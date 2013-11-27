@@ -1,0 +1,6 @@
+{
+  DoubleMatrix z=W.transpose().mmul(y);
+  z=z.add(vbias);
+  for (int i=0; i < z.length; i++)   z.put(i,sigmoid(z.get(i)));
+  return z;
+}

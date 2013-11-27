@@ -1,0 +1,7 @@
+{
+  final double max=x.max();
+  for (int i=0; i < x.length; i++)   x.put(i,Math.exp(x.get(i) - max));
+  double sum=x.sum();
+  for (int i=0; i < x.length; i++)   x.put(i,x.get(i) / sum);
+  return x;
+}

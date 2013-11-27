@@ -1,0 +1,7 @@
+{
+  Counter<E> newCounter=new Counter<E>(this);
+  for (  E key : newCounter.keySet()) {
+    newCounter.setCount(key,Math.log(getCount(key)));
+  }
+  return newCounter;
+}

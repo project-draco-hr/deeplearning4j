@@ -1,0 +1,6 @@
+{
+  int index=outcome(current);
+  double curr=current.get(index);
+  double prev=previous.get(index);
+  return Math.abs(curr - prev) <= distanceThreshold;
+}

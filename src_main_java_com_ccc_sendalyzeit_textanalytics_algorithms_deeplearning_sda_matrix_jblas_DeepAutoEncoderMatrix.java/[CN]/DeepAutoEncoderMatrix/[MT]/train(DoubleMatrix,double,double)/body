@@ -1,0 +1,21 @@
+{
+  if (!x.isColumnVector()) {
+    if (x.isRowVector())     x=x.transpose();
+ else     throw new IllegalStateException("Unable to transpose row matrix as input");
+  }
+  double p=1 - corruption_level;
+  DoubleMatrix tilde_x=get_corrupted_input(x,p);
+  DoubleMatrix y=get_hidden_values(tilde_x);
+  DoubleMatrix z=get_reconstructed_input(y);
+  DoubleMatrix L_vbias=x.mini(z);
+  for (int i=0; i < n_visible; i++)   vbias.put(i,vbias.get(i) + lr * L_vbias.get(i) / N);
+  DoubleMatrix L_hbias=W.mmul(L_vbias);
+  for (int i=0; i < n_hidden; i++) {
+    for (int j=0; j < n_visible; j++) {
+      L_hbias.put(i,W.get(i,j) * L_vbias.get(j));
+    }
+    L_hbias.put(i,L_hbias.get(i) * y.get(i) * (1 - y.get(i)));
+    hbias.put(i,hbias.get(i) + lr * L_hbias.get(i) / N);
+  }
+  for (int i=0; i < W.rows; i++)   for (int j=0; j < W.columns; j++)   W.put(i,j,W.get(i,j) + (lr * (L_hbias.get(i) * tilde_x.get(j) + L_vbias.get(j) * y.get(i)) / N));
+}

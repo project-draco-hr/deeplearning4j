@@ -1,0 +1,9 @@
+{
+  this.input=input.isColumnVector() ? input : input.transpose();
+  DoubleMatrix ret=new DoubleMatrix(1,input.length);
+  for (int j=0; j < ret.length; j++) {
+    double score=sigmoid(output(input,W.getRow(i),b.get(i)));
+    ret.put(j,score);
+  }
+  return ret;
+}

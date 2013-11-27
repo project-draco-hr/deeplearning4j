@@ -1,0 +1,9 @@
+{
+  Factory<Iterator<T>> factory=new Factory<Iterator<T>>(){
+    public Iterator<T> newInstance(    Object... args){
+      return (Iterator<T>)args[0];
+    }
+  }
+;
+  return new IteratorIterator<T>(Arrays.asList(args).iterator(),factory);
+}

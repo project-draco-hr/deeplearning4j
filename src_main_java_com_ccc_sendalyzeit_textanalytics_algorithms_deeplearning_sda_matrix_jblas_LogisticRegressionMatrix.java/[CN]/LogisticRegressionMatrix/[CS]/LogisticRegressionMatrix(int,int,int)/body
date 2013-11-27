@@ -1,0 +1,7 @@
+{
+  this.N=N;
+  this.n_in=n_in;
+  this.n_out=n_out;
+  W=DoubleMatrix.zeros(n_out,n_in);
+  b=DoubleMatrix.zeros(n_out);
+}

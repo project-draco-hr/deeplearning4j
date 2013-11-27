@@ -1,0 +1,13 @@
+{
+  int T=o.length;
+  double[][] fwd=new double[numStates][T];
+  for (int i=0; i < numStates; i++)   fwd[i][0]=pi[i] * b[i][o[0]];
+  for (int t=0; t <= T - 2; t++) {
+    for (int j=0; j < numStates; j++) {
+      fwd[j][t + 1]=0;
+      for (int i=0; i < numStates; i++)       fwd[j][t + 1]+=(fwd[i][t] * a[i][j]);
+      fwd[j][t + 1]*=b[j][o[t + 1]];
+    }
+  }
+  return fwd;
+}

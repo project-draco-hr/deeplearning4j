@@ -1,0 +1,6 @@
+{
+  if (x.length != n_visible)   throw new IllegalArgumentException("x must have a length of " + n_visible);
+  final DoubleMatrix tilde_x=DoubleMatrix.zeros(n_visible);
+  for (int i=0; i < n_visible; i++)   tilde_x.put(i,binomial(1,p));
+  return tilde_x;
+}

@@ -1,0 +1,8 @@
+{
+  DoubleMatrix input=x;
+  for (int i=0; i < n_layers; i++) {
+    HiddenLayerMatrix layer=sigmoid_layers[i];
+    input=layer.outputMatrix(input);
+  }
+  return log_layer.predict(input);
+}

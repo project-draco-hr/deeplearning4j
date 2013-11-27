@@ -1,0 +1,5 @@
+{
+  if (input.length != n_in)   throw new IllegalArgumentException("Input length must be equal to the number of specified inputs" + n_in);
+  if (w.length != n_in)   throw new IllegalArgumentException("Input length must be equal to the number of specified inputs" + n_in);
+  return sigmoid(w.dot(input) + b);
+}

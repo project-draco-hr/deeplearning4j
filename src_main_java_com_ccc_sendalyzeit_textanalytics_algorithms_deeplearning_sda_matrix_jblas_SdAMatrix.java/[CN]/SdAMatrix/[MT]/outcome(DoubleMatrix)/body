@@ -1,0 +1,4 @@
+{
+  if (!outcomes.isColumnVector() && !outcomes.isRowVector())   throw new IllegalArgumentException("Outcomes is not a vector");
+  return outcomes.elementsAsList().indexOf(outcomes.max());
+}

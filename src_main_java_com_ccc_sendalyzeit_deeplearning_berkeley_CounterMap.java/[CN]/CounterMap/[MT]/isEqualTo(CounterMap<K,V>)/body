@@ -1,0 +1,8 @@
+{
+  boolean tmp=true;
+  CounterMap<K,V> bigger=map.size() > size() ? map : this;
+  for (  K k : bigger.keySet()) {
+    tmp&=map.getCounter(k).isEqualTo(getCounter(k));
+  }
+  return tmp;
+}

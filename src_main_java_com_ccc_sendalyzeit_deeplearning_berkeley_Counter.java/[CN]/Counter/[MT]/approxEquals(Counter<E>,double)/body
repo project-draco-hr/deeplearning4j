@@ -1,0 +1,9 @@
+{
+  for (  E key : keySet()) {
+    if (Math.abs(getCount(key) - other.getCount(key)) > tol)     return false;
+  }
+  for (  E key : other.keySet()) {
+    if (Math.abs(getCount(key) - other.getCount(key)) > tol)     return false;
+  }
+  return true;
+}

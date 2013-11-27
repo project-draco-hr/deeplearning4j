@@ -1,0 +1,5 @@
+{
+  HMM hmm=new HMM(2,2);
+  int[] outcomes=new int[]{0,1,0,1,0,0,1};
+  hmm.train(outcomes,3);
+}

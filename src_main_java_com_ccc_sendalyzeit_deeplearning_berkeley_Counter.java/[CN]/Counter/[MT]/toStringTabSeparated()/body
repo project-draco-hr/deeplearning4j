@@ -1,0 +1,7 @@
+{
+  StringBuilder sb=new StringBuilder();
+  for (  E key : getSortedKeys()) {
+    sb.append(key.toString() + "\t" + getCount(key)+ "\n");
+  }
+  return sb.toString();
+}
