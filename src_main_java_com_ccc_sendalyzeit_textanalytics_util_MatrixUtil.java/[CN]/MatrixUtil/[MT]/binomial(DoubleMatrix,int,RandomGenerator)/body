@@ -1,0 +1,5 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(p.rows,p.columns);
+  for (int i=0; i < ret.rows; i++)   for (int j=0; j < ret.columns; j++)   ret.put(i,j,MathUtils.binomial(rng,n,p.get(i,j)));
+  return ret;
+}

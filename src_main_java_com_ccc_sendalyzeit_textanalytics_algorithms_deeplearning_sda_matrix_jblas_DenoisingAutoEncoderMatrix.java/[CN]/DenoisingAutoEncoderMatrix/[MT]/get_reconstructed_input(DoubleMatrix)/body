@@ -1,0 +1,6 @@
+{
+  DoubleMatrix z=y.mmul(W.transpose());
+  z=z.addRowVector(vbias);
+  z=MatrixUtil.sigmoid(z);
+  return z;
+}

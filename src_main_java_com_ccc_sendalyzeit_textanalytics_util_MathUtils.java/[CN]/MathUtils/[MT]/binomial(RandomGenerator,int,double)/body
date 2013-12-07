@@ -1,0 +1,4 @@
+{
+  BinomialDistribution dist=new BinomialDistribution(rng,n,p);
+  return dist.sample();
+}

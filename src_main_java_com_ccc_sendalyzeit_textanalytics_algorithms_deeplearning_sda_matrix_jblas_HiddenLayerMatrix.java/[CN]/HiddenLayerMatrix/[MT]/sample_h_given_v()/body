@@ -1,5 +1,4 @@
 {
-  DoubleMatrix ret=DoubleMatrix.zeros(input.length);
-  for (int i=0; i < ret.length; i++)   ret.put(i,binomial(1,output(input,W.getRow(i),b.get(i))));
+  DoubleMatrix ret=MatrixUtil.binomial(outputMatrix(),1,rng);
   return ret;
 }

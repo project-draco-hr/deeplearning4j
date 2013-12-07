@@ -1,13 +1,8 @@
 {
-  if (!x.isColumnVector()) {
-    log.warn("X " + x.toString() + " is not a column vector; transforming");
-    if (x.isRowVector())     x=x.transpose();
- else     throw new IllegalStateException("Unable to transform in to a column vector");
-  }
-  DoubleMatrix p_y_given_x=softmax(W.mmul(x).add(b));
-  final DoubleMatrix dy=y.sub(p_y_given_x);
-  for (int i=0; i < n_out; i++) {
-    for (int j=0; j < n_in; j++)     W.put(i,j,W.get(i,j) + lr * dy.get(i) * x.get(j) / N);
-    b.put(i,b.get(i) + lr * dy.get(i) / N);
-  }
+  DoubleMatrix mul=x.mmul(W);
+  DoubleMatrix p_y_given_x=softmax(mul.addRowVector(b));
+  DoubleMatrix dy=y.sub(p_y_given_x);
+  DoubleMatrix mult2=x.transpose().mmul(dy);
+  W=W.add(mult2);
+  b=b.add(MatrixUtil.columnWiseMean(p_y_given_x,0).mul(lr));
 }

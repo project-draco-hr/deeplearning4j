@@ -12,7 +12,7 @@
       DoubleMatrix prevInput=new DoubleMatrix(prev_layer_input);
       double score=sigmoid_layers[i].b.get(k) + w2.dot(prevInput);
       log.info(String.valueOf("Score for layer 1 " + score));
-      layer_input[k]=sigmoid(linear_output);
+      layer_input[k]=MathUtils.sigmoid(linear_output);
     }
     log.info("Layer input arr " + Arrays.toString(layer_input));
     if (i < n_layers - 1) {

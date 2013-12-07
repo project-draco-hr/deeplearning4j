@@ -1,8 +1,5 @@
 {
   DoubleMatrix ret=new DoubleMatrix(1,n_out);
-  for (int i=0; i < n_out; i++) {
-    ret.put(i,W.getRow(i).dot(x) + b.get(i));
-  }
-  log.info("Matrix before softmax " + ret);
+  for (int i=0; i < n_out; i++)   ret.put(i,W.getRow(i).dot(x) + b.get(i));
   return softmax(ret);
 }

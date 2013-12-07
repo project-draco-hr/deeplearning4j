@@ -1,3 +1,5 @@
 {
-  return sigmoid(b.add(W.dot(input)));
+  DoubleMatrix mult=this.input.mmul(W);
+  mult=mult.addRowVector(b);
+  return MatrixUtil.sigmoid(mult);
 }
