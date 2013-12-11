@@ -1,0 +1,7 @@
+{
+  SdAMatrix sda=sdamatrix();
+  sda.pretrain(pretrain_lr,corruption_level,pretraining_epochs);
+  sda.finetune(finetune_lr,finetune_epochs);
+  log.info("OUTPUT TEST");
+  log.info(sda.predict(test_X_matrix).toString());
+}

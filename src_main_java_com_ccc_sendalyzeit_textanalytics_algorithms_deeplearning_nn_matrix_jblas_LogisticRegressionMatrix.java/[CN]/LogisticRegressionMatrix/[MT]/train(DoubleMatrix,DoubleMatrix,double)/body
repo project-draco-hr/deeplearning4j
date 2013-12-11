@@ -1,0 +1,10 @@
+{
+  DoubleMatrix mul=x.mmul(W);
+  DoubleMatrix p_y_given_x=MatrixUtil.softmax(mul.addRowVector(b));
+  DoubleMatrix dy=y.sub(p_y_given_x);
+  DoubleMatrix mult2=x.transpose().mmul(dy);
+  mult2=mult2.mul(lr);
+  W=W.add(mult2);
+  DoubleMatrix bAdd=dy.columnMeans();
+  b=b.add(bAdd.mul(lr));
+}

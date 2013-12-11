@@ -10,10 +10,10 @@
   DoubleMatrix L_W=tilde_x.transpose().mmul(L_h1).add(L_h2.transpose().mmul(y));
   DoubleMatrix learnMulL_W=L_W.mul(lr);
   this.W=W.add(learnMulL_W);
-  DoubleMatrix L_hbias_mean=MatrixUtil.columnWiseMean(L_hbias,0);
-  DoubleMatrix L_vbias_mean=MatrixUtil.columnWiseMean(L_vbias,0);
+  DoubleMatrix L_hbias_mean=L_hbias.columnMeans();
+  DoubleMatrix L_vbias_mean=L_vbias.columnMeans();
   L_hbias_mean=L_hbias_mean.mul(lr);
   L_vbias_mean=L_vbias_mean.mul(lr);
-  this.hbias=hbias.add(L_hbias_mean);
-  this.vbias=vbias.add(L_vbias_mean);
+  this.hBias=hBias.add(L_hbias_mean);
+  this.vBias=vBias.add(L_vbias_mean);
 }

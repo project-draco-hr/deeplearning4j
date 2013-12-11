@@ -1,5 +1,5 @@
 {
-  DoubleMatrix matrix=new DoubleMatrix(x.rows,x.columns);
-  for (int i=0; i < matrix.length; i++)   matrix.put(i,1f / (1f + Math.pow(Math.E,-x.get(i))));
-  return matrix;
+  DoubleMatrix denominator=MatrixFunctions.exp(x.neg()).add(1);
+  denominator=DoubleMatrix.ones(denominator.rows,denominator.columns).div(denominator);
+  return denominator;
 }

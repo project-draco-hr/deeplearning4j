@@ -1,5 +1,0 @@
-{
-  DoubleMatrix ret=DoubleMatrix.zeros(y.rows,1);
-  for (int i=0; i < y.rows; i++)   ret.put(i,outcome(y.getRow(i)));
-  return ret;
-}

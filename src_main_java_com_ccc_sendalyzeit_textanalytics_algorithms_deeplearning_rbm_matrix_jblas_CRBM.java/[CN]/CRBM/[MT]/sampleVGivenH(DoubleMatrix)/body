@@ -1,0 +1,17 @@
+{
+  DoubleMatrix aH=propDown(h);
+  DoubleMatrix en=MatrixFunctions.exp(aH.neg());
+  DoubleMatrix ep=MatrixFunctions.exp(aH);
+  DoubleMatrix oneMinusEn=MatrixUtil.oneMinus(en);
+  DoubleMatrix oneDivAh=MatrixUtil.oneDiv(aH);
+  DoubleMatrix diff=oneMinusEn.sub(oneDivAh);
+  DoubleMatrix v1Mean=MatrixUtil.oneDiv(diff);
+  UniformRealDistribution uDist=new UniformRealDistribution(rng,0,1,UniformRealDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  DoubleMatrix U=new DoubleMatrix(v1Mean.rows,v1Mean.columns);
+  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++)   U.put(i,j,uDist.sample());
+  DoubleMatrix oneMinusEp=MatrixUtil.oneMinus(ep);
+  DoubleMatrix uTimesOneMinusEp=U.mul(oneMinusEp);
+  DoubleMatrix preLog=MatrixUtil.oneMinus(uTimesOneMinusEp);
+  DoubleMatrix v1Sample=MatrixFunctions.log(preLog).div(aH);
+  return new Pair<DoubleMatrix,DoubleMatrix>(v1Mean,v1Sample);
+}
