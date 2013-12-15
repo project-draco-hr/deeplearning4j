@@ -1,0 +1,27 @@
+{
+  File ensureExists=new File("/tmp/MNIST");
+  if (ensureExists.exists()) {
+    MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+    man.setCurrent(example);
+    int[][] image=man.readImage();
+    int[] imageExample=new int[image.length * image[0].length];
+    int linearCount=0;
+    for (int i=0; i < image.length; i++)     for (int j=0; j < image[i].length; j++) {
+      imageExample[linearCount++]=image[i][j];
+    }
+    return new Pair<DoubleMatrix,DoubleMatrix>(asMatrix(imageExample),toOutcomeVector(man.readLabel(),10));
+  }
+ else {
+    MnistFetcher fetcher=new MnistFetcher();
+    fetcher.downloadAndUntar();
+    MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+    man.setCurrent(example);
+    int[][] image=man.readImage();
+    int[] imageExample=new int[image.length * image[0].length];
+    int linearCount=0;
+    for (int i=0; i < image.length; i++)     for (int j=0; j < image[i].length; j++) {
+      imageExample[linearCount++]=image[i][j];
+    }
+    return new Pair<DoubleMatrix,DoubleMatrix>(asMatrix(imageExample),toOutcomeVector(man.readLabel(),10));
+  }
+}

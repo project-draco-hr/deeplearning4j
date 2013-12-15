@@ -1,4 +1,5 @@
 {
+  if (this.input == null)   initializeLayers(input);
   DoubleMatrix layerInput=null;
   for (int i=0; i < nLayers; i++) {
     if (i == 0)     layerInput=input;

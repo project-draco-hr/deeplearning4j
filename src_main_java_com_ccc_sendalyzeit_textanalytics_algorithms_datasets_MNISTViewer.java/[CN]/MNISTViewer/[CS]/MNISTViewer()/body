@@ -1,0 +1,13 @@
+{
+  try {
+    manager=new MnistManager("MNIST/train-images-idx3-ubyte","MNIST/train-labels-idx1-ubyte");
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  network=new NN(xnodes * ynodes,connections);
+  network.init();
+  MyFrame mf=new MyFrame("MNSIT Viewer");
+  mf.pack();
+  mf.setVisible(true);
+}

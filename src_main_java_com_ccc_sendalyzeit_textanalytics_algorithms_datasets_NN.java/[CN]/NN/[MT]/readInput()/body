@@ -1,0 +1,10 @@
+{
+  float[] values=null;
+  if (inputNodes != null) {
+    values=new float[inputNodes.length];
+    for (int i=0; i < values.length; i++) {
+      values[i]=currentState[inputNodes[i]];
+    }
+  }
+  return values;
+}
