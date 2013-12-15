@@ -1,28 +1,28 @@
 {
   int input_size;
-  this.n_ins=n_ins;
-  this.hidden_layer_sizes=hidden_layer_sizes;
+  this.nIns=n_ins;
+  this.hiddenLayerSizes=hidden_layer_sizes;
   this.input=input;
   this.labels=labels;
-  if (hidden_layer_sizes.length != n_layers)   throw new IllegalArgumentException("Te number of hidden layer sizes must be equivalent to the n_layers argument which is a value of " + n_layers);
-  this.n_outs=n_outs;
-  this.n_layers=n_layers;
-  this.sigmoid_layers=new HiddenLayerMatrix[n_layers];
+  if (hidden_layer_sizes.length != n_layers)   throw new IllegalArgumentException("Te number of hidden layer sizes must be equivalent to the nLayers argument which is a value of " + n_layers);
+  this.nOuts=n_outs;
+  this.nLayers=n_layers;
+  this.sigmoidLayers=new HiddenLayerMatrix[n_layers];
   this.layers=createNetworkLayers(n_layers);
   if (rng == null)   this.rng=new MersenneTwister(123);
  else   this.rng=rng;
   DoubleMatrix layer_input=input;
-  for (int i=0; i < this.n_layers; i++) {
-    if (i == 0)     input_size=this.n_ins;
- else     input_size=this.hidden_layer_sizes[i - 1];
+  for (int i=0; i < this.nLayers; i++) {
+    if (i == 0)     input_size=this.nIns;
+ else     input_size=this.hiddenLayerSizes[i - 1];
     if (i == 0) {
-      this.sigmoid_layers[i]=new HiddenLayerMatrix(input_size,this.hidden_layer_sizes[i],null,null,rng,layer_input);
+      this.sigmoidLayers[i]=new HiddenLayerMatrix(input_size,this.hiddenLayerSizes[i],null,null,rng,layer_input);
     }
  else {
-      layer_input=sigmoid_layers[i - 1].sample_h_given_v();
-      this.sigmoid_layers[i]=new HiddenLayerMatrix(input_size,this.hidden_layer_sizes[i],null,null,rng,layer_input);
+      layer_input=sigmoidLayers[i - 1].sample_h_given_v();
+      this.sigmoidLayers[i]=new HiddenLayerMatrix(input_size,this.hiddenLayerSizes[i],null,null,rng,layer_input);
     }
-    this.layers[i]=createLayer(layer_input,input_size,this.hidden_layer_sizes[i],this.sigmoid_layers[i].W,this.sigmoid_layers[i].b,null,rng,i);
+    this.layers[i]=createLayer(layer_input,input_size,this.hiddenLayerSizes[i],this.sigmoidLayers[i].W,this.sigmoidLayers[i].b,null,rng,i);
   }
-  this.log_layer=new LogisticRegressionMatrix(layer_input,this.hidden_layer_sizes[this.n_layers - 1],this.n_outs);
+  this.logLayer=new LogisticRegressionMatrix(layer_input,this.hiddenLayerSizes[this.nLayers - 1],this.nOuts);
 }

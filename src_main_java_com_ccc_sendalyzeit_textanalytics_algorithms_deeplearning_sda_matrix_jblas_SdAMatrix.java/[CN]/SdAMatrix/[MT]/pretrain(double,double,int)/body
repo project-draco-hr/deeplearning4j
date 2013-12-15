@@ -1,14 +1,3 @@
 {
-  DoubleMatrix layer_input=null;
-  for (int i=0; i < n_layers; i++) {
-    if (i == 0)     layer_input=input;
- else     layer_input=this.sigmoid_layers[i - 1].sample_h_given_v(layer_input);
-    DenoisingAutoEncoderMatrix da=(DenoisingAutoEncoderMatrix)this.layers[i];
-    HiddenLayerMatrix h=this.sigmoid_layers[i];
-    for (int epoch=0; epoch < epochs; epoch++) {
-      da.train(layer_input,lr,corruption_level);
-      if (h.W != (da.W))       h.W=da.W;
-      if (h.b != da.hBias)       h.b=da.hBias;
-    }
-  }
+  pretrain(this.input,lr,corruptionLevel,epochs);
 }

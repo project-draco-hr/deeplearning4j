@@ -1,7 +1,3 @@
 {
-  DoubleMatrix layer_input=this.sigmoid_layers[sigmoid_layers.length - 1].sample_h_given_v();
-  for (int epoch=0; epoch < epochs; epoch++) {
-    log_layer.train(layer_input,labels,lr);
-    lr*=0.95;
-  }
+  finetune(this.labels,lr,epochs);
 }

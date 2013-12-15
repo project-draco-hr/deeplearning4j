@@ -6,7 +6,7 @@
   DoubleMatrix oneDivAh=MatrixUtil.oneDiv(aH);
   DoubleMatrix diff=oneMinusEn.sub(oneDivAh);
   DoubleMatrix v1Mean=MatrixUtil.oneDiv(diff);
-  UniformRealDistribution uDist=new UniformRealDistribution(rng,0,1,UniformRealDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  UniformRealDistribution uDist=new UniformRealDistribution(rng,0,1);
   DoubleMatrix U=new DoubleMatrix(v1Mean.rows,v1Mean.columns);
   for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++)   U.put(i,j,uDist.sample());
   DoubleMatrix oneMinusEp=MatrixUtil.oneMinus(ep);

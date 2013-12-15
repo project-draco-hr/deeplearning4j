@@ -1,0 +1,6 @@
+{
+  if (input != null && labels != null) {
+    return buildWithInputsAndLabels();
+  }
+ else   return buildWithoutInputsAndLabels();
+}

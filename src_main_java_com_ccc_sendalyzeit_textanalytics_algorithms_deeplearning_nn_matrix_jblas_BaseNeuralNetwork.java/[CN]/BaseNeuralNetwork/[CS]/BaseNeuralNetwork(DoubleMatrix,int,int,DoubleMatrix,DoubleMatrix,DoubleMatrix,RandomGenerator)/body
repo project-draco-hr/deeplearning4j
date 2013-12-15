@@ -1,7 +1,7 @@
 {
   this.input=input;
-  this.n_visible=n_visible;
-  this.n_hidden=n_hidden;
+  this.nVisible=n_visible;
+  this.nHidden=n_hidden;
   if (rng == null)   this.rng=new MersenneTwister(1234);
  else   this.rng=rng;
   if (W == null) {
