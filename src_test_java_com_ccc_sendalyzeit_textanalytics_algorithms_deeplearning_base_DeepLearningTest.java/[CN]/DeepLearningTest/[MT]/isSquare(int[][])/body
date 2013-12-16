@@ -1,7 +1,0 @@
-{
-  int firstLength=nums[0].length;
-  for (int i=0; i < nums.length; i++) {
-    if (nums.length != firstLength)     return false;
-  }
-  return true;
-}

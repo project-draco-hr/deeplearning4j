@@ -1,0 +1,16 @@
+{
+  File ensureExists=new File("/tmp/MNIST");
+  if (!ensureExists.exists())   new MnistFetcher().downloadAndUntar();
+  MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  int[][] image=man.readImage();
+  int[] imageExample=ArrayUtil.flatten(image);
+  int[][] examples=new int[batchSize][imageExample.length];
+  int[][] outcomeMatrix=new int[batchSize][10];
+  for (int i=1; i < batchSize; i++) {
+    man.setCurrent(i);
+    int[] currExample=ArrayUtil.flatten(man.readImage());
+    examples[i]=currExample;
+    outcomeMatrix[i]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
+  }
+  return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(imageExample),MatrixUtil.toMatrix(outcomeMatrix));
+}

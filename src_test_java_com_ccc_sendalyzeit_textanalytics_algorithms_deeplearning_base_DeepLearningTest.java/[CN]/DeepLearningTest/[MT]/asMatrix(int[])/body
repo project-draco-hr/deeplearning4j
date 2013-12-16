@@ -1,5 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(nums.length);
-  for (int i=0; i < ret.length; i++)   ret.put(i,nums[i]);
-  return ret.transpose();
-}

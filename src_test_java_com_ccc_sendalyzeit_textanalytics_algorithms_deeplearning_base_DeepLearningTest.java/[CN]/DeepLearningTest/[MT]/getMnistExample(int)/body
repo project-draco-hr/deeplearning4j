@@ -9,7 +9,7 @@
     for (int i=0; i < image.length; i++)     for (int j=0; j < image[i].length; j++) {
       imageExample[linearCount++]=image[i][j];
     }
-    return new Pair<DoubleMatrix,DoubleMatrix>(asMatrix(imageExample),toOutcomeVector(man.readLabel(),10));
+    return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(imageExample),MatrixUtil.toOutcomeVector(man.readLabel(),10));
   }
  else {
     MnistFetcher fetcher=new MnistFetcher();
@@ -22,6 +22,6 @@
     for (int i=0; i < image.length; i++)     for (int j=0; j < image[i].length; j++) {
       imageExample[linearCount++]=image[i][j];
     }
-    return new Pair<DoubleMatrix,DoubleMatrix>(asMatrix(imageExample),toOutcomeVector(man.readLabel(),10));
+    return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(imageExample),MatrixUtil.toOutcomeVector(man.readLabel(),10));
   }
 }
