@@ -1,5 +1,4 @@
 {
-  DoubleMatrix denominator=MatrixFunctions.exp(x.neg()).add(1);
-  denominator=DoubleMatrix.ones(denominator.rows,denominator.columns).div(denominator);
-  return denominator;
+  DoubleMatrix ones=DoubleMatrix.ones(x.rows,x.columns);
+  return ones.div(ones.add(MatrixFunctions.exp(x.neg())));
 }

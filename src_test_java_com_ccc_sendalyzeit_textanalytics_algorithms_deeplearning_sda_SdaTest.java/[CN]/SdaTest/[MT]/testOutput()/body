@@ -3,5 +3,8 @@
   sda.pretrain(pretrain_lr,corruption_level,pretraining_epochs);
   sda.finetune(finetune_lr,finetune_epochs);
   log.info("OUTPUT TEST");
-  log.info(sda.predict(test_X_matrix).toString());
+  DoubleMatrix predicted=sda.predict(train_X_matrix);
+  for (int i=0; i < predicted.rows; i++) {
+    assertEquals(SimpleBlas.iamax(predicted.getRow(i)),SimpleBlas.iamax(train_Y_matrix));
+  }
 }

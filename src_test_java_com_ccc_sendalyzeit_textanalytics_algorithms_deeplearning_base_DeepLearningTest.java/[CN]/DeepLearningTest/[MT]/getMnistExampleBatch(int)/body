@@ -6,11 +6,11 @@
   int[] imageExample=ArrayUtil.flatten(image);
   int[][] examples=new int[batchSize][imageExample.length];
   int[][] outcomeMatrix=new int[batchSize][10];
-  for (int i=1; i < batchSize; i++) {
+  for (int i=1; i < batchSize + 1; i++) {
     man.setCurrent(i);
     int[] currExample=ArrayUtil.flatten(man.readImage());
-    examples[i]=currExample;
-    outcomeMatrix[i]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
+    examples[i - 1]=currExample;
+    outcomeMatrix[i - 1]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
   }
-  return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(imageExample),MatrixUtil.toMatrix(outcomeMatrix));
+  return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(examples),MatrixUtil.toMatrix(outcomeMatrix));
 }

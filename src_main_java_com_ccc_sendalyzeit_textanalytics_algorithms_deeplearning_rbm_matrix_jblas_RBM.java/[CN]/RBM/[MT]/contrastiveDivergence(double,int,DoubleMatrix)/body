@@ -13,6 +13,7 @@
     nvMeans=matrices.getFirst().getFirst();
     nvSamples=matrices.getFirst().getSecond();
     nhMeans=matrices.getSecond().getFirst();
+    if (MatrixUtil.isNaN(nhMeans))     throw new IllegalStateException("No");
     nhSamples=matrices.getSecond().getSecond();
   }
   DoubleMatrix inputTimesPhSample=this.input.transpose().mmul(ph.getSecond());

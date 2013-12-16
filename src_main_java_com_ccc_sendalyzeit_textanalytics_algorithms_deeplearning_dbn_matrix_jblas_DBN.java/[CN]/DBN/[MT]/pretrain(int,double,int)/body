@@ -1,14 +1,3 @@
 {
-  DoubleMatrix layerInput=null;
-  for (int i=0; i < nLayers; i++) {
-    if (i == 0)     layerInput=this.input;
- else     layerInput=sigmoidLayers[i - 1].sample_h_given_v(layerInput);
-    RBM r=(RBM)this.layers[i];
-    HiddenLayerMatrix h=this.sigmoidLayers[i];
-    for (int epoch=0; epoch < epochs; epoch++) {
-      r.contrastiveDivergence(learningRate,k,layerInput);
-      h.W=r.W;
-      h.b=r.hBias;
-    }
-  }
+  pretrain(this.input,k,learningRate,epochs);
 }
