@@ -4,13 +4,16 @@
   MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
   int[][] image=man.readImage();
   int[] imageExample=ArrayUtil.flatten(image);
-  int[][] examples=new int[batchSize][imageExample.length];
+  double[][] examples=new double[batchSize][imageExample.length];
   int[][] outcomeMatrix=new int[batchSize][10];
   for (int i=1; i < batchSize + 1; i++) {
     man.setCurrent(i);
-    int[] currExample=ArrayUtil.flatten(man.readImage());
+    double[] currExample=ArrayUtil.flatten(ArrayUtil.toDouble(man.readImage()));
+    for (int j=0; j < currExample.length; j++)     currExample[j]=MathUtils.normalize(currExample[j],0,255);
     examples[i - 1]=currExample;
     outcomeMatrix[i - 1]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
   }
-  return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(examples),MatrixUtil.toMatrix(outcomeMatrix));
+  DoubleMatrix training=new DoubleMatrix(examples);
+  MatrixUtil.discretizeColumns(training,255);
+  return new Pair<DoubleMatrix,DoubleMatrix>(training,MatrixUtil.toMatrix(outcomeMatrix));
 }

@@ -16,5 +16,9 @@
     rowOutcome[outcomeTypes.indexOf(outcome)]=1;
     outcomes[i]=rowOutcome;
   }
+  MatrixUtil.columnNormalizeBySum(ret);
+  ret=MatrixUtil.roundToTheNearest(ret,10000);
+  MatrixUtil.discretizeColumns(ret,4);
+  ret=ret.mul(0.01);
   return new Pair<>(ret,new DoubleMatrix(outcomes));
 }
