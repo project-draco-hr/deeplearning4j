@@ -14,6 +14,5 @@
     outcomeMatrix[i - 1]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
   }
   DoubleMatrix training=new DoubleMatrix(examples);
-  MatrixUtil.discretizeColumns(training,255);
   return new Pair<DoubleMatrix,DoubleMatrix>(training,MatrixUtil.toMatrix(outcomeMatrix));
 }

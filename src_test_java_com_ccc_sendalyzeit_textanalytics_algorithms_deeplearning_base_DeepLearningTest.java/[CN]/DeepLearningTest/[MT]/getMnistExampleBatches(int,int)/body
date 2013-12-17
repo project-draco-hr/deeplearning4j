@@ -11,7 +11,6 @@
     for (int i=1 + batch; i < batchSize + 1 + batch; i++) {
       man.setCurrent(i);
       double[] currExample=ArrayUtil.flatten(ArrayUtil.toDouble(man.readImage()));
-      for (int j=0; j < currExample.length; j++)       currExample[j]=MathUtils.normalize(currExample[j],0,255);
       examples[i - 1 - batch]=currExample;
       outcomeMatrix[i - 1 - batch]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
     }
