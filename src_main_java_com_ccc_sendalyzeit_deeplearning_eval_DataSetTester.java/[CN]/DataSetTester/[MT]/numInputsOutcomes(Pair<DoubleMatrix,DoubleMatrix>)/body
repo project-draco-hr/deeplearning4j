@@ -1,0 +1,5 @@
+{
+  int numInputs=pair.getFirst().columns;
+  int numOutcomes=pair.getSecond().columns;
+  return new Pair<>(numInputs,numOutcomes);
+}

@@ -1,0 +1,13 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> dataset=null;
+  if (numExamples != null)   dataset=loadDataset(numExamples);
+ else   dataset=loadDataset();
+  BaseMultiLayerNetwork neuralNet=getNeuralNet(dataset);
+  Evaluation e=new Evaluation();
+  for (  Pair<DoubleMatrix,DoubleMatrix> pair : dataset) {
+    neuralNet.trainNetwork(pair.getFirst(),pair.getSecond(),getOtherParams());
+    DoubleMatrix predicted=neuralNet.predict(pair.getFirst());
+    e.eval(pair.getSecond(),predicted);
+  }
+  log.info(e.stats());
+}
