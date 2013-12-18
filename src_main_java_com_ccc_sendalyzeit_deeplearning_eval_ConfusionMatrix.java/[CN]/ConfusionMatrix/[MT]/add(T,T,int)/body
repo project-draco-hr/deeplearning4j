@@ -1,0 +1,12 @@
+{
+  if (matrix.containsKey(actual)) {
+    matrix.get(actual).add(predicted,count);
+  }
+ else {
+    Multiset<T> counts=HashMultiset.create();
+    counts.add(predicted,count);
+    matrix.put(actual,counts);
+  }
+  classes.add(actual);
+  classes.add(predicted);
+}
