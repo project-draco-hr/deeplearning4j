@@ -1,0 +1,7 @@
+{
+  List<Integer> ret=new ArrayList<Integer>();
+  for (int i=0; i < iterations; i++) {
+    ret.add(gen.nextInt());
+  }
+  return ret;
+}

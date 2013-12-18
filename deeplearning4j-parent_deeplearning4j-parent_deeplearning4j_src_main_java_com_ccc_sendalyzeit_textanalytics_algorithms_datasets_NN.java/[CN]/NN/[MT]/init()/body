@@ -1,0 +1,15 @@
+{
+  int numedges;
+  int node;
+  for (int i=0; i < numnodes; i++) {
+    for (int j=0; j < maxedges; j++) {
+      edges[i][j]=-1;
+    }
+    numedges=(int)(Math.random() * (maxedges + 1));
+    for (int j=0; j < numedges; j++) {
+      node=getRandomPartner(i,false);
+      edges[i][j]=node;
+      weights[i][j]=(float)Math.random();
+    }
+  }
+}

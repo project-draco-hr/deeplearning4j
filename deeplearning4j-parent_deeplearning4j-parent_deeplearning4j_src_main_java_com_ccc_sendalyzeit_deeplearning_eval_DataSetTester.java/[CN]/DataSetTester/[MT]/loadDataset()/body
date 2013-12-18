@@ -1,0 +1,12 @@
+{
+  if (dataset.equals("lfw")) {
+    return getFaces();
+  }
+ else   if (dataset.equals("iris")) {
+    return Collections.singletonList(getIris());
+  }
+ else   if (dataset.equals("mnist")) {
+    return this.getMnistExampleBatches(10,6000);
+  }
+  return null;
+}

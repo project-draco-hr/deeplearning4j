@@ -1,0 +1,7 @@
+{
+  double max=matrix.max();
+  for (int j=0; j < matrix.length; j++) {
+    if (matrix.get(j) == max)     return j;
+  }
+  return -1;
+}

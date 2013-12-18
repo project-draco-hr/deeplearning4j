@@ -1,0 +1,5 @@
+{
+  double ret=0;
+  for (  double d : vector)   ret+=Math.pow(d,2);
+  return ret;
+}

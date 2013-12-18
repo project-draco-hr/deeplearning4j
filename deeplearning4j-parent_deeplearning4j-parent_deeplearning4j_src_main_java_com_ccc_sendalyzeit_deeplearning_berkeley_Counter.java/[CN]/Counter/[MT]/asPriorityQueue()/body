@@ -1,0 +1,7 @@
+{
+  PriorityQueue<E> pq=new PriorityQueue<E>(entries.size());
+  for (  Map.Entry<E,Double> entry : entries.entrySet()) {
+    pq.add(entry.getKey(),entry.getValue());
+  }
+  return pq;
+}
