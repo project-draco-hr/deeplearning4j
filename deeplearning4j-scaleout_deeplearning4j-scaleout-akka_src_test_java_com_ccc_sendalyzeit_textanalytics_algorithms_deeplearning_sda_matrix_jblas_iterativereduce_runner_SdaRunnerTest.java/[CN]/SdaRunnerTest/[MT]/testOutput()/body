@@ -1,0 +1,4 @@
+{
+  BaseMultiLayerNetwork m=runner.train();
+  log.info(m.logLayer.W.toString());
+}

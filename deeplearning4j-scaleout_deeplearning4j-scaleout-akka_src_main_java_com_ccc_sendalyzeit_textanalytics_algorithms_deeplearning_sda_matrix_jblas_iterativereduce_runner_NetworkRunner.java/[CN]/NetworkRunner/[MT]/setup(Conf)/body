@@ -1,0 +1,15 @@
+{
+  this.conf=conf;
+  split=conf.getInt(SPLIT);
+  system=ActorSystem.create();
+  conf.put(N_IN,String.valueOf(input.columns));
+  conf.put(OUT,String.valueOf(outcomes.columns));
+  epochs=conf.getInt(FINE_TUNE_EPOCHS);
+  master=new ComputableMasterAkka();
+  master.setup(this.conf);
+  if (conf.get(SEED) != null)   org.jblas.util.Random.seed(Integer.parseInt(conf.get(SEED)));
+  List<Integer> rows2=new ArrayList<>();
+  for (int i=0; i < input.rows; i++)   rows2.add(i);
+  List<List<Integer>> indices=Lists.partition(rows2,split);
+  for (int i=0; i < indices.size(); i++)   workers.add(fromMatrices(convert(indices.get(i))));
+}

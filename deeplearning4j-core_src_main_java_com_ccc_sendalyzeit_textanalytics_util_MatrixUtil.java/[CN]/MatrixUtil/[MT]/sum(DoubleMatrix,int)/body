@@ -1,0 +1,17 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(input.rows,1);
+  if (axis == 0) {
+    for (int i=0; i < input.columns; i++) {
+      ret.put(i,input.getColumn(i).sum());
+    }
+    return ret;
+  }
+ else   if (axis == 1) {
+    for (int i=0; i < input.rows; i++) {
+      ret.put(i,input.getRow(i).sum());
+    }
+    return ret;
+  }
+  for (int i=0; i < input.rows; i++)   ret.put(i,input.getRow(i).sum());
+  return ret;
+}

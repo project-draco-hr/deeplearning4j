@@ -1,0 +1,15 @@
+{
+  StringBuilder sb=new StringBuilder("[\n");
+  for (  Map.Entry<K,Counter<V>> entry : counterMap.entrySet()) {
+    if (keyFilter != null && !keyFilter.contains(entry.getKey())) {
+      continue;
+    }
+    sb.append("  ");
+    sb.append(entry.getKey());
+    sb.append(" -> ");
+    sb.append(entry.getValue().toString(20));
+    sb.append("\n");
+  }
+  sb.append("]");
+  return sb.toString();
+}
