@@ -1,0 +1,9 @@
+{
+  StringBuilder builder=new StringBuilder().append("\n").append(confusion.toString()).append("\n");
+  builder.append("\n==========================F1 Scores========================================");
+  for (  Integer label : confusion.getClasses()) {
+    builder.append("\nLABEL " + label + " f1 "+ f1(label)+ " precision "+ precision(label)+ " recall "+ recall());
+  }
+  builder.append("\n===========================================================================");
+  return builder.toString();
+}

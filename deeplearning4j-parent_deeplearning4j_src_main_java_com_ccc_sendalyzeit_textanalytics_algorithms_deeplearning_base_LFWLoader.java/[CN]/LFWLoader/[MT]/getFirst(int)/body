@@ -1,0 +1,11 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>(num);
+  File[] files=lfwDir.listFiles();
+  int label=0;
+  for (  File file : files) {
+    ret.addAll(getImages(label,file));
+    label++;
+    if (ret.size() >= num)     break;
+  }
+  return ret;
+}

@@ -1,0 +1,7 @@
+{
+  gen=new org.apache.commons.math3.random.MersenneTwister(seed);
+  List<Integer> test1=testRand();
+  gen=new org.apache.commons.math3.random.MersenneTwister(seed);
+  List<Integer> test2=testRand();
+  log.info(String.valueOf(test1.equals(test2)));
+}

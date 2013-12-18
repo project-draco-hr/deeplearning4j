@@ -1,0 +1,13 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> mnist=getMnistExampleBatches(10,5);
+  int numVisible=mnist.get(0).getFirst().columns;
+  RandomGenerator g=new MersenneTwister(123);
+  RBM r=new RBM.Builder().numberOfVisible(numVisible).numHidden(10).withRandom(g).build();
+  DoubleMatrix input=mnist.get(0).getFirst();
+  for (int i=0; i < 1000; i++)   r.contrastiveDivergence(0.1,1,input);
+  DoubleMatrix reconstructed=r.reconstruct(input);
+  for (int i=0; i < 5; i++) {
+    log.info("INPUT " + i + "\n"+ input.getRow(i).toString().replaceAll(";","\n"));
+    log.info("TRANSFORMED " + i + "\n"+ reconstructed.getRow(i).toString().replaceAll(";","\n"));
+  }
+}

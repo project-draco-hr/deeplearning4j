@@ -1,0 +1,12 @@
+{
+  if (keepHigher && entries.containsKey(key)) {
+    double oldCount=entries.get(key);
+    if (count > oldCount) {
+      entries.put(key,count);
+    }
+  }
+ else {
+    entries.put(key,count);
+  }
+  dirty=true;
+}

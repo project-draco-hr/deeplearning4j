@@ -1,0 +1,12 @@
+{
+  Double lr=(Double)otherParams[0];
+  Double corruptionLevel=(Double)otherParams[1];
+  Integer epochs=(Integer)otherParams[2];
+  pretrain(input,lr,corruptionLevel,epochs);
+  if (otherParams.length <= 3)   finetune(labels,lr,epochs);
+ else {
+    Double finetuneLr=(Double)otherParams[3];
+    Integer fineTuneEpochs=(Integer)otherParams[4];
+    finetune(labels,finetuneLr,fineTuneEpochs);
+  }
+}

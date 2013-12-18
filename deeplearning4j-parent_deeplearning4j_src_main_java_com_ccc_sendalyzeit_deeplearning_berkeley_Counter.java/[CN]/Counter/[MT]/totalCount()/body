@@ -1,0 +1,12 @@
+{
+  if (!dirty) {
+    return cacheTotal;
+  }
+  double total=0.0;
+  for (  Map.Entry<E,Double> entry : entries.entrySet()) {
+    total+=entry.getValue();
+  }
+  cacheTotal=total;
+  dirty=false;
+  return total;
+}

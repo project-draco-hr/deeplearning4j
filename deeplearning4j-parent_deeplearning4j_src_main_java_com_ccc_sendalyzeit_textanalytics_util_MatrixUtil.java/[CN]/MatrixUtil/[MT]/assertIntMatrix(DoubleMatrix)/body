@@ -1,0 +1,6 @@
+{
+  for (int i=0; i < matrix.length; i++) {
+    int cast=(int)matrix.get(i);
+    if (cast != matrix.get(i))     throw new IllegalArgumentException("Found something that is not an integer at linear index " + i);
+  }
+}

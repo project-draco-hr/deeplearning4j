@@ -1,0 +1,8 @@
+{
+  double[] ret=new double[l];
+  java.util.Random rgen=new java.util.Random();
+  for (int i=0; i < l; i++) {
+    ret[i]=rgen.nextDouble();
+  }
+  return ret;
+}

@@ -1,0 +1,9 @@
+{
+  ComputableWorkerAkka ret=new ComputableWorkerAkka(input,outcomes,rows);
+  Conf c=conf.copy();
+  c.put(ROWS,rows.length);
+  c.put(FINE_TUNE_EPOCHS,100);
+  c.put(PRE_TRAIN_EPOCHS,100);
+  ret.setup(c);
+  return ret;
+}

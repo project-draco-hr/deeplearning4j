@@ -1,0 +1,4 @@
+{
+  DoubleMatrix ret=x.mmul(W).addRowVector(b);
+  return MatrixUtil.softmax(ret);
+}
