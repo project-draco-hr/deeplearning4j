@@ -1,5 +1,0 @@
-{
-  T next=current.next();
-  if (!current.hasNext())   current=getNextIterator();
-  return next;
-}

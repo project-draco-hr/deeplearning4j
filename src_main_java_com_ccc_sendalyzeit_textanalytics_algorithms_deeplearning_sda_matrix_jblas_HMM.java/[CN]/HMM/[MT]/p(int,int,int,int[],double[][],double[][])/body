@@ -1,8 +1,0 @@
-{
-  double num;
-  if (t == o.length - 1)   num=fwd[i][t] * a[i][j];
- else   num=fwd[i][t] * a[i][j] * b[j][o[t + 1]]* bwd[j][t + 1];
-  double denom=0;
-  for (int k=0; k < numStates; k++)   denom+=(fwd[k][t] * bwd[k][t]);
-  return divide(num,denom);
-}

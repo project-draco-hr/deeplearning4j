@@ -1,6 +1,0 @@
-{
-  double nFac=MathUtils.factorial(n);
-  double rFac=MathUtils.factorial(r);
-  double nMinusRFac=MathUtils.factorial((n - r));
-  return nFac / (rFac * nMinusRFac);
-}

@@ -1,4 +1,0 @@
-{
-  if (!x.isColumnVector())   x=x.transpose();
-  return sigmoid(W.mmul(x).add(hbias));
-}

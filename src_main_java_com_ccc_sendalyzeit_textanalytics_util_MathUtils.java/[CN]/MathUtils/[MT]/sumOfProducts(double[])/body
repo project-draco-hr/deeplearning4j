@@ -1,9 +1,0 @@
-{
-  if (nums == null || nums.length < 1)   return 0;
-  double sum=0;
-  for (int i=0; i < nums.length; i++) {
-    double[] column=column(i,nums);
-    sum+=times(column);
-  }
-  return sum;
-}

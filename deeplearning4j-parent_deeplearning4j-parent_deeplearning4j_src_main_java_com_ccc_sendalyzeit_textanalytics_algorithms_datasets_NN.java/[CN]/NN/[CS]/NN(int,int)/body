@@ -1,8 +1,0 @@
-{
-  numnodes=nodes;
-  this.maxedges=maxedges;
-  currentState=new float[nodes];
-  nextState=new float[nodes];
-  edges=new int[nodes][maxedges];
-  weights=new float[nodes][maxedges];
-}

@@ -1,6 +1,0 @@
-{
-  double num=fwd[i][t] * bwd[i][t];
-  double denom=0;
-  for (int j=0; j < numStates; j++)   denom+=fwd[j][t] * bwd[j][t];
-  return divide(num,denom);
-}

@@ -1,9 +1,0 @@
-{
-  boolean isScalar=a.isColumnVector() || a.isRowVector() && b.isColumnVector() || b.isRowVector();
-  if (isScalar) {
-    return DoubleMatrix.scalar(a.dot(b));
-  }
- else {
-    return a.mmul(b);
-  }
-}

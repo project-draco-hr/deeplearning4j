@@ -1,4 +1,0 @@
-{
-  DoubleMatrix mul=x.mmul(W);
-  return MatrixUtil.sigmoid(mul.addRowVector(hBias));
-}

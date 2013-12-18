@@ -1,5 +1,4 @@
 {
-  N=conf.getInt(ROWS);
   hiddenLayerSizes=conf.getIntsWithSeparator(LAYER_SIZES,",");
   numOuts=conf.getInt(OUT);
   numIns=conf.getInt(N_IN);
@@ -11,4 +10,5 @@
   preTrainEpochs=conf.getInt(PRE_TRAIN_EPOCHS);
   fineTuneEpochs=conf.getInt(FINE_TUNE_EPOCHS);
   corruptionLevel=conf.getDouble(CORRUPTION_LEVEL);
+  extraParams=conf.loadParams(PARAMS);
 }

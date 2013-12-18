@@ -2,6 +2,8 @@
   this.conf=conf;
   split=conf.getInt(SPLIT);
   system=ActorSystem.create();
+  conf.put(N_IN,String.valueOf(input.columns));
+  conf.put(OUT,String.valueOf(outcomes.columns));
   epochs=conf.getInt(FINE_TUNE_EPOCHS);
   master=new ComputableMasterAkka();
   master.setup(this.conf);

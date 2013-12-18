@@ -1,5 +1,0 @@
-{
-  downloadAndUntar();
-  MNIST_DatasetUtils util=new MNIST_DatasetUtils("/tmp/" + LOCAL_DIR_NAME + "/"+ trainingFileLabelsFilename_unzipped,"/tmp/" + LOCAL_DIR_NAME + "/"+ trainingFilesFilename_unzipped);
-  util.scanIDXFiles();
-}

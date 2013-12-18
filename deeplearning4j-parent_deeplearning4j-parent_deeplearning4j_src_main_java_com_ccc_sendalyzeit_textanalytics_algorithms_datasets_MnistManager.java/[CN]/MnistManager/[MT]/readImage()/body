@@ -1,6 +1,0 @@
-{
-  if (images == null) {
-    throw new IllegalStateException("Images file not initialized.");
-  }
-  return images.readImage();
-}

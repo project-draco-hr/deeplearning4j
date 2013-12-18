@@ -1,3 +1,0 @@
-{
-  return (getFilePointer() - getHeaderSize()) / getEntryLength() + 1;
-}

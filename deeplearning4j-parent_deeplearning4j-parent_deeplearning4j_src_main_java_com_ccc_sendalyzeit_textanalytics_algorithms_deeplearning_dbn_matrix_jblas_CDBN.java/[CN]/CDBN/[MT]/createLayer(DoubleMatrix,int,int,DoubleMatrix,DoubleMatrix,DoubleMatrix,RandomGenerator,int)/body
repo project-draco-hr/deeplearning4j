@@ -1,4 +1,0 @@
-{
-  if (index == 0)   return new CRBM(input,nVisible,nHidden,W,hBias,vBias,rng);
- else   return new RBM(input,nVisible,nHidden,W,hBias,vBias,rng);
-}

@@ -1,9 +1,0 @@
-{
-  for (  K key : keySet()) {
-    Counter<V> ctr=getCounter(key);
-    double totalCount=ctr.totalCount();
-    for (    V value : ctr.keySet()) {
-      ctr.setCount(value,(ctr.getCount(value) - discount) / totalCount);
-    }
-  }
-}

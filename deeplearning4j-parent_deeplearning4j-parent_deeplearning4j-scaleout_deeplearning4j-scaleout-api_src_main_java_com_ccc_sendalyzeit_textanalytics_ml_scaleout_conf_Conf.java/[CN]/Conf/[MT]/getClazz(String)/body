@@ -1,8 +1,0 @@
-{
-  try {
-    return (Class<? extends BaseMultiLayerNetwork>)Class.forName(get(key));
-  }
- catch (  ClassNotFoundException e) {
-    throw new RuntimeException(e);
-  }
-}

@@ -1,7 +1,0 @@
-{
-  super();
-  setPreferredSize(new Dimension(width,height));
-  setBorder(BorderFactory.createLineBorder(Color.black));
-  JLabel title=new JLabel("Output");
-  add(title);
-}

@@ -1,9 +1,0 @@
-{
-  double[] predictedValues=new double[residuals.length];
-  for (int i=0; i < predictedValues.length; i++) {
-    predictedValues[i]=targetAttribute[i] - residuals[i];
-  }
-  double ssErr=ssError(predictedValues,targetAttribute);
-  double total=ssTotal(residuals,targetAttribute);
-  return 1 - (ssErr / total);
-}

@@ -1,4 +1,4 @@
 {
-  network.trainNetwork(combinedInput,outcomes,new Object[]{});
+  network.trainNetwork(combinedInput,outcomes,extraParams);
   return new UpdateableMatrix(network);
 }
