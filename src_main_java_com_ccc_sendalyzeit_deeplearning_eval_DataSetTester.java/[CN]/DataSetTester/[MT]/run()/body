@@ -3,11 +3,15 @@
   if (numExamples != null)   dataset=loadDataset(numExamples);
  else   dataset=loadDataset();
   BaseMultiLayerNetwork neuralNet=getNeuralNet(dataset);
+  long start=System.currentTimeMillis();
   Evaluation e=new Evaluation();
   for (  Pair<DoubleMatrix,DoubleMatrix> pair : dataset) {
     neuralNet.trainNetwork(pair.getFirst(),pair.getSecond(),getOtherParams());
     DoubleMatrix predicted=neuralNet.predict(pair.getFirst());
     e.eval(pair.getSecond(),predicted);
   }
+  long end=System.currentTimeMillis();
+  long diff=end - start;
+  log.info("Ended in " + TimeUnit.MILLISECONDS.toSeconds(diff) + " seconds");
   log.info(e.stats());
 }
