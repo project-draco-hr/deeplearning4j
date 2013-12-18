@@ -6,7 +6,7 @@
     return Collections.singletonList(getIris());
   }
  else   if (dataset.equals("mnist")) {
-    return this.getMnistExampleBatches(10,numExamples);
+    return this.getMnistExampleBatches(1,numExamples);
   }
   return null;
 }
