@@ -4,7 +4,7 @@
   train_Y_arr=new double[][]{{1,0},{1,0},{1,0},{1,0},{1,0},{0,1},{0,1},{0,1},{0,1},{0,1}};
   train_X_matrix=new DoubleMatrix(train_X_arr);
   train_Y_matrix=new DoubleMatrix(train_Y_arr);
-  runner=new NetworkRunner(train_X_matrix,train_Y_matrix);
+  runner=new NetworkRunner();
   conf.put(PRE_TRAIN_EPOCHS,10);
   conf.put(FINE_TUNE_EPOCHS,10);
   conf.put(ROWS,train_X_arr.length);
