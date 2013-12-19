@@ -1,0 +1,6 @@
+{
+  Datum ret=new Datum(window.getFocusWord(),label);
+  ret.previousLabel=prevLabel;
+  ret.features=features;
+  return ret;
+}

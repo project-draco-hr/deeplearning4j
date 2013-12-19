@@ -1,0 +1,27 @@
+{
+  if (this == obj)   return true;
+  if (obj == null)   return false;
+  if (getClass() != obj.getClass())   return false;
+  VocabWord other=(VocabWord)obj;
+  if (code != other.code)   return false;
+  if (codes == null) {
+    if (other.codes != null)     return false;
+  }
+ else   if (!codes.equals(other.codes))   return false;
+  if (index != other.index)   return false;
+  if (layerSize != other.layerSize)   return false;
+  if (left == null) {
+    if (other.left != null)     return false;
+  }
+ else   if (!left.equals(other.left))   return false;
+  if (points == null) {
+    if (other.points != null)     return false;
+  }
+ else   if (!points.equals(other.points))   return false;
+  if (right == null) {
+    if (other.right != null)     return false;
+  }
+ else   if (!right.equals(other.right))   return false;
+  if (Double.doubleToLongBits(wordFrequency) != Double.doubleToLongBits(other.wordFrequency))   return false;
+  return true;
+}

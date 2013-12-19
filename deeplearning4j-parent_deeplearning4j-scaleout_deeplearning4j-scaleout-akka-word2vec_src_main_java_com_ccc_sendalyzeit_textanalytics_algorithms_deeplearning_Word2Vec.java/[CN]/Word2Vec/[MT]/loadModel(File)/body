@@ -1,0 +1,21 @@
+{
+  log.info("Loading model from " + file.getAbsolutePath());
+  try (DataInputStream dis=new DataInputStream(new BufferedInputStream(new FileInputStream(file)))){
+    int vocabSize=dis.readInt();
+    int layerSize=dis.readInt();
+    setLayerSize(layerSize);
+    for (int i=0; i < vocabSize; i++) {
+      String word=dis.readUTF();
+      wordIndex.add(word);
+      vocab.put(word,new VocabWord().read(dis,layerSize));
+    }
+    syn0=DoubleMatrix.zeros(vocabSize,layerSize);
+    syn1=DoubleMatrix.zeros(vocabSize,layerSize);
+    syn0.in(dis);
+    syn1.in(dis);
+    dis.close();
+  }
+ catch (  IOException e) {
+    log.error("Unable to read file for loading model",e);
+  }
+}
