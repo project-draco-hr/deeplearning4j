@@ -1,0 +1,11 @@
+{
+  this.conf=conf;
+  setup(conf);
+  int split=conf.getInt(SPLIT);
+  for (int i=0; i < split; i++) {
+    Conf c=conf.copy();
+    c.put(FINE_TUNE_EPOCHS,1);
+    c.put(PRE_TRAIN_EPOCHS,1);
+    workers.add(context().actorOf(Props.create(new WorkerActor.WorkerActorFactory(c))));
+  }
+}

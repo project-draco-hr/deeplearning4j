@@ -1,0 +1,10 @@
+{
+  this.samples=list;
+  masterActor.tell(list,masterActor);
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

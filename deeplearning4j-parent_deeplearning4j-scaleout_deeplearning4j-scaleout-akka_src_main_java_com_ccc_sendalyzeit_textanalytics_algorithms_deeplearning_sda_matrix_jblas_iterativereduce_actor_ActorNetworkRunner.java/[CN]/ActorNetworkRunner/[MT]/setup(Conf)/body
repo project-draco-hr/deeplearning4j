@@ -1,0 +1,8 @@
+{
+  system=ActorSystem.create();
+  epochs=conf.getInt(PRE_TRAIN_EPOCHS);
+  latch=new CountDownLatch(epochs);
+  masterActor=system.actorOf(Props.create(new MasterActor.MasterActorFactory(conf)));
+  masterActor.tell(this,masterActor);
+  log.info("Setup master with epochs " + epochs);
+}

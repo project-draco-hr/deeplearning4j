@@ -1,0 +1,9 @@
+{
+  train(new Pair<DoubleMatrix,DoubleMatrix>(input,labels));
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

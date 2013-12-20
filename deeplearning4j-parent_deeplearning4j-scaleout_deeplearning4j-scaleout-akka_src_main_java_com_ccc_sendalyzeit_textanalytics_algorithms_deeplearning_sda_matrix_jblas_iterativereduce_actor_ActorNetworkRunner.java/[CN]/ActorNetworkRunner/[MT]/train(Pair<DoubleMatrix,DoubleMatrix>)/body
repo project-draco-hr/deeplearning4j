@@ -1,0 +1,11 @@
+{
+  this.samples=new ArrayList<>(Arrays.asList(input));
+  masterActor.tell(input,masterActor);
+  log.info("Training....");
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

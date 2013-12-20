@@ -1,6 +1,6 @@
 {
   File ensureExists=new File("/tmp/MNIST");
-  if (!ensureExists.exists())   new MnistFetcher().downloadAndUntar();
+  if (!ensureExists.exists() || !new File("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped).exists() || !new File("/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped).exists())   new MnistFetcher().downloadAndUntar();
   MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
   int[][] image=man.readImage();
   int[] imageExample=ArrayUtil.flatten(image);
