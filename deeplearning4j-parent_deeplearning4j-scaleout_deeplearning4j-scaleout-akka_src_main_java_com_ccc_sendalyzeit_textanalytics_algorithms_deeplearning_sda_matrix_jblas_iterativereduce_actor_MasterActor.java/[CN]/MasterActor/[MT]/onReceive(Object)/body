@@ -20,8 +20,18 @@
  else   if (message instanceof List || message instanceof Pair) {
     if (message instanceof List) {
       List<Pair<DoubleMatrix,DoubleMatrix>> list=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
+      splitListIntoRows(list);
       int split=conf.getInt(SPLIT);
       List<List<Pair<DoubleMatrix,DoubleMatrix>>> splitList=Lists.partition(list,split);
+      if (splitList.size() >= workers.size()) {
+        log.info("Adding workers to accomadate split and load...");
+        while (workers.size() < splitList.size()) {
+          Conf c=conf.copy();
+          c.put(FINE_TUNE_EPOCHS,1);
+          c.put(PRE_TRAIN_EPOCHS,1);
+          workers.add(context().actorOf(Props.create(new WorkerActor.WorkerActorFactory(c))));
+        }
+      }
       for (int i=0; i < splitList.size(); i++) {
         workers.get(i).tell(splitList.get(i),getSelf());
       }

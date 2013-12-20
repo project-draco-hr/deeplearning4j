@@ -1,5 +1,5 @@
 {
-  Pair<DoubleMatrix,DoubleMatrix> mnist=this.getMnistExampleBatch(1);
+  Pair<DoubleMatrix,DoubleMatrix> mnist=this.getMnistExampleBatch(100);
   runner=new ActorNetworkRunner();
   conf.put(CLASS,"com.ccc.sendalyzeit.textanalytics.algorithms.deeplearning.sda.matrix.jblas.SdAMatrix");
   conf.put(LAYER_SIZES,Arrays.toString(hidden_layer_sizes_arr).replace("[","").replace("]","").replace(" ",""));

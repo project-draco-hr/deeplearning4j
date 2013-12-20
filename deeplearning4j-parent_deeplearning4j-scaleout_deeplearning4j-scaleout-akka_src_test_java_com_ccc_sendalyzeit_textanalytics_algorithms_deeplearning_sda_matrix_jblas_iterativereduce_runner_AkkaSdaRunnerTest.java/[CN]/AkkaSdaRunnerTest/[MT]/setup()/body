@@ -5,8 +5,8 @@
   train_X_matrix=new DoubleMatrix(train_X_arr);
   train_Y_matrix=new DoubleMatrix(train_Y_arr);
   runner=new ActorNetworkRunner();
-  conf.put(PRE_TRAIN_EPOCHS,10);
-  conf.put(FINE_TUNE_EPOCHS,10);
+  conf.put(PRE_TRAIN_EPOCHS,100);
+  conf.put(FINE_TUNE_EPOCHS,100);
   conf.put(ROWS,train_X_arr.length);
   conf.put(LAYER_SIZES,hidden_layer_sizes_arr);
   conf.put(LEARNING_RATE,0.1);
