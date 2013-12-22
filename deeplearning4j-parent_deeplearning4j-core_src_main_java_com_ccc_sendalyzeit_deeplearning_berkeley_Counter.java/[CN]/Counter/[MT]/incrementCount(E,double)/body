@@ -1,6 +1,0 @@
-{
-  double newVal=getCount(key) + increment;
-  setCount(key,newVal);
-  dirty=true;
-  return newVal;
-}

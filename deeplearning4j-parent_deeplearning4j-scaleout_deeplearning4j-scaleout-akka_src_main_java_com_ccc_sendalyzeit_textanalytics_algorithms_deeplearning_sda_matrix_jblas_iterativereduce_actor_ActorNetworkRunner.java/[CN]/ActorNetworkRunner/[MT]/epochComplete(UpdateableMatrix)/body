@@ -1,9 +1,0 @@
-{
-  currEpochs++;
-  if (currEpochs < epochs) {
-    masterActor.tell(samples,masterActor);
-    log.info("Updating result on epoch " + currEpochs);
-  }
-  this.result=result;
-  latch.countDown();
-}

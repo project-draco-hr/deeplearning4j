@@ -1,4 +1,0 @@
-{
-  double norm2=matrix.norm2();
-  return SimpleBlas.scal(1 / norm2,matrix);
-}

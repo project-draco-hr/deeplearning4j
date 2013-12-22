@@ -1,5 +1,0 @@
-{
-  double precision=precision(i);
-  double recall=recall();
-  return 2.0 * ((precision * recall / (precision + recall)));
-}
