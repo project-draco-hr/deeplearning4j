@@ -1,0 +1,45 @@
+{
+  system=ActorSystem.create(systemName);
+  system.actorOf(Props.create(SimpleClusterListener.class),"clusterListener");
+  mediator=DistributedPubSubExtension.get(system).mediator();
+  epochs=conf.getInt(PRE_TRAIN_EPOCHS);
+  if (type.equals("master")) {
+    masterAddress=startBackend(null,"master",conf);
+    try {
+      Thread.sleep(5000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
+    Cluster.get(system).join(masterAddress);
+    startBackend(masterAddress,"master",conf);
+    Conf c=conf.copy();
+    c.put(FINE_TUNE_EPOCHS,1);
+    c.put(PRE_TRAIN_EPOCHS,1);
+    try {
+      Thread.sleep(5000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    startWorker(masterAddress,c);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,this),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,epochs),mediator);
+    log.info("Setup master with epochs " + epochs);
+  }
+ else {
+    Conf c=conf.copy();
+    c.put(FINE_TUNE_EPOCHS,1);
+    c.put(PRE_TRAIN_EPOCHS,1);
+    startWorker(masterAddress,c);
+    try {
+      Thread.sleep(5000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    Cluster.get(system).join(masterAddress);
+    log.info("Setup worker nodes");
+  }
+}

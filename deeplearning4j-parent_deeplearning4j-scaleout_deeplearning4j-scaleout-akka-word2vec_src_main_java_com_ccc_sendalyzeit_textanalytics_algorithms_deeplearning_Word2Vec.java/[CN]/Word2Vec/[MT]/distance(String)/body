@@ -1,0 +1,20 @@
+{
+  DoubleMatrix wordVector=getWordVectorMatrix(word);
+  if (wordVector == null) {
+    return null;
+  }
+  DoubleMatrix tempVector=null;
+  List<VocabWord> wordEntrys=new ArrayList<VocabWord>(topNSize);
+  String name=null;
+  for (int i=0; i < syn0.rows; i++) {
+    name=wordIndex.get(i).toString();
+    if (name.equals(word)) {
+      continue;
+    }
+    double dist=0;
+    tempVector=syn0.getRow(i);
+    dist=wordVector.dot(tempVector);
+    insertTopN(name,dist,wordEntrys);
+  }
+  return new TreeSet<VocabWord>(wordEntrys);
+}

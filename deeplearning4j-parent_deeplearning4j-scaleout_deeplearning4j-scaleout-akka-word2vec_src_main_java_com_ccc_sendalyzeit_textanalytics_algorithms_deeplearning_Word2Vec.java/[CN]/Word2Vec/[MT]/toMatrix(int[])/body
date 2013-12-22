@@ -1,0 +1,5 @@
+{
+  double[] ret=new double[codes.length];
+  for (int i=0; i < codes.length; i++)   ret[i]=codes[i];
+  return new DoubleMatrix(ret);
+}

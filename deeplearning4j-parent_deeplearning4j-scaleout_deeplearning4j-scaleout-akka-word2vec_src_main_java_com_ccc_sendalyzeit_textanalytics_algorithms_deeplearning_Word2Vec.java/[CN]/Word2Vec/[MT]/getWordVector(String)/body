@@ -1,0 +1,5 @@
+{
+  int i=this.wordIndex.indexOf(word);
+  if (i < 0)   return oob;
+  return syn0.getRow(i).toArray();
+}

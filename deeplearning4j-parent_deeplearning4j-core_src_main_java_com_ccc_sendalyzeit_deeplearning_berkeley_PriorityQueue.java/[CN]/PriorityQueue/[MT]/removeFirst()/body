@@ -1,0 +1,7 @@
+{
+  if (size < 1)   return;
+  swap(0,size - 1);
+  size--;
+  elements.remove(size);
+  heapifyDown(0);
+}

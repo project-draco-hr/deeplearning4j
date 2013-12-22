@@ -1,0 +1,16 @@
+{
+  this.nIns=n_ins;
+  this.hiddenLayerSizes=hidden_layer_sizes;
+  this.input=input;
+  this.labels=labels;
+  if (hidden_layer_sizes.length != n_layers)   throw new IllegalArgumentException("The number of hidden layer sizes must be equivalent to the nLayers argument which is a value of " + n_layers);
+  this.nOuts=n_outs;
+  this.nLayers=n_layers;
+  this.sigmoidLayers=new HiddenLayerMatrix[n_layers];
+  this.layers=createNetworkLayers(n_layers);
+  if (rng == null)   this.rng=new MersenneTwister(123);
+ else   this.rng=rng;
+  if (input != null) {
+    initializeLayers(input);
+  }
+}
