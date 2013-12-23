@@ -1,7 +1,6 @@
 {
   if (type != null && type.equals("worker")) {
-    ZooKeeper zk=new ZookeeperBuilder().setHost(host).build();
-    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(zk,"master");
+    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
     Conf conf=retriever.retreive();
     String address=conf.get(MASTER_URL);
     runner=new ActorNetworkRunner(type,address);

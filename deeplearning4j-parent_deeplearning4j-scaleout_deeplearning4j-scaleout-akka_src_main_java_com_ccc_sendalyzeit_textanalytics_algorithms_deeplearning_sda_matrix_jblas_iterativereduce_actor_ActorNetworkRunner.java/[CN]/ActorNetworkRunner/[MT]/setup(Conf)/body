@@ -4,7 +4,7 @@
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getInt(PRE_TRAIN_EPOCHS);
   if (type.equals("master")) {
-    masterAddress=startBackend(null,"master",conf);
+    masterAddress=startBackend(null,"master",conf,iter);
     try {
       Thread.sleep(5000);
     }
@@ -13,7 +13,7 @@
     }
     system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
     Cluster.get(system).join(masterAddress);
-    startBackend(masterAddress,"master",conf);
+    startBackend(masterAddress,"master",conf,iter);
     Conf c=conf.copy();
     c.put(FINE_TUNE_EPOCHS,1);
     c.put(PRE_TRAIN_EPOCHS,1);

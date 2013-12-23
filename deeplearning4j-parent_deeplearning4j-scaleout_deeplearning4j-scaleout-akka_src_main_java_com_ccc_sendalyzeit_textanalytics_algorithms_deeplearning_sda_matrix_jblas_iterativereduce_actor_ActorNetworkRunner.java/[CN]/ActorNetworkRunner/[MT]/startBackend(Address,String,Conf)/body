@@ -1,8 +1,0 @@
-{
-  Config conf=ConfigFactory.parseString("akka.cluster.roles=[" + role + "]").withFallback(ConfigFactory.load());
-  ActorSystem system=ActorSystem.create(systemName,conf);
-  Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
-  Cluster.get(system).join(realJoinAddress);
-  system.actorOf(ClusterSingletonManager.defaultProps(MasterActor.propsFor(c),"active",PoisonPill.getInstance(),"master"));
-  return realJoinAddress;
-}

@@ -1,6 +1,0 @@
-{
-  this.conf=conf;
-  mediator.tell(new Put(getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.RESULT,getSelf()),getSelf());
-  setup(conf);
-}

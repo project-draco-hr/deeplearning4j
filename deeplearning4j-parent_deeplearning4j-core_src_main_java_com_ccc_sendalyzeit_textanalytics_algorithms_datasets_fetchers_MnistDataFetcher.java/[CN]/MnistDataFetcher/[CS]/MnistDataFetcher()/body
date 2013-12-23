@@ -2,6 +2,7 @@
   man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
   numOutcomes=10;
   totalExamples=NUM_EXAMPLES;
+  cursor=1;
   man.setCurrent(cursor);
   int[][] image;
   try {

@@ -9,13 +9,4 @@
   }
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,this),mediator);
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,list),mediator);
-  do {
-    try {
-      Thread.sleep(10000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
-  }
- while (currEpochs < epochs);
 }

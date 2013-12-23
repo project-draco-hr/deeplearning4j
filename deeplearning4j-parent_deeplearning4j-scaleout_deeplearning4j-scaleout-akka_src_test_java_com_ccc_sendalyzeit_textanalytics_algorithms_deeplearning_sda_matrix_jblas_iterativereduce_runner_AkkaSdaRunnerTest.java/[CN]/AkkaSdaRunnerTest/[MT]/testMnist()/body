@@ -19,5 +19,4 @@
   DoubleMatrix predicted=trained.predict(mnist.getFirst());
   eval.eval(mnist.getSecond(),predicted);
   log.info(eval.stats());
-  runner.shutdown();
 }

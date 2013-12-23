@@ -1,0 +1,8 @@
+{
+  if (arg0 instanceof ResetMessage) {
+    iter.reset();
+  }
+ else   if (iter.hasNext()) {
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,iter.next()),mediator);
+  }
+}

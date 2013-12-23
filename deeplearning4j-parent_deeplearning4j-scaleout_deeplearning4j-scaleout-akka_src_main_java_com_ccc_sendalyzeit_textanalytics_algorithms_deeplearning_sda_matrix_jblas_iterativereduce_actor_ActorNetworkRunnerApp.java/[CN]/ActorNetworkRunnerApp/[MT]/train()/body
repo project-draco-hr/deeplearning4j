@@ -1,6 +1,6 @@
 {
   Pair<DoubleMatrix,DoubleMatrix> batch=null;
-  while (iter.hasNext()) {
+  if (iter.hasNext()) {
     batch=iter.next();
     runner.train(batch);
   }

@@ -13,6 +13,9 @@
     if (updates.size() == partition) {
       masterMatrix=this.compute(updates,updates);
       if (listener != null)       listener.epochComplete(masterMatrix);
+      batchActor.tell(new ResetMessage(),getSelf());
+      epochsComplete++;
+      batchActor.tell(up,getSelf());
       updates.clear();
     }
   }
