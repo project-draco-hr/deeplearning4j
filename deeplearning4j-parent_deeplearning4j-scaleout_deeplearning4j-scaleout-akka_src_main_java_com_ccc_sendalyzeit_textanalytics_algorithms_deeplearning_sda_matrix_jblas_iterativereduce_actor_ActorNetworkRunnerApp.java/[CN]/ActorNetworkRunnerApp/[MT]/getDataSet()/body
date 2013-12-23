@@ -1,0 +1,20 @@
+{
+  try {
+    if (dataSet.equals("mnist")) {
+      if (numExamples > 0)       return DeepLearningTest.getMnistExampleBatch(numExamples);
+ else       return DeepLearningTest.getMnistExampleBatch(60000);
+    }
+ else     if (dataSet.equals("iris")) {
+      if (numExamples > 0)       return DeepLearningTest.getIris(numExamples);
+ else       return DeepLearningTest.getIris();
+    }
+ else     if (dataSet.equals("lfw")) {
+      if (numExamples > 0)       return DeepLearningTest.getFaces(numExamples);
+ else       return DeepLearningTest.getFacesMatrix();
+    }
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return null;
+}

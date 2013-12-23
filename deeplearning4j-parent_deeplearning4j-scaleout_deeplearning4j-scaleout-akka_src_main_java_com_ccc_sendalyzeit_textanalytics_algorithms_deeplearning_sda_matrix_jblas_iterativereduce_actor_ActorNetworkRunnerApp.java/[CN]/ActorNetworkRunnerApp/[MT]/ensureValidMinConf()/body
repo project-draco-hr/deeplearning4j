@@ -1,0 +1,5 @@
+{
+  if (this.algorithm == null && !Arrays.asList("sda","cdbn","dbn").contains(this.algorithm))   throw new IllegalStateException("Algorithm not defined or invalid algorithm specified");
+  if (this.inputs < 1)   throw new IllegalStateException("Please define some inputs");
+  if (this.outputs < 1)   throw new IllegalStateException("Please define some outputs");
+}

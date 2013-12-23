@@ -1,0 +1,9 @@
+{
+  ActorNetworkRunnerApp app=new ActorNetworkRunnerApp(new String[]{"-data","mnist","-a","sda","-i","1","-o","1"});
+  app.exec();
+  ZooKeeper zk=new ZookeeperBuilder().setHost("127.0.0.1").build();
+  ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(zk,"master");
+  Conf conf=retriever.retreive();
+  assertEquals(true,conf != null);
+  app.shutdown();
+}

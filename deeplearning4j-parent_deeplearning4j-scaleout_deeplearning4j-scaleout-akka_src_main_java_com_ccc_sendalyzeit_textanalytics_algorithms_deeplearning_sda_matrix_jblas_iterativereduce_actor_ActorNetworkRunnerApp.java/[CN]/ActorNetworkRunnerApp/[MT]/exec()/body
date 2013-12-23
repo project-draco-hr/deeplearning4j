@@ -1,0 +1,34 @@
+{
+  if (type != null && type.equals("worker")) {
+    ZooKeeper zk=new ZookeeperBuilder().setHost(host).build();
+    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(zk,"master");
+    Conf conf=retriever.retreive();
+    String address=conf.get(MASTER_URL);
+    runner=new ActorNetworkRunner(type,address);
+    runner.setup(conf);
+    retriever.close();
+  }
+ else {
+    Conf conf=new Conf();
+    Pair<DoubleMatrix,DoubleMatrix> dataSets=getDataSet();
+    conf.put(CLASS,getClassForAlgorithm());
+    conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
+    conf.put(SPLIT,String.valueOf(10));
+    conf.put(N_IN,String.valueOf(dataSets.getFirst().columns));
+    conf.put(OUT,String.valueOf(dataSets.getSecond().columns));
+    conf.put(PRE_TRAIN_EPOCHS,String.valueOf(pretrainEpochs));
+    conf.put(FINE_TUNE_EPOCHS,String.valueOf(finetuneEpochs));
+    conf.put(SEED,String.valueOf(rngSeed));
+    conf.put(LEARNING_RATE,String.valueOf(pretrainLearningRate));
+    conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
+    conf.put(CORRUPTION_LEVEL,corruptionLevel);
+    conf.put(SPLIT,String.valueOf(split));
+    conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(corruptionLevel).finetuneEpochs(finetuneEpochs).finetuneLearningRate(finetineLearningRate).learningRate(pretrainLearningRate).epochs(pretrainEpochs).build());
+    runner=new ActorNetworkRunner();
+    runner.setup(conf);
+    conf.put(MASTER_URL,runner.getMasterAddress().toString());
+    ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,new ZookeeperBuilder().build(),"master");
+    reg.register();
+    reg.close();
+  }
+}
