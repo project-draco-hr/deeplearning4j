@@ -10,6 +10,9 @@
   conf.put(FINE_TUNE_EPOCHS,String.valueOf(1));
   conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(0.5).finetuneEpochs(finetune_epochs).finetuneLearningRate(finetune_lr).learningRate(pretrain_lr).epochs(pretraining_epochs).build());
   runner.setup(conf);
+  Thread.sleep(10000);
+  ActorNetworkRunner worker=new ActorNetworkRunner("worker",runner.getMasterAddress().toString());
+  worker.setup(conf);
   runner.train(mnist.getFirst(),mnist.getSecond());
   BaseMultiLayerNetwork trained=runner.getResult().get();
   Evaluation eval=new Evaluation();

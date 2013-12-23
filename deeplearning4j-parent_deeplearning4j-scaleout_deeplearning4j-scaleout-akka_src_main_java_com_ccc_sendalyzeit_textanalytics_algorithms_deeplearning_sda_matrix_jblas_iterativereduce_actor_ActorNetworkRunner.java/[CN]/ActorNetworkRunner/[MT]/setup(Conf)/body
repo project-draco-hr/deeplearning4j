@@ -42,4 +42,5 @@
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
+  writeMasterAddress();
 }

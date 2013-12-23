@@ -1,0 +1,5 @@
+{
+  if (event.getState() == KeeperState.Expired) {
+    zk=new ZookeeperBuilder().setHost(host).setPort(port).setWatcher(this).build();
+  }
+}
