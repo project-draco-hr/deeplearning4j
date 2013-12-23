@@ -1,8 +1,9 @@
 {
   conf=new Conf();
+  conf.put("test","test");
   server=new TestingServer(2181);
   String host="localhost";
   keeper=new ZookeeperBuilder().setHost(host).build();
-  register=new ZooKeeperConfigurationRegister(conf,keeper,"test");
+  register=new ZooKeeperConfigurationRegister(conf,"test","localhost",2181);
   retriever=new ZookeeperConfigurationRetriever(host,2181,"test");
 }

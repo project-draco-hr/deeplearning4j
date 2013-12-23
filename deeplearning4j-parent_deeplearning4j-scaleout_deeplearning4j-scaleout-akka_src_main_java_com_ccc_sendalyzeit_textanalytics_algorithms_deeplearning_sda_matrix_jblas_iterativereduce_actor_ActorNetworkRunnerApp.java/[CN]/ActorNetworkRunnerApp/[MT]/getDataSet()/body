@@ -1,20 +1,16 @@
 {
   try {
     if (dataSet.equals("mnist")) {
-      if (numExamples > 0)       return DeepLearningTest.getMnistExampleBatch(numExamples);
- else       return DeepLearningTest.getMnistExampleBatch(60000);
+      iter=new MnistDataSetIterator(numExamples);
     }
  else     if (dataSet.equals("iris")) {
-      if (numExamples > 0)       return DeepLearningTest.getIris(numExamples);
- else       return DeepLearningTest.getIris();
+      iter=new IrisDataSetIterator(numExamples);
     }
  else     if (dataSet.equals("lfw")) {
-      if (numExamples > 0)       return DeepLearningTest.getFaces(numExamples);
- else       return DeepLearningTest.getFacesMatrix();
+      iter=new LFWDataSetIterator(numExamples);
     }
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  return null;
 }
