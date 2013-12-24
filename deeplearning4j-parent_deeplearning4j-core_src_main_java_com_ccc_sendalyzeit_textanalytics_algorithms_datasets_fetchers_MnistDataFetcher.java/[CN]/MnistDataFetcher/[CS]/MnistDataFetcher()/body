@@ -1,4 +1,5 @@
 {
+  if (!new File("/tmp/mnist").exists())   new MnistFetcher().downloadAndUntar();
   man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
   numOutcomes=10;
   totalExamples=NUM_EXAMPLES;

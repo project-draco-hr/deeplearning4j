@@ -1,8 +1,12 @@
 {
   ActorNetworkRunnerApp app=new ActorNetworkRunnerApp(new String[]{"-data","mnist","-a","sda","-i","1","-o","1"});
   app.exec();
+  app.train();
   ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever("master");
   Conf conf=retriever.retreive();
   assertEquals(true,conf != null);
-  app.shutdown();
+  while (!app.isDone()) {
+    Thread.sleep(10000);
+  }
+  log.info("Done");
 }

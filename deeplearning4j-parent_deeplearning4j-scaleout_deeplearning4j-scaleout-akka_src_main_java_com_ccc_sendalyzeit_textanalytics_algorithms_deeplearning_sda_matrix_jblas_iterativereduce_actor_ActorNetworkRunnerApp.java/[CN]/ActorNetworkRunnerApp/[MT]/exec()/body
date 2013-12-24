@@ -1,5 +1,6 @@
 {
   if (type != null && type.equals("worker")) {
+    log.info("Initializing conf from zookeeper at " + host);
     ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
     Conf conf=retriever.retreive();
     String address=conf.get(MASTER_URL);
@@ -9,6 +10,7 @@
   }
  else {
     Conf conf=new Conf();
+    getDataSet();
     conf.put(CLASS,getClassForAlgorithm());
     conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
     conf.put(SPLIT,String.valueOf(10));
@@ -25,7 +27,7 @@
     runner=new ActorNetworkRunner();
     runner.setup(conf);
     conf.put(MASTER_URL,runner.getMasterAddress().toString());
-    ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
+    ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master",host,2181);
     reg.register();
     reg.close();
   }

@@ -1,4 +1,5 @@
 {
+  if (type.equals("worker"))   return;
   try {
     if (dataSet.equals("mnist")) {
       iter=new MnistDataSetIterator(numExamples);

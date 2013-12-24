@@ -2,8 +2,6 @@
   CmdLineParser parser=new CmdLineParser(this);
   try {
     parser.parseArgument(args);
-    ensureValidMinConf();
-    getDataSet();
   }
  catch (  CmdLineException e) {
     parser.printUsage(System.err);
