@@ -1,5 +1,4 @@
 {
   DoubleMatrix h=MatrixUtil.sigmoid(v.mmul(W).addRowVector(hBias));
-  DoubleMatrix reconstructedV=MatrixUtil.sigmoid(h.mmul(W.transpose()).addRowVector(vBias));
-  return reconstructedV;
+  return propDown(h);
 }
