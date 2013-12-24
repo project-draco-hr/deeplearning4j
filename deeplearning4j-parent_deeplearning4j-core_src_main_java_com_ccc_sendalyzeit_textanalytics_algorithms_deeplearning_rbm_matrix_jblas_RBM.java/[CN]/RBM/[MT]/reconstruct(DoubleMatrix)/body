@@ -1,4 +1,3 @@
 {
-  DoubleMatrix h=MatrixUtil.sigmoid(v.mmul(W).addRowVector(hBias));
-  return propDown(h);
+  return propDown(propUp(v));
 }
