@@ -19,7 +19,8 @@
     }
  else     if (algorithm.equals(PARAM_CDBN) || algorithm.equals(PARAM_DBN)) {
       Integer k=j.getInt(PARAM_K);
-      Double learningRate=j.getDouble(LEARNING_RATE);
+      if (k < 1)       throw new IllegalStateException("K must be greater than 0");
+      Double learningRate=j.getDouble(PARAM_LEARNING_RATE);
       Integer epochs=j.getInt(PARAM_EPOCHS);
       if (j.length() > 3) {
         Double finetuneLr=j.getDouble(PARAM_FINETUNE_LR);

@@ -1,4 +1,5 @@
 {
+  if (examples.isEmpty())   log.warn("Warning: empty dataset from the fetcher");
   DoubleMatrix inputs=createInputMatrix(examples.size());
   DoubleMatrix labels=createOutputMatrix(examples.size());
   for (int i=0; i < examples.size(); i++) {

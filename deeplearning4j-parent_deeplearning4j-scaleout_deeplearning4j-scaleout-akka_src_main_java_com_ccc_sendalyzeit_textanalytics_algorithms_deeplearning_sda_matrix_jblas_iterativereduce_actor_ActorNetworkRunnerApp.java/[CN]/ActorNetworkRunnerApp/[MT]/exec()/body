@@ -23,8 +23,8 @@
     conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
     conf.put(CORRUPTION_LEVEL,corruptionLevel);
     conf.put(SPLIT,String.valueOf(split));
-    conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(corruptionLevel).finetuneEpochs(finetuneEpochs).finetuneLearningRate(finetineLearningRate).learningRate(pretrainLearningRate).epochs(pretrainEpochs).build());
-    runner=new ActorNetworkRunner();
+    conf.put(PARAMS,new ExtraParamsBuilder().algorithm(algorithm).corruptionlevel(corruptionLevel).finetuneEpochs(finetuneEpochs).k(k).finetuneLearningRate(finetineLearningRate).learningRate(pretrainLearningRate).epochs(pretrainEpochs).build());
+    runner=new ActorNetworkRunner("master",iter);
     runner.setup(conf);
     conf.put(MASTER_URL,runner.getMasterAddress().toString());
     ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master",host,2181);

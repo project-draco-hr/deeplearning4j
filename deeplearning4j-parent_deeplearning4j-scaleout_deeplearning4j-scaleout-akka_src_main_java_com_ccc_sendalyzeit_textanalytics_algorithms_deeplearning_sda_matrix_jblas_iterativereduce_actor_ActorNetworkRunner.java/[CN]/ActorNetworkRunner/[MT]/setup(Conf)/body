@@ -4,6 +4,7 @@
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getInt(PRE_TRAIN_EPOCHS);
   if (type.equals("master")) {
+    if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to train");
     masterAddress=startBackend(null,"master",conf,iter);
     try {
       Thread.sleep(5000);
