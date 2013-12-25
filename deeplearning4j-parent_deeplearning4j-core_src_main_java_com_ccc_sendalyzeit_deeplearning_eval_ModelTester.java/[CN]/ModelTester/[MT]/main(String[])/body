@@ -1,0 +1,12 @@
+{
+  Pair<DoubleMatrix,DoubleMatrix> inputs=DeepLearningTest.getMnistExampleBatch(100);
+  Evaluation eval=new Evaluation();
+  BaseMultiLayerNetwork load=BaseMultiLayerNetwork.loadFromFile(new FileInputStream(new File(args[0])));
+  DoubleMatrix in=inputs.getFirst();
+  DoubleMatrix outcomes=inputs.getSecond();
+  for (int i=0; i < in.rows; i++) {
+    DoubleMatrix pre=load.predict(in.getRow(i));
+    eval.eval(outcomes.getRow(i),pre);
+  }
+  log.info(eval.stats());
+}
