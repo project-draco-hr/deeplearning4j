@@ -6,6 +6,7 @@
     if (classes.length > 0 && classes[0].isAssignableFrom(Integer.class) || classes[0].isPrimitive()) {
       try {
         ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen);
+        return ret;
       }
  catch (      Exception e) {
         throw new RuntimeException(e);

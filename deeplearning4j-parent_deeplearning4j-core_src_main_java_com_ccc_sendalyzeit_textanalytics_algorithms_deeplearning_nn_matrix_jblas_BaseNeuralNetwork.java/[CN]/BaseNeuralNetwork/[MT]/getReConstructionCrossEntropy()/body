@@ -1,7 +1,7 @@
 {
-  DoubleMatrix preSigH=input.mmul(W).add(hBias);
+  DoubleMatrix preSigH=input.mmul(W).addRowVector(hBias);
   DoubleMatrix sigH=MatrixUtil.sigmoid(preSigH);
-  DoubleMatrix preSigV=sigH.mmul(W.transpose()).add(vBias);
+  DoubleMatrix preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
   DoubleMatrix sigV=MatrixUtil.sigmoid(preSigV);
   DoubleMatrix logSigV=MatrixFunctions.log(sigV);
   DoubleMatrix oneMinusSigV=DoubleMatrix.ones(sigV.rows,sigV.columns).sub(sigV);

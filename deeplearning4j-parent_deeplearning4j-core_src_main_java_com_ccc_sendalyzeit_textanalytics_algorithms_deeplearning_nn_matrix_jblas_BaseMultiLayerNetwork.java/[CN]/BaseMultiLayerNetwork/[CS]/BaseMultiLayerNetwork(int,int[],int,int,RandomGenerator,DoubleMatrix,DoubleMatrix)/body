@@ -10,7 +10,5 @@
   this.layers=createNetworkLayers(n_layers);
   if (rng == null)   this.rng=new MersenneTwister(123);
  else   this.rng=rng;
-  if (input != null) {
-    initializeLayers(input);
-  }
+  if (input != null)   initializeLayers(input);
 }

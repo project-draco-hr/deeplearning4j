@@ -13,6 +13,7 @@
       r.contrastiveDivergence(learningRate,k,layerInput);
       h.W=r.W;
       h.b=r.hBias;
+      log.info("Reconstruction entropy on epoch " + epoch + " of epochs "+ epochs+ " "+ r.getReConstructionCrossEntropy()+ " for layer "+ i);
     }
   }
 }
