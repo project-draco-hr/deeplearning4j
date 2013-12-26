@@ -1,9 +1,0 @@
-{
-  if (x.size() != y.size())   throw new IllegalArgumentException("Sample sizes must be the same for each data set.");
-  List<Double> ret=new ArrayList<Double>();
-  for (int i=0; i < x.size(); i++) {
-    ret.add(x.get(i));
-    ret.add(y.get(i));
-  }
-  return ret;
-}

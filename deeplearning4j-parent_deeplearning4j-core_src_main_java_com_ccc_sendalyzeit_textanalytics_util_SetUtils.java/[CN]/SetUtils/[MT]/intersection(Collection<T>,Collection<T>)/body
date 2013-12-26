@@ -1,5 +1,0 @@
-{
-  Set<T> results=new HashSet<T>(parentCollection);
-  results.retainAll(removeFromCollection);
-  return results;
-}

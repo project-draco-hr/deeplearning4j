@@ -1,6 +1,0 @@
-{
-  File[] images=file.listFiles();
-  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>();
-  for (  File f : images)   ret.add(fromImageFile(label,f));
-  return ret;
-}

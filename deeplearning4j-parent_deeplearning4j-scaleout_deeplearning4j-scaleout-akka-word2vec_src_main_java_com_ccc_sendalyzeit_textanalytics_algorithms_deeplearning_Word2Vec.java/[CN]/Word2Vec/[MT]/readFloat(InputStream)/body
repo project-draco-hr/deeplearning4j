@@ -1,5 +1,0 @@
-{
-  byte[] bytes=new byte[4];
-  is.read(bytes);
-  return getFloat(bytes);
-}

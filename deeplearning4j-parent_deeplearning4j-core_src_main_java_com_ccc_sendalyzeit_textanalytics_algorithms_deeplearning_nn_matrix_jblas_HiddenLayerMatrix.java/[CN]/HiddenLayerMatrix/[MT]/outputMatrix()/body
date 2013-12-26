@@ -1,5 +1,0 @@
-{
-  DoubleMatrix mult=this.input.mmul(W);
-  mult=mult.addRowVector(b);
-  return MatrixUtil.sigmoid(mult);
-}
