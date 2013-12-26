@@ -1,0 +1,16 @@
+{
+  return new Iterator<U>(){
+    boolean unused=true;
+    public boolean hasNext(){
+      return unused;
+    }
+    public U next(){
+      unused=false;
+      return item;
+    }
+    public void remove(){
+      throw new UnsupportedOperationException();
+    }
+  }
+;
+}

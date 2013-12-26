@@ -1,0 +1,9 @@
+{
+  if (vector == null)   return 0;
+ else   if (vector.length < 1)   return 0;
+ else {
+    double ret=0;
+    for (    double d : vector)     ret+=d * Math.log(d);
+    return ret;
+  }
+}

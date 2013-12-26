@@ -1,0 +1,4 @@
+{
+  if (iter == null)   throw new IllegalArgumentException("Iter can't be null");
+  this.iter=iter;
+}

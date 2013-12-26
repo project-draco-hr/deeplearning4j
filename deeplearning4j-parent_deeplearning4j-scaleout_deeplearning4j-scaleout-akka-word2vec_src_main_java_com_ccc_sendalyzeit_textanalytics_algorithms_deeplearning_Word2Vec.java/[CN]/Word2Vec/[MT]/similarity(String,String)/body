@@ -1,0 +1,12 @@
+{
+  if (word.equals(word2))   return 1.0;
+  double[] vector=getWordVector(word);
+  double[] vector2=getWordVector(word2);
+  if (vector == null || vector2 == null)   return -1;
+  DoubleMatrix matrix=new DoubleMatrix(vector);
+  DoubleMatrix matrix2=new DoubleMatrix(vector2);
+  double dot=matrix.dot(matrix2);
+  double mag1=magnitude(matrix);
+  double mag2=magnitude(matrix2);
+  return dot / (mag1 * mag2);
+}

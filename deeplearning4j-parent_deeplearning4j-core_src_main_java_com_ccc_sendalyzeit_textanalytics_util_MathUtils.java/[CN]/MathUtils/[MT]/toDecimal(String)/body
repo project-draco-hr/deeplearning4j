@@ -1,0 +1,15 @@
+{
+  long num=Long.parseLong(binary);
+  long rem;
+  while (num > 0) {
+    rem=num % 10;
+    num=num / 10;
+    if (rem != 0 && rem != 1) {
+      System.out.println("This is not a binary number.");
+      System.out.println("Please try once again.");
+      return -1;
+    }
+  }
+  int i=Integer.parseInt(binary,2);
+  return i;
+}

@@ -1,0 +1,15 @@
+{
+  Pair<DoubleMatrix,DoubleMatrix> iris=getIris();
+  LogisticRegressionMatrix classifier=new LogisticRegressionMatrix.Builder().numberOfInputs(4).numberOfOutputs(3).build();
+  for (int i=0; i < 1000; i++)   classifier.train(iris.getFirst(),iris.getSecond(),0.1);
+  DoubleMatrix predicted=classifier.predict(iris.getFirst());
+  int numCorrect=0;
+  for (int i=0; i < predicted.rows; i++) {
+    DoubleMatrix predictedRow=predicted.getRow(i);
+    DoubleMatrix yRow=iris.getSecond().getRow(i);
+    int max=SimpleBlas.iamax(predictedRow);
+    int actual=SimpleBlas.iamax(yRow);
+    if (max == actual)     numCorrect++;
+  }
+  log.info("Number correct for logistic regression " + numCorrect);
+}

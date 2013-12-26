@@ -1,0 +1,17 @@
+{
+  Constructor<?>[] c=clazz.getDeclaredConstructors();
+  for (int i=0; i < c.length; i++) {
+    Constructor<?> curr=c[i];
+    Class<?>[] classes=curr.getParameterTypes();
+    if (classes.length > 0 && classes[0].isAssignableFrom(DoubleMatrix.class)) {
+      try {
+        ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen);
+        return ret;
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+  return ret;
+}

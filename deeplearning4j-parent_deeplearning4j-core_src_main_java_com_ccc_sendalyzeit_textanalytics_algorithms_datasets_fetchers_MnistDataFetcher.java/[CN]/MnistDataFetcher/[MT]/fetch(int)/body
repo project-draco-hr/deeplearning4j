@@ -1,0 +1,16 @@
+{
+  if (!hasMore())   throw new IllegalStateException("Unable to get more; there are no more images");
+  List<Pair<DoubleMatrix,DoubleMatrix>> toConvert=new ArrayList<>();
+  for (int i=0; i < numExamples; i++, cursor++) {
+    if (!hasMore())     break;
+    man.setCurrent(cursor);
+    try {
+      DoubleMatrix in=MatrixUtil.toMatrix(ArrayUtil.flatten(man.readImage())).div(255);
+      toConvert.add(new Pair<>(in,createOutputVector(man.readLabel())));
+    }
+ catch (    IOException e) {
+      throw new IllegalStateException("Unable to read image");
+    }
+  }
+  initializeCurrFromList(toConvert);
+}

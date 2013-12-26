@@ -1,0 +1,11 @@
+{
+  VocabWord word=sentence.get(i);
+  if (word == null)   return;
+  for (int j=b; j < window * 2 + 1 - b; j++) {
+    if (j == window)     continue;
+    int c1=i - window + j;
+    if (c1 < 0 || c1 >= sentence.size())     continue;
+    VocabWord word2=sentence.get(c1);
+    iterate(word,word2);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  Set<T> s3=new HashSet<T>(s1);
+  s3.addAll(s2);
+  return s3;
+}

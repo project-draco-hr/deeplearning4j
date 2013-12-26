@@ -1,0 +1,23 @@
+{
+  StringBuffer binaryBuffer=new StringBuffer();
+  List<String> binaryReps=new ArrayList<String>(vector.length);
+  for (int i=0; i < vector.length; i++) {
+    double d=vector[i];
+    int j=(int)d;
+    String binary=Integer.toBinaryString(j);
+    binaryReps.add(binary);
+  }
+  while (!binaryReps.isEmpty()) {
+    for (int j=0; j < binaryReps.size(); j++) {
+      String curr=binaryReps.get(j);
+      if (!curr.isEmpty()) {
+        char first=curr.charAt(0);
+        binaryBuffer.append(first);
+        curr=curr.substring(1);
+        binaryReps.set(j,curr);
+      }
+ else       binaryReps.remove(j);
+    }
+  }
+  return Integer.parseInt(binaryBuffer.toString(),2);
+}

@@ -1,0 +1,32 @@
+{
+  BufferedReader reader=new BufferedReader(new FileReader(new File(path)));
+  String temp=null;
+  boolean first=true;
+  Integer vectorSize=null;
+  Integer rows=null;
+  int currRow=0;
+  while ((temp=reader.readLine()) != null) {
+    if (first) {
+      String[] split=temp.split(" ");
+      rows=Integer.parseInt(split[0]);
+      vectorSize=Integer.parseInt(split[1]);
+      this.layerSize=vectorSize;
+      syn0=new DoubleMatrix(rows - 1,vectorSize);
+      first=false;
+    }
+ else {
+      StringTokenizer tokenizer=new StringTokenizer(temp);
+      double[] vec=new double[layerSize];
+      int count=0;
+      String word=tokenizer.nextToken();
+      if (word.equals("</s>"))       continue;
+      while (tokenizer.hasMoreTokens()) {
+        vec[count++]=Double.parseDouble(tokenizer.nextToken());
+      }
+      syn0.putRow(currRow,new DoubleMatrix(vec));
+      currRow++;
+    }
+  }
+  reader.close();
+  loadGoogleVocab(vocabPath);
+}

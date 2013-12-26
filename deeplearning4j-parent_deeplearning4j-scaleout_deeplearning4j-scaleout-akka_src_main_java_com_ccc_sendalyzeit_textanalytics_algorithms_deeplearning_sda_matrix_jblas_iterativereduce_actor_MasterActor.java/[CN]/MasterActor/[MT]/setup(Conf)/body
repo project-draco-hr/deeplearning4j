@@ -1,0 +1,5 @@
+{
+  RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
+  BaseMultiLayerNetwork matrix=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getInt(N_IN)).numberOfOutPuts(conf.getInt(OUT)).withClazz(conf.getClazz(CLASS)).hiddenLayerSizes(conf.getIntsWithSeparator(LAYER_SIZES,",")).withRng(rng).build();
+  masterMatrix=new UpdateableMatrix(matrix);
+}
