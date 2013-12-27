@@ -1,8 +1,0 @@
-{
-  List<Pair<DoubleMatrix,DoubleMatrix>> list=new ArrayList<Pair<DoubleMatrix,DoubleMatrix>>();
-  File[] dirs=lfwDir.listFiles();
-  for (int i=0; i < dirs.length; i++) {
-    list.addAll(getImages(i,dirs[i]));
-  }
-  return list;
-}

@@ -1,8 +1,0 @@
-{
-  DoubleMatrix preSigH=input.mmul(W).addRowVector(hBias);
-  DoubleMatrix sigH=MatrixUtil.sigmoid(preSigH);
-  DoubleMatrix preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
-  DoubleMatrix sigV=MatrixUtil.sigmoid(preSigV);
-  DoubleMatrix inner=input.mul(MatrixFunctions.log(sigV)).add(MatrixUtil.oneMinus(input).mul(MatrixUtil.log(MatrixUtil.oneMinus(sigV))));
-  return -inner.rowSums().mean();
-}

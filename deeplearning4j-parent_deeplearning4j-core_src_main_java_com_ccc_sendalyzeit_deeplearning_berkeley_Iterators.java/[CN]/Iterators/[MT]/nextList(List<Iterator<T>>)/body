@@ -1,7 +1,0 @@
-{
-  List<T> items=new ArrayList<T>(iterators.size());
-  for (  Iterator<T> iter : iterators) {
-    items.add(iter.next());
-  }
-  return items;
-}

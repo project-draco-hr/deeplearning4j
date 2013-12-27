@@ -1,5 +1,0 @@
-{
-  Counter<V> valueCounter=counterMap.get(key);
-  if (valueCounter == null)   return defltVal;
-  return valueCounter.getCount(value);
-}

@@ -1,8 +1,0 @@
-{
-  double total=0.0;
-  for (  Map.Entry<K,Counter<V>> entry : counterMap.entrySet()) {
-    Counter<V> counter=entry.getValue();
-    total+=counter.totalCount();
-  }
-  return total;
-}

@@ -1,5 +1,0 @@
-{
-  DoubleMatrix h1Mean=propUp(v);
-  DoubleMatrix h1Sample=MatrixUtil.binomial(h1Mean,1,rng);
-  return new Pair<DoubleMatrix,DoubleMatrix>(h1Mean,h1Sample);
-}
