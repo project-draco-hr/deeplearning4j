@@ -1,8 +1,9 @@
 {
+  this.input=x;
   double p=1 - corruption_level;
-  DoubleMatrix tilde_x=get_corrupted_input(x,p);
-  DoubleMatrix y=get_hidden_values(tilde_x);
-  DoubleMatrix z=get_reconstructed_input(y);
+  DoubleMatrix tilde_x=getCorruptedInput(x,p);
+  DoubleMatrix y=getHiddenValues(tilde_x);
+  DoubleMatrix z=getReconstructedInput(y);
   DoubleMatrix L_h2=x.sub(z);
   DoubleMatrix L_h1=L_h2.mmul(W).mul(y).mul(DoubleMatrix.ones(y.length).sub(y));
   DoubleMatrix L_vbias=L_h2;
@@ -16,4 +17,5 @@
   L_vbias_mean=L_vbias_mean.mul(lr);
   this.hBias=hBias.add(L_hbias_mean);
   this.vBias=vBias.add(L_vbias_mean);
+  log.info("Training negative log likelihood " + this.negativeLoglikelihood(corruption_level));
 }

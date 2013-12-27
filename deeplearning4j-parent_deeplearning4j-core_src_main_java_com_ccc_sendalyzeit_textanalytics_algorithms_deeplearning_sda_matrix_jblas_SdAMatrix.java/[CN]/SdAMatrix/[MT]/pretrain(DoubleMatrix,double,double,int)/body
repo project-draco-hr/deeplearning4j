@@ -10,6 +10,7 @@
       da.train(layerInput,lr,corruption_level);
       if (h.W != (da.W))       h.W=da.W;
       if (h.b != da.hBias)       h.b=da.hBias;
+      if (epoch % 100 == 0)       log.info("Auto encoder " + (i + 1) + " cross entropy for epoch "+ (epoch + 1)+ " "+ da.getReConstructionCrossEntropy());
     }
   }
 }

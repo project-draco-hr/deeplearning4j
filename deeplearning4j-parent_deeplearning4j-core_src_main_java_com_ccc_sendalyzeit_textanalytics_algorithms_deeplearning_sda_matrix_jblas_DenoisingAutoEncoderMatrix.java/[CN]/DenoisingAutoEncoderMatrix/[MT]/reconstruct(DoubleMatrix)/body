@@ -1,4 +1,4 @@
 {
-  DoubleMatrix y=get_hidden_values(x);
-  return get_reconstructed_input(y);
+  DoubleMatrix y=getHiddenValues(x);
+  return getReconstructedInput(y);
 }
