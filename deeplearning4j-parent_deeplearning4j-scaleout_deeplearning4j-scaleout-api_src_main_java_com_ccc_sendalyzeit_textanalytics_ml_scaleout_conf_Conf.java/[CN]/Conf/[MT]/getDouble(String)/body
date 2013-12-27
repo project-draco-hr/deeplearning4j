@@ -1,0 +1,4 @@
+{
+  String ret=get(key);
+  return ret != null ? Double.parseDouble(ret) : null;
+}

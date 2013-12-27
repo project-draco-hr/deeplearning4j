@@ -1,0 +1,6 @@
+{
+  super.paintComponent(g);
+  g.drawRect(mx,my,getWidth() - 2 * mx,getHeight() - 2 * my);
+  drawCurrentImage(g);
+  drawCurrentOutput(g);
+}

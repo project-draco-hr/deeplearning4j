@@ -1,0 +1,16 @@
+{
+  StringBuilder sb=new StringBuilder("[");
+  NumberFormat f=NumberFormat.getInstance();
+  f.setMaximumFractionDigits(5);
+  int numKeysPrinted=0;
+  for (  E element : new TreeSet<E>(keySet())) {
+    sb.append(element.toString());
+    sb.append(" : ");
+    sb.append(f.format(getCount(element)));
+    if (numKeysPrinted < size() - 1)     sb.append(", ");
+    numKeysPrinted++;
+  }
+  if (numKeysPrinted < size())   sb.append("...");
+  sb.append("]");
+  return sb.toString();
+}

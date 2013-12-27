@@ -1,0 +1,12 @@
+{
+  StringBuilder buff=new StringBuilder("[");
+  int sz=objects.size();
+  int i;
+  for (i=0; i < sz; i++) {
+    Object e=objects.get(i);
+    buff.append(i).append("=").append(e);
+    if (i < (sz - 1))     buff.append(",");
+  }
+  buff.append("]");
+  return buff.toString();
+}

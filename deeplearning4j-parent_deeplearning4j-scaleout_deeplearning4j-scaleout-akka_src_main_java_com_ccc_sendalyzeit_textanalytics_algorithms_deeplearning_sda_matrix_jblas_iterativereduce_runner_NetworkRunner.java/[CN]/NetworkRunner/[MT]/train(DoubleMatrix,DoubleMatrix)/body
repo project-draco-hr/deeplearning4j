@@ -1,0 +1,40 @@
+{
+  this.input=input;
+  this.outcomes=labels;
+  if (!setup)   doSetup(conf);
+  for (int i=0; i < epochs; i++) {
+    final List<UpdateableMatrix> workerUpdates=new CopyOnWriteArrayList<>();
+    final CountDownLatch latch=new CountDownLatch(workers.size());
+    final int epoch=i + 1;
+    for (    final ComputableWorkerAkka worker : workers) {
+      Future<UpdateableMatrix> future=Futures.future(new Callable<UpdateableMatrix>(){
+        @Override public UpdateableMatrix call() throws Exception {
+          return worker.compute();
+        }
+      }
+,system.dispatcher());
+      future.onComplete(new OnComplete<UpdateableMatrix>(){
+        @Override public void onComplete(        Throwable arg0,        UpdateableMatrix arg1) throws Throwable {
+          if (arg0 != null)           log.error("Error processing worker:",arg0);
+          workerUpdates.add(arg1);
+          log.info("Worker updates error is " + arg1.get().negativeLogLikelihood() + " for epoch "+ epoch+ " and number of updates so far "+ workerUpdates.size());
+          latch.countDown();
+          worker.incrementIteration();
+        }
+      }
+,system.dispatcher());
+    }
+    try {
+      latch.await();
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    log.info("Computation for iteration " + i + " done");
+    UpdateableMatrix masterResult=master.compute(workerUpdates,workerUpdates);
+    for (    ComputableWorkerAkka worker : workers)     worker.update(masterResult);
+    output=masterResult.get();
+    acc.accumulate(output);
+  }
+  return output;
+}

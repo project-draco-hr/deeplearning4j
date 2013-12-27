@@ -1,0 +1,7 @@
+{
+  createExpTable();
+  this.buildVocab(sentences);
+  this.sentences=new ArrayList<String>(sentences);
+  oob=new double[layerSize];
+  Arrays.fill(oob,0.0);
+}

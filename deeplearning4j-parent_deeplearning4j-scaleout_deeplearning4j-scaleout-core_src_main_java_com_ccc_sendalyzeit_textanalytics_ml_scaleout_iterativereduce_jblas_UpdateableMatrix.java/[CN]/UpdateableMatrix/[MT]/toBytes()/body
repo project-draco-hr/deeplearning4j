@@ -1,0 +1,5 @@
+{
+  ByteArrayOutputStream os=new ByteArrayOutputStream();
+  DataOutputStream dos=new DataOutputStream(os);
+  return ByteBuffer.wrap(os.toByteArray());
+}

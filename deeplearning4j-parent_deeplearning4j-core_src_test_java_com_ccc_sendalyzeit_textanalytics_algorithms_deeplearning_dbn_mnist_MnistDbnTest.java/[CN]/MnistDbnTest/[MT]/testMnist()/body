@@ -1,0 +1,18 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher();
+  fetcher.fetch(1200);
+  DataSet first=fetcher.next();
+  int numIns=first.getFirst().columns;
+  int numLabels=first.getSecond().columns;
+  int[] layerSizes=new int[3];
+  Arrays.fill(layerSizes,100);
+  double lr=0.1;
+  first.roundToTheNearest(100);
+  CDBN dbn=new CDBN.Builder().numberOfInputs(numIns).numberOfOutPuts(numLabels).withRng(new MersenneTwister(123)).hiddenLayerSizes(layerSizes).build();
+  dbn.pretrain(first.getFirst(),1,lr,50);
+  dbn.finetune(first.getSecond(),lr,50);
+  DoubleMatrix predicted=dbn.predict(first.getFirst());
+  Evaluation eval=new Evaluation();
+  eval.eval(first.getSecond(),predicted);
+  log.info(eval.stats());
+}

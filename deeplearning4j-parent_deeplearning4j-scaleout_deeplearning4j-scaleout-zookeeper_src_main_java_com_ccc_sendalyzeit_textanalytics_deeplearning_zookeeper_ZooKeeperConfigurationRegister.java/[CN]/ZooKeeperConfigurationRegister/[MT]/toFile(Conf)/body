@@ -1,0 +1,7 @@
+{
+  StringBuffer sb=new StringBuffer();
+  for (  String key : configuration.keySet()) {
+    sb.append(key + "=" + configuration.get(key)+ "\n");
+  }
+  return sb.toString();
+}

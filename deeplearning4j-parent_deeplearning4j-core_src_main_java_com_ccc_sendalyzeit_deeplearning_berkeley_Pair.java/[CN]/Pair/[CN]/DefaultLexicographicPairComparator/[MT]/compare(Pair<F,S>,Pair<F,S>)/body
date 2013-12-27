@@ -1,0 +1,7 @@
+{
+  int firstCompare=o1.getFirst().compareTo(o2.getFirst());
+  if (firstCompare != 0) {
+    return firstCompare;
+  }
+  return o2.getSecond().compareTo(o2.getSecond());
+}

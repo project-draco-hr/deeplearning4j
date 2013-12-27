@@ -1,0 +1,6 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher();
+  fetcher.fetch(100);
+  DataSet write=new DataSet(fetcher.next());
+  write.saveTo(new File(args[0]),false);
+}

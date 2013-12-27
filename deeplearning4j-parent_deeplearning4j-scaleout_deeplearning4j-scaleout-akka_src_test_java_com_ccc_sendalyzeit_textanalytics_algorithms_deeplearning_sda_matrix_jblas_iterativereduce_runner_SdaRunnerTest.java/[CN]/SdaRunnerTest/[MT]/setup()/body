@@ -1,0 +1,22 @@
+{
+  conf=new Conf();
+  train_X_arr=new double[][]{{1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,1,0,1,1,1,0,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,1,1,1,1,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,1,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1}};
+  train_Y_arr=new double[][]{{1,0},{1,0},{1,0},{1,0},{1,0},{0,1},{0,1},{0,1},{0,1},{0,1}};
+  train_X_matrix=new DoubleMatrix(train_X_arr);
+  train_Y_matrix=new DoubleMatrix(train_Y_arr);
+  runner=new NetworkRunner();
+  conf.put(PRE_TRAIN_EPOCHS,100);
+  conf.put(FINE_TUNE_EPOCHS,100);
+  conf.put(ROWS,train_X_arr.length);
+  conf.put(LAYER_SIZES,hidden_layer_sizes_arr);
+  conf.put(LEARNING_RATE,0.1);
+  conf.put(N_IN,n_ins);
+  conf.put(SEED,1);
+  conf.put(LAYER_SIZES,StringUtils.join(hidden_layer_sizes_arr,","));
+  conf.put(CORRUPTION_LEVEL,0.3);
+  conf.put(SPLIT,1);
+  conf.put(OUT,2);
+  conf.put(CLASS,"com.ccc.sendalyzeit.textanalytics.algorithms.deeplearning.sda.matrix.jblas.SdAMatrix");
+  conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(0.3).finetuneEpochs(finetune_epochs).finetuneLearningRate(finetune_lr).learningRate(pretrain_lr).epochs(10).build());
+  runner.setup(conf);
+}

@@ -1,0 +1,9 @@
+{
+  if (algorithm.equals("sda")) {
+    return new Object[]{0.1,0.3,500,0.1,200};
+  }
+ else   if (algorithm.equals("dbn") || algorithm.equals("cdbn")) {
+    return new Object[]{1,0.1,500,0.1,200};
+  }
+  return null;
+}

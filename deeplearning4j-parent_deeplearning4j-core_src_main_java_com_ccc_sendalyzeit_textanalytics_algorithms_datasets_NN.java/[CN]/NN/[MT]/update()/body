@@ -1,0 +1,34 @@
+{
+  if (firstUpdate) {
+    firstUpdate=false;
+  }
+ else {
+    if (inputNodes != null) {
+      applyInput();
+    }
+    if (outputNodes != null) {
+      applyOutput();
+    }
+  }
+  double threashold=0.9;
+  double theta=1.0;
+  for (int i=0; i < numnodes; i++) {
+    double x=currentState[i];
+    double sigmoid=1.0 / (Math.pow(Math.E,-x)) - theta;
+    boolean active=sigmoid > threashold ? true : false;
+    if (active) {
+      for (int j=0; j < maxedges; j++) {
+        if (edges[i][j] != -1) {
+          nextState[edges[i][j]]+=weights[i][j] * currentState[i];
+        }
+ else {
+          break;
+        }
+      }
+    }
+  }
+  for (int i=0; i < numnodes; i++) {
+    currentState[i]=nextState[i];
+    nextState[i]=0f;
+  }
+}

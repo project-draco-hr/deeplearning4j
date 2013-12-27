@@ -1,0 +1,5 @@
+{
+  DoubleMatrix matrix=new DoubleMatrix(x.rows,x.columns);
+  for (int i=0; i < matrix.length; i++)   matrix.put(i,1f / (1f + Math.pow(Math.E,-x.get(i))));
+  return matrix;
+}
