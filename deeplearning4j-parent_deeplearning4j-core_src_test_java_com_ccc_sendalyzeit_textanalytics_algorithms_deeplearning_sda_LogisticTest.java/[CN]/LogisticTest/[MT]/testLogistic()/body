@@ -1,5 +1,5 @@
 {
-  LogisticRegressionMatrix log2=new LogisticRegressionMatrix(xTestMatrix,x[0].length,2);
+  LogisticRegression log2=new LogisticRegression(xTestMatrix,x[0].length,2);
   double learningRate=0.01;
   for (int i=0; i < 1000; i++) {
     log2.train(xMatrix,yMatrix,learningRate);

@@ -3,7 +3,7 @@
   DoubleMatrix input=new DoubleMatrix(test);
   DoubleMatrix W=new DoubleMatrix(new double[][]{{-3.08480550e-02,1.22108771e-02},{-6.22722610e-03,2.85358584e-02},{2.79975808e-02,-2.27407395e-02},{-2.23535745e-02,3.01872178e-02},{4.58139354e-02,3.75932635e-02},{-1.42182730e-02,9.95125523e-05},{1.83462935e-02,2.12702027e-02},{-1.29749245e-02,6.11961861e-03},{3.08316531e-04,-4.86231550e-02},{2.72826622e-02,3.82641191e-02},{-1.35114016e-02,1.15396178e-02},{-4.24618758e-02,-1.31175994e-02},{4.33140102e-02,1.51378143e-02},{-1.02797422e-02,2.88730143e-02},{-1.83163878e-02,6.80986526e-03},{3.69127390e-02,-6.38265761e-03},{3.02147642e-02,-3.56233175e-02},{2.04260971e-02,2.04581308e-02},{-2.81207894e-02,4.24867629e-02},{-5.78592446e-03,4.09315959e-02}});
   DoubleMatrix b=new DoubleMatrix(new double[]{0.0,0.0});
-  HiddenLayerMatrix h=new HiddenLayerMatrix(test[0].length,2,W,b,rng,input);
+  HiddenLayer h=new HiddenLayer(test[0].length,2,W,b,rng,input);
   log.info(h.sample_h_given_v().toString().replace(";","\n"));
   log.info(h.outputMatrix().toString().replace(";","\n"));
 }

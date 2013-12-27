@@ -7,7 +7,7 @@
     ret.hiddenLayerSizes=this.hiddenLayerSizes;
     ret.nLayers=this.nLayers;
     ret.rng=this.rng;
-    ret.sigmoidLayers=new HiddenLayerMatrix[ret.nLayers];
+    ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
     ret.layers=ret.createNetworkLayers(ret.nLayers);
     return ret;
   }

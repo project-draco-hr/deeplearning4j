@@ -1,5 +1,5 @@
 {
-  SdAMatrix sda=sdamatrix();
+  StackedDenoisingAutoEncoder sda=sdamatrix();
   sda.pretrain(pretrain_lr,corruption_level,pretraining_epochs);
   sda.finetune(finetune_lr,finetune_epochs);
   log.info("OUTPUT TEST");

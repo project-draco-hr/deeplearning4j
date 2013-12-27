@@ -16,7 +16,7 @@
   conf.put(CORRUPTION_LEVEL,0.3);
   conf.put(SPLIT,1);
   conf.put(OUT,2);
-  conf.put(CLASS,"com.ccc.sendalyzeit.textanalytics.algorithms.deeplearning.sda.matrix.jblas.SdAMatrix");
+  conf.put(CLASS,"com.ccc.sendalyzeit.textanalytics.algorithms.deeplearning.sda.matrix.jblas.StackedDenoisingAutoEncoder");
   conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(0.3).finetuneEpochs(finetune_epochs).finetuneLearningRate(finetune_lr).learningRate(pretrain_lr).epochs(10).build());
   runner.setup(conf);
 }

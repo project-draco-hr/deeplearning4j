@@ -8,7 +8,7 @@
   int[] layerSizes=new int[2];
   Arrays.fill(layerSizes,300);
   double lr=0.1;
-  SdAMatrix sda=new SdAMatrix.Builder().numberOfInputs(numIns).numberOfOutPuts(numLabels).withRng(new MersenneTwister(123)).hiddenLayerSizes(layerSizes).build();
+  StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder.Builder().numberOfInputs(numIns).numberOfOutPuts(numLabels).withRng(new MersenneTwister(123)).hiddenLayerSizes(layerSizes).build();
   sda.pretrain(first.getFirst(),lr,0.5,2000);
   sda.finetune(first.getSecond(),lr,2000);
   DoubleMatrix predicted=sda.predict(first.getFirst());

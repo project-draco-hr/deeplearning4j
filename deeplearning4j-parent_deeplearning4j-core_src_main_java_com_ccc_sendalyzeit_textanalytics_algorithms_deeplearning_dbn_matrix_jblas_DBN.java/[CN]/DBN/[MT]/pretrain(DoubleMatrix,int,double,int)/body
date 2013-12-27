@@ -8,7 +8,7 @@
     if (i == 0)     layerInput=this.input;
  else     layerInput=sigmoidLayers[i - 1].sampleHGivenV(layerInput);
     RBM r=(RBM)this.layers[i];
-    HiddenLayerMatrix h=this.sigmoidLayers[i];
+    HiddenLayer h=this.sigmoidLayers[i];
     for (int epoch=0; epoch < epochs; epoch++) {
       r.contrastiveDivergence(learningRate,k,layerInput);
       h.W=r.W;
