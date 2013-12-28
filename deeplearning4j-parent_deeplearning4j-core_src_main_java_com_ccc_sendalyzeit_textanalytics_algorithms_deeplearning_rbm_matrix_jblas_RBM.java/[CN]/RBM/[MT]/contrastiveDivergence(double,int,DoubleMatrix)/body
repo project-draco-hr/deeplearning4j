@@ -1,6 +1,6 @@
 {
   if (input != null)   this.input=input;
-  Pair<DoubleMatrix,DoubleMatrix> probHidden=this.sampleHiddenGivenVisible(this.input);
+  Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
   DoubleMatrix nvMeans=null;
@@ -15,14 +15,14 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix inputTimesPhSample=this.input.transpose().mmul(probHidden.getSecond());
+  DoubleMatrix inputTimesPhSample=input.transpose().mmul(probHidden.getSecond());
   DoubleMatrix nvSamplesTTimesNhMeans=nvSamples.transpose().mmul(nhMeans);
   DoubleMatrix diff=inputTimesPhSample.sub(nvSamplesTTimesNhMeans);
   DoubleMatrix wAdd=diff.mul(learningRate);
   W=W.add(wAdd);
-  DoubleMatrix vBiasAdd=MatrixUtil.mean(this.input.sub(nvSamples),0);
+  DoubleMatrix vBiasAdd=mean(input.sub(nvSamples),0);
   vBias=vBiasAdd.mul(learningRate);
-  DoubleMatrix hBiasAdd=MatrixUtil.mean(probHidden.getSecond().sub(nhMeans),0);
+  DoubleMatrix hBiasAdd=mean(probHidden.getSecond().sub(nhMeans),0);
   hBiasAdd=hBiasAdd.mul(learningRate);
   hBias=hBias.add(hBiasAdd);
 }

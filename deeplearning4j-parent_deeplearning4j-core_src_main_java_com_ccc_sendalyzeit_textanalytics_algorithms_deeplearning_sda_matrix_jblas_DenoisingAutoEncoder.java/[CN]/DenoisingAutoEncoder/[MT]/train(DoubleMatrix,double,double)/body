@@ -1,6 +1,6 @@
 {
   this.input=x;
-  double p=1 - corruption_level;
+  double p=1 - corruptionLevel;
   DoubleMatrix tilde_x=getCorruptedInput(x,p);
   DoubleMatrix y=getHiddenValues(tilde_x);
   DoubleMatrix z=getReconstructedInput(y);

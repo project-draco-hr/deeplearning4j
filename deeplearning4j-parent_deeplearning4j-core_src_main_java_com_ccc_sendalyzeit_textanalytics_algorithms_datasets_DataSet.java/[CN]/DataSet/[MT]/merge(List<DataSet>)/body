@@ -1,5 +1,5 @@
 {
-  if (data.isEmpty())   return null;
+  if (data.isEmpty())   throw new IllegalArgumentException("Unable to merge empty dataset");
   DataSet first=data.iterator().next();
   DoubleMatrix in=new DoubleMatrix(data.size(),first.getFirst().columns);
   DoubleMatrix out=new DoubleMatrix(data.size(),first.getSecond().columns);

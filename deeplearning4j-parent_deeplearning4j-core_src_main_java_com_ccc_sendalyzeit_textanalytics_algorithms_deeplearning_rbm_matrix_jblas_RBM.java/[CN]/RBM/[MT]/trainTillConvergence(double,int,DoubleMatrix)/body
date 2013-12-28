@@ -1,0 +1,31 @@
+{
+  if (input != null)   this.input=input;
+  double score=getReConstructionCrossEntropy();
+  boolean done=false;
+  while (!done) {
+    DoubleMatrix W=this.W.dup();
+    DoubleMatrix hBias=this.hBias.dup();
+    DoubleMatrix vBias=this.vBias.dup();
+    contrastiveDivergence(learningRate,k,input);
+    double currScore=getReConstructionCrossEntropy();
+    if (currScore <= score) {
+      double diff=Math.abs(currScore - score);
+      if (diff <= 0.000001) {
+        done=true;
+        score=currScore;
+        log.info("Converged on cost " + currScore);
+        break;
+      }
+ else       score=currScore;
+      log.info("Found new reconstruction entropy " + score);
+    }
+ else     if (currScore > score) {
+      log.info("Converged on score " + score + " due to greater entropy after the last training batch");
+      this.W=W;
+      this.hBias=hBias;
+      this.vBias=vBias;
+      done=true;
+      break;
+    }
+  }
+}
