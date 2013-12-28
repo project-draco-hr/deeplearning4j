@@ -1,0 +1,45 @@
+{
+  Map<Integer,Queue<DataSet>> map=new HashMap<Integer,Queue<DataSet>>();
+  List<DataSet> data=asList();
+  int numLabels=numOutcomes();
+  int examples=numExamples();
+  for (  DataSet d : data) {
+    int label=getLabel(d);
+    Queue<DataSet> q=map.get(label);
+    if (q == null) {
+      q=new ArrayDeque<DataSet>();
+      map.put(label,q);
+    }
+    q.add(d);
+  }
+  for (  Integer label : map.keySet()) {
+    log.info("Label " + label + " has "+ map.get(label).size()+ " elements");
+  }
+  boolean optimal=true;
+  for (int i=0; i < examples; i++) {
+    if (optimal) {
+      for (int j=0; j < numLabels; j++) {
+        Queue<DataSet> q=map.get(j);
+        DataSet next=q.poll();
+        if (next != null) {
+          addRow(next,i);
+          i++;
+        }
+ else {
+          optimal=false;
+          break;
+        }
+      }
+    }
+ else {
+      DataSet add=null;
+      for (      Queue<DataSet> q : map.values()) {
+        if (!q.isEmpty()) {
+          add=q.poll();
+          break;
+        }
+      }
+      addRow(add,i);
+    }
+  }
+}

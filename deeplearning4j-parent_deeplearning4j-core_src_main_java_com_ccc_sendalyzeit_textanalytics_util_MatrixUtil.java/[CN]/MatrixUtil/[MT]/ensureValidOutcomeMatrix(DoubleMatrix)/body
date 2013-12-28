@@ -1,0 +1,10 @@
+{
+  boolean found=false;
+  for (int col=0; col < out.length; col++) {
+    if (out.get(col) > 0) {
+      found=true;
+      break;
+    }
+  }
+  if (!found)   throw new IllegalStateException("Found a matrix without an outcome");
+}
