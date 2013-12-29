@@ -15,10 +15,7 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix inputTimesPhSample=input.transpose().mmul(probHidden.getSecond());
-  DoubleMatrix nvSamplesTTimesNhMeans=nvSamples.transpose().mmul(nhMeans);
-  DoubleMatrix diff=inputTimesPhSample.sub(nvSamplesTTimesNhMeans);
-  DoubleMatrix wAdd=diff.mul(learningRate);
+  DoubleMatrix wAdd=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate);
   W=W.add(wAdd);
   DoubleMatrix vBiasAdd=mean(input.sub(nvSamples),0);
   vBias=vBiasAdd.mul(learningRate);
