@@ -1,6 +1,0 @@
-{
-  DeepLearningAccumulator acc=new DeepLearningAccumulator();
-  for (  UpdateableMatrix m : workerUpdates)   acc.accumulate(m.get());
-  masterMatrix.set(acc.averaged());
-  return masterMatrix;
-}

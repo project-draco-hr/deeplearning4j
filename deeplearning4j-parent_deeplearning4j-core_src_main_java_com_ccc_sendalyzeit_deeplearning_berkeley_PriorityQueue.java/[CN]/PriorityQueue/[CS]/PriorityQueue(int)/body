@@ -1,7 +1,0 @@
-{
-  int legalCapacity=0;
-  while (legalCapacity < capacity) {
-    legalCapacity=2 * legalCapacity + 1;
-  }
-  grow(legalCapacity);
-}

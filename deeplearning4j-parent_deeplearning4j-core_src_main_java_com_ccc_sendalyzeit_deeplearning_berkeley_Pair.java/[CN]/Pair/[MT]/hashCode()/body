@@ -1,6 +1,0 @@
-{
-  int result;
-  result=(first != null ? first.hashCode() : 0);
-  result=29 * result + (second != null ? second.hashCode() : 0);
-  return result;
-}

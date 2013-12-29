@@ -1,5 +1,0 @@
-{
-  assertEquals(true,iter.hasNext());
-  for (int i=0; i < numIters; i++)   iter.next();
-  assertEquals(shouldHaveNext,iter.hasNext());
-}

@@ -1,4 +1,0 @@
-{
-  if (truePositives == 0)   return 0;
-  return truePositives / (truePositives + falsePositives.getCount(i));
-}

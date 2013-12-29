@@ -1,6 +1,0 @@
-{
-  List<String> list=FileUtils.readLines(file);
-  this.buildVocab(list);
-  this.sentences=new ArrayList<String>(list);
-  this.train();
-}

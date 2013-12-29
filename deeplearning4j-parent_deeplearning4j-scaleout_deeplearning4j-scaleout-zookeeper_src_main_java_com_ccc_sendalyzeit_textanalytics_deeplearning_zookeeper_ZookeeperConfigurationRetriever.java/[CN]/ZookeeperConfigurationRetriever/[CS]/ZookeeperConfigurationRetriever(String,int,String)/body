@@ -1,7 +1,0 @@
-{
-  super();
-  this.keeper=new ZookeeperBuilder().setHost(host).setPort(port).build();
-  this.host=host;
-  this.port=port;
-  this.id=id;
-}

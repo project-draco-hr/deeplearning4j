@@ -1,5 +1,0 @@
-{
-  DoubleMatrix preSig=v.mmul(W);
-  preSig=preSig.addRowVector(hBias);
-  return sigmoid(preSig);
-}

@@ -1,9 +1,0 @@
-{
-  int node=(int)(Math.random() * numnodes);
-  if (!selfAllowed) {
-    while (node == self) {
-      node=(int)(Math.random() * numnodes);
-    }
-  }
-  return node;
-}

@@ -1,7 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(vals.rows,vals.columns);
-  for (int i=0; i < vals.length; i++) {
-    ret.put(i,vals.get(i) == 0 ? 0 : Math.log(vals.get(i)));
-  }
-  return ret;
-}
