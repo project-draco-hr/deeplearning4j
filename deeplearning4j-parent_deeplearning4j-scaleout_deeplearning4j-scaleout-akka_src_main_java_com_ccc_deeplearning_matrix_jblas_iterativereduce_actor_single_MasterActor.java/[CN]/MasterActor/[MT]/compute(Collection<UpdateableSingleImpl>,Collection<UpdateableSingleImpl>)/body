@@ -1,0 +1,6 @@
+{
+  SingleNetworkAccumulator acc=new SingleNetworkAccumulator();
+  for (  UpdateableSingleImpl m : workerUpdates)   acc.accumulate(m.get());
+  masterResults.set(acc.averaged());
+  return masterResults;
+}

@@ -1,0 +1,16 @@
+{
+  String temp=System.getProperty("java.io.tmpdir");
+  File f=new File(temp,"masteraddress");
+  if (f.exists())   f.delete();
+  try {
+    f.createNewFile();
+    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(f));
+    bos.write(masterAddress.toString().getBytes());
+    bos.flush();
+    bos.close();
+  }
+ catch (  IOException e) {
+    log.error("Unable to create file for master address",e);
+  }
+  f.deleteOnExit();
+}
