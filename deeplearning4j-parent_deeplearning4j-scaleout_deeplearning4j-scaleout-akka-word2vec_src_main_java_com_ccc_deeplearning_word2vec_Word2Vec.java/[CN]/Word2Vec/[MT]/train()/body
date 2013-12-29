@@ -1,0 +1,40 @@
+{
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  log.info("Training word2vec multithreaded");
+  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
+    private static final long serialVersionUID=5447027920163740307L;
+    @Override public Map<String,Double> buildMap(){
+      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
+    }
+  }
+;
+  final Counter<String> totalWords=new Counter<String>(factory);
+  final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
+  if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
+  for (  final String sentence : sentences) {
+    Future<Void> future=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        if (!sentence.isEmpty())         trainSentence(sentence,totalWords);
+        return null;
+      }
+    }
+,trainingSystem.dispatcher());
+    future.onComplete(new OnComplete<Void>(){
+      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
+        sentenceCounter.countDown();
+        if (sentenceCounter.getCount() % 10000 == 0) {
+          alpha=new Double(Math.max(MIN_ALPHA,alpha * (1 - 1.0 * totalWords.totalCount() / allWordsCount)));
+          log.info("Alpha updated " + alpha + " progress "+ sentenceCounter.getCount()+ " sentence size "+ sentences.size());
+        }
+      }
+    }
+,trainingSystem.dispatcher());
+  }
+  try {
+    sentenceCounter.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+  if (trainingSystem != null)   trainingSystem.shutdown();
+}

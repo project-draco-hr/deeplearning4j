@@ -1,0 +1,4 @@
+{
+  if (batchSize < 1)   throw new IllegalArgumentException("Batch size must be at least 1");
+  this.W=W.div(batchSize).mul(1 - momentum).add(W.min(W.mul(l2)));
+}

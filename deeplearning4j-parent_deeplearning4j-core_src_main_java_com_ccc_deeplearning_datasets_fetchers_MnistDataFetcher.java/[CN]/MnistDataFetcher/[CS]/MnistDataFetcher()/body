@@ -1,0 +1,16 @@
+{
+  if (!new File("/tmp/mnist").exists())   new MnistFetcher().downloadAndUntar();
+  man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  numOutcomes=10;
+  totalExamples=NUM_EXAMPLES;
+  cursor=1;
+  man.setCurrent(cursor);
+  int[][] image;
+  try {
+    image=man.readImage();
+  }
+ catch (  IOException e) {
+    throw new IllegalStateException("Unable to read image");
+  }
+  inputColumns=ArrayUtil.flatten(image).length;
+}

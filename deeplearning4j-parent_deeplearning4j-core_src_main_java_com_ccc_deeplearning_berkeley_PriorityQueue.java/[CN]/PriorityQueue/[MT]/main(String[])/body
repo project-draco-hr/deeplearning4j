@@ -1,0 +1,16 @@
+{
+  PriorityQueue<String> pq=new PriorityQueue<String>();
+  System.out.println(pq);
+  pq.put("one",1);
+  System.out.println(pq);
+  pq.put("three",3);
+  System.out.println(pq);
+  pq.put("one",1.1);
+  System.out.println(pq);
+  pq.put("two",2);
+  System.out.println(pq);
+  System.out.println(pq.toString(2,false));
+  while (pq.hasNext()) {
+    System.out.println(pq.next());
+  }
+}

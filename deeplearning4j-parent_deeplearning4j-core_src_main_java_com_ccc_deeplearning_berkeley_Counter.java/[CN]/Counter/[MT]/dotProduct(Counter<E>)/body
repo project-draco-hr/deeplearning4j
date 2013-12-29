@@ -1,0 +1,11 @@
+{
+  double sum=0.0;
+  for (  Map.Entry<E,Double> entry : getEntrySet()) {
+    final double otherCount=other.getCount(entry.getKey());
+    if (otherCount == 0.0)     continue;
+    final double value=entry.getValue();
+    if (value == 0.0)     continue;
+    sum+=value * otherCount;
+  }
+  return sum;
+}

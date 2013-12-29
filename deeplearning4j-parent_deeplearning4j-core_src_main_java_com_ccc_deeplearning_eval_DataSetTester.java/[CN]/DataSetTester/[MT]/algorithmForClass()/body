@@ -1,0 +1,6 @@
+{
+  if (algorithm.equals("sda"))   return BaseMultiLayerNetwork.class;
+ else   if (algorithm.equals("cdbn"))   return CDBN.class;
+ else   if (algorithm.equals("dbn"))   return DBN.class;
+  throw new IllegalStateException("No algorithm found");
+}

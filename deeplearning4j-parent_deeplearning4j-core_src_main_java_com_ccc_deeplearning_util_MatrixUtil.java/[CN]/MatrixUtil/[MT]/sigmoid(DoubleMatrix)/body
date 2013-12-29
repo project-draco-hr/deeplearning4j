@@ -1,0 +1,4 @@
+{
+  DoubleMatrix ones=DoubleMatrix.ones(x.rows,x.columns);
+  return ones.div(ones.add(MatrixFunctions.exp(x.neg())));
+}

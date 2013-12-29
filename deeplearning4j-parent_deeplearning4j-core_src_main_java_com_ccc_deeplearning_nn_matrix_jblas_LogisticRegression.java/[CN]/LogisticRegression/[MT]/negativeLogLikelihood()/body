@@ -1,0 +1,4 @@
+{
+  DoubleMatrix sigAct=softmax(input.mmul(W).addRowVector(b));
+  return -labels.mul(log(sigAct)).add(oneMinus(labels).mul(log(oneMinus(sigAct)))).columnSums().mean();
+}

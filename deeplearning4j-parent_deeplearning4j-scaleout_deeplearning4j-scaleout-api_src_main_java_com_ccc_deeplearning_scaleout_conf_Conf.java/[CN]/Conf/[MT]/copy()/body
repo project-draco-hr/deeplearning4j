@@ -1,0 +1,5 @@
+{
+  Conf conf=new Conf();
+  conf.putAll(this);
+  return conf;
+}

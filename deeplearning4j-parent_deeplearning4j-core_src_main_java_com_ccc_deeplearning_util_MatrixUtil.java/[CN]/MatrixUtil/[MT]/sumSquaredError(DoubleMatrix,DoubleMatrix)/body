@@ -1,0 +1,6 @@
+{
+  if (input.length != other.length)   throw new IllegalArgumentException("Matrices must be same length");
+  SimpleRegression r=new SimpleRegression();
+  r.addData(new double[][]{input.data,other.data});
+  return r.getSumSquaredErrors();
+}

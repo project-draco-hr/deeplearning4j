@@ -1,0 +1,21 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher();
+  fetcher.fetch(60000);
+  Pair<DoubleMatrix,DoubleMatrix> first=fetcher.next();
+  int numIns=first.getFirst().columns;
+  int numLabels=first.getSecond().columns;
+  int[] layerSizes=new int[3];
+  Arrays.fill(layerSizes,100);
+  runner=new NetworkRunner();
+  conf.put(SPLIT,String.valueOf(600));
+  conf.put(CLASS,"com.ccc.deeplearning.sda.jblas.StackedDenoisingAutoEncoder");
+  conf.put(LAYER_SIZES,Arrays.toString(hidden_layer_sizes_arr).replace("[","").replace("]","").replace(" ",""));
+  conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(0.5).finetuneEpochs(finetune_epochs).finetuneLearningRate(finetune_lr).learningRate(pretrain_lr).epochs(pretraining_epochs).build());
+  runner.setup(conf);
+  runner.train(first.getFirst(),first.getSecond());
+  BaseMultiLayerNetwork trained=runner.result();
+  Evaluation eval=new Evaluation();
+  DoubleMatrix predicted=trained.predict(first.getFirst());
+  eval.eval(first.getSecond(),predicted);
+  log.info(eval.stats());
+}

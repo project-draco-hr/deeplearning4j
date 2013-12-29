@@ -1,0 +1,8 @@
+{
+  PriorityQueue<E> pq=this.asPriorityQueue();
+  List<E> keys=new ArrayList<E>();
+  while (pq.hasNext()) {
+    keys.add(pq.next());
+  }
+  return keys;
+}

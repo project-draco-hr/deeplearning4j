@@ -1,0 +1,48 @@
+{
+  if (input != null)   this.input=input;
+  double score=getReConstructionCrossEntropy();
+  boolean done=false;
+  int numTimesExceeded=0;
+  while (!done) {
+    DoubleMatrix W=this.W.dup();
+    DoubleMatrix hBias=this.hBias.dup();
+    DoubleMatrix vBias=this.vBias.dup();
+    contrastiveDivergence(learningRate,k,input);
+    double currScore=getReConstructionCrossEntropy();
+    if (currScore <= score) {
+      numTimesExceeded=0;
+      double diff=Math.abs(currScore - score);
+      if (diff <= 0.000001) {
+        done=true;
+        score=currScore;
+        log.info("Converged on cost " + currScore);
+        break;
+      }
+ else       score=currScore;
+      log.info("Found new reconstruction entropy " + score);
+    }
+ else     if (currScore > score) {
+      if (numTimesExceeded >= 5) {
+        done=true;
+        log.info("Converged on score " + score + " due to greater entropy after the last training batch");
+        this.W=W;
+        this.hBias=hBias;
+        this.vBias=vBias;
+        break;
+      }
+ else {
+        numTimesExceeded++;
+        int diff=5 - numTimesExceeded;
+        log.info("Entropy exceeded going to iterate " + diff + " more times to search for possible local minima, otherwise converging.");
+        if (numTimesExceeded >= 5) {
+          done=true;
+          log.info("Converged on score " + score + " due to greater entropy after the last training batch");
+          this.W=W;
+          this.hBias=hBias;
+          this.vBias=vBias;
+          break;
+        }
+      }
+    }
+  }
+}

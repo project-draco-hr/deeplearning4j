@@ -1,0 +1,8 @@
+{
+  File ensureExists=new File("/tmp/MNIST");
+  if (!ensureExists.exists())   new MnistFetcher().downloadAndUntar();
+  MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  man.setCurrent(example);
+  int[] imageExample=ArrayUtil.flatten(man.readImage());
+  return new Pair<DoubleMatrix,DoubleMatrix>(MatrixUtil.toMatrix(imageExample).transpose(),MatrixUtil.toOutcomeVector(man.readLabel(),10));
+}

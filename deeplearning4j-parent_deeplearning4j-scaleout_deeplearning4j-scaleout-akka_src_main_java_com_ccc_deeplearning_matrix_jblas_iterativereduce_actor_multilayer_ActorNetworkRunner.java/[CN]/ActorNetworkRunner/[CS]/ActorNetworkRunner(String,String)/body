@@ -1,0 +1,5 @@
+{
+  this.type=type;
+  URI u=URI.create(address);
+  masterAddress=Address.apply(u.getScheme(),u.getUserInfo(),u.getHost(),u.getPort());
+}

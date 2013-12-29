@@ -1,0 +1,7 @@
+{
+  double total=0.0;
+  for (  double d : probabilities) {
+    total+=(-1.0 * log2(d) * d);
+  }
+  return total;
+}
