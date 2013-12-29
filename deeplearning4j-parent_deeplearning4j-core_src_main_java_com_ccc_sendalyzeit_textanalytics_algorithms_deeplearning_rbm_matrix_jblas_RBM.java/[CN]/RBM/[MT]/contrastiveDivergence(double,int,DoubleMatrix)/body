@@ -17,6 +17,7 @@
   }
   DoubleMatrix wAdd=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate);
   W=W.add(wAdd);
+  regularizeWeights(input.rows,learningRate);
   DoubleMatrix vBiasAdd=mean(input.sub(nvSamples),0);
   vBias=vBiasAdd.mul(learningRate);
   DoubleMatrix hBiasAdd=mean(probHidden.getSecond().sub(nhMeans),0);

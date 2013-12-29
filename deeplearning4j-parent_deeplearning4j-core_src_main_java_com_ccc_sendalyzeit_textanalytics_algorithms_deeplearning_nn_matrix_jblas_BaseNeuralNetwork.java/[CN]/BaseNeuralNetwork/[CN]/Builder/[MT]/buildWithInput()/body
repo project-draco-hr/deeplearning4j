@@ -6,6 +6,9 @@
     if (classes.length > 0 && classes[0].isAssignableFrom(DoubleMatrix.class)) {
       try {
         ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen);
+        ret.sparsity=this.sparsity;
+        ret.l2=this.l2;
+        ret.momentum=this.momentum;
         return ret;
       }
  catch (      Exception e) {
