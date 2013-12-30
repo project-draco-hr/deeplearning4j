@@ -31,6 +31,15 @@
         return new Object[]{k,learningRate,epochs};
       }
     }
+ else     if (algorithm.equals(PARAM_RBM) || algorithm.equals(PARAM_CRBM)) {
+      Integer k=j.getInt(PARAM_K);
+      if (k < 1)       throw new IllegalStateException("K must be greater than 0");
+      return new Object[]{k};
+    }
+ else     if (algorithm.equals(PARAM_DA)) {
+      Double corruptionLevel=j.getDouble(PARAM_CORRUPTION_LEVEL);
+      return new Object[]{corruptionLevel};
+    }
   }
   throw new IllegalStateException("Invalid getter configuration");
 }
