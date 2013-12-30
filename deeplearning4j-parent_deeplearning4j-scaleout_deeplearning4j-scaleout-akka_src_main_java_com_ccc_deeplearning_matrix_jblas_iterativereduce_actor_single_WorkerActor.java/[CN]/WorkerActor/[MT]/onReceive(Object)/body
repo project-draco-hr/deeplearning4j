@@ -8,8 +8,8 @@
     updateTraining(input);
   }
  else   if (message instanceof UpdateMessage) {
-    UpdateMessage<UpdateableImpl> m=(UpdateMessage<UpdateableImpl>)message;
-    workerMatrix=(UpdateableImpl)m.getUpdateable().get();
+    UpdateMessage<UpdateableSingleImpl> m=(UpdateMessage<UpdateableSingleImpl>)message;
+    workerResult=(UpdateableSingleImpl)m.getUpdateable().get();
   }
  else   unhandled(message);
 }

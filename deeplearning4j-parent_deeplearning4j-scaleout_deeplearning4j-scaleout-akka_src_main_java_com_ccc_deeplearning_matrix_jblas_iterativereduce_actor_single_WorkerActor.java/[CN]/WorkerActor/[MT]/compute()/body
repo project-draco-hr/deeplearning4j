@@ -1,5 +1,5 @@
 {
   log.info("Training network");
-  network.trainNetwork(combinedInput,outcomes,extraParams);
-  return new UpdateableImpl(network);
+  network.trainTillConvergence(combinedInput,learningRate,extraParams);
+  return new UpdateableSingleImpl(network);
 }

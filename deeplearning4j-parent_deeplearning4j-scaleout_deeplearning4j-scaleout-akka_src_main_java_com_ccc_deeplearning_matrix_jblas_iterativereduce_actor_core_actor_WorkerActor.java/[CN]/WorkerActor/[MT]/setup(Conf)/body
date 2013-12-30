@@ -1,7 +1,7 @@
 {
   hiddenLayerSizes=conf.getIntsWithSeparator(LAYER_SIZES,",");
-  numOuts=conf.getInt(OUT);
-  numIns=conf.getInt(N_IN);
+  numHidden=conf.getInt(OUT);
+  numVisible=conf.getInt(N_IN);
   numHiddenNeurons=conf.getIntsWithSeparator(LAYER_SIZES,",").length;
   seed=conf.getLong(SEED);
   RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));

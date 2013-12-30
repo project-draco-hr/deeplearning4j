@@ -1,5 +1,5 @@
 {
   super.setup(conf);
   RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
-  network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(numIns).numberOfOutPuts(numOuts).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).withClazz(conf.getClazz(CLASS)).build();
+  network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(numVisible).numberOfOutPuts(numHidden).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).withClazz(conf.getClazz(CLASS)).build();
 }

@@ -7,11 +7,4 @@
     parser.printUsage(System.err);
     log.error("Unable to parse args",e);
   }
-  if (hiddenLayerSizesOption != null) {
-    String[] split=hiddenLayerSizesOption.split(",");
-    hiddenLayerSizes=new int[split.length];
-    for (int i=0; i < split.length; i++) {
-      hiddenLayerSizes[i]=Integer.parseInt(split[i]);
-    }
-  }
 }

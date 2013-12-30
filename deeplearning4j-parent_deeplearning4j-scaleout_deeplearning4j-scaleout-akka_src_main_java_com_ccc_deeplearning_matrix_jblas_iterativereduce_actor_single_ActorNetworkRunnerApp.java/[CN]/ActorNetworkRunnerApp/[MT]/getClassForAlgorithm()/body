@@ -1,11 +1,11 @@
 {
 switch (algorithm) {
-case "sda":
-    return "com.ccc.deeplearning.sda.jblas.StackedDenoisingAutoEncoder";
-case "dbn":
-  return "com.ccc.deeplearning.dbn.matrix.jblas.DBN";
-case "cdbn":
-return "com.ccc.deeplearning.dbn.matrix.jblas.CDBN";
+case "da":
+    return "com.ccc.deeplearning.sda.jblas.DenoisingAutoEncoder";
+case "rbm":
+  return "com.ccc.deeplearning.rbm.matrix.jblas.RBM";
+case "crbm":
+return "com.ccc.deeplearning.rbm.matrix.jblas.CRBM";
 }
 return null;
 }

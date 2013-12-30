@@ -7,7 +7,7 @@
   }
   this.combinedInput=newInput;
   this.outcomes=newOutput;
-  UpdateableImpl work=compute();
+  UpdateableSingleImpl work=compute();
   log.info("Updating parent actor...");
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,work),getSelf());
 }
