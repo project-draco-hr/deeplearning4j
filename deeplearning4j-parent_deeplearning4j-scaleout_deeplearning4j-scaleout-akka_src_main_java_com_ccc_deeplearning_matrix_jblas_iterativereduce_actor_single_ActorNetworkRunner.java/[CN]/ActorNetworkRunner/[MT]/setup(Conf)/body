@@ -16,8 +16,6 @@
     Cluster.get(system).join(masterAddress);
     startBackend(masterAddress,"master",conf,iter);
     Conf c=conf.copy();
-    c.put(FINE_TUNE_EPOCHS,1);
-    c.put(PRE_TRAIN_EPOCHS,1);
     try {
       Thread.sleep(5000);
     }
@@ -31,8 +29,6 @@
   }
  else {
     Conf c=conf.copy();
-    c.put(FINE_TUNE_EPOCHS,1);
-    c.put(PRE_TRAIN_EPOCHS,1);
     startWorker(masterAddress,c);
     try {
       Thread.sleep(5000);

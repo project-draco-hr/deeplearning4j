@@ -1,7 +1,6 @@
 {
-  DoubleMatrix corrupted=this.getCorruptedInput(input,corruptionLevel);
-  DoubleMatrix y=this.getHiddenValues(corrupted);
-  DoubleMatrix z=this.getReconstructedInput(y);
-  DoubleMatrix inside=input.mul(MatrixUtil.log(z)).add(MatrixUtil.oneMinus(input).mul(MatrixUtil.log(MatrixUtil.oneMinus(z))));
-  return -inside.columnSums().mean();
+  DoubleMatrix corrupted=getCorruptedInput(input,corruptionLevel);
+  DoubleMatrix y=getHiddenValues(corrupted);
+  DoubleMatrix z=getReconstructedInput(y);
+  return -input.mul(log(z)).add(oneMinus(input).mul(log(oneMinus(z)))).columnSums().mean();
 }

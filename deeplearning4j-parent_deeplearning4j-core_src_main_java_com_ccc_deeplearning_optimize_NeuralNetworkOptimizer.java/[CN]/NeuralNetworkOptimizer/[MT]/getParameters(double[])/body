@@ -1,0 +1,6 @@
+{
+  int idx=0;
+  for (int i=0; i < network.W.length; i++)   buffer[idx++]=network.W.get(i);
+  for (int i=0; i < network.vBias.length; i++)   buffer[idx++]=network.vBias.get(i);
+  for (int i=0; i < network.hBias.length; i++)   buffer[idx++]=network.hBias.get(i);
+}

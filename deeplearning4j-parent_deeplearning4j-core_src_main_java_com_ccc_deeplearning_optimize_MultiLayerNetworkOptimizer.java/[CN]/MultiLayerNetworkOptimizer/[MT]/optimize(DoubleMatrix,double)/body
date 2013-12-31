@@ -1,0 +1,31 @@
+{
+  MatrixUtil.ensureValidOutcomeMatrix(labels);
+  DoubleMatrix layerInput=network.sigmoidLayers[network.sigmoidLayers.length - 1].sample_h_given_v();
+  network.logLayer.input=layerInput;
+  network.logLayer.labels=labels;
+  double cost=network.negativeLogLikelihood();
+  boolean done=false;
+  while (!done) {
+    DoubleMatrix W=network.logLayer.W.dup();
+    network.logLayer.train(layerInput,labels,lr);
+    lr*=network.learningRateUpdate;
+    double currCost=network.negativeLogLikelihood();
+    if (currCost <= cost) {
+      double diff=Math.abs(cost - currCost);
+      if (diff <= errorTolerance) {
+        done=true;
+        log.info("Converged on finetuning at " + cost);
+        break;
+      }
+ else       cost=currCost;
+      errors.add(cost);
+      log.info("Found new log likelihood " + cost);
+    }
+ else     if (currCost > cost) {
+      done=true;
+      network.logLayer.W=W;
+      log.info("Converged on finetuning at " + cost + " due to a higher cost coming out than "+ currCost);
+      break;
+    }
+  }
+}

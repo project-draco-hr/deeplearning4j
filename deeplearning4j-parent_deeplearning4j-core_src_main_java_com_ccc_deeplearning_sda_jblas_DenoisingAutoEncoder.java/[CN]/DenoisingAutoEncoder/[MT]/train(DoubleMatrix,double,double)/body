@@ -1,21 +1,16 @@
 {
   this.input=x;
-  double p=1 - corruptionLevel;
-  DoubleMatrix tilde_x=getCorruptedInput(x,p);
-  DoubleMatrix y=getHiddenValues(tilde_x);
+  DoubleMatrix tildeX=getCorruptedInput(x,corruptionLevel);
+  DoubleMatrix y=getHiddenValues(tildeX);
   DoubleMatrix z=getReconstructedInput(y);
   DoubleMatrix L_h2=x.sub(z);
-  DoubleMatrix L_h1=L_h2.mmul(W).mul(y).mul(DoubleMatrix.ones(y.length).sub(y));
+  DoubleMatrix L_h1=L_h2.mmul(W).mul(y).mul(oneMinus(y));
   DoubleMatrix L_vbias=L_h2;
   DoubleMatrix L_hbias=L_h1;
-  DoubleMatrix L_W=tilde_x.transpose().mmul(L_h1).add(L_h2.transpose().mmul(y));
-  DoubleMatrix learnMulL_W=L_W.mul(lr);
-  this.W=W.add(learnMulL_W);
-  regularizeWeights(x.rows,lr);
-  DoubleMatrix L_hbias_mean=L_hbias.columnMeans();
-  DoubleMatrix L_vbias_mean=L_vbias.columnMeans();
-  L_hbias_mean=L_hbias_mean.mul(lr);
-  L_vbias_mean=L_vbias_mean.mul(lr);
+  DoubleMatrix L_W=tildeX.transpose().mmul(L_h1).add(L_h2.transpose().mmul(y)).mul(lr);
+  this.W=W.add(L_W).mul(momentum);
+  DoubleMatrix L_hbias_mean=L_hbias.columnMeans().mul(lr);
+  DoubleMatrix L_vbias_mean=L_vbias.columnMeans().mul(lr);
   this.hBias=hBias.add(L_hbias_mean);
   this.vBias=vBias.add(L_vbias_mean);
 }

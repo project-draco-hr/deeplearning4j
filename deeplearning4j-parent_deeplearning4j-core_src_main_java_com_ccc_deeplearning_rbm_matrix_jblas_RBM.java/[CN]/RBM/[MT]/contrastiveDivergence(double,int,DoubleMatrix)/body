@@ -3,7 +3,7 @@
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
-  DoubleMatrix nvMeans=null;
+  @SuppressWarnings("unused") DoubleMatrix nvMeans=null;
   DoubleMatrix nvSamples=null;
   DoubleMatrix nhMeans=null;
   DoubleMatrix nhSamples=null;
@@ -15,12 +15,11 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix wAdd=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate);
+  DoubleMatrix wAdd=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate).mul(momentum);
   W=W.add(wAdd);
   regularizeWeights(input.rows,learningRate);
-  DoubleMatrix vBiasAdd=mean(input.sub(nvSamples),0);
-  vBias=vBiasAdd.mul(learningRate);
-  DoubleMatrix hBiasAdd=mean(probHidden.getSecond().sub(nhMeans),0);
-  hBiasAdd=hBiasAdd.mul(learningRate);
+  DoubleMatrix vBiasAdd=mean(input.sub(nvSamples),0).mul(learningRate);
+  vBias=vBias.add(vBiasAdd);
+  DoubleMatrix hBiasAdd=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
   hBias=hBias.add(hBiasAdd);
 }

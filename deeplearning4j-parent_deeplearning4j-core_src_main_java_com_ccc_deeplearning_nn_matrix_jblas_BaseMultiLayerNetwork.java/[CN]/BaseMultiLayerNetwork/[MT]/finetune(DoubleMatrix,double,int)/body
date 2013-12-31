@@ -1,30 +1,4 @@
 {
-  MatrixUtil.ensureValidOutcomeMatrix(labels);
-  DoubleMatrix layerInput=this.sigmoidLayers[sigmoidLayers.length - 1].sample_h_given_v();
-  logLayer.input=layerInput;
-  logLayer.labels=labels;
-  double cost=this.negativeLogLikelihood();
-  boolean done=false;
-  while (!done) {
-    DoubleMatrix W=logLayer.W.dup();
-    logLayer.train(layerInput,labels,lr);
-    lr*=learningRateUpdate;
-    double currCost=this.negativeLogLikelihood();
-    if (currCost <= cost) {
-      double diff=Math.abs(cost - currCost);
-      if (diff <= 0.0000001) {
-        done=true;
-        log.info("Converged on finetuning at " + cost);
-        break;
-      }
- else       cost=currCost;
-      log.info("Found new log likelihood " + cost);
-    }
- else     if (currCost > cost) {
-      done=true;
-      logLayer.W=W;
-      log.info("Converged on finetuning at " + cost + " due to a higher cost coming out than "+ currCost);
-      break;
-    }
-  }
+  optimizer=new MultiLayerNetworkOptimizer(this);
+  optimizer.optimize(labels,lr);
 }

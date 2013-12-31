@@ -1,0 +1,13 @@
+{
+  if (index >= network.W.length) {
+    if (index >= network.vBias.length) {
+      int i=index - network.hBias.length;
+      network.hBias.put(i,value);
+    }
+ else {
+      int i=index - network.vBias.length;
+      network.vBias.put(i,value);
+    }
+  }
+  network.W.put(index,value);
+}

@@ -1,0 +1,18 @@
+{
+  ConjugateGradient lbfgs=new ConjugateGradient(this);
+  boolean done=false;
+  network.train(x,lr,extraParams);
+  while (!done) {
+    try {
+      done=lbfgs.optimize();
+    }
+ catch (    InvalidOptimizableException e) {
+      network.train(x,lr,extraParams);
+      log.warn("Invalid step taken; trying again. Error was ",e);
+    }
+catch (    OptimizationException e2) {
+      network.train(x,lr,extraParams);
+      log.warn("Invalid step taken; trying again. Error was ",e2);
+    }
+  }
+}

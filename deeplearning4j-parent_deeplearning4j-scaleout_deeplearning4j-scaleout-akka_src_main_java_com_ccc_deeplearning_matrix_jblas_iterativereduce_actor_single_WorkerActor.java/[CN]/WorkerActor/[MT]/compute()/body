@@ -1,5 +1,21 @@
 {
-  log.info("Training network");
-  network.trainTillConvergence(combinedInput,learningRate,extraParams);
+  int epochs=this.preTrainEpochs;
+  log.info("Training network line search " + epochs + " times");
+  Double currError=null;
+  int numIterated=0;
+  do {
+    network.trainTillConvergence(combinedInput,learningRate,extraParams);
+    double entropy=network.lossFunction(extraParams);
+    if (currError != null) {
+      double diff=Math.abs(currError - entropy);
+      if (diff <= 0.01) {
+        log.info("Trained line search " + numIterated + " times and converged on "+ entropy);
+        break;
+      }
+    }
+    currError=entropy;
+    numIterated++;
+  }
+ while (true);
   return new UpdateableSingleImpl(network);
 }

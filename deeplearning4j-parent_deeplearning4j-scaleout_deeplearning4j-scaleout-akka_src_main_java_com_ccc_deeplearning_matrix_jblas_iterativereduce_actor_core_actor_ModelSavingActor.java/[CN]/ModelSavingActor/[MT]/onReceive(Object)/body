@@ -1,6 +1,6 @@
 {
-  if (message instanceof UpdateableImpl) {
-    UpdateableImpl u=(UpdateableImpl)message;
+  if (message instanceof Updateable) {
+    Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)message;
     File save=new File(pathToSave);
     if (save.exists()) {
       File parent=save.getParentFile();
