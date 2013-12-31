@@ -1,10 +1,9 @@
 {
   MnistDataSetIterator fetcher=new MnistDataSetIterator(10,10);
   MersenneTwister rand=new MersenneTwister(123);
-  DenoisingAutoEncoder da=new DenoisingAutoEncoder.Builder().numberOfVisible(784).numHidden(500).withRandom(rand).withMomentum(0.9).build();
+  RBM da=new RBM.Builder().numberOfVisible(784).numHidden(500).withRandom(rand).withMomentum(0.1).build();
   DataSet first=fetcher.next();
-  da.trainTillConverge(first.getFirst(),0.1,0.8);
-  log.info(String.valueOf(da.optimizer.getErrors()));
+  for (int i=0; i < 100; i++)   da.trainTillConvergence(0.1,1,first.getFirst());
   DoubleMatrix reconstruct=da.reconstruct(first.getFirst());
   for (int i=0; i < first.numExamples(); i++) {
     DoubleMatrix draw1=first.get(i).getFirst().mul(255);
