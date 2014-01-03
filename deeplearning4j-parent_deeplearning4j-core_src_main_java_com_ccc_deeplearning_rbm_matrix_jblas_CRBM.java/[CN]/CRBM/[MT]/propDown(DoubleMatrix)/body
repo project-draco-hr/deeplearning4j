@@ -1,5 +1,3 @@
 {
-  DoubleMatrix preAct=h.mmul(W.transpose());
-  preAct=preAct.addRowVector(vBias);
-  return preAct;
+  return h.mmul(W.transpose()).addRowVector(vBias);
 }

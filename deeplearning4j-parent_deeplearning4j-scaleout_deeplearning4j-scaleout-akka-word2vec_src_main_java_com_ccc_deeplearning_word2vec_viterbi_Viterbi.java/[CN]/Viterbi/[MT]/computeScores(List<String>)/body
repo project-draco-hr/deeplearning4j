@@ -1,0 +1,9 @@
+{
+  DoubleMatrix scores=new DoubleMatrix(numLabels());
+  for (  Object feature : features) {
+    int f=featureIndex.indexOf(feature);
+    if (f < 0)     continue;
+    for (int i=0; i < scores.length; i++)     scores.put(i,weights.get(i,f));
+  }
+  return scores;
+}
