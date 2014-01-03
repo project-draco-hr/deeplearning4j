@@ -10,6 +10,9 @@
 ;
   final Counter<String> totalWords=new Counter<String>(factory);
   final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
+  if (syn0 == null) {
+    this.buildVocab(sentences);
+  }
   if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
   for (  final String sentence : sentences) {
     Future<Void> future=Futures.future(new Callable<Void>(){
