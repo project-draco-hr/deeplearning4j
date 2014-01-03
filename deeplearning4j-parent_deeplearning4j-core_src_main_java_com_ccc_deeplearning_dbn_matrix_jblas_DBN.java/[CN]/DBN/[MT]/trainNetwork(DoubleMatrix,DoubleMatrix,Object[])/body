@@ -5,8 +5,8 @@
   pretrain(input,k,lr,epochs);
   if (otherParams.length < 3)   finetune(labels,lr,epochs);
  else {
-    double finetuneLr=(double)otherParams[3];
-    int finetuneEpochs=(int)otherParams[4];
+    double finetuneLr=otherParams.length > 3 ? (double)otherParams[3] : lr;
+    int finetuneEpochs=otherParams.length > 4 ? (int)otherParams[4] : epochs;
     finetune(labels,finetuneLr,finetuneEpochs);
   }
 }

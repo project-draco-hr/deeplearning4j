@@ -1,4 +1,4 @@
 {
   optimizer=new MultiLayerNetworkOptimizer(this,lr);
-  optimizer.optimize(labels,lr);
+  optimizer.optimize(labels,lr,epochs);
 }
