@@ -1,5 +1,12 @@
 {
   int k=(int)extraParams[0];
+  numTimesIterated++;
+  if (this.k <= 0)   this.k=k;
+  if (numTimesIterated % 10 == 0) {
+    this.k++;
+  }
+  if (this.k >= 15)   this.k=15;
+  k=this.k;
   RBM r=(RBM)network;
   Pair<DoubleMatrix,DoubleMatrix> probHidden=r.sampleHiddenGivenVisible(r.input);
   DoubleMatrix chainStart=probHidden.getSecond();
