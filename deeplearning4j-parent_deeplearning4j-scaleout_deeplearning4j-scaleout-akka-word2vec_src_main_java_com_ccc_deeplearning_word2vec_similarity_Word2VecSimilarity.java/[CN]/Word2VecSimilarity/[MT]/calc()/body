@@ -1,0 +1,10 @@
+{
+  WordMetaData data=new WordMetaData(words1);
+  data.calc();
+  WordMetaData d2=new WordMetaData(words2);
+  d2.calc();
+  List<String> vocab=new ArrayList<String>(SetUtils.union(new HashSet<String>(data.wordList),new HashSet<String>(d2.wordList)));
+  DoubleMatrix m1=matrixFor(data,vocab);
+  DoubleMatrix m2=matrixFor(d2,vocab);
+  distance=m1.distance1(m2);
+}

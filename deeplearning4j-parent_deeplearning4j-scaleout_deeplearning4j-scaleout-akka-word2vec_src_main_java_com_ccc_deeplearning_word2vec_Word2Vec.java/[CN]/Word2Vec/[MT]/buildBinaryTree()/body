@@ -4,7 +4,7 @@
   while (heap.size() > 1) {
     VocabWord min1=heap.poll();
     VocabWord min2=heap.poll();
-    VocabWord add=new VocabWord(min1.wordFrequency + min2.wordFrequency,layerSize);
+    VocabWord add=new VocabWord(min1.getWordFrequency() + min2.getWordFrequency(),layerSize);
     int index=(vocab.size() + i);
     add.setIndex(index);
     add.setLeft(min1);
@@ -24,12 +24,16 @@
     int[] codes=triple.getSecond();
     int[] points=triple.getThird();
     VocabWord node=triple.getFirst();
-    if (node.index < vocab.size()) {
+    if (node == null) {
+      log.info("Node was null");
+      continue;
+    }
+    if (node.getIndex() < vocab.size()) {
       node.setCodes(codes);
       node.setPoints(points);
     }
  else {
-      int[] copy=plus(points,node.index - vocab.size());
+      int[] copy=plus(points,node.getIndex() - vocab.size());
       points=copy;
       triple.setThird(points);
       stack.add(new Triple<VocabWord,int[],int[]>(node.getLeft(),plus(codes,0),points));

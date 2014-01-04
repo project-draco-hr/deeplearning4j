@@ -1,8 +1,7 @@
 {
   ClassPathResource model=new ClassPathResource("/word2vecmodel.bin");
   File f=model.getFile();
-  Word2Vec vec=new Word2Vec();
-  vec.loadModel(f);
+  Word2Vec vec=Word2VecLoader.loadModel(f);
   int nIn=vec.getWindow() * vec.getSyn0().columns;
   CRBM r=null;
   File dir=new File("src/test/resources/articles");

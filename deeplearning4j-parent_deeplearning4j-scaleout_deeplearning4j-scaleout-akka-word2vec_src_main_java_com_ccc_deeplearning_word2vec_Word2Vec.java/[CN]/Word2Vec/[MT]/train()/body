@@ -9,35 +9,47 @@
   }
 ;
   final Counter<String> totalWords=new Counter<String>(factory);
-  final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
-  if (syn0 == null) {
+  if (syn0 == null && !sentences.isEmpty()) {
     this.buildVocab(sentences);
   }
   if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
-  for (  final String sentence : sentences) {
-    Future<Void> future=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        if (!sentence.isEmpty())         trainSentence(sentence,totalWords);
-        return null;
-      }
-    }
-,trainingSystem.dispatcher());
-    future.onComplete(new OnComplete<Void>(){
-      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
-        sentenceCounter.countDown();
-        if (sentenceCounter.getCount() % 10000 == 0) {
-          alpha=new Double(Math.max(MIN_ALPHA,alpha * (1 - 1.0 * totalWords.totalCount() / allWordsCount)));
-          log.info("Alpha updated " + alpha + " progress "+ sentenceCounter.getCount()+ " sentence size "+ sentences.size());
+  if (sentences.isEmpty()) {
+    if (fileIterator == null)     throw new IllegalStateException("Unable to train sentences, no iterator or sentences defined");
+ else {
+      if (!fileIterator.hasNext())       throw new IllegalStateException("File iterator does not appear to have any files to train on");
+      final CountDownLatch sentenceCounter=new CountDownLatch(numLines);
+      int numLinesIterated=0;
+      while (fileIterator.hasNext()) {
+        try {
+          LineIterator lines=FileUtils.lineIterator(fileIterator.next());
+          while (lines.hasNext()) {
+            final String sentence=lines.nextLine();
+            numLinesIterated++;
+            processSentence(sentence,sentenceCounter,totalWords);
+          }
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
         }
       }
+      try {
+        sentenceCounter.await();
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      if (numLinesIterated != numLines)       throw new IllegalStateException("We appear to have a misynchronized data set. Perhaps the wrong iterator was passed in?");
     }
-,trainingSystem.dispatcher());
   }
-  try {
-    sentenceCounter.await();
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
+ else {
+    final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
+    for (    final String sentence : sentences)     processSentence(sentence,sentenceCounter,totalWords);
+    try {
+      sentenceCounter.await();
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
   }
   if (trainingSystem != null)   trainingSystem.shutdown();
 }

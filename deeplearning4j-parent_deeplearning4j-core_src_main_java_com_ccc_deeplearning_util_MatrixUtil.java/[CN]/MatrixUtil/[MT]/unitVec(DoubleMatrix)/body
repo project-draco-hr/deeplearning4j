@@ -1,0 +1,5 @@
+{
+  double length=toScale.norm2();
+  if (length > 0)   return SimpleBlas.scal(1.0 / length,toScale);
+  return toScale;
+}

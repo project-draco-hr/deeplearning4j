@@ -1,5 +1,4 @@
 {
-  Map<String,VocabWord> vocab=new HashMap<String,VocabWord>();
   Queue<String> queue=new ArrayDeque<>(sentences);
   int count=0;
   while (!queue.isEmpty()) {
@@ -10,11 +9,11 @@
     if (count % 10000 == 0)     log.info("Processed  sentence " + count + " current word count "+ allWordsCount);
     while (tokenizer.hasMoreTokens()) {
       String token=tokenizer.nextToken();
-      VocabWord word=vocab.get(token);
+      VocabWord word=rawVocab.get(token);
       if (word != null)       word.increment();
  else {
         word=new VocabWord(1.0,layerSize);
-        vocab.put(token,word);
+        rawVocab.put(token,word);
       }
       if (word.getWordFrequency() >= minWordFrequency) {
         if (!this.vocab.containsKey(token)) {
@@ -25,8 +24,5 @@
       }
     }
   }
-  log.info("Building binary tree");
-  buildBinaryTree();
-  log.info("Resetting weights");
-  resetWeights();
+  setup();
 }

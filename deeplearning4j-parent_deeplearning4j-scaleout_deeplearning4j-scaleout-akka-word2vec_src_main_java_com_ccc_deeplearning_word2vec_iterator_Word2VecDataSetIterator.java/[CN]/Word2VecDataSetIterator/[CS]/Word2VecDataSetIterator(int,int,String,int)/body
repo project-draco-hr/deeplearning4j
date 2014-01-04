@@ -1,0 +1,3 @@
+{
+  super(batch,numExamples,new Word2VecDataFetcher(path,minWordFrequency));
+}

@@ -1,0 +1,7 @@
+{
+  DoubleMatrix m1=new DoubleMatrix(vocab.size(),vec.getLayerSize());
+  for (int i=0; i < vocab.size(); i++) {
+    m1.putRow(i,d.getVectorForWord(vocab.get(i)));
+  }
+  return m1;
+}
