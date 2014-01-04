@@ -1,0 +1,7 @@
+{
+  if (vec == null || labels == null || labels.isEmpty())   throw new IllegalArgumentException("Unable to initialize due to missing argument or empty label set");
+  this.batch=batch;
+  this.numExamples=numExamples;
+  this.vec=vec;
+  this.labels=labels;
+}

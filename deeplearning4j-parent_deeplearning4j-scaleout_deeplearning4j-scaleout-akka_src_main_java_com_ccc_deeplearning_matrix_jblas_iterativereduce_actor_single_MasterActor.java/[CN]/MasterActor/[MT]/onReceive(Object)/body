@@ -13,12 +13,19 @@
     if (updates.size() == partition) {
       masterResults=this.compute(updates,updates);
       if (listener != null)       listener.epochComplete(masterResults);
-      batchActor.tell(new ResetMessage(),getSelf());
-      epochsComplete++;
-      batchActor.tell(up,getSelf());
-      updates.clear();
       if (epochsComplete == conf.getInt(PRE_TRAIN_EPOCHS)) {
         isDone=true;
+        batchActor.tell(up,getSelf());
+        updates.clear();
+        Cluster.get(this.getContext().system()).down(Cluster.get(getContext().system()).selfAddress());
+        context().system().shutdown();
+        log.info("Last iteration; left cluster");
+      }
+ else {
+        batchActor.tell(new ResetMessage(),getSelf());
+        epochsComplete++;
+        batchActor.tell(up,getSelf());
+        updates.clear();
       }
     }
   }

@@ -20,7 +20,7 @@
       if (epochsComplete == conf.getInt(PRE_TRAIN_EPOCHS)) {
         isDone=true;
         log.info("All done; shutting down");
-        context().system().shutdown();
+        Cluster.get(this.getContext().system()).down(Cluster.get(getContext().system()).selfAddress());
       }
     }
   }

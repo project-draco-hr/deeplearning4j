@@ -1,0 +1,31 @@
+{
+  files=FileUtils.iterateFiles(new File(path),null,true);
+  vec=new Word2Vec();
+  Set<String> labels=new HashSet<String>();
+  while (files.hasNext()) {
+    File next=files.next();
+    try {
+      LineIterator lines=FileUtils.lineIterator(next);
+      for (String line=lines.nextLine(); lines.hasNext(); ) {
+        vec.addSentence(line);
+        Matcher beginMatcher=begin.matcher(line);
+        Matcher endMatcher=end.matcher(line);
+        while (beginMatcher.find() && endMatcher.find()) {
+          String beginGroup=beginMatcher.group();
+          String endGroup=endMatcher.group();
+          beginGroup=beginGroup.replace("<","").replace(">","");
+          endGroup=endGroup.replace("<","").replace(">","");
+          if (beginGroup.equals(endGroup)) {
+            labels.add(beginGroup);
+          }
+        }
+      }
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  vec.train();
+  files=FileUtils.iterateFiles(new File(path),null,true);
+  this.labels.addAll(labels);
+}

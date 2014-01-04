@@ -1,0 +1,5 @@
+{
+  ActorNetworkRunnerApp app=new ActorNetworkRunnerApp(args);
+  app.exec();
+  if (app.type.equals("master"))   app.train();
+}
