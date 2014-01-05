@@ -3,16 +3,9 @@
   data.calc();
   WordMetaData d2=new WordMetaData(words2);
   d2.calc();
-  List<String> vocab=new ArrayList<String>(SetUtils.union(new HashSet<String>(data.wordList),new HashSet<String>(d2.wordList)));
-  DoubleMatrix m1=MatrixUtil.unitVec(matrixFor(data,vocab));
-  DoubleMatrix m2=MatrixUtil.unitVec(matrixFor(d2,vocab));
-  crbm=new CRBM.Builder().withRandom(new MersenneTwister(123)).numberOfVisible(m1.columns).numHidden(m1.columns).build();
-  DoubleMatrix c1=matrixFor(data,vocab);
-  DoubleMatrix c2=matrixFor(d2,vocab);
-  for (int i=0; i < 5; i++)   crbm.trainTillConvergence(0.1,1,c1);
-  DoubleMatrix reconstruct1=crbm.reconstruct(c1);
-  DoubleMatrix reconstruct2=crbm.reconstruct(c2);
-  log.info("Un transformed distance " + m1.distance1(m2));
-  distance=reconstruct1.distance1(reconstruct2);
-  log.info("Reconstructed distance " + distance);
+  List<String> vocab=new ArrayList<String>(SetUtils.intersection(new HashSet<String>(data.wordList),new HashSet<String>(d2.wordList)));
+  DoubleMatrix m1=matrixFor(data,vocab);
+  DoubleMatrix m2=matrixFor(d2,vocab);
+  distance=m1.distance1(m2);
+  log.info("distance " + distance);
 }
