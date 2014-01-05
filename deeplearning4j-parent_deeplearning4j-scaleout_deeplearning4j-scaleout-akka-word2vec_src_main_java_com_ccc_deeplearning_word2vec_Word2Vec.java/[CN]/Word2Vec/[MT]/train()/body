@@ -1,5 +1,6 @@
 {
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   MapFactory<String,Double> factory=new MapFactory<String,Double>(){
     private static final long serialVersionUID=5447027920163740307L;
@@ -38,7 +39,9 @@
  catch (      InterruptedException e) {
         Thread.currentThread().interrupt();
       }
-      if (numLinesIterated != numLines)       throw new IllegalStateException("We appear to have a misynchronized data set. Perhaps the wrong iterator was passed in?");
+      if (numLinesIterated != numLines) {
+        this.numLines=numLinesIterated;
+      }
     }
   }
  else {

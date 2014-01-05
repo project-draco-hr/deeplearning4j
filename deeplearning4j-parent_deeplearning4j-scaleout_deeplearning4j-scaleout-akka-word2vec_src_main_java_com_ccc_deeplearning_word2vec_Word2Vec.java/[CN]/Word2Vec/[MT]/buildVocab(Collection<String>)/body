@@ -1,4 +1,5 @@
 {
+  readStopWords();
   Queue<String> queue=new ArrayDeque<>(sentences);
   int count=0;
   while (!queue.isEmpty()) {
@@ -15,7 +16,7 @@
         word=new VocabWord(1.0,layerSize);
         rawVocab.put(token,word);
       }
-      if (word.getWordFrequency() >= minWordFrequency) {
+      if (word.getWordFrequency() >= minWordFrequency && !stopWords.contains(token)) {
         if (!this.vocab.containsKey(token)) {
           word.setIndex(this.vocab.size());
           this.vocab.put(token,word);

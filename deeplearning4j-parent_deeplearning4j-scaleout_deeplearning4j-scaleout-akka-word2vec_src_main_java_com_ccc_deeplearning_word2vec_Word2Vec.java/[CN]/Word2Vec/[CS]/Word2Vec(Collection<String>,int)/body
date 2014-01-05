@@ -5,4 +5,5 @@
   this.buildVocab(sentences);
   oob=new double[layerSize];
   Arrays.fill(oob,0.0);
+  readStopWords();
 }
