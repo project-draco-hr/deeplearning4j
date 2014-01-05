@@ -5,7 +5,6 @@
   String techcrunch2=FileUtils.readFileToString(new File("src/test/resources/articles/techcrunch/-2013-12-09-facebook-artificial-intelligence-lab-lecun-"));
   String venturebeat2=FileUtils.readFileToString(new File("src/test/resources/articles/venturebeat/-2013-12-09-zuckerberg-to-talk-about-facebooks-artificial-intelligence-plans-"));
   Word2Vec vec=Word2VecLoader.loadModel(new ClassPathResource("/word2vecmodel-techblogs.bin").getFile());
-  log.info("Analogy " + vec.analogy("Facebook","Twitter","Google"));
   eval(vec,techcrunch,venturebeat,other);
   log.info("Next test");
   eval(vec,techcrunch2,venturebeat2,other);
