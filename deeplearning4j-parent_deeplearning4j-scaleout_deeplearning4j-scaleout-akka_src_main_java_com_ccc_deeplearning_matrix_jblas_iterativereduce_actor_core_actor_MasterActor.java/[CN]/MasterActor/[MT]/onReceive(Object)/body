@@ -20,6 +20,7 @@
       if (epochsComplete == conf.getInt(PRE_TRAIN_EPOCHS)) {
         isDone=true;
         log.info("All done; shutting down");
+        mediator.tell(new DistributedPubSubMediator.Publish(SHUTDOWN,new ShutdownMessage()),getSelf());
         Cluster.get(this.getContext().system()).down(Cluster.get(getContext().system()).selfAddress());
       }
     }

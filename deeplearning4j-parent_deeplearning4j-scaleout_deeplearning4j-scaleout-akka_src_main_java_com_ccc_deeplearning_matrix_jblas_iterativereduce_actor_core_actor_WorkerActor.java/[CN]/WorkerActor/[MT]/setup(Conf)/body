@@ -4,7 +4,6 @@
   numVisible=conf.getInt(N_IN);
   numHiddenNeurons=conf.getIntsWithSeparator(LAYER_SIZES,",").length;
   seed=conf.getLong(SEED);
-  RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
   learningRate=conf.getDouble(LEARNING_RATE);
   preTrainEpochs=conf.getInt(PRE_TRAIN_EPOCHS);
   fineTuneEpochs=conf.getInt(FINE_TUNE_EPOCHS);
