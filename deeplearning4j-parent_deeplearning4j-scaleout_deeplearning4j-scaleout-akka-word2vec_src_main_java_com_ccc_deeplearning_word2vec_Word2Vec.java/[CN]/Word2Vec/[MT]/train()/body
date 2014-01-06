@@ -24,7 +24,7 @@
         try {
           LineIterator lines=FileUtils.lineIterator(fileIterator.next());
           while (lines.hasNext()) {
-            final String sentence=lines.nextLine();
+            final String sentence=lines.nextLine().replaceAll("\\p{P}","");
             numLinesIterated++;
             processSentence(sentence,sentenceCounter,totalWords);
           }

@@ -16,7 +16,7 @@
         word=new VocabWord(1.0,layerSize);
         rawVocab.put(token,word);
       }
-      if (word.getWordFrequency() >= minWordFrequency && !stopWords.contains(token)) {
+      if (word.getWordFrequency() >= minWordFrequency && !matchesAnyStopWord(token)) {
         if (!this.vocab.containsKey(token)) {
           word.setIndex(this.vocab.size());
           this.vocab.put(token,word);

@@ -1,10 +1,30 @@
 {
-  WordMetaData data=new WordMetaData(vec,words1);
-  data.calc();
+  WordMetaData d1=new WordMetaData(vec,words1);
   WordMetaData d2=new WordMetaData(vec,words2);
+  d1.calc();
   d2.calc();
-  List<String> vocab=new ArrayList<String>(SetUtils.union(new HashSet<String>(data.getWordList()),new HashSet<String>(d2.getWordList())));
-  DoubleMatrix m1=matrixFor(data,vocab);
-  DoubleMatrix m2=matrixFor(d2,vocab).mini(vocab.size());
-  distance=m1.distance1(m2);
+  Set<String> vocab=SetUtils.union(d1.getWordCounts().keySet(),d2.getWordCounts().keySet());
+  Set<String> remove=new HashSet<String>();
+  for (  String word : vocab) {
+    if (vec.matchesAnyStopWord(word))     remove.add(word);
+  }
+  vocab.removeAll(remove);
+  Set<String> inter=SetUtils.intersection(d1.getWordCounts().keySet(),d2.getWordCounts().keySet());
+  inter.removeAll(remove);
+  List<String> wordList=new ArrayList<String>(vocab);
+  DoubleMatrix a1Matrix=new DoubleMatrix(wordList.size(),vec.getLayerSize());
+  DoubleMatrix a2Matrix=new DoubleMatrix(wordList.size(),vec.getLayerSize());
+  for (int i=0; i < wordList.size(); i++) {
+    if (d1.getWordCounts().getCount(wordList.get(i)) > 0) {
+      a1Matrix.putRow(i,vec.getWordVectorMatrix(wordList.get(i)));
+    }
+ else     a1Matrix.putRow(i,DoubleMatrix.zeros(vec.getLayerSize()));
+    if (d2.getWordCounts().getCount(wordList.get(i)) > 0) {
+      a2Matrix.putRow(i,vec.getWordVectorMatrix(wordList.get(i)));
+    }
+ else     a2Matrix.putRow(i,DoubleMatrix.zeros(vec.getLayerSize()));
+  }
+  double wordSim=(double)inter.size() / (double)wordList.size();
+  double finalScore=MatrixUtil.cosineSim(a1Matrix,a2Matrix) * wordSim;
+  distance=finalScore;
 }
