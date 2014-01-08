@@ -5,8 +5,9 @@
   network.logLayer.labels=labels;
   network.logLayer.train(layerInput,labels,lr);
   lr*=network.learningRateUpdate;
-  opt=new cc.mallet.optimize.LimitedMemoryBFGS(this);
+  opt=new cc.mallet.optimize.ConjugateGradient(this);
   boolean done=false;
+  int numTimesFailed=0;
   for (int i=0; i < epochs; i++)   while (!done) {
     try {
       done=opt.optimize();
@@ -14,6 +15,12 @@
  catch (    InvalidOptimizableException e) {
       network.logLayer.input=layerInput;
       network.logLayer.labels=labels;
+      numTimesFailed++;
+      if (numTimesFailed >= 5) {
+        done=true;
+        log.warn("Too many optimization errors; breaking");
+        continue;
+      }
       network.logLayer.train(layerInput,labels,lr);
       lr*=network.learningRateUpdate;
       log.warn("Invalid step taken; trying again. Error was ",e);
@@ -21,6 +28,12 @@
 catch (    OptimizationException e2) {
       network.logLayer.input=layerInput;
       network.logLayer.labels=labels;
+      numTimesFailed++;
+      if (numTimesFailed >= 5) {
+        done=true;
+        log.warn("Too many optimization errors; breaking");
+        continue;
+      }
       network.logLayer.train(layerInput,labels,lr);
       lr*=network.learningRateUpdate;
       log.warn("Invalid step taken; trying again. Error was ",e2);

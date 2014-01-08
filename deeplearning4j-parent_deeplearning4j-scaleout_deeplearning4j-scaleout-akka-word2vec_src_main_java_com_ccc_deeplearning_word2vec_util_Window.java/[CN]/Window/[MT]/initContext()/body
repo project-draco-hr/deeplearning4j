@@ -4,12 +4,12 @@
   List<String> after=words.subList(median + 1,words.size());
   for (  String s : begin) {
     if (s.matches(BEGIN_LABEL)) {
-      this.label=s.replaceAll("(<|>)","");
+      this.label=s.replaceAll("(<|>)","").replace("/","");
       beginLabel=true;
     }
  else     if (s.matches(END_LABEL)) {
       endLabel=true;
-      this.label=s.replaceAll("(<|>|/)","");
+      this.label=s.replaceAll("(<|>|/)","").replace("/","");
     }
   }
   for (  String s1 : after) {

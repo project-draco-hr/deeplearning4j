@@ -1,0 +1,20 @@
+{
+  if (training == null || training.isEmpty())   return;
+  List<String> words=new ArrayList<String>();
+  StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(training).transform());
+  while (tokenizer.hasMoreTokens()) {
+    String token=tokenizer.nextToken();
+    if (token.charAt(0) == '<' && token.endsWith(">"))     token=token.toUpperCase();
+    words.add(token);
+  }
+  String currLabel="NONE";
+  List<Window> windows=Windows.windows(words,vec.getWindow());
+  for (  Window window : windows) {
+    if (window.isBeginLabel())     currLabel=window.getLabel();
+ else     if (window.isEndLabel())     currLabel="NONE";
+    exampleString.add(window);
+    if (trainWord2Vec)     vec.addSentence(window.asTokens());
+    trainingOutput.add(outcome(currLabel));
+    stringOutcomes.add(currLabel);
+  }
+}

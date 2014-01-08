@@ -1,0 +1,4 @@
+{
+  if (exampleString != null)   for (  Window training : exampleString)   trainingExamples.add(WindowConverter.asExample(training,vec));
+ else   log.warn("Unable to add word vectors; exampleString is null");
+}

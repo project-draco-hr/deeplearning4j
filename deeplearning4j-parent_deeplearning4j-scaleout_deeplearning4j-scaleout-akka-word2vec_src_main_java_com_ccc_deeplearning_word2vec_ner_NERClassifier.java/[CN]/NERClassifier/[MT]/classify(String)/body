@@ -1,0 +1,16 @@
+{
+  log.info("RUNNING " + words);
+  List<Window> windows=Windows.windows(new InputHomogenization(words).transform());
+  double[][] ret=new double[windows.size()][labels.size() + 1];
+  if (viterbi == null) {
+  }
+  for (int i=0; i < windows.size(); i++) {
+    Window window=windows.get(i);
+    log.info("PREDICTION FOR " + window);
+    DoubleMatrix toPredict=prop.predict(new DoubleMatrix(WindowConverter.asExample(window,vec)));
+    ret[i]=toPredict.toArray();
+    log.info(toPredict.toString());
+  }
+  log.info("============================");
+  return new DoubleMatrix(ret);
+}
