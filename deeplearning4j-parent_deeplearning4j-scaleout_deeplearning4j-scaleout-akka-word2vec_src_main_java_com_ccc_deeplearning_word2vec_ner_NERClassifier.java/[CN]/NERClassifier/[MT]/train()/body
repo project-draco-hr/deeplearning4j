@@ -17,9 +17,11 @@
   }
   stats.normalize();
   log.info(stats.toString());
-  DataSet d=new DataSet(inputs,outputs);
-  prop=new CDBN.Builder().hiddenLayerSizes(numNodes).numberOfInputs(inputs.columns).numberOfOutPuts(outputs.columns).withRng(new MersenneTwister(123)).build();
-  DataSet train=d;
-  prop.trainNetwork(train.getFirst(),train.getSecond(),deepLearningParams);
-  initializeViterbi(d);
+  if (trainDeepNet) {
+    DataSet d=new DataSet(inputs,outputs);
+    prop=new CDBN.Builder().hiddenLayerSizes(numNodes).numberOfInputs(inputs.columns).numberOfOutPuts(outputs.columns).withRng(new MersenneTwister(123)).build();
+    DataSet train=d;
+    prop.trainNetwork(train.getFirst(),train.getSecond(),deepLearningParams);
+    initializeViterbi(d);
+  }
 }

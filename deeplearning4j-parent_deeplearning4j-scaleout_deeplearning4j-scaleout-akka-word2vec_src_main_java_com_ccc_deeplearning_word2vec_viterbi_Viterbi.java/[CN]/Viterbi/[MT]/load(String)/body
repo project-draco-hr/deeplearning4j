@@ -1,0 +1,5 @@
+{
+  Viterbi v=new Viterbi();
+  v.load(new BufferedInputStream(new FileInputStream(new File(path))));
+  return v;
+}
