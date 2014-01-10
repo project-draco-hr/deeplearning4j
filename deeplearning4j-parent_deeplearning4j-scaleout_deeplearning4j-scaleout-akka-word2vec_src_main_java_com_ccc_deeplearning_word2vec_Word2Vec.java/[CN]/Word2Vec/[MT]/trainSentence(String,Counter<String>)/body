@@ -3,6 +3,7 @@
   List<VocabWord> sentence2=new ArrayList<VocabWord>();
   while (tokenizer.hasMoreTokens()) {
     String next=tokenizer.nextToken();
+    if (stopWords.contains(next))     next="STOP";
     VocabWord word=vocab.get(next);
     if (word == null)     continue;
     sentence2.add(word);

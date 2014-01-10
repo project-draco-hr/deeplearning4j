@@ -1,0 +1,5 @@
+{
+  super.setup(conf);
+  RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
+  network=new Word2VecMultiLayerNetwork.Builder().withWord2Vec(vec).numberOfInputs(numVisible).numberOfOutPuts(numHidden).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).withClazz(conf.getClazz(CLASS)).build();
+}

@@ -1,4 +1,5 @@
 {
+  words=new InputHomogenization(words).transform();
   List<Window> windows=Windows.windows(words);
   List<String> labels=new ArrayList<String>();
   DoubleMatrix classified=classify(words);

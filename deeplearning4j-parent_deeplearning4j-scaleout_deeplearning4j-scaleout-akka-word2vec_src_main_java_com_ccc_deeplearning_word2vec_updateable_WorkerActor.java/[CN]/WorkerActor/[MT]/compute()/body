@@ -1,0 +1,5 @@
+{
+  log.info("Training network");
+  network.trainNetwork(combinedInput,outcomes,extraParams);
+  return new Word2VecUpdateable(network);
+}

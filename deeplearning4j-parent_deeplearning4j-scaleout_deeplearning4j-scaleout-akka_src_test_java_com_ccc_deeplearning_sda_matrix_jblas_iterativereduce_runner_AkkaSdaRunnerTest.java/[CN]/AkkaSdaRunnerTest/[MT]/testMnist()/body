@@ -1,7 +1,7 @@
 {
   MnistDataSetIterator fetcher=new MnistDataSetIterator(60,600);
   runner=new ActorNetworkRunner("master",fetcher);
-  conf.put(CLASS,"com.ccc.deeplearning.sda.jblas.StackedDenoisingAutoEncoder");
+  conf.put(CLASS,"com.ccc.deeplearning.sda.StackedDenoisingAutoEncoder");
   conf.put(LAYER_SIZES,Arrays.toString(hidden_layer_sizes_arr).replace("[","").replace("]","").replace(" ",""));
   conf.put(SPLIT,String.valueOf(10));
   conf.put(PRE_TRAIN_EPOCHS,String.valueOf(1));

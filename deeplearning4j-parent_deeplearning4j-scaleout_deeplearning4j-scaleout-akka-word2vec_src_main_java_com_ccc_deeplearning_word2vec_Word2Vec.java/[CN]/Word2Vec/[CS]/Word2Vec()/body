@@ -1,6 +1,6 @@
 {
   createExpTable();
   oob=new double[layerSize];
-  Arrays.fill(oob,1.0);
+  Arrays.fill(oob,0.0);
   readStopWords();
 }

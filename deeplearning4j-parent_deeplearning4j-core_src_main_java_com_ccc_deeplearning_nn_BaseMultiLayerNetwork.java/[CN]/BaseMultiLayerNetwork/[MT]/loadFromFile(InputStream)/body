@@ -1,0 +1,11 @@
+{
+  try {
+    ObjectInputStream ois=new ObjectInputStream(is);
+    log.info("Loading network model...");
+    BaseMultiLayerNetwork loaded=(BaseMultiLayerNetwork)ois.readObject();
+    return loaded;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

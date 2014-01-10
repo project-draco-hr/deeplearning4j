@@ -16,6 +16,8 @@
   for (position=1; position < data.size(); position++) {
     int i=position * numLabels() - 1;
     for (int j=0; j < numLabels(); j++) {
+      int datumToEval=i + j;
+      if (datumToEval >= dataWithMultiplePrevLabels.size())       break;
       Datum datum=dataWithMultiplePrevLabels.get(i + j);
       String previousLabel=datum.previousLabel;
       if (previousLabel == null)       throw new IllegalStateException("Datum previous word can NEVER be null");

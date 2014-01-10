@@ -1,0 +1,11 @@
+{
+  ByteArrayOutputStream os=new ByteArrayOutputStream();
+  try {
+    ObjectOutputStream os2=new ObjectOutputStream(os);
+    os2.writeObject(wrapped);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  return ByteBuffer.wrap(os.toByteArray());
+}

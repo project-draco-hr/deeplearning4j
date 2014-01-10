@@ -1,0 +1,5 @@
+{
+  super.update(matrix);
+  Word2VecMultiLayerNetwork network=(Word2VecMultiLayerNetwork)matrix;
+  this.vec=network.vec;
+}
