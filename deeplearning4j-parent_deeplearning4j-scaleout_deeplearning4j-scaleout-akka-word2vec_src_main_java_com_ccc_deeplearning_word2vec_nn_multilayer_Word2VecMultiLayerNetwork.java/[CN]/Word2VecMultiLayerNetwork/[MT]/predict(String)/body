@@ -3,7 +3,7 @@
   double[][] ret=new double[windows.size()][labels.size()];
   for (int i=0; i < windows.size(); i++) {
     Window window=windows.get(i);
-    DoubleMatrix prediction=MatrixUtil.normalize(new DoubleMatrix(WindowConverter.asExample(window,vec)));
+    DoubleMatrix prediction=new DoubleMatrix(WindowConverter.asExample(window,vec));
     DoubleMatrix toPredict=super.predict(prediction);
     ret[i]=toPredict.toArray();
   }

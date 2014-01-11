@@ -1,14 +1,20 @@
 {
-  @SuppressWarnings("unchecked") List<String> example=IOUtils.readLines(new ClassPathResource("/deeplearning/ADDRESS-small.split").getInputStream());
-  example=example.subList(0,20);
-  network.pretrain(example,1,0.01,1000);
-  network.finetune(0.01,1000,example,Arrays.asList("NONE","ADDRESS"));
+  @SuppressWarnings("unchecked") List<String> example=IOUtils.readLines(new ClassPathResource("/deeplearning/ADDRESS.split").getInputStream());
+  example=example.subList(0,500);
+  network.pretrain(example,1,0.001,500);
+  network.finetune(0.001,1000,example,Arrays.asList("NONE","ADDRESS"));
+  Evaluation eval=new Evaluation();
   for (int i=0; i < example.size(); i++) {
     if (example.get(i).isEmpty()) {
       continue;
     }
     log.info("Predicting " + example.get(i));
     DoubleMatrix m=network.predict(example.get(i));
-    log.info(m.toString());
+    List<Window> windows=Windows.windows(example.get(i));
+    StringBuffer print=new StringBuffer();
+    for (int w=0; w < windows.size(); w++) {
+      print.append("Classification for " + windows.get(w).asTokens() + " was "+ m.getRow(w)+ "\n");
+    }
+    log.info(print.toString());
   }
 }

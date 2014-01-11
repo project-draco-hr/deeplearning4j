@@ -1,0 +1,27 @@
+{
+  conf=new Conf();
+  int[] hiddenLayerSizes={vec.getLayerSize(),vec.getLayerSize()};
+  int pretrainEpochs=300;
+  int finetuneEpochs=300;
+  long rngSeed=123;
+  double pretrainLearningRate=0.001;
+  double corruptionLevel=0.3;
+  int split=100;
+  int k=1;
+  double finetuneLearningRate=0.001;
+  String algorithm="wordcdbn";
+  conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
+  conf.put(SPLIT,String.valueOf(10));
+  conf.put(N_IN,String.valueOf(iter.inputColumns()));
+  conf.put(OUT,String.valueOf(iter.totalOutcomes()));
+  conf.put(PRE_TRAIN_EPOCHS,String.valueOf(pretrainEpochs));
+  conf.put(FINE_TUNE_EPOCHS,String.valueOf(finetuneEpochs));
+  conf.put(SEED,String.valueOf(rngSeed));
+  conf.put(LEARNING_RATE,String.valueOf(pretrainLearningRate));
+  conf.put(LAYER_SIZES,Arrays.toString(hiddenLayerSizes).replace("[","").replace("]","").replace(" ",""));
+  conf.put(CORRUPTION_LEVEL,corruptionLevel);
+  conf.put(SPLIT,String.valueOf(split));
+  conf.put(PARAMS,new ExtraParamsBuilder().algorithm(algorithm).corruptionlevel(corruptionLevel).finetuneEpochs(finetuneEpochs).k(k).finetuneLearningRate(finetuneLearningRate).learningRate(pretrainLearningRate).epochs(pretrainEpochs).build());
+  runner=new ActorNetworkRunner("master",iter,vec,labels);
+  runner.setup(conf);
+}

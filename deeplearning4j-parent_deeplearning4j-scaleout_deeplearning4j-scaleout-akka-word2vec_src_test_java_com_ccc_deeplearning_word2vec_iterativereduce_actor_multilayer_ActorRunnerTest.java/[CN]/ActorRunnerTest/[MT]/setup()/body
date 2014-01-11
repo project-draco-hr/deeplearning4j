@@ -1,0 +1,11 @@
+{
+  labels=Arrays.asList("NONE","ADDRESS");
+  try {
+    vec=Word2VecLoader.loadModel(new ClassPathResource("/word2vec-address.bin").getFile());
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  this.iter=new Word2VecDataSetIteratorImpl(new ClassPathResource("/deeplearning/").getFile().getAbsolutePath(),labels,200,vec);
+  if (conf == null)   setupConf();
+}

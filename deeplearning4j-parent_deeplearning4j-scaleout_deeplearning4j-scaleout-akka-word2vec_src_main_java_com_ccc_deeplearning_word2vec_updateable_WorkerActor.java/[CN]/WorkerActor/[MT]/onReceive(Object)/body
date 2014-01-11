@@ -4,7 +4,7 @@
     log.info("Subscribed to " + ack.toString());
   }
  else   if (message instanceof List) {
-    List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
+    List<Window> input=(List<Window>)message;
     updateTraining(input);
   }
  else   if (message instanceof UpdateMessage) {

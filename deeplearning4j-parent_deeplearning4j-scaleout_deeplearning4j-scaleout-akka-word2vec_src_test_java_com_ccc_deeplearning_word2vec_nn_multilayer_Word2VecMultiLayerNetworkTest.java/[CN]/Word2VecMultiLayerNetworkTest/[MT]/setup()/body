@@ -4,7 +4,7 @@
   }
   if (network == null) {
     int inputs=vec.getLayerSize() * vec.getWindow();
-    int[] hiddenLayerSizes={inputs,inputs * 2};
+    int[] hiddenLayerSizes={inputs * 4,inputs * 2,inputs};
     network=new Word2VecMultiLayerNetwork.Builder().withWord2Vec(vec).withRng(new MersenneTwister(123)).numberOfInputs(inputs).withActivation(new HardTanh()).numberOfOutPuts(2).hiddenLayerSizes(hiddenLayerSizes).build();
   }
 }

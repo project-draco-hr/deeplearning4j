@@ -29,8 +29,7 @@
   }
  else   if (message instanceof List || message instanceof Pair) {
     if (message instanceof List) {
-      List<Pair<DoubleMatrix,DoubleMatrix>> list=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
-      splitListIntoRows(list);
+      List<Window> list=(List<Window>)message;
       sendToWorkers(list);
     }
  else     if (message instanceof Pair) {

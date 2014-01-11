@@ -1,0 +1,5 @@
+{
+  super();
+  put(PARAM_ALGORITHM,WORD2VEC_CDBN);
+  put(CLASS,"com.ccc.deeplearning.word2vec.nn.multilayer.Word2VecMultiLayerNetwork");
+}
