@@ -3,8 +3,6 @@
     vec=Word2VecLoader.loadModel(new ClassPathResource("/word2vec-address.bin").getFile());
   }
   if (network == null) {
-    int inputs=vec.getLayerSize() * vec.getWindow();
-    int[] hiddenLayerSizes={inputs * 4,inputs * 2,inputs};
-    network=new Word2VecMultiLayerNetwork.Builder().withWord2Vec(vec).withRng(new MersenneTwister(123)).numberOfInputs(inputs).withActivation(new HardTanh()).numberOfOutPuts(2).hiddenLayerSizes(hiddenLayerSizes).build();
+    network=(Word2VecMultiLayerNetwork)BaseMultiLayerNetwork.loadFromFile(new BufferedInputStream(new ClassPathResource("/nn-model.bin").getInputStream()));
   }
 }

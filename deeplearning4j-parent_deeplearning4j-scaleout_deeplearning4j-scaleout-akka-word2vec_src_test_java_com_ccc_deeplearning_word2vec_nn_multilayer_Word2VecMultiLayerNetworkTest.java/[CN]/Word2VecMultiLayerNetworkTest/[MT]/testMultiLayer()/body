@@ -1,8 +1,6 @@
 {
   @SuppressWarnings("unchecked") List<String> example=IOUtils.readLines(new ClassPathResource("/deeplearning/ADDRESS.split").getInputStream());
   example=example.subList(0,500);
-  network.pretrain(example,1,0.001,500);
-  network.finetune(0.001,1000,example,Arrays.asList("NONE","ADDRESS"));
   Evaluation eval=new Evaluation();
   for (int i=0; i < example.size(); i++) {
     if (example.get(i).isEmpty()) {

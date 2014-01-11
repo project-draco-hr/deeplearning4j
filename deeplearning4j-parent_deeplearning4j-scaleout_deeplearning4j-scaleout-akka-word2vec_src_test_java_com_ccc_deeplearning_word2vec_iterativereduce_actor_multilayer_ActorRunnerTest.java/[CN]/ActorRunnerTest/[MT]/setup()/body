@@ -6,6 +6,6 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  this.iter=new Word2VecDataSetIteratorImpl(new ClassPathResource("/deeplearning/").getFile().getAbsolutePath(),labels,200,vec);
+  this.iter=new Word2VecDataSetIteratorImpl("/home/agibsonccc/datasets/ADDRESS",labels,200,vec);
   if (conf == null)   setupConf();
 }
