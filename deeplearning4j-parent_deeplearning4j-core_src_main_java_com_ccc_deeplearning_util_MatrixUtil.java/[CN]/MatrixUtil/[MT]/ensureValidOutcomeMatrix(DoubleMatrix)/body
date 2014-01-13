@@ -6,5 +6,8 @@
       break;
     }
   }
-  if (!found)   throw new IllegalStateException("Found a matrix without an outcome");
+  if (!found) {
+    log.warn("Found invalid matrix assuming; nothing which means adding a 1 to the first spot");
+    out.put(0,1.0);
+  }
 }

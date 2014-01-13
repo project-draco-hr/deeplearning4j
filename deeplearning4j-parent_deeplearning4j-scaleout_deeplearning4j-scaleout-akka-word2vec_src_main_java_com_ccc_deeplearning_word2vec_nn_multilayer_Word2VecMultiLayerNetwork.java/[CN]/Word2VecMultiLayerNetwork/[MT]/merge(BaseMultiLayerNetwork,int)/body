@@ -1,14 +1,3 @@
 {
   super.merge(network,batchSize);
-  Word2VecMultiLayerNetwork network2=(Word2VecMultiLayerNetwork)network;
-  DoubleMatrix curr=vec.getSyn0();
-  DoubleMatrix delta=network2.vec.getSyn0();
-  if (delta.length != curr.length)   throw new IllegalArgumentException("Unmergable, must be at least same length");
-  for (int i=0; i < curr.rows; i++) {
-    double diff=delta.sum() - curr.sum();
-    if (diff != 0) {
-      DoubleMatrix gradient=delta.add(curr).div(batchSize);
-      vec.getSyn0().putRow(i,gradient);
-    }
-  }
 }

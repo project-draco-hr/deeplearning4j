@@ -1,6 +1,10 @@
 {
   int columns=vec.getLayerSize() * vec.getWindow();
   int rows=windows.size();
+  if (rows < 1) {
+    log.info("Unable to train on empty windows; returning");
+    return;
+  }
   List<Window> w=new ArrayList<Window>(windows);
   DoubleMatrix ret=new DoubleMatrix(rows,columns);
   DoubleMatrix labels=new DoubleMatrix(rows,this.labels.size());

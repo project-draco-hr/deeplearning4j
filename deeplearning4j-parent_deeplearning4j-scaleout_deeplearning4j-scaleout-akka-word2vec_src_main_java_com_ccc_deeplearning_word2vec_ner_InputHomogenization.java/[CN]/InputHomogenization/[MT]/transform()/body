@@ -6,5 +6,8 @@
  else     if (Character.isUpperCase(input.charAt(i)))     sb.append(Character.toLowerCase(input.charAt(i)));
  else     sb.append(input.charAt(i));
   }
+  String normalized=Normalizer.normalize(sb.toString(),Form.NFD);
+  normalized=normalized.replaceAll("[^\\p{InCombiningDiacriticalMarks}]","");
+  normalized=normalized.replaceAll("[^\\p{ASCII}]","");
   return sb.toString();
 }

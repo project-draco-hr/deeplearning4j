@@ -3,9 +3,38 @@
   DoubleMatrix layerInput=network.sigmoidLayers[network.sigmoidLayers.length - 1].sample_h_given_v();
   network.logLayer.input=layerInput;
   network.logLayer.labels=labels;
+  DoubleMatrix w=network.logLayer.W.dup();
+  DoubleMatrix b=network.logLayer.b.dup();
+  Double currLoss=null;
+  Integer numTimesOver=null;
   for (int i=0; i < epochs; i++) {
     network.logLayer.train(layerInput,labels,lr);
     lr*=network.learningRateUpdate;
+    if (currLoss == null)     currLoss=network.negativeLogLikelihood();
+ else {
+      Double loss=network.negativeLogLikelihood();
+      if (loss > currLoss) {
+        if (numTimesOver == null)         numTimesOver=1;
+ else         numTimesOver++;
+        if (numTimesOver >= 5) {
+          log.info("Reverting weights and exiting...");
+          network.logLayer.W=w.dup();
+          network.logLayer.b=b.dup();
+          break;
+        }
+      }
+ else       if (loss < currLoss) {
+        w=network.logLayer.W.dup();
+        b=network.logLayer.b.dup();
+        currLoss=loss;
+      }
+    }
     log.info("Negative log likelihood on epoch " + i + " "+ network.negativeLogLikelihood());
+  }
+  double curr=network.negativeLogLikelihood();
+  if (curr > currLoss) {
+    network.logLayer.W=w.dup();
+    network.logLayer.b=b.dup();
+    log.info("Reverting to last known good state; converged after global minimum");
   }
 }

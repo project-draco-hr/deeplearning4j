@@ -1,0 +1,7 @@
+{
+  DoubleMatrix columnSums=m.columnSums();
+  for (int i=0; i < m.columns; i++) {
+    m.putColumn(i,m.getColumn(i).div(columnSums.get(i)));
+  }
+  return m;
+}
