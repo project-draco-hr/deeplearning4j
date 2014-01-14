@@ -1,0 +1,22 @@
+{
+  LineIterator iter=FileUtils.lineIterator(f);
+  Counter<String> wordCounts=new Counter<String>();
+  DoubleMatrix ret=new DoubleMatrix(vocab.size());
+  while (iter.hasNext()) {
+    String line=iter.nextLine();
+    StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(line).transform());
+    while (tokenizer.hasMoreTokens()) {
+      String token=tokenizer.nextToken();
+      if (!stopWords.contains(token)) {
+        wordCounts.incrementCount(token,1.0);
+      }
+    }
+  }
+  for (  String key : wordCounts.keySet()) {
+    double count=wordCounts.getCount(key);
+    int idx=vocab.indexOf(key);
+    ret.put(idx,count);
+  }
+  ret.divi(vocab.size());
+  return ret;
+}
