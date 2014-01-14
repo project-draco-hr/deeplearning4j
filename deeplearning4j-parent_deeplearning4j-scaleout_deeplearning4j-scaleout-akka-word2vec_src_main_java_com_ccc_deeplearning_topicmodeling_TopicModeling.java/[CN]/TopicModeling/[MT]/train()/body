@@ -1,0 +1,25 @@
+{
+  for (  File f : rootDir.listFiles()) {
+    try {
+      LineIterator iter=FileUtils.lineIterator(f);
+      while (iter.hasNext()) {
+        String line=iter.nextLine();
+        StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(line).transform());
+        while (tokenizer.hasMoreTokens()) {
+          String token=tokenizer.nextToken();
+          if (!stopWords.contains(token)) {
+            words.incrementCount(token,f.getName(),1.0);
+            if (vocab.indexOf(token) < 0)             vocab.add(token);
+          }
+        }
+      }
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  if (classify)   cdbn=new CDBN.Builder().numberOfInputs(words.keySet().size()).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{words.keySet().size() * 2,words.keySet().size(),numOuts,words.keySet().size() * 2,words.keySet().size()}).build();
+ else   cdbn=new CDBN.Builder().numberOfInputs(words.keySet().size()).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{words.keySet().size() * 2,words.keySet().size(),numOuts}).build();
+  DoubleMatrix input=toMatrix();
+  cdbn.pretrain(input,1,0.01,1000);
+}

@@ -1,0 +1,15 @@
+{
+  StringTokenizer tokenizer=new StringTokenizer(input);
+  DoubleMatrix ret=new DoubleMatrix(vocab.size());
+  while (tokenizer.hasMoreTokens()) {
+    String token=tokenizer.nextToken();
+    if (!stopWords.contains(token)) {
+      int idx=vocab.indexOf(token);
+      if (idx >= 0) {
+        ret.put(idx,words.getCounter(token).totalCount());
+      }
+    }
+  }
+  ret.divi(ret.length);
+  return ret;
+}

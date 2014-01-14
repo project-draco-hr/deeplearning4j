@@ -1,0 +1,9 @@
+{
+  this.numOuts=numOuts;
+  File[] subs=rootDir.listFiles();
+  labels=new ArrayList<String>(subs.length);
+  for (  File f : subs) {
+    labels.add(f.getName());
+  }
+  readStopWords();
+}
