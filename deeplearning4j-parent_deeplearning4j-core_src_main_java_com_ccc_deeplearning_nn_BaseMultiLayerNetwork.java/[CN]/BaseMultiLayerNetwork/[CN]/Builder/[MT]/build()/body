@@ -9,7 +9,7 @@
     ret.rng=this.rng;
     ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
     ret.layers=ret.createNetworkLayers(ret.nLayers);
-    ret.activation=activation;
+    if (activation != null)     ret.activation=activation;
     return ret;
   }
  catch (  InstantiationException|IllegalAccessException e) {

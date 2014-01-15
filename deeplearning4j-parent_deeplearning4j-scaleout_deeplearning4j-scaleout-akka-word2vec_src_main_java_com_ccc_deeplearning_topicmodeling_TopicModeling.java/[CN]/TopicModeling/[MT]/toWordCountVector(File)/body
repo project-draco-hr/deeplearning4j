@@ -4,7 +4,7 @@
   DoubleMatrix ret=new DoubleMatrix(vocab.size());
   while (iter.hasNext()) {
     String line=iter.nextLine();
-    StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(line).transform());
+    StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(line,true).transform());
     while (tokenizer.hasMoreTokens()) {
       String token=tokenizer.nextToken();
       if (!stopWords.contains(token)) {
@@ -12,11 +12,16 @@
       }
     }
   }
-  for (  String key : wordCounts.keySet()) {
-    double count=wordCounts.getCount(key);
-    int idx=vocab.indexOf(key);
-    ret.put(idx,count);
+  for (int i=0; i < vocab.size(); i++) {
+    double count=wordCounts.getCount(vocab.get(i).toString());
+    ret.put(i,count);
   }
-  ret.divi(vocab.size());
+  int nonStopWords=0;
+  for (int i=0; i < ret.length; i++) {
+    if (ret.get(i) > 0) {
+      nonStopWords++;
+    }
+  }
+  ret.divi(nonStopWords);
   return ret;
 }

@@ -1,5 +1,7 @@
 {
   this.numOuts=numOuts;
+  this.rootDir=rootDir;
+  this.classify=classify;
   File[] subs=rootDir.listFiles();
   labels=new ArrayList<String>(subs.length);
   for (  File f : subs) {
