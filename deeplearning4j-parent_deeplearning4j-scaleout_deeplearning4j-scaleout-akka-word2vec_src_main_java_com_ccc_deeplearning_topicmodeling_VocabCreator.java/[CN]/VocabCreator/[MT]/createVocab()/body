@@ -1,0 +1,27 @@
+{
+  Index vocab=new Index();
+  calcWordFrequencies();
+  for (  String topic : words.keySet()) {
+    for (    String word : words.getCounter(topic).keySet()) {
+      double tfVal=tf.getCount(topic,word);
+      double idfVal=idf.getCount(topic,word);
+      double tfidfVal=MathUtils.tdidf(tfVal,idfVal);
+      if (!stopWords.contains(word))       tfidf.setCount(topic,word,tfidfVal);
+    }
+  }
+  log.info("Tfidf keys " + tfidf + " got rid of "+ (Math.abs(tfidf.size() - words.size()))+ " words");
+  Set<String> remove=new HashSet<String>();
+  Counter<String> aggregate=new Counter<String>();
+  for (  String topic : tfidf.keySet()) {
+    for (    String word : tfidf.getCounter(topic).keySet()) {
+      aggregate.setCount(word,tfidf.getCount(topic,word));
+    }
+  }
+  for (  String s : remove)   aggregate.removeKey(s);
+  aggregate.keepTopNKeys(500);
+  log.info(tfidf.toString());
+  for (  String word : aggregate.keySet()) {
+    if (vocab.indexOf(word) < 0)     vocab.add(word);
+  }
+  return vocab;
+}

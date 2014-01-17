@@ -1,6 +1,7 @@
 {
   try {
     ret=(E)clazz.newInstance();
+    ret.input=this.input;
     ret.nOuts=this.nOuts;
     ret.nIns=this.nIns;
     ret.labels=this.labels;
@@ -9,6 +10,7 @@
     ret.rng=this.rng;
     ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
     ret.layers=ret.createNetworkLayers(ret.nLayers);
+    ret.toDecode=this.decode;
     if (activation != null)     ret.activation=activation;
     return ret;
   }

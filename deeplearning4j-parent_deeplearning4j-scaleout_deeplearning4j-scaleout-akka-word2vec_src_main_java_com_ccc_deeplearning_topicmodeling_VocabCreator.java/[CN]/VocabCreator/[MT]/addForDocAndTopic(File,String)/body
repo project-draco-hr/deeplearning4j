@@ -1,0 +1,19 @@
+{
+  Set<String> encountered=new HashSet<String>();
+  LineIterator iter=FileUtils.lineIterator(doc);
+  while (iter.hasNext()) {
+    String line=iter.nextLine();
+    StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(line).transform());
+    while (tokenizer.hasMoreTokens()) {
+      String token=tokenizer.nextToken();
+      if (!stopWords.contains(token)) {
+        words.incrementCount(topic,token,1.0);
+        tf.incrementCount(topic,token,1.0);
+        if (!encountered.contains(token)) {
+          idf.incrementCount(topic,token,1.0);
+          encountered.add(token);
+        }
+      }
+    }
+  }
+}

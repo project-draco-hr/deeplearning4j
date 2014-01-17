@@ -1,11 +1,8 @@
 {
-  calcWordFrequencies();
+  this.vocabCreator=new VocabCreator(stopWords,rootDir);
+  vocab=vocabCreator.createVocab();
   int size=vocab.size();
-  if (classify) {
-    cdbn=new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).withActivation(new HardTanh()).hiddenLayerSizes(new int[]{size / 4,size / 8,numOuts}).build();
-    discriminatory=new TopicModelingCDBN.Builder().numberOfInputs(numOuts).withActivation(new HardTanh()).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{numOuts,size / 4,size / 4,size}).build();
-  }
- else   cdbn=new TopicModelingCDBN.Builder().numberOfInputs(vocab.size()).withActivation(new HardTanh()).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{size / 4,size / 8,numOuts}).build();
+  cdbn=new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{size / 4,size / 8,size / 12}).build();
   List<DataSet> list=new ArrayList<DataSet>();
   for (  File f : rootDir.listFiles()) {
     for (    File doc : f.listFiles()) {
@@ -18,20 +15,8 @@
   Evaluation eval=new Evaluation();
   DoubleMatrix first=data.getFirst();
   DoubleMatrix second=data.getSecond();
-  cdbn.pretrain(first,1,0.01,1000);
-  trained=new DataSet(cdbn.reconstruct(first),second);
-  if (classify) {
-    DoubleMatrix reconstructed=cdbn.reconstruct(first);
-    reconstructed=MatrixUtil.normalizeByRowSums(reconstructed);
-    discriminatory.pretrain(reconstructed,1,0.1,1000);
-    discriminatory.finetune(second,0.01,1000);
-    eval.eval(second,discriminatory.predict(reconstructed));
-    log.info("F - score so far " + eval.f1());
-  }
+  autoEncoder=new DeepAutoEncoder(cdbn,new Object[]{1,0.1,1000});
+  autoEncoder.train(first,second,0.1);
+  eval.eval(second,cdbn.predict(first));
   log.info("Final stats " + eval.stats());
-  eval=new Evaluation();
-  if (classify) {
-    eval.eval(data.getSecond(),cdbn.predict(data.getFirst()));
-    log.info("F - score for batch   after train is " + eval.f1());
-  }
 }

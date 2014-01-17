@@ -6,7 +6,7 @@
     if (!stopWords.contains(token)) {
       int idx=vocab.indexOf(token);
       if (idx >= 0) {
-        ret.put(idx,words.getCounter(token).totalCount());
+        ret.put(idx,vocabCreator.getCountForWord(token));
       }
     }
   }

@@ -1,0 +1,14 @@
+{
+  double errorThreshold=0.0001;
+  for (int i=0; i < epochs; i++) {
+    List<DoubleMatrix> activations=feedForward();
+    List<Pair<DoubleMatrix,DoubleMatrix>> deltas=computeDeltas(activations);
+    DoubleMatrix delta=deltas.get(deltas.size() - 1).getFirst();
+    double sse=MatrixFunctions.pow(2,delta).sum();
+    if (sse < errorThreshold)     break;
+    for (int l=0; l < nLayers; l++) {
+      layers[i].getW().addi(deltas.get(i).getFirst());
+      layers[i].gethBias().addi(deltas.get(i).getSecond());
+    }
+  }
+}

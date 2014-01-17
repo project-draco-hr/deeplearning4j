@@ -1,0 +1,35 @@
+{
+  DoubleMatrix[] deltas=new DoubleMatrix[nLayers + 1];
+  DoubleMatrix[] errors=new DoubleMatrix[nLayers + 1];
+  ActivationFunction derivative=sigmoidLayers[0].activationFunction;
+  DoubleMatrix err=labels.sub(activations.get(activations.size() - 1)).neg();
+  errors[errors.length - 1]=err;
+  List<DoubleMatrix> weights=new ArrayList<>();
+  for (int j=0; j < layers.length; j++)   weights.add(layers[j].getW());
+  weights.add(logLayer.W);
+  List<DoubleMatrix> zs=new ArrayList<>();
+  for (int i=0; i < layers.length; i++) {
+    zs.add(layers[i].getInput().mmul(weights.get(i)).addRowVector(layers[i].gethBias()));
+  }
+  zs.add(logLayer.input.mmul(logLayer.W).addRowVector(logLayer.b));
+  for (int i=nLayers; i >= 0; i--) {
+    if (i == nLayers) {
+      DoubleMatrix initialDelta=err.mul(derivative.applyDerivative(zs.get(zs.size() - 1)));
+      deltas[deltas.length - 1]=initialDelta;
+    }
+ else {
+      err=errors[i + 1];
+      DoubleMatrix w=weights.get(i + 1).transpose();
+      DoubleMatrix z=zs.get(i);
+      DoubleMatrix a=activations.get(i).transpose();
+      errors[i]=err.mmul(w);
+      errors[i]=errors[i].mul(derivative.applyDerivative(z));
+      deltas[i]=a.mmul(err);
+    }
+  }
+  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>();
+  for (int i=0; i < deltas.length; i++) {
+    ret.add(new Pair<>(deltas[i],errors[i]));
+  }
+  return ret;
+}

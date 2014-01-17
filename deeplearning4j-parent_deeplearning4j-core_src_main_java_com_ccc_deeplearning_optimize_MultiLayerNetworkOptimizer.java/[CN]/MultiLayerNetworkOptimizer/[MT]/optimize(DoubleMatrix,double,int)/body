@@ -41,4 +41,5 @@
     network.logLayer.b=b.dup();
     log.info("Reverting to last known good state; converged after global minimum");
   }
+  network.backProp(lr,epochs);
 }

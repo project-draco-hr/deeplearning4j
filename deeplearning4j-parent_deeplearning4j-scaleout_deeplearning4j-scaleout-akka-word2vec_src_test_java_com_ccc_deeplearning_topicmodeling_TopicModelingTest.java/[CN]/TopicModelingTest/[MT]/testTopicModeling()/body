@@ -1,5 +1,4 @@
 {
-  TopicModeling modeling=new TopicModeling(new ClassPathResource("/bitcoin/topics").getFile(),2,true);
+  TopicModeling modeling=new TopicModeling(new File("/home/agibsonccc/Downloads/20news-bydate-train"),2);
   modeling.train();
-  modeling.dump("/home/agibsonccc/bitcoin/thisiswhatitlookslike");
 }
