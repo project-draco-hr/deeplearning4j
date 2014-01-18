@@ -2,14 +2,20 @@
   double errorThreshold=0.0001;
   for (int i=0; i < epochs; i++) {
     List<DoubleMatrix> activations=feedForward();
-    List<Pair<DoubleMatrix,DoubleMatrix>> deltas=computeDeltas(activations);
+    List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
+    computeDeltas(activations,deltas);
     DoubleMatrix delta=deltas.get(deltas.size() - 2).getFirst();
     double sse=MatrixFunctions.pow(2,delta).sum();
     if (sse < errorThreshold)     break;
+    if (i % 1000 == 0 || i == 0) {
+      log.info("SSE on epoch " + i + " is  "+ sse);
+      log.info("Negative log likelihood is " + this.negativeLogLikelihood());
+    }
     for (int l=0; l < nLayers; l++) {
       DoubleMatrix add=deltas.get(l).getFirst();
-      DoubleMatrix w=layers[l].getW();
-      w.addi(add);
+      layers[l].setW(layers[l].getW().sub(add));
+      sigmoidLayers[l].W=layers[l].getW();
     }
+    logLayer.W.subi(deltas.get(nLayers).getFirst());
   }
 }

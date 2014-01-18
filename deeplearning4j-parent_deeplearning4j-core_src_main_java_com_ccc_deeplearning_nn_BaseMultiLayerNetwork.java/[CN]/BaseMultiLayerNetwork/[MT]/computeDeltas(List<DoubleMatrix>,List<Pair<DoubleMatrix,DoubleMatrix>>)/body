@@ -31,9 +31,15 @@
       gradients[i]=a.transpose().mmul(error).transpose();
     }
   }
-  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>();
-  for (int i=0; i < gradients.length; i++) {
-    ret.add(new Pair<>(gradients[i],deltas[i]));
+  if (deltaRet.isEmpty()) {
+    for (int i=0; i < gradients.length; i++) {
+      deltaRet.add(new Pair<>(gradients[i],deltas[i]));
+    }
   }
-  return ret;
+ else {
+    for (int i=0; i < gradients.length; i++) {
+      if (deltaRet.get(i).getFirst() != null)       deltaRet.get(i).getFirst().addi(gradients[i]);
+      if (deltaRet.get(i).getSecond() != null)       deltaRet.get(i).getSecond().addi(deltas[i]);
+    }
+  }
 }

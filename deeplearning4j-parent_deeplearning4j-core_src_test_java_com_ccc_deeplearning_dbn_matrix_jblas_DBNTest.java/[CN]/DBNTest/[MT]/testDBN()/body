@@ -21,7 +21,7 @@
   assertEquals(dbn.nOuts,decoder.nIns);
   assertEquals(dbn.nIns,decoder.nOuts);
   assertEquals(decoder.nLayers,dbn.nLayers);
-  boolean e=Arrays.equals(new int[]{6,3},decoder.hiddenLayerSizes);
+  boolean e=Arrays.equals(new int[]{9,7,4},decoder.hiddenLayerSizes);
   assertEquals(true,e);
   decoder.pretrain(predict,1,0.1,1000);
   decoder.finetune(testX,0.1,1000);
