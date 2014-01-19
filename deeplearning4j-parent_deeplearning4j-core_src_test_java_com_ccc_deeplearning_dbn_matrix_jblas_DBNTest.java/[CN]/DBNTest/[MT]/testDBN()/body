@@ -13,9 +13,12 @@
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix testX=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0},{1,1,1,1,1,0}});
+  DoubleMatrix testY=new DoubleMatrix(new double[][]{{1,0},{1,0},{0,1}});
   DoubleMatrix predict=dbn.predict(testX);
   log.info(predict.toString());
-  dbn.backProp(fineTuneLr,1000);
+  Evaluation eval=new Evaluation();
+  eval.eval(testY,predict);
+  log.info(eval.stats());
   DBN decoder=new DBN.Builder().buildEmpty();
   decoder.asDecoder(dbn);
   assertEquals(dbn.nOuts,decoder.nIns);

@@ -5,8 +5,8 @@
   }
   this.input=x;
   this.labels=y;
-  DoubleMatrix p_y_given_x=softmax(x.mmul(W).addRowVector(b));
+  DoubleMatrix p_y_given_x=sigmoid(x.mmul(W).addRowVector(b));
   DoubleMatrix dy=y.sub(p_y_given_x);
-  W=W.add(x.transpose().mmul(dy).mul(lr));
-  b=b.add(dy.columnMeans().mul(lr));
+  W.addi(x.transpose().mmul(dy).mul(lr));
+  b.addi(dy.columnMeans().mul(lr));
 }

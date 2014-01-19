@@ -1,4 +1,6 @@
 {
+  if (input == null)   throw new IllegalArgumentException("Unable to initialize layers with empty input");
+  this.input=input.dup();
   DoubleMatrix layer_input=input;
   int inputSize;
   for (int i=0; i < this.nLayers; i++) {

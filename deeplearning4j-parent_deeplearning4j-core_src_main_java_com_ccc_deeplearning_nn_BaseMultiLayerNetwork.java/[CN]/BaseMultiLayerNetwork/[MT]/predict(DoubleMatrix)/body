@@ -4,5 +4,5 @@
     HiddenLayer layer=sigmoidLayers[i];
     input=layer.activate(input);
   }
-  return logLayer.predict(input);
+  return (logLayer.predict(input));
 }

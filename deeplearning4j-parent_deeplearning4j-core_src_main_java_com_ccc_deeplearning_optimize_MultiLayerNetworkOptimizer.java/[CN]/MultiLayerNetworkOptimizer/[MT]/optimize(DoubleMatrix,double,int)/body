@@ -17,7 +17,7 @@
     if (currLoss == null)     currLoss=network.negativeLogLikelihood();
  else {
       Double loss=network.negativeLogLikelihood();
-      if (loss > currLoss) {
+      if (loss > currLoss || loss <= 0.01) {
         if (numTimesOver == null)         numTimesOver=1;
  else         numTimesOver++;
         if (numTimesOver >= 5) {
@@ -41,5 +41,5 @@
     network.logLayer.b=b.dup();
     log.info("Reverting to last known good state; converged after global minimum");
   }
-  network.backProp(lr,10000);
+  network.backProp(lr,epochs);
 }

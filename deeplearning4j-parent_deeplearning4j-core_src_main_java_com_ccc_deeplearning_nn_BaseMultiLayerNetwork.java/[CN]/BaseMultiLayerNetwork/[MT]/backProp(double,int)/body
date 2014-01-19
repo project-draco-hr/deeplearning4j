@@ -1,21 +1,48 @@
 {
   double errorThreshold=0.0001;
+  Double lastEntropy=null;
+  NeuralNetwork[] copies=new NeuralNetwork[this.layers.length];
+  LogisticRegression reg=this.logLayer;
+  double numMistakes=0;
+  for (int i=0; i < copies.length; i++) {
+    copies[i]=layers[i].clone();
+  }
   for (int i=0; i < epochs; i++) {
     List<DoubleMatrix> activations=feedForward();
     List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
     computeDeltas(activations,deltas);
-    DoubleMatrix delta=deltas.get(deltas.size() - 2).getFirst();
-    double sse=MatrixFunctions.pow(2,delta).sum();
+    double sse=this.negativeLogLikelihood();
+    if (lastEntropy == null)     lastEntropy=sse;
+ else     if (sse < lastEntropy) {
+      lastEntropy=sse;
+      copies=new NeuralNetwork[this.layers.length];
+      reg=this.logLayer;
+      for (int j=0; j < copies.length; j++) {
+        copies[j]=layers[j].clone();
+      }
+    }
+ else     if (sse > lastEntropy || sse == lastEntropy || Double.isNaN(sse) || Double.isInfinite(sse)) {
+      numMistakes++;
+      if (numMistakes >= 30) {
+        this.logLayer=reg;
+        this.layers=copies;
+        log.info("Entropy went up; restoring from last good state");
+        break;
+      }
+    }
     if (sse < errorThreshold)     break;
-    if (i % 1000 == 0 || i == 0) {
+    if (i % 10 == 0 || i == 0) {
       log.info("SSE on epoch " + i + " is  "+ sse);
       log.info("Negative log likelihood is " + this.negativeLogLikelihood());
     }
     for (int l=0; l < nLayers; l++) {
-      DoubleMatrix add=deltas.get(l).getFirst();
+      DoubleMatrix add=deltas.get(l).getFirst().div(input.rows).mul(lr);
       layers[l].setW(layers[l].getW().sub(add));
       sigmoidLayers[l].W=layers[l].getW();
+      DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+      layers[l].gethBias().subi(deltaColumnSums);
+      sigmoidLayers[l].b=layers[l].gethBias();
     }
-    logLayer.W.subi(deltas.get(nLayers).getFirst());
+    logLayer.W.addi(deltas.get(nLayers).getFirst());
   }
 }

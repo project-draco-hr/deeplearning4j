@@ -18,10 +18,9 @@
     }
   }
   for (  String s : remove)   aggregate.removeKey(s);
-  aggregate.keepTopNKeys(500);
-  log.info(tfidf.toString());
-  for (  String word : aggregate.keySet()) {
-    if (vocab.indexOf(word) < 0)     vocab.add(word);
-  }
+  aggregate.keepTopNKeys(2000);
+  log.info(tf.toString());
+  String[] vocab2=new String[]{"funding","venture","round","accept","accepting","investor","investors","partners","partnering","raising","capital"};
+  for (  String s : vocab2)   vocab.add(s);
   return vocab;
 }
