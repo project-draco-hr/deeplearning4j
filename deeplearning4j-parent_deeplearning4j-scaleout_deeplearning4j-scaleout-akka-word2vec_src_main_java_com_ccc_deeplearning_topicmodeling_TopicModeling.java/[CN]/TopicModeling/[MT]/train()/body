@@ -2,29 +2,24 @@
   this.vocabCreator=new VocabCreator(stopWords,rootDir);
   vocab=vocabCreator.createVocab();
   int size=vocab.size();
-  cdbn=(TopicModelingCDBN)new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{200,150,100}).build();
+  cdbn=(TopicModelingCDBN)new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{size,size,size / 2}).build();
   List<DataSet> list=new ArrayList<DataSet>();
   File[] dirs=rootDir.listFiles();
   for (  File f : dirs) {
     for (    File doc : f.listFiles()) {
       DoubleMatrix train=toWordCountVector(doc).transpose();
       DoubleMatrix outcome=MatrixUtil.toOutcomeVector(labels.indexOf(f.getName()),labels.size());
-      for (int i=0; i < 30; i++)       list.add(new DataSet(train,outcome));
+      for (int i=0; i < 100; i++)       list.add(new DataSet(train,outcome));
     }
   }
   DataSet data=DataSet.merge(list);
   Evaluation eval=new Evaluation();
   DoubleMatrix first=data.getFirst();
   DoubleMatrix second=data.getSecond();
-  autoEncoder=new DeepAutoEncoder(cdbn,new Object[]{1,0.1,1000});
-  autoEncoder.train(first,second,0.1);
-  log.info("Predicting " + first + "\n"+ " with labels "+ second);
   cdbn.pretrain(first,1,0.1,1000);
   cdbn.finetune(second,0.1,1000);
   DoubleMatrix predicted=cdbn.predict(first);
   DoubleMatrix outcomes2=MatrixUtil.outcomes(predicted);
-  log.info("Predicted was " + outcomes2);
-  log.info("Actual was " + second);
   eval.eval(second,predicted);
   log.info("Final stats for first " + eval.stats());
 }
