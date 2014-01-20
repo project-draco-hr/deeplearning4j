@@ -1,0 +1,6 @@
+{
+  RBM r=new RBM.Builder().numberOfVisible(10).numHidden(10).build();
+  NeuralNetPlotter plotter=new NeuralNetPlotter();
+  plotter.plotWeights(r);
+  plotter.plotHbias(r);
+}

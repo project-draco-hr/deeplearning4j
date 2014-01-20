@@ -2,7 +2,7 @@
   this.vocabCreator=new VocabCreator(stopWords,rootDir);
   vocab=vocabCreator.createVocab();
   int size=vocab.size();
-  cdbn=(TopicModelingCDBN)new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{size,size,size / 2}).build();
+  cdbn=(TopicModelingCDBN)new TopicModelingCDBN.Builder().numberOfInputs(size).numberOfOutPuts(labels.size()).hiddenLayerSizes(new int[]{size,size,size}).build();
   List<DataSet> list=new ArrayList<DataSet>();
   File[] dirs=rootDir.listFiles();
   for (  File f : dirs) {

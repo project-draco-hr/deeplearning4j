@@ -1,5 +1,5 @@
 {
-  if (this.input == null)   initializeLayers(input);
+  if (this.input == null)   initializeLayers(input.dup());
   DoubleMatrix layerInput=null;
   for (int i=0; i < nLayers; i++) {
     if (i == 0)     layerInput=input;
@@ -11,7 +11,19 @@
     Double bestLoss=null;
     Integer numTimesOver=null;
     for (int epoch=0; epoch < epochs; epoch++) {
+      if (da.renderWeightsEveryNumEpochs > 0) {
+        if (epoch % da.renderWeightsEveryNumEpochs == 0) {
+          NeuralNetPlotter plotter=new NeuralNetPlotter();
+          plotter.plotWeights(da);
+        }
+      }
       da.trainTillConvergence(layerInput,lr,new Object[]{corruptionLevel});
+      if (da.renderWeightsEveryNumEpochs > 0) {
+        if (epoch % da.renderWeightsEveryNumEpochs == 0) {
+          NeuralNetPlotter plotter=new NeuralNetPlotter();
+          plotter.plotWeights(da);
+        }
+      }
       h.W=da.W;
       h.b=da.hBias;
       double entropy=da.getReConstructionCrossEntropy();
@@ -56,11 +68,6 @@
       log.info("Converged past global minimum; reverting");
       da.W=w.dup();
       da.hBias=hBias.dup();
-    }
-    for (int l=0; l < epochs; l++) {
-      da.trainTillConverge(layerInput,lr,corruptionLevel);
-      if (h.W != (da.W))       h.W=da.W;
-      if (h.b != da.hBias)       h.b=da.hBias;
     }
   }
 }

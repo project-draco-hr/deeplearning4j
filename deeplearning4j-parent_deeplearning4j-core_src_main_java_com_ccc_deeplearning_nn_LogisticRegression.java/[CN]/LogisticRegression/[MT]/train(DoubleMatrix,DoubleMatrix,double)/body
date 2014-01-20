@@ -5,6 +5,7 @@
   }
   this.input=x;
   this.labels=y;
+  DoubleMatrix regularized=W.transpose().mul(regTerm);
   DoubleMatrix p_y_given_x=sigmoid(x.mmul(W).addRowVector(b));
   DoubleMatrix dy=y.sub(p_y_given_x);
   W.addi(x.transpose().mmul(dy).mul(lr));

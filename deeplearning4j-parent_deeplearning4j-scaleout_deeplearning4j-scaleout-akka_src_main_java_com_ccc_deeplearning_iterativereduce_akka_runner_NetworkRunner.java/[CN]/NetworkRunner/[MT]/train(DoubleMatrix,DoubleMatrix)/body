@@ -34,6 +34,9 @@
     UpdateableImpl masterResult=master.compute(workerUpdates,workerUpdates);
     for (    ComputableWorkerAkka worker : workers)     worker.update(masterResult);
     output=masterResult.get();
+    Evaluation eval=new Evaluation();
+    eval.eval(labels,output.predict(input));
+    log.info(eval.stats());
     acc.accumulate(output);
   }
   return output;

@@ -1,0 +1,28 @@
+{
+  try {
+    String filePath=System.getProperty("java.io.tmpdir") + File.separator + UUID.randomUUID().toString();
+    File write=new File(filePath);
+    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(write,true));
+    for (int i=0; i < network.getW().rows; i++) {
+      DoubleMatrix row=network.getW().getRow(i);
+      StringBuffer sb=new StringBuffer();
+      for (int j=0; j < row.length; j++) {
+        sb.append(row.get(j));
+        if (j < row.length - 1)         sb.append(",");
+      }
+      sb.append("\n");
+      String line=sb.toString();
+      bos.write(line.getBytes());
+      bos.flush();
+    }
+    bos.close();
+    Process is=Runtime.getRuntime().exec("python /tmp/plot.py weights " + filePath);
+    Thread.sleep(3000);
+    is.destroy();
+    log.info("Rendering weights " + filePath);
+    log.error(IOUtils.readLines(is.getErrorStream()).toString());
+    write.deleteOnExit();
+  }
+ catch (  Exception e) {
+  }
+}
