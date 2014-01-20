@@ -1,15 +1,3 @@
 {
-  this.nVisible=nVisible;
-  this.nHidden=nHidden;
-  this.fanIn=fanIn;
-  if (rng == null)   this.rng=new MersenneTwister(1234);
- else   this.rng=rng;
-  if (this.W == null)   initWeights();
- else   this.W=W;
-  if (hbias == null)   this.hBias=DoubleMatrix.zeros(nHidden);
- else   if (hbias.length != nHidden)   throw new IllegalArgumentException("Hidden bias must have a length of " + nHidden + " length was "+ hbias.length);
- else   this.hBias=hbias;
-  if (vbias == null)   this.vBias=DoubleMatrix.zeros(nVisible);
- else   if (vbias.length != nVisible)   throw new IllegalArgumentException("Visible bias must have a length of " + nVisible + " but length was "+ vbias.length);
- else   this.vBias=vbias;
+  this(null,nVisible,nHidden,W,hbias,vbias,rng,fanIn);
 }

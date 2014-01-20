@@ -1,6 +1,31 @@
 {
   double a=fanIn();
-  UniformRealDistribution u=new UniformRealDistribution(rng,-a,a);
-  this.W=DoubleMatrix.zeros(nVisible,nHidden);
-  for (int i=0; i < this.W.rows; i++)   this.W.putRow(i,new DoubleMatrix(u.sample(this.W.columns)));
+  if (this.W == null) {
+    UniformRealDistribution u=new UniformRealDistribution(rng,-a,a);
+    this.W=DoubleMatrix.zeros(nVisible,nHidden);
+    for (int i=0; i < this.W.rows; i++)     this.W.putRow(i,new DoubleMatrix(u.sample(this.W.columns)));
+  }
+  if (this.hBias == null) {
+    this.hBias=DoubleMatrix.zeros(nHidden);
+    this.hBias.subi(4);
+  }
+  if (this.vBias == null) {
+    if (this.input != null) {
+      Counter<Integer> c=new Counter<Integer>();
+      DoubleMatrix hMeans=binomial(sigmoid(input.mmul(W).addRowVector(hBias)),1,rng);
+      for (int i=0; i < hMeans.rows; i++) {
+        DoubleMatrix row=hMeans.getRow(i);
+        for (int j=0; j < row.columns; j++) {
+          if (row.get(j) > 0)           c.incrementCount(j,1.0);
+        }
+      }
+      this.vBias=DoubleMatrix.zeros(nVisible);
+      for (int i=0; i < vBias.length; i++) {
+        double prob=c.getProbability(i);
+        double num=Math.log(prob / (1 - prob));
+        this.vBias.put(i,num);
+      }
+    }
+ else     this.vBias=DoubleMatrix.zeros(nVisible);
+  }
 }

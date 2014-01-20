@@ -1,4 +1,12 @@
 {
-  this(n_visible,n_hidden,W,hbias,vbias,rng,fanIn);
+  this.nVisible=nVisible;
+  this.nHidden=nHidden;
+  this.fanIn=fanIn;
   this.input=input;
+  if (rng == null)   this.rng=new MersenneTwister(1234);
+ else   this.rng=rng;
+  this.W=W;
+  this.vBias=vbias;
+  this.hBias=hbias;
+  initWeights();
 }
