@@ -1,8 +1,12 @@
 {
-  MnistDataSetIterator fetcher=new MnistDataSetIterator(10,10);
+  MnistDataSetIterator fetcher=new MnistDataSetIterator(300,300);
   MersenneTwister rand=new MersenneTwister(123);
-  RBM da=new RBM.Builder().numberOfVisible(784).numHidden(1000).withRandom(rand).withMomentum(0.1).build();
-  da.input=fetcher.next().getFirst();
+  RBM da=new RBM.Builder().numberOfVisible(784).numHidden(500).withRandom(rand).withMomentum(0.1).build();
+  DoubleMatrix input=fetcher.next().getFirst();
+  da.input=input;
   NeuralNetPlotter plotter=new NeuralNetPlotter();
-  plotter.plotHbias(da);
+  for (int i=0; i < 1000; i++) {
+    plotter.plotHbias(da);
+    da.trainTillConvergence(0.01,1,input);
+  }
 }

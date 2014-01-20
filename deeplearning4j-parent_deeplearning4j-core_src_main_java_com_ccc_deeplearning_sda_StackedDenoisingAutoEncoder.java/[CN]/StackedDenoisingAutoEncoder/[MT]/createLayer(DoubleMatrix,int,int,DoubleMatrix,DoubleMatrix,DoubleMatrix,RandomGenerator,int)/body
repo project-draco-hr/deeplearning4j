@@ -1,3 +1,5 @@
 {
-  return new DenoisingAutoEncoder(input,nVisible,nHidden,vBias,vBias,vBias,rng);
+  DenoisingAutoEncoder ret=new DenoisingAutoEncoder(input,nVisible,nHidden,vBias,vBias,vBias,rng);
+  super.initializeNetwork(ret);
+  return ret;
 }

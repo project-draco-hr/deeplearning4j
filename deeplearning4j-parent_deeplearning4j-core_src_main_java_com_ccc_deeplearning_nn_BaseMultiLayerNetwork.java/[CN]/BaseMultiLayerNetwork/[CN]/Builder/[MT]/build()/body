@@ -11,6 +11,10 @@
     ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
     ret.layers=ret.createNetworkLayers(ret.nLayers);
     ret.toDecode=this.decode;
+    ret.input=this.input;
+    ret.labels=this.labels;
+    ret.fanIn=this.fanIn;
+    ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
     if (activation != null)     ret.activation=activation;
     return ret;
   }

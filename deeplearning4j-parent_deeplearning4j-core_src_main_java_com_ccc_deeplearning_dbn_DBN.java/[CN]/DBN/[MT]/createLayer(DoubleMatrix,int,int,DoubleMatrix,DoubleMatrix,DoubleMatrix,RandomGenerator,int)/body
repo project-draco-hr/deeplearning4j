@@ -1,3 +1,5 @@
 {
-  return new RBM(input,nVisible,nHidden,W,hBias,vBias,rng);
+  RBM ret=new RBM(input,nVisible,nHidden,W,hBias,vBias,rng);
+  super.initializeNetwork(ret);
+  return ret;
 }
