@@ -1,7 +1,0 @@
-{
-  ComputableWorkerAkka ret=new ComputableWorkerAkka(input,outcomes,rows);
-  Conf c=conf.copy();
-  c.put(ROWS,rows.length);
-  ret.setup(c);
-  return ret;
-}

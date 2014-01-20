@@ -1,5 +1,0 @@
-{
-  RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
-  Word2VecMultiLayerNetwork matrix=new Word2VecMultiLayerNetwork.Builder().withWord2Vec(vec).numberOfInputs(conf.getInt(N_IN)).numberOfOutPuts(conf.getInt(OUT)).withClazz(conf.getClazz(CLASS)).hiddenLayerSizes(conf.getIntsWithSeparator(LAYER_SIZES,",")).withRng(rng).build();
-  masterResults=new Word2VecUpdateable(matrix);
-}

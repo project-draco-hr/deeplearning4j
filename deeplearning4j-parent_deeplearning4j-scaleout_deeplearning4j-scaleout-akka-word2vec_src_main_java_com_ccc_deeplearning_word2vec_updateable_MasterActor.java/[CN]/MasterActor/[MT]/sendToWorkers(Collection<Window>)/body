@@ -1,4 +1,0 @@
-{
-  List<Window> l=new ArrayList<Window>(data);
-  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,l),getSelf());
-}

@@ -1,6 +1,0 @@
-{
-  DoubleMatrix corrupted=getCorruptedInput(input,corruptionLevel);
-  DoubleMatrix y=getHiddenValues(corrupted);
-  DoubleMatrix z=getReconstructedInput(y);
-  return -input.mul(log(z)).add(oneMinus(input).mul(log(oneMinus(z)))).columnSums().mean();
-}

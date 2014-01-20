@@ -1,4 +1,0 @@
-{
-  WordConverter converter=new WordConverter(input,vec);
-  super.pretrain(converter.toInputMatrix(),k,learningRate,epochs);
-}

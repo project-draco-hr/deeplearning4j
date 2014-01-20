@@ -1,8 +1,0 @@
-{
-  @SuppressWarnings("unchecked") List<String> list=FileUtils.readLines(file);
-  Word2Vec vec=new Word2Vec();
-  vec.buildVocab(list);
-  for (  String sentence : list)   vec.addSentence(sentence);
-  vec.train();
-  return vec;
-}

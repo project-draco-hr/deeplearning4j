@@ -1,6 +1,0 @@
-{
-  log.info("LOADING MODEL...");
-  ObjectInputStream ois=new ObjectInputStream(is);
-  NERClassifier ner=(NERClassifier)ois.readObject();
-  return ner;
-}

@@ -1,8 +1,0 @@
-{
-  DoubleMatrix aH=propDown(h);
-  DoubleMatrix en=exp(aH.neg());
-  DoubleMatrix ep=exp(aH);
-  DoubleMatrix v1Mean=oneDiv(oneMinus(en).sub(oneDiv(aH)));
-  DoubleMatrix v1Sample=log(oneMinus(uniform(rng,v1Mean.rows,v1Mean.columns).mul(oneMinus(ep)))).div(aH);
-  return new Pair<DoubleMatrix,DoubleMatrix>(v1Mean,v1Sample);
-}

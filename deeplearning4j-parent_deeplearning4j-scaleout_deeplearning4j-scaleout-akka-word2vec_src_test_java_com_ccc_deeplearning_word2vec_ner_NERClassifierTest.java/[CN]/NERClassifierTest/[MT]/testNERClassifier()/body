@@ -1,8 +1,0 @@
-{
-  Word2Vec vec=Word2VecLoader.loadModel(new ClassPathResource("/word2vec-address.bin").getFile());
-  Viterbi v=Viterbi.load(new ClassPathResource("/viterbi-addresses-model.bin").getFile().getAbsolutePath());
-  BaseMultiLayerNetwork dbn=BaseMultiLayerNetwork.loadFromFile(new BufferedInputStream(new ClassPathResource("/nn-model.bin").getInputStream()));
-  NERClassifier classifier=new NERClassifier((Word2VecMultiLayerNetwork)dbn,vec,v,Arrays.asList("NONE","ADDRESS"));
-  List<String> classified=classifier.predict("4820 1st street  P.O Box 94540952 mZcpm  Fatehpur marshall Islands  mBysky ls'm  mLfm 33397-5443");
-  log.info(classified.toString());
-}

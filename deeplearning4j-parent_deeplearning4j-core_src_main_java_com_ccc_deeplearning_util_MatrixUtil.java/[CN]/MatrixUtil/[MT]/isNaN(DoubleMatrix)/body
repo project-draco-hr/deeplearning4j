@@ -1,7 +1,0 @@
-{
-  DoubleMatrix nan=test.isNaN();
-  for (int i=0; i < nan.length; i++) {
-    if (nan.get(i) > 0)     return true;
-  }
-  return false;
-}

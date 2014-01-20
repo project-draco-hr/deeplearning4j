@@ -1,6 +1,0 @@
-{
-  for (int i=0; i < getFirst().length; i++) {
-    double curr=getFirst().get(i);
-    getFirst().put(i,MathUtils.roundDouble(curr,roundTo));
-  }
-}

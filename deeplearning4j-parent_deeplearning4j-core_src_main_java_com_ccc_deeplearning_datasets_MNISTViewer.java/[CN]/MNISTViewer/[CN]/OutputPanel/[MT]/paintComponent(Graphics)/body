@@ -1,7 +1,0 @@
-{
-  super.paintComponent(g);
-  g.drawRect(mx,my,getWidth() - 2 * mx,getHeight() - 2 * my);
-  drawInputNodes(g);
-  drawState(g);
-  drawOutputNodes(g);
-}

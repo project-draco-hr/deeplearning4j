@@ -1,4 +1,0 @@
-{
-  optimizer=new DenoisingAutoEncoderOptimizer(this,lr,new Object[]{corruptionLevel});
-  optimizer.train(x);
-}

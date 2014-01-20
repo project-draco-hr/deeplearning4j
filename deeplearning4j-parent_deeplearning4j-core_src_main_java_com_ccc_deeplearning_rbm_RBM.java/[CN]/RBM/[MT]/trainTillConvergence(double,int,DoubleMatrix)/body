@@ -1,5 +1,0 @@
-{
-  if (input != null)   this.input=input;
-  optimizer=new RBMOptimizer(this,learningRate,new Object[]{k});
-  optimizer.train(input);
-}

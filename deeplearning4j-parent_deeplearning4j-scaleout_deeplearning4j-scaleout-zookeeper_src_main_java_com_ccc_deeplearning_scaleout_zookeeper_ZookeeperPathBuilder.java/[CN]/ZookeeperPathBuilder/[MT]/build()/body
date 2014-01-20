@@ -1,8 +1,0 @@
-{
-  StringBuffer sb=new StringBuffer();
-  sb.append("/" + host + ":"+ port);
-  for (  String s : paths) {
-    sb.append("/" + s);
-  }
-  return sb.toString();
-}

@@ -1,7 +1,0 @@
-{
-  double ret=0.0;
-  for (  String topic : words.keySet()) {
-    ret+=words.getCount(topic,word);
-  }
-  return ret;
-}

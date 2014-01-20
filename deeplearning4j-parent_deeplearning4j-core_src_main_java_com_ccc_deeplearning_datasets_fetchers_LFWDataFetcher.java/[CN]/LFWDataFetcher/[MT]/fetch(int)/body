@@ -1,9 +1,0 @@
-{
-  if (!hasMore())   throw new IllegalStateException("Unable to get more; there are no more images");
-  List<Pair<DoubleMatrix,DoubleMatrix>> toConvert=new ArrayList<>();
-  for (int i=0; i < numExamples; i++, cursor++) {
-    if (!hasMore())     break;
-    toConvert.add(loader.getDataFor(cursor));
-  }
-  initializeCurrFromList(toConvert);
-}

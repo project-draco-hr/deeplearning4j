@@ -1,9 +1,0 @@
-{
-  DoubleMatrix inputs=new DoubleMatrix(images.size(),numPixelColumns);
-  DoubleMatrix outputs=new DoubleMatrix(images.size(),numNames);
-  for (int i=0; i < images.size(); i++) {
-    inputs.putRow(i,images.get(i).getFirst());
-    outputs.putRow(i,images.get(i).getSecond());
-  }
-  return new Pair<DoubleMatrix,DoubleMatrix>(inputs,outputs);
-}

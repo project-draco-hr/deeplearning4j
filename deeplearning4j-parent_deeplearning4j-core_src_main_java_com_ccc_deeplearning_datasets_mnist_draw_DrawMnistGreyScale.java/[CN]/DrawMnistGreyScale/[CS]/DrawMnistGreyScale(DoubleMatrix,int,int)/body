@@ -1,9 +1,0 @@
-{
-  img=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-  this.heightOffset=heightOffset;
-  this.widthOffset=widthOffset;
-  WritableRaster r=img.getRaster();
-  int[] equiv=new int[data.length];
-  for (int i=0; i < equiv.length; i++)   equiv[i]=(int)Math.round(data.get(i));
-  r.setDataElements(0,0,width,height,equiv);
-}

@@ -1,7 +1,0 @@
-{
-  @SuppressWarnings("unchecked") List<String> example=IOUtils.readLines(new ClassPathResource("/deeplearning/ADDRESS.split").getInputStream());
-  example=example.subList(0,500);
-  Evaluation eval=new Evaluation();
-  printPredictFor("sadcasdfoijasdfasdf.");
-  printPredictFor(example.get(0));
-}

@@ -1,6 +1,0 @@
-{
-  Word2VecMultiLayerNetwork ret=super.build();
-  ret.vec=vec;
-  ret.labels=this.labels;
-  return ret;
-}

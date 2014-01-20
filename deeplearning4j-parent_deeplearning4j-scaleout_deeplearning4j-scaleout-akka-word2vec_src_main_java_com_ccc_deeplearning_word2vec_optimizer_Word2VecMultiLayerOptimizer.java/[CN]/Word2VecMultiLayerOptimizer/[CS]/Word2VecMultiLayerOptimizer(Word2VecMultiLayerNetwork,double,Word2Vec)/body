@@ -1,5 +1,0 @@
-{
-  super(network,lr);
-  this.network=(Word2VecMultiLayerNetwork)super.network;
-  this.vec=vec;
-}

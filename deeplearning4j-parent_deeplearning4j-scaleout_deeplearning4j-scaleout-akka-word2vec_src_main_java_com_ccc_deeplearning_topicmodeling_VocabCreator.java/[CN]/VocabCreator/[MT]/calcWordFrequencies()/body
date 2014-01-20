@@ -1,8 +1,0 @@
-{
-  for (  File f : rootDir.listFiles()) {
-    for (    File doc : f.listFiles()) {
-      topics.incrementCount(f,doc,1.0);
-      addForDocAndTopic(doc,f.getName());
-    }
-  }
-}

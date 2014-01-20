@@ -1,7 +1,0 @@
-{
-  Conf ret=retreive();
-  for (  String key : conf.keySet()) {
-    conf.put(key,ret.get(key));
-  }
-  return conf;
-}

@@ -1,4 +1,0 @@
-{
-  WordConverter converter=new WordConverter(examples,vec);
-  super.trainNetwork(converter.toInputMatrix(),converter.toLabelMatrix(labels),otherParams);
-}
