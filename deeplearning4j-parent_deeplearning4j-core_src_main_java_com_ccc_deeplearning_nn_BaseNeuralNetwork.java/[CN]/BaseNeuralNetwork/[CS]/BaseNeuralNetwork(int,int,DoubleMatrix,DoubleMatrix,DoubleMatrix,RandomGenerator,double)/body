@@ -1,14 +1,10 @@
 {
   this.nVisible=nVisible;
   this.nHidden=nHidden;
+  this.fanIn=fanIn;
   if (rng == null)   this.rng=new MersenneTwister(1234);
  else   this.rng=rng;
-  if (W == null) {
-    double a=fanIn();
-    UniformRealDistribution u=new UniformRealDistribution(rng,-a,a);
-    this.W=DoubleMatrix.zeros(nVisible,nHidden);
-    for (int i=0; i < this.W.rows; i++)     this.W.putRow(i,new DoubleMatrix(u.sample(this.W.columns)));
-  }
+  if (this.W == null)   initWeights();
  else   this.W=W;
   if (hbias == null)   this.hBias=DoubleMatrix.zeros(nHidden);
  else   if (hbias.length != nHidden)   throw new IllegalArgumentException("Hidden bias must have a length of " + nHidden + " length was "+ hbias.length);

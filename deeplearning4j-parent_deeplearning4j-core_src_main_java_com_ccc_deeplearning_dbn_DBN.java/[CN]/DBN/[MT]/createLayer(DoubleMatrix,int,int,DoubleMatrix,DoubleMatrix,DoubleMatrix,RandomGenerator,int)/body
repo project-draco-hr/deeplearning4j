@@ -1,5 +1,4 @@
 {
-  RBM ret=new RBM(input,nVisible,nHidden,W,hBias,vBias,rng);
-  super.initializeNetwork(ret);
+  RBM ret=new RBM.Builder().numberOfVisible(nVisible).numHidden(nHidden).withWeights(W).withInput(input).withVisibleBias(vBias).withHBias(hBias).withRandom(rng).renderWeights(renderWeightsEveryNEpochs).fanIn(fanIn).build();
   return ret;
 }
