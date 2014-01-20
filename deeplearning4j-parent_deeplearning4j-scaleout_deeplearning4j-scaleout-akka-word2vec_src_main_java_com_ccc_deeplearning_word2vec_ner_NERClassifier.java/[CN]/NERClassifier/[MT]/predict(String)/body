@@ -1,0 +1,10 @@
+{
+  words=new InputHomogenization(words).transform();
+  List<Window> windows=Windows.windows(words);
+  List<String> labels=new ArrayList<String>();
+  DoubleMatrix classified=classify(words);
+  List<Datum> datums=viterbi.decode(classified,labels,windows);
+  List<String> ret=new ArrayList<String>();
+  for (  Datum d : datums)   ret.add(d.guessLabel);
+  return ret;
+}

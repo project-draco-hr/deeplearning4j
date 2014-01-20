@@ -1,0 +1,14 @@
+{
+  this.vec=vec;
+  this.labels=labels;
+  trainWord2Vec=false;
+  trainDeepNet=true;
+  if (deepLearningParams != null)   this.deepLearningParams=deepLearningParams;
+ else {
+    this.deepLearningParams=new Object[]{1,0.1,50};
+  }
+  if (this.labels.contains("NONE")) {
+    this.labels.remove("NONE");
+    log.warn("No need to include NONE as a label, taken care of internally; removing");
+  }
+}

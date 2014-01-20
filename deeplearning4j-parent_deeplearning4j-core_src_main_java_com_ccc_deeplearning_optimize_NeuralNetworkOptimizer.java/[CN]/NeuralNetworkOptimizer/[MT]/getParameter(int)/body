@@ -1,0 +1,9 @@
+{
+  if (index >= network.W.length) {
+    if (index >= network.vBias.length) {
+      return network.hBias.get(index);
+    }
+ else     return network.vBias.get(index);
+  }
+  return network.W.get(index);
+}

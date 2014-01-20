@@ -1,0 +1,8 @@
+{
+  double count=getCount(key);
+  double total=totalCount();
+  if (total < 0.0) {
+    throw new RuntimeException("Can't call getProbability() with totalCount < 0.0");
+  }
+  return total > 0.0 ? count / total : 0.0;
+}

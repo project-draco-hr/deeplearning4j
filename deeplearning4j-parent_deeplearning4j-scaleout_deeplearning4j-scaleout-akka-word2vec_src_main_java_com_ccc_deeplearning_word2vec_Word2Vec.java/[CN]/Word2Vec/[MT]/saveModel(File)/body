@@ -1,0 +1,19 @@
+{
+  if (file.exists())   file.delete();
+  try (DataOutputStream dataOutputStream=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))){
+    dataOutputStream.writeInt(vocab.size());
+    dataOutputStream.writeInt(layerSize);
+    for (int i=0; i < vocab.size(); i++) {
+      String word=this.wordIndex.get(i).toString();
+      dataOutputStream.writeUTF(word);
+      vocab.get(word).write(dataOutputStream);
+    }
+    syn0.out(dataOutputStream);
+    syn1.out(dataOutputStream);
+    dataOutputStream.flush();
+    dataOutputStream.close();
+  }
+ catch (  IOException e) {
+    log.error("Unable to save model",e);
+  }
+}

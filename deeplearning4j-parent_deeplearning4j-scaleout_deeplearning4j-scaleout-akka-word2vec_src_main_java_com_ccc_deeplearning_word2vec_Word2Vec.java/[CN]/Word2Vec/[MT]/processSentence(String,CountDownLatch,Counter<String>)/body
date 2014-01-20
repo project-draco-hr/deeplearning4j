@@ -1,0 +1,19 @@
+{
+  Future<Void> future=Futures.future(new Callable<Void>(){
+    @Override public Void call() throws Exception {
+      if (!sentence.isEmpty())       trainSentence(sentence,totalWords);
+      return null;
+    }
+  }
+,trainingSystem.dispatcher());
+  future.onComplete(new OnComplete<Void>(){
+    @Override public void onComplete(    Throwable arg0,    Void arg1) throws Throwable {
+      sentenceCounter.countDown();
+      if (sentenceCounter.getCount() % 10000 == 0) {
+        alpha=new Double(Math.max(MIN_ALPHA,alpha * (1 - 1.0 * totalWords.totalCount() / allWordsCount)));
+        log.info("Alpha updated " + alpha + " progress "+ sentenceCounter.getCount()+ " sentence size "+ sentences.size());
+      }
+    }
+  }
+,trainingSystem.dispatcher());
+}

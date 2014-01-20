@@ -1,0 +1,4 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> images=getImagesAsList();
+  return convertListPairs(images);
+}

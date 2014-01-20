@@ -1,0 +1,30 @@
+{
+  readStopWords();
+  Queue<String> queue=new ArrayDeque<>(sentences);
+  int count=0;
+  while (!queue.isEmpty()) {
+    final String words=queue.poll();
+    StringTokenizer tokenizer=new StringTokenizer(new InputHomogenization(words).transform());
+    this.allWordsCount+=tokenizer.countTokens();
+    count++;
+    if (count % 10000 == 0)     log.info("Processed  sentence " + count + " current word count "+ allWordsCount);
+    while (tokenizer.hasMoreTokens()) {
+      String token=tokenizer.nextToken();
+      if (stopWords.contains(token))       token="STOP";
+      VocabWord word=rawVocab.get(token);
+      if (word != null)       word.increment();
+ else {
+        word=new VocabWord(1.0,layerSize);
+        rawVocab.put(token,word);
+      }
+      if (word.getWordFrequency() >= minWordFrequency && !matchesAnyStopWord(token)) {
+        if (!this.vocab.containsKey(token)) {
+          word.setIndex(this.vocab.size());
+          this.vocab.put(token,word);
+          wordIndex.add(token);
+        }
+      }
+    }
+  }
+  setup();
+}

@@ -1,0 +1,5 @@
+{
+  double[][] input=new double[trainingExamples.size()][trainingExamples.get(0).length];
+  for (int i=0; i < trainingExamples.size(); i++)   for (int j=0; j < trainingExamples.get(i).length; j++)   input[i][j]=trainingExamples.get(i)[j];
+  return input;
+}

@@ -1,0 +1,9 @@
+{
+  double mean=sum(vector) / vector.length;
+  double ret=0;
+  for (int i=0; i < vector.length; i++) {
+    double vec1Diff=Math.pow(vector[i] - mean,2);
+    ret+=vec1Diff;
+  }
+  return ret;
+}

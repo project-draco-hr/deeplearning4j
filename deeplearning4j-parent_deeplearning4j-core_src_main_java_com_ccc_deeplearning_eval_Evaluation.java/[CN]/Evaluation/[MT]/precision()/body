@@ -1,0 +1,7 @@
+{
+  double prec=0.0;
+  for (  Integer i : confusion.getClasses()) {
+    prec+=precision(i);
+  }
+  return prec / (double)confusion.getClasses().size();
+}

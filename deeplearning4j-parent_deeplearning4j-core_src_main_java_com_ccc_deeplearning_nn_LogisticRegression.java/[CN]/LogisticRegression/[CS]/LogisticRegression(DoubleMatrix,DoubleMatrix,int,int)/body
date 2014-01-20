@@ -1,0 +1,8 @@
+{
+  this.input=input;
+  this.labels=labels;
+  this.nIn=nIn;
+  this.nOut=nOut;
+  W=DoubleMatrix.zeros(nIn,nOut);
+  b=DoubleMatrix.zeros(nOut);
+}

@@ -1,0 +1,12 @@
+{
+  if (network.nLayers != nLayers)   throw new IllegalArgumentException("Unable to merge networks that are not of equal length");
+  for (int i=0; i < nLayers; i++) {
+    NeuralNetwork n=layers[i];
+    NeuralNetwork otherNetwork=network.layers[i];
+    n.merge(otherNetwork,batchSize);
+    HiddenLayer l=sigmoidLayers[i];
+    l.b=n.gethBias();
+    l.W=n.getW();
+  }
+  logLayer.merge(network.logLayer,batchSize);
+}

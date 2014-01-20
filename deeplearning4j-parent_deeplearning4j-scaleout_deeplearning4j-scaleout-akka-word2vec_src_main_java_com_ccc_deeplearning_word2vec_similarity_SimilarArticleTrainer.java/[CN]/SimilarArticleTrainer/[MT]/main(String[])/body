@@ -1,0 +1,47 @@
+{
+  Word2Vec vec=Word2VecLoader.loadModel(new File(args[0]));
+  File trainingDir=new File(args[1]);
+  File[] dirs=trainingDir.listFiles();
+  List<DoubleMatrix> individualMatrices=new ArrayList<DoubleMatrix>();
+  List<DataSet> examples=new ArrayList<DataSet>();
+  for (  File dir : dirs) {
+    if (!dir.getName().equals("test")) {
+      File[] articles=dir.listFiles();
+      String a1=FileUtils.readFileToString(articles[0]);
+      String a2=FileUtils.readFileToString(articles[1]);
+      WordMetaData d1=new WordMetaData(vec,a1);
+      WordMetaData d2=new WordMetaData(vec,a2);
+      DoubleMatrix positive=new DoubleMatrix(new double[]{1.0,0.0});
+      DoubleMatrix firstPositive=matrixFor(vec,d1,vec.getVocab().keySet());
+      DoubleMatrix secondPositive=matrixFor(vec,d2,vec.getVocab().keySet());
+      individualMatrices.add(firstPositive);
+      individualMatrices.add(secondPositive);
+      List<DataSet> positiveExamples=getExamples(firstPositive,secondPositive,positive);
+      examples.addAll(positiveExamples);
+    }
+  }
+  Random r=new Random();
+  CDBN dbn=new CDBN.Builder().numberOfInputs(examples.get(0).getFirst().columns).numberOfOutPuts(2).hiddenLayerSizes(new int[]{500,500,2000}).build();
+  for (int i=0; i < individualMatrices.size(); i++) {
+    DoubleMatrix negative=new DoubleMatrix(new double[]{1.0,0.0});
+    int negativeExample=r.nextInt(individualMatrices.size());
+    while (negativeExample == i || (Math.abs(negativeExample - i)) == 1)     negativeExample=r.nextInt(individualMatrices.size());
+    List<DataSet> negativeExamples=getExamples(individualMatrices.get(0),individualMatrices.get(negativeExample),negative);
+    examples.addAll(negativeExamples);
+  }
+  DataSet d=DataSet.merge(examples);
+  log.info("Training on " + d.numExamples() + " with "+ examples.get(0).getFirst().columns+ " inputs");
+  List<List<DataSet>> batches=d.batchBy(10);
+  d=null;
+  examples.clear();
+  individualMatrices.clear();
+  for (  List<DataSet> list : batches) {
+    DataSet train=DataSet.merge(list);
+    dbn.pretrain(train.getFirst(),3,0.1,5);
+    dbn.finetune(train.getSecond(),0.1,5);
+  }
+  BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(new File(args[2])));
+  dbn.write(bos);
+  bos.flush();
+  bos.close();
+}

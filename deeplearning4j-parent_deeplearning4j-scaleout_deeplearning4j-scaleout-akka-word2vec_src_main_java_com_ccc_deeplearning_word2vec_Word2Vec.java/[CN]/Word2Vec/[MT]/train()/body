@@ -1,0 +1,58 @@
+{
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  if (stopWords == null)   readStopWords();
+  log.info("Training word2vec multithreaded");
+  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
+    private static final long serialVersionUID=5447027920163740307L;
+    @Override public Map<String,Double> buildMap(){
+      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
+    }
+  }
+;
+  final Counter<String> totalWords=new Counter<String>(factory);
+  if (syn0 == null && !sentences.isEmpty()) {
+    this.buildVocab(sentences);
+  }
+  if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
+  if (sentences.isEmpty()) {
+    if (fileIterator == null)     throw new IllegalStateException("Unable to train sentences, no iterator or sentences defined");
+ else {
+      if (!fileIterator.hasNext())       throw new IllegalStateException("File iterator does not appear to have any files to train on");
+      final CountDownLatch sentenceCounter=new CountDownLatch(numLines);
+      int numLinesIterated=0;
+      while (fileIterator.hasNext()) {
+        try {
+          LineIterator lines=FileUtils.lineIterator(fileIterator.next());
+          while (lines.hasNext()) {
+            final String sentence=new InputHomogenization(lines.nextLine().replaceAll("\\p{P}","")).transform();
+            numLinesIterated++;
+            processSentence(sentence,sentenceCounter,totalWords);
+          }
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+      try {
+        sentenceCounter.await();
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      if (numLinesIterated != numLines) {
+        this.numLines=numLinesIterated;
+      }
+    }
+  }
+ else {
+    final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
+    for (    final String sentence : sentences)     processSentence(sentence,sentenceCounter,totalWords);
+    try {
+      sentenceCounter.await();
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+  if (trainingSystem != null)   trainingSystem.shutdown();
+}

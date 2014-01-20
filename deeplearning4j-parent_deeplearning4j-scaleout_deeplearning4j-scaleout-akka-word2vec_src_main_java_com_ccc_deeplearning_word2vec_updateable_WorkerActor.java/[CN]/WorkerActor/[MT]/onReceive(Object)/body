@@ -1,0 +1,15 @@
+{
+  if (message instanceof DistributedPubSubMediator.SubscribeAck) {
+    DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
+    log.info("Subscribed to " + ack.toString());
+  }
+ else   if (message instanceof List) {
+    List<Window> input=(List<Window>)message;
+    updateTraining(input);
+  }
+ else   if (message instanceof UpdateMessage) {
+    UpdateMessage<Word2VecUpdateable> m=(UpdateMessage<Word2VecUpdateable>)message;
+    workerMatrix=(Word2VecUpdateable)m.getUpdateable().get();
+  }
+ else   unhandled(message);
+}

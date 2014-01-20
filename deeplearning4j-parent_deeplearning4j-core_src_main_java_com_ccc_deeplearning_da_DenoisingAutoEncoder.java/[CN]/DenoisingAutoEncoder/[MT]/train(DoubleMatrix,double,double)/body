@@ -1,0 +1,16 @@
+{
+  this.input=x;
+  DoubleMatrix tildeX=getCorruptedInput(x,corruptionLevel);
+  DoubleMatrix y=getHiddenValues(tildeX);
+  DoubleMatrix z=getReconstructedInput(y);
+  DoubleMatrix L_h2=x.sub(z);
+  DoubleMatrix L_h1=L_h2.mmul(W).mul(y).mul(oneMinus(y));
+  DoubleMatrix L_vbias=L_h2;
+  DoubleMatrix L_hbias=L_h1;
+  DoubleMatrix L_W=tildeX.transpose().mmul(L_h1).add(L_h2.transpose().mmul(y));
+  this.W.addi(L_W).mul(lr).mul(0.01);
+  DoubleMatrix L_hbias_mean=L_hbias.columnMeans();
+  DoubleMatrix L_vbias_mean=L_vbias.columnMeans();
+  this.hBias.addi(L_hbias_mean.mul(lr));
+  this.vBias.addi(L_vbias_mean.mul(lr));
+}

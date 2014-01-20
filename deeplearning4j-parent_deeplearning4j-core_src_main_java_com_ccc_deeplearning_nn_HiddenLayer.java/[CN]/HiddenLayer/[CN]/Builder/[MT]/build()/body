@@ -1,0 +1,5 @@
+{
+  HiddenLayer ret=new HiddenLayer(n_in,n_out,W,b,rng,input);
+  ret.activationFunction=activationFunction;
+  return ret;
+}

@@ -1,0 +1,6 @@
+{
+  for (int i=0; i < windows.size(); i++) {
+    Window w=windows.remove(0);
+    addTo.add(w);
+  }
+}

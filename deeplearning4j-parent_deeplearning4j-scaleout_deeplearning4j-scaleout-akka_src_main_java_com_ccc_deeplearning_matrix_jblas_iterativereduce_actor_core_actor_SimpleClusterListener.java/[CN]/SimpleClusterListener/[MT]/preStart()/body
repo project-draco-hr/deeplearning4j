@@ -1,0 +1,3 @@
+{
+  cluster.subscribe(getSelf(),ClusterDomainEvent.class);
+}

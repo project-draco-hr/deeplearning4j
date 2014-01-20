@@ -1,0 +1,8 @@
+{
+  MnistDataSetIterator fetcher=new MnistDataSetIterator(10,10);
+  MersenneTwister rand=new MersenneTwister(123);
+  RBM da=new RBM.Builder().numberOfVisible(784).numHidden(1000).withRandom(rand).withMomentum(0.1).build();
+  da.input=fetcher.next().getFirst();
+  NeuralNetPlotter plotter=new NeuralNetPlotter();
+  plotter.plotHbias(da);
+}

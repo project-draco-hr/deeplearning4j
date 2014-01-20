@@ -1,0 +1,10 @@
+{
+  StackedDenoisingAutoEncoder sda=sdamatrix();
+  sda.pretrain(pretrain_lr,corruption_level,pretraining_epochs);
+  sda.finetune(finetune_lr,finetune_epochs);
+  log.info("OUTPUT TEST");
+  DoubleMatrix predicted=sda.predict(train_X_matrix);
+  Evaluation eval=new Evaluation();
+  eval.eval(train_Y_matrix,predicted);
+  log.info(eval.stats());
+}

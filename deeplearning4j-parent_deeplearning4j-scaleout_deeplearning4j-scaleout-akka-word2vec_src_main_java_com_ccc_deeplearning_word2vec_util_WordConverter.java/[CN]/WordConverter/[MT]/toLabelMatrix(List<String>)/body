@@ -1,0 +1,9 @@
+{
+  int columns=labels.size();
+  List<Window> windows=allWindowsForAllSentences();
+  DoubleMatrix ret=new DoubleMatrix(windows.size(),columns);
+  for (int i=0; i < ret.rows; i++) {
+    ret.putRow(i,MatrixUtil.toOutcomeVector(labels.indexOf(windows.get(i).getLabel()),labels.size()));
+  }
+  return ret;
+}

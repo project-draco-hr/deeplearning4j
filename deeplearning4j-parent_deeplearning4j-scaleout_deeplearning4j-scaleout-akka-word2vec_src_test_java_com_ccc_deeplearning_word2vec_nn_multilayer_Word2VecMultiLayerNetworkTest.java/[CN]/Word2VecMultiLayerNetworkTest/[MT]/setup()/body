@@ -1,0 +1,5 @@
+{
+  if (network == null) {
+    network=(Word2VecMultiLayerNetwork)BaseMultiLayerNetwork.loadFromFile(new BufferedInputStream(new ClassPathResource("/nn-model.bin").getInputStream()));
+  }
+}

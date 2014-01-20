@@ -1,0 +1,13 @@
+{
+  ensureValidOutcomeMatrix(y);
+  if (x.rows != y.rows) {
+    throw new IllegalArgumentException("How does this happen?");
+  }
+  this.input=x;
+  this.labels=y;
+  DoubleMatrix regularized=W.transpose().mul(regTerm);
+  DoubleMatrix p_y_given_x=sigmoid(x.mmul(W).addRowVector(b));
+  DoubleMatrix dy=y.sub(p_y_given_x);
+  W.addi(x.transpose().mmul(dy).mul(lr));
+  b.addi(dy.columnMeans().mul(lr));
+}

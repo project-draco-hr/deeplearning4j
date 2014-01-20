@@ -1,0 +1,13 @@
+{
+  DoubleMatrix l1=syn0.getRow(w2.getIndex());
+  DoubleMatrix l2a=syn1.getRows(w1.getCodes());
+  DoubleMatrix fa=MatrixUtil.sigmoid(MatrixUtil.dot(l1,l2a.transpose()));
+  DoubleMatrix ga=DoubleMatrix.ones(fa.length).sub(MatrixUtil.toMatrix(w1.getCodes())).sub(fa).mul(alpha);
+  DoubleMatrix outer=ga.mmul(l1);
+  for (int i=0; i < w1.getPoints().length; i++) {
+    DoubleMatrix toAdd=l2a.getRow(i).add(outer.getRow(i));
+    syn1.putRow(w1.getPoints()[i],toAdd);
+  }
+  DoubleMatrix updatedInput=l1.add(MatrixUtil.dot(ga,l2a));
+  syn0.putRow(w2.getIndex(),updatedInput);
+}

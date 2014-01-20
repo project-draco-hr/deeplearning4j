@@ -1,0 +1,12 @@
+{
+  StringBuilder sb=new StringBuilder("[\n");
+  for (  Map.Entry<K,Counter<V>> entry : counterMap.entrySet()) {
+    sb.append("  ");
+    sb.append(entry.getKey());
+    sb.append(" -> ");
+    sb.append(entry.getValue().toString(maxValsPerKey));
+    sb.append("\n");
+  }
+  sb.append("]");
+  return sb.toString();
+}

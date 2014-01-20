@@ -1,0 +1,7 @@
+{
+  super(name,mode);
+  if (getMagicNumber() != readInt()) {
+    throw new RuntimeException("This MNIST DB file " + name + " should start with the number "+ getMagicNumber()+ ".");
+  }
+  count=readInt();
+}

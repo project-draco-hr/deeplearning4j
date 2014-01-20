@@ -1,0 +1,5 @@
+{
+  this.iter=FileUtils.iterateFiles(new File(path),null,true);
+  this.windows.clear();
+  this.cache.clear();
+}

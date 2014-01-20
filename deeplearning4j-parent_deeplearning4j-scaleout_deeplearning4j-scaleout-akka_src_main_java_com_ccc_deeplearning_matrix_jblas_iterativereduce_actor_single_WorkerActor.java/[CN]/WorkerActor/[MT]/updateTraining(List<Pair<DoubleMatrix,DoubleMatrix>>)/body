@@ -1,0 +1,13 @@
+{
+  DoubleMatrix newInput=new DoubleMatrix(list.size(),list.get(0).getFirst().columns);
+  DoubleMatrix newOutput=new DoubleMatrix(list.size(),list.get(0).getSecond().columns);
+  for (int i=0; i < list.size(); i++) {
+    newInput.putRow(i,list.get(i).getFirst());
+    newOutput.putRow(i,list.get(i).getSecond());
+  }
+  this.combinedInput=newInput;
+  this.outcomes=newOutput;
+  UpdateableSingleImpl work=compute();
+  log.info("Updating parent actor...");
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,work),getSelf());
+}

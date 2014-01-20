@@ -1,0 +1,7 @@
+{
+  if (index >= network.logLayer.W.length) {
+    int i=index - network.logLayer.b.length;
+    network.logLayer.b.put(i,value);
+  }
+ else   network.logLayer.W.put(index,value);
+}

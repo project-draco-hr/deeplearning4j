@@ -1,0 +1,9 @@
+{
+  int idx=0;
+  for (int i=0; i < network.logLayer.W.length; i++) {
+    buffer[idx++]=network.logLayer.W.get(i);
+  }
+  for (int i=0; i < network.logLayer.b.length; i++) {
+    buffer[idx++]=network.logLayer.b.get(i);
+  }
+}
