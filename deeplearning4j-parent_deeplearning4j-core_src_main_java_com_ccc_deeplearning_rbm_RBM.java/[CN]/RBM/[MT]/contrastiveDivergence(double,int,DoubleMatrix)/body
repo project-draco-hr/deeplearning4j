@@ -3,7 +3,7 @@
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
-  @SuppressWarnings("unused") DoubleMatrix nvMeans=null;
+  DoubleMatrix nvMeans=null;
   DoubleMatrix nvSamples=null;
   DoubleMatrix nhMeans=null;
   DoubleMatrix nhSamples=null;
@@ -16,6 +16,7 @@
     nhSamples=matrices.getSecond().getSecond();
   }
   DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate).mul(momentum);
+  wGradient.subi(W.muli(l2));
   W.addi(wGradient);
   regularizeWeights(input.rows,learningRate);
   DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0).mul(learningRate);

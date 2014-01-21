@@ -31,7 +31,7 @@
     hBias=network.gethBias().dup();
     bestLoss=entropy;
   }
-  log.info("Cross entropy for layer " + (epoch + 1) + " on epoch "+ epoch+ " is "+ entropy);
+  log.info("Cross entropy for layer " + (layer + 1) + " on epoch "+ epoch+ " is "+ entropy);
   double curr=network.getReConstructionCrossEntropy();
   if (curr > bestLoss) {
     log.info("Converged past global minimum; reverting");

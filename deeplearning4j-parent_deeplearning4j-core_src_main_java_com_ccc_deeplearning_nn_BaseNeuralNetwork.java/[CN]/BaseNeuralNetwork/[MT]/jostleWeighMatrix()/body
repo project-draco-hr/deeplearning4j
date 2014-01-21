@@ -1,6 +1,5 @@
 {
-  double a=fanIn();
-  UniformRealDistribution u=new UniformRealDistribution(rng,-a,a);
+  NormalDistribution u=new NormalDistribution(rng,0,.01,fanIn());
   DoubleMatrix W=DoubleMatrix.zeros(nVisible,nHidden);
   for (int i=0; i < this.W.rows; i++)   W.putRow(i,new DoubleMatrix(u.sample(this.W.columns)));
 }
