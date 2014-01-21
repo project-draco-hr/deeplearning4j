@@ -2,12 +2,12 @@
   DoubleMatrix x=new DoubleMatrix(new double[][]{{0.4,0.5,0.5,0.,0.,0.},{0.5,0.3,0.5,0.,0.,0.},{0.4,0.5,0.5,0.,0.,0.},{0.,0.,0.5,0.3,0.5,0.},{0.,0.,0.5,0.4,0.5,0.},{0.,0.,0.5,0.5,0.5,0.}});
   DoubleMatrix y=new DoubleMatrix(new double[][]{{1,0},{1,0},{1,0},{0,1},{0,1},{0,1}});
   RandomGenerator rng=new MersenneTwister(123);
-  double preTrainLr=0.1;
+  double preTrainLr=0.01;
   int preTrainEpochs=1000;
   int k=1;
   int nIns=6, nOuts=2;
   int[] hiddenLayerSizes=new int[]{5,5};
-  double fineTuneLr=0.1;
+  double fineTuneLr=0.01;
   int fineTuneEpochs=200;
   CDBN dbn=new CDBN(nIns,hiddenLayerSizes,nOuts,2,rng,x,y);
   dbn.pretrain(k,preTrainLr,preTrainEpochs);

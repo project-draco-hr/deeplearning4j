@@ -1,10 +1,5 @@
 {
-  int idx=0;
   for (int i=0; i < buffer.length; i++) {
-    buffer[i]=logReg.W.get(i);
-    idx++;
-  }
-  for (int i=0; i < logReg.b.length; i++) {
-    buffer[idx]=logReg.b.get(i);
+    buffer[i]=getParameter(i);
   }
 }

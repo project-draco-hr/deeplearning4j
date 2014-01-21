@@ -1,4 +1,4 @@
 {
-  if (index > logReg.W.length)   return logReg.b.get(index - logReg.W.length);
+  if (index >= logReg.W.length)   return logReg.b.get(index - logReg.W.length);
   return logReg.W.get(index);
 }

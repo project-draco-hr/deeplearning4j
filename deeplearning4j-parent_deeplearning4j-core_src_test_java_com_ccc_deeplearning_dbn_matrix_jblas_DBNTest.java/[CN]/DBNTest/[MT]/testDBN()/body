@@ -9,14 +9,16 @@
   int[] hiddenLayerSizes=new int[]{6,6,6};
   double fineTuneLr=0.1;
   int fineTuneEpochs=200;
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).numberOfOutPuts(nOuts).withRng(rng).build();
+  DBN dbn=new DBN.Builder().useRegularization(true).renderWeights(1).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).numberOfOutPuts(nOuts).withRng(rng).build();
+  NeuralNetPlotter plotter=new NeuralNetPlotter();
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
+  plotter.plot(dbn.layers[0]);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix testX=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0},{1,1,1,1,1,0}});
   DoubleMatrix testY=new DoubleMatrix(new double[][]{{1,0},{1,0},{0,1}});
-  DoubleMatrix predict=dbn.predict(testX);
+  DoubleMatrix predict=dbn.predict(x);
   log.info(predict.toString());
   Evaluation eval=new Evaluation();
-  eval.eval(testY,predict);
+  eval.eval(y,predict);
   log.info(eval.stats());
 }

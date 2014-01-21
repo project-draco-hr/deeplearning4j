@@ -1,9 +1,5 @@
 {
-  if (opt == null)   opt=new com.ccc.deeplearning.util.MyConjugateGradient(this);
-  try {
-    opt.optimize();
-  }
- catch (  Throwable e) {
-    log.error("",e);
-  }
+  if (opt == null)   opt=new MyConjugateGradient(this);
+  opt.setTolerance(tolerance);
+  opt.optimize();
 }
