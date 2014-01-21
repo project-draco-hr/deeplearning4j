@@ -7,25 +7,10 @@
   }
   if (this.k >= 15)   this.k=15;
   k=this.k;
-  RBM r=(RBM)network;
-  Pair<DoubleMatrix,DoubleMatrix> probHidden=r.sampleHiddenGivenVisible(r.input);
-  DoubleMatrix chainStart=probHidden.getSecond();
-  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
-  @SuppressWarnings("unused") DoubleMatrix nvMeans=null;
-  DoubleMatrix nvSamples=null;
-  DoubleMatrix nhMeans=null;
-  DoubleMatrix nhSamples=null;
-  for (int i=0; i < k; i++) {
-    if (i == 0)     matrices=r.gibbhVh(chainStart);
- else     matrices=r.gibbhVh(nhSamples);
-    nvMeans=matrices.getFirst().getFirst();
-    nvSamples=matrices.getFirst().getSecond();
-    nhMeans=matrices.getSecond().getFirst();
-    nhSamples=matrices.getSecond().getSecond();
-  }
-  DoubleMatrix wAdd=r.input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(lr).mul(0.1);
-  DoubleMatrix vBiasAdd=mean(r.input.sub(nvSamples),0).mul(lr);
-  DoubleMatrix hBiasAdd=mean(probHidden.getSecond().sub(nhMeans),0).mul(lr);
+  NeuralNetworkGradient gradient=network.getGradient(new Object[]{k,lr});
+  DoubleMatrix wAdd=gradient.getwGradient();
+  DoubleMatrix vBiasAdd=gradient.getvBiasGradient();
+  DoubleMatrix hBiasAdd=gradient.gethBiasGradient();
   int idx=0;
   for (int i=0; i < wAdd.length; i++)   buffer[idx++]=wAdd.get(i);
   for (int i=0; i < vBiasAdd.length; i++)   buffer[idx++]=vBiasAdd.get(i);

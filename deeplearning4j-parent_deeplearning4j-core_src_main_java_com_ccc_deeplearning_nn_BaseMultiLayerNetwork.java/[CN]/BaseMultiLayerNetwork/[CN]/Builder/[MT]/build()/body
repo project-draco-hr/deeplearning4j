@@ -16,6 +16,7 @@
     ret.fanIn=this.fanIn;
     ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
     ret.l2=l2;
+    ret.useRegularization=useRegularization;
     if (activation != null)     ret.activation=activation;
     return ret;
   }

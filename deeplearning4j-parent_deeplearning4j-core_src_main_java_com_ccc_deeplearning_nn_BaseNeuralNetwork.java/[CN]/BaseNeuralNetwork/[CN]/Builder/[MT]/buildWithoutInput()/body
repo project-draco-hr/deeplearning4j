@@ -7,6 +7,7 @@
       try {
         ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen,fanIn);
         ret.renderWeightsEveryNumEpochs=this.renderWeightsEveryNumEpochs;
+        ret.useRegularization=this.useRegularization;
         return ret;
       }
  catch (      Exception e) {

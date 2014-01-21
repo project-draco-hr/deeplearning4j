@@ -1,27 +1,7 @@
 {
   if (input != null)   this.input=input;
-  Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
-  DoubleMatrix chainStart=probHidden.getSecond();
-  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
-  DoubleMatrix nvMeans=null;
-  DoubleMatrix nvSamples=null;
-  DoubleMatrix nhMeans=null;
-  DoubleMatrix nhSamples=null;
-  for (int i=0; i < k; i++) {
-    if (i == 0)     matrices=gibbhVh(chainStart);
- else     matrices=gibbhVh(nhSamples);
-    nvMeans=matrices.getFirst().getFirst();
-    nvSamples=matrices.getFirst().getSecond();
-    nhMeans=matrices.getSecond().getFirst();
-    nhSamples=matrices.getSecond().getSecond();
-  }
-  DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate).mul(momentum);
-  wGradient.subi(W.muli(l2));
-  wGradient.divi(input.rows);
-  W.addi(wGradient);
-  regularizeWeights(input.rows,learningRate);
-  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0).mul(learningRate);
-  vBias.addi(vBiasGradient);
-  DoubleMatrix hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
-  hBias.addi(hBiasGradient);
+  NeuralNetworkGradient gradient=getGradient(new Object[]{k,learningRate});
+  W.addi(gradient.getwGradient());
+  hBias.addi(gradient.gethBiasGradient());
+  vBias.addi(gradient.getvBiasGradient());
 }

@@ -1,3 +1,9 @@
 {
-  network.train(x,lr,extraParams);
+  if (opt == null)   opt=new com.ccc.deeplearning.util.MyConjugateGradient(this);
+  try {
+    opt.optimize();
+  }
+ catch (  Throwable e) {
+    log.error("",e);
+  }
 }

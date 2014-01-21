@@ -30,16 +30,20 @@
         break;
       }
     }
-    if (sse < errorThreshold)     break;
     if (i % 10 == 0 || i == 0) {
       log.info("SSE on epoch " + i + " is  "+ sse);
       log.info("Negative log likelihood is " + this.negativeLogLikelihood());
     }
     for (int l=0; l < nLayers; l++) {
       DoubleMatrix add=deltas.get(l).getFirst().div(input.rows).mul(lr);
+      add.divi(input.rows);
+      if (useRegularization) {
+        add.muli(layers[l].getW().mul(l2));
+      }
       layers[l].setW(layers[l].getW().sub(add.mul(lr)));
       sigmoidLayers[l].W=layers[l].getW();
       DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+      deltaColumnSums.divi(input.rows);
       layers[l].gethBias().subi(deltaColumnSums.mul(lr));
       sigmoidLayers[l].b=layers[l].gethBias();
     }

@@ -6,7 +6,7 @@
   int preTrainEpochs=1000;
   int k=1;
   int nIns=6, nOuts=2;
-  int[] hiddenLayerSizes=new int[]{4,7,9};
+  int[] hiddenLayerSizes=new int[]{6,6,6};
   double fineTuneLr=0.1;
   int fineTuneEpochs=200;
   DBN dbn=new DBN.Builder().hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).numberOfOutPuts(nOuts).withRng(rng).build();
@@ -19,13 +19,4 @@
   Evaluation eval=new Evaluation();
   eval.eval(testY,predict);
   log.info(eval.stats());
-  DBN decoder=new DBN.Builder().buildEmpty();
-  decoder.asDecoder(dbn);
-  assertEquals(dbn.nOuts,decoder.nIns);
-  assertEquals(dbn.nIns,decoder.nOuts);
-  assertEquals(decoder.nLayers,dbn.nLayers);
-  boolean e=Arrays.equals(new int[]{9,7,4},decoder.hiddenLayerSizes);
-  assertEquals(true,e);
-  decoder.pretrain(predict,1,0.1,1000);
-  decoder.finetune(testX,0.1,1000);
 }

@@ -18,5 +18,7 @@
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].W,this.sigmoidLayers[i].b,null,rng,i);
   }
   this.logLayer=new LogisticRegression(layerInput,this.hiddenLayerSizes[this.nLayers - 1],this.nOuts);
+  this.logLayer.useRegularization=this.useRegularization;
+  this.logLayer.l2=this.l2;
   dimensionCheck();
 }
