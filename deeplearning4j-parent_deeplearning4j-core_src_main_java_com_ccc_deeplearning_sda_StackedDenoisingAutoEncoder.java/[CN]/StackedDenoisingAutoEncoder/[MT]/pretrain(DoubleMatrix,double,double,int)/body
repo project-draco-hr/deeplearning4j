@@ -5,7 +5,7 @@
     if (i == 0)     layerInput=input;
  else     layerInput=this.sigmoidLayers[i - 1].sampleHGivenV(layerInput);
     Integer numTimesOver=1;
-    Double bestLoss=layers[i].getReConstructionCrossEntropy();
+    Double bestLoss=Double.POSITIVE_INFINITY;
     for (int epoch=0; epoch < epochs; epoch++) {
       boolean trainedProperly=this.trainNetwork(this.layers[i],this.sigmoidLayers[i],epoch,i,layerInput,lr,bestLoss,new Object[]{corruptionLevel});
       if (!trainedProperly)       numTimesOver++;

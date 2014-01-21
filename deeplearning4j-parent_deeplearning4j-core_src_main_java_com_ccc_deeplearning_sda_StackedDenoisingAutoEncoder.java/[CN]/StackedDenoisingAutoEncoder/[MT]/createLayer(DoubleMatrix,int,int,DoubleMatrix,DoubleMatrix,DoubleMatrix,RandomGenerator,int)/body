@@ -1,4 +1,4 @@
 {
-  DenoisingAutoEncoder ret=new DenoisingAutoEncoder.Builder().withHBias(hbias).withInput(input).withWeights(W).withRandom(rng).withMomentum(momentum).withVisibleBias(vBias).withSparsity(0.01).renderWeights(renderWeightsEveryNEpochs).fanIn(fanIn).build();
+  DenoisingAutoEncoder ret=new DenoisingAutoEncoder.Builder().withHBias(hbias).withInput(input).withWeights(W).withRandom(rng).withMomentum(momentum).withVisibleBias(vBias).numberOfVisible(nVisible).numHidden(nHidden).withSparsity(0.01).renderWeights(renderWeightsEveryNEpochs).fanIn(fanIn).build();
   return ret;
 }

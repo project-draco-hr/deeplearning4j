@@ -1,4 +1,6 @@
 {
+  if (this.nVisible < 1)   throw new IllegalStateException("Number of visible can not be less than 1");
+  if (this.nHidden < 1)   throw new IllegalStateException("Number of hidden can not be less than 1");
   if (this.W == null) {
     NormalDistribution u=new NormalDistribution(rng,0,.01,fanIn());
     this.W=DoubleMatrix.zeros(nVisible,nHidden);
