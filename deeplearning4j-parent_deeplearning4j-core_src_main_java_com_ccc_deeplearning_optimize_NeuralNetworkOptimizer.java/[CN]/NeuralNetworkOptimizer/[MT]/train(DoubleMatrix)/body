@@ -1,5 +1,6 @@
 {
-  if (opt == null)   opt=new MyConjugateGradient(this);
+  if (opt == null)   opt=new MyConjugateGradient(this,this);
   opt.setTolerance(tolerance);
-  opt.optimize();
+  opt.setMaxIterations(10000);
+  opt.optimize(100);
 }

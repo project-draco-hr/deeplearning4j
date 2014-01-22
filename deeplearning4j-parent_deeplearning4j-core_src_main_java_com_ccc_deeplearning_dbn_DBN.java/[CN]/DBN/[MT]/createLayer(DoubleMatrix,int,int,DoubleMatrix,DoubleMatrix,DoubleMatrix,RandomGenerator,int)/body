@@ -1,4 +1,5 @@
 {
   RBM ret=new RBM.Builder().useRegularization(useRegularization).numberOfVisible(nVisible).numHidden(nHidden).withWeights(W).withInput(input).withVisibleBias(vBias).withHBias(hBias).withRandom(rng).renderWeights(renderWeightsEveryNEpochs).fanIn(fanIn).build();
+  ret.getW().muli(1000);
   return ret;
 }

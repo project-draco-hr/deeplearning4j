@@ -1,3 +1,3 @@
 {
-  return logReg.negativeLogLikelihood();
+  return -logReg.negativeLogLikelihood();
 }
