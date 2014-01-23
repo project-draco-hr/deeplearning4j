@@ -13,6 +13,7 @@
   if (useRegularization) {
     L_W.subi(W.muli(l2));
   }
+  if (momentum != 0)   L_W.muli(1 - momentum);
   L_W.divi(input.rows);
   DoubleMatrix L_hbias_mean=L_hbias.columnMeans();
   DoubleMatrix L_vbias_mean=L_vbias.columnMeans();

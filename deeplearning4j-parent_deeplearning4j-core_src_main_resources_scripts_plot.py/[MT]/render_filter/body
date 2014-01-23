@@ -1,9 +1,12 @@
-def render_filter(path):
-    matrix = from_file(path)
-    tiled = (ones(((11 * 10), (11 * 10)), dtype='ieruint8') * 51)
+def render_filter(path, nRows, nCols, data_length):
+    X = from_file(path)
+    data = math.sqrt(nRows)
+    print ('data ' + str(data))
+    tiled = (ones(((data * nRows), (data * nCols)), dtype='uint8') * 51)
     for row in xrange(nRows):
         for col in xrange(nCols):
-            patch = X[((row * nCols) + col)].reshape((10, 10))
+            curr_neuron = col
+            patch = X[:, curr_neuron].reshape((data, data))
             normPatch = ((patch - patch.min()) / ((patch.max() - patch.min()) + 1e-06))
-            tiled[(row * 11):((row * 11) + 10), (col * 11):((col * 11) + 10)] = (normPatch * 255)
+            tiled[(row * data):((row * data) + data), (col * data):((col * data) + data)] = (normPatch * 255)
     Image.fromarray(tiled).show()

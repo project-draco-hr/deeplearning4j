@@ -2,6 +2,6 @@
   int plotEpochs=network.getRenderEpochs();
   if (epoch % plotEpochs == 0 || epoch == 0) {
     NeuralNetPlotter plotter=new NeuralNetPlotter();
-    plotter.plot(network);
+    plotter.plotNetworkGradient(network,network.getGradient(extraParams));
   }
 }

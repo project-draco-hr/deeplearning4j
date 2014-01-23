@@ -1,3 +1,5 @@
-def hist_matrix(values):
+def hist_matrix(values, show=True, chart_title=''):
     hist(from_file(values))
-    plot.show()
+    magnitude = (' mm %g ' % mean(fabs(values)))
+    chart_title += (' ' + magnitude)
+    title(chart_title)
