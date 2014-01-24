@@ -20,7 +20,13 @@
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
   wGradient.divi(input.rows);
+  DoubleMatrix hBiasGradient=null;
+  if (this.sparsity != 0) {
+    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0).mul(learningRate);
+  }
+ else {
+    hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
+  }
   DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0).mul(learningRate);
-  DoubleMatrix hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
   return new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
 }

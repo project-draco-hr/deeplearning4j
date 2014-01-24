@@ -16,6 +16,7 @@
     ret.momentum=this.momentum;
     ret.labels=this.labels;
     ret.fanIn=this.fanIn;
+    ret.sparsity=this.sparsity;
     ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
     ret.l2=l2;
     ret.forceNumEpochs=shouldForceEpochs;

@@ -1,0 +1,34 @@
+{
+  List<DoubleMatrix> activations=feedForward();
+  double error=this.negativeLogLikelihood();
+  if (lastEntropy == null) {
+    lastEntropy=error;
+  }
+ else   if (error > lastEntropy) {
+    log.info("Error greater than previous; found global minima; converging");
+    update(revert);
+    return false;
+  }
+ else   if (error < lastEntropy) {
+    lastEntropy=error;
+    revert=clone();
+    log.info("Found better error on epoch " + epoch + " "+ lastEntropy);
+  }
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
+  computeDeltas(activations,deltas);
+  for (int l=0; l < nLayers; l++) {
+    DoubleMatrix add=deltas.get(l).getFirst().div(input.rows).mul(lr);
+    add.divi(input.rows);
+    if (useRegularization) {
+      add.muli(layers[l].getW().mul(l2));
+    }
+    layers[l].setW(layers[l].getW().add(add.mul(lr)));
+    sigmoidLayers[l].W=layers[l].getW();
+    DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+    deltaColumnSums.divi(input.rows);
+    layers[l].gethBias().addi(deltaColumnSums.mul(lr));
+    sigmoidLayers[l].b=layers[l].gethBias();
+  }
+  logLayer.W.addi(deltas.get(nLayers).getFirst());
+  return true;
+}
