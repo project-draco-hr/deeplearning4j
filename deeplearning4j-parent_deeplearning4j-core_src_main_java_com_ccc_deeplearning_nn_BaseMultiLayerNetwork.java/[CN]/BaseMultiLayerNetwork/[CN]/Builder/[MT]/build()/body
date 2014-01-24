@@ -18,6 +18,7 @@
     ret.fanIn=this.fanIn;
     ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
     ret.l2=l2;
+    ret.forceNumEpochs=shouldForceEpochs;
     ret.useRegularization=useRegularization;
     if (activation != null)     ret.activation=activation;
     if (dist != null)     ret.dist=dist;
