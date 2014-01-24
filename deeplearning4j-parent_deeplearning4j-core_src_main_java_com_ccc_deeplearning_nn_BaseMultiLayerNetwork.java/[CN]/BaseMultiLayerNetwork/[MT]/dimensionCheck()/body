@@ -7,9 +7,9 @@
     if (i < nLayers - 1) {
       HiddenLayer h1=sigmoidLayers[i + 1];
       NeuralNetwork network1=layers[i + 1];
-      if (h1.n_in != h.n_out)       throw new IllegalStateException("Invalid structure: hidden layer in for " + (i + 1) + " not equal to number of ins "+ i);
+      if (h1.nIn != h.nOut)       throw new IllegalStateException("Invalid structure: hidden layer in for " + (i + 1) + " not equal to number of ins "+ i);
       if (network.getnHidden() != network1.getnVisible())       throw new IllegalStateException("Invalid structure: network hidden for " + (i + 1) + " not equal to number of visible "+ i);
     }
   }
-  if (sigmoidLayers[sigmoidLayers.length - 1].n_out != logLayer.nIn)   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
+  if (sigmoidLayers[sigmoidLayers.length - 1].nOut != logLayer.nIn)   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
 }

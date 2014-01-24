@@ -29,12 +29,14 @@
       delta=deltas[i + 1];
       DoubleMatrix w=weights.get(i).transpose();
       DoubleMatrix z=zs.get(i);
-      DoubleMatrix a=activations.get(i + 1);
+      DoubleMatrix a=activations.get(i);
       DoubleMatrix error=delta.mmul(w);
       deltas[i]=error;
       error=error.mul(derivative.applyDerivative(z));
       deltas[i]=error;
-      gradients[i]=a.transpose().mmul(error).transpose().div(input.rows);
+      DoubleMatrix lastLayerDelta=deltas[i + 1].transpose();
+      DoubleMatrix newGradient=lastLayerDelta.mmul(a);
+      gradients[i]=newGradient.div(input.rows);
     }
   }
   for (int i=0; i < gradients.length; i++) {

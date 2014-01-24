@@ -1,5 +1,6 @@
 {
   this.nVisible=nVisible;
+  if (dist != null)   this.dist=dist;
   this.nHidden=nHidden;
   this.fanIn=fanIn;
   this.input=input;

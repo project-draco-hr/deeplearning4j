@@ -1,7 +1,7 @@
 {
-  StackedDenoisingAutoEncoder sda=sdamatrix();
-  sda.pretrain(pretrain_lr,corruption_level,pretraining_epochs);
-  sda.finetune(finetune_lr,finetune_epochs);
+  StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder.Builder().withActivation(new HardTanh()).hiddenLayerSizes(hidden_layer_sizes_arr).numberOfInputs(n_ins).numberOfOutPuts(n_outs).renderWeights(10).useRegularization(true).withMomentum(0).withRng(rng).build();
+  sda.pretrain(train_X_matrix,pretrain_lr,corruption_level,pretraining_epochs);
+  sda.finetune(this.train_Y_matrix,finetune_lr,finetune_epochs);
   log.info("OUTPUT TEST");
   DoubleMatrix predicted=sda.predict(train_X_matrix);
   Evaluation eval=new Evaluation();

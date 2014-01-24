@@ -4,7 +4,8 @@
   layer.W=W.transpose();
   layer.input=input.transpose();
   layer.activationFunction=activationFunction;
-  layer.n_out=n_in;
-  layer.n_in=n_out;
+  layer.nOut=nIn;
+  layer.nIn=nOut;
+  layer.rng=rng;
   return layer;
 }

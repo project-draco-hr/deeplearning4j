@@ -21,4 +21,5 @@
   this.logLayer.useRegularization=this.useRegularization;
   this.logLayer.l2=this.l2;
   dimensionCheck();
+  applyTransforms();
 }

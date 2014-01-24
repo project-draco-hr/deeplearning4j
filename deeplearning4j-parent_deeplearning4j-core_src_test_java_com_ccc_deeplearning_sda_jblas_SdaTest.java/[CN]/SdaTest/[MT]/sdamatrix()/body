@@ -1,4 +1,0 @@
-{
-  StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder(n_ins,hidden_layer_sizes_arr,n_outs,n_layers,rng,train_X_matrix,train_Y_matrix);
-  return sda;
-}

@@ -7,6 +7,7 @@
     ret.setnVisible(getnVisible());
     ret.setW(W.dup());
     ret.setRng(getRng());
+    ret.setDist(getDist());
     return ret;
   }
  catch (  Exception e) {

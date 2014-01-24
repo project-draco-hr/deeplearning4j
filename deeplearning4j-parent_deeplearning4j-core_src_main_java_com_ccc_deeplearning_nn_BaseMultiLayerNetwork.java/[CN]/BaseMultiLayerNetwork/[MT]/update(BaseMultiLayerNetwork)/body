@@ -1,10 +1,15 @@
 {
-  this.layers=matrix.layers;
-  this.hiddenLayerSizes=matrix.hiddenLayerSizes;
-  this.logLayer=matrix.logLayer;
-  this.nIns=matrix.nIns;
-  this.nLayers=matrix.nLayers;
-  this.nOuts=matrix.nOuts;
-  this.rng=matrix.rng;
-  this.sigmoidLayers=matrix.sigmoidLayers;
+  this.layers=new NeuralNetwork[network.layers.length];
+  for (int i=0; i < layers.length; i++) {
+    this.layers[i]=network.layers[i].clone();
+  }
+  this.hiddenLayerSizes=network.hiddenLayerSizes;
+  this.logLayer=network.logLayer.clone();
+  this.nIns=network.nIns;
+  this.nLayers=network.nLayers;
+  this.nOuts=network.nOuts;
+  this.rng=network.rng;
+  this.dist=network.dist;
+  this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
+  for (int i=0; i < sigmoidLayers.length; i++)   this.sigmoidLayers[i]=network.sigmoidLayers[i].clone();
 }

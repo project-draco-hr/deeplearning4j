@@ -1,6 +1,23 @@
 {
+  Double lastEntropy=null;
+  BaseMultiLayerNetwork revert=clone();
   for (int i=0; i < epochs; i++) {
     List<DoubleMatrix> activations=feedForward();
+    double error=this.negativeLogLikelihood();
+    if (lastEntropy == null) {
+      lastEntropy=error;
+    }
+ else     if (error > lastEntropy) {
+      log.info("Error greater than previous; found global minima; converging");
+      update(revert);
+      break;
+    }
+ else     if (error < lastEntropy) {
+      lastEntropy=error;
+      revert=clone();
+      log.info("Found better error on epoch " + i + " "+ lastEntropy);
+    }
+    log.info("Error for epoch " + epochs + " is "+ error);
     List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
     computeDeltas(activations,deltas);
     for (int l=0; l < nLayers; l++) {
@@ -9,11 +26,11 @@
       if (useRegularization) {
         add.muli(layers[l].getW().mul(l2));
       }
-      layers[l].setW(layers[l].getW().sub(add.mul(lr)));
+      layers[l].setW(layers[l].getW().add(add.mul(lr)));
       sigmoidLayers[l].W=layers[l].getW();
       DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
       deltaColumnSums.divi(input.rows);
-      layers[l].gethBias().subi(deltaColumnSums.mul(lr));
+      layers[l].gethBias().addi(deltaColumnSums.mul(lr));
       sigmoidLayers[l].b=layers[l].gethBias();
     }
     logLayer.W.addi(deltas.get(nLayers).getFirst());

@@ -5,7 +5,7 @@
     Class<?>[] classes=curr.getParameterTypes();
     if (classes.length > 0 && classes[0].isAssignableFrom(Integer.class) || classes[0].isPrimitive()) {
       try {
-        ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen,fanIn);
+        ret=(E)curr.newInstance(numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
         ret.renderWeightsEveryNumEpochs=this.renderWeightsEveryNumEpochs;
         ret.useRegularization=this.useRegularization;
         return ret;

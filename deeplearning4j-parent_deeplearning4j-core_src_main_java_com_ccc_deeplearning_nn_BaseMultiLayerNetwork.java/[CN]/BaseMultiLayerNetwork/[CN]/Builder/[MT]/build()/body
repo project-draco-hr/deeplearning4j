@@ -8,16 +8,20 @@
     ret.hiddenLayerSizes=this.hiddenLayerSizes;
     ret.nLayers=this.nLayers;
     ret.rng=this.rng;
+    ret.shouldBackProp=this.backProp;
     ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
     ret.layers=ret.createNetworkLayers(ret.nLayers);
     ret.toDecode=this.decode;
     ret.input=this.input;
+    ret.momentum=this.momentum;
     ret.labels=this.labels;
     ret.fanIn=this.fanIn;
     ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
     ret.l2=l2;
     ret.useRegularization=useRegularization;
     if (activation != null)     ret.activation=activation;
+    if (dist != null)     ret.dist=dist;
+    ret.weightTransforms.putAll(weightTransforms);
     return ret;
   }
  catch (  InstantiationException|IllegalAccessException e) {

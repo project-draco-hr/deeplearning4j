@@ -6,5 +6,5 @@
   LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(network.logLayer,lr);
   MyConjugateGradient g=new MyConjugateGradient(opt);
   g.optimize();
-  network.backProp(lr,epochs);
+  if (network.isShouldBackProp())   network.backProp(lr,epochs);
 }
