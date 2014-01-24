@@ -17,7 +17,6 @@
       revert=clone();
       log.info("Found better error on epoch " + i + " "+ lastEntropy);
     }
-    log.info("Error for epoch " + epochs + " is "+ error);
     List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
     computeDeltas(activations,deltas);
     for (int l=0; l < nLayers; l++) {

@@ -6,6 +6,7 @@
   put(CORRUPTION_LEVEL,String.valueOf(0.3));
   put(OUT,String.valueOf(1));
   put(N_IN,String.valueOf(1));
+  put(ACTIVATION,"sigmoid");
   put(CLASS,"com.ccc.deeplearning.sda.StackedDenoisingAutoEncoder");
   put(PARAM_ALGORITHM,"sda");
   put(LAYER_SIZES,"300,300,300");

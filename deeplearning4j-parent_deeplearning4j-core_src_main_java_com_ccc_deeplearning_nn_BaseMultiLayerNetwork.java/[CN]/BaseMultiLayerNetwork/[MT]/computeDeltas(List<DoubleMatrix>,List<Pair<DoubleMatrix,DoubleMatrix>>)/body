@@ -39,7 +39,5 @@
       gradients[i]=newGradient.div(input.rows);
     }
   }
-  for (int i=0; i < gradients.length; i++) {
-    deltaRet.add(new Pair<>(gradients[i],deltas[i]));
-  }
+  for (int i=0; i < gradients.length; i++)   deltaRet.add(new Pair<>(gradients[i],deltas[i]));
 }

@@ -1,8 +1,5 @@
 {
   ensureValidOutcomeMatrix(y);
-  if (x.rows != y.rows) {
-    throw new IllegalArgumentException("How does this happen?");
-  }
   this.input=x;
   this.labels=y;
   LogisticRegressionGradient gradient=getGradient(lr);
