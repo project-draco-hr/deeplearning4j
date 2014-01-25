@@ -7,11 +7,11 @@
   }
   List<Window> w=new ArrayList<Window>(windows);
   DoubleMatrix ret=new DoubleMatrix(rows,columns);
-  DoubleMatrix labels=new DoubleMatrix(rows,this.labels.size());
+  DoubleMatrix labels=new DoubleMatrix(rows,this.labelStrings.size());
   for (int i=0; i < rows; i++) {
     Window w2=w.get(i);
     ret.putRow(i,new DoubleMatrix(WindowConverter.asExample(w2,vec)));
-    labels.putRow(i,MatrixUtil.toOutcomeVector(this.labels.indexOf(w.get(i).getLabel()),this.labels.size()));
+    labels.putRow(i,MatrixUtil.toOutcomeVector(this.labelStrings.indexOf(w.get(i).getLabel()),this.labelStrings.size()));
   }
   super.trainNetwork(ret,labels,otherParams);
 }

@@ -1,7 +1,14 @@
 {
-  @SuppressWarnings("unchecked") List<String> example=IOUtils.readLines(new ClassPathResource("/deeplearning/ADDRESS.split").getInputStream());
-  example=example.subList(0,500);
+  Word2VecDataSetIterator iter=new Word2VecDataSetIteratorImpl(new ClassPathResource("/deeplearning/").getFile().getAbsolutePath(),labels,10,vec);
+  network.pretrain(iter,1,0.01,1000);
+  network.finetune(0.01,1000,iter,labels);
   Evaluation eval=new Evaluation();
-  printPredictFor("sadcasdfoijasdfasdf.");
-  printPredictFor(example.get(0));
+  iter.reset();
+  while (iter.hasNext()) {
+    List<Window> next=iter.next();
+    DoubleMatrix actual=WordConverter.toLabelMatrix(labels,next);
+    DoubleMatrix prediction=network.predict(next);
+    eval.eval(actual,prediction);
+  }
+  log.info(eval.stats());
 }

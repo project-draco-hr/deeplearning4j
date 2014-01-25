@@ -1,5 +1,6 @@
 {
+  iter.reset();
   if (this.labelStrings == null)   this.labelStrings=labels;
   if (optimizer == null)   optimizer=new Word2VecMultiLayerOptimizer(this,lr,vec);
-  optimizer.optimize(lr,epochs,words,labels);
+  optimizer.optimize(lr,epochs,iter,labels);
 }

@@ -1,10 +1,4 @@
 {
   List<Window> windows=allWindowsForAllSentences();
-  int columns=vec.getLayerSize() * vec.getWindow();
-  int rows=windows.size();
-  DoubleMatrix ret=new DoubleMatrix(rows,columns);
-  for (int i=0; i < rows; i++) {
-    ret.putRow(i,new DoubleMatrix(WindowConverter.asExample(windows.get(i),vec)));
-  }
-  return ret;
+  return toInputMatrix(windows,vec);
 }

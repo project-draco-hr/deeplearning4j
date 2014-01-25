@@ -1,5 +1,7 @@
 {
   if (network == null) {
-    network=(Word2VecMultiLayerNetwork)BaseMultiLayerNetwork.loadFromFile(new BufferedInputStream(new ClassPathResource("/nn-model.bin").getInputStream()));
+    vec=Word2VecLoader.loadModel(new ClassPathResource("/word2vec-address.bin").getFile());
+    int size=vec.getWindow() * vec.getLayerSize();
+    network=new Word2VecMultiLayerNetwork.Builder().withWord2Vec(vec).withLabels(labels).numberOfInputs(size).numberOfOutPuts(2).hiddenLayerSizes(new int[]{100,100,100}).useRegularization(false).withActivation(new HardTanh()).build();
   }
 }
