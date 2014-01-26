@@ -3,6 +3,9 @@
   int count=0;
   while (sentenceIter.hasNext()) {
     final String words=sentenceIter.nextSentence();
+    if (words == null) {
+      break;
+    }
     Tokenizer tokenizer=tokenizerFactory.create(new InputHomogenization(words).transform());
     this.allWordsCount+=tokenizer.countTokens();
     count++;
