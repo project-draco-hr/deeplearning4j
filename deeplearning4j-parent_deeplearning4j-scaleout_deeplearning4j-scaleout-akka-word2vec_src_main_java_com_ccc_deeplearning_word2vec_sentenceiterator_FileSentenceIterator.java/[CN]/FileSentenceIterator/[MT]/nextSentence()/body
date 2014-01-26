@@ -1,0 +1,14 @@
+{
+  if (currLineIterator != null) {
+    if (currLineIterator.hasNext())     return currLineIterator.nextLine();
+ else {
+      nextLineIter();
+      if (currLineIterator.hasNext())       return currLineIterator.nextLine();
+ else       throw new IllegalStateException("No more lines found");
+    }
+  }
+ else {
+    nextLineIter();
+    return currLineIterator.nextLine();
+  }
+}

@@ -1,5 +1,5 @@
 {
-  StringTokenizer tokenizer=new StringTokenizer(sentence);
+  Tokenizer tokenizer=tokenizerFactory.create(sentence);
   List<VocabWord> sentence2=new ArrayList<VocabWord>();
   while (tokenizer.hasMoreTokens()) {
     String next=tokenizer.nextToken();

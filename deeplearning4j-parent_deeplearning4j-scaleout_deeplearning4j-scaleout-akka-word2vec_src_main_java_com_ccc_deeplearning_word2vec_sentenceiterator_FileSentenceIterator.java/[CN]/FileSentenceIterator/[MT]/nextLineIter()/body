@@ -1,0 +1,10 @@
+{
+  if (fileIterator.hasNext()) {
+    try {
+      currLineIterator=FileUtils.lineIterator(fileIterator.next());
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

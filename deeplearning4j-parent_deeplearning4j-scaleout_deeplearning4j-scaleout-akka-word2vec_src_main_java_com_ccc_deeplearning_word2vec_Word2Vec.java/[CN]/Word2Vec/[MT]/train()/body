@@ -10,45 +10,15 @@
   }
 ;
   final Counter<String> totalWords=new Counter<String>(factory);
-  if (syn0 == null && !sentences.isEmpty()) {
-    this.buildVocab(sentences);
-  }
   if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
-  if (sentences.isEmpty()) {
-    if (fileIterator == null)     throw new IllegalStateException("Unable to train sentences, no iterator or sentences defined");
- else {
-      if (!fileIterator.hasNext())       throw new IllegalStateException("File iterator does not appear to have any files to train on");
-      final CountDownLatch sentenceCounter=new CountDownLatch(numLines);
-      int numLinesIterated=0;
-      while (fileIterator.hasNext()) {
-        try {
-          LineIterator lines=FileUtils.lineIterator(fileIterator.next());
-          while (lines.hasNext()) {
-            final String sentence=new InputHomogenization(lines.nextLine().replaceAll("\\p{P}","")).transform();
-            numLinesIterated++;
-            processSentence(sentence,sentenceCounter,totalWords);
-          }
-        }
- catch (        Exception e) {
-          throw new RuntimeException(e);
-        }
-      }
-      try {
-        sentenceCounter.await();
-      }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-      if (numLinesIterated != numLines) {
-        this.numLines=numLinesIterated;
-      }
-    }
+  while (sentenceIter.hasNext()) {
+    String sentence=sentenceIter.nextSentence();
+    processSentence(sentence,totalWords);
+    numSentencesProcessed.incrementAndGet();
   }
- else {
-    final CountDownLatch sentenceCounter=new CountDownLatch(sentences.size());
-    for (    final String sentence : sentences)     processSentence(sentence,sentenceCounter,totalWords);
+  while (sentenceIter.hasNext()) {
     try {
-      sentenceCounter.await();
+      Thread.sleep(150000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();

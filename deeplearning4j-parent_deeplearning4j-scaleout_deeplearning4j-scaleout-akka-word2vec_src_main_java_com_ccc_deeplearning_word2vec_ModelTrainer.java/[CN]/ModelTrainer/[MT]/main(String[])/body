@@ -15,6 +15,6 @@
   Word2Vec vec=new Word2Vec(sentences,1);
   vec.setWindow(3);
   vec.train();
-  vec.saveModel(new File(args[1]));
+  Word2VecSaver.saveModel(vec,new File(args[1]));
   log.info("Saved to " + args[1]);
 }

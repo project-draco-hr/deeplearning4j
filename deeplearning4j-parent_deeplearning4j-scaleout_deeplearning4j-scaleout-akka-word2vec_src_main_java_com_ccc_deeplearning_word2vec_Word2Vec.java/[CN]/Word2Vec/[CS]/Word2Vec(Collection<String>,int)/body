@@ -1,8 +1,8 @@
 {
   createExpTable();
   this.minWordFrequency=minWordFrequency;
-  this.sentences=new ArrayList<String>(sentences);
-  this.buildVocab(sentences);
+  this.sentenceIter=new CollectionSentenceIterator(sentences);
+  this.buildVocab();
   oob=new double[layerSize];
   Arrays.fill(oob,0.0);
   readStopWords();
