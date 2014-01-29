@@ -1,0 +1,5 @@
+{
+  super(preProcessor);
+  this.dir=dir;
+  fileIterator=FileUtils.iterateFiles(dir,null,true);
+}

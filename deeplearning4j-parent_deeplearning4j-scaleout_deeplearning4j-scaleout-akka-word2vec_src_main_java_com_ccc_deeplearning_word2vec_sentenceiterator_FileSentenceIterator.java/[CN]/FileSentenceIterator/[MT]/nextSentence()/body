@@ -1,14 +1,24 @@
 {
   if (currLineIterator != null) {
-    if (currLineIterator.hasNext())     return currLineIterator.nextLine();
+    if (currLineIterator.hasNext()) {
+      String ret=currLineIterator.nextLine();
+      if (this.getPreProcessor() != null)       ret=this.getPreProcessor().preProcess(ret);
+      return ret;
+    }
  else {
       nextLineIter();
-      if (currLineIterator.hasNext())       return currLineIterator.nextLine();
+      if (currLineIterator.hasNext()) {
+        String ret=currLineIterator.nextLine();
+        if (this.getPreProcessor() != null)         ret=this.getPreProcessor().preProcess(ret);
+        return ret;
+      }
  else       throw new IllegalStateException("No more lines found");
     }
   }
  else {
     nextLineIter();
-    return currLineIterator.nextLine();
+    String ret=currLineIterator.nextLine();
+    if (this.getPreProcessor() != null)     ret=this.getPreProcessor().preProcess(ret);
+    return ret;
   }
 }

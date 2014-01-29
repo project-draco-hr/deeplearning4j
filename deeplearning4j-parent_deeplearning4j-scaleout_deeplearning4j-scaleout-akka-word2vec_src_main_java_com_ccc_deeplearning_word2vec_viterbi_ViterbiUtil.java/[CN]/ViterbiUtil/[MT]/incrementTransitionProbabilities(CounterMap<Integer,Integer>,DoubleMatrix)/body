@@ -1,0 +1,5 @@
+{
+  for (int i=1; i < d.rows; i++) {
+    counter.incrementCount(SimpleBlas.iamax(d.getRow(i - 1)),SimpleBlas.iamax(d.getRow(i)),1.0);
+  }
+}

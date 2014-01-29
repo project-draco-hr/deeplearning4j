@@ -1,0 +1,15 @@
+{
+  try {
+    DataInputStream dis=new DataInputStream(is);
+    ObjectInputStream ois=new ObjectInputStream(is);
+    syn0.in(dis);
+    syn1.in(dis);
+    this.window=dis.readInt();
+    this.layerSize=dis.readInt();
+    indexToWord=(Map<Integer,String>)ois.readObject();
+    vocab=(Map<String,VocabWord>)ois.readObject();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
