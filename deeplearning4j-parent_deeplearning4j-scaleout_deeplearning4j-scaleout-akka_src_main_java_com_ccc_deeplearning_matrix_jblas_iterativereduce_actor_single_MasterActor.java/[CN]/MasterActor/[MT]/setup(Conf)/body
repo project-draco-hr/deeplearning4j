@@ -1,5 +1,5 @@
 {
-  RandomGenerator rng=new MersenneTwister(conf.getLong(SEED));
-  BaseNeuralNetwork matrix=new BaseNeuralNetwork.Builder<>().withClazz(conf.getClazzSingle(CLASS)).withRandom(rng).withL2(conf.getDouble(L2)).withMomentum(conf.getDouble(MOMENTUM)).numberOfVisible(conf.getInt(N_IN)).numHidden(conf.getInt(OUT)).build();
+  RandomGenerator rng=new MersenneTwister(conf.getSeed());
+  BaseNeuralNetwork matrix=new BaseNeuralNetwork.Builder<>().withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).withRandom(rng).withL2(conf.getL2()).withMomentum(conf.getMomentum()).numberOfVisible(conf.getnIn()).numHidden(conf.getnOut()).build();
   masterResults=new UpdateableSingleImpl(matrix);
 }

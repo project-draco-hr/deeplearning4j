@@ -7,10 +7,13 @@
   int[] layerSizes=new int[3];
   Arrays.fill(layerSizes,1000);
   runner=new NetworkRunner();
-  conf.put(SPLIT,String.valueOf(600));
-  conf.put(CLASS,"com.ccc.deeplearning.sda.StackedDenoisingAutoEncoder");
-  conf.put(LAYER_SIZES,Arrays.toString(hidden_layer_sizes_arr).replace("[","").replace("]","").replace(" ",""));
-  conf.put(PARAMS,new ExtraParamsBuilder().algorithm(PARAM_SDA).corruptionlevel(0.5).finetuneEpochs(finetune_epochs).finetuneLearningRate(finetune_lr).learningRate(pretrain_lr).epochs(pretraining_epochs).build());
+  conf.setSplit(600);
+  conf.setPretrainEpochs(100);
+  conf.setFinetuneEpochs(100);
+  conf.setnIn(numIns);
+  conf.setLayerSizes(hidden_layer_sizes_arr);
+  conf.setnOut(numLabels);
+  conf.setMultiLayerClazz(StackedDenoisingAutoEncoder.class);
   runner.setup(conf);
   runner.train(first.getFirst(),first.getSecond());
   BaseMultiLayerNetwork trained=runner.result();

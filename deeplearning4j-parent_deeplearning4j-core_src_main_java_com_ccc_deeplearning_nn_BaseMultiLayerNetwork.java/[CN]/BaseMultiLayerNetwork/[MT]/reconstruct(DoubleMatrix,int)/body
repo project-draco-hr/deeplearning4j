@@ -5,5 +5,5 @@
     HiddenLayer layer=sigmoidLayers[i];
     input=layer.activate(input);
   }
-  return MatrixUtil.softmax(input);
+  return input;
 }

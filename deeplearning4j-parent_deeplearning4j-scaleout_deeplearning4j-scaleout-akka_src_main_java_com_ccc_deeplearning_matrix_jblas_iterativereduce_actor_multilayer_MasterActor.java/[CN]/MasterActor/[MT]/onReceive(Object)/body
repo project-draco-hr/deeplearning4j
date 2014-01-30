@@ -17,7 +17,7 @@
       epochsComplete++;
       batchActor.tell(up,getSelf());
       updates.clear();
-      if (epochsComplete == conf.getInt(PRE_TRAIN_EPOCHS)) {
+      if (epochsComplete == conf.getPretrainEpochs()) {
         isDone=true;
         log.info("All done; shutting down");
         context().system().shutdown();

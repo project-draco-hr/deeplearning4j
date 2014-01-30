@@ -1,13 +1,7 @@
 {
-  DataOutputStream dos=new DataOutputStream(os);
   try {
-    syn0.out(dos);
-    syn1.out(dos);
-    dos.writeInt(window);
-    dos.writeInt(layerSize);
-    ObjectOutputStream oos=new ObjectOutputStream(os);
-    oos.writeObject(indexToWord);
-    oos.writeObject(vocab);
+    ObjectOutputStream dos=new ObjectOutputStream(os);
+    dos.writeObject(this);
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

@@ -13,7 +13,7 @@
     if (updates.size() == partition) {
       masterResults=this.compute(updates,updates);
       if (listener != null)       listener.epochComplete(masterResults);
-      if (epochsComplete == conf.getInt(PRE_TRAIN_EPOCHS)) {
+      if (epochsComplete == conf.getPretrainEpochs()) {
         isDone=true;
         batchActor.tell(up,getSelf());
         updates.clear();

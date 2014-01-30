@@ -1,5 +1,5 @@
 {
-  int split=conf.getInt(SPLIT);
+  int split=conf.getSplit();
   List<List<Pair<DoubleMatrix,DoubleMatrix>>> splitList=Lists.partition(pairs,split);
   partition=splitList.size();
   for (int i=0; i < splitList.size(); i++)   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new ArrayList<>(splitList.get(i))),getSelf());

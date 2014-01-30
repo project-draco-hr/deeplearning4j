@@ -17,7 +17,7 @@
       epochsComplete++;
       batchActor.tell(up,getSelf());
       updates.clear();
-      if (epochsComplete == conf.getInt(NUM_PASSES)) {
+      if (epochsComplete == conf.getNumPasses()) {
         isDone=true;
         log.info("All done; shutting down");
         context().system().shutdown();

@@ -1,7 +1,0 @@
-{
-  String val=get(ACTIVATION);
-  if (val.equals("hardtanh"))   return new HardTanh();
- else   if (val.equals("sigmoid"))   return new Sigmoid();
- else   if (val.equals("tanh"))   return new Tanh();
-  throw new IllegalArgumentException("Function does not exist;");
-}
