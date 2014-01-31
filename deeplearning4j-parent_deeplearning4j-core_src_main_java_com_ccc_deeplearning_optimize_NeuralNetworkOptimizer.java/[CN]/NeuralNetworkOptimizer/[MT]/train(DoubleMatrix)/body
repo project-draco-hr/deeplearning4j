@@ -1,5 +1,5 @@
 {
-  if (opt == null)   opt=new MyConjugateGradient(this,this);
+  if (opt == null)   opt=new NonZeroStoppingConjugateGradient(this,this);
   opt.setTolerance(tolerance);
   opt.setMaxIterations(10000);
   opt.optimize(1500);

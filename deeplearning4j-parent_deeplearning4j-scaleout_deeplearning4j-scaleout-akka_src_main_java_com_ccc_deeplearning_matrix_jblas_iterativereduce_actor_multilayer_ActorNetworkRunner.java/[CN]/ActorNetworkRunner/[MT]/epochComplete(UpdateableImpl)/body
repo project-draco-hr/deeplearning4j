@@ -10,7 +10,7 @@
       Thread.currentThread().interrupt();
     }
     log.info("Starting next epoch");
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,samples),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,samples),mediator);
   }
   this.result=result;
   mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,result),mediator);

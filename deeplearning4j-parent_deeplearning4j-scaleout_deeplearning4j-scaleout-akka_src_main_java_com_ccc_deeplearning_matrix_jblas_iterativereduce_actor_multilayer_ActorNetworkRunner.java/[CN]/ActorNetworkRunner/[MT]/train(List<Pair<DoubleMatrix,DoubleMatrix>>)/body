@@ -7,6 +7,6 @@
  catch (  InterruptedException e1) {
     Thread.currentThread().interrupt();
   }
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,this),mediator);
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,list),mediator);
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,list),mediator);
 }

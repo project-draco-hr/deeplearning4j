@@ -2,5 +2,5 @@
   this.input=windows;
   Word2VecUpdateable work=compute();
   log.info("Updating parent actor...");
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,work),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
 }

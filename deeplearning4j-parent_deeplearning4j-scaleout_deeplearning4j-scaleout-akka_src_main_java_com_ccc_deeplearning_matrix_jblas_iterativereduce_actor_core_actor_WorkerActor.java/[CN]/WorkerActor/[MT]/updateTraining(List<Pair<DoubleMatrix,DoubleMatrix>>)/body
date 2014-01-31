@@ -7,7 +7,18 @@
   }
   this.combinedInput=newInput;
   this.outcomes=newOutput;
-  E work=compute();
-  log.info("Updating parent actor...");
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,work),getSelf());
+  Future<E> f=Futures.future(new Callable<E>(){
+    @Override public E call() throws Exception {
+      E work=compute();
+      return work;
+    }
+  }
+,getContext().dispatcher());
+  f.onComplete(new OnComplete<E>(){
+    @Override public void onComplete(    Throwable arg0,    E work) throws Throwable {
+      log.info("Updating parent actor...");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+    }
+  }
+,context().dispatcher());
 }

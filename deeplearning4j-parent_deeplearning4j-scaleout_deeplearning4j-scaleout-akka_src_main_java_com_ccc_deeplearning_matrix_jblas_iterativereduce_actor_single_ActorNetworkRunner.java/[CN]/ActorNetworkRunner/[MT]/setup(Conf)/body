@@ -23,8 +23,8 @@
       Thread.currentThread().interrupt();
     }
     startWorker(masterAddress,c);
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,this),mediator);
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,epochs),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,epochs),mediator);
     log.info("Setup master with epochs " + epochs);
   }
  else {

@@ -1,5 +1,8 @@
 {
-  if (message instanceof ResetMessage) {
+  if (message instanceof DistributedPubSubMediator.SubscribeAck) {
+    log.info("Susbcribed");
+  }
+ else   if (message instanceof ResetMessage) {
     iter.reset();
     numTimesReset++;
   }
@@ -8,7 +11,7 @@
     if (!context().system().isTerminated())     context().system().shutdown();
   }
  else   if (iter.hasNext()) {
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.RESULT,iter.next()),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
   }
  else   unhandled(message);
 }

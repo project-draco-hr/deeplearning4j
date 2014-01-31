@@ -1,0 +1,72 @@
+{
+  myName=Thread.currentThread().getName();
+  if (converged)   return true;
+  int n=optimizable.getNumParameters();
+  long last=System.currentTimeMillis();
+  if (xi == null) {
+    fp=optimizable.getValue();
+    xi=new double[n];
+    g=new double[n];
+    h=new double[n];
+    optimizable.getValueGradient(xi);
+    System.arraycopy(xi,0,g,0,n);
+    System.arraycopy(xi,0,h,0,n);
+    step=initialStepSize;
+    iterations=0;
+  }
+  long curr=0;
+  for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
+    curr=System.currentTimeMillis();
+    if (listener != null)     listener.epochDone(iterationCount);
+    logger.info(myName + " ConjugateGradient: At iteration " + iterations+ ", cost = "+ fp+ " -"+ (curr - last));
+    last=curr;
+    try {
+      step=lineMaximizer.optimize(xi,step);
+    }
+ catch (    Throwable e) {
+      logger.info(e.getMessage());
+    }
+    fret=optimizable.getValue();
+    optimizable.getValueGradient(xi);
+    if ((0 < tolerance) && (2.0 * Math.abs(fret - fp) <= tolerance * (Math.abs(fret) + Math.abs(fp) + eps))) {
+      logger.info("ConjugateGradient converged: old value= " + fp + " new value= "+ fret+ " tolerance="+ tolerance);
+      converged=true;
+      return true;
+    }
+    fp=fret;
+    double twoNorm=MatrixOps.twoNorm(xi);
+    if (twoNorm < gradientTolerance) {
+      logger.info("ConjugateGradient converged: gradient two norm " + twoNorm + ", less than "+ gradientTolerance);
+      converged=true;
+      return true;
+    }
+    dgg=gg=0.0;
+    for (j=0; j < xi.length; j++) {
+      gg+=g[j] * g[j];
+      dgg+=xi[j] * (xi[j] - g[j]);
+    }
+    gam=dgg / gg;
+    for (j=0; j < xi.length; j++) {
+      g[j]=xi[j];
+      h[j]=xi[j] + gam * h[j];
+    }
+    assert(!MatrixOps.isNaN(h));
+    if (MatrixOps.dotProduct(xi,h) > 0) {
+      MatrixOps.set(xi,h);
+    }
+ else {
+      logger.warning("Reverting back to GA");
+      MatrixOps.set(h,xi);
+    }
+    iterations++;
+    if (iterations > maxIterations) {
+      logger.info("Too many iterations in ConjugateGradient.java");
+      converged=true;
+      return true;
+    }
+    if (eval != null) {
+      eval.evaluate(optimizable,iterations);
+    }
+  }
+  return false;
+}

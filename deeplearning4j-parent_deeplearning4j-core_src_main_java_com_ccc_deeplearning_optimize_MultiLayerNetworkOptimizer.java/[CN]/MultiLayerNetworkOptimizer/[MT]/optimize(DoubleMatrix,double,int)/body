@@ -9,7 +9,7 @@
   }
   if (!network.isForceNumEpochs()) {
     LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(network.logLayer,lr);
-    MyConjugateGradient g=new MyConjugateGradient(opt);
+    NonZeroStoppingConjugateGradient g=new NonZeroStoppingConjugateGradient(opt);
     g.optimize(epochs);
   }
  else {
