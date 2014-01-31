@@ -18,5 +18,4 @@
   worker.setup(conf);
   DataSet first=fetcher.next();
   runner.train(first.getFirst(),first.getSecond());
-  while (true)   Thread.sleep(10000);
 }

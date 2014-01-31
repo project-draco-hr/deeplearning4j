@@ -9,5 +9,7 @@
     double normalized=l + l2RegularizedCoefficient();
     return -inner.rowSums().mean() / normalized;
   }
-  return -inner.rowSums().mean();
+  double ret=-inner.rowSums().mean();
+  if (Double.isNaN(ret) || Double.isInfinite(ret))   throw new IllegalStateException("We appear to have an invalid return value of " + (Double.isNaN(ret) ? "NAN" : "Inifinity"));
+  return ret;
 }
