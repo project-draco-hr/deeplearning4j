@@ -1,4 +1,4 @@
 {
-  this.input=input;
+  if (input != null)   this.input=input;
   return activate();
 }

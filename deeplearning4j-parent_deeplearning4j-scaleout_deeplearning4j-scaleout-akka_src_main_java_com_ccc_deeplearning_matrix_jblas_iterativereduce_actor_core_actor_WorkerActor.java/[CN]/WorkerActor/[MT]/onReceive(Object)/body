@@ -3,10 +3,6 @@
     DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
     log.info("Subscribed to " + ack.toString());
   }
- else   if (message instanceof ShutdownMessage) {
-    log.info("Shutting down system for worker with address " + Cluster.get(context().system()).selfAddress().toString());
-    if (!context().system().isTerminated())     context().system().shutdown();
-  }
  else   if (message instanceof List) {
     List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
     updateTraining(input);

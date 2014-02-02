@@ -1,7 +1,7 @@
 {
-  if (index >= network.logLayer.W.length) {
-    int i=index - network.logLayer.b.length;
-    return network.logLayer.b.get(i);
+  if (index >= network.getLogLayer().getW().length) {
+    int i=index - network.getLogLayer().getB().length;
+    return network.getLogLayer().getB().get(i);
   }
- else   return network.logLayer.W.get(index);
+ else   return network.getLogLayer().getW().get(index);
 }

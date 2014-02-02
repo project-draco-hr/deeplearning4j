@@ -1,5 +1,7 @@
 {
   log.info("Training network");
-  network.trainNetwork(combinedInput,outcomes,extraParams);
+synchronized (network) {
+    network.trainNetwork(this.getCombinedInput(),this.getOutcomes(),extraParams);
+  }
   return new UpdateableImpl(network);
 }

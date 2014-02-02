@@ -1,4 +1,4 @@
 {
-  if (index >= logReg.W.length)   logReg.b.put(index - logReg.W.length,value);
- else   logReg.W.put(index,value);
+  if (index >= logReg.getW().length)   logReg.getB().put(index - logReg.getW().length,value);
+ else   logReg.getW().put(index,value);
 }

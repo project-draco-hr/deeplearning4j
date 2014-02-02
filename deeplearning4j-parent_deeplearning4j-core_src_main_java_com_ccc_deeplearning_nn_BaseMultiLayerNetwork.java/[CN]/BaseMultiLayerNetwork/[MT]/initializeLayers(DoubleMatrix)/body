@@ -1,6 +1,7 @@
 {
   if (input == null)   throw new IllegalArgumentException("Unable to initialize layers with empty input");
-  if (input.columns != nIns)   throw new IllegalArgumentException("Unable to train on number of inputs; columns should be equal to number of inputs");
+  if (input.columns != nIns)   throw new IllegalArgumentException(String.format("Unable to train on number of inputs; columns should be equal to number of inputs. Number of inputs was %d while number of columns was %d",nIns,input.columns));
+  if (this.layers == null)   this.layers=new NeuralNetwork[nLayers];
   this.input=input.dup();
   DoubleMatrix layerInput=input;
   int inputSize;
@@ -9,18 +10,18 @@
  else     inputSize=this.hiddenLayerSizes[i - 1];
     if (i == 0) {
       this.sigmoidLayers[i]=new HiddenLayer(inputSize,this.hiddenLayerSizes[i],null,null,rng,layerInput);
-      sigmoidLayers[i].activationFunction=activation;
+      sigmoidLayers[i].setActivationFunction(activation);
     }
  else {
       layerInput=sigmoidLayers[i - 1].sample_h_given_v();
       this.sigmoidLayers[i]=new HiddenLayer(inputSize,this.hiddenLayerSizes[i],null,null,rng,layerInput);
-      sigmoidLayers[i].activationFunction=activation;
+      sigmoidLayers[i].setActivationFunction(activation);
     }
-    this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].W,this.sigmoidLayers[i].b,null,rng,i);
+    this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
   }
   this.logLayer=new LogisticRegression(layerInput,this.hiddenLayerSizes[this.nLayers - 1],this.nOuts);
-  this.logLayer.useRegularization=this.useRegularization;
-  this.logLayer.l2=this.l2;
+  this.logLayer.setUseRegularization(this.isUseRegularization());
+  this.logLayer.setL2(this.getL2());
   dimensionCheck();
   applyTransforms();
 }

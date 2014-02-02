@@ -12,36 +12,36 @@
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
+    ActorRef ref=system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
+    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,ref),mediator);
     Cluster.get(system).join(masterAddress);
     startBackend(masterAddress,"master",conf,iter);
     Conf c=conf.copy();
-    c.setFinetuneEpochs(1);
-    c.setPretrainEpochs(1);
     try {
       Thread.sleep(5000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    startWorker(masterAddress,c);
+    ActorRef worker=startWorker(masterAddress,c);
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,epochs),mediator);
+    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,worker),mediator);
     log.info("Setup master with epochs " + epochs);
   }
  else {
     Conf c=conf.copy();
     c.setFinetuneEpochs(1);
     c.setPretrainEpochs(1);
-    startWorker(masterAddress,c);
+    ActorRef worker=startWorker(masterAddress,c);
     try {
       Thread.sleep(5000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
+    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,worker),mediator);
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
-  writeMasterAddress();
 }

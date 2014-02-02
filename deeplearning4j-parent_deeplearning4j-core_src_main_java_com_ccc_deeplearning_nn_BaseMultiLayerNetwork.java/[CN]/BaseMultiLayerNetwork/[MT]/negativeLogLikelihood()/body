@@ -5,9 +5,8 @@
     if (useRegularization)     ret+=sum * l2;
  else     ret+=sum;
   }
-  double sum=(MatrixFunctions.pow(logLayer.W,2).sum() / 2.0);
+  double sum=(MatrixFunctions.pow(logLayer.getW(),2).sum() / 2.0);
   if (useRegularization)   ret+=sum * l2;
  else   ret+=sum;
-  if (Double.isNaN(ret) || Double.isInfinite(ret))   throw new IllegalStateException("We appear to have hit an invalid negative log likelidhood " + (Double.isNaN(ret) ? "NAN" : "Inifinity"));
   return ret;
 }

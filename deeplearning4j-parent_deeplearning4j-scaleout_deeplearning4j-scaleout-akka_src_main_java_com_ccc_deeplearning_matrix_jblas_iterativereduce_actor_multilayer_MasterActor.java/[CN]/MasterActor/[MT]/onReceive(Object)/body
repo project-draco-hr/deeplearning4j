@@ -10,18 +10,13 @@
  else   if (message instanceof UpdateableImpl) {
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
-    if (updates.size() == partition) {
+    log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
+    if (updates.size() >= partition) {
       masterResults=this.compute(updates,updates);
       if (listener != null)       listener.epochComplete(masterResults);
-      batchActor.tell(new ResetMessage(),getSelf());
       epochsComplete++;
       batchActor.tell(up,getSelf());
       updates.clear();
-      if (epochsComplete == conf.getPretrainEpochs()) {
-        isDone=true;
-        log.info("All done; shutting down");
-        context().system().shutdown();
-      }
     }
   }
  else   if (message instanceof UpdateMessage) {

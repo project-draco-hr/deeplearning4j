@@ -1,4 +1,5 @@
 {
-  double corruptionLevel=(double)params[0];
-  trainTillConverge(input,lr,corruptionLevel);
+  if (input != null)   this.input=input;
+  optimizer=new DenoisingAutoEncoderOptimizer(this,lr,params);
+  optimizer.train(input);
 }

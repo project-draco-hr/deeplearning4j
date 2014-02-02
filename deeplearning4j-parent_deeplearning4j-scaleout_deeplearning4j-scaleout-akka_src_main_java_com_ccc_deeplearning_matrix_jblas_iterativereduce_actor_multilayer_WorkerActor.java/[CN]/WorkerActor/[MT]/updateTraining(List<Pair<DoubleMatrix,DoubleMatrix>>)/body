@@ -5,8 +5,8 @@
     newInput.putRow(i,list.get(i).getFirst());
     newOutput.putRow(i,list.get(i).getSecond());
   }
-  this.combinedInput=newInput;
-  this.outcomes=newOutput;
+  setCombinedInput(newInput);
+  setOutcomes(newOutput);
   Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
     @Override public UpdateableImpl call() throws Exception {
       UpdateableImpl work=compute();

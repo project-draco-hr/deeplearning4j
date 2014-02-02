@@ -1,5 +1,5 @@
 {
-  @SuppressWarnings("unchecked") BaseMultiLayerNetwork ret=new Builder<>().withClazz(getClass()).buildEmpty();
+  BaseMultiLayerNetwork ret=new Builder<>().withClazz(getClass()).buildEmpty();
   ret.update(this);
   return ret;
 }

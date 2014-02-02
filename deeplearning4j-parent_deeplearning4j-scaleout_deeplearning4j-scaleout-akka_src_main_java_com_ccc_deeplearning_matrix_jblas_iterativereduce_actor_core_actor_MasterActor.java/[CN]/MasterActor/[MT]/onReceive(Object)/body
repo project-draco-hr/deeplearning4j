@@ -10,20 +10,25 @@
  else   if (message instanceof Updateable) {
     E up=(E)message;
     updates.add(up);
-    if (updates.size() == partition) {
+    if (updates.size() >= partition) {
       masterResults=this.compute(updates,updates);
       if (listener != null)       listener.epochComplete(masterResults);
       batchActor.tell(new ResetMessage(),getSelf());
       epochsComplete++;
       batchActor.tell(up,getSelf());
       updates.clear();
-      if (epochsComplete == conf.getPretrainEpochs()) {
+      if (epochsComplete == conf.getNumPasses()) {
         isDone=true;
-        log.info("All done; shutting down");
-        mediator.tell(new DistributedPubSubMediator.Publish(SHUTDOWN,new ShutdownMessage()),getSelf());
-        Cluster.get(this.getContext().system()).down(Cluster.get(getContext().system()).selfAddress());
       }
     }
+  }
+ else   if (message instanceof FinishMessage) {
+    if (!updates.isEmpty()) {
+      masterResults=this.compute(updates,updates);
+      if (listener != null)       listener.epochComplete(masterResults);
+    }
+    isDone=true;
+    log.info("All done; shutting down");
   }
  else   if (message instanceof UpdateMessage) {
     mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,message),getSelf());

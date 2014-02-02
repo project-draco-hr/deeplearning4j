@@ -55,7 +55,7 @@
       MatrixOps.set(xi,h);
     }
  else {
-      logger.warning("Reverting back to GA");
+      logger.warn("Reverting back to GA");
       MatrixOps.set(h,xi);
     }
     iterations++;

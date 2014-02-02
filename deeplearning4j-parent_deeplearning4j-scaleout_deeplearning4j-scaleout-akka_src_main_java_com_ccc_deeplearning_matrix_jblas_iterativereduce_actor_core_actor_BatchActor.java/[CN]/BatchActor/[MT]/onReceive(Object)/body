@@ -6,12 +6,39 @@
     iter.reset();
     numTimesReset++;
   }
- else   if (message instanceof ShutdownMessage) {
-    log.info("Shutting down system for worker with address " + Cluster.get(context().system()).selfAddress().toString());
-    if (!context().system().isTerminated())     context().system().shutdown();
+ else   if (message instanceof FinetuneMessage) {
+    FinetuneMessage m=(FinetuneMessage)message;
+    UpdateableImpl result=(UpdateableImpl)m.getUpdateable();
+    final UpdateableImpl save=SerializationUtils.clone(result);
+    Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
+      @Override public UpdateableImpl call() throws Exception {
+        DataSetIterator iter2=SerializationUtils.clone(iter);
+        iter2.reset();
+        log.info("Finetuning with backprop...");
+        while (iter2.hasNext()) {
+          DataSet next=iter2.next();
+          log.info("Next data set");
+          save.get().setInput(next.getFirst());
+          save.get().backProp(0.01,1000);
+          log.info("Completed backprop");
+        }
+        mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
+        return save;
+      }
+    }
+,context().system().dispatcher());
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,result),mediator);
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    if (iter.hasNext())     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
   }
  else   if (iter.hasNext()) {
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
   }
  else   unhandled(message);
+  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,iter),mediator);
 }

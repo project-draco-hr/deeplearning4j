@@ -1,5 +1,4 @@
 {
-  List<DoubleMatrix> activations=feedForward();
   double error=this.negativeLogLikelihood();
   if (lastEntropy == null) {
     lastEntropy=error;
@@ -8,7 +7,7 @@
     log.info("Converged; no more stepping appears to do anything");
     return false;
   }
- else   if (error > lastEntropy) {
+ else   if (error > lastEntropy || Double.isNaN(error) || Double.isInfinite(error)) {
     log.info("Error greater than previous; found global minima; converging");
     update(revert);
     return false;
@@ -19,7 +18,7 @@
     log.info("Found better error on epoch " + epoch + " "+ lastEntropy);
   }
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
-  computeDeltas(activations,deltas);
+  computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
     DoubleMatrix add=deltas.get(l).getFirst().div(input.rows).mul(lr);
     add.divi(input.rows);
@@ -27,12 +26,12 @@
       add.muli(layers[l].getW().mul(l2));
     }
     layers[l].setW(layers[l].getW().add(add.mul(lr)));
-    sigmoidLayers[l].W=layers[l].getW();
+    sigmoidLayers[l].setW(layers[l].getW());
     DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
     deltaColumnSums.divi(input.rows);
     layers[l].gethBias().addi(deltaColumnSums.mul(lr));
-    sigmoidLayers[l].b=layers[l].gethBias();
+    sigmoidLayers[l].setB(getLayers()[l].gethBias());
   }
-  logLayer.W.addi(deltas.get(nLayers).getFirst());
+  logLayer.getW().addi(deltas.get(nLayers).getFirst());
   return true;
 }

@@ -1,6 +1,6 @@
 {
   if (message instanceof Updateable) {
-    @SuppressWarnings("unchecked") Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)message;
+    Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)message;
     File save=new File(pathToSave);
     if (save.exists()) {
       File parent=save.getParentFile();
@@ -11,10 +11,6 @@
     bos.flush();
     bos.close();
     log.info("saved model to " + pathToSave);
-  }
- else   if (message instanceof ShutdownMessage) {
-    log.info("Shutting down system for worker with address " + Cluster.get(context().system()).selfAddress().toString());
-    if (!context().system().isTerminated())     context().system().shutdown();
   }
  else   unhandled(message);
 }

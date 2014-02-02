@@ -1,6 +1,17 @@
 {
   int split=conf.getSplit();
-  List<List<Pair<DoubleMatrix,DoubleMatrix>>> splitList=Lists.partition(pairs,split);
+  final List<List<Pair<DoubleMatrix,DoubleMatrix>>> splitList=Lists.partition(pairs,split);
   partition=splitList.size();
-  for (int i=0; i < splitList.size(); i++)   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new ArrayList<>(splitList.get(i))),getSelf());
+  log.info("Found partition of size " + partition);
+  for (int i=0; i < splitList.size(); i++) {
+    final int j=i;
+    Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        log.info("Sending off work for batch " + j);
+        mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new ArrayList<>(splitList.get(j))),getSelf());
+        return null;
+      }
+    }
+,context().system().dispatcher());
+  }
 }

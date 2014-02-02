@@ -4,9 +4,8 @@
     NeuralNetwork n=layers[i];
     NeuralNetwork otherNetwork=network.layers[i];
     n.merge(otherNetwork,batchSize);
-    HiddenLayer l=sigmoidLayers[i];
-    l.b=n.gethBias();
-    l.W=n.getW();
+    getSigmoidLayers()[i].setB(n.gethBias());
+    getSigmoidLayers()[i].setW(n.getW());
   }
-  logLayer.merge(network.logLayer,batchSize);
+  getLogLayer().merge(network.logLayer,batchSize);
 }

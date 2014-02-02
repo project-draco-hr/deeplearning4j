@@ -1,5 +1,11 @@
 {
-  byte[] data=toFile(configuration).getBytes();
+  byte[] data;
+  try {
+    data=serialize(configuration);
+  }
+ catch (  IOException e1) {
+    throw new RuntimeException(e1);
+  }
   try {
     zk.multi(Arrays.asList(Op.create(new ZookeeperPathBuilder().setHost(host).setPort(port).build(),data,ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT),Op.create(new ZookeeperPathBuilder().setHost(host).setPort(port).addPath("tmp").build(),data,ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT)));
   }

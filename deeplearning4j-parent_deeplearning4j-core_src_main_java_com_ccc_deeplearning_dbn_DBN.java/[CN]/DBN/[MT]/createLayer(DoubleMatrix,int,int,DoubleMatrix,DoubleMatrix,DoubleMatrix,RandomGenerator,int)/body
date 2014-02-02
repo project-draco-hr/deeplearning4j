@@ -1,4 +1,4 @@
 {
-  RBM ret=new RBM.Builder().useRegularization(useRegularization).withMomentum(momentum).withSparsity(sparsity).numberOfVisible(nVisible).numHidden(nHidden).withWeights(W).withInput(input).withVisibleBias(vBias).withHBias(hBias).withDistribution(dist).withRandom(rng).renderWeights(renderWeightsEveryNEpochs).fanIn(fanIn).build();
+  RBM ret=new RBM.Builder().useRegularization(isUseRegularization()).withMomentum(getMomentum()).withSparsity(getSparsity()).numberOfVisible(nVisible).numHidden(nHidden).withWeights(W).withInput(input).withVisibleBias(vBias).withHBias(hBias).withDistribution(getDist()).withRandom(rng).renderWeights(getRenderWeightsEveryNEpochs()).fanIn(getFanIn()).build();
   return ret;
 }

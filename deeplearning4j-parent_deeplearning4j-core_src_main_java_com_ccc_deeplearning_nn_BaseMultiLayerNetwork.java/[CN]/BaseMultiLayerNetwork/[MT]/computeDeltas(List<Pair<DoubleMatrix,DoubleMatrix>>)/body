@@ -1,0 +1,33 @@
+{
+  DoubleMatrix[] gradients=new DoubleMatrix[nLayers + 2];
+  DoubleMatrix[] deltas=new DoubleMatrix[nLayers + 2];
+  ActivationFunction derivative=sigmoidLayers[0].getActivationFunction();
+  DoubleMatrix delta=null;
+  List<DoubleMatrix> activations=feedForward(getInput());
+  List<DoubleMatrix> weights=new ArrayList<>();
+  for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
+  weights.add(getLogLayer().getW());
+  DoubleMatrix labels=predict(getInput());
+  for (int i=nLayers + 1; i >= 0; i--) {
+    if (i >= nLayers + 1) {
+      DoubleMatrix z=activations.get(i);
+      delta=labels.sub(z).neg();
+      DoubleMatrix initialDelta=delta.mul(derivative.applyDerivative(z));
+      deltas[i]=initialDelta;
+    }
+ else {
+      delta=deltas[i + 1];
+      DoubleMatrix w=weights.get(i).transpose();
+      DoubleMatrix z=activations.get(i);
+      DoubleMatrix a=activations.get(i);
+      DoubleMatrix error=delta.mmul(w);
+      deltas[i]=error;
+      error=error.mul(derivative.applyDerivative(z));
+      deltas[i]=error;
+      DoubleMatrix lastLayerDelta=deltas[i + 1].transpose();
+      DoubleMatrix newGradient=lastLayerDelta.mmul(a);
+      gradients[i]=newGradient.div(getInput().rows);
+    }
+  }
+  for (int i=0; i < gradients.length; i++)   deltaRet.add(new Pair<>(gradients[i],deltas[i]));
+}

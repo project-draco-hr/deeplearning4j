@@ -1,29 +1,28 @@
 {
   try {
     ret=(E)clazz.newInstance();
-    ret.input=this.input;
-    ret.nOuts=this.nOuts;
-    ret.nIns=this.nIns;
-    ret.labels=this.labels;
-    ret.hiddenLayerSizes=this.hiddenLayerSizes;
-    ret.nLayers=this.nLayers;
-    ret.rng=this.rng;
-    ret.shouldBackProp=this.backProp;
-    ret.sigmoidLayers=new HiddenLayer[ret.nLayers];
-    ret.layers=ret.createNetworkLayers(ret.nLayers);
-    ret.toDecode=this.decode;
-    ret.input=this.input;
-    ret.momentum=this.momentum;
-    ret.labels=this.labels;
-    ret.fanIn=this.fanIn;
-    ret.sparsity=this.sparsity;
-    ret.renderWeightsEveryNEpochs=this.renderWeithsEveryNEpochs;
-    ret.l2=l2;
-    ret.forceNumEpochs=shouldForceEpochs;
-    ret.useRegularization=useRegularization;
-    if (activation != null)     ret.activation=activation;
-    if (dist != null)     ret.dist=dist;
-    ret.weightTransforms.putAll(weightTransforms);
+    ret.setInput(this.input);
+    ret.setnOuts(this.nOuts);
+    ret.setnIns(this.nIns);
+    ret.setLabels(this.labels);
+    ret.setHiddenLayerSizes(this.hiddenLayerSizes);
+    ret.setnLayers(this.nLayers);
+    ret.setRng(this.rng);
+    ret.setShouldBackProp(this.backProp);
+    ret.setSigmoidLayers(new HiddenLayer[ret.getnLayers()]);
+    ret.setToDecode(decode);
+    ret.setInput(this.input);
+    ret.setMomentum(momentum);
+    ret.setLabels(labels);
+    ret.setFanIn(fanIn);
+    ret.setSparsity(sparsity);
+    ret.setRenderWeightsEveryNEpochs(renderWeithsEveryNEpochs);
+    ret.setL2(l2);
+    ret.setForceNumEpochs(shouldForceEpochs);
+    ret.setUseRegularization(useRegularization);
+    if (activation != null)     ret.setActivation(activation);
+    if (dist != null)     ret.setDist(dist);
+    ret.getWeightTransforms().putAll(weightTransforms);
     return ret;
   }
  catch (  InstantiationException|IllegalAccessException e) {

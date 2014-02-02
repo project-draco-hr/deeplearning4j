@@ -1,4 +1,0 @@
-{
-  this.iter=iter;
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
-}
