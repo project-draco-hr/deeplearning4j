@@ -31,8 +31,6 @@
   }
  else {
     Conf c=conf.copy();
-    c.setFinetuneEpochs(1);
-    c.setPretrainEpochs(1);
     ActorRef worker=startWorker(masterAddress,c);
     try {
       Thread.sleep(5000);
@@ -44,4 +42,8 @@
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
+  conf.setMasterUrl(getMasterAddress().toString());
+  ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
+  reg.register();
+  reg.close();
 }

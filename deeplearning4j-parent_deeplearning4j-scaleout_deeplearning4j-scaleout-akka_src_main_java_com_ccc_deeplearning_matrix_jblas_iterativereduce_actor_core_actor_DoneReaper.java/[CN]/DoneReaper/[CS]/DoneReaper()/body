@@ -1,0 +1,4 @@
+{
+  super();
+  mediator.tell(new DistributedPubSubMediator.Subscribe(REAPER,getSelf()),getSelf());
+}

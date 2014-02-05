@@ -28,9 +28,5 @@
     conf.setPretrainLearningRate(pretrainLearningRate);
     runner=new ActorNetworkRunner("master",iter);
     runner.setup(conf);
-    conf.setMasterUrl(runner.getMasterAddress().toString());
-    ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master",host,2181);
-    reg.register();
-    reg.close();
   }
 }

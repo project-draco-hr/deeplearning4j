@@ -1,5 +1,6 @@
 {
   MatrixUtil.ensureValidOutcomeMatrix(labels);
+  network.feedForward(network.getInput());
   DoubleMatrix layerInput=network.getSigmoidLayers()[network.getSigmoidLayers().length - 1].sample_h_given_v();
   network.getLogLayer().setInput(layerInput);
   network.getLogLayer().setLabels(labels);
