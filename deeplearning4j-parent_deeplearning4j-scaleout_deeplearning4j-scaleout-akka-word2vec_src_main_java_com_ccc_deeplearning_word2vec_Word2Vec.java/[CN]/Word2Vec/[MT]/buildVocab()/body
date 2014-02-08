@@ -1,49 +1,35 @@
 {
   readStopWords();
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
-  final AtomicInteger count=new AtomicInteger(0);
+  @SuppressWarnings("unused") final AtomicInteger count=new AtomicInteger(0);
   final AtomicBoolean bool=new AtomicBoolean(false);
-  while (sentenceIter.hasNext()) {
-    final String words=sentenceIter.nextSentence();
-    if (words == null) {
-      break;
+  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
+    private static final long serialVersionUID=5447027920163740307L;
+    @Override public Map<String,Double> buildMap(){
+      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
     }
-    Future<Void> f=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        Tokenizer tokenizer=tokenizerFactory.create(new InputHomogenization(words).transform());
-        Word2Vec.this.allWordsCount+=tokenizer.countTokens();
-        int curr=count.incrementAndGet();
-        if (curr % 10000 == 0)         log.info("Processed  sentence " + count + " current word count "+ allWordsCount+ " with sentence "+ words);
-        while (tokenizer.hasMoreTokens()) {
-          String token=tokenizer.nextToken();
-          if (stopWords.contains(token))           token="STOP";
-          VocabWord word=rawVocab.get(token);
-          if (word != null)           word.increment();
- else {
-            word=new VocabWord(1.0,layerSize);
-            rawVocab.put(token,word);
-          }
-          if (word.getWordFrequency() >= minWordFrequency && !matchesAnyStopWord(token)) {
-            if (!Word2Vec.this.vocab.containsKey(token)) {
-              word.setIndex(Word2Vec.this.vocab.size());
-              Word2Vec.this.vocab.put(token,word);
-              wordIndex.add(token);
-            }
-          }
-        }
-        numSentencesProcessed.incrementAndGet();
-        return null;
-      }
-    }
-,trainingSystem.dispatcher());
-    f.onComplete(new OnComplete<Void>(){
-      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
-        if (arg0 != null)         throw arg0;
-        if (!sentenceIter.hasNext())         bool.getAndSet(true);
-      }
-    }
-,trainingSystem.dispatcher());
   }
+;
+  final Counter<String> rawVocab=new Counter<String>(factory);
+  final int capacity=Runtime.getRuntime().availableProcessors() * 4;
+  final java.util.concurrent.ArrayBlockingQueue<String> work=new java.util.concurrent.ArrayBlockingQueue<>(capacity);
+  final AtomicInteger workersSpawned=new AtomicInteger(0);
+  Future<Void> f1=Futures.future(new Callable<Void>(){
+    @Override public Void call() throws Exception {
+      while (sentenceIter.hasNext()) {
+        if (work.remainingCapacity() == 0) {
+          Word2Vec.this.process(bool,work,count,rawVocab);
+          workersSpawned.incrementAndGet();
+        }
+ else {
+          if (workersSpawned.get() < capacity)           Word2Vec.this.process(bool,work,count,rawVocab);
+          work.add(sentenceIter.nextSentence());
+        }
+      }
+      return null;
+    }
+  }
+,trainingSystem.dispatcher());
   while (!bool.get()) {
     try {
       Thread.sleep(15000);
