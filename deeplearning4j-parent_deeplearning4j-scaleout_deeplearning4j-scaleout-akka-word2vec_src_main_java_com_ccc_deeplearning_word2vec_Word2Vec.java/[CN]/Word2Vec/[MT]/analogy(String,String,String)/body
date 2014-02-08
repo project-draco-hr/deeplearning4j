@@ -2,7 +2,7 @@
   DoubleMatrix wv0=getWordVectorMatrix(word0);
   DoubleMatrix wv1=getWordVectorMatrix(word1);
   DoubleMatrix wv2=getWordVectorMatrix(word2);
-  DoubleMatrix wordVector=wv1.sub(wv1).add(wv2);
+  DoubleMatrix wordVector=wv1.sub(wv0).add(wv2);
   if (wv1 == null || wv2 == null || wv0 == null)   return null;
   DoubleMatrix tempVector;
   String name;

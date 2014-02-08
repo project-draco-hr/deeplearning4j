@@ -1,5 +1,4 @@
 {
-  createExpTable();
   this.minWordFrequency=minWordFrequency;
   this.sentenceIter=new CollectionSentenceIterator(sentences);
   this.buildVocab();

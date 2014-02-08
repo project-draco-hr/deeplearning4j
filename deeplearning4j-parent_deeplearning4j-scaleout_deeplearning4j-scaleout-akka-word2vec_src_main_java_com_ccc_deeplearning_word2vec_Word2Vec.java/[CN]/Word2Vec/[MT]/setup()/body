@@ -2,5 +2,5 @@
   log.info("Building binary tree");
   buildBinaryTree();
   log.info("Resetting weights");
-  resetWeights();
+  if (shouldReset)   resetWeights();
 }

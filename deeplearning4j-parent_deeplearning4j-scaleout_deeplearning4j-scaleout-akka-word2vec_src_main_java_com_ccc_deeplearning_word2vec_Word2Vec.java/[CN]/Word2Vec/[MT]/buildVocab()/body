@@ -1,33 +1,56 @@
 {
   readStopWords();
-  int count=0;
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  final AtomicInteger count=new AtomicInteger(0);
+  final AtomicBoolean bool=new AtomicBoolean(false);
   while (sentenceIter.hasNext()) {
     final String words=sentenceIter.nextSentence();
     if (words == null) {
       break;
     }
-    Tokenizer tokenizer=tokenizerFactory.create(new InputHomogenization(words).transform());
-    this.allWordsCount+=tokenizer.countTokens();
-    count++;
-    if (count % 10000 == 0)     log.info("Processed  sentence " + count + " current word count "+ allWordsCount);
-    while (tokenizer.hasMoreTokens()) {
-      String token=tokenizer.nextToken();
-      if (stopWords.contains(token))       token="STOP";
-      VocabWord word=rawVocab.get(token);
-      if (word != null)       word.increment();
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        Tokenizer tokenizer=tokenizerFactory.create(new InputHomogenization(words).transform());
+        Word2Vec.this.allWordsCount+=tokenizer.countTokens();
+        int curr=count.incrementAndGet();
+        if (curr % 10000 == 0)         log.info("Processed  sentence " + count + " current word count "+ allWordsCount+ " with sentence "+ words);
+        while (tokenizer.hasMoreTokens()) {
+          String token=tokenizer.nextToken();
+          if (stopWords.contains(token))           token="STOP";
+          VocabWord word=rawVocab.get(token);
+          if (word != null)           word.increment();
  else {
-        word=new VocabWord(1.0,layerSize);
-        rawVocab.put(token,word);
-      }
-      if (word.getWordFrequency() >= minWordFrequency && !matchesAnyStopWord(token)) {
-        if (!this.vocab.containsKey(token)) {
-          word.setIndex(this.vocab.size());
-          this.vocab.put(token,word);
-          wordIndex.add(token);
+            word=new VocabWord(1.0,layerSize);
+            rawVocab.put(token,word);
+          }
+          if (word.getWordFrequency() >= minWordFrequency && !matchesAnyStopWord(token)) {
+            if (!Word2Vec.this.vocab.containsKey(token)) {
+              word.setIndex(Word2Vec.this.vocab.size());
+              Word2Vec.this.vocab.put(token,word);
+              wordIndex.add(token);
+            }
+          }
         }
+        numSentencesProcessed.incrementAndGet();
+        return null;
       }
     }
-    numSentencesProcessed.incrementAndGet();
+,trainingSystem.dispatcher());
+    f.onComplete(new OnComplete<Void>(){
+      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
+        if (arg0 != null)         throw arg0;
+        if (!sentenceIter.hasNext())         bool.getAndSet(true);
+      }
+    }
+,trainingSystem.dispatcher());
+  }
+  while (!bool.get()) {
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
   }
   setup();
 }
