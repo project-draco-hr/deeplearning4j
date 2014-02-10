@@ -17,7 +17,7 @@
     Futures.future(new Callable<Void>(){
       @Override public Void call() throws Exception {
         processSentence(sentence,totalWords);
-        numSentencesProcessed.incrementAndGet();
+        numSentencesProcessed++;
         return null;
       }
     }
