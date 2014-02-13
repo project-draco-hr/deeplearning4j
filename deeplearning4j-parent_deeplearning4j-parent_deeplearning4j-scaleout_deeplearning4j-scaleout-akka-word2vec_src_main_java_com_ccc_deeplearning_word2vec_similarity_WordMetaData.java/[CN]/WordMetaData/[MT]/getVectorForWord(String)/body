@@ -1,0 +1,3 @@
+{
+  return vec.getWordVectorMatrix(word).mul(wordCounts.getCount(word));
+}

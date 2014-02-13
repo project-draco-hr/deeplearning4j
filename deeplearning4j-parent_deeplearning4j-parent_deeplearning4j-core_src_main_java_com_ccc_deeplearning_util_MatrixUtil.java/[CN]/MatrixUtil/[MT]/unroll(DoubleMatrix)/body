@@ -1,0 +1,5 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(1,d.length);
+  for (int i=0; i < d.length; i++)   ret.put(i,d.get(i));
+  return ret;
+}

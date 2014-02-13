@@ -1,0 +1,24 @@
+{
+  DoubleMatrix newInput=new DoubleMatrix(list.size(),list.get(0).getFirst().columns);
+  DoubleMatrix newOutput=new DoubleMatrix(list.size(),list.get(0).getSecond().columns);
+  for (int i=0; i < list.size(); i++) {
+    newInput.putRow(i,list.get(i).getFirst());
+    newOutput.putRow(i,list.get(i).getSecond());
+  }
+  this.combinedInput=newInput;
+  this.outcomes=newOutput;
+  Future<E> f=Futures.future(new Callable<E>(){
+    @Override public E call() throws Exception {
+      E work=compute();
+      return work;
+    }
+  }
+,getContext().dispatcher());
+  f.onComplete(new OnComplete<E>(){
+    @Override public void onComplete(    Throwable arg0,    E work) throws Throwable {
+      log.info("Updating parent actor...");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+    }
+  }
+,context().dispatcher());
+}

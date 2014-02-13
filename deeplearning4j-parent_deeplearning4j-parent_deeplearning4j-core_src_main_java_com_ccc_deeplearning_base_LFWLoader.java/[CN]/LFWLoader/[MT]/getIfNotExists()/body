@@ -1,0 +1,15 @@
+{
+  if (!lfwDir.exists()) {
+    lfwDir.mkdir();
+    FileUtils.copyURLToFile(new URL(LFW_URL),lfwTarFile);
+    untarFile(baseDir,lfwTarFile);
+  }
+  File firstImage=lfwDir.listFiles()[0].listFiles()[0];
+  numPixelColumns=ArrayUtil.flatten(loader.fromFile(firstImage)).length;
+  numNames=lfwDir.getAbsoluteFile().listFiles().length;
+  Collection<File> allImages=FileUtils.listFiles(lfwDir,org.apache.commons.io.filefilter.FileFileFilter.FILE,org.apache.commons.io.filefilter.DirectoryFileFilter.DIRECTORY);
+  for (  File f : allImages) {
+    images.add(f.getAbsolutePath());
+  }
+  for (  File dir : lfwDir.getAbsoluteFile().listFiles())   outcomes.add(dir.getAbsolutePath());
+}

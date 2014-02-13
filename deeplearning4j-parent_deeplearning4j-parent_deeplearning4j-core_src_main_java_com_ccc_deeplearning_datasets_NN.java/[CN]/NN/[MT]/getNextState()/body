@@ -1,0 +1,8 @@
+{
+  String s="Next State:\n";
+  for (int i=0; i < numnodes; i++) {
+    s+=i + ": ";
+    s+=nextState[i] + "\n";
+  }
+  return s;
+}

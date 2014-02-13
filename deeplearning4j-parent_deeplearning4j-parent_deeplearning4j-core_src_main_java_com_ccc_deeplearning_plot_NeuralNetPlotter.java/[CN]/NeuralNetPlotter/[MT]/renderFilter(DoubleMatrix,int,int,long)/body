@@ -1,0 +1,12 @@
+{
+  try {
+    String filePath=writeMatrix(w);
+    Process is=Runtime.getRuntime().exec("python /tmp/plot.py filter " + filePath + " "+ r+ " "+ c+ " "+ length);
+    log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
+    log.info("Rendering weights " + filePath);
+    log.error(IOUtils.readLines(is.getErrorStream()).toString());
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

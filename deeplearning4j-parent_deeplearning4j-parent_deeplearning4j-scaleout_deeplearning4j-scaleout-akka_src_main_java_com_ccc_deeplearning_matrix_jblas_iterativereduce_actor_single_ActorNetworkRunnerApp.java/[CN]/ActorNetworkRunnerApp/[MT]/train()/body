@@ -1,0 +1,10 @@
+{
+  DataSet batch=null;
+  int numBatches=0;
+  if (iter.hasNext()) {
+    log.info("Training next batch " + (numBatches + 1));
+    batch=iter.next();
+    runner.train(batch);
+    numBatches++;
+  }
+}

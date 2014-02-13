@@ -1,0 +1,7 @@
+{
+  ActorNetworkRunnerApp app=new ActorNetworkRunnerApp(new String[]{"-data","mnist","-a","sda","-i","1","-o","1"});
+  assertEquals("mnist",app.getData());
+  assertEquals("sda",app.getAlgorithm());
+  assertEquals("1",String.valueOf(app.getInputs()));
+  assertEquals("1",String.valueOf(app.getOutputs()));
+}

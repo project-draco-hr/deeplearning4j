@@ -1,0 +1,17 @@
+{
+  List<Window> nextDataSet=new ArrayList<Window>();
+  if (!windows.isEmpty()) {
+    if (windows.size() < batchSize) {
+      addWhatsLeft(nextDataSet);
+      addFromSentenceCache(nextDataSet);
+    }
+ else {
+      addUpToBatch(nextDataSet);
+      return toDataSet(nextDataSet);
+    }
+  }
+ else {
+    return handleWhileNeeded(nextDataSet);
+  }
+  return toDataSet(nextDataSet);
+}

@@ -1,0 +1,11 @@
+{
+  log.info("Untaring File: " + tarFile.toString());
+  Process p=Runtime.getRuntime().exec(String.format("tar -C %s -xvf %s",baseDir.getAbsolutePath(),tarFile.getAbsolutePath()));
+  BufferedReader stdError=new BufferedReader(new InputStreamReader(p.getErrorStream()));
+  log.info("Here is the standard error of the command (if any):\n");
+  String s;
+  while ((s=stdError.readLine()) != null) {
+    log.info(s);
+  }
+  stdError.close();
+}

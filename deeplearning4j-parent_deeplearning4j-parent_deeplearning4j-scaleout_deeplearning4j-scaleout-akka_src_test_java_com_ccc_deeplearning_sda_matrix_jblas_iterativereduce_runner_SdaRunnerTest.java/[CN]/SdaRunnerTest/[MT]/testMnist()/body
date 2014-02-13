@@ -1,0 +1,24 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher();
+  fetcher.fetch(600);
+  Pair<DoubleMatrix,DoubleMatrix> first=fetcher.next();
+  int numIns=first.getFirst().columns;
+  int numLabels=first.getSecond().columns;
+  int[] layerSizes=new int[3];
+  Arrays.fill(layerSizes,1000);
+  runner=new NetworkRunner();
+  conf.setSplit(600);
+  conf.setPretrainEpochs(100);
+  conf.setFinetuneEpochs(100);
+  conf.setnIn(numIns);
+  conf.setLayerSizes(hidden_layer_sizes_arr);
+  conf.setnOut(numLabels);
+  conf.setMultiLayerClazz(StackedDenoisingAutoEncoder.class);
+  runner.setup(conf);
+  runner.train(first.getFirst(),first.getSecond());
+  BaseMultiLayerNetwork trained=runner.result();
+  Evaluation eval=new Evaluation();
+  DoubleMatrix predicted=trained.predict(first.getFirst());
+  eval.eval(first.getSecond(),predicted);
+  log.info(eval.stats());
+}

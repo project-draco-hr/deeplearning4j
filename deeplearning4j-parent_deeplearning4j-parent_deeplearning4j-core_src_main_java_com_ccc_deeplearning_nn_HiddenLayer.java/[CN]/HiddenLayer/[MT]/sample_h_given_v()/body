@@ -1,0 +1,5 @@
+{
+  DoubleMatrix output=activate();
+  DoubleMatrix ret=MatrixUtil.binomial(output,1,rng);
+  return ret;
+}

@@ -1,0 +1,16 @@
+{
+  try {
+    NeuralNetwork ret=getClass().newInstance();
+    ret.sethBias(hBias.dup());
+    ret.setvBias(vBias.dup());
+    ret.setnHidden(getnVisible());
+    ret.setnVisible(getnHidden());
+    ret.setW(W.transpose());
+    ret.setRng(getRng());
+    ret.setDist(getDist());
+    return ret;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

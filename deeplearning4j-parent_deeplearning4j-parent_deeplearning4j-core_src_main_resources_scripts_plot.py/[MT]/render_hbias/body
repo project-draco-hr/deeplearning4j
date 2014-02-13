@@ -1,0 +1,3 @@
+def render_hbias(path):
+    hMean = from_file(path)
+    image = Image.fromarray((hMean * 256)).show()

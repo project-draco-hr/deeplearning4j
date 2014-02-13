@@ -1,0 +1,19 @@
+{
+  String filePath=args[0];
+  int batch=Integer.parseInt(args[1]);
+  DataSet data=DataSet.empty();
+  data.load(new BufferedInputStream(new FileInputStream(new File(filePath))));
+  List<DataSet> batches=data.dataSetBatches(batch);
+  int in=batches.get(0).getFirst().columns;
+  int out=batches.get(0).numOutcomes();
+  CDBN c=new CDBN.Builder().useRegularization(false).numberOfInputs(in).hiddenLayerSizes(new int[]{in / 2,in / 4,in / 8}).withActivation(new HardTanh()).numberOfOutPuts(out).build();
+  for (int i=0; i < batches.size(); i++) {
+    DataSet d=batches.get(i);
+    DoubleMatrix first=d.getFirst();
+    first=MatrixUtil.normalizeByColumnSums(first);
+    DoubleMatrix second=d.getSecond();
+    c.pretrain(first,1,0.01,1000);
+    c.finetune(second,0.01,1000);
+  }
+  c.write(new BufferedOutputStream(new FileOutputStream(new File("nn-model.bin"))));
+}

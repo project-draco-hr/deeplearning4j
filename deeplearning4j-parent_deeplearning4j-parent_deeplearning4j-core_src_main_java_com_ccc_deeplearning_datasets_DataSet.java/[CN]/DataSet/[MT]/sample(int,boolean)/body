@@ -1,0 +1,3 @@
+{
+  return sample(numSamples,new MersenneTwister(System.currentTimeMillis()),withReplacement);
+}

@@ -1,0 +1,11 @@
+{
+  final TestActorRef<BatchActor> ref=TestActorRef.create(system,Props.create(new BatchActor.BatchActorFactory(new MnistDataSetIterator(1,1),1)),"testA");
+  BatchActor ref2=ref.underlyingActor();
+  assertEquals(true,ref2.getIter().hasNext());
+  assertEquals(1,ref2.getIter().batch());
+  ref2.onReceive(new ResetMessage());
+  assertEquals(true,ref2.getIter().hasNext());
+  assertEquals(1,ref2.getIter().batch());
+  ref2.onReceive(1);
+  assertEquals(true,ref2.getIter().hasNext());
+}

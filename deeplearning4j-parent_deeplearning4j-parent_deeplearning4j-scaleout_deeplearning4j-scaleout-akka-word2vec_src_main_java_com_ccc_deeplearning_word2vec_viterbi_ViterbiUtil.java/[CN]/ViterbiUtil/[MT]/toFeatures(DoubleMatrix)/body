@@ -1,0 +1,9 @@
+{
+  List<List<String>> ret=new ArrayList<List<String>>();
+  for (int i=0; i < matrix.rows; i++) {
+    List<String> row=new ArrayList<String>();
+    for (int j=0; j < matrix.columns; j++)     row.add(String.valueOf(matrix.get(i,j)));
+    ret.add(row);
+  }
+  return ret;
+}

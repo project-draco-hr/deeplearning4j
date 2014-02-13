@@ -1,0 +1,22 @@
+{
+  if (file.exists())   file.delete();
+  file.createNewFile();
+  if (binary) {
+    DataOutputStream bos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+    getFirst().out(bos);
+    getSecond().out(bos);
+    bos.flush();
+    bos.close();
+  }
+ else {
+    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(file));
+    for (int i=0; i < numExamples(); i++) {
+      bos.write(getFirst().getRow(i).toString("%.3f","[","]",", ",";").getBytes());
+      bos.write("\t".getBytes());
+      bos.write(getSecond().getRow(i).toString("%.3f","[","]",", ",";").getBytes());
+      bos.write("\n".getBytes());
+    }
+    bos.flush();
+    bos.close();
+  }
+}

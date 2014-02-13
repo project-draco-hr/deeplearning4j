@@ -1,0 +1,8 @@
+{
+  encoder.trainNetwork(input,labels,trainingParams);
+  decoder=new BaseMultiLayerNetwork.Builder<>().withClazz(encoder.getClass()).buildEmpty();
+  decoder.asDecoder(encoder);
+  DoubleMatrix encoderInput=encoder.predict(input);
+  DoubleMatrix encoderLabels=input;
+  decoder.trainNetwork(encoderInput,encoderLabels,trainingParams);
+}

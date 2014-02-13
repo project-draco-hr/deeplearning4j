@@ -1,0 +1,11 @@
+{
+  if (word.equals(word2))   return 1.0;
+  double[] vector=getWordVector(word);
+  double[] vector2=getWordVector(word2);
+  if (vector == null || vector2 == null)   return -1;
+  DoubleMatrix d1=MatrixUtil.unitVec(new DoubleMatrix(vector));
+  DoubleMatrix d2=MatrixUtil.unitVec(new DoubleMatrix(vector2));
+  double ret=d1.dot(d2);
+  if (ret < 0)   return 0;
+  return ret;
+}

@@ -1,0 +1,19 @@
+{
+  createNetworkLayers(network.nLayers + 1);
+  this.layers=new NeuralNetwork[network.nLayers];
+  this.sigmoidLayers=new HiddenLayer[network.nLayers];
+  hiddenLayerSizes=new int[network.nLayers];
+  this.nIns=network.nOuts;
+  this.nOuts=network.nIns;
+  this.nLayers=network.nLayers;
+  this.dist=network.dist;
+  int count=0;
+  for (int i=network.nLayers - 1; i >= 0; i--) {
+    layers[count]=network.layers[i].clone();
+    layers[count].setRng(network.layers[i].getRng());
+    hiddenLayerSizes[count]=network.hiddenLayerSizes[i];
+    count++;
+  }
+  this.rng=network.rng;
+  shouldInit=false;
+}

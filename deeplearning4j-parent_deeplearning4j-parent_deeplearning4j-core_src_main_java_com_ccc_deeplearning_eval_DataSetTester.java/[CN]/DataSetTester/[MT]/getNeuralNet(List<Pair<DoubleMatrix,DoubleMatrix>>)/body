@@ -1,0 +1,5 @@
+{
+  Pair<Integer,Integer> params=numInputsOutcomes(dataset);
+  BaseMultiLayerNetwork ret=new BaseMultiLayerNetwork.Builder<>().hiddenLayerSizes(layers).numberOfInputs(params.getFirst()).numberOfOutPuts(params.getSecond()).withRng(new MersenneTwister(123)).withClazz(algorithmForClass()).build();
+  return ret;
+}

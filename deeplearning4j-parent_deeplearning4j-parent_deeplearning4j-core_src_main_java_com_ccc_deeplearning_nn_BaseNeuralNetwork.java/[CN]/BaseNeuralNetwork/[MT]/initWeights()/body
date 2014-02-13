@@ -1,0 +1,17 @@
+{
+  if (this.nVisible < 1)   throw new IllegalStateException("Number of visible can not be less than 1");
+  if (this.nHidden < 1)   throw new IllegalStateException("Number of hidden can not be less than 1");
+  if (this.W == null) {
+    this.W=DoubleMatrix.zeros(nVisible,nHidden);
+    for (int i=0; i < this.W.rows; i++)     this.W.putRow(i,new DoubleMatrix(dist.sample(this.W.columns)));
+  }
+  if (this.hBias == null) {
+    this.hBias=DoubleMatrix.zeros(nHidden);
+  }
+  if (this.vBias == null) {
+    if (this.input != null) {
+      this.vBias=DoubleMatrix.zeros(nVisible);
+    }
+ else     this.vBias=DoubleMatrix.zeros(nVisible);
+  }
+}

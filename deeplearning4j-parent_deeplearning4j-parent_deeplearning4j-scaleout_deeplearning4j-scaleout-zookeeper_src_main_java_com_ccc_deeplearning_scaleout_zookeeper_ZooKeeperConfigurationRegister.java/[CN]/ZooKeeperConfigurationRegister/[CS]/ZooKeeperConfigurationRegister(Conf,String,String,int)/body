@@ -1,0 +1,8 @@
+{
+  super();
+  this.configuration=configuration;
+  this.id=id;
+  this.host=host;
+  this.port=port;
+  if (zk == null)   this.zk=new ZookeeperBuilder().setHost(host).setPort(port).build();
+}

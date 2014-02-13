@@ -1,0 +1,11 @@
+{
+switch (algorithm) {
+case "da":
+    return "com.ccc.deeplearning.sda.DenoisingAutoEncoder";
+case "rbm":
+  return "com.ccc.deeplearning.rbm.RBM";
+case "crbm":
+return "com.ccc.deeplearning.rbm.CRBM";
+}
+return null;
+}

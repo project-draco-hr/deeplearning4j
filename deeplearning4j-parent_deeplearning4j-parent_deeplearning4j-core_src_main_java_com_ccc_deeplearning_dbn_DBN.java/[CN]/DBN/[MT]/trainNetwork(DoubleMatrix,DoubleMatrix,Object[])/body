@@ -1,0 +1,12 @@
+{
+  int k=(Integer)otherParams[0];
+  double lr=(Double)otherParams[1];
+  int epochs=(Integer)otherParams[2];
+  pretrain(input,k,lr,epochs);
+  if (otherParams.length < 3)   finetune(labels,lr,epochs);
+ else {
+    double finetuneLr=otherParams.length > 3 ? (double)otherParams[3] : lr;
+    int finetuneEpochs=otherParams.length > 4 ? (int)otherParams[4] : epochs;
+    finetune(labels,finetuneLr,finetuneEpochs);
+  }
+}

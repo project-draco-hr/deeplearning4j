@@ -1,0 +1,17 @@
+{
+  if (type.equals("worker"))   return;
+  try {
+    if (dataSet.equals("mnist")) {
+      iter=new MnistDataSetIterator(split,numExamples);
+    }
+ else     if (dataSet.equals("iris")) {
+      iter=new IrisDataSetIterator(split,numExamples);
+    }
+ else     if (dataSet.equals("lfw")) {
+      iter=new LFWDataSetIterator(split,numExamples);
+    }
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

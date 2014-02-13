@@ -1,0 +1,9 @@
+{
+  CounterMap<Integer,Integer> transitionProbabilities=new CounterMap<>();
+  incrementTransitionProbabilities(transitionProbabilities,d.getSecond());
+  DoubleMatrix transitionProbabilities2=CounterUtil.convert(transitionProbabilities);
+  Index labelIndex=new Index();
+  labelIndex.add("NONE");
+  for (int i=0; i < labels.size(); i++)   labelIndex.add(labels.get(i));
+  return new Viterbi(labelIndex,ViterbiUtil.featureIndexFromLabelIndex(labelIndex),transitionProbabilities2);
+}

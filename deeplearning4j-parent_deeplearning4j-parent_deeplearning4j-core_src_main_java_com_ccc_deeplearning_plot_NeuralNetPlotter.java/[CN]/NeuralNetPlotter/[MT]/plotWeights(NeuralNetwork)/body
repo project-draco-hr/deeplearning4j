@@ -1,0 +1,10 @@
+{
+  try {
+    String filePath=writeMatrix(network.getW());
+    Process is=Runtime.getRuntime().exec("python /tmp/plot.py weights " + filePath);
+    log.info("Rendering weights " + filePath);
+    log.error(IOUtils.readLines(is.getErrorStream()).toString());
+  }
+ catch (  Exception e) {
+  }
+}

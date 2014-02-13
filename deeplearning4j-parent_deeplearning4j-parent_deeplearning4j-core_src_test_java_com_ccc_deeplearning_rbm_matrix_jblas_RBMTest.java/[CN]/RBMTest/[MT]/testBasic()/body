@@ -1,0 +1,22 @@
+{
+  double[][] data=new double[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0},{0,0,1,1,1,0}};
+  DoubleMatrix d=new DoubleMatrix(data);
+  RandomGenerator g=new MersenneTwister(123);
+  RBM r=new RBM.Builder().numberOfVisible(6).numHidden(2).withRandom(g).build();
+  for (int i=0; i < 10; i++) {
+    r.contrastiveDivergence(0.1,1,d);
+    log.info("Cross entropy " + r.getReConstructionCrossEntropy());
+  }
+  DoubleMatrix v=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0}});
+  log.info(r.reconstruct(v).toString());
+  NeuralNetwork r2=r.clone();
+  assertEquals(r2.getnVisible(),r.nVisible);
+  assertEquals(r2.getnHidden(),r.nHidden);
+  assertEquals(r2.getW(),r.W);
+  assertEquals(r2.gethBias(),r.hBias);
+  assertEquals(r2.getvBias(),r.vBias);
+  for (int i=0; i < 10; i++) {
+    r2.trainTillConvergence(d,0.1,new Object[]{1,0.1});
+    log.info("Cross entropy " + r.getReConstructionCrossEntropy());
+  }
+}

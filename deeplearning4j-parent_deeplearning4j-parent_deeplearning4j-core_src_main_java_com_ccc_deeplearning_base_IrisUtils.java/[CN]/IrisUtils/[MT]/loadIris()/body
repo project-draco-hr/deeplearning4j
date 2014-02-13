@@ -1,0 +1,24 @@
+{
+  ClassPathResource resource=new ClassPathResource("/iris.dat");
+  List<String> lines=IOUtils.readLines(resource.getInputStream());
+  Collections.shuffle(lines);
+  Collections.rotate(lines,3);
+  DoubleMatrix ret=DoubleMatrix.ones(lines.size(),4);
+  List<String> outcomeTypes=new ArrayList<String>();
+  double[][] outcomes=new double[lines.size()][3];
+  for (int i=0; i < lines.size(); i++) {
+    String line=lines.get(i);
+    String[] split=line.split(",");
+    addRow(ret,i,split);
+    String outcome=split[split.length - 1];
+    if (!outcomeTypes.contains(outcome))     outcomeTypes.add(outcome);
+    double[] rowOutcome=new double[3];
+    rowOutcome[outcomeTypes.indexOf(outcome)]=1;
+    outcomes[i]=rowOutcome;
+  }
+  MatrixUtil.columnNormalizeBySum(ret);
+  ret=MatrixUtil.roundToTheNearest(ret,10000);
+  MatrixUtil.discretizeColumns(ret,4);
+  ret=ret.mul(0.01);
+  return new Pair<>(ret,new DoubleMatrix(outcomes));
+}

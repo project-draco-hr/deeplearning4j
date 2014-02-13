@@ -1,0 +1,15 @@
+{
+  this.createNetworkLayers(network.nLayers);
+  this.layers=new NeuralNetwork[network.nLayers];
+  hiddenLayerSizes=new int[nLayers];
+  int count=0;
+  for (int i=nLayers - 1; i > 0; i--) {
+    NeuralNetwork n=network.layers[i].clone();
+    HiddenLayer l=network.sigmoidLayers[i].clone();
+    layers[count]=n;
+    sigmoidLayers[count]=l;
+    hiddenLayerSizes[count]=network.hiddenLayerSizes[i];
+    count++;
+  }
+  this.logLayer=new LogisticRegression(hiddenLayerSizes[nLayers - 1],network.input.columns);
+}
