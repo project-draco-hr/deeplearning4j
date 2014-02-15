@@ -1,5 +1,6 @@
 {
   try {
+    if (iter != null)     iter.close();
     iter=FileUtils.lineIterator(file);
   }
  catch (  IOException e) {

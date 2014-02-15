@@ -1,8 +1,20 @@
 {
   if (message instanceof SentenceMessage) {
-    SentenceMessage m2=(SentenceMessage)message;
-    vec.processSentence(m2.getSentence(),m2.getCounter());
-    m2.getChanged().set(System.currentTimeMillis());
+    scala.concurrent.Future<SentenceMessage> f=Futures.future(new Callable<SentenceMessage>(){
+      @Override public SentenceMessage call() throws Exception {
+        SentenceMessage m2=(SentenceMessage)message;
+        vec.processSentence(m2.getSentence(),m2.getCounter());
+        return m2;
+      }
+    }
+,context().dispatcher());
+    f.onComplete(new OnComplete<SentenceMessage>(){
+      @Override public void onComplete(      Throwable arg0,      SentenceMessage m2) throws Throwable {
+        log.info("Processed sentence");
+        m2.getChanged().set(System.currentTimeMillis());
+      }
+    }
+,context().dispatcher());
   }
  else   unhandled(message);
 }

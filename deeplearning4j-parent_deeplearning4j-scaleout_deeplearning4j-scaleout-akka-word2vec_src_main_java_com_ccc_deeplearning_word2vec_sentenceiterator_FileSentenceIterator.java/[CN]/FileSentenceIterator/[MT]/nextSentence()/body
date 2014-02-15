@@ -19,7 +19,7 @@
   }
   if (ret == null) {
     if (!cache.isEmpty())     ret=cache.poll();
- else     throw new IllegalStateException("Ret cant be null");
+ else     return null;
   }
   return ret;
 }

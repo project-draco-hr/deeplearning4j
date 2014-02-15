@@ -2,24 +2,34 @@
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
-  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
-    private static final long serialVersionUID=5447027920163740307L;
-    @Override public Map<String,Double> buildMap(){
-      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
+  final Counter<String> totalWords=Util.parallelCounter();
+  getSentenceIter().reset();
+  final AtomicLong changed=new AtomicLong(System.currentTimeMillis());
+  ActorRef sentenceActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(new SentenceActor.SentenceActorCreator(this)).withDispatcher("akka.actor.worker-dispatcher")));
+  if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
+  int numSentences=0;
+  while (getSentenceIter().hasNext()) {
+    final String sentence=sentenceIter.nextSentence();
+    if (sentence != null) {
+      Future<Void> f=Futures.future(new Callable<Void>(){
+        @Override public Void call() throws Exception {
+          processSentence(sentence,totalWords);
+          return null;
+        }
+      }
+,trainingSystem.dispatcher());
+      f.onComplete(new OnComplete<Void>(){
+        @Override public void onComplete(        Throwable arg0,        Void arg1) throws Throwable {
+          if (arg0 != null)           throw arg0;
+          numSentencesProcessed++;
+          changed.set(System.currentTimeMillis());
+        }
+      }
+,trainingSystem.dispatcher());
     }
   }
-;
-  final Counter<String> totalWords=new Counter<String>(factory);
-  sentenceIter.reset();
-  final AtomicLong changed=new AtomicLong(System.currentTimeMillis());
-  ActorRef sentenceActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(new SentenceActor.SentenceActorCreator(this))));
-  if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
-  while (sentenceIter.hasNext()) {
-    final String sentence=sentenceIter.nextSentence();
-    sentenceActor.tell(new SentenceMessage(totalWords,sentence,changed),sentenceActor);
-  }
   boolean done=false;
-  long fiveMinutes=TimeUnit.MINUTES.toMillis(5);
+  long fiveMinutes=TimeUnit.MINUTES.toMillis(1);
   while (!done) {
     long curr=System.currentTimeMillis();
     long lastChanged=changed.get();

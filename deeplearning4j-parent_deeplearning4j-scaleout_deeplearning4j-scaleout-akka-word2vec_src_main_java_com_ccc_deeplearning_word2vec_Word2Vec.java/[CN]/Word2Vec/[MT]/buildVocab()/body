@@ -1,55 +1,25 @@
 {
   readStopWords();
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
-  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class)));
-  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
-    private static final long serialVersionUID=5447027920163740307L;
-    @Override public Map<String,Double> buildMap(){
-      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
-    }
-  }
-;
-  final Counter<String> rawVocab=new Counter<String>(factory);
+  final Counter<String> rawVocab=Util.parallelCounter();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger numSentences=new AtomicInteger(0);
   int queued=0;
-  while (sentenceIter.hasNext()) {
-    Future<Void> f=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        String sentence=sentenceIter.nextSentence();
-        Tokenizer t=tokenizerFactory.create(sentence);
-        List<String> tokens=new ArrayList<String>();
-        while (t.hasMoreTokens())         tokens.add(t.nextToken());
-        vocabActor.tell(new VocabMessage(rawVocab,tokens,stopWords,minWordFrequency,wordIndex,vocab,layerSize,semaphore),vocabActor);
-        numSentences.incrementAndGet();
-        if (numSentences.get() % 10000 == 0)         log.info("Sent " + numSentences);
-        return null;
-      }
-    }
-,trainingSystem.dispatcher());
-    f.onComplete(new OnComplete<Void>(){
-      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
-        if (arg0 != null)         throw arg0;
-      }
-    }
-,trainingSystem.dispatcher());
+  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,wordIndex,minWordFrequency,vocab,layerSize,stopWords,rawVocab,semaphore)));
+  while (getSentenceIter().hasNext()) {
+    String sentence=getSentenceIter().nextSentence();
+    if (sentence == null)     continue;
+    vocabActor.tell(sentence,vocabActor);
+    log.info("Sent " + queued);
     queued++;
-    if (queued % 100000 == 0) {
-      log.info("Queued " + queued + " sentences");
-      try {
-        Thread.sleep(15000);
-      }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    }
   }
   boolean done=false;
-  long fiveMinutes=TimeUnit.MINUTES.toMillis(5);
+  long fiveMinutes=TimeUnit.MINUTES.toMillis(1);
   while (!done) {
     long curr=System.currentTimeMillis();
     long lastChanged=semaphore.get();
     long diff=Math.abs(curr - lastChanged);
+    log.info("Waiting on setup...");
     if (diff >= fiveMinutes) {
       done=true;
     }
