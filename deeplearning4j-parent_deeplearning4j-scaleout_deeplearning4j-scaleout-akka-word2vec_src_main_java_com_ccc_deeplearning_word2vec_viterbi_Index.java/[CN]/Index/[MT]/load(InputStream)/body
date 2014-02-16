@@ -1,0 +1,10 @@
+{
+  try {
+    Index i=(Index)new ObjectInputStream(is).readObject();
+    this.indexes=i.indexes;
+    this.objects=i.objects;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
