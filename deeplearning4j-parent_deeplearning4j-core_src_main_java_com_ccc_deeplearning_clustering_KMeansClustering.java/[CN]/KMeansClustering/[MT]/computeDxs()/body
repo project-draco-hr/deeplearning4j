@@ -1,0 +1,15 @@
+{
+  DoubleMatrix dxs=new DoubleMatrix(this.initFeatures.size(),this.initFeatures.get(0).columns);
+  int sum=0;
+  DoubleMatrix features;
+  int nearestCentroidIndex;
+  DoubleMatrix nearestCentroid;
+  for (int i=0; i < this.initFeatures.size(); i++) {
+    features=this.initFeatures.get(i);
+    nearestCentroidIndex=this.nearestCentroid(features);
+    nearestCentroid=this.centroids.getRow(nearestCentroidIndex);
+    sum+=MatrixFunctions.pow(features.distance2(nearestCentroid),2);
+    dxs.put(i,sum);
+  }
+  return dxs;
+}
