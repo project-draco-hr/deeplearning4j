@@ -8,7 +8,7 @@
     features=this.initFeatures.get(i);
     nearestCentroidIndex=this.nearestCentroid(features);
     nearestCentroid=this.centroids.getRow(nearestCentroidIndex);
-    sum+=MatrixFunctions.pow(features.distance2(nearestCentroid),2);
+    sum+=MatrixFunctions.pow(getDistance(features,nearestCentroid),2);
     dxs.put(i,sum);
   }
   return dxs;

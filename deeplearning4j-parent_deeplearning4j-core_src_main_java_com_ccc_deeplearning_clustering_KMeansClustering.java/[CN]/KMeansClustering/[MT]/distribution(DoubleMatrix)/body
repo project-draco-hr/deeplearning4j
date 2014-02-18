@@ -6,7 +6,7 @@
   DoubleMatrix currentCentroid;
   for (int i=0; i < this.nbCluster; i++) {
     currentCentroid=this.centroids.getRow(i);
-    distribution.put(i,currentCentroid.distance2(features));
+    distribution.put(i,getDistance(currentCentroid,features));
   }
   return distribution;
 }
