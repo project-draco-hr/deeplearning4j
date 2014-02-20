@@ -1,0 +1,10 @@
+{
+  for (  Map.Entry<K,Counter<V>> entry : cMap.counterMap.entrySet()) {
+    K key=entry.getKey();
+    Counter<V> innerCounter=entry.getValue();
+    for (    Map.Entry<V,Double> innerEntry : innerCounter.entrySet()) {
+      V value=innerEntry.getKey();
+      incrementCount(key,value,innerEntry.getValue());
+    }
+  }
+}

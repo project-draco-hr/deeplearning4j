@@ -1,0 +1,10 @@
+{
+  try {
+    ObjectInputStream ois=new ObjectInputStream(is);
+    BaseNeuralNetwork loaded=(BaseNeuralNetwork)ois.readObject();
+    update(loaded);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

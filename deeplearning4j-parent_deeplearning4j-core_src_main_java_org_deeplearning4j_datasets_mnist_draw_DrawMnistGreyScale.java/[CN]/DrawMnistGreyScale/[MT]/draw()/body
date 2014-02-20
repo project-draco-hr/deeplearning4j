@@ -1,0 +1,8 @@
+{
+  frame=new JFrame(title);
+  frame.setVisible(true);
+  start();
+  frame.add(new JLabel(new ImageIcon(getImage())));
+  frame.pack();
+  frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+}

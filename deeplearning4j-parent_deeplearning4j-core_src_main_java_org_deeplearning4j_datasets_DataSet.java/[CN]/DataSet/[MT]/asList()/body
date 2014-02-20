@@ -1,0 +1,7 @@
+{
+  List<DataSet> list=new ArrayList<DataSet>(numExamples());
+  for (int i=0; i < numExamples(); i++) {
+    list.add(new DataSet(getFirst().getRow(i),getSecond().getRow(i)));
+  }
+  return list;
+}

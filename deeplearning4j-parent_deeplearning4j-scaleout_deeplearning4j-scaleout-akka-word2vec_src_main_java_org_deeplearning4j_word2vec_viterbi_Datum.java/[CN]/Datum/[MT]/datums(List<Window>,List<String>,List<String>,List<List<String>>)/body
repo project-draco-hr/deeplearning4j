@@ -1,0 +1,7 @@
+{
+  List<Datum> ret=new ArrayList<Datum>();
+  for (int i=0; i < windows.size(); i++) {
+    ret.add(create(windows.get(i),labels.get(i),previousLabels.get(i),features.get(i)));
+  }
+  return ret;
+}

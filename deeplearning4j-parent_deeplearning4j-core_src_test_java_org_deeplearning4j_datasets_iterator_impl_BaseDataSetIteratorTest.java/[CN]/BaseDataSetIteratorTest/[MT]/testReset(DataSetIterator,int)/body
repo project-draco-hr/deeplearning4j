@@ -1,0 +1,5 @@
+{
+  toTest.reset();
+  assertEquals(true,toTest.hasNext());
+  assertEquals(expectedCursorPosition,toTest.cursor());
+}

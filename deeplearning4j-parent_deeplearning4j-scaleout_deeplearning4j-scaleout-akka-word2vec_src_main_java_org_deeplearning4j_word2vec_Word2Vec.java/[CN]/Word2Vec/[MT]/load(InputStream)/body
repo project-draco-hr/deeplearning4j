@@ -1,0 +1,23 @@
+{
+  try {
+    ObjectInputStream ois=new ObjectInputStream(is);
+    Word2Vec vec=(Word2Vec)ois.readObject();
+    this.allWordsCount=vec.allWordsCount;
+    this.alpha=vec.alpha;
+    this.minWordFrequency=vec.minWordFrequency;
+    this.numSentencesProcessed=vec.numSentencesProcessed;
+    this.oob=vec.oob;
+    this.sample=vec.sample;
+    this.size=vec.size;
+    this.wordIndex=vec.wordIndex;
+    this.stopWords=vec.stopWords;
+    this.syn0=vec.syn0;
+    this.syn1=vec.syn1;
+    this.topNSize=vec.topNSize;
+    this.trainWordsCount=vec.trainWordsCount;
+    this.window=vec.window;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

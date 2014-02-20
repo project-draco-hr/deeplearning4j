@@ -1,0 +1,21 @@
+{
+  File ensureExists=new File("/tmp/MNIST");
+  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>();
+  if (!ensureExists.exists())   new MnistFetcher().downloadAndUntar();
+  MnistManager man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  int[][] image=man.readImage();
+  int[] imageExample=ArrayUtil.flatten(image);
+  for (int batch=0; batch < numBatches; batch++) {
+    double[][] examples=new double[batchSize][imageExample.length];
+    int[][] outcomeMatrix=new int[batchSize][10];
+    for (int i=1 + batch; i < batchSize + 1 + batch; i++) {
+      man.setCurrent(i);
+      double[] currExample=ArrayUtil.flatten(ArrayUtil.toDouble(man.readImage()));
+      examples[i - 1 - batch]=currExample;
+      outcomeMatrix[i - 1 - batch]=ArrayUtil.toOutcomeArray(man.readLabel(),10);
+    }
+    DoubleMatrix training=new DoubleMatrix(examples);
+    ret.add(new Pair<>(training,MatrixUtil.toMatrix(outcomeMatrix)));
+  }
+  return ret;
+}

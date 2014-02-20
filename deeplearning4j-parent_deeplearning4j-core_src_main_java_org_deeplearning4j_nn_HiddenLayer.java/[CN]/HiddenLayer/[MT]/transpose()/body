@@ -1,0 +1,11 @@
+{
+  HiddenLayer layer=new HiddenLayer();
+  layer.b=b.dup();
+  layer.W=W.transpose();
+  layer.input=input.transpose();
+  layer.activationFunction=activationFunction;
+  layer.nOut=nIn;
+  layer.nIn=nOut;
+  layer.rng=rng;
+  return layer;
+}

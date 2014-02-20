@@ -1,0 +1,26 @@
+{
+  if (message instanceof String) {
+    String sentence=message.toString();
+    Tokenizer t=tokenizer.create(sentence);
+    List<String> tokens=new ArrayList<String>();
+    while (t.hasMoreTokens())     tokens.add(t.nextToken());
+    getSelf().tell(tokens,getSelf());
+  }
+ else   if (message instanceof Collection) {
+    Collection<String> tokens=(Collection<String>)message;
+    for (    String token : tokens) {
+      if (stopWords.contains(token))       token="STOP";
+      rawVocab.incrementCount(token,1.0);
+      if (!Util.matchesAnyStopWord(stopWords,token)) {
+        if (!vocab.containsKey(token)) {
+          VocabWord word=new VocabWord(rawVocab.getCount(token),layerSize);
+          word.setIndex(vocab.size());
+          vocab.put(token,word);
+          wordIndex.add(token);
+        }
+      }
+    }
+    lastUpdate.getAndSet(System.currentTimeMillis());
+  }
+ else   unhandled(message);
+}

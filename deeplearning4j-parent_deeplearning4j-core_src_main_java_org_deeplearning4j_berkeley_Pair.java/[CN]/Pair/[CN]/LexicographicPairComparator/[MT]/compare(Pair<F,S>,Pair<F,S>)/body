@@ -1,0 +1,5 @@
+{
+  int firstCompare=firstComparator.compare(pair1.getFirst(),pair2.getFirst());
+  if (firstCompare != 0)   return firstCompare;
+  return secondComparator.compare(pair1.getSecond(),pair2.getSecond());
+}

@@ -1,0 +1,4 @@
+{
+  List<Window> windows=allWindowsForAllSentences();
+  return toLabelMatrix(labels,windows);
+}

@@ -1,0 +1,19 @@
+{
+  if (file.exists())   file.delete();
+  try (DataOutputStream dataOutputStream=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))){
+    dataOutputStream.writeInt(vec.getVocab().size());
+    dataOutputStream.writeInt(vec.getLayerSize());
+    for (int i=0; i < vec.getVocab().size(); i++) {
+      String word=vec.getWordIndex().get(i).toString();
+      dataOutputStream.writeUTF(word);
+      vec.getVocab().get(word).write(dataOutputStream);
+    }
+    vec.getSyn0().out(dataOutputStream);
+    vec.getSyn1().out(dataOutputStream);
+    dataOutputStream.flush();
+    dataOutputStream.close();
+  }
+ catch (  IOException e) {
+    log.error("Unable to save model",e);
+  }
+}

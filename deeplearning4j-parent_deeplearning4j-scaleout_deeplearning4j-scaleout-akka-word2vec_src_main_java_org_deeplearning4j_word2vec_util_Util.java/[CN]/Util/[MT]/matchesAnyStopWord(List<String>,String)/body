@@ -1,0 +1,4 @@
+{
+  for (  String s : stopWords)   if (s.equalsIgnoreCase(word))   return true;
+  return false;
+}

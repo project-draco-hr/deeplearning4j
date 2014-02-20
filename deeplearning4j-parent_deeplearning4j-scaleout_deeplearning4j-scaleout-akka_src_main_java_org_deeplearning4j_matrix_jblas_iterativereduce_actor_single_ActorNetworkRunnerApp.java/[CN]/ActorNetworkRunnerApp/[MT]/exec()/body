@@ -1,0 +1,35 @@
+{
+  if (type != null && type.equals("worker")) {
+    log.info("Initializing conf from zookeeper at " + host);
+    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
+    Conf conf=retriever.retreive();
+    String address=conf.getMasterUrl();
+    runner=new ActorNetworkRunner(type,address);
+    runner.setup(conf);
+    retriever.close();
+  }
+ else {
+    Conf conf=new Conf();
+    getDataSet();
+    conf.setMultiLayerClazz((Class<? extends BaseMultiLayerNetwork>)Class.forName(getClassForAlgorithm()));
+    conf.setSplit(10);
+    if (inputs < 1)     conf.setnIn(iter.inputColumns());
+ else     conf.setnIn(inputs);
+    if (outputs < 1)     conf.setnOut(iter.totalOutcomes());
+ else     conf.setnOut(outputs);
+    conf.setPretrainEpochs(pretrainEpochs);
+    conf.setSeed(rngSeed);
+    conf.setPretrainLearningRate(pretrainLearningRate);
+    conf.setL2(l2);
+    conf.setMomentum(momentum);
+    conf.setCorruptionLevel(corruptionLevel);
+    conf.setSplit(split);
+    conf.setK(k);
+    runner=new ActorNetworkRunner("master",iter);
+    runner.setup(conf);
+    conf.setMasterUrl(runner.getMasterAddress().toString());
+    ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master",host,2181);
+    reg.register();
+    reg.close();
+  }
+}

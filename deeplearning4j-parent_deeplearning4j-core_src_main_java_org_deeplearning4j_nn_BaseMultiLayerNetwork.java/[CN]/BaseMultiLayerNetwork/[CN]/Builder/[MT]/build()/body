@@ -1,0 +1,31 @@
+{
+  try {
+    ret=(E)clazz.newInstance();
+    ret.setInput(this.input);
+    ret.setnOuts(this.nOuts);
+    ret.setnIns(this.nIns);
+    ret.setLabels(this.labels);
+    ret.setHiddenLayerSizes(this.hiddenLayerSizes);
+    ret.setnLayers(this.nLayers);
+    ret.setRng(this.rng);
+    ret.setShouldBackProp(this.backProp);
+    ret.setSigmoidLayers(new HiddenLayer[ret.getnLayers()]);
+    ret.setToDecode(decode);
+    ret.setInput(this.input);
+    ret.setMomentum(momentum);
+    ret.setLabels(labels);
+    ret.setFanIn(fanIn);
+    ret.setSparsity(sparsity);
+    ret.setRenderWeightsEveryNEpochs(renderWeithsEveryNEpochs);
+    ret.setL2(l2);
+    ret.setForceNumEpochs(shouldForceEpochs);
+    ret.setUseRegularization(useRegularization);
+    if (activation != null)     ret.setActivation(activation);
+    if (dist != null)     ret.setDist(dist);
+    ret.getWeightTransforms().putAll(weightTransforms);
+    return ret;
+  }
+ catch (  InstantiationException|IllegalAccessException e) {
+    throw new RuntimeException(e);
+  }
+}

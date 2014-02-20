@@ -1,0 +1,9 @@
+{
+  Integer index=indexes.get(o);
+  if (index == null) {
+    return -1;
+  }
+ else {
+    return index;
+  }
+}

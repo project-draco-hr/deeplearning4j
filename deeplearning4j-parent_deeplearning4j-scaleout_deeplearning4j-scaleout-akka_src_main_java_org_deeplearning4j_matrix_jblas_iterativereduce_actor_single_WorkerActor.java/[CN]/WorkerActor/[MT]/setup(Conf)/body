@@ -1,0 +1,5 @@
+{
+  super.setup(conf);
+  RandomGenerator rng=new MersenneTwister(conf.getSeed());
+  network=new BaseNeuralNetwork.Builder<>().numberOfVisible(numVisible).numHidden(numHidden).withRandom(rng).withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).build();
+}

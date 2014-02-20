@@ -1,0 +1,25 @@
+{
+  String ret=null;
+  if (!cache.isEmpty()) {
+    ret=cache.poll();
+    if (preProcessor != null)     ret=preProcessor.preProcess(ret);
+    return ret;
+  }
+ else {
+    if (currLineIterator == null || !currLineIterator.hasNext())     nextLineIter();
+    for (int i=0; i < 100000; i++) {
+      if (currLineIterator != null && currLineIterator.hasNext())       cache.add(currLineIterator.nextLine());
+ else       break;
+    }
+    if (!cache.isEmpty()) {
+      ret=cache.poll();
+      if (preProcessor != null)       ret=preProcessor.preProcess(ret);
+      return ret;
+    }
+  }
+  if (ret == null) {
+    if (!cache.isEmpty())     ret=cache.poll();
+ else     return null;
+  }
+  return ret;
+}

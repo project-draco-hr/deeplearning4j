@@ -1,0 +1,11 @@
+{
+switch (algorithm) {
+case "sda":
+    return "org.deeplearning4j.sda.StackedDenoisingAutoEncoder";
+case "dbn":
+  return "org.deeplearning4j.dbn.DBN";
+case "cdbn":
+return "org.deeplearning4j.dbn.CDBN";
+}
+return null;
+}

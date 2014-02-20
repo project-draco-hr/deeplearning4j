@@ -1,0 +1,16 @@
+{
+  conf=new Conf();
+  train_X_arr=new double[][]{{1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,1,0,1,1,1,0,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,1,1,1,1,1,1,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,0,1,0,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,1,0,1,1,1},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1,1}};
+  train_Y_arr=new double[][]{{1,0},{1,0},{1,0},{1,0},{1,0},{0,1},{0,1},{0,1},{0,1},{0,1}};
+  train_X_matrix=new DoubleMatrix(train_X_arr);
+  train_Y_matrix=new DoubleMatrix(train_Y_arr);
+  conf.setPretrainEpochs(100);
+  conf.setFinetuneEpochs(100);
+  conf.setLayerSizes(hidden_layer_sizes_arr);
+  conf.setnIn(n_ins);
+  conf.setSplit(1);
+  conf.setFinetuneEpochs(finetune_epochs);
+  conf.setFinetuneLearningRate(finetune_lr);
+  conf.setnOut(2);
+  conf.setMultiLayerClazz(StackedDenoisingAutoEncoder.class);
+}

@@ -1,0 +1,5 @@
+{
+  fetcher.fetch(expectedBatchSize);
+  assumeNotNull(fetcher.next());
+  assertEquals(expectedBatchSize,fetcher.next().getFirst().rows);
+}

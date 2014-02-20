@@ -1,0 +1,12 @@
+{
+  List<String> validWords=new ArrayList<String>();
+  for (  String word : vocab) {
+    validWords.add(word);
+  }
+  DoubleMatrix m1=new DoubleMatrix(validWords.size(),vec.getLayerSize());
+  for (int i=0; i < validWords.size(); i++) {
+    if (d.getWordCounts().getCount(validWords.get(i)) > 0)     m1.putRow(i,d.getVectorForWord(validWords.get(i)));
+ else     m1.putRow(i,DoubleMatrix.zeros(vec.getLayerSize()));
+  }
+  return m1;
+}

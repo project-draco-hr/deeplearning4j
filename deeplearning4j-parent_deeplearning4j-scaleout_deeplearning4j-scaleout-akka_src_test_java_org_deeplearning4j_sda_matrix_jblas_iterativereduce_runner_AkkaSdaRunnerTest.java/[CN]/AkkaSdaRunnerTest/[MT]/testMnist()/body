@@ -1,0 +1,21 @@
+{
+  MnistDataSetIterator fetcher=new MnistDataSetIterator(60,600);
+  runner=new ActorNetworkRunner("master",fetcher);
+  conf.setPretrainEpochs(100);
+  conf.setSplit(10);
+  conf.setFinetuneEpochs(100);
+  conf.setLayerSizes(hidden_layer_sizes_arr);
+  conf.setnIn(784);
+  conf.setSplit(1);
+  conf.setFinetuneEpochs(finetune_epochs);
+  conf.setFinetuneLearningRate(finetune_lr);
+  conf.setnOut(10);
+  conf.setMultiLayerClazz(StackedDenoisingAutoEncoder.class);
+  conf.setDeepLearningParams(Conf.getDefaultDenoisingAutoEncoderParams());
+  runner.setup(conf);
+  Thread.sleep(10000);
+  ActorNetworkRunner worker=new ActorNetworkRunner("worker",runner.getMasterAddress().toString());
+  worker.setup(conf);
+  DataSet first=fetcher.next();
+  runner.train(first.getFirst(),first.getSecond());
+}

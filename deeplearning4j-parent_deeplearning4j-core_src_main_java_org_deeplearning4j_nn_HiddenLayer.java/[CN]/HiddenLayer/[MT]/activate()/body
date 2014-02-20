@@ -1,0 +1,3 @@
+{
+  return getActivationFunction().apply(getInput().mmul(getW()).addRowVector(getB()));
+}

@@ -1,0 +1,5 @@
+{
+  StringBuilder builder=new StringBuilder();
+  builder.append("===========INPUT===================\n").append(getFirst().toString().replaceAll(";","\n")).append("\n=================OUTPUT==================\n").append(getSecond().toString().replaceAll(";","\n"));
+  return builder.toString();
+}

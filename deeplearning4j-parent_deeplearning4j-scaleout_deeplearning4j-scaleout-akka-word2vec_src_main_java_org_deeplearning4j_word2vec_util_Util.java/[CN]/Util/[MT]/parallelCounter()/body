@@ -1,0 +1,11 @@
+{
+  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
+    private static final long serialVersionUID=5447027920163740307L;
+    @Override public Map<String,Double> buildMap(){
+      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
+    }
+  }
+;
+  Counter<String> totalWords=new Counter<String>(factory);
+  return totalWords;
+}

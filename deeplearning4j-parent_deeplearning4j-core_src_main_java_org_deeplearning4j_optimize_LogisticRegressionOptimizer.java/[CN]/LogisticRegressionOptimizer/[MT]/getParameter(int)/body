@@ -1,0 +1,4 @@
+{
+  if (index >= logReg.getW().length)   return logReg.getB().get(index - logReg.getW().length);
+  return logReg.getW().get(index);
+}

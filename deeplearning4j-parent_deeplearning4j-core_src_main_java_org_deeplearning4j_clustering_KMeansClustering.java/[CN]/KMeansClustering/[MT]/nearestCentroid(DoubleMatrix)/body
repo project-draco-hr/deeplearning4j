@@ -1,0 +1,17 @@
+{
+  Integer nearestCentroidIndex=0;
+  Double minDistance=Double.MAX_VALUE;
+  DoubleMatrix currentCentroid;
+  Double currentDistance;
+  for (int i=0; i < this.centroids.rows; i++) {
+    currentCentroid=this.centroids.getRow(i);
+    if (currentCentroid != null) {
+      currentDistance=getDistance(currentCentroid,features);
+      if (currentDistance < minDistance) {
+        minDistance=currentDistance;
+        nearestCentroidIndex=i;
+      }
+    }
+  }
+  return nearestCentroidIndex;
+}

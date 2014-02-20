@@ -1,0 +1,13 @@
+{
+  double maxCount=Double.NEGATIVE_INFINITY;
+  Pair<K,V> maxKey=null;
+  for (  Map.Entry<K,Counter<V>> entry : counterMap.entrySet()) {
+    Counter<V> counter=entry.getValue();
+    V localMax=counter.argMax();
+    if (counter.getCount(localMax) > maxCount || maxKey == null) {
+      maxKey=new Pair<K,V>(entry.getKey(),localMax);
+      maxCount=counter.getCount(localMax);
+    }
+  }
+  return maxKey;
+}

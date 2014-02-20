@@ -1,0 +1,14 @@
+{
+  super(s);
+  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  JPanel main=new JPanel();
+  main.setBorder(BorderFactory.createLineBorder(Color.black));
+  main.setLayout(new GridLayout(1,3));
+  input=new InputPanel();
+  output=new OutputPanel();
+  options=new OptionsPanel();
+  add(main);
+  main.add(input);
+  main.add(output);
+  main.add(options);
+}

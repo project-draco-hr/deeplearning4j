@@ -1,0 +1,6 @@
+{
+  List<DataSet> ret=new ArrayList<>();
+  ret.add(new DataSet(combine(v1,v2),outcome.dup()));
+  ret.add(new DataSet(combine(v2,v1),outcome.dup()));
+  return ret;
+}

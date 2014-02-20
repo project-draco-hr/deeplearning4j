@@ -1,0 +1,7 @@
+{
+  LogisticRegressionGradient grad=logReg.getGradient(lr);
+  for (int i=0; i < buffer.length; i++) {
+    if (i < logReg.getW().length)     buffer[i]=grad.getwGradient().get(i);
+ else     buffer[i]=grad.getbGradient().get(i - logReg.getW().length);
+  }
+}

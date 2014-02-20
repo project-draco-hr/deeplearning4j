@@ -1,0 +1,10 @@
+{
+  if (index >= network.W.length) {
+    int i=getAdjustedIndex(index);
+    if (index >= network.vBias.length + network.W.length) {
+      return network.hBias.get(i);
+    }
+ else     return network.vBias.get(i);
+  }
+ else   return network.W.get(index);
+}

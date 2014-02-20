@@ -1,0 +1,6 @@
+{
+  DoubleMatrix max=input.rowMaxs();
+  MatrixFunctions.expi(input.subiColumnVector(max));
+  DoubleMatrix sum=input.rowSums();
+  return input.diviColumnVector(sum);
+}

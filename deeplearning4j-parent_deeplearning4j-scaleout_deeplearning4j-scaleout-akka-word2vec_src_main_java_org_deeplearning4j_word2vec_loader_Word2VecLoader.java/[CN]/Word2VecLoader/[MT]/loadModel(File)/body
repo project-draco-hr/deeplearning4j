@@ -1,0 +1,6 @@
+{
+  log.info("Loading model from " + file.getAbsolutePath());
+  Word2Vec ret=new Word2Vec();
+  ret.load(new BufferedInputStream(new FileInputStream(file)));
+  return ret;
+}

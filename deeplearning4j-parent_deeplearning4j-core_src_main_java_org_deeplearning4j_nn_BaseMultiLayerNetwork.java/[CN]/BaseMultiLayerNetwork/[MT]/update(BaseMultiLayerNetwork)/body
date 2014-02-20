@@ -1,0 +1,32 @@
+{
+  this.layers=new NeuralNetwork[network.layers.length];
+  for (int i=0; i < layers.length; i++) {
+    this.layers[i]=network.layers[i].clone();
+  }
+  this.hiddenLayerSizes=network.hiddenLayerSizes;
+  this.logLayer=network.logLayer.clone();
+  this.nIns=network.nIns;
+  this.nLayers=network.nLayers;
+  this.nOuts=network.nOuts;
+  this.rng=network.rng;
+  this.dist=network.dist;
+  this.activation=network.activation;
+  this.useRegularization=network.useRegularization;
+  this.columnMeans=network.columnMeans;
+  this.columnStds=network.columnStds;
+  this.columnSums=network.columnSums;
+  this.errorTolerance=network.errorTolerance;
+  this.forceNumEpochs=network.forceNumEpochs;
+  this.input=network.input;
+  this.l2=network.l2;
+  this.fanIn=network.fanIn;
+  this.labels=network.labels;
+  this.momentum=network.momentum;
+  this.learningRateUpdate=network.learningRateUpdate;
+  this.shouldBackProp=network.shouldBackProp;
+  this.weightTransforms=network.weightTransforms;
+  this.sparsity=network.sparsity;
+  this.toDecode=network.toDecode;
+  this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
+  for (int i=0; i < sigmoidLayers.length; i++)   this.sigmoidLayers[i]=network.sigmoidLayers[i].clone();
+}
