@@ -1,6 +1,6 @@
 {
   ret=new LogisticRegression(input,nIn,nOut);
-  ret.W=W;
-  ret.b=b;
+  if (W != null)   ret.W=W;
+  if (b != null)   ret.b=b;
   return ret;
 }

@@ -1,5 +1,7 @@
 {
-  Pair<DoubleMatrix,DoubleMatrix> pair=DeepLearningTest.getMnistExample(1);
+  DataSetFetcher fetcher=getFetcher();
+  fetcher.fetch(10);
+  Pair<DoubleMatrix,DoubleMatrix> pair=fetcher.next();
   int inputColumns=pair.getFirst().columns;
   int outputColumns=10;
   testFetcher(fetcher,inputColumns,outputColumns);

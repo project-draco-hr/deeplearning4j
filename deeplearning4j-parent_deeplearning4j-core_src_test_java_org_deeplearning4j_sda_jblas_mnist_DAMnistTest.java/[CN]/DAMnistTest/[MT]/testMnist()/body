@@ -8,7 +8,7 @@
   DoubleMatrix hiddenBias=da.gethBias();
   DoubleMatrix vBias=da.getvBias();
   int numMistakes=0;
-  da.trainTillConverge(first.getFirst(),0.1,0.6);
+  da.trainTillConvergence(first.getFirst(),0.1,0.6);
   log.info(String.valueOf(da.optimizer.getErrors()));
   DoubleMatrix reconstruct=da.reconstruct(first.getFirst());
   for (int i=0; i < first.numExamples(); i++) {

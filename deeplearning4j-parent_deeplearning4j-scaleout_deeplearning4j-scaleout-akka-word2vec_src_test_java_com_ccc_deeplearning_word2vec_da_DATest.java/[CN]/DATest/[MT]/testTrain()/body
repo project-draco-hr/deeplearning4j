@@ -37,7 +37,7 @@
   List<Window> windows=Windows.windows(example);
   StringBuffer errors=new StringBuffer();
   for (int i=0; i < 2000; i++) {
-    r.trainTillConverge(input,0.1,corruption);
+    r.trainTillConvergence(input,0.1,corruption);
     double entropy=r.negativeLoglikelihood(corruption);
     errors.append(i + "," + entropy+ "\n");
     log.info("cross entropy " + entropy);
