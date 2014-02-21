@@ -1,0 +1,40 @@
+{
+  if (message instanceof DistributedPubSubMediator.SubscribeAck) {
+    log.info("Susbcribed");
+  }
+ else   if (message instanceof ResetMessage) {
+    iter.reset();
+    numTimesReset++;
+  }
+ else   if (message instanceof FinetuneMessage) {
+    FinetuneMessage m=(FinetuneMessage)message;
+    UpdateableImpl result=(UpdateableImpl)m.getUpdateable();
+    final UpdateableImpl save=SerializationUtils.clone(result);
+    Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
+      @Override public UpdateableImpl call() throws Exception {
+        mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
+        return save;
+      }
+    }
+,context().dispatcher());
+    f.onComplete(new OnComplete<UpdateableImpl>(){
+      @Override public void onComplete(      Throwable arg0,      UpdateableImpl arg1) throws Throwable {
+        if (arg0 != null)         throw arg0;
+      }
+    }
+,context().dispatcher());
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,result),mediator);
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    if (iter.hasNext())     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
+  }
+ else   if (iter.hasNext()) {
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
+  }
+ else   unhandled(message);
+  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,iter),mediator);
+}

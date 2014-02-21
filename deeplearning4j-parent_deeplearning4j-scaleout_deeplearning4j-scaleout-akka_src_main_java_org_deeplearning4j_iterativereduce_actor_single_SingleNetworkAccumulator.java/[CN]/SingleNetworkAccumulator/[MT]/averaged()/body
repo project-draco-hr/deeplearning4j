@@ -1,0 +1,10 @@
+{
+  if (workers.isEmpty())   return null;
+  BaseNeuralNetwork first=workers.get(0);
+  BaseNeuralNetwork ret=first;
+  for (int worker=1; worker < workers.size(); worker++) {
+    BaseNeuralNetwork network=workers.get(worker);
+    first.merge(network,workers.size());
+  }
+  return ret;
+}

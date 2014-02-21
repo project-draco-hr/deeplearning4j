@@ -1,0 +1,11 @@
+{
+switch (algorithm) {
+case "da":
+    return "org.deeplearning4j.sda.DenoisingAutoEncoder";
+case "rbm":
+  return "org.deeplearning4j.rbm.RBM";
+case "crbm":
+return "org.deeplearning4j.rbm.CRBM";
+}
+return null;
+}
