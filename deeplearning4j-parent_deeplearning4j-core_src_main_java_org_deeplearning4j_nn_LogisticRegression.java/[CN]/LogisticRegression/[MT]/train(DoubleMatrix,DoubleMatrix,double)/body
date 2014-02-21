@@ -1,5 +1,5 @@
 {
-  ensureValidOutcomeMatrix(y);
+  MatrixUtil.complainAboutMissMatchedMatrices(x,y);
   this.input=x;
   this.labels=y;
   LogisticRegressionGradient gradient=getGradient(lr);

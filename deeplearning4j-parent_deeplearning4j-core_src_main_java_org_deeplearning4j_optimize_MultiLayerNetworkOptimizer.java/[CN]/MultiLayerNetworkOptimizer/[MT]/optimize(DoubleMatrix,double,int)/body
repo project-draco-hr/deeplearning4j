@@ -1,5 +1,4 @@
 {
-  MatrixUtil.ensureValidOutcomeMatrix(labels);
   network.feedForward(network.getInput());
   DoubleMatrix layerInput=network.getSigmoidLayers()[network.getSigmoidLayers().length - 1].sample_h_given_v();
   network.getLogLayer().setInput(layerInput);
@@ -7,11 +6,7 @@
   if (layerInput.rows != labels.rows) {
     throw new IllegalStateException("Labels not equal to input");
   }
-  if (!network.isForceNumEpochs()) {
-    LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(network.getLogLayer(),lr);
-    NonZeroStoppingConjugateGradient g=new NonZeroStoppingConjugateGradient(opt);
-    g.optimize(epochs);
-  }
+  if (!network.isForceNumEpochs())   network.getLogLayer().trainTillConvergence(lr,epochs);
  else {
     log.info("Training for " + epochs + " epochs");
     for (int i=0; i < epochs; i++) {

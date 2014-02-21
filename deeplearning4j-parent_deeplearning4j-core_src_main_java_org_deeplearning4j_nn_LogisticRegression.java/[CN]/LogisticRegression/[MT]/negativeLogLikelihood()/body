@@ -1,4 +1,5 @@
 {
+  MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
   DoubleMatrix sigAct=softmax(input.mmul(W).addRowVector(b));
   if (useRegularization) {
     double reg=(2 / l2) * MatrixFunctions.pow(this.W,2).sum();
