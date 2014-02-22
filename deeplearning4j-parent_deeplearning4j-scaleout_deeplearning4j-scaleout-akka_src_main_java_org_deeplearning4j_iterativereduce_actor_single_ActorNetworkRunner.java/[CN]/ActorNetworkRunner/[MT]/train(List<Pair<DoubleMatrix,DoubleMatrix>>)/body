@@ -2,7 +2,7 @@
   this.samples=list;
   log.info("Publishing to results for training");
   try {
-    Thread.sleep(15000);
+    Thread.sleep(30000);
   }
  catch (  InterruptedException e1) {
     Thread.currentThread().interrupt();

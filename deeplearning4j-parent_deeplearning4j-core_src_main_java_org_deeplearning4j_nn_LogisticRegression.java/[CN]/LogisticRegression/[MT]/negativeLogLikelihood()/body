@@ -5,5 +5,7 @@
     double reg=(2 / l2) * MatrixFunctions.pow(this.W,2).sum();
     return -labels.mul(log(sigAct)).add(oneMinus(labels).mul(log(oneMinus(sigAct)))).columnSums().mean() + reg;
   }
-  return -labels.mul(log(sigAct)).add(oneMinus(labels).mul(log(oneMinus(sigAct)))).columnSums().mean();
+ else {
+    return -labels.mul(log(sigAct)).add(oneMinus(labels).mul(log(oneMinus(sigAct)))).columnSums().mean();
+  }
 }

@@ -1,11 +1,14 @@
 {
   log.info("Publishing to results for training");
   try {
-    Thread.sleep(15000);
+    log.info("Waiting for cluster to go up...");
+    Thread.sleep(30000);
+    log.info("Done waiting");
   }
  catch (  InterruptedException e1) {
     Thread.currentThread().interrupt();
   }
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,list),mediator);
+  log.info("Published results");
 }
