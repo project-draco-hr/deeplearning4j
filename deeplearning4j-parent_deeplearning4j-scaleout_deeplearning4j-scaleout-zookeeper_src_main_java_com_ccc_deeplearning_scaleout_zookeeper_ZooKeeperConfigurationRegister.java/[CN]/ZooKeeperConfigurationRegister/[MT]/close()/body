@@ -1,8 +1,0 @@
-{
-  try {
-    zk.close();
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
-  }
-}

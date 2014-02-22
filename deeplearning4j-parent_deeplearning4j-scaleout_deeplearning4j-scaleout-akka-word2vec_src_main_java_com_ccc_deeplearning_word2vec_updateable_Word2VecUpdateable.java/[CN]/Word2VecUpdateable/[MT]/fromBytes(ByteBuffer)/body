@@ -1,5 +1,0 @@
-{
-  wrapped=new Word2VecMultiLayerNetwork.Builder().withClazz(clazz).buildEmpty();
-  DataInputStream dis=new DataInputStream(new BufferedInputStream(new ByteArrayInputStream(b.array())));
-  wrapped.load(dis);
-}

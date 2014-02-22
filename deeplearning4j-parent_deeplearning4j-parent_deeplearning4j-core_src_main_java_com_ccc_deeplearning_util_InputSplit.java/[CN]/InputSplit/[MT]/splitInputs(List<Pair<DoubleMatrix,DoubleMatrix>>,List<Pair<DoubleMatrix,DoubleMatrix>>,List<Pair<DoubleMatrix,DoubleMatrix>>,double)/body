@@ -1,5 +1,0 @@
-{
-  Random rand=new Random();
-  for (  Pair<DoubleMatrix,DoubleMatrix> pair : pairs)   if (rand.nextDouble() <= split)   train.add(pair);
- else   test.add(pair);
-}

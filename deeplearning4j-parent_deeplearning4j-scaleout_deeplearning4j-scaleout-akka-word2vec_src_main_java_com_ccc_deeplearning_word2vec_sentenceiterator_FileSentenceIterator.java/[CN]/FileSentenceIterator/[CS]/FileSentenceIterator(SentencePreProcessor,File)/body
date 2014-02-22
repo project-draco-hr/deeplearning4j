@@ -1,6 +1,0 @@
-{
-  super(preProcessor);
-  this.dir=dir;
-  cache=new java.util.concurrent.ConcurrentLinkedDeque<>();
-  fileIterator=FileUtils.iterateFiles(dir,null,true);
-}

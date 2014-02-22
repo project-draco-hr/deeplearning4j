@@ -1,6 +1,0 @@
-{
-  Viterbi v=new Viterbi();
-  log.info("Loading viterbi model...");
-  v.load(new BufferedInputStream(new FileInputStream(new File(path))));
-  return v;
-}

@@ -1,4 +1,0 @@
-{
-  BaseMultiLayerNetwork m=runner.train(this.train_X_matrix,this.train_Y_matrix);
-  log.info(m.getLogLayer().getW().toString());
-}

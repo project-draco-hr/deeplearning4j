@@ -1,7 +1,0 @@
-{
-  final int prime=31;
-  int result=1;
-  result=prime * result + ((bGradient == null) ? 0 : bGradient.hashCode());
-  result=prime * result + ((wGradient == null) ? 0 : wGradient.hashCode());
-  return result;
-}

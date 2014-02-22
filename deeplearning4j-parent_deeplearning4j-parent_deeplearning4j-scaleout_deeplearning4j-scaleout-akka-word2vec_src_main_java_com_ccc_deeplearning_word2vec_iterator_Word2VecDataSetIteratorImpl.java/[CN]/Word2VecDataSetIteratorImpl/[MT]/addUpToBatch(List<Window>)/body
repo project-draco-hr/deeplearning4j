@@ -1,6 +1,0 @@
-{
-  for (int i=0; i < batchSize; i++) {
-    Window w=windows.remove(0);
-    addTo.add(w);
-  }
-}

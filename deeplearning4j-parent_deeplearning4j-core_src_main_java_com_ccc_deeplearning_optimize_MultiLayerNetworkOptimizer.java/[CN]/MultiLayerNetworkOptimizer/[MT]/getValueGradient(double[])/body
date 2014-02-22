@@ -1,9 +1,0 @@
-{
-  DoubleMatrix p_y_given_x=softmax(network.getLogLayer().getInput().mmul(network.getLogLayer().getW()).addRowVector(network.getLogLayer().getB()));
-  DoubleMatrix dy=network.getLogLayer().getLabels().sub(p_y_given_x);
-  int idx=0;
-  DoubleMatrix weightGradient=network.getLogLayer().getInput().transpose().mmul(dy).mul(lr);
-  DoubleMatrix biasGradient=dy.columnMeans().mul(lr);
-  for (int i=0; i < weightGradient.length; i++)   buffer[idx++]=weightGradient.get(i);
-  for (int i=0; i < biasGradient.length; i++)   buffer[idx++]=biasGradient.get(i);
-}

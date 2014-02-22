@@ -1,8 +1,0 @@
-{
-  while (iter.hasNext()) {
-    List<Window> next=iter.next();
-    DoubleMatrix labelMatrix=WordConverter.toLabelMatrix(labels,next);
-    network.labels=labelMatrix;
-    super.optimize(labelMatrix,lr,epochs);
-  }
-}

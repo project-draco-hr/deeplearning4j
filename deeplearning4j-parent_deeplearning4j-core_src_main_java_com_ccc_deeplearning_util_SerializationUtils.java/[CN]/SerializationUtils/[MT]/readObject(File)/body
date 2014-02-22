@@ -1,9 +1,0 @@
-{
-  try {
-    ObjectInputStream ois=new ObjectInputStream(FileUtils.openInputStream(file));
-    return (T)ois.readObject();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

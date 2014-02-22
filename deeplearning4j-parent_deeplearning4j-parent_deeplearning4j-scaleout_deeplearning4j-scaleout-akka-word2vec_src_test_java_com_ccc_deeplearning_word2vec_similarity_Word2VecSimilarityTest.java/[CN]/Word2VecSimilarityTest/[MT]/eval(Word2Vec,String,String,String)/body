@@ -1,8 +1,0 @@
-{
-  Word2VecSimilarity sim2=new Word2VecSimilarity(good1,good2,vec);
-  sim2.calc();
-  Word2VecSimilarity badDistance2=new Word2VecSimilarity(good1,bad,vec);
-  badDistance2.calc();
-  log.info("Good " + sim2.getDistance() + " bad "+ badDistance2.getDistance());
-  assertEquals(true,sim2.getDistance() < badDistance2.getDistance());
-}

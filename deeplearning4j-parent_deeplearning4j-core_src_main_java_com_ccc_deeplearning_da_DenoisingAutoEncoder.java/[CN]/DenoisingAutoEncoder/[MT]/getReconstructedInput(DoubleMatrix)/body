@@ -1,3 +1,0 @@
-{
-  return sigmoid(y.mmul(W.transpose()).addRowVector(vBias));
-}

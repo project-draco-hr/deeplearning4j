@@ -1,7 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(window.size(),labelIndex.size());
-  for (int i=0; i < ret.rows; i++) {
-    ret.putRow(i,MatrixUtil.toOutcomeVector(labelIndex.indexOf(window.get(i).getLabel()),labelIndex.size()));
-  }
-  return ret;
-}

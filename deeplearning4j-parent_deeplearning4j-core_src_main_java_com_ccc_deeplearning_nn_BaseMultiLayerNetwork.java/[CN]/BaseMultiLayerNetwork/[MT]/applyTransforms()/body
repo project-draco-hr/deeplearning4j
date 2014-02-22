@@ -1,8 +1,0 @@
-{
-  if (layers == null || layers.length < 1) {
-    throw new IllegalStateException("Layers not initialized");
-  }
-  for (int i=0; i < layers.length; i++) {
-    if (weightTransforms.containsKey(i))     layers[i].setW(weightTransforms.get(i).apply(layers[i].getW()));
-  }
-}

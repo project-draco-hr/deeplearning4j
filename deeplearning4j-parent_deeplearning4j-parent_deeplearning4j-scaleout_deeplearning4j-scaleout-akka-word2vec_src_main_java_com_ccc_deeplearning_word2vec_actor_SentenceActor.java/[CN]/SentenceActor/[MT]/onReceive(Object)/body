@@ -1,8 +1,0 @@
-{
-  if (message instanceof SentenceMessage) {
-    SentenceMessage m2=(SentenceMessage)message;
-    vec.processSentence(m2.getSentence(),m2.getCounter());
-    m2.getChanged().set(System.currentTimeMillis());
-  }
- else   unhandled(message);
-}

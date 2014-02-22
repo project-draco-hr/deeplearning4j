@@ -1,6 +1,0 @@
-{
-  if (vec == null || labels == null || labels.isEmpty())   throw new IllegalArgumentException("Unable to initialize due to missing argument or empty label set");
-  this.vec=vec;
-  this.labels=labels;
-  this.path=path;
-}

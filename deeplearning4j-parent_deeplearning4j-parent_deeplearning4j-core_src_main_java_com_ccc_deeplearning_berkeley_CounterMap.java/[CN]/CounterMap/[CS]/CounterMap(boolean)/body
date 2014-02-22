@@ -1,3 +1,0 @@
-{
-  this(identityHashMap ? new MapFactory.IdentityHashMapFactory<K,Counter<V>>() : new MapFactory.HashMapFactory<K,Counter<V>>(),identityHashMap ? new MapFactory.IdentityHashMapFactory<V,Double>() : new MapFactory.HashMapFactory<V,Double>());
-}

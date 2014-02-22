@@ -1,8 +1,0 @@
-{
-  try {
-    return new MnistDataFetcher();
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
-}

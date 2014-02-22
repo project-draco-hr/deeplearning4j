@@ -1,7 +1,0 @@
-{
-  trainSentence(sentence,totalWords);
-  if (numSentencesProcessed % 10000 == 0) {
-    alpha=new Double(Math.max(MIN_ALPHA,alpha * (1 - 1.0 * totalWords.totalCount() / allWordsCount)));
-    log.info("Alpha updated " + alpha + " progress "+ numSentencesProcessed);
-  }
-}

@@ -1,3 +1,0 @@
-{
-  for (int i=0; i < x.columns; i++)   x.putColumn(i,x.getColumn(i).div(x.getColumn(i).sum()));
-}

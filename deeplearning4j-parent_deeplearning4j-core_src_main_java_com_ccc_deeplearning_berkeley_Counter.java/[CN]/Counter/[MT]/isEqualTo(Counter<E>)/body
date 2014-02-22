@@ -1,8 +1,0 @@
-{
-  boolean tmp=true;
-  Counter<E> bigger=counter.size() > size() ? counter : this;
-  for (  E e : bigger.keySet()) {
-    tmp&=counter.getCount(e) == getCount(e);
-  }
-  return tmp;
-}

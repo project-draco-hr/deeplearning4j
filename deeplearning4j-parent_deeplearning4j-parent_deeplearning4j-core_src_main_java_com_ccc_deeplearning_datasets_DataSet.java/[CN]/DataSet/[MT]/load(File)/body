@@ -1,9 +1,0 @@
-{
-  DataInputStream bis=new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
-  DoubleMatrix x=new DoubleMatrix(1,1);
-  DoubleMatrix y=new DoubleMatrix(1,1);
-  x.in(bis);
-  y.in(bis);
-  bis.close();
-  return new DataSet(x,y);
-}

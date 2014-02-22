@@ -1,4 +1,0 @@
-{
-  List<Pair<DoubleMatrix,DoubleMatrix>> images=getImagesAsList().subList(0,numRows);
-  return convertListPairs(images);
-}

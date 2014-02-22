@@ -1,9 +1,0 @@
-{
-  int range=curr + batch;
-  if (range >= list.size()) {
-    range=list.size();
-  }
-  DataSet d=DataSet.merge(list.subList(curr,range));
-  curr+=batch;
-  return d;
-}

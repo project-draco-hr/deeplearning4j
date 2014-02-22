@@ -1,8 +1,0 @@
-{
-  iter.reset();
-  while (iter.hasNext()) {
-    List<Window> window=iter.next();
-    DoubleMatrix input=MatrixUtil.normalizeByColumnSums(WordConverter.toInputMatrix(window,vec));
-    super.pretrain(input,k,learningRate,epochs);
-  }
-}

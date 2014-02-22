@@ -1,9 +1,0 @@
-{
-  try {
-    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(to,true));
-    return bos;
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
-}

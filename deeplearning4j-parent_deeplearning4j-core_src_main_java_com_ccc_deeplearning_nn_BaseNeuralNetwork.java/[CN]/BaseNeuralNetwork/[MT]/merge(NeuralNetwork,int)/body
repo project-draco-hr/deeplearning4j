@@ -1,5 +1,0 @@
-{
-  W.addi(network.getW().mini(W).div(batchSize));
-  hBias.addi(network.gethBias().subi(hBias).divi(batchSize));
-  vBias.addi(network.getvBias().subi(vBias).divi(batchSize));
-}

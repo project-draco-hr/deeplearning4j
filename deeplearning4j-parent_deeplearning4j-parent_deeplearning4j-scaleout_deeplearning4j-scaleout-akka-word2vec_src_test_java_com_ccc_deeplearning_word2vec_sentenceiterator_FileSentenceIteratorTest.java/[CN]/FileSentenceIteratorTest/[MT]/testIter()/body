@@ -1,9 +1,0 @@
-{
-  File f=new ClassPathResource("/itertest").getFile();
-  FileSentenceIterator iter=new FileSentenceIterator(f);
-  for (int i=0; i < 9; i++) {
-    String sentence=iter.nextSentence();
-    assertEquals("line" + i,sentence);
-  }
-  assertEquals(false,iter.hasNext());
-}

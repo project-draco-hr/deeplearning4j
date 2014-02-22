@@ -1,7 +1,0 @@
-{
-  next=null;
-  while (next == null && base.hasNext()) {
-    next=base.next();
-    if (!filter.accept(next))     next=null;
-  }
-}

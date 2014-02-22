@@ -1,6 +1,0 @@
-{
-  WordConverter converter=new WordConverter(examples,vec);
-  DoubleMatrix labelMatrix=converter.toLabelMatrix(labels);
-  network.labels=labelMatrix;
-  super.optimize(labelMatrix,lr,epochs);
-}

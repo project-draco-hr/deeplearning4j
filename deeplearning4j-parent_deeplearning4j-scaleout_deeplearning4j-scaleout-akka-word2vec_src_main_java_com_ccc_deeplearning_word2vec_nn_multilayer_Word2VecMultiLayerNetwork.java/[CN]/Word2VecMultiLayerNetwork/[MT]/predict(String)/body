@@ -1,4 +1,0 @@
-{
-  List<Window> windows=Windows.windows(new InputHomogenization(words).transform());
-  return predict(windows);
-}

@@ -1,3 +1,0 @@
-{
-  return softmax(x.mmul(W).addRowVector(b));
-}

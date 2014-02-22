@@ -1,6 +1,0 @@
-{
-  UniformRealDistribution uDist=new UniformRealDistribution(rng,0,1);
-  DoubleMatrix U=new DoubleMatrix(rows,columns);
-  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++)   U.put(i,j,uDist.sample());
-  return U;
-}

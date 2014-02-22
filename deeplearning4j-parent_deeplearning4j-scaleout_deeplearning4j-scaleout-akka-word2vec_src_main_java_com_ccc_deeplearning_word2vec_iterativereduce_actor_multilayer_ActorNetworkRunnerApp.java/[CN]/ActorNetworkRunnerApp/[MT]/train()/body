@@ -1,8 +1,0 @@
-{
-  List<Window> data;
-  if (!iter.hasNext()) {
-    throw new IllegalStateException("Unable to train on empty dataset");
-  }
-  data=iter.next();
-  runner.train(data);
-}

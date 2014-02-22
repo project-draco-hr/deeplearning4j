@@ -1,5 +1,0 @@
-{
-  super.setup(conf);
-  RandomGenerator rng=new SynchronizedRandomGenerator(new MersenneTwister(conf.getSeed()));
-  network=new BaseMultiLayerNetwork.Builder<>().disableBackProp().numberOfInputs(numVisible).numberOfOutPuts(numHidden).withActivation(conf.getFunction()).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).transformWeightsAt(conf.getWeightTransforms()).withClazz(conf.getMultiLayerClazz()).build();
-}
