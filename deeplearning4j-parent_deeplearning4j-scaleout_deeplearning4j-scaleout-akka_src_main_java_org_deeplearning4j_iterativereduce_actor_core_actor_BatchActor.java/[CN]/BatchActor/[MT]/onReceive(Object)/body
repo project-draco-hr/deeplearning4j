@@ -30,7 +30,9 @@
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    if (iter.hasNext())     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
+    if (iter.hasNext()) {
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
+    }
   }
  else   if (iter.hasNext()) {
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
