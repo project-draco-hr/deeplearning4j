@@ -1,0 +1,13 @@
+{
+  IrisDataFetcher fetcher=new IrisDataFetcher();
+  fetcher.fetch(110);
+  DataSet iris=fetcher.next();
+  LogisticRegression classifier=new LogisticRegression.Builder().numberOfInputs(4).numberOfOutputs(3).build();
+  for (int i=0; i < 1000; i++)   classifier.train(iris.getFirst(),iris.getSecond(),0.1);
+  fetcher.fetch(40);
+  iris=fetcher.next();
+  DoubleMatrix predicted=classifier.predict(iris.getFirst());
+  Evaluation eval=new Evaluation();
+  eval.eval(iris.getSecond(),predicted);
+  log.info(eval.stats());
+}

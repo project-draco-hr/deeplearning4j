@@ -1,9 +1,9 @@
 DoubleMatrix input
-int nVisible
-int nHidden
+int n_visible
+int n_hidden
 DoubleMatrix W
-DoubleMatrix hBias
-DoubleMatrix vBias
+DoubleMatrix hbias
+DoubleMatrix vbias
 RandomGenerator rng
 double fanIn
 RealDistribution dist
