@@ -1,0 +1,14 @@
+{
+  DataSetIterator iter=new MnistDataSetIterator(10,60000);
+  Conf c=new Conf();
+  c.setFinetuneEpochs(1000);
+  c.setFinetuneLearningRate(0.01);
+  c.setLayerSizes(new int[]{500,400,250});
+  c.setnIn(784);
+  c.setnOut(10);
+  c.setMultiLayerClazz(DBN.class);
+  c.setUseRegularization(false);
+  c.setDeepLearningParams(new Object[]{1,0.01,1000});
+  ActorNetworkRunner runner=new ActorNetworkRunner("master",iter);
+  runner.train();
+}

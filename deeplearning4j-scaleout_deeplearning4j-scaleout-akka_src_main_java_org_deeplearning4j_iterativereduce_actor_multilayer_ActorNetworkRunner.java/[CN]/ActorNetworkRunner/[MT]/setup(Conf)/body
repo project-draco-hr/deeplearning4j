@@ -7,7 +7,7 @@
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to train");
     masterAddress=startBackend(null,"master",conf,iter);
     try {
-      Thread.sleep(5000);
+      Thread.sleep(30000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
