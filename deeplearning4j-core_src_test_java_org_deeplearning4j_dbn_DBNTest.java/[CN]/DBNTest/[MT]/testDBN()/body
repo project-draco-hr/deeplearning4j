@@ -11,7 +11,7 @@
   int[] hiddenLayerSizes=new int[]{2,2,2};
   double fineTuneLr=0.001;
   int fineTuneEpochs=1000;
-  DBN dbn=new DBN.Builder().transformWeightsAt(0,new MultiplyScalar(1000)).transformWeightsAt(1,new MultiplyScalar(100)).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).renderWeights(0).useRegularization(false).withMomentum(0).withDist(new NormalDistribution(0,0.001)).numberOfOutPuts(nOuts).withRng(rng).build();
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).renderWeights(0).useRegularization(false).withMomentum(0).withDist(new NormalDistribution(0,0.001)).numberOfOutPuts(nOuts).withRng(rng).build();
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix predict=dbn.predict(x);
