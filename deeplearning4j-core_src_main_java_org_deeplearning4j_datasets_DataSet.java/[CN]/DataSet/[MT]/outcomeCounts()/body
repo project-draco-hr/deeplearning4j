@@ -1,0 +1,8 @@
+{
+  List<DataSet> list=asList();
+  Counter<Integer> ret=new Counter<>();
+  for (int i=0; i < list.size(); i++) {
+    ret.incrementCount(list.get(i).outcome(),1.0);
+  }
+  return ret;
+}

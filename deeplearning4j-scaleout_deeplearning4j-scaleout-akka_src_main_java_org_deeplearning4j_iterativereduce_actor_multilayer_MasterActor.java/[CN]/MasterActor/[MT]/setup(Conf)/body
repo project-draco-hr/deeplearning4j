@@ -2,4 +2,10 @@
   RandomGenerator rng=new MersenneTwister(conf.getSeed());
   BaseMultiLayerNetwork matrix=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).withRng(rng).build();
   masterResults=new UpdateableImpl(matrix);
+  Conf c=conf.copy();
+  Address masterAddress=Cluster.get(context().system()).selfAddress();
+  log.info("Starting worker");
+  ActorRef worker=ActorNetworkRunner.startWorker(masterAddress,c);
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
+  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,worker),mediator);
 }

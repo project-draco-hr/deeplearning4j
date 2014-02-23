@@ -6,12 +6,7 @@
   Props p=WorkerActor.propsFor(clusterClient,conf);
   int cores=Runtime.getRuntime().availableProcessors();
   ActorRef ref=system.actorOf(new RoundRobinPool(cores).props(p),"worker");
-  try {
-    Thread.sleep(5000);
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
-  }
+  log.info("Worker joining cluster");
   Cluster.get(system).join(contactAddress);
   return ref;
 }

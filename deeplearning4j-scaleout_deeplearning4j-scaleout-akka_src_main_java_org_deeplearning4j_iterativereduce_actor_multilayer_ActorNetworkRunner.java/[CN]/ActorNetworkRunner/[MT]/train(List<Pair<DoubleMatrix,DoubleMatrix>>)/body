@@ -9,6 +9,7 @@
     Thread.currentThread().interrupt();
   }
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
+  log.info("Started pipeline");
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,list),mediator);
   log.info("Published results");
 }

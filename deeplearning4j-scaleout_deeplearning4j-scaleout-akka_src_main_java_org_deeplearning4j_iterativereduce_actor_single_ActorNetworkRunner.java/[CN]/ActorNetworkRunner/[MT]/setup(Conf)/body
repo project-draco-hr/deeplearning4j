@@ -7,25 +7,12 @@
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to train");
     masterAddress=startBackend(null,"master",conf,iter);
     try {
-      Thread.sleep(5000);
+      Thread.sleep(30000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
-    Cluster.get(system).join(masterAddress);
-    startBackend(masterAddress,"master",conf,iter);
-    Conf c=conf.copy();
-    try {
-      Thread.sleep(5000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
-    startWorker(masterAddress,c);
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,epochs),mediator);
-    log.info("Setup master with epochs " + epochs);
   }
  else {
     Conf c=conf.copy();
@@ -39,5 +26,4 @@
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
-  writeMasterAddress();
 }
