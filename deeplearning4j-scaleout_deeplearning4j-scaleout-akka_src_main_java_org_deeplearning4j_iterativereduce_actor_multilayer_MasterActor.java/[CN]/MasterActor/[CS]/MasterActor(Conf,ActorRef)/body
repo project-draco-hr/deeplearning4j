@@ -1,4 +1,3 @@
 {
   super(conf,batchActor);
-  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,getSelf()),mediator);
 }

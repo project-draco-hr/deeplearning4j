@@ -12,7 +12,8 @@
     updates.add(up);
     if (updates.size() >= partition) {
       masterResults=this.compute(updates,updates);
-      if (listener != null)       listener.epochComplete(masterResults);
+      log.info("Saving new model");
+      mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.FINETUNE,new FinetuneMessage(masterResults)),mediator);
       batchActor.tell(new ResetMessage(),getSelf());
       epochsComplete++;
       batchActor.tell(up,getSelf());

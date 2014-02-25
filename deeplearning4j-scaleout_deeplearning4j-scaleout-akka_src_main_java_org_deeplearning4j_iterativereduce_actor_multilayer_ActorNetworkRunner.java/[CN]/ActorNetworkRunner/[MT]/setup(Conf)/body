@@ -16,7 +16,6 @@
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     log.info("Starting model saver");
     ActorRef ref=system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
-    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,ref),mediator);
     Cluster.get(system).join(masterAddress);
     log.info("Setup master with epochs " + epochs);
   }
@@ -29,12 +28,25 @@
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,worker),mediator);
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
   conf.setMasterUrl(getMasterAddress().toString());
-  ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
-  reg.register();
-  reg.close();
+  scala.concurrent.Future<Void> f=Futures.future(new Callable<Void>(){
+    @Override public Void call() throws Exception {
+      log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
+      ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
+      reg.register();
+      reg.close();
+      return null;
+    }
+  }
+,system.dispatcher());
+  f.onComplete(new OnComplete<Void>(){
+    @Override public void onComplete(    Throwable arg0,    Void arg1) throws Throwable {
+      if (arg0 != null)       throw arg0;
+      log.info("Registered conf with zookeeper");
+    }
+  }
+,system.dispatcher());
 }

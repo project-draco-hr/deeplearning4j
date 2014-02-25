@@ -4,6 +4,28 @@
   mediator.tell(new Put(getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,getSelf()),mediator);
   setup(conf);
+  iterChecker=Executors.newScheduledThreadPool(1);
+  iterChecker.scheduleAtFixedRate(new Runnable(){
+    @Override public void run(){
+      log.info("Updating model...");
+      File save=new File("nn-model.bin");
+      if (save.exists()) {
+        File parent=save.getParentFile();
+        save.renameTo(new File(parent,save.getName() + "-" + System.currentTimeMillis()));
+      }
+      try {
+        BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(save));
+        Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)masterResults;
+        u.get().write(bos);
+        bos.flush();
+        bos.close();
+        log.info("saved model to " + "nn-model.bin");
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+,10,60,TimeUnit.SECONDS);
 }

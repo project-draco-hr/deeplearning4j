@@ -1,0 +1,5 @@
+{
+  super.postStop();
+  log.info("Post stop on model saver");
+  cluster.unsubscribe(getSelf());
+}

@@ -2,7 +2,4 @@
   currEpochs++;
   this.result=result;
   mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.FINETUNE,new FinetuneMessage(result)),mediator);
-  if (!iter.hasNext()) {
-    mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,iter),mediator);
-  }
 }

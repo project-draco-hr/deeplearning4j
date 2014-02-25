@@ -4,7 +4,6 @@
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
   ActorRef batchActor=system.actorOf(pool.props(Props.create(new BatchActor.BatchActorFactory(iter,c.getNumPasses()))));
   log.info("Started batch actor");
-  system.actorOf(Props.create(DoneReaper.class));
   Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
   Cluster.get(system).join(realJoinAddress);
   system.actorOf(ClusterSingletonManager.defaultProps(MasterActor.propsFor(c,batchActor),"active",PoisonPill.getInstance(),"master"));

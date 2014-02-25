@@ -7,5 +7,4 @@
   log.info("Starting worker");
   ActorRef worker=ActorNetworkRunner.startWorker(masterAddress,c);
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
-  mediator.tell(new DistributedPubSubMediator.Publish(DoneReaper.REAPER,worker),mediator);
 }
