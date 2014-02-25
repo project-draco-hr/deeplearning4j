@@ -9,6 +9,7 @@
   }
  else   if (message instanceof UpdateMessage) {
     UpdateMessage<E> m=(UpdateMessage<E>)message;
+    log.info("Updating worker");
     results=m.getUpdateable().get();
   }
  else   unhandled(message);

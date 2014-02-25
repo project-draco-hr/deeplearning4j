@@ -16,6 +16,7 @@
 ,getContext().dispatcher());
   f.onComplete(new OnComplete<E>(){
     @Override public void onComplete(    Throwable arg0,    E work) throws Throwable {
+      if (arg0 != null)       throw arg0;
       log.info("Updating parent actor...");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
     }

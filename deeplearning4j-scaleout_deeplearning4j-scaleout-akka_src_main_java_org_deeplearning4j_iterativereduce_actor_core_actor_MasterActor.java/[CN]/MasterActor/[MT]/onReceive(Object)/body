@@ -18,9 +18,6 @@
       epochsComplete++;
       batchActor.tell(up,getSelf());
       updates.clear();
-      if (epochsComplete == conf.getNumPasses()) {
-        isDone=true;
-      }
     }
   }
  else   if (message instanceof FinishMessage) {
