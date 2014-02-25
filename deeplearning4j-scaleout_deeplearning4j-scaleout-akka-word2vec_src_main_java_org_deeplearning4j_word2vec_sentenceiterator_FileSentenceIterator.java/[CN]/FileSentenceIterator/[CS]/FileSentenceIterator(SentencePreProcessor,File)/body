@@ -1,6 +1,7 @@
 {
   super(preProcessor);
-  this.dir=dir;
+  this.file=file;
   cache=new java.util.concurrent.ConcurrentLinkedDeque<>();
-  fileIterator=FileUtils.iterateFiles(dir,null,true);
+  if (file.isDirectory())   fileIterator=FileUtils.iterateFiles(file,null,true);
+ else   fileIterator=Arrays.asList(file).iterator();
 }
