@@ -1,0 +1,7 @@
+{
+  List<DataSet> list=asList();
+  Collections.shuffle(list);
+  DataSet ret=DataSet.merge(list);
+  setFirst(ret.getFirst());
+  setSecond(ret.getSecond());
+}

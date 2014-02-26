@@ -4,6 +4,7 @@
   numVisible=conf.getnIn();
   numHiddenNeurons=hiddenLayerSizes.length;
   seed=conf.getSeed();
+  renderWeightEpochs=conf.getRenderWeightEpochs();
   useRegularization=conf.isUseRegularization();
   learningRate=conf.getPretrainLearningRate();
   preTrainEpochs=conf.getPretrainEpochs();
