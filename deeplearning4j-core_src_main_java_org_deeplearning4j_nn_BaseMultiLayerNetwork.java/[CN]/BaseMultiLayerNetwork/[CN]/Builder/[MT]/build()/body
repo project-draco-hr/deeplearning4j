@@ -23,6 +23,8 @@
     if (activation != null)     ret.setActivation(activation);
     if (dist != null)     ret.setDist(dist);
     ret.getWeightTransforms().putAll(weightTransforms);
+    ret.getVisibleBiasTransforms().putAll(visibleBiasTransforms);
+    ret.getHiddenBiasTransforms().putAll(hiddenBiasTransforms);
     return ret;
   }
  catch (  InstantiationException|IllegalAccessException e) {

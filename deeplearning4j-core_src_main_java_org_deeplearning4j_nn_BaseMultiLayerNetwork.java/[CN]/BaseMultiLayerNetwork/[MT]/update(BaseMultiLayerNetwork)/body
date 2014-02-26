@@ -27,6 +27,8 @@
   this.weightTransforms=network.weightTransforms;
   this.sparsity=network.sparsity;
   this.toDecode=network.toDecode;
+  this.visibleBiasTransforms=network.visibleBiasTransforms;
+  this.hiddenBiasTransforms=network.hiddenBiasTransforms;
   this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
   for (int i=0; i < sigmoidLayers.length; i++)   this.sigmoidLayers[i]=network.sigmoidLayers[i].clone();
 }
