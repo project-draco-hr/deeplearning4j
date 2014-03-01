@@ -1,0 +1,10 @@
+{
+  try {
+    MnistDataFetcher fetcher=new MnistDataFetcher();
+    fetcher.fetch(num);
+    return fetcher.next();
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

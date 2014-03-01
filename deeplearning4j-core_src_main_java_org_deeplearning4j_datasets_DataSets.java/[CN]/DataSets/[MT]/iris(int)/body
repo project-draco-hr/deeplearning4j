@@ -1,0 +1,5 @@
+{
+  IrisDataFetcher fetcher=new IrisDataFetcher();
+  fetcher.fetch(num);
+  return fetcher.next();
+}

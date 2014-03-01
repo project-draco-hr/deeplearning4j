@@ -1,0 +1,5 @@
+{
+  LFWDataFetcher fetcher=new LFWDataFetcher();
+  fetcher.fetch(num);
+  return fetcher.next();
+}
