@@ -1,0 +1,8 @@
+{
+  if (a > b) {
+    return a + Math.log(1.0 - Math.exp(b - a));
+  }
+ else {
+    return b + Math.log(-1.0 + Math.exp(a - b));
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (val < 0.0)   return Double.NaN;
+  if (val == 0.0)   return Double.NEGATIVE_INFINITY;
+  double r=val - 1;
+  if (Math.abs(r) < 0.3) {
+    final double rSquared=r * r;
+    return r - rSquared / 2 + rSquared * r / 3;
+  }
+  final double x=(Double.doubleToLongBits(val) >> 32);
+  return (x - 1072632447) / 1512775;
+}

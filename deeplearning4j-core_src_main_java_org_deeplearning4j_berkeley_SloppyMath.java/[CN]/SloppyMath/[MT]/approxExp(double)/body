@@ -1,0 +1,5 @@
+{
+  if (Math.abs(val) < 0.1)   return 1 + val;
+  final long tmp=(long)(1512775 * val + (1072693248 - 60801));
+  return Double.longBitsToDouble(tmp << 32);
+}

@@ -1,0 +1,19 @@
+{
+  char[] chars=s.toCharArray();
+  StringBuffer sb=new StringBuffer();
+  for (int i=0; i < chars.length; i++) {
+    char c=chars[i];
+    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')|| (c == '_')) {
+      sb.append(c);
+    }
+ else {
+      if (c == ' ' || c == '-') {
+        sb.append('_');
+      }
+ else {
+        sb.append("x" + (int)c + "x");
+      }
+    }
+  }
+  return sb.toString();
+}

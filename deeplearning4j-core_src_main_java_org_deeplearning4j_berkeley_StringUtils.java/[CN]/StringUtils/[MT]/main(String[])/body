@@ -1,0 +1,12 @@
+{
+  String[] s={"there once was a man","this one is a manic","hey there","there once was a mane","once in a manger.","where is one match?"};
+  for (int i=0; i < 6; i++) {
+    for (int j=0; j < 6; j++) {
+      System.out.println("s1: " + s[i]);
+      System.out.println("s2: " + s[j]);
+      System.out.println("edit distance: " + editDistance(s[i],s[j]));
+      System.out.println("LCS:           " + longestCommonSubstring(s[i],s[j]));
+      System.out.println();
+    }
+  }
+}

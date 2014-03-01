@@ -1,0 +1,14 @@
+{
+  String lineSeparator=System.getProperty("line.separator");
+  URLConnection uc=u.openConnection();
+  InputStream is=uc.getInputStream();
+  BufferedReader br=new BufferedReader(new InputStreamReader(is));
+  String temp;
+  StringBuffer buff=new StringBuffer(16000);
+  while ((temp=br.readLine()) != null) {
+    buff.append(temp);
+    buff.append(lineSeparator);
+  }
+  br.close();
+  return buff.toString();
+}

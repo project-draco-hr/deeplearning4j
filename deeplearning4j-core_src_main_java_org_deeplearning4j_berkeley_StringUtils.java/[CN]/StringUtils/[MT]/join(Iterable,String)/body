@@ -1,0 +1,12 @@
+{
+  StringBuffer sb=new StringBuffer();
+  boolean first=true;
+  for (  Object o : l) {
+    if (!first) {
+      sb.append(glue);
+    }
+    sb.append(o.toString());
+    first=false;
+  }
+  return sb.toString();
+}

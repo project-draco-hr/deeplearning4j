@@ -1,0 +1,8 @@
+{
+  double[] arr=new double[counts.size()];
+  int index=0;
+  for (  Map.Entry<T,Double> entry : counts.entrySet()) {
+    arr[index++]=entry.getValue();
+  }
+  return SloppyMath.logAdd(arr);
+}

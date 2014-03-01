@@ -1,0 +1,12 @@
+{
+  k=Math.min(k,n - k);
+  if (k == 0) {
+    return 1;
+  }
+  int accum=n;
+  for (int i=1; i < k; i++) {
+    accum*=(n - i);
+    accum/=i;
+  }
+  return accum / k;
+}

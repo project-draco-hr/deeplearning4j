@@ -1,0 +1,19 @@
+{
+  StringBuffer result=new StringBuffer();
+  for (int i=0; i < s.length(); i++) {
+    char c=s.charAt(i);
+    if (c == escapeChar) {
+      result.append(escapeChar);
+    }
+ else {
+      for (int j=0; j < charsToEscape.length; j++) {
+        if (c == charsToEscape[j]) {
+          result.append(escapeChar);
+          break;
+        }
+      }
+    }
+    result.append(c);
+  }
+  return result.toString();
+}

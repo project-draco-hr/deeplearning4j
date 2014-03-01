@@ -1,0 +1,42 @@
+{
+  List<String> result=new ArrayList<String>();
+  int i=0;
+  int length=s.length();
+  StringBuffer b=new StringBuffer();
+  while (i < length) {
+    char curr=s.charAt(i);
+    if (curr == splitChar) {
+      if (b.length() > 0) {
+        result.add(b.toString());
+        b=new StringBuffer();
+      }
+      i++;
+    }
+ else     if (curr == quoteChar) {
+      i++;
+      while (i < length) {
+        curr=s.charAt(i);
+        if (curr == escapeChar) {
+          b.append(s.charAt(i + 1));
+          i+=2;
+        }
+ else         if (curr == quoteChar) {
+          i++;
+          break;
+        }
+ else {
+          b.append(s.charAt(i));
+          i++;
+        }
+      }
+    }
+ else {
+      b.append(curr);
+      i++;
+    }
+  }
+  if (b.length() > 0) {
+    result.add(b.toString());
+  }
+  return (String[])result.toArray(new String[0]);
+}

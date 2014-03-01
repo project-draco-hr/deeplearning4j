@@ -1,0 +1,9 @@
+{
+  if (a == b) {
+    return 0.0;
+  }
+  if (a == Double.NEGATIVE_INFINITY) {
+    return a;
+  }
+  return a - b;
+}

@@ -1,0 +1,36 @@
+{
+  Properties result=new Properties();
+  List<String> remainingArgs=new ArrayList<String>();
+  String key;
+  for (int i=0; i < args.length; i++) {
+    key=args[i];
+    if (key.charAt(0) == '-') {
+      key=key.substring(1);
+      Integer maxFlagArgs=(Integer)flagsToNumArgs.get(key);
+      int max=maxFlagArgs == null ? 1 : maxFlagArgs.intValue();
+      List<String> flagArgs=new ArrayList<String>();
+      for (int j=0; j < max && i + 1 < args.length && args[i + 1].charAt(0) != '-'; i++, j++) {
+        flagArgs.add(args[i + 1]);
+      }
+      if (flagArgs.size() == 0) {
+        result.setProperty(key,"true");
+      }
+ else {
+        result.setProperty(key,join(flagArgs," "));
+        if (key.equalsIgnoreCase(PROP)) {
+          try {
+            result.load(new BufferedInputStream(new FileInputStream(result.getProperty(PROP))));
+          }
+ catch (          IOException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+ else {
+      remainingArgs.add(args[i]);
+    }
+  }
+  result.setProperty("",join(remainingArgs," "));
+  return result;
+}

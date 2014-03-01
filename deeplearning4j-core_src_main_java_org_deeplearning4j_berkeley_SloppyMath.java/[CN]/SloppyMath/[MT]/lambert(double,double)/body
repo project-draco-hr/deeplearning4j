@@ -1,0 +1,11 @@
+{
+  double x=-(Math.log(-v) + u);
+  double w=-x;
+  double diff=1;
+  while (Math.abs(diff) < 1.0e-5) {
+    double z=-x - Math.log(Math.abs(w));
+    diff=z - w;
+    w=z;
+  }
+  return w;
+}
