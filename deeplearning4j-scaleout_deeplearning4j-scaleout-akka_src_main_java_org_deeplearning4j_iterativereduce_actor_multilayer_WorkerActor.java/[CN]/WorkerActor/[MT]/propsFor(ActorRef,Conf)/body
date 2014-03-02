@@ -1,3 +1,3 @@
 {
-  return Props.create(new WorkerActor.WorkerActorFactory(conf));
+  return Props.create(WorkerActor.class,actor,conf);
 }

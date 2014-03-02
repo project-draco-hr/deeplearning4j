@@ -6,5 +6,7 @@
   Address masterAddress=Cluster.get(context().system()).selfAddress();
   log.info("Starting worker");
   ActorRef worker=ActorNetworkRunner.startWorker(masterAddress,c);
+  log.info("Broadcasting initial master network");
+  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new UpdateMessage<>(masterResults)),getSelf());
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
 }

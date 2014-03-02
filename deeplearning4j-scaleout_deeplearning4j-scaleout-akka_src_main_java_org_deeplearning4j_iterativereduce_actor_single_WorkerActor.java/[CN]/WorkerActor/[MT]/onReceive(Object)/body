@@ -10,6 +10,7 @@
  else   if (message instanceof UpdateMessage) {
     UpdateMessage<UpdateableSingleImpl> m=(UpdateMessage<UpdateableSingleImpl>)message;
     workerResult=(UpdateableSingleImpl)m.getUpdateable().get();
+    this.network=workerResult.get();
   }
  else   unhandled(message);
 }

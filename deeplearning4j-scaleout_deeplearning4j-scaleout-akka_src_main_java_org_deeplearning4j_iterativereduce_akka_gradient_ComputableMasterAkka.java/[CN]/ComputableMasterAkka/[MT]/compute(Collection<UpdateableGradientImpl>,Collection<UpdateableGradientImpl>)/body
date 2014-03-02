@@ -1,0 +1,6 @@
+{
+  GradientAccumulator acc=new GradientAccumulator();
+  for (  UpdateableGradientImpl m : workerUpdates)   acc.accumulate(m.get());
+  masterResults.set(acc.averaged());
+  return masterResults;
+}

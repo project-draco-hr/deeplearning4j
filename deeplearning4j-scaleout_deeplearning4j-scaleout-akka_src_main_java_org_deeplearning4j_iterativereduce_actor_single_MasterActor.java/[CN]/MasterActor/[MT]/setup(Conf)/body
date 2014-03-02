@@ -7,4 +7,6 @@
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
   log.info("Setup master with epochs " + conf.getPretrainEpochs());
   masterResults=new UpdateableSingleImpl(network);
+  log.info("Broadcasting initial master network");
+  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new UpdateMessage<>(masterResults)),getSelf());
 }
