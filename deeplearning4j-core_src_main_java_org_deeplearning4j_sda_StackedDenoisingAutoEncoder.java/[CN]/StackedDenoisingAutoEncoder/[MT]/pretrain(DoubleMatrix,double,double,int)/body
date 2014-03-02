@@ -10,6 +10,6 @@
         log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ layers[i].getReConstructionCrossEntropy());
       }
     }
- else     layers[i].trainTillConvergence(layerInput,lr,new Object[]{corruptionLevel,lr});
+ else     layers[i].trainTillConvergence(layerInput,lr,new Object[]{corruptionLevel,lr,epochs});
   }
 }
