@@ -1,0 +1,14 @@
+{
+  if (conf.get(HDFS_HOST) != null) {
+    String hdfs=getHost(conf);
+    HdfsLock lock=new HdfsLock(hdfs,2181);
+    if (lock.isLocked()) {
+      if (log.isDebugEnabled())       log.debug("Returning paths; already found host");
+      List<Path> paths=lock.getPaths();
+      FileSystem system=FileSystem.get(conf);
+      for (      Path path : paths)       system.delete(path,true);
+      lock.delete();
+    }
+    lock.close();
+  }
+}

@@ -1,0 +1,80 @@
+{
+  String hdfs=getHost(jobConf);
+  HdfsLock lock=new HdfsLock(hdfs);
+  String hdfs2=getHdfs(jobConf);
+  if (jobConf.get(HDFS_HOST) != null) {
+    if (lock.isLocked()) {
+      List<Path> ret=lock.getPaths();
+      StringBuffer files=new StringBuffer();
+      StringBuffer classPath=new StringBuffer();
+      for (      Path path : ret) {
+        files.append(hdfs2 + path.toString());
+        files.append(",");
+        classPath.append(hdfs2 + path.toString());
+        classPath.append(":");
+        jobConf.addResource(path.toUri().toURL());
+      }
+      String classPathToSet=classPath.toString().substring(0,classPath.lastIndexOf(":"));
+      String filesToSet=files.toString().substring(0,files.lastIndexOf(","));
+      log.info("Setting class path " + classPathToSet);
+      log.info("Using files " + filesToSet);
+      jobConf.set("mapred.cache.files",filesToSet);
+      jobConf.set("mapred.job.classpath.files",classPathToSet);
+      return ret;
+    }
+  }
+  List<Path> paths=new ArrayList<Path>();
+  log.info("Copying classpath to job");
+  final String[] jars=findJarFiles(new String[]{System.getenv().get("CLASSPATH"),System.getProperty("java.class.path"),System.getProperty("surefire.test.class.path")});
+  final FileSystem defFS=FileSystem.get(jobConf);
+  int numFilesWritten=0;
+  for (  String jarFile : jars) {
+    if (jarFile.contains("hadoop-client")) {
+      log.info("Skipping hadoop-client");
+      continue;
+    }
+ else     if (jarFile.contains("mapreduce-run")) {
+      log.info("Skipping map reduce run");
+      continue;
+    }
+    Path srcJarFilePath=new Path("file:///" + jarFile);
+    String filename=srcJarFilePath.getName();
+    Path tmpJarFilePath=makeFile(jobConf,filename);
+    log.info("Uploading " + jarFile + " to "+ tmpJarFilePath.toString());
+    try {
+      defFS.copyFromLocalFile(srcJarFilePath,tmpJarFilePath);
+      jobConf.addResource(tmpJarFilePath);
+      paths.add(tmpJarFilePath);
+      numFilesWritten++;
+    }
+ catch (    Exception e) {
+      for (      Path path : paths) {
+        if (defFS.exists(path))         defFS.delete(path,true);
+      }
+      lock.close();
+      log.error(String.format("Exception writing to hdfs; rolling back %d jar files ",numFilesWritten),e);
+      throw new IOException("Couldn't write jar file " + jarFile);
+    }
+  }
+  try {
+    lock.create(paths);
+  }
+ catch (  KeeperException.SessionExpiredException e) {
+    lock=new HdfsLock(hdfs);
+    lock.create(paths);
+  }
+  lock.close();
+  Set<Path> remove=new HashSet<Path>();
+  for (  Path path : paths) {
+    boolean exists=false;
+    try {
+      exists=defFS.exists(path);
+    }
+ catch (    IllegalArgumentException e) {
+      exists=false;
+    }
+    if (!exists)     remove.add(path);
+  }
+  paths.removeAll(remove);
+  return paths;
+}

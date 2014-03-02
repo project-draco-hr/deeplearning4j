@@ -1,0 +1,8 @@
+{
+  FileSystem fs=getFileSystem(conf);
+  if (!fs.exists(new Path(prependUserPath("")))) {
+    boolean dirs=fs.mkdirs(new Path(prependUserPath("")));
+    if (!dirs)     throw new IllegalStateException("Couldn't make " + prependUserPath(""));
+    FileUtil.chmod(prependUserPath(""),"777");
+  }
+}

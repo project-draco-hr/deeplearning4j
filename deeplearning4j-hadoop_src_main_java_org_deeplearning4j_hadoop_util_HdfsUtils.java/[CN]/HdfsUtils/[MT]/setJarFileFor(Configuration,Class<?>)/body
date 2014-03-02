@@ -1,0 +1,5 @@
+{
+  String jar=findJar(jarClass);
+  conf.setClassLoader(Thread.currentThread().getContextClassLoader());
+  conf.set("mapred.jar",jar);
+}

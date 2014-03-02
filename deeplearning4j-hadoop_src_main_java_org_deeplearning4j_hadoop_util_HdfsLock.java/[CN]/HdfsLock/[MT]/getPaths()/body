@@ -1,0 +1,11 @@
+{
+  List<Path> ret=new ArrayList<Path>();
+  String lockPath=new ZookeeperPathBuilder().setHost(host).setPort(port).addPath("hdfslock2").build();
+  Stat stat=zk.exists(lockPath,false);
+  String data=new String(zk.getData(lockPath,false,stat));
+  String[] paths=data.split("\n");
+  for (  String s : paths) {
+    ret.add(new Path(s));
+  }
+  return ret;
+}

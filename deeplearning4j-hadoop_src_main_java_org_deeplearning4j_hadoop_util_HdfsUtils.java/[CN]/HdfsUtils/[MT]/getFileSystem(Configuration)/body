@@ -1,0 +1,8 @@
+{
+  FileSystem ret=systems.get(conf);
+  if (ret == null) {
+    ret=FileSystem.get(conf);
+    systems.put(conf,ret);
+  }
+  return ret;
+}

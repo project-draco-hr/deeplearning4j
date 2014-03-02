@@ -1,0 +1,6 @@
+{
+  if (prependUserPath)   ensureUserDirExists(conf);
+  FileSystem fs=getFileSystem(conf);
+  if (prependUserPath && !fs.exists(new Path(prependUserPath(path))))   fs.mkdirs(new Path(prependUserPath(path)));
+  if (!fs.exists(new Path(path)))   fs.mkdirs(new Path(path));
+}

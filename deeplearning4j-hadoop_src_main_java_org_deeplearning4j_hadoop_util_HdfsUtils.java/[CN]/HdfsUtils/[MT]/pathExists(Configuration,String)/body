@@ -1,0 +1,5 @@
+{
+  FileSystem fs=getFileSystem(conf);
+  boolean ret=fs.exists(new Path(path));
+  return ret;
+}

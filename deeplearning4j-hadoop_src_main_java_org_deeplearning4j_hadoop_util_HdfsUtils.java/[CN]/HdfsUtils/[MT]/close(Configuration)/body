@@ -1,0 +1,7 @@
+{
+  FileSystem system=systems.get(conf);
+  if (system != null) {
+    system.close();
+    systems.remove(conf);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  FileSystem fs=getFileSystem(conf);
+  if (fs.exists(new Path(prependUserPath("")))) {
+    boolean delete=fs.delete(new Path(prependUserPath("")),true);
+    if (!delete)     throw new RuntimeException("Couldn't delete file " + prependUserPath(""));
+  }
+}

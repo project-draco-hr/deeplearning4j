@@ -1,0 +1,5 @@
+{
+  FileSystem fs=getFileSystem(conf);
+  if (!prependUserPath && pathExists(conf,path))   fs.delete(new Path(path),true);
+ else   if (pathExists(conf,prependUserPath(path)))   fs.delete(new Path(prependUserPath(path)),true);
+}

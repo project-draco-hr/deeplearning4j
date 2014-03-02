@@ -1,0 +1,11 @@
+{
+  if (conf.get("hdfs.host") == null) {
+    try {
+      HdfsUtils.setHostForConf(conf);
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  return conf.get("hdfs.host");
+}

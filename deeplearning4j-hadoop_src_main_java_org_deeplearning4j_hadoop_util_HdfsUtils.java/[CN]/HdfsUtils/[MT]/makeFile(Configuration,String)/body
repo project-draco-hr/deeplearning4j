@@ -1,0 +1,6 @@
+{
+  final int randomKey=jobConf.getInt("terrier.tempfile.id",random.nextInt());
+  jobConf.setInt("terrier.tempfile.id",randomKey);
+  final Path tempFile=new Path("/tmp/" + (randomKey) + "-"+ filename);
+  return tempFile;
+}

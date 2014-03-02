@@ -1,0 +1,7 @@
+{
+  FileSystem fs=FileSystem.get(conf);
+  if (!fs.exists(path))   throw new FileNotFoundException("File does not exist");
+  if (fs.isDirectory(path))   throw new IllegalArgumentException("Not a file");
+  InputStream is=fs.open(path);
+  return is;
+}

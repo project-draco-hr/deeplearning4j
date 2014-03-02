@@ -1,0 +1,19 @@
+{
+  Properties prop=new Properties();
+  InputStream in=HdfsUtils.class.getResourceAsStream("/host.properties");
+  if (in == null) {
+    throw new IOException("No host.properties found");
+  }
+  prop.load(in);
+  in.close();
+  String host=prop.getProperty("hdfs.host","localhost");
+  boolean reachable=InetAddress.getByName(host).isReachable(1000);
+  if (!reachable) {
+    log.warn("Host " + host + " was not reachable! Falling back to localhost");
+    host="localhost";
+  }
+  log.info("Using host  " + host);
+  conf.set("hdfs.host",host);
+  conf.set("fs.defaultFS",String.format("hdfs://%s:8020",host));
+  conf.set("mapred.job.tracker",String.format("hdfs://%s:8021",host));
+}
