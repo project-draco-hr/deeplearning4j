@@ -7,9 +7,8 @@
     List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
     updateTraining(input);
   }
- else   if (message instanceof UpdateMessage) {
-    UpdateMessage<UpdateableSingleImpl> m=(UpdateMessage<UpdateableSingleImpl>)message;
-    workerResult=(UpdateableSingleImpl)m.getUpdateable().get();
+ else   if (message instanceof Updateable) {
+    workerResult=(UpdateableSingleImpl)message;
     this.network=workerResult.get();
   }
  else   unhandled(message);

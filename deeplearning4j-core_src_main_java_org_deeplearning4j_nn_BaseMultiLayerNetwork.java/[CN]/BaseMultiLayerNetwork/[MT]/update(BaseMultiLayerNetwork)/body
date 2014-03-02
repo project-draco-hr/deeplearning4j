@@ -1,10 +1,10 @@
 {
-  this.layers=new NeuralNetwork[network.layers.length];
-  for (int i=0; i < layers.length; i++) {
-    this.layers[i]=network.layers[i].clone();
+  if (network.layers != null && network.layers.length > 0) {
+    this.layers=new NeuralNetwork[network.layers.length];
+    for (int i=0; i < layers.length; i++)     this.layers[i]=network.layers[i].clone();
   }
   this.hiddenLayerSizes=network.hiddenLayerSizes;
-  this.logLayer=network.logLayer.clone();
+  if (network.logLayer != null)   this.logLayer=network.logLayer.clone();
   this.nIns=network.nIns;
   this.nLayers=network.nLayers;
   this.nOuts=network.nOuts;
@@ -29,6 +29,8 @@
   this.toDecode=network.toDecode;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
-  this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
-  for (int i=0; i < sigmoidLayers.length; i++)   this.sigmoidLayers[i]=network.sigmoidLayers[i].clone();
+  if (network.sigmoidLayers != null && network.sigmoidLayers.length > 0) {
+    this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
+    for (int i=0; i < sigmoidLayers.length; i++)     this.sigmoidLayers[i]=network.sigmoidLayers[i].clone();
+  }
 }

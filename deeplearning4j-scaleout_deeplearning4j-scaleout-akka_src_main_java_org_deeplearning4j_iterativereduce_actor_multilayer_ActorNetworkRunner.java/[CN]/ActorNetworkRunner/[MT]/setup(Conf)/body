@@ -8,7 +8,7 @@
     log.info("Starting master");
     masterAddress=startBackend(null,"master",conf,iter);
     try {
-      Thread.sleep(30000);
+      Thread.sleep(60000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();

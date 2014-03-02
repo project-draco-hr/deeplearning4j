@@ -1,5 +1,5 @@
 {
-  RandomGenerator rng=new MersenneTwister(conf.getSeed());
+  RandomGenerator rng=new SynchronizedRandomGenerator(new MersenneTwister(conf.getSeed()));
   BaseMultiLayerNetwork network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).withRng(rng).build();
   masterResults=new UpdateableImpl(network);
   Conf c=conf.copy();
@@ -7,6 +7,6 @@
   log.info("Starting worker");
   ActorRef worker=ActorNetworkRunner.startWorker(masterAddress,c);
   log.info("Broadcasting initial master network");
-  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new UpdateMessage<>(masterResults)),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
 }

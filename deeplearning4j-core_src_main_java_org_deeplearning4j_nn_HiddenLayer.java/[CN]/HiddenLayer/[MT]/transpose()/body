@@ -2,7 +2,7 @@
   HiddenLayer layer=new HiddenLayer();
   layer.b=b.dup();
   layer.W=W.transpose();
-  layer.input=input.transpose();
+  if (input != null)   layer.input=input.transpose();
   layer.activationFunction=activationFunction;
   layer.nOut=nIn;
   layer.nIn=nOut;

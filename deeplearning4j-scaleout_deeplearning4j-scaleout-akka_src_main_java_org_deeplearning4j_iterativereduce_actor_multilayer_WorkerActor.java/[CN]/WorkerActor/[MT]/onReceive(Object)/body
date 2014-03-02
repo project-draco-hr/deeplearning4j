@@ -7,10 +7,15 @@
     List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
     updateTraining(input);
   }
- else   if (message instanceof UpdateMessage) {
-    UpdateMessage<UpdateableImpl> m=(UpdateMessage<UpdateableImpl>)message;
-    setWorkerUpdateable(m.getUpdateable().get());
-    this.network=m.getUpdateable().get().get();
+ else   if (message instanceof Updateable) {
+    UpdateableImpl m=(UpdateableImpl)message;
+    setWorkerUpdateable(m);
+    log.info("Updated worker network");
+    if (m.get() == null) {
+      log.warn("Unable to initialize network; network was null");
+      throw new IllegalArgumentException("Network was null");
+    }
+    this.network=m.get().clone();
   }
  else   unhandled(message);
 }

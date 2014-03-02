@@ -1,5 +1,5 @@
 {
-  RandomGenerator rng=new MersenneTwister(conf.getSeed());
+  RandomGenerator rng=new SynchronizedRandomGenerator(new MersenneTwister(conf.getSeed()));
   @SuppressWarnings("unchecked") BaseNeuralNetwork network=new BaseNeuralNetwork.Builder<>().withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).withRandom(rng).withL2(conf.getL2()).withMomentum(conf.getMomentum()).numberOfVisible(conf.getnIn()).numHidden(conf.getnOut()).build();
   context().system().actorOf(Props.create(ModelSavingActor.class,"nn-model.bin"),",model-saver");
   Address masterAddress=Cluster.get(context().system()).selfAddress();
@@ -8,5 +8,5 @@
   log.info("Setup master with epochs " + conf.getPretrainEpochs());
   masterResults=new UpdateableSingleImpl(network);
   log.info("Broadcasting initial master network");
-  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new UpdateMessage<>(masterResults)),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
 }

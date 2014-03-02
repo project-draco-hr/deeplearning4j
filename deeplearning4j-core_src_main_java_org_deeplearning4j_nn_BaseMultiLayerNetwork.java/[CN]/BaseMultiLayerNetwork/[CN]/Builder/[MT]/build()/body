@@ -25,6 +25,8 @@
     ret.getWeightTransforms().putAll(weightTransforms);
     ret.getVisibleBiasTransforms().putAll(visibleBiasTransforms);
     ret.getHiddenBiasTransforms().putAll(hiddenBiasTransforms);
+    if (hiddenLayerSizes == null)     throw new IllegalStateException("Unable to build network, no hidden layer sizes defined");
+    ret.init();
     return ret;
   }
  catch (  InstantiationException|IllegalAccessException e) {

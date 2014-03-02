@@ -29,7 +29,7 @@
       }
     }
   }
- else   if (message instanceof UpdateMessage) {
+ else   if (message instanceof Updateable) {
     mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,message),getSelf());
   }
  else   if (message instanceof List || message instanceof Pair) {

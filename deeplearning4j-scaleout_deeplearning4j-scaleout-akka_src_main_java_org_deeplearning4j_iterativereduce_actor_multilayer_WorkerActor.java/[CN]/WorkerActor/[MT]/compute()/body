@@ -1,5 +1,14 @@
 {
   log.info("Training network");
+  while (network == null) {
+    log.info("Unable to process; waiting till network is initialized");
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
   network.trainNetwork(this.getCombinedInput(),this.getOutcomes(),extraParams);
   return new UpdateableImpl(network);
 }

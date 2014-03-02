@@ -7,10 +7,9 @@
     List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
     updateTraining(input);
   }
- else   if (message instanceof UpdateMessage) {
-    UpdateMessage<E> m=(UpdateMessage<E>)message;
+ else   if (message instanceof Updateable) {
     log.info("Updating worker");
-    results=m.getUpdateable().get();
+    results=(E)message;
   }
  else   unhandled(message);
 }
