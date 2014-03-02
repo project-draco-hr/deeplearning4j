@@ -3,13 +3,4 @@
   this.maxReset=maxReset;
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(FINETUNE,getSelf()),getSelf());
-  iterChecker=Executors.newScheduledThreadPool(1);
-  iterChecker.scheduleAtFixedRate(new Runnable(){
-    @Override public void run(){
-      if (BatchActor.this.maxReset == numTimesReset) {
-        log.info("Shutting down via batch actor and max resets");
-      }
-    }
-  }
-,10,60,TimeUnit.SECONDS);
 }
