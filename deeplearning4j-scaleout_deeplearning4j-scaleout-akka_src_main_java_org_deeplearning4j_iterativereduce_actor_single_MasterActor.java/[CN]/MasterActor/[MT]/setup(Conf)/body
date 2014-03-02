@@ -1,7 +1,7 @@
 {
   RandomGenerator rng=new MersenneTwister(conf.getSeed());
   @SuppressWarnings("unchecked") BaseNeuralNetwork network=new BaseNeuralNetwork.Builder<>().withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).withRandom(rng).withL2(conf.getL2()).withMomentum(conf.getMomentum()).numberOfVisible(conf.getnIn()).numHidden(conf.getnOut()).build();
-  context().system().actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
+  context().system().actorOf(Props.create(ModelSavingActor.class,"nn-model.bin"),",model-saver");
   Address masterAddress=Cluster.get(context().system()).selfAddress();
   ActorNetworkRunner.startWorker(masterAddress,conf);
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);

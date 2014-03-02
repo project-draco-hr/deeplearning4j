@@ -1,6 +1,3 @@
 {
-  String name;
-  name=System.getProperty("user.name");
-  if (name == null)   name="hdfs";
-  return name;
+  return "hdfs";
 }

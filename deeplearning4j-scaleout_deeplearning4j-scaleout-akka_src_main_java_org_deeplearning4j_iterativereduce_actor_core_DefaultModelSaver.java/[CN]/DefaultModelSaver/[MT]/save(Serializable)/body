@@ -1,0 +1,10 @@
+{
+  if (rewrite) {
+    String path=file.getAbsolutePath();
+    if (file.exists()) {
+      file.renameTo(new File(file.getParentFile(),file.getName() + "-" + System.currentTimeMillis()));
+    }
+    file=new File(path);
+  }
+  SerializationUtils.saveObject(ser,file);
+}

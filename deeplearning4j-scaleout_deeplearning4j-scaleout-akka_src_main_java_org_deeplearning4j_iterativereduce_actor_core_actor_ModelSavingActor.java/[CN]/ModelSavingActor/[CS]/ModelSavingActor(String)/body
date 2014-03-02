@@ -1,3 +1,4 @@
 {
   this.pathToSave=pathToSave;
+  modelSaver=new DefaultModelSaver(new File(pathToSave));
 }

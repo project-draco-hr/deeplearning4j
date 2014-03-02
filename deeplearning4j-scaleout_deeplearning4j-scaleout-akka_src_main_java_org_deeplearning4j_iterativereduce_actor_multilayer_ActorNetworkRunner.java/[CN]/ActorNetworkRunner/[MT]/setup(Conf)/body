@@ -15,7 +15,7 @@
     }
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     log.info("Starting model saver");
-    ActorRef ref=system.actorOf(Props.create(new ModelSavingActor.ModelSavingActorFactory("nn-model.bin")),",model-saver");
+    ActorRef ref=system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
     Cluster.get(system).join(masterAddress);
     log.info("Setup master with epochs " + epochs);
   }
