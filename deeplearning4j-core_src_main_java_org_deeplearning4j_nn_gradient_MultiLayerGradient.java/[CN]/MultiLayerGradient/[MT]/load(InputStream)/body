@@ -1,0 +1,5 @@
+{
+  MultiLayerGradient read=SerializationUtils.readObject(is);
+  this.gradients=read.gradients;
+  this.logRegGradient=read.logRegGradient;
+}

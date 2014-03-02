@@ -1,0 +1,12 @@
+{
+  try {
+    ObjectInputStream ois=new ObjectInputStream(is);
+    NeuralNetworkGradient g=(NeuralNetworkGradient)ois.readObject();
+    this.wGradient=g.wGradient;
+    this.vBiasGradient=g.vBiasGradient;
+    this.hBiasGradient=g.hBiasGradient;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

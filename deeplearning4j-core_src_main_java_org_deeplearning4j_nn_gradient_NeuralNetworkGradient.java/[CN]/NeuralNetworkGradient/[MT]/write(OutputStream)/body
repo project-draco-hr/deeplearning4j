@@ -1,0 +1,10 @@
+{
+  ObjectOutputStream os2;
+  try {
+    os2=new ObjectOutputStream(os);
+    os2.writeObject(this);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

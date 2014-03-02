@@ -1,0 +1,8 @@
+{
+  List<NeuralNetworkGradient> gradient=new ArrayList<NeuralNetworkGradient>();
+  for (  NeuralNetwork network : layers) {
+    gradient.add(network.getGradient(params));
+  }
+  LogisticRegressionGradient g2=logLayer.getGradient(lr);
+  return new MultiLayerGradient(gradient,g2);
+}

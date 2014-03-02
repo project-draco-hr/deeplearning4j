@@ -8,8 +8,8 @@
   }
  else   if (message instanceof FinetuneMessage) {
     FinetuneMessage m=(FinetuneMessage)message;
-    UpdateableImpl result=(UpdateableImpl)m.getUpdateable();
-    final UpdateableImpl save=SerializationUtils.clone(result);
+    UpdateableGradientImpl result=(UpdateableGradientImpl)m.getUpdateable();
+    final UpdateableGradientImpl save=SerializationUtils.clone(result);
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
     log.info("Broadcasting another dataset");
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,result),mediator);
