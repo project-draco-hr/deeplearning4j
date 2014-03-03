@@ -8,7 +8,7 @@
  else   if (message instanceof FinetuneMessage) {
     FinetuneMessage m=(FinetuneMessage)message;
     UpdateableImpl result=(UpdateableImpl)m.getUpdateable();
-    final UpdateableImpl save=SerializationUtils.clone(result);
+    UpdateableImpl save=SerializationUtils.clone(result);
     log.info("Saving model");
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
     if (iter.hasNext()) {

@@ -4,6 +4,7 @@
   log.info("Starting worker");
   ActorNetworkRunner.startWorker(masterAddress,c);
   log.info("Broadcasting initial master network");
+  BaseMultiLayerNetwork network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).build();
+  masterResults=new UpdateableImpl(network);
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,conf.getPretrainEpochs()),mediator);
 }
