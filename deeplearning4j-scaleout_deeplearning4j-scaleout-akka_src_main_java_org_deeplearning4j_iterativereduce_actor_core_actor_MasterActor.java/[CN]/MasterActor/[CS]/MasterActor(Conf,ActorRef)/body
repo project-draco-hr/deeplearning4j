@@ -16,7 +16,7 @@
       }
       try {
         BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(save));
-        Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)masterResults;
+        @SuppressWarnings("unchecked") Updateable<? extends Persistable> u=(Updateable<? extends Persistable>)masterResults;
         u.get().write(bos);
         bos.flush();
         bos.close();

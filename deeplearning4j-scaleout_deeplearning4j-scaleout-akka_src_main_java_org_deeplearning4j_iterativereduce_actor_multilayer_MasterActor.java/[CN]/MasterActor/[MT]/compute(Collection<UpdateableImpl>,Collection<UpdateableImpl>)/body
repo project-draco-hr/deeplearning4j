@@ -1,6 +1,7 @@
 {
   DeepLearningAccumulator acc=new DeepLearningAccumulator();
   for (  UpdateableImpl m : workerUpdates)   acc.accumulate(m.get());
-  masterResults.set(acc.averaged());
+  if (masterResults == null)   masterResults=new UpdateableImpl(acc.averaged());
+ else   masterResults.set(acc.averaged());
   return masterResults;
 }

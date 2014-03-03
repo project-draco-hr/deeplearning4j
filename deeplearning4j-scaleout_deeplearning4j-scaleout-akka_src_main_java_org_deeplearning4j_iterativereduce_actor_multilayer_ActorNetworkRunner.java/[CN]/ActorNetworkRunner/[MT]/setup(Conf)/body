@@ -1,6 +1,5 @@
 {
   system=ActorSystem.create(systemName);
-  system.actorOf(Props.create(SimpleClusterListener.class),"clusterListener");
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getPretrainEpochs();
   if (type.equals("master")) {
@@ -15,13 +14,13 @@
     }
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     log.info("Starting model saver");
-    ActorRef ref=system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
+    system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
     Cluster.get(system).join(masterAddress);
     log.info("Setup master with epochs " + epochs);
   }
  else {
     Conf c=conf.copy();
-    ActorRef worker=startWorker(masterAddress,c);
+    startWorker(masterAddress,c);
     try {
       Thread.sleep(30000);
     }
@@ -32,7 +31,7 @@
     log.info("Setup worker nodes");
   }
   conf.setMasterUrl(getMasterAddress().toString());
-  scala.concurrent.Future<Void> f=Futures.future(new Callable<Void>(){
+  Future<Void> f=Futures.future(new Callable<Void>(){
     @Override public Void call() throws Exception {
       log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
       ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);

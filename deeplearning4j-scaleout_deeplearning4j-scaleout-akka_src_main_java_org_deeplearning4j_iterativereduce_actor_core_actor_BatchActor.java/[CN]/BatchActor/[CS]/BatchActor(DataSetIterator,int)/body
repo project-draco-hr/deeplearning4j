@@ -1,6 +1,0 @@
-{
-  this.iter=iter;
-  this.maxReset=maxReset;
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Subscribe(FINETUNE,getSelf()),getSelf());
-}

@@ -1,12 +1,9 @@
 {
   ActorSystem system=ActorSystem.create(systemName);
-  Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
-  initialContacts.add(system.actorSelection(contactAddress + "/user/receptionist"));
-  ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
-  Props p=WorkerActor.propsFor(clusterClient,conf);
+  Props p=WorkerActor.propsFor(conf);
   int cores=Runtime.getRuntime().availableProcessors();
-  ActorRef ref=system.actorOf(new RoundRobinPool(cores).props(p),"worker");
   log.info("Worker joining cluster");
   Cluster.get(system).join(contactAddress);
+  ActorRef ref=system.actorOf(ClusterSingletonManager.defaultProps(new RoundRobinPool(cores).props(p),"active",PoisonPill.getInstance(),"worker"));
   return ref;
 }

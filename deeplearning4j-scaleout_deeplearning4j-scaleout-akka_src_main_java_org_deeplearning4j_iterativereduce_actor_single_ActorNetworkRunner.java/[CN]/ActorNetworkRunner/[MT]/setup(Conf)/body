@@ -1,6 +1,5 @@
 {
   system=ActorSystem.create(systemName);
-  system.actorOf(Props.create(SimpleClusterListener.class),"clusterListener");
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getPretrainEpochs();
   if (type.equals("master")) {

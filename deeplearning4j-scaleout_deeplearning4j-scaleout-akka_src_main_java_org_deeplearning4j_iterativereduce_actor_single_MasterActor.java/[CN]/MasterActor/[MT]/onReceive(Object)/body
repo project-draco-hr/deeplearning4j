@@ -34,17 +34,17 @@
   }
  else   if (message instanceof List || message instanceof Pair) {
     if (message instanceof List) {
-      List<Pair<DoubleMatrix,DoubleMatrix>> list=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
+      List<DataSet> list=(List<DataSet>)message;
       splitListIntoRows(list);
       sendToWorkers(list);
     }
  else     if (message instanceof Pair) {
-      Pair<DoubleMatrix,DoubleMatrix> pair=(Pair<DoubleMatrix,DoubleMatrix>)message;
+      DataSet pair=(DataSet)message;
       List<DoubleMatrix> inputs=pair.getFirst().rowsAsList();
       List<DoubleMatrix> labels=pair.getSecond().rowsAsList();
-      List<Pair<DoubleMatrix,DoubleMatrix>> pairs=new ArrayList<>();
+      List<DataSet> pairs=new ArrayList<>();
       for (int i=0; i < inputs.size(); i++) {
-        pairs.add(new Pair<>(inputs.get(i),labels.get(i)));
+        pairs.add(new DataSet(inputs.get(i),labels.get(i)));
       }
       sendToWorkers(pairs);
     }
