@@ -10,15 +10,18 @@
   Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
     @Override public UpdateableImpl call() throws Exception {
       UpdateableImpl work=compute();
+      log.info("Updating parent actor...");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
       return work;
     }
   }
 ,getContext().dispatcher());
   f.onComplete(new OnComplete<UpdateableImpl>(){
     @Override public void onComplete(    Throwable arg0,    UpdateableImpl work) throws Throwable {
-      if (arg0 != null)       throw arg0;
-      log.info("Updating parent actor...");
-      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+      if (arg0 != null) {
+        log.error("Unable to process work ",arg0);
+        throw arg0;
+      }
     }
   }
 ,context().dispatcher());

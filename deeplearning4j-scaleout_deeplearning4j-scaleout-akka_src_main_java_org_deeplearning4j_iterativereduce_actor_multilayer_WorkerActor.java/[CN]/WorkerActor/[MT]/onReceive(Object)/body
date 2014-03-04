@@ -15,7 +15,7 @@
       log.warn("Unable to initialize network; network was null");
       throw new IllegalArgumentException("Network was null");
     }
-    this.network=m.get().clone();
+    setNetwork(m.get().clone());
   }
  else   unhandled(message);
 }
