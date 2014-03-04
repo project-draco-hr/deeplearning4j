@@ -1,5 +1,0 @@
-{
-  currEpochs++;
-  this.result=result;
-  mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.FINETUNE,new FinetuneMessage(result)),mediator);
-}

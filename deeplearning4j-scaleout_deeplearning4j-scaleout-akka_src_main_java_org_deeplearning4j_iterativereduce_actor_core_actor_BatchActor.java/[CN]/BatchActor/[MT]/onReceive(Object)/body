@@ -5,8 +5,8 @@
  else   if (message instanceof ResetMessage) {
     iter.reset();
   }
- else   if (message instanceof FinetuneMessage) {
-    FinetuneMessage m=(FinetuneMessage)message;
+ else   if (message instanceof MoreWorkMessage) {
+    MoreWorkMessage m=(MoreWorkMessage)message;
     UpdateableImpl result=(UpdateableImpl)m.getUpdateable();
     UpdateableImpl save=SerializationUtils.clone(result);
     log.info("Saving model");

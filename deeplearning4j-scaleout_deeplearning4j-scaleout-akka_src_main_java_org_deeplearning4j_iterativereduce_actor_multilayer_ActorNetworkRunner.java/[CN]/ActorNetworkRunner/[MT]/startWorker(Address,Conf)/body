@@ -1,9 +1,0 @@
-{
-  ActorSystem system=ActorSystem.create(systemName);
-  Props p=WorkerActor.propsFor(conf);
-  int cores=Runtime.getRuntime().availableProcessors();
-  log.info("Worker joining cluster");
-  Cluster.get(system).join(contactAddress);
-  ActorRef ref=system.actorOf(ClusterSingletonManager.defaultProps(new RoundRobinPool(cores).props(p),"active",PoisonPill.getInstance(),"worker"));
-  return ref;
-}

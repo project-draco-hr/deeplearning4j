@@ -1,8 +1,3 @@
 {
-  this.conf=conf;
-  this.batchActor=batchActor;
-  mediator.tell(new Put(getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
-  setup(conf);
+  this(conf,batchActor,null);
 }

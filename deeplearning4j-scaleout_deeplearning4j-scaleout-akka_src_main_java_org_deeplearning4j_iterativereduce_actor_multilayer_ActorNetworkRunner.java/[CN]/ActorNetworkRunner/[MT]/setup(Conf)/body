@@ -19,8 +19,11 @@
     log.info("Setup master with epochs " + epochs);
   }
  else {
-    Conf c=conf.copy();
-    startWorker(masterAddress,c);
+    log.info("Starting workers");
+    ActorSystem system=ActorSystem.create(systemName);
+    Props p=WorkerActor.propsFor(conf);
+    int cores=Runtime.getRuntime().availableProcessors();
+    system.actorOf(new RoundRobinPool(cores).props(p));
     try {
       Thread.sleep(30000);
     }

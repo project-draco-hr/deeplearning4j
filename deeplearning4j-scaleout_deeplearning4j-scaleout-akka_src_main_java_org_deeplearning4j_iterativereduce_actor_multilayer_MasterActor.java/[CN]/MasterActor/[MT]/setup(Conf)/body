@@ -1,10 +1,22 @@
 {
-  Conf c=conf.copy();
-  Address masterAddress=Cluster.get(context().system()).selfAddress();
-  log.info("Starting worker");
-  ActorNetworkRunner.startWorker(masterAddress,c);
+  log.info("Starting workers");
+  ActorSystem system=ActorSystem.create(context().system().name());
+  Props p=WorkerActor.propsFor(conf);
+  int cores=Runtime.getRuntime().availableProcessors();
+  system.actorOf(new RoundRobinPool(cores).props(p));
+  try {
+    Thread.sleep(15000);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
   log.info("Broadcasting initial master network");
-  BaseMultiLayerNetwork network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).build();
+  BaseMultiLayerNetwork network=this.network == null ? new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).build() : this.network;
   masterResults=new UpdateableImpl(network);
-  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+  Cluster.get(context().system()).registerOnMemberUp(new Runnable(){
+    @Override public void run(){
+      mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+    }
+  }
+);
 }
