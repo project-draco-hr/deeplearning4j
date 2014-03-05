@@ -1,6 +1,6 @@
 {
   RandomGenerator rng=new SynchronizedRandomGenerator(new MersenneTwister(conf.getSeed()));
-  @SuppressWarnings("unchecked") BaseNeuralNetwork network=new BaseNeuralNetwork.Builder<>().withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).withRandom(rng).withL2(conf.getL2()).withMomentum(conf.getMomentum()).numberOfVisible(conf.getnIn()).numHidden(conf.getnOut()).build();
+  @SuppressWarnings("unchecked") BaseNeuralNetwork network=new BaseNeuralNetwork.Builder<>().withClazz((Class<? extends BaseNeuralNetwork>)conf.getNeuralNetworkClazz()).withRandom(rng).withL2(conf.getL2()).renderWeights(conf.getRenderWeightEpochs()).withMomentum(conf.getMomentum()).numberOfVisible(conf.getnIn()).numHidden(conf.getnOut()).build();
   context().system().actorOf(Props.create(ModelSavingActor.class,"nn-model.bin"),",model-saver");
   Address masterAddress=Cluster.get(context().system()).selfAddress();
   ActorNetworkRunner.startWorker(masterAddress,conf);
