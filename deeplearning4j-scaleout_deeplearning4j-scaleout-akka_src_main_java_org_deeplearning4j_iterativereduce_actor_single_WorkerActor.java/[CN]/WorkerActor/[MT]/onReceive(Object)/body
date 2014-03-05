@@ -7,6 +7,10 @@
     List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
     updateTraining(input);
   }
+ else   if (message instanceof NeuralNetwork) {
+    this.network=(BaseNeuralNetwork)message;
+    log.info("Set network");
+  }
  else   if (message instanceof Updateable) {
     workerResult=(UpdateableSingleImpl)message;
     this.network=workerResult.get();
