@@ -3,6 +3,7 @@
   layer.b=b.dup();
   layer.W=W.transpose();
   if (input != null)   layer.input=input.transpose();
+  if (dist != null)   layer.dist=dist;
   layer.activationFunction=activationFunction;
   layer.nOut=nIn;
   layer.nIn=nOut;

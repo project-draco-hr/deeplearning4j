@@ -2,18 +2,17 @@
   DoubleMatrix layerInput=input;
   int inputSize;
   if (nLayers < 1)   throw new IllegalStateException("Unable to create network layers; number specified is less than 1");
+  if (this.dist == null)   dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   this.layers=new NeuralNetwork[nLayers];
   for (int i=0; i < this.nLayers; i++) {
     if (i == 0)     inputSize=this.nIns;
  else     inputSize=this.hiddenLayerSizes[i - 1];
     if (i == 0) {
-      this.sigmoidLayers[i]=new HiddenLayer(inputSize,this.hiddenLayerSizes[i],null,null,rng,layerInput);
-      sigmoidLayers[i].setActivationFunction(activation);
+      sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
     }
  else {
       if (this.input != null)       layerInput=sigmoidLayers[i - 1].sample_h_given_v();
-      this.sigmoidLayers[i]=new HiddenLayer(inputSize,this.hiddenLayerSizes[i],null,null,rng,layerInput);
-      sigmoidLayers[i].setActivationFunction(activation);
+      sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
     }
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
   }
