@@ -1,0 +1,5 @@
+{
+  File outputfile=new File(imageName);
+  if (!outputfile.exists())   outputfile.createNewFile();
+  ImageIO.write(img,"png",outputfile);
+}

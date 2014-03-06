@@ -1,0 +1,5 @@
+{
+  BigDecimal bd=new BigDecimal(unrounded);
+  BigDecimal rounded=bd.setScale(precision,roundingMode);
+  return rounded.doubleValue();
+}
