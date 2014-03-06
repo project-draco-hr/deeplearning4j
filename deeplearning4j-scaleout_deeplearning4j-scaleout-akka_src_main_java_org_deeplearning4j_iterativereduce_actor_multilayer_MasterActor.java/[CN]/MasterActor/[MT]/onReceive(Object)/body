@@ -11,6 +11,10 @@
     log.info("Added worker " + message.toString());
     this.addWorker((WorkerState)message);
   }
+ else   if (message instanceof NeedsModelMessage) {
+    log.info("Sending networks over");
+    getSender().tell(masterResults.get(),getSelf());
+  }
  else   if (message instanceof String) {
     WorkerState state=this.workers.get(message.toString());
     if (state == null) {
