@@ -8,7 +8,7 @@
     updateTraining(input);
   }
  else   if (message instanceof BaseMultiLayerNetwork) {
-    this.network=(BaseMultiLayerNetwork)message;
+    setNetwork((BaseMultiLayerNetwork)message);
     log.info("Set network");
   }
  else   if (message instanceof Updateable) {

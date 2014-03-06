@@ -8,7 +8,14 @@
     Future<Void> f=Futures.future(new Callable<Void>(){
       @Override public Void call() throws Exception {
         log.info("Sending off work for batch " + j);
-        mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,new ArrayList<>(splitList.get(j))),getSelf());
+        for (        WorkerState state : workers.values()) {
+          if (state.isAvailable()) {
+            state.getRef().tell(new ArrayList<>(splitList.get(j)),getSelf());
+            log.info("Delegated work to worker " + state.getWorkerId());
+            state.setAvailable(false);
+            break;
+          }
+        }
         return null;
       }
     }

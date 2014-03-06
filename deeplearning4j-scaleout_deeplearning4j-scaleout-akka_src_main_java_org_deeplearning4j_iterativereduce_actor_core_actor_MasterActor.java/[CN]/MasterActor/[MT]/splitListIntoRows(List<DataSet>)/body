@@ -3,7 +3,7 @@
   list.clear();
   log.info("Splitting list in to rows...");
   while (!q.isEmpty()) {
-    Pair<DoubleMatrix,DoubleMatrix> pair=q.poll();
+    DataSet pair=q.poll();
     List<DoubleMatrix> inputRows=pair.getFirst().rowsAsList();
     List<DoubleMatrix> labelRows=pair.getSecond().rowsAsList();
     if (inputRows.isEmpty())     throw new IllegalArgumentException("No input rows found");

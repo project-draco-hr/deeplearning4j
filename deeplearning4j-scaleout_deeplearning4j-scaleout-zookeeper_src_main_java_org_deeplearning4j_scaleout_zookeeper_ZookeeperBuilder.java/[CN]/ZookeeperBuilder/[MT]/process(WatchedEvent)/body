@@ -1,5 +1,7 @@
 {
-  if (event.getState() == KeeperState.SyncConnected)   latch.countDown();
+  if (event.getState() == KeeperState.SyncConnected) {
+    log.info("Synced");
+  }
  else   if (event.getState() == KeeperState.Disconnected) {
     keeper=build();
   }
@@ -7,4 +9,5 @@
     keeper=build();
   }
   if (watcher != null)   watcher.process(event);
+  log.info("Processed event...");
 }

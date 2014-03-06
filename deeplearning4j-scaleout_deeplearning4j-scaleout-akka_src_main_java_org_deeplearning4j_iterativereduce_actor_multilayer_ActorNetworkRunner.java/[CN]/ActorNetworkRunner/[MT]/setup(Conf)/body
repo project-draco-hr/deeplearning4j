@@ -16,14 +16,35 @@
     log.info("Starting model saver");
     system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
     Cluster.get(system).join(masterAddress);
+    conf.setMasterUrl(getMasterAddress().toString());
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
+        ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
+        reg.register();
+        reg.close();
+        return null;
+      }
+    }
+,system.dispatcher());
+    f.onComplete(new OnComplete<Void>(){
+      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
+        if (arg0 != null)         throw arg0;
+        log.info("Registered conf with zookeeper");
+      }
+    }
+,system.dispatcher());
     log.info("Setup master with epochs " + epochs);
   }
  else {
     log.info("Starting workers");
     ActorSystem system=ActorSystem.create(systemName);
     Props p=WorkerActor.propsFor(conf);
-    int cores=Runtime.getRuntime().availableProcessors();
-    system.actorOf(new RoundRobinPool(cores).props(p));
+    int totalInstances=100;
+    int maxInstancesPerNode=3;
+    boolean allowLocalRoutees=true;
+    String useRole="worker";
+    system.actorOf(new ClusterRouterPool(new AdaptiveLoadBalancingPool(SystemLoadAverageMetricsSelector.getInstance(),0),new ClusterRouterPoolSettings(totalInstances,maxInstancesPerNode,allowLocalRoutees,useRole)).props(p),"worker");
     try {
       Thread.sleep(30000);
     }
@@ -33,22 +54,4 @@
     Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
-  conf.setMasterUrl(getMasterAddress().toString());
-  Future<Void> f=Futures.future(new Callable<Void>(){
-    @Override public Void call() throws Exception {
-      log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
-      ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
-      reg.register();
-      reg.close();
-      return null;
-    }
-  }
-,system.dispatcher());
-  f.onComplete(new OnComplete<Void>(){
-    @Override public void onComplete(    Throwable arg0,    Void arg1) throws Throwable {
-      if (arg0 != null)       throw arg0;
-      log.info("Registered conf with zookeeper");
-    }
-  }
-,system.dispatcher());
 }

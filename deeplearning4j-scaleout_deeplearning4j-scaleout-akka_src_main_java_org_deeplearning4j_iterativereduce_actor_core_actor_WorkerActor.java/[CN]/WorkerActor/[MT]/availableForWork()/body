@@ -1,0 +1,3 @@
+{
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,id),getSelf());
+}

@@ -22,6 +22,7 @@
         log.error("Unable to process work ",arg0);
         throw arg0;
       }
+      availableForWork();
     }
   }
 ,context().dispatcher());

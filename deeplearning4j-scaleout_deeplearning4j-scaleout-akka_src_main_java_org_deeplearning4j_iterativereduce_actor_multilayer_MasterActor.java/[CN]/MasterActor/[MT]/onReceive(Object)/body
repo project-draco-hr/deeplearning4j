@@ -7,6 +7,22 @@
     listener=(EpochDoneListener<UpdateableImpl>)message;
     log.info("Set listener");
   }
+ else   if (message instanceof WorkerState) {
+    log.info("Added worker " + message.toString());
+    this.addWorker((WorkerState)message);
+  }
+ else   if (message instanceof String) {
+    WorkerState state=this.workers.get(message.toString());
+    if (state == null) {
+      state=new WorkerState(message.toString(),getSender());
+      state.setAvailable(true);
+      log.info("Worker " + state.getWorkerId() + " available for work");
+    }
+ else {
+      state.setAvailable(true);
+      log.info("Worker " + state.getWorkerId() + " available for work");
+    }
+  }
  else   if (message instanceof UpdateableImpl) {
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
