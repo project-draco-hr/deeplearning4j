@@ -5,7 +5,7 @@
     if (!hasMore())     break;
     if (man == null) {
       try {
-        man=new MnistManager("/tmp/MNIST/" + MnistFetcher.trainingFilesFilename_unzipped,"/tmp/MNIST/" + MnistFetcher.trainingFileLabelsFilename_unzipped);
+        man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
       }
  catch (      IOException e) {
         throw new RuntimeException(e);
