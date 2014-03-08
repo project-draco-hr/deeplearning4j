@@ -1,6 +1,6 @@
 {
   if (!hasMore())   throw new IllegalStateException("Unable to get more; there are no more images");
-  List<Pair<DoubleMatrix,DoubleMatrix>> toConvert=new ArrayList<>();
+  List<DataSet> toConvert=new ArrayList<>();
   for (int i=0; i < numExamples; i++, cursor++) {
     if (!hasMore())     break;
     if (man == null) {
@@ -29,7 +29,7 @@
         }
       }
       if (!found)       throw new IllegalStateException("Found a matrix without an outcome");
-      toConvert.add(new Pair<>(in,out));
+      toConvert.add(new DataSet(in,out));
     }
  catch (    IOException e) {
       throw new IllegalStateException("Unable to read image");

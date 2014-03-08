@@ -1,6 +1,6 @@
 {
   ClassPathResource resource=new ClassPathResource("/iris.dat");
-  List<String> lines=IOUtils.readLines(resource.getInputStream());
+  @SuppressWarnings("unchecked") List<String> lines=IOUtils.readLines(resource.getInputStream());
   Collections.shuffle(lines);
   Collections.rotate(lines,3);
   DoubleMatrix ret=DoubleMatrix.ones(lines.size(),4);
@@ -20,5 +20,5 @@
   ret=MatrixUtil.roundToTheNearest(ret,10000);
   MatrixUtil.discretizeColumns(ret,4);
   ret=ret.mul(0.01);
-  return new Pair<>(ret,new DoubleMatrix(outcomes));
+  return new DataSet(ret,new DoubleMatrix(outcomes));
 }

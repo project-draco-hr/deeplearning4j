@@ -1,6 +1,6 @@
 {
   ClassPathResource resource=new ClassPathResource("/iris.dat");
-  List<String> lines=IOUtils.readLines(resource.getInputStream());
+  @SuppressWarnings("unchecked") List<String> lines=IOUtils.readLines(resource.getInputStream());
   Collections.shuffle(lines);
   Collections.rotate(lines,3);
   Random rand=new Random(1);
