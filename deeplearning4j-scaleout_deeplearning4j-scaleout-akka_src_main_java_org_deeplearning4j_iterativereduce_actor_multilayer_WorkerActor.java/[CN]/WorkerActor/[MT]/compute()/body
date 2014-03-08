@@ -2,7 +2,7 @@
   log.info("Training network");
   while (getNetwork() == null) {
     log.info("Network is null, this worker has recently joined the cluster. Asking master for a copy of the current network");
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new NeedsModelMessage()),getSelf());
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new NeedsModelMessage(id)),getSelf());
     try {
       Thread.sleep(15000);
     }

@@ -1,0 +1,4 @@
+{
+  cluster.subscribe(getSelf(),MemberEvent.class);
+  log.info("Subscribed to cluster events");
+}

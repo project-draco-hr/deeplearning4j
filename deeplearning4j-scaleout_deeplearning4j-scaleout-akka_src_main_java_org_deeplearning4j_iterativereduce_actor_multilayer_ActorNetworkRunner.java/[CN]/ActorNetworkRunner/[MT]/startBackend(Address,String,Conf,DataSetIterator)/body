@@ -7,6 +7,6 @@
   log.info("Started batch actor");
   Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
   Cluster.get(system).join(realJoinAddress);
-  system.actorOf(ClusterSingletonManager.defaultProps(masterProps,"active",PoisonPill.getInstance(),"master"));
+  masterActor=system.actorOf(ClusterSingletonManager.defaultProps(masterProps,"active",PoisonPill.getInstance(),"master"));
   return realJoinAddress;
 }

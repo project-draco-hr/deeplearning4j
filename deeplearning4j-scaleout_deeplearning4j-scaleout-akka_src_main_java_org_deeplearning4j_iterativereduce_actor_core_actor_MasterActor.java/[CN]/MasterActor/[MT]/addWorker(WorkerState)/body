@@ -1,3 +1,6 @@
 {
-  this.workers.put(state.getWorkerId(),state);
+  if (!this.workers.containsKey(state.getWorkerId())) {
+    this.workers.put(state.getWorkerId(),state);
+    log.info("Added worker with id " + state.getWorkerId());
+  }
 }

@@ -1,14 +1,11 @@
 {
   log.info("Starting workers");
-  ActorSystem system=ActorSystem.create(context().system().name());
-  Props p=new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(WorkerActor.propsFor(conf));
-  int totalInstances=100;
-  int maxInstancesPerNode=3;
-  boolean allowLocalRoutees=true;
-  String useRole="worker";
-  system.actorOf(new ClusterRouterPool(new AdaptiveLoadBalancingPool(SystemLoadAverageMetricsSelector.getInstance(),0),new ClusterRouterPoolSettings(totalInstances,maxInstancesPerNode,allowLocalRoutees,useRole)).props(p),"worker");
+  ActorSystem system=context().system();
+  RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
+  Props p=pool.props(WorkerActor.propsFor(conf));
+  system.actorOf(p,"worker");
   try {
-    Thread.sleep(15000);
+    Thread.sleep(30000);
   }
  catch (  InterruptedException e) {
     Thread.currentThread().interrupt();

@@ -1,0 +1,10 @@
+{
+  setup(conf);
+  mediator.tell(new Put(getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
+  id=generateId();
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
+  this.registerTask=getContext().system().scheduler().schedule(Duration.Zero(),Duration.fromNanos(100000),context().system().actorSelection(conf.getMasterAbsPath()).anchor(),register(),context().dispatcher(),getSelf());
+  log.info("Registered with master " + id + " at master "+ conf.getMasterAbsPath());
+}

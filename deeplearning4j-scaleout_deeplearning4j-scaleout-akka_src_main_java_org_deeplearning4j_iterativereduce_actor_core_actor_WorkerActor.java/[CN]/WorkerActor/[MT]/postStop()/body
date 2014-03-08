@@ -2,4 +2,5 @@
   super.postStop();
   log.info("Post stop on worker actor");
   cluster.unsubscribe(getSelf());
+  registerTask.cancel();
 }

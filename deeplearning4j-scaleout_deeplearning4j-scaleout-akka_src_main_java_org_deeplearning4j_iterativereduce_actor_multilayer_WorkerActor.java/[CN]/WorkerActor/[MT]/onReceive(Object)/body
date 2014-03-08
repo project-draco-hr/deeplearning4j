@@ -11,6 +11,9 @@
     setNetwork((BaseMultiLayerNetwork)message);
     log.info("Set network");
   }
+ else   if (message instanceof Ack) {
+    log.info("Ack from master on worker " + id);
+  }
  else   if (message instanceof Updateable) {
     UpdateableImpl m=(UpdateableImpl)message;
     setWorkerUpdateable(m);

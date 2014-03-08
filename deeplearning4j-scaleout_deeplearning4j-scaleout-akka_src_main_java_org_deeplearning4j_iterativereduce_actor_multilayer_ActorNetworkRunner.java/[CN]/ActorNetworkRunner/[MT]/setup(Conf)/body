@@ -17,6 +17,8 @@
     system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
     Cluster.get(system).join(masterAddress);
     conf.setMasterUrl(getMasterAddress().toString());
+    conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));
+    log.info("Stored master path of " + conf.getMasterAbsPath());
     Future<Void> f=Futures.future(new Callable<Void>(){
       @Override public Void call() throws Exception {
         log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
@@ -37,14 +39,15 @@
     log.info("Setup master with epochs " + epochs);
   }
  else {
+    Config conf2=ConfigFactory.parseString(String.format("akka.cluster.seed-nodes = [%s]",conf.getMasterUrl())).withFallback(ConfigFactory.load());
     log.info("Starting workers");
-    ActorSystem system=ActorSystem.create(systemName);
-    Props p=WorkerActor.propsFor(conf);
-    int totalInstances=100;
-    int maxInstancesPerNode=3;
-    boolean allowLocalRoutees=true;
-    String useRole="worker";
-    system.actorOf(new ClusterRouterPool(new AdaptiveLoadBalancingPool(SystemLoadAverageMetricsSelector.getInstance(),0),new ClusterRouterPoolSettings(totalInstances,maxInstancesPerNode,allowLocalRoutees,useRole)).props(p),"worker");
+    ActorSystem system=ActorSystem.create(systemName,conf2);
+    system.actorOf(Props.create(ClusterListener.class));
+    Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
+    initialContacts.add(system.actorSelection(masterAddress + "/user/receptionist"));
+    ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
+    Props p=WorkerActor.propsFor(clusterClient,conf);
+    system.actorOf(p,"worker");
     try {
       Thread.sleep(30000);
     }

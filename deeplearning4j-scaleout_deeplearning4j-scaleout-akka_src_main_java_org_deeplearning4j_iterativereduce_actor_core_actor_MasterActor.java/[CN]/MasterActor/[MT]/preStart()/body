@@ -1,4 +1,7 @@
 {
   super.preStart();
-  log.info("Pre start on master");
+  mediator.tell(new Put(getSelf()),getSelf());
+  ActorRef self=self();
+  log.info("Setup master with path " + self.path());
+  log.info("Pre start on master " + this.self().path().toString());
 }

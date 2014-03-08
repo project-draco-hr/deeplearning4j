@@ -13,6 +13,7 @@
           for (          WorkerState state : workers.values()) {
             if (state.isAvailable()) {
               state.getRef().tell(new ArrayList<>(splitList.get(j)),getSelf());
+              mediator.tell(new DistributedPubSubMediator.Publish(state.getWorkerId(),new ArrayList<>(splitList.get(j))),getSelf());
               log.info("Delegated work to worker " + state.getWorkerId());
               state.setAvailable(false);
               foundWork=true;
