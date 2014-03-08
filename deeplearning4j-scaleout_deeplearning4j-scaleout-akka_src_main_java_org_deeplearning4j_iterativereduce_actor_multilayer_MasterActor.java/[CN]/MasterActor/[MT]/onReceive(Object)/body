@@ -14,6 +14,10 @@
     log.info("Sending networks over");
     getSender().tell(masterResults.get(),getSelf());
   }
+ else   if (message instanceof ClearWorker) {
+    log.info("Removing worker with id " + ((ClearWorker)message).getId());
+    this.workers.remove(((ClearWorker)message).getId());
+  }
  else   if (message instanceof String) {
     WorkerState state=this.workers.get(message.toString());
     if (state == null) {
