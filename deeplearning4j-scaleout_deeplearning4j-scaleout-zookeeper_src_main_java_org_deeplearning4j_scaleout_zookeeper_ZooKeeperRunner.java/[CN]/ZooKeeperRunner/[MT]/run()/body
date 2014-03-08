@@ -1,0 +1,9 @@
+{
+  File dir=new File(dataDirectory,"zookeeper").getAbsoluteFile();
+  NIOServerCnxnFactory factory=new NIOServerCnxnFactory();
+  ZooKeeperServer server=new ZooKeeperServer(dir,dir,tickTime);
+  factory.setZooKeeperServer(server);
+  factory.setMaxClientCnxnsPerHost(numConnections);
+  factory.configure(new InetSocketAddress(clientPort),numConnections);
+  factory.startup(server);
+}
