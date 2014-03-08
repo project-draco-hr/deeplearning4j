@@ -1,5 +1,6 @@
 {
   system=ActorSystem.create(systemName);
+  addShutDownForSystem(system);
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getPretrainEpochs();
   if (type.equals("master")) {

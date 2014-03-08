@@ -1,0 +1,9 @@
+{
+  Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
+    @Override public void run(){
+      Cluster cluster=Cluster.get(system);
+      cluster.leave(cluster.selfAddress());
+    }
+  }
+));
+}

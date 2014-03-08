@@ -1,6 +1,7 @@
 {
   Config conf=ConfigFactory.parseString("akka.cluster.roles=[master,worker]").withFallback(ConfigFactory.load());
   ActorSystem system=ActorSystem.create(systemName,conf);
+  addShutDownForSystem(system);
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
   ActorRef batchActor=system.actorOf(pool.props(Props.create(BatchActor.class,iter)));
   Props masterProps=startingNetwork != null ? MasterActor.propsFor(c,batchActor,startingNetwork) : MasterActor.propsFor(c,batchActor);
