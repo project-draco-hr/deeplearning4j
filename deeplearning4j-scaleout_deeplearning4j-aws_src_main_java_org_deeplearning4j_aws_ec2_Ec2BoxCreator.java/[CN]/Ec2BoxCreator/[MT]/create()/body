@@ -1,0 +1,5 @@
+{
+  RunInstancesRequest runInstancesRequest=new RunInstancesRequest();
+  runInstancesRequest.withImageId(amiId).withInstanceType(size).withMinCount(1).withMaxCount(numBoxes);
+  getEc2().runInstances(runInstancesRequest);
+}
