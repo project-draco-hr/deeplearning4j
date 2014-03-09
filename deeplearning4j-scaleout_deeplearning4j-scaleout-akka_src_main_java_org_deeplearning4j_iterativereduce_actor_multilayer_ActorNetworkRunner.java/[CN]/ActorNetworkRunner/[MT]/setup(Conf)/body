@@ -51,7 +51,8 @@
     Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
     initialContacts.add(system.actorSelection(masterAddress + "/user/receptionist"));
     ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
-    Props p=WorkerActor.propsFor(clusterClient,conf);
+    RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
+    Props p=pool.props(WorkerActor.propsFor(clusterClient,conf));
     system.actorOf(p,"worker");
     try {
       Thread.sleep(30000);
