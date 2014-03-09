@@ -1,0 +1,10 @@
+{
+  AmazonS3 s3=getClient();
+  S3Object obj=s3.getObject(bucket,key);
+  InputStream is=obj.getObjectContent();
+  BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(to));
+  IOUtils.copy(is,bos);
+  bos.close();
+  is.close();
+  obj.close();
+}

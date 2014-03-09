@@ -1,0 +1,11 @@
+{
+  AmazonS3 client=getClient();
+  List<Bucket> buckets=client.listBuckets();
+  ObjectMetadata med=new ObjectMetadata();
+  for (  Bucket b : buckets)   if (b.getName().equals(bucketName)) {
+    client.putObject(bucketName,name,is,med);
+    return;
+  }
+  client.createBucket(bucketName);
+  client.putObject(bucketName,name,is,med);
+}

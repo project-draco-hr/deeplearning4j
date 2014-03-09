@@ -4,7 +4,7 @@
     log.info("Subscribed to " + ack.toString());
   }
  else   if (message instanceof List) {
-    List<Pair<DoubleMatrix,DoubleMatrix>> input=(List<Pair<DoubleMatrix,DoubleMatrix>>)message;
+    List<DataSet> input=(List<DataSet>)message;
     updateTraining(input);
   }
  else   if (message instanceof BaseMultiLayerNetwork) {

@@ -1,0 +1,10 @@
+{
+  AmazonS3 client=new AmazonS3Client(creds);
+  List<Bucket> buckets=client.listBuckets();
+  for (  Bucket b : buckets)   if (b.getName().equals(bucketName)) {
+    client.putObject(bucketName,file.getName(),file);
+    return;
+  }
+  client.createBucket(bucketName);
+  client.putObject(bucketName,file.getName(),file);
+}

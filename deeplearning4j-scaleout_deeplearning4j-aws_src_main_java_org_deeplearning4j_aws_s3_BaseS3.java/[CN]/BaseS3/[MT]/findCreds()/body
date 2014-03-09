@@ -1,0 +1,10 @@
+{
+  if (System.getProperty(ACCESS_KEY) != null && System.getProperty(ACCESS_SECRET) != null) {
+    accessKey=System.getProperty(ACCESS_KEY);
+    secretKey=System.getProperty(ACCESS_SECRET);
+  }
+ else   if (System.getenv(AWS_ACCESS_KEY) != null && System.getenv(AWS_SECRET_KEY) != null) {
+    accessKey=System.getenv(AWS_ACCESS_KEY);
+    secretKey=System.getenv(AWS_SECRET_KEY);
+  }
+}

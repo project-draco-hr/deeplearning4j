@@ -4,7 +4,7 @@
   mediator.tell(new Put(getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(id,getSelf()),getSelf());
-  heartbeat=context().system().scheduler().schedule(Duration.apply(10,TimeUnit.SECONDS),Duration.apply(1,TimeUnit.SECONDS),new Runnable(){
+  heartbeat=context().system().scheduler().schedule(Duration.apply(10,TimeUnit.SECONDS),Duration.apply(10,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
       log.info("Sending heartbeat to master");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,id),getSelf());

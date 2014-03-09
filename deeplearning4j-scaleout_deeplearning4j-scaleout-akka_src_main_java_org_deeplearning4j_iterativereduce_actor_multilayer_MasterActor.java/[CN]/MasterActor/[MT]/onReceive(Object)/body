@@ -32,7 +32,7 @@
       state=new WorkerState(message.toString(),getSender());
       state.setAvailable(true);
       log.info("Worker " + state.getWorkerId() + " available for work");
-      getSender().tell("",getSelf());
+      getSender().tell(new Ack(),getSelf());
     }
  else {
       state.setAvailable(true);
