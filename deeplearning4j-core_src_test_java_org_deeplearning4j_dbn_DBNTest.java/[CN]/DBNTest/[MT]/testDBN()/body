@@ -1,17 +1,15 @@
 {
-  int n=10;
-  DataSet d=MatrixUtil.xorData(n);
+  int n=50;
+  DataSet d=MatrixUtil.xorData(n,500);
   DoubleMatrix x=d.getFirst();
   DoubleMatrix y=d.getSecond();
-  RandomGenerator rng=new MersenneTwister(123);
-  double preTrainLr=0.001;
+  double preTrainLr=0.0001;
   int preTrainEpochs=1000;
   int k=1;
-  int nIns=2, nOuts=2;
-  int[] hiddenLayerSizes=new int[]{2,2,2};
-  double fineTuneLr=0.001;
+  int[] hiddenLayerSizes=new int[]{400,250,100};
+  double fineTuneLr=0.0001;
   int fineTuneEpochs=1000;
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(nIns).renderWeights(0).useRegularization(false).withMomentum(0).withDist(new NormalDistribution(0,0.001)).numberOfOutPuts(nOuts).withRng(rng).build();
+  DBN dbn=new DBN.Builder().forceEpochs().hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(d.numInputs()).useRegularization(false).numberOfOutPuts(d.numOutcomes()).build();
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix predict=dbn.predict(x);

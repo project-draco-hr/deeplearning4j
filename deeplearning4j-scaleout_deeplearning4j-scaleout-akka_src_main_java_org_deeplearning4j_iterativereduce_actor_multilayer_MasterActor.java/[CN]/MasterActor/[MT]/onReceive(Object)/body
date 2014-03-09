@@ -14,6 +14,14 @@
     log.info("Sending networks over");
     getSender().tell(masterResults.get(),getSelf());
   }
+ else   if (message instanceof DoneMessage) {
+    log.info("Received done message");
+    masterResults=this.compute(updates,updates);
+    if (listener != null)     listener.epochComplete(masterResults);
+    epochsComplete++;
+    updates.clear();
+    batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+  }
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());
     this.workers.remove(((ClearWorker)message).getId());
