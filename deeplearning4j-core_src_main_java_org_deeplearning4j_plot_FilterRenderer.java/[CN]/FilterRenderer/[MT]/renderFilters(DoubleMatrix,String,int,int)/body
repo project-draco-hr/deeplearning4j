@@ -32,6 +32,8 @@
   }
   try {
     saveImageToDisk(img,filename);
+    FilterPanel panel=new FilterPanel(img);
+    panel.setVisible(true);
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

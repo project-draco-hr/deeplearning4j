@@ -1,0 +1,6 @@
+{
+  this.bucket=bucket;
+  if (s3 == null)   s3=new S3Downloader();
+  currList=s3.listObjects(bucket);
+  currObjects=currList.getObjectSummaries();
+}

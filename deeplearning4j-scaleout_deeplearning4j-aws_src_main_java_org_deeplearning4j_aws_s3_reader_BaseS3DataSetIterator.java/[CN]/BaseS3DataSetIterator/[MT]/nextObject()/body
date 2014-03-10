@@ -1,0 +1,9 @@
+{
+  if (currIterator.hasNext())   return currIterator.next();
+ else   if (currBucket < buckets.size()) {
+    currBucket++;
+    currIterator=downloader.iterateBucket(buckets.get(currBucket));
+    return currIterator.next();
+  }
+  return null;
+}

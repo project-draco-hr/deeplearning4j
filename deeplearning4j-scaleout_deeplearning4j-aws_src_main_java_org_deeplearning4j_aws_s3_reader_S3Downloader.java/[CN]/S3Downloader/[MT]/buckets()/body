@@ -1,0 +1,7 @@
+{
+  List<String> ret=new ArrayList<String>();
+  AmazonS3 s3=getClient();
+  List<Bucket> buckets=s3.listBuckets();
+  for (  Bucket b : buckets)   ret.add(b.getName());
+  return ret;
+}

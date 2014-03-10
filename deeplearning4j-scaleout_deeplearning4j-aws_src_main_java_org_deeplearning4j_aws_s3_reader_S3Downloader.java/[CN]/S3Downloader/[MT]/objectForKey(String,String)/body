@@ -1,0 +1,6 @@
+{
+  AmazonS3 s3=getClient();
+  S3Object obj=s3.getObject(bucket,key);
+  InputStream is=obj.getObjectContent();
+  return is;
+}

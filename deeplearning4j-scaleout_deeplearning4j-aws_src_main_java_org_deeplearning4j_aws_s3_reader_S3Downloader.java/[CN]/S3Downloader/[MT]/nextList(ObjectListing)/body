@@ -1,0 +1,5 @@
+{
+  AmazonS3 s3=getClient();
+  if (list.isTruncated())   return s3.listNextBatchOfObjects(list);
+  return null;
+}

@@ -1,0 +1,13 @@
+{
+  AmazonS3 s3=getClient();
+  ObjectListing list=s3.listObjects(bucket);
+  for (  S3ObjectSummary summary : list.getObjectSummaries()) {
+    if (listener != null)     listener.onKey(s3,bucket,summary.getKey());
+  }
+  while (list.isTruncated()) {
+    list=s3.listNextBatchOfObjects(list);
+    for (    S3ObjectSummary summary : list.getObjectSummaries()) {
+      if (listener != null)       listener.onKey(s3,bucket,summary.getKey());
+    }
+  }
+}

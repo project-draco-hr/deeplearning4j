@@ -1,0 +1,6 @@
+{
+  downloader=new S3Downloader();
+  buckets=downloader.buckets();
+  currBucket=0;
+  currIterator=downloader.iterateBucket(buckets.get(currBucket));
+}

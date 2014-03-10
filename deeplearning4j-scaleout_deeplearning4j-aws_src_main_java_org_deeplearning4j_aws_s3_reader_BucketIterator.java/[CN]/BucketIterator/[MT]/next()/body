@@ -1,0 +1,16 @@
+{
+  if (currObject < currObjects.size()) {
+    InputStream ret=s3.objectForKey(bucket,currObjects.get(currObject).getKey());
+    currObject++;
+    return ret;
+  }
+ else   if (currList.isTruncated()) {
+    currList=s3.nextList(currList);
+    currObjects=currList.getObjectSummaries();
+    currObject=0;
+    InputStream ret=s3.objectForKey(bucket,currObjects.get(currObject).getKey());
+    currObject++;
+    return ret;
+  }
+  return null;
+}

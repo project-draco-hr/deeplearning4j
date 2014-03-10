@@ -1,0 +1,5 @@
+{
+  AmazonS3 s3=getClient();
+  ObjectListing list=s3.listObjects(bucket);
+  return list;
+}
