@@ -3,8 +3,12 @@
     DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
     log.info("Subscribed to " + ack.toString());
   }
- else   if (message instanceof List) {
-    List<DataSet> input=(List<DataSet>)message;
+ else   if (message instanceof Job) {
+    Job j=(Job)message;
+    log.info("Confirmation from " + j.getWorkerId() + " on work");
+    this.current=j;
+    List<DataSet> input=(List<DataSet>)j.getWork();
+    confirmWorking();
     updateTraining(input);
   }
  else   if (message instanceof BaseMultiLayerNetwork) {

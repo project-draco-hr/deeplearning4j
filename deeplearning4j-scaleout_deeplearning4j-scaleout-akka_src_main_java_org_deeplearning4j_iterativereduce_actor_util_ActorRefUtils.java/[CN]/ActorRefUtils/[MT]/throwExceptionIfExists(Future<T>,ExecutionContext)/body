@@ -1,0 +1,8 @@
+{
+  f.onComplete(new OnComplete<T>(){
+    @Override public void onComplete(    Throwable arg0,    T arg1) throws Throwable {
+      if (arg0 != null)       throw arg0;
+    }
+  }
+,context);
+}

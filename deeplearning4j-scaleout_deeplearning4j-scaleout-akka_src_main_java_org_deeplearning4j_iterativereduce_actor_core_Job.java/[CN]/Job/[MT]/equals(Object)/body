@@ -1,0 +1,16 @@
+{
+  if (this == obj)   return true;
+  if (obj == null)   return false;
+  if (getClass() != obj.getClass())   return false;
+  Job other=(Job)obj;
+  if (done != other.done)   return false;
+  if (work == null) {
+    if (other.work != null)     return false;
+  }
+ else   if (!work.equals(other.work))   return false;
+  if (workerId == null) {
+    if (other.workerId != null)     return false;
+  }
+ else   if (!workerId.equals(other.workerId))   return false;
+  return true;
+}

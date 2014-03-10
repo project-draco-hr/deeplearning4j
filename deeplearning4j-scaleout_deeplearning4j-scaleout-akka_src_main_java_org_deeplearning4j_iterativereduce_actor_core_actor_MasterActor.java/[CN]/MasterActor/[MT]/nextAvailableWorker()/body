@@ -1,0 +1,12 @@
+{
+  boolean foundWork=false;
+  while (!foundWork) {
+    for (    WorkerState state : workers.values()) {
+      if (state.isAvailable()) {
+        foundWork=true;
+        return state;
+      }
+    }
+  }
+  return null;
+}

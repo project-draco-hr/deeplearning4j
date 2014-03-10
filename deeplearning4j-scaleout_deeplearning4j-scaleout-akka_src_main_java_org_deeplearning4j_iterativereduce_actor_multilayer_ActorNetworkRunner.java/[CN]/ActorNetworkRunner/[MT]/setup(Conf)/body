@@ -1,6 +1,6 @@
 {
   system=ActorSystem.create(systemName);
-  addShutDownForSystem(system);
+  ActorRefUtils.addShutDownForSystem(system);
   mediator=DistributedPubSubExtension.get(system).mediator();
   epochs=conf.getPretrainEpochs();
   if (type.equals("master")) {
@@ -19,28 +19,7 @@
     Cluster.get(system).join(masterAddress);
     conf.setMasterUrl(getMasterAddress().toString());
     conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));
-    log.info("Stored master path of " + conf.getMasterAbsPath());
-    Future<Void> f=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        log.info("Registering with zookeeper; if the logging stops here, ensure zookeeper is started");
-        if (!PortTaken.portTaken(2181)) {
-          log.info("No zookeeper found; starting an embedded zookeeper");
-          startEmbeddedZooKeeper();
-        }
-        ZooKeeperConfigurationRegister reg=new ZooKeeperConfigurationRegister(conf,"master","localhost",2181);
-        reg.register();
-        reg.close();
-        return null;
-      }
-    }
-,system.dispatcher());
-    f.onComplete(new OnComplete<Void>(){
-      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
-        if (arg0 != null)         throw arg0;
-        log.info("Registered conf with zookeeper");
-      }
-    }
-,system.dispatcher());
+    ActorRefUtils.registerConfWithZooKeeper(conf,system);
     log.info("Setup master with epochs " + epochs);
   }
  else {
@@ -48,23 +27,6 @@
     Cluster cluster=Cluster.get(system);
     cluster.join(masterAddress);
     startWorker(masterAddress,c);
-    Config conf2=ConfigFactory.parseString(String.format("akka.cluster.seed-nodes = [%s]",conf.getMasterUrl())).withFallback(ConfigFactory.load());
-    log.info("Starting workers");
-    ActorSystem system=ActorSystem.create(systemName,conf2);
-    system.actorOf(Props.create(ClusterListener.class));
-    Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
-    initialContacts.add(system.actorSelection(masterAddress + "/user/receptionist"));
-    ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
-    RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
-    Props p=pool.props(WorkerActor.propsFor(clusterClient,conf));
-    system.actorOf(p,"worker");
-    try {
-      Thread.sleep(30000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
-    Cluster.get(system).join(masterAddress);
     log.info("Setup worker nodes");
   }
 }

@@ -3,10 +3,6 @@
     DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
     log.info("Subscribed " + ack.toString());
   }
- else   if (message instanceof EpochDoneListener) {
-    listener=(EpochDoneListener<UpdateableImpl>)message;
-    log.info("Set listener");
-  }
  else   if (message instanceof WorkerState) {
     this.addWorker((WorkerState)message);
   }
@@ -17,7 +13,6 @@
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
     masterResults=this.compute(updates,updates);
-    if (listener != null)     listener.epochComplete(masterResults);
     epochsComplete++;
     updates.clear();
     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
@@ -32,13 +27,12 @@
       state=new WorkerState(message.toString(),getSender());
       state.setAvailable(true);
       log.info("Worker " + state.getWorkerId() + " available for work");
-      getSender().tell(new Ack(),getSelf());
     }
  else {
       state.setAvailable(true);
       log.info("Worker " + state.getWorkerId() + " available for work");
     }
-    getSender().tell(new Ack(),getSelf());
+    getSender().tell(Ack.getInstance(),getSelf());
   }
  else   if (message instanceof UpdateableImpl) {
     UpdateableImpl up=(UpdateableImpl)message;
@@ -46,12 +40,22 @@
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
     if (updates.size() >= partition) {
       masterResults=this.compute(updates,updates);
-      if (listener != null)       listener.epochComplete(masterResults);
       epochsComplete++;
       batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
       updates.clear();
       log.info("Broadcasting weights");
       mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+    }
+  }
+ else   if (message instanceof Job) {
+    Job j=(Job)message;
+    if (!j.isDone()) {
+      currentJobs.put(j.getWorkerId(),j);
+      log.info("Ack from worker " + j.getWorkerId() + " on job");
+    }
+ else {
+      log.info("Job " + j.getWorkerId() + " finished");
+      currentJobs.remove(j.getWorkerId());
     }
   }
  else   if (message instanceof List || message instanceof Pair) {

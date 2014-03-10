@@ -7,10 +7,5 @@
     }
   }
 ,system.dispatcher());
-  f.onComplete(new OnComplete<Void>(){
-    @Override public void onComplete(    Throwable arg0,    Void arg1) throws Throwable {
-      if (arg0 != null)       throw arg0;
-    }
-  }
-,system.dispatcher());
+  throwExceptionIfExists(f,system.dispatcher());
 }

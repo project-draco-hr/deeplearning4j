@@ -16,14 +16,5 @@
     }
   }
 ,getContext().dispatcher());
-  f.onComplete(new OnComplete<UpdateableImpl>(){
-    @Override public void onComplete(    Throwable arg0,    UpdateableImpl work) throws Throwable {
-      if (arg0 != null) {
-        log.error("Unable to process work ",arg0);
-        throw arg0;
-      }
-      availableForWork();
-    }
-  }
-,context().dispatcher());
+  ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
 }

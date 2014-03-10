@@ -1,0 +1,6 @@
+{
+  current.setDone(true);
+  log.info("Finished work " + id);
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,current),getSelf());
+  current=null;
+}

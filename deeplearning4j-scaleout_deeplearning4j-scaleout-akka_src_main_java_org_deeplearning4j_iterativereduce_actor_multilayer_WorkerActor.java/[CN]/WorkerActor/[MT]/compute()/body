@@ -11,5 +11,6 @@
     }
   }
   getNetwork().trainNetwork(this.getCombinedInput(),this.getOutcomes(),extraParams);
+  finishedWork();
   return new UpdateableImpl(getNetwork());
 }

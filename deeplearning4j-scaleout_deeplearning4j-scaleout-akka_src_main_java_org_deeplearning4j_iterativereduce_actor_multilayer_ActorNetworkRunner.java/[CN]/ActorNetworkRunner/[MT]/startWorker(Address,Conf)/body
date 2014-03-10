@@ -1,7 +1,7 @@
 {
   Config conf2=ConfigFactory.parseString(String.format("akka.cluster.seed-nodes = [\"" + contactAddress.toString() + "\"]")).withFallback(ConfigFactory.load());
   final ActorSystem system=ActorSystem.create(systemName,conf2);
-  addShutDownForSystem(system);
+  ActorRefUtils.addShutDownForSystem(system);
   system.actorOf(Props.create(ClusterListener.class));
   log.info("Attempting to join node " + contactAddress);
   log.info("Starting workers");

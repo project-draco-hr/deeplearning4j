@@ -1,6 +1,6 @@
 {
   final ActorSystem system=ActorSystem.create(systemName);
-  addShutDownForSystem(system);
+  ActorRefUtils.addShutDownForSystem(system);
   system.actorOf(Props.create(ClusterListener.class));
   ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter),"batch");
   log.info("Started batch actor");
