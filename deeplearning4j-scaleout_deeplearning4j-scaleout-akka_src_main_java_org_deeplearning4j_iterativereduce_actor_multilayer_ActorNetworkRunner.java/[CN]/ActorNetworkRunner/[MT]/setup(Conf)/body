@@ -44,6 +44,10 @@
     log.info("Setup master with epochs " + epochs);
   }
  else {
+    Conf c=conf.copy();
+    Cluster cluster=Cluster.get(system);
+    cluster.join(masterAddress);
+    startWorker(masterAddress,c);
     Config conf2=ConfigFactory.parseString(String.format("akka.cluster.seed-nodes = [%s]",conf.getMasterUrl())).withFallback(ConfigFactory.load());
     log.info("Starting workers");
     ActorSystem system=ActorSystem.create(systemName,conf2);

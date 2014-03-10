@@ -1,0 +1,17 @@
+{
+  Config conf2=ConfigFactory.parseString(String.format("akka.cluster.seed-nodes = [\"" + contactAddress.toString() + "\"]")).withFallback(ConfigFactory.load());
+  final ActorSystem system=ActorSystem.create(systemName,conf2);
+  addShutDownForSystem(system);
+  system.actorOf(Props.create(ClusterListener.class));
+  log.info("Attempting to join node " + contactAddress);
+  log.info("Starting workers");
+  Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
+  initialContacts.add(system.actorSelection(contactAddress + "/user/"));
+  RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
+  ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
+  Props p=pool.props(WorkerActor.propsFor(clusterClient,conf));
+  system.actorOf(p,"worker");
+  Cluster cluster=Cluster.get(system);
+  cluster.join(contactAddress);
+  log.info("Worker joining cluster");
+}
