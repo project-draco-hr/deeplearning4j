@@ -39,6 +39,10 @@
       frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       FilterPanel panel=new FilterPanel(img);
       frame.add(panel);
+      Dimension d=new Dimension(numberCols * patchWidth,numPatchRows * patchHeight);
+      frame.setSize(d);
+      frame.setMinimumSize(d);
+      panel.setMinimumSize(d);
       frame.pack();
       frame.setVisible(true);
       Thread.sleep(10000);
