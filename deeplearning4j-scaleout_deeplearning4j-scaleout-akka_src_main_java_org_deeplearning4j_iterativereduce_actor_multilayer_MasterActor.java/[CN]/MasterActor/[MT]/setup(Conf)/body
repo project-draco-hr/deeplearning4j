@@ -12,6 +12,8 @@
   }
   log.info("Broadcasting initial master network");
   BaseMultiLayerNetwork network=this.network == null ? new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withSparsity(conf.getSparsity()).build() : this.network;
+  if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
+  if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
   masterResults=new UpdateableImpl(network);
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
 }
