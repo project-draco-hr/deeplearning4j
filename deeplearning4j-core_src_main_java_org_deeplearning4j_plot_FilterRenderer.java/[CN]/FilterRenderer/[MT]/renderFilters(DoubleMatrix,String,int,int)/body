@@ -32,8 +32,18 @@
   }
   try {
     saveImageToDisk(img,filename);
-    FilterPanel panel=new FilterPanel(img);
-    panel.setVisible(true);
+    GraphicsEnvironment ge=GraphicsEnvironment.getLocalGraphicsEnvironment();
+    if (!ge.isHeadlessInstance()) {
+      log.info("Rendering frame...");
+      JFrame frame=new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      FilterPanel panel=new FilterPanel(img);
+      frame.add(panel);
+      frame.pack();
+      frame.setVisible(true);
+      Thread.sleep(10000);
+      frame.dispose();
+    }
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

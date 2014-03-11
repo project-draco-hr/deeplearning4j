@@ -1,4 +1,11 @@
 {
   plotMatrices(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new DoubleMatrix[]{network.getW(),network.gethBias(),network.getvBias(),gradient.getwGradient(),gradient.gethBiasGradient(),gradient.getvBiasGradient()});
   plotActivations(network);
+  FilterRenderer render=new FilterRenderer();
+  try {
+    render.renderFilters(network.getW(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }
