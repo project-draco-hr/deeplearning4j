@@ -1,4 +1,5 @@
 {
   cluster.unsubscribe(getSelf());
   log.info("UnSubscribed to cluster events");
+  topicTask.cancel();
 }

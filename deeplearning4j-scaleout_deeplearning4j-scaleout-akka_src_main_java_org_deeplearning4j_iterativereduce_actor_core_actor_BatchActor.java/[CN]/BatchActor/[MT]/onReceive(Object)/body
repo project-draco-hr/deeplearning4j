@@ -1,6 +1,7 @@
 {
-  if (message instanceof DistributedPubSubMediator.SubscribeAck) {
-    log.info("Susbcribed");
+  if (message instanceof DistributedPubSubMediator.SubscribeAck || message instanceof DistributedPubSubMediator.UnsubscribeAck) {
+    log.info("Susbcribed batch actor");
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
   }
  else   if (message instanceof ResetMessage) {
     iter.reset();

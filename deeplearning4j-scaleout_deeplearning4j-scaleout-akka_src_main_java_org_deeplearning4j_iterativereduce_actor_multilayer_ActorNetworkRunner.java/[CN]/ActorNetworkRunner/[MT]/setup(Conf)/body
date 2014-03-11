@@ -20,6 +20,12 @@
     conf.setMasterUrl(getMasterAddress().toString());
     conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));
     ActorRefUtils.registerConfWithZooKeeper(conf,system);
+    system.scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+      @Override public void run(){
+        log.info("Current cluster members " + Cluster.get(system).readView().members());
+      }
+    }
+,system.dispatcher());
     log.info("Setup master with epochs " + epochs);
   }
  else {
@@ -27,6 +33,12 @@
     Cluster cluster=Cluster.get(system);
     cluster.join(masterAddress);
     startWorker(masterAddress,c);
+    system.scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+      @Override public void run(){
+        log.info("Current cluster members " + Cluster.get(system).readView().members());
+      }
+    }
+,system.dispatcher());
     log.info("Setup worker nodes");
   }
 }

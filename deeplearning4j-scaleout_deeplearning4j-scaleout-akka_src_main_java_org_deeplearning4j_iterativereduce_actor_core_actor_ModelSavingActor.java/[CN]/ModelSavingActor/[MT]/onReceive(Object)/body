@@ -4,5 +4,9 @@
     modelSaver.save(u.get());
     log.info("saved model to " + pathToSave);
   }
+ else   if (message instanceof DistributedPubSubMediator.UnsubscribeAck || message instanceof DistributedPubSubMediator.SubscribeAck) {
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
+    log.info("Sending sub/unsub over");
+  }
  else   unhandled(message);
 }

@@ -1,6 +1,7 @@
 {
-  if (message instanceof DistributedPubSubMediator.SubscribeAck) {
+  if (message instanceof DistributedPubSubMediator.SubscribeAck || message instanceof DistributedPubSubMediator.UnsubscribeAck) {
     DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed " + ack.toString());
   }
  else   if (message instanceof WorkerState) {

@@ -13,6 +13,17 @@
   }
  else   if (message instanceof MemberEvent) {
   }
+ else   if (message instanceof DistributedPubSubMediator.SubscribeAck) {
+    DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
+    topics.add(ack.subscribe().topic());
+  }
+ else   if (message instanceof DistributedPubSubMediator.UnsubscribeAck) {
+    DistributedPubSubMediator.UnsubscribeAck unsub=(DistributedPubSubMediator.UnsubscribeAck)message;
+    topics.remove(unsub.unsubscribe().topic());
+  }
+ else   if (message instanceof List) {
+    log.info("Topics sent " + message);
+  }
  else {
     unhandled(message);
   }
