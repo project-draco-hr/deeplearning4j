@@ -6,7 +6,7 @@
  else   if (message instanceof Job) {
     Job j=(Job)message;
     log.info("Confirmation from " + j.getWorkerId() + " on work");
-    this.current=j;
+    setCurrent(j);
     List<DataSet> input=(List<DataSet>)j.getWork();
     confirmWorking();
     updateTraining(input);

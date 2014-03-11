@@ -1,6 +1,6 @@
 {
-  current.setDone(true);
+  getCurrent().setDone(true);
   log.info("Finished work " + id);
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,current),getSelf());
-  current=null;
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,getCurrent()),getSelf());
+  clearCurrentJob();
 }
