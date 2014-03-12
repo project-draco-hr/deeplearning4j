@@ -1,6 +1,5 @@
 {
   RBM r=new RBM.Builder().numberOfVisible(784).numHidden(400).build();
-  r.getW().muli(1000);
   DataSetIterator iter=new MnistDataSetIterator(10,1000);
   while (iter.hasNext()) {
     DataSet next=iter.next();
