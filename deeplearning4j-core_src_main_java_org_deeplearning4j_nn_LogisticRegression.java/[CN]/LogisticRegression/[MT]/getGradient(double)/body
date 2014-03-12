@@ -1,9 +1,0 @@
-{
-  MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
-  DoubleMatrix p_y_given_x=sigmoid(input.mmul(W).addRowVector(b));
-  DoubleMatrix dy=labels.sub(p_y_given_x);
-  if (useRegularization)   dy.divi(input.rows);
-  DoubleMatrix wGradient=input.transpose().mmul(dy).mul(lr);
-  DoubleMatrix bGradient=dy;
-  return new LogisticRegressionGradient(wGradient,bGradient);
-}

@@ -1,6 +1,6 @@
 {
   if (opt == null)   opt=new NonZeroStoppingConjugateGradient(this,this);
   opt.setTolerance(tolerance);
-  int epochs=(int)extraParams[2];
+  int epochs=(int)extraParams[1];
   opt.optimize(epochs);
 }

@@ -7,7 +7,7 @@
   }
   if (this.k >= 15)   this.k=15;
   k=this.k;
-  NeuralNetworkGradient gradient=network.getGradient(new Object[]{k,lr});
+  NeuralNetworkGradient gradient=network.getGradient(new Object[]{k});
   DoubleMatrix wAdd=gradient.getwGradient();
   DoubleMatrix vBiasAdd=gradient.getvBiasGradient();
   DoubleMatrix hBiasAdd=gradient.gethBiasGradient();

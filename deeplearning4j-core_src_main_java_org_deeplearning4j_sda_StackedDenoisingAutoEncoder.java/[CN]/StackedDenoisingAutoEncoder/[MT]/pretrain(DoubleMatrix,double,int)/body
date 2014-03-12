@@ -1,0 +1,15 @@
+{
+  if (this.getInput() == null)   initializeLayers(input.dup());
+  DoubleMatrix layerInput=null;
+  for (int i=0; i < this.getnLayers(); i++) {
+    if (i == 0)     layerInput=input;
+ else     layerInput=this.getSigmoidLayers()[i - 1].sampleHGivenV(layerInput);
+    if (isForceNumEpochs()) {
+      for (int epoch=0; epoch < epochs; epoch++) {
+        layers[i].train(layerInput,new Object[]{corruptionLevel});
+        log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ layers[i].getReConstructionCrossEntropy());
+      }
+    }
+ else     layers[i].trainTillConvergence(layerInput,new Object[]{corruptionLevel,epochs});
+  }
+}

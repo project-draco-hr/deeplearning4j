@@ -1,5 +1,0 @@
-{
-  LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(this,learningRate);
-  NonZeroStoppingConjugateGradient g=new NonZeroStoppingConjugateGradient(opt);
-  g.optimize(numEpochs);
-}
