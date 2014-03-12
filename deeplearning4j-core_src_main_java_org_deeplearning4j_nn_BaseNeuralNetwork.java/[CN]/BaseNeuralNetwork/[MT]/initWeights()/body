@@ -6,6 +6,7 @@
     this.W=DoubleMatrix.zeros(nVisible,nHidden);
     for (int i=0; i < this.W.rows; i++)     this.W.putRow(i,new DoubleMatrix(dist.sample(this.W.columns)));
   }
+  if (useAdaGrad)   this.wAdaGrad=new AdaGrad(this.W.rows,this.W.columns);
   if (this.hBias == null) {
     this.hBias=DoubleMatrix.zeros(nHidden);
   }

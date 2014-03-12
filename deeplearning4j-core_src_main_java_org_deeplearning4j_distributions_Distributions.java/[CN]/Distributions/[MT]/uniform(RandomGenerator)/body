@@ -1,0 +1,4 @@
+{
+  double fanIn=0.01;
+  return new UniformRealDistribution(rng,-fanIn,fanIn);
+}

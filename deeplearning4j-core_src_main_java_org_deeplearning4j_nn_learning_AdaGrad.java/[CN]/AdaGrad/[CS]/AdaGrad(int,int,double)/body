@@ -1,0 +1,7 @@
+{
+  this.rows=rows;
+  this.cols=cols;
+  this.adjustedGradient=new DoubleMatrix(rows,cols);
+  this.historicalGradient=new DoubleMatrix(rows,cols);
+  this.masterStepSize=gamma;
+}

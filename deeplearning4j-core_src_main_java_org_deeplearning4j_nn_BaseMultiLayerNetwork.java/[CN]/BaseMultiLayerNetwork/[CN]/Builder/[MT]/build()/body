@@ -20,6 +20,7 @@
     ret.setL2(l2);
     ret.setForceNumEpochs(shouldForceEpochs);
     ret.setUseRegularization(useRegularization);
+    ret.setUseAdaGrad(useAdaGrad);
     if (activation != null)     ret.setActivation(activation);
     if (dist != null)     ret.setDist(dist);
     ret.getWeightTransforms().putAll(weightTransforms);

@@ -8,6 +8,7 @@
     ret.setW(W.dup());
     ret.setRng(getRng());
     ret.setDist(getDist());
+    ret.setAdaGrad(wAdaGrad);
     return ret;
   }
  catch (  Exception e) {

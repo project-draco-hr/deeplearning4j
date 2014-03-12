@@ -16,7 +16,9 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans)).mul(learningRate);
+  DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
+  if (useAdaGrad)   wGradient.muli(wAdaGrad.getLearningRates(wGradient));
+ else   wGradient.muli(learningRate);
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
   wGradient.divi(input.rows);
