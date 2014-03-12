@@ -2,11 +2,4 @@
   cluster.subscribe(getSelf(),MemberEvent.class);
   mediator.tell(new DistributedPubSubMediator.Subscribe(TOPICS,getSelf()),getSelf());
   log.info("Subscribed to cluster events");
-  topicTask=context().system().scheduler().schedule(Duration.create(10,TimeUnit.SECONDS),Duration.create(10,TimeUnit.SECONDS),new Runnable(){
-    @Override public void run(){
-      log.info("Current topics " + topics);
-      mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,topics),getSelf());
-    }
-  }
-,context().dispatcher());
 }

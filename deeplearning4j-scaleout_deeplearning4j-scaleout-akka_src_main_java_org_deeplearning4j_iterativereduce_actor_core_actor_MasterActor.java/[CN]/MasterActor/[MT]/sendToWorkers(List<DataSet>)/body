@@ -2,6 +2,9 @@
   int split=this.workers.size();
   final List<List<DataSet>> splitList=Lists.partition(datasets,split);
   partition=splitList.size();
+  if (splitList.size() < workers.size()) {
+    log.warning("You may want to reconfigure your batch sizes, the current partition rate does not match the number of available workers");
+  }
   log.info("Found partition of size " + partition);
   for (int i=0; i < splitList.size(); i++) {
     final int j=i;

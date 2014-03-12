@@ -1,3 +1,4 @@
 {
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,id),getSelf());
+  log.info("Flagging availability of self " + id + " as available");
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new WorkerState(id,getSelf())),getSelf());
 }

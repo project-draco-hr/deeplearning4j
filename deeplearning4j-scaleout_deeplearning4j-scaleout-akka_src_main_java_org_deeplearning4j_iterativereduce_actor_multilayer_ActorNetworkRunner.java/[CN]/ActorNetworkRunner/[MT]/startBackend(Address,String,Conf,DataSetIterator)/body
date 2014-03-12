@@ -6,6 +6,7 @@
   log.info("Started batch actor");
   Props masterProps=startingNetwork != null ? MasterActor.propsFor(c,batchActor,startingNetwork) : MasterActor.propsFor(c,batchActor);
   final Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
+  c.setMasterUrl(realJoinAddress.toString());
   if (exec == null)   exec=Executors.newScheduledThreadPool(2);
   Cluster cluster=Cluster.get(system);
   cluster.join(realJoinAddress);

@@ -15,7 +15,7 @@
     }
     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     log.info("Starting model saver");
-    system.actorOf(Props.create(ModelSavingActor.class,",model-saver"));
+    system.actorOf(Props.create(ModelSavingActor.class,"model-saver"));
     Cluster.get(system).join(masterAddress);
     conf.setMasterUrl(getMasterAddress().toString());
     conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));

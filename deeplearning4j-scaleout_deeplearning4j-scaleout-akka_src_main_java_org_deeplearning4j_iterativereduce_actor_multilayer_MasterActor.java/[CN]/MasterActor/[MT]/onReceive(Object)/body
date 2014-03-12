@@ -5,7 +5,11 @@
     log.info("Subscribed " + ack.toString());
   }
  else   if (message instanceof WorkerState) {
-    this.addWorker((WorkerState)message);
+    WorkerState s=(WorkerState)message;
+    if (s.getWorkerId() != null) {
+      this.addWorker(s);
+      getSender().tell(Ack.getInstance(),getSelf());
+    }
   }
  else   if (message instanceof NeedsModelMessage) {
     log.info("Sending networks over");
@@ -41,6 +45,10 @@
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
     if (updates.size() >= partition) {
       masterResults=this.compute(updates,updates);
+      for (      String key : workers.keySet()) {
+        workers.get(key).setAvailable(true);
+        log.info("Freeing " + key + " for work post batch completion");
+      }
       epochsComplete++;
       batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
       updates.clear();

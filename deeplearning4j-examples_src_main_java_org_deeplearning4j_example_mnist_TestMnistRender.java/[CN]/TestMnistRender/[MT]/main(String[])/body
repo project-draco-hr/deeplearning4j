@@ -1,0 +1,16 @@
+{
+  DBN dbn=new DBN.Builder().buildEmpty();
+  InputStream is=new FileInputStream(new File(args[0]));
+  dbn.load(is);
+  DataSetIterator iter=new MnistDataSetIterator(10,60000);
+  Evaluation eval=new Evaluation();
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    dbn.setInput(next.getFirst());
+    NeuralNetPlotter plotter=new NeuralNetPlotter();
+    plotter.plotWeights(dbn.layers[0]);
+    log.info("Current stats " + eval.stats());
+  }
+  log.info("Prediciton f scores and accuracy");
+  log.info(eval.stats());
+}

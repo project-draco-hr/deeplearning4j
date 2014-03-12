@@ -3,6 +3,7 @@
   while (!foundWork) {
     for (    WorkerState state : workers.values()) {
       if (state.isAvailable()) {
+        log.info("Found next available worker " + state.getWorkerId());
         foundWork=true;
         return state;
       }

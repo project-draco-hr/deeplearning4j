@@ -4,4 +4,10 @@
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
   setup(conf);
+  context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+    @Override public void run(){
+      log.info("Current workers " + workers.keySet());
+    }
+  }
+,context().dispatcher());
 }

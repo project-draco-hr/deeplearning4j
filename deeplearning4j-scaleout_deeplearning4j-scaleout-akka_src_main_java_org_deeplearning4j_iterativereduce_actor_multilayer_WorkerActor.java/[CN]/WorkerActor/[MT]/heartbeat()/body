@@ -2,7 +2,7 @@
   heartbeat=context().system().scheduler().schedule(Duration.apply(10,TimeUnit.SECONDS),Duration.apply(10,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
       log.info("Sending heartbeat to master");
-      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,id),getSelf());
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
     }
   }
 ,context().dispatcher());
