@@ -17,4 +17,13 @@
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
   masterResults=new UpdateableImpl(network);
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+  ensureNoLeftOvers=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+    @Override public void run(){
+      if (!updates.isEmpty() && currentJobs.isEmpty()) {
+        log.info("Forcing next iteration");
+        nextIteration();
+      }
+    }
+  }
+,context().dispatcher());
 }

@@ -2,6 +2,7 @@
   final int prime=31;
   int result=1;
   result=prime * result + (done ? 1231 : 1237);
+  result=prime * result + (pretrain ? 1231 : 1237);
   result=prime * result + ((work == null) ? 0 : work.hashCode());
   result=prime * result + ((workerId == null) ? 0 : workerId.hashCode());
   return result;

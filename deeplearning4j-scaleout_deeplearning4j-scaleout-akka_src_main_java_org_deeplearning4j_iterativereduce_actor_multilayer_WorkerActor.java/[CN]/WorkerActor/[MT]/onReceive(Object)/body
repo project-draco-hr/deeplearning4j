@@ -19,15 +19,34 @@
  else   if (message instanceof Ack) {
     log.info("Ack from master on worker " + id);
   }
+ else   if (message instanceof GiveMeMyJob) {
+    GiveMeMyJob g=(GiveMeMyJob)message;
+    current.set(g.getJob());
+    log.info("Got job again for id " + id);
+  }
  else   if (message instanceof Updateable) {
     UpdateableImpl m=(UpdateableImpl)message;
-    setWorkerUpdateable(m);
-    log.info("Updated worker network");
     if (m.get() == null) {
-      log.warn("Unable to initialize network; network was null");
-      throw new IllegalArgumentException("Network was null");
+      log.info("Network is null, this worker has recently joined the cluster or the network was lost. Asking master for a copy of the current network");
+      while (this.getNetwork() == null) {
+        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new NeedsModelMessage(id)),getSelf());
+        try {
+          Thread.sleep(15000);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+      }
     }
-    setNetwork(m.get().clone());
+ else {
+      setWorkerUpdateable(m);
+      log.info("Updated worker network");
+      if (m.get() == null) {
+        log.warn("Unable to initialize network; network was null");
+        throw new IllegalArgumentException("Network was null");
+      }
+      setNetwork(m.get().clone());
+    }
   }
  else   unhandled(message);
 }

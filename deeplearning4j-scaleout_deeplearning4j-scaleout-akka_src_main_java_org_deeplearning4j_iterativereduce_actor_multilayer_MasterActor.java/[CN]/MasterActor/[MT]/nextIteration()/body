@@ -1,0 +1,12 @@
+{
+  masterResults=this.compute(updates,updates);
+  for (  String key : workers.keySet()) {
+    workers.get(key).setAvailable(true);
+    log.info("Freeing " + key + " for work post batch completion");
+  }
+  epochsComplete++;
+  if (!isDone())   batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+  updates.clear();
+  log.info("Broadcasting weights");
+  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+}

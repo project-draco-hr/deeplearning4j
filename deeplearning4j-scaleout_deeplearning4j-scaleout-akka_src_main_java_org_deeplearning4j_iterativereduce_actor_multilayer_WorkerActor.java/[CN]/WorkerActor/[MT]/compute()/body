@@ -10,7 +10,24 @@
       Thread.currentThread().interrupt();
     }
   }
-  getNetwork().trainNetwork(this.getCombinedInput(),this.getOutcomes(),extraParams);
+  while (this.getCurrent() == null) {
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new GiveMeMyJob(id,null)),getSelf());
+    log.info("Waiting on null job");
+    try {
+      Thread.sleep(10000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+  if (this.getCurrent().isPretrain()) {
+    log.info("Worker " + id + " pretraining");
+    getNetwork().pretrain(this.getCombinedInput(),extraParams);
+  }
+ else {
+    log.info("Worker " + id + " finetuning");
+    getNetwork().finetune(outcomes,learningRate,fineTuneEpochs);
+  }
   finishedWork();
   return new UpdateableImpl(getNetwork());
 }

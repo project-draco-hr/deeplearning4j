@@ -4,6 +4,7 @@
   if (getClass() != obj.getClass())   return false;
   Job other=(Job)obj;
   if (done != other.done)   return false;
+  if (pretrain != other.pretrain)   return false;
   if (work == null) {
     if (other.work != null)     return false;
   }

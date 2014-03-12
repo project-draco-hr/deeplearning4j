@@ -11,6 +11,13 @@
       getSender().tell(Ack.getInstance(),getSelf());
     }
   }
+ else   if (message instanceof GiveMeMyJob) {
+    GiveMeMyJob j=(GiveMeMyJob)message;
+    Job j2=this.currentJobs.get(j.getId());
+    j.setJob(j2);
+    log.info("Returning current job for worker " + j.getId());
+    mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
+  }
  else   if (message instanceof NeedsModelMessage) {
     log.info("Sending networks over");
     getSender().tell(masterResults.get(),getSelf());
@@ -20,7 +27,21 @@
     masterResults=this.compute(updates,updates);
     epochsComplete++;
     updates.clear();
-    batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+    if (pretrain) {
+      batchActor.tell(ResetMessage.getInstance(),getSelf());
+      log.info("Switching to finetune mode");
+      pretrain=false;
+      SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
+      for (      String key : workers.keySet()) {
+        workers.get(key).setAvailable(true);
+        log.info("Freeing " + key + " for work post batch completion");
+      }
+      batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+    }
+ else {
+      isDone=true;
+      log.info("Done training!");
+    }
   }
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());
@@ -43,18 +64,7 @@
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
-    if (updates.size() >= partition) {
-      masterResults=this.compute(updates,updates);
-      for (      String key : workers.keySet()) {
-        workers.get(key).setAvailable(true);
-        log.info("Freeing " + key + " for work post batch completion");
-      }
-      epochsComplete++;
-      batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
-      updates.clear();
-      log.info("Broadcasting weights");
-      mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
-    }
+    if (updates.size() >= partition)     nextIteration();
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
@@ -73,7 +83,7 @@
       splitListIntoRows(list);
       sendToWorkers(list);
     }
- else     if (message instanceof Pair) {
+ else     if (message instanceof DataSet) {
       DataSet pair=(DataSet)message;
       List<DoubleMatrix> inputs=pair.getFirst().rowsAsList();
       List<DoubleMatrix> labels=pair.getSecond().rowsAsList();

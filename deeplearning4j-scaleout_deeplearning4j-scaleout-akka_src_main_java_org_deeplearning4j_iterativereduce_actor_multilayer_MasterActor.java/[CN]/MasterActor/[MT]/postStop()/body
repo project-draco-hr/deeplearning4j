@@ -1,0 +1,4 @@
+{
+  super.postStop();
+  ensureNoLeftOvers.cancel();
+}

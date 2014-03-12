@@ -7,8 +7,9 @@
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.setInput(next.getFirst());
+    dbn.layers[0].setInput(next.getFirst());
     NeuralNetPlotter plotter=new NeuralNetPlotter();
-    plotter.plotWeights(dbn.layers[0]);
+    plotter.plotNetworkGradient(dbn.layers[0],dbn.layers[0].getGradient(Conf.getDefaultRbmParams()));
     log.info("Current stats " + eval.stats());
   }
   log.info("Prediciton f scores and accuracy");
