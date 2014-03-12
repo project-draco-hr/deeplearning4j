@@ -1,0 +1,5 @@
+{
+  DoubleMatrix gradientsSquared=MatrixFunctions.pow(gradient,2);
+  if (first)   this.historicalGradient=gradientsSquared;
+ else   this.historicalGradient=this.historicalGradient.mul(this.autoCorrect).add(MatrixUtil.oneMinus(historicalGradient)).mul(gradientsSquared);
+}
