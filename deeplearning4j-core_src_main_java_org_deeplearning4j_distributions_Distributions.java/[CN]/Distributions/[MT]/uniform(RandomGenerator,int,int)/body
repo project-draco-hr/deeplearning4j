@@ -1,0 +1,4 @@
+{
+  double fanIn=-4 * Math.sqrt(6. / (nOut + nIn));
+  return uniform(rng,fanIn);
+}

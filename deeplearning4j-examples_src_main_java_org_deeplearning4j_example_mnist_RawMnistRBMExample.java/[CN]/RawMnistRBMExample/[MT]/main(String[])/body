@@ -1,13 +1,11 @@
 {
-  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(500).build();
-  DataSetIterator iter=new MnistDataSetIterator(10,30);
+  RBM r=new RBM.Builder().numberOfVisible(784).useAdaGrad(false).numHidden(500).renderWeights(1000).withDistribution(Distributions.uniform(new MersenneTwister(123),784,500)).build();
+  DataSetIterator iter=new RawMnistDataSetIterator(10,20);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFirst(),0.01,new Object[]{1,0.01,200});
+    r.trainTillConvergence(next.getFirst(),0.01,new Object[]{1,0.01,1000});
   }
   iter.reset();
-  FilterRenderer render=new FilterRenderer();
-  render.renderFilters(r.getW(),"example-render.jpg",28,28);
   while (iter.hasNext()) {
     DataSet first=iter.next();
     DoubleMatrix reconstruct=r.reconstruct(first.getFirst());
