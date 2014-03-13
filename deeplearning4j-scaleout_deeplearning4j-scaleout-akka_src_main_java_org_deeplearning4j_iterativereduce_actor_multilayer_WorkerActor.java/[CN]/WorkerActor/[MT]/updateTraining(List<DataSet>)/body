@@ -12,6 +12,8 @@
       UpdateableImpl work=compute();
       log.info("Updating parent actor...");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+      getCurrent().setDone(true);
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,getCurrent()),getSelf());
       return work;
     }
   }
