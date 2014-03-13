@@ -21,7 +21,7 @@
  else   wGradient.muli(learningRate);
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
-  wGradient.divi(input.rows);
+  if (useRegularization)   wGradient.divi(input.rows);
   DoubleMatrix hBiasGradient=null;
   if (this.sparsity != 0) {
     hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0).mul(learningRate);

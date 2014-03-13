@@ -1,0 +1,12 @@
+{
+  while (this.getCurrent() == null) {
+    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new GiveMeMyJob(id,null)),getSelf());
+    log.info("Waiting on null job");
+    try {
+      Thread.sleep(10000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+}
