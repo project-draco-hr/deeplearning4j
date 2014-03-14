@@ -2,13 +2,13 @@
   try {
     NeuralNetwork ret=getClass().newInstance();
     ret.sethBias(hBias.dup());
-    ret.setAdaGrad(adaGrad);
     ret.setvBias(vBias.dup());
     ret.setnHidden(getnHidden());
     ret.setnVisible(getnVisible());
     ret.setW(W.dup());
     ret.setRng(getRng());
     ret.setDist(getDist());
+    ret.setAdaGrad(wAdaGrad);
     return ret;
   }
  catch (  Exception e) {

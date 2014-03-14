@@ -8,6 +8,7 @@
   if (rng == null)   this.rng=new MersenneTwister(1234);
  else   this.rng=rng;
   this.W=W;
+  if (this.W != null)   this.wAdaGrad=new AdaGrad(this.W.rows,this.W.columns);
   this.vBias=vbias;
   this.hBias=hbias;
   initWeights();

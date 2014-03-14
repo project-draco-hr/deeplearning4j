@@ -1,5 +1,6 @@
 {
   int k=(int)params[0];
+  double learningRate=(double)params[1];
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
@@ -16,20 +17,18 @@
     nhSamples=matrices.getSecond().getSecond();
   }
   DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
-  wGradient=wGradient.mul(adaGrad.getLearningRates(wGradient));
+  if (useAdaGrad)   wGradient.muli(wAdaGrad.getLearningRates(wGradient));
+ else   wGradient.muli(learningRate);
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
   if (useRegularization)   wGradient.divi(input.rows);
   DoubleMatrix hBiasGradient=null;
   if (this.sparsity != 0) {
-    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0);
-    hBiasGradient=hBiasGradient.mul(this.hBiasAdaGrad.getLearningRates(hBiasGradient));
+    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0).mul(learningRate);
   }
  else {
-    hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
-    hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient));
+    hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
   }
-  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
-  vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient));
+  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0).mul(learningRate);
   return new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
 }

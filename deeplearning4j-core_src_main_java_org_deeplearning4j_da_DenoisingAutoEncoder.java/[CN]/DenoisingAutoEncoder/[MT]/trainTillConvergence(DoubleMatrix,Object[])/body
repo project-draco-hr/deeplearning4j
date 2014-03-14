@@ -1,5 +1,0 @@
-{
-  if (input != null)   this.input=input;
-  optimizer=new DenoisingAutoEncoderOptimizer(this,params);
-  optimizer.train(input);
-}

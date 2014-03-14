@@ -1,6 +1,11 @@
 {
   this.gradient=gradient;
-  addLastIterationGradient();
+  DoubleMatrix gradientsSquared=MatrixFunctions.pow(gradient,2);
+  if (first) {
+    this.historicalGradient=gradientsSquared;
+    first=false;
+  }
+ else   this.historicalGradient=this.historicalGradient.mul(this.autoCorrect).add(MatrixUtil.oneMinus(historicalGradient)).mul(gradientsSquared);
   DoubleMatrix gAdd=MatrixFunctions.sqrt(historicalGradient).add(fudgeFactor);
   this.adjustedGradient=gradient.div(gAdd);
   this.adjustedGradient.mul(masterStepSize);

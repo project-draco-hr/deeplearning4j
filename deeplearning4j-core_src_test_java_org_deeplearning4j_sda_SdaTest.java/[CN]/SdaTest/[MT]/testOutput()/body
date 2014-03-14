@@ -2,7 +2,7 @@
   DataSet xor=MatrixUtil.xorData(100,200);
   StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder.Builder().hiddenLayerSizes(hidden_layer_sizes_arr).numberOfInputs(xor.getFirst().columns).numberOfOutPuts(xor.getSecond().columns).renderWeights(0).useRegularization(false).withMomentum(0.).withRng(rng).build();
   DoubleMatrix x=xor.getFirst();
-  sda.pretrain(x,corruption_level,pretraining_epochs);
+  sda.pretrain(x,pretrain_lr,corruption_level,1000);
   sda.finetune(xor.getSecond(),finetune_lr,finetune_epochs);
   log.info("OUTPUT TEST");
   DoubleMatrix predicted=sda.predict(x);

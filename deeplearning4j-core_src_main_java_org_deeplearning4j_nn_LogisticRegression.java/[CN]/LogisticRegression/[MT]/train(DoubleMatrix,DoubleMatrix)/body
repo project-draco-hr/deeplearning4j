@@ -1,8 +1,0 @@
-{
-  MatrixUtil.complainAboutMissMatchedMatrices(x,y);
-  this.input=x;
-  this.labels=y;
-  LogisticRegressionGradient gradient=getGradient();
-  W.addi(gradient.getwGradient());
-  b.addi(gradient.getbGradient());
-}

@@ -6,11 +6,11 @@
   if (layerInput.rows != labels.rows) {
     throw new IllegalStateException("Labels not equal to input");
   }
-  if (!network.isForceNumEpochs())   network.getLogLayer().trainTillConvergence(epochs);
+  if (!network.isForceNumEpochs())   network.getLogLayer().trainTillConvergence(lr,epochs);
  else {
     log.info("Training for " + epochs + " epochs");
     for (int i=0; i < epochs; i++) {
-      network.getLogLayer().train(layerInput,labels);
+      network.getLogLayer().train(layerInput,labels,lr);
     }
   }
   if (network.isShouldBackProp())   network.backProp(lr,epochs);

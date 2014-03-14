@@ -11,6 +11,7 @@
         ret.l2=this.l2;
         ret.momentum=this.momentum;
         ret.useRegularization=this.useRegularization;
+        ret.useAdaGrad=this.useAdaGrad;
         return ret;
       }
  catch (      Exception e) {

@@ -14,6 +14,7 @@
         WorkerState state=nextAvailableWorker();
         List<DataSet> work=new ArrayList<>(splitList.get(j));
         Job j2=new Job(state.getWorkerId(),(Serializable)work,pretrain);
+        currentJobs.put(state.getWorkerId(),j2);
         mediator.tell(new DistributedPubSubMediator.Publish(state.getWorkerId(),j2),getSelf());
         log.info("Delegated work to worker " + state.getWorkerId());
         state.setAvailable(false);

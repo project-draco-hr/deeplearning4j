@@ -6,14 +6,14 @@
     this.W=DoubleMatrix.zeros(nVisible,nHidden);
     for (int i=0; i < this.W.rows; i++)     this.W.putRow(i,new DoubleMatrix(dist.sample(this.W.columns)));
   }
-  this.adaGrad=new AdaGrad(W.rows,W.columns);
+  this.wAdaGrad=new AdaGrad(this.W.rows,this.W.columns);
   if (this.hBias == null) {
     this.hBias=DoubleMatrix.zeros(nHidden);
   }
-  this.hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);
   if (this.vBias == null) {
-    if (this.input != null)     this.vBias=DoubleMatrix.zeros(nVisible);
+    if (this.input != null) {
+      this.vBias=DoubleMatrix.zeros(nVisible);
+    }
  else     this.vBias=DoubleMatrix.zeros(nVisible);
   }
-  this.vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
 }

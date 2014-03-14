@@ -3,6 +3,14 @@
   for (  NeuralNetwork network : layers) {
     gradient.add(network.getGradient(params));
   }
-  LogisticRegressionGradient g2=logLayer.getGradient();
-  return new MultiLayerGradient(gradient,g2);
+  double lr=0.01;
+  if (params.length >= 2)   lr=(double)params[1];
+  LogisticRegressionGradient g2=logLayer.getGradient(lr);
+  MultiLayerGradient ret=new MultiLayerGradient(gradient,g2);
+  if (multiLayerGradientListeners != null && !multiLayerGradientListeners.isEmpty()) {
+    for (    MultiLayerGradientListener listener : multiLayerGradientListeners) {
+      listener.onMultiLayerGradient(ret);
+    }
+  }
+  return ret;
 }

@@ -1,11 +1,13 @@
 {
-  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(400).useRegularization(true).build();
-  DataSetIterator iter=new MnistDataSetIterator(10,100);
+  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(400).build();
+  DataSetIterator iter=new MnistDataSetIterator(10,20);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFirst(),new Object[]{1,10000});
+    r.trainTillConvergence(next.getFirst(),0.1,new Object[]{1,0.01,1000});
   }
   iter.reset();
+  FilterRenderer render=new FilterRenderer();
+  render.renderFilters(r.getW(),"example-render.jpg",28,28);
   while (iter.hasNext()) {
     DataSet first=iter.next();
     DoubleMatrix reconstruct=r.reconstruct(first.getFirst());
@@ -16,7 +18,7 @@
       DrawMnistGreyScale d=new DrawMnistGreyScale(draw1);
       d.title="REAL";
       d.draw();
-      DrawMnistGreyScale d2=new DrawMnistGreyScale(draw2,100,100);
+      DrawMnistGreyScale d2=new DrawMnistGreyScale(draw2,1000,1000);
       d2.title="TEST";
       d2.draw();
       Thread.sleep(10000);

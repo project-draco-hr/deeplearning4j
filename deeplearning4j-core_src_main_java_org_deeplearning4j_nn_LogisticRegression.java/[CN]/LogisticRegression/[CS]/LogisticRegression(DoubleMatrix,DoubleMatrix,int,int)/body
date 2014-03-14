@@ -4,6 +4,6 @@
   this.nIn=nIn;
   this.nOut=nOut;
   W=DoubleMatrix.zeros(nIn,nOut);
-  this.adaGrad=new AdaGrad(nIn,nOut);
+  adaGrad=new AdaGrad(nIn,nOut);
   b=DoubleMatrix.zeros(nOut);
 }
