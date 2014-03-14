@@ -38,7 +38,7 @@
       pretrain=false;
       SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
       for (      String key : workers.keySet()) {
-        workers.get(key).setAvailable(true);
+        setWorkerDone(key);
         log.info("Freeing " + key + " for work post batch completion");
       }
       batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
@@ -49,24 +49,32 @@
     }
   }
  else   if (message instanceof AlreadyWorking) {
-    AlreadyWorking a=(AlreadyWorking)message;
-    WorkerState state=this.workers.get(a.getId());
-    if (state != null) {
-      state.setAvailable(false);
-      log.info("Worker " + state.getWorkerId() + " available for work");
-      Job j=currentJobs.get(a.getId());
-      if (j != null) {
-        log.info("Redispatching work for id " + j.getWorkerId());
-        WorkerState worker=this.nextAvailableWorker();
-        j.setWorkerId(worker.getWorkerId());
-        mediator.tell(new DistributedPubSubMediator.Publish(worker.getWorkerId(),j),getSelf());
-        log.info("Delegated work to worker " + state.getWorkerId());
+    final AlreadyWorking a=(AlreadyWorking)message;
+    scala.concurrent.Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        WorkerState state=workers.get(a.getId());
+        if (state != null) {
+          state.setAvailable(false);
+          log.info("Worker " + state.getWorkerId() + " available for work");
+          Job j=currentJobs.get(a.getId());
+          if (j != null) {
+            log.info("Redispatching work for id " + j.getWorkerId());
+            WorkerState worker=nextAvailableWorker();
+            j.setWorkerId(worker.getWorkerId());
+            mediator.tell(new DistributedPubSubMediator.Publish(worker.getWorkerId(),j),getSelf());
+            log.info("Delegated work to worker " + state.getWorkerId());
+          }
+        }
+        return null;
       }
     }
+,context().dispatcher());
+    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
   }
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());
     this.workers.remove(((ClearWorker)message).getId());
+    this.currentJobs.remove(((ClearWorker)message).getId());
   }
  else   if (message instanceof String) {
     WorkerState state=this.workers.get(message.toString());
@@ -85,7 +93,7 @@
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
-    if (updates.size() >= partition)     nextIteration();
+    if (updates.size() >= partition || everyWorkerAvailable() || currentJobs.isEmpty())     nextIteration();
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
@@ -95,7 +103,7 @@
     }
  else {
       log.info("Job " + j.getWorkerId() + " finished");
-      currentJobs.remove(j.getWorkerId());
+      setWorkerDone(j.getWorkerId());
     }
   }
  else   if (message instanceof List || message instanceof Pair) {

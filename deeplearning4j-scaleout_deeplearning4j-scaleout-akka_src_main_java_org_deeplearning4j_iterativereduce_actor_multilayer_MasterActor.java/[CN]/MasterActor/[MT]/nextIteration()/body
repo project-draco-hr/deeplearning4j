@@ -2,6 +2,7 @@
   masterResults=this.compute(updates,updates);
   for (  String key : workers.keySet()) {
     workers.get(key).setAvailable(true);
+    currentJobs.remove(key);
     log.info("Freeing " + key + " for work post batch completion");
   }
   epochsComplete++;

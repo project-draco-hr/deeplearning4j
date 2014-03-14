@@ -19,10 +19,12 @@
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
   ensureNoLeftOvers=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
-      if (!updates.isEmpty() && currentJobs.isEmpty()) {
+      log.info("Status check on next iteration");
+      if (!updates.isEmpty() && currentJobs.isEmpty() || everyWorkerAvailable()) {
         log.info("Forcing next iteration");
         nextIteration();
       }
+      log.info("Current jobs left " + currentJobs.keySet());
     }
   }
 ,context().dispatcher());

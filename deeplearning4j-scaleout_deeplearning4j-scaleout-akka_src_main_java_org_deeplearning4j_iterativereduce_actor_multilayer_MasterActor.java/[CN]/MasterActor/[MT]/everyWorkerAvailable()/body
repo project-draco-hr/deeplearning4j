@@ -1,0 +1,4 @@
+{
+  for (  WorkerState s : workers.values())   if (!s.isAvailable())   return false;
+  return true;
+}

@@ -3,6 +3,9 @@
     @Override public void run(){
       log.info("Sending heartbeat to master");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
+      if (getCurrent() == null) {
+        availableForWork();
+      }
     }
   }
 ,context().dispatcher());
