@@ -4,5 +4,11 @@
     gradient.add(network.getGradient(params));
   }
   LogisticRegressionGradient g2=logLayer.getGradient(lr);
-  return new MultiLayerGradient(gradient,g2);
+  MultiLayerGradient ret=new MultiLayerGradient(gradient,g2);
+  if (multiLayerGradientListeners != null && !multiLayerGradientListeners.isEmpty()) {
+    for (    MultiLayerGradientListener listener : multiLayerGradientListeners) {
+      listener.onMultiLayerGradient(ret);
+    }
+  }
+  return ret;
 }

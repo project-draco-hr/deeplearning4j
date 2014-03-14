@@ -1,0 +1,7 @@
+{
+  if (gradientListeners != null && !gradientListeners.isEmpty()) {
+    for (    NeuralNetworkGradientListener listener : gradientListeners) {
+      listener.onGradient(gradient);
+    }
+  }
+}
