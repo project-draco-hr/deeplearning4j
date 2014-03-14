@@ -13,7 +13,7 @@
   }
   DBN dbn=null;
   if (args.length < 2) {
-    dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).renderWeights(10).numberOfInputs(784).numberOfOutPuts(10).useRegularization(false).useAdGrad(true).build();
+    dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).numberOfInputs(784).numberOfOutPuts(10).useRegularization(false).build();
   }
  else {
     dbn=SerializationUtils.readObject(new File(args[0]));
@@ -22,7 +22,7 @@
   while (iter.hasNext()) {
     DataSet next=iter.next();
     long now=System.currentTimeMillis();
-    dbn.pretrain(next.getFirst(),1,0.001,1000);
+    dbn.pretrain(next.getFirst(),1,0.01,1000);
     long after=System.currentTimeMillis();
     log.info("Pretrain took " + TimeUnit.MILLISECONDS.toSeconds((after - now)) + " seconds");
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-pretrain-dbn.bin-" + numIters));
