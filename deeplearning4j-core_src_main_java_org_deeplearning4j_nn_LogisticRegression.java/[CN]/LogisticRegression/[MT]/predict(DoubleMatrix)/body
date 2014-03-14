@@ -1,3 +1,4 @@
 {
+  this.input=x;
   return softmax(x.mmul(W).addRowVector(b));
 }

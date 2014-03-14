@@ -6,11 +6,17 @@
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
-    log.info("Confirmation from " + j.getWorkerId() + " on work");
-    setCurrent(j);
-    List<DataSet> input=(List<DataSet>)j.getWork();
-    confirmWorking();
-    updateTraining(input);
+    if (getCurrent() != null) {
+      log.info("Job sent when already had job");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new AlreadyWorking(id)),getSelf());
+    }
+ else {
+      log.info("Confirmation from " + j.getWorkerId() + " on work");
+      setCurrent(j);
+      List<DataSet> input=(List<DataSet>)j.getWork();
+      confirmWorking();
+      updateTraining(input);
+    }
   }
  else   if (message instanceof BaseMultiLayerNetwork) {
     setNetwork((BaseMultiLayerNetwork)message);
@@ -21,8 +27,10 @@
   }
  else   if (message instanceof GiveMeMyJob) {
     GiveMeMyJob g=(GiveMeMyJob)message;
-    if (g.getJob() == null)     throw new IllegalArgumentException("Job for worker " + id + " given back was null");
-    current.set(g.getJob());
+    if (g.getJob() == null) {
+      this.blockTillJobAvailable();
+    }
+ else     current.set(g.getJob());
     log.info("Got job again for id " + id);
   }
  else   if (message instanceof Updateable) {
@@ -40,7 +48,7 @@
       }
     }
  else {
-      setWorkerUpdateable(m);
+      setWorkerUpdateable(m.clone());
       log.info("Updated worker network");
       if (m.get() == null) {
         log.warn("Unable to initialize network; network was null");

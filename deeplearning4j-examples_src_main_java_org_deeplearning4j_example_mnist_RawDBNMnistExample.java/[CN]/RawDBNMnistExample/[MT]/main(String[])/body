@@ -12,8 +12,9 @@
     iter=new ListDataSetIterator(list,10);
   }
   DBN dbn=null;
+  List<MultiLayerGradientListener> listeners=new ArrayList<>();
   if (args.length < 2) {
-    dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).numberOfInputs(784).numberOfOutPuts(10).useRegularization(false).build();
+    dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).numberOfInputs(784).numberOfOutPuts(10).useRegularization(false).withMultiLayerGradientListeners(listeners).build();
   }
  else {
     dbn=SerializationUtils.readObject(new File(args[0]));

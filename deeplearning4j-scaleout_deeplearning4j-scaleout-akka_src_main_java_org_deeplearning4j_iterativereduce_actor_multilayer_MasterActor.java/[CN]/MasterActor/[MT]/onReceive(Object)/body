@@ -14,9 +14,14 @@
  else   if (message instanceof GiveMeMyJob) {
     GiveMeMyJob j=(GiveMeMyJob)message;
     Job j2=this.currentJobs.get(j.getId());
-    j.setJob(j2);
-    log.info("Returning current job for worker " + j.getId());
-    mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
+    if (j2 == null) {
+      log.info("There does not appear to be a job for worker " + j.getId());
+    }
+ else {
+      j.setJob(j2);
+      log.info("Returning current job for worker " + j.getId());
+      mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
+    }
   }
  else   if (message instanceof NeedsModelMessage) {
     log.info("Sending networks over");
@@ -41,6 +46,22 @@
  else {
       isDone=true;
       log.info("Done training!");
+    }
+  }
+ else   if (message instanceof AlreadyWorking) {
+    AlreadyWorking a=(AlreadyWorking)message;
+    WorkerState state=this.workers.get(a.getId());
+    if (state != null) {
+      state.setAvailable(false);
+      log.info("Worker " + state.getWorkerId() + " available for work");
+      Job j=currentJobs.get(a.getId());
+      if (j != null) {
+        log.info("Redispatching work for id " + j.getWorkerId());
+        WorkerState worker=this.nextAvailableWorker();
+        j.setWorkerId(worker.getWorkerId());
+        mediator.tell(new DistributedPubSubMediator.Publish(worker.getWorkerId(),j),getSelf());
+        log.info("Delegated work to worker " + state.getWorkerId());
+      }
     }
   }
  else   if (message instanceof ClearWorker) {
