@@ -1,0 +1,6 @@
+{
+  MultiLayerGradient first=gradients.get(0).clone();
+  for (int i=1; i < gradients.size(); i++)   first.addGradient(gradients.get(i).clone());
+  first.div(gradients.size());
+  return first;
+}
