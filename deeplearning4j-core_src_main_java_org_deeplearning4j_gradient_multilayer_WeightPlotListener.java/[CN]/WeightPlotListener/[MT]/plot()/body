@@ -1,0 +1,11 @@
+{
+  DoubleMatrix[] d=new DoubleMatrix[gradients.size()];
+  String[] names=new String[gradients.size()];
+  log.info("Plotting " + gradients.size() + " matrices");
+  for (int i=0; i < gradients.size(); i++) {
+    names[i]=String.valueOf(i);
+    d[i]=gradients.get(i).getGradients().get(0).getwGradient();
+  }
+  NeuralNetPlotter plotter=new NeuralNetPlotter();
+  plotter.plotMatrices(names,d);
+}
