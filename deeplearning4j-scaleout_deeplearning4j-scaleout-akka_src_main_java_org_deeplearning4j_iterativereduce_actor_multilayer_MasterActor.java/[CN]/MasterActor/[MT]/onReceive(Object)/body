@@ -81,6 +81,7 @@
     if (state == null) {
       state=new WorkerState(message.toString(),getSender());
       state.setAvailable(true);
+      addWorker(state);
       log.info("Worker " + state.getWorkerId() + " available for work");
     }
  else {

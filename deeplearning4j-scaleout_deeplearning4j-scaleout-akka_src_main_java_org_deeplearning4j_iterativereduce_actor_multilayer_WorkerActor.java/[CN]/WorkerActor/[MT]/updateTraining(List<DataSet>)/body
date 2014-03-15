@@ -11,6 +11,7 @@
     @Override public UpdateableImpl call() throws Exception {
       while (getCurrent() == null) {
         log.info("Calling for job on worker " + id);
+        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new GiveMeMyJob(id,null)),getSelf());
       }
       UpdateableImpl work=compute();
       log.info("Updating parent actor...");

@@ -1,20 +1,9 @@
 {
-  boolean foundWork=false;
-  while (!foundWork) {
-    for (    WorkerState state : workers.values()) {
-      if (state.isAvailable()) {
-        log.info("Found next available worker " + state.getWorkerId());
-        foundWork=true;
-        return state;
-      }
-    }
-    log.info("Waiting on next worker...");
-    try {
-      Thread.sleep(15000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+  try {
+    return availableWorkers.take();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
   }
   return null;
 }

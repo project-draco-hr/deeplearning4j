@@ -34,28 +34,35 @@
     log.info("Got job again for id " + id);
   }
  else   if (message instanceof Updateable) {
-    UpdateableImpl m=(UpdateableImpl)message;
-    if (m.get() == null) {
-      log.info("Network is null, this worker has recently joined the cluster or the network was lost. Asking master for a copy of the current network");
-      while (this.getNetwork() == null) {
-        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new NeedsModelMessage(id)),getSelf());
-        try {
-          Thread.sleep(15000);
+    final UpdateableImpl m=(UpdateableImpl)message;
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        if (m.get() == null) {
+          log.info("Network is null, this worker has recently joined the cluster or the network was lost. Asking master for a copy of the current network");
+          while (getNetwork() == null) {
+            mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new NeedsModelMessage(id)),getSelf());
+            try {
+              Thread.sleep(15000);
+            }
+ catch (            InterruptedException e) {
+              Thread.currentThread().interrupt();
+            }
+          }
         }
- catch (        InterruptedException e) {
-          Thread.currentThread().interrupt();
-        }
-      }
-    }
  else {
-      setWorkerUpdateable(m.clone());
-      log.info("Updated worker network");
-      if (m.get() == null) {
-        log.warn("Unable to initialize network; network was null");
-        throw new IllegalArgumentException("Network was null");
+          setWorkerUpdateable(m.clone());
+          log.info("Updated worker network");
+          if (m.get() == null) {
+            log.warn("Unable to initialize network; network was null");
+            throw new IllegalArgumentException("Network was null");
+          }
+          setNetwork(m.get().clone());
+        }
+        return null;
       }
-      setNetwork(m.get().clone());
     }
+,context().dispatcher());
+    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
   }
  else   unhandled(message);
 }

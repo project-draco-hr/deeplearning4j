@@ -3,6 +3,7 @@
   for (  String key : workers.keySet()) {
     workers.get(key).setAvailable(true);
     currentJobs.remove(key);
+    this.availableWorkers.add(workers.get(key));
     log.info("Freeing " + key + " for work post batch completion");
   }
   epochsComplete++;
