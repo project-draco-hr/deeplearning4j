@@ -50,26 +50,9 @@
   }
  else   if (message instanceof AlreadyWorking) {
     final AlreadyWorking a=(AlreadyWorking)message;
-    scala.concurrent.Future<Void> f=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        WorkerState state=workers.get(a.getId());
-        if (state != null) {
-          state.setAvailable(false);
-          log.info("Worker " + state.getWorkerId() + " available for work");
-          Job j=currentJobs.get(a.getId());
-          if (j != null) {
-            log.info("Redispatching work for id " + j.getWorkerId());
-            WorkerState worker=nextAvailableWorker();
-            j.setWorkerId(worker.getWorkerId());
-            mediator.tell(new DistributedPubSubMediator.Publish(worker.getWorkerId(),j),getSelf());
-            log.info("Delegated work to worker " + state.getWorkerId());
-          }
-        }
-        return null;
-      }
-    }
-,context().dispatcher());
-    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
+    final Job j=currentJobs.get(a.getId());
+    log.info("Adding job to be redistributed");
+    needsToBeRedistributed.add(j);
   }
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());

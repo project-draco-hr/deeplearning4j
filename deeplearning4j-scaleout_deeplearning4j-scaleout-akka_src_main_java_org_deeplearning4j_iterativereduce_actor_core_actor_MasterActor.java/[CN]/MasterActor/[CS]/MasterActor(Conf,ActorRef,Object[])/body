@@ -7,6 +7,8 @@
   context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
       log.info("Current workers " + workers.keySet());
+      log.info("Asking for status update");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,NeedsStatus.getInstance()),getSelf());
     }
   }
 ,context().dispatcher());

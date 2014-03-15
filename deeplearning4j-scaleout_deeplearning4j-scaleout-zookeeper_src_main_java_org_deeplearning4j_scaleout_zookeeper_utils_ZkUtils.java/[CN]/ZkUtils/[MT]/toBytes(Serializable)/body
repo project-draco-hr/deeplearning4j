@@ -1,0 +1,6 @@
+{
+  ByteArrayOutputStream bos=new ByteArrayOutputStream();
+  ObjectOutputStream ois=new ObjectOutputStream(bos);
+  ois.writeObject(ser);
+  return bos.toByteArray();
+}

@@ -12,10 +12,13 @@
       while (getCurrent() == null) {
         log.info("Calling for job on worker " + id);
         mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new GiveMeMyJob(id,null)),getSelf());
+        Thread.sleep(1000);
       }
       UpdateableImpl work=compute();
-      log.info("Updating parent actor...");
-      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+      if (work != null) {
+        log.info("Updating parent actor...");
+        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
+      }
       finishedWork();
       availableForWork();
       return work;

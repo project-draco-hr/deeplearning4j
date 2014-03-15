@@ -1,0 +1,13 @@
+{
+  Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
+  if (stat != null && stat.getDataLength() != 0) {
+    Map<String,WorkerState> workers=currentWorkers();
+    WorkerState state=workers.get(id);
+    if (state != null) {
+      state.setAvailable(true);
+    }
+    workersClient.delete().forPath(currentWorkersPath());
+    workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
+    queue.put(state,id);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  ByteArrayInputStream bis=new ByteArrayInputStream(data);
+  ObjectInputStream ois=new ObjectInputStream(bis);
+  return (T)ois.readObject();
+}

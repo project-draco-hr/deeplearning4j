@@ -2,7 +2,7 @@
   return new OneForOneStrategy(0,Duration.Zero(),new Function<Throwable,Directive>(){
     public Directive apply(    Throwable cause){
       log.error("Problem with processing",cause);
-      return SupervisorStrategy.stop();
+      return SupervisorStrategy.resume();
     }
   }
 );

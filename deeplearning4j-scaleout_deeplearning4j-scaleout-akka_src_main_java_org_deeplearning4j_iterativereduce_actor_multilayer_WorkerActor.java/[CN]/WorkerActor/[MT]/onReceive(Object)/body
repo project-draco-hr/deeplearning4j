@@ -33,6 +33,16 @@
  else     current.set(g.getJob());
     log.info("Got job again for id " + id);
   }
+ else   if (message instanceof NeedsStatus) {
+    log.info("Sending status update to master");
+    if (getCurrent() == null) {
+      log.info("Null job sending job done to worker");
+      Job j=new Job(id,null,false);
+      j.setDone(true);
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,j),getSelf());
+    }
+ else     mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,getCurrent()),getSelf());
+  }
  else   if (message instanceof Updateable) {
     final UpdateableImpl m=(UpdateableImpl)message;
     Future<Void> f=Futures.future(new Callable<Void>(){

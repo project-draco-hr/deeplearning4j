@@ -1,0 +1,11 @@
+{
+  super();
+  jobClient=CuratorFrameworkFactory.builder().namespace(JOBS).retryPolicy(new RetryUntilElapsed(60000,5000)).ensembleProvider(new FixedEnsembleProvider(connectionString)).build();
+  jobClient.start();
+  jobClient.getZookeeperClient().blockUntilConnectedOrTimedOut();
+  workersClient=CuratorFrameworkFactory.builder().namespace(WORKERS).retryPolicy(new RetryUntilElapsed(60000,5000)).ensembleProvider(new FixedEnsembleProvider(connectionString)).build();
+  workersClient.start();
+  workersClient.getZookeeperClient().blockUntilConnectedOrTimedOut();
+  queue=QueueBuilder.builder(workersClient,this,this,availableWorkersPath()).buildIdQueue();
+  queue.start();
+}

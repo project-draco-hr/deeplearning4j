@@ -1,7 +1,7 @@
 {
   log.info("Training network");
   blockTillNetworkAvailable();
-  blockTillJobAvailable();
+  if (getCurrent() == null)   return null;
   if (this.getCurrent().isPretrain()) {
     log.info("Worker " + id + " pretraining");
     getNetwork().pretrain(this.getCombinedInput(),extraParams);
