@@ -2,7 +2,7 @@
   log.info("Starting workers");
   ActorSystem system=context().system();
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
-  Props p=pool.props(WorkerActor.propsFor(conf));
+  Props p=pool.props(WorkerActor.propsFor(conf,stateTracker));
   p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
   system.actorOf(p,"worker");
   try {
@@ -15,22 +15,35 @@
   BaseMultiLayerNetwork network=this.network == null ? new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withSparsity(conf.getSparsity()).useAdGrad(conf.isUseAdaGrad()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build() : this.network;
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
-  masterResults=new UpdateableImpl(network);
+  UpdateableImpl masterResults=new UpdateableImpl(network);
+  try {
+    this.stateTracker.setCurrent(masterResults);
+  }
+ catch (  Exception e1) {
+    throw new RuntimeException(e1);
+  }
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
   ensureNoLeftOvers=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
-      log.info("Status check on next iteration");
-      if (!updates.isEmpty() && currentJobs.isEmpty() || everyWorkerAvailable()) {
-        log.info("Forcing next iteration");
-        nextIteration();
-      }
- else {
-        for (        Job j : currentJobs.values()) {
-          mediator.tell(new DistributedPubSubMediator.Publish(j.getWorkerId(),NeedsStatus.getInstance()),getSelf());
+      try {
+        List<Job> currentJobs=stateTracker.currentJobs();
+        Collection<WorkerState> availableWorkers=stateTracker.currentWorkers().values();
+        log.info("Status check on next iteration");
+        if (!updates.isEmpty() && currentJobs.isEmpty() || everyWorkerAvailable()) {
+          log.info("Forcing next iteration");
+          nextIteration();
         }
+ else {
+          for (          Job j : currentJobs) {
+            mediator.tell(new DistributedPubSubMediator.Publish(j.getWorkerId(),NeedsStatus.getInstance()),getSelf());
+          }
+        }
+        log.info("Available workers " + availableWorkers);
+        log.info("Current jobs left " + currentJobs);
       }
-      log.info("Available workers " + availableWorkers);
-      log.info("Current jobs left " + currentJobs.keySet());
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 ,context().dispatcher());
@@ -39,6 +52,7 @@
       for (      final Job j : needsToBeRedistributed) {
         scala.concurrent.Future<Void> f=Futures.future(new Callable<Void>(){
           @Override public Void call() throws Exception {
+            Map<String,WorkerState> workers=stateTracker.currentWorkers();
             WorkerState state=workers.get(j.getWorkerId());
             if (state != null) {
               state.setAvailable(true);

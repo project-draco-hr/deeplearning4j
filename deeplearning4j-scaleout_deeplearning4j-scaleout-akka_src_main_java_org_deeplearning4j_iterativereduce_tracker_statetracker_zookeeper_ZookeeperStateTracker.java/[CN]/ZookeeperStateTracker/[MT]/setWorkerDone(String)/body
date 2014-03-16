@@ -5,9 +5,8 @@
     WorkerState state=workers.get(id);
     if (state != null) {
       state.setAvailable(true);
+      createWorkersWithData(workers);
+      queue.put(state,id);
     }
-    workersClient.delete().forPath(currentWorkersPath());
-    workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
-    queue.put(state,id);
   }
 }

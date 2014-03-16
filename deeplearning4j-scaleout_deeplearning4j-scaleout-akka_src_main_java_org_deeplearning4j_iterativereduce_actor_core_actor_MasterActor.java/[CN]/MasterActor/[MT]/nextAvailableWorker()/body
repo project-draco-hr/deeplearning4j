@@ -1,22 +1,3 @@
 {
-  try {
-    WorkerState ret=null;
-    do {
-      ret=availableWorkers.poll(1,TimeUnit.SECONDS);
-    }
- while (ret == null);
-    if (!ret.isAvailable()) {
-      for (      WorkerState w : workers.values()) {
-        if (w.isAvailable()) {
-          availableWorkers.add(w);
-        }
-      }
-      return nextAvailableWorker();
-    }
-    return ret;
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
-  }
-  return null;
+  return stateTracker.nextAvailableWorker();
 }

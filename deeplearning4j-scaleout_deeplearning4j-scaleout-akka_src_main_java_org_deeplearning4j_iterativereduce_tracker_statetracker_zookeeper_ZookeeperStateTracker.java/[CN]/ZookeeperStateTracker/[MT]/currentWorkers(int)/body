@@ -1,0 +1,18 @@
+{
+  Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
+  if (numRetries >= 3) {
+    return new HashMap<>();
+  }
+  numRetries++;
+  if (stat != null && stat.getDataLength() != 0) {
+    byte[] data=workersClient.getData().forPath(currentWorkersPath());
+    try {
+      Map<String,WorkerState> workers=ZkUtils.fromBytes(data,Map.class);
+      return workers;
+    }
+ catch (    Exception e) {
+      return currentWorkers(numRetries);
+    }
+  }
+  return new HashMap<>();
+}

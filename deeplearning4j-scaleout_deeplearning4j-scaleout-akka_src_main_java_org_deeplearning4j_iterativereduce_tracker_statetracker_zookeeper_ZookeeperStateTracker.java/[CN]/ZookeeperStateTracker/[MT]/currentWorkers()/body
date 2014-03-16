@@ -1,9 +1,3 @@
 {
-  Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
-  if (stat != null && stat.getDataLength() != 0) {
-    byte[] data=workersClient.getData().forPath(currentWorkersPath());
-    Map<String,WorkerState> workers=ZkUtils.fromBytes(data,Map.class);
-    return workers;
-  }
-  return Collections.emptyMap();
+  return currentWorkers(0);
 }

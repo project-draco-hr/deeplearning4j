@@ -6,6 +6,12 @@
   workersClient=CuratorFrameworkFactory.builder().namespace(WORKERS).retryPolicy(new RetryUntilElapsed(60000,5000)).ensembleProvider(new FixedEnsembleProvider(connectionString)).build();
   workersClient.start();
   workersClient.getZookeeperClient().blockUntilConnectedOrTimedOut();
+  topicsClient=CuratorFrameworkFactory.builder().namespace(TOPICS).retryPolicy(new RetryUntilElapsed(60000,5000)).ensembleProvider(new FixedEnsembleProvider(connectionString)).build();
+  topicsClient.start();
+  topicsClient.getZookeeperClient().blockUntilConnectedOrTimedOut();
+  resultClient=CuratorFrameworkFactory.builder().namespace(RESULT).retryPolicy(new RetryUntilElapsed(60000,5000)).connectionTimeoutMs(99999999).ensembleProvider(new FixedEnsembleProvider(connectionString)).build();
+  resultClient.start();
+  resultClient.getZookeeperClient().blockUntilConnectedOrTimedOut();
   queue=QueueBuilder.builder(workersClient,this,this,availableWorkersPath()).buildIdQueue();
   queue.start();
 }

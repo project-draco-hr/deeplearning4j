@@ -1,15 +1,9 @@
 {
-  Stat stat=jobClient.checkExists().forPath(currentJobsPath());
-  if (stat != null && stat.getDataLength() != 0) {
-    byte[] data=jobClient.getZookeeperClient().getZooKeeper().getData(currentJobsPath(),false,stat);
-    List<Job> jobs=ZkUtils.fromBytes(data,List.class);
-    jobs.add(j);
-    jobClient.delete().forPath(currentJobsPath());
-    jobClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentJobsPath(),ZkUtils.toBytes((Serializable)jobs));
+  if (j.getWork() == null) {
+    log.info("Ignoring null work");
+    return;
   }
- else {
-    List<Job> currentJobs=new ArrayList<>();
-    currentJobs.add(j);
-    jobClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentJobsPath(),ZkUtils.toBytes((Serializable)currentJobs));
-  }
+  List<Job> jobs=currentJobs();
+  jobs.add(j);
+  createJobsWithData(jobs);
 }

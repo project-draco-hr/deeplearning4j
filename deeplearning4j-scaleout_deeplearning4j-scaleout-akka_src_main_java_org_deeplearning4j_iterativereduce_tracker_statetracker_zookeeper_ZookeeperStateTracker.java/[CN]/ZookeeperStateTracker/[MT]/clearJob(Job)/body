@@ -1,6 +1,9 @@
 {
+  if (j.getWork() == null) {
+    log.info("Ignoring null work");
+    return;
+  }
   List<Job> jobs=currentJobs();
   jobs.remove(j);
-  jobClient.delete().forPath(currentJobsPath());
-  jobClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentJobsPath(),ZkUtils.toBytes((Serializable)jobs));
+  createJobsWithData(jobs);
 }

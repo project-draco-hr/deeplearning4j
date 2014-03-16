@@ -1,0 +1,4 @@
+{
+  super.aroundPreRestart(reason,message);
+  log.info("Restarted because of ",reason + " with message " + message.toString());
+}

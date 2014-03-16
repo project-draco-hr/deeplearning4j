@@ -1,8 +1,3 @@
 {
-  if (!this.workers.containsKey(state.getWorkerId())) {
-    if (!state.isAvailable())     state.setAvailable(true);
-    this.workers.put(state.getWorkerId(),state);
-    this.availableWorkers.add(state);
-    log.info("Added worker with id " + state.getWorkerId());
-  }
+  stateTracker.addWorker(state);
 }

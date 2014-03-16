@@ -4,10 +4,6 @@
   if (getClass() != obj.getClass())   return false;
   WorkerState other=(WorkerState)obj;
   if (isAvailable != other.isAvailable)   return false;
-  if (ref == null) {
-    if (other.ref != null)     return false;
-  }
- else   if (!ref.equals(other.ref))   return false;
   if (workerId == null) {
     if (other.workerId != null)     return false;
   }

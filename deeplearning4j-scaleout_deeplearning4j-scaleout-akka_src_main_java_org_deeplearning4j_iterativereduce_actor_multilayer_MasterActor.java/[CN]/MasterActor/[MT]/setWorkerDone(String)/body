@@ -1,8 +1,3 @@
 {
-  if (this.workers == null || id == null || !this.workers.containsKey(id))   return;
-  WorkerState state=this.workers != null ? this.workers.get(id) : null;
-  if (state != null)   this.workers.get(id).setAvailable(true);
-  if (this.currentJobs != null && this.currentJobs.containsKey(id))   this.currentJobs.remove(id);
-  state.setAvailable(true);
-  this.availableWorkers.add(state);
+  stateTracker.setWorkerDone(id);
 }

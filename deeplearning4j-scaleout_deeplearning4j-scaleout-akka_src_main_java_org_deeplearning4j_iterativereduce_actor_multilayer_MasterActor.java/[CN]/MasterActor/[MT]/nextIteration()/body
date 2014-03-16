@@ -1,9 +1,8 @@
 {
-  masterResults=this.compute(updates,updates);
+  UpdateableImpl masterResults=this.compute(updates,updates);
+  Map<String,WorkerState> workers=stateTracker.currentWorkers();
   for (  String key : workers.keySet()) {
-    workers.get(key).setAvailable(true);
-    currentJobs.remove(key);
-    this.availableWorkers.add(workers.get(key));
+    stateTracker.setWorkerDone(key);
     log.info("Freeing " + key + " for work post batch completion");
   }
   epochsComplete++;
@@ -11,4 +10,5 @@
   updates.clear();
   log.info("Broadcasting weights");
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+  this.stateTracker.setCurrent(masterResults);
 }

@@ -1,12 +1,23 @@
 {
   this.conf=conf;
   this.batchActor=batchActor;
+  try {
+    this.stateTracker=new ZookeeperStateTracker();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
   setup(conf);
   context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
-      log.info("Current workers " + workers.keySet());
+      try {
+        log.info("Current workers " + stateTracker.currentWorkers().keySet());
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
       log.info("Asking for status update");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,NeedsStatus.getInstance()),getSelf());
     }

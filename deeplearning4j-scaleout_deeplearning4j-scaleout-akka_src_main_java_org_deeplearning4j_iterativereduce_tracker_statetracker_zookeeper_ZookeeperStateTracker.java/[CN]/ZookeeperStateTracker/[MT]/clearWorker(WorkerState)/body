@@ -1,9 +1,9 @@
 {
   Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
   if (stat != null && stat.getDataLength() != 0) {
-    byte[] data=workersClient.getZookeeperClient().getZooKeeper().getData(currentJobsPath(),false,stat);
+    byte[] data=workersClient.getData().forPath(currentJobsPath());
     Map<String,WorkerState> workers=ZkUtils.fromBytes(data,Map.class);
     workers.remove(worker.getWorkerId());
-    workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
+    createWorkersWithData(workers);
   }
 }

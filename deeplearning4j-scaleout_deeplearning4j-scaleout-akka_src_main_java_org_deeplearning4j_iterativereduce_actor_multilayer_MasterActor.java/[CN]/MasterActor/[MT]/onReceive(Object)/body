@@ -13,23 +13,23 @@
   }
  else   if (message instanceof GiveMeMyJob) {
     GiveMeMyJob j=(GiveMeMyJob)message;
-    Job j2=this.currentJobs.get(j.getId());
-    if (j2 == null) {
-      log.info("There does not appear to be a job for worker " + j.getId());
-    }
- else {
-      j.setJob(j2);
-      log.info("Returning current job for worker " + j.getId());
-      mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
+    List<Job> jobs=stateTracker.currentJobs();
+    for (    Job j2 : jobs) {
+      if (j2.getWorkerId().equals(j.getId())) {
+        j.setJob(j2);
+        log.info("Returning current job for worker " + j.getId());
+        mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
+      }
     }
   }
  else   if (message instanceof NeedsModelMessage) {
     log.info("Sending networks over");
-    getSender().tell(masterResults.get(),getSelf());
+    getSender().tell(getResults().get(),getSelf());
   }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
-    masterResults=this.compute(updates,updates);
+    UpdateableImpl masterResults=this.compute(updates,updates);
+    stateTracker.setCurrent(masterResults);
     epochsComplete++;
     updates.clear();
     if (pretrain) {
@@ -37,6 +37,7 @@
       log.info("Switching to finetune mode");
       pretrain=false;
       SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
+      Map<String,WorkerState> workers=stateTracker.currentWorkers();
       for (      String key : workers.keySet()) {
         setWorkerDone(key);
         log.info("Freeing " + key + " for work post batch completion");
@@ -49,20 +50,26 @@
     }
   }
  else   if (message instanceof AlreadyWorking) {
-    final AlreadyWorking a=(AlreadyWorking)message;
-    final Job j=currentJobs.get(a.getId());
-    log.info("Adding job to be redistributed");
-    needsToBeRedistributed.add(j);
+    List<Job> jobs=stateTracker.currentJobs();
+    AlreadyWorking working=(AlreadyWorking)message;
+    for (    Job j : jobs) {
+      if (j.getWorkerId().equals(working.getId())) {
+        stateTracker.requeueJob(j);
+      }
+    }
   }
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());
-    this.workers.remove(((ClearWorker)message).getId());
-    this.currentJobs.remove(((ClearWorker)message).getId());
+    ClearWorker clear=(ClearWorker)message;
+    Map<String,WorkerState> workers=stateTracker.currentWorkers();
+    WorkerState clear2=workers.get(clear.getId());
+    if (clear != null)     stateTracker.clearWorker(clear2);
   }
  else   if (message instanceof String) {
-    WorkerState state=this.workers.get(message.toString());
+    Map<String,WorkerState> workers=stateTracker.currentWorkers();
+    WorkerState state=workers.get(message.toString());
     if (state == null) {
-      state=new WorkerState(message.toString(),getSender());
+      state=new WorkerState(message.toString());
       state.setAvailable(true);
       addWorker(state);
       log.info("Worker " + state.getWorkerId() + " available for work");
@@ -77,12 +84,13 @@
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
+    List<Job> currentJobs=stateTracker.currentJobs();
     if (updates.size() >= partition || everyWorkerAvailable() || currentJobs.isEmpty())     nextIteration();
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
     if (!j.isDone()) {
-      currentJobs.put(j.getWorkerId(),j);
+      stateTracker.addJobToCurrent(j);
       log.info("Ack from worker " + j.getWorkerId() + " on job");
     }
  else {

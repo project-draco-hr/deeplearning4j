@@ -1,0 +1,16 @@
+{
+  if (numTimes >= 3) {
+    log.warn("3 failures to insert workers with zk creation...exiting");
+    return;
+  }
+  numTimes++;
+  try {
+    EnsurePath ensurePath=new EnsurePath(currentWorkersPath());
+    ensurePath.ensure(workersClient.getZookeeperClient());
+    if (workersClient.checkExists().forPath(currentWorkersPath()) != null)     workersClient.setData().forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
+ else     workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
+  }
+ catch (  Exception e) {
+    createWorkersWithData(workers,numTimes);
+  }
+}

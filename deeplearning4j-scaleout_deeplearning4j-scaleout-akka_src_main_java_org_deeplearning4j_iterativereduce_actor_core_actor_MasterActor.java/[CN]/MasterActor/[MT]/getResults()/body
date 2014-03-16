@@ -1,3 +1,8 @@
 {
-  return masterResults;
+  try {
+    return (E)stateTracker.getCurrent().get();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }

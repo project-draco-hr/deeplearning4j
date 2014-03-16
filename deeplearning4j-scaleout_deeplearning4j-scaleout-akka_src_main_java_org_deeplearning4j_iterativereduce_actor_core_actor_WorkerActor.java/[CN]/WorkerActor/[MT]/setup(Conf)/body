@@ -16,5 +16,4 @@
   Address a=AddressFromURIString.apply(url);
   Cluster.get(context().system()).join(a);
   mediator=DistributedPubSubExtension.get(getContext().system()).mediator();
-  availableForWork();
 }

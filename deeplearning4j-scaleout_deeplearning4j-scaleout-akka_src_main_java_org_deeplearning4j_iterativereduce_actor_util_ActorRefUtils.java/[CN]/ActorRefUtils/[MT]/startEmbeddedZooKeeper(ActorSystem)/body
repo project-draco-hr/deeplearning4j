@@ -1,4 +1,5 @@
 {
+  System.setProperty("jute.maxbuffer","5048583");
   Future<Void> f=Futures.future(new Callable<Void>(){
     @Override public Void call() throws Exception {
       ZooKeeperRunner runner=new ZooKeeperRunner();

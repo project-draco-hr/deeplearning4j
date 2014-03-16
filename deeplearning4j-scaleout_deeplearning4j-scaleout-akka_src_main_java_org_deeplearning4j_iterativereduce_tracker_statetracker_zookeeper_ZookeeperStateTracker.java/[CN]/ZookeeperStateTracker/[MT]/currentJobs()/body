@@ -1,9 +1,3 @@
 {
-  Stat stat=jobClient.checkExists().forPath(currentJobsPath());
-  if (stat != null && stat.getDataLength() != 0) {
-    byte[] data=jobClient.getData().forPath(currentJobsPath());
-    List<Job> jobs=ZkUtils.fromBytes(data,List.class);
-    return jobs;
-  }
-  return Collections.emptyList();
+  return currentJobs(0);
 }

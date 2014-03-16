@@ -1,3 +1,11 @@
 {
-  return availableWorkers.take();
+  WorkerState ret=availableWorkers.poll(30,TimeUnit.SECONDS);
+  while (ret == null) {
+    Map<String,WorkerState> workers=currentWorkers();
+    for (    WorkerState w : workers.values()) {
+      if (w.isAvailable())       availableWorkers.add(w);
+    }
+    ret=availableWorkers.poll(30,TimeUnit.SECONDS);
+  }
+  return ret;
 }

@@ -1,8 +1,0 @@
-{
-  String id=UUID.randomUUID().toString();
-  WorkerState state=new WorkerState(id,null);
-  state.setAvailable(true);
-  tracker.addWorker(state);
-  Map<String,WorkerState> workers=tracker.currentWorkers();
-  assertEquals(1,workers.size());
-}

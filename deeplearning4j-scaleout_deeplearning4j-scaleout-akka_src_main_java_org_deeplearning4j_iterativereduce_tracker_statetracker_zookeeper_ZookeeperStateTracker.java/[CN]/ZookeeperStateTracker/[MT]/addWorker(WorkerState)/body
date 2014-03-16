@@ -1,16 +1,5 @@
 {
-  Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
-  if (stat != null && stat.getDataLength() != 0) {
-    byte[] data=workersClient.getZookeeperClient().getZooKeeper().getData(currentJobsPath(),false,stat);
-    Map<String,WorkerState> workers=ZkUtils.fromBytes(data,Map.class);
-    workersClient.delete().forPath(currentWorkersPath());
-    workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
-    queue.put(worker,worker.getWorkerId());
-  }
- else {
-    Map<String,WorkerState> workers=new HashMap<String,WorkerState>();
-    workers.put(worker.getWorkerId(),worker);
-    workersClient.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(currentWorkersPath(),ZkUtils.toBytes((Serializable)workers));
-    queue.put(worker,worker.getWorkerId());
-  }
+  Map<String,WorkerState> workers=this.currentWorkers();
+  createWorkersWithData(workers);
+  queue.put(worker,worker.getWorkerId());
 }
