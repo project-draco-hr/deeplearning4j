@@ -49,9 +49,10 @@
 ,context().dispatcher());
   ensureDistribution=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
-      for (      final Job j : needsToBeRedistributed) {
+      while (!stateTracker.jobsToRedistribute().isEmpty()) {
+        Job remove=needsToBeRedistributed.remove(0);
         try {
-          stateTracker.requeueJob(j);
+          stateTracker.requeueJob(remove);
         }
  catch (        Exception e) {
           throw new RuntimeException(e);

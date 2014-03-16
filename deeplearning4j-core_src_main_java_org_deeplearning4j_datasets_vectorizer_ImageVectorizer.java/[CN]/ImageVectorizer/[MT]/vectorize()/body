@@ -1,0 +1,22 @@
+{
+  try {
+    DoubleMatrix d=loader.asMatrix(image);
+    DoubleMatrix label2=MatrixUtil.toOutcomeVector(label,numLabels);
+    if (normalize) {
+      d=MatrixUtil.normalizeByRowSums(d);
+    }
+ else     if (binarize) {
+      for (int i=0; i < d.length; i++) {
+        double curr=d.get(i);
+        if (curr > threshold) {
+          d.put(i,1);
+        }
+ else         d.put(i,0);
+      }
+    }
+    return new DataSet(d,label2);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
