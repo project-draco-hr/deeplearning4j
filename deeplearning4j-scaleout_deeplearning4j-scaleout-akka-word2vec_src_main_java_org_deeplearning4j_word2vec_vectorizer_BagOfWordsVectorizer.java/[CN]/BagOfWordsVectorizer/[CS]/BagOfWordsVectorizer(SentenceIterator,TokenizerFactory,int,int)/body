@@ -1,0 +1,7 @@
+{
+  this.sentenceIter=iter;
+  this.tokenizerFactory=tokenizer;
+  this.numLabels=numLabels;
+  this.label=label;
+  this.vocab=new Index();
+}
