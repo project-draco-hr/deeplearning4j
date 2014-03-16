@@ -1,0 +1,4 @@
+{
+  if (this.master == null)   this.master=new AtomicReference<UpdateableImpl>(e);
+ else   this.master.set(e);
+}

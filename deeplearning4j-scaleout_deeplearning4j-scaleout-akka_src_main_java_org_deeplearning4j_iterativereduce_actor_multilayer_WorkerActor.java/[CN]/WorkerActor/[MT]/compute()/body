@@ -2,14 +2,15 @@
   log.info("Training network");
   blockTillNetworkAvailable();
   if (getCurrent() == null)   return null;
+  BaseMultiLayerNetwork network=this.getNetwork();
   if (this.getCurrent().isPretrain()) {
     log.info("Worker " + id + " pretraining");
-    getNetwork().pretrain(this.getCombinedInput(),extraParams);
+    network.pretrain(this.getCombinedInput(),extraParams);
   }
  else {
     log.info("Worker " + id + " finetuning");
-    getNetwork().finetune(outcomes,learningRate,fineTuneEpochs);
+    network.finetune(outcomes,learningRate,fineTuneEpochs);
   }
   finishedWork();
-  return new UpdateableImpl(getNetwork());
+  return new UpdateableImpl(network);
 }

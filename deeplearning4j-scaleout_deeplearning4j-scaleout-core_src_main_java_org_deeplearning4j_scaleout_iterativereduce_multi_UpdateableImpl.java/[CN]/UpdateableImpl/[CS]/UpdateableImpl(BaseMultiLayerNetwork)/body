@@ -1,4 +1,4 @@
 {
-  wrapped=matrix;
-  if (clazz == null)   clazz=matrix.getClass();
+  this.wrapped=wrapped;
+  if (clazz == null)   clazz=wrapped.getClass();
 }

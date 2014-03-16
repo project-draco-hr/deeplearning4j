@@ -1,4 +1,4 @@
 {
-  UpdateableImpl u=(UpdateableImpl)master;
+  UpdateableImpl u=master.get();
   return u.clone();
 }
