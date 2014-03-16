@@ -1,10 +1,2 @@
 {
-  if (jobClient != null)   jobClient.close();
-  if (workersClient != null)   workersClient.close();
-  if (queue != null)   try {
-    queue.close();
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
 }

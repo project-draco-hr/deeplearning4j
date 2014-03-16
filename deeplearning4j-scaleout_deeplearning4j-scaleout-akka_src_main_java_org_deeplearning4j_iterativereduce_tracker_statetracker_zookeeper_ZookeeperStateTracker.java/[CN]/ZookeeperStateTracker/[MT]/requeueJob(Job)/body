@@ -1,9 +1,3 @@
 {
-  if (j.getWork() == null) {
-    log.info("Ignoring null work");
-    return;
-  }
-  List<Job> currentJobs=new ArrayList<>();
-  currentJobs.add(j);
-  createJobsWithData(currentJobs);
+  redist.add(j);
 }

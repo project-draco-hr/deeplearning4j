@@ -1,9 +1,3 @@
 {
-  if (j.getWork() == null) {
-    log.info("Ignoring null work");
-    return;
-  }
-  List<Job> jobs=currentJobs();
   jobs.remove(j);
-  createJobsWithData(jobs);
 }

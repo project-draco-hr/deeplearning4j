@@ -1,12 +1,4 @@
 {
-  Stat stat=workersClient.checkExists().forPath(currentWorkersPath());
-  if (stat != null && stat.getDataLength() != 0) {
-    Map<String,WorkerState> workers=currentWorkers();
-    WorkerState state=workers.get(id);
-    if (state != null) {
-      state.setAvailable(true);
-      createWorkersWithData(workers);
-      queue.put(state,id);
-    }
-  }
+  this.workers.get(id).setAvailable(true);
+  availableWorkers.add(workers.get(id));
 }

@@ -1,8 +1,0 @@
-{
-  try {
-    return ZkUtils.toBytes(arg0);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

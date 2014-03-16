@@ -1,9 +1,4 @@
 {
-  if (j.getWork() == null) {
-    log.info("Ignoring null work");
-    return;
-  }
-  List<Job> jobs=currentJobs();
   jobs.add(j);
-  createJobsWithData(jobs);
+  workers.get(j.getWorkerId()).setAvailable(false);
 }

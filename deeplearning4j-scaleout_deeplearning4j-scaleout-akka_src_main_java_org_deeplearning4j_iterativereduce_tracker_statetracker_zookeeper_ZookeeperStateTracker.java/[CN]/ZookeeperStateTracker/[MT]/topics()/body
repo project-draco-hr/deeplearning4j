@@ -1,8 +1,3 @@
 {
-  if (topicsClient.checkExists().forPath(topicsPath()) != null) {
-    byte[] data=topicsClient.getData().forPath(topicsPath());
-    List<String> topics=ZkUtils.fromBytes(data,List.class);
-    return topics;
-  }
-  return Collections.emptyList();
+  return topics;
 }

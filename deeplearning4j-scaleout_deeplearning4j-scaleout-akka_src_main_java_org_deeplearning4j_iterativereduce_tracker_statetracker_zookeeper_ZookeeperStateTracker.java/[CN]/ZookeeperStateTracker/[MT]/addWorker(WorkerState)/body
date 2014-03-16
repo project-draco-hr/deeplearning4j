@@ -1,5 +1,4 @@
 {
-  Map<String,WorkerState> workers=this.currentWorkers();
-  createWorkersWithData(workers);
-  queue.put(worker,worker.getWorkerId());
+  workers.put(worker.getWorkerId(),worker);
+  availableWorkers.add(worker);
 }

@@ -20,6 +20,21 @@
       }
       log.info("Asking for status update");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.BROADCAST,NeedsStatus.getInstance()),getSelf());
+      while (!stateTracker.jobsToRedistribute().isEmpty()) {
+        Job j=stateTracker.jobsToRedistribute().remove(0);
+        try {
+          WorkerState state=nextAvailableWorker();
+          stateTracker.clearJob(j);
+          stateTracker.jobRequeued(j);
+          j.setWorkerId(state.getWorkerId());
+          stateTracker.addJobToCurrent(j);
+          mediator.tell(new DistributedPubSubMediator.Publish(state.getWorkerId(),j),getSelf());
+          log.info("Redistributing job to worker id " + state.getWorkerId());
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
     }
   }
 ,context().dispatcher());
