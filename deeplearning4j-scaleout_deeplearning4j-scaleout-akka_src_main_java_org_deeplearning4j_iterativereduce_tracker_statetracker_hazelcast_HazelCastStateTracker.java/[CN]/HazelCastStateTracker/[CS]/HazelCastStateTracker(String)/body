@@ -1,0 +1,10 @@
+{
+  h=Hazelcast.newHazelcastInstance(config);
+  jobs=h.getList(JOBS);
+  workers=h.getMap(CURRENT_WORKERS);
+  topics=h.getList(TOPICS);
+  redist=h.getList(REDIST);
+  availableWorkers=h.getQueue(AVAILABLE_WORKERS);
+  master=h.getAtomicReference(RESULT);
+  h.getAtomicReference(RESULT);
+}

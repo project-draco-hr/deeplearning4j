@@ -1,6 +1,6 @@
 {
   try {
-    return new ZookeeperStateTracker("localhost:2182");
+    return new HazelCastStateTracker("localhost:2182");
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
