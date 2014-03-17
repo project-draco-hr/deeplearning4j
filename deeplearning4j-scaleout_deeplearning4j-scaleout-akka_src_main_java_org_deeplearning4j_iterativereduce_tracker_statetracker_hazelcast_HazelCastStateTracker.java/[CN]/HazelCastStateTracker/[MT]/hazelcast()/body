@@ -1,0 +1,28 @@
+{
+  Config conf=new Config();
+  conf.getNetworkConfig().setPort(DEFAULT_HAZELCAST_PORT);
+  conf.getNetworkConfig().setPortAutoIncrement(true);
+  conf.setProperty("hazelcast.initial.min.cluster.size","1");
+  JoinConfig join=conf.getNetworkConfig().getJoin();
+  join.getTcpIpConfig().setEnabled(true);
+  join.getAwsConfig().setEnabled(false);
+  join.getMulticastConfig().setEnabled(false);
+  join.getTcpIpConfig().setConnectionTimeoutSeconds(2000);
+  join.getTcpIpConfig().addMember("127.0.0.1:5172");
+  ListConfig jobConfig=new ListConfig();
+  jobConfig.setName(JOBS);
+  conf.addListConfig(jobConfig);
+  MapConfig workersConfig=new MapConfig();
+  workersConfig.setName(CURRENT_WORKERS);
+  conf.addMapConfig(workersConfig);
+  ListConfig topicsConfig=new ListConfig();
+  topicsConfig.setName(TOPICS);
+  conf.addListConfig(topicsConfig);
+  ListConfig reDistConfig=new ListConfig();
+  reDistConfig.setName(REDIST);
+  conf.addListConfig(reDistConfig);
+  ListConfig availableWorkersConfig=new ListConfig();
+  availableWorkersConfig.setName(AVAILABLE_WORKERS);
+  conf.addListConfig(availableWorkersConfig);
+  return conf;
+}
