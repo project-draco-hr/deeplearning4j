@@ -15,5 +15,6 @@
   redist=h.getList(REDIST);
   availableWorkers=h.getQueue(AVAILABLE_WORKERS);
   master=h.getAtomicReference(RESULT);
-  h.getAtomicReference(RESULT);
+  isPretrain=h.getAtomicReference(IS_PRETRAIN);
+  isPretrain.set(false);
 }

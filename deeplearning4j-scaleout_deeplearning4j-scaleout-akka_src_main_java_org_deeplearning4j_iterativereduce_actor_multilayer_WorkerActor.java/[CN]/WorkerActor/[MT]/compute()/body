@@ -2,7 +2,7 @@
   log.info("Training network");
   if (getCurrent() == null)   return null;
   BaseMultiLayerNetwork network=this.getNetwork();
-  if (this.getCurrent().isPretrain()) {
+  if (tracker.isPretrain()) {
     log.info("Worker " + id + " pretraining");
     network.pretrain(this.getCombinedInput(),extraParams);
   }
