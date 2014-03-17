@@ -7,6 +7,7 @@
     network.pretrain(this.getCombinedInput(),extraParams);
   }
  else {
+    network.setInput(getCombinedInput());
     log.info("Worker " + id + " finetuning");
     network.finetune(outcomes,learningRate,fineTuneEpochs);
   }
