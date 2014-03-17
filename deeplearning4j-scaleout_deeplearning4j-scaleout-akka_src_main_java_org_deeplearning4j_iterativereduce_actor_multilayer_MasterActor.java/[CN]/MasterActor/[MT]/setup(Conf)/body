@@ -36,6 +36,10 @@
  else {
           for (          Job j : currentJobs) {
             mediator.tell(new DistributedPubSubMediator.Publish(j.getWorkerId(),NeedsStatus.getInstance()),getSelf());
+            if (stateTracker.workerAvailable(j.getWorkerId())) {
+              log.info("Out of sync job and worker list; removing job " + j.getWorkerId());
+              stateTracker.jobDone(j);
+            }
           }
         }
         log.info("Available workers " + availableWorkers);

@@ -1,0 +1,5 @@
+{
+  WorkerState w=this.workers.get(id);
+  if (w != null)   return w.isAvailable();
+  return false;
+}

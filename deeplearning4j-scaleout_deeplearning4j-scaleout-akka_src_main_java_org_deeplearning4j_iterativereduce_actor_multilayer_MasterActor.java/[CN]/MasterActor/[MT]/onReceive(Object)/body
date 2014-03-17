@@ -55,6 +55,7 @@
     for (    Job j : jobs) {
       if (j.getWorkerId().equals(working.getId())) {
         stateTracker.requeueJob(j);
+        break;
       }
     }
   }
@@ -96,9 +97,10 @@
  else {
       log.info("Job " + j.getWorkerId() + " finished");
       setWorkerDone(j.getWorkerId());
+      stateTracker.jobDone(j);
     }
   }
- else   if (message instanceof List || message instanceof Pair) {
+ else   if (message instanceof List || message instanceof DataSet) {
     if (message instanceof List) {
       List<DataSet> list=(List<DataSet>)message;
       splitListIntoRows(list);
