@@ -1,4 +1,6 @@
 {
-  this.workers.get(id).setAvailable(true);
+  WorkerState w=workers.get(id);
+  w.setAvailable(true);
+  workers.put(w.getWorkerId(),w);
   availableWorkers.add(workers.get(id));
 }

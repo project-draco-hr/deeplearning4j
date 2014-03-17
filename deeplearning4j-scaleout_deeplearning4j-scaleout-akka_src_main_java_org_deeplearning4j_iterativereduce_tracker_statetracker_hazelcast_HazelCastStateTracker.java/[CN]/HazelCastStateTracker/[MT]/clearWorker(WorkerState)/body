@@ -1,4 +1,4 @@
 {
-  this.workers.remove(worker.getWorkerId());
+  workers.remove(worker.getWorkerId());
   availableWorkers.remove(worker);
 }

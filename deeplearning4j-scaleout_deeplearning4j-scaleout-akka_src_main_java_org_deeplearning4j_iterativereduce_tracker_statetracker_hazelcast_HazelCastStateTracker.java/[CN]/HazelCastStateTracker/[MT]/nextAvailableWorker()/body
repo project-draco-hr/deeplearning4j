@@ -1,3 +1,18 @@
 {
-  return availableWorkers.poll();
+  WorkerState ret=null;
+  int timesLooped=0;
+  do {
+    ret=availableWorkers.poll();
+    timesLooped++;
+    if (timesLooped % 5 == 0) {
+      for (      WorkerState w : workers.values()) {
+        if (w.isAvailable() && !availableWorkers.contains(w)) {
+          availableWorkers.add(w);
+          log.info("Adding missing worker " + w.getWorkerId());
+        }
+      }
+    }
+  }
+ while (ret == null);
+  return ret;
 }

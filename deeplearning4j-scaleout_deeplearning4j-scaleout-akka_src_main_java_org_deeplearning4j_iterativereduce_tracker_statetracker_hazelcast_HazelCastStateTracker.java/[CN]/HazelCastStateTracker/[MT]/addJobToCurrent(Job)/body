@@ -1,4 +1,6 @@
 {
   jobs.add(j);
-  workers.get(j.getWorkerId()).setAvailable(false);
+  WorkerState w=workers.get(j.getWorkerId());
+  w.setAvailable(false);
+  workers.put(w.getWorkerId(),w);
 }
