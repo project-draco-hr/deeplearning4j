@@ -3,6 +3,7 @@
   conf.getNetworkConfig().setPort(DEFAULT_HAZELCAST_PORT);
   conf.getNetworkConfig().setPortAutoIncrement(true);
   conf.setProperty("hazelcast.initial.min.cluster.size","1");
+  conf.setProperty("hazelcast.shutdownhook.enabled","false");
   JoinConfig join=conf.getNetworkConfig().getJoin();
   join.getTcpIpConfig().setEnabled(true);
   join.getAwsConfig().setEnabled(false);
