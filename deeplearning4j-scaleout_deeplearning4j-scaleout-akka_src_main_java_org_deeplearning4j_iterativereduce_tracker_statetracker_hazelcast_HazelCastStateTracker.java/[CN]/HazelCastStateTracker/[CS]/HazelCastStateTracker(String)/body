@@ -1,5 +1,14 @@
 {
-  h=Hazelcast.newHazelcastInstance(config);
+  String[] s=connectionString.split(":");
+  if (!s.equals("localhost") && !s.equals("127.0.0.1") && !s.equals("0.0.0.0")) {
+    ClientConfig clientConfig=new ClientConfig();
+    clientConfig.getNetworkConfig().setAddresses(Arrays.asList(s[0] + ":" + DEFAULT_HAZELCAST_PORT));
+    h=HazelcastClient.newHazelcastClient(clientConfig);
+  }
+ else {
+    config=new Config();
+    h=Hazelcast.newHazelcastInstance(config);
+  }
   jobs=h.getList(JOBS);
   workers=h.getMap(CURRENT_WORKERS);
   topics=h.getList(TOPICS);
