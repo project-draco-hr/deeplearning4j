@@ -1,9 +1,0 @@
-{
-  GenericObjectPoolConfig conf=new GenericObjectPoolConfig();
-  conf.setBlockWhenExhausted(true);
-  conf.setMaxTotal(Integer.MAX_VALUE);
-  conf.setTestOnBorrow(false);
-  conf.setTestOnCreate(false);
-  conf.setMinEvictableIdleTimeMillis(-1);
-  return conf;
-}

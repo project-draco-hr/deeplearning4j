@@ -1,6 +1,5 @@
 {
   setup(conf);
-  this.current=new AtomicReference<>(null);
   this.tracker=tracker;
   mediator.tell(new Put(getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
@@ -8,6 +7,12 @@
   id=generateId();
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
   this.clusterClient=client;
+  try {
+    this.tracker.addWorker(new WorkerState(id));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
   masterPath=conf.getMasterAbsPath();
   log.info("Registered with master " + id + " at master "+ conf.getMasterAbsPath());
 }

@@ -1,11 +1,3 @@
 {
-  TransactionContext context=beginTransaction();
-  TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
-  WorkerState w=workers.get(id);
-  if (w != null) {
-    context.commitTransaction();
-    return w.isAvailable();
-  }
-  context.commitTransaction();
-  return false;
+  return h.getLock(id).isLocked();
 }

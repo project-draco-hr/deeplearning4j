@@ -1,3 +1,3 @@
 {
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,getCurrent()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,tracker.jobFor(id)),getSelf());
 }

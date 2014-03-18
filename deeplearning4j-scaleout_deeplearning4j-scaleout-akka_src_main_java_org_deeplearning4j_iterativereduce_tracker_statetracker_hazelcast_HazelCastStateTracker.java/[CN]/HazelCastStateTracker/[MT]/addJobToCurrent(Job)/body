@@ -1,8 +1,10 @@
 {
   TransactionContext context=beginTransaction();
   context.getList(JOBS).add(j);
-  WorkerState w=(WorkerState)context.getMap(CURRENT_WORKERS).get(j.getWorkerId());
-  w.setAvailable(false);
-  context.getMap(CURRENT_WORKERS).put(w.getWorkerId(),w);
+  IAtomicReference<Job> r=h.getAtomicReference("job-" + j.getWorkerId());
+  while (r.get() != null) {
+    log.info("Currently locked unable to add job for current worker");
+  }
+  r.set(j);
   context.commitTransaction();
 }

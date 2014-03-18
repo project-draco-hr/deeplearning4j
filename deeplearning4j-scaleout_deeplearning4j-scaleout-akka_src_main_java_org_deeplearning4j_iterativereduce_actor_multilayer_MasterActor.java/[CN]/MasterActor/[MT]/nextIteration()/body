@@ -1,10 +1,5 @@
 {
   UpdateableImpl masterResults=this.compute(updates,updates);
-  Map<String,WorkerState> workers=stateTracker.currentWorkers();
-  for (  String key : workers.keySet()) {
-    stateTracker.setWorkerDone(key);
-    log.info("Freeing " + key + " for work post batch completion");
-  }
   epochsComplete++;
   if (!isDone())   batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
   updates.clear();

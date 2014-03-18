@@ -9,18 +9,15 @@
   setOutcomes(newOutput);
   Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
     @Override public UpdateableImpl call() throws Exception {
-      while (getCurrent() == null) {
-        log.info("Calling for job on worker " + id);
-        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new GiveMeMyJob(id,null)),getSelf());
-        Thread.sleep(1000);
-      }
       UpdateableImpl work=compute();
       if (work != null) {
         log.info("Updating parent actor...");
         mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
       }
-      finishedWork();
-      availableForWork();
+ else {
+        log.info("No job found; unlocking worker " + id);
+        tracker.unlockWorker(id);
+      }
       return work;
     }
   }

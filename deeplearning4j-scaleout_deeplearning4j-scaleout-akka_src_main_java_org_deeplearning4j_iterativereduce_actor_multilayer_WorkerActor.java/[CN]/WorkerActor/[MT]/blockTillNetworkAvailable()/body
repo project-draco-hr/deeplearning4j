@@ -1,8 +1,0 @@
-{
-  try {
-    setNetwork(this.tracker.getCurrent().get());
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

@@ -1,3 +1,5 @@
 {
   super(conf,batchActor,new Object[]{network});
+  this.network=network;
+  setup(conf);
 }

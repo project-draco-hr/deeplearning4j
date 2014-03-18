@@ -11,21 +11,6 @@
       getSender().tell(Ack.getInstance(),getSelf());
     }
   }
- else   if (message instanceof GiveMeMyJob) {
-    GiveMeMyJob j=(GiveMeMyJob)message;
-    List<Job> jobs=stateTracker.currentJobs();
-    for (    Job j2 : jobs) {
-      if (j2.getWorkerId().equals(j.getId())) {
-        j.setJob(j2);
-        log.info("Returning current job for worker " + j.getId());
-        mediator.tell(new DistributedPubSubMediator.Publish(j.getId(),j),getSelf());
-      }
-    }
-  }
- else   if (message instanceof NeedsModelMessage) {
-    log.info("Sending networks over");
-    getSender().tell(getResults().get(),getSelf());
-  }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
     UpdateableImpl masterResults=null;
@@ -41,27 +26,12 @@
       pretrain=false;
       stateTracker.moveToFinetune();
       SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
-      Map<String,WorkerState> workers=stateTracker.currentWorkers();
-      for (      String key : workers.keySet()) {
-        setWorkerDone(key);
-        log.info("Freeing " + key + " for work post batch completion");
-      }
       batchActor.tell(ResetMessage.getInstance(),getSelf());
       batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
     }
  else     if (stateTracker.currentJobs().isEmpty()) {
       isDone=true;
       log.info("Done training!");
-    }
-  }
- else   if (message instanceof AlreadyWorking) {
-    List<Job> jobs=stateTracker.currentJobs();
-    AlreadyWorking working=(AlreadyWorking)message;
-    for (    Job j : jobs) {
-      if (j.getWorkerId().equals(working.getId())) {
-        stateTracker.requeueJob(j);
-        break;
-      }
     }
   }
  else   if (message instanceof ClearWorker) {
@@ -92,17 +62,6 @@
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
     List<Job> currentJobs=stateTracker.currentJobs();
     if (updates.size() >= partition || everyWorkerAvailable() || currentJobs.isEmpty())     nextIteration();
-  }
- else   if (message instanceof Job) {
-    Job j=(Job)message;
-    if (!j.isDone()) {
-      log.info("Ack from worker " + j.getWorkerId() + " on job");
-    }
- else {
-      log.info("Worker " + j.getWorkerId() + " is done working");
-      setWorkerDone(j.getWorkerId());
-      stateTracker.jobDone(j);
-    }
   }
  else   if (message instanceof List || message instanceof DataSet) {
     if (message instanceof List) {

@@ -1,7 +1,7 @@
 {
   DataSetIterator iter=null;
   if (args.length < 2) {
-    iter=new RawMnistDataSetIterator(80,160);
+    iter=new RawMnistDataSetIterator(80,60000);
   }
  else {
     int start=Integer.parseInt(args[1]);
@@ -15,8 +15,8 @@
   List<MultiLayerGradientListener> listeners=new ArrayList<>();
   WeightPlotListener listener=new WeightPlotListener();
   Conf c=new Conf();
-  c.setFinetuneEpochs(1000);
-  c.setFinetuneLearningRate(0.01);
+  c.setFinetuneEpochs(2000);
+  c.setFinetuneLearningRate(0.0001);
   c.setLayerSizes(new int[]{500,400,250});
   c.setnIn(784);
   c.setUseAdaGrad(true);
@@ -24,9 +24,12 @@
   c.setSplit(10);
   c.setMultiLayerClazz(DBN.class);
   c.setUseRegularization(false);
-  c.setDeepLearningParams(new Object[]{1,0.01,1000});
+  c.setDeepLearningParams(new Object[]{1,0.0001,2000});
   c.setMultiLayerGradientListeners(listeners);
-  ActorNetworkRunner runner=new ActorNetworkRunner("master",iter);
+  if (args.length >= 1) {
+    dbn=SerializationUtils.readObject(new File(args[0]));
+  }
+  ActorNetworkRunner runner=dbn == null ? new ActorNetworkRunner("master",iter) : new ActorNetworkRunner("master",iter,dbn);
   runner.setup(c);
   runner.train();
 }

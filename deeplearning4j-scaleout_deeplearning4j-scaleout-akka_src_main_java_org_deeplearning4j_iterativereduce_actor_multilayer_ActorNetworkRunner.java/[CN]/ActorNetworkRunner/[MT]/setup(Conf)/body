@@ -13,7 +13,6 @@
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
-    mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,this),mediator);
     log.info("Starting model saver");
     system.actorOf(Props.create(ModelSavingActor.class,"model-saver"));
     Cluster.get(system).join(masterAddress);

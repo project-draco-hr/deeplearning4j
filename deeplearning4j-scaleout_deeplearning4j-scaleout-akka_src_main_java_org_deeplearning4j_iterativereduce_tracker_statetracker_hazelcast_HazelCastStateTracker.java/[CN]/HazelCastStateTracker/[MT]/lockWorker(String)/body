@@ -1,0 +1,6 @@
+{
+  WorkerState w=new WorkerState(id);
+  w.setAvailable(false);
+  workers.put(id,w);
+  h.getAtomicReference(id).set(w);
+}

@@ -1,8 +1,11 @@
 {
+  log.info("Added worker " + worker.getWorkerId());
   TransactionContext context=beginTransaction();
   TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
-  TransactionalQueue<WorkerState> availableWorkers=context.getQueue(AVAILABLE_WORKERS);
+  TransactionalList<WorkerState> availableWorkers=context.getList(AVAILABLE_WORKERS);
   workers.put(worker.getWorkerId(),worker);
-  availableWorkers.offer(worker);
+  IAtomicReference<WorkerState> workerRef=h.getAtomicReference(worker.getWorkerId());
+  workerRef.set(worker);
+  if (!this.availableWorkers.contains(worker))   availableWorkers.add(worker);
   context.commitTransaction();
 }

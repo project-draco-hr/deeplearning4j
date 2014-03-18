@@ -1,6 +1,5 @@
 {
-  TransactionOptions options=new TransactionOptions().setTransactionType(TransactionType.LOCAL);
-  TransactionContext context=h.newTransactionContext(options);
+  TransactionContext context=h.newTransactionContext();
   context.beginTransaction();
   return context;
 }

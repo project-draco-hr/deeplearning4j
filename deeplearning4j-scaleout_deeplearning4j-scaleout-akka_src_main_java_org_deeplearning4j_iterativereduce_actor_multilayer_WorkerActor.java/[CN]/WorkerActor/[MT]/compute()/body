@@ -1,6 +1,6 @@
 {
   log.info("Training network");
-  while (getCurrent() == null)   return null;
+  tracker.lockWorker(id);
   BaseMultiLayerNetwork network=this.getNetwork();
   while (network == null) {
     try {
@@ -12,23 +12,30 @@
     }
   }
   DataSet d=null;
-  try {
-    for (    Job j : tracker.currentJobs()) {
-      if (j.getWorkerId().equals(id)) {
-        if (j.getWork() instanceof List) {
-          @SuppressWarnings("unchecked") List<DataSet> l=(List<DataSet>)j.getWork();
-          d=DataSet.merge(l);
-        }
- else         d=(DataSet)j.getWork();
-        combinedInput=d.getFirst();
-        outcomes=d.getSecond();
-        break;
+  Job j=null;
+  int numLooped=0;
+  while (j == null && numLooped < 10) {
+    j=tracker.jobFor(id);
+    if (j != null) {
+      log.info("Found job for worker " + id);
+      if (j.getWork() instanceof List) {
+        List<DataSet> l=(List<DataSet>)j.getWork();
+        d=DataSet.merge(l);
       }
+ else       d=(DataSet)j.getWork();
+      combinedInput=d.getFirst();
+      outcomes=d.getSecond();
+    }
+ else     log.info("Job appears to be null...waiting");
+    numLooped++;
+    try {
+      Thread.sleep(100);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
   }
- catch (  Exception e) {
-    throw new IllegalStateException("No job found for worker " + id,e);
-  }
+  if (j == null)   return null;
   if (d == null) {
     throw new IllegalStateException("No job found for worker " + id);
   }
@@ -41,6 +48,12 @@
     log.info("Worker " + id + " finetuning");
     network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
   }
-  finishedWork();
+  try {
+    if (j != null)     tracker.clearJob(j);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  tracker.unlockWorker(id);
   return new UpdateableImpl(network);
 }

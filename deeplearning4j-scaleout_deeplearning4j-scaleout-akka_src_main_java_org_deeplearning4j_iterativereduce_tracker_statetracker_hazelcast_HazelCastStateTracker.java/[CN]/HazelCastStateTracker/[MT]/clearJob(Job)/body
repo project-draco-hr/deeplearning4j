@@ -1,8 +1,10 @@
 {
-  TransactionContext context=beginTransaction();
-  TransactionalList<Job> jobs=context.getList(JOBS);
-  TransactionalList<Job> redist=context.getList(REDIST);
+  IAtomicReference<Job> jRef=h.getAtomicReference("job-" + j.getWorkerId());
+  jRef.set(null);
   jobs.remove(j);
-  redist.remove(j);
-  context.commitTransaction();
+  WorkerState state=workers.get(j.getWorkerId());
+  state.setAvailable(true);
+  workers.put(state.getWorkerId(),state);
+  IAtomicReference<WorkerState> workerRef=h.getAtomicReference(j.getWorkerId());
+  workerRef.set(state);
 }

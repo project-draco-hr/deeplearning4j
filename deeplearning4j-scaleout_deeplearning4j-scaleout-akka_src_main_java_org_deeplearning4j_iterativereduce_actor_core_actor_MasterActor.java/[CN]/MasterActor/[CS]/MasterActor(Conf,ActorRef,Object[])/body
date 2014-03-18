@@ -9,43 +9,4 @@
   }
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
-  setup(conf);
-  context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
-    @Override public void run(){
-      try {
-        log.info("Current workers " + stateTracker.currentWorkers().keySet());
-        if (pretrain && stateTracker.currentJobs().isEmpty()) {
-          log.info("Switching to finetune mode");
-          pretrain=false;
-          stateTracker.moveToFinetune();
-          SerializationUtils.saveObject(stateTracker.getCurrent().get(),new File("pretrain-model.bin"));
-          MasterActor.this.batchActor.tell(ResetMessage.getInstance(),getSelf());
-          MasterActor.this.batchActor.tell(new MoreWorkMessage((Updateable<?>)stateTracker.getCurrent().get()),getSelf());
-        }
- else         if (stateTracker.currentJobs().isEmpty()) {
-          isDone=true;
-          log.info("Done training!");
-        }
-      }
- catch (      Exception e) {
-        throw new RuntimeException(e);
-      }
-      while (!stateTracker.jobsToRedistribute().isEmpty()) {
-        Job j=stateTracker.jobsToRedistribute().remove(0);
-        try {
-          WorkerState state=nextAvailableWorker();
-          stateTracker.clearJob(j);
-          stateTracker.jobRequeued(j);
-          j.setWorkerId(state.getWorkerId());
-          stateTracker.addJobToCurrent(j);
-          mediator.tell(new DistributedPubSubMediator.Publish(state.getWorkerId(),j),getSelf());
-          log.info("Redistributing job to worker id " + state.getWorkerId());
-        }
- catch (        Exception e) {
-          throw new RuntimeException(e);
-        }
-      }
-    }
-  }
-,context().dispatcher());
 }

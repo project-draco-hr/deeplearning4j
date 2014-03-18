@@ -1,29 +1,13 @@
 {
   WorkerState ret=null;
-  int timesLooped=0;
-  TransactionContext context=beginTransaction();
-  do {
-    ret=(WorkerState)context.getQueue(AVAILABLE_WORKERS).poll();
-    if (ret == null)     continue;
-    for (    Job j : currentJobs()) {
-      if (j.getWorkerId().equals(ret.getWorkerId())) {
-        ret=null;
+  while (ret == null) {
+    for (    String key : workers.keySet()) {
+      IAtomicReference<WorkerState> state=h.getAtomicReference(key);
+      if (state.get().isAvailable()) {
+        ret=workers.get(key);
         break;
       }
     }
-    timesLooped++;
-    TransactionalQueue<WorkerState> availableWorkers=context.getQueue(AVAILABLE_WORKERS);
-    TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
-    if (timesLooped % 5 == 0) {
-      for (      WorkerState w : workers.values()) {
-        if (w.isAvailable()) {
-          availableWorkers.offer(w);
-          log.info("Adding missing worker " + w.getWorkerId());
-        }
-      }
-    }
   }
- while (ret == null);
-  context.commitTransaction();
   return ret;
 }

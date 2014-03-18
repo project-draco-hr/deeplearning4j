@@ -12,8 +12,7 @@
   jobs=h.getList(JOBS);
   workers=h.getMap(CURRENT_WORKERS);
   topics=h.getList(TOPICS);
-  redist=h.getList(REDIST);
-  availableWorkers=h.getQueue(AVAILABLE_WORKERS);
+  availableWorkers=h.getList(AVAILABLE_WORKERS);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
   isPretrain.set(true);

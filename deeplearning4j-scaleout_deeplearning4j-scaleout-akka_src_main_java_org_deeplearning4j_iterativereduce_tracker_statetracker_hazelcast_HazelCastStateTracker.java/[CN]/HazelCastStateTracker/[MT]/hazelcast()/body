@@ -19,9 +19,6 @@
   ListConfig topicsConfig=new ListConfig();
   topicsConfig.setName(TOPICS);
   conf.addListConfig(topicsConfig);
-  ListConfig reDistConfig=new ListConfig();
-  reDistConfig.setName(REDIST);
-  conf.addListConfig(reDistConfig);
   ListConfig availableWorkersConfig=new ListConfig();
   availableWorkersConfig.setName(AVAILABLE_WORKERS);
   conf.addListConfig(availableWorkersConfig);

@@ -6,31 +6,16 @@
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
-    if (getCurrent() != null) {
-      log.info("Job sent when already had job");
-      boolean consistent=false;
-      for (      Job j2 : tracker.currentJobs()) {
-        if (j2.getWorkerId().equals(id)) {
-          consistent=true;
-          break;
-        }
-      }
-      if (consistent)       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new AlreadyWorking(id)),getSelf());
- else {
-        log.info("Confirmation from " + j.getWorkerId() + " on work");
-        setCurrent(j);
-        List<DataSet> input=(List<DataSet>)j.getWork();
-        confirmWorking();
-        updateTraining(input);
-      }
+    Job alreadyDoing=null;
+    do {
+      alreadyDoing=tracker.jobFor(id);
     }
- else {
-      log.info("Confirmation from " + j.getWorkerId() + " on work");
-      setCurrent(j);
-      List<DataSet> input=(List<DataSet>)j.getWork();
-      confirmWorking();
-      updateTraining(input);
-    }
+ while (alreadyDoing != null);
+    log.info("Confirmation from " + j.getWorkerId() + " on work");
+    List<DataSet> input=(List<DataSet>)j.getWork();
+    tracker.addJobToCurrent(j);
+    confirmWorking();
+    updateTraining(input);
   }
  else   if (message instanceof BaseMultiLayerNetwork) {
     setNetwork((BaseMultiLayerNetwork)message);
@@ -38,14 +23,6 @@
   }
  else   if (message instanceof Ack) {
     log.info("Ack from master on worker " + id);
-  }
- else   if (message instanceof GiveMeMyJob) {
-    GiveMeMyJob g=(GiveMeMyJob)message;
-    if (g.getJob() == null) {
-      this.blockTillJobAvailable();
-    }
- else     current.set(g.getJob());
-    log.info("Got job again for id " + id);
   }
  else   if (message instanceof Updateable) {
     final UpdateableImpl m=(UpdateableImpl)message;
