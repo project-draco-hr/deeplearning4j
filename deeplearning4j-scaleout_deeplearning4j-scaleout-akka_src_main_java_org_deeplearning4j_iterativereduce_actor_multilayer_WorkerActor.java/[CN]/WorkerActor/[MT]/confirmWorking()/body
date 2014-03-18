@@ -1,3 +1,5 @@
 {
-  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,tracker.jobFor(id)),getSelf());
+  Job j=tracker.jobFor(id);
+  if (j != null)   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,j),getSelf());
+ else   log.warn("Not confirming work when none to be found");
 }

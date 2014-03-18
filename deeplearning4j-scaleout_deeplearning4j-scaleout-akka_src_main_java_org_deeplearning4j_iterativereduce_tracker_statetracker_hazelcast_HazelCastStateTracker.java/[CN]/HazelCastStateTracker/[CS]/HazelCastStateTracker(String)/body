@@ -10,9 +10,8 @@
     h=Hazelcast.newHazelcastInstance(config);
   }
   jobs=h.getList(JOBS);
-  workers=h.getMap(CURRENT_WORKERS);
+  ids=h.getList(CURRENT_WORKERS);
   topics=h.getList(TOPICS);
-  availableWorkers=h.getList(AVAILABLE_WORKERS);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
   isPretrain.set(true);

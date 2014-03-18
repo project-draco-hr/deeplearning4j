@@ -4,12 +4,9 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed " + ack.toString());
   }
- else   if (message instanceof WorkerState) {
-    WorkerState s=(WorkerState)message;
-    if (s.getWorkerId() != null) {
-      this.addWorker(s);
-      getSender().tell(Ack.getInstance(),getSelf());
-    }
+ else   if (message instanceof NoJobFound) {
+    partition--;
+    if (updates.size() >= partition)     nextIteration();
   }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
@@ -37,31 +34,15 @@
  else   if (message instanceof ClearWorker) {
     log.info("Removing worker with id " + ((ClearWorker)message).getId());
     ClearWorker clear=(ClearWorker)message;
-    Map<String,WorkerState> workers=stateTracker.currentWorkers();
-    WorkerState clear2=workers.get(clear.getId());
-    if (clear != null)     stateTracker.clearWorker(clear2);
   }
  else   if (message instanceof String) {
-    Map<String,WorkerState> workers=stateTracker.currentWorkers();
-    WorkerState state=workers.get(message.toString());
-    if (state == null) {
-      state=new WorkerState(message.toString());
-      state.setAvailable(true);
-      addWorker(state);
-      log.info("Worker " + state.getWorkerId() + " available for work");
-    }
- else {
-      state.setAvailable(true);
-      log.info("Worker " + state.getWorkerId() + " available for work");
-    }
     getSender().tell(Ack.getInstance(),getSelf());
   }
  else   if (message instanceof UpdateableImpl) {
     UpdateableImpl up=(UpdateableImpl)message;
     updates.add(up);
     log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
-    List<Job> currentJobs=stateTracker.currentJobs();
-    if (updates.size() >= partition || everyWorkerAvailable() || currentJobs.isEmpty())     nextIteration();
+    if (updates.size() >= partition)     nextIteration();
   }
  else   if (message instanceof List || message instanceof DataSet) {
     if (message instanceof List) {

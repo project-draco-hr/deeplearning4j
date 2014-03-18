@@ -1,5 +1,0 @@
-{
-  Map<String,WorkerState> workers=currentWorkers();
-  for (  WorkerState state : workers.values())   if (!state.isAvailable())   return false;
-  return true;
-}

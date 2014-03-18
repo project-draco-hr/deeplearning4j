@@ -1,0 +1,12 @@
+{
+  List<String> ids=stateTracker.jobIds();
+  Job j2=null;
+  for (  String s : ids) {
+    if (stateTracker.jobFor(s) == null) {
+      j2=new Job(s,(Serializable)work,pretrain);
+      mediator.tell(new DistributedPubSubMediator.Publish(s,j2),getSelf());
+      log.info("Delegated work to worker " + s);
+      break;
+    }
+  }
+}

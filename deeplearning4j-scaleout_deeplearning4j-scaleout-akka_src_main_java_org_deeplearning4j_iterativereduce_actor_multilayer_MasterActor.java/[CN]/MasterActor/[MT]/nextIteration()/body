@@ -6,7 +6,4 @@
   log.info("Broadcasting weights");
   mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
   this.stateTracker.setCurrent(masterResults);
-  for (  Job j : stateTracker.currentJobs()) {
-    stateTracker.clearJob(j);
-  }
 }

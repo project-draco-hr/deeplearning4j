@@ -1,6 +1,5 @@
 {
   log.info("Training network");
-  tracker.lockWorker(id);
   BaseMultiLayerNetwork network=this.getNetwork();
   while (network == null) {
     try {
@@ -12,28 +11,16 @@
     }
   }
   DataSet d=null;
-  Job j=null;
-  int numLooped=0;
-  while (j == null && numLooped < 10) {
-    j=tracker.jobFor(id);
-    if (j != null) {
-      log.info("Found job for worker " + id);
-      if (j.getWork() instanceof List) {
-        List<DataSet> l=(List<DataSet>)j.getWork();
-        d=DataSet.merge(l);
-      }
- else       d=(DataSet)j.getWork();
-      combinedInput=d.getFirst();
-      outcomes=d.getSecond();
+  Job j=tracker.jobFor(id);
+  if (j != null) {
+    log.info("Found job for worker " + id);
+    if (j.getWork() instanceof List) {
+      List<DataSet> l=(List<DataSet>)j.getWork();
+      d=DataSet.merge(l);
     }
- else     log.info("Job appears to be null...waiting");
-    numLooped++;
-    try {
-      Thread.sleep(100);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+ else     d=(DataSet)j.getWork();
+    combinedInput=d.getFirst();
+    outcomes=d.getSecond();
   }
   if (j == null)   return null;
   if (d == null) {
@@ -54,6 +41,5 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  tracker.unlockWorker(id);
   return new UpdateableImpl(network);
 }

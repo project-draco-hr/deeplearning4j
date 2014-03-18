@@ -1,4 +1,18 @@
 {
   super(conf,batchActor);
   setup(conf);
+  forceNextPhase=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+    @Override public void run(){
+      try {
+        List<Job> currentJobs=stateTracker.currentJobs();
+        log.info("Status check on next iteration");
+        if (updates.size() >= partition)         nextIteration();
+        log.info("Current jobs left " + currentJobs);
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+,context().dispatcher());
 }

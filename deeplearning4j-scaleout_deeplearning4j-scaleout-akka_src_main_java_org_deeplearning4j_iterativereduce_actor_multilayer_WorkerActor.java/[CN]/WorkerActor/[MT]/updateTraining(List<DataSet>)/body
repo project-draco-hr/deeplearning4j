@@ -15,8 +15,8 @@
         mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,work),getSelf());
       }
  else {
+        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,NoJobFound.getInstance()),getSelf());
         log.info("No job found; unlocking worker " + id);
-        tracker.unlockWorker(id);
       }
       return work;
     }

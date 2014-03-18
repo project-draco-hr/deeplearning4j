@@ -7,12 +7,7 @@
   id=generateId();
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
   this.clusterClient=client;
-  try {
-    this.tracker.addWorker(new WorkerState(id));
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  tracker.availableForWork(id);
   masterPath=conf.getMasterAbsPath();
   log.info("Registered with master " + id + " at master "+ conf.getMasterAbsPath());
 }

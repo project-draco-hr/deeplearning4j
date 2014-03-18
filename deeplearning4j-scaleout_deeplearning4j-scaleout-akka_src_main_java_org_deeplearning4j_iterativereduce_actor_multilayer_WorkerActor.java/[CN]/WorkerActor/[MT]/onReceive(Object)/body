@@ -6,16 +6,31 @@
   }
  else   if (message instanceof Job) {
     Job j=(Job)message;
-    Job alreadyDoing=null;
-    do {
-      alreadyDoing=tracker.jobFor(id);
+    Job trackerJob=tracker.jobFor(id);
+    if (trackerJob == null) {
+      tracker.addJobToCurrent(j);
+      log.info("Confirmation from " + j.getWorkerId() + " on work");
+      List<DataSet> input=(List<DataSet>)j.getWork();
+      confirmWorking();
+      updateTraining(input);
     }
- while (alreadyDoing != null);
-    log.info("Confirmation from " + j.getWorkerId() + " on work");
-    List<DataSet> input=(List<DataSet>)j.getWork();
-    tracker.addJobToCurrent(j);
-    confirmWorking();
-    updateTraining(input);
+ else {
+      Job j2=null;
+      boolean redist=false;
+      while (!redist) {
+        List<String> ids=tracker.jobIds();
+        for (        String s : ids) {
+          if (tracker.jobFor(s) == null) {
+            j2=j;
+            j2.setWorkerId(s);
+            mediator.tell(new DistributedPubSubMediator.Publish(s,j2),getSelf());
+            log.info("Delegated work to worker " + s);
+            redist=true;
+            break;
+          }
+        }
+      }
+    }
   }
  else   if (message instanceof BaseMultiLayerNetwork) {
     setNetwork((BaseMultiLayerNetwork)message);

@@ -1,10 +1,5 @@
 {
   IAtomicReference<Job> jRef=h.getAtomicReference("job-" + j.getWorkerId());
-  jRef.set(null);
+  jRef.destroy();
   jobs.remove(j);
-  WorkerState state=workers.get(j.getWorkerId());
-  state.setAvailable(true);
-  workers.put(state.getWorkerId(),state);
-  IAtomicReference<WorkerState> workerRef=h.getAtomicReference(j.getWorkerId());
-  workerRef.set(state);
 }

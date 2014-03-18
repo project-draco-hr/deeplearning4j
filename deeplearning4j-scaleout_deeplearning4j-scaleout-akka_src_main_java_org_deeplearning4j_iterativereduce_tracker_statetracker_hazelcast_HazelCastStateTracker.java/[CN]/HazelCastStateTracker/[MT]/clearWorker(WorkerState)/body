@@ -1,7 +1,0 @@
-{
-  TransactionContext context=beginTransaction();
-  TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
-  workers.remove(worker.getWorkerId());
-  h.getLock(worker.getWorkerId()).destroy();
-  context.commitTransaction();
-}
