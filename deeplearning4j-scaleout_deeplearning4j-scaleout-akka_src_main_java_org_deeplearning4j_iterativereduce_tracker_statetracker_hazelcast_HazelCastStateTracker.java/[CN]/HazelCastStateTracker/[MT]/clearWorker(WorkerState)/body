@@ -1,4 +1,6 @@
 {
+  TransactionContext context=beginTransaction();
+  TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
   workers.remove(worker.getWorkerId());
-  availableWorkers.remove(worker);
+  context.commitTransaction();
 }

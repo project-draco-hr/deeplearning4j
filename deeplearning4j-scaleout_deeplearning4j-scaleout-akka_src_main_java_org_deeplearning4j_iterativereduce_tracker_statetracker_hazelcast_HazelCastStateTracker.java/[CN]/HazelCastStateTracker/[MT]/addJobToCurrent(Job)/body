@@ -1,6 +1,8 @@
 {
-  jobs.add(j);
-  WorkerState w=workers.get(j.getWorkerId());
+  TransactionContext context=beginTransaction();
+  context.getList(JOBS).add(j);
+  WorkerState w=(WorkerState)context.getMap(CURRENT_WORKERS).get(j.getWorkerId());
   w.setAvailable(false);
-  workers.put(w.getWorkerId(),w);
+  context.getMap(CURRENT_WORKERS).put(w.getWorkerId(),w);
+  context.commitTransaction();
 }

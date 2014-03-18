@@ -37,7 +37,6 @@
     }
  else     masterResults=this.getMasterResults();
     if (pretrain && stateTracker.currentJobs().isEmpty()) {
-      batchActor.tell(ResetMessage.getInstance(),getSelf());
       log.info("Switching to finetune mode");
       pretrain=false;
       stateTracker.moveToFinetune();
@@ -48,6 +47,7 @@
         log.info("Freeing " + key + " for work post batch completion");
       }
       batchActor.tell(ResetMessage.getInstance(),getSelf());
+      batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
     }
  else     if (stateTracker.currentJobs().isEmpty()) {
       isDone=true;

@@ -1,4 +1,8 @@
 {
+  TransactionContext context=beginTransaction();
+  TransactionalMap<String,WorkerState> workers=context.getMap(CURRENT_WORKERS);
+  TransactionalQueue<WorkerState> availableWorkers=context.getQueue(AVAILABLE_WORKERS);
   workers.put(worker.getWorkerId(),worker);
-  availableWorkers.add(worker);
+  availableWorkers.offer(worker);
+  context.commitTransaction();
 }

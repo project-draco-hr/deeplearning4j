@@ -14,6 +14,18 @@
     @Override public void run(){
       try {
         log.info("Current workers " + stateTracker.currentWorkers().keySet());
+        if (pretrain && stateTracker.currentJobs().isEmpty()) {
+          log.info("Switching to finetune mode");
+          pretrain=false;
+          stateTracker.moveToFinetune();
+          SerializationUtils.saveObject(stateTracker.getCurrent().get(),new File("pretrain-model.bin"));
+          MasterActor.this.batchActor.tell(ResetMessage.getInstance(),getSelf());
+          MasterActor.this.batchActor.tell(new MoreWorkMessage((Updateable<?>)stateTracker.getCurrent().get()),getSelf());
+        }
+ else         if (stateTracker.currentJobs().isEmpty()) {
+          isDone=true;
+          log.info("Done training!");
+        }
       }
  catch (      Exception e) {
         throw new RuntimeException(e);

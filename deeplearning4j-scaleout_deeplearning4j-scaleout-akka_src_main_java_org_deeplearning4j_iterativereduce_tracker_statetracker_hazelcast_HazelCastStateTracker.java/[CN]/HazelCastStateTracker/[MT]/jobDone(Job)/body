@@ -1,4 +1,8 @@
 {
-  jobs.remove(job);
-  redist.remove(job);
+  try {
+    clearJob(job);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }

@@ -1,4 +1,8 @@
 {
+  TransactionContext context=beginTransaction();
+  TransactionalList<Job> jobs=context.getList(JOBS);
+  TransactionalList<Job> redist=context.getList(REDIST);
   jobs.remove(j);
   redist.remove(j);
+  context.commitTransaction();
 }
