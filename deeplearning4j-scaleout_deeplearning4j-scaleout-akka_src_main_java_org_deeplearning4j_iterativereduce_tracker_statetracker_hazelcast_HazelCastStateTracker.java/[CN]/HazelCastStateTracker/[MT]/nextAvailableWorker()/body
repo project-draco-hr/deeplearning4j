@@ -3,6 +3,13 @@
   int timesLooped=0;
   do {
     ret=availableWorkers.poll();
+    if (ret == null)     continue;
+    for (    Job j : currentJobs()) {
+      if (j.getWorkerId().equals(ret.getWorkerId())) {
+        ret=null;
+        break;
+      }
+    }
     timesLooped++;
     if (timesLooped % 5 == 0) {
       for (      WorkerState w : workers.values()) {

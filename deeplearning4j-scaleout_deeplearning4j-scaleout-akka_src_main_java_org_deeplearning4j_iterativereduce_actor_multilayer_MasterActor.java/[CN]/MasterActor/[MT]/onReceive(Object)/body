@@ -28,23 +28,28 @@
   }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
-    UpdateableImpl masterResults=this.compute(updates,updates);
-    stateTracker.setCurrent(masterResults);
-    epochsComplete++;
-    updates.clear();
-    if (pretrain) {
+    UpdateableImpl masterResults=null;
+    if (!updates.isEmpty()) {
+      masterResults=this.compute(updates,updates);
+      stateTracker.setCurrent(masterResults);
+      epochsComplete++;
+      updates.clear();
+    }
+ else     masterResults=this.getMasterResults();
+    if (pretrain && stateTracker.currentJobs().isEmpty()) {
       batchActor.tell(ResetMessage.getInstance(),getSelf());
       log.info("Switching to finetune mode");
       pretrain=false;
+      stateTracker.moveToFinetune();
       SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
       Map<String,WorkerState> workers=stateTracker.currentWorkers();
       for (      String key : workers.keySet()) {
         setWorkerDone(key);
         log.info("Freeing " + key + " for work post batch completion");
       }
-      batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+      batchActor.tell(ResetMessage.getInstance(),getSelf());
     }
- else {
+ else     if (stateTracker.currentJobs().isEmpty()) {
       isDone=true;
       log.info("Done training!");
     }
@@ -91,11 +96,10 @@
  else   if (message instanceof Job) {
     Job j=(Job)message;
     if (!j.isDone()) {
-      stateTracker.addJobToCurrent(j);
       log.info("Ack from worker " + j.getWorkerId() + " on job");
     }
  else {
-      log.info("Job " + j.getWorkerId() + " finished");
+      log.info("Worker " + j.getWorkerId() + " is done working");
       setWorkerDone(j.getWorkerId());
       stateTracker.jobDone(j);
     }

@@ -1,7 +1,31 @@
 {
   log.info("Training network");
-  if (getCurrent() == null)   return null;
+  while (getCurrent() == null)   return null;
   BaseMultiLayerNetwork network=this.getNetwork();
+  while (network == null) {
+    try {
+      network=tracker.getCurrent().get();
+      this.network=network;
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  while (this.getCombinedInput() == null || this.getOutcomes() == null) {
+    try {
+      for (      Job j : tracker.currentJobs()) {
+        if (j.getWorkerId().equals(id)) {
+          DataSet d=(DataSet)j.getWork();
+          combinedInput=d.getFirst();
+          outcomes=d.getSecond();
+          break;
+        }
+      }
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
   if (tracker.isPretrain()) {
     log.info("Worker " + id + " pretraining");
     network.pretrain(this.getCombinedInput(),extraParams);

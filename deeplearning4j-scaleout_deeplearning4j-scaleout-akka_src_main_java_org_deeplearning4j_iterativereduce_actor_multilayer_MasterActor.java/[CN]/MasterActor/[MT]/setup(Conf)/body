@@ -35,7 +35,6 @@
         }
  else {
           for (          Job j : currentJobs) {
-            mediator.tell(new DistributedPubSubMediator.Publish(j.getWorkerId(),NeedsStatus.getInstance()),getSelf());
             if (stateTracker.workerAvailable(j.getWorkerId())) {
               log.info("Out of sync job and worker list; removing job " + j.getWorkerId());
               stateTracker.jobDone(j);
@@ -54,7 +53,7 @@
   ensureDistribution=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
       while (!stateTracker.jobsToRedistribute().isEmpty()) {
-        Job remove=needsToBeRedistributed.remove(0);
+        Job remove=stateTracker.jobsToRedistribute().remove(0);
         try {
           stateTracker.requeueJob(remove);
         }
