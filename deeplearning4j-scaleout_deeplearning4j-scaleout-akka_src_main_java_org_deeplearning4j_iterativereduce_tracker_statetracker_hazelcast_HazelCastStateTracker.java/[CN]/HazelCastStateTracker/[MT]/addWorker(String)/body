@@ -1,3 +1,4 @@
 {
+  log.info("Adding worker " + worker);
   if (!workers.contains(worker))   workers.add(worker);
 }

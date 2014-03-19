@@ -5,4 +5,5 @@
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(id,getSelf()),getSelf());
   heartbeat();
+  tracker.addWorker(id);
 }
