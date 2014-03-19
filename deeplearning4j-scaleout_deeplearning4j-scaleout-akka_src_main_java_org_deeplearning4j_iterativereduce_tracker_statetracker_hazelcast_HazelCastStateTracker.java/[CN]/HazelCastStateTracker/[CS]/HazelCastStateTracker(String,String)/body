@@ -1,0 +1,18 @@
+{
+  if (type.equals("master")) {
+    config=hazelcast();
+    h=Hazelcast.newHazelcastInstance(config);
+  }
+ else {
+    ClientConfig client=new ClientConfig();
+    client.getNetworkConfig().setAddresses(Arrays.asList(connectionString));
+    h=HazelcastClient.newHazelcastClient(client);
+  }
+  this.type=type;
+  jobs=h.getList(JOBS);
+  ids=h.getList(CURRENT_WORKERS);
+  topics=h.getList(TOPICS);
+  master=h.getAtomicReference(RESULT);
+  isPretrain=h.getAtomicReference(IS_PRETRAIN);
+  isPretrain.set(true);
+}

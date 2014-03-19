@@ -20,6 +20,7 @@
     conf.setFinetuneEpochs(finetuneEpochs);
     conf.setSeed(rngSeed);
     conf.setPretrainLearningRate(pretrainLearningRate);
+    conf.setUseAdaGrad(useAdaGrad);
     conf.setCorruptionLevel(corruptionLevel);
     conf.setSplit(split);
     conf.setK(k);

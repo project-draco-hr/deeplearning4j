@@ -2,7 +2,7 @@
   final ActorSystem system=ActorSystem.create(systemName);
   ActorRefUtils.addShutDownForSystem(system);
   system.actorOf(Props.create(ClusterListener.class));
-  ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter),"batch");
+  ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter,stateTracker,c),"batch");
   log.info("Started batch actor");
   Props masterProps=startingNetwork != null ? MasterActor.propsFor(c,batchActor,startingNetwork) : MasterActor.propsFor(c,batchActor);
   final Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;

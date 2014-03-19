@@ -21,7 +21,10 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
     if (iter.hasNext()) {
       log.info("Propagating new work to master");
-      DataSet next=iter.next();
+      int numWorkers=stateTracker.jobIds().size();
+      int miniBatchSize=conf.getSplit();
+      int batch=numWorkers * miniBatchSize;
+      DataSet next=iter.next(batch);
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,next),mediator);
     }
  else     if (!iter.hasNext()) {
