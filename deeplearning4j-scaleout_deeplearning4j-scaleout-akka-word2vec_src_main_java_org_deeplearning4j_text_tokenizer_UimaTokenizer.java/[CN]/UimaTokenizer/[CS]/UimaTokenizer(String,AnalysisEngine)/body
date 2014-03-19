@@ -1,0 +1,21 @@
+{
+  this.engine=engine;
+  this.tokens=new ArrayList<String>();
+  try {
+    CAS cas=this.engine.newCAS();
+    cas.setDocumentText(tokens);
+synchronized (engine) {
+      this.engine.process(cas);
+      for (      Sentence s : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+        for (        Token t : JCasUtil.selectCovered(Token.class,s)) {
+          if (valid(t.getCoveredText()))           if (t.getLemma() != null)           this.tokens.add(t.getLemma());
+ else           if (t.getStem() != null)           this.tokens.add(t.getStem());
+ else           this.tokens.add(t.getCoveredText());
+        }
+      }
+    }
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

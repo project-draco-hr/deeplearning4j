@@ -1,0 +1,3 @@
+{
+  return AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),PoStagger.getDescription("en"),DefaultSnowballStemmer.getDescription("English")));
+}
