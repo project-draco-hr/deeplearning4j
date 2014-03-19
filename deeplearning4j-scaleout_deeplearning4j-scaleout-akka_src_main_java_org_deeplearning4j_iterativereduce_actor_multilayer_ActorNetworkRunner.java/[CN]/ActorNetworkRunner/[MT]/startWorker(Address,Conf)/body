@@ -9,9 +9,15 @@
   initialContacts.add(system.actorSelection(contactAddress + "/user/"));
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
   ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
-  Props p=pool.props(WorkerActor.propsFor(clusterClient,conf,null));
-  system.actorOf(p,"worker");
-  Cluster cluster=Cluster.get(system);
-  cluster.join(contactAddress);
-  log.info("Worker joining cluster");
+  try {
+    StateTracker<UpdateableImpl> stateTracker=new HazelCastStateTracker(contactAddress.host().get() + ":" + HazelCastStateTracker.DEFAULT_HAZELCAST_PORT,"worker");
+    Props p=pool.props(WorkerActor.propsFor(clusterClient,conf,(HazelCastStateTracker)stateTracker));
+    system.actorOf(p,"worker");
+    Cluster cluster=Cluster.get(system);
+    cluster.join(contactAddress);
+    log.info("Worker joining cluster");
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }
