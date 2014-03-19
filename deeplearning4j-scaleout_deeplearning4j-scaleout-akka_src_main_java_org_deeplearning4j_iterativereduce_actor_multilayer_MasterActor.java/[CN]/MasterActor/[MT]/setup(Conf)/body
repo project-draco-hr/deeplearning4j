@@ -13,6 +13,7 @@
   }
   log.info("Broadcasting initial master network");
   BaseMultiLayerNetwork network=this.network == null ? new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withSparsity(conf.getSparsity()).useAdGrad(conf.isUseAdaGrad()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build() : this.network;
+  network.synchonrizeRng();
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
   UpdateableImpl masterResults=new UpdateableImpl(network);
