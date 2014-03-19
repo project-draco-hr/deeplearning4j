@@ -1,0 +1,22 @@
+{
+  if (message instanceof File) {
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        File f=(File)message;
+        vocabCreator.addForDoc(f);
+        return null;
+      }
+    }
+,context().dispatcher());
+    f.onComplete(new OnComplete<Void>(){
+      @Override public void onComplete(      Throwable arg0,      Void arg1) throws Throwable {
+        if (arg0 != null)         throw arg0;
+        latch.countDown();
+      }
+    }
+,context().dispatcher());
+  }
+ else {
+    unhandled(message);
+  }
+}

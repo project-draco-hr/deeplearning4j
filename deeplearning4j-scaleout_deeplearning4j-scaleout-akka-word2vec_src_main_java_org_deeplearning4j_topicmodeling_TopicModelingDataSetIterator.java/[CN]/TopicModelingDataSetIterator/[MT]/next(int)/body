@@ -1,0 +1,16 @@
+{
+  int curr=0;
+  if (!hasNext())   throw new IllegalStateException("Unable to get next; no more data found");
+  List<DataSet> d=new ArrayList<DataSet>();
+  while (files.hasNext() && curr < num) {
+    File next=files.next();
+    DoubleMatrix input=vocabCreator.getScoreMatrix(next);
+    if (input.sum() != 0) {
+      String label=next.getParentFile().getName();
+      DoubleMatrix y=MatrixUtil.toOutcomeVector(labels.indexOf(label),labels.size());
+      d.add(new DataSet(input,y));
+      curr++;
+    }
+  }
+  return DataSet.merge(d);
+}

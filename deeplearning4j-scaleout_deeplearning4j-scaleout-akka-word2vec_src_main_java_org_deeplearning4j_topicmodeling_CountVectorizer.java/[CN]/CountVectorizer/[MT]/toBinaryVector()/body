@@ -1,0 +1,19 @@
+{
+  DoubleMatrix d=new DoubleMatrix(1,wordsToCount.size());
+  Counter<String> wordFrequencies=new Counter<String>();
+  while (iter.hasNext()) {
+    String sentence=iter.nextSentence();
+    if (sentence == null)     continue;
+    Tokenizer t=tokenizerFactory.create(sentence);
+    while (t.hasMoreTokens()) {
+      String token=t.nextToken();
+      log.info("Token " + token);
+      if (wordsToCount.indexOf(token) >= 0 || wordsToCount.size() < 1)       wordFrequencies.incrementCount(token,1.0);
+    }
+  }
+  for (int i=0; i < wordsToCount.size(); i++) {
+    double count=wordFrequencies.getCount(wordsToCount.get(i).toString());
+    d.put(i,count > 0 ? 1 : 0);
+  }
+  return d;
+}
