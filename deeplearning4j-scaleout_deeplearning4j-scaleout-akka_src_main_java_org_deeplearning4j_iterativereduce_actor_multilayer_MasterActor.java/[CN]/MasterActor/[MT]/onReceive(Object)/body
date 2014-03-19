@@ -31,10 +31,6 @@
       log.info("Done training!");
     }
   }
- else   if (message instanceof ClearWorker) {
-    log.info("Removing worker with id " + ((ClearWorker)message).getId());
-    ClearWorker clear=(ClearWorker)message;
-  }
  else   if (message instanceof String) {
     getSender().tell(Ack.getInstance(),getSelf());
   }
