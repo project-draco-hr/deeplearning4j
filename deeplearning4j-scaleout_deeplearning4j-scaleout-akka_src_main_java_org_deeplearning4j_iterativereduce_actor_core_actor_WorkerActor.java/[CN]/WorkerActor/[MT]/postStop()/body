@@ -1,5 +1,6 @@
 {
   super.postStop();
+  tracker.removeWorker(id);
   log.info("Post stop on worker actor");
   cluster.unsubscribe(getSelf());
 }

@@ -4,13 +4,15 @@
     h=Hazelcast.newHazelcastInstance(config);
   }
  else {
+    log.info("Connecting to hazelcast on " + connectionString);
     ClientConfig client=new ClientConfig();
-    client.getNetworkConfig().setAddresses(Arrays.asList(connectionString));
+    client.getNetworkConfig().addAddress(connectionString);
     h=HazelcastClient.newHazelcastClient(client);
   }
   this.type=type;
   jobs=h.getList(JOBS);
   ids=h.getList(CURRENT_WORKERS);
+  workers=h.getList(WORKERS);
   topics=h.getList(TOPICS);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
