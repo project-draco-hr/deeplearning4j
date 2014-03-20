@@ -1,0 +1,4 @@
+{
+  if (stateTracker != null)   stateTracker.shutdown();
+  system.shutdown();
+}

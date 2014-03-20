@@ -7,7 +7,8 @@
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to train");
     log.info("Starting master");
     try {
-      masterAddress=startBackend(null,"master",conf,iter,new HazelCastStateTracker());
+      stateTracker=new HazelCastStateTracker();
+      masterAddress=startBackend(null,"master",conf,iter,stateTracker);
       Thread.sleep(60000);
     }
  catch (    Exception e1) {
@@ -29,10 +30,22 @@
     log.info("Setup master with epochs " + epochs);
   }
  else {
+    Address a=AddressFromURIString.parse(conf.getMasterUrl());
     Conf c=conf.copy();
     Cluster cluster=Cluster.get(system);
-    cluster.join(masterAddress);
-    startWorker(masterAddress,c);
+    cluster.join(a);
+    try {
+      String host=a.host().get();
+      if (host == null)       throw new IllegalArgumentException("No host set for worker");
+      int port=HazelCastStateTracker.DEFAULT_HAZELCAST_PORT;
+      String connectionString=host + ":" + port;
+      stateTracker=new HazelCastStateTracker(connectionString,"worker");
+    }
+ catch (    Exception e1) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException(e1);
+    }
+    startWorker(c);
     system.scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
       @Override public void run(){
         log.info("Current cluster members " + Cluster.get(system).readView().members());

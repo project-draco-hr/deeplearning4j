@@ -2,7 +2,7 @@
   this.conf=conf;
   this.batchActor=batchActor;
   try {
-    this.stateTracker=new HazelCastStateTracker();
+    this.stateTracker=stateTracker;
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

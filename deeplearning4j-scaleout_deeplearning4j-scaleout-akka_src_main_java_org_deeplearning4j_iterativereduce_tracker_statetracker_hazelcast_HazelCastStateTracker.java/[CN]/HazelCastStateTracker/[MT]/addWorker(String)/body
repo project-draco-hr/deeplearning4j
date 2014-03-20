@@ -1,4 +1,7 @@
 {
   log.info("Adding worker " + worker);
-  if (!workers.contains(worker))   workers.add(worker);
+  if (!workers.contains(worker)) {
+    workers.add(worker);
+    log.info("Number of workers is now " + workers.size());
+  }
 }

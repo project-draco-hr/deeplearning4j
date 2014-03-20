@@ -1,5 +1,6 @@
 {
-  List<String> ids=stateTracker.jobIds();
+  List<String> ids=new ArrayList<String>(stateTracker.workers());
+  log.info("Possible workers " + ids);
   Job j2=null;
   for (  String s : ids) {
     if (stateTracker.jobFor(s) == null) {

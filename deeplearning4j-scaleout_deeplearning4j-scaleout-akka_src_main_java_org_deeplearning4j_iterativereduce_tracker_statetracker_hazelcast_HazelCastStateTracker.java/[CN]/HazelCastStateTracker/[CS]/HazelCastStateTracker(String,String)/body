@@ -1,7 +1,19 @@
 {
-  if (type.equals("master")) {
+  if (type.equals("master") && !PortTaken.portTaken(DEFAULT_HAZELCAST_PORT)) {
     config=hazelcast();
     h=Hazelcast.newHazelcastInstance(config);
+    h.getCluster().addMembershipListener(new MembershipListener(){
+      @Override public void memberAdded(      MembershipEvent membershipEvent){
+        log.info("Member added " + membershipEvent.toString());
+      }
+      @Override public void memberRemoved(      MembershipEvent membershipEvent){
+        log.info("Member removed " + membershipEvent.toString());
+      }
+      @Override public void memberAttributeChanged(      MemberAttributeEvent memberAttributeEvent){
+        log.info("Member changed " + memberAttributeEvent.toString());
+      }
+    }
+);
   }
  else {
     log.info("Connecting to hazelcast on " + connectionString);
@@ -11,8 +23,14 @@
   }
   this.type=type;
   jobs=h.getList(JOBS);
-  ids=h.getList(CURRENT_WORKERS);
   workers=h.getList(WORKERS);
+  if (!type.equals("master")) {
+    while (workers.isEmpty()) {
+      log.warn("Waiting for data sync...");
+      Thread.sleep(1000);
+    }
+  }
+  log.info("Workers is " + workers.size());
   topics=h.getList(TOPICS);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);

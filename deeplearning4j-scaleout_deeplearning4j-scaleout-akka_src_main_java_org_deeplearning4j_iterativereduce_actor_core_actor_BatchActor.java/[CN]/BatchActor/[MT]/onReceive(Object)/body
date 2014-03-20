@@ -21,7 +21,9 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
     if (iter.hasNext()) {
       log.info("Propagating new work to master");
-      int numWorkers=stateTracker.numWorkers();
+      List<String> workers2=stateTracker.workers();
+      for (      String s : workers2)       log.info("Worker " + s);
+      int numWorkers=stateTracker.workers().size();
       int miniBatchSize=conf.getSplit();
       if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();
       log.info("Number of workers " + numWorkers + " and batch size is "+ miniBatchSize);

@@ -4,7 +4,6 @@
     log.info("Currently locked unable to add job for current worker");
     return false;
   }
-  ids.add(j.getWorkerId());
   jobs.add(j);
   r.set(j);
   return true;
