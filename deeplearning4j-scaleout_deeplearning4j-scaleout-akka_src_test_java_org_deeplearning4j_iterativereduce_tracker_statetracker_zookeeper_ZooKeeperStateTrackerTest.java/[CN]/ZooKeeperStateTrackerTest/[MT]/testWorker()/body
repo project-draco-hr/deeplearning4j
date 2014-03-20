@@ -1,0 +1,6 @@
+{
+  StateTracker tracker=createTracker();
+  tracker.addWorker("id");
+  assertEquals(1,tracker.numWorkers());
+  tracker.shutdown();
+}

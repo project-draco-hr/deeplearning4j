@@ -1,5 +1,4 @@
 {
-  server=new TestingServer(2182);
   StateTracker tracker=createTracker();
   String id=UUID.randomUUID().toString();
   Job j=new Job(false,id,id,false);
@@ -10,5 +9,4 @@
   jobs=tracker.currentJobs();
   assertEquals(true,jobs.isEmpty());
   tracker.shutdown();
-  server.stop();
 }

@@ -1,7 +1,6 @@
 {
   try {
-    if (server != null)     server=new TestingServer(2182);
-    if (tracker != null)     tracker=createTracker();
+    tracker=createTracker();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
