@@ -1,4 +1,7 @@
 {
-  if (iter.hasNext())   train(iter.next());
+  int numWorkers=stateTracker.numWorkers();
+  int batch=conf.getSplit();
+  int miniBatches=numWorkers * batch;
+  if (iter.hasNext())   train(iter.next(miniBatches));
  else   log.warn("No data found");
 }
