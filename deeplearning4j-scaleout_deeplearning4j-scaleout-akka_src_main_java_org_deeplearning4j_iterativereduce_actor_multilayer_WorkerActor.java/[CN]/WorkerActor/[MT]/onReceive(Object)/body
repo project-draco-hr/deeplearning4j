@@ -18,7 +18,7 @@
       Job j2=null;
       boolean redist=false;
       while (!redist) {
-        List<String> ids=tracker.jobIds();
+        List<String> ids=tracker.workers();
         for (        String s : ids) {
           if (tracker.jobFor(s) == null) {
             j2=j;
