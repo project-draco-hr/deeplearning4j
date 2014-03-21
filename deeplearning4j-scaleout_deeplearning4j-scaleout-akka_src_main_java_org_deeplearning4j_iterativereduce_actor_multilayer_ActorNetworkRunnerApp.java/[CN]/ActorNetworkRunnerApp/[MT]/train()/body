@@ -1,5 +1,5 @@
 {
-  Pair<DoubleMatrix,DoubleMatrix> batch=null;
+  DataSet batch=null;
   if (iter.hasNext()) {
     batch=iter.next();
     runner.train(batch);
