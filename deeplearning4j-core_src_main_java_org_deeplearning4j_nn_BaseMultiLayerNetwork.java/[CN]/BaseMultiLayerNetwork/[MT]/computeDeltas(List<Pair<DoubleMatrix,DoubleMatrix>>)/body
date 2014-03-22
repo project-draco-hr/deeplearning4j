@@ -7,7 +7,7 @@
   List<DoubleMatrix> weights=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
   weights.add(getLogLayer().getW());
-  DoubleMatrix labels=predict(getInput());
+  DoubleMatrix labels=this.labels;
   for (int i=nLayers + 1; i >= 0; i--) {
     if (i >= nLayers + 1) {
       DoubleMatrix z=activations.get(i);

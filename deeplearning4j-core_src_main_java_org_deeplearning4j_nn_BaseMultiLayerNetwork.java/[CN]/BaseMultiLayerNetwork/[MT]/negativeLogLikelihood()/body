@@ -1,12 +1,3 @@
 {
-  double ret=0.0;
-  for (int i=0; i < nLayers; i++) {
-    double sum=(MatrixFunctions.pow(layers[i].getW(),2).sum() / 2.0);
-    if (useRegularization)     ret+=sum * l2;
- else     ret+=sum;
-  }
-  double sum=(MatrixFunctions.pow(logLayer.getW(),2).sum() / 2.0);
-  if (useRegularization)   ret+=sum * l2;
- else   ret+=sum;
-  return ret;
+  return logLayer.negativeLogLikelihood();
 }

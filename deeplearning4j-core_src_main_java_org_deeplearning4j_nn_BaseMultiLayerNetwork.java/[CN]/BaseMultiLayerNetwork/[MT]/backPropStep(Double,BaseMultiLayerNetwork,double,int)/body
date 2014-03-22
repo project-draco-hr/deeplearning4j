@@ -1,5 +1,6 @@
 {
   double error=this.negativeLogLikelihood();
+  log.info("Current back prop error " + error);
   if (lastEntropy == null) {
     lastEntropy=error;
   }
@@ -20,12 +21,14 @@
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
-    DoubleMatrix add=deltas.get(l).getFirst().div(input.rows).mul(lr);
+    DoubleMatrix add=deltas.get(l).getFirst().div(input.rows);
+    if (isUseAdaGrad())     add.muli(layers[l].getAdaGrad().getLearningRates(add));
+ else     add.muli(lr);
     add.divi(input.rows);
     if (useRegularization) {
       add.muli(layers[l].getW().mul(l2));
     }
-    layers[l].setW(layers[l].getW().add(add.mul(lr)));
+    layers[l].getW().addi(add);
     sigmoidLayers[l].setW(layers[l].getW());
     DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
     deltaColumnSums.divi(input.rows);
