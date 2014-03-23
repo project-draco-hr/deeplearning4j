@@ -1,0 +1,6 @@
+{
+  this.finetune=true;
+  if (this.startingNetwork == null) {
+    throw new IllegalStateException("No network to finetune!");
+  }
+}

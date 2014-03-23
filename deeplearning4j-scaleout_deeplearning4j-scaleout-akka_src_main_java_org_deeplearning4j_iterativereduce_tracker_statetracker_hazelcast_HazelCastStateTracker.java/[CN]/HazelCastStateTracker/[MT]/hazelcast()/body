@@ -17,5 +17,8 @@
   ListConfig availableWorkersConfig=new ListConfig();
   availableWorkersConfig.setName(AVAILABLE_WORKERS);
   conf.addListConfig(availableWorkersConfig);
+  MapConfig heartbeatConfig=new MapConfig();
+  heartbeatConfig.setName(HEART_BEAT);
+  conf.addMapConfig(heartbeatConfig);
   return conf;
 }

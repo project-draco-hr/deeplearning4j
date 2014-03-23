@@ -24,7 +24,7 @@
   this.type=type;
   jobs=h.getList(JOBS);
   workers=h.getList(WORKERS);
-  if (!type.equals("master")) {
+  if (!this.type.equals("master")) {
     while (workers.isEmpty()) {
       log.warn("Waiting for data sync...");
       Thread.sleep(1000);
@@ -32,6 +32,7 @@
   }
   log.info("Workers is " + workers.size());
   topics=h.getList(TOPICS);
+  heartbeat=h.getMap(HEART_BEAT);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
   isPretrain.set(true);

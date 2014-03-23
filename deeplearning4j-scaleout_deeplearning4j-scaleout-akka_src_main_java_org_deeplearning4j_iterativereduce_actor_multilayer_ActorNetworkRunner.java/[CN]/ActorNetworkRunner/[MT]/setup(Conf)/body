@@ -8,6 +8,7 @@
     log.info("Starting master");
     try {
       stateTracker=new HazelCastStateTracker();
+      if (finetune)       stateTracker.moveToFinetune();
       masterAddress=startBackend(null,"master",conf,iter,stateTracker);
       Thread.sleep(60000);
     }
