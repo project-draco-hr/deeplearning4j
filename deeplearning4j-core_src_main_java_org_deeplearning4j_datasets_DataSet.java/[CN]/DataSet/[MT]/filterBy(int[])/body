@@ -1,7 +1,7 @@
 {
   List<DataSet> list=asList();
-  List<DataSet> newList=new ArrayList<DataSet>();
-  List<Integer> labelList=new ArrayList<Integer>();
+  List<DataSet> newList=new ArrayList<>();
+  List<Integer> labelList=new ArrayList<>();
   for (  int i : labels)   labelList.add(i);
   for (  DataSet d : list) {
     if (labelList.contains(d.getLabel(d))) {

@@ -1,0 +1,21 @@
+{
+  DataSet filtered=filterBy(labels);
+  List<Integer> newLabels=new ArrayList<>();
+  Map<Integer,Integer> labelMap=new HashMap<>();
+  for (int i=0; i < labels.length; i++)   labelMap.put(labels[i],i);
+  for (int i=0; i < filtered.numExamples(); i++) {
+    int o2=filtered.get(i).outcome();
+    int outcome=labelMap.get(o2);
+    newLabels.add(outcome);
+  }
+  DoubleMatrix newLabelMatrix=new DoubleMatrix(filtered.numExamples(),labels.length);
+  if (newLabelMatrix.rows != newLabels.size())   throw new IllegalStateException("Inconsistent label sizes");
+  for (int i=0; i < newLabelMatrix.rows; i++) {
+    Integer i2=newLabels.get(i);
+    if (i2 == null)     throw new IllegalStateException("Label not found on row " + i);
+    DoubleMatrix newRow=MatrixUtil.toOutcomeVector(i2,labels.length);
+    newLabelMatrix.putRow(i,newRow);
+  }
+  setFirst(filtered.getFirst());
+  setSecond(newLabelMatrix);
+}
