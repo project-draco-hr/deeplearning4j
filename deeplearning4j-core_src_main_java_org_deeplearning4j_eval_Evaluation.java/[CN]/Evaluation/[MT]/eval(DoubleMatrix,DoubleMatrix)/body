@@ -6,7 +6,12 @@
     int currMax=SimpleBlas.iamax(currRow);
     int guessMax=SimpleBlas.iamax(guessRow);
     addToConfusion(currMax,guessMax);
-    if (currMax == guessMax)     incrementTruePositives();
+    if (currMax == guessMax) {
+      incrementTruePositives();
+      for (      Integer clazz : confusion.getClasses()) {
+        if (clazz != guessMax)         trueNegative.incrementCount(clazz,1.0);
+      }
+    }
  else {
       incrementFalseNegatives();
       incrementFalsePositives(guessMax);

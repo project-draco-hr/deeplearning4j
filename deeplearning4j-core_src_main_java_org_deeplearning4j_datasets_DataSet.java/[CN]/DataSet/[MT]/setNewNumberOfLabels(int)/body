@@ -1,0 +1,5 @@
+{
+  int examples=numExamples();
+  DoubleMatrix newOutcomes=new DoubleMatrix(examples,labels);
+  setSecond(newOutcomes);
+}

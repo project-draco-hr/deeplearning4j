@@ -21,6 +21,8 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,save),mediator);
     if (iter.hasNext()) {
       log.info("Propagating new work to master");
+      numDataSets++;
+      log.info("Iterating over next dataset " + numDataSets);
       List<String> workers2=stateTracker.workers();
       for (      String s : workers2)       log.info("Worker " + s);
       int numWorkers=stateTracker.workers().size();
