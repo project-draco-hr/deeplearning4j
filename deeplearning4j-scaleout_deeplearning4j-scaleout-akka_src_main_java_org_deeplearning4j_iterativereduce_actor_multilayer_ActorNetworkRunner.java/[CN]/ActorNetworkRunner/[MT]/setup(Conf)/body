@@ -17,7 +17,8 @@
       throw new RuntimeException(e1);
     }
     log.info("Starting model saver");
-    system.actorOf(Props.create(ModelSavingActor.class,"model-saver"));
+    if (modelSaver == null)     system.actorOf(Props.create(ModelSavingActor.class,"model-saver"));
+ else     system.actorOf(Props.create(ModelSavingActor.class,modelSaver));
     conf.setMasterUrl(getMasterAddress().toString());
     conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));
     ActorRefUtils.registerConfWithZooKeeper(conf,system);
