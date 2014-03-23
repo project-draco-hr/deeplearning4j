@@ -1,0 +1,7 @@
+{
+  double totalScore=0.0;
+  for (  Token token : JCasUtil.selectCovered(Token.class,sentence)) {
+    totalScore+=extract(token.getCoveredText().toLowerCase());
+  }
+  return classForScore(totalScore);
+}
