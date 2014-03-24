@@ -2,14 +2,16 @@
   File f=new File("twoandfours.bin");
   if (!f.exists())   Create2sAnd4sDataSet.main(null);
   DataSet twosAndFours=DataSet.load(f);
-  DataSetIterator iter=new ListDataSetIterator(twosAndFours.asList(),10);
+  DataSetIterator iter=new ListDataSetIterator(twosAndFours.asList(),100);
   CDBN dbn=null;
   if (args.length >= 1) {
     dbn=SerializationUtils.readObject(new File(args[0]));
   }
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.finetune(next.getSecond(),0.01,1000);
+    dbn.setInput(next.getFirst());
+    dbn.feedForward(next.getFirst());
+    dbn.finetune(next.getSecond(),0.01,10000);
   }
   iter.reset();
   SerializationUtils.saveObject(dbn,new File("twosandfoursfinetuned.bin"));

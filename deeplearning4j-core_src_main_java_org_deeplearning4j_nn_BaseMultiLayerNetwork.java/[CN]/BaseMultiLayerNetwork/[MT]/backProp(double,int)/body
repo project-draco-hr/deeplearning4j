@@ -12,7 +12,7 @@
     while (backPropStep(lastEntropy,revert,lr,count)) {
       count++;
       lastEntropy=this.negativeLogLikelihood();
-      logLayer.traintillconvergence(count,epochs);
+      logLayer.trainTillConvergence(count,epochs);
     }
   }
 }
