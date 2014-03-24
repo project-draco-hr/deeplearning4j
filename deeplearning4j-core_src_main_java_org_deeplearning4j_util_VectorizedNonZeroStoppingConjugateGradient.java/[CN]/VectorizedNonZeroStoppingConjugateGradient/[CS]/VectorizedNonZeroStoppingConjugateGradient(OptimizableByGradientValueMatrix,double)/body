@@ -1,7 +1,0 @@
-{
-  this.initialStepSize=initialStepSize;
-  this.optimizable=function;
-  this.lineMaximizer=new VectorizedBackTrackLineSearch(function);
-  BackTrackLineSearch l=(BackTrackLineSearch)this.lineMaximizer;
-  l.setAbsTolx(tolerance);
-}

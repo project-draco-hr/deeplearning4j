@@ -1,8 +1,0 @@
-{
-  for (int i=0; i < x.length; i++) {
-    if (Math.abs(x.get(i) - x.get(i)) > absTolx) {
-      return false;
-    }
-  }
-  return true;
-}

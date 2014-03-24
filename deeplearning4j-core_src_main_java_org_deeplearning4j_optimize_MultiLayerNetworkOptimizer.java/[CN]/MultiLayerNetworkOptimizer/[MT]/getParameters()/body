@@ -1,0 +1,5 @@
+{
+  double[] d=new double[getNumParameters()];
+  this.getParameters(d);
+  return new DoubleMatrix(d);
+}
