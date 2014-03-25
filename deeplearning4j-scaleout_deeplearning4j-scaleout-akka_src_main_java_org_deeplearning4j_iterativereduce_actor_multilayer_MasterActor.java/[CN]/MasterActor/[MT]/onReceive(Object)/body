@@ -18,7 +18,7 @@
       updates.clear();
     }
  else     masterResults=this.getMasterResults();
-    if (pretrain && stateTracker.currentJobs().isEmpty()) {
+    if (stateTracker.isPretrain() && stateTracker.currentJobs().isEmpty()) {
       log.info("Switching to finetune mode");
       pretrain=false;
       stateTracker.moveToFinetune();

@@ -27,6 +27,7 @@
           if (seconds >= 30) {
             log.info("Removing stale worker " + key);
             MasterActor.this.stateTracker.removeWorker(key);
+            partition--;
           }
         }
       }

@@ -11,7 +11,7 @@
       sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
     }
  else {
-      if (this.input != null)       layerInput=sigmoidLayers[i - 1].sample_h_given_v();
+      if (this.input != null)       layerInput=sigmoidLayers[i - 1].sampleHiddenGivenVisible();
       sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
     }
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
