@@ -51,7 +51,7 @@
     }
     iterations++;
     if (iterations > maxIterations) {
-      logger.info("Too many iterations in ConjugateGradient.java");
+      logger.info("Passed max umber of iterations");
       converged=true;
       return true;
     }

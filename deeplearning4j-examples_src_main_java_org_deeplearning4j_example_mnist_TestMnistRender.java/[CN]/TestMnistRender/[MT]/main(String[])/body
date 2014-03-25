@@ -9,6 +9,4 @@
     plotter.plotNetworkGradient(dbn.getLayers()[0],dbn.getLayers()[0].getGradient(Conf.getDefaultRbmParams()));
     log.info("Current stats " + eval.stats());
   }
-  log.info("Prediciton f scores and accuracy");
-  log.info(eval.stats());
 }

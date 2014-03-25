@@ -7,6 +7,18 @@
   if (args.length >= 1) {
     dbn=SerializationUtils.readObject(new File(args[0]));
   }
+  dbn.getLayers()[0].getW().muli(1000);
+  dbn.getLayers()[1].getW().muli(1000);
+  dbn.getLayers()[2].getW().muli(1000);
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    log.info("Evaluating " + Arrays.toString(next.getFirst().toArray()));
+    dbn.feedForward(next.getFirst());
+    log.info("Hbias mean " + dbn.getLayers()[0].hBiasMean());
+    NeuralNetPlotter plotter=new NeuralNetPlotter();
+    plotter.plotNetworkGradient(dbn.getLayers()[0],dbn.getLayers()[0].getGradient(Conf.getDefaultRbmParams()));
+  }
+  iter.reset();
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
@@ -15,6 +27,6 @@
     eval.eval(labels,predict);
     log.info("Current stats " + eval.stats());
   }
-  log.info("Prediciton f scores and accuracy");
+  log.info("Prediction f scores and accuracy");
   log.info(eval.stats());
 }
