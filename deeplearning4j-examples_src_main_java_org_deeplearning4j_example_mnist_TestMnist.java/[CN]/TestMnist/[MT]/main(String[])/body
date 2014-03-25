@@ -1,7 +1,5 @@
 {
-  DBN dbn=new DBN.Builder().buildEmpty();
-  InputStream is=new FileInputStream(new File(args[0]));
-  dbn.load(is);
+  DBN dbn=SerializationUtils.readObject(new File(args[0]));
   DataSetIterator iter=new RawMnistDataSetIterator(10,60000);
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {

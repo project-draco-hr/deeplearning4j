@@ -1,14 +1,12 @@
 {
-  DBN dbn=new DBN.Builder().buildEmpty();
-  InputStream is=new FileInputStream(new File(args[0]));
-  dbn.load(is);
+  DBN dbn=SerializationUtils.readObject(new File(args[0]));
   DataSetIterator iter=new MnistDataSetIterator(10,60000);
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.feedForward(next.getFirst());
     NeuralNetPlotter plotter=new NeuralNetPlotter();
-    plotter.plotNetworkGradient(dbn.layers[0],dbn.layers[0].getGradient(Conf.getDefaultRbmParams()));
+    plotter.plotNetworkGradient(dbn.getLayers()[0],dbn.getLayers()[0].getGradient(Conf.getDefaultRbmParams()));
     log.info("Current stats " + eval.stats());
   }
   log.info("Prediciton f scores and accuracy");

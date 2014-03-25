@@ -1,5 +1,5 @@
 {
-  feedForward(x);
+  List<DoubleMatrix> activations=feedForward(x);
   if (columnSums != null) {
     for (int i=0; i < x.columns; i++) {
       DoubleMatrix col=x.getColumn(i);
@@ -24,5 +24,7 @@
   if (this.input == null) {
     this.initializeLayers(x);
   }
-  return logLayer.predict(getSigmoidLayers()[nLayers - 1].sampleHiddenGivenVisible());
+  DoubleMatrix sample=getSigmoidLayers()[nLayers - 1].sampleHiddenGivenVisible();
+  DoubleMatrix predicted=logLayer.predict(sample);
+  return predicted;
 }

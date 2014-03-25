@@ -1,5 +1,5 @@
 {
-  int n=3900;
+  int n=400;
   DataSet d=MatrixUtil.xorData(n);
   DoubleMatrix x=d.getFirst();
   DoubleMatrix y=d.getSecond();
@@ -9,7 +9,7 @@
   int[] hiddenLayerSizes=new int[]{2,2,2};
   double fineTuneLr=0.001;
   int fineTuneEpochs=10000;
-  DBN dbn=new DBN.Builder().useAdGrad(true).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(d.numInputs()).useRegularization(false).numberOfOutPuts(d.numOutcomes()).build();
+  DBN dbn=new DBN.Builder().useAdGrad(true).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(d.numInputs()).useRegularization(false).withActivation(new HardTanh()).numberOfOutPuts(d.numOutcomes()).build();
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix predict=dbn.predict(x);

@@ -3,7 +3,7 @@
   if (!f.exists())   Create2sAnd4sDataSet.main(null);
   DataSet twosAndFours=DataSet.load(f);
   DataSetIterator iter=new ListDataSetIterator(twosAndFours.asList());
-  CDBN dbn=null;
+  DBN dbn=null;
   if (args.length >= 1) {
     dbn=SerializationUtils.readObject(new File(args[0]));
   }
