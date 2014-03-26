@@ -44,7 +44,7 @@
     try {
       String host=a.host().get();
       if (host == null)       throw new IllegalArgumentException("No host set for worker");
-      int port=this.stateTrackerPort;
+      int port=this.stateTrackerPort < 1 ? HazelCastStateTracker.DEFAULT_HAZELCAST_PORT : this.stateTrackerPort;
       String connectionString=host + ":" + port;
       stateTracker=new HazelCastStateTracker(connectionString,"worker",port);
     }
