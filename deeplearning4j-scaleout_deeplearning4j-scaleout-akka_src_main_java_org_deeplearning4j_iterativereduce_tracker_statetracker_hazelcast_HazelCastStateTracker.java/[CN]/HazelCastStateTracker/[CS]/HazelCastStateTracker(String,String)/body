@@ -35,5 +35,9 @@
   heartbeat=h.getMap(HEART_BEAT);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
+  numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
+  numTimesPretrain.set(1);
   isPretrain.set(true);
+  numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
+  numTimesPretrainRan.set(0);
 }

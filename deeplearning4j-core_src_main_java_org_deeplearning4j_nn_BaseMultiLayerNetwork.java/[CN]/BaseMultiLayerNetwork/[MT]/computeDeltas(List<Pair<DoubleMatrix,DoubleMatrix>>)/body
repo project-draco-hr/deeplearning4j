@@ -1,7 +1,7 @@
 {
   DoubleMatrix[] gradients=new DoubleMatrix[nLayers + 2];
   DoubleMatrix[] deltas=new DoubleMatrix[nLayers + 2];
-  ActivationFunction derivative=sigmoidLayers[0].getActivationFunction();
+  ActivationFunction derivative=this.getSigmoidLayers()[0].getActivationFunction();
   DoubleMatrix delta=null;
   List<DoubleMatrix> activations=feedForward(getInput());
   List<DoubleMatrix> weights=new ArrayList<>();

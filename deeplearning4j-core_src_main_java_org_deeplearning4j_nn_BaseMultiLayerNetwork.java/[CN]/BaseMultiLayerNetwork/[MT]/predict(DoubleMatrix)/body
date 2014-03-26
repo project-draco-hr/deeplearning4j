@@ -24,7 +24,6 @@
   if (this.input == null) {
     this.initializeLayers(x);
   }
-  DoubleMatrix sample=getSigmoidLayers()[nLayers - 1].sampleHiddenGivenVisible();
-  DoubleMatrix predicted=logLayer.predict(sample);
+  DoubleMatrix predicted=activations.get(activations.size() - 1);
   return predicted;
 }

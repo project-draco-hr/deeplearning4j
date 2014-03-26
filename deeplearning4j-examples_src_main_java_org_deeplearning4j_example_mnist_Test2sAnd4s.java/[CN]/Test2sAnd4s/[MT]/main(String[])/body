@@ -3,22 +3,10 @@
   if (!f.exists())   Create2sAnd4sDataSet.main(null);
   DataSet twosAndFours=DataSet.load(f);
   DataSetIterator iter=new ListDataSetIterator(twosAndFours.asList());
-  DBN dbn=null;
+  CDBN dbn=null;
   if (args.length >= 1) {
     dbn=SerializationUtils.readObject(new File(args[0]));
   }
-  dbn.getLayers()[0].getW().muli(1000);
-  dbn.getLayers()[1].getW().muli(1000);
-  dbn.getLayers()[2].getW().muli(1000);
-  while (iter.hasNext()) {
-    DataSet next=iter.next();
-    log.info("Evaluating " + Arrays.toString(next.getFirst().toArray()));
-    dbn.feedForward(next.getFirst());
-    log.info("Hbias mean " + dbn.getLayers()[0].hBiasMean());
-    NeuralNetPlotter plotter=new NeuralNetPlotter();
-    plotter.plotNetworkGradient(dbn.getLayers()[0],dbn.getLayers()[0].getGradient(Conf.getDefaultRbmParams()));
-  }
-  iter.reset();
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
