@@ -1,15 +1,8 @@
 {
   if (type.equals("worker"))   return;
   try {
-    if (dataSet.equals("mnist")) {
-      iter=new MnistDataSetIterator(split,numExamples);
-    }
- else     if (dataSet.equals("iris")) {
-      iter=new IrisDataSetIterator(split,numExamples);
-    }
- else     if (dataSet.equals("lfw")) {
-      iter=new LFWDataSetIterator(split,numExamples);
-    }
+    if (this.numExamples >= 0 && this.split != 0)     this.iter=(DataSetIterator)Class.forName(dataSet).getConstructor(Integer.class,Integer.class).newInstance(split,numExamples);
+ else     this.iter=(DataSetIterator)Class.forName(dataSet).newInstance();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

@@ -28,6 +28,7 @@
     conf.setPretrainEpochs(pretrainEpochs);
     conf.setPretrainLearningRate(pretrainLearningRate);
     runner=new ActorNetworkRunner("master",iter);
+    runner.setStateTrackerPort(stateTrackerPort);
     runner.setup(conf);
   }
 }

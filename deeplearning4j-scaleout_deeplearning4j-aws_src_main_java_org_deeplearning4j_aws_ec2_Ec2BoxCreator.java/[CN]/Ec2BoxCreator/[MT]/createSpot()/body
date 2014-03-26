@@ -1,0 +1,19 @@
+{
+  RequestSpotInstancesRequest requestRequest=new RequestSpotInstancesRequest();
+  requestRequest.setSpotPrice("0.03");
+  requestRequest.setInstanceCount(Integer.valueOf(1));
+  LaunchSpecification launchSpecification=new LaunchSpecification();
+  launchSpecification.setImageId("ami-8c1fece5");
+  launchSpecification.setInstanceType("t1.micro");
+  List<String> securityGroups=new ArrayList<String>();
+  securityGroups.add("GettingStartedGroup");
+  launchSpecification.setSecurityGroups(securityGroups);
+  requestRequest.setLaunchSpecification(launchSpecification);
+  RequestSpotInstancesResult requestResult=getEc2().requestSpotInstances(requestRequest);
+  List<SpotInstanceRequest> requestResponses=requestResult.getSpotInstanceRequests();
+  List<String> spotInstanceRequestIds=new ArrayList<String>();
+  for (  SpotInstanceRequest requestResponse : requestResponses) {
+    System.out.println("Created Spot Request: " + requestResponse.getSpotInstanceRequestId());
+    spotInstanceRequestIds.add(requestResponse.getSpotInstanceRequestId());
+  }
+}

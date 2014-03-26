@@ -13,7 +13,7 @@
   c.setLayerSizes(new int[]{500,400,250});
   c.setUseAdaGrad(true);
   c.setSplit(10);
-  c.setNumPasses(3);
+  c.setNumPasses(100);
   c.setMultiLayerClazz(CDBN.class);
   c.setUseRegularization(false);
   c.setDeepLearningParams(new Object[]{1,0.1,10000});

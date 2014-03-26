@@ -7,7 +7,8 @@
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to train");
     log.info("Starting master");
     try {
-      stateTracker=new HazelCastStateTracker();
+      if (stateTrackerPort > 0)       stateTracker=new HazelCastStateTracker(stateTrackerPort);
+ else       stateTracker=new HazelCastStateTracker();
       if (finetune)       stateTracker.moveToFinetune();
       masterAddress=startBackend(null,"master",conf,iter,stateTracker);
       Thread.sleep(60000);
@@ -43,9 +44,9 @@
     try {
       String host=a.host().get();
       if (host == null)       throw new IllegalArgumentException("No host set for worker");
-      int port=HazelCastStateTracker.DEFAULT_HAZELCAST_PORT;
+      int port=this.stateTrackerPort;
       String connectionString=host + ":" + port;
-      stateTracker=new HazelCastStateTracker(connectionString,"worker");
+      stateTracker=new HazelCastStateTracker(connectionString,"worker",port);
     }
  catch (    Exception e1) {
       Thread.currentThread().interrupt();

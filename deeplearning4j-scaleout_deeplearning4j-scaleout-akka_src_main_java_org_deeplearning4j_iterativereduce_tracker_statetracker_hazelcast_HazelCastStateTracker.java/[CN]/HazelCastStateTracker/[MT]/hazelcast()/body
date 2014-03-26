@@ -1,6 +1,6 @@
 {
   Config conf=new Config();
-  conf.getNetworkConfig().setPort(DEFAULT_HAZELCAST_PORT);
+  conf.getNetworkConfig().setPort(hazelCastPort);
   conf.getNetworkConfig().setPortAutoIncrement(false);
   conf.setProperty("hazelcast.initial.min.cluster.size","1");
   conf.setProperty("hazelcast.shutdownhook.enabled","false");

@@ -1,5 +1,6 @@
 {
-  if (type.equals("master") && !PortTaken.portTaken(DEFAULT_HAZELCAST_PORT)) {
+  if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
+    this.hazelCastPort=stateTrackerPort;
     config=hazelcast();
     h=Hazelcast.newHazelcastInstance(config);
     h.getCluster().addMembershipListener(new MembershipListener(){
@@ -29,15 +30,17 @@
       log.warn("Waiting for data sync...");
       Thread.sleep(1000);
     }
+    log.info("Workers is " + workers.size());
   }
-  log.info("Workers is " + workers.size());
   topics=h.getList(TOPICS);
   heartbeat=h.getMap(HEART_BEAT);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
   numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
-  numTimesPretrain.set(1);
-  isPretrain.set(true);
   numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
-  numTimesPretrainRan.set(0);
+  if (type.equals("master")) {
+    numTimesPretrainRan.set(0);
+    numTimesPretrain.set(1);
+    isPretrain.set(true);
+  }
 }
