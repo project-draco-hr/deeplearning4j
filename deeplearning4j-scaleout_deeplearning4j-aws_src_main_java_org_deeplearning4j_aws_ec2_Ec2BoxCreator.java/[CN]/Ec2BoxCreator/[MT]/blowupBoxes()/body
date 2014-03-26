@@ -1,0 +1,10 @@
+{
+  TerminateInstancesRequest request=new TerminateInstancesRequest().withInstanceIds(boxesCreated);
+  if (boxesCreated != null) {
+    TerminateInstancesResult result=getEc2().terminateInstances(request);
+    List<InstanceStateChange> change=result.getTerminatingInstances();
+    log.info("Boxes destroyed " + boxesCreated);
+    return change;
+  }
+  return Collections.emptyList();
+}

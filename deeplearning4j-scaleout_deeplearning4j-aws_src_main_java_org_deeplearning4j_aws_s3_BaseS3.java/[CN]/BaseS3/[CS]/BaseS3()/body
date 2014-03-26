@@ -1,4 +1,5 @@
 {
   findCreds();
   if (accessKey != null && secretKey != null)   creds=new BasicAWSCredentials(accessKey,secretKey);
+  if (creds == null)   throw new IllegalStateException("Unable to find ec2 credentials");
 }

@@ -1,0 +1,11 @@
+{
+  while (!allRunning()) {
+    try {
+      Thread.sleep(1000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    log.info("Not all created...");
+  }
+}

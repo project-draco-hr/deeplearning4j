@@ -1,0 +1,14 @@
+{
+  DescribeInstancesResult result=getEc2().describeInstances();
+  List<String> hosts=new ArrayList<>();
+  List<Reservation> reservations=result.getReservations();
+  for (  Reservation r : reservations) {
+    List<Instance> instances=r.getInstances();
+    for (    Instance instance : instances) {
+      InstanceState state=instance.getState();
+      if (state.getCode() == 48)       continue;
+      hosts.add(instance.getPublicDnsName());
+    }
+  }
+  return hosts;
+}

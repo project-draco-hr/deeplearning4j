@@ -1,5 +1,14 @@
 {
-  RunInstancesRequest runInstancesRequest=new RunInstancesRequest();
-  runInstancesRequest.withImageId(amiId).withInstanceType(size).withMinCount(1).withMaxCount(numBoxes);
-  getEc2().runInstances(runInstancesRequest);
+  RunInstancesRequest runInstancesRequest=new RunInstancesRequest().withImageId(amiId).withInstanceType(size).withMinCount(1).withMaxCount(numBoxes);
+  List<Instance> boxes=getEc2().runInstances(runInstancesRequest).getReservation().getInstances();
+  if (boxesCreated == null) {
+    boxesCreated=new ArrayList<>();
+    for (    Instance i : boxes)     boxesCreated.add(i.getInstanceId());
+    log.info("Boxes created " + boxesCreated);
+  }
+ else {
+    blowupBoxes();
+    boxesCreated.clear();
+    for (    Instance i : boxes)     boxesCreated.add(i.getInstanceId());
+  }
 }
