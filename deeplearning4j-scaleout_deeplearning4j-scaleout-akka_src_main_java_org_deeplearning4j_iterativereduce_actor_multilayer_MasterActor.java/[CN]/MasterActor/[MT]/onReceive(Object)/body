@@ -28,6 +28,7 @@
     }
  else     if (stateTracker.currentJobs().isEmpty()) {
       isDone=true;
+      stateTracker.finish();
       log.info("Done training!");
     }
   }
