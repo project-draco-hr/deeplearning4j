@@ -38,9 +38,11 @@
   isPretrain=h.getAtomicReference(IS_PRETRAIN);
   numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
   numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
+  done=h.getAtomicReference(DONE);
   if (type.equals("master")) {
     numTimesPretrainRan.set(0);
     numTimesPretrain.set(1);
     isPretrain.set(true);
+    done.set(false);
   }
 }
