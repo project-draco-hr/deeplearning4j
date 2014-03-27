@@ -1,0 +1,13 @@
+{
+  for (  String workerHost : workers) {
+    try {
+      HostProvisioner uploader=new HostProvisioner(workerHost,"ec2-user");
+      uploader.uploadForDeployment(libDirPath,"lib");
+      uploader.addKeyFile(pathToPrivateKey);
+      uploader.uploadAndRun(workerSetupScriptPath,"");
+    }
+ catch (    Exception e) {
+      log.error("Error ",e);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (!to.isEmpty())   mkDir(to);
+  upload(from,to);
+}

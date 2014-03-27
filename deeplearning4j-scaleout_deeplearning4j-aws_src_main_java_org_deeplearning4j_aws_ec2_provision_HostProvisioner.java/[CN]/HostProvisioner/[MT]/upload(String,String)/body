@@ -1,0 +1,8 @@
+{
+  if (uploadRootDir.isEmpty())   uploadRootDir=".";
+  if (rootDir.endsWith(".tar") || rootDir.endsWith(".tar.gz")) {
+    upload(new File(rootDir),uploadRootDir);
+    untar(uploadRootDir);
+  }
+ else   upload(Arrays.asList(new File(rootDir).listFiles()),uploadRootDir);
+}

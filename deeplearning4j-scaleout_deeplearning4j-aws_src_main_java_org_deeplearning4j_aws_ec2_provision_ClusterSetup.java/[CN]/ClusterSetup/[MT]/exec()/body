@@ -1,0 +1,8 @@
+{
+  Ec2BoxCreator boxCreator=new Ec2BoxCreator(ami,numWorkers + 1,size,securityGroupName,keyPairName);
+  boxCreator.create();
+  boxCreator.blockTillAllRunning();
+  List<String> hosts=boxCreator.getHosts();
+  provisionMaster(hosts.get(0));
+  provisionWorkers(hosts.subList(1,hosts.size()));
+}

@@ -1,0 +1,20 @@
+{
+  Session session=getSession();
+  int numRetries=0;
+  while (numRetries < 3 && !session.isConnected()) {
+    try {
+      session.connect();
+    }
+ catch (    Exception e) {
+      numRetries++;
+    }
+  }
+  Channel channel=session.openChannel("sftp");
+  channel.connect();
+  ChannelSftp c=(ChannelSftp)channel;
+  BufferedInputStream bis=new BufferedInputStream(new FileInputStream(f));
+  c.put(bis,remoteFile);
+  bis.close();
+  c.exit();
+  session.disconnect();
+}

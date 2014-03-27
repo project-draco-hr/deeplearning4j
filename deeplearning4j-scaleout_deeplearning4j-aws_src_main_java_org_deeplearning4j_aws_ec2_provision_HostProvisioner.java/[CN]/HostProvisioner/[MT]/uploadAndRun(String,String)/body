@@ -1,0 +1,7 @@
+{
+  String remoteName=rootDir.isEmpty() ? new File(script).getName() : rootDir + "/" + script;
+  upload(new File(script),remoteName);
+  String remoteCommand=remoteName.charAt(0) != '/' ? "./" + remoteName : remoteName;
+  remoteCommand="chmod +x " + remoteCommand + " && "+ remoteCommand;
+  runRemoteCommand(remoteCommand);
+}
