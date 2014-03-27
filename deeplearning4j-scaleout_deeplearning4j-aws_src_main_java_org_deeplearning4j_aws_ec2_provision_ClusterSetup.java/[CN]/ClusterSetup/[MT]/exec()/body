@@ -4,5 +4,4 @@
   boxCreator.blockTillAllRunning();
   List<String> hosts=boxCreator.getHosts();
   provisionMaster(hosts.get(0));
-  provisionWorkers(hosts.subList(1,hosts.size()));
 }

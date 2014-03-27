@@ -1,0 +1,9 @@
+{
+  try {
+    channel.stat(dir);
+    return true;
+  }
+ catch (  Exception e) {
+    return false;
+  }
+}

@@ -1,4 +1,5 @@
 {
-  if (!to.isEmpty())   mkDir(to);
-  upload(from,to);
+  File fromFile=new File(from);
+  if (!to.isEmpty() && fromFile.isDirectory())   mkDir(to);
+ else   upload(from,to);
 }

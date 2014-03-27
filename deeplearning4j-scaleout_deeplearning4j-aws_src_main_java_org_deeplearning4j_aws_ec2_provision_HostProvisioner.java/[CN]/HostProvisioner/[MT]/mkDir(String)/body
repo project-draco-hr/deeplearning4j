@@ -4,7 +4,7 @@
   Channel channel=session.openChannel("sftp");
   channel.connect();
   ChannelSftp c=(ChannelSftp)channel;
-  c.mkdir(dir);
+  if (!fileExists(dir,c))   c.mkdir(dir);
   c.exit();
   session.disconnect();
 }

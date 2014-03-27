@@ -1,8 +1,15 @@
 {
   if (uploadRootDir.isEmpty())   uploadRootDir=".";
-  if (rootDir.endsWith(".tar") || rootDir.endsWith(".tar.gz")) {
-    upload(new File(rootDir),uploadRootDir);
+  File origin=new File(fileOrDir);
+  if (fileOrDir.endsWith(".tar") || fileOrDir.endsWith(".tar.gz")) {
+    upload(new File(fileOrDir),uploadRootDir);
     untar(uploadRootDir);
   }
- else   upload(Arrays.asList(new File(rootDir).listFiles()),uploadRootDir);
+ else   if (origin.isFile()) {
+    upload(new File(fileOrDir),uploadRootDir);
+  }
+ else {
+    File[] childFiles=origin.listFiles();
+    if (childFiles != null)     upload(Arrays.asList(childFiles),uploadRootDir);
+  }
 }
