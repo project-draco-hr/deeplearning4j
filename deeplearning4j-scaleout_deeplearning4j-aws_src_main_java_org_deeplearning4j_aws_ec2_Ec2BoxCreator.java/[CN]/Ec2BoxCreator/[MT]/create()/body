@@ -1,5 +1,5 @@
 {
-  RunInstancesRequest runInstancesRequest=new RunInstancesRequest().withImageId(amiId).withInstanceType(size).withMinCount(1).withMaxCount(numBoxes);
+  RunInstancesRequest runInstancesRequest=new RunInstancesRequest().withImageId(amiId).withInstanceType(size).withKeyName(keyPair).withMinCount(1).withSecurityGroupIds(securityGroupId).withMaxCount(numBoxes);
   List<Instance> boxes=getEc2().runInstances(runInstancesRequest).getReservation().getInstances();
   if (boxesCreated == null) {
     boxesCreated=new ArrayList<>();
