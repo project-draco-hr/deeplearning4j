@@ -1,5 +1,0 @@
-{
-  Session session=jsch.getSession(user,host,port);
-  session.setUserInfo(this);
-  return session;
-}
