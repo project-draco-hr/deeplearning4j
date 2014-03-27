@@ -4,6 +4,9 @@
     uploader.uploadForDeployment(libDirPath,"lib");
     uploader.addKeyFile(pathToPrivateKey);
     if (dataSetPath != null)     uploader.uploadForDeployment(dataSetPath,"");
+    String sshPath="/home/ec2-user/.ssh/";
+    uploader.runRemoteCommand("chmod 0400 " + sshPath + "*");
+    uploader.uploadForDeployment(pathToPrivateKey,sshPath);
     uploader.uploadAndRun(masterSetupScriptPath,"");
   }
  catch (  Exception e) {
