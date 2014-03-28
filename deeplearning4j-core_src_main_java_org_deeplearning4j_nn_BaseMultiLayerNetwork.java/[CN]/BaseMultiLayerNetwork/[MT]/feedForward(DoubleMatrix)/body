@@ -9,6 +9,7 @@
     currInput=getSigmoidLayers()[i].activate(currInput);
     activations.add(currInput);
   }
+  logLayer.setInput(currInput);
   activations.add(getLogLayer().predict(currInput));
   return activations;
 }

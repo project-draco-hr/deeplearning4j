@@ -3,16 +3,28 @@
   BaseMultiLayerNetwork revert=clone();
   if (forceNumEpochs) {
     for (int i=0; i < epochs; i++) {
-      backPropStep(lastEntropy,revert,lr,i);
+      backPropStep(revert,lr,i);
       lastEntropy=negativeLogLikelihood();
     }
   }
  else {
+    logLayer.trainTillConvergence(lr,epochs);
+    boolean train=true;
     int count=0;
-    while (backPropStep(lastEntropy,revert,lr,count)) {
+    int numOver=0;
+    int tolerance=3;
+    while (train) {
       count++;
-      lastEntropy=this.negativeLogLikelihood();
+      backPropStep(revert,lr,count);
       logLayer.trainTillConvergence(count,epochs);
+      Double entropy=this.negativeLogLikelihood();
+      if (lastEntropy == null || entropy < lastEntropy)       lastEntropy=entropy;
+ else       if (entropy > lastEntropy) {
+        update(revert);
+        numOver++;
+        if (numOver >= tolerance)         train=false;
+      }
+ else       if (entropy == lastEntropy)       train=false;
     }
   }
 }

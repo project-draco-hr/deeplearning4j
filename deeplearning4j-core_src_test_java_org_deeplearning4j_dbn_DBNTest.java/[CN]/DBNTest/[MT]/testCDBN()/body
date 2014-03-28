@@ -11,8 +11,8 @@
   double fineTuneLr=0.001;
   int fineTuneEpochs=1000;
   CDBN dbn=new CDBN.Builder().useAdGrad(true).numberOfInputs(nIns).numberOfOutPuts(nOuts).hiddenLayerSizes(hiddenLayerSizes).useRegularization(false).withRng(rng).build();
-  for (int i=0; i < 1000; i++)   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
-  for (int i=0; i < 1000; i++)   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
+  dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
+  dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix testX=new DoubleMatrix(new double[][]{{0.5,0.5,0.,0.,0.,0.},{0.,0.,0.,0.5,0.5,0.},{0.5,0.5,0.5,0.5,0.5,0.}});
   Evaluation eval=new Evaluation();
   eval.eval(y,dbn.predict(x));

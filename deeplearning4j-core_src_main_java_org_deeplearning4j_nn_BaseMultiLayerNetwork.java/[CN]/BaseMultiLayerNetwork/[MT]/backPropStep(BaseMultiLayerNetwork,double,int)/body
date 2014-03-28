@@ -1,23 +1,4 @@
 {
-  double error=this.negativeLogLikelihood();
-  log.info("Current back prop error " + error);
-  if (lastEntropy == null) {
-    lastEntropy=error;
-  }
- else   if (error == lastEntropy) {
-    log.info("Converged; no more stepping appears to do anything");
-    return false;
-  }
- else   if (error > lastEntropy || Double.isNaN(error) || Double.isInfinite(error)) {
-    log.info("Error greater than previous; found global minima; converging");
-    update(revert);
-    return false;
-  }
- else   if (error < lastEntropy) {
-    lastEntropy=error;
-    revert=clone();
-    log.info("Found better error on epoch " + epoch + " "+ lastEntropy);
-  }
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
@@ -36,5 +17,4 @@
     getSigmoidLayers()[l].setB(getLayers()[l].gethBias());
   }
   getLogLayer().getW().addi(deltas.get(nLayers).getFirst());
-  return true;
 }

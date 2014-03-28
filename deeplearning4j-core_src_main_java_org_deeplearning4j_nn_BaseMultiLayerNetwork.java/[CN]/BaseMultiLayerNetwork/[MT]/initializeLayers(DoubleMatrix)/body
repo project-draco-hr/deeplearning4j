@@ -5,5 +5,5 @@
   for (int i=0; i < hiddenLayerSizes.length; i++)   if (hiddenLayerSizes[i] < 1)   throw new IllegalArgumentException("All hidden layer sizes must be >= 1");
   this.input=input.dup();
   if (!initCalled)   init();
- else   this.feedForward(input);
+ else   feedForward(input);
 }

@@ -1,3 +1,4 @@
 {
-  return getActivationFunction().apply(getInput().mmul(getW()).addRowVector(getB()));
+  DoubleMatrix activation=getActivationFunction().apply(getInput().mmul(getW()).addRowVector(getB()));
+  return activation;
 }
