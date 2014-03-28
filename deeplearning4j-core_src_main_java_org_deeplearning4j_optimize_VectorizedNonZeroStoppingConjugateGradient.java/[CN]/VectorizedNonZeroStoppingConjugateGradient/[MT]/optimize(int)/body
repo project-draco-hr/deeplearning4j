@@ -19,7 +19,7 @@
       step=lineMaximizer.optimize(xi,step);
     }
  catch (    Throwable e) {
-      logger.info(e.getMessage());
+      logger.warn("Error during computation",e);
     }
     fret=optimizable.getValue();
     xi=optimizable.getValueGradient();

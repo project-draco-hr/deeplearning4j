@@ -19,13 +19,8 @@
     miniBatches.add(next.copy());
   }
   log.info("Training on " + miniBatches.size() + " minibatches");
-  for (int i=0; i < miniBatches.size(); i++) {
-    dbn.pretrain(miniBatches.get(i).getFirst(),k,preTrainLr,preTrainEpochs);
-  }
-  for (int i=0; i < finetuneBatches.size(); i++) {
-    dbn.setInput(finetuneBatches.get(i).getFirst());
-    dbn.finetune(finetuneBatches.get(i).getSecond(),fineTuneLr,fineTuneEpochs);
-  }
+  dbn.pretrain(next.getFirst(),k,preTrainLr,preTrainEpochs);
+  dbn.finetune(next.getSecond(),fineTuneLr,fineTuneEpochs);
   sampling=new SamplingDataSetIterator(next,10,3000);
   miniBatches.clear();
   while (sampling.hasNext()) {

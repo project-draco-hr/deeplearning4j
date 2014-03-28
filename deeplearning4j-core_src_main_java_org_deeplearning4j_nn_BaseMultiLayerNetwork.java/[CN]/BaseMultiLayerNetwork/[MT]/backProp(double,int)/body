@@ -1,5 +1,5 @@
 {
-  Double lastEntropy=null;
+  Double lastEntropy=this.negativeLogLikelihood();
   BaseMultiLayerNetwork revert=clone();
   if (forceNumEpochs) {
     for (int i=0; i < epochs; i++) {
@@ -8,7 +8,6 @@
     }
   }
  else {
-    logLayer.trainTillConvergence(lr,epochs);
     boolean train=true;
     int count=0;
     int numOver=0;
@@ -16,7 +15,8 @@
     while (train) {
       count++;
       backPropStep(revert,lr,count);
-      logLayer.trainTillConvergence(count,epochs);
+      DoubleMatrix newSample=getSigmoidLayers()[nLayers - 1].sampleHiddenGivenVisible();
+      logLayer.trainTillConvergence(newSample,logLayer.getLabels(),lr,epochs);
       Double entropy=this.negativeLogLikelihood();
       if (lastEntropy == null || entropy < lastEntropy)       lastEntropy=entropy;
  else       if (entropy > lastEntropy) {
