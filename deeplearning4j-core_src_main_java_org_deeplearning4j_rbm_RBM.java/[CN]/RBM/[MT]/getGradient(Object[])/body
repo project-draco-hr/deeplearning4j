@@ -37,14 +37,14 @@
  else {
     hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
     if (useAdaGrad) {
-      DoubleMatrix hBiasLearningRates=this.hBiasAdaGrad.getLearningRates(hBiasGradient);
+      DoubleMatrix hBiasLearningRates=hBiasAdaGrad.getLearningRates(hBiasGradient);
       hBiasGradient.muli(hBiasLearningRates);
     }
  else     hBiasGradient.muli(learningRate);
   }
   DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
   if (useAdaGrad) {
-    DoubleMatrix vBiasLearningRates=this.vBiasAdaGrad.getLearningRates(vBiasGradient);
+    DoubleMatrix vBiasLearningRates=vBiasAdaGrad.getLearningRates(vBiasGradient);
     vBiasGradient.muli(vBiasLearningRates);
   }
  else   vBiasGradient.muli(learningRate);

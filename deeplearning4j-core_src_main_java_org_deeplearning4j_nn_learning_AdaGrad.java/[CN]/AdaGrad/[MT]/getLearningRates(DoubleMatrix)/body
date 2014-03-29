@@ -1,13 +1,9 @@
 {
-  this.gradient=gradient.dup();
-  DoubleMatrix gradientsSquared=MatrixFunctions.pow(gradient,2);
-  if (first) {
-    this.historicalGradient=gradientsSquared;
-    first=false;
-  }
- else   this.historicalGradient.addi(gradientsSquared);
-  DoubleMatrix gAdd=MatrixFunctions.sqrt(historicalGradient).add(fudgeFactor);
-  this.adjustedGradient=this.gradient.div(gAdd);
-  this.adjustedGradient.muli(masterStepSize);
-  return adjustedGradient.neg();
+  this.gradient=MatrixFunctions.abs(gradient.dup());
+  double currentLearningRate=this.masterStepSize;
+  DoubleMatrix gradientSquared=MatrixFunctions.pow(this.gradient,2);
+  this.historicalGradient.addi(gradientSquared);
+  DoubleMatrix sqrtHistoricalGradient=MatrixFunctions.sqrt(historicalGradient).add(fudgeFactor);
+  this.adjustedGradient=this.gradient.div(sqrtHistoricalGradient).mul(currentLearningRate);
+  return adjustedGradient;
 }
