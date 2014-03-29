@@ -8,11 +8,11 @@
   DoubleMatrix v=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0}});
   log.info("Reconstruction " + r.reconstruct(v).toString());
   NeuralNetwork r2=r.clone();
-  assertEquals(r2.getnVisible(),r.nVisible);
-  assertEquals(r2.getnHidden(),r.nHidden);
-  assertEquals(r2.getW(),r.W);
-  assertEquals(r2.gethBias(),r.hBias);
-  assertEquals(r2.getvBias(),r.vBias);
+  assertEquals(r2.getnVisible(),r.getnVisible());
+  assertEquals(r2.getnHidden(),r.getnHidden());
+  assertEquals(r2.getW(),r.getW());
+  assertEquals(r2.gethBias(),r.gethBias());
+  assertEquals(r2.getvBias(),r.getvBias());
   r2.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
   log.info("Cross entropy " + r.getReConstructionCrossEntropy());
 }

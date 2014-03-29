@@ -8,6 +8,10 @@
     ret.setnHidden(getnHidden());
     ret.setnVisible(getnVisible());
     ret.setW(W.dup());
+    ret.setL2(l2);
+    ret.setMomentum(momentum);
+    ret.setRenderEpochs(getRenderEpochs());
+    ret.setSparsity(sparsity);
     ret.setRng(getRng());
     ret.setDist(getDist());
     ret.setAdaGrad(wAdaGrad);
