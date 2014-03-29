@@ -2,7 +2,7 @@
   MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
   DoubleMatrix p_y_given_x=sigmoid(input.mmul(W).addRowVector(b));
   DoubleMatrix dy=labels.sub(p_y_given_x);
-  dy.divi(input.rows);
+  if (normalizeByInputRows)   dy.divi(input.rows);
   DoubleMatrix wGradient=input.transpose().mmul(dy);
   if (useAdaGrad)   wGradient.muli(adaGrad.getLearningRates(wGradient));
  else   wGradient.muli(lr);

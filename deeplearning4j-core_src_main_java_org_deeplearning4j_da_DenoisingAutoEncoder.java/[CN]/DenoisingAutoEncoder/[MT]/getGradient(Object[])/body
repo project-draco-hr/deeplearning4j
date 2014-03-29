@@ -13,7 +13,7 @@
  else   wGradient.muli(lr);
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
-  wGradient.divi(input.rows);
+  if (normalizeByInputRows)   wGradient.divi(input.rows);
   DoubleMatrix L_hbias_mean=L_hbias.columnMeans();
   DoubleMatrix L_vbias_mean=L_vbias.columnMeans();
   NeuralNetworkGradient gradient=new NeuralNetworkGradient(wGradient,L_vbias_mean,L_hbias_mean);

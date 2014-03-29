@@ -21,14 +21,29 @@
  else   wGradient.muli(learningRate);
   if (useRegularization)   wGradient.subi(W.muli(l2));
   if (momentum != 0)   wGradient.muli(1 - momentum);
-  wGradient.divi(input.rows);
+  if (normalizeByInputRows)   wGradient.divi(input.rows);
   DoubleMatrix hBiasGradient=null;
   if (this.sparsity != 0) {
-    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0).mul(learningRate);
+    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0);
+    if (useAdaGrad) {
+      DoubleMatrix hBiasLearningRates=this.hBiasAdaGrad.getLearningRates(hBiasGradient);
+      hBiasGradient.muli(hBiasLearningRates);
+    }
+ else     hBiasGradient.muli(learningRate);
   }
  else {
-    hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0).mul(learningRate);
+    hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
+    if (useAdaGrad) {
+      DoubleMatrix hBiasLearningRates=this.hBiasAdaGrad.getLearningRates(hBiasGradient);
+      hBiasGradient.muli(hBiasLearningRates);
+    }
+ else     hBiasGradient.muli(learningRate);
   }
-  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0).mul(learningRate);
+  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
+  if (useAdaGrad) {
+    DoubleMatrix vBiasLearningRates=this.vBiasAdaGrad.getLearningRates(vBiasGradient);
+    vBiasGradient.muli(vBiasLearningRates);
+  }
+ else   vBiasGradient.muli(learningRate);
   return new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
 }

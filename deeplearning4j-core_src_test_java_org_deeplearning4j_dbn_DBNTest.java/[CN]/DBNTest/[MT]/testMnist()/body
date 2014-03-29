@@ -1,11 +1,17 @@
 {
-  MnistDataFetcher fetcher=new MnistDataFetcher();
-  fetcher.fetch(20);
+  MnistDataFetcher fetcher=new MnistDataFetcher(true);
+  fetcher.fetch(100);
   DataSet d=fetcher.next();
-  assertEquals(20,d.numExamples());
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,250,100}).withActivation(new HardTanh()).numberOfInputs(784).numberOfOutPuts(10).useRegularization(false).build();
-  dbn.pretrain(d.getFirst(),1,0.0001,30000);
-  dbn.finetune(d.getSecond(),0.0001,10000);
+  d.filterAndStrip(new int[]{0,1});
+  log.info("Training on " + d.numExamples());
+  StopWatch watch=new StopWatch();
+  log.info("Data set " + d);
+  DBN dbn=new DBN.Builder().withActivation(Activations.tanh()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0).numberOfInputs(784).useAdGrad(true).numberOfOutPuts(2).useRegularization(false).build();
+  watch.start();
+  dbn.pretrain(d.getFirst(),1,0.1,300);
+  dbn.finetune(d.getSecond(),0.1,100);
+  watch.stop();
+  log.info("Took " + watch.getTime());
   Evaluation eval=new Evaluation();
   DoubleMatrix predict=dbn.predict(d.getFirst());
   eval.eval(d.getSecond(),predict);

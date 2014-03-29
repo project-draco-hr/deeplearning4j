@@ -3,6 +3,7 @@
     this.layers=new NeuralNetwork[nLayers];
     for (int i=0; i < layers.length; i++)     this.getLayers()[i]=network.getLayers()[i].clone();
   }
+  this.normalizeByInputRows=network.normalizeByInputRows;
   this.useAdaGrad=network.useAdaGrad;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
   if (network.logLayer != null)   this.logLayer=network.logLayer.clone();

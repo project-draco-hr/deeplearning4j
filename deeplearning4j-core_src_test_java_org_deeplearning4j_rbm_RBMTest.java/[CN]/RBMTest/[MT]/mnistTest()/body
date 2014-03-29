@@ -1,0 +1,23 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher(true);
+  fetcher.fetch(10);
+  DataSet d=fetcher.next();
+  RandomGenerator g=new MersenneTwister(123);
+  RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.numInputs()).numHidden(500).withRandom(g).build();
+  r.trainTillConvergence(d.getFirst(),0.1,new Object[]{1,0.01,3000});
+  DoubleMatrix reconstruct=r.reconstruct(d.getFirst());
+  for (int j=0; j < d.numExamples(); j++) {
+    DoubleMatrix draw1=d.get(j).getFirst().mul(255);
+    DoubleMatrix reconstructed2=reconstruct.getRow(j);
+    DoubleMatrix draw2=MatrixUtil.binomial(reconstructed2,1,g).mul(255);
+    DrawMnistGreyScale d3=new DrawMnistGreyScale(draw1);
+    d3.title="REAL";
+    d3.draw();
+    DrawMnistGreyScale d2=new DrawMnistGreyScale(draw2,1000,1000);
+    d2.title="TEST";
+    d2.draw();
+    Thread.sleep(10000);
+    d3.frame.dispose();
+    d2.frame.dispose();
+  }
+}

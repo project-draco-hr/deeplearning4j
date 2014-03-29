@@ -16,8 +16,6 @@
     outcomes[i]=rowOutcome;
   }
   MatrixUtil.scaleByMax(ret);
-  for (int i=0; i < ret.rows; i++) {
-    list.add(new DataSet(ret.getRow(i),new DoubleMatrix(outcomes[i]).transpose()));
-  }
+  for (int i=0; i < ret.rows; i++)   list.add(new DataSet(ret.getRow(i),new DoubleMatrix(outcomes[i]).transpose()));
   return list;
 }

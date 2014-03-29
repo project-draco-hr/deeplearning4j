@@ -1,5 +1,5 @@
 {
   if (opt == null)   opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
-  int epochs=(int)extraParams[2];
+  int epochs=extraParams.length < 3 ? 1000 : (int)extraParams[2];
   opt.optimize(epochs);
 }

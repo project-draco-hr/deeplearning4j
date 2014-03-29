@@ -16,7 +16,7 @@
     }
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
   }
-  this.logLayer=new LogisticRegression.Builder().useAdaGrad(useAdaGrad).useRegularization(useRegularization).numberOfInputs(this.hiddenLayerSizes[this.nLayers - 1]).numberOfOutputs(nOuts).withL2(l2).build();
+  this.logLayer=new LogisticRegression.Builder().useAdaGrad(useAdaGrad).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(hiddenLayerSizes[nLayers - 1]).numberOfOutputs(nOuts).withL2(l2).build();
   dimensionCheck();
   applyTransforms();
   initCalled=true;

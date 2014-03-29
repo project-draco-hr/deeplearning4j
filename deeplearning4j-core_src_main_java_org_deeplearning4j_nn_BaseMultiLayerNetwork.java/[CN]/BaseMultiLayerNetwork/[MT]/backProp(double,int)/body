@@ -12,12 +12,18 @@
     int count=0;
     int numOver=0;
     int tolerance=3;
+    double changeTolerance=1e-5;
     while (train) {
       count++;
       backPropStep(revert,lr,count);
       Double entropy=this.negativeLogLikelihood();
       if (lastEntropy == null || entropy < lastEntropy) {
-        lastEntropy=entropy;
+        double diff=Math.abs(entropy - lastEntropy);
+        if (diff < changeTolerance) {
+          log.info("Not enough of a change on back prop...breaking");
+          break;
+        }
+ else         lastEntropy=entropy;
         log.info("New negative log likelihood " + lastEntropy);
       }
  else       if (entropy >= lastEntropy) {

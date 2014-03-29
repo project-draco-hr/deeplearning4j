@@ -1,6 +1,8 @@
 {
   try {
     NeuralNetwork ret=getClass().newInstance();
+    ret.setHbiasAdaGrad(hBiasAdaGrad);
+    ret.setVBiasAdaGrad(vBiasAdaGrad);
     ret.sethBias(hBias.dup());
     ret.setvBias(vBias.dup());
     ret.setnHidden(getnHidden());

@@ -7,6 +7,7 @@
   reg.nIn=this.nIn;
   reg.nOut=this.nOut;
   reg.useRegularization=this.useRegularization;
+  reg.normalizeByInputRows=this.normalizeByInputRows;
   if (this.input != null)   reg.input=this.input.dup();
   return reg;
 }

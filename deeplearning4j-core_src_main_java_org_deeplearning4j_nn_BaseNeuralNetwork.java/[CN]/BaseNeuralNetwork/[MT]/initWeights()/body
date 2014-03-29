@@ -10,10 +10,12 @@
   if (this.hBias == null) {
     this.hBias=DoubleMatrix.zeros(nHidden);
   }
+  this.hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);
   if (this.vBias == null) {
     if (this.input != null) {
       this.vBias=DoubleMatrix.zeros(nVisible);
     }
  else     this.vBias=DoubleMatrix.zeros(nVisible);
   }
+  this.vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
 }

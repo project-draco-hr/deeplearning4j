@@ -1,6 +1,7 @@
 {
   try {
     ret=(E)clazz.newInstance();
+    ret.setNormalizeByInputRows(normalizeByInputRows);
     ret.setInput(this.input);
     ret.setnOuts(this.nOuts);
     ret.setnIns(this.nIns);
