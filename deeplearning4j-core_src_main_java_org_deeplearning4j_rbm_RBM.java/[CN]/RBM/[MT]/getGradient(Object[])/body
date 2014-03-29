@@ -1,6 +1,9 @@
 {
   int k=(int)params[0];
   double learningRate=(double)params[1];
+  if (wAdaGrad != null)   this.wAdaGrad.setMasterStepSize(learningRate);
+  if (hBiasAdaGrad != null)   this.hBiasAdaGrad.setMasterStepSize(learningRate);
+  if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;

@@ -4,7 +4,7 @@
   DataSet d=fetcher.next();
   RandomGenerator g=new MersenneTwister(123);
   RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.numInputs()).numHidden(500).withRandom(g).build();
-  r.trainTillConvergence(d.getFirst(),0.1,new Object[]{1,0.01,3000});
+  r.trainTillConvergence(d.getFirst(),0.01,new Object[]{1,0.01,3000});
   DoubleMatrix reconstruct=r.reconstruct(d.getFirst());
   for (int j=0; j < d.numExamples(); j++) {
     DoubleMatrix draw1=d.get(j).getFirst().mul(255);

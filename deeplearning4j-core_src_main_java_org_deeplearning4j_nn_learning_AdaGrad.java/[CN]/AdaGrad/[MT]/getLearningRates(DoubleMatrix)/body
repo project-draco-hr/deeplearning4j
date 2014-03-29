@@ -8,6 +8,6 @@
  else   this.historicalGradient.addi(gradientsSquared);
   DoubleMatrix gAdd=MatrixFunctions.sqrt(historicalGradient).add(fudgeFactor);
   this.adjustedGradient=this.gradient.div(gAdd);
-  this.adjustedGradient.muli(masterStepSize).negi();
-  return adjustedGradient;
+  this.adjustedGradient.muli(masterStepSize);
+  return adjustedGradient.neg();
 }
