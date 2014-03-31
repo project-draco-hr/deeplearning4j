@@ -1,7 +1,7 @@
 {
   DoubleMatrix v1Mean=propDown(h);
-  double diffFromData=MatrixFunctions.pow(input.sub(v1Mean),2).mean() * 1e-4;
-  DoubleMatrix gaussianNoise=MatrixUtil.normal(getRng(),v1Mean,diffFromData).mul(diffFromData);
+  double variance=MatrixFunctions.pow(input.sub(v1Mean),2).mean();
+  DoubleMatrix gaussianNoise=normal(getRng(),v1Mean,variance).mul(variance);
   DoubleMatrix v1Sample=v1Mean.add(gaussianNoise);
-  return new Pair<DoubleMatrix,DoubleMatrix>(v1Mean,v1Sample);
+  return new Pair<>(v1Mean,v1Sample);
 }

@@ -1,0 +1,7 @@
+{
+  DoubleMatrix preSig=sigmoid(v.mmul(W).addiRowVector(hBias));
+  double variance=MatrixUtil.variance(preSig);
+  DoubleMatrix gaussian=MatrixUtil.normal(getRng(),preSig,variance).mul(variance);
+  preSig.addi(gaussian);
+  return preSig;
+}

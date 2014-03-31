@@ -1,0 +1,6 @@
+{
+  DoubleMatrix means=input.columnMeans();
+  DoubleMatrix diff=MatrixFunctions.abs(input.subRowVector(means));
+  double variance=diff.sum() / diff.rows;
+  return variance;
+}

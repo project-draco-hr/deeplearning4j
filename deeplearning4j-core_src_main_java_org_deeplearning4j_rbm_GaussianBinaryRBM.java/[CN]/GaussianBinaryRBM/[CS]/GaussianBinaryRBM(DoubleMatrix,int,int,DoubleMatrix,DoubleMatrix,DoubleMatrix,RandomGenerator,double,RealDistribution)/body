@@ -4,4 +4,7 @@
     this.wAdaGrad.setMasterStepSize(1e-2);
     this.wAdaGrad.setDecayLr(true);
   }
+  for (int i=0; i < this.getvBias().length; i++) {
+    this.getvBias().put(i,this.getvBias().get(i) - i);
+  }
 }

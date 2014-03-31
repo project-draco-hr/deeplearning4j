@@ -24,7 +24,7 @@
   if (normalizeByInputRows)   wGradient.divi(input.rows);
   DoubleMatrix hBiasGradient=null;
   if (sparsity != 0) {
-    hBiasGradient=mean(MatrixUtil.scalarMinus(sparsity,probHidden.getSecond()),0);
+    hBiasGradient=mean(scalarMinus(sparsity,probHidden.getSecond()),0);
     hBiasGradient.muli(learningRate);
   }
  else {
