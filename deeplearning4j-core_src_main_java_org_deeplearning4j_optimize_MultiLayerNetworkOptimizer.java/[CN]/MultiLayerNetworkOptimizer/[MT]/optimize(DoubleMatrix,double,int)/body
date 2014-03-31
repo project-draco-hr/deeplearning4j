@@ -1,6 +1,5 @@
 {
   network.getLogLayer().setLabels(labels);
-  List<DoubleMatrix> activations=network.feedForward(network.getInput());
   DoubleMatrix train=sampleHiddenGivenVisible();
   if (!network.isForceNumEpochs()) {
     network.getLogLayer().trainTillConvergence(train,labels,lr,epochs);
@@ -9,7 +8,7 @@
  else {
     log.info("Training for " + epochs + " epochs");
     for (int i=0; i < epochs; i++) {
-      network.getLogLayer().train(activations.get(activations.size() - 2),labels,lr);
+      network.getLogLayer().train(train,labels,lr);
     }
     if (network.isShouldBackProp())     network.backProp(lr,epochs);
   }

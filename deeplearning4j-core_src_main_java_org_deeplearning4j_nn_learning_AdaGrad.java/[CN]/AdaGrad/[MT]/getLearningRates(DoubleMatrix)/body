@@ -1,6 +1,11 @@
 {
   this.gradient=gradient.dup();
   double currentLearningRate=this.masterStepSize;
+  if (decayLr && numIterations > 0) {
+    this.masterStepSize*=lrDecay;
+    if (masterStepSize < minLearningRate)     masterStepSize=minLearningRate;
+  }
+  numIterations++;
   this.adjustedGradient=MatrixFunctions.sqrt(MatrixFunctions.pow(this.gradient,2)).mul(currentLearningRate);
   return adjustedGradient;
 }

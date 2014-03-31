@@ -1,0 +1,3 @@
+{
+  return new RectifiedLinearHiddenLayer.Builder().nIn(nIn).nOut(nOut).withActivation(activation).withRng(rng).withInput(layerInput).dist(dist).build();
+}

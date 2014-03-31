@@ -1,0 +1,5 @@
+{
+  DataSet next=super.next();
+  next.scale();
+  return next;
+}

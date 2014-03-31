@@ -9,7 +9,7 @@
   int[] hiddenLayerSizes=new int[]{2,2,2};
   double fineTuneLr=0.1;
   int fineTuneEpochs=10000;
-  CDBN dbn=new CDBN.Builder().useAdGrad(true).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(d.numInputs()).useRegularization(false).withActivation(new HardTanh()).numberOfOutPuts(d.numOutcomes()).build();
+  CDBN dbn=new CDBN.Builder().useAdaGrad(true).hiddenLayerSizes(hiddenLayerSizes).numberOfInputs(d.numInputs()).useRegularization(false).withActivation(new HardTanh()).numberOfOutPuts(d.numOutcomes()).build();
   dbn.pretrain(x,k,preTrainLr,preTrainEpochs);
   dbn.finetune(y,fineTuneLr,fineTuneEpochs);
   DoubleMatrix predict=dbn.predict(x);

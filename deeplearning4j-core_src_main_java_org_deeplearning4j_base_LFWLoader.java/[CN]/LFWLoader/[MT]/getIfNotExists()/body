@@ -1,6 +1,7 @@
 {
   if (!lfwDir.exists()) {
     lfwDir.mkdir();
+    log.info("Grabbing LFW...");
     FileUtils.copyURLToFile(new URL(LFW_URL),lfwTarFile);
     untarFile(baseDir,lfwTarFile);
   }

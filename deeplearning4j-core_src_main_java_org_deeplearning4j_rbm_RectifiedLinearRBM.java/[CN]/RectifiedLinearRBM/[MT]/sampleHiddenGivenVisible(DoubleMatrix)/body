@@ -1,0 +1,8 @@
+{
+  DoubleMatrix h1Mean=propUp(v);
+  double variance=MatrixFunctions.pow(v.sub(v.mean()),2).mean();
+  DoubleMatrix gaussianNoise=MatrixUtil.normal(getRng(),MatrixUtil.sigmoid(h1Mean),variance).mul(variance);
+  DoubleMatrix h1Sample=h1Mean.add(gaussianNoise);
+  if (h1Sample.sum() > 0)   return new Pair<>(h1Mean,h1Sample);
+ else   return new Pair<>(h1Mean,DoubleMatrix.zeros(h1Sample.rows,h1Sample.columns));
+}

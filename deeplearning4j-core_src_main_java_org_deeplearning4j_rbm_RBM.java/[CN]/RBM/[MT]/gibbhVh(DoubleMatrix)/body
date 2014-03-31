@@ -1,5 +1,5 @@
 {
-  Pair<DoubleMatrix,DoubleMatrix> v1MeanAndSample=sampleVGivenH(h);
+  Pair<DoubleMatrix,DoubleMatrix> v1MeanAndSample=sampleVisibleGivenHidden(h);
   DoubleMatrix vSample=v1MeanAndSample.getSecond();
   Pair<DoubleMatrix,DoubleMatrix> h1MeanAndSample=sampleHiddenGivenVisible(vSample);
   return new Pair<>(v1MeanAndSample,h1MeanAndSample);

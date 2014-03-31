@@ -8,11 +8,11 @@
     if (i == 0)     inputSize=this.nIns;
  else     inputSize=this.hiddenLayerSizes[i - 1];
     if (i == 0) {
-      sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
+      sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],activation,rng,layerInput,dist);
     }
  else {
       if (this.input != null)       layerInput=sigmoidLayers[i - 1].sampleHiddenGivenVisible();
-      sigmoidLayers[i]=new HiddenLayer.Builder().nIn(inputSize).nOut(this.hiddenLayerSizes[i]).withActivation(activation).withRng(rng).withRng(rng).withInput(layerInput).dist(dist).build();
+      sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],activation,rng,layerInput,dist);
     }
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
   }

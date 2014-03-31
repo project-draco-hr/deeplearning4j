@@ -1,48 +1,23 @@
 {
-  DataSetIterator iter=null;
-  if (args.length < 2) {
-    iter=new RawMnistDataSetIterator(10,60000);
-  }
- else {
-    int start=Integer.parseInt(args[1]);
-    iter=new RawMnistDataSetIterator(60000,60000);
-    DataSet next=iter.next();
-    List<DataSet> list=next.asList();
-    list=list.subList(start,list.size());
-    iter=new ListDataSetIterator(list,10);
-  }
-  DBN dbn=null;
-  List<MultiLayerGradientListener> listeners=new ArrayList<>();
-  if (args.length < 2) {
-    dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).numberOfInputs(784).numberOfOutPuts(10).useAdGrad(true).useRegularization(false).withMultiLayerGradientListeners(listeners).build();
-  }
- else {
-    dbn=SerializationUtils.readObject(new File(args[0]));
-  }
-  int numIters=0;
+  DataSetIterator iter=new RawMnistDataSetIterator(10,40);
+  GaussianBinaryDBN dbn=new GaussianBinaryDBN.Builder().useAdaGrad(true).useRegularization(false).hiddenLayerSizes(new int[]{500,400,250}).normalizeByInputRows(true).numberOfInputs(784).numberOfOutPuts(10).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    long now=System.currentTimeMillis();
-    dbn.pretrain(next.getFirst(),1,0.01,1000);
-    long after=System.currentTimeMillis();
-    log.info("Pretrain took " + TimeUnit.MILLISECONDS.toSeconds((after - now)) + " seconds");
-    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-pretrain-dbn.bin-" + numIters));
-    dbn.write(bos);
-    bos.flush();
-    bos.close();
-    log.info("Saved dbn");
-    numIters++;
+    next.normalizeZeroMeanZeroUnitVariance();
+    dbn.pretrain(next.getFirst(),1,0.0001,10000);
+  }
+  iter.reset();
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    next.normalizeZeroMeanZeroUnitVariance();
+    dbn.setInput(next.getFirst());
+    dbn.finetune(next.getSecond(),0.001,10000);
   }
   BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-dbn.bin"));
   dbn.write(bos);
   bos.flush();
   bos.close();
   log.info("Saved dbn");
-  iter.reset();
-  while (iter.hasNext()) {
-    DataSet next=iter.next();
-    dbn.finetune(next.getSecond(),0.01,1000);
-  }
   iter.reset();
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
@@ -51,6 +26,6 @@
     DoubleMatrix labels=next.getSecond();
     eval.eval(labels,predict);
   }
-  log.info("Prediction f scores and accuracy");
+  log.info("Prediciton f scores and accuracy");
   log.info(eval.stats());
 }

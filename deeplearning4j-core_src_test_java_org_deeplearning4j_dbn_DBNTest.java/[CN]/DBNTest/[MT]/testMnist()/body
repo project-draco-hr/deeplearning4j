@@ -6,7 +6,7 @@
   log.info("Training on " + d.numExamples());
   StopWatch watch=new StopWatch();
   log.info("Data set " + d);
-  DBN dbn=new DBN.Builder().withActivation(Activations.tanh()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0).numberOfInputs(784).useAdGrad(true).numberOfOutPuts(2).useRegularization(false).build();
+  DBN dbn=new DBN.Builder().withActivation(Activations.tanh()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0).numberOfInputs(784).useAdaGrad(true).numberOfOutPuts(2).useRegularization(false).build();
   watch.start();
   dbn.pretrain(d.getFirst(),1,0.1,300);
   dbn.finetune(d.getSecond(),0.1,100);

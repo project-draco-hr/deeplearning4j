@@ -3,16 +3,15 @@
   computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
     DoubleMatrix add=deltas.get(l).getFirst().div(input.rows);
-    if (isUseAdaGrad())     add.muli(this.getLayers()[l].getAdaGrad().getLearningRates(add));
+    if (isUseAdaGrad())     add.muli(getLayers()[l].getAdaGrad().getLearningRates(add));
  else     add.muli(lr);
-    add.divi(input.rows);
-    if (useRegularization) {
-      add.muli(this.getLayers()[l].getW().mul(l2));
-    }
-    this.getLayers()[l].getW().addi(add);
-    this.getSigmoidLayers()[l].setW(layers[l].getW());
+    if (normalizeByInputRows)     add.divi(input.rows);
+    if (useRegularization)     add.muli(getLayers()[l].getW().mul(l2));
+    getLayers()[l].getW().addi(add);
+    getSigmoidLayers()[l].setW(layers[l].getW());
     DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
-    deltaColumnSums.divi(input.rows);
+    if (normalizeByInputRows)     deltaColumnSums.divi(input.rows);
+    if (sparsity != 0)     deltaColumnSums=MatrixUtil.scalarMinus(sparsity,deltaColumnSums);
     getLayers()[l].gethBias().addi(deltaColumnSums.mul(lr));
     getSigmoidLayers()[l].setB(getLayers()[l].gethBias());
   }

@@ -23,8 +23,8 @@
   if (momentum != 0)   wGradient.muli(1 - momentum);
   if (normalizeByInputRows)   wGradient.divi(input.rows);
   DoubleMatrix hBiasGradient=null;
-  if (this.sparsity != 0) {
-    hBiasGradient=mean(probHidden.getSecond().add(-sparsity),0);
+  if (sparsity != 0) {
+    hBiasGradient=mean(MatrixUtil.scalarMinus(sparsity,probHidden.getSecond()),0);
     hBiasGradient.muli(learningRate);
   }
  else {

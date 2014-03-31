@@ -1,0 +1,7 @@
+{
+  DoubleMatrix columnMeans=getFirst().columnMeans();
+  setFirst(getFirst().subiRowVector(columnMeans));
+  DoubleMatrix columnStds=MatrixUtil.columnStdDeviation(getFirst());
+  columnStds.addi(1e-6);
+  setFirst(getFirst().diviRowVector(columnStds));
+}
