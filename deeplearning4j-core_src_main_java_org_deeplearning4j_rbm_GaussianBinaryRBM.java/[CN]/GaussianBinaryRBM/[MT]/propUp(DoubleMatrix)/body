@@ -1,7 +1,7 @@
 {
-  DoubleMatrix preSig=sigmoid(v.mmul(W).addiRowVector(hBias));
-  double variance=MatrixUtil.variance(preSig);
-  DoubleMatrix gaussian=MatrixUtil.normal(getRng(),preSig,variance).mul(variance);
-  preSig.addi(gaussian);
-  return preSig;
+  DoubleMatrix activation=sigmoid(v.mmul(W).addiRowVector(hBias));
+  DoubleMatrix gaussian=MatrixUtil.normal(getRng(),activation);
+  activation.addi(gaussian);
+  for (int i=0; i < activation.length; i++)   activation.put(i,Math.max(0,activation.get(i)));
+  return activation;
 }
