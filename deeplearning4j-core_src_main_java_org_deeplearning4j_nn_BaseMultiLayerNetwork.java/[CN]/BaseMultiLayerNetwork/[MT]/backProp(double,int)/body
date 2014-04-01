@@ -16,6 +16,7 @@
     while (train) {
       count++;
       backPropStep(revert,lr,count);
+      getLogLayer().trainTillConvergence(lr,epochs);
       Double entropy=this.negativeLogLikelihood();
       if (lastEntropy == null || entropy < lastEntropy) {
         double diff=Math.abs(entropy - lastEntropy);
@@ -25,10 +26,12 @@
         }
  else         lastEntropy=entropy;
         log.info("New negative log likelihood " + lastEntropy);
+        getLogLayer().trainTillConvergence(lr,epochs);
       }
  else       if (entropy >= lastEntropy) {
         update(revert);
         numOver++;
+        log.info("Last change no good...reverting");
         if (numOver >= tolerance)         train=false;
       }
  else       if (entropy == lastEntropy)       train=false;

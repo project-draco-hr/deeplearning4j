@@ -2,7 +2,7 @@
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
-    DoubleMatrix add=deltas.get(l).getFirst().div(input.rows);
+    DoubleMatrix add=deltas.get(l).getFirst();
     if (isUseAdaGrad())     add.muli(getLayers()[l].getAdaGrad().getLearningRates(add));
  else     add.muli(lr);
     if (normalizeByInputRows)     add.divi(input.rows);
