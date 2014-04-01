@@ -1,3 +1,0 @@
-{
-  return new HiddenLayer.Builder().nIn(nIn).nOut(nOut).withActivation(activation).withRng(rng).withInput(layerInput).dist(dist).build();
-}

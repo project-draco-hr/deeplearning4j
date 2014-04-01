@@ -1,0 +1,11 @@
+{
+  DoubleMatrix filterMatrix=new DoubleMatrix(numFilters);
+  for (int k=0; k < numFilters; k++) {
+    DoubleMatrix next=MatrixUtil.convolution2D(visible,visible.columns,visible.rows,this.getW().getRow(k),this.getW().rows,this.getW().columns).add(this.gethBias().add(bias)).transpose();
+    filterMatrix.putRow(k,next);
+  }
+  filterMatrix=pool(filterMatrix);
+  filterMatrix.addi(1);
+  filterMatrix=MatrixUtil.oneDiv(filterMatrix);
+  return filterMatrix;
+}

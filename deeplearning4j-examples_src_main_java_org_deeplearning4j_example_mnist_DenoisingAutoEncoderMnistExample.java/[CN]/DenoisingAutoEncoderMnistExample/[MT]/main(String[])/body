@@ -1,9 +1,9 @@
 {
-  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().numberOfVisible(784).numHidden(600).normalizeByInputRows(true).useAdaGrad(true).useRegularization(false).withMomentum(0).build();
+  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().numberOfVisible(784).numHidden(600).normalizeByInputRows(true).useAdaGrad(false).useRegularization(false).withMomentum(0).build();
   DataSetIterator iter=new RawMnistDataSetIterator(10,30);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    autoEncoder.trainTillConvergence(next.getFirst(),0.1,new Object[]{0.3,0.1,1000});
+    autoEncoder.trainTillConvergence(next.getFirst(),1e-4,new Object[]{0.3,1e-4,1000});
   }
   iter.reset();
   FilterRenderer render=new FilterRenderer();

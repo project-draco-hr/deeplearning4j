@@ -1,0 +1,7 @@
+{
+  DoubleMatrix h1Mean=propUp(v);
+  DoubleMatrix sigH1Mean=sigmoid(h1Mean);
+  DoubleMatrix h1Sample=h1Mean.add(MatrixUtil.normal(getRng(),sigH1Mean,1).mul(sqrt(sigH1Mean)));
+  MatrixUtil.max(0,h1Sample);
+  return new Pair<DoubleMatrix,DoubleMatrix>(h1Mean,h1Sample);
+}

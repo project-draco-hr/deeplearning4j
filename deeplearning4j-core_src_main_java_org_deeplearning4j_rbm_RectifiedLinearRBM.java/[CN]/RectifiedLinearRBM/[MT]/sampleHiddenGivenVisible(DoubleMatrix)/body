@@ -1,7 +1,0 @@
-{
-  DoubleMatrix h1Mean=propUp(v);
-  DoubleMatrix gaussianNoise=normal(getRng(),sigmoid(h1Mean));
-  DoubleMatrix h1Sample=h1Mean.add(gaussianNoise);
-  for (int i=0; i < h1Sample.length; i++)   h1Sample.put(i,Math.max(0,h1Sample.get(i)));
-  return new Pair<>(h1Mean,h1Sample);
-}

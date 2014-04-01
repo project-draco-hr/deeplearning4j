@@ -1,6 +1,6 @@
 {
   DataSetIterator iter=new RawMnistDataSetIterator(10,40);
-  GaussianBinaryDBN dbn=new GaussianBinaryDBN.Builder().useAdaGrad(true).useRegularization(false).hiddenLayerSizes(new int[]{500,400,250}).normalizeByInputRows(true).numberOfInputs(784).numberOfOutPuts(10).build();
+  GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().useAdaGrad(true).useRegularization(false).hiddenLayerSizes(new int[]{500,400,250}).normalizeByInputRows(true).numberOfInputs(784).numberOfOutPuts(10).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     next.normalizeZeroMeanZeroUnitVariance();

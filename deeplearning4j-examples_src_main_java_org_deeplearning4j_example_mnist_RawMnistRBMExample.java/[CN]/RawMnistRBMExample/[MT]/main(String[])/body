@@ -1,9 +1,9 @@
 {
-  GaussianBinaryRBM r=new GaussianBinaryRBM.Builder().numberOfVisible(784).useAdaGrad(true).withMomentum(0.5).numHidden(2000).normalizeByInputRows(true).build();
+  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(784).useAdaGrad(false).numHidden(600).normalizeByInputRows(true).build();
   DataSetIterator iter=new RawMnistDataSetIterator(10,20);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFirst(),1e-4,new Object[]{1,1e-4,10000});
+    r.trainTillConvergence(next.getFirst(),1e-3,new Object[]{1,1e-3,1000});
   }
   iter.reset();
   while (iter.hasNext()) {
