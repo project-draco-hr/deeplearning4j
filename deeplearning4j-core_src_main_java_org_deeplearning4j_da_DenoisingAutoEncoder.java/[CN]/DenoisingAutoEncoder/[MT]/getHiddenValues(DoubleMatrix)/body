@@ -1,3 +1,5 @@
 {
-  return sigmoid(x.mmul(W).addRowVector(hBias));
+  DoubleMatrix ret=sigmoid(x.mmul(W).addRowVector(hBias));
+  applyDropOutIfNecessary(ret);
+  return ret;
 }
