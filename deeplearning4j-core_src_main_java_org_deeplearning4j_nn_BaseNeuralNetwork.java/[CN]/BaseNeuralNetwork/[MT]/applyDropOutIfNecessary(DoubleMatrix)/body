@@ -1,0 +1,4 @@
+{
+  if (dropOut > 0)   this.doMask=DoubleMatrix.rand(input.rows,this.nHidden).gt(dropOut);
+ else   this.doMask=DoubleMatrix.ones(input.rows,this.nHidden);
+}
