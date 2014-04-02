@@ -7,8 +7,11 @@
   double l=inner.length;
   if (useRegularization) {
     double normalized=l + l2RegularizedCoefficient();
-    return -inner.rowSums().mean() / normalized;
+    double ret=-inner.rowSums().mean() / normalized;
+    if (this.normalizeByInputRows)     ret/=input.rows;
+    return ret;
   }
   double ret=-inner.rowSums().mean();
+  if (this.normalizeByInputRows)   ret/=input.rows;
   return ret;
 }

@@ -2,8 +2,11 @@
   DoubleMatrix z=this.reconstruct(input);
   if (this.useRegularization) {
     double reg=(2 / l2) * MatrixFunctions.pow(this.W,2).sum();
-    return -input.mul(log(z)).add(oneMinus(input).mul(log(oneMinus(z)))).columnSums().mean() + reg;
+    double ret=-input.mul(log(z)).add(oneMinus(input).mul(log(oneMinus(z)))).columnSums().mean() + reg;
+    if (this.normalizeByInputRows)     ret/=input.rows;
+    return ret;
   }
   double likelihood=-input.mul(log(z)).add(oneMinus(input).mul(log(oneMinus(z)))).columnSums().mean();
+  if (this.normalizeByInputRows)   likelihood/=input.rows;
   return likelihood;
 }

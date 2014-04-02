@@ -1,0 +1,22 @@
+{
+  DoubleMatrix wGradient=gradient.getwGradient();
+  DoubleMatrix hBiasGradient=gradient.gethBiasGradient();
+  DoubleMatrix vBiasGradient=gradient.getvBiasGradient();
+  if (useAdaGrad)   wGradient.muli(wAdaGrad.getLearningRates(wGradient));
+ else   wGradient.muli(learningRate);
+  if (useRegularization)   wGradient.subi(W.muli(l2));
+  if (momentum != 0) {
+    DoubleMatrix change=wGradient.mul(momentum).add(wGradient.mul(1 - momentum));
+    wGradient.addi(change);
+  }
+  if (useAdaGrad)   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient)).add(hBiasGradient.mul(momentum));
+ else   hBiasGradient=hBiasGradient.mul(learningRate).add(hBiasGradient.mul(momentum));
+  if (useAdaGrad)   vBiasGradient=vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient)).add(vBiasGradient.mul(momentum));
+ else   vBiasGradient=vBiasGradient.mul(learningRate).add(vBiasGradient.mul(momentum));
+  if (applySparsity)   applySparsity(hBiasGradient,learningRate);
+  if (normalizeByInputRows) {
+    wGradient.divi(input.rows);
+    vBiasGradient.divi(input.rows);
+    hBiasGradient.divi(input.rows);
+  }
+}
