@@ -1,17 +1,5 @@
 {
   if (input == null)   throw new IllegalStateException("Unable to perform feed forward; no input found");
  else   this.input=input;
-  DoubleMatrix currInput=this.input;
-  List<DoubleMatrix> activations=new ArrayList<>();
-  activations.add(currInput);
-  for (int i=0; i < nLayers; i++) {
-    getLayers()[i].setInput(currInput);
-    getSigmoidLayers()[i].setInput(input);
-    if (useHiddenActivationsForwardProp)     currInput=getSigmoidLayers()[i].activate(currInput);
- else     currInput=getLayers()[i].sampleHiddenGivenVisible(currInput).getSecond();
-    activations.add(currInput);
-  }
-  logLayer.setInput(currInput);
-  activations.add(getLogLayer().predict(currInput));
-  return activations;
+  return feedForward();
 }
