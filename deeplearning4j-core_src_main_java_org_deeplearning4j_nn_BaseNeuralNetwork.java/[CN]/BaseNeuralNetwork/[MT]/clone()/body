@@ -17,6 +17,8 @@
     ret.setRng(getRng());
     ret.setDist(getDist());
     ret.setAdaGrad(wAdaGrad);
+    ret.setLossFunction(lossFunction);
+    ret.setOptimizationAlgorithm(optimizationAlgo);
     return ret;
   }
  catch (  Exception e) {

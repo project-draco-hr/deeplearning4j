@@ -33,6 +33,8 @@
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
   this.dropOut=network.dropOut;
+  this.optimizationAlgorithm=network.optimizationAlgorithm;
+  this.lossFunction=network.lossFunction;
   if (network.sigmoidLayers != null && network.sigmoidLayers.length > 0) {
     this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
     for (int i=0; i < sigmoidLayers.length; i++)     this.getSigmoidLayers()[i]=network.getSigmoidLayers()[i].clone();

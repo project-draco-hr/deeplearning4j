@@ -24,6 +24,8 @@
     ret.setUseRegularization(useRegularization);
     ret.setUseAdaGrad(useAdaGrad);
     ret.setDropOut(dropOut);
+    ret.setOptimizationAlgorithm(optimizationAlgo);
+    ret.setLossFunction(lossFunction);
     if (activation != null)     ret.setActivation(activation);
     if (dist != null)     ret.setDist(dist);
     ret.getWeightTransforms().putAll(weightTransforms);

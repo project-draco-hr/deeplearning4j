@@ -1,5 +1,13 @@
 {
   LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(this,learningRate);
-  VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
-  g.optimize(numEpochs);
+  if (this.optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
+    g.setTolerance(1e-5);
+    g.optimize(numEpochs);
+  }
+ else {
+    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
+    g.setTolerance(1e-5);
+    g.optimize(numEpochs);
+  }
 }

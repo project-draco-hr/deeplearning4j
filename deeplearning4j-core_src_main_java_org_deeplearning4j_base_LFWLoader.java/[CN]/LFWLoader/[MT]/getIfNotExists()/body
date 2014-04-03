@@ -5,7 +5,15 @@
     FileUtils.copyURLToFile(new URL(LFW_URL),lfwTarFile);
     untarFile(baseDir,lfwTarFile);
   }
-  File firstImage=lfwDir.listFiles()[0].listFiles()[0];
+  File firstImage=null;
+  try {
+    firstImage=lfwDir.listFiles()[0].listFiles()[0];
+  }
+ catch (  Exception e) {
+    FileUtils.deleteDirectory(lfwDir);
+    getIfNotExists();
+    log.warn("Error opening first image; probably corrupt download...trying again");
+  }
   numPixelColumns=ArrayUtil.flatten(loader.fromFile(firstImage)).length;
   numNames=lfwDir.getAbsoluteFile().listFiles().length;
   @SuppressWarnings("unchecked") Collection<File> allImages=FileUtils.listFiles(lfwDir,org.apache.commons.io.filefilter.FileFileFilter.FILE,org.apache.commons.io.filefilter.DirectoryFileFilter.DIRECTORY);
