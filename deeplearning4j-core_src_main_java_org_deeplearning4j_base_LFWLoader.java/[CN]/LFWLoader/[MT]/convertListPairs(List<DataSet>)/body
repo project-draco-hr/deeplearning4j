@@ -5,5 +5,5 @@
     inputs.putRow(i,images.get(i).getFirst());
     outputs.putRow(i,images.get(i).getSecond());
   }
-  return new Pair<DoubleMatrix,DoubleMatrix>(inputs,outputs);
+  return new DataSet(inputs,outputs);
 }

@@ -1,5 +1,5 @@
 {
   DoubleMatrix outcome=MatrixUtil.toOutcomeVector(label,numNames);
   DoubleMatrix image2=MatrixUtil.toMatrix(loader.flattenedImageFromFile(image));
-  return new Pair<>(image2,outcome);
+  return new DataSet(image2,outcome);
 }

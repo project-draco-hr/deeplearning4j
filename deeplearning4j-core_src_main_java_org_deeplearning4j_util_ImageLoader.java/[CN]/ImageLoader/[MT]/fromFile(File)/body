@@ -1,5 +1,6 @@
 {
   BufferedImage image=ImageIO.read(file);
+  if (height > 0 && width > 0)   image=toBufferedImage(image.getScaledInstance(height,width,Image.SCALE_SMOOTH));
   Raster raster=image.getData();
   int w=raster.getWidth(), h=raster.getHeight();
   int[][] ret=new int[w][h];
