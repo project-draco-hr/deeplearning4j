@@ -1,11 +1,3 @@
 {
-  try {
-    loader.getIfNotExists();
-    inputColumns=loader.getNumPixelColumns();
-    numOutcomes=loader.getNumNames();
-    totalExamples=NUM_IMAGES;
-  }
- catch (  Exception e) {
-    throw new IllegalStateException("Unable to fetch images",e);
-  }
+  this(200,200);
 }

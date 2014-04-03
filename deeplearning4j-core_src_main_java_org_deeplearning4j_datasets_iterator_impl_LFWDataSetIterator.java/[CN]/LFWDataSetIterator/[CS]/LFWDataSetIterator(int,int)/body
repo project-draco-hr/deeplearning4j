@@ -1,3 +1,3 @@
 {
-  super(batch,numExamples,new LFWDataFetcher());
+  this(batch,numExamples,28,28);
 }

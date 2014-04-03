@@ -1,0 +1,10 @@
+{
+  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+    opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
+    ((VectorizedNonZeroStoppingConjugateGradient)opt).setTolerance(tolerance);
+  }
+ else {
+    opt=new VectorizedDeepLearningGradientAscent(this,this);
+    ((VectorizedDeepLearningGradientAscent)opt).setTolerance(tolerance);
+  }
+}

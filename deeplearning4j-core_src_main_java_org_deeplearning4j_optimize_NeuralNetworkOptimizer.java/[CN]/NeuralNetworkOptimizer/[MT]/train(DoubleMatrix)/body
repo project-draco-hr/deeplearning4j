@@ -1,14 +1,11 @@
 {
   if (opt == null) {
-    if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
-      opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
-      ((VectorizedNonZeroStoppingConjugateGradient)opt).setTolerance(tolerance);
-    }
- else {
-      opt=new VectorizedDeepLearningGradientAscent(this,this);
-      ((VectorizedDeepLearningGradientAscent)opt).setTolerance(tolerance);
-    }
+    createOptimizationAlgorithm();
   }
   int epochs=extraParams.length < 3 ? 1000 : (int)extraParams[2];
-  opt.optimize(epochs);
+  boolean converged=opt.optimize(epochs);
+  while (!converged) {
+    converged=opt.optimize(epochs);
+    log.info("Not quite converged...retraining");
+  }
 }

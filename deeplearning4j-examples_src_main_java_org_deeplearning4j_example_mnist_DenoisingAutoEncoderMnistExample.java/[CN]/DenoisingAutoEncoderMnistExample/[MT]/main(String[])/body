@@ -1,5 +1,5 @@
 {
-  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().numberOfVisible(784).numHidden(500).normalizeByInputRows(true).withLossFunction(LossFunction.NEGATIVELOGLIKELIHOOD).useAdaGrad(true).useRegularization(true).withSparsity(0).withOptmizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).withMomentum(0.5).build();
+  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().numberOfVisible(784).numHidden(500).normalizeByInputRows(true).withLossFunction(LossFunction.NEGATIVELOGLIKELIHOOD).useAdaGrad(true).useRegularization(true).withSparsity(0).withL2(0.01).withOptmizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).withMomentum(0.5).build();
   DataSetIterator iter=new RawMnistDataSetIterator(10,30);
   for (int i=0; i < 20; i++) {
     while (iter.hasNext()) {
