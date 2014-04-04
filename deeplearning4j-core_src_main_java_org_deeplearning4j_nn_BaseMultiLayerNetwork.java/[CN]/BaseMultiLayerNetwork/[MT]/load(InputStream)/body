@@ -1,10 +1,4 @@
 {
-  try {
-    ObjectInputStream ois=new ObjectInputStream(is);
-    BaseMultiLayerNetwork loaded=(BaseMultiLayerNetwork)ois.readObject();
-    update(loaded);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  BaseMultiLayerNetwork loaded=SerializationUtils.readObject(is);
+  update(loaded);
 }

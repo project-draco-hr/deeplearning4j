@@ -10,27 +10,7 @@
   }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
-    UpdateableImpl masterResults=null;
-    if (!updates.isEmpty()) {
-      masterResults=this.compute(updates,updates);
-      stateTracker.setCurrent(masterResults);
-      epochsComplete++;
-      updates.clear();
-    }
- else     masterResults=this.getMasterResults();
-    if (stateTracker.isPretrain() && stateTracker.currentJobs().isEmpty()) {
-      log.info("Switching to finetune mode");
-      pretrain=false;
-      stateTracker.moveToFinetune();
-      SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
-      batchActor.tell(ResetMessage.getInstance(),getSelf());
-      batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
-    }
- else     if (stateTracker.currentJobs().isEmpty()) {
-      isDone=true;
-      stateTracker.finish();
-      log.info("Done training!");
-    }
+    checkDone();
   }
  else   if (message instanceof String) {
     getSender().tell(Ack.getInstance(),getSelf());

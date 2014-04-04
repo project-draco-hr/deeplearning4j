@@ -1,9 +1,12 @@
 {
-  UpdateableImpl masterResults=this.compute(updates,updates);
-  epochsComplete++;
-  if (!isDone())   batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
-  updates.clear();
-  log.info("Broadcasting weights");
-  mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
-  this.stateTracker.setCurrent(masterResults);
+  if (!updates.isEmpty()) {
+    UpdateableImpl masterResults=this.compute(updates,updates);
+    epochsComplete++;
+    if (!isDone())     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+    updates.clear();
+    log.info("Broadcasting weights");
+    mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
+    this.stateTracker.setCurrent(masterResults);
+  }
+  checkDone();
 }
