@@ -6,7 +6,7 @@
       try {
         List<Job> currentJobs=MasterActor.this.stateTracker.currentJobs();
         log.info("Status check on next iteration");
-        if (updates.size() >= partition)         nextIteration();
+        if (updates.size() >= partition || currentJobs.isEmpty())         nextIteration();
         log.info("Current jobs left " + currentJobs);
       }
  catch (      Exception e) {
