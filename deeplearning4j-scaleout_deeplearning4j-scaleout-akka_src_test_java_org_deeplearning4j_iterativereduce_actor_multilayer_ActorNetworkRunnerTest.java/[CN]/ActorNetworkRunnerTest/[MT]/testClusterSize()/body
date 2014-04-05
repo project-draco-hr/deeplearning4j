@@ -24,7 +24,6 @@
   worker.setup(conf);
   assertEquals(true,runner.getStateTracker().numWorkers() == worker.getStateTracker().numWorkers());
   runner.train();
-  assertEquals(true,runner.getStateTracker().isDone());
-  runner.shutdown();
   worker.shutdown();
+  runner.shutdown();
 }

@@ -1,3 +1,8 @@
 {
-  done.set(true);
+  try {
+    done.set(true);
+  }
+ catch (  Exception e) {
+    log.warn("Hazelcast already shutdown...done() being set is pointless");
+  }
 }

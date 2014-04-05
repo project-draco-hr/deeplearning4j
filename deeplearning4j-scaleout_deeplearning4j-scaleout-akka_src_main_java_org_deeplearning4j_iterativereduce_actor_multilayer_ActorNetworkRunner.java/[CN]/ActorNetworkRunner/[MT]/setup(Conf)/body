@@ -30,7 +30,14 @@
     ActorRefUtils.registerConfWithZooKeeper(conf,system);
     system.scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
       @Override public void run(){
-        log.info("Current cluster members " + Cluster.get(system).readView().members());
+        if (!system.isTerminated()) {
+          try {
+            log.info("Current cluster members " + Cluster.get(system).readView().members());
+          }
+ catch (          Exception e) {
+            log.warn("Tried reading cluster members during shutdown");
+          }
+        }
       }
     }
 ,system.dispatcher());

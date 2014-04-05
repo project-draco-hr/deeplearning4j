@@ -1,3 +1,9 @@
 {
-  return done.get();
+  try {
+    return done.get();
+  }
+ catch (  Exception e) {
+    log.warn("Hazelcast already shutdown...returning true on isDone()");
+    return true;
+  }
 }

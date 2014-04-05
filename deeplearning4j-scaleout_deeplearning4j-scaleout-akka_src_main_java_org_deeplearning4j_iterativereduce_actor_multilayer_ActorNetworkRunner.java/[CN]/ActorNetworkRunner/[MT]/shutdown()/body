@@ -1,4 +1,12 @@
 {
-  system.shutdown();
-  if (stateTracker != null)   stateTracker.shutdown();
+  try {
+    system.shutdown();
+  }
+ catch (  Exception e) {
+  }
+  try {
+    if (stateTracker != null)     stateTracker.shutdown();
+  }
+ catch (  Exception e) {
+  }
 }
