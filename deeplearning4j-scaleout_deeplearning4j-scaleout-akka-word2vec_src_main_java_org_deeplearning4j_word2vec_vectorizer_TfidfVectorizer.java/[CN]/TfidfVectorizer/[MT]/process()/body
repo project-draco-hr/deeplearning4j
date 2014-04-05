@@ -1,0 +1,14 @@
+{
+  while (sentenceIterator.hasNext()) {
+    Tokenizer tokenizer=tokenizerFactory.create(sentenceIterator.nextSentence());
+    Counter<String> runningTotal=new Counter<>();
+    Counter<String> documentOccurrences=new Counter<>();
+    numDocs++;
+    for (    String token : tokenizer.getTokens()) {
+      runningTotal.incrementCount(token,1.0);
+      if (!documentOccurrences.containsKey(token))       documentOccurrences.setMinCount(token,1.0);
+    }
+    idf.incrementAll(documentOccurrences);
+    tf.incrementAll(runningTotal);
+  }
+}

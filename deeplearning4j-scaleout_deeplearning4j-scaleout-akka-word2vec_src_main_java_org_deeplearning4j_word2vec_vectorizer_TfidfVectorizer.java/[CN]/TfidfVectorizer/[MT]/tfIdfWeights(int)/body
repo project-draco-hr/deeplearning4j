@@ -1,0 +1,6 @@
+{
+  Counter<String> ret=new Counter<String>();
+  for (  String word : allWords())   ret.setMinCount(word,tfidfWord(word));
+  ret.keepTopNKeys(top);
+  return ret;
+}
