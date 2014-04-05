@@ -12,4 +12,5 @@
     tf.incrementAll(runningTotal);
   }
   tfIdfWeights=tfIdfWeights();
+  if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
 }
