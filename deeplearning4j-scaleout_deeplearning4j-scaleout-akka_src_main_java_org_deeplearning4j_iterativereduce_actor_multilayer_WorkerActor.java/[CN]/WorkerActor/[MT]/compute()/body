@@ -19,8 +19,6 @@
       d=DataSet.merge(l);
     }
  else     d=(DataSet)j.getWork();
-    combinedInput=d.getFirst();
-    outcomes=d.getSecond();
   }
   if (j == null)   return null;
   if (d == null) {
@@ -32,7 +30,8 @@
   }
  else {
     network.setInput(d.getFirst());
-    log.info("Worker " + id + " finetuning");
+    log.info("Worker " + id + " finetune");
+    network.feedForward(d.getFirst());
     network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
   }
   try {

@@ -8,5 +8,4 @@
     mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
     this.stateTracker.setCurrent(masterResults);
   }
-  checkDone();
 }
