@@ -11,4 +11,5 @@
     idf.incrementAll(documentOccurrences);
     tf.incrementAll(runningTotal);
   }
+  tfIdfWeights=tfIdfWeights();
 }

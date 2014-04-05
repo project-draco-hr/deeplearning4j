@@ -1,6 +1,9 @@
 {
   process();
-  initIndexFromTfIdf();
-  Counter<String> tfIdfWeights=tfIdfWeights();
-  return null;
+  sentenceIterator.reset();
+  List<DataSet> data=new ArrayList<>();
+  while (sentenceIterator.hasNext()) {
+    data.add(vectorize(sentenceIterator.nextSentence(),sentenceIterator.currentLabel()));
+  }
+  return DataSet.merge(data);
 }

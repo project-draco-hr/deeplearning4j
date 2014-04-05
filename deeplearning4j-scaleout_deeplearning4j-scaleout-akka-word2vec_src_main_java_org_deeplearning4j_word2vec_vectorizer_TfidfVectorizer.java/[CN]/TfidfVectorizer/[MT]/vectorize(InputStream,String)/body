@@ -1,0 +1,3 @@
+{
+  return new DataSet(tfidfForInput(is),MatrixUtil.toOutcomeVector(labels.indexOf(label),labels.size()));
+}

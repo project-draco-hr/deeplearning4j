@@ -1,0 +1,9 @@
+{
+  try {
+    String text=new String(IOUtils.toByteArray(is));
+    return tfidfForInput(text);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

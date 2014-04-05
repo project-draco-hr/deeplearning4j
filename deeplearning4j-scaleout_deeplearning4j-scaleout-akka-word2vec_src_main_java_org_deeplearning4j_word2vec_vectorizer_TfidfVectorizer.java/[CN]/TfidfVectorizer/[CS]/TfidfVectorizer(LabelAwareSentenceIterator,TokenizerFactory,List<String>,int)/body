@@ -2,4 +2,7 @@
   this.sentenceIterator=sentenceIterator;
   this.tokenizerFactory=tokenizerFactory;
   this.labels=labels;
+  this.numTop=numTop;
+  process();
+  initIndexFromTfIdf();
 }

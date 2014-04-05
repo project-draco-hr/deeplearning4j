@@ -1,4 +1,3 @@
 {
-  Counter<String> tfidf=tfIdfWeights();
-  for (  String key : tfidf.keySet())   this.vocab.add(key);
+  for (  String key : tfIdfWeights.keySet())   this.vocab.add(key);
 }

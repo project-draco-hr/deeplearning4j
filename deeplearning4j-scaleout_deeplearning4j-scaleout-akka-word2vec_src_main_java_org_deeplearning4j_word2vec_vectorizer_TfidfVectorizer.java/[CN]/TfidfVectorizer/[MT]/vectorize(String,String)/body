@@ -1,0 +1,5 @@
+{
+  DoubleMatrix tfidf=tfidfForInput(text);
+  DoubleMatrix label2=MatrixUtil.toOutcomeVector(labels.indexOf(label),labels.size());
+  return new DataSet(tfidf,label2);
+}
