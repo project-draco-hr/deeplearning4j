@@ -6,10 +6,10 @@
   log.info("Training on " + d.numExamples());
   StopWatch watch=new StopWatch();
   log.info("Data set " + d);
-  DBN dbn=new DBN.Builder().withActivation(Activations.tanh()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0).numberOfInputs(784).useAdaGrad(true).numberOfOutPuts(2).useRegularization(false).build();
+  DBN dbn=new DBN.Builder().withActivation(Activations.sigmoid()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0.5).normalizeByInputRows(true).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.GRADIENT_DESCENT).numberOfInputs(784).useAdaGrad(true).withSparsity(0.01).numberOfOutPuts(2).useHiddenActivationsForwardProp(true).useRegularization(false).build();
   watch.start();
-  dbn.pretrain(d.getFirst(),1,0.1,300);
-  dbn.finetune(d.getSecond(),0.1,100);
+  dbn.pretrain(d.getFirst(),1,1e-2,300);
+  dbn.finetune(d.getSecond(),1e-2,100);
   watch.stop();
   log.info("Took " + watch.getTime());
   Evaluation eval=new Evaluation();

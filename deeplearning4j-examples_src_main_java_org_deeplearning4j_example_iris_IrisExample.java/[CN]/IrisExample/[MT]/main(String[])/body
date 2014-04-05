@@ -1,0 +1,26 @@
+{
+  DataSetIterator irisData=new IrisDataSetIterator(150,150);
+  DataSet next=irisData.next();
+  next.normalizeZeroMeanZeroUnitVariance();
+  Pair<DataSet,DataSet> trainTest=next.splitTestAndTrain(140);
+  DataSet train=trainTest.getFirst();
+  DataSet test=trainTest.getSecond();
+  int numExamples=train.numExamples();
+  log.info("Training on " + numExamples);
+  DataSetIterator sampling=new SamplingDataSetIterator(train,10,10000);
+  GaussianRectifiedLinearDBN cdbn1=new GaussianRectifiedLinearDBN.Builder().hiddenLayerSizes(new int[]{4,3,3}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).normalizeByInputRows(true).numberOfInputs(4).numberOfOutPuts(3).withL2(0.01).useAdaGrad(true).useHiddenActivationsForwardProp(true).withDropOut(0.2).useRegularization(true).withActivation(Activations.tanh()).build();
+  while (sampling.hasNext()) {
+    DataSet sample=sampling.next();
+    cdbn1.pretrain(sample.getFirst(),1,1e-2,10000);
+  }
+  sampling.reset();
+  while (sampling.hasNext()) {
+    DataSet sample=sampling.next();
+    cdbn1.feedForward(sample.getFirst());
+    cdbn1.finetune(sample.getSecond(),1e-2,10000);
+  }
+  Evaluation eval=new Evaluation();
+  DoubleMatrix predicted=cdbn1.predict(test.getFirst());
+  eval.eval(test.getSecond(),predicted);
+  log.info(eval.stats());
+}
