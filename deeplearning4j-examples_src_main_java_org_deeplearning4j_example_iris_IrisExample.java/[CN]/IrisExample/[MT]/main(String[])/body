@@ -8,7 +8,7 @@
   int numExamples=train.numExamples();
   log.info("Training on " + numExamples);
   DataSetIterator sampling=new SamplingDataSetIterator(train,10,10000);
-  GaussianRectifiedLinearDBN cdbn1=new GaussianRectifiedLinearDBN.Builder().hiddenLayerSizes(new int[]{4,3,3}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).normalizeByInputRows(true).numberOfInputs(4).numberOfOutPuts(3).withL2(0.01).useAdaGrad(true).useHiddenActivationsForwardProp(true).withDropOut(0.2).useRegularization(true).withActivation(Activations.tanh()).build();
+  GaussianRectifiedLinearDBN cdbn1=new GaussianRectifiedLinearDBN.Builder().hiddenLayerSizes(new int[]{4,3,3}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).normalizeByInputRows(true).numberOfInputs(4).numberOfOutPuts(3).useAdaGrad(true).useHiddenActivationsForwardProp(true).withDropOut(0.2).useRegularization(false).withActivation(Activations.sigmoid()).build();
   while (sampling.hasNext()) {
     DataSet sample=sampling.next();
     cdbn1.pretrain(sample.getFirst(),1,1e-2,10000);
