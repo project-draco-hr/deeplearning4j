@@ -1,0 +1,7 @@
+{
+  ReutersNewsGroupsLoader loader=new ReutersNewsGroupsLoader(true);
+  String homeDir=System.getProperty("user.home");
+  File rootDir=new File(homeDir,"reuters");
+  assertEquals(true,rootDir.exists());
+  assertEquals(20,rootDir.listFiles().length);
+}
