@@ -2,10 +2,7 @@
   if (fileDir != null) {
     return fileDir;
   }
-  File tmpDir=new File("/tmp");
-  if (!tmpDir.isDirectory()) {
-    tmpDir=new File(System.getProperty("java.io.tmpdir"));
-  }
+  File tmpDir=new File(System.getProperty("user.home"));
   File baseDir=new File(tmpDir,LOCAL_DIR_NAME);
   if (!(baseDir.isDirectory() || baseDir.mkdir())) {
     throw new IOException("Could not mkdir " + baseDir);
@@ -15,12 +12,7 @@
   if (!tarFile.isFile()) {
     FileUtils.copyURLToFile(new URL(trainingFilesURL),tarFile);
   }
-  gunzipFile(baseDir,tarFile);
-  File tarLabelsFile=new File(baseDir,trainingFileLabelsFilename);
-  if (!tarLabelsFile.isFile()) {
-    FileUtils.copyURLToFile(new URL(trainingFileLabelsURL),tarLabelsFile);
-  }
-  gunzipFile(baseDir,tarLabelsFile);
+  ArchiveUtils.unzipFileTo(tarFile.getAbsolutePath(),baseDir.getAbsolutePath());
   fileDir=baseDir;
   return fileDir;
 }
