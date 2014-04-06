@@ -1,7 +1,7 @@
 {
   this.sentenceIter=sentenceIterator;
   this.tokenizerFactory=tokenizerFactory;
-  this.vocab=vocab;
+  this.vocab=new Index();
   this.labels=labels;
   this.vocabSize=vocabSize;
   wordCounts=new Counter<>();

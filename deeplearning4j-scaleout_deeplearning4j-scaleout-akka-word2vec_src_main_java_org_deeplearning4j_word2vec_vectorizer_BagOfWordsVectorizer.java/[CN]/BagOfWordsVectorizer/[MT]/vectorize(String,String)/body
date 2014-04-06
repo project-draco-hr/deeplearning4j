@@ -3,7 +3,8 @@
   List<String> tokens=tokenizer.getTokens();
   DoubleMatrix input=new DoubleMatrix(1,vocab.size());
   for (int i=0; i < tokens.size(); i++) {
-    if (vocab.indexOf(tokens.get(i)) >= 0)     input.put(i,wordCounts.getCount(tokens.get(i)));
+    int idx=vocab.indexOf(tokens.get(i));
+    if (vocab.indexOf(tokens.get(i)) >= 0)     input.put(idx,wordCounts.getCount(tokens.get(i)));
   }
   DoubleMatrix labelMatrix=MatrixUtil.toOutcomeVector(labels.indexOf(label),labels.size());
   return new DataSet(input,labelMatrix);

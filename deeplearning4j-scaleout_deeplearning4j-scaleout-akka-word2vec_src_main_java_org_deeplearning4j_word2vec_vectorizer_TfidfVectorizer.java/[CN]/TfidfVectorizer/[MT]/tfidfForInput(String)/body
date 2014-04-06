@@ -4,7 +4,7 @@
   List<String> tokens=tokenizer.getTokens();
   for (int i=0; i < tokens.size(); i++) {
     int idx=vocab.indexOf(tokens.get(i));
-    if (idx >= 0)     ret.put(i,tfidfWord(tokens.get(i)));
+    if (idx >= 0)     ret.put(idx,tfidfWord(tokens.get(i)));
   }
   return ret;
 }

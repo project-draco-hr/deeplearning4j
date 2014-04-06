@@ -2,6 +2,7 @@
   if (fileIterator.hasNext()) {
     try {
       File next=fileIterator.next();
+      currentFile=next;
       if (next.getAbsolutePath().endsWith(".gz")) {
         if (currLineIterator != null)         currLineIterator.close();
         currLineIterator=IOUtils.lineIterator(new BufferedInputStream(new GZIPInputStream(new FileInputStream(next))),"UTF-8");

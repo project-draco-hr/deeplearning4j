@@ -3,6 +3,7 @@
   this.tokenizerFactory=tokenizerFactory;
   this.labels=labels;
   this.numTop=numTop;
+  stopWords=StopWords.getStopWords();
   process();
   initIndexFromTfIdf();
 }

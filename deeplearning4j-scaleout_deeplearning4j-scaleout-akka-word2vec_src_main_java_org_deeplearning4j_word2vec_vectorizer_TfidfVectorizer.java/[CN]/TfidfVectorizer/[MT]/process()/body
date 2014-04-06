@@ -5,6 +5,7 @@
     Counter<String> documentOccurrences=new Counter<>();
     numDocs++;
     for (    String token : tokenizer.getTokens()) {
+      if (stopWords.contains(token))       continue;
       runningTotal.incrementCount(token,1.0);
       if (!documentOccurrences.containsKey(token))       documentOccurrences.setMinCount(token,1.0);
     }
