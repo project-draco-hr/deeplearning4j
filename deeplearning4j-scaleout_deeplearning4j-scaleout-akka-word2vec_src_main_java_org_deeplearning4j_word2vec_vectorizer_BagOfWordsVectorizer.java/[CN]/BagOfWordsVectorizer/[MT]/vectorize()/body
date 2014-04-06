@@ -1,6 +1,9 @@
 {
-  CountVectorizer count=new CountVectorizer(sentenceIter,tokenizerFactory,vocab);
-  DoubleMatrix input=count.toVector();
-  DoubleMatrix d=MatrixUtil.toOutcomeVector(label,numLabels);
-  return new DataSet(input,d);
+  process();
+  sentenceIter.reset();
+  List<DataSet> ret=new ArrayList<>();
+  while (sentenceIter.hasNext()) {
+    ret.add(vectorize(sentenceIter.nextSentence(),sentenceIter.currentLabel()));
+  }
+  return DataSet.merge(ret);
 }

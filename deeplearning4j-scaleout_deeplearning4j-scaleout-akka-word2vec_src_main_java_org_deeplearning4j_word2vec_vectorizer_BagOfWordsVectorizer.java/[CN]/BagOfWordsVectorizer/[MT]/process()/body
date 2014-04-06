@@ -1,0 +1,7 @@
+{
+  while (sentenceIter.hasNext()) {
+    Tokenizer tokenizer=tokenizerFactory.create(sentenceIter.nextSentence());
+    List<String> tokens=tokenizer.getTokens();
+    for (    String token : tokens)     wordCounts.incrementCount(token,1.0);
+  }
+}
