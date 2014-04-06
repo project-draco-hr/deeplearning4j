@@ -1,0 +1,11 @@
+{
+  String home=System.getProperty("user.home");
+  getIfNotExists();
+  String rootDir=home + File.separator + "reuters";
+  reutersRootDir=new File(rootDir);
+  LabelAwareSentenceIterator iter=new LabelAwareFileSentenceIterator(reutersRootDir);
+  List<String> labels=Arrays.asList("label1","label2");
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  if (tfidf)   this.textVectorizer=new TfidfVectorizer(iter,tokenizerFactory,labels);
+ else   this.textVectorizer=new BagOfWordsVectorizer(iter,tokenizerFactory,labels);
+}
