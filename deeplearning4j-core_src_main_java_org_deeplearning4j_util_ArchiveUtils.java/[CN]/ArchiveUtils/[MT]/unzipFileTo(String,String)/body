@@ -48,4 +48,15 @@
     }
     tarIn.close();
   }
+ else   if (file.endsWith(".gz")) {
+    GZIPInputStream is2=new GZIPInputStream(fin);
+    File extracted=new File(target.getParent(),target.getName().replace(".gz",""));
+    if (extracted.exists())     extracted.delete();
+    extracted.createNewFile();
+    OutputStream fos=FileUtils.openOutputStream(extracted);
+    IOUtils.copyLarge(is2,fos);
+    is2.close();
+    fos.flush();
+    fos.close();
+  }
 }
