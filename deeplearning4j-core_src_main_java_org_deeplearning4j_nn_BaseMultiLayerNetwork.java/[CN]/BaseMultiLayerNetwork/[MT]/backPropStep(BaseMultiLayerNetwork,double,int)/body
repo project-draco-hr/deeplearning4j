@@ -30,5 +30,6 @@
  else   biasGradient.muli(lr);
   if (isNormalizeByInputRows())   biasGradient.divi(input.rows);
   getLogLayer().getW().subi(logLayerGradient);
-  getLogLayer().getB().subi(biasGradient);
+  if (getLogLayer().getB().length == biasGradient.length)   getLogLayer().getB().subi(biasGradient);
+ else   getLogLayer().getB().subi(biasGradient.mean());
 }

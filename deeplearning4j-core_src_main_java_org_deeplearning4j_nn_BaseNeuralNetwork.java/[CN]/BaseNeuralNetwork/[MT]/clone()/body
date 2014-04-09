@@ -1,6 +1,6 @@
 {
   try {
-    Constructor<?> c=getClass().getDeclaredConstructors()[0];
+    Constructor<?> c=Dl4jReflection.getEmptyConstructor(getClass());
     c.setAccessible(true);
     NeuralNetwork ret=(NeuralNetwork)c.newInstance();
     ret.setHbiasAdaGrad(hBiasAdaGrad);

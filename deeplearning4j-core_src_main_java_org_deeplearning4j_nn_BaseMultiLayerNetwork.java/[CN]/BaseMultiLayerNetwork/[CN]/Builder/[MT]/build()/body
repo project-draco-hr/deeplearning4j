@@ -1,6 +1,9 @@
 {
   try {
-    ret=(E)clazz.newInstance();
+    E ret=null;
+    Constructor<?> c=Dl4jReflection.getEmptyConstructor(clazz);
+    c.setAccessible(true);
+    ret=(E)c.newInstance();
     ret.setNormalizeByInputRows(normalizeByInputRows);
     ret.setInput(this.input);
     ret.setnOuts(this.nOuts);
@@ -34,10 +37,9 @@
     ret.gradientListeners.putAll(gradientListeners);
     ret.multiLayerGradientListeners.addAll(multiLayerGradientListeners);
     if (hiddenLayerSizes == null)     throw new IllegalStateException("Unable to build network, no hidden layer sizes defined");
-    ret.init();
     return ret;
   }
- catch (  InstantiationException|IllegalAccessException e) {
+ catch (  Exception e) {
     throw new RuntimeException(e);
   }
 }
