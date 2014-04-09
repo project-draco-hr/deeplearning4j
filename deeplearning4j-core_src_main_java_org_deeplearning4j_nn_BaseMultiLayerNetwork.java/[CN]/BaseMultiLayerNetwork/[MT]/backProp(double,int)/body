@@ -9,8 +9,6 @@
  else {
     boolean train=true;
     int count=0;
-    int numOver=0;
-    int tolerance=3;
     double changeTolerance=1e-5;
     int backPropIterations=0;
     while (train) {
@@ -30,7 +28,6 @@
         }
  else         lastEntropy=entropy;
         log.info("New negative log likelihood " + lastEntropy);
-        getLogLayer().trainTillConvergence(lr,epochs);
         revert=clone();
       }
  else       if (entropy >= lastEntropy) {
