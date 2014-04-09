@@ -12,7 +12,12 @@
     int numOver=0;
     int tolerance=3;
     double changeTolerance=1e-5;
+    int backPropIterations=0;
     while (train) {
+      if (backPropIterations >= epochs) {
+        log.info("Backprop number of iterations max hit; convering");
+        break;
+      }
       count++;
       backPropStep(revert,lr,count);
       getLogLayer().trainTillConvergence(lr,epochs);
@@ -31,6 +36,7 @@
  else       if (entropy >= lastEntropy) {
         train=false;
       }
+      backPropIterations++;
     }
   }
 }
