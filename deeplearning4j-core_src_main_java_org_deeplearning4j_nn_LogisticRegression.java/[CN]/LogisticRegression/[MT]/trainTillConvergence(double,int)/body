@@ -1,8 +1,11 @@
 {
   LogisticRegressionOptimizer opt=new LogisticRegressionOptimizer(this,learningRate);
-  if (this.optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+  adaGrad.setMasterStepSize(learningRate);
+  biasAdaGrad.setMasterStepSize(learningRate);
+  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
     g.setTolerance(1e-5);
+    g.setMaxIterations(numEpochs);
     g.optimize(numEpochs);
   }
  else {

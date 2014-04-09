@@ -2,18 +2,24 @@
   DoubleMatrix wGradient=gradient.getwGradient();
   DoubleMatrix hBiasGradient=gradient.gethBiasGradient();
   DoubleMatrix vBiasGradient=gradient.getvBiasGradient();
-  if (useAdaGrad)   wGradient.muli(wAdaGrad.getLearningRates(wGradient));
+  DoubleMatrix wLearningRates=wAdaGrad.getLearningRates(wGradient);
+  if (useAdaGrad)   wGradient.muli(wLearningRates);
  else   wGradient.muli(learningRate);
-  if (useRegularization)   wGradient.subi(W.muli(l2));
-  if (momentum != 0) {
-    DoubleMatrix change=wGradient.mul(momentum).add(wGradient.mul(1 - momentum));
-    wGradient.addi(change);
-  }
   if (useAdaGrad)   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient)).add(hBiasGradient.mul(momentum));
  else   hBiasGradient=hBiasGradient.mul(learningRate).add(hBiasGradient.mul(momentum));
   if (useAdaGrad)   vBiasGradient=vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient)).add(vBiasGradient.mul(momentum));
  else   vBiasGradient=vBiasGradient.mul(learningRate).add(vBiasGradient.mul(momentum));
   if (applySparsity)   applySparsity(hBiasGradient,learningRate);
+  if (momentum != 0) {
+    DoubleMatrix change=wGradient.mul(momentum).add(wGradient.mul(1 - momentum));
+    wGradient.addi(change);
+  }
+  if (useRegularization) {
+    if (l2 > 0) {
+      DoubleMatrix penalized=W.mul(l2);
+      wGradient.subi(penalized);
+    }
+  }
   if (normalizeByInputRows) {
     wGradient.divi(input.rows);
     vBiasGradient.divi(input.rows);

@@ -1,4 +1,6 @@
 {
+  adaGrad.setMasterStepSize(lr);
+  biasAdaGrad.setMasterStepSize(lr);
   MatrixUtil.complainAboutMissMatchedMatrices(x,labels);
   train(x,labels,lr);
 }

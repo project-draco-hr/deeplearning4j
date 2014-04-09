@@ -6,4 +6,5 @@
   W=DoubleMatrix.zeros(nIn,nOut);
   adaGrad=new AdaGrad(nIn,nOut);
   b=DoubleMatrix.zeros(nOut);
+  biasAdaGrad=new AdaGrad(b.rows,b.columns);
 }

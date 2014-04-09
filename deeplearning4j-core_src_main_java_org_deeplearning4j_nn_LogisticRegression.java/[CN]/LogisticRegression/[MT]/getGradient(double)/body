@@ -1,11 +1,16 @@
 {
   MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
+  adaGrad.setMasterStepSize(lr);
+  biasAdaGrad.setMasterStepSize(lr);
   DoubleMatrix p_y_given_x=sigmoid(input.mmul(W).addRowVector(b));
   DoubleMatrix dy=labels.sub(p_y_given_x);
   if (normalizeByInputRows)   dy.divi(input.rows);
   DoubleMatrix wGradient=input.transpose().mmul(dy);
   if (useAdaGrad)   wGradient.muli(adaGrad.getLearningRates(wGradient));
  else   wGradient.muli(lr);
+  if (useAdaGrad)   dy.muli(biasAdaGrad.getLearningRates(dy));
+ else   dy.muli(lr);
+  if (normalizeByInputRows)   dy.divi(input.rows);
   DoubleMatrix bGradient=dy;
   return new LogisticRegressionGradient(wGradient,bGradient);
 }

@@ -4,7 +4,6 @@
   if (forceNumEpochs) {
     for (int i=0; i < epochs; i++) {
       backPropStep(revert,lr,i);
-      lastEntropy=negativeLogLikelihood();
     }
   }
  else {
@@ -17,7 +16,7 @@
       count++;
       backPropStep(revert,lr,count);
       getLogLayer().trainTillConvergence(lr,epochs);
-      Double entropy=this.negativeLogLikelihood();
+      Double entropy=negativeLogLikelihood();
       if (lastEntropy == null || entropy < lastEntropy) {
         double diff=Math.abs(entropy - lastEntropy);
         if (diff < changeTolerance) {
@@ -27,14 +26,11 @@
  else         lastEntropy=entropy;
         log.info("New negative log likelihood " + lastEntropy);
         getLogLayer().trainTillConvergence(lr,epochs);
+        revert=clone();
       }
  else       if (entropy >= lastEntropy) {
-        update(revert);
-        numOver++;
-        log.info("Last change no good...reverting");
-        if (numOver >= tolerance)         train=false;
+        train=false;
       }
- else       if (entropy == lastEntropy)       train=false;
     }
   }
 }

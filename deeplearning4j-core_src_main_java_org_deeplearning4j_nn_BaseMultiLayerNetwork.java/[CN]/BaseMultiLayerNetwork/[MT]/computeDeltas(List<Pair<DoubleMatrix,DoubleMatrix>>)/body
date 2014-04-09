@@ -2,29 +2,20 @@
   DoubleMatrix[] gradients=new DoubleMatrix[nLayers + 2];
   DoubleMatrix[] deltas=new DoubleMatrix[nLayers + 2];
   ActivationFunction derivative=getSigmoidLayers()[0].getActivationFunction();
+  ActivationFunction softMaxDerivative=Activations.softmax();
   DoubleMatrix delta=null;
   List<DoubleMatrix> activations=feedForward(getInput());
   List<DoubleMatrix> weights=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
   weights.add(getLogLayer().getW());
-  DoubleMatrix labels=this.labels;
   for (int i=nLayers + 1; i >= 0; i--) {
     if (i >= nLayers + 1) {
-      DoubleMatrix z=activations.get(i);
-      delta=labels.sub(z).neg().muli(derivative.applyDerivative(z));
+      delta=labels.sub(activations.get(i)).neg().mul(softMaxDerivative.applyDerivative(activations.get(i)));
       deltas[i]=delta;
     }
  else {
-      delta=deltas[i + 1];
-      DoubleMatrix w=weights.get(i).transpose();
-      DoubleMatrix z=activations.get(i);
-      DoubleMatrix zDerivative=derivative.applyDerivative(z);
-      DoubleMatrix error=delta.mmul(w);
-      error.muli(zDerivative);
-      deltas[i]=error.dup();
-      DoubleMatrix lastLayerDelta=deltas[i + 1].transpose();
-      DoubleMatrix newGradient=lastLayerDelta.mmul(z);
-      if (normalizeByInputRows)       newGradient.divi(getInput().rows);
+      deltas[i]=deltas[i + 1].mmul(weights.get(i).transpose()).muli(derivative.applyDerivative(activations.get(i)));
+      DoubleMatrix newGradient=deltas[i + 1].transpose().mmul(activations.get(i));
       gradients[i]=newGradient;
     }
   }

@@ -1,19 +1,15 @@
 {
-  DataSetIterator iter=new LFWDataSetIterator(10,150000);
+  DataSetIterator iter=new LFWDataSetIterator(10,150000,56,56);
   int cols=iter.inputColumns();
   log.info("Learning from " + cols);
-  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(iter.inputColumns()).useAdaGrad(true).withOptmizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).numHidden(600).normalizeByInputRows(true).withMomentum(0.5).withLossFunction(LossFunction.RECONSTRUCTION_CROSSENTROPY).build();
-  for (int i=0; i < 100; i++) {
-    while (iter.hasNext()) {
-      DataSet next=iter.next();
-      next.scale();
-      next.normalizeZeroMeanZeroUnitVariance();
-      r.trainTillConvergence(next.getFirst(),1e-2,new Object[]{1,1e-2,50});
-      SerializationUtils.saveObject(r,new File("/home/agibsonccc/models/faces-rbm.bin"));
-    }
+  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(iter.inputColumns()).useAdaGrad(true).withOptmizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).numHidden(600).normalizeByInputRows(true).withLossFunction(LossFunction.RECONSTRUCTION_CROSSENTROPY).build();
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    r.trainTillConvergence(next.getFirst(),1e-3,new Object[]{1,1e-3,1000});
     SerializationUtils.saveObject(r,new File("/home/agibsonccc/models/faces-rbm.bin"));
-    iter.reset();
   }
+  SerializationUtils.saveObject(r,new File("/home/agibsonccc/models/faces-rbm.bin"));
+  iter.reset();
   while (iter.hasNext()) {
     DataSet first=iter.next();
     DoubleMatrix reconstruct=r.reconstruct(first.getFirst());

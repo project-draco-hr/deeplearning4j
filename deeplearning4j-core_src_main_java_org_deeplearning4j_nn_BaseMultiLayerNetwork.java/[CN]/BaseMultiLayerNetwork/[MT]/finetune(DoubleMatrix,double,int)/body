@@ -1,4 +1,5 @@
 {
+  this.setUseHiddenActivationsForwardProp(true);
   if (labels != null)   this.labels=labels;
   optimizer=new MultiLayerNetworkOptimizer(this,lr);
   optimizer.optimize(this.labels,lr,epochs);

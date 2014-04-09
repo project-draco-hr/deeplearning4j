@@ -2,18 +2,33 @@
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=0; l < nLayers; l++) {
-    DoubleMatrix add=deltas.get(l).getFirst();
-    if (isUseAdaGrad())     add.muli(getLayers()[l].getAdaGrad().getLearningRates(add));
- else     add.muli(lr);
-    if (normalizeByInputRows)     add.divi(input.rows);
-    if (useRegularization)     add.muli(getLayers()[l].getW().mul(l2));
-    getLayers()[l].getW().addi(add);
+    DoubleMatrix gradientChange=deltas.get(l).getFirst();
+    if (isUseAdaGrad())     gradientChange.muli(getLayers()[l].getAdaGrad().getLearningRates(gradientChange));
+ else     gradientChange.muli(lr);
+    if (useRegularization)     gradientChange.muli(getLayers()[l].getW().mul(l2));
+    if (momentum != 0)     gradientChange.muli(momentum);
+    if (this.isNormalizeByInputRows())     gradientChange.divi(input.rows);
+    getLayers()[l].getW().subi(gradientChange);
     getSigmoidLayers()[l].setW(layers[l].getW());
     DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
-    if (normalizeByInputRows)     deltaColumnSums.divi(input.rows);
     if (sparsity != 0)     deltaColumnSums=MatrixUtil.scalarMinus(sparsity,deltaColumnSums);
-    getLayers()[l].gethBias().addi(deltaColumnSums.mul(lr));
+    if (useAdaGrad)     deltaColumnSums.muli(layers[l].gethBiasAdaGrad().getLearningRates(deltaColumnSums));
+ else     deltaColumnSums.muli(lr);
+    if (momentum != 0)     deltaColumnSums.muli(momentum);
+    if (isNormalizeByInputRows())     deltaColumnSums.divi(input.rows);
+    getLayers()[l].gethBias().subi(deltaColumnSums);
     getSigmoidLayers()[l].setB(getLayers()[l].gethBias());
   }
-  getLogLayer().getW().addi(deltas.get(nLayers).getFirst());
+  DoubleMatrix logLayerGradient=deltas.get(nLayers).getFirst();
+  DoubleMatrix biasGradient=deltas.get(nLayers).getSecond().columnSums();
+  if (momentum != 0)   logLayerGradient.muli(momentum);
+  if (useAdaGrad)   logLayerGradient.muli(logLayer.getAdaGrad().getLearningRates(logLayerGradient));
+ else   logLayerGradient.muli(lr);
+  if (isNormalizeByInputRows())   logLayerGradient.divi(input.rows);
+  if (momentum != 0)   biasGradient.muli(momentum);
+  if (useAdaGrad)   biasGradient.muli(logLayer.getBiasAdaGrad().getLearningRates(biasGradient));
+ else   biasGradient.muli(lr);
+  if (isNormalizeByInputRows())   biasGradient.divi(input.rows);
+  getLogLayer().getW().subi(logLayerGradient);
+  getLogLayer().getB().subi(biasGradient);
 }

@@ -59,4 +59,5 @@
     fos.flush();
     fos.close();
   }
+  target.delete();
 }
