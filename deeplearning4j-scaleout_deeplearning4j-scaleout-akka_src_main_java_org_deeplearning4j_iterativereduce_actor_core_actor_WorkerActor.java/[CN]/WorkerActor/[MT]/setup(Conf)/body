@@ -11,6 +11,7 @@
   fineTuneEpochs=conf.getFinetuneEpochs();
   corruptionLevel=conf.getCorruptionLevel();
   extraParams=conf.getDeepLearningParams();
+  isNormalizeZeroMeanAndUnitVariance=conf.isNormalizeZeroMeanAndUnitVariance();
   String url=conf.getMasterUrl();
   this.masterPath=conf.getMasterAbsPath();
   Address a=AddressFromURIString.apply(url);

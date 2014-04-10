@@ -27,9 +27,13 @@
   }
   if (tracker.isPretrain()) {
     log.info("Worker " + id + " pretraining");
+    if (isNormalizeZeroMeanAndUnitVariance)     d.normalizeZeroMeanZeroUnitVariance();
+    ;
     network.pretrain(d.getFirst(),extraParams);
   }
  else {
+    if (isNormalizeZeroMeanAndUnitVariance)     d.normalizeZeroMeanZeroUnitVariance();
+    ;
     network.setInput(d.getFirst());
     log.info("Worker " + id + " finetune");
     network.feedForward(d.getFirst());
