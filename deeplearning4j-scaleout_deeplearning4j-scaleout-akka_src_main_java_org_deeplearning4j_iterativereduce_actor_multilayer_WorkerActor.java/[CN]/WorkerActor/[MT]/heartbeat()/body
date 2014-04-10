@@ -4,6 +4,13 @@
       log.info("Sending heartbeat to master");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
       tracker.addWorker(id);
+      Job j=tracker.jobFor(id);
+      try {
+        if (j != null)         tracker.clearJob(j);
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 ,context().dispatcher());

@@ -1,6 +1,7 @@
 {
   log.info("Training network");
   BaseMultiLayerNetwork network=this.getNetwork();
+  isWorking=true;
   while (network == null) {
     try {
       network=tracker.getCurrent().get();
@@ -40,5 +41,6 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
+  isWorking=false;
   return new UpdateableImpl(network);
 }

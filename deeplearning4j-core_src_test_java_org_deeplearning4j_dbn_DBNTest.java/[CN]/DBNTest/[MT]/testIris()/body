@@ -4,15 +4,16 @@
   int preTrainEpochs=10000;
   int k=1;
   int nIns=4, nOuts=3;
-  int[] hiddenLayerSizes=new int[]{4,3,2};
+  int[] hiddenLayerSizes=new int[]{4,3,3};
   double fineTuneLr=0.01;
   int fineTuneEpochs=10000;
-  GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().useAdaGrad(true).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.tanh()).hiddenLayerSizes(hiddenLayerSizes).useRegularization(true).withRng(rng).build();
+  GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().useAdaGrad(true).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.hardTanh()).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).build();
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next(150);
+  next.normalizeZeroMeanZeroUnitVariance();
   next.shuffle();
   List<DataSet> finetuneBatches=next.dataSetBatches(10);
-  DataSetIterator sampling=new SamplingDataSetIterator(next,150,3000);
+  DataSetIterator sampling=new SamplingDataSetIterator(next,150,3);
   List<DataSet> miniBatches=new ArrayList<DataSet>();
   while (sampling.hasNext()) {
     next=sampling.next();

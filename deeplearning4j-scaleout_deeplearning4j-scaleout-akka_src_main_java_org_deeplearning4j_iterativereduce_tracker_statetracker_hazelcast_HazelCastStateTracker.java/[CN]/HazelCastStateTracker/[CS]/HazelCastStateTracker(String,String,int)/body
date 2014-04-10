@@ -16,6 +16,7 @@
     }
 );
   }
+ else   if (type.equals("master") && PortTaken.portTaken(stateTrackerPort))   throw new IllegalStateException("Specified type was master and the port specified was taken, please specify a different port");
  else {
     log.info("Connecting to hazelcast on " + connectionString);
     ClientConfig client=new ClientConfig();

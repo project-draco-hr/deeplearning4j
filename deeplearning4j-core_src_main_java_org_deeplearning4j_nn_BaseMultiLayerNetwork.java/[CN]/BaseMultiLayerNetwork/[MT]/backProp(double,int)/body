@@ -32,6 +32,7 @@
       }
  else       if (entropy >= lastEntropy) {
         train=false;
+        update(revert);
       }
       backPropIterations++;
     }
