@@ -1,16 +1,37 @@
 {
+  ActorSystem actorSystem=ActorSystem.create("Tfidf-vectorizer");
+  List<Future<Void>> futures=new CopyOnWriteArrayList<>();
   while (sentenceIterator.hasNext()) {
-    Tokenizer tokenizer=tokenizerFactory.create(sentenceIterator.nextSentence());
-    Counter<String> runningTotal=new Counter<>();
-    Counter<String> documentOccurrences=new Counter<>();
-    numDocs++;
-    for (    String token : tokenizer.getTokens()) {
-      if (stopWords.contains(token))       continue;
-      runningTotal.incrementCount(token,1.0);
-      if (!documentOccurrences.containsKey(token))       documentOccurrences.setMinCount(token,1.0);
+    final Counter<String> runningTotal=Util.parallelCounter();
+    final Counter<String> documentOccurrences=Util.parallelCounter();
+    futures.add(Futures.future(new Callable<Void>(){
+      /** 
+ * Computes a result, or throws an exception if unable to do so.
+ * @return computed result
+ * @throws Exception if unable to compute a result
+ */
+      @Override public Void call() throws Exception {
+        Tokenizer tokenizer=tokenizerFactory.create(sentenceIterator.nextSentence());
+        numDocs++;
+        for (        String token : tokenizer.getTokens()) {
+          if (stopWords.contains(token))           continue;
+          runningTotal.incrementCount(token,1.0);
+          if (!documentOccurrences.containsKey(token))           documentOccurrences.setMinCount(token,1.0);
+        }
+        idf.incrementAll(documentOccurrences);
+        tf.incrementAll(runningTotal);
+        return null;
+      }
     }
-    idf.incrementAll(documentOccurrences);
-    tf.incrementAll(runningTotal);
+,actorSystem.dispatcher()));
+  }
+  Iterable<Future<Void>> fIter=(Iterable<Future<Void>>)futures;
+  try {
+    Future<Iterable<Void>> composed=Futures.sequence(fIter,actorSystem.dispatcher());
+    Await.result(composed,Duration.Inf());
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
   }
   tfIdfWeights=tfIdfWeights();
   if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
