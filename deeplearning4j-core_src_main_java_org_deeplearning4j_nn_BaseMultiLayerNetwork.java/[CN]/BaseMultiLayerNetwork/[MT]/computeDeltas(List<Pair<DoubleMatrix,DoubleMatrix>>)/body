@@ -4,7 +4,7 @@
   ActivationFunction derivative=getSigmoidLayers()[0].getActivationFunction();
   ActivationFunction softMaxDerivative=Activations.softmax();
   DoubleMatrix delta=null;
-  List<DoubleMatrix> activations=feedForward(getInput());
+  List<DoubleMatrix> activations=feedForward();
   List<DoubleMatrix> weights=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
   weights.add(getLogLayer().getW());

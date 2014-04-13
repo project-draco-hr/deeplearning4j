@@ -2,8 +2,7 @@
   double[][] data=new double[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0},{0,0,1,1,1,0}};
   DoubleMatrix d=new DoubleMatrix(data);
   RandomGenerator g=new MersenneTwister(123);
-  RBM r=new RBM.Builder().withSparsity(0.01).numberOfVisible(6).numHidden(4).withRandom(g).build();
-  r.getW().muli(1000);
+  RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.columns).numHidden(4).withRandom(g).build();
   r.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
   DoubleMatrix v=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0}});
   log.info("Reconstruction " + r.reconstruct(v).toString());
