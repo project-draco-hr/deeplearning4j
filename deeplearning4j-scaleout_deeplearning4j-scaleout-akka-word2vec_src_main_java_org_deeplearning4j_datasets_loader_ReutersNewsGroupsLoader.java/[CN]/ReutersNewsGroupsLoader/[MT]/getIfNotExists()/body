@@ -3,6 +3,7 @@
   String rootDir=home + File.separator + "reuters";
   reutersRootDir=new File(rootDir);
   if (!reutersRootDir.exists())   reutersRootDir.mkdir();
+ else   if (reutersRootDir.exists())   return;
   File rootTarFile=new File(reutersRootDir,"20news-18828.tar.gz");
   if (rootTarFile.exists())   rootTarFile.delete();
   rootTarFile.createNewFile();

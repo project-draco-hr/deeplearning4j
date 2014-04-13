@@ -25,14 +25,17 @@
     }
 ,actorSystem.dispatcher()));
   }
+  log.info("Number of documents was " + futures.size());
   Iterable<Future<Void>> fIter=(Iterable<Future<Void>>)futures;
   try {
     Future<Iterable<Void>> composed=Futures.sequence(fIter,actorSystem.dispatcher());
+    log.info("Awaiting futures results");
     Await.result(composed,Duration.Inf());
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
+  actorSystem.shutdown();
   tfIdfWeights=tfIdfWeights();
   if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
 }
