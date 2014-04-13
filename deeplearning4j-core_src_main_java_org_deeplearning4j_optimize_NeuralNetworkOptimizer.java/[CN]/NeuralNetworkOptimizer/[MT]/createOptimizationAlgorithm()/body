@@ -6,5 +6,6 @@
  else {
     opt=new VectorizedDeepLearningGradientAscent(this,this);
     ((VectorizedDeepLearningGradientAscent)opt).setTolerance(tolerance);
+    if (maxStep > 0)     ((VectorizedDeepLearningGradientAscent)opt).setMaxStepSize(maxStep);
   }
 }
