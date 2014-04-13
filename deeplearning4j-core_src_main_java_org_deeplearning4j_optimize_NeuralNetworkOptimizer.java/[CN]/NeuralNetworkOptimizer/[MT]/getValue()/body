@@ -1,6 +1,6 @@
 {
-  if (this.lossFunction == LossFunction.RECONSTRUCTION_CROSSENTROPY)   return -network.getReConstructionCrossEntropy();
+  if (this.lossFunction == LossFunction.RECONSTRUCTION_CROSSENTROPY)   return network.getReConstructionCrossEntropy();
  else   if (this.lossFunction == LossFunction.SQUARED_LOSS)   return -network.squaredLoss();
  else   if (this.lossFunction == LossFunction.NEGATIVELOGLIKELIHOOD)   return -network.negativeLogLikelihood();
-  return -network.getReConstructionCrossEntropy();
+  return network.getReConstructionCrossEntropy();
 }

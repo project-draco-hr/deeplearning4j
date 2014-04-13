@@ -11,7 +11,7 @@
     if (this.normalizeByInputRows)     ret/=input.rows;
     return ret;
   }
-  double ret=-inner.rowSums().mean();
+  double ret=inner.rowSums().mean();
   if (this.normalizeByInputRows)   ret/=input.rows;
   return ret;
 }

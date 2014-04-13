@@ -1,0 +1,39 @@
+{
+  double currRecon=getReConstructionCrossEntropy();
+  boolean train=true;
+  NeuralNetwork revert=clone();
+  int numEpochs=0;
+  while (train) {
+    if (numEpochs > epochs)     break;
+    NeuralNetworkGradient gradient=getGradient(extraParams);
+    Pair<DoubleMatrix,DoubleMatrix> sample=sampleHiddenGivenVisible(input);
+    DoubleMatrix hiddenSample=sample.getSecond().transpose();
+    DoubleMatrix scaledInput=input.divRowVector(input.columnMeans());
+    DoubleMatrix z=reconstruct(input);
+    z.diviRowVector(z.columnMeans());
+    DoubleMatrix outputDiff=z.sub(scaledInput).neg();
+    DoubleMatrix delta=hiddenSample.mmul(outputDiff).transpose();
+    DoubleMatrix hBiasMean=sample.getFirst().columnSums().transpose();
+    delta.muli(lr);
+    if (momentum != 0)     delta.muli(momentum).add(delta.mul(1 - momentum));
+    if (normalizeByInputRows)     delta.divi(input.rows);
+    DoubleMatrix means=delta;
+    getW().subi(means);
+    hBiasMean.muli(lr);
+    if (momentum != 0)     hBiasMean.muli(momentum).add(hBiasMean.mul(1 - momentum));
+    if (normalizeByInputRows)     hBiasMean.divi(input.rows);
+    gethBias().subi(hBiasMean);
+    double newRecon=getReConstructionCrossEntropy();
+    if (newRecon >= currRecon) {
+      update((BaseNeuralNetwork)revert);
+      log.info("Converged for new recon; breaking...");
+      break;
+    }
+ else {
+      currRecon=newRecon;
+      revert=clone();
+      log.info("Recon went down " + currRecon);
+    }
+    numEpochs++;
+  }
+}
