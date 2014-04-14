@@ -1,5 +1,6 @@
 {
+  String ret=text.get(currPosition);
+  if (sentencePreProcessor != null)   ret=sentencePreProcessor.preProcess(ret);
   currPosition++;
-  if (sentencePreProcessor != null)   return sentencePreProcessor.preProcess(text.get(currPosition));
-  return text.get(currPosition);
+  return ret;
 }
