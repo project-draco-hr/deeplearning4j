@@ -51,5 +51,11 @@
   actorSystem.shutdown();
   tfIdfWeights=tfIdfWeights();
   if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
+  vocab=new Index();
+  List<String> reversed=new ArrayList<>(tfIdfWeights.getSortedKeys());
+  Collections.reverse(reversed);
+  for (  String key : reversed) {
+    vocab.add(key);
+  }
   process=false;
 }
