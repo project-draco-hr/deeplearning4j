@@ -1,5 +1,6 @@
 {
   String ret=text.get(currPosition);
+  currentLabel=labels.get(currPosition);
   if (sentencePreProcessor != null)   ret=sentencePreProcessor.preProcess(ret);
   currPosition++;
   return ret;
