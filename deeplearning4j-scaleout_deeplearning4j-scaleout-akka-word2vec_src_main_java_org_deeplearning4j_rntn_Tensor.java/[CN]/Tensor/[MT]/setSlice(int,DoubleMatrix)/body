@@ -1,0 +1,4 @@
+{
+  if (slice.rows != rows || slice.columns != cols)   throw new IllegalArgumentException("Illegal matrix passed in, must be of same dimenions as specified slices");
+  slices[index]=slice;
+}

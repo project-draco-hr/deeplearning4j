@@ -1,0 +1,8 @@
+{
+  if (slices == null || slices.length < 1)   throw new IllegalArgumentException("Illegal argument, please pass in slices array >= length 1");
+  this.rows=slices[0].rows;
+  this.cols=slices[0].columns;
+  for (int i=1; i < slices.length; i++) {
+    if (slices[i].rows != rows || slices[i].columns != cols)     throw new IllegalArgumentException("All slices must be of the same number of rows and columns");
+  }
+}

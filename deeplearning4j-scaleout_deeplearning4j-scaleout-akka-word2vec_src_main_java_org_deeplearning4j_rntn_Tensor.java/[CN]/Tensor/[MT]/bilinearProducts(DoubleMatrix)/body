@@ -1,0 +1,18 @@
+{
+  if (in.columns != 1) {
+    throw new AssertionError("Expected a column vector");
+  }
+  if (in.rows != columns()) {
+    throw new AssertionError("Number of rows in the input does not match number of columns in tensor");
+  }
+  if (rows != cols) {
+    throw new AssertionError("Can only perform this operation on a SimpleTensor with square slices");
+  }
+  DoubleMatrix inT=in.transpose();
+  DoubleMatrix out=new DoubleMatrix(slices.length,1);
+  for (int slice=0; slice < slices.length; ++slice) {
+    double result=inT.mul(slices[slice]).mul(in).get(0);
+    out.put(slice,result);
+  }
+  return out;
+}
