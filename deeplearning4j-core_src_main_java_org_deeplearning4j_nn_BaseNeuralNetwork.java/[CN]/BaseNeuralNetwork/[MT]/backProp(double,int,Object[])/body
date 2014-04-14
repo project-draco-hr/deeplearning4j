@@ -39,5 +39,12 @@
       log.info("Recon went down " + currRecon);
     }
     numEpochs++;
+    int plotEpochs=getRenderEpochs();
+    if (plotEpochs > 0) {
+      NeuralNetPlotter plotter=new NeuralNetPlotter();
+      if (numEpochs % plotEpochs == 0) {
+        plotter.plotNetworkGradient(this,getGradient(extraParams));
+      }
+    }
   }
 }

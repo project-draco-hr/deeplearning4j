@@ -1,6 +1,7 @@
 {
+  if (!process)   return;
   ActorSystem actorSystem=ActorSystem.create("Tfidf-vectorizer");
-  List<Future<Void>> futures=new CopyOnWriteArrayList<>();
+  List<Future<Void>> futures=new ArrayList<>();
   while (sentenceIterator.hasNext()) {
     final Counter<String> runningTotal=Util.parallelCounter();
     final Counter<String> documentOccurrences=Util.parallelCounter();
@@ -24,6 +25,18 @@
       }
     }
 ,actorSystem.dispatcher()));
+    try {
+      Thread.sleep(5);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+  try {
+    Thread.sleep(10000);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
   }
   log.info("Number of documents was " + futures.size());
   Iterable<Future<Void>> fIter=(Iterable<Future<Void>>)futures;
@@ -33,9 +46,10 @@
     Await.result(composed,Duration.Inf());
   }
  catch (  Exception e) {
-    throw new RuntimeException(e);
+    log.warn("Done...");
   }
   actorSystem.shutdown();
   tfIdfWeights=tfIdfWeights();
   if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
+  process=false;
 }

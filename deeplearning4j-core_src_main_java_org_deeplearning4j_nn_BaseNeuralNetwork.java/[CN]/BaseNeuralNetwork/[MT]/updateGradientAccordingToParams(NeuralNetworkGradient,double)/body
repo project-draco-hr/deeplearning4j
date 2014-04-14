@@ -17,6 +17,8 @@
   if (useRegularization) {
     if (l2 > 0) {
       DoubleMatrix penalized=W.mul(l2);
+      if (useAdaGrad)       penalized.muli(wAdaGrad.getLearningRates(wGradient));
+ else       penalized.muli(learningRate);
       wGradient.subi(penalized);
     }
   }

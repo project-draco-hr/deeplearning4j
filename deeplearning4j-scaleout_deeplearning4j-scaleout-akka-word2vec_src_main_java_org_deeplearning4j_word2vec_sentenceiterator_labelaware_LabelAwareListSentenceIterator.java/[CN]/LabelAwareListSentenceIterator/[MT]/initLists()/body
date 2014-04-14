@@ -1,0 +1,11 @@
+{
+  labels=new ArrayList<>(lines.size());
+  text=new ArrayList<>(lines.size());
+  for (  String line : lines) {
+    String[] split=line.split(delimiter);
+    String label=split[labelPosition];
+    String text=split[textPosition];
+    labels.add(label);
+    this.text.add(text);
+  }
+}

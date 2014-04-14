@@ -4,13 +4,6 @@
   DoubleMatrix preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
   DoubleMatrix sigV=sigmoid(preSigV);
   DoubleMatrix inner=input.mul(log(sigV)).add(oneMinus(input).mul(log(oneMinus(sigV))));
-  double l=inner.length;
-  if (useRegularization) {
-    double normalized=l + l2RegularizedCoefficient();
-    double ret=-inner.rowSums().mean() / normalized;
-    if (this.normalizeByInputRows)     ret/=input.rows;
-    return ret;
-  }
   double ret=inner.rowSums().mean();
   if (this.normalizeByInputRows)   ret/=input.rows;
   return ret;

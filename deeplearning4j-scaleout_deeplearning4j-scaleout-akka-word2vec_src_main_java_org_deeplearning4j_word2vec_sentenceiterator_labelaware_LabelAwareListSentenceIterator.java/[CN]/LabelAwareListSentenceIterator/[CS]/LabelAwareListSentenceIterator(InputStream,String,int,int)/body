@@ -1,0 +1,8 @@
+{
+  this.delimiter=delimiter;
+  this.labelPosition=labelPosition;
+  this.textPosition=textPosition;
+  lines=IOUtils.readLines(is);
+  initLists();
+  is.close();
+}

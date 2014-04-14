@@ -1,0 +1,9 @@
+{
+  ClassPathResource resource=new ClassPathResource("/tweets_clean.txt");
+  InputStream is=resource.getInputStream();
+  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is);
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  TextVectorizer vectorizor=new TfidfVectorizer(iterator,tokenizerFactory,Arrays.asList("0","1","2"));
+  DataSet data=vectorizor.vectorize();
+  log.info("Example tweets " + data.numExamples());
+}
