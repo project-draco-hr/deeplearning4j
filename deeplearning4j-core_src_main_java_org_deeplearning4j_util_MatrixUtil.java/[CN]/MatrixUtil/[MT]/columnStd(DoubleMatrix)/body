@@ -5,5 +5,6 @@
     double result=std.evaluate(m.getColumn(i).data);
     ret.put(i,result);
   }
+  ret.divi(m.rows);
   return ret;
 }
