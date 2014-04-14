@@ -6,6 +6,7 @@
   while (train) {
     if (numEpochs > epochs)     break;
     NeuralNetworkGradient gradient=getGradient(extraParams);
+    DoubleMatrix wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
     Pair<DoubleMatrix,DoubleMatrix> sample=sampleHiddenGivenVisible(input);
     DoubleMatrix hiddenSample=sample.getSecond().transpose();
     DoubleMatrix scaledInput=input.dup();
@@ -15,20 +16,23 @@
     DoubleMatrix outputDiff=z.sub(scaledInput);
     DoubleMatrix delta=hiddenSample.mmul(outputDiff).transpose();
     DoubleMatrix hBiasMean=sample.getFirst().columnSums().transpose();
-    delta.muli(lr);
+    if (isUseAdaGrad())     delta.muli(wLearningRates);
+ else     delta.muli(lr);
     if (momentum != 0)     delta.muli(momentum).add(delta.mul(1 - momentum));
     if (normalizeByInputRows)     delta.divi(input.rows);
     getW().subi(delta);
-    hBiasMean.muli(lr);
+    if (isUseAdaGrad())     hBiasMean.muli(gethBiasAdaGrad().getLearningRates(gradient.gethBiasGradient()));
+ else     hBiasMean.muli(lr);
     if (momentum != 0)     hBiasMean.muli(momentum).add(hBiasMean.mul(1 - momentum));
     if (normalizeByInputRows)     hBiasMean.divi(input.rows);
     gethBias().subi(hBiasMean);
     double newRecon=getReConstructionCrossEntropy();
-    if (newRecon >= currRecon) {
+    if (newRecon > currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");
       break;
     }
+ else     if (newRecon == currRecon)     continue;
  else {
       currRecon=newRecon;
       revert=clone();

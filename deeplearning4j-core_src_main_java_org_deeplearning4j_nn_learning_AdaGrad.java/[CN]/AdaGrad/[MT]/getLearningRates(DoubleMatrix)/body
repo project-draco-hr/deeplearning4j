@@ -1,12 +1,14 @@
 {
   this.gradient=gradient.dup();
+  DoubleMatrix squaredGradient=pow(this.gradient,2);
+  this.historicalGradient.addi(squaredGradient);
   double currentLearningRate=this.masterStepSize;
   if (decayLr && numIterations > 0) {
     this.masterStepSize*=lrDecay;
     if (masterStepSize < minLearningRate)     masterStepSize=minLearningRate;
   }
   numIterations++;
-  this.adjustedGradient=MatrixFunctions.sqrt(MatrixFunctions.pow(this.gradient,2)).mul(currentLearningRate);
+  this.adjustedGradient=this.gradient.div(sqrt(squaredGradient).add(fudgeFactor)).mul(currentLearningRate);
   this.adjustedGradient.addi(1e-6);
   return adjustedGradient;
 }
