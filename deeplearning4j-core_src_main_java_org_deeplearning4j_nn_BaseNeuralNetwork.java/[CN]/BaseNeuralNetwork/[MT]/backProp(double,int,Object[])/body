@@ -27,7 +27,7 @@
     if (normalizeByInputRows)     hBiasMean.divi(input.rows);
     gethBias().subi(hBiasMean);
     double newRecon=getReConstructionCrossEntropy();
-    if (newRecon > currRecon) {
+    if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");
       break;
