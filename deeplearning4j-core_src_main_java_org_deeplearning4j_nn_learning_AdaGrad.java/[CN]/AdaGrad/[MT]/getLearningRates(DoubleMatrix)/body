@@ -1,6 +1,7 @@
 {
   this.gradient=gradient.dup();
   DoubleMatrix squaredGradient=pow(this.gradient,2);
+  if (this.historicalGradient.length != this.gradient.length)   this.historicalGradient=DoubleMatrix.zeros(this.gradient.rows,this.gradient.columns);
   this.historicalGradient.addi(squaredGradient);
   double currentLearningRate=this.masterStepSize;
   if (decayLr && numIterations > 0) {
