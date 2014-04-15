@@ -1,11 +1,10 @@
 {
   createNetworkLayers(network.getnLayers() + 1);
-  this.layers=new NeuralNetwork[network.getnLayers()];
+  this.setnLayers(network.getnLayers());
   this.sigmoidLayers=new HiddenLayer[network.getnLayers()];
   hiddenLayerSizes=new int[network.getnLayers()];
   this.nIns=network.nOuts;
   this.nOuts=network.nIns;
-  this.setnLayers(network.getnLayers());
   this.dist=network.dist;
   int count=0;
   for (int i=network.getnLayers() - 1; i >= 0; i--) {
