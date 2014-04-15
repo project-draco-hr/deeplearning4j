@@ -1,0 +1,9 @@
+{
+  DoubleMatrix first=slices[0].columnSums();
+  Tensor t=new Tensor(first.rows,first.columns,slices.length);
+  t.slices[0]=first;
+  for (int i=1; i < slices.length; i++) {
+    t.slices[i]=slices[i].columnSums();
+  }
+  return t;
+}

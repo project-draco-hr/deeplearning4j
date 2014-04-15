@@ -4,7 +4,6 @@
     DoubleMatrix next=MatrixUtil.convolution2D(visible,visible.columns,visible.rows,this.getW().getRow(k),this.getW().rows,this.getW().columns).add(this.getvBias().add(bias)).transpose();
     filterMatrix.putRow(k,next);
   }
-  filterMatrix=pool(filterMatrix);
   filterMatrix.addi(1);
   filterMatrix=MatrixUtil.oneDiv(filterMatrix);
   return MatrixUtil.sigmoid(filterMatrix);

@@ -23,7 +23,7 @@
     zis.closeEntry();
     zis.close();
   }
- else   if (file.endsWith(".tar.gz")) {
+ else   if (file.endsWith(".tar.gz") || file.endsWith(".tgz")) {
     BufferedInputStream in=new BufferedInputStream(fin);
     GzipCompressorInputStream gzIn=new GzipCompressorInputStream(in);
     TarArchiveInputStream tarIn=new TarArchiveInputStream(gzIn);

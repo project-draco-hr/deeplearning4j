@@ -1,0 +1,15 @@
+{
+  int nCols=input.columns();
+  int rows=input.rows();
+  Tensor ret=Tensor.zeros(rows,nCols,input.slices());
+  for (int i=0; i < Math.ceil(nCols / stride[0]); i++) {
+    int rowsMin=(i - 1) * stride[0] + 1;
+    int rowsMax=i * stride[0];
+    for (int j=0; j < Math.ceil(nCols / stride[1]); j++) {
+      int cols=(j - 1) * stride[1] + 1;
+      int colsMax=j * stride[1];
+      double blockVal=input.get(new int[]{rowsMin,rowsMax},new int[]{cols,colsMax}).columnsSums().sum();
+    }
+  }
+  return ret;
+}
