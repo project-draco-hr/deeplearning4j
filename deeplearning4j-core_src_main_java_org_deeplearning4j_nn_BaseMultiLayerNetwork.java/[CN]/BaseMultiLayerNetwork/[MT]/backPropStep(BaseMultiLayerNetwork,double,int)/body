@@ -1,7 +1,7 @@
 {
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
-  for (int l=0; l < nLayers; l++) {
+  for (int l=0; l < getnLayers(); l++) {
     DoubleMatrix gradientChange=deltas.get(l).getFirst();
     if (isUseAdaGrad())     gradientChange.muli(getLayers()[l].getAdaGrad().getLearningRates(gradientChange));
  else     gradientChange.muli(lr);
@@ -19,8 +19,8 @@
     getLayers()[l].gethBias().subi(deltaColumnSums);
     getSigmoidLayers()[l].setB(getLayers()[l].gethBias());
   }
-  DoubleMatrix logLayerGradient=deltas.get(nLayers).getFirst();
-  DoubleMatrix biasGradient=deltas.get(nLayers).getSecond().columnSums();
+  DoubleMatrix logLayerGradient=deltas.get(getnLayers()).getFirst();
+  DoubleMatrix biasGradient=deltas.get(getnLayers()).getSecond().columnSums();
   if (momentum != 0)   logLayerGradient.muli(momentum);
   if (useAdaGrad)   logLayerGradient.muli(logLayer.getAdaGrad().getLearningRates(logLayerGradient));
  else   logLayerGradient.muli(lr);
