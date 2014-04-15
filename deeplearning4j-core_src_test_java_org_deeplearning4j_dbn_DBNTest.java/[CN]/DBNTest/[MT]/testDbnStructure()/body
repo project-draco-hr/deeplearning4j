@@ -11,6 +11,7 @@
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next(150);
   next.shuffle();
+  dbn.init();
   dbn.feedForward(next.getFirst());
   for (int i=0; i < dbn.getnLayers(); i++) {
     assertEquals(dbn.getLayers()[i].gethBias(),dbn.getSigmoidLayers()[i].getB());
