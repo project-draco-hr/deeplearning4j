@@ -1,0 +1,5 @@
+{
+  Tensor t=new Tensor(rows,columns(),slices());
+  for (int i=0; i < slices(); i++)   t.slices[i]=slices[i].mul(val);
+  return t;
+}

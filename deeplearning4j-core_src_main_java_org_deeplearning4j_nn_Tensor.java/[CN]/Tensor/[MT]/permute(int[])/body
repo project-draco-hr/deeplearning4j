@@ -61,5 +61,5 @@
     }
     return t;
   }
-  return null;
+  throw new IllegalArgumentException("Illegal argument: Passed in array must be a unique array containing only" + "the numbers 1,2 or 3");
 }
