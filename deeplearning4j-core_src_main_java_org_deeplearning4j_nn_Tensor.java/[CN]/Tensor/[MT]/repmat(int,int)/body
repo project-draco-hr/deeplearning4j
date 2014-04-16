@@ -1,0 +1,3 @@
+{
+  return Tensor.create(toMatrix().repmat(rows,cols),rows * slices());
+}
