@@ -1,0 +1,6 @@
+{
+  this.slices=new DoubleMatrix[t.slices()];
+  this.rows=t.rows();
+  this.cols=t.columns();
+  System.arraycopy(t.slices,0,this.slices,0,t.slices());
+}
