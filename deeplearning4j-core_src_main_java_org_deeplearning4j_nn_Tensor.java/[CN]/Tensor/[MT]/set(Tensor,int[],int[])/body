@@ -1,0 +1,5 @@
+{
+  for (int i=0; i < slices(); i++) {
+    slices[i].put(rowIndices,columnIndices,tensor.slices[i]);
+  }
+}
