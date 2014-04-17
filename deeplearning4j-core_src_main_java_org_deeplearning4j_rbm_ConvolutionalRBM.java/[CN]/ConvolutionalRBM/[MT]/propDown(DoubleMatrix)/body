@@ -1,7 +1,8 @@
 {
+  Tensor h1=(Tensor)h;
   for (int i=0; i < numFilters; i++) {
-    visI.setSlice(i,convolution2D(h,MatrixUtil.reverse(W.getSlice(i)).add(vBias.get(i))));
+    visI.setSlice(i,convolution2D(h1.getSlice(i),W.getSlice(i)));
   }
-  DoubleMatrix I=visI.rowSums().addRowVector(vBias);
+  DoubleMatrix I=visI.sliceElementSums().addRowVector(vBias);
   return sigmoid(I);
 }
