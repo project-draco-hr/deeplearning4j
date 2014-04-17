@@ -12,7 +12,7 @@
       int rowLength=rowsMax - rowsMin;
       int colLength=colsMax - cols;
       Tensor set=blockVal.permute(new int[]{2,3,1}).repmat(rowLength,colLength);
-      ret.set(set,new int[]{rowsMin,rowsMax},new int[]{cols,colsMax});
+      ret.put(RangeUtils.interval(rowsMin,rowsMax),RangeUtils.interval(cols,colsMax),set);
     }
   }
   return ret;
