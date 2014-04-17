@@ -5,6 +5,7 @@
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
+  Pair<Tensor,Tensor> probHiddenTensor=new Pair<>((Tensor)probHidden.getFirst(),(Tensor)probHidden.getSecond());
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
   DoubleMatrix nvMeans=null;
@@ -19,11 +20,15 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
+  Tensor eHiddenInitial=(Tensor)probHidden.getSecond();
+  Tensor hiddenMeans=(Tensor)nhMeans;
+  Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
+  for (int i=0; i < numFilters; i++) {
+    wGradient.setSlice(i,convolution2D(input,eHiddenInitial.getSlice(i)).sub(convolution2D(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)))));
+  }
   DoubleMatrix hBiasGradient=null;
-  if (sparsity != 0)   hBiasGradient=mean(scalarMinus(sparsity,probHidden.getSecond()),0);
- else   hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
-  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
+  hBiasGradient=DoubleMatrix.scalar(probHidden.getSecond().sub(nhMeans).columnSums().sum());
+  DoubleMatrix vBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,learningRate);
   triggerGradientEvents(ret);

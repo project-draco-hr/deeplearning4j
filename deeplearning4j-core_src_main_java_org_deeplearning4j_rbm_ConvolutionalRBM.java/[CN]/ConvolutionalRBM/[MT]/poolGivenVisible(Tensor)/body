@@ -1,7 +1,0 @@
-{
-  Tensor I=Tensor.zeros(eHid.rows(),eHid.columns(),eHid.slices());
-  for (int i=0; i < numFilters; i++) {
-    I.setSlice(i,convolution2D(input,MatrixUtil.reverse(W.getSlice(i))));
-  }
-  return I;
-}

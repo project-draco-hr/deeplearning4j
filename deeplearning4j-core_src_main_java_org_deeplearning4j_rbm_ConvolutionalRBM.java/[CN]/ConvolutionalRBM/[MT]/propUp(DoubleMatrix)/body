@@ -2,7 +2,7 @@
   for (int i=0; i < numFilters; i++) {
     hidI.setSlice(i,convolution2D(v,MatrixUtil.reverse(W.getSlice(i)).add(hBias.get(i))));
   }
-  DoubleMatrix expHidI=exp(hidI);
-  DoubleMatrix eHid=exp(hidI).div(pooledExpectation(expHidI,hBias.get(0)));
+  Tensor expHidI=hidI.exp();
+  DoubleMatrix eHid=expHidI.div(pool(expHidI));
   return eHid;
 }
