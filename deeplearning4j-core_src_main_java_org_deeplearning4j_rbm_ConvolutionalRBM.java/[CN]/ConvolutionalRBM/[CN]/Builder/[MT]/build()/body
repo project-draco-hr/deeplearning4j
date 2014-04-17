@@ -1,0 +1,6 @@
+{
+  ConvolutionalRBM ret=(ConvolutionalRBM)super.build();
+  ret.numFilters=numFilters;
+  ret.stride=stride;
+  return ret;
+}
