@@ -1,0 +1,7 @@
+{
+  for (int i=0; i < numFilters; i++) {
+    visI.setSlice(i,convolution2D(h,MatrixUtil.reverse(W.getSlice(i)).add(vBias.get(i))));
+  }
+  DoubleMatrix I=visI.rowSums().addRowVector(vBias);
+  return sigmoid(I);
+}

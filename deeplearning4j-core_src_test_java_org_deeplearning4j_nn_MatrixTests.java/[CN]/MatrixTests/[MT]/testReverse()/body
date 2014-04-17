@@ -1,0 +1,9 @@
+{
+  DoubleMatrix r=DoubleMatrix.rand(1,2);
+  DoubleMatrix reverse=MatrixUtil.reverse(r);
+  int reverseIndex=0;
+  for (int i=r.length - 1; i >= 0; i--) {
+    assertEquals(true,reverse.get(i) == r.get(reverseIndex));
+    reverseIndex++;
+  }
+}
