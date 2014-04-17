@@ -1,6 +1,6 @@
 {
-  int[] indices=new int[]{slices};
+  int[] indices=new int[slices()];
   for (int i=0; i < slices(); i++)   indices[i]=row * i;
-  DoubleMatrix ret=get(indices,this.getColIndicesForSlice());
+  DoubleMatrix ret=get(indices,getColIndicesForSlice());
   return ret;
 }

@@ -1,3 +1,9 @@
 {
-  return new int[]{slice * rows,slice * rows + rows};
+  int[] ret=new int[Math.abs(slice * rows - (slice * rows) + rows)];
+  int start=slice * rows;
+  for (int i=0; i < ret.length; i++) {
+    ret[i]=start;
+    start++;
+  }
+  return ret;
 }

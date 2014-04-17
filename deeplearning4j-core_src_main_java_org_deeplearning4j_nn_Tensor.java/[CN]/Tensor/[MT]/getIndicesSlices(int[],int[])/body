@@ -1,5 +1,5 @@
 {
-  DoubleMatrix first=getSlice(9).get(rowIndices,columnIndices);
+  DoubleMatrix first=getSlice(0).get(rowIndices,columnIndices);
   Tensor ret=new Tensor(first.rows,first.columns,slices());
   ret.setSlice(0,first);
   for (int i=1; i < slices(); i++) {
