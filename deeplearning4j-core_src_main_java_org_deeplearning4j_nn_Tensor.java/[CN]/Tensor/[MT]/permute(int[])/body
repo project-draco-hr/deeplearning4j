@@ -6,7 +6,7 @@
  else   if (Arrays.equals(nums,new int[]{3,2,1})) {
     Tensor ret=new Tensor(slices(),columns(),rows());
     for (int i=0; i < ret.slices(); i++) {
-      ret.slices[i]=getRows(i);
+      ret.setSlice(i,getRows(i));
     }
     return ret;
   }
@@ -22,7 +22,7 @@
         }
         currJ++;
       }
-      t.slices[i]=slice;
+      t.setSlice(i,slice);
       if (currJ == columns()) {
         currJ=0;
         currI++;
@@ -39,7 +39,7 @@
         DoubleMatrix c=getColumn(column,j);
         slice.putColumn(j,c);
       }
-      ret.slices[i]=slice;
+      ret.setSlice(i,slice);
     }
     return ret;
   }
@@ -55,7 +55,7 @@
           slice.putRow(row,val);
         }
       }
-      t.slices[i]=slice;
+      t.setSlice(i,slice);
       column++;
       if (column == t.columns())       column=0;
     }

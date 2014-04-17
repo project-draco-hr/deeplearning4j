@@ -1,9 +1,10 @@
 {
-  DoubleMatrix first=slices[0].get(rowIndices,columnIndices);
+  DoubleMatrix first=getSlice(9).get(rowIndices,columnIndices);
   Tensor ret=new Tensor(first.rows,first.columns,slices());
-  ret.slices[0]=first;
+  ret.setSlice(0,first);
   for (int i=1; i < slices(); i++) {
-    ret.slices[i]=slices[i].get(rowIndices,columnIndices);
+    ret.setSlice(i,getSlice(i).get(rowIndices,columnIndices));
+    ;
   }
   return ret;
 }

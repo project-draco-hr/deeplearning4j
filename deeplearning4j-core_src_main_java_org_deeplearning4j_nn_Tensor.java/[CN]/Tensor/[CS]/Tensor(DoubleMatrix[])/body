@@ -1,7 +1,0 @@
-{
-  ensureSameSize(slices);
-  this.slices=new DoubleMatrix[slices.length];
-  for (int i=0; i < slices.length; i++) {
-    this.slices[i]=slices[i].dup();
-  }
-}

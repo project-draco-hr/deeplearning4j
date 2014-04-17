@@ -1,4 +1,3 @@
 {
-  DoubleMatrix c=slices[slice].getColumn(column);
-  return c;
+  return get(getRowIndicesForSlice(slice)).getColumn(column);
 }

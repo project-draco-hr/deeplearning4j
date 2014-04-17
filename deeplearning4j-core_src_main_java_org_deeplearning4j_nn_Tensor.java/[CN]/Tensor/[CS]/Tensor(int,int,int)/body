@@ -1,8 +1,5 @@
 {
+  super(rows * slices,columns);
+  this.slices=slices;
   this.rows=rows;
-  this.cols=columns;
-  this.slices=new DoubleMatrix[slices];
-  for (int i=0; i < slices; i++) {
-    this.slices[i]=DoubleMatrix.zeros(rows,columns);
-  }
 }

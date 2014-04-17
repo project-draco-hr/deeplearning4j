@@ -1,9 +1,0 @@
-{
-  if (this == o)   return true;
-  if (!(o instanceof Tensor))   return false;
-  Tensor tensor=(Tensor)o;
-  if (cols != tensor.cols)   return false;
-  if (rows != tensor.rows)   return false;
-  if (!Arrays.equals(slices,tensor.slices))   return false;
-  return true;
-}

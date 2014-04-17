@@ -1,6 +1,0 @@
-{
-  int result=Arrays.hashCode(slices);
-  result=31 * result + rows;
-  result=31 * result + cols;
-  return result;
-}

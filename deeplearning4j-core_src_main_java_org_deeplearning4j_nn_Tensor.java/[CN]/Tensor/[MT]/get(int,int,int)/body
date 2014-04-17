@@ -1,3 +1,3 @@
 {
-  return slices[slice].get(i,j);
+  return get(i + slice,j);
 }

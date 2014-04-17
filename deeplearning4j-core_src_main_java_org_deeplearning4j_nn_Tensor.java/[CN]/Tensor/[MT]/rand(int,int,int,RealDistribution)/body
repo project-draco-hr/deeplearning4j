@@ -3,7 +3,7 @@
   for (int i=0; i < slices; i++) {
     DoubleMatrix d=new DoubleMatrix(rows,cols);
     for (int j=0; j < d.length; j++)     d.put(j,dist.sample());
-    t.slices[i]=d;
+    t.setSlice(i,d);
   }
   return t;
 }

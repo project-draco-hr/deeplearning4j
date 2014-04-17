@@ -1,7 +1,3 @@
 {
-  Tensor ret=new Tensor(columns(),rows,slices());
-  for (int i=0; i < slices(); i++) {
-    ret.slices[i]=slices[i].transpose();
-  }
-  return ret;
+  return new Tensor(super.transpose());
 }
