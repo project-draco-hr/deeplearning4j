@@ -3,8 +3,8 @@
   fetcher.fetch(10);
   DataSet d=fetcher.next();
   RandomGenerator g=new MersenneTwister(123);
-  RBM r=new RBM.Builder().useAdaGrad(true).normalizeByInputRows(true).numberOfVisible(d.numInputs()).renderWeights(100).numHidden(600).withMomentum(0.3).withLossFunction(NeuralNetwork.LossFunction.NEGATIVELOGLIKELIHOOD).withRandom(g).build();
-  r.trainTillConvergence(d.getFirst(),1e-6,new Object[]{1,1e-6,3000});
+  RBM r=new RBM.Builder().numberOfVisible(d.numInputs()).renderWeights(1).numHidden(600).build();
+  r.trainTillConvergence(d.getFirst(),1e-2,new Object[]{1,1e-2,3000});
   DoubleMatrix reconstruct=r.reconstruct(d.getFirst());
   if (Boolean.parseBoolean(System.getProperty("java.awt.headless","false")))   return;
   for (int j=0; j < d.numExamples(); j++) {

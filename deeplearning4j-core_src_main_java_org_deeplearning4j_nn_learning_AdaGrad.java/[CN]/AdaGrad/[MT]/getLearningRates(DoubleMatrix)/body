@@ -9,7 +9,8 @@
     if (masterStepSize < minLearningRate)     masterStepSize=minLearningRate;
   }
   numIterations++;
-  this.adjustedGradient=this.gradient.div(sqrt(squaredGradient).add(fudgeFactor)).mul(currentLearningRate);
+  DoubleMatrix sqrtGradient=sqrt(squaredGradient);
+  this.adjustedGradient=abs(this.gradient.div(sqrtGradient).add(fudgeFactor).mul(currentLearningRate));
   this.adjustedGradient.addi(1e-6);
   return adjustedGradient;
 }

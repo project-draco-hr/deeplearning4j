@@ -1,5 +1,5 @@
 {
-  double currRecon=getReConstructionCrossEntropy();
+  double currRecon=this.negativeLogLikelihood();
   boolean train=true;
   NeuralNetwork revert=clone();
   int numEpochs=0;
@@ -20,19 +20,19 @@
  else     delta.muli(lr);
     if (momentum != 0)     delta.muli(momentum).add(delta.mul(1 - momentum));
     if (normalizeByInputRows)     delta.divi(input.rows);
-    getW().subi(delta);
+    getW().addi(W.sub(delta));
     if (isUseAdaGrad())     hBiasMean.muli(gethBiasAdaGrad().getLearningRates(gradient.gethBiasGradient()));
  else     hBiasMean.muli(lr);
     if (momentum != 0)     hBiasMean.muli(momentum).add(hBiasMean.mul(1 - momentum));
     if (normalizeByInputRows)     hBiasMean.divi(input.rows);
-    gethBias().subi(hBiasMean);
-    double newRecon=getReConstructionCrossEntropy();
+    gethBias().addi(gethBias().sub(hBiasMean));
+    double newRecon=negativeLogLikelihood();
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");
       break;
     }
- else     if (newRecon == currRecon)     continue;
+ else     if (newRecon == currRecon)     break;
  else {
       currRecon=newRecon;
       revert=clone();

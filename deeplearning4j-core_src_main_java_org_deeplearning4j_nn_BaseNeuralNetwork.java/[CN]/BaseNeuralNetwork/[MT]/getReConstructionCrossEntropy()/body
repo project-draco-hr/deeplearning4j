@@ -5,6 +5,6 @@
   DoubleMatrix sigV=sigmoid(preSigV);
   DoubleMatrix inner=input.mul(log(sigV)).add(oneMinus(input).mul(log(oneMinus(sigV))));
   double ret=inner.rowSums().mean();
-  if (this.normalizeByInputRows)   ret/=input.rows;
+  if (normalizeByInputRows)   ret/=input.rows;
   return ret;
 }

@@ -1,9 +1,9 @@
 {
-  RBM r=new RBM.Builder().numberOfVisible(784).useAdaGrad(true).numHidden(500).normalizeByInputRows(true).build();
+  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(600).build();
   DataSetIterator iter=new MnistDataSetIterator(10,50);
+  DataSet next=iter.next();
   while (iter.hasNext()) {
-    DataSet next=iter.next();
-    r.trainTillConvergence(next.getFirst(),0.01,new Object[]{1,0.01,5000});
+    r.trainTillConvergence(next.getFirst(),1e-1,new Object[]{1,1e-1,5000});
   }
   iter.reset();
   FilterRenderer render=new FilterRenderer();
