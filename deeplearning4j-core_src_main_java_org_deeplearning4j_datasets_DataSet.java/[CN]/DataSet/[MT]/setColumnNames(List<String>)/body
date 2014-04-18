@@ -1,0 +1,4 @@
+{
+  if (columnNames.size() != numInputs())   throw new IllegalArgumentException("Column names don't match input");
+  this.columnNames=columnNames;
+}
