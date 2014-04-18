@@ -1,5 +1,5 @@
 {
-  CRBM r=new CRBM.Builder().numberOfVisible(784).useAdaGrad(true).withMomentum(0.3).numHidden(600).normalizeByInputRows(true).useRegularization(false).build();
+  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(784).useAdaGrad(true).withMomentum(0.3).numHidden(600).normalizeByInputRows(true).useRegularization(false).build();
   DataSetIterator iter=new RawMnistDataSetIterator(10,20);
   while (iter.hasNext()) {
     DataSet next=iter.next();
