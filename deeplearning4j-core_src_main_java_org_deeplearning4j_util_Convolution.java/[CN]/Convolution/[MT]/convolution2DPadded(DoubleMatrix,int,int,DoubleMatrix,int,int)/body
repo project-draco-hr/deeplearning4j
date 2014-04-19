@@ -1,0 +1,15 @@
+{
+  int smallWidth=width - kernelWidth + 1;
+  int smallHeight=height - kernelHeight + 1;
+  int top=kernelHeight / 2;
+  int left=kernelWidth / 2;
+  DoubleMatrix small=new DoubleMatrix(smallWidth,smallHeight);
+  small=convolution2D(input,width,height,kernel,kernelWidth,kernelHeight);
+  DoubleMatrix large=new DoubleMatrix(width,height);
+  for (int j=0; j < smallHeight; ++j) {
+    for (int i=0; i < smallWidth; ++i) {
+      large.put(i + left,j + top,small.get(i,j));
+    }
+  }
+  return large;
+}

@@ -1,0 +1,14 @@
+{
+  DoubleMatrix newInput=input.dup();
+  DoubleMatrix output=input.dup();
+  for (int i=0; i < iterations; ++i) {
+    int smallWidth=width - kernelWidth + 1;
+    int smallHeight=height - kernelHeight + 1;
+    output=new DoubleMatrix(smallWidth,smallHeight);
+    output=convolution2D(newInput,width,height,kernel,kernelWidth,kernelHeight);
+    width=smallWidth;
+    height=smallHeight;
+    newInput=output.dup();
+  }
+  return output;
+}

@@ -1,0 +1,8 @@
+{
+  DoubleMatrix rand=DoubleMatrix.rand(3);
+  DoubleMatrix fourier=disceteFourierTransform(rand);
+  DoubleMatrix inverse=inverseDisceteFourierTransform(rand);
+  DoubleMatrix toAndFro=inverseDisceteFourierTransform(disceteFourierTransform(rand));
+  assertEquals(true,toAndFro.distance1(rand) < 1e-1);
+  log.info("Back and forth " + toAndFro);
+}

@@ -1,0 +1,17 @@
+{
+  int[] result=new int[greys.length];
+  int grey;
+  for (int i=0; i < greys.length; ++i) {
+    if (greys[i] > 255) {
+      grey=255;
+    }
+ else     if (greys[i] < 0) {
+      grey=0;
+    }
+ else {
+      grey=(int)Math.round(greys[i]);
+    }
+    result[i]=(new Color(grey,grey,grey)).getRGB();
+  }
+  return result;
+}

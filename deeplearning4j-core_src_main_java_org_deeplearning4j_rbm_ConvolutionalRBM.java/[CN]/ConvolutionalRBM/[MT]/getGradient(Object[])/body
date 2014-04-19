@@ -24,7 +24,7 @@
   Tensor hiddenMeans=(Tensor)nhMeans;
   Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
   for (int i=0; i < numFilters; i++) {
-    wGradient.setSlice(i,convolution2D(input,eHiddenInitial.getSlice(i)).sub(convolution2D(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)))));
+    wGradient.setSlice(i,Convolution.conv2d(input,eHiddenInitial.getSlice(i),Convolution.Type.VALID).sub(Convolution.conv2d(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)),Convolution.Type.VALID)));
   }
   DoubleMatrix hBiasGradient=null;
   hBiasGradient=DoubleMatrix.scalar(probHidden.getSecond().sub(nhMeans).columnSums().sum());

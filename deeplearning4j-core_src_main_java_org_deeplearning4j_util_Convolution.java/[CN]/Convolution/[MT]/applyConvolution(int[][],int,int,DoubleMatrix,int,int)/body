@@ -1,0 +1,9 @@
+{
+  int output=0;
+  for (int i=0; i < kernelWidth; ++i) {
+    for (int j=0; j < kernelHeight; ++j) {
+      output=output + (int)Math.round(input[x + i][y + j] * k.get(i,j));
+    }
+  }
+  return output;
+}

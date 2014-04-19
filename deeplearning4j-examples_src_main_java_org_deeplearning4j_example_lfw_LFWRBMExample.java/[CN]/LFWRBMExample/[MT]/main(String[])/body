@@ -5,7 +5,7 @@
   iter=new SamplingDataSetIterator(all,10,100);
   int cols=iter.inputColumns();
   log.info("Learning from " + cols);
-  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(iter.inputColumns()).useAdaGrad(true).withOptmizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).numHidden(1000).renderWeights(100).normalizeByInputRows(true).withLossFunction(LossFunction.RECONSTRUCTION_CROSSENTROPY).build();
+  GaussianRectifiedLinearRBM r=new GaussianRectifiedLinearRBM.Builder().numberOfVisible(iter.inputColumns()).withOptmizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).numHidden(1000).renderWeights(100).withLossFunction(LossFunction.RECONSTRUCTION_CROSSENTROPY).build();
   NeuralNetPlotter plotter=new NeuralNetPlotter();
   int numIter=0;
   while (iter.hasNext()) {

@@ -1,0 +1,14 @@
+{
+  double len=MatrixUtil.length(input);
+  Complex c=new Complex(2,1);
+  c=c.multiply(FastMath.PI / len);
+  double first=c.getReal();
+  DoubleMatrix second=input.getRange(0,(int)len - 1);
+  second=second.transpose().mmul(second);
+  DoubleMatrix ret=exp(MatrixUtil.numDivideMatrix(first,second));
+  if (input.isRowVector())   ret=input.mmul(ret);
+  ret=ret.mmul(input);
+  ret=ret.neg();
+  MatrixUtil.scaleByMax(ret);
+  return ret;
+}

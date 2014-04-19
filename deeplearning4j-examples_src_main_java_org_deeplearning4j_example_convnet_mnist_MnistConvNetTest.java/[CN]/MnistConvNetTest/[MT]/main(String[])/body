@@ -1,5 +1,5 @@
 {
-  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(600).renderWeights(100).build();
+  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withNumFilters(100).numberOfVisible(784).numHidden(600).build();
   DataSetIterator iter=new MnistDataSetIterator(10,50);
   while (iter.hasNext()) {
     DataSet next=iter.next();

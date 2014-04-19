@@ -1,0 +1,11 @@
+{
+  DoubleMatrix result2D=new DoubleMatrix(width,height);
+  result2D=convolution2DPadded(input,width,height,kernel,kernelWidth,kernelHeight);
+  DoubleMatrix result=new DoubleMatrix(width * height);
+  for (int j=0; j < height; ++j) {
+    for (int i=0; i < width; ++i) {
+      result.put(j * width + i,result2D.get(i,j));
+    }
+  }
+  return result;
+}

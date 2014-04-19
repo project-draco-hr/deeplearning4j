@@ -8,7 +8,7 @@
   DoubleMatrix wGradient=input.transpose().mmul(dy);
   if (useAdaGrad)   wGradient.muli(adaGrad.getLearningRates(wGradient));
  else   wGradient.muli(lr);
-  if (useAdaGrad)   dy.muli(biasAdaGrad.getLearningRates(dy));
+  if (useAdaGrad)   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.columnMeans()));
  else   dy.muli(lr);
   if (normalizeByInputRows)   dy.divi(input.rows);
   DoubleMatrix bGradient=dy;

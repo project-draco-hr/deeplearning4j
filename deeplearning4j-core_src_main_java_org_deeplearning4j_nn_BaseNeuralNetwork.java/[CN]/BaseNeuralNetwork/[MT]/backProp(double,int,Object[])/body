@@ -1,5 +1,5 @@
 {
-  double currRecon=this.negativeLogLikelihood();
+  double currRecon=this.getReConstructionCrossEntropy();
   boolean train=true;
   NeuralNetwork revert=clone();
   int numEpochs=0;
@@ -26,7 +26,7 @@
     if (momentum != 0)     hBiasMean.muli(momentum).add(hBiasMean.mul(1 - momentum));
     if (normalizeByInputRows)     hBiasMean.divi(input.rows);
     gethBias().addi(gethBias().sub(hBiasMean));
-    double newRecon=negativeLogLikelihood();
+    double newRecon=this.getReConstructionCrossEntropy();
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");
