@@ -1,3 +1,6 @@
 {
+  if (slice.rows != rows() && slice.columns != columns()) {
+    throw new IllegalArgumentException("Slice dimension mismatch");
+  }
   put(getRowIndicesForSlice(index),getColIndicesForSlice(),slice);
 }
