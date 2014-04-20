@@ -1,12 +1,3 @@
 {
-  double len=MatrixUtil.length(input);
-  ComplexDoubleMatrix c=new ComplexDoubleMatrix(input);
-  Complex c2=new Complex(-2,1);
-  c2=c2.multiply(FastMath.PI / len);
-  double first=c2.getReal();
-  DoubleMatrix second=input.getRange(0,(int)len - 1);
-  second=second.transpose().mmul(second);
-  DoubleMatrix ret=exp(MatrixUtil.numDivideMatrix(first,second));
-  if (input.isRowVector())   return input.mmul(ret);
-  return ret.mmul(input);
+  return complexDisceteFourierTransform(input).getReal();
 }

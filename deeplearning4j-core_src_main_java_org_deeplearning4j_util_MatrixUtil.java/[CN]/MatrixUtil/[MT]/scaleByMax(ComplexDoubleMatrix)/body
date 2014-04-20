@@ -1,0 +1,6 @@
+{
+  for (int i=0; i < toScale.rows; i++) {
+    ComplexDouble scaleBy=max(toScale.getRow(i));
+    toScale.putRow(i,toScale.getRow(i).divi(scaleBy));
+  }
+}

@@ -1,0 +1,6 @@
+{
+  int diff=(int)Math.abs(end - begin);
+  ComplexDoubleMatrix ret=new ComplexDoubleMatrix(1,diff);
+  for (int i=0; i < ret.length; i++)   ret.put(i,i);
+  return ret.transpose();
+}
