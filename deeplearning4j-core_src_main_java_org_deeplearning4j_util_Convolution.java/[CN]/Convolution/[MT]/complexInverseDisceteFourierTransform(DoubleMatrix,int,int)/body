@@ -1,5 +1,7 @@
 {
   ComplexDoubleMatrix base=null;
+  StopWatch watch=new StopWatch();
+  watch.start();
   if (input.rows < rows || input.columns < cols)   base=MatrixUtil.complexPadWithZeros(input,rows,cols);
  else   if (input.rows > rows || input.columns > cols) {
     base=new ComplexDoubleMatrix(input);
@@ -16,5 +18,7 @@
     ComplexDoubleMatrix row=temp.getRow(i);
     ret.putRow(i,complexInverseDisceteFourierTransform1d(row));
   }
+  watch.stop();
+  log.info("Took " + watch.getTime());
   return ret;
 }

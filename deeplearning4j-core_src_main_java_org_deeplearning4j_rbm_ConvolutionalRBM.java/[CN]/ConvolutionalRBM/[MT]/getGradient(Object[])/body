@@ -5,7 +5,6 @@
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
-  Pair<Tensor,Tensor> probHiddenTensor=new Pair<>((Tensor)probHidden.getFirst(),(Tensor)probHidden.getSecond());
   DoubleMatrix chainStart=probHidden.getSecond();
   Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
   DoubleMatrix nvMeans=null;

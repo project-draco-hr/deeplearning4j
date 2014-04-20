@@ -1,9 +1,10 @@
 {
-  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withNumFilters(100).numberOfVisible(784).numHidden(600).build();
-  DataSetIterator iter=new MnistDataSetIterator(10,50);
+  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withNumFilters(10).numberOfVisible(28).numHidden(28).build();
+  DataSetIterator iter=new MnistDataSetIterator(1,50);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFirst(),1e-1,new Object[]{1,1e-1,5000});
+    DoubleMatrix reshape=next.getFirst().reshape(28,28);
+    r.trainTillConvergence(reshape,1e-1,new Object[]{1,1e-1,5000});
   }
   iter.reset();
   FilterRenderer render=new FilterRenderer();

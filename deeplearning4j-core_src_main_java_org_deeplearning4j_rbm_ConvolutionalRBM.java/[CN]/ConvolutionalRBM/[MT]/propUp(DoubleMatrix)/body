@@ -1,6 +1,8 @@
 {
   for (int i=0; i < numFilters; i++) {
-    hidI.setSlice(i,Convolution.conv2d(v,MatrixUtil.reverse(W.getSlice(i)),Convolution.Type.VALID).add(hBias.get(i)));
+    DoubleMatrix reversedSlice=MatrixUtil.reverse(W.getSlice(i));
+    DoubleMatrix slice=Convolution.conv2d(v,reversedSlice,Convolution.Type.VALID).add(hBias.get(i));
+    hidI.setSlice(i,slice);
   }
   Tensor expHidI=hidI.exp();
   DoubleMatrix eHid=expHidI.div(pool(expHidI));
