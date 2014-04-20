@@ -1,8 +1,3 @@
 {
-  double len=MatrixUtil.length(inputC);
-  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI).divi(len);
-  ComplexDoubleMatrix complexRet=complexDisceteFourierTransform(inputC);
-  complexRet=complexRet.negi();
-  complexRet.divi(len);
-  return complexRet;
+  return complexInverseDisceteFourierTransform(inputC,inputC.rows,inputC.columns);
 }

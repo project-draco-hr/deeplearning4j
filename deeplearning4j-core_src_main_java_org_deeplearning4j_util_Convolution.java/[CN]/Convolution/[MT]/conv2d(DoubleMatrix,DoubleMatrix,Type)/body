@@ -1,6 +1,23 @@
 {
   int retRows=input.rows + kernel.rows - 1;
   int retCols=input.columns + kernel.columns - 1;
-  DoubleMatrix ret=inverseDisceteFourierTransform(disceteFourierTransform(input).reshape(retRows,retCols).mmul(disceteFourierTransform(kernel).reshape(retRows,retCols)));
+  ComplexDoubleMatrix fftInput=complexDisceteFourierTransform(input,retRows,retCols);
+  ComplexDoubleMatrix fftKernel=complexDisceteFourierTransform(kernel,retRows,retCols);
+  ComplexDoubleMatrix mul=fftKernel.mul(fftInput);
+  ComplexDoubleMatrix retComplex=complexInverseDisceteFourierTransform(mul);
+  DoubleMatrix ret=retComplex.getReal();
+  if (type == Type.VALID) {
+    int row=input.rows - kernel.rows + 1;
+    int col=input.columns - kernel.columns + 1;
+    if (row < 1 || col < 1) {
+      row=kernel.rows - input.rows + 1;
+      col=kernel.columns - input.columns + 1;
+    }
+    int beginRow=retRows - row;
+    int beginCol=retCols - col;
+    int endRow=beginRow + row;
+    int endCol=endRow + col;
+    ret=ret.get(new int[]{beginRow,endRow},new int[]{beginCol,endCol});
+  }
   return ret;
 }
