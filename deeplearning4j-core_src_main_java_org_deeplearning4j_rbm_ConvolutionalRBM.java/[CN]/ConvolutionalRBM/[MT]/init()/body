@@ -1,5 +1,0 @@
-{
-  W=new Tensor(getnVisible(),getnHidden(),numFilters);
-  visI=Tensor.zeros(getnVisible(),getnHidden(),numFilters);
-  hidI=Tensor.zeros(getnVisible() - numFilters + 1,getnHidden() - numFilters + 1,numFilters);
-}

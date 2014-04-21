@@ -2,4 +2,7 @@
   Tensor t=new Tensor(1,1,1);
   t.set(0,0,0,2.0);
   assertEquals(true,2.0 == t.get(0,0,0));
+  Tensor t2=new Tensor(2,2,2);
+  t2.set(0,0,0,1);
+  assertEquals(true,1 == t2.get(0,0,0));
 }

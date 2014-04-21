@@ -3,5 +3,5 @@
   Tensor rowSums=t.sliceRowSums();
   assertEquals(t.slices(),rowSums.slices());
   assertEquals(true,Math.abs(t.sum() - rowSums.sum()) < 1e-1);
-  assertEquals(rowSums.rows(),t.rows());
+  assertEquals(rowSums.rows(),1);
 }

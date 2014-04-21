@@ -1,0 +1,10 @@
+{
+  if (convolutionInitCalled)   return;
+  W=new Tensor(getnVisible(),getnHidden(),numFilters);
+  visI=Tensor.zeros(getnVisible(),getnHidden(),numFilters);
+  int visibleNumFilters=getnVisible() - numFilters + 1;
+  int hiddenNumFilters=getnHidden() - numFilters + 1;
+  if (visibleNumFilters < 1 || hiddenNumFilters < 1)   throw new IllegalArgumentException("Invalid hidden filter size shape: (" + visibleNumFilters + ","+ hiddenNumFilters+ ")");
+  hidI=Tensor.zeros(visibleNumFilters,hiddenNumFilters,numFilters);
+  convolutionInitCalled=true;
+}

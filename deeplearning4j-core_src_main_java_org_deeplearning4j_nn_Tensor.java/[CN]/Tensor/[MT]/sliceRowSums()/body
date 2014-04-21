@@ -1,7 +1,7 @@
 {
-  Tensor ret=new Tensor(rows(),columns(),slices);
+  Tensor ret=new Tensor(1,rows(),slices);
   for (int i=0; i < slices(); i++) {
-    DoubleMatrix rowSums=getSlice(i).rowSums();
+    DoubleMatrix rowSums=getSlice(i).rowSums().transpose();
     ret.setSlice(i,rowSums);
   }
   return ret;
