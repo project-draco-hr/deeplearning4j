@@ -1,3 +1,6 @@
 {
-  return new Tensor(SimpleBlas.scal(value,this));
+  Tensor ret=new Tensor(SimpleBlas.scal(value,this));
+  ret.slices=slices;
+  ret.perMatrixRows=perMatrixRows;
+  return ret;
 }

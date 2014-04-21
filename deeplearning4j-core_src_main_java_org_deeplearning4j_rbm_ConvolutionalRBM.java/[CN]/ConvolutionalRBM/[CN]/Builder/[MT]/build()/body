@@ -1,7 +1,15 @@
 {
   ConvolutionalRBM ret=(ConvolutionalRBM)super.build();
+  if (filterSize == null)   throw new IllegalStateException("Please specify a filter size");
+  if (visibleSize == null)   throw new IllegalStateException("Please specify a viisble size");
   ret.numFilters=numFilters;
   ret.stride=stride;
+  fmSize=new int[2];
+  fmSize[0]=visibleSize[0] - filterSize[0] + 1;
+  fmSize[1]=visibleSize[1] - filterSize[1] + 1;
+  ret.fmSize=fmSize;
+  ret.visibleSize=visibleSize;
+  ret.filterSize=filterSize;
   ret.convolutionInit();
   return ret;
 }

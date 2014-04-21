@@ -1,3 +1,6 @@
 {
-  return new Tensor(mul(val));
+  Tensor ret=new Tensor(mul(val));
+  ret.slices=slices;
+  ret.perMatrixRows=perMatrixRows;
+  return ret;
 }

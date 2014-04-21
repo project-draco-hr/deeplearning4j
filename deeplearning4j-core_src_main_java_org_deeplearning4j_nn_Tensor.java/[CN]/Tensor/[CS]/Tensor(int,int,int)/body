@@ -4,5 +4,5 @@
   if (rows < 1)   throw new IllegalArgumentException("Illegal number of rows");
   if (columns < 1)   throw new IllegalArgumentException("Illegal number of columns");
   this.slices=slices;
-  this.rows=rows;
+  this.perMatrixRows=rows;
 }

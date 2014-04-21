@@ -1,3 +1,5 @@
 {
-  return new Tensor(matrix);
+  Tensor ret=new Tensor(matrix);
+  ret.slices=numSlices;
+  return ret;
 }

@@ -1,3 +1,5 @@
 {
-  return new Tensor(super.div(val));
+  Tensor copy=dup();
+  for (int i=0; i < length; i++)   put(i,get(i) / val.get(i));
+  return copy;
 }

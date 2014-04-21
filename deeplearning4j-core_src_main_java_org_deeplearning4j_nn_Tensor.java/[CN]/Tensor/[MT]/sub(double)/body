@@ -1,3 +1,6 @@
 {
-  return new Tensor(super.sub(val));
+  Tensor ret=new Tensor(super.sub(val));
+  ret.perMatrixRows=perMatrixRows;
+  ret.slices=slices;
+  return ret;
 }

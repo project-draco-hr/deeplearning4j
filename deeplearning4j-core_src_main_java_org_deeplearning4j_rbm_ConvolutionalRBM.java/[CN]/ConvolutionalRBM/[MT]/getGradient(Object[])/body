@@ -4,29 +4,19 @@
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
-  Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
-  DoubleMatrix chainStart=probHidden.getSecond();
-  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
-  DoubleMatrix nvMeans=null;
-  DoubleMatrix nvSamples=null;
-  DoubleMatrix nhMeans=null;
-  DoubleMatrix nhSamples=null;
+  Tensor chainStart=this.propUp(input);
+  Tensor nvSamples=null;
+  Tensor hiddenMeans=chainStart;
   for (int i=0; i < k; i++) {
-    if (i == 0)     matrices=gibbhVh(chainStart);
- else     matrices=gibbhVh(nhSamples);
-    nvMeans=matrices.getFirst().getFirst();
-    nvSamples=matrices.getFirst().getSecond();
-    nhMeans=matrices.getSecond().getFirst();
-    nhSamples=matrices.getSecond().getSecond();
+    nvSamples=new Tensor(MatrixUtil.binomial(propDown(hiddenMeans),1,rng));
+    hiddenMeans=propUp(nvSamples);
   }
-  Tensor eHiddenInitial=(Tensor)probHidden.getSecond();
-  Tensor hiddenMeans=(Tensor)nhMeans;
   Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
   for (int i=0; i < numFilters; i++) {
-    wGradient.setSlice(i,Convolution.conv2d(input,eHiddenInitial.getSlice(i),Convolution.Type.VALID).sub(Convolution.conv2d(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)),Convolution.Type.VALID)));
+    wGradient.setSlice(i,Convolution.conv2d(input,chainStart.getSlice(i),Convolution.Type.VALID).sub(Convolution.conv2d(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)),Convolution.Type.VALID)));
   }
   DoubleMatrix hBiasGradient=null;
-  hBiasGradient=DoubleMatrix.scalar(probHidden.getSecond().sub(nhMeans).columnSums().sum());
+  hBiasGradient=DoubleMatrix.scalar(hiddenMeans.sub(nvSamples).columnSums().sum());
   DoubleMatrix vBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,learningRate);

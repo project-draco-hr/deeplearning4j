@@ -1,4 +1,5 @@
 {
   super(t.toArray2());
-  this.slices=1;
+  this.slices=t.slices();
+  this.perMatrixRows=t.perMatrixRows;
 }
