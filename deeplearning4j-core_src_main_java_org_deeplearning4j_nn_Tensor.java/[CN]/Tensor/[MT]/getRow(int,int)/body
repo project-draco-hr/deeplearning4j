@@ -1,4 +1,4 @@
 {
-  DoubleMatrix rows=get(this.getRowIndicesForSlice(slice),this.getColIndicesForSlice());
+  DoubleMatrix rows=get(getRowIndicesForSlice(slice),getColIndicesForSlice());
   return rows;
 }

@@ -1,0 +1,6 @@
+{
+  Tensor h1Mean=propUp(v);
+  Tensor h1Sample=new Tensor(binomial(h1Mean,1,rng));
+  applyDropOutIfNecessary(h1Sample);
+  return new Pair<>((DoubleMatrix)h1Mean,(DoubleMatrix)h1Sample);
+}

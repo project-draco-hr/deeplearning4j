@@ -3,16 +3,17 @@
   int rows=input.rows();
   Tensor ret=Tensor.zeros(rows,nCols,input.slices());
   for (int i=0; i < Math.ceil(nCols / stride[0]); i++) {
-    int rowsMin=(i - 1) * stride[0] + 1;
-    int rowsMax=i * stride[0];
+    int rowsMin=i * stride[0] + 1;
+    int rowsMax=(i + 1) * stride[0];
     for (int j=0; j < Math.ceil(nCols / stride[1]); j++) {
-      int cols=(j - 1) * stride[1] + 1;
-      int colsMax=j * stride[1];
-      Tensor blockVal=null;
+      int cols=j * stride[1] + 1;
+      int colsMax=(j + 1) * stride[1];
+      double blockVal=input.columnsSums().sum();
       int rowLength=rowsMax - rowsMin;
       int colLength=colsMax - cols;
-      Tensor set=blockVal.permute(new int[]{2,3,1}).repmat(rowLength,colLength);
-      ret.put(RangeUtils.interval(rowsMin,rowsMax),RangeUtils.interval(cols,colsMax),set);
+      DoubleMatrix block=new DoubleMatrix(rowLength,colLength);
+      MatrixUtil.assign(block,blockVal);
+      ret.put(RangeUtils.interval(rowsMin,rowsMax),RangeUtils.interval(cols,colsMax),block);
     }
   }
   return ret;

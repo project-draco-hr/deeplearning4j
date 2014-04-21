@@ -1,0 +1,5 @@
+{
+  Tensor v1Mean=propDown(h);
+  Tensor v1Sample=new Tensor(binomial(v1Mean,1,rng));
+  return new Pair<>((DoubleMatrix)v1Mean,(DoubleMatrix)v1Sample);
+}

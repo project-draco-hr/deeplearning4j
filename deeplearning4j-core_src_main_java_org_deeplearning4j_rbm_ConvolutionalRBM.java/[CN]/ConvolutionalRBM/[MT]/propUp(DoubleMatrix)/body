@@ -5,6 +5,6 @@
     hidI.setSlice(i,slice);
   }
   Tensor expHidI=hidI.exp();
-  DoubleMatrix eHid=expHidI.div(pool(expHidI));
+  Tensor eHid=expHidI.div(pool(expHidI));
   return eHid;
 }

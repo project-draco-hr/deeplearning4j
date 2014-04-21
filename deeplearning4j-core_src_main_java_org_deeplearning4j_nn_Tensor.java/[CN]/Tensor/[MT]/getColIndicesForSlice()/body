@@ -1,5 +1,3 @@
 {
-  int[] ret=new int[columns];
-  for (int i=0; i < ret.length; i++)   ret[i]=i;
-  return ret;
+  return RangeUtils.all();
 }
