@@ -16,7 +16,7 @@
     wGradient.setSlice(i,Convolution.conv2d(input,chainStart.getSlice(i),Convolution.Type.VALID).sub(Convolution.conv2d(nvSamples,MatrixUtil.reverse(hiddenMeans.getSlice(i)),Convolution.Type.VALID)));
   }
   DoubleMatrix hBiasGradient=null;
-  hBiasGradient=DoubleMatrix.scalar(hiddenMeans.sub(nvSamples).columnSums().sum());
+  hBiasGradient=DoubleMatrix.scalar(chainStart.sub(hiddenMeans).columnSums().sum());
   DoubleMatrix vBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,learningRate);
