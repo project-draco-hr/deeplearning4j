@@ -19,6 +19,5 @@
     ret.putRow(i,complexInverseDisceteFourierTransform1d(row));
   }
   watch.stop();
-  log.info("Took " + watch.getTime());
   return ret;
 }

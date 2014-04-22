@@ -1,0 +1,45 @@
+{
+  boolean train=true;
+  double currRecon=this.getReConstructionCrossEntropy();
+  NeuralNetwork revert=clone();
+  int numEpochs=0;
+  while (train) {
+    if (numEpochs > epochs)     break;
+    NeuralNetworkGradient gradient=getGradient(extraParams);
+    DoubleMatrix wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
+    DoubleMatrix z=reconstruct(input);
+    DoubleMatrix scaledInput=input.dup();
+    MatrixUtil.normalizeZeroMeanAndUnitVariance(scaledInput);
+    MatrixUtil.normalizeZeroMeanAndUnitVariance(z);
+    DoubleMatrix outputDiff=z.sub(scaledInput);
+    DoubleMatrix delta=W.transpose().mmul(outputDiff);
+    DoubleMatrix hBiasMean=z.columnSums().transpose();
+    if (isUseAdaGrad()) {
+      delta.muli(wLearningRates);
+    }
+ else     delta.muli(lr);
+    if (momentum != 0)     delta.muli(momentum).add(delta.mul(1 - momentum));
+    if (normalizeByInputRows)     delta.divi(input.rows);
+    getW().addi(W.sub(delta));
+    double newRecon=this.getReConstructionCrossEntropy();
+    if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
+      update((BaseNeuralNetwork)revert);
+      log.info("Converged for new recon; breaking...");
+      break;
+    }
+ else     if (newRecon == currRecon)     break;
+ else {
+      currRecon=newRecon;
+      revert=clone();
+      log.info("Recon went down " + currRecon);
+    }
+    numEpochs++;
+    int plotEpochs=getRenderEpochs();
+    if (plotEpochs > 0) {
+      NeuralNetPlotter plotter=new NeuralNetPlotter();
+      if (numEpochs % plotEpochs == 0) {
+        plotter.plotNetworkGradient(this,getGradient(extraParams));
+      }
+    }
+  }
+}
