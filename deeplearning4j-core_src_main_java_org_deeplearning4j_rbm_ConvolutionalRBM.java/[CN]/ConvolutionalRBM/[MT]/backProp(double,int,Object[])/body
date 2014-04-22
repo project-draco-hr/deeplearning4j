@@ -1,5 +1,5 @@
 {
-  boolean train=true;
+  boolean train=false;
   double currRecon=this.getReConstructionCrossEntropy();
   NeuralNetwork revert=clone();
   int numEpochs=0;
