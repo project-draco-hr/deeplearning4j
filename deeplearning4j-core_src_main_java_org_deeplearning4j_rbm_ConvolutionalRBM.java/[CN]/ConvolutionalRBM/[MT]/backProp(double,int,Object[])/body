@@ -9,10 +9,10 @@
     DoubleMatrix wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
     DoubleMatrix z=reconstruct(input);
     DoubleMatrix scaledInput=input.dup();
-    MatrixUtil.normalizeZeroMeanAndUnitVariance(scaledInput);
-    MatrixUtil.normalizeZeroMeanAndUnitVariance(z);
+    normalizeZeroMeanAndUnitVariance(scaledInput);
+    normalizeZeroMeanAndUnitVariance(z);
     DoubleMatrix outputDiff=z.sub(scaledInput);
-    DoubleMatrix delta=W.transpose().mmul(outputDiff);
+    DoubleMatrix delta=W.mmul(outputDiff);
     DoubleMatrix hBiasMean=z.columnSums().transpose();
     if (isUseAdaGrad()) {
       delta.muli(wLearningRates);

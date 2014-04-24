@@ -1,0 +1,6 @@
+{
+  DoubleMatrix zeros=DoubleMatrix.rand(1,3);
+  log.info("Starting " + zeros);
+  MatrixUtil.rot90(zeros);
+  log.info("Ending " + zeros);
+}

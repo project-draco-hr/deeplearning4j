@@ -16,7 +16,7 @@
       int rowLength=rowsMax - rowsMin;
       int colLength=colsMax - cols;
       DoubleMatrix block=new DoubleMatrix(rowLength,colLength);
-      MatrixUtil.assign(block,blockVal);
+      assign(block,blockVal);
       ret.put(RangeUtils.interval(rowsMin,rowsMax),RangeUtils.interval(cols,colsMax),block);
     }
   }

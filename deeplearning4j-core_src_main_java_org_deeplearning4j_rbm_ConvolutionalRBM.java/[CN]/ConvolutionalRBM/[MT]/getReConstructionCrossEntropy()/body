@@ -1,3 +1,5 @@
 {
-  return negativeLogLikelihood();
+  if (eVis == null)   reconstruct(input);
+  double squaredLoss=MatrixFunctions.pow(eVis.sub(input),2).sum();
+  return squaredLoss;
 }

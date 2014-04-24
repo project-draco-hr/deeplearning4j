@@ -1,8 +1,10 @@
 {
   Tensor h1=(Tensor)h;
   for (int i=0; i < numFilters; i++) {
-    DoubleMatrix conv=Convolution.conv2d(h1.getSlice(i),W.getSlice(i),Convolution.Type.FULL);
+    DoubleMatrix conv=conv2d(h1.getSlice(i),W.getSlice(i),FULL);
     visI.setSlice(i,conv);
   }
-  return new Tensor(sigmoid(visI.sliceElementSums().add(vBias)));
+  Tensor ret=new Tensor(sigmoid(visI.sliceElementSums().add(vBias)));
+  this.eVis=ret;
+  return ret;
 }

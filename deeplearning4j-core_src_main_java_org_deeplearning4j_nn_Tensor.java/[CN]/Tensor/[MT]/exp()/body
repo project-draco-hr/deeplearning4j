@@ -1,5 +1,5 @@
 {
   Tensor copy=dup();
-  for (int i=0; i < length; i++)   put(i,FastMath.exp(get(i)));
+  for (int i=0; i < length; i++)   copy.put(i,FastMath.exp(get(i)));
   return copy;
 }
