@@ -8,6 +8,7 @@
       try {
         ret=(E)curr.newInstance(input,numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
         ret.sparsity=this.sparsity;
+        ret.applySparsity=this.applySparsity;
         ret.normalizeByInputRows=this.normalizeByInputRows;
         ret.renderWeightsEveryNumEpochs=this.renderWeightsEveryNumEpochs;
         ret.l2=this.l2;
