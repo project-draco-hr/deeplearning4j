@@ -13,9 +13,6 @@
   log.debug("Patch array size: " + equiv.length);
   img=new BufferedImage(filterImgWidth,filterImgHeight,BufferedImage.TYPE_BYTE_GRAY);
   WritableRaster r=img.getRaster();
-  if (patchWidth * patchHeight != data.rows) {
-    throw new Exception("patch size does not match filter patch size");
-  }
   for (int col=0; col < data.columns; col++) {
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);

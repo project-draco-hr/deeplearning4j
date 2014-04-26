@@ -32,6 +32,9 @@
     if (twoNorm < gradientTolerance) {
       logger.info("ConjugateGradient converged: gradient two norm " + twoNorm + ", less than "+ gradientTolerance);
       converged=true;
+      if (listener != null) {
+        listener.epochDone(iterationCount);
+      }
       return true;
     }
     dgg=gg=0.0;
@@ -52,6 +55,9 @@
     if (iterations > maxIterations) {
       logger.info("Passed max number of iterations");
       converged=true;
+      if (listener != null) {
+        listener.epochDone(iterationCount);
+      }
       return true;
     }
     if (listener != null) {

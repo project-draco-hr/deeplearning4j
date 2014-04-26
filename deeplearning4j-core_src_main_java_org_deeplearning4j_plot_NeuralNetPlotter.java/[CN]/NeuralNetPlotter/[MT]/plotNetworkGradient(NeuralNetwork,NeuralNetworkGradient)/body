@@ -3,7 +3,11 @@
   plotActivations(network);
   FilterRenderer render=new FilterRenderer();
   try {
-    render.renderFilters(network.getW(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows));
+    if (network.getW() instanceof Tensor) {
+      Tensor w=(Tensor)network.getW();
+      render.renderFilters(network.getW(),"currimg.png",(int)Math.sqrt(network.getW().rows / w.slices()),(int)Math.sqrt(network.getW().rows / w.slices()));
+    }
+ else     render.renderFilters(network.getW(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows));
   }
  catch (  Exception e) {
     log.error("Unable to plot filter, continuing...",e);
