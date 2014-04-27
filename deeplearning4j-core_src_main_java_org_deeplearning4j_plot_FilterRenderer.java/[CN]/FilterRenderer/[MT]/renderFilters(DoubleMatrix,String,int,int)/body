@@ -13,7 +13,7 @@
   log.debug("Patch array size: " + equiv.length);
   img=new BufferedImage(filterImgWidth,filterImgHeight,BufferedImage.TYPE_BYTE_GRAY);
   WritableRaster r=img.getRaster();
-  for (int col=0; col < data.columns; col++) {
+  outer:   for (int col=0; col < data.columns; col++) {
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);
     DoubleMatrix column=data.getColumn(col);
@@ -24,7 +24,19 @@
       double patch_normal=(column.get(i) - col_min) / (col_max - col_min + 0.000001);
       equiv[i]=(int)(255 * patch_normal);
     }
-    r.setPixels(curX,curY,patchWidth,patchHeight,equiv);
+    if (curX >= filterImgWidth) {
+      r.setPixels(filterImgWidth - 1,curY,patchWidth,patchHeight,equiv);
+      break outer;
+    }
+ else     if (curY >= filterImgHeight) {
+      r.setPixels(curX,filterImgHeight - 1,patchWidth,patchHeight,equiv);
+      break outer;
+    }
+ else     if (curX >= filterImgWidth && curY >= filterImgHeight) {
+      r.setPixels(filterImgWidth - 1,filterImgHeight - 1,patchWidth,patchHeight,equiv);
+      break outer;
+    }
+ else     r.setPixels(curX,curY,patchWidth,patchHeight,equiv);
   }
   try {
     saveImageToDisk(img,filename);
