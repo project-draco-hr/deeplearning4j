@@ -8,7 +8,7 @@
   Tensor nvSamples=null;
   Tensor hiddenMeans=chainStart;
   for (int i=0; i < k; i++) {
-    nvSamples=new Tensor(propDown(binomial(eHid,1,rng)));
+    nvSamples=propDown(binomial(eHid,1,rng));
     hiddenMeans=propUp(nvSamples);
   }
   Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
