@@ -13,8 +13,8 @@
   }
   Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
   for (int i=0; i < numFilters; i++)   wGradient.setSlice(i,conv2d(input,chainStart.getSlice(i),VALID).sub(conv2d(nvSamples,reverse(hiddenMeans.getSlice(i)),VALID)));
-  DoubleMatrix hBiasGradient=DoubleMatrix.scalar(chainStart.sub(hiddenMeans).columnSums().sum());
-  DoubleMatrix vBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
+  DoubleMatrix vBiasGradient=DoubleMatrix.scalar(chainStart.sub(hiddenMeans).columnSums().sum());
+  DoubleMatrix hBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,learningRate);
   triggerGradientEvents(ret);

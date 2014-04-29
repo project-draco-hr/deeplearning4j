@@ -4,8 +4,8 @@
   visI=Tensor.zeros(visibleSize[0],visibleSize[1],numFilters);
   hidI=Tensor.zeros(fmSize[0],fmSize[1],numFilters);
   convolutionInitCalled=true;
-  vBias=DoubleMatrix.zeros(1);
-  hBias=DoubleMatrix.zeros(numFilters);
+  vBias=DoubleMatrix.zeros(numFilters);
+  hBias=DoubleMatrix.zeros(1);
   for (int i=0; i < this.W.rows; i++)   this.W.putRow(i,new DoubleMatrix(dist.sample(this.W.columns)));
   wAdaGrad=new AdaGrad(W.rows,W.columns);
   vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);

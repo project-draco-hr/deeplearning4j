@@ -4,7 +4,7 @@
     DoubleMatrix conv=conv2d(h1.getSlice(i),W.getSlice(i),FULL);
     visI.setSlice(i,conv);
   }
-  DoubleMatrix I=visI.sliceElementSums().add(vBias);
+  DoubleMatrix I=visI.sliceElementSums().add(hBias);
   I=sigmoid(I);
   Tensor ret=new Tensor(I);
   this.eVis=ret;
