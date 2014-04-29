@@ -1,5 +1,0 @@
-{
-  DoubleMatrix v1Mean=propDown(h);
-  DoubleMatrix v1Sample=MatrixUtil.normal(getRng(),v1Mean,1).mulRowVector(sigma);
-  return new Pair<>(v1Mean,v1Sample);
-}

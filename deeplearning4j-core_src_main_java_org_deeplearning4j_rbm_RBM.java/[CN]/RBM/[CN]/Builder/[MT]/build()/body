@@ -1,0 +1,6 @@
+{
+  RBM ret=super.build();
+  ret.hiddenType=hidden;
+  ret.visibleType=visible;
+  return ret;
+}

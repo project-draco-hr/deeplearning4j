@@ -12,7 +12,9 @@
   c.setnOut(3);
   c.setSplit(150);
   c.setFunction(Activations.tanh());
-  c.setMultiLayerClazz(GaussianRectifiedLinearDBN.class);
+  c.setMultiLayerClazz(DBN.class);
+  c.setHiddenUnit(RBM.HiddenUnit.RECTIFIED);
+  c.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
   c.setUseRegularization(false);
   c.setL2(1e-3);
   c.setDeepLearningParams(new Object[]{1,1e-6,30000});

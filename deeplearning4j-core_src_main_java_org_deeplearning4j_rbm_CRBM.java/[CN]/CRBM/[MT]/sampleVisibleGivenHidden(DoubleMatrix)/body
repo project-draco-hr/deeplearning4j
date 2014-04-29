@@ -1,8 +1,0 @@
-{
-  DoubleMatrix activationHidden=propDown(h);
-  DoubleMatrix negativeEnergy=exp(activationHidden.neg());
-  DoubleMatrix positiveEnergy=exp(activationHidden);
-  DoubleMatrix v1Mean=oneDiv(oneMinus(negativeEnergy).sub(oneDiv(activationHidden)));
-  DoubleMatrix v1Sample=log(oneMinus(uniform(rng,v1Mean.rows,v1Mean.columns).mul(oneMinus(positiveEnergy)))).div(activationHidden);
-  return new Pair<>(v1Mean,v1Sample);
-}

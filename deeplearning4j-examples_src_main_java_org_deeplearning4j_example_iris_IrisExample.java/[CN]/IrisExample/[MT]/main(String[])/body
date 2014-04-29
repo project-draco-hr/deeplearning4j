@@ -5,7 +5,7 @@
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next();
   for (int i=0; i < 3000; i++) {
-    GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().numberOfInputs(nIns).numberOfOutPuts(nOuts).hiddenLayerSizes(hiddenLayerSizes).useAdaGrad(false).withRng(rng).build();
+    DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).numberOfInputs(nIns).numberOfOutPuts(nOuts).hiddenLayerSizes(hiddenLayerSizes).useAdaGrad(false).withRng(rng).build();
     next.shuffle();
     dbn.pretrain(next.getFirst(),1,1e-4,1000000);
     dbn.finetune(next.getSecond(),1e-4,1000000);

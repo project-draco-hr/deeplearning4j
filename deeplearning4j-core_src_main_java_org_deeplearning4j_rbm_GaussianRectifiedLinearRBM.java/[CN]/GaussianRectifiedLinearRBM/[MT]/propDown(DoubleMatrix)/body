@@ -1,4 +1,0 @@
-{
-  DoubleMatrix vMean=h.mmul(W.transpose()).mulRowVector(vBias.add(sigma));
-  return vMean;
-}

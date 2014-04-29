@@ -1,4 +1,11 @@
 {
-  DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
-  return sigmoid(preSig);
+  if (hiddenType == HiddenUnit.RECTIFIED) {
+    DoubleMatrix preSig=v.divRowVector(sigma).mmul(W).addiRowVector(hBias);
+    return preSig;
+  }
+ else   if (hiddenType == HiddenUnit.BINARY) {
+    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
+    return sigmoid(preSig);
+  }
+  throw new IllegalStateException("Hidden unit type should either be binary or rectified linear");
 }

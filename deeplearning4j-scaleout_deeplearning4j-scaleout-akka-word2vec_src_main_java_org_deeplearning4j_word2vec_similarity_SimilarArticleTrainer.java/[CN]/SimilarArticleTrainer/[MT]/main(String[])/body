@@ -21,7 +21,7 @@
     }
   }
   Random r=new Random();
-  CDBN dbn=new CDBN.Builder().numberOfInputs(examples.get(0).getFirst().columns).numberOfOutPuts(2).hiddenLayerSizes(new int[]{500,500,2000}).build();
+  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).numberOfInputs(examples.get(0).getFirst().columns).numberOfOutPuts(2).hiddenLayerSizes(new int[]{500,500,2000}).build();
   for (int i=0; i < individualMatrices.size(); i++) {
     DoubleMatrix negative=new DoubleMatrix(new double[]{1.0,0.0});
     int negativeExample=r.nextInt(individualMatrices.size());

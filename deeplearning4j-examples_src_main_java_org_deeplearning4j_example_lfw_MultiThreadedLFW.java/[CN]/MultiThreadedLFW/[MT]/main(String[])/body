@@ -11,9 +11,11 @@
   c.setnOut(10);
   c.setSplit(10);
   c.setNumPasses(3);
-  c.setMultiLayerClazz(GaussianRectifiedLinearDBN.class);
+  c.setMultiLayerClazz(DBN.class);
   c.setUseRegularization(false);
   c.setL2(1e-3);
+  c.setHiddenUnit(RBM.HiddenUnit.RECTIFIED);
+  c.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
   c.setDeepLearningParams(new Object[]{1,1e-6,10000});
   StateTracker<UpdateableImpl> stateTracker=new HazelCastStateTracker();
   if (args.length < 1) {

@@ -1,6 +1,17 @@
 {
-  DoubleMatrix h1Mean=propUp(v);
-  DoubleMatrix h1Sample=binomial(h1Mean,1,rng);
-  applyDropOutIfNecessary(h1Sample);
-  return new Pair<>(h1Mean,h1Sample);
+  if (hiddenType == HiddenUnit.RECTIFIED) {
+    DoubleMatrix h1Mean=propUp(v);
+    DoubleMatrix sigH1Mean=sigmoid(h1Mean);
+    DoubleMatrix h1Sample=h1Mean.addi(MatrixUtil.normal(getRng(),h1Mean,1).mul(sqrt(sigH1Mean)));
+    MatrixUtil.max(0.0,h1Sample);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+ else   if (hiddenType == HiddenUnit.BINARY) {
+    DoubleMatrix h1Mean=propUp(v);
+    DoubleMatrix h1Sample=binomial(h1Mean,1,rng);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+  throw new IllegalStateException("Hidden unit type must either be rectified linear or binary");
 }

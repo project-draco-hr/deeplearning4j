@@ -12,7 +12,16 @@
     Thread.currentThread().interrupt();
   }
   log.info("Broadcasting initial master network");
-  BaseMultiLayerNetwork network=this.network == null ? new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build() : this.network;
+  BaseMultiLayerNetwork network=null;
+  if (this.network == null) {
+    if (conf.getMultiLayerClazz().isAssignableFrom(DBN.class)) {
+      network=new DBN.Builder().withHiddenUnits(conf.getHiddenUnit()).withVisibleUnits(conf.getVisibleUnit()).numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build();
+    }
+ else {
+      network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build();
+    }
+  }
+ else   network=this.network;
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
   UpdateableImpl masterResults=new UpdateableImpl(network);

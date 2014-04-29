@@ -1,4 +1,0 @@
-{
-  DoubleMatrix preSig=v.divRowVector(sigma).mmul(W).addiRowVector(hBias);
-  return preSig;
-}

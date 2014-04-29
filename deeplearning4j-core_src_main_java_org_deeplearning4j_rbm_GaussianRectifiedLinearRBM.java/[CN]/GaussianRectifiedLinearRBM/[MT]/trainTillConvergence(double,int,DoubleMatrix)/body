@@ -1,8 +1,0 @@
-{
-  if (input != null)   this.input=input;
-  this.sigma=MatrixUtil.columnVariance(input).divi(input.rows);
-  optimizer=new RBMOptimizer(this,learningRate,new Object[]{k,learningRate},optimizationAlgo,lossFunction);
-  optimizer.setMaxStep(1000);
-  optimizer.setTolerance(1e-6);
-  optimizer.train(input);
-}

@@ -7,7 +7,7 @@
   int[] hiddenLayerSizes=new int[]{4,3,2};
   double fineTuneLr=0.01;
   int fineTuneEpochs=10000;
-  GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().useAdaGrad(true).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.tanh()).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).build();
+  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.tanh()).hiddenLayerSizes(hiddenLayerSizes).withRng(rng).build();
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next(150);
   next.shuffle();

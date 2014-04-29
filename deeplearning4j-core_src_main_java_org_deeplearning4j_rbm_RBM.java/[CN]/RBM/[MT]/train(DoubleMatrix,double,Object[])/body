@@ -1,4 +1,5 @@
 {
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=MatrixUtil.columnVariance(input).divi(input.rows);
   int k=(int)params[0];
   contrastiveDivergence(lr,k,input);
 }

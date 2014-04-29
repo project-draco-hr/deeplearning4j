@@ -1,4 +1,11 @@
 {
-  DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
-  return sigmoid(preSig);
+  if (visibleType == VisibleUnit.GAUSSIAN) {
+    DoubleMatrix vMean=h.mmul(W.transpose()).mulRowVector(vBias.add(sigma));
+    return vMean;
+  }
+ else   if (visibleType == VisibleUnit.BINARY) {
+    DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
+    return sigmoid(preSig);
+  }
+  throw new IllegalStateException("Visible unit type should either be binary or gaussian");
 }

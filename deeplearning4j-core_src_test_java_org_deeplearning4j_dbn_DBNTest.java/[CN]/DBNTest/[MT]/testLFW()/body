@@ -1,6 +1,6 @@
 {
   DataSetIterator iter=new LFWDataSetIterator(10,10,14,14);
-  GaussianRectifiedLinearDBN dbn=new GaussianRectifiedLinearDBN.Builder().hiddenLayerSizes(new int[]{250,150,100}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).numberOfInputs(iter.inputColumns()).numberOfOutPuts(iter.totalOutcomes()).build();
+  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).hiddenLayerSizes(new int[]{250,150,100}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).numberOfInputs(iter.inputColumns()).numberOfOutPuts(iter.totalOutcomes()).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.pretrain(next.getFirst(),1,1e-5,10000);

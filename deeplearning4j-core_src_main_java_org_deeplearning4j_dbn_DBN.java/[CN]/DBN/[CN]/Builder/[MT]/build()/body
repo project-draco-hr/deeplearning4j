@@ -1,0 +1,6 @@
+{
+  DBN ret=super.build();
+  ret.hiddenUnit=hiddenUnit;
+  ret.visibleUnit=visibleUnit;
+  return ret;
+}
