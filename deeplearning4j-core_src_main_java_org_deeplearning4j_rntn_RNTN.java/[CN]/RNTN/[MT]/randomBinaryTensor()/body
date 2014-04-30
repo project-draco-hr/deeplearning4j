@@ -1,0 +1,5 @@
+{
+  double range=1.0 / (4.0 * numHidden);
+  Tensor tensor=Tensor.rand(numHidden * 2,numHidden * 2,numHidden,-range,range,rng);
+  return tensor.scale(scalingForInit);
+}

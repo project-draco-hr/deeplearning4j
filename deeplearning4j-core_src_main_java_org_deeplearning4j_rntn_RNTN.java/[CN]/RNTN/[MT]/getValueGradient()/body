@@ -1,0 +1,57 @@
+{
+  MultiDimensionalMap<String,String,DoubleMatrix> binaryTD=MultiDimensionalMap.newTreeBackedMap();
+  MultiDimensionalMap<String,String,Tensor> binaryTensorTD=MultiDimensionalMap.newTreeBackedMap();
+  MultiDimensionalMap<String,String,DoubleMatrix> binaryCD=MultiDimensionalMap.newTreeBackedMap();
+  Map<String,DoubleMatrix> unaryCD=new TreeMap<>();
+  Map<String,DoubleMatrix> wordVectorD=new TreeMap<>();
+  for (  MultiDimensionalMap.Entry<String,String,DoubleMatrix> entry : binaryTransform.entrySet()) {
+    int numRows=entry.getValue().rows;
+    int numCols=entry.getValue().columns;
+    binaryTD.put(entry.getFirstKey(),entry.getSecondKey(),new DoubleMatrix(numRows,numCols));
+  }
+  if (!combineClassification) {
+    for (    MultiDimensionalMap.Entry<String,String,DoubleMatrix> entry : binaryClassification.entrySet()) {
+      int numRows=entry.getValue().rows;
+      int numCols=entry.getValue().columns;
+      binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),new DoubleMatrix(numRows,numCols));
+    }
+  }
+  if (useTensors) {
+    for (    MultiDimensionalMap.Entry<String,String,Tensor> entry : binaryTensors.entrySet()) {
+      int numRows=entry.getValue().rows();
+      int numCols=entry.getValue().columns;
+      int numSlices=entry.getValue().slices();
+      binaryTensorTD.put(entry.getFirstKey(),entry.getSecondKey(),new Tensor(numRows,numCols,numSlices));
+    }
+  }
+  for (  Map.Entry<String,DoubleMatrix> entry : unaryClassification.entrySet()) {
+    int numRows=entry.getValue().rows;
+    int numCols=entry.getValue().columns;
+    unaryCD.put(entry.getKey(),new DoubleMatrix(numRows,numCols));
+  }
+  for (  Map.Entry<String,DoubleMatrix> entry : featureVectors.entrySet()) {
+    int numRows=entry.getValue().rows;
+    int numCols=entry.getValue().columns;
+    wordVectorD.put(entry.getKey(),new DoubleMatrix(numRows,numCols));
+  }
+  List<Tree> forwardPropTrees=new ArrayList<>();
+  for (  Tree tree : trainingTrees) {
+    Tree trainingTree=tree.clone();
+    forwardPropagateTree(trainingTree);
+    forwardPropTrees.add(trainingTree);
+  }
+  double error=0.0;
+  for (  Tree tree : forwardPropTrees) {
+    backpropDerivativesAndError(tree,binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD);
+    error+=tree.errorSum();
+  }
+  double scale=(1.0 / trainingTrees.size());
+  double value=error * scale;
+  value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
+  value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
+  value+=scaleAndRegularizeTensor(binaryTensorTD,binaryTensors,scale,regTransformTensor);
+  value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
+  value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
+  DoubleMatrix derivative=MatrixUtil.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryTensorTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
+  return derivative;
+}

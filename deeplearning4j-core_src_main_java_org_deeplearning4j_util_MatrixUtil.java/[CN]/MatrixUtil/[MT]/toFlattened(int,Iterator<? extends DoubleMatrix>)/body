@@ -1,0 +1,13 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(1,length);
+  int linearIndex=0;
+  for (  Iterator<? extends DoubleMatrix> iter : matrices) {
+    while (iter.hasNext()) {
+      DoubleMatrix d=iter.next();
+      for (int i=0; i < d.length; i++) {
+        ret.put(linearIndex++,d.get(i));
+      }
+    }
+  }
+  return ret;
+}

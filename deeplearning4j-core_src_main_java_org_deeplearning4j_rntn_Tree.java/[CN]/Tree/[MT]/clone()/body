@@ -1,0 +1,8 @@
+{
+  Tree ret=new Tree();
+  ret.setChildren(children());
+  ret.setError(error);
+  ret.setValue(value);
+  ret.setVector(vector);
+  return ret;
+}

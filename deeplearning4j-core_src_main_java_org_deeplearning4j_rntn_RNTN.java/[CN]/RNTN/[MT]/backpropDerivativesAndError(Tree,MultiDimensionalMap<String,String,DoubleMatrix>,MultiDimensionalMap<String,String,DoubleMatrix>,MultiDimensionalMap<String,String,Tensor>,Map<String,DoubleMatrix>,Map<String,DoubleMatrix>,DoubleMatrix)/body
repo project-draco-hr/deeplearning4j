@@ -1,0 +1,64 @@
+{
+  if (tree.isLeaf()) {
+    return;
+  }
+  DoubleMatrix currentVector=tree.vector();
+  String category=tree.label();
+  category=basicCategory(category);
+  DoubleMatrix goldLabel=new DoubleMatrix(numOuts,1);
+  int goldClass=tree.goldLabel();
+  if (goldClass >= 0) {
+    goldLabel.put(goldClass,1.0);
+  }
+  double nodeWeight=classWeights.get(goldClass);
+  DoubleMatrix predictions=tree.prediction();
+  DoubleMatrix deltaClass=goldClass >= 0 ? SimpleBlas.scal(nodeWeight,predictions.sub(goldLabel)) : new DoubleMatrix(predictions.rows,predictions.columns);
+  DoubleMatrix localCD=deltaClass.mmul(DoubleMatrix.concatHorizontally(currentVector,DoubleMatrix.ones(1,currentVector.columns)).transpose());
+  double error=-(MatrixFunctions.log(predictions).mul(goldLabel).sum());
+  error=error * nodeWeight;
+  tree.setError(error);
+  if (tree.isPreTerminal()) {
+    unaryCD.put(category,unaryCD.get(category).add(localCD));
+    String word=tree.children().get(0).label();
+    word=getVocabWord(word);
+    DoubleMatrix currentVectorDerivative=MatrixFunctions.tanh(currentVector);
+    DoubleMatrix deltaFromClass=getUnaryClassification(category).transpose().mmul(deltaClass);
+    deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,1),RangeUtils.interval(0,numHidden)).mul(currentVectorDerivative);
+    DoubleMatrix deltaFull=deltaFromClass.add(deltaUp);
+    wordVectorD.put(word,wordVectorD.get(word).add(deltaFull));
+  }
+ else {
+    String leftCategory=basicCategory(tree.children().get(0).label());
+    String rightCategory=basicCategory(tree.children().get(1).label());
+    if (combineClassification) {
+      unaryCD.put("",unaryCD.get("").add(localCD));
+    }
+ else {
+      binaryCD.put(leftCategory,rightCategory,binaryCD.get(leftCategory,rightCategory).add(localCD));
+    }
+    DoubleMatrix currentVectorDerivative=MatrixFunctions.tanh(currentVector);
+    DoubleMatrix deltaFromClass=getBinaryClassification(leftCategory,rightCategory).transpose().mmul(deltaClass);
+    deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,1),RangeUtils.interval(0,numHidden)).mul(currentVectorDerivative);
+    DoubleMatrix deltaFull=deltaFromClass.add(deltaUp);
+    DoubleMatrix leftVector=tree.children().get(0).vector();
+    DoubleMatrix rightVector=tree.children().get(1).vector();
+    DoubleMatrix childrenVector=DoubleMatrix.concatHorizontally(leftVector,rightVector);
+    DoubleMatrix W_df=deltaFull.mmul(childrenVector.transpose());
+    binaryTD.put(leftCategory,rightCategory,binaryTD.get(leftCategory,rightCategory).add(W_df));
+    DoubleMatrix deltaDown;
+    if (useTensors) {
+      Tensor Wt_df=getTensorGradient(deltaFull,leftVector,rightVector);
+      binaryTensorTD.put(leftCategory,rightCategory,binaryTensorTD.get(leftCategory,rightCategory).add(Wt_df));
+      deltaDown=computeTensorDeltaDown(deltaFull,leftVector,rightVector,getBinaryTransform(leftCategory,rightCategory),getBinaryTensor(leftCategory,rightCategory));
+    }
+ else {
+      deltaDown=getBinaryTransform(leftCategory,rightCategory).transpose().mmul(deltaFull);
+    }
+    DoubleMatrix leftDerivative=MatrixFunctions.tanh(leftVector);
+    DoubleMatrix rightDerivative=MatrixFunctions.tanh(rightVector);
+    DoubleMatrix leftDeltaDown=deltaDown.get(RangeUtils.interval(0,1),RangeUtils.interval(0,deltaFull.rows));
+    DoubleMatrix rightDeltaDown=deltaDown.get(RangeUtils.interval(0,1),RangeUtils.interval(deltaFull.rows,deltaFull.rows * 2));
+    backpropDerivativesAndError(tree.children().get(0),binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD,leftDerivative.mul(leftDeltaDown));
+    backpropDerivativesAndError(tree.children().get(1),binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD,rightDerivative.mul(rightDeltaDown));
+  }
+}

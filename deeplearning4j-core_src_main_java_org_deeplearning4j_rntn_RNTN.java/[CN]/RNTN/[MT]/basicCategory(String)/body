@@ -1,0 +1,6 @@
+{
+  if (simplifiedModel) {
+    return "";
+  }
+  throw new IllegalStateException("Only simplified model enabled");
+}

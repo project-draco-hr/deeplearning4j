@@ -1,0 +1,10 @@
+{
+  double cost=0.0;
+  for (  MultiDimensionalMap.Entry<String,String,Tensor> entry : currentMatrices.entrySet()) {
+    Tensor D=derivatives.get(entry.getFirstKey(),entry.getSecondKey());
+    D=D.scale(scale).add(entry.getValue().scale(regCost));
+    derivatives.put(entry.getFirstKey(),entry.getSecondKey(),D);
+    cost+=entry.getValue().mul(entry.getValue()).sum() * regCost / 2.0;
+  }
+  return cost;
+}

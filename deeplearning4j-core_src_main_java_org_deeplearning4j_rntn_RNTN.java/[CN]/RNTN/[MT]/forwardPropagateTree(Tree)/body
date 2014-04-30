@@ -1,0 +1,41 @@
+{
+  DoubleMatrix nodeVector=null;
+  DoubleMatrix classification=null;
+  if (tree.isLeaf()) {
+    throw new AssertionError("We should not have reached leaves in forwardPropagate");
+  }
+ else   if (tree.isPreTerminal()) {
+    classification=getUnaryClassification(tree.label());
+    String word=tree.children().get(0).label();
+    DoubleMatrix wordVector=getFeatureVector(word);
+    nodeVector=MatrixFunctions.tanh(wordVector);
+  }
+ else   if (tree.children().size() == 1) {
+    throw new AssertionError("Non-preterminal nodes of size 1 should have already been collapsed");
+  }
+ else   if (tree.children().size() == 2) {
+    forwardPropagateTree(tree.children().get(0));
+    forwardPropagateTree(tree.children().get(1));
+    String leftCategory=tree.children().get(0).label();
+    String rightCategory=tree.children().get(1).label();
+    DoubleMatrix W=getBinaryTransform(leftCategory,rightCategory);
+    classification=getBinaryClassification(leftCategory,rightCategory);
+    DoubleMatrix leftVector=tree.children().get(0).vector();
+    DoubleMatrix rightVector=tree.children().get(1).vector();
+    DoubleMatrix childrenVector=DoubleMatrix.concatHorizontally(leftVector,rightVector);
+    if (useTensors) {
+      Tensor tensor=getBinaryTensor(leftCategory,rightCategory);
+      DoubleMatrix tensorIn=DoubleMatrix.concatHorizontally(leftVector,rightVector);
+      DoubleMatrix tensorOut=tensor.bilinearProducts(tensorIn);
+      nodeVector=MatrixFunctions.tanh(W.mmul(childrenVector).add(tensorOut));
+    }
+ else {
+      nodeVector=MatrixFunctions.tanh(W.mmul(childrenVector));
+    }
+  }
+ else {
+    throw new AssertionError("Tree not correctly binarized");
+  }
+  DoubleMatrix predictions=MatrixUtil.softmax(classification.mmul(DoubleMatrix.concatHorizontally(nodeVector,DoubleMatrix.ones(nodeVector.columns,1))));
+  int index=SimpleBlas.iamax(predictions);
+}

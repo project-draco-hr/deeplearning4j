@@ -1,0 +1,4 @@
+{
+  double range=1.0 / (Math.sqrt((double)numHidden) * 2.0);
+  return MatrixUtil.rand(numHidden,numHidden,-range,range,rng).add(identity);
+}

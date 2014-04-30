@@ -1,0 +1,5 @@
+{
+  double range=1.0 / (Math.sqrt((double)numHidden));
+  DoubleMatrix score=MatrixUtil.rand(numOuts,numHidden + 1,-range,range,rng);
+  return SimpleBlas.scal(scalingForInit,score);
+}

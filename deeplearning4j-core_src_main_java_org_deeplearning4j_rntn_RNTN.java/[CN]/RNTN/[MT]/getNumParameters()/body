@@ -1,0 +1,7 @@
+{
+  int totalSize=0;
+  totalSize=numBinaryMatrices * (binaryTransformSize + binaryClassificationSize + binaryTensorSize);
+  totalSize+=numUnaryMatrices * unaryClassificationSize;
+  totalSize+=featureVectors.size() * numHidden;
+  return totalSize;
+}
