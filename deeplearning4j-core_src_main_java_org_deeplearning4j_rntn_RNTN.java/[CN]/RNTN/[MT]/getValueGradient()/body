@@ -46,12 +46,14 @@
     error+=tree.errorSum();
   }
   double scale=(1.0 / trainingTrees.size());
-  double value=error * scale;
+  value=error * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
   value+=scaleAndRegularizeTensor(binaryTensorTD,binaryTensors,scale,regTransformTensor);
   value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
   value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
   DoubleMatrix derivative=MatrixUtil.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryTensorTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
+  if (paramAdaGrad == null)   paramAdaGrad=new AdaGrad(1,derivative.columns);
+  derivative.muli(paramAdaGrad.getLearningRates(derivative));
   return derivative;
 }
