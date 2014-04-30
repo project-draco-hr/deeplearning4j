@@ -27,10 +27,10 @@
       Tensor tensor=getBinaryTensor(leftCategory,rightCategory);
       DoubleMatrix tensorIn=DoubleMatrix.concatHorizontally(leftVector,rightVector);
       DoubleMatrix tensorOut=tensor.bilinearProducts(tensorIn);
-      nodeVector=MatrixFunctions.tanh(W.mmul(childrenVector).add(tensorOut));
+      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(tensorOut));
     }
  else {
-      nodeVector=MatrixFunctions.tanh(W.mmul(childrenVector));
+      nodeVector=activationFunction.apply(W.mmul(childrenVector));
     }
   }
  else {
@@ -38,4 +38,7 @@
   }
   DoubleMatrix predictions=MatrixUtil.softmax(classification.mmul(DoubleMatrix.concatHorizontally(nodeVector,DoubleMatrix.ones(nodeVector.columns,1))));
   int index=SimpleBlas.iamax(predictions);
+  tree.setPrediction(predictions);
+  tree.setVector(nodeVector);
+  tree.setLabel(String.valueOf(index));
 }

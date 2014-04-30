@@ -21,7 +21,7 @@
     unaryCD.put(category,unaryCD.get(category).add(localCD));
     String word=tree.children().get(0).label();
     word=getVocabWord(word);
-    DoubleMatrix currentVectorDerivative=MatrixFunctions.tanh(currentVector);
+    DoubleMatrix currentVectorDerivative=activationFunction.apply(currentVector);
     DoubleMatrix deltaFromClass=getUnaryClassification(category).transpose().mmul(deltaClass);
     deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,1),RangeUtils.interval(0,numHidden)).mul(currentVectorDerivative);
     DoubleMatrix deltaFull=deltaFromClass.add(deltaUp);
@@ -36,7 +36,7 @@
  else {
       binaryCD.put(leftCategory,rightCategory,binaryCD.get(leftCategory,rightCategory).add(localCD));
     }
-    DoubleMatrix currentVectorDerivative=MatrixFunctions.tanh(currentVector);
+    DoubleMatrix currentVectorDerivative=activationFunction.apply(currentVector);
     DoubleMatrix deltaFromClass=getBinaryClassification(leftCategory,rightCategory).transpose().mmul(deltaClass);
     deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,1),RangeUtils.interval(0,numHidden)).mul(currentVectorDerivative);
     DoubleMatrix deltaFull=deltaFromClass.add(deltaUp);
@@ -54,8 +54,8 @@
  else {
       deltaDown=getBinaryTransform(leftCategory,rightCategory).transpose().mmul(deltaFull);
     }
-    DoubleMatrix leftDerivative=MatrixFunctions.tanh(leftVector);
-    DoubleMatrix rightDerivative=MatrixFunctions.tanh(rightVector);
+    DoubleMatrix leftDerivative=activationFunction.apply(leftVector);
+    DoubleMatrix rightDerivative=activationFunction.apply(rightVector);
     DoubleMatrix leftDeltaDown=deltaDown.get(RangeUtils.interval(0,1),RangeUtils.interval(0,deltaFull.rows));
     DoubleMatrix rightDeltaDown=deltaDown.get(RangeUtils.interval(0,1),RangeUtils.interval(deltaFull.rows,deltaFull.rows * 2));
     backpropDerivativesAndError(tree.children().get(0),binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD,leftDerivative.mul(leftDeltaDown));
