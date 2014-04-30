@@ -11,7 +11,6 @@
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
   TextVectorizer vectorizor=new TfidfVectorizer(iterator,tokenizerFactory,Arrays.asList("0","1","2"),2000);
   DataSet data=vectorizor.vectorize();
-  data.binarize();
   log.info("Vocab " + vectorizor.vocab());
   DataSetIterator iter=new ListDataSetIterator(data.asList(),10);
   HazelCastStateTracker tracker=new HazelCastStateTracker();
@@ -23,6 +22,8 @@
   c.setUseAdaGrad(true);
   c.setnOut(3);
   c.setSplit(10);
+  c.setHiddenUnit(RBM.HiddenUnit.RECTIFIED);
+  c.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
   c.setMultiLayerClazz(DBN.class);
   c.setUseRegularization(false);
   c.setDeepLearningParams(new Object[]{1,1e-1,1000});

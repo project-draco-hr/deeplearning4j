@@ -1,4 +1,5 @@
 {
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=MatrixUtil.columnVariance(input).divi(input.rows);
   if (hiddenType == HiddenUnit.RECTIFIED) {
     DoubleMatrix preSig=v.divRowVector(sigma).mmul(W).addiRowVector(hBias);
     return preSig;

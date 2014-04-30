@@ -8,7 +8,7 @@
     classification=getUnaryClassification(tree.label());
     String word=tree.children().get(0).label();
     DoubleMatrix wordVector=getFeatureVector(word);
-    nodeVector=MatrixFunctions.tanh(wordVector);
+    nodeVector=activationFunction.apply(wordVector);
   }
  else   if (tree.children().size() == 1) {
     throw new AssertionError("Non-preterminal nodes of size 1 should have already been collapsed");
