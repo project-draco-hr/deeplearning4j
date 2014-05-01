@@ -6,6 +6,7 @@
  else   masterResults.set(acc.averaged());
   try {
     stateTracker.setCurrent(masterResults);
+    for (    String workerId : stateTracker.workers())     stateTracker.addReplicate(workerId);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

@@ -1,11 +1,11 @@
 {
+  List<UpdateableImpl> updates=stateTracker.updates();
   if (!updates.isEmpty()) {
     UpdateableImpl masterResults=this.compute(updates,updates);
     epochsComplete++;
     if (!isDone())     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
-    updates.clear();
+    stateTracker.updates().clear();
     log.info("Broadcasting weights");
-    mediator.tell(new DistributedPubSubMediator.Publish(BROADCAST,masterResults),getSelf());
-    this.stateTracker.setCurrent(masterResults);
+    for (    String worker : stateTracker.workers())     stateTracker.addReplicate(worker);
   }
 }

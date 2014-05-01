@@ -1,12 +1,27 @@
 {
   heartbeat=context().system().scheduler().schedule(Duration.apply(10,TimeUnit.SECONDS),Duration.apply(10,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
-      log.info("Sending heartbeat to master");
+      log.info("Sending heartbeat to master and polling for weight updates");
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
       tracker.addWorker(id);
-      Job j=tracker.jobFor(id);
+      if (tracker.needsReplicate(id)) {
+        try {
+          log.info("Updating worker " + id);
+          setE(tracker.getCurrent());
+          setNetwork(tracker.getCurrent().get());
+          tracker.doneReplicating(id);
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
       try {
-        if (j != null)         tracker.clearJob(j);
+        blockTillJobAvailable();
+        if (currentJob != null) {
+          log.info("Confirmation from " + currentJob.getWorkerId() + " on work");
+          List<DataSet> input=(List<DataSet>)currentJob.getWork();
+          processDataSet(input);
+        }
       }
  catch (      Exception e) {
         throw new RuntimeException(e);

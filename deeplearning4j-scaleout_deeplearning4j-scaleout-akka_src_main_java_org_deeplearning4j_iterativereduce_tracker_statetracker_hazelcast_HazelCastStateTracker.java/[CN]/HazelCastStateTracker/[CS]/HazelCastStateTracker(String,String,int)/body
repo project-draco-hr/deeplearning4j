@@ -1,5 +1,9 @@
 {
   if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
+    if (connectionString.equals("master")) {
+      String host=InetAddress.getLocalHost().getHostName();
+      this.connectionString=host + ":" + stateTrackerPort;
+    }
     this.hazelCastPort=stateTrackerPort;
     config=hazelcast();
     h=Hazelcast.newHazelcastInstance(config);
@@ -18,6 +22,7 @@
   }
  else   if (type.equals("master") && PortTaken.portTaken(stateTrackerPort))   throw new IllegalStateException("Specified type was master and the port specified was taken, please specify a different port");
  else {
+    setConnectionString(connectionString);
     log.info("Connecting to hazelcast on " + connectionString);
     ClientConfig client=new ClientConfig();
     client.getNetworkConfig().addAddress(connectionString);
@@ -33,7 +38,9 @@
     }
     log.info("Workers is " + workers.size());
   }
+  replicate=h.getList(REPLICATE_WEIGHTS);
   topics=h.getList(TOPICS);
+  updates=h.getList(UPDATES);
   heartbeat=h.getMap(HEART_BEAT);
   master=h.getAtomicReference(RESULT);
   isPretrain=h.getAtomicReference(IS_PRETRAIN);

@@ -11,9 +11,15 @@
   ListConfig jobConfig=new ListConfig();
   jobConfig.setName(JOBS);
   conf.addListConfig(jobConfig);
+  ListConfig replicateConfig=new ListConfig();
+  replicateConfig.setName(REPLICATE_WEIGHTS);
+  conf.addListConfig(replicateConfig);
   ListConfig topicsConfig=new ListConfig();
   topicsConfig.setName(TOPICS);
   conf.addListConfig(topicsConfig);
+  ListConfig updatesConfig=new ListConfig();
+  updatesConfig.setName(UPDATES);
+  conf.addListConfig(updatesConfig);
   ListConfig availableWorkersConfig=new ListConfig();
   availableWorkersConfig.setName(AVAILABLE_WORKERS);
   conf.addListConfig(availableWorkersConfig);

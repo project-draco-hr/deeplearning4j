@@ -4,57 +4,12 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed to " + ack.toString());
   }
- else   if (message instanceof Job) {
-    Job j=(Job)message;
-    Job trackerJob=tracker.jobFor(id);
-    if (trackerJob == null) {
-      tracker.addJobToCurrent(j);
-      log.info("Confirmation from " + j.getWorkerId() + " on work");
-      List<DataSet> input=(List<DataSet>)j.getWork();
-      confirmWorking();
-      updateTraining(input);
-    }
- else {
-      Job j2=null;
-      boolean redist=false;
-      while (!redist) {
-        List<String> ids=tracker.workers();
-        for (        String s : ids) {
-          if (tracker.jobFor(s) == null) {
-            j2=j;
-            j2.setWorkerId(s);
-            mediator.tell(new DistributedPubSubMediator.Publish(s,j2),getSelf());
-            log.info("Delegated work to worker " + s);
-            redist=true;
-            break;
-          }
-        }
-      }
-    }
-  }
  else   if (message instanceof BaseMultiLayerNetwork) {
     setNetwork((BaseMultiLayerNetwork)message);
     log.info("Set network");
   }
  else   if (message instanceof Ack) {
     log.info("Ack from master on worker " + id);
-  }
- else   if (message instanceof Updateable) {
-    final UpdateableImpl m=(UpdateableImpl)message;
-    Future<Void> f=Futures.future(new Callable<Void>(){
-      @Override public Void call() throws Exception {
-        if (m.get() == null) {
-          setNetwork(tracker.getCurrent().get());
-        }
- else {
-          setWorkerUpdateable(m.clone());
-          setNetwork(m.get());
-        }
-        return null;
-      }
-    }
-,context().dispatcher());
-    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
   }
  else   unhandled(message);
 }

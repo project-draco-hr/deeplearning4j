@@ -1,3 +1,5 @@
 {
-  return UUID.randomUUID().toString();
+  String base=UUID.randomUUID().toString();
+  String host=System.getProperty("akka.remote.netty.tcp.hostname","localhost");
+  return host + "-" + base;
 }

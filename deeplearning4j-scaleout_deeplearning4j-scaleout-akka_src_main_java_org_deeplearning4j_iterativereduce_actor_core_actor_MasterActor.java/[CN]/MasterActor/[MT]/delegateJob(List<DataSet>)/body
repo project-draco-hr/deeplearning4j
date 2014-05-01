@@ -1,18 +1,17 @@
 {
-  List<String> ids=new ArrayList<String>(stateTracker.workers());
-  log.info("Possible workers " + ids);
+  log.info("Possible workers " + stateTracker.workers());
   Job j2=null;
   boolean sent=false;
+  String host=System.getProperty("akka.remote.netty.tcp.hostname","localhost");
   while (!sent) {
-    for (    String s : ids) {
+    for (    String s : stateTracker.workers()) {
       if (stateTracker.jobFor(s) == null) {
         j2=new Job(s,(Serializable)work,pretrain);
-        mediator.tell(new DistributedPubSubMediator.Publish(s,j2),getSelf());
+        stateTracker.addJobToCurrent(j2);
         log.info("Delegated work to worker " + s + " with size "+ work.size());
         sent=true;
         break;
       }
     }
-    ids=stateTracker.workers();
   }
 }

@@ -4,22 +4,12 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed " + ack.toString());
   }
- else   if (message instanceof NoJobFound) {
-    partition--;
-    if (updates.size() >= partition)     nextIteration();
-  }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
     checkDone();
   }
  else   if (message instanceof String) {
     getSender().tell(Ack.getInstance(),getSelf());
-  }
- else   if (message instanceof UpdateableImpl) {
-    UpdateableImpl up=(UpdateableImpl)message;
-    updates.add(up);
-    log.info("Num updates so far " + updates.size() + " and partition size is "+ partition);
-    if (updates.size() >= partition)     nextIteration();
   }
  else   if (message instanceof List || message instanceof DataSet) {
     if (message instanceof List) {

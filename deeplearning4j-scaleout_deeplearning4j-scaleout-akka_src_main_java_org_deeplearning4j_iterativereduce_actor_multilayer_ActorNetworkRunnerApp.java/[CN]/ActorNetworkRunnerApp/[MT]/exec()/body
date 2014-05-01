@@ -4,7 +4,10 @@
     ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
     Conf conf=retriever.retreive();
     String address=conf.getMasterUrl();
+    HazelCastStateTracker stateTracker=new HazelCastStateTracker(conf.getStateTrackerConnectionString());
+    log.info("Creating hazel cast via worker " + stateTracker.connectionString());
     runner=new ActorNetworkRunner(type,address);
+    runner.setStateTracker(stateTracker);
     runner.setup(conf);
     retriever.close();
   }

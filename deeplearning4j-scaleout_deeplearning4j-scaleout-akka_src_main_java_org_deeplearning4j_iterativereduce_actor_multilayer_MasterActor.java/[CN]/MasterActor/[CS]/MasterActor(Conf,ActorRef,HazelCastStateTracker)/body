@@ -4,8 +4,18 @@
   forceNextPhase=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
       try {
-        List<Job> currentJobs=MasterActor.this.stateTracker.currentJobs();
+        List<Job> currentJobs=stateTracker.currentJobs();
         log.info("Status check on next iteration");
+        if (stateTracker.getCurrent() == null) {
+          try {
+            log.info("State tracker did not have a network; reinitializing");
+            if (network == null)             stateTracker.setCurrent(new UpdateableImpl(network));
+          }
+ catch (          Exception e) {
+            throw new RuntimeException(e);
+          }
+        }
+        List<UpdateableImpl> updates=stateTracker.updates();
         if (updates.size() >= partition || currentJobs.isEmpty())         nextIteration();
         log.info("Current jobs left " + currentJobs);
       }

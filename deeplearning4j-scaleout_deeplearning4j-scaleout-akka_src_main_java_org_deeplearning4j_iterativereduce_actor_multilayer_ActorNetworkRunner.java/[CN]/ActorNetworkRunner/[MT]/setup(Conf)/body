@@ -11,8 +11,9 @@
         if (stateTrackerPort > 0)         stateTracker=new HazelCastStateTracker(stateTrackerPort);
  else         stateTracker=new HazelCastStateTracker();
       }
+      log.info("Started state tracker with connection string " + stateTracker.connectionString());
       if (finetune)       stateTracker.moveToFinetune();
-      masterAddress=startBackend(null,"master",conf,iter,stateTracker);
+      masterAddress=startBackend(null,conf,iter,stateTracker);
       Thread.sleep(60000);
     }
  catch (    Exception e1) {
@@ -29,6 +30,7 @@
  else     system.actorOf(Props.create(ModelSavingActor.class,modelSaver));
     conf.setMasterUrl(getMasterAddress().toString());
     conf.setMasterAbsPath(ActorRefUtils.absPath(masterActor,system));
+    conf.setStateTrackerConnectionString(stateTracker.connectionString());
     ActorRefUtils.registerConfWithZooKeeper(conf,system);
     system.scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
       @Override public void run(){
@@ -53,9 +55,8 @@
     try {
       String host=a.host().get();
       if (host == null)       throw new IllegalArgumentException("No host set for worker");
-      int port=this.stateTrackerPort < 1 ? HazelCastStateTracker.DEFAULT_HAZELCAST_PORT : this.stateTrackerPort;
-      String connectionString=host + ":" + port;
-      stateTracker=new HazelCastStateTracker(connectionString,"worker",port);
+      String connectionString=conf.getStateTrackerConnectionString();
+      stateTracker=new HazelCastStateTracker(connectionString);
     }
  catch (    Exception e1) {
       Thread.currentThread().interrupt();

@@ -6,22 +6,23 @@
     try {
       network=tracker.getCurrent().get();
       this.network=network;
+      log.info("Network is currently null");
     }
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
   }
   DataSet d=null;
-  Job j=tracker.jobFor(id);
-  if (j != null) {
+  if (currentJob != null) {
     log.info("Found job for worker " + id);
-    if (j.getWork() instanceof List) {
-      List<DataSet> l=(List<DataSet>)j.getWork();
+    if (currentJob.getWork() instanceof List) {
+      List<DataSet> l=(List<DataSet>)currentJob.getWork();
       d=DataSet.merge(l);
     }
- else     d=(DataSet)j.getWork();
+ else     d=(DataSet)currentJob.getWork();
   }
-  if (j == null)   return null;
+ else   log.warn("No job found for " + id + " despite compute being called");
+  if (currentJob == null)   return null;
   if (d == null) {
     throw new IllegalStateException("No job found for worker " + id);
   }
@@ -33,7 +34,6 @@
   }
  else {
     if (isNormalizeZeroMeanAndUnitVariance)     d.normalizeZeroMeanZeroUnitVariance();
-    ;
     if (scale)     d.scale();
     network.setInput(d.getFirst());
     log.info("Worker " + id + " finetune");
@@ -41,7 +41,10 @@
     network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
   }
   try {
-    if (j != null)     tracker.clearJob(j);
+    if (currentJob != null) {
+      tracker.clearJob(currentJob);
+      log.info("Clearing job for worker " + id);
+    }
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
