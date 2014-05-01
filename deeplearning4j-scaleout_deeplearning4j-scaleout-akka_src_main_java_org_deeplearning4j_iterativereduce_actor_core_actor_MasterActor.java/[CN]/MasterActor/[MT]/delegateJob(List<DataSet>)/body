@@ -1,6 +1,6 @@
 {
   log.info("Possible workers " + stateTracker.workers());
-  Job j2=null;
+  Job j2;
   boolean sent=false;
   String host=System.getProperty("akka.remote.netty.tcp.hostname","localhost");
   while (!sent) {
