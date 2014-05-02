@@ -1,0 +1,5 @@
+{
+  int[] ret=new int[matrix.length];
+  for (int i=0; i < ret.length; i++)   ret[i]=(int)Math.round(matrix.get(i));
+  return ret;
+}

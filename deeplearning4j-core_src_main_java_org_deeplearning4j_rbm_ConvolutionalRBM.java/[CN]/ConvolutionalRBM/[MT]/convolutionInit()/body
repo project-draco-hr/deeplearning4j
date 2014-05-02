@@ -6,7 +6,7 @@
   convolutionInitCalled=true;
   vBias=DoubleMatrix.zeros(numFilters);
   hBias=DoubleMatrix.zeros(1);
-  for (int i=0; i < this.W.rows; i++)   this.W.putRow(i,new DoubleMatrix(dist.sample(this.W.columns)));
+  for (int i=0; i < this.W.rows; i++)   W.putRow(i,new DoubleMatrix(dist.sample(W.columns)));
   wAdaGrad=new AdaGrad(W.rows,W.columns);
   vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
   hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);

@@ -5,7 +5,7 @@
     visI.setSlice(i,conv);
   }
   DoubleMatrix I=visI.sliceElementSums().add(hBias);
-  I=sigmoid(I);
+  if (visibleType == VisibleUnit.BINARY)   I=sigmoid(I);
   Tensor ret=new Tensor(I);
   this.eVis=ret;
   return ret;

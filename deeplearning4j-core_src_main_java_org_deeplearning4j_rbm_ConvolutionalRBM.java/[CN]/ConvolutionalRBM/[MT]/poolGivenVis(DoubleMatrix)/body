@@ -2,7 +2,7 @@
   Tensor eHid=propUp(input);
   Tensor I=Tensor.zeros(eHid.rows(),eHid.columns(),eHid.slices());
   for (int i=0; i < W.slices(); i++) {
-    I.setSlice(i,Convolution.conv2d(input,reverse(W.getSlice(i)),VALID).add(hBias.get(i)));
+    I.setSlice(i,Convolution.conv2d(input,reverse(W.getSlice(i)),VALID).add(vBias.get(i)));
   }
   Tensor ret=Tensor.ones(I.rows(),I.columns(),I.slices());
   Tensor poolExpI=pool(I.exp()).add(1);

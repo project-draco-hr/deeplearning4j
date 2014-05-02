@@ -1,16 +1,18 @@
 {
   RandomGenerator gen=new MersenneTwister(123);
-  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(new int[]{28,28}).withNumFilters(9).withStride(new int[]{2,2}).withVisibleSize(new int[]{28,28}).withLossFunction(NeuralNetwork.LossFunction.RECONSTRUCTION_CROSSENTROPY).numberOfVisible(28).numHidden(28).withMomentum(0.3).build();
+  int rows=7;
+  int cols=7;
+  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(new int[]{rows,cols}).withNumFilters(9).withStride(new int[]{2,2}).withVisible(RBM.VisibleUnit.BINARY).withVisibleSize(new int[]{28,28}).withLossFunction(NeuralNetwork.LossFunction.RECONSTRUCTION_CROSSENTROPY).numberOfVisible(28).numHidden(28).withMomentum(0.5).build();
   DataSetIterator iter=new MnistDataSetIterator(1,10);
   for (int i=0; i < 10; i++) {
     while (iter.hasNext()) {
       DataSet next=iter.next();
+      log.info("This is a " + next.labelDistribution());
       DoubleMatrix reshape=next.getFirst().reshape(28,28);
-      r.train(reshape,1e-1,new Object[]{1,1e-1,5000});
-      Tensor W=(Tensor)r.getW().dup();
-      DoubleMatrix draw=W.reshape(W.rows() * W.columns(),W.slices());
-      FilterRenderer render=new FilterRenderer();
-      render.renderFilters(draw,"tmpfile.png",28,28);
+      for (int j=0; j < 10; j++)       r.train(reshape,1e-2,new Object[]{1,1e-2,20});
+      Tensor reshapePool=r.poolGivenVis(reshape);
+      drawFilters(r,rows,cols);
+      for (int j=0; j < reshapePool.slices(); j++)       drawSample(r,reshapePool.getSlice(j).rows,reshapePool.getSlice(j).columns,reshapePool.getSlice(j));
     }
     iter.reset();
   }
