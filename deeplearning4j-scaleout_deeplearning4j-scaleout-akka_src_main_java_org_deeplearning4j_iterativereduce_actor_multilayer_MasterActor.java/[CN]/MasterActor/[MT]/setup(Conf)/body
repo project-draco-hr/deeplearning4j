@@ -27,6 +27,8 @@
   UpdateableImpl masterResults=new UpdateableImpl(network);
   try {
     this.stateTracker.setCurrent(masterResults);
+    UpdateableImpl u2=this.stateTracker.getCurrent();
+    log.info("Stored " + u2.get());
   }
  catch (  Exception e1) {
     throw new RuntimeException(e1);

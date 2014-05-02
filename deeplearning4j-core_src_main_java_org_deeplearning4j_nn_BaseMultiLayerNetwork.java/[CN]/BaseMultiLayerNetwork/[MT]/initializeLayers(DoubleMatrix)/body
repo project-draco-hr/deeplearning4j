@@ -1,4 +1,5 @@
 {
+  log.info("Initializing layers with input of dims " + input.rows + " x "+ input.columns);
   if (input == null)   throw new IllegalArgumentException("Unable to initialize layers with empty input");
   if (input.columns != nIns)   throw new IllegalArgumentException(String.format("Unable to train on number of inputs; columns should be equal to number of inputs. Number of inputs was %d while number of columns was %d",nIns,input.columns));
   if (this.layers == null)   this.layers=new NeuralNetwork[getnLayers()];

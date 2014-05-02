@@ -1,6 +1,6 @@
 {
   log.info("Training network");
-  BaseMultiLayerNetwork network=this.getNetwork();
+  BaseMultiLayerNetwork network=getNetwork();
   isWorking=true;
   while (network == null) {
     try {
@@ -43,6 +43,7 @@
   try {
     if (currentJob != null) {
       tracker.clearJob(currentJob);
+      currentJob=null;
       log.info("Clearing job for worker " + id);
     }
   }

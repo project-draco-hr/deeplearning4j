@@ -4,7 +4,7 @@
     return;
   }
   IAtomicReference<Job> jRef=h.getAtomicReference("job-" + j.getWorkerId());
-  jRef.destroy();
+  jRef.clear();
   log.info("Destroyed job ref " + j.getWorkerId());
   jobs.remove(j);
 }

@@ -1,13 +1,21 @@
 {
   if (convolutionInitCalled)   return;
   W=new Tensor(filterSize[0],filterSize[1],numFilters);
+  wRows=W.rows();
+  wCols=W.columns();
+  wSlices=W.slices();
   visI=Tensor.zeros(visibleSize[0],visibleSize[1],numFilters);
   hidI=Tensor.zeros(fmSize[0],fmSize[1],numFilters);
   convolutionInitCalled=true;
-  vBias=DoubleMatrix.zeros(numFilters);
-  hBias=DoubleMatrix.zeros(1);
+  vBias=DoubleMatrix.zeros(1);
+  hBias=DoubleMatrix.zeros(numFilters);
+  double fanIn=visibleSize[0] * visibleSize[1];
+  double fanOut=fanIn * 9;
+  double range=Math.sqrt(6 / (fanIn + fanOut));
   for (int i=0; i < this.W.rows; i++)   W.putRow(i,new DoubleMatrix(dist.sample(W.columns)));
   wAdaGrad=new AdaGrad(W.rows,W.columns);
   vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
   hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);
+  convolutionInitCalled=true;
+  this.normalizeByInputRows=false;
 }

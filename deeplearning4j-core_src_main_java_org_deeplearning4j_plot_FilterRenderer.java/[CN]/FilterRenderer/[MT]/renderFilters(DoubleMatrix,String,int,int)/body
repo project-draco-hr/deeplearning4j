@@ -1,5 +1,5 @@
 {
-  int[] equiv=new int[data.getColumn(0).length];
+  int[] equiv=new int[data.length];
   int numberCols=data.columns;
   int patchesPerRow=10;
   double approx=(double)numberCols / (double)patchesPerRow;

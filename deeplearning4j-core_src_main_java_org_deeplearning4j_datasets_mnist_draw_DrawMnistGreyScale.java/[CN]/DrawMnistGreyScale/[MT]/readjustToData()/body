@@ -1,4 +1,5 @@
 {
   this.width=data.columns;
   this.height=data.rows;
+  img=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
 }

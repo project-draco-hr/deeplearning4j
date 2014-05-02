@@ -1,0 +1,8 @@
+{
+  if (sparsity != 0) {
+    DoubleMatrix negMean=DoubleMatrix.scalar(sparseGain * (sparsity - chainStart.columnMeans().mean()));
+    if (useAdaGrad)     negMean.muli(hBiasAdaGrad.getLearningRates(hBiasGradient));
+ else     negMean.muli(learningRate);
+    hBias.addi(negMean);
+  }
+}

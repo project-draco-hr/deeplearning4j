@@ -1,5 +1,5 @@
 {
-  double[] d=new double[this.getNumParameters()];
+  double[] d=new double[getNumParameters()];
   getValueGradient(d);
   return new DoubleMatrix(d);
 }

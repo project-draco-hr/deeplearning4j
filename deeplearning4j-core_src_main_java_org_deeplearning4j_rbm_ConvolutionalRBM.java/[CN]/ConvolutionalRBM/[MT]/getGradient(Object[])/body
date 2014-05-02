@@ -5,6 +5,7 @@
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Tensor chainStart=propUp(input);
+  this.chainStart=chainStart;
   Tensor nvSamples=null;
   Tensor hiddenMeans=chainStart;
   for (int i=0; i < k; i++) {

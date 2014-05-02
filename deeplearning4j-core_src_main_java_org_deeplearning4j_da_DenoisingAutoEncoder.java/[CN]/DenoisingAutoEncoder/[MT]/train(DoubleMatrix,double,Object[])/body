@@ -1,6 +1,7 @@
 {
   double corruptionLevel=(double)params[0];
-  this.input=input;
+  if (input != null && cacheInput)   this.input=input;
+  this.lastMiniBatchSize=input.rows;
   NeuralNetworkGradient gradient=getGradient(new Object[]{corruptionLevel,lr});
   vBias.addi(gradient.getvBiasGradient());
   W.addi(gradient.getwGradient());

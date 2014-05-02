@@ -1,6 +1,10 @@
 {
-  if (input != null)   this.input=input;
-  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=MatrixUtil.columnVariance(input).divi(input.rows);
+  if (input != null && cacheInput)   this.input=input;
+  this.lastMiniBatchSize=input.rows;
+  if (visibleType == VisibleUnit.GAUSSIAN) {
+    this.sigma=MatrixUtil.columnVariance(input);
+    if (normalizeByInputRows)     this.sigma.divi(input.rows);
+  }
   optimizer=new RBMOptimizer(this,lr,params,optimizationAlgo,lossFunction);
   optimizer.train(input);
 }

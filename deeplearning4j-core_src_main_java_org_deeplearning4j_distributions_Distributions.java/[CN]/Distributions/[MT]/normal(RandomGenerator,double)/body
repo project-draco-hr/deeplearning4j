@@ -1,3 +1,8 @@
 {
-  return new NormalDistribution(rng,0,std,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  if (normalDistributions.get(rng,std) == null) {
+    RealDistribution ret=new NormalDistribution(rng,0,std,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+    normalDistributions.put(rng,std,ret);
+    return ret;
+  }
+  return normalDistributions.get(rng,std);
 }

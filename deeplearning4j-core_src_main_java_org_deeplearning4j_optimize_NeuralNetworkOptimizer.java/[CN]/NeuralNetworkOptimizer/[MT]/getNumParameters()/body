@@ -1,3 +1,7 @@
 {
-  return network.getW().length + network.gethBias().length + network.getvBias().length;
+  if (numParams < 0) {
+    numParams=network.getW().length + network.gethBias().length + network.getvBias().length;
+    return numParams;
+  }
+  return numParams;
 }
