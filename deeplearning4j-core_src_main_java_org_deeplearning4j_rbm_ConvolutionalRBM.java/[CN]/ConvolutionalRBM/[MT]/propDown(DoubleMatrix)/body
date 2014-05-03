@@ -1,7 +1,7 @@
 {
   Tensor h1=(Tensor)h;
   for (int i=0; i < numFilters; i++) {
-    visI.setSlice(i,conv2d(h1.getSlice(i),W.getSlice(i),FULL));
+    visI.setSlice(i,sigmoid(conv2d(h1.getSlice(i),W.getSlice(i),FULL)));
   }
   DoubleMatrix I=visI.sliceElementSums().add(vBias);
   if (visibleType == VisibleUnit.BINARY)   I=sigmoid(I);
