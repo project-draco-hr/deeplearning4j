@@ -17,7 +17,7 @@
         }
         List<UpdateableImpl> updates=stateTracker.updates();
         if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
- else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.partition());
+ else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
         log.info("Current jobs left " + currentJobs);
       }
  catch (      Exception e) {
