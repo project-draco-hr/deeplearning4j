@@ -1,7 +1,7 @@
 {
-  List<UpdateableImpl> updates=stateTracker.updates();
+  Collection<String> updates=stateTracker.workerUpdates();
   if (!updates.isEmpty() && stateTracker.currentJobs().isEmpty()) {
-    UpdateableImpl masterResults=compute(updates,updates);
+    UpdateableImpl masterResults=compute();
     log.info("Updating next batch");
     stateTracker.setCurrent(masterResults);
     for (    String s : stateTracker.workers()) {
@@ -9,7 +9,7 @@
       stateTracker.addReplicate(s);
     }
     epochsComplete++;
-    stateTracker.updates().clear();
+    stateTracker.workerUpdates().clear();
     for (    String worker : stateTracker.workers()) {
       log.info("Enabling worker post batch " + worker);
       stateTracker.enableWorker(worker);

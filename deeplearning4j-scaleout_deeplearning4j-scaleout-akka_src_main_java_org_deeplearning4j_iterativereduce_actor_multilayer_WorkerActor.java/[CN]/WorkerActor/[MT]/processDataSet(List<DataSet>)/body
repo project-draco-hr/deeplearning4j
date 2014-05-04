@@ -19,9 +19,9 @@
       UpdateableImpl work=compute();
       if (work != null) {
         log.info("Done working; adding update to mini batch on worker " + id);
-        tracker.addUpdate(work);
+        tracker.addUpdate(id,work);
         tracker.disableWorker(id);
-        log.info("Number of updates so far " + tracker.updates().size());
+        log.info("Number of updates so far " + tracker.workerUpdates().size());
       }
       return work;
     }

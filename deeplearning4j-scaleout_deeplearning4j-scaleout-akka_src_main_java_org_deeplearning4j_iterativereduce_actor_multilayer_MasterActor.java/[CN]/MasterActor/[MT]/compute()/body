@@ -1,0 +1,19 @@
+{
+  DeepLearningAccumulatorIterateAndUpdate update=(DeepLearningAccumulatorIterateAndUpdate)stateTracker.updates();
+  try {
+    update.accumulate();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  UpdateableImpl masterResults=this.getResults();
+  if (masterResults == null)   masterResults=update.accumulated();
+ else   masterResults.set(update.accumulated().get());
+  try {
+    stateTracker.setCurrent(masterResults);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return masterResults;
+}

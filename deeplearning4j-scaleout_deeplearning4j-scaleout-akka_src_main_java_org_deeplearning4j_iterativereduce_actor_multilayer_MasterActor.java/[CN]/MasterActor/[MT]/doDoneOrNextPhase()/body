@@ -1,11 +1,11 @@
 {
   UpdateableImpl masterResults=null;
-  List<UpdateableImpl> updates=stateTracker.updates();
+  Collection<String> updates=stateTracker.workerUpdates();
   if (!updates.isEmpty()) {
-    masterResults=compute(updates,updates);
+    masterResults=compute();
     stateTracker.setCurrent(masterResults);
     epochsComplete++;
-    stateTracker.updates().clear();
+    stateTracker.workerUpdates().clear();
   }
  else   masterResults=getMasterResults();
   if (stateTracker.isPretrain() && stateTracker.currentJobs().isEmpty()) {

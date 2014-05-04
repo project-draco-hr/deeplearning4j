@@ -1,5 +1,0 @@
-{
-  network.trainNetwork(combinedInput,outcomes,extraParams);
-  MultiLayerGradient gradient=network.getGradient(extraParams);
-  return new UpdateableGradientImpl(gradient);
-}

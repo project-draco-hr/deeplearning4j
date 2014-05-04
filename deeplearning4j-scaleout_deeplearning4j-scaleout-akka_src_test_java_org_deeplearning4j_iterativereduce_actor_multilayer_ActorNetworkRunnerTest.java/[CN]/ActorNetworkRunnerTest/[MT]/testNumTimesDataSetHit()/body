@@ -12,7 +12,6 @@
   conf.setnIn(784);
   conf.setL2(0.001);
   conf.setMomentum(0);
-  conf.setWeightTransforms(Collections.singletonMap(0,(MatrixTransform)new MultiplyScalar(1000)));
   conf.setSplit(10);
   conf.setUseRegularization(false);
   conf.setDeepLearningParams(new Object[]{1,0.0001,1000});

@@ -1,8 +1,10 @@
 {
   Job j=null;
-  int numRetries=0;
-  int maxRetries=10;
   if ((j=tracker.jobFor(id)) == null || !tracker.workerEnabled(id)) {
+    if (!isWorking.get() && j != null) {
+      tracker.clearJob(id);
+      log.info("Clearing stale job " + id);
+    }
     return;
   }
   if (tracker.needsReplicate(id)) {

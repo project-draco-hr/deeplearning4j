@@ -15,7 +15,7 @@
             throw new RuntimeException(e);
           }
         }
-        List<UpdateableImpl> updates=stateTracker.updates();
+        Collection<String> updates=stateTracker.workerUpdates();
         if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
  else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
         log.info("Current jobs left " + currentJobs);
