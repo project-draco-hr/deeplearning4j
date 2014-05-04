@@ -1,0 +1,16 @@
+{
+  FourDTensor fd=new FourDTensor(2,2,2,2);
+  assertEquals(2,fd.numTensors());
+  assertEquals(8,fd.getTensor(1).length);
+  assertEquals(16,fd.length);
+  assertEquals(8,fd.getTensor(0).length);
+  assertEquals(4,fd.getSliceOfTensor(1,1).length);
+  FourDTensor fd2=new FourDTensor(2,3,2,2);
+  assertEquals(2,fd2.numTensors());
+  assertEquals(12,fd2.getTensor(1).length);
+  assertEquals(24,fd2.length);
+  assertEquals(12,fd2.getTensor(0).length);
+  assertEquals(6,fd2.getSliceOfTensor(1,1).length);
+  fd.put(1,1,1,1,0.5);
+  assertEquals("Was " + fd.get(1,1,1,1),true,0.5 == fd.get(1,1,1,1));
+}
