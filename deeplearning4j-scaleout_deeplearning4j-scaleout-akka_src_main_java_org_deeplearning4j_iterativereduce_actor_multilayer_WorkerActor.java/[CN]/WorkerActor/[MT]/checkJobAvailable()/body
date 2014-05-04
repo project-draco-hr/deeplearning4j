@@ -1,0 +1,24 @@
+{
+  Job j=null;
+  int numRetries=0;
+  int maxRetries=10;
+  if ((j=tracker.jobFor(id)) == null || !tracker.workerEnabled(id)) {
+    return;
+  }
+  if (tracker.needsReplicate(id)) {
+    try {
+      log.info("Updating worker " + id);
+      setE(tracker.getCurrent());
+      setNetwork(tracker.getCurrent().get());
+      tracker.doneReplicating(id);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  if (j != null) {
+    log.info("Assigning job for worker " + id);
+    currentJob=j;
+    tracker.updateJob(new Job(id,null));
+  }
+}

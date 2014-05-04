@@ -1,0 +1,19 @@
+{
+  log.info("Possible workers " + stateTracker.workers());
+  Job j2;
+  boolean sent=false;
+  while (!sent) {
+    for (    String s : stateTracker.workers()) {
+      if (stateTracker.jobFor(s) == null && !workerDelegated.contains(s)) {
+        stateTracker.addReplicate(s);
+        j2=new Job(s,(Serializable)work);
+        stateTracker.addJobToCurrent(j2);
+        workerDelegated.add(s);
+        log.info("Delegated work to worker " + s + " with size "+ work.size());
+        sent=true;
+        work=null;
+        break;
+      }
+    }
+  }
+}

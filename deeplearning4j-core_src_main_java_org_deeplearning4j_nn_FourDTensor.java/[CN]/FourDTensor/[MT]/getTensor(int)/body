@@ -1,0 +1,4 @@
+{
+  DoubleMatrix ret=get(RangeUtils.interval(tensor * slices(),tensor * slices * rows),RangeUtils.interval(0,columns()));
+  return new Tensor(ret,slices(),rows());
+}

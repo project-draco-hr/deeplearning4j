@@ -1,0 +1,8 @@
+{
+  HazelCastStateTracker master=new HazelCastStateTracker("localhost:" + HazelCastStateTracker.DEFAULT_HAZELCAST_PORT,"master",HazelCastStateTracker.DEFAULT_HAZELCAST_PORT);
+  master.addReplicate("1");
+  assertEquals(true,master.needsReplicate("1"));
+  master.doneReplicating("1");
+  assertEquals(false,master.needsReplicate("1"));
+  master.shutdown();
+}

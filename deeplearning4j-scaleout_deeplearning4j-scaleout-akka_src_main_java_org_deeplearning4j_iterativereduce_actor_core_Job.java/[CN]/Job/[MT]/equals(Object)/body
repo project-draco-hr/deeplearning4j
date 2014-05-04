@@ -1,17 +1,9 @@
 {
-  if (this == obj)   return true;
-  if (obj == null)   return false;
-  if (getClass() != obj.getClass())   return false;
-  Job other=(Job)obj;
-  if (done != other.done)   return false;
-  if (pretrain != other.pretrain)   return false;
-  if (work == null) {
-    if (other.work != null)     return false;
-  }
- else   if (!work.equals(other.work))   return false;
-  if (workerId == null) {
-    if (other.workerId != null)     return false;
-  }
- else   if (!workerId.equals(other.workerId))   return false;
+  if (this == o)   return true;
+  if (!(o instanceof Job))   return false;
+  Job job=(Job)o;
+  if (done != job.done)   return false;
+  if (work != null ? !work.equals(job.work) : job.work != null)   return false;
+  if (workerId != null ? !workerId.equals(job.workerId) : job.workerId != null)   return false;
   return true;
 }

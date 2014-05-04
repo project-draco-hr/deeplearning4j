@@ -1,0 +1,19 @@
+{
+  List<UpdateableImpl> updates=stateTracker.updates();
+  if (!updates.isEmpty() && stateTracker.currentJobs().isEmpty()) {
+    UpdateableImpl masterResults=compute(updates,updates);
+    log.info("Updating next batch");
+    stateTracker.setCurrent(masterResults);
+    for (    String s : stateTracker.workers()) {
+      log.info("Replicating new network to " + s);
+      stateTracker.addReplicate(s);
+    }
+    epochsComplete++;
+    stateTracker.updates().clear();
+    for (    String worker : stateTracker.workers()) {
+      log.info("Enabling worker post batch " + worker);
+      stateTracker.enableWorker(worker);
+    }
+    batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+  }
+}

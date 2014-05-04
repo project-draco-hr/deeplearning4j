@@ -6,7 +6,7 @@
   }
  else   if (message instanceof DoneMessage) {
     log.info("Received done message");
-    checkDone();
+    doDoneOrNextPhase();
   }
  else   if (message instanceof String) {
     getSender().tell(Ack.getInstance(),getSelf());

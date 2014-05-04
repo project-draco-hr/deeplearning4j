@@ -31,7 +31,7 @@
       log.info("Iterating over next dataset " + numDataSets);
       List<String> workers2=stateTracker.workers();
       for (      String s : workers2)       log.info("Worker " + s);
-      int numWorkers=stateTracker.workers().size();
+      int numWorkers=workers2.size();
       int miniBatchSize=conf.getSplit();
       if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();
       log.info("Number of workers " + numWorkers + " and batch size is "+ miniBatchSize);

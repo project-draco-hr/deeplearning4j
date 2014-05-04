@@ -1,9 +1,7 @@
 {
-  if (j == null)   return false;
   IAtomicReference<Job> r=h.getAtomicReference("job-" + j.getWorkerId());
-  if (r.get() != null) {
-    log.info("Currently locked unable to add job for current worker");
-    return false;
+  if (r.get() != null || !r.isNull()) {
+    throw new IllegalArgumentException("Tried to add job with id " + j.getWorkerId() + " when one already exists");
   }
   r.set(j);
   j.setWork(null);

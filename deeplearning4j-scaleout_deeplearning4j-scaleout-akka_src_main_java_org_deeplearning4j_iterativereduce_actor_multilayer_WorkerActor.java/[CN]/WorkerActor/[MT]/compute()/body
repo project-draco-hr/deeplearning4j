@@ -1,7 +1,8 @@
 {
-  log.info("Training network");
+  log.info("Training network on worker " + id);
+  if (!tracker.workerEnabled(id))   return null;
   BaseMultiLayerNetwork network=getNetwork();
-  isWorking=true;
+  isWorking.set(true);
   while (network == null) {
     try {
       network=tracker.getCurrent().get();
@@ -13,7 +14,7 @@
     }
   }
   DataSet d=null;
-  if (currentJob != null) {
+  if (currentJob != null && tracker.workerEnabled(id)) {
     log.info("Found job for worker " + id);
     if (currentJob.getWork() instanceof List) {
       List<DataSet> l=(List<DataSet>)currentJob.getWork();
@@ -26,30 +27,24 @@
   if (d == null) {
     throw new IllegalStateException("No job found for worker " + id);
   }
+  if (isNormalizeZeroMeanAndUnitVariance)   d.normalizeZeroMeanZeroUnitVariance();
+  if (scale)   d.scale();
+  if (d.getFirst() == null || d.getSecond() == null)   throw new IllegalStateException("Input cant be null");
   if (tracker.isPretrain()) {
     log.info("Worker " + id + " pretraining");
-    if (isNormalizeZeroMeanAndUnitVariance)     d.normalizeZeroMeanZeroUnitVariance();
-    if (scale)     d.scale();
     network.pretrain(d.getFirst(),extraParams);
   }
  else {
-    if (isNormalizeZeroMeanAndUnitVariance)     d.normalizeZeroMeanZeroUnitVariance();
-    if (scale)     d.scale();
     network.setInput(d.getFirst());
     log.info("Worker " + id + " finetune");
-    network.feedForward(d.getFirst());
     network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
   }
   try {
-    if (currentJob != null) {
-      tracker.clearJob(currentJob);
-      currentJob=null;
-      log.info("Clearing job for worker " + id);
-    }
+    tracker.clearJob(id);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  isWorking=false;
+  isWorking.set(false);
   return new UpdateableImpl(network);
 }

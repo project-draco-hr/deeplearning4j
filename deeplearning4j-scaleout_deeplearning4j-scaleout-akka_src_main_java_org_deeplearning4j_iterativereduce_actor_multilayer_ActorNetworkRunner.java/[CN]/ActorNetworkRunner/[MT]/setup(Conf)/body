@@ -12,6 +12,7 @@
  else         stateTracker=new HazelCastStateTracker();
       }
       log.info("Started state tracker with connection string " + stateTracker.connectionString());
+      if (!stateTracker.isPretrain())       throw new IllegalStateException("State tracker must start on pretrain");
       if (finetune)       stateTracker.moveToFinetune();
       masterAddress=startBackend(null,conf,iter,stateTracker);
       Thread.sleep(60000);

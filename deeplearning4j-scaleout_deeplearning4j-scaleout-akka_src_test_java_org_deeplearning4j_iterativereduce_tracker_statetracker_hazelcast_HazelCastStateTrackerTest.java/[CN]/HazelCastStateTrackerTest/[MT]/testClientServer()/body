@@ -1,5 +1,7 @@
 {
   HazelCastStateTracker master=new HazelCastStateTracker("localhost:" + HazelCastStateTracker.DEFAULT_HAZELCAST_PORT,"master",HazelCastStateTracker.DEFAULT_HAZELCAST_PORT);
+  assertEquals(true,master.isPretrain());
+  assertEquals(false,master.isDone());
   master.runPreTrainIterations(10);
   master.addWorker("id");
   master.moveToFinetune();
@@ -7,4 +9,6 @@
   assertEquals(master.isPretrain(),worker.isPretrain());
   assertEquals(master.numWorkers(),worker.numWorkers());
   assertEquals(10,worker.runPreTrainIterations());
+  master.shutdown();
+  worker.shutdown();
 }

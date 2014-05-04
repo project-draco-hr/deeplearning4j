@@ -1,24 +1,13 @@
 {
-  int split=this.getConf().getSplit();
+  for (  String worker : stateTracker.workers())   stateTracker.enableWorker(worker);
+  int split=stateTracker.inputSplit();
   final List<List<DataSet>> splitList=Lists.partition(datasets,split);
-  partition=splitList.size();
-  log.info("Found partition of size " + partition);
+  log.info("Found partition of size " + stateTracker.partition());
+  Set<String> workerDelegated=new HashSet<>();
   for (int i=0; i < splitList.size(); i++) {
     final List<DataSet> wrap=splitList.get(i);
     final List<DataSet> work=new ArrayList<>(wrap);
-    Future<Void> f=Futures.future(new Callable<Void>(){
-      /** 
- * Computes a result, or throws an exception if unable to do so.
- * @return computed result
- * @throws Exception if unable to compute a result
- */
-      @Override public Void call() throws Exception {
-        delegateJob(work);
-        log.info("Sending off work for batch ");
-        return null;
-      }
-    }
-,context().system().dispatcher());
-    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
+    delegateJob(work,workerDelegated);
+    log.info("Sending off work for batch " + i);
   }
 }

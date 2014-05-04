@@ -1,7 +1,7 @@
 {
   super(conf,batchActor,stateTracker);
   setup(conf);
-  forceNextPhase=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+  forceNextPhase=context().system().scheduler().schedule(Duration.create(10,TimeUnit.SECONDS),Duration.create(10,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
       try {
         List<Job> currentJobs=stateTracker.currentJobs();
@@ -16,7 +16,8 @@
           }
         }
         List<UpdateableImpl> updates=stateTracker.updates();
-        if (updates.size() >= partition || currentJobs.isEmpty())         nextIteration();
+        if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
+ else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.partition());
         log.info("Current jobs left " + currentJobs);
       }
  catch (      Exception e) {
@@ -37,7 +38,6 @@
           if (seconds >= 30) {
             log.info("Removing stale worker " + key);
             MasterActor.this.stateTracker.removeWorker(key);
-            partition--;
           }
         }
       }

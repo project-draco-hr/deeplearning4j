@@ -38,6 +38,8 @@
     }
     log.info("Workers is " + workers.size());
   }
+  miniBatchSize=h.getAtomicReference(INPUT_SPLIT);
+  workerEnabled=h.getMap(WORKER_ENABLED);
   replicate=h.getList(REPLICATE_WEIGHTS);
   topics=h.getList(TOPICS);
   updates=h.getList(UPDATES);

@@ -26,5 +26,8 @@
   MapConfig heartbeatConfig=new MapConfig();
   heartbeatConfig.setName(HEART_BEAT);
   conf.addMapConfig(heartbeatConfig);
+  MapConfig workerEnabledConifg=new MapConfig();
+  workerEnabledConifg.setName(WORKER_ENABLED);
+  conf.addMapConfig(workerEnabledConifg);
   return conf;
 }

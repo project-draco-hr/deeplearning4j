@@ -1,14 +1,7 @@
 {
-  if (tracker.needsReplicate(id)) {
-    try {
-      log.info("Updating worker " + id);
-      setE(tracker.getCurrent());
-      setNetwork(tracker.getCurrent().get());
-      tracker.doneReplicating(id);
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
+  if (list == null || list.isEmpty()) {
+    log.warn("Worker " + id + " was passed an empty or null list");
+    return;
   }
   Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
     @Override public UpdateableImpl call() throws Exception {
@@ -18,14 +11,17 @@
         newInput.putRow(i,list.get(i).getFirst());
         newOutput.putRow(i,list.get(i).getSecond());
       }
+      if (tracker.needsReplicate(id)) {
+        log.info("Updating network for worker " + id);
+        network=tracker.getCurrent().get();
+        tracker.doneReplicating(id);
+      }
       UpdateableImpl work=compute();
       if (work != null) {
-        log.info("Done working; adding update to mini batch...");
+        log.info("Done working; adding update to mini batch on worker " + id);
         tracker.addUpdate(work);
-      }
- else {
-        mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,NoJobFound.getInstance()),getSelf());
-        log.info("No job found; unlocking worker " + id);
+        tracker.disableWorker(id);
+        log.info("Number of updates so far " + tracker.updates().size());
       }
       return work;
     }
