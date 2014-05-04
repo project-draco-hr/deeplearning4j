@@ -5,6 +5,9 @@
       if (tracker.needsReplicate(id)) {
         try {
           log.info("Updating worker " + id);
+          if (tracker.getCurrent() == null || tracker.getCurrent().get() == null) {
+            return;
+          }
           setE(tracker.getCurrent());
           setNetwork(tracker.getCurrent().get());
           tracker.doneReplicating(id);
