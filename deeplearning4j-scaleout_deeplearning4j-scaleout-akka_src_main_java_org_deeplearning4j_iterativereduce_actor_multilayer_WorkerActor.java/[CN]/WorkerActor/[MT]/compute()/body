@@ -1,6 +1,9 @@
 {
+  if (!tracker.workerEnabled(id)) {
+    log.info("Worker " + id + " should be re enabled if not doing work");
+    return null;
+  }
   log.info("Training network on worker " + id);
-  if (!tracker.workerEnabled(id))   return null;
   BaseMultiLayerNetwork network=getNetwork();
   isWorking.set(true);
   while (network == null) {

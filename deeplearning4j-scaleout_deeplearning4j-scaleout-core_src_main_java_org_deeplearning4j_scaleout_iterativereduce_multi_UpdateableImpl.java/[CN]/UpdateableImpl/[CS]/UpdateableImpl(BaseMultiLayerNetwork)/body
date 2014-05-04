@@ -1,4 +1,5 @@
 {
+  if (wrapped == null)   throw new IllegalArgumentException("Null argument not allowed");
   this.wrapped=wrapped;
   if (clazz == null)   clazz=wrapped.getClass();
 }

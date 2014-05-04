@@ -7,13 +7,10 @@
     for (    String s : stateTracker.workers()) {
       log.info("Replicating new network to " + s);
       stateTracker.addReplicate(s);
+      stateTracker.enableWorker(s);
     }
     epochsComplete++;
     stateTracker.workerUpdates().clear();
-    for (    String worker : stateTracker.workers()) {
-      log.info("Enabling worker post batch " + worker);
-      stateTracker.enableWorker(worker);
-    }
     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
   }
 }
