@@ -3,18 +3,10 @@
   setup(conf);
   forceNextPhase=context().system().scheduler().schedule(Duration.create(10,TimeUnit.SECONDS),Duration.create(10,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
+      if (stateTracker.isDone())       return;
       try {
         List<Job> currentJobs=stateTracker.currentJobs();
         log.info("Status check on next iteration");
-        if (stateTracker.getCurrent() == null) {
-          try {
-            log.info("State tracker did not have a network; reinitializing");
-            if (network == null)             stateTracker.setCurrent(new UpdateableImpl(network));
-          }
- catch (          Exception e) {
-            throw new RuntimeException(e);
-          }
-        }
         Collection<String> updates=stateTracker.workerUpdates();
         if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
  else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
@@ -28,6 +20,7 @@
 ,context().dispatcher());
   this.clearStateWorkers=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
     @Override public void run(){
+      if (stateTracker.isDone())       return;
       try {
         long now=System.currentTimeMillis();
         Map<String,Long> heartbeats=MasterActor.this.stateTracker.getHeartBeats();

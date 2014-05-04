@@ -1,3 +1,7 @@
 {
+  if (e == null || e.get() == null) {
+    log.warn("Not setting a null update");
+    return;
+  }
   this.master.set(e);
 }

@@ -8,10 +8,17 @@
     stateTracker.workerUpdates().clear();
   }
  else   masterResults=getMasterResults();
+  while (!stateTracker.currentJobs().isEmpty()) {
+    log.info("Waiting fo jobs to finish up before next phase...");
+    Thread.sleep(30000);
+  }
   if (stateTracker.isPretrain() && stateTracker.currentJobs().isEmpty()) {
     log.info("Switching to finetune mode");
     stateTracker.moveToFinetune();
     SerializationUtils.saveObject(masterResults.get(),new File("pretrain-model.bin"));
+    while (masterResults == null) {
+      masterResults=getMasterResults();
+    }
     batchActor.tell(ResetMessage.getInstance(),getSelf());
     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
   }
