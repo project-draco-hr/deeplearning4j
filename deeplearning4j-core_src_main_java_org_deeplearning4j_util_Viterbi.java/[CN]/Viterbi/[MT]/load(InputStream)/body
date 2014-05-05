@@ -1,2 +1,10 @@
 {
+  Viterbi ret=SerializationUtils.readObject(is);
+  this.states=ret.states;
+  this.logStates=ret.logStates;
+  this.metaStability=ret.metaStability;
+  this.logMetaInstability=ret.logMetaInstability;
+  this.logOfDiangnalTProb=ret.logOfDiangnalTProb;
+  this.logPCorrect=ret.logPCorrect;
+  this.pCorrect=ret.pCorrect;
 }
