@@ -1,4 +1,5 @@
 {
+  if (tracker.isDone())   return null;
   if (!tracker.workerEnabled(id)) {
     log.info("Worker " + id + " should be re enabled if not doing work");
     return null;
@@ -43,11 +44,11 @@
     network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
   }
   try {
-    tracker.clearJob(id);
+    if (!tracker.isDone())     tracker.clearJob(id);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  isWorking.set(false);
+  if (!tracker.isDone())   isWorking.set(false);
   return new UpdateableImpl(network);
 }

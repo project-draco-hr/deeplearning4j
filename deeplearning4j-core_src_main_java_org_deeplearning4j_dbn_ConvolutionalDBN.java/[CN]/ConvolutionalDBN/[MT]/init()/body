@@ -1,0 +1,27 @@
+{
+  DoubleMatrix layerInput=input;
+  if (!(rng instanceof SynchronizedRandomGenerator))   rng=new SynchronizedRandomGenerator(rng);
+  int inputSize;
+  if (getnLayers() < 1)   throw new IllegalStateException("Unable to create network layers; number specified is less than 1");
+  if (this.dist == null)   dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  this.layers=new NeuralNetwork[getnLayers()];
+  for (int i=0; i < this.getnLayers(); i++) {
+    if (i == 0)     inputSize=this.nIns;
+ else     inputSize=this.hiddenLayerSizes[i - 1];
+    if (i == 0) {
+      sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],activation,rng,layerInput,dist);
+    }
+ else {
+      if (input != null) {
+        if (this.useHiddenActivationsForwardProp)         layerInput=sigmoidLayers[i - 1].sampleHiddenGivenVisible();
+ else         layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
+      }
+      sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],activation,rng,layerInput,dist);
+    }
+    this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
+  }
+  this.logLayer=new LogisticRegression.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(hiddenLayerSizes[getnLayers() - 1]).numberOfOutputs(nOuts).withL2(l2).build();
+  synchonrizeRng();
+  applyTransforms();
+  initCalled=true;
+}

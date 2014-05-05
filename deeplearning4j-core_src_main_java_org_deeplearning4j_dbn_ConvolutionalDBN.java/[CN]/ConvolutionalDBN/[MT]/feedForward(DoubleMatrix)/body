@@ -1,0 +1,6 @@
+{
+  FourDTensor tensor=new FourDTensor(input,inputSize[0],inputSize[1],input.rows / inputSize[0],input.rows / input.length);
+  for (int i=0; i < getnLayers(); i++) {
+  }
+  return super.feedForward(input);
+}

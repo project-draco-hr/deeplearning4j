@@ -1,6 +1,7 @@
 {
   try {
     done.set(true);
+    updateSaver().cleanup();
   }
  catch (  Exception e) {
     log.warn("Hazelcast already shutdown...done() being set is pointless");
