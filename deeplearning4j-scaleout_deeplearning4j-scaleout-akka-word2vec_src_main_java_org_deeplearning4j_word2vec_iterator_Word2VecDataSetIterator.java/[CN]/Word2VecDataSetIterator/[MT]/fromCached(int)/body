@@ -1,0 +1,16 @@
+{
+  List<Window> windows=new ArrayList<>(num);
+  for (int i=0; i < num; i++) {
+    windows.add(cachedWindow.remove(0));
+  }
+  DoubleMatrix inputs=new DoubleMatrix(num,inputColumns());
+  for (int i=0; i < inputs.rows; i++) {
+    inputs.putRow(i,WindowConverter.asExampleMatrix(windows.get(i),vec));
+  }
+  DoubleMatrix labelOutput=new DoubleMatrix(num,labels.size());
+  for (int i=0; i < labelOutput.rows; i++) {
+    String label=windows.get(i).getLabel();
+    labelOutput.putRow(i,MatrixUtil.toOutcomeVector(labels.indexOf(label),labels.size()));
+  }
+  return new DataSet(inputs,labelOutput);
+}

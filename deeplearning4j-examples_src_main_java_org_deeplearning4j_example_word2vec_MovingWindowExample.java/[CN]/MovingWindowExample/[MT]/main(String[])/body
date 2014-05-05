@@ -38,22 +38,11 @@
   runner.setup(c);
   runner.train();
   iterator.reset();
-  Index labelIndex=new Index();
-  for (int i=0; i < labels.size(); i++)   labelIndex.add(labels.get(i));
-  Index featureIndex=ViterbiUtil.featureIndexFromLabelIndex(labelIndex);
-  CounterMap<Integer,Integer> transitions=new CounterMap<>();
-  while (iterator.hasNext()) {
-    String sentence=iterator.nextSentence();
-    if (sentence.isEmpty())     continue;
-    List<Window> windows=Windows.windows(sentence);
-    for (int i=1; i < windows.size(); i++) {
-      String firstLabel=windows.get(i - 1).getLabel();
-      String secondLabel=windows.get(i).getLabel();
-      int first=labelIndex.indexOf(firstLabel);
-      int second=labelIndex.indexOf(secondLabel);
-      transitions.incrementCount(first,second,1.0);
-    }
-    DoubleMatrix transitionWeights=CounterUtil.convert(transitions);
-    Viterbi viterbi=new Viterbi(labelIndex,featureIndex,transitionWeights);
+  Viterbi viterbi=new Viterbi(new DoubleMatrix(new double[]{0,1,2}));
+  iter.reset();
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    Pair<Double,DoubleMatrix> decoded=viterbi.decode(next.getSecond());
+    log.info("Pair " + decoded.getSecond());
   }
 }

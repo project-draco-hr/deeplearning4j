@@ -1,6 +1,0 @@
-{
-  Index labelIndex=new Index();
-  labelIndex.add("NONE");
-  for (int i=0; i < labels.size(); i++)   labelIndex.add(labels.get(i));
-  return labelIndex;
-}

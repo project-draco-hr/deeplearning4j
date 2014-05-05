@@ -1,5 +1,5 @@
 {
-  log.info("Possible workers " + stateTracker.workers());
+  log.info("Possible workers " + new ArrayList<>(stateTracker.workers()));
   Job j2;
   boolean sent=false;
   while (!sent) {

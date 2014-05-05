@@ -1,0 +1,5 @@
+{
+  DoubleMatrix row=DoubleMatrix.ones(1,states).mul(logOfDiangnalTProb);
+  row.put(k,logMetaInstability);
+  return row;
+}

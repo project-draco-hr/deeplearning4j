@@ -1,0 +1,13 @@
+{
+  if (num <= cachedWindow.size())   return fromCached(num);
+ else   if (num >= cachedWindow.size() && !iter.hasNext())   return fromCached(cachedWindow.size());
+ else {
+    while (cachedWindow.size() < num && iter.hasNext()) {
+      String sentence=iter.nextSentence();
+      List<Window> windows=Windows.windows(sentence,vec.getTokenizerFactory(),vec.getWindow());
+      for (      Window w : windows)       w.setLabel(iter.currentLabel());
+      cachedWindow.addAll(windows);
+    }
+    return fromCached(num);
+  }
+}
