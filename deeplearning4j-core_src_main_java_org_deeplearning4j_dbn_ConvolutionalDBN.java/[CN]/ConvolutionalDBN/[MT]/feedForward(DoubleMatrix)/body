@@ -1,10 +1,18 @@
 {
   FourDTensor tensor=new FourDTensor(input,inputSize[0],inputSize[1],input.rows / inputSize[0],input.rows / input.length);
   FourDTensor curr=tensor;
-  for (int i=0; i < getnLayers(); i++) {
-    ConvolutionalRBM currLayer=(ConvolutionalRBM)getLayers()[i];
+  for (int i=1; i < getnLayers(); i++) {
+    ConvolutionalRBM currLayer=(ConvolutionalRBM)getLayers()[i - 1];
+    ConvolutionalRBM prevLayer=(ConvolutionalRBM)getLayers()[i];
     for (int j=0; j < currLayer.getNumFilters(); j++) {
       DoubleMatrix prevLayerShape=curr.shape();
+      int nInY=(int)prevLayerShape.get(0);
+      int nInX=(int)prevLayerShape.get(1);
+      int nInFM=(int)prevLayerShape.get(2);
+      int nObs=(int)prevLayerShape.get(3);
+      Tensor featureMap=Tensor.zeros(nFm[j],1,nObs);
+      for (int l=0; l < prevLayer.getNumFilters(); l++) {
+      }
     }
   }
   return super.feedForward(input);
