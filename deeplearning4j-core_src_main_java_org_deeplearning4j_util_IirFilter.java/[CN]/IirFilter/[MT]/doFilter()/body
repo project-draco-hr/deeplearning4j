@@ -6,8 +6,7 @@
   DoubleMatrix xv=x.isColumnVector() ? x : x.transpose();
   DoubleMatrix v=xv.mul(b.get(0));
   for (int i=1; i < Math.min(NB,NX); i++) {
-    DoubleMatrix xvConcat=xv.get(toIndices(interval(0,NX - i)));
-    DoubleMatrix xDelayed=concatVertically(DoubleMatrix.zeros(i,1),xvConcat);
+    DoubleMatrix xDelayed=concatVertically(DoubleMatrix.zeros(i,1),xv.get(toIndices(interval(0,NX - i))));
     v.addi(xDelayed.mul(b.get(i)));
   }
   DoubleMatrix ac=a.get(toIndices(interval(1,NA))).neg();

@@ -2,9 +2,5 @@
   this.a=a;
   this.b=b;
   this.x=x;
-  this.np=x.length - 1;
-  this.ord=b.length - 1;
   this.y=new DoubleMatrix(x.rows,x.columns);
-  np=x.length - 1;
-  ord=b.length - 1;
 }
