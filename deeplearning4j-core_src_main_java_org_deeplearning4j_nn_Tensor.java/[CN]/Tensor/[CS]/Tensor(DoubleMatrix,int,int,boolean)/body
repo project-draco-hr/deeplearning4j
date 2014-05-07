@@ -1,0 +1,17 @@
+{
+  this.slices=slices;
+  this.perMatrixRows=rows;
+  if (copy) {
+    this.data=new double[t.length];
+    System.arraycopy(t.data,0,this.data,0,this.data.length);
+    this.rows=t.rows;
+    this.perMatrixRows=rows;
+    this.columns=t.columns;
+  }
+ else {
+    this.rows=rows;
+    this.columns=t.columns;
+    this.perMatrixRows=rows;
+    this.data=t.data;
+  }
+}

@@ -4,16 +4,18 @@
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
-  Tensor chainStart=propUp(input);
+  FourDTensor chainStart=propUp(input);
   this.chainStart=chainStart;
-  Tensor nvSamples=null;
-  Tensor hiddenMeans=chainStart;
+  FourDTensor nvSamples=null;
+  FourDTensor hiddenMeans=chainStart;
   for (int i=0; i < k; i++) {
     nvSamples=propDown(binomial(eHid,1,rng));
     hiddenMeans=propUp(nvSamples);
   }
-  Tensor wGradient=new Tensor(W.rows(),W.columns(),W.slices());
-  for (int i=0; i < numFilters; i++)   wGradient.setSlice(i,conv2d(input,chainStart.getSlice(i),VALID).sub(conv2d(nvSamples,reverse(hiddenMeans.getSlice(i)),VALID)));
+  FourDTensor wGradient=new FourDTensor(W.rows(),W.columns(),W.slices(),W.getNumTensor());
+  for (int i=0; i < numFilters[0]; i++)   for (int j=0; j < numFilters[1]; j++) {
+    wGradient.put(j,i,conv2d(input,chainStart.getSliceOfTensor(j,i),VALID).sub(conv2d(nvSamples,reverse(hiddenMeans.getSliceOfTensor(j,i)),VALID)));
+  }
   DoubleMatrix vBiasGradient=DoubleMatrix.scalar(chainStart.sub(hiddenMeans).columnSums().sum());
   DoubleMatrix hBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);

@@ -1,0 +1,8 @@
+{
+  DoubleMatrix U=new DoubleMatrix(mean.rows,mean.columns);
+  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++) {
+    RealDistribution reals=new NormalDistribution(mean.get(i,j),Math.sqrt(sigma));
+    U.put(i,j,reals.sample());
+  }
+  return createBasedOn(U,mean);
+}

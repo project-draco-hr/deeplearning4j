@@ -1,0 +1,9 @@
+{
+  this.slices=1;
+  this.perMatrixRows=1;
+  if (copy) {
+    this.data=new double[t.length];
+    System.arraycopy(t.data,0,this.data,0,this.data.length);
+  }
+ else   this.data=t.data;
+}

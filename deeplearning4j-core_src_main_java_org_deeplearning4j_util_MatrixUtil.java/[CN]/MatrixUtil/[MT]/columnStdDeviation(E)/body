@@ -1,0 +1,9 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(1,m.columns);
+  for (int i=0; i < ret.length; i++) {
+    StandardDeviation dev=new StandardDeviation();
+    double std=dev.evaluate(m.getColumn(i).toArray());
+    ret.put(i,std);
+  }
+  return createBasedOn(ret,m);
+}

@@ -1,0 +1,24 @@
+{
+  int nCols=input.columns();
+  int nRows=input.rows;
+  int yStride=stride[0];
+  int xStride=stride[1];
+  FourDTensor ret=new FourDTensor(input.rows,input.columns,input.slices(),input.numTensors());
+  int endRowBlock=(int)Math.ceil(nRows / yStride);
+  for (int i=1; i < endRowBlock; i++) {
+    int rowsMin=(i - 1) * yStride + 1;
+    int rowsMax=i * yStride;
+    int endColBlock=(int)Math.ceil(nCols / xStride);
+    for (int j=1; j < endColBlock; j++) {
+      int cols=(j - 1) * xStride + 1;
+      int colsMax=j * xStride;
+      double blockVal=input.columnsSums().sum();
+      int rowLength=rowsMax - rowsMin;
+      int colLength=colsMax - cols;
+      DoubleMatrix block=new DoubleMatrix(rowLength,colLength);
+      assign(block,blockVal);
+      ret.put(RangeUtils.interval(rowsMin,rowsMax),RangeUtils.interval(cols,colsMax),block);
+    }
+  }
+  return ret;
+}

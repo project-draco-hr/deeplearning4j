@@ -1,0 +1,15 @@
+{
+  this.rows=rows * slices;
+  this.columns=columns;
+  if (copy) {
+    this.data=new double[baseLineMatrix.length];
+    System.arraycopy(baseLineMatrix.data,0,this.data,0,baseLineMatrix.length);
+  }
+ else   this.data=baseLineMatrix.data;
+  if (baseLineMatrix.length != rows * columns * slices)   throw new IllegalArgumentException("Illegal matrix, amount of data does not match the specified dimensions");
+  if (slices < 1)   throw new IllegalArgumentException("Tensor has no slices");
+  if (rows < 1)   throw new IllegalArgumentException("Illegal number of rows");
+  if (columns < 1)   throw new IllegalArgumentException("Illegal number of columns");
+  this.slices=slices;
+  this.perMatrixRows=rows;
+}

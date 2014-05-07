@@ -1,0 +1,18 @@
+{
+  if (input instanceof FourDTensor) {
+    FourDTensor tensor=new FourDTensor(result,false);
+    FourDTensor casted=(FourDTensor)input;
+    tensor.setSlices(casted.slices());
+    tensor.setPerMatrixRows(casted.rows());
+    tensor.setNumTensor(casted.getNumTensor());
+    return (E)tensor;
+  }
+ else   if (input instanceof Tensor) {
+    Tensor ret=new Tensor(result,false);
+    Tensor casted=(Tensor)input;
+    ret.setPerMatrixRows(ret.rows());
+    ret.setSlices(casted.slices());
+    return (E)ret;
+  }
+ else   return (E)result;
+}

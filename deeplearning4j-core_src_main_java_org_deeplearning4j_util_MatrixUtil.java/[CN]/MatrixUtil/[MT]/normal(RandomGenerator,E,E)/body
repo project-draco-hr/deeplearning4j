@@ -1,0 +1,10 @@
+{
+  DoubleMatrix std=MatrixFunctions.sqrt(variance);
+  for (int i=0; i < variance.length; i++)   if (variance.get(i) <= 0)   variance.put(i,1e-4);
+  DoubleMatrix U=new DoubleMatrix(mean.rows,mean.columns);
+  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++) {
+    RealDistribution reals=new NormalDistribution(mean.get(i,j),std.get(j));
+    U.put(i,j,reals.sample());
+  }
+  return createBasedOn(U,mean);
+}

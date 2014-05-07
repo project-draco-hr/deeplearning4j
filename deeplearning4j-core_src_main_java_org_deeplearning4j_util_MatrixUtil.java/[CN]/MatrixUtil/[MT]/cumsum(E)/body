@@ -1,0 +1,13 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(sum.rows,sum.columns);
+  for (int i=0; i < ret.columns; i++) {
+    for (int j=0; j < ret.rows; j++) {
+      int[] indices=new int[j + 1];
+      for (int row=0; row < indices.length; row++)       indices[row]=row;
+      DoubleMatrix toSum=sum.get(indices,new int[]{i});
+      double d=toSum.sum();
+      ret.put(j,i,d);
+    }
+  }
+  return (E)ret;
+}

@@ -1,0 +1,5 @@
+{
+  FourDTensor ret=new FourDTensor(rows,columns,slices,tensors);
+  ret.assign(1);
+  return ret;
+}

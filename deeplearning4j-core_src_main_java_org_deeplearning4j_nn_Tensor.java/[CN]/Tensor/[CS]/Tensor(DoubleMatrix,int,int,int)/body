@@ -1,9 +1,3 @@
 {
-  super(rows * slices,columns);
-  if (baseLineMatrix.length != rows * columns * slices)   throw new IllegalArgumentException("Illegal matrix, amount of data does not match the specified dimensions");
-  if (slices < 1)   throw new IllegalArgumentException("Tensor has no slices");
-  if (rows < 1)   throw new IllegalArgumentException("Illegal number of rows");
-  if (columns < 1)   throw new IllegalArgumentException("Illegal number of columns");
-  this.slices=slices;
-  this.perMatrixRows=rows;
+  this(baseLineMatrix,rows,columns,slices,true);
 }

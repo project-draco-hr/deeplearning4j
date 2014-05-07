@@ -1,6 +1,0 @@
-{
-  DoubleMatrix max=input.rowMaxs();
-  DoubleMatrix diff=MatrixFunctions.exp(input.subColumnVector(max));
-  diff.diviColumnVector(diff.rowSums());
-  return diff;
-}
