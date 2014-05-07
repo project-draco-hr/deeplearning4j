@@ -1,7 +1,7 @@
 {
   Map<Integer,Integer> mapHistory=this.generateHistogramBuckets(data,numberBins);
-  double min=MatrixUtil.min(data);
-  double max=MatrixUtil.max(data);
+  double min=data.min();
+  double max=data.max();
   double range=max - min;
   double stepSize=range / numberBins;
   int xOffset=50;

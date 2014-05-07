@@ -17,8 +17,8 @@
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);
     DoubleMatrix column=data.getColumn(col);
-    double col_max=MatrixUtil.min(column);
-    double col_min=MatrixUtil.max(column);
+    double col_max=column.min();
+    double col_min=column.max();
     log.debug("rendering " + column.length + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
     for (int i=0; i < column.length; i++) {
       double patch_normal=(column.get(i) - col_min) / (col_max - col_min + 0.000001);

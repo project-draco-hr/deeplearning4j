@@ -3,5 +3,5 @@
   d.divi(prod(stride));
   DoubleMatrix ret=Convolution.conv2d(data,d,Convolution.Type.VALID);
   ret=ret.get(RangeUtils.interval(0,(int)stride.get(0)),RangeUtils.interval(0,(int)stride.get(1)));
-  return ret;
+  return createBasedOn(ret,data);
 }

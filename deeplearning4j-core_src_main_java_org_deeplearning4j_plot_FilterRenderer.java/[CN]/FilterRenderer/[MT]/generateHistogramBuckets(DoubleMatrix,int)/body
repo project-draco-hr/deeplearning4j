@@ -1,7 +1,7 @@
 {
   Map<Integer,Integer> mapHistory=new TreeMap<Integer,Integer>();
-  double min=MatrixUtil.min(data);
-  double max=MatrixUtil.max(data);
+  double min=data.min();
+  double max=data.max();
   double range=max - min;
   double stepSize=range / numberBins;
   for (int row=0; row < data.rows; row++) {
