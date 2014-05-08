@@ -29,7 +29,7 @@
       DoubleMatrix rotFilter=rot(forwardRBM.getW().getSliceOfTensor(i,k));
       FourDTensor tensor=(FourDTensor)errorSignals[i + 1];
       Tensor currEs=tensor.getTensor(k);
-      propErrorSignal.addi(currEs);
+      propErrorSignal.addi(conv2d(currEs,rotFilter,Type.FULL));
     }
     errorSignals[i]=propErrorSignal;
     DoubleMatrix mapSize=forwardRBM.getFeatureMap().shape();
@@ -39,5 +39,11 @@
       rbmEs.setTensor(k,propEs);
     }
     errorSignals[i - 1]=rbmEs;
+  }
+  for (int i=getnLayers() - 2; i >= 0; i--) {
+    ConvolutionalRBM r2=(ConvolutionalRBM)getLayers()[i];
+    DoubleMatrix shape2=r2.getFeatureMap().shape();
+    for (int j=0; j < r2.getNumFilters()[0]; j++) {
+    }
   }
 }
