@@ -9,7 +9,7 @@
   DoubleMatrix features=new DoubleMatrix(nMap * nM,noBs);
   for (int j=0; j < d.getNumFeatureMaps(); j++) {
     Tensor map=d.getFeatureMap().getTensor(j);
-    features.put(RangeUtils.interval(j * nMap + 1,j * nMap),RangeUtils.interval(0,features.columns),map.reshape(nMap,noBs));
+    features.put(interval(j * nMap + 1,j * nMap),interval(0,features.columns),map.reshape(nMap,noBs));
   }
   return createBasedOn(logLayer.predict(features),features);
 }
