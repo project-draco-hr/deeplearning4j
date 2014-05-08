@@ -1,0 +1,12 @@
+{
+  checkInvalidColumn(column1);
+  checkInvalidColumn(column2);
+  if (column1 != column2)   for (  List<String> list : this) {
+    StringBuffer sb=new StringBuffer();
+    sb.append(list.get(column1));
+    sb.append(list.get(column2));
+    list.set(Math.min(column1,column2),sb.toString().replaceAll("\"","").replace(sep," "));
+    list.remove(Math.max(column1,column2));
+  }
+  numColumns--;
+}

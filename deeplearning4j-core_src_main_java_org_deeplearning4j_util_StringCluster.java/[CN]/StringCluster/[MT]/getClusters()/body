@@ -1,0 +1,5 @@
+{
+  List<Map<String,Integer>> _clusters=new ArrayList<Map<String,Integer>>(values());
+  Collections.sort(_clusters,new StringCluster.SizeComparator());
+  return _clusters;
+}

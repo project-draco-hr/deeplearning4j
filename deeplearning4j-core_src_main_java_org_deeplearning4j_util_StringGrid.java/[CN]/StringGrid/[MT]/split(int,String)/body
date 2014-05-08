@@ -1,0 +1,31 @@
+{
+  List<String> col=getColumn(column);
+  int validate=-1;
+  Set<String> remove=new HashSet<String>();
+  for (int i=0; i < col.size(); i++) {
+    String s=col.get(i);
+    String[] split2=StringUtils.splitOnCharWithQuoting(s,sepBy.charAt(0),'"','\\');
+    if (validate < 0)     validate=split2.length;
+ else     if (validate != split2.length) {
+      log.warn("Row " + get(i) + " will be invalid after split; removing");
+      remove.add(s);
+    }
+  }
+  for (  String s : remove) {
+    StringGrid grid=select(column,s);
+    removeAll(grid);
+  }
+  Map<Integer,List<String>> replace=new HashMap<>();
+  for (int i=0; i < size(); i++) {
+    List<String> list=get(i);
+    List<String> newList=new ArrayList<>();
+    String split=list.get(column);
+    String[] split2=StringUtils.splitOnCharWithQuoting(split,sepBy.charAt(0),'"','\\');
+    for (int j=0; j < list.size(); j++) {
+      if (j == column)       for (      String s : split2)       newList.add(s);
+ else       newList.add(list.get(j));
+    }
+    replace.put(i,newList);
+  }
+  for (  Integer i : replace.keySet())   set(i,replace.get(i));
+}

@@ -1,0 +1,17 @@
+{
+  checkInvalidColumn(column);
+  StringGrid grid=new StringGrid(sep,numColumns);
+  List<String> columns=getColumn(column);
+  Counter<String> counter=new Counter<String>();
+  for (  String val : columns)   counter.incrementCount(val,1.0);
+  Set<String> keys=new HashSet<String>(counter.keySet());
+  for (  String key : keys) {
+    if (counter.getCount(key) > 1) {
+      counter.removeKey(key);
+    }
+  }
+  for (  List<String> row : this) {
+    for (    String key : keys)     if (row.get(column).equals(key))     grid.addRow(row);
+  }
+  return grid;
+}

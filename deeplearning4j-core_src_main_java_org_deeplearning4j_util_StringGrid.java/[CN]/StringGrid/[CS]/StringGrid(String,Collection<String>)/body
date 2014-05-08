@@ -1,0 +1,33 @@
+{
+  super();
+  this.sep=sep;
+  List<String> list=new ArrayList<>(data);
+  for (int i=0; i < list.size(); i++) {
+    String line=list.get(i).trim();
+    if (line.indexOf("\"") > 0) {
+      Counter<Character> counter=new Counter<>();
+      for (int j=0; j < line.length(); j++) {
+        counter.incrementCount(line.charAt(j),1.0);
+      }
+      if (counter.getCount('"') > 1) {
+        String[] split=splitOnCharWithQuoting(line,sep.charAt(0),'"','\\');
+        add(new ArrayList<>(Arrays.asList(split)));
+      }
+ else {
+        List<String> row=new ArrayList<>(Arrays.asList(splitOnCharWithQuoting(line,sep.charAt(0),'"','\\')));
+        if (numColumns < 0)         numColumns=row.size();
+ else         if (row.size() != numColumns)         log.warn("Row " + i + " had invalid number of columns  line was "+ line);
+ else         add(row);
+      }
+    }
+ else {
+      List<String> row=new ArrayList<>(Arrays.asList(splitOnCharWithQuoting(line,sep.charAt(0),'"','\\')));
+      if (numColumns < 0)       numColumns=row.size();
+ else       if (row.size() != numColumns) {
+        log.warn("Could not add " + line);
+      }
+ else       add(row);
+    }
+  }
+  fillOut();
+}

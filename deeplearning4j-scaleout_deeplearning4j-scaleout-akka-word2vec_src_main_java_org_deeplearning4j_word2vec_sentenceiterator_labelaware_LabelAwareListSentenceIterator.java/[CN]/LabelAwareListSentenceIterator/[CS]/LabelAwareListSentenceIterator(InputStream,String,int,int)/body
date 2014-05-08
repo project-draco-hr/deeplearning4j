@@ -2,7 +2,8 @@
   this.delimiter=delimiter;
   this.labelPosition=labelPosition;
   this.textPosition=textPosition;
-  lines=IOUtils.readLines(is);
-  initLists();
+  StringGrid grid=StringGrid.fromInput(is,delimiter);
+  labels=grid.getColumn(labelPosition);
+  text=grid.getColumn(textPosition);
   is.close();
 }

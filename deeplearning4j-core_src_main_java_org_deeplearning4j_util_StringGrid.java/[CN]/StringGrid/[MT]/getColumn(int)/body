@@ -1,0 +1,8 @@
+{
+  checkInvalidColumn(column);
+  List<String> ret=new ArrayList<>();
+  for (  List<String> list : this) {
+    ret.add(list.get(column));
+  }
+  return ret;
+}

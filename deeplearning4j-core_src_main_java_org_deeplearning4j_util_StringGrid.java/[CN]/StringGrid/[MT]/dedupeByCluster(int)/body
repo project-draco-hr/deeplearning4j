@@ -1,0 +1,21 @@
+{
+  StringCluster cluster=clusterColumn(column);
+  System.out.println(cluster.get("family mcdonalds restaurant"));
+  System.out.println(cluster.get("family mcdonalds restaurants"));
+  List<Map<String,Integer>> list2=cluster.getClusters();
+  for (int i=0; i < list2.size(); i++) {
+    if (list2.get(i).size() > 1) {
+      System.out.println(list2.get(i));
+    }
+  }
+  FingerPrintKeyer keyer=new FingerPrintKeyer();
+  Set<Integer> alreadyDeDupped=new HashSet<Integer>();
+  for (int i=0; i < size(); i++) {
+    String key=keyer.key(get(i).get(column));
+    Map<String,Integer> map=cluster.get(key);
+    if (map != null && map.size() > 1) {
+      List<Integer> list=filterRowsByColumn(column,map.keySet());
+      if (list.size() > 1)       modifyRows(alreadyDeDupped,column,list,map);
+    }
+  }
+}

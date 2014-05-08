@@ -1,0 +1,13 @@
+{
+  checkInvalidColumn(column);
+  StringGrid grid=new StringGrid(sep,numColumns);
+  List<String> columns=getColumn(column);
+  Counter<String> counter=new Counter<String>();
+  for (  String val : columns)   counter.incrementCount(val,1.0);
+  counter.pruneKeysBelowThreshold(2.0);
+  Set<String> keys=counter.keySet();
+  for (  List<String> row : this) {
+    for (    String key : keys)     if (row.get(column).equals(key))     grid.addRow(row);
+  }
+  return grid;
+}

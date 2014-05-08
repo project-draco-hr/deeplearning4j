@@ -1,15 +1,14 @@
 {
-  ClassPathResource resource=new ClassPathResource("/tweets_clean.txt");
-  InputStream is=resource.getInputStream();
-  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is);
+  InputStream is=FileUtils.openInputStream(new File(args[0]));
+  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is,",");
   iterator.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
       return new InputHomogenization(sentence).transform();
     }
   }
 );
-  TokenizerFactory tokenizerFactory=new PosUimaTokenizerFactory(Arrays.asList("JJ","JJR","VB","VBZ","RB","VBD","VBN","VBP","VBG"));
-  TextVectorizer vectorizor=new TfidfVectorizer(iterator,tokenizerFactory,Arrays.asList("0","1","2"),2000);
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  TextVectorizer vectorizor=new TfidfVectorizer(iterator,tokenizerFactory,Arrays.asList("0","1"),4000);
   DataSet data=vectorizor.vectorize();
   data.binarize();
   log.info("Vocab " + vectorizor.vocab());
@@ -25,8 +24,8 @@
   c.setUseAdaGrad(true);
   c.setMomentum(0.3);
   c.setNormalizeZeroMeanAndUnitVariance(false);
-  c.setnOut(3);
-  c.setSplit(10);
+  c.setnOut(2);
+  c.setSplit(5);
   c.setHiddenUnit(RBM.HiddenUnit.BINARY);
   c.setVisibleUnit(RBM.VisibleUnit.BINARY);
   c.setMultiLayerClazz(DBN.class);

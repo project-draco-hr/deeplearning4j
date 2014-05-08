@@ -1,0 +1,7 @@
+{
+  List<List<String>> ret=new ArrayList<>();
+  for (  List<String> val : this) {
+    if (values.contains(val.get(column)))     ret.add(val);
+  }
+  return ret;
+}

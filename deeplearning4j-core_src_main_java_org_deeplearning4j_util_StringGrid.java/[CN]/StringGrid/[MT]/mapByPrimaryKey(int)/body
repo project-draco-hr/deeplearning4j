@@ -1,0 +1,13 @@
+{
+  Map<String,List<List<String>>> map=new HashMap<>();
+  for (  List<String> line : this) {
+    String val=line.get(columnKey);
+    List<List<String>> get=map.get(val);
+    if (get == null) {
+      get=new ArrayList<>();
+      map.put(val,get);
+    }
+    get.add(new ArrayList<>(Arrays.asList(sep)));
+  }
+  return map;
+}

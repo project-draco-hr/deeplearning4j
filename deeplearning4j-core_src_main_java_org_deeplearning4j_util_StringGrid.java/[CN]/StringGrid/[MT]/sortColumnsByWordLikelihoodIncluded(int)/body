@@ -1,0 +1,28 @@
+{
+  final Counter<String> counter=new Counter<String>();
+  List<String> col=getColumn(column);
+  for (  String s : col) {
+    StringTokenizer tokenizer=new StringTokenizer(s);
+    while (tokenizer.hasMoreTokens()) {
+      counter.incrementCount(tokenizer.nextToken(),1.0);
+    }
+  }
+  if (counter.totalCount() <= 0.0) {
+    log.warn("Unable to calculate probability; nothing found");
+    return;
+  }
+  counter.incrementAll(counter.keySet(),1.0);
+  Set<String> remove=new HashSet<String>();
+  for (  String key : counter.keySet())   if (key.length() < 2 || key.matches("[a-z]+"))   remove.add(key);
+  for (  String key : remove)   counter.removeKey(key);
+  counter.pruneKeysBelowThreshold(4.0);
+  final double totalCount=counter.totalCount();
+  Collections.sort(this,new Comparator<List<String>>(){
+    @Override public int compare(    List<String> o1,    List<String> o2){
+      double c1=sumOverTokens(counter,o1.get(column),totalCount);
+      double c2=sumOverTokens(counter,o2.get(column),totalCount);
+      return Double.compare(c1,c2);
+    }
+  }
+);
+}

@@ -1,0 +1,3 @@
+{
+  if (column < 0 || column >= numColumns)   throw new IllegalArgumentException("Invalid column " + column);
+}

@@ -1,0 +1,5 @@
+{
+  List<String> read=IOUtils.readLines(from);
+  if (read.isEmpty())   throw new IllegalStateException("Nothing to read; file is empty");
+  return new StringGrid(sep,read);
+}

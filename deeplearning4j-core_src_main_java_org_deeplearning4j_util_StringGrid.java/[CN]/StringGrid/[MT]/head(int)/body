@@ -1,0 +1,8 @@
+{
+  if (num >= size())   num=size();
+  StringBuilder builder=new StringBuilder();
+  for (int i=0; i < num; i++) {
+    builder.append(get(i) + "\n");
+  }
+  log.info(builder.toString());
+}

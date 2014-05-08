@@ -1,0 +1,7 @@
+{
+  Counter<String> counter=new Counter<String>();
+  for (  String s : map.keySet()) {
+    counter.incrementCount(s,map.get(s));
+  }
+  return counter.argMax();
+}

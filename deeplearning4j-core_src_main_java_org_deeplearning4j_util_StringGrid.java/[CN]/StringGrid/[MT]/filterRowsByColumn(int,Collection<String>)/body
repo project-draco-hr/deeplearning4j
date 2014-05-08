@@ -1,0 +1,7 @@
+{
+  List<Integer> list=new ArrayList<Integer>();
+  for (int i=0; i < size(); i++) {
+    if (values.contains(get(i).get(column)))     list.add(i);
+  }
+  return list;
+}

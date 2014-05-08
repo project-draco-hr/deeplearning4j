@@ -1,0 +1,6 @@
+{
+  for (  List<String> row : this) {
+    String currVal=row.get(toColumn);
+    row.set(toColumn,currVal + append);
+  }
+}

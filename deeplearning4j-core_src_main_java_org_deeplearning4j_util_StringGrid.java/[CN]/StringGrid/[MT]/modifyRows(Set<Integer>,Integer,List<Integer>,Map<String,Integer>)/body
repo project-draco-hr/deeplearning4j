@@ -1,0 +1,57 @@
+{
+  String chosenKey=null;
+  Integer max=null;
+  for (  String key : cluster.keySet()) {
+    StringTokenizer val=new StringTokenizer(key);
+    List<String> list=new ArrayList<String>();
+    boolean allLower=true;
+    outer:     while (val.hasMoreTokens()) {
+      String token=val.nextToken();
+      if (token.length() >= 3 && token.matches("[A-Z]+")) {
+        continue outer;
+      }
+      list.add(token);
+    }
+    for (    String s : list) {
+      allLower=allLower && s.matches("[a-z]+");
+    }
+    if (allLower) {
+      continue;
+    }
+    if (list.get(list.size() - 1).toLowerCase().equals("the")) {
+      continue;
+    }
+    if (max == null) {
+      max=cluster.get(key);
+      chosenKey=key;
+    }
+ else     if (!allLower && cluster.get(key) > max) {
+      max=cluster.get(key);
+      chosenKey=key;
+    }
+  }
+  if (chosenKey == null) {
+    String max2=maximalValue(cluster);
+    StringTokenizer val=new StringTokenizer(max2);
+    List<String> list=new ArrayList<String>();
+    while (val.hasMoreTokens()) {
+      String token=val.nextToken();
+      if (token.length() >= 3 && token.matches("[A-Z]+")) {
+        token=token.charAt(0) + token.substring(1).toLowerCase();
+      }
+      list.add(token);
+    }
+    boolean allLower=true;
+    for (    String s : list)     allLower=allLower && s.matches("[a-z]+");
+    if (list.get(list.size() - 1).toLowerCase().equals("the")) {
+      max2=max2.replaceAll("^[Tt]he","");
+    }
+    if (allLower)     max2=StringUtils.capitalize(max2);
+    chosenKey=max2;
+  }
+  for (  Integer i2 : rows) {
+    if (!alreadyDeDupped.contains(i2)) {
+      disambiguateRow(i2,column,chosenKey);
+    }
+  }
+}
