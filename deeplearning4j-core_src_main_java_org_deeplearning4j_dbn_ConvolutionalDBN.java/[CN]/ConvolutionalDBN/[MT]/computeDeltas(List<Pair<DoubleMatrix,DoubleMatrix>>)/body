@@ -1,0 +1,16 @@
+{
+  ActivationFunction a=getSigmoidLayers()[0].getActivationFunction();
+  ActivationFunction softMaxDerivative=Activations.softmax();
+  List<DoubleMatrix> activations=feedForward();
+  DoubleMatrix error=labels.sub(activations.get(activations.size() - 1)).neg().mul(softMaxDerivative.applyDerivative(activations.get(activations.size() - 1)));
+  DoubleMatrix es=logLayer.getW().mmul(error);
+  DownSamplingLayer d=(DownSamplingLayer)getSigmoidLayers()[getSigmoidLayers().length - 1];
+  DoubleMatrix shape=d.getFeatureMap().shape();
+  ConvolutionalRBM rbm=(ConvolutionalRBM)getLayers()[getnLayers() - 1];
+  DoubleMatrix[] errorSignals=new DoubleMatrix[getnLayers()];
+  errorSignals[errorSignals.length - 1]=es;
+  FourDTensor layerErrorSignal=FourDTensor.zeros((int)shape.get(0),(int)shape.get(1),(int)shape.get(2),(int)shape.get(3));
+  int nMap=(int)shape.get(0) * (int)shape.get(1);
+  for (int i=0; i < rbm.getNumFilters()[0]; i++) {
+  }
+}

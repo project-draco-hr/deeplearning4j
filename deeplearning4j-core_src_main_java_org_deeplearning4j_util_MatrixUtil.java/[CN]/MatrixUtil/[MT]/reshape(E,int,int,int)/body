@@ -1,0 +1,6 @@
+{
+  DoubleMatrix ret=input.reshape(rows * numSlices,columns);
+  Tensor retTensor=new Tensor(ret,false);
+  retTensor.setSlices(numSlices);
+  return retTensor;
+}

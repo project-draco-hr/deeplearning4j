@@ -1,0 +1,15 @@
+{
+  DownSamplingLayer d=(DownSamplingLayer)getSigmoidLayers()[getSigmoidLayers().length - 1];
+  FourDTensor lastLayer=d.getFeatureMap();
+  int nY=lastLayer.getRows();
+  int nX=lastLayer.getColumns();
+  int nM=lastLayer.slices();
+  int noBs=lastLayer.getNumTensor();
+  int nMap=nY * nX;
+  DoubleMatrix features=new DoubleMatrix(nMap * nM,noBs);
+  for (int j=0; j < d.getNumFeatureMaps(); j++) {
+    Tensor map=d.getFeatureMap().getTensor(j);
+    features.put(RangeUtils.interval(j * nMap + 1,j * nMap),RangeUtils.interval(0,features.columns),map.reshape(nMap,noBs));
+  }
+  return createBasedOn(logLayer.predict(features),features);
+}

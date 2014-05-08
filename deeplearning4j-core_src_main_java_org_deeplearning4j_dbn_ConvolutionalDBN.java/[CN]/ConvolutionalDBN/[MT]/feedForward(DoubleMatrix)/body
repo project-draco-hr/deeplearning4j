@@ -1,7 +1,7 @@
 {
-  Tensor realInput=(Tensor)input;
   FourDTensor tensor=new FourDTensor(input,inputSize[0],inputSize[1],input.rows / inputSize[0],input.rows / input.length);
   FourDTensor curr=tensor;
+  List<DoubleMatrix> activations=new ArrayList<>();
   for (int i=0; i < getnLayers(); i++) {
     ConvolutionalRBM r=(ConvolutionalRBM)getLayers()[i];
     DownSamplingLayer d=(DownSamplingLayer)getSigmoidLayers()[i];
@@ -16,8 +16,10 @@
       }
       featureMap.addi(r.gethBias().get(i));
       r.getFeatureMap().setSlice(j,d.activate(featureMap));
-      d.getFeatureMap().setTensor(j,MatrixUtil.downSample(r.getFeatureMap().getTensor(j),MatrixUtil.toMatrix(r.getStride())));
+      d.getFeatureMap().setTensor(j,downSample(r.getFeatureMap().getTensor(j),MatrixUtil.toMatrix(r.getStride())));
     }
+    activations.add(d.getFeatureMap());
   }
-  return super.feedForward(input);
+  activations.add(predict(activations.get(activations.size() - 1)));
+  return activations;
 }

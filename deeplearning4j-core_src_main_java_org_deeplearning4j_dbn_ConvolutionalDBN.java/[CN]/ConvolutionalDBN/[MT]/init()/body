@@ -31,7 +31,10 @@
     DownSamplingLayer d=new DownSamplingLayer.Builder().dist(dist).withStride(this.stride[i]).withFmSize(MatrixUtil.floor(MatrixUtil.toMatrix(r.getFmSize()).div(stride))).numFeatureMaps(nFm).withBias(r.gethBias()).withRng(rng).build();
     this.sigmoidLayers[i]=d;
   }
-  this.logLayer=new LogisticRegression.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(hiddenLayerSizes[getnLayers() - 1]).numberOfOutputs(nOuts).withL2(l2).build();
+  ConvolutionalRBM r=(ConvolutionalRBM)getLayers()[getLayers().length - 1];
+  int nFmIn=r.getNumFilters()[0];
+  int nOuts=r.getFmSize()[0] * r.getFmSize()[1] * nFmIn;
+  this.logLayer=new LogisticRegression.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(nFmIn).numberOfOutputs(nOuts).withL2(l2).build();
   synchonrizeRng();
   applyTransforms();
   initCalled=true;
