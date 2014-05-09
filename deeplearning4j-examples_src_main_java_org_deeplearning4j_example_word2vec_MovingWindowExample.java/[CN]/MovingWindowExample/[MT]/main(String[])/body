@@ -1,33 +1,38 @@
 {
-  ClassPathResource resource=new ClassPathResource("/tweets_clean.txt");
-  InputStream is=resource.getInputStream();
-  List<String> labels=Arrays.asList("0","1","2");
-  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is);
+  InputStream is=FileUtils.openInputStream(new File(args[0]));
+  List<String> labels=Arrays.asList("0","1");
+  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is,",");
   iterator.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
-      return new InputHomogenization(sentence).transform();
+      String base=new InputHomogenization(sentence).transform();
+      base=base.replaceAll("@.*","");
+      return base;
     }
   }
 );
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
-  Word2Vec vec=new Word2Vec(tokenizerFactory,iterator,1);
-  vec.train();
-  log.info("Saving word 2 vec model...");
+  File vecModel=new File("tweet-wordvectors.ser");
+  Word2Vec vec=vecModel.exists() ? (Word2Vec)SerializationUtils.readObject(vecModel) : new Word2Vec(tokenizerFactory,iterator,1);
+  if (!vecModel.exists()) {
+    vec.train();
+    log.info("Saving word 2 vec model...");
+    SerializationUtils.saveObject(vec,new File("tweet-wordvectors.ser"));
+  }
+ else   vec.setTokenizerFactory(tokenizerFactory);
   iterator.reset();
-  DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1","2"));
-  HazelCastStateTracker tracker=new HazelCastStateTracker();
+  DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1"));
+  HazelCastStateTracker tracker=new HazelCastStateTracker(2200);
   if (!tracker.isPretrain())   throw new IllegalStateException("Tracker should be on pretrain");
   Conf c=new Conf();
   c.setFinetuneEpochs(10000);
   c.setPretrainEpochs(10000);
   c.setFinetuneLearningRate(1e-1);
-  c.setLayerSizes(new int[]{iter.inputColumns() / 2,iter.inputColumns() / 4,iter.inputColumns() / 3});
-  c.setnIn(iter.inputColumns());
+  c.setLayerSizes(new int[]{iter.inputColumns() / 4,iter.inputColumns() / 4,iter.inputColumns() / 3});
   c.setUseAdaGrad(true);
   c.setMomentum(0.3);
-  c.setNormalizeZeroMeanAndUnitVariance(false);
-  c.setnOut(3);
+  c.setnOut(2);
   c.setSplit(10);
+  c.setnIn(vec.getLayerSize() * vec.getWindow());
   c.setHiddenUnit(RBM.HiddenUnit.RECTIFIED);
   c.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
   c.setMultiLayerClazz(DBN.class);
@@ -38,7 +43,7 @@
   runner.setup(c);
   runner.train();
   iterator.reset();
-  Viterbi viterbi=new Viterbi(new DoubleMatrix(new double[]{0,1,2}));
+  Viterbi viterbi=new Viterbi(new DoubleMatrix(new double[]{0,1}));
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();

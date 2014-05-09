@@ -6,5 +6,5 @@
     ret.put(i,result);
   }
   ret.divi(m.rows);
-  return createBasedOn(ret,m);
+  return ret;
 }

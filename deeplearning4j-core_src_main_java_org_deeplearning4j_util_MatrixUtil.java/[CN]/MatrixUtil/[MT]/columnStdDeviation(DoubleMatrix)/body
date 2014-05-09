@@ -5,5 +5,5 @@
     double std=dev.evaluate(m.getColumn(i).toArray());
     ret.put(i,std);
   }
-  return createBasedOn(ret,m);
+  return ret;
 }
