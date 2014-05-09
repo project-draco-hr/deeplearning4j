@@ -11,5 +11,5 @@
     hiddenLayerSizes[count]=network.hiddenLayerSizes[i];
     count++;
   }
-  this.logLayer=new LogisticRegression(hiddenLayerSizes[getnLayers() - 1],network.input.columns);
+  this.logLayer=new OutputLayer(hiddenLayerSizes[getnLayers() - 1],network.input.columns);
 }

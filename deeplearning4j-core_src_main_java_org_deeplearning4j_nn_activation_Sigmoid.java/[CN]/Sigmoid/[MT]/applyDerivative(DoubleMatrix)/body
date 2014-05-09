@@ -1,3 +1,3 @@
 {
-  return sigmoid(input).mul(oneMinus(sigmoid(input)));
+  return input.mul(oneMinus(input));
 }

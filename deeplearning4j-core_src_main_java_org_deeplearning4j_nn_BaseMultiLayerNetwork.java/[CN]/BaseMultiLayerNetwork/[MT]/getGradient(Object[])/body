@@ -6,7 +6,7 @@
   double lr=0.01;
   if (params.length >= 2)   lr=(double)params[1];
   this.feedForward(input);
-  LogisticRegressionGradient g2=logLayer.getGradient(lr);
+  OutputLayerGradient g2=logLayer.getGradient(lr);
   MultiLayerGradient ret=new MultiLayerGradient(gradient,g2);
   if (multiLayerGradientListeners != null && !multiLayerGradientListeners.isEmpty()) {
     for (    MultiLayerGradientListener listener : multiLayerGradientListeners) {

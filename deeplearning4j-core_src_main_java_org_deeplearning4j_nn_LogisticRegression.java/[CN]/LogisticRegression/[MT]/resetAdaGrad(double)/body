@@ -1,6 +1,0 @@
-{
-  if (!firstTimeThrough) {
-    this.adaGrad=new AdaGrad(nIn,nOut,lr);
-    firstTimeThrough=false;
-  }
-}

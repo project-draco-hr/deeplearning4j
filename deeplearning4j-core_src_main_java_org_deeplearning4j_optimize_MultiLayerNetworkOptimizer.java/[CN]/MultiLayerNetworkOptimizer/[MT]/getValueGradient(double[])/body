@@ -1,5 +1,5 @@
 {
-  LogisticRegressionGradient gradient=network.getLogLayer().getGradient(lr);
+  OutputLayerGradient gradient=network.getLogLayer().getGradient(lr);
   DoubleMatrix weightGradient=gradient.getwGradient();
   DoubleMatrix biasGradient=gradient.getbGradient();
   int idx=0;

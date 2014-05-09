@@ -1,0 +1,18 @@
+{
+  DoubleMatrix z=output(input);
+switch (lossFunction) {
+case MCXENT:
+    DoubleMatrix p_y_given_x=sigmoid(input.mmul(W).addRowVector(b));
+  DoubleMatrix dy=labels.sub(p_y_given_x);
+return input.transpose().mmul(dy);
+case XENT:
+DoubleMatrix xEntDiff=z.sub(labels);
+return xEntDiff.div(z.mul(oneMinus(z)));
+case MSE:
+DoubleMatrix mseDelta=labels.sub(z);
+return mseDelta.neg();
+case EXPLL:
+return oneMinus(labels).div(z);
+}
+throw new IllegalStateException("Invalid loss function");
+}

@@ -10,6 +10,6 @@
     activations.add(currInput);
   }
   logLayer.setInput(currInput);
-  activations.add(getLogLayer().predict(currInput));
+  activations.add(getLogLayer().output(currInput));
   return activations;
 }

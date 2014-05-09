@@ -1,0 +1,16 @@
+{
+  MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
+  adaGrad.setMasterStepSize(lr);
+  biasAdaGrad.setMasterStepSize(lr);
+  DoubleMatrix netOut=output(input);
+  DoubleMatrix dy=labels.sub(netOut);
+  if (normalizeByInputRows)   dy.divi(input.rows);
+  DoubleMatrix wGradient=getWeightGradient();
+  if (useAdaGrad)   wGradient.muli(adaGrad.getLearningRates(wGradient));
+ else   wGradient.muli(lr);
+  if (useAdaGrad)   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.columnMeans()));
+ else   dy.muli(lr);
+  if (normalizeByInputRows)   dy.divi(input.rows);
+  DoubleMatrix bGradient=dy;
+  return new OutputLayerGradient(wGradient,bGradient);
+}

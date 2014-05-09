@@ -1,0 +1,16 @@
+{
+  OutputLayerOptimizer opt=new OutputLayerOptimizer(this,learningRate);
+  adaGrad.setMasterStepSize(learningRate);
+  biasAdaGrad.setMasterStepSize(learningRate);
+  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
+    g.setTolerance(1e-3);
+    g.setMaxIterations(numEpochs);
+    g.optimize(numEpochs);
+  }
+ else {
+    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
+    g.setTolerance(1e-3);
+    g.optimize(numEpochs);
+  }
+}

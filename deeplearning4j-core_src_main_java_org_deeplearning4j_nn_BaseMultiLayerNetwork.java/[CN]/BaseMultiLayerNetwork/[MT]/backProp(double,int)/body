@@ -13,7 +13,7 @@
     int backPropIterations=0;
     while (train) {
       if (backPropIterations >= epochs) {
-        log.info("Backprop number of iterations max hit; convering");
+        log.info("Backprop number of iterations max hit; converging");
         break;
       }
       count++;

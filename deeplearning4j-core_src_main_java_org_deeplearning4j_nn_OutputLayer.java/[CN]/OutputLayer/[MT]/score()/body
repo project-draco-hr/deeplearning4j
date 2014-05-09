@@ -1,0 +1,21 @@
+{
+  MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
+  DoubleMatrix z=output(input);
+switch (lossFunction) {
+case MCXENT:
+    DoubleMatrix mcXEntLogZ=log(z);
+  return -labels.mul(mcXEntLogZ).columnSums().sum() / labels.rows;
+case XENT:
+DoubleMatrix xEntLogZ=log(z);
+DoubleMatrix xEntOneMinusLabelsOut=oneMinus(labels);
+DoubleMatrix xEntOneMinusLogOneMinusZ=oneMinus(log(z));
+return -labels.mul(xEntLogZ).add(xEntOneMinusLabelsOut).mul(xEntOneMinusLogOneMinusZ).columnSums().sum() / labels.rows;
+case MSE:
+DoubleMatrix mseDelta=labels.sub(z);
+return 0.5 * pow(mseDelta,2).columnSums().sum() / labels.rows;
+case EXPLL:
+DoubleMatrix expLLLogZ=log(z);
+return -z.sub(labels.mul(expLLLogZ)).columnSums().sum() / labels.rows;
+}
+throw new IllegalStateException("No loss function found");
+}

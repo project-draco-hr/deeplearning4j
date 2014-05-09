@@ -1,0 +1,18 @@
+{
+  OutputLayer reg=new OutputLayer();
+  reg.b=b.dup();
+  reg.W=W.dup();
+  reg.l2=this.l2;
+  if (this.labels != null)   reg.labels=this.labels.dup();
+  reg.nIn=this.nIn;
+  reg.nOut=this.nOut;
+  reg.useRegularization=this.useRegularization;
+  reg.normalizeByInputRows=this.normalizeByInputRows;
+  reg.biasAdaGrad=this.biasAdaGrad;
+  reg.adaGrad=this.adaGrad;
+  reg.useAdaGrad=this.useAdaGrad;
+  reg.setOptimizationAlgorithm(this.getOptimizationAlgorithm());
+  reg.lossFunction=this.lossFunction;
+  if (this.input != null)   reg.input=this.input.dup();
+  return reg;
+}

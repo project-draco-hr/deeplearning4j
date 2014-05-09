@@ -11,5 +11,5 @@
     Tensor map=d.getFeatureMap().getTensor(j);
     features.put(interval(j * nMap + 1,j * nMap),interval(0,features.columns),map.reshape(nMap,noBs));
   }
-  return createBasedOn(logLayer.predict(features),features);
+  return createBasedOn(logLayer.output(features),features);
 }

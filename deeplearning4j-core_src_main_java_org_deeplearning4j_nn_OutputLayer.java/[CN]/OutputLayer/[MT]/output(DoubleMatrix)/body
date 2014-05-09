@@ -1,0 +1,4 @@
+{
+  this.input=x;
+  return activationFunction.apply(x.mmul(W).addRowVector(b));
+}
