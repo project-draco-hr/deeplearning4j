@@ -2,7 +2,8 @@
   if (hiddenType == HiddenUnit.RECTIFIED) {
     DoubleMatrix h1Mean=propUp(v);
     DoubleMatrix sigH1Mean=sigmoid(h1Mean);
-    DoubleMatrix h1Sample=h1Mean.addi(MatrixUtil.normal(getRng(),h1Mean,1).mul(sqrt(sigH1Mean)));
+    DoubleMatrix sqrtSigH1Mean=sqrt(sigH1Mean);
+    DoubleMatrix h1Sample=h1Mean.addi(normal(getRng(),h1Mean,1).mul(sqrtSigH1Mean));
     MatrixUtil.max(0.0,h1Sample);
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);

@@ -7,5 +7,5 @@
     if (variance == 0)     variance=1e-6;
     ret.put(i,variance);
   }
-  return createBasedOn(ret,input);
+  return ret;
 }

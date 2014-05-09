@@ -1,4 +1,4 @@
 {
   DoubleMatrix ones=DoubleMatrix.ones(x.rows,x.columns);
-  return createBasedOn(ones.div(ones.add(MatrixFunctions.exp(x.neg()))),x);
+  return createBasedOn(ones.div(ones.add(exp(x.neg()))),x);
 }
