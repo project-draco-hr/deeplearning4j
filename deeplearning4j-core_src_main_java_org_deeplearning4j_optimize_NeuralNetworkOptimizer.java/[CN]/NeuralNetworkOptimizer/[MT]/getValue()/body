@@ -2,5 +2,6 @@
   if (this.lossFunction == LossFunction.RECONSTRUCTION_CROSSENTROPY)   return network.getReConstructionCrossEntropy();
  else   if (this.lossFunction == LossFunction.SQUARED_LOSS)   return -network.squaredLoss();
  else   if (this.lossFunction == LossFunction.NEGATIVELOGLIKELIHOOD)   return -network.negativeLogLikelihood();
+ else   if (lossFunction == LossFunction.MSE)   return -network.mse();
   return network.getReConstructionCrossEntropy();
 }

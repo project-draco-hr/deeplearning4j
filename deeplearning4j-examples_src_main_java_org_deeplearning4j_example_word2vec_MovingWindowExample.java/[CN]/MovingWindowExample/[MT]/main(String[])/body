@@ -39,6 +39,7 @@
   c.setUseRegularization(false);
   c.setDeepLearningParams(new Object[]{1,1e-1,1000});
   ActorNetworkRunner runner=new ActorNetworkRunner("master",iter);
+  runner.setModelSaver(new DefaultModelSaver(new File("word2vec-modelsaver.ser")));
   runner.setStateTracker(tracker);
   runner.setup(c);
   runner.train();

@@ -1,13 +1,11 @@
 {
   DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().withSparsity(1e-1).numberOfVisible(784).numHidden(600).build();
   DataSetIterator iter=new MnistDataSetIterator(10,30);
-  for (int i=0; i < 20; i++) {
-    while (iter.hasNext()) {
-      DataSet next=iter.next();
-      autoEncoder.trainTillConvergence(next.getFirst(),1e-2,new Object[]{0.3,1e-2,1000});
-    }
-    iter.reset();
+  while (iter.hasNext()) {
+    DataSet next=iter.next();
+    autoEncoder.trainTillConvergence(next.getFirst(),1e-1,new Object[]{0.6,1e-1,1000});
   }
+  iter.reset();
   FilterRenderer render=new FilterRenderer();
   render.renderFilters(autoEncoder.getW(),"example-render.jpg",28,28);
   while (iter.hasNext()) {

@@ -2,7 +2,7 @@
   this.input=input;
   DoubleMatrix output=activate();
   DoubleMatrix sigH1Mean=sigmoid(output);
-  DoubleMatrix h1Sample=output.addi(MatrixUtil.normal(getRng(),output,1).mul(sqrt(sigH1Mean)));
+  DoubleMatrix h1Sample=output.addi(normal(getRng(),output,1).mul(sqrt(sigH1Mean)));
   MatrixUtil.max(0.0,h1Sample);
   return h1Sample;
 }
