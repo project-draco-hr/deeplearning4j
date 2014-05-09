@@ -1,6 +1,7 @@
 {
   DataSetIterator iter=new MnistDataSetIterator(10,500);
-  DBN dbn=new DBN.Builder().useAdaGrad(true).useRegularization(false).hiddenLayerSizes(new int[]{500,400,250}).normalizeByInputRows(true).numberOfInputs(784).numberOfOutPuts(10).build();
+  RandomGenerator rng=new MersenneTwister(123);
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{500,400,250}).renderWeights(100).withRng(rng).numberOfInputs(784).numberOfOutPuts(10).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.pretrain(next.getFirst(),1,0.01,10000);

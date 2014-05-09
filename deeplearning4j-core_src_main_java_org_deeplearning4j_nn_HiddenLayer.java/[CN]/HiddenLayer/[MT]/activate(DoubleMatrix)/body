@@ -1,4 +1,4 @@
 {
-  if (input != null)   this.input=input;
+  if (input != null)   this.input=stabilizeInput(input.dup(),1);
   return activate();
 }

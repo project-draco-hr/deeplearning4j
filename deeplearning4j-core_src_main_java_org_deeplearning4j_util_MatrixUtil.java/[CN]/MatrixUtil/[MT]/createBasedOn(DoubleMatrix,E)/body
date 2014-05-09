@@ -1,5 +1,5 @@
 {
-  if (input.getClass().equals(result.getClass()))   return input;
+  if (input.getClass().equals(result.getClass()))   return (E)result;
  else   if (input instanceof FourDTensor) {
     FourDTensor tensor=new FourDTensor(result,false);
     FourDTensor casted=(FourDTensor)input;

@@ -1,5 +1,5 @@
 {
-  if (input != null && cacheInput)   this.input=input;
+  if (input != null && cacheInput)   this.input=MatrixUtil.stabilizeInput(input,1);
   this.lastMiniBatchSize=input.rows;
   if (visibleType == VisibleUnit.GAUSSIAN) {
     this.sigma=MatrixUtil.columnVariance(input);
