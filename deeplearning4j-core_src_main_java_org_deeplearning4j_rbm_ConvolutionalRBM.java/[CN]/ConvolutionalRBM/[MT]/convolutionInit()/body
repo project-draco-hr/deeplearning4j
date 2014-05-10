@@ -14,5 +14,6 @@
   vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
   hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);
   convolutionInitCalled=true;
+  dWeights=new FourDTensor(W.rows(),W.columns(),W.slices(),W.getNumTensor());
   this.normalizeByInputRows=false;
 }
