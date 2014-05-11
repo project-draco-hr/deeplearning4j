@@ -7,12 +7,12 @@ case MCXENT:
 return input.transpose().mmul(dy);
 case XENT:
 DoubleMatrix xEntDiff=z.sub(labels);
-return xEntDiff.div(z.mul(oneMinus(z)));
+return input.transpose().mmul(xEntDiff.div(z.mul(oneMinus(z))));
 case MSE:
 DoubleMatrix mseDelta=labels.sub(z);
-return mseDelta.neg();
+return input.transpose().mmul(mseDelta.neg());
 case EXPLL:
-return oneMinus(labels).div(z);
+return input.transpose().mmul(oneMinus(labels).div(z));
 }
 throw new IllegalStateException("Invalid loss function");
 }

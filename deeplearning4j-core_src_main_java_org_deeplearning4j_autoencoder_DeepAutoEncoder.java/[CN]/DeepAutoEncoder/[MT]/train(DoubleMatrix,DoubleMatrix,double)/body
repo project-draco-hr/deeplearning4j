@@ -6,7 +6,7 @@
   ArrayUtil.reverse(hiddenLayerSizes);
   if (encoder.getClass().isAssignableFrom(DBN.class)) {
     DBN d=(DBN)encoder;
-    decoder=new DBN.Builder().withHiddenUnits(d.getHiddenUnit()).withVisibleUnits(d.getVisibleUnit()).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
+    decoder=new DBN.Builder().withHiddenUnits(d.getHiddenUnit()).withVisibleUnits(d.getVisibleUnit()).withOutputLossFunction(OutputLayer.LossFunction.XENT).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
   }
  else {
     decoder=new DBN.Builder().withOutputLossFunction(OutputLayer.LossFunction.XENT).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
@@ -24,6 +24,11 @@
   DoubleMatrix decoderInput=activations.get(activations.size() - 2);
   decoder.setSigmoidLayers(clonedHidden);
   decoder.setLayers(cloned);
+  for (int i=0; i < decoder.getLayers().length; i++) {
+    decoder.getLayers()[i].setAdaGrad(null);
+    decoder.getLayers()[i].setHbiasAdaGrad(null);
+    decoder.getLayers()[i].setVBiasAdaGrad(null);
+  }
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
   decoder.finetune(input,1e-2,1000);
