@@ -18,7 +18,7 @@
       }
       count++;
       backPropStep(revert,lr,count);
-      getLogLayer().trainTillConvergence(lr,epochs,eval);
+      getOutputLayer().trainTillConvergence(lr,epochs,eval);
       if (eval.shouldStop(count))       break;
       Double entropy=score();
       if (lastEntropy == null || entropy < lastEntropy) {

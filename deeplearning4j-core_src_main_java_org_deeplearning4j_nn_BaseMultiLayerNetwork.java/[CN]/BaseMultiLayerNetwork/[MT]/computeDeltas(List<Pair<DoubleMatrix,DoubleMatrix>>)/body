@@ -7,7 +7,7 @@
   List<DoubleMatrix> activations=feedForward();
   List<DoubleMatrix> weights=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
-  weights.add(getLogLayer().getW());
+  weights.add(getOutputLayer().getW());
   for (int i=getnLayers() + 1; i >= 0; i--) {
     if (i >= getnLayers() + 1) {
       delta=labels.sub(activations.get(i)).neg().mul(softMaxDerivative.applyDerivative(activations.get(i)));

@@ -3,7 +3,7 @@
   ActivationFunction softMaxDerivative=Activations.softmax();
   List<DoubleMatrix> activations=feedForward();
   DoubleMatrix error=labels.sub(activations.get(activations.size() - 1)).neg().mul(softMaxDerivative.applyDerivative(activations.get(activations.size() - 1)));
-  DoubleMatrix es=logLayer.getW().transpose().mmul(error);
+  DoubleMatrix es=outputLayer.getW().transpose().mmul(error);
   DownSamplingLayer d=(DownSamplingLayer)getSigmoidLayers()[getSigmoidLayers().length - 1];
   DoubleMatrix shape=d.getFeatureMap().shape();
   ConvolutionalRBM rbm=(ConvolutionalRBM)getLayers()[getnLayers() - 1];

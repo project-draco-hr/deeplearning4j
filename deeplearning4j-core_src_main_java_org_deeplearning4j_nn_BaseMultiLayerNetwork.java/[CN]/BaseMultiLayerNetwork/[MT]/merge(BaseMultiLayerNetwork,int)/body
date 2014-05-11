@@ -7,5 +7,5 @@
     getSigmoidLayers()[i].setB(n.gethBias());
     getSigmoidLayers()[i].setW(n.getW());
   }
-  getLogLayer().merge(network.logLayer,batchSize);
+  getOutputLayer().merge(network.outputLayer,batchSize);
 }

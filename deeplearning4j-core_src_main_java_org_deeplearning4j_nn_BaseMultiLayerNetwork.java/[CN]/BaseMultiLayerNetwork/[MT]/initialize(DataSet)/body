@@ -2,5 +2,5 @@
   setInput(data.getFirst());
   feedForward(data.getFirst());
   this.labels=data.getSecond();
-  logLayer.setLabels(labels);
+  outputLayer.setLabels(labels);
 }

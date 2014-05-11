@@ -12,7 +12,7 @@
   this.normalizeByInputRows=network.normalizeByInputRows;
   this.useAdaGrad=network.useAdaGrad;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
-  if (network.logLayer != null)   this.logLayer=network.logLayer.clone();
+  if (network.outputLayer != null)   this.outputLayer=network.outputLayer.clone();
   this.nIns=network.nIns;
   this.nOuts=network.nOuts;
   this.rng=network.rng;
@@ -34,7 +34,6 @@
   this.shouldBackProp=network.shouldBackProp;
   this.weightTransforms=network.weightTransforms;
   this.sparsity=network.sparsity;
-  this.toDecode=network.toDecode;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
   this.dropOut=network.dropOut;

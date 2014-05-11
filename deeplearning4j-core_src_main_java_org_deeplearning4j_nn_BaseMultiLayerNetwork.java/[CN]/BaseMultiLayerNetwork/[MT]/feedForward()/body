@@ -9,8 +9,8 @@
  else     currInput=getLayers()[i].sampleHiddenGivenVisible(currInput).getSecond();
     activations.add(currInput);
   }
-  getLogLayer().setInput(currInput);
-  if (getLogLayer().getActivationFunction() == null)   logLayer.setActivationFunction(outputActivationFunction);
-  activations.add(getLogLayer().output(currInput));
+  getOutputLayer().setInput(currInput);
+  if (getOutputLayer().getActivationFunction() == null)   outputLayer.setActivationFunction(outputActivationFunction);
+  activations.add(getOutputLayer().output(currInput));
   return activations;
 }

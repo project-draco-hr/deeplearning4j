@@ -18,7 +18,7 @@
       }
       count++;
       backPropStep(revert,lr,count);
-      getLogLayer().trainTillConvergence(lr,epochs);
+      getOutputLayer().trainTillConvergence(lr,epochs);
       Double entropy=score();
       if (lastEntropy == null || entropy < lastEntropy) {
         double diff=Math.abs(entropy - lastEntropy);
@@ -27,7 +27,7 @@
           break;
         }
  else         lastEntropy=entropy;
-        log.info("New negative log likelihood " + lastEntropy);
+        log.info("New score " + lastEntropy);
         revert=clone();
       }
  else       if (entropy >= lastEntropy) {

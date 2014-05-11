@@ -11,5 +11,5 @@
       if (network.getnHidden() != network1.getnVisible())       throw new IllegalStateException("Invalid structure: network hidden for " + (i + 1) + " not equal to number of visible "+ i);
     }
   }
-  if (sigmoidLayers[sigmoidLayers.length - 1].getnOut() != logLayer.getnIn())   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
+  if (sigmoidLayers[sigmoidLayers.length - 1].getnOut() != outputLayer.getnIn())   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
 }

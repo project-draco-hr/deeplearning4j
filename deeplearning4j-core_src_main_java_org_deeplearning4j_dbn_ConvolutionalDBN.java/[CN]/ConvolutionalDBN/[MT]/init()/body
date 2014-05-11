@@ -34,7 +34,7 @@
   ConvolutionalRBM r=(ConvolutionalRBM)getLayers()[getLayers().length - 1];
   int nFmIn=r.getNumFilters()[0];
   int nOuts=r.getFmSize()[0] * r.getFmSize()[1] * nFmIn;
-  this.logLayer=new OutputLayer.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(nFmIn).numberOfOutputs(nOuts).withL2(l2).build();
+  this.outputLayer=new OutputLayer.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(nFmIn).numberOfOutputs(nOuts).withL2(l2).build();
   synchonrizeRng();
   applyTransforms();
   initCalled=true;
