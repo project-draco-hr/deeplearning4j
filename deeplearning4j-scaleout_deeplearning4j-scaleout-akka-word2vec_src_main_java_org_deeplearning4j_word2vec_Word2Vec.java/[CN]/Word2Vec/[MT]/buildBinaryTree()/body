@@ -36,8 +36,8 @@
       int[] copy=plus(points,node.getIndex() - vocab.size());
       points=copy;
       triple.setThird(points);
-      stack.add(new Triple<VocabWord,int[],int[]>(node.getLeft(),plus(codes,0),points));
-      stack.add(new Triple<VocabWord,int[],int[]>(node.getRight(),plus(codes,1),points));
+      stack.add(new Triple<>(node.getLeft(),plus(codes,0),points));
+      stack.add(new Triple<>(node.getRight(),plus(codes,1),points));
     }
   }
   log.info("Built tree");

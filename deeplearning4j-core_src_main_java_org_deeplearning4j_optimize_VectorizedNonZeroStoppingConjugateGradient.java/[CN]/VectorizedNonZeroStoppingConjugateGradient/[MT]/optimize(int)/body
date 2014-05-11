@@ -63,6 +63,9 @@
     if (listener != null) {
       listener.epochDone(iterationCount);
     }
+    if (eval != null && eval.shouldStop(iterations)) {
+      return true;
+    }
   }
   return false;
 }

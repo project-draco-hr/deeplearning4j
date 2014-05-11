@@ -20,6 +20,5 @@
   DoubleMatrix hBiasGradient=DoubleMatrix.scalar((input.sub(nvSamples)).columnSums().sum());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,learningRate);
-  triggerGradientEvents(ret);
   return ret;
 }

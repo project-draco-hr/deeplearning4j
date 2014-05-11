@@ -49,10 +49,21 @@
   numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
   numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
   done=h.getAtomicReference(DONE);
+  validationEpochs=h.getAtomicReference(VALIDATION_EPOCHS);
+  improvementThreshold=h.getAtomicReference(IMPROVEMENT_THRESHOLD);
+  bestLoss=h.getAtomicReference(BEST_LOSS);
+  earlyStop=h.getAtomicReference(EARLY_STOP);
+  patience=h.getAtomicReference(PATIENCE);
+  patienceIncrease=h.getAtomicReference(PATIENCE_INCREASE);
   if (type.equals("master")) {
     numTimesPretrainRan.set(0);
     numTimesPretrain.set(1);
     isPretrain.set(true);
     done.set(false);
+    earlyStop.set(true);
+    patience.set(40.0);
+    patienceIncrease.set(2.0);
+    improvementThreshold.set(0.995);
+    validationEpochs.set((int)Math.min(10,patience() / 2));
   }
 }

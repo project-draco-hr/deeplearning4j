@@ -20,7 +20,7 @@
     }
     this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
   }
-  this.logLayer=new OutputLayer.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).useRegularization(useRegularization).numberOfInputs(hiddenLayerSizes[getnLayers() - 1]).numberOfOutputs(nOuts).withL2(l2).build();
+  this.logLayer=new OutputLayer.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(hiddenLayerSizes[getnLayers() - 1]).numberOfOutputs(nOuts).withL2(l2).build();
   synchonrizeRng();
   dimensionCheck();
   applyTransforms();

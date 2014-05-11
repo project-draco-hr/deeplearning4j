@@ -20,6 +20,6 @@
     }
     activations.add(d.getFeatureMap());
   }
-  activations.add(predict(activations.get(activations.size() - 1)));
+  activations.add(output(activations.get(activations.size() - 1)));
   return activations;
 }

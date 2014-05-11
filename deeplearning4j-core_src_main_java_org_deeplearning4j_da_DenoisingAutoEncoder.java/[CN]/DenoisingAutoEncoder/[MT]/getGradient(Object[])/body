@@ -15,7 +15,6 @@
   DoubleMatrix hBiasGradient=L_hbias.columnMeans();
   DoubleMatrix vBiasGradient=L_vbias.columnMeans();
   NeuralNetworkGradient gradient=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  triggerGradientEvents(gradient);
   updateGradientAccordingToParams(gradient,lr);
   return gradient;
 }

@@ -11,7 +11,7 @@
   for (int i=0; i < topNSize; i++) {
     VocabWord wordEntry=wordsEntrys.get(i);
     if (min > wordEntry.getWordFrequency()) {
-      min=(double)wordEntry.getWordFrequency();
+      min=wordEntry.getWordFrequency();
       minOffe=i;
       minIndex=wordEntry.getIndex();
     }

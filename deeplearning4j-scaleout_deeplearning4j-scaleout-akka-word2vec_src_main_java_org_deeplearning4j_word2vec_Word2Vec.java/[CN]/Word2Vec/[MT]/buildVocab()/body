@@ -3,7 +3,6 @@
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   final Counter<String> rawVocab=Util.parallelCounter();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
-  final AtomicInteger numSentences=new AtomicInteger(0);
   int queued=0;
   final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,wordIndex,minWordFrequency,vocab,layerSize,stopWords,rawVocab,semaphore)));
   while (getSentenceIter().hasNext()) {

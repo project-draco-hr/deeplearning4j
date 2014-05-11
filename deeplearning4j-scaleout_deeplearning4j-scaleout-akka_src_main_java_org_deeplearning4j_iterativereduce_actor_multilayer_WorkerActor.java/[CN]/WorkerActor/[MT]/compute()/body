@@ -41,7 +41,8 @@
  else {
     network.setInput(d.getFirst());
     log.info("Worker " + id + " finetune");
-    network.finetune(d.getSecond(),learningRate,fineTuneEpochs);
+    TrainingEvaluator eval=tracker.create(network);
+    network.finetune(d.getSecond(),learningRate,fineTuneEpochs,eval);
   }
   try {
     if (!tracker.isDone())     tracker.clearJob(id);

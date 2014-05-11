@@ -9,10 +9,10 @@
   BaseMultiLayerNetwork network=null;
   if (this.network == null) {
     if (conf.getMultiLayerClazz().isAssignableFrom(DBN.class)) {
-      network=new DBN.Builder().withHiddenUnits(conf.getHiddenUnit()).withVisibleUnits(conf.getVisibleUnit()).numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build();
+      network=new DBN.Builder().withHiddenUnits(conf.getHiddenUnit()).withVisibleUnits(conf.getVisibleUnit()).numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).build();
     }
  else {
-      network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).withMultiLayerGradientListeners(conf.getMultiLayerGradientListeners()).withGradientListeners(conf.getGradientListeners()).build();
+      network=new BaseMultiLayerNetwork.Builder<>().numberOfInputs(conf.getnIn()).numberOfOutPuts(conf.getnOut()).withClazz(conf.getMultiLayerClazz()).hiddenLayerSizes(conf.getLayerSizes()).renderWeights(conf.getRenderWeightEpochs()).useRegularization(conf.isUseRegularization()).withDropOut(conf.getDropOut()).withLossFunction(conf.getLossFunction()).withSparsity(conf.getSparsity()).useAdaGrad(conf.isUseAdaGrad()).withOptimizationAlgorithm(conf.getOptimizationAlgorithm()).build();
     }
   }
  else   network=this.network;

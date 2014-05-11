@@ -5,7 +5,7 @@
   sda.pretrain(x,pretrain_lr,corruption_level,1000);
   sda.finetune(xor.getSecond(),finetune_lr,finetune_epochs);
   log.info("OUTPUT TEST");
-  DoubleMatrix predicted=sda.predict(x);
+  DoubleMatrix predicted=sda.output(x);
   Evaluation eval=new Evaluation();
   eval.eval(xor.getSecond(),predicted);
   log.info(eval.stats());

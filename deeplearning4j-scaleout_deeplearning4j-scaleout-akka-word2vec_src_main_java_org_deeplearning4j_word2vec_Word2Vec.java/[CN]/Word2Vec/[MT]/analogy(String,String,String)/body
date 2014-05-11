@@ -6,7 +6,7 @@
   if (wv1 == null || wv2 == null || wv0 == null)   return null;
   DoubleMatrix tempVector;
   String name;
-  List<VocabWord> wordEntrys=new ArrayList<VocabWord>(topNSize);
+  List<VocabWord> wordEntrys=new ArrayList<>(topNSize);
   for (int i=0; i < syn0.rows; i++) {
     name=wordIndex.get(i).toString();
     if (name.equals(word0) || name.equals(word1) || name.equals(word2)) {
@@ -16,5 +16,5 @@
     double dist=wordVector.dot(tempVector);
     insertTopN(name,dist,wordEntrys);
   }
-  return new TreeSet<VocabWord>(wordEntrys);
+  return new TreeSet<>(wordEntrys);
 }

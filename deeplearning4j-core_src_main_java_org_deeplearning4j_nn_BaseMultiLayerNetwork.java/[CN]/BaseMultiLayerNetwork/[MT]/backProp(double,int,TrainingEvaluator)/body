@@ -1,0 +1,41 @@
+{
+  Double lastEntropy=this.score();
+  BaseMultiLayerNetwork revert=clone();
+  if (forceNumEpochs) {
+    for (int i=0; i < epochs; i++) {
+      backPropStep(revert,lr,i);
+    }
+  }
+ else {
+    boolean train=true;
+    int count=0;
+    double changeTolerance=1e-5;
+    int backPropIterations=0;
+    while (train) {
+      if (backPropIterations >= epochs) {
+        log.info("Backprop number of iterations max hit; converging");
+        break;
+      }
+      count++;
+      backPropStep(revert,lr,count);
+      getLogLayer().trainTillConvergence(lr,epochs,eval);
+      if (eval.shouldStop(count))       break;
+      Double entropy=score();
+      if (lastEntropy == null || entropy < lastEntropy) {
+        double diff=Math.abs(entropy - lastEntropy);
+        if (diff < changeTolerance) {
+          log.info("Not enough of a change on back prop...breaking");
+          break;
+        }
+ else         lastEntropy=entropy;
+        log.info("New negative log likelihood " + lastEntropy);
+        revert=clone();
+      }
+ else       if (entropy >= lastEntropy) {
+        train=false;
+        update(revert);
+      }
+      backPropIterations++;
+    }
+  }
+}

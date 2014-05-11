@@ -13,7 +13,7 @@
   watch.stop();
   log.info("Took " + watch.getTime());
   Evaluation eval=new Evaluation();
-  DoubleMatrix predict=dbn.predict(d.getFirst());
+  DoubleMatrix predict=dbn.output(d.getFirst());
   eval.eval(d.getSecond(),predict);
   log.info(eval.stats());
 }

@@ -8,7 +8,7 @@
     log.debug("Unable to accumulate results",e);
     return null;
   }
-  UpdateableImpl masterResults=this.getResults();
+  UpdateableImpl masterResults=getResults();
   if (masterResults == null)   masterResults=update.accumulated();
  else   masterResults.set(update.accumulated().get());
   try {

@@ -26,7 +26,7 @@
     dbn.finetune(next.getSecond(),1e-1,10000);
   }
   Evaluation eval=new Evaluation();
-  eval.eval(data.getSecond(),dbn.predict(data.getFirst()));
+  eval.eval(data.getSecond(),dbn.output(data.getFirst()));
   log.info(eval.stats());
   log.info("Example tweets " + data.numExamples());
 }

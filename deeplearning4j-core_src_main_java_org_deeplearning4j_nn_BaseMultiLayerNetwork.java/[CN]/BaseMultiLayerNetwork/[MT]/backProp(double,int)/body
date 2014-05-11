@@ -1,5 +1,5 @@
 {
-  Double lastEntropy=this.negativeLogLikelihood();
+  Double lastEntropy=this.score();
   BaseMultiLayerNetwork revert=clone();
   if (forceNumEpochs) {
     for (int i=0; i < epochs; i++) {
@@ -19,7 +19,7 @@
       count++;
       backPropStep(revert,lr,count);
       getLogLayer().trainTillConvergence(lr,epochs);
-      Double entropy=negativeLogLikelihood();
+      Double entropy=score();
       if (lastEntropy == null || entropy < lastEntropy) {
         double diff=Math.abs(entropy - lastEntropy);
         if (diff < changeTolerance) {
