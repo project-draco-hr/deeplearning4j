@@ -57,4 +57,7 @@
     }
     biasGradients[i]=biasGradient;
   }
+  for (int i=0; i < biasGradients.length; i++) {
+    deltaRet.add(new Pair<>(errorSignals[i],biasGradients[i]));
+  }
 }
