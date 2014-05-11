@@ -29,6 +29,7 @@
     decoder.getLayers()[i].setHbiasAdaGrad(null);
     decoder.getLayers()[i].setVBiasAdaGrad(null);
   }
+  decoder.getLayers()[0].getW().muli(n);
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
   decoder.finetune(input,1e-2,1000);
