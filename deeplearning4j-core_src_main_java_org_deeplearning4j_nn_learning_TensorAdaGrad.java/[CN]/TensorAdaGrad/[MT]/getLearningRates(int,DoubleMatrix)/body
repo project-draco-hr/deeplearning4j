@@ -1,0 +1,15 @@
+{
+  this.gradient=gradient.dup();
+  Tensor histGrad=(Tensor)this.historicalGradient;
+  Tensor grad=(Tensor)this.gradient;
+  Tensor adjustedGrad=(Tensor)adjustedGradient;
+  DoubleMatrix squaredGradient=pow(grad.getSlice(slice),2);
+  if (this.historicalGradient.length != this.gradient.length)   this.historicalGradient=Tensor.zeros(grad.rows(),this.gradient.columns,grad.slices());
+  histGrad.setSlice(slice,histGrad.getSlice(slice).add(squaredGradient));
+  this.historicalGradient.addi(squaredGradient);
+  numIterations++;
+  DoubleMatrix sqrtGradient=sqrt(squaredGradient).add(fudgeFactor);
+  DoubleMatrix div=abs(gradient).div(sqrtGradient);
+  adjustedGrad.setSlice(slice,div.mul(masterStepSize));
+  return adjustedGrad.getSlice(slice);
+}

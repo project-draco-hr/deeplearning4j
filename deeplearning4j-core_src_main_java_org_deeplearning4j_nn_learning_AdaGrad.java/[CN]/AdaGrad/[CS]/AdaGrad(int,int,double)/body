@@ -1,8 +1,8 @@
 {
   this.rows=rows;
   this.cols=cols;
-  this.adjustedGradient=new DoubleMatrix(rows,cols);
-  this.historicalGradient=new DoubleMatrix(rows,cols);
+  createHistoricalGradient();
+  createAdjustedGradient();
   this.masterStepSize=gamma;
   this.decayLr=false;
 }
