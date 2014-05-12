@@ -5,7 +5,7 @@
   d.filterAndStrip(new int[]{0,1});
   log.info("Training on " + d.numExamples());
   StopWatch watch=new StopWatch();
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{1000,500,250,30}).withMomentum(0.5).renderWeights(100).numberOfInputs(784).useAdaGrad(false).numberOfOutPuts(2).build();
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{1000,500,250,30}).withMomentum(0.5).renderWeights(100).numberOfInputs(784).numberOfOutPuts(2).build();
   DeepAutoEncoder encoder=new DeepAutoEncoder(dbn,new Object[]{1,1e-2,10000});
   encoder.train(d.getFirst(),1e-2,1);
 }

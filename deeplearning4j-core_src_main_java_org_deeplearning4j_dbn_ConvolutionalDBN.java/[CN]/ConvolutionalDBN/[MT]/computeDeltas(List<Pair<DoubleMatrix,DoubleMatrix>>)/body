@@ -45,7 +45,7 @@
     ConvolutionalRBM r2=(ConvolutionalRBM)getLayers()[i];
     ConvolutionalRBM prevRBM=(ConvolutionalRBM)getLayers()[i - 1];
     FourDTensor errorSignal=(FourDTensor)errorSignals[i - 1];
-    Tensor biasGradient=new Tensor(errorSignal.rows(),errorSignal.columns(),errorSignal.slices());
+    DoubleMatrix biasGradient=new DoubleMatrix(1,r2.getNumFilters()[0]);
     for (int j=0; j < r2.getNumFilters()[0]; j++) {
       Tensor es2=errorSignal.getTensor(j);
       for (int k=0; k < prevRBM.getNumFilters()[0]; k++) {
@@ -53,11 +53,12 @@
         DoubleMatrix dedFilter=conv2d(flipped,es2,Type.VALID);
         r2.getdWeights().put(j,k,dedFilter);
       }
-      biasGradient.setSlice(j,es.columnSums().div(errorSignal.numTensors()));
+      biasGradient.put(j,es.columnSums().div(errorSignal.numTensors()).sum());
     }
     biasGradients[i]=biasGradient;
   }
   for (int i=0; i < biasGradients.length; i++) {
     deltaRet.add(new Pair<>(errorSignals[i],biasGradients[i]));
   }
+  deltaRet.add(new Pair<>(errorSignals[errorSignals.length - 1].mmul(outputLayer.getInput()),errorSignals[errorSignals.length - 1].columnMeans()));
 }
