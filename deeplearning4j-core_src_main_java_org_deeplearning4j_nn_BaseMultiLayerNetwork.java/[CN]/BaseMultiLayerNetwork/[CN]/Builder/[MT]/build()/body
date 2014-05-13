@@ -20,6 +20,7 @@
     ret.setMomentum(momentum);
     ret.setLabels(labels);
     ret.setFanIn(fanIn);
+    ret.activationFunctionForLayer.putAll(activationForLayer);
     ret.setSparsity(sparsity);
     ret.setRenderWeightsEveryNEpochs(renderWeithsEveryNEpochs);
     ret.setL2(l2);

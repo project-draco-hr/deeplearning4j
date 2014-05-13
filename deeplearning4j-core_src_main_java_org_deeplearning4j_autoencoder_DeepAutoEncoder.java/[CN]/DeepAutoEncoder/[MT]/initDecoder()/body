@@ -1,4 +1,5 @@
 {
+  if (encoder.getLayers() == null || encoder.getSigmoidLayers() == null)   return;
   int[] hiddenLayerSizes=new int[encoder.getHiddenLayerSizes().length - 1];
   System.arraycopy(encoder.getHiddenLayerSizes(),0,hiddenLayerSizes,0,hiddenLayerSizes.length);
   ArrayUtil.reverse(hiddenLayerSizes);
