@@ -2,5 +2,7 @@
   DBN ret=super.build();
   ret.hiddenUnit=hiddenUnit;
   ret.visibleUnit=visibleUnit;
+  ret.visibleUnitByLayer.putAll(visibleUnitByLayer);
+  ret.hiddenUnitByLayer.putAll(hiddenUnitByLayer);
   return ret;
 }
