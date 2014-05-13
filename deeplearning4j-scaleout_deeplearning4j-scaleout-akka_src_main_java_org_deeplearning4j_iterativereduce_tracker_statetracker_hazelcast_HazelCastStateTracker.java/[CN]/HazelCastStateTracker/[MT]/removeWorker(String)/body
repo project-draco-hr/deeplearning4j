@@ -1,3 +1,11 @@
 {
   workers.remove(worker);
+  if (jobFor(worker) != null) {
+    try {
+      clearJob(worker);
+    }
+ catch (    Exception e) {
+      log.warn("Unable to clear job for worker with id" + worker);
+    }
+  }
 }
