@@ -8,6 +8,9 @@
         List<Job> currentJobs=stateTracker.currentJobs();
         log.info("Status check on next iteration");
         Collection<String> updates=stateTracker.workerUpdates();
+        Set<String> workersLeft=new HashSet<>();
+        for (        Job s : currentJobs)         workersLeft.add(s.getWorkerId());
+        workersLeft=SetUtils.difference(workersLeft,updates);
         if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
  else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
         log.info("Current jobs left " + currentJobs);

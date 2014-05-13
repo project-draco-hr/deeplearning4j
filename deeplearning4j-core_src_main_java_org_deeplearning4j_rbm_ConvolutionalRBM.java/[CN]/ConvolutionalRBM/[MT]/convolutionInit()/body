@@ -10,7 +10,7 @@
   vBias=DoubleMatrix.zeros(1);
   hBias=DoubleMatrix.zeros(numFilters[0]);
   for (int i=0; i < this.W.rows; i++)   W.putRow(i,new DoubleMatrix(dist.sample(W.columns)));
-  wAdaGrad=new AdaGrad(W.rows,W.columns);
+  wAdaGrad=new FourDTensorAdaGrad(W.rows(),W.columns(),W.slices(),W.numTensors());
   vBiasAdaGrad=new AdaGrad(vBias.rows,vBias.columns);
   hBiasAdaGrad=new AdaGrad(hBias.rows,hBias.columns);
   convolutionInitCalled=true;

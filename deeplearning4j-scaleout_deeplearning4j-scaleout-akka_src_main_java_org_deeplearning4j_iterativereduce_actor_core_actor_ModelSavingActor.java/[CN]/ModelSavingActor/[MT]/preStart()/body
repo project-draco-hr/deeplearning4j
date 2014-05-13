@@ -1,4 +1,5 @@
 {
   super.preStart();
+  this.checkModel();
   log.info("Pre start on model saver");
 }

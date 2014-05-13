@@ -15,9 +15,6 @@
       log.info("On next batch master results was null, attempting to grab results again");
       masterResults=getResults();
     }
-    if (!stateTracker.isPretrain()) {
-      DataSet test=stateTracker.testSet();
-    }
     batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
   }
 }

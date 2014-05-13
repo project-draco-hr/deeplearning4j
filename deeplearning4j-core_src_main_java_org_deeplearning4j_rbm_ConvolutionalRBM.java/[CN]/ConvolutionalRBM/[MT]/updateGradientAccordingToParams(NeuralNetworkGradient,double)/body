@@ -1,5 +1,5 @@
 {
-  DoubleMatrix wGradient=gradient.getwGradient();
+  FourDTensor wGradient=(FourDTensor)gradient.getwGradient();
   DoubleMatrix hBiasGradient=gradient.gethBiasGradient();
   DoubleMatrix vBiasGradient=gradient.getvBiasGradient();
   DoubleMatrix wLearningRates=wAdaGrad.getLearningRates(wGradient);

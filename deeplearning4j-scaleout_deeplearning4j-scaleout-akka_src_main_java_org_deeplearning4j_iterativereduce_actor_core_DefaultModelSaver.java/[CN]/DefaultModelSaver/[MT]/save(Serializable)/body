@@ -6,5 +6,6 @@
     }
     file=new File(path);
   }
+  log.info("Saving to " + file);
   SerializationUtils.saveObject(ser,file);
 }

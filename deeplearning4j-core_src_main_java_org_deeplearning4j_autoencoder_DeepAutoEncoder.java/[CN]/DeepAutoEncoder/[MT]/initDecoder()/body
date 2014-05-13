@@ -1,0 +1,23 @@
+{
+  int[] hiddenLayerSizes=new int[encoder.getHiddenLayerSizes().length - 1];
+  System.arraycopy(encoder.getHiddenLayerSizes(),0,hiddenLayerSizes,0,hiddenLayerSizes.length);
+  ArrayUtil.reverse(hiddenLayerSizes);
+  if (encoder.getClass().isAssignableFrom(DBN.class)) {
+    DBN d=(DBN)encoder;
+    decoder=new DBN.Builder().withHiddenUnits(d.getHiddenUnit()).withVisibleUnits(d.getVisibleUnit()).withOutputLossFunction(OutputLayer.LossFunction.XENT).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
+  }
+ else {
+    decoder=new DBN.Builder().withOutputLossFunction(OutputLayer.LossFunction.XENT).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
+  }
+  NeuralNetwork[] cloned=new NeuralNetwork[encoder.getnLayers()];
+  HiddenLayer[] clonedHidden=new HiddenLayer[encoder.getnLayers()];
+  for (int i=0; i < cloned.length; i++)   cloned[i]=encoder.getLayers()[i].transpose();
+  for (int i=0; i < cloned.length; i++) {
+    clonedHidden[i]=encoder.getSigmoidLayers()[i].transpose();
+    clonedHidden[i].setB(cloned[i].gethBias());
+  }
+  ArrayUtil.reverse(cloned);
+  ArrayUtil.reverse(clonedHidden);
+  decoder.setSigmoidLayers(clonedHidden);
+  decoder.setLayers(cloned);
+}
