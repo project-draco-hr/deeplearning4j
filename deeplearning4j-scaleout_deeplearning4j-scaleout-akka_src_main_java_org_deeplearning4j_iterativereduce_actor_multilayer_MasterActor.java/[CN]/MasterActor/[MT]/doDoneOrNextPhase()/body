@@ -20,7 +20,7 @@
       masterResults=getMasterResults();
     }
     batchActor.tell(ResetMessage.getInstance(),getSelf());
-    batchActor.tell(new MoreWorkMessage(masterResults),getSelf());
+    batchActor.tell(MoreWorkMessage.getInstance(),getSelf());
   }
  else   if (stateTracker.currentJobs().isEmpty()) {
     isDone=true;
