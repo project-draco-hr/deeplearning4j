@@ -22,10 +22,10 @@
   if (useHiddenActivationsForwardProp != that.useHiddenActivationsForwardProp)   return false;
   if (useRegularization != that.useRegularization)   return false;
   if (activation != null ? !activation.equals(that.activation) : that.activation != null)   return false;
+  if (activationFunctionForLayer != null ? !activationFunctionForLayer.equals(that.activationFunctionForLayer) : that.activationFunctionForLayer != null)   return false;
   if (columnMeans != null ? !columnMeans.equals(that.columnMeans) : that.columnMeans != null)   return false;
   if (columnStds != null ? !columnStds.equals(that.columnStds) : that.columnStds != null)   return false;
   if (columnSums != null ? !columnSums.equals(that.columnSums) : that.columnSums != null)   return false;
-  if (dist != null ? !dist.equals(that.dist) : that.dist != null)   return false;
   if (hiddenBiasTransforms != null ? !hiddenBiasTransforms.equals(that.hiddenBiasTransforms) : that.hiddenBiasTransforms != null)   return false;
   if (!Arrays.equals(hiddenLayerSizes,that.hiddenLayerSizes))   return false;
   if (input != null ? !input.equals(that.input) : that.input != null)   return false;
@@ -37,7 +37,6 @@
   if (outputActivationFunction != null ? !outputActivationFunction.equals(that.outputActivationFunction) : that.outputActivationFunction != null)   return false;
   if (outputLayer != null ? !outputLayer.equals(that.outputLayer) : that.outputLayer != null)   return false;
   if (outputLossFunction != that.outputLossFunction)   return false;
-  if (rng != null ? !rng.equals(that.rng) : that.rng != null)   return false;
   if (!Arrays.equals(sigmoidLayers,that.sigmoidLayers))   return false;
   if (visibleBiasTransforms != null ? !visibleBiasTransforms.equals(that.visibleBiasTransforms) : that.visibleBiasTransforms != null)   return false;
   if (weightTransforms != null ? !weightTransforms.equals(that.weightTransforms) : that.weightTransforms != null)   return false;
