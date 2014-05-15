@@ -8,7 +8,7 @@
   log.info("Broadcasting initial master network");
   BaseMultiLayerNetwork network=null;
   if (this.network == null) {
-    this.network=conf.init();
+    network=conf.init();
   }
  else   network=this.network;
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
