@@ -1,5 +1,0 @@
-{
-  encoder.pretrain(input,trainingParams);
-  encoder.getSigmoidLayers()[encoder.getSigmoidLayers().length - 1].setActivationFunction(Activations.linear());
-  initDecoder();
-}

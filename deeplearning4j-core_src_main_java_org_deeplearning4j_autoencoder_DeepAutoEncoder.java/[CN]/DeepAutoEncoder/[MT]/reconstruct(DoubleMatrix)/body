@@ -2,5 +2,5 @@
   List<DoubleMatrix> activations=encoder.feedForward(input);
   DoubleMatrix decoderInput=activations.get(activations.size() - 2);
   List<DoubleMatrix> decoderActivations=decoder.feedForward(decoderInput);
-  return round(decoderActivations.get(decoderActivations.size() - 1));
+  return decoderActivations.get(decoderActivations.size() - 1);
 }
