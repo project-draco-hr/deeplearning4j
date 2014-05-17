@@ -1,7 +1,14 @@
 {
-  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=MatrixUtil.columnVariance(input).divi(input.rows);
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=columnVariance(input).divi(input.rows);
   if (hiddenType == HiddenUnit.RECTIFIED) {
     DoubleMatrix preSig=v.divRowVector(sigma).mmul(W).addiRowVector(hBias);
+    return preSig;
+  }
+ else   if (hiddenType == HiddenUnit.GAUSSIAN) {
+    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
+    this.hiddenSigma=columnVariance(preSig);
+    DoubleMatrix add=normal(getRng(),preSig,this.hiddenSigma);
+    preSig.addi(add);
     return preSig;
   }
  else   if (hiddenType == HiddenUnit.BINARY) {

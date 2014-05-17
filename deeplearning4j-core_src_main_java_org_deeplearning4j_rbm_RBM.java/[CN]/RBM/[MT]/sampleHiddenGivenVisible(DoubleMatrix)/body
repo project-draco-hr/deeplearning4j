@@ -8,6 +8,14 @@
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
+ else   if (hiddenType == HiddenUnit.GAUSSIAN) {
+    DoubleMatrix h1Mean=propUp(v);
+    this.hiddenSigma=columnVariance(h1Mean);
+    DoubleMatrix h1Sample=h1Mean.addi(normal(getRng(),h1Mean,this.hiddenSigma));
+    ;
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
  else   if (hiddenType == HiddenUnit.BINARY) {
     DoubleMatrix h1Mean=propUp(v);
     DoubleMatrix h1Sample=binomial(h1Mean,1,rng);
