@@ -5,5 +5,5 @@
     double newNum=MathUtils.roundDouble(d2,num);
     ret.put(i,j,newNum);
   }
-  return ret;
+  return createBasedOn(ret,d);
 }

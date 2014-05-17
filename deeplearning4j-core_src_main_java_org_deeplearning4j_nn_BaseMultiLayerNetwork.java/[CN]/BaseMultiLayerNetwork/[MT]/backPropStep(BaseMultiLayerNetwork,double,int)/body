@@ -1,4 +1,5 @@
 {
+  log.info("Back prop step " + epoch);
   List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=0; l < getnLayers(); l++) {
