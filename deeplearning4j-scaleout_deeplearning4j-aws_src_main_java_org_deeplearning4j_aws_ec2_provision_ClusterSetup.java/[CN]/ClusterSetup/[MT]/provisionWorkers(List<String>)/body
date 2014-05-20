@@ -11,9 +11,14 @@
         @Override public Void call() throws Exception {
           HostProvisioner uploader=new HostProvisioner(workerHost,"ec2-user");
           uploader.addKeyFile(pathToPrivateKey);
-          uploader.runRemoteCommand("sudo hostname " + workerHost);
           uploader.uploadAndRun(workerSetupScriptPath,"");
           return null;
+        }
+      }
+,as.dispatcher());
+      f.onComplete(new OnComplete<Void>(){
+        @Override public void onComplete(        Throwable throwable,        Void aVoid) throws Throwable {
+          if (throwable != null)           throw throwable;
         }
       }
 ,as.dispatcher());

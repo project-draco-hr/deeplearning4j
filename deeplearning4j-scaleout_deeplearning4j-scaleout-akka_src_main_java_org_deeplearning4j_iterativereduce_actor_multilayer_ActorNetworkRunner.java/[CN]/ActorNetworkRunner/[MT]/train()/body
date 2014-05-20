@@ -1,7 +1,24 @@
 {
-  int numWorkers=stateTracker.numWorkers();
-  int batch=conf.getSplit();
-  int miniBatches=numWorkers * batch;
-  if (iter.hasNext())   train(iter.next(miniBatches));
- else   log.warn("No data found");
+  log.info("Publishing to results for training");
+  try {
+    log.info("Waiting for cluster to go up...");
+    Thread.sleep(30000);
+    log.info("Done waiting");
+  }
+ catch (  InterruptedException e1) {
+    Thread.currentThread().interrupt();
+  }
+  log.info("Started pipeline");
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,MoreWorkMessage.getInstance()),mediator);
+  log.info("Published results");
+  while (!stateTracker.isDone()) {
+    log.info("State tracker not done...blocking");
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+  shutdown();
 }

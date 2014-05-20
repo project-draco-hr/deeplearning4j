@@ -11,21 +11,20 @@
  else   if (message instanceof String) {
     getSender().tell(Ack.getInstance(),getSelf());
   }
- else   if (message instanceof List || message instanceof DataSet) {
-    if (message instanceof List) {
-      List<DataSet> list=(List<DataSet>)message;
-      splitListIntoRows(list);
-      sendToWorkers(list);
-    }
- else     if (message instanceof DataSet) {
-      DataSet pair=(DataSet)message;
-      List<DoubleMatrix> inputs=pair.getFirst().rowsAsList();
-      List<DoubleMatrix> labels=pair.getSecond().rowsAsList();
-      List<DataSet> pairs=new ArrayList<>();
-      for (int i=0; i < inputs.size(); i++) {
-        pairs.add(new DataSet(inputs.get(i),labels.get(i)));
+ else   if (message instanceof MoreWorkMessage) {
+    log.info("Prompted for more work, starting pipeline");
+    batchActor.tell(message,getSelf());
+  }
+ else   if (message instanceof Collection) {
+    if (message instanceof Collection) {
+      Collection<String> list=(Collection<String>)message;
+      for (      String worker : list) {
+        DataSet data=stateTracker.loadForWorker(worker);
+        Job j2=new Job(worker,(Serializable)data);
+        stateTracker.addJobToCurrent(j2);
+        data=null;
+        log.info("Job delegated for " + worker);
       }
-      sendToWorkers(pairs);
     }
   }
  else   unhandled(message);

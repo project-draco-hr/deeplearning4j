@@ -20,8 +20,8 @@
         checkJobAvailable();
         if (currentJob != null && !isWorking.get() && tracker.jobFor(id) != null) {
           log.info("Confirmation from " + currentJob.getWorkerId() + " on work");
-          List<DataSet> input=(List<DataSet>)currentJob.getWork();
-          processDataSet(input);
+          DataSet data=(DataSet)currentJob.getWork();
+          processDataSet(data.asList());
         }
  else         if (currentJob == null || !isWorking.get() && tracker.jobFor(id) != null) {
           if (tracker.jobFor(id) != null)           tracker.clearJob(id);

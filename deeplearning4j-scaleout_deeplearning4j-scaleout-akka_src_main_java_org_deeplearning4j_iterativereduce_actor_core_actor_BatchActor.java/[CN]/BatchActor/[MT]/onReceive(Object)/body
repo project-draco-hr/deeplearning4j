@@ -33,11 +33,15 @@
       int miniBatchSize=conf.getSplit();
       if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();
       log.info("Number of workers " + numWorkers + " and batch size is "+ miniBatchSize);
+      for (      String worker : stateTracker.workers())       stateTracker.enableWorker(worker);
       int batch=numWorkers * miniBatchSize;
       log.info("Batch size for worker is " + batch);
-      DataSet next=iter.next(batch);
-      List<DataSet> list=next.asList();
-      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,list),mediator);
+      for (int i=0; i < numWorkers; i++) {
+        DataSet next=iter.next(miniBatchSize);
+        String worker=nextWorker();
+        stateTracker.saveWorker(worker,next);
+      }
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,stateTracker.workerData()),mediator);
     }
  else     if (!iter.hasNext()) {
       int iterations=stateTracker.runPreTrainIterations();
