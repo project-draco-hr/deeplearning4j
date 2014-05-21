@@ -2,7 +2,7 @@
   boolean sent=false;
   while (!sent) {
     for (    String s : stateTracker.workers()) {
-      if (!stateTracker.workerData().contains(s)) {
+      if (!stateTracker.workerData().contains(s) && stateTracker.jobFor(s) == null) {
         return s;
       }
     }

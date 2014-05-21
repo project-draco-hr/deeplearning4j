@@ -20,7 +20,8 @@
       Collection<String> list=(Collection<String>)message;
       for (      String worker : list) {
         DataSet data=stateTracker.loadForWorker(worker);
-        Job j2=new Job(worker,(Serializable)data);
+        if (data == null)         throw new IllegalStateException("Data was null!");
+        Job j2=new Job(worker,(Serializable)data.copy());
         stateTracker.addJobToCurrent(j2);
         data=null;
         log.info("Job delegated for " + worker);

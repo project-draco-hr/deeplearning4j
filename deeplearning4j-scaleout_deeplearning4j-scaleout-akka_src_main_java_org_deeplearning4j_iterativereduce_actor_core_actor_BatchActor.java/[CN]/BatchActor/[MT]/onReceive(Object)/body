@@ -39,6 +39,7 @@
       for (int i=0; i < numWorkers; i++) {
         DataSet next=iter.next(miniBatchSize);
         String worker=nextWorker();
+        log.info("Saving data for worker " + worker);
         stateTracker.saveWorker(worker,next);
       }
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,stateTracker.workerData()),mediator);
