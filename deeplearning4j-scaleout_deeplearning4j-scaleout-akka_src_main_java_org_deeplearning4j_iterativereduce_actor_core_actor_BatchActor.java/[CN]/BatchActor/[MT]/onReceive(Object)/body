@@ -20,7 +20,6 @@
     }
   }
  else   if (message instanceof MoreWorkMessage) {
-    MoreWorkMessage m=(MoreWorkMessage)message;
     log.info("Saving model");
     mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,MoreWorkMessage.getInstance()),mediator);
     if (iter.hasNext()) {
@@ -29,6 +28,9 @@
       log.info("Iterating over next dataset " + numDataSets);
       List<String> workers2=stateTracker.workers();
       for (      String s : workers2)       log.info("Worker " + s);
+      for (      String s : stateTracker.workerData()) {
+        stateTracker.removeWorkerData(s);
+      }
       int numWorkers=workers2.size();
       int miniBatchSize=conf.getSplit();
       if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();

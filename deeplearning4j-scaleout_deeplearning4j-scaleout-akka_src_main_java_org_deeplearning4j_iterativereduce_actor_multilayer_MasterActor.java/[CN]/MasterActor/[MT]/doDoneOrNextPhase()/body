@@ -19,6 +19,8 @@
     while (masterResults == null) {
       masterResults=getMasterResults();
     }
+    mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,ResetMessage.getInstance()),getSelf());
+    mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,MoreWorkMessage.getInstance()),getSelf());
     batchActor.tell(ResetMessage.getInstance(),getSelf());
     batchActor.tell(MoreWorkMessage.getInstance(),getSelf());
   }

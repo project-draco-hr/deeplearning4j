@@ -3,5 +3,5 @@
   this.stateTracker=stateTracker;
   this.conf=conf;
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
-  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(BATCH,getSelf()),getSelf());
 }

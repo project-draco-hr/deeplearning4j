@@ -13,7 +13,7 @@
   }
  else   if (message instanceof MoreWorkMessage) {
     log.info("Prompted for more work, starting pipeline");
-    batchActor.tell(message,getSelf());
+    mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,MoreWorkMessage.getInstance()),getSelf());
   }
  else   if (message instanceof Collection) {
     if (message instanceof Collection) {

@@ -19,7 +19,7 @@
       count++;
       backPropStep(revert,lr,count);
       getOutputLayer().trainTillConvergence(lr,epochs,eval);
-      if (eval.shouldStop(count))       break;
+      if (eval != null && eval.shouldStop(count))       break;
       Double entropy=score();
       if (lastEntropy == null || entropy < lastEntropy) {
         if (lastEntropy > 0 && entropy < 0) {
