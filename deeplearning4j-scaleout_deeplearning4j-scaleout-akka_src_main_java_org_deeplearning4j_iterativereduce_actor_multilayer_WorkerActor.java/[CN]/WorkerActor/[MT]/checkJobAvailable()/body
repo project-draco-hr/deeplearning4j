@@ -18,7 +18,7 @@
       throw new RuntimeException(e);
     }
   }
-  if (j != null) {
+  if (j != null && currentJob == null) {
     log.info("Assigning job for worker " + id);
     currentJob=j;
     tracker.updateJob(new Job(id,null));
