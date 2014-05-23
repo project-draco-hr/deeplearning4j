@@ -9,7 +9,7 @@
   ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
   try {
     String host=contactAddress.host().get();
-    log.info("Connecting hazelcast to host " + host);
+    log.info("Connecting  to host " + host);
     int workers=stateTracker.numWorkers();
     if (workers <= 1)     throw new IllegalStateException("Did not properly connect to cluster");
     log.info("Joining cluster of size " + workers);

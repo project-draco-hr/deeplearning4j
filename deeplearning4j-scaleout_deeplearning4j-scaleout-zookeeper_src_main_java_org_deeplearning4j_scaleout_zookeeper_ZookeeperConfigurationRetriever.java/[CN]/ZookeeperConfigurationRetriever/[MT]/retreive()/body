@@ -4,10 +4,12 @@
   String[] hosts={host,"127.0.0.1","localhost",localhost};
   for (int i=0; i < hosts.length; i++) {
     try {
-      log.info("Attempting to retreive conf from " + hosts[i]);
-      c=retreive(hosts[i]);
+      log.info("Attempting to retrieve conf from " + hosts[i]);
+      c=retrieve(hosts[i]);
+      if (c != null)       break;
     }
  catch (    Exception e) {
+      log.warn("Trying next host " + hosts[i] + " failed");
     }
   }
   return c;

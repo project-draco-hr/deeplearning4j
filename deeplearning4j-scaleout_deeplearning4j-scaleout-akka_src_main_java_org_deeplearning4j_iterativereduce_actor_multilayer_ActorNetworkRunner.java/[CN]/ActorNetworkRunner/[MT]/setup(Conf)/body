@@ -73,7 +73,7 @@
     log.info("Setup worker nodes");
   }
   this.conf=conf;
-  if (stateTracker instanceof HazelCastStateTracker) {
+  if (stateTracker instanceof HazelCastStateTracker && type.equals("master")) {
     HazelCastStateTracker s=(HazelCastStateTracker)stateTracker;
     try {
       InputStream is=new ClassPathResource("dropwizard.yml").getInputStream();
@@ -88,4 +88,5 @@
       throw new RuntimeException(e);
     }
   }
+ else   if (stateTracker instanceof HazelCastStateTracker)   log.info("Not starting drop wizard; worker state detected");
 }
