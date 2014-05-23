@@ -3,7 +3,7 @@
   fetcher.fetch(20);
   DataSet data=fetcher.next();
   log.info("Training on " + data.numExamples());
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{1000,500,250,28}).numberOfInputs(784).numberOfOutPuts(2).build();
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{1000,500,250,28}).numberOfInputs(784).numberOfOutPuts(2).withDropOut(0.5).build();
   DataSetIterator iter=new ListDataSetIterator(data.asList(),10);
   while (iter.hasNext()) {
     dbn.pretrain(iter.next().getFirst(),new Object[]{1,1e-1,10000});
