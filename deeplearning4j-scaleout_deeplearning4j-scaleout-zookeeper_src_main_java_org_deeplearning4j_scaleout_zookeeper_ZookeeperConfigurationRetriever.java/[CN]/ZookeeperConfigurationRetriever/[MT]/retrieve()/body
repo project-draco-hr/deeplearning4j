@@ -6,11 +6,15 @@
     try {
       log.info("Attempting to retrieve conf from " + hosts[i]);
       c=retrieve(hosts[i]);
-      if (c != null)       break;
+      if (c != null) {
+        log.info("Found from host " + hosts[i]);
+        break;
+      }
     }
  catch (    Exception e) {
       log.warn("Trying next host " + hosts[i] + " failed");
     }
   }
+  log.info("Returning conf from host" + host);
   return c;
 }

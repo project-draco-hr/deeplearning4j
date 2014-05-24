@@ -1,4 +1,5 @@
 {
+  log.info("Setting up hazelcast with type " + type + " connection string "+ connectionString+ " and port "+ stateTrackerPort);
   if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
     if (connectionString.equals("master")) {
       String host=InetAddress.getLocalHost().getHostName();

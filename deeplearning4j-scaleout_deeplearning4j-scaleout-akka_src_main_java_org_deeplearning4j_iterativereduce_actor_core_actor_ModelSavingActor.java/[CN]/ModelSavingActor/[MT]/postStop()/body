@@ -1,6 +1,5 @@
 {
   super.postStop();
-  if (saveCheck != null)   saveCheck.cancel();
   log.info("Post stop on model saver");
   cluster.unsubscribe(getSelf());
 }

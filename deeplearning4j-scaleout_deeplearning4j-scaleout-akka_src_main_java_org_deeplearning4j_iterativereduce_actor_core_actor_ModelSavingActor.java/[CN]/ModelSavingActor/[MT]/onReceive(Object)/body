@@ -2,6 +2,7 @@
   if (message instanceof MoreWorkMessage) {
     BaseMultiLayerNetwork current=stateTracker.getCurrent().get();
     if (current.getLayers() == null || current.getSigmoidLayers() == null)     throw new IllegalStateException("Invalid model found when prompted to save..");
+    current.clearInput();
     stateTracker.setCurrent(new UpdateableImpl(current));
     modelSaver.save(current);
   }
