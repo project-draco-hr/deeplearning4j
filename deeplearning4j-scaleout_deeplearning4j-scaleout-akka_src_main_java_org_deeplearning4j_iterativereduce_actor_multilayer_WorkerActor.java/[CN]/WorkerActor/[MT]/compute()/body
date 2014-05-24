@@ -44,7 +44,7 @@
     if (tracker.testSet() != null) {
       TrainingEvaluator eval=tracker.create(network);
     }
- else     network.finetune(d.getSecond(),learningRate,fineTuneEpochs,null);
+    network.finetune(d.getSecond(),learningRate,fineTuneEpochs,null);
   }
   try {
     if (!tracker.isDone())     tracker.clearJob(id);

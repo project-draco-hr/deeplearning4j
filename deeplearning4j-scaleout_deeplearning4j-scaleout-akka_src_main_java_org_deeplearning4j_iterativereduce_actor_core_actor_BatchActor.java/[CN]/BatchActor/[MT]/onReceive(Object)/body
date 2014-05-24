@@ -32,7 +32,7 @@
         stateTracker.removeWorkerData(s);
       }
       int numWorkers=workers2.size();
-      int miniBatchSize=conf.getSplit();
+      int miniBatchSize=stateTracker.inputSplit();
       if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();
       log.info("Number of workers " + numWorkers + " and batch size is "+ miniBatchSize);
       for (      String worker : stateTracker.workers())       stateTracker.enableWorker(worker);

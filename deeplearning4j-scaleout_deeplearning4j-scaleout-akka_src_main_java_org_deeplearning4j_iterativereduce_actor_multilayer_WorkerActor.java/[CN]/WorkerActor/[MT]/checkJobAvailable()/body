@@ -1,5 +1,5 @@
 {
-  Job j=null;
+  Job j;
   if ((j=tracker.jobFor(id)) == null || !tracker.workerEnabled(id)) {
     if (!isWorking.get() && j != null) {
       tracker.clearJob(id);
