@@ -5,7 +5,7 @@
     log.info("Subscribed to " + ack.toString());
   }
  else   if (message instanceof BaseMultiLayerNetwork) {
-    setNetwork((BaseMultiLayerNetwork)message);
+    results.set((BaseMultiLayerNetwork)message);
     log.info("Set network");
   }
  else   if (message instanceof Ack) {

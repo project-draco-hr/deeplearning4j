@@ -10,8 +10,7 @@
   if (tracker.needsReplicate(id)) {
     try {
       log.info("Updating worker " + id);
-      setE(tracker.getCurrent());
-      setNetwork(tracker.getCurrent().get());
+      results=tracker.getCurrent();
       tracker.doneReplicating(id);
     }
  catch (    Exception e) {

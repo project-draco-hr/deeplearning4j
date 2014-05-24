@@ -5,12 +5,12 @@
     return null;
   }
   log.info("Training network on worker " + id);
-  BaseMultiLayerNetwork network=getNetwork();
+  BaseMultiLayerNetwork network=getResults().get();
   isWorking.set(true);
   while (network == null) {
     try {
       network=tracker.getCurrent().get();
-      this.network=network;
+      results.set(network);
       log.info("Network is currently null");
     }
  catch (    Exception e) {

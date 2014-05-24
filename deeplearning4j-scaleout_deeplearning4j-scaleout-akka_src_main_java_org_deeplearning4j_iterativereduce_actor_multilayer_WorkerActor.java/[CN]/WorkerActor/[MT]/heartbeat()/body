@@ -5,11 +5,11 @@
       if (tracker.needsReplicate(id)) {
         try {
           log.info("Updating worker " + id);
-          if (tracker.getCurrent() == null || tracker.getCurrent().get() == null) {
+          UpdateableImpl u=tracker.getCurrent();
+          if (u == null || u.get() == null) {
             return;
           }
-          setE(tracker.getCurrent());
-          setNetwork(tracker.getCurrent().get());
+          results=u;
           tracker.doneReplicating(id);
         }
  catch (        Exception e) {

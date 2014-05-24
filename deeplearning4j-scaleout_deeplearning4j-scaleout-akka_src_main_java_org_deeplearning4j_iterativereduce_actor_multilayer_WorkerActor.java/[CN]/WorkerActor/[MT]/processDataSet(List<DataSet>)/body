@@ -13,7 +13,7 @@
       }
       if (tracker.needsReplicate(id)) {
         log.info("Updating network for worker " + id);
-        network=tracker.getCurrent().get();
+        results=tracker.getCurrent();
         tracker.doneReplicating(id);
       }
       UpdateableImpl work=compute();
