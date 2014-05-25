@@ -1,0 +1,10 @@
+{
+  try {
+    DoubleMatrix d=asMatrix(f);
+    Tensor f2=new Tensor(d,numRowsPerSlice,d.columns,numMiniBatches);
+    return f2;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

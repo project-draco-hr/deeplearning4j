@@ -33,7 +33,7 @@
           log.info("No data found for worker..." + worker + " returning");
           return;
         }
-        Job j2=new Job(worker,(Serializable)data.copy());
+        Job j2=new Job(worker,data.copy());
         stateTracker.addJobToCurrent(j2);
         data=null;
         log.info("Job delegated for " + worker);

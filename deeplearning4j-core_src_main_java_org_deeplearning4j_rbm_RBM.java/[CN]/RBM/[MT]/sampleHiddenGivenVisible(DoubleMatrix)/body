@@ -16,6 +16,12 @@
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
+ else   if (hiddenType == HiddenUnit.SOFTMAX) {
+    DoubleMatrix h1Mean=propUp(v);
+    DoubleMatrix h1Sample=softmax(h1Mean);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
  else   if (hiddenType == HiddenUnit.BINARY) {
     DoubleMatrix h1Mean=propUp(v);
     DoubleMatrix h1Sample=binomial(h1Mean,1,rng);

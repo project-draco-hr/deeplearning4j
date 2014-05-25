@@ -6,7 +6,7 @@
   p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
   system.actorOf(p,"worker");
   log.info("Broadcasting initial master network");
-  BaseMultiLayerNetwork network=null;
+  BaseMultiLayerNetwork network;
   if (this.network == null) {
     network=conf.init();
   }

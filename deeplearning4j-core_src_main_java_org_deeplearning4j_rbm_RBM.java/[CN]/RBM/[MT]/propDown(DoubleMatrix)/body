@@ -7,5 +7,9 @@
     DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
     return sigmoid(preSig);
   }
+ else   if (visibleType == VisibleUnit.SOFTMAX) {
+    DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
+    return softmax(preSig);
+  }
   throw new IllegalStateException("Visible unit type should either be binary or gaussian");
 }
