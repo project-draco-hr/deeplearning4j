@@ -1,0 +1,9 @@
+{
+  FloatTensor t=new FloatTensor(rows,cols,slices);
+  for (int i=0; i < slices; i++) {
+    FloatMatrix d=new FloatMatrix(rows,cols);
+    for (int j=0; j < d.length; j++)     d.put(j,(float)dist.sample());
+    t.setSlice(i,d);
+  }
+  return t;
+}

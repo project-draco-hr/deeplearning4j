@@ -1,0 +1,12 @@
+{
+  if (numHoldout >= numExamples())   throw new IllegalArgumentException("Unable to split on size larger than the number of rows");
+  List<FloatDataSet> list=asList();
+  Collections.rotate(list,3);
+  Collections.shuffle(list);
+  List<List<FloatDataSet>> partition=new ArrayList<>();
+  partition.add(list.subList(0,numHoldout));
+  partition.add(list.subList(numHoldout,list.size()));
+  FloatDataSet train=merge(partition.get(0));
+  FloatDataSet test=merge(partition.get(1));
+  return new Pair<>(train,test);
+}

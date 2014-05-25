@@ -1,0 +1,7 @@
+{
+  super(t,rows,columns,slices * tensor,copy);
+  this.perMatrixRows=rows;
+  this.columns=columns;
+  this.slices=slices;
+  this.numTensor=tensor;
+}

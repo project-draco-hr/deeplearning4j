@@ -1,0 +1,13 @@
+{
+  FloatMatrix ret=new FloatMatrix(1,length);
+  int linearIndex=0;
+  for (  Iterator<? extends FloatMatrix> iter : matrices) {
+    while (iter.hasNext()) {
+      FloatMatrix d=iter.next();
+      for (int i=0; i < d.length; i++) {
+        ret.put(linearIndex++,d.get(i));
+      }
+    }
+  }
+  return ret;
+}

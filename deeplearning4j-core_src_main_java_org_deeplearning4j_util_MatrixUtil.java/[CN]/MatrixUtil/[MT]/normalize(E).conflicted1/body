@@ -1,0 +1,5 @@
+{
+  float min=input.min();
+  float max=input.max();
+  return createBasedOn(input.subi(min).divi(max - min),input);
+}

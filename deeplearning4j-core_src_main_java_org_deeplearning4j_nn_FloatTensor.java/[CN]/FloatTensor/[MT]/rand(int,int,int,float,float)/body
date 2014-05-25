@@ -1,0 +1,13 @@
+{
+  FloatTensor t=new FloatTensor(rows,cols,slices);
+  for (int i=0; i < slices; i++) {
+    FloatMatrix d=new FloatMatrix(rows,cols);
+    for (int j=0; j < d.length; j++) {
+      float val=MathUtils.randomFloatBetween(min,max);
+      if (val == 0)       val+=Math.random();
+      d.put(j,val);
+    }
+    t.setSlice(i,d);
+  }
+  return t;
+}

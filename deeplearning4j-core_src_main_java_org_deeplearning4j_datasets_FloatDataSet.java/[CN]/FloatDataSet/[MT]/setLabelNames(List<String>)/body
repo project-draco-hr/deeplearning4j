@@ -1,0 +1,4 @@
+{
+  if (labelNames == null || labelNames.size() != numOutcomes())   throw new IllegalArgumentException("Unable to set label names, does not match number of possible outcomes");
+  this.labelNames=labelNames;
+}

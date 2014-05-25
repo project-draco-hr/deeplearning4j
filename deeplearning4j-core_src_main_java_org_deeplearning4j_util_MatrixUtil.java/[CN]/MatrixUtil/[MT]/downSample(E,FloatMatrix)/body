@@ -1,0 +1,7 @@
+{
+  FloatMatrix d=FloatMatrix.ones((int)stride.get(0),(int)stride.get(1));
+  d.divi(prod(stride));
+  FloatMatrix ret=Convolution.conv2d(data,d,Convolution.Type.VALID);
+  ret=ret.get(RangeUtils.interval(0,(int)stride.get(0)),RangeUtils.interval(0,(int)stride.get(1)));
+  return createBasedOn(ret,data);
+}

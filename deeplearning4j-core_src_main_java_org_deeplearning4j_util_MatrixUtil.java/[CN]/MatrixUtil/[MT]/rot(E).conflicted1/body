@@ -1,0 +1,22 @@
+{
+  if (input instanceof FloatFourDTensor) {
+    FloatFourDTensor t=(FloatFourDTensor)input;
+    FloatFourDTensor ret=new FloatFourDTensor(t);
+    for (int i=0; i < ret.numTensors(); i++) {
+      FloatTensor t1=ret.getTensor(i);
+      for (int j=0; j < t1.slices(); j++) {
+        ret.setSlice(j,reverse(t1.getSlice(j)));
+      }
+    }
+    return createBasedOn(ret,input);
+  }
+ else   if (input instanceof FloatTensor) {
+    FloatTensor t=(FloatTensor)input;
+    FloatTensor ret=new FloatTensor(t);
+    for (int j=0; j < t.slices(); j++) {
+      ret.setSlice(j,reverse(t.getSlice(j)));
+    }
+    return createBasedOn(ret,input);
+  }
+ else   return reverse(input);
+}

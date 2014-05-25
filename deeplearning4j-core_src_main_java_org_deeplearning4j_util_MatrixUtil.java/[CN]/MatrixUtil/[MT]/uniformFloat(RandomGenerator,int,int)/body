@@ -1,0 +1,6 @@
+{
+  UniformRealDistribution uDist=new UniformRealDistribution(rng,0,1);
+  FloatMatrix U=new FloatMatrix(rows,columns);
+  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++)   U.put(i,j,(float)uDist.sample());
+  return U;
+}

@@ -1,0 +1,4 @@
+{
+  if (i > numExamples() || i < 0)   throw new IllegalArgumentException("invalid example number");
+  return new FloatDataSet(getFirst().getRow(i),getSecond().getRow(i));
+}

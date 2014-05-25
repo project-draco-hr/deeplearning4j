@@ -1,0 +1,7 @@
+{
+  FloatTensor t=new FloatTensor(slices(),columns,slices);
+  for (int i=0; i < slices; i++) {
+    t.setSlice(i,getSlice(i).rowSums());
+  }
+  return t;
+}

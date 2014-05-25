@@ -16,7 +16,7 @@
     heap.add(add);
     i++;
   }
-  Triple<VocabWord,int[],int[]> triple=new Triple<VocabWord,int[],int[]>(heap.poll(),new int[]{},new int[]{});
+  Triple<VocabWord,int[],int[]> triple=new Triple<>(heap.poll(),new int[]{},new int[]{});
   Stack<Triple<VocabWord,int[],int[]>> stack=new Stack<>();
   stack.add(triple);
   while (!stack.isEmpty()) {

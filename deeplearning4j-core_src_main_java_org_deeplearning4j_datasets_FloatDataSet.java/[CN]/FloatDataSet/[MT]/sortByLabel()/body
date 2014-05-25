@@ -1,0 +1,45 @@
+{
+  Map<Integer,Queue<FloatDataSet>> map=new HashMap<>();
+  List<FloatDataSet> data=asList();
+  int numLabels=numOutcomes();
+  int examples=numExamples();
+  for (  FloatDataSet d : data) {
+    int label=getLabel(d);
+    Queue<FloatDataSet> q=map.get(label);
+    if (q == null) {
+      q=new ArrayDeque<>();
+      map.put(label,q);
+    }
+    q.add(d);
+  }
+  for (  Integer label : map.keySet()) {
+    log.info("Label " + label + " has "+ map.get(label).size()+ " elements");
+  }
+  boolean optimal=true;
+  for (int i=0; i < examples; i++) {
+    if (optimal) {
+      for (int j=0; j < numLabels; j++) {
+        Queue<FloatDataSet> q=map.get(j);
+        FloatDataSet next=q.poll();
+        if (next != null) {
+          addRow(next,i);
+          i++;
+        }
+ else {
+          optimal=false;
+          break;
+        }
+      }
+    }
+ else {
+      FloatDataSet add=null;
+      for (      Queue<FloatDataSet> q : map.values()) {
+        if (!q.isEmpty()) {
+          add=q.poll();
+          break;
+        }
+      }
+      addRow(add,i);
+    }
+  }
+}

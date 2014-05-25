@@ -1,0 +1,4 @@
+{
+  if (d1 == null || d2 == null)   throw new IllegalArgumentException("No null matrices allowed");
+  if (d1.rows != d2.rows)   throw new IllegalArgumentException("Matrices must have same rows");
+}

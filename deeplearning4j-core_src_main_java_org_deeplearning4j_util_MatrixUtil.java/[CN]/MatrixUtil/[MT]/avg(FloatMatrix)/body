@@ -1,0 +1,10 @@
+{
+  if (matrices == null)   return null;
+  if (matrices.length == 1)   return matrices[0];
+ else {
+    FloatMatrix ret=matrices[0];
+    for (int i=1; i < matrices.length; i++)     ret=ret.add(matrices[i]);
+    ret=ret.div(matrices.length);
+    return ret;
+  }
+}

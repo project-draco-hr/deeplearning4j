@@ -1,0 +1,5 @@
+{
+  FloatTensor copy=dup();
+  for (int i=0; i < length; i++)   copy.put(i,(float)FastMath.exp(get(i)));
+  return copy;
+}

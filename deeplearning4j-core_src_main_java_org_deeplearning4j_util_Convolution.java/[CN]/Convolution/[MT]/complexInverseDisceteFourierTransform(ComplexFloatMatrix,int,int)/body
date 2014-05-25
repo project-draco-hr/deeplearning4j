@@ -1,0 +1,20 @@
+{
+  ComplexFloatMatrix base=null;
+  if (input.rows < rows || input.columns < cols)   base=MatrixUtil.padWithZeros(input,rows,cols);
+ else   if (input.rows > rows || input.columns > cols) {
+    base=input.dup();
+    base=base.get(MatrixUtil.toIndices(RangeUtils.interval(0,rows)),MatrixUtil.toIndices(RangeUtils.interval(0,cols)));
+  }
+ else   base=input.dup();
+  ComplexFloatMatrix temp=new ComplexFloatMatrix(base.rows,base.columns);
+  ComplexFloatMatrix ret=new ComplexFloatMatrix(base.rows,base.columns);
+  for (int i=0; i < base.columns; i++) {
+    ComplexFloatMatrix column=base.getColumn(i);
+    temp.putColumn(i,complexInverseDisceteFourierTransform1d(column));
+  }
+  for (int i=0; i < ret.rows; i++) {
+    ComplexFloatMatrix row=temp.getRow(i);
+    ret.putRow(i,complexInverseDisceteFourierTransform1d(row));
+  }
+  return ret;
+}

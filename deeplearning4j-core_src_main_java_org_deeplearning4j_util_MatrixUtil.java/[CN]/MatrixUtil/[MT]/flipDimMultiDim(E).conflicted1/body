@@ -1,0 +1,23 @@
+{
+  if (input instanceof FloatFourDTensor) {
+    FloatFourDTensor t=(FloatFourDTensor)input;
+    FloatMatrix ret=new FloatMatrix(input.rows,input.columns);
+    FloatFourDTensor flipped=createBasedOn(ret,t);
+    for (int i=0; i < flipped.numTensors(); i++) {
+      for (int j=0; j < flipped.getTensor(i).slices(); j++) {
+        flipped.put(i,j,flipDim(t.getSliceOfTensor(i,j)));
+      }
+    }
+    return createBasedOn(flipped,input);
+  }
+ else   if (input instanceof FloatTensor) {
+    FloatTensor t=(FloatTensor)input;
+    FloatMatrix ret=new FloatMatrix(input.rows,input.columns);
+    FloatTensor flipped=createBasedOn(ret,t);
+    for (int j=0; j < flipped.slices(); j++) {
+      flipped.setSlice(j,flipDim(t.getSlice(j)));
+    }
+    return createBasedOn(ret,input);
+  }
+ else   return (E)flipDim(input);
+}

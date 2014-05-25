@@ -1,5 +1,6 @@
 {
   int i=this.wordIndex.indexOf(word);
-  if (i < 0)   return new DoubleMatrix(oob);
+  if (oob == null)   oob=new float[layerSize];
+  if (i < 0)   return new FloatMatrix(oob);
   return syn0.getRow(i);
 }

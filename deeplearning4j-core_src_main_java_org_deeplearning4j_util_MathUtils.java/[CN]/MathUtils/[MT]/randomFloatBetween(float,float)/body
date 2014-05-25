@@ -1,0 +1,4 @@
+{
+  float rand=(float)Math.random();
+  return begin + (rand * ((end - begin)));
+}

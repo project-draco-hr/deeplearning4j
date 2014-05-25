@@ -1,0 +1,8 @@
+{
+  FloatTensor ret=new FloatTensor(this);
+  for (int i=0; i < slices(); i++) {
+    FloatMatrix slice=MatrixUtil.reverse(getSlice(i));
+    setSlice(i,slice);
+  }
+  return ret;
+}

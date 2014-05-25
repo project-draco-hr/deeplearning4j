@@ -1,0 +1,9 @@
+{
+  DataInputStream bis=new DataInputStream(new BufferedInputStream(new FileInputStream(path)));
+  FloatMatrix x=new FloatMatrix(1,1);
+  FloatMatrix y=new FloatMatrix(1,1);
+  x.in(bis);
+  y.in(bis);
+  bis.close();
+  return new FloatDataSet(x,y);
+}

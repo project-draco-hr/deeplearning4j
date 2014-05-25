@@ -1,8 +1,8 @@
 {
-  syn1=DoubleMatrix.zeros(vocab.size(),layerSize);
-  syn0=DoubleMatrix.zeros(vocab.size(),layerSize);
+  syn1=FloatMatrix.zeros(vocab.size(),layerSize);
+  syn0=FloatMatrix.zeros(vocab.size(),layerSize);
   org.jblas.util.Random.seed(1);
   for (int i=0; i < syn0.rows; i++)   for (int j=0; j < syn0.columns; j++) {
-    syn0.put(i,j,(org.jblas.util.Random.nextDouble() - 0.5) / layerSize);
+    syn0.put(i,j,(float)(org.jblas.util.Random.nextFloat() - 0.5) / layerSize);
   }
 }

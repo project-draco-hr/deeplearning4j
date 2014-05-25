@@ -1,0 +1,9 @@
+{
+  FloatMatrix ret=new FloatMatrix(vals.rows,vals.columns);
+  for (int i=0; i < vals.length; i++) {
+    float logVal=(float)Math.log(vals.get(i));
+    if (!Double.isNaN(logVal) && !Double.isInfinite(logVal))     ret.put(i,logVal);
+ else     ret.put(i,1e-6f);
+  }
+  return createBasedOn(ret,vals);
+}

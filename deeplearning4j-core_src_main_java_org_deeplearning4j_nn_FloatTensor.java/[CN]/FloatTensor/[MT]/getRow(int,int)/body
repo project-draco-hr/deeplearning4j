@@ -1,0 +1,4 @@
+{
+  FloatMatrix rows=get(getRowIndicesForSlice(slice),getColIndicesForSlice());
+  return rows;
+}

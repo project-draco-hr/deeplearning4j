@@ -1,0 +1,10 @@
+{
+  if (index >= slices())   throw new IllegalArgumentException("Unable to get slice " + index + " out of bounds");
+  try {
+    FloatMatrix slice=get(RangeUtils.interval(index,index + rows()),RangeUtils.interval(0,columns()));
+    return slice;
+  }
+ catch (  Exception e) {
+    throw new IllegalArgumentException("Unable to get a slice ",e);
+  }
+}

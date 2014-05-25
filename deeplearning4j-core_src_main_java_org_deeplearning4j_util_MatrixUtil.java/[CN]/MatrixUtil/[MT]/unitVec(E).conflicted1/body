@@ -1,0 +1,5 @@
+{
+  float length=toScale.norm2();
+  if (length > 0)   return createBasedOn(SimpleBlas.scal(1.0f / length,toScale),toScale);
+  return toScale;
+}

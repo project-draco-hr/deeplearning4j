@@ -1,0 +1,7 @@
+{
+  FloatMatrix ret=input.reshape(rows * numSlices,columns);
+  FloatFourDTensor retTensor=new FloatFourDTensor(ret,false);
+  retTensor.setSlices(numSlices);
+  retTensor.setNumTensor(numTensors);
+  return retTensor;
+}

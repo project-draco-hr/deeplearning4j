@@ -1,5 +1,7 @@
 {
   int i=this.wordIndex.indexOf(word);
-  if (i < 0)   return new DoubleMatrix(oob);
-  return syn0.getRow(i);
+  if (oob == null)   oob=new float[layerSize];
+  if (i < 0)   return FloatMatrix.zeros(syn0.getRow(0).columns);
+  FloatMatrix r=syn0.getRow(i);
+  return r.div((SimpleBlas.nrm2(r)));
 }

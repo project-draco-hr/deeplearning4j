@@ -1,0 +1,6 @@
+{
+  FloatTensor ret=new FloatTensor(mul(tensor));
+  ret.slices=slices;
+  ret.perMatrixRows=perMatrixRows;
+  return ret;
+}

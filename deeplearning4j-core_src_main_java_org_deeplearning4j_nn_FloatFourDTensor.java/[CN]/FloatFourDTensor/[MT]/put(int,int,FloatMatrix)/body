@@ -1,0 +1,7 @@
+{
+  int tensorIndex=tensor * slices();
+  int row=tensorIndex * slice * rows();
+  Range rows=RangeUtils.interval(row,row + put.rows);
+  Range columns=RangeUtils.interval(0,put.columns);
+  put(rows,columns,put);
+}

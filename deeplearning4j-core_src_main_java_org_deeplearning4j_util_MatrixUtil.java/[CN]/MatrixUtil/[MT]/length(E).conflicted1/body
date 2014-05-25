@@ -1,0 +1,7 @@
+{
+  if (d instanceof FloatTensor) {
+    FloatTensor t=(FloatTensor)d;
+    return (float)MathUtils.max(new double[]{t.rows(),t.columns(),t.slices()});
+  }
+ else   return Math.max(d.rows,d.columns);
+}

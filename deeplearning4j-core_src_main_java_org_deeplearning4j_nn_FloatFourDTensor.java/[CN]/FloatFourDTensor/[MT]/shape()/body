@@ -1,0 +1,8 @@
+{
+  FloatMatrix ret=new FloatMatrix(1,4);
+  ret.put(0,rows());
+  ret.put(1,columns());
+  ret.put(2,slices());
+  ret.put(3,numTensors());
+  return ret;
+}

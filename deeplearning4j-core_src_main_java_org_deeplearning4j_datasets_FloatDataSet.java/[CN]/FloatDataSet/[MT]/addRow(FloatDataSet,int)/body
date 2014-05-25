@@ -1,0 +1,5 @@
+{
+  if (i > numExamples() || d == null)   throw new IllegalArgumentException("Invalid index for adding a row");
+  getFirst().putRow(i,d.getFirst());
+  getSecond().putRow(i,d.getSecond());
+}

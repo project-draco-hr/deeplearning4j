@@ -1,0 +1,6 @@
+{
+  FloatMatrix max=input.rowMaxs();
+  FloatMatrix diff=MatrixFunctions.exp(input.subColumnVector(max));
+  diff.diviColumnVector(diff.rowSums());
+  return createBasedOn(diff,input);
+}

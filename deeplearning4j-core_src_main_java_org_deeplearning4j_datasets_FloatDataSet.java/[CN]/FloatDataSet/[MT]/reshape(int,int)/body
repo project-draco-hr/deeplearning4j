@@ -1,0 +1,4 @@
+{
+  FloatDataSet ret=new FloatDataSet(getFirst().reshape(rows,cols),getSecond());
+  return ret;
+}

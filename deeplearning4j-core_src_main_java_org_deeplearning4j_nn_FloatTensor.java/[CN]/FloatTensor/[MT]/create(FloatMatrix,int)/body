@@ -1,0 +1,5 @@
+{
+  FloatTensor ret=new FloatTensor(matrix);
+  ret.slices=numSlices;
+  return ret;
+}

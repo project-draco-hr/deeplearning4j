@@ -1,0 +1,6 @@
+{
+  int tensorIndex=tensor * slices();
+  int end=tensorIndex + slices();
+  FloatMatrix ret=get(RangeUtils.interval(tensorIndex,end),RangeUtils.interval(0,columns()));
+  return new FloatTensor(ret,slices(),rows()).getSlice(slice);
+}

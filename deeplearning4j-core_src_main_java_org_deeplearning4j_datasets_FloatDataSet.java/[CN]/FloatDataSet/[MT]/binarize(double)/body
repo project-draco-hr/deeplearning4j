@@ -1,0 +1,4 @@
+{
+  for (int i=0; i < getFirst().length; i++)   if (getFirst().get(i) > cutoff)   getFirst().put(i,1);
+ else   getFirst().put(i,0);
+}

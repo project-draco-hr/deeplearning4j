@@ -1,0 +1,8 @@
+{
+  FloatMatrix ret=d;
+  for (int i=0; i < d.rows; i++)   for (int j=0; j < d.columns; j++) {
+    double d2=d.get(i,j);
+    ret.put(i,j,FastMath.round(d2));
+  }
+  return createBasedOn(ret,d);
+}

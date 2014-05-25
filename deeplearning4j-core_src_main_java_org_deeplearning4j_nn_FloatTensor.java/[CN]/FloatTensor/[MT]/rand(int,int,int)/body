@@ -1,0 +1,3 @@
+{
+  return rand(rows,cols,slices,Distributions.uniform(new MersenneTwister(123),0,1));
+}

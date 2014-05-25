@@ -5,19 +5,20 @@
   float vector=0;
   Word2Vec ret=new Word2Vec();
   Index wordIndex=new Index();
-  DoubleMatrix wordVectors=null;
+  FloatMatrix wordVectors=null;
   try {
     bis=new BufferedInputStream(path.endsWith(".gz") ? new GZIPInputStream(new FileInputStream(path)) : new FileInputStream(path));
     dis=new DataInputStream(bis);
-    Map<String,DoubleMatrix> wordMap=new HashMap<String,DoubleMatrix>();
+    Map<String,FloatMatrix> wordMap=new HashMap<>();
     int words=Integer.parseInt(readString(dis));
     int size=Integer.parseInt(readString(dis));
-    wordVectors=new DoubleMatrix(words,size);
+    wordVectors=new FloatMatrix(words,size);
     String word;
-    double[] vectors=null;
+    float[] vectors=null;
     for (int i=0; i < words; i++) {
       word=readString(dis);
-      vectors=new double[size];
+      log.info("Loaded " + word);
+      vectors=new float[size];
       len=0;
       for (int j=0; j < size; j++) {
         vector=readFloat(dis);
@@ -29,7 +30,7 @@
         vectors[j]/=len;
       }
       wordIndex.add(word);
-      wordVectors.putRow(i,new DoubleMatrix(vectors));
+      wordVectors.putRow(i,new FloatMatrix(vectors));
       dis.read();
     }
   }
