@@ -2,7 +2,7 @@
   log.info("Starting workers");
   ActorSystem system=context().system();
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
-  Props p=pool.props(WorkerActor.propsFor(conf,stateTracker));
+  Props p=pool.props(WorkerActor.propsFor(conf,(StateTracker<UpdateableImpl>)stateTracker));
   p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
   system.actorOf(p,"worker");
   log.info("Broadcasting initial master network");

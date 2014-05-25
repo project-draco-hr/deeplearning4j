@@ -5,7 +5,7 @@
       if (tracker.needsReplicate(id)) {
         try {
           log.info("Updating worker " + id);
-          UpdateableImpl u=tracker.getCurrent();
+          E u=tracker.getCurrent();
           if (u == null || u.get() == null) {
             return;
           }

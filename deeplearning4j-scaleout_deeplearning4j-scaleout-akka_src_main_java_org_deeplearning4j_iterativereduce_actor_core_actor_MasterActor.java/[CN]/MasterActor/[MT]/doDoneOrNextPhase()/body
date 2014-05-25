@@ -1,5 +1,5 @@
 {
-  UpdateableImpl masterResults=null;
+  E masterResults=null;
   Collection<String> updates=stateTracker.workerUpdates();
   if (!updates.isEmpty()) {
     masterResults=compute();

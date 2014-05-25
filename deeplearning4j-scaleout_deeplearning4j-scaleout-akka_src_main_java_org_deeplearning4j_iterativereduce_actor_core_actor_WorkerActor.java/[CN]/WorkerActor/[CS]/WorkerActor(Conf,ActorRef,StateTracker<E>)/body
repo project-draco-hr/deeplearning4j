@@ -10,4 +10,6 @@
   tracker.availableForWork(id);
   masterPath=conf.getMasterAbsPath();
   log.info("Registered with master " + id + " at master "+ conf.getMasterAbsPath());
+  heartbeat();
+  tracker.addWorker(id);
 }

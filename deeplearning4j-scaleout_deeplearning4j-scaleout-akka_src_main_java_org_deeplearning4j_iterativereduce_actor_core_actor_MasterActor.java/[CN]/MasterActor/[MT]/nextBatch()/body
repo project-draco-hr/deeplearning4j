@@ -1,7 +1,7 @@
 {
   Collection<String> updates=stateTracker.workerUpdates();
   if (!updates.isEmpty() && stateTracker.currentJobs().isEmpty()) {
-    UpdateableImpl masterResults=compute();
+    E masterResults=compute();
     log.info("Updating next batch");
     stateTracker.setCurrent(masterResults);
     for (    String s : stateTracker.workers()) {

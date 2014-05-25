@@ -3,8 +3,8 @@
     log.warn("Worker " + id + " was passed an empty or null list");
     return;
   }
-  Future<UpdateableImpl> f=Futures.future(new Callable<UpdateableImpl>(){
-    @Override public UpdateableImpl call() throws Exception {
+  Future<E> f=Futures.future(new Callable<E>(){
+    @Override public E call() throws Exception {
       DoubleMatrix newInput=new DoubleMatrix(list.size(),list.get(0).getFirst().columns);
       DoubleMatrix newOutput=new DoubleMatrix(list.size(),list.get(0).getSecond().columns);
       for (int i=0; i < list.size(); i++) {
@@ -16,7 +16,7 @@
         results=tracker.getCurrent();
         tracker.doneReplicating(id);
       }
-      UpdateableImpl work=compute();
+      E work=compute();
       if (work != null) {
         log.info("Done working; adding update to mini batch on worker " + id);
         tracker.addUpdate(id,work);
