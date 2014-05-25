@@ -1,18 +1,5 @@
 {
-  hiddenLayerSizes=conf.getLayerSizes();
-  numHidden=conf.getnOut();
-  numVisible=conf.getnIn();
-  numHiddenNeurons=hiddenLayerSizes.length;
-  seed=conf.getSeed();
-  renderWeightEpochs=conf.getRenderWeightEpochs();
-  useRegularization=conf.isUseRegularization();
-  learningRate=conf.getPretrainLearningRate();
-  preTrainEpochs=conf.getPretrainEpochs();
-  fineTuneEpochs=conf.getFinetuneEpochs();
-  corruptionLevel=conf.getCorruptionLevel();
-  extraParams=conf.getDeepLearningParams();
-  scale=conf.isScale();
-  isNormalizeZeroMeanAndUnitVariance=conf.isNormalizeZeroMeanAndUnitVariance();
+  this.conf=conf;
   String url=conf.getMasterUrl();
   this.masterPath=conf.getMasterAbsPath();
   Address a=AddressFromURIString.apply(url);

@@ -6,5 +6,4 @@
   tracker.addWorker(id);
   mediator.tell(new DistributedPubSubMediator.Subscribe(id,getSelf()),getSelf());
   heartbeat();
-  active=true;
 }

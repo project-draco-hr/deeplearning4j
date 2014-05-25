@@ -1,6 +1,5 @@
 {
   super.preStart();
-  active=true;
   cluster.subscribe(getSelf(),MemberEvent.class);
   log.info("Pre start on worker");
 }

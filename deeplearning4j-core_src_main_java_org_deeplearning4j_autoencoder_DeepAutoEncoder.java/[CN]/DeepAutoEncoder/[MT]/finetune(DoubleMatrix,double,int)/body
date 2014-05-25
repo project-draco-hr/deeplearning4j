@@ -1,7 +1,6 @@
 {
   List<DoubleMatrix> activations=encoder.feedForward(input);
   if (decoder == null)   initDecoder();
-  RBM r=(RBM)encoder.getLayers()[0];
   DoubleMatrix decoderInput=round(activations.get(activations.size() - 2));
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
