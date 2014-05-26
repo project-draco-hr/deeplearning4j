@@ -1,0 +1,4 @@
+{
+  OutputLayerTrainingEvaluator eval=new OutputLayerTrainingEvaluator.Builder().bestLoss(bestLoss()).improvementThreshold(improvementThreshold()).patience(patience()).testSet(testSet()).withNetwork(network).validationEpochs(validationEpochs()).patienceIncrease(patienceIncrease.get()).build();
+  return eval;
+}

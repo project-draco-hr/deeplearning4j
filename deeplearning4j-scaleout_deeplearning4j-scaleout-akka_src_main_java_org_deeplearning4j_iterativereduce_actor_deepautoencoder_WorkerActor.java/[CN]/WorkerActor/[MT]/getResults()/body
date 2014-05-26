@@ -1,0 +1,9 @@
+{
+  try {
+    if (results == null)     results=tracker.getCurrent();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return results;
+}

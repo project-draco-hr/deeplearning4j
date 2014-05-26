@@ -1,0 +1,3 @@
+{
+  return Response.ok(new ArrayList<>(workers()).size()).build();
+}

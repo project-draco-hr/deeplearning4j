@@ -1,0 +1,9 @@
+{
+  super(conf,clusterClient,tracker);
+  setup(conf);
+  mediator.tell(new Put(getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
+  tracker.addWorker(id);
+  mediator.tell(new DistributedPubSubMediator.Subscribe(id,getSelf()),getSelf());
+  heartbeat();
+}

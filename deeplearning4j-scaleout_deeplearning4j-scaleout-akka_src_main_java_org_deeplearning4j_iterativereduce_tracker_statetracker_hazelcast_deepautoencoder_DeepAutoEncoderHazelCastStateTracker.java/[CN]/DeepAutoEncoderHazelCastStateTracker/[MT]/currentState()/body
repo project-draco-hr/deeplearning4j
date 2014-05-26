@@ -1,0 +1,3 @@
+{
+  return Response.ok(Collections.singletonMap("phase",isPretrain() ? "pretrain" : "finetune")).build();
+}

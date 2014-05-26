@@ -1,0 +1,16 @@
+{
+  if (message instanceof DistributedPubSubMediator.SubscribeAck || message instanceof DistributedPubSubMediator.UnsubscribeAck) {
+    DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
+    log.info("Subscribed to " + ack.toString());
+  }
+ else   if (message instanceof DeepAutoEncoder) {
+    if (results == null)     results=new UpdateableEncoderImpl((DeepAutoEncoder)message);
+ else     results.set((DeepAutoEncoder)message);
+    log.info("Set network");
+  }
+ else   if (message instanceof Ack) {
+    log.info("Ack from master on worker " + id);
+  }
+ else   unhandled(message);
+}

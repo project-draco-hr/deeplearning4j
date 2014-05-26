@@ -1,0 +1,7 @@
+{
+  String path=paths.remove(id);
+  File load=new File(path);
+  UpdateableEncoderImpl u=SerializationUtils.readObject(load);
+  load.delete();
+  return u;
+}

@@ -1,0 +1,5 @@
+{
+  super.aroundPostStop();
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,new ClearWorker(id)),getSelf());
+  heartbeat.cancel();
+}

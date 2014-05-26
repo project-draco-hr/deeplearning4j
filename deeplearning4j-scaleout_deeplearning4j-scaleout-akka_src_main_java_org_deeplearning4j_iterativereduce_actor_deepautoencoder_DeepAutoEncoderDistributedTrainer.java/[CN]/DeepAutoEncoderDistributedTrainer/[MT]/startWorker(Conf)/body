@@ -1,0 +1,25 @@
+{
+  Address contactAddress=AddressFromURIString.parse(conf.getMasterUrl());
+  system.actorOf(Props.create(ClusterListener.class));
+  log.info("Attempting to join node " + contactAddress);
+  log.info("Starting workers");
+  Set<ActorSelection> initialContacts=new HashSet<ActorSelection>();
+  initialContacts.add(system.actorSelection(contactAddress + "/user/"));
+  RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
+  ActorRef clusterClient=system.actorOf(ClusterClient.defaultProps(initialContacts),"clusterClient");
+  try {
+    String host=contactAddress.host().get();
+    log.info("Connecting  to host " + host);
+    int workers=stateTracker.numWorkers();
+    if (workers <= 1)     throw new IllegalStateException("Did not properly connect to cluster");
+    log.info("Joining cluster of size " + workers);
+    Props p=pool.props(WorkerActor.propsFor(clusterClient,conf,stateTracker));
+    system.actorOf(p,"worker");
+    Cluster cluster=Cluster.get(system);
+    cluster.join(contactAddress);
+    log.info("Worker joining cluster");
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

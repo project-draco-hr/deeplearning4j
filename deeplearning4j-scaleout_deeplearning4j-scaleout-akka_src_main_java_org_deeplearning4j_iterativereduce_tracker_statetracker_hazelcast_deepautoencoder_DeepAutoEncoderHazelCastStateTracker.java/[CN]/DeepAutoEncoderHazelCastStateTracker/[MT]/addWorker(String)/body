@@ -1,0 +1,8 @@
+{
+  heartbeat.put(worker,System.currentTimeMillis());
+  if (!workers.contains(worker)) {
+    log.info("Adding worker " + worker);
+    workers.add(worker);
+    log.info("Number of workers is now " + workers.size());
+  }
+}

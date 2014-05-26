@@ -1,0 +1,5 @@
+{
+  super(conf,batchActor,stateTracker);
+  this.encoder=network;
+  setup(conf);
+}

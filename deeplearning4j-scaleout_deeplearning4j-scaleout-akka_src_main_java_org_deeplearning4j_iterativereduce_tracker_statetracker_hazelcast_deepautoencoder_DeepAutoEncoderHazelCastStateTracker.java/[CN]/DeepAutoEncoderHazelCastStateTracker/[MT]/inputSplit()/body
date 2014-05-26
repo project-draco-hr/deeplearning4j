@@ -1,0 +1,3 @@
+{
+  return (miniBatchSize.get() * numWorkers()) / numWorkers();
+}

@@ -1,4 +1,0 @@
-{
-  DataInputStream dis=new DataInputStream(new BufferedInputStream(new ByteArrayInputStream(b.array())));
-  wrapped.load(dis);
-}
