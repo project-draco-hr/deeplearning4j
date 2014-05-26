@@ -3,7 +3,7 @@
   system.actorOf(Props.create(ClusterListener.class));
   ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter,stateTracker,c),"batch");
   log.info("Started batch actor");
-  Props masterProps=startingNetwork != null ? Props.create(MasterActor.class,c,batchActor,startingNetwork,stateTracker) : Props.create(MasterActor.class,c,batchActor,stateTracker);
+  Props masterProps=startingNetwork != null ? Props.create(MasterActor.class,c,batchActor,startingNetwork,stateTracker) : encoder != null ? Props.create(MasterActor.class,c,batchActor,encoder,stateTracker) : Props.create(MasterActor.class,c,batchActor,stateTracker);
   final Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
   c.setMasterUrl(realJoinAddress.toString());
   if (exec == null)   exec=Executors.newScheduledThreadPool(2);

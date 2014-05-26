@@ -5,7 +5,7 @@
     Conf conf=retriever.retrieve();
     String address=conf.getMasterUrl();
     log.info("Creating hazel cast state tracker... " + conf.getStateTrackerConnectionString());
-    HazelCastStateTracker stateTracker=new HazelCastStateTracker(conf.getStateTrackerConnectionString());
+    DeepAutoEncoderHazelCastStateTracker stateTracker=new DeepAutoEncoderHazelCastStateTracker(conf.getStateTrackerConnectionString());
     log.info("Creating hazel cast via worker " + stateTracker.connectionString());
     runner=new DeepAutoEncoderDistributedTrainer(type,address);
     runner.setStateTracker(stateTracker);

@@ -8,8 +8,14 @@
   log.info("Broadcasting initial master network");
   DeepAutoEncoder network;
   if (this.network == null) {
-    if (encoder != null)     network=new DeepAutoEncoder(encoder);
- else     network=new DeepAutoEncoder(conf.init());
+    if (encoder != null) {
+      network=new DeepAutoEncoder(encoder);
+      this.network=network;
+    }
+ else {
+      network=new DeepAutoEncoder(conf.init());
+      this.network=network;
+    }
   }
  else   network=this.network;
   UpdateableEncoderImpl masterResults=new UpdateableEncoderImpl(network);

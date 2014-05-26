@@ -1,0 +1,5 @@
+{
+  DistributedDeepLearningTrainerApp app=new DistributedDeepLearningTrainerApp(args);
+  app.exec();
+  if (app.type.equals("master"))   app.train();
+}

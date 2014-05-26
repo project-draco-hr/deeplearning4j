@@ -1,5 +1,5 @@
 {
-  UpdateableEncoderImpl u=(UpdateableEncoderImpl)master.get();
+  UpdateableEncoderImpl u=master != null ? (UpdateableEncoderImpl)master.get() : null;
   if (u == null)   return null;
   return u;
 }
