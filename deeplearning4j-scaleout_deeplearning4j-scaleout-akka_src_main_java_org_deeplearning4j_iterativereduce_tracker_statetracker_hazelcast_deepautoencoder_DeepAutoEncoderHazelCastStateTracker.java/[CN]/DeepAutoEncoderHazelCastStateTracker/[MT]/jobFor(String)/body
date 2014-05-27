@@ -1,5 +1,0 @@
-{
-  IAtomicReference<Job> j=h.getAtomicReference("job-" + id);
-  if (j.isNull() || isCurrentlyJob(id))   return null;
-  return j.get();
-}

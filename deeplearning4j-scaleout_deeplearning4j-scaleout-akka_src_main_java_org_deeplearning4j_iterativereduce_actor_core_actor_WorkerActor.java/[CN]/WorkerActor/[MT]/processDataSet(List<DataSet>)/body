@@ -11,6 +11,7 @@
         newInput.putRow(i,list.get(i).getFirst());
         newOutput.putRow(i,list.get(i).getSecond());
       }
+      tracker.beginTraining();
       if (tracker.needsReplicate(id)) {
         log.info("Updating network for worker " + id);
         results=tracker.getCurrent();

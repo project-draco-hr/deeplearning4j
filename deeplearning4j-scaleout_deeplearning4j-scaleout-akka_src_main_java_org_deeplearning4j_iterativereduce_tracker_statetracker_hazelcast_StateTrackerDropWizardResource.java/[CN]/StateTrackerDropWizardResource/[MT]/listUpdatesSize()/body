@@ -1,0 +1,3 @@
+{
+  return Response.ok(stateTracker.workerUpdates().size()).build();
+}

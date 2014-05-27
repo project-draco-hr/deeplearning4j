@@ -35,12 +35,55 @@
   if (conf.isScale())   d.scale();
   if (d.getFirst() == null || d.getSecond() == null)   throw new IllegalStateException("Input cant be null");
   if (tracker.isPretrain()) {
-    log.info("Worker " + id + " pretraining");
-    network.getEncoder().pretrain(d.getFirst(),conf.getDeepLearningParams());
+    int numTries=0;
+    boolean done=false;
+    while (!done && numTries < 3) {
+      try {
+        log.info("Worker " + id + " pretraining");
+        network.getEncoder().pretrain(d.getFirst(),conf.getDeepLearningParams());
+        done=true;
+      }
+ catch (      Exception e) {
+        if (d.getFirst() == null) {
+          d=(DataSet)currentJob.getWork();
+        }
+        numTries++;
+      }
+    }
+    if (!done) {
+      log.warn("Worker " + id + " failed! returning null");
+      try {
+        if (!tracker.isDone())         tracker.clearJob(id);
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+      if (!tracker.isDone())       isWorking.set(false);
+    }
   }
  else {
-    network.finetune(d.getFirst(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs());
-    log.info("Worker " + id + " finetune");
+    int numTries=0;
+    boolean done=false;
+    while (!done && numTries < 3) {
+      try {
+        network.finetune(d.getFirst(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs());
+        log.info("Worker " + id + " finetune");
+        done=true;
+      }
+ catch (      Exception e) {
+        numTries++;
+      }
+    }
+    if (!done) {
+      log.warn("Worker " + id + " failed! returning null");
+      try {
+        if (!tracker.isDone())         tracker.clearJob(id);
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+      if (!tracker.isDone())       isWorking.set(false);
+    }
   }
   try {
     if (!tracker.isDone())     tracker.clearJob(id);

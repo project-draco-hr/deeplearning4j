@@ -1,0 +1,11 @@
+{
+  log.info("Saving model...");
+  try {
+    Updateable<?> u=stateTracker.getCurrent();
+    SerializationUtils.saveObject(u.get(),new File("savedmodel.ser"));
+  }
+ catch (  Exception e) {
+    return Response.ok(Collections.singletonMap("status",e.getMessage())).build();
+  }
+  return Response.ok(Collections.singletonMap("status","saved")).build();
+}

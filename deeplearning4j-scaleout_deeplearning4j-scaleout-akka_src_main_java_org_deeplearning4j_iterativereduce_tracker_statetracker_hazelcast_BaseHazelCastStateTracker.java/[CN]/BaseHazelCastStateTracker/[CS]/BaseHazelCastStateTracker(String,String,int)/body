@@ -1,0 +1,75 @@
+{
+  log.info("Setting up hazelcast with type " + type + " connection string "+ connectionString+ " and port "+ stateTrackerPort);
+  if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
+    if (connectionString.equals("master")) {
+      String host=InetAddress.getLocalHost().getHostName();
+      this.connectionString=host + ":" + stateTrackerPort;
+    }
+    this.hazelCastPort=stateTrackerPort;
+    config=hazelcast();
+    h=Hazelcast.newHazelcastInstance(config);
+    h.getCluster().addMembershipListener(new MembershipListener(){
+      @Override public void memberAdded(      MembershipEvent membershipEvent){
+        log.info("Member added " + membershipEvent.toString());
+      }
+      @Override public void memberRemoved(      MembershipEvent membershipEvent){
+        log.info("Member removed " + membershipEvent.toString());
+      }
+      @Override public void memberAttributeChanged(      MemberAttributeEvent memberAttributeEvent){
+        log.info("Member changed " + memberAttributeEvent.toString());
+      }
+    }
+);
+  }
+ else   if (type.equals("master") && PortTaken.portTaken(stateTrackerPort))   throw new IllegalStateException("Specified type was master and the port specified was taken, please specify a different port");
+ else {
+    setConnectionString(connectionString);
+    log.info("Connecting to hazelcast on " + connectionString);
+    ClientConfig client=new ClientConfig();
+    client.getNetworkConfig().addAddress(connectionString);
+    h=HazelcastClient.newHazelcastClient(client);
+  }
+  this.type=type;
+  jobs=h.getList(JOBS);
+  workers=h.getList(WORKERS);
+  if (!this.type.equals("master")) {
+    while (workers.isEmpty()) {
+      log.warn("Waiting for data sync...");
+      Thread.sleep(1000);
+    }
+    log.info("Workers is " + workers.size());
+  }
+  begunTraining=h.getAtomicReference(BEGUN);
+  miniBatchSize=h.getAtomicReference(INPUT_SPLIT);
+  workerEnabled=h.getMap(WORKER_ENABLED);
+  replicate=h.getList(REPLICATE_WEIGHTS);
+  topics=h.getList(TOPICS);
+  updates=h.getList(UPDATES);
+  heartbeat=h.getMap(HEART_BEAT);
+  master=h.getAtomicReference(RESULT);
+  isPretrain=h.getAtomicReference(IS_PRETRAIN);
+  numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
+  numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
+  done=h.getAtomicReference(DONE);
+  validationEpochs=h.getAtomicReference(VALIDATION_EPOCHS);
+  improvementThreshold=h.getAtomicReference(IMPROVEMENT_THRESHOLD);
+  bestLoss=h.getAtomicReference(BEST_LOSS);
+  earlyStop=h.getAtomicReference(EARLY_STOP);
+  patience=h.getAtomicReference(PATIENCE);
+  patienceIncrease=h.getAtomicReference(PATIENCE_INCREASE);
+  if (type.equals("master")) {
+    begunTraining.set(false);
+    saver=createUpdateSaver();
+    numTimesPretrainRan.set(0);
+    numTimesPretrain.set(1);
+    isPretrain.set(true);
+    done.set(false);
+    resource=new StateTrackerDropWizardResource(this);
+    bestLoss.set(Double.POSITIVE_INFINITY);
+    earlyStop.set(true);
+    patience.set(40.0);
+    patienceIncrease.set(2.0);
+    improvementThreshold.set(0.995);
+    validationEpochs.set((int)Math.min(10,patience() / 2));
+  }
+}

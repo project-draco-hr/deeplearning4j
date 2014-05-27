@@ -1,0 +1,3 @@
+{
+  return Response.ok(Collections.singletonMap("minibatch",stateTracker.miniBatchSize())).build();
+}

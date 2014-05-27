@@ -1,7 +1,7 @@
 {
   heartbeat=context().system().scheduler().schedule(Duration.apply(30,TimeUnit.SECONDS),Duration.apply(30,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
-      tracker.addWorker(id);
+      if (!tracker.isDone())       tracker.addWorker(id);
       if (tracker.needsReplicate(id)) {
         try {
           log.info("Updating worker " + id);

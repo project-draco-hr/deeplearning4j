@@ -69,20 +69,8 @@
     log.info("Setup worker nodes");
   }
   this.conf=conf;
-  if (stateTracker instanceof DeepAutoEncoderHazelCastStateTracker && type.equals("master")) {
-    DeepAutoEncoderHazelCastStateTracker s=(DeepAutoEncoderHazelCastStateTracker)stateTracker;
-    try {
-      InputStream is=new ClassPathResource("dropwizard.yml").getInputStream();
-      File tmpConfig=new File("dropwizard.yml");
-      BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(tmpConfig));
-      IOUtils.copy(is,bos);
-      bos.flush();
-      s.run(new String[]{"server",tmpConfig.getAbsolutePath()});
-      tmpConfig.deleteOnExit();
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
+  if (type.equals("master")) {
+    stateTracker.startRestApi();
   }
  else   if (stateTracker instanceof DeepAutoEncoderHazelCastStateTracker)   log.info("Not starting drop wizard; worker state detected");
 }
