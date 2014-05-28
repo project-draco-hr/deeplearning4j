@@ -1,7 +1,8 @@
 {
   if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=columnVariance(input).divi(input.rows);
   if (hiddenType == HiddenUnit.RECTIFIED) {
-    DoubleMatrix preSig=v.divRowVector(sigma).mmul(W).addiRowVector(hBias);
+    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
+    MatrixUtil.max(0,preSig);
     return preSig;
   }
  else   if (hiddenType == HiddenUnit.GAUSSIAN) {

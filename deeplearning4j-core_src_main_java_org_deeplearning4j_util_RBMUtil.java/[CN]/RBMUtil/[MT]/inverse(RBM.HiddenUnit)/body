@@ -1,3 +1,12 @@
 {
-  return visibleToHidden.get(hidden);
+switch (visible) {
+case BINARY:
+    return RBM.VisibleUnit.BINARY;
+case GAUSSIAN:
+  return RBM.VisibleUnit.GAUSSIAN;
+case SOFTMAX:
+return RBM.VisibleUnit.SOFTMAX;
+default :
+return null;
+}
 }

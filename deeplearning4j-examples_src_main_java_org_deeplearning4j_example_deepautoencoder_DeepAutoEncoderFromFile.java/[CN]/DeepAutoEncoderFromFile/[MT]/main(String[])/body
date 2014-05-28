@@ -1,12 +1,23 @@
 {
   DataSetIterator iter=new MnistDataSetIterator(10,60000);
   DBN dbn=SerializationUtils.readObject(new File(args[0]));
+  RBM r=(RBM)dbn.getLayers()[dbn.getnLayers() - 1];
+  r.setVisibleType(RBM.VisibleUnit.GAUSSIAN);
+  r.setHiddenType(RBM.HiddenUnit.BINARY);
+  dbn.setLayerLearningRates(Collections.singletonMap(dbn.getnLayers() - 1,1e-3));
+  dbn.getLayers()[3].setRenderEpochs(1);
+  dbn.getSigmoidLayers()[dbn.getnLayers() - 1].setActivationFunction(Activations.sigmoid());
   DeepAutoEncoder encoder=new DeepAutoEncoder(dbn);
+  encoder.setHiddenUnit(RBM.HiddenUnit.GAUSSIAN);
+  encoder.setVisibleUnit(RBM.VisibleUnit.BINARY);
   while (iter.hasNext()) {
-    DataSet d=iter.next();
-    dbn.setInput(d.getFirst());
-    log.info("Training on " + d.numExamples());
-    encoder.finetune(d.getFirst(),1e-1,100);
+    DataSet next=iter.next();
+    dbn.setInput(next.getFirst());
+    dbn.pretrain(next.getFirst(),1,1e-2,1000);
+    log.info("Training on " + next.numExamples());
+    List<DoubleMatrix> activations=dbn.feedForward();
+    log.info("Activation sum was " + activations.get(activations.size() - 2));
+    encoder.finetune(next.getFirst(),1e-1,1000);
   }
   SerializationUtils.saveObject(encoder,new File("deepautoencoder.ser"));
   iter.reset();

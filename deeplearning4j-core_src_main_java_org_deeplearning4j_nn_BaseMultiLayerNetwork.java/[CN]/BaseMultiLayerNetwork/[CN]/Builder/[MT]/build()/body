@@ -37,6 +37,7 @@
     ret.getWeightTransforms().putAll(weightTransforms);
     ret.getVisibleBiasTransforms().putAll(visibleBiasTransforms);
     ret.getHiddenBiasTransforms().putAll(hiddenBiasTransforms);
+    ret.getLayerLearningRates().putAll(layerLearningRates);
     if (hiddenLayerSizes == null)     throw new IllegalStateException("Unable to build network, no hidden layer sizes defined");
     return ret;
   }

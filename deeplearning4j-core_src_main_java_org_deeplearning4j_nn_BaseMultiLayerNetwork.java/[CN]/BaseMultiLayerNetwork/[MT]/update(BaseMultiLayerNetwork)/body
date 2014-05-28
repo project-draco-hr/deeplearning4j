@@ -9,6 +9,7 @@
       this.getLayers()[i]=network.getLayers()[i].clone();
     }
   }
+  this.layerLearningRates=network.layerLearningRates;
   this.normalizeByInputRows=network.normalizeByInputRows;
   this.useAdaGrad=network.useAdaGrad;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
