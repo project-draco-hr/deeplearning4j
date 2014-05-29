@@ -1,6 +1,7 @@
 {
-  List<DoubleMatrix> activations=encoder.feedForward(input);
-  DoubleMatrix decoderInput=activations.get(activations.size() - 2);
+  DoubleMatrix encode=encode(input);
+  DoubleMatrix decoderInput=round(encode);
+  MatrixUtil.scaleByMax(decoderInput);
   List<DoubleMatrix> decoderActivations=decoder.feedForward(decoderInput);
   return decoderActivations.get(decoderActivations.size() - 1);
 }
