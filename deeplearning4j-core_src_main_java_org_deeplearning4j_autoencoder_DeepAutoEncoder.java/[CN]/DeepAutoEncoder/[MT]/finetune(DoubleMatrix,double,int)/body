@@ -1,7 +1,7 @@
 {
   if (decoder == null)   initDecoder();
   DoubleMatrix encode=encode(input);
-  DoubleMatrix decoderInput=round(sigmoid(encode));
+  DoubleMatrix decoderInput=sigmoid(encode);
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
   decoder.finetune(input,lr,epochs);
