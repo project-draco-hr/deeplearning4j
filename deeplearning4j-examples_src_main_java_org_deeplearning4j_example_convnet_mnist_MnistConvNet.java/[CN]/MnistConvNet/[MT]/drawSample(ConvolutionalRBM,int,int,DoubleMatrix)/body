@@ -1,6 +1,6 @@
 {
   DoubleMatrix draw=input.dup();
-  DrawMnistGreyScale greyScale=new DrawMnistGreyScale(input);
+  DrawReconstruction greyScale=new DrawReconstruction(input);
   greyScale.readjustToData();
   greyScale.draw();
   log.info("Draw sum " + draw.sum());

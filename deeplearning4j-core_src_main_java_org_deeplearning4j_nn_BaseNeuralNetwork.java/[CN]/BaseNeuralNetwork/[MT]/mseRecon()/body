@@ -1,0 +1,3 @@
+{
+  return sqrt(pow(reconstruct(input).sub(input),2)).sum() / input.rows;
+}

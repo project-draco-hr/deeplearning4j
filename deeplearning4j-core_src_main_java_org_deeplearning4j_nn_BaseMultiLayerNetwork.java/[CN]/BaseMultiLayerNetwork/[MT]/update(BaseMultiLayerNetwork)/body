@@ -9,6 +9,7 @@
       this.getLayers()[i]=network.getLayers()[i].clone();
     }
   }
+  this.sampleOrActivate=network.sampleOrActivate;
   this.layerLearningRates=network.layerLearningRates;
   this.normalizeByInputRows=network.normalizeByInputRows;
   this.useAdaGrad=network.useAdaGrad;
@@ -18,6 +19,7 @@
   this.nOuts=network.nOuts;
   this.rng=network.rng;
   this.dist=network.dist;
+  this.renderByLayer=network.renderByLayer;
   this.activation=network.activation;
   this.useRegularization=network.useRegularization;
   this.columnMeans=network.columnMeans;

@@ -1,10 +1,5 @@
 {
   DoubleMatrix currInput=x;
-  for (int i=0; i < layerNum - 1; i++) {
-    getLayers()[i].setInput(currInput);
-    getSigmoidLayers()[i].setInput(input);
-    if (useHiddenActivationsForwardProp)     currInput=getSigmoidLayers()[i].activate(currInput);
- else     currInput=getLayers()[i].sampleHiddenGivenVisible(currInput).getSecond();
-  }
-  return getLayers()[layerNum - 1].reconstruct(currInput);
+  List<DoubleMatrix> forward=feedForward(currInput);
+  return getLayers()[layerNum - 1].reconstruct(forward.get(layerNum - 1));
 }

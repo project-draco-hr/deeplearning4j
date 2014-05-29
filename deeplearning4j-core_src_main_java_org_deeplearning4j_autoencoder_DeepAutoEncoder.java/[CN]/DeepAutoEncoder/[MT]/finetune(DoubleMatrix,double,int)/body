@@ -1,8 +1,9 @@
 {
-  List<DoubleMatrix> activations=encoder.feedForward(input);
   if (decoder == null)   initDecoder();
-  DoubleMatrix decoderInput=round(activations.get(activations.size() - 2));
+  DoubleMatrix encode=encode(input);
+  DoubleMatrix decoderInput=round(encode);
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
+  decoder.feedForward(decoderInput);
   decoder.finetune(input,lr,epochs);
 }

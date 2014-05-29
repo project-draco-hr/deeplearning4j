@@ -5,7 +5,7 @@
   RBM r=new RBM.Builder().withHidden(RBM.HiddenUnit.RECTIFIED).withVisible(RBM.VisibleUnit.GAUSSIAN).numberOfVisible(300 * 300).numHidden(1200).build();
   r.trainTillConvergence(d2,1e-2,new Object[]{1,1e-2,10000});
   DoubleMatrix draw1=r.reconstruct(d2).mul(255);
-  DrawMnistGreyScale d=new DrawMnistGreyScale(draw1);
+  DrawReconstruction d=new DrawReconstruction(draw1);
   d.title="REAL";
   d.draw();
   Thread.sleep(10000);
