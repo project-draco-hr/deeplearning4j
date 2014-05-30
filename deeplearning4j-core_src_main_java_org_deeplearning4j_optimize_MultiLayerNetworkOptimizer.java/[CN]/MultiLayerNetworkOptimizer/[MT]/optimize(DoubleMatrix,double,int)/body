@@ -1,6 +1,6 @@
 {
   network.getOutputLayer().setLabels(labels);
-  DoubleMatrix train=sampleHiddenGivenVisible();
+  DoubleMatrix train=network.output(network.getInput());
   if (!network.isForceNumEpochs()) {
     network.getOutputLayer().trainTillConvergence(train,labels,lr,epochs);
     if (network.isShouldBackProp())     network.backProp(lr,epochs);
@@ -9,6 +9,7 @@
     log.info("Training for " + epochs + " epochs");
     for (int i=0; i < epochs; i++) {
       network.getOutputLayer().train(train,labels,lr);
+      log.info("Error on epoch " + i + " is  "+ network.getOutputLayer().score());
     }
     if (network.isShouldBackProp())     network.backProp(lr,epochs);
   }
