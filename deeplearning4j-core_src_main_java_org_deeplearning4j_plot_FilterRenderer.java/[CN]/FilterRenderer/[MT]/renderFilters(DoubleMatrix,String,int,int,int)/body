@@ -1,7 +1,6 @@
 {
   int[] equiv=new int[data.length];
   int numberCols=data.columns;
-  int patchesPerRow=10;
   double approx=(double)numberCols / (double)patchesPerRow;
   int numPatchRows=(int)Math.round(approx);
   if (numPatchRows < 1)   numPatchRows=1;
@@ -24,19 +23,19 @@
       double patch_normal=(column.get(i) - col_min) / (col_max - col_min + 0.000001);
       equiv[i]=(int)(255 * patch_normal);
     }
+    boolean outOfBounds=false;
     if (curX >= filterImgWidth) {
-      r.setPixels(filterImgWidth - 1,curY,patchWidth,patchHeight,equiv);
+      curX=filterImgWidth - 1;
+      outOfBounds=true;
       break outer;
     }
- else     if (curY >= filterImgHeight) {
-      r.setPixels(curX,filterImgHeight - 1,patchWidth,patchHeight,equiv);
+    if (curY >= filterImgHeight) {
+      curY=filterImgHeight - 1;
+      outOfBounds=true;
       break outer;
     }
- else     if (curX >= filterImgWidth && curY >= filterImgHeight) {
-      r.setPixels(filterImgWidth - 1,filterImgHeight - 1,patchWidth,patchHeight,equiv);
-      break outer;
-    }
- else     r.setPixels(curX,curY,patchWidth,patchHeight,equiv);
+    r.setPixels(curX,curY,patchWidth,patchHeight,equiv);
+    if (outOfBounds)     break outer;
   }
   try {
     saveImageToDisk(img,filename);

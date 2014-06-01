@@ -6,9 +6,9 @@
     if (network.getW() instanceof Tensor) {
       Tensor w=(Tensor)network.getW().dup();
       DoubleMatrix render2=w.reshape(w.rows() * w.columns(),w.slices());
-      render.renderFilters(render2,"currimg.png",w.columns(),w.rows());
+      render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
     }
- else     render.renderFilters(network.getW().dup(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows));
+ else     render.renderFilters(network.getW().dup(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows),patchesPerRow);
   }
  catch (  Exception e) {
     log.error("Unable to plot filter, continuing...",e);

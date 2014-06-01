@@ -7,7 +7,7 @@
   }
   iter.reset();
   FilterRenderer render=new FilterRenderer();
-  render.renderFilters(autoEncoder.getW(),"example-render.jpg",28,28);
+  render.renderFilters(autoEncoder.getW(),"example-render.jpg",28,28,10);
   while (iter.hasNext()) {
     DataSet first=iter.next();
     DoubleMatrix reconstruct=autoEncoder.reconstruct(first.getFirst());

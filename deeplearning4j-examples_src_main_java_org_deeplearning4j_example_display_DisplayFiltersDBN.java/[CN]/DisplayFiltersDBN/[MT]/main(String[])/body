@@ -4,7 +4,7 @@
   NeuralNetPlotter plotter=new NeuralNetPlotter();
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    plotter.plotNetworkGradient(network.getLayers()[0],network.getLayers()[0].getGradient(Conf.getDefaultRbmParams()));
+    plotter.plotNetworkGradient(network.getLayers()[0],network.getLayers()[0].getGradient(Conf.getDefaultRbmParams()),10);
     DoubleMatrix reconstruct=network.reconstruct(first.getFirst(),0);
     for (int j=0; j < first.numExamples(); j++) {
       DoubleMatrix draw1=first.get(j).getFirst().mul(255);
