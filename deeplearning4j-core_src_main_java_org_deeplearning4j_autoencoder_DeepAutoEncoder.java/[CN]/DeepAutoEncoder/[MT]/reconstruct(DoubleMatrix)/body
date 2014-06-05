@@ -1,6 +1,5 @@
 {
-  DoubleMatrix encode=encode(input);
-  DoubleMatrix decoderInput=isRoundCodeLayerInput() ? round(sigmoid(encode)) : sigmoid(encode);
+  DoubleMatrix decoderInput=encodeWithScaling(input);
   List<DoubleMatrix> decoderActivations=decoder.feedForward(decoderInput);
   return decoderActivations.get(decoderActivations.size() - 1);
 }

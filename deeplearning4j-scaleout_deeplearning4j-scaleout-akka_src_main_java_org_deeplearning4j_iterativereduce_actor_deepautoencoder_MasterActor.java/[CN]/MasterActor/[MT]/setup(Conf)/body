@@ -18,6 +18,12 @@
     }
   }
  else   network=this.network;
+  network.setHiddenUnit(conf.getHiddenUnit());
+  network.setVisibleUnit(conf.getVisibleUnit());
+  network.setOutputLayerActivation(conf.getOutputActivationFunction());
+  network.setRoundCodeLayerInput(conf.isRoundCodeLayer());
+  network.setOutputLayerLossFunction(conf.getOutputLayerLossFunction());
+  network.setNormalizeCodeLayerOutput(conf.isNormalizeCodeLayer());
   UpdateableEncoderImpl masterResults=new UpdateableEncoderImpl(network);
   try {
     this.stateTracker.setCurrent(masterResults);

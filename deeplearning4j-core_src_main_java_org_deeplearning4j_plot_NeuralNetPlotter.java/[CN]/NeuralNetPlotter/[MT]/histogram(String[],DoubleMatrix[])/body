@@ -8,7 +8,7 @@
     }
     String paths=StringUtils.join(path,",");
     Process is=Runtime.getRuntime().exec("python /tmp/plot.py multi " + paths);
-    log.info("Rendering multiple matrices... ");
+    log.info("Rendering Matrix histograms... ");
     log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
     log.error(IOUtils.readLines(is.getErrorStream()).toString());
   }

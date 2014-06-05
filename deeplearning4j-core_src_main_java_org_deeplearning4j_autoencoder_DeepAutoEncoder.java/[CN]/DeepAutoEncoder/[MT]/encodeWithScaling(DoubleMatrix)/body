@@ -1,0 +1,6 @@
+{
+  DoubleMatrix encode=encode(input);
+  if (!isRoundCodeLayerInput() && isNormalizeCodeLayerOutput())   MatrixUtil.normalizeZeroMeanAndUnitVariance(encode);
+  DoubleMatrix decoderInput=isRoundCodeLayerInput() ? round(sigmoid(encode)) : sigmoid(encode);
+  return decoderInput;
+}

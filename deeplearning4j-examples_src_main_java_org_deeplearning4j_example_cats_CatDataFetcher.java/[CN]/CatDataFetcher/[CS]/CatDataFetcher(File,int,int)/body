@@ -1,0 +1,14 @@
+{
+  try {
+    fileIterator=FileUtils.iterateFiles(rootDir,org.apache.commons.io.filefilter.FileFileFilter.FILE,org.apache.commons.io.filefilter.DirectoryFileFilter.DIRECTORY);
+    loader=new ImageLoader(imageWidth,imageHeight);
+    this.imageWidth=imageWidth;
+    this.imageHeight=imageHeight;
+    inputColumns=imageWidth * imageHeight;
+    numOutcomes=1;
+    totalExamples=NUM_IMAGES;
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException("Unable to fetch images",e);
+  }
+}

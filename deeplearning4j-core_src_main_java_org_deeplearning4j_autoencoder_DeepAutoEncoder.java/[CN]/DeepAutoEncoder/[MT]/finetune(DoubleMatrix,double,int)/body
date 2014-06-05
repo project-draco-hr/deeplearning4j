@@ -1,8 +1,8 @@
 {
   if (decoder == null)   initDecoder();
-  DoubleMatrix encode=encode(input);
-  DoubleMatrix decoderInput=isRoundCodeLayerInput() ? round(sigmoid(encode)) : sigmoid(encode);
+  DoubleMatrix decoderInput=encodeWithScaling(input);
   decoder.setInput(decoderInput);
   decoder.initializeLayers(decoderInput);
+  decoder.feedForward(decoderInput);
   decoder.finetune(input,lr,epochs);
 }
