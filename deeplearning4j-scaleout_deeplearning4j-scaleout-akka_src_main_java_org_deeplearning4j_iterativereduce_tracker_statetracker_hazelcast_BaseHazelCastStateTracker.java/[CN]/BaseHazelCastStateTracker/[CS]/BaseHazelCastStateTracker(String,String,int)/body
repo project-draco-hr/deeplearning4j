@@ -57,6 +57,7 @@
   earlyStop=h.getAtomicReference(EARLY_STOP);
   patience=h.getAtomicReference(PATIENCE);
   patienceIncrease=h.getAtomicReference(PATIENCE_INCREASE);
+  numBatches=h.getAtomicReference(NUM_BATCHES_SO_FAR_RAN);
   if (type.equals("master")) {
     begunTraining.set(false);
     saver=createUpdateSaver();
@@ -71,5 +72,6 @@
     patienceIncrease.set(2.0);
     improvementThreshold.set(0.995);
     validationEpochs.set((int)Math.min(10,patience() / 2));
+    numBatches.set(0);
   }
 }

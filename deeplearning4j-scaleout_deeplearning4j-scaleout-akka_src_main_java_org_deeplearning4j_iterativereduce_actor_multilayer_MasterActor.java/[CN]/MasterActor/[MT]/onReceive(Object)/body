@@ -16,28 +16,26 @@
     mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,MoreWorkMessage.getInstance()),getSelf());
   }
  else   if (message instanceof Collection) {
-    if (message instanceof Collection) {
-      Collection<String> list=(Collection<String>)message;
-      for (      String worker : list) {
-        DataSet data=stateTracker.loadForWorker(worker);
-        int numRetries=0;
-        while (data == null && numRetries < 3) {
-          data=stateTracker.loadForWorker(worker);
-          numRetries++;
-          if (data == null) {
-            Thread.sleep(10000);
-            log.info("Data still not found....sleeping for 10 seconds and trying again");
-          }
+    Collection<String> list=(Collection<String>)message;
+    for (    String worker : list) {
+      DataSet data=stateTracker.loadForWorker(worker);
+      int numRetries=0;
+      while (data == null && numRetries < 3) {
+        data=stateTracker.loadForWorker(worker);
+        numRetries++;
+        if (data == null) {
+          Thread.sleep(10000);
+          log.info("Data still not found....sleeping for 10 seconds and trying again");
         }
-        if (data == null && numRetries >= 3) {
-          log.info("No data found for worker..." + worker + " returning");
-          return;
-        }
-        Job j2=new Job(worker,data.copy());
-        stateTracker.addJobToCurrent(j2);
-        data=null;
-        log.info("Job delegated for " + worker);
       }
+      if (data == null && numRetries >= 3) {
+        log.info("No data found for worker..." + worker + " returning");
+        return;
+      }
+      Job j2=new Job(worker,data.copy());
+      stateTracker.addJobToCurrent(j2);
+      data=null;
+      log.info("Job delegated for " + worker);
     }
   }
  else   unhandled(message);

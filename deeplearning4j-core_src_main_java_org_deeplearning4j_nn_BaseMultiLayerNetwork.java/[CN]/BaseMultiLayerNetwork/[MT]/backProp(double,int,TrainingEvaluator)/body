@@ -1,4 +1,5 @@
 {
+  log.info("BEGIN BACKPROP WITH SCORE OF " + score());
   Double lastEntropy=this.score();
   BaseMultiLayerNetwork revert=clone();
   if (forceNumEpochs) {

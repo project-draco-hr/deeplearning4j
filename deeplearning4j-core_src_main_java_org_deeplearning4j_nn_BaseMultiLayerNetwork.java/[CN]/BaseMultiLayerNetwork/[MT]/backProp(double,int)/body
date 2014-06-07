@@ -1,4 +1,5 @@
 {
+  log.info("BEGIN BACKPROP WITH SCORE OF " + score());
   Double lastEntropy=this.score();
   BaseMultiLayerNetwork revert=clone();
   if (forceNumEpochs) {
@@ -33,6 +34,7 @@
  else       if (entropy >= lastEntropy) {
         train=false;
         update(revert);
+        log.info("Reverting to best score " + lastEntropy);
       }
       backPropIterations++;
     }

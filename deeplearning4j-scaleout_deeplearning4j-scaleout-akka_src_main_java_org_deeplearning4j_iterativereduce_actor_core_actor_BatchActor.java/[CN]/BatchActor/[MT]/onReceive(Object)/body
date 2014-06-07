@@ -45,6 +45,7 @@
         log.info("Saving data for worker " + worker);
         stateTracker.saveWorker(worker,next);
       }
+      stateTracker.incrementBatchesRan(workers2.size());
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,stateTracker.workerData()),mediator);
     }
  else     if (!iter.hasNext()) {

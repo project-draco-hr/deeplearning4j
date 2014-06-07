@@ -2,14 +2,12 @@
   log.info("Starting workers");
   ActorSystem system=context().system();
   RoundRobinPool pool=new RoundRobinPool(Runtime.getRuntime().availableProcessors());
-  Props p=pool.props(WorkerActor.propsFor(conf,(StateTracker<UpdateableImpl>)stateTracker));
+  Props p=pool.props(WorkerActor.propsFor(conf,stateTracker));
   p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
   system.actorOf(p,"worker");
   log.info("Broadcasting initial master network");
   BaseMultiLayerNetwork network;
-  if (this.network == null) {
-    network=conf.init();
-  }
+  if (this.network == null)   network=conf.init();
  else   network=this.network;
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
