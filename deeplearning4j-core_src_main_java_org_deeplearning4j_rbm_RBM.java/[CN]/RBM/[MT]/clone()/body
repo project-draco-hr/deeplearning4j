@@ -1,0 +1,8 @@
+{
+  RBM r=(RBM)super.clone();
+  r.setHiddenType(hiddenType);
+  r.setVisibleType(visibleType);
+  r.sigma=sigma;
+  r.hiddenSigma=hiddenSigma;
+  return r;
+}

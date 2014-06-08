@@ -15,7 +15,7 @@
       }
       count++;
     }
-    decoder=new DBN.Builder().withVisibleUnitsByLayer(m).withHiddenUnitsByLayer(m2).withHiddenUnits(d.getHiddenUnit()).withVisibleUnits(d.getVisibleUnit()).withVisibleUnits(d.getVisibleUnit()).withOutputLossFunction(outputLayerLossFunction).learningRateForLayer(learningRateForLayerReversed).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).renderByLayer(encoder.getRenderByLayer()).withOutputActivationFunction(outputLayerActivation).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
+    decoder=new DBN.Builder().withVisibleUnitsByLayer(m).withHiddenUnitsByLayer(m2).withHiddenUnits(d.getHiddenUnit()).withVisibleUnits(d.getVisibleUnit()).withVisibleUnits(d.getVisibleUnit()).withOutputLossFunction(outputLayerLossFunction).sampleOrActivateByLayer(encoder.getSampleOrActivate()).withHiddenUnitsByLayer(((DBN)encoder).getHiddenUnitByLayer()).withVisibleUnitsByLayer(((DBN)encoder).getVisibleUnitByLayer()).learningRateForLayer(learningRateForLayerReversed).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).renderByLayer(encoder.getRenderByLayer()).withOutputActivationFunction(outputLayerActivation).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
     if (encoder.isForceNumEpochs())     decoder.setForceNumEpochs(true);
   }
  else {
@@ -23,7 +23,17 @@
   }
   NeuralNetwork[] cloned=new NeuralNetwork[encoder.getnLayers()];
   HiddenLayer[] clonedHidden=new HiddenLayer[encoder.getnLayers()];
-  for (int i=0; i < cloned.length; i++)   cloned[i]=encoder.getLayers()[i].transpose();
+  for (int i=0; i < cloned.length; i++) {
+    cloned[i]=encoder.getLayers()[i].transpose();
+    if (i == cloned.length - 1) {
+      if (cloned[i] instanceof RBM) {
+        RBM r=(RBM)cloned[i];
+        r.setHiddenType(hiddenUnit);
+        r.setVisibleType(visibleUnit);
+        cloned[i]=r;
+      }
+    }
+  }
   for (int i=0; i < cloned.length; i++) {
     clonedHidden[i]=encoder.getSigmoidLayers()[i].transpose();
     clonedHidden[i].setB(cloned[i].gethBias());
@@ -32,4 +42,12 @@
   ArrayUtil.reverse(clonedHidden);
   decoder.setSigmoidLayers(clonedHidden);
   decoder.setLayers(cloned);
+  DoubleMatrix encoded=encodeWithScaling(input);
+  decoder.setInput(encoded);
+  decoder.initializeLayers(encoded);
+  update(decoder);
+  this.hiddenLayerSizes=ArrayUtil.combine(encoder.getHiddenLayerSizes(),decoder.getHiddenLayerSizes());
+  this.layers=ArrayUtil.combine(encoder.getLayers(),decoder.getLayers());
+  this.sigmoidLayers=ArrayUtil.combine(encoder.getSigmoidLayers(),decoder.getSigmoidLayers());
+  this.outputLayer=decoder.getOutputLayer();
 }

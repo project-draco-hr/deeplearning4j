@@ -1,8 +1,7 @@
 {
+  this.input=input;
   if (decoder == null)   initDecoder();
-  DoubleMatrix decoderInput=encodeWithScaling(input);
-  decoder.setInput(decoderInput);
-  decoder.initializeLayers(decoderInput);
-  decoder.feedForward(decoderInput);
-  decoder.finetune(input,lr,epochs);
+  setInput(input);
+  setLabels(labels);
+  super.finetune(input,lr,epochs);
 }
