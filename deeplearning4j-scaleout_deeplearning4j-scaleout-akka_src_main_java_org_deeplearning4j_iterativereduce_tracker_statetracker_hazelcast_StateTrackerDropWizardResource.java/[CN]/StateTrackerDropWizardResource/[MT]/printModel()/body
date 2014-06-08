@@ -1,0 +1,3 @@
+{
+  return Response.ok(Collections.singletonMap("model",stateTracker.getCurrent().get().toString())).build();
+}

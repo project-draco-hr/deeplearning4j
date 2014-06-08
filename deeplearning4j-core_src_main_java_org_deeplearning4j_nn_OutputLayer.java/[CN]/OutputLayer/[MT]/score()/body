@@ -18,6 +18,8 @@ return 0.5 * pow(mseDelta,2).columnSums().sum() / labels.rows;
 case EXPLL:
 DoubleMatrix expLLLogZ=log(z);
 return -z.sub(labels.mul(expLLLogZ)).columnSums().sum() / labels.rows;
+case SQUARED_LOSS:
+return pow(labels.sub(z),2).columnSums().sum() / labels.rows;
 }
 throw new IllegalStateException("No loss function found");
 }

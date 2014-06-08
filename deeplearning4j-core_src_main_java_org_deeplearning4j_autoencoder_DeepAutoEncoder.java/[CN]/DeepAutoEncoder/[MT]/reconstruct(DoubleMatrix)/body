@@ -1,5 +1,0 @@
-{
-  DoubleMatrix decoderInput=encodeWithScaling(input);
-  List<DoubleMatrix> decoderActivations=decoder.feedForward(decoderInput);
-  return decoderActivations.get(decoderActivations.size() - 1);
-}

@@ -21,8 +21,8 @@
  else {
     decoder=new BaseMultiLayerNetwork.Builder().withClazz(encoder.getClass()).withOutputLossFunction(outputLayerLossFunction).activateForLayer(encoder.getActivationFunctionForLayer()).renderByLayer(encoder.getRenderByLayer()).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
   }
-  NeuralNetwork[] cloned=new NeuralNetwork[encoder.getnLayers()];
-  HiddenLayer[] clonedHidden=new HiddenLayer[encoder.getnLayers()];
+  NeuralNetwork[] cloned=new NeuralNetwork[encoder.getLayers().length];
+  HiddenLayer[] clonedHidden=new HiddenLayer[encoder.getLayers().length];
   for (int i=0; i < cloned.length; i++) {
     cloned[i]=encoder.getLayers()[i].transpose();
     if (i == cloned.length - 1) {
@@ -40,14 +40,50 @@
   }
   ArrayUtil.reverse(cloned);
   ArrayUtil.reverse(clonedHidden);
-  decoder.setSigmoidLayers(clonedHidden);
-  decoder.setLayers(cloned);
+  NeuralNetwork[] decoderLayers=new NeuralNetwork[cloned.length - 1];
+  for (int i=0; i < decoderLayers.length; i++)   decoderLayers[i]=cloned[i];
+  HiddenLayer[] decoderHiddenLayers=new HiddenLayer[clonedHidden.length - 1];
+  for (int i=0; i < decoderHiddenLayers.length; i++)   decoderHiddenLayers[i]=clonedHidden[i];
+  decoder.setSigmoidLayers(decoderHiddenLayers);
+  decoder.setLayers(decoderLayers);
   DoubleMatrix encoded=encodeWithScaling(input);
   decoder.setInput(encoded);
   decoder.initializeLayers(encoded);
-  update(decoder);
+  this.sampleOrActivate=decoder.getSampleOrActivate();
+  this.layerLearningRates=decoder.getLayerLearningRates();
+  this.normalizeByInputRows=decoder.isNormalizeByInputRows();
+  this.useAdaGrad=decoder.isUseAdaGrad();
+  this.hiddenLayerSizes=decoder.getHiddenLayerSizes();
+  this.rng=decoder.getRng();
+  this.dist=decoder.getDist();
+  this.activation=decoder.getActivation();
+  this.useRegularization=decoder.isUseRegularization();
+  this.columnMeans=decoder.getColumnMeans();
+  this.columnStds=decoder.getColumnStds();
+  this.columnSums=decoder.getColumnSums();
+  this.errorTolerance=decoder.getErrorTolerance();
+  this.renderWeightsEveryNEpochs=decoder.getRenderWeightsEveryNEpochs();
+  this.forceNumEpochs=decoder.isForceNumEpochs();
+  this.l2=decoder.getL2();
+  this.fanIn=decoder.getFanIn();
+  this.momentum=decoder.getMomentum();
+  this.learningRateUpdate=decoder.getLearningRateUpdate();
+  this.shouldBackProp=decoder.isShouldBackProp();
+  this.sparsity=decoder.getSparsity();
+  this.dropOut=decoder.getDropOut();
+  this.optimizationAlgorithm=decoder.getOptimizationAlgorithm();
+  this.lossFunction=decoder.getLossFunction();
+  this.outputActivationFunction=decoder.getOutputActivationFunction();
+  this.lossFunctionByLayer=decoder.getLossFunctionByLayer();
+  this.outputLossFunction=decoder.getOutputLossFunction();
   this.hiddenLayerSizes=ArrayUtil.combine(encoder.getHiddenLayerSizes(),decoder.getHiddenLayerSizes());
+  RBM r=(RBM)decoder.getLayers()[0];
+  r.setVisibleType(visibleUnit);
+  r.setHiddenType(hiddenUnit);
   this.layers=ArrayUtil.combine(encoder.getLayers(),decoder.getLayers());
   this.sigmoidLayers=ArrayUtil.combine(encoder.getSigmoidLayers(),decoder.getSigmoidLayers());
   this.outputLayer=decoder.getOutputLayer();
+  dimensionCheck();
+  this.encoder=null;
+  this.decoder=null;
 }

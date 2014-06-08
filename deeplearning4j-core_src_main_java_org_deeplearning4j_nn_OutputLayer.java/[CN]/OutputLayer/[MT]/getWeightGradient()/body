@@ -15,6 +15,8 @@ case EXPLL:
 return input.transpose().mmul(oneMinus(labels).div(z));
 case RMSE_XENT:
 return input.transpose().mmul(sqrt(pow(labels.sub(z),2)));
+case SQUARED_LOSS:
+return input.transpose().mmul(pow(labels.sub(z),2));
 }
 throw new IllegalStateException("Invalid loss function");
 }

@@ -1,0 +1,9 @@
+{
+  StringBuilder builder=new StringBuilder();
+  builder.append("\n");
+  for (int i=0; i < dbn.getLayers().length; i++) {
+    RBM r=(RBM)dbn.getLayers()[i];
+    builder.append(architecure(r,i));
+  }
+  return builder.toString();
+}

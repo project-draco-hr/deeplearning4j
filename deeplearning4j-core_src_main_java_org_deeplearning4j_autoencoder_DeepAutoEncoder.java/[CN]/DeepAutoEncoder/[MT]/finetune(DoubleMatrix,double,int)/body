@@ -2,6 +2,6 @@
   this.input=input;
   if (decoder == null)   initDecoder();
   setInput(input);
-  setLabels(labels);
+  setLabels(input);
   super.finetune(input,lr,epochs);
 }

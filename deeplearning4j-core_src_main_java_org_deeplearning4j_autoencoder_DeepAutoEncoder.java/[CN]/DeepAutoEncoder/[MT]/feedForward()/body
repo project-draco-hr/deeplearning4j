@@ -1,0 +1,47 @@
+{
+  DoubleMatrix currInput=this.input;
+  List<DoubleMatrix> activations=new ArrayList<>();
+  activations.add(currInput);
+  NeuralNetwork[] layers=getLayers();
+  for (int i=0; i < layers.length; i++) {
+    NeuralNetwork layer=getLayers()[i];
+    HiddenLayer l=getSigmoidLayers()[i];
+    if (layer == null) {
+      log.warn("Null layer found going to break");
+      break;
+    }
+    if (l == null) {
+      log.warn("Null sigmoid layer found going to break");
+      break;
+    }
+    layer.setInput(currInput);
+    l.setInput(currInput);
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i)) {
+      currInput=getSigmoidLayers()[i].activate(currInput);
+      if (roundCodeLayerInput && (layer instanceof RBM)) {
+        RBM r=(RBM)layer;
+        if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
+          currInput=round(currInput);
+        }
+      }
+    }
+ else     if (useHiddenActivationsForwardProp) {
+      currInput=l.sampleHGivenV(currInput);
+      if (roundCodeLayerInput && (layer instanceof RBM)) {
+        RBM r=(RBM)layer;
+        if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
+          currInput=round(currInput);
+        }
+      }
+    }
+ else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
+    activations.add(currInput);
+  }
+  if (getOutputLayer() != null) {
+    getOutputLayer().setInput(currInput);
+    if (getOutputLayer().getActivationFunction() == null)     if (outputActivationFunction != null)     outputLayer.setActivationFunction(outputActivationFunction);
+ else     outputLayer.setActivationFunction(Activations.sigmoid());
+    activations.add(getOutputLayer().output(activations.get(activations.size() - 1)));
+  }
+  return activations;
+}
