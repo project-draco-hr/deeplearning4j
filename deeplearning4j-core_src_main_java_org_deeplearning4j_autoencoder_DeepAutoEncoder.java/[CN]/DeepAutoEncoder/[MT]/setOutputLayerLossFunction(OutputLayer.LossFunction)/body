@@ -1,3 +1,4 @@
 {
   this.outputLayerLossFunction=outputLayerLossFunction;
+  outputLayer.setLossFunction(outputLayerLossFunction);
 }

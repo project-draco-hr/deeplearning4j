@@ -1,6 +1,6 @@
 {
   this.input=input;
-  if (decoder == null)   initDecoder();
+  if (decoder == null && !alreadyInitialized)   initDecoder();
   setInput(input);
   setLabels(input);
   super.finetune(input,lr,epochs);

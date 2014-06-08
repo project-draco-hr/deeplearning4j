@@ -21,9 +21,6 @@
       x.putColumn(i,col);
     }
   }
-  if (this.input == null) {
-    this.initializeLayers(x);
-  }
   DoubleMatrix predicted=activations.get(activations.size() - 1);
   return predicted;
 }
