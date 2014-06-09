@@ -1,5 +1,5 @@
 {
   DataSet ret=sampleFrom.sample(batchSize);
-  numTimesSampled++;
+  numTimesSampled+=batchSize;
   return ret;
 }

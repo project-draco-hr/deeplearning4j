@@ -82,7 +82,7 @@
   r.setHiddenType(hiddenUnit);
   this.layers=ArrayUtil.combine(encoder.getLayers(),decoder.getLayers());
   this.sigmoidLayers=ArrayUtil.combine(encoder.getSigmoidLayers(),decoder.getSigmoidLayers());
-  this.sigmoidLayers[encoder.getSigmoidLayers().length - 1].setActivationFunction(Activations.sigmoid());
+  this.sigmoidLayers[encoder.getSigmoidLayers().length - 1].setActivationFunction(codeLayerAct);
   this.outputLayer=decoder.getOutputLayer();
   this.outputLayer.setW(encoder.getLayers()[0].getW().transpose());
   this.outputLayer.setB(encoder.getLayers()[0].getvBias().dup());

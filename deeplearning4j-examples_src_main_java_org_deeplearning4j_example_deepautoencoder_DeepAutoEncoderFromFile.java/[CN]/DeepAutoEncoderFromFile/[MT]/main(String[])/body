@@ -1,11 +1,10 @@
 {
-  DataSetIterator iter=new MnistDataSetIterator(1,60000,false);
+  DataSetIterator iter=new MnistDataSetIterator(10,60000,false);
   DBN dbn=SerializationUtils.readObject(new File(args[0]));
   dbn.setOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT);
   DeepAutoEncoder encoder=new DeepAutoEncoder(dbn);
-  encoder.setRoundCodeLayerInput(true);
-  encoder.setUseHiddenActivationsForwardProp(false);
   encoder.setOutputLayerLossFunction(OutputLayer.LossFunction.RMSE_XENT);
+  encoder.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
   encoder.setOutputLayerActivation(Activations.sigmoid());
   int testSets=0;
   int count=0;
@@ -17,7 +16,8 @@
     if (next == null)     break;
     log.info("Labels " + labels);
     log.info("Training on " + next.numExamples());
-    encoder.finetune(next.getFirst(),1e-3,1000);
+    encoder.finetune(next.getFirst(),1e-1,1000);
+    DoubleMatrix recon=encoder.output(next.getFirst());
     if (true) {
       NeuralNetPlotter plotter=new NeuralNetPlotter();
       List<DoubleMatrix> activations=encoder.feedForward(next.getFirst());
@@ -29,7 +29,7 @@
       }
       plotter.histogram(layers,weights);
       FilterRenderer f=new FilterRenderer();
-      f.renderFilters(encoder.getDecoder().getOutputLayer().getW(),"outputlayer.png",28,28,next.numExamples());
+      f.renderFilters(encoder.getOutputLayer().getW(),"outputlayer.png",28,28,next.numExamples());
       DeepAutoEncoderDataSetReconstructionRender render=new DeepAutoEncoderDataSetReconstructionRender(next.iterator(next.numExamples()),encoder);
       render.draw();
     }

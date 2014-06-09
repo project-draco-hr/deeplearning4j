@@ -1,6 +1,6 @@
 {
   DBN d=SerializationUtils.readObject(new File(args[0]));
-  DataSetIterator iter=new MnistDataSetIterator(80,60000);
+  DataSetIterator iter=new MnistDataSetIterator(80,60000,false);
   Conf c=new Conf();
   c.setFinetuneEpochs(10000);
   c.setFinetuneLearningRate(1e-2);
@@ -15,8 +15,6 @@
   c.setL2(2e-2);
   c.setOutputLayerLossFunction(OutputLayer.LossFunction.RMSE_XENT);
   c.setOutputActivationFunction(Activations.sigmoid());
-  c.setVisibleUnit(RBM.VisibleUnit.BINARY);
-  c.setHiddenUnit(RBM.HiddenUnit.BINARY);
   DeepAutoEncoderHazelCastStateTracker tracker=new DeepAutoEncoderHazelCastStateTracker();
   tracker.moveToFinetune();
   DeepAutoEncoderDistributedTrainer runner=new DeepAutoEncoderDistributedTrainer("master",iter,d);

@@ -1,22 +1,25 @@
 {
-  DataSetIterator iter=new MnistDataSetIterator(10,10);
-  DBN dbn=new DBN.Builder().learningRateForLayer(Collections.singletonMap(3,1e-1)).withLossFunction(NeuralNetwork.LossFunction.RECONSTRUCTION_CROSSENTROPY).withOutputLossFunction(OutputLayer.LossFunction.RMSE_XENT).hiddenLayerSizes(new int[]{1000,500,250,28}).withHiddenUnitsByLayer(Collections.singletonMap(3,RBM.HiddenUnit.GAUSSIAN)).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.GRADIENT_DESCENT).numberOfInputs(784).withMomentum(0.9).withDropOut(0.5).useRegularization(true).withL2(2e-4).numberOfOutPuts(2).build();
+  DataSetIterator iter=new SamplingDataSetIterator(new MnistDataSetIterator(100,100).next(),100,10000);
+  RandomGenerator rng=new MersenneTwister(123);
+  DBN dbn=new DBN.Builder().learningRateForLayer(Collections.singletonMap(3,1e-1)).hiddenLayerSizes(new int[]{600,500,10}).withRng(rng).numberOfInputs(784).withDist(Distributions.normal(rng,0.1)).numberOfOutPuts(2).withMomentum(0.9).withDropOut(0.5).useRegularization(true).withL2(2e-4).build();
   log.info("Training with layers of " + RBMUtil.architecure(dbn));
+  log.info("Begin training ");
+  int numTimesIter=0;
   while (iter.hasNext()) {
     DataSet data=iter.next();
-    dbn.pretrain(data.getFirst(),new Object[]{1,1e-1,1000});
+    dbn.pretrain(data.getFirst(),new Object[]{1,1e-1,10});
+    log.info("Training " + numTimesIter++);
   }
   iter.reset();
   DeepAutoEncoder encoder=new DeepAutoEncoder(dbn);
-  encoder.setRoundCodeLayerInput(false);
-  encoder.setVisibleUnit(RBM.VisibleUnit.GAUSSIAN);
+  encoder.setRoundCodeLayerInput(true);
+  encoder.setCodeLayerActivationFunction(Activations.sigmoid());
+  encoder.setOutputLayerLossFunction(OutputLayer.LossFunction.RMSE_XENT);
   encoder.setUseHiddenActivationsForwardProp(false);
   while (iter.hasNext()) {
     DataSet next=iter.next();
     log.info("Fine tune " + next.labelDistribution());
     encoder.finetune(next.getFirst(),1e-1,1000);
-    DoubleMatrix output=encoder.output(next.getFirst());
-    log.info("Output " + output);
   }
   iter.reset();
   while (iter.hasNext()) {
