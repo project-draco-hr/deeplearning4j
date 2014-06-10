@@ -2,7 +2,7 @@ from numpy import tanh, fabs, mean, ones, loadtxt, fromfile, zeros, product
 import sys
 import math
 from PIL import Image
-from matplotlib.pyplot import hist, title, subplot
+from matplotlib.pyplot import hist, title, subplot, scatter
 import matplotlib.pyplot as plot
 if (__name__ == '__main__'):
     if (len(sys.argv) < 3):
@@ -19,5 +19,8 @@ if (__name__ == '__main__'):
         print (((('Rendering ' + sys.argv[3]) + ' x ') + sys.argv[4]) + ' matrix')
         render_filter(sys.argv[2], nRows, nCols, length)
     elif (sys.argv[1] == 'multi'):
+        paths = sys.argv[2].split(',')
+        plot_multiple_matrices(paths)
+    elif (sys.argv[1] == 'scatter'):
         paths = sys.argv[2].split(',')
         plot_multiple_matrices(paths)

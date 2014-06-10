@@ -1,4 +1,4 @@
 {
   img=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-  this.data=data;
+  this.data=MatrixUtil.round(data);
 }

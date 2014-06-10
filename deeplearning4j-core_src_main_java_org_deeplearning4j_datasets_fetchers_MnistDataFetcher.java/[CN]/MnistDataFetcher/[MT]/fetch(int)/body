@@ -22,6 +22,7 @@
  else           in.put(d,0);
         }
       }
+ else       in.divi(255);
       DoubleMatrix out=createOutputVector(man.readLabel());
       boolean found=false;
       for (int col=0; col < out.length; col++) {

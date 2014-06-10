@@ -16,8 +16,8 @@
     }
     layer.setInput(currInput);
     l.setInput(currInput);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i)) {
-      currInput=getSigmoidLayers()[i].activate(currInput);
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !useHiddenActivationsForwardProp) {
+      currInput=getSigmoidLayers()[i].activate(layer.reconstruct(currInput));
       if (roundCodeLayerInput && (layer instanceof RBM)) {
         RBM r=(RBM)layer;
         if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
@@ -41,7 +41,7 @@
     getOutputLayer().setInput(currInput);
     if (getOutputLayer().getActivationFunction() == null)     if (outputActivationFunction != null)     outputLayer.setActivationFunction(outputActivationFunction);
  else     outputLayer.setActivationFunction(Activations.sigmoid());
-    activations.add(getOutputLayer().output(activations.get(activations.size() - 1)));
+    activations.add(getOutputLayer().output(currInput));
   }
   return activations;
 }

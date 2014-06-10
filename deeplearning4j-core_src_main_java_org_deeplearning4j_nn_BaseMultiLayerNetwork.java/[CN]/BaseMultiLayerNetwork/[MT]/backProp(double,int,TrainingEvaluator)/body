@@ -5,6 +5,7 @@
   if (forceNumEpochs) {
     for (int i=0; i < epochs; i++) {
       backPropStep(revert,lr,i);
+      log.info("Iteration " + i + " error "+ score());
     }
   }
  else {

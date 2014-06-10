@@ -1,0 +1,8 @@
+def scatter_matrix(values, show=True, chart_title=''):
+    if (product(values.shape) < 2):
+        values = zeros((3, 3))
+        chart_title += '-fake'
+    scatter(values)
+    magnitude = (' mm %g ' % mean(fabs(values)))
+    chart_title += (' ' + magnitude)
+    title(chart_title)

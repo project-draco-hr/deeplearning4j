@@ -1,0 +1,49 @@
+{
+  if (this.getInput() == null || this.getLayers() == null || this.getLayers()[0] == null || this.getSigmoidLayers() == null || this.getSigmoidLayers()[0] == null) {
+    setInput(input);
+    initializeLayers(input);
+  }
+ else   setInput(input);
+  DoubleMatrix layerInput=null;
+  for (int i=0; i < getnLayers(); i++) {
+    if (i == 0) {
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        this.input=next.getFirst();
+        double realLearningRate=layerLearningRates.get(i) != null ? layerLearningRates.get(i) : learningRate;
+        if (isForceNumEpochs()) {
+          for (int epoch=0; epoch < epochs; epoch++) {
+            log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
+            getLayers()[i].train(next.getFirst(),realLearningRate,new Object[]{k,learningRate});
+            getLayers()[i].epochDone(epoch);
+          }
+        }
+ else         getLayers()[i].trainTillConvergence(next.getFirst(),realLearningRate,new Object[]{k,realLearningRate,epochs});
+      }
+      iter.reset();
+    }
+ else {
+      boolean activateOnly=getSampleOrActivate() != null && getSampleOrActivate().get(i) != null ? getSampleOrActivate().get(i) : !useHiddenActivationsForwardProp;
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        layerInput=next.getFirst();
+        for (int j=1; j <= i; j++) {
+          if (activateOnly)           layerInput=getSigmoidLayers()[j - 1].activate(layerInput);
+ else           if (isUseHiddenActivationsForwardProp())           layerInput=getSigmoidLayers()[j - 1].sampleHGivenV(layerInput);
+ else           layerInput=getLayers()[j - 1].sampleHiddenGivenVisible(layerInput).getSecond();
+        }
+        log.info("Training on layer " + (i + 1));
+        double realLearningRate=layerLearningRates.get(i) != null ? layerLearningRates.get(i) : learningRate;
+        if (isForceNumEpochs()) {
+          for (int epoch=0; epoch < epochs; epoch++) {
+            log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
+            getLayers()[i].train(layerInput,realLearningRate,new Object[]{k,learningRate});
+            getLayers()[i].epochDone(epoch);
+          }
+        }
+ else         getLayers()[i].trainTillConvergence(layerInput,realLearningRate,new Object[]{k,realLearningRate,epochs});
+      }
+      iter.reset();
+    }
+  }
+}

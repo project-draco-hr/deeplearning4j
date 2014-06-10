@@ -1,4 +1,4 @@
-def plot_multiple_matrices(paths):
+def plot_multiple_scatters(paths):
     graph_count = 1
     print paths
     for i in xrange((len(paths) - 1)):
@@ -9,6 +9,6 @@ def plot_multiple_matrices(paths):
             matrix = from_file(path)
             subplot(2, (len(paths) / 3), graph_count)
             plot.tight_layout()
-            hist_matrix(matrix, False, chart_title=title)
+            scatter_matrix(matrix, False, chart_title=title)
             graph_count += 1
     plot.show()

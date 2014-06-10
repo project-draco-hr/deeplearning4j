@@ -7,7 +7,7 @@
     HiddenLayer l=getSigmoidLayers()[i];
     layer.setInput(currInput);
     l.setInput(input);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidLayers()[i].activate(currInput);
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidLayers()[i].activate(layer.reconstruct(currInput));
  else     if (useHiddenActivationsForwardProp)     currInput=l.sampleHGivenV(currInput);
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     activations.add(currInput);
