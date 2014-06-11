@@ -2,7 +2,6 @@
   if (this == o)   return true;
   if (!(o instanceof BaseMultiLayerNetwork))   return false;
   BaseMultiLayerNetwork that=(BaseMultiLayerNetwork)o;
-  if (buildAutoEncoder != that.buildAutoEncoder)   return false;
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
   if (Double.compare(that.errorTolerance,errorTolerance) != 0)   return false;
   if (Double.compare(that.fanIn,fanIn) != 0)   return false;

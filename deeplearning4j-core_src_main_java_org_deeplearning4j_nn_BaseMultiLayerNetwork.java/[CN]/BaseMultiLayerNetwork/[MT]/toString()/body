@@ -12,7 +12,6 @@
   sb.append(", labels=").append(labels);
   sb.append(", optimizer=").append(optimizer);
   sb.append(", activation=").append(activation);
-  sb.append(", buildAutoEncoder=").append(buildAutoEncoder);
   sb.append(", l2=").append(l2);
   sb.append(", shouldInit=").append(shouldInit);
   sb.append(", fanIn=").append(fanIn);

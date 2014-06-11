@@ -1,5 +1,5 @@
 {
-  Map<Integer,Queue<DataSet>> map=new HashMap<Integer,Queue<DataSet>>();
+  Map<Integer,Queue<DataSet>> map=new HashMap<>();
   List<DataSet> data=asList();
   int numLabels=numOutcomes();
   int examples=numExamples();
@@ -7,7 +7,7 @@
     int label=getLabel(d);
     Queue<DataSet> q=map.get(label);
     if (q == null) {
-      q=new ArrayDeque<DataSet>();
+      q=new ArrayDeque<>();
       map.put(label,q);
     }
     q.add(d);
@@ -20,6 +20,10 @@
     if (optimal) {
       for (int j=0; j < numLabels; j++) {
         Queue<DataSet> q=map.get(j);
+        if (q == null) {
+          optimal=false;
+          break;
+        }
         DataSet next=q.poll();
         if (next != null) {
           addRow(next,i);

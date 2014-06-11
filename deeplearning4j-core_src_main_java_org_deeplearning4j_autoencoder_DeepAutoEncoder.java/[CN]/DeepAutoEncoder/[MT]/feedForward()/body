@@ -17,7 +17,7 @@
     layer.setInput(currInput);
     l.setInput(currInput);
     if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !useHiddenActivationsForwardProp) {
-      currInput=getSigmoidLayers()[i].activate(layer.reconstruct(currInput));
+      currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
       if (roundCodeLayerInput && (layer instanceof RBM)) {
         RBM r=(RBM)layer;
         if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
@@ -26,10 +26,10 @@
       }
     }
  else     if (useHiddenActivationsForwardProp) {
-      currInput=l.sampleHGivenV(currInput);
+      currInput=l.activate(currInput);
       if (roundCodeLayerInput && (layer instanceof RBM)) {
         RBM r=(RBM)layer;
-        if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
+        if (r.getHiddenType() != RBM.HiddenUnit.GAUSSIAN) {
           currInput=round(currInput);
         }
       }

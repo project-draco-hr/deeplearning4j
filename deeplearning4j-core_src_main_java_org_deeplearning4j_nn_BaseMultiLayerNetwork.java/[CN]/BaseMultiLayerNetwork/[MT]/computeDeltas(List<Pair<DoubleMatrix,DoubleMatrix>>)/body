@@ -2,15 +2,15 @@
   DoubleMatrix[] gradients=new DoubleMatrix[getnLayers() + 2];
   DoubleMatrix[] deltas=new DoubleMatrix[getnLayers() + 2];
   ActivationFunction derivative=getSigmoidLayers()[0].getActivationFunction();
-  ActivationFunction softMaxDerivative=outputLayer.getActivationFunction();
-  DoubleMatrix delta=null;
+  ActivationFunction outputDerivative=outputLayer.getActivationFunction();
+  DoubleMatrix delta;
   List<DoubleMatrix> activations=feedForward();
   List<DoubleMatrix> weights=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
   weights.add(getOutputLayer().getW());
   for (int i=getnLayers() + 1; i >= 0; i--) {
     if (i >= getnLayers() + 1) {
-      delta=labels.sub(activations.get(i)).neg().mul(softMaxDerivative.applyDerivative(activations.get(i)));
+      delta=labels.sub(activations.get(i)).neg().mul(outputDerivative.applyDerivative(activations.get(i)));
       deltas[i]=delta;
     }
  else {

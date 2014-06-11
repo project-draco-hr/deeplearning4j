@@ -10,7 +10,7 @@
  else {
       boolean activateOnly=getSampleOrActivate() != null && getSampleOrActivate().get(i) != null ? getSampleOrActivate().get(i) : !useHiddenActivationsForwardProp;
       if (activateOnly)       layerInput=getSigmoidLayers()[i - 1].activate(layerInput);
- else       if (isUseHiddenActivationsForwardProp())       layerInput=getSigmoidLayers()[i - 1].sampleHGivenV(layerInput);
+ else       if (isUseHiddenActivationsForwardProp())       layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(getSigmoidLayers()[i - 1].getActivationFunction().apply(layerInput)).getSecond();
  else       layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
     }
     log.info("Training on layer " + (i + 1));

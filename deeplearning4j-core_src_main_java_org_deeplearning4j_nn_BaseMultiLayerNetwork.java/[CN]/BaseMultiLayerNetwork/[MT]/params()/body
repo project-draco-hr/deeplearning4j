@@ -1,0 +1,23 @@
+{
+  double[][] list=new double[layers.length * 2 + 2][];
+  int length=0;
+  int deltaCount=0;
+  for (int i=0; i < list.length - 1; i+=2) {
+    if (deltaCount >= layers.length) {
+      list[i]=outputLayer.getW().dup().reshape(1,outputLayer.getW().length).data;
+      list[i + 1]=outputLayer.getB().dup().reshape(1,outputLayer.getB().length).data;
+      length+=outputLayer.getB().length;
+      length+=list[i + 1].length;
+      deltaCount++;
+    }
+ else {
+      list[i]=layers[deltaCount].getW().dup().reshape(1,layers[deltaCount].getW().length).data;
+      list[i + 1]=layers[deltaCount].gethBias().dup().reshape(1,layers[deltaCount].gethBias().length).data;
+      length+=layers[deltaCount].gethBias().length;
+      length+=list[i + 1].length;
+      deltaCount++;
+    }
+  }
+  DoubleMatrix ret=new DoubleMatrix(ArrayUtil.combine(list));
+  return ret.reshape(1,ret.length);
+}

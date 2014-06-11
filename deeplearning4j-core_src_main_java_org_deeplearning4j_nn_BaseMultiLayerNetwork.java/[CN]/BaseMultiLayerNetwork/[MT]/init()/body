@@ -15,7 +15,7 @@
       }
  else {
         if (input != null) {
-          if (this.useHiddenActivationsForwardProp)           layerInput=sigmoidLayers[i - 1].sampleHiddenGivenVisible();
+          if (this.useHiddenActivationsForwardProp)           layerInput=layers[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
  else           layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
         }
         sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);

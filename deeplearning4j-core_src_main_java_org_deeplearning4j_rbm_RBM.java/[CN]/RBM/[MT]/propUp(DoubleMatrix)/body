@@ -1,20 +1,18 @@
 {
-  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=columnVariance(input).divi(input.rows);
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=columnVariance(v).divi(input.rows);
+  DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
   if (hiddenType == HiddenUnit.RECTIFIED) {
-    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
-    MatrixUtil.max(0,preSig);
+    max(0,preSig);
     return preSig;
   }
  else   if (hiddenType == HiddenUnit.GAUSSIAN) {
-    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
     this.hiddenSigma=columnVariance(preSig);
     DoubleMatrix add=normal(getRng(),preSig,this.hiddenSigma);
     preSig.addi(add);
     return preSig;
   }
  else   if (hiddenType == HiddenUnit.BINARY) {
-    DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
     return sigmoid(preSig);
   }
-  throw new IllegalStateException("Hidden unit type should either be binary or rectified linear");
+  throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
 }

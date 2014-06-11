@@ -1,0 +1,12 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=backPropGradient(fineTuneLearningRate);
+  for (int i=0; i < layers.length; i++) {
+    if (deltas.size() < layers.length) {
+      layers[i].getW().subi(deltas.get(i).getFirst());
+      layers[i].gethBias().subi(deltas.get(i).getSecond());
+      sigmoidLayers[i].setW(layers[i].getW());
+    }
+  }
+  outputLayer.getW().subi(deltas.get(deltas.size() - 1).getFirst());
+  outputLayer.getB().subi(deltas.get(deltas.size() - 1).getSecond());
+}

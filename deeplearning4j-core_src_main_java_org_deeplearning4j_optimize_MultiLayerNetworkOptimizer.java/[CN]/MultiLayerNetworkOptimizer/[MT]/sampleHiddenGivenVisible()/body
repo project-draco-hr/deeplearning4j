@@ -1,4 +1,0 @@
-{
-  if (network.isUseHiddenActivationsForwardProp())   return network.getSigmoidLayers()[network.getnLayers() - 1].sampleHiddenGivenVisible();
- else   return network.getLayers()[network.getnLayers() - 1].sampleHiddenGivenVisible(network.getLayers()[network.getnLayers() - 1].getInput()).getSecond();
-}

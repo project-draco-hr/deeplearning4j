@@ -1,6 +1,7 @@
 {
   if (visibleType == VisibleUnit.GAUSSIAN) {
-    DoubleMatrix vMean=h.mmul(W.transpose()).mulRowVector(vBias.add(sigma));
+    DoubleMatrix vMean=h.mmul(W.transpose()).addRowVector(vBias);
+    vMean.addi(normal(rng,vMean,1.0));
     return vMean;
   }
  else   if (visibleType == VisibleUnit.LINEAR) {

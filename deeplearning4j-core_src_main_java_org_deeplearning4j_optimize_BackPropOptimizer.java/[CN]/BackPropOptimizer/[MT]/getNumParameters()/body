@@ -1,0 +1,4 @@
+{
+  if (length < 0)   length=getParameters().length;
+  return length;
+}

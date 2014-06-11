@@ -1,6 +1,0 @@
-{
-  RectifiedLinearHiddenLayer ret=new RectifiedLinearHiddenLayer(nIn,nOut,W,b,rng,input);
-  ret.activationFunction=activationFunction;
-  ret.dist=dist;
-  return ret;
-}

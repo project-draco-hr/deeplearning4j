@@ -1,0 +1,34 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
+  computeDeltas(deltas);
+  List<Pair<DoubleMatrix,DoubleMatrix>> list=new ArrayList<>();
+  for (int l=0; l < getnLayers(); l++) {
+    DoubleMatrix gradientChange=deltas.get(l).getFirst();
+    if (gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
+    DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+    if (sparsity != 0)     deltaColumnSums=MatrixUtil.scalarMinus(sparsity,deltaColumnSums);
+    if (useAdaGrad)     deltaColumnSums.muli(layers[l].gethBiasAdaGrad().getLearningRates(deltaColumnSums));
+ else     deltaColumnSums.muli(lr);
+    if (momentum != 0)     deltaColumnSums.muli(momentum);
+    if (isNormalizeByInputRows())     deltaColumnSums.divi(input.rows);
+    if (deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias gradient not equal to layer " + l + " hbias length");
+    list.add(new Pair<>(gradientChange,deltaColumnSums));
+  }
+  DoubleMatrix logLayerGradient=deltas.get(getnLayers()).getFirst();
+  DoubleMatrix biasGradient=deltas.get(getnLayers() + 1).getSecond().columnSums();
+  if (momentum != 0)   logLayerGradient.muli(momentum);
+  if (useAdaGrad)   logLayerGradient.muli(outputLayer.getAdaGrad().getLearningRates(logLayerGradient));
+ else   logLayerGradient.muli(lr);
+  if (isNormalizeByInputRows())   logLayerGradient.divi(input.rows);
+  if (momentum != 0)   biasGradient.muli(momentum);
+  if (useAdaGrad)   biasGradient.muli(outputLayer.getBiasAdaGrad().getLearningRates(biasGradient));
+ else   biasGradient.muli(lr);
+  if (isNormalizeByInputRows())   biasGradient.divi(input.rows);
+  if (getOutputLayer().getB().length != biasGradient.length) {
+    DoubleMatrix add=DoubleMatrix.ones(getOutputLayer().getB().rows,getOutputLayer().getB().columns);
+    add.addi(biasGradient.mean());
+    biasGradient=add;
+  }
+  list.add(new Pair<>(logLayerGradient,biasGradient));
+  return list;
+}

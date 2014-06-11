@@ -12,7 +12,6 @@
   result=31 * result + (labels != null ? labels.hashCode() : 0);
   result=31 * result + (optimizer != null ? optimizer.hashCode() : 0);
   result=31 * result + (activation != null ? activation.hashCode() : 0);
-  result=31 * result + (buildAutoEncoder ? 1 : 0);
   temp=Double.doubleToLongBits(l2);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (shouldInit ? 1 : 0);

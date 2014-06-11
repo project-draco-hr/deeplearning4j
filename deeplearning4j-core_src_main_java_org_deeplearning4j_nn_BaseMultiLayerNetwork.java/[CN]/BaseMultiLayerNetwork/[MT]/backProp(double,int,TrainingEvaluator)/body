@@ -1,46 +1,4 @@
 {
-  log.info("BEGIN BACKPROP WITH SCORE OF " + score());
-  Double lastEntropy=this.score();
-  BaseMultiLayerNetwork revert=clone();
-  if (forceNumEpochs) {
-    for (int i=0; i < epochs; i++) {
-      backPropStep(revert,lr,i);
-      log.info("Iteration " + i + " error "+ score());
-    }
-  }
- else {
-    boolean train=true;
-    int count=0;
-    double changeTolerance=1e-5;
-    int backPropIterations=0;
-    while (train) {
-      if (backPropIterations >= epochs) {
-        log.info("Backprop number of iterations max hit; converging");
-        break;
-      }
-      count++;
-      backPropStep(revert,lr,count);
-      getOutputLayer().trainTillConvergence(lr,epochs,eval);
-      if (eval != null && eval.shouldStop(count))       break;
-      Double entropy=score();
-      if (lastEntropy == null || entropy < lastEntropy) {
-        if (lastEntropy > 0 && entropy < 0) {
-          log.info("Breaking...change of sign on backprop");
-        }
-        double diff=Math.abs(entropy - lastEntropy);
-        if (diff < changeTolerance) {
-          log.info("Not enough of a change on back prop...breaking");
-          break;
-        }
- else         lastEntropy=entropy;
-        log.info("New negative log likelihood " + lastEntropy);
-        revert=clone();
-      }
- else       if (entropy >= lastEntropy) {
-        train=false;
-        update(revert);
-      }
-      backPropIterations++;
-    }
-  }
+  BackPropOptimizer opt=new BackPropOptimizer(this,lr,epochs);
+  opt.optimize(eval,epochs,lineSearchBackProp);
 }

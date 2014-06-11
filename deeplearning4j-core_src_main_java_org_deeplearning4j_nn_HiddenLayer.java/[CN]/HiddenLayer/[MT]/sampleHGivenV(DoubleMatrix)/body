@@ -1,5 +1,0 @@
-{
-  if (input != null)   this.input=stabilizeInput(input.dup(),1);
-  DoubleMatrix ret=binomial(activate(),1,rng);
-  return ret;
-}

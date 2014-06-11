@@ -18,8 +18,8 @@
     ret.setShouldBackProp(this.backProp);
     ret.setSigmoidLayers(new HiddenLayer[ret.getnLayers()]);
     ret.setUseHiddenActivationsForwardProp(useHiddenActivationsForwardProp);
-    ret.setBuildAutoEncoder(buildAutoEncoder);
     ret.setInput(this.input);
+    ret.setLineSearchBackProp(lineSearchBackProp);
     ret.setMomentum(momentum);
     ret.setLabels(labels);
     ret.setFanIn(fanIn);

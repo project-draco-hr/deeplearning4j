@@ -22,6 +22,7 @@
  else {
     decoder=new BaseMultiLayerNetwork.Builder().withClazz(encoder.getClass()).withOutputLossFunction(outputLayerLossFunction).activateForLayer(encoder.getActivationFunctionForLayer()).renderByLayer(encoder.getRenderByLayer()).numberOfInputs(encoder.getHiddenLayerSizes()[encoder.getHiddenLayerSizes().length - 1]).numberOfOutPuts(encoder.getnIns()).withClazz(encoder.getClass()).hiddenLayerSizes(hiddenLayerSizes).renderWeights(encoder.getRenderWeightsEveryNEpochs()).useRegularization(encoder.isUseRegularization()).withDropOut(encoder.getDropOut()).withLossFunction(encoder.getLossFunction()).withSparsity(encoder.getSparsity()).useAdaGrad(encoder.isUseAdaGrad()).withOptimizationAlgorithm(encoder.getOptimizationAlgorithm()).build();
   }
+  this.useHiddenActivationsForwardProp=false;
   NeuralNetwork[] cloned=new NeuralNetwork[encoder.getLayers().length];
   HiddenLayer[] clonedHidden=new HiddenLayer[encoder.getLayers().length];
   for (int i=0; i < cloned.length; i++) {
