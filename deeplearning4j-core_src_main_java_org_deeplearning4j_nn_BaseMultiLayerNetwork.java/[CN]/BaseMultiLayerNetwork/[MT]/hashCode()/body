@@ -30,7 +30,7 @@
   result=31 * result + (columnMeans != null ? columnMeans.hashCode() : 0);
   result=31 * result + (columnStds != null ? columnStds.hashCode() : 0);
   result=31 * result + (initCalled ? 1 : 0);
-  result=31 * result + (useHiddenActivationsForwardProp ? 1 : 0);
+  result=31 * result + (sampleFromHiddenActivations ? 1 : 0);
   result=31 * result + (useAdaGrad ? 1 : 0);
   result=31 * result + (activationFunctionForLayer != null ? activationFunctionForLayer.hashCode() : 0);
   temp=Double.doubleToLongBits(learningRateUpdate);

@@ -27,7 +27,7 @@
   sb.append(", columnMeans=").append(columnMeans);
   sb.append(", columnStds=").append(columnStds);
   sb.append(", initCalled=").append(initCalled);
-  sb.append(", useHiddenActivationsForwardProp=").append(useHiddenActivationsForwardProp);
+  sb.append(", sampleFromHiddenActivations=").append(sampleFromHiddenActivations);
   sb.append(", useAdaGrad=").append(useAdaGrad);
   sb.append(", activationFunctionForLayer=").append(activationFunctionForLayer);
   sb.append(", learningRateUpdate=").append(learningRateUpdate);

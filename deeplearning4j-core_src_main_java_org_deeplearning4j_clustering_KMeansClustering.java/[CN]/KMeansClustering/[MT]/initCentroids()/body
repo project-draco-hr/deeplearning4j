@@ -1,5 +1,5 @@
 {
-  this.counts=new ArrayList<Long>(this.nbCluster);
+  this.counts=new ArrayList<>(this.nbCluster);
   for (int i=0; i < this.nbCluster; i++) {
     this.counts.add(0L);
   }

@@ -2,9 +2,9 @@
   DataSetIterator iter=new MnistDataSetIterator(10,10,false);
   int codeLayer=3;
   Map<Integer,Double> layerLearningRates=new HashMap<>();
-  layerLearningRates.put(codeLayer,1e-1);
+  layerLearningRates.put(codeLayer,1e-2);
   RandomGenerator rng=new MersenneTwister(123);
-  DBN dbn=new DBN.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{1000,500,250,30}).withRng(rng).withHiddenUnitsByLayer(Collections.singletonMap(codeLayer,RBM.HiddenUnit.GAUSSIAN)).numberOfInputs(784).useHiddenActivationsForwardProp(true).numberOfOutPuts(784).withMomentum(0.5).withOutputLossFunction(OutputLayer.LossFunction.RMSE_XENT).build();
+  DBN dbn=new DBN.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{1000,500,250,30}).withRng(rng).activateForLayer(Collections.singletonMap(3,Activations.linear())).withHiddenUnitsByLayer(Collections.singletonMap(codeLayer,RBM.HiddenUnit.GAUSSIAN)).numberOfInputs(784).sampleFromHiddenActivations(true).sampleOrActivateByLayer(Collections.singletonMap(3,false)).lineSearchBackProp(true).useRegularization(true).withL2(1e-4).withOutputActivationFunction(Activations.sigmoid()).numberOfOutPuts(784).withMomentum(0.9).withOutputLossFunction(OutputLayer.LossFunction.SQUARED_LOSS).build();
   log.info("Training with layers of " + RBMUtil.architecture(dbn));
   log.info("Begin training ");
   while (iter.hasNext()) {
@@ -14,22 +14,18 @@
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.finetune(next.getFirst(),1e-3,1000);
+    dbn.setInput(next.getFirst());
+    dbn.finetune(next.getFirst(),1e-1,100000);
   }
   DeepAutoEncoder encoder=new DeepAutoEncoder(dbn);
-  encoder.setRoundCodeLayerInput(true);
-  encoder.setUseHiddenActivationsForwardProp(true);
-  encoder.setVisibleUnit(RBM.VisibleUnit.BINARY);
-  encoder.setHiddenUnit(RBM.HiddenUnit.GAUSSIAN);
-  encoder.setCodeLayerActivationFunction(Activations.linear());
-  encoder.setOutputLayerActivation(Activations.sigmoid());
-  encoder.setOutputLayerLossFunction(OutputLayer.LossFunction.RMSE_XENT);
+  encoder.setSampleFromHiddenActivations(false);
+  encoder.setOutputLayerLossFunction(OutputLayer.LossFunction.SQUARED_LOSS);
   log.info("Arch " + RBMUtil.architecture(encoder));
   iter.reset();
   while (iter.hasNext()) {
     DataSet data=iter.next();
     log.info("Fine tune " + data.labelDistribution());
-    encoder.finetune(data.getFirst(),1e-3,10);
+    encoder.finetune(data.getFirst(),1e-1,100000);
     DeepAutoEncoderDataSetReconstructionRender r=new DeepAutoEncoderDataSetReconstructionRender(data.iterator(data.numExamples()),encoder,28,28);
     r.setPicDraw(MatrixTransformations.multiplyScalar(255));
     r.draw();

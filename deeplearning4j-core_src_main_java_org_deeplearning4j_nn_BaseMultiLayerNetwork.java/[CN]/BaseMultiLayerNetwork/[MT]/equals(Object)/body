@@ -18,7 +18,7 @@
   if (shouldInit != that.shouldInit)   return false;
   if (Double.compare(that.sparsity,sparsity) != 0)   return false;
   if (useAdaGrad != that.useAdaGrad)   return false;
-  if (useHiddenActivationsForwardProp != that.useHiddenActivationsForwardProp)   return false;
+  if (sampleFromHiddenActivations != that.sampleFromHiddenActivations)   return false;
   if (useRegularization != that.useRegularization)   return false;
   if (activation != null ? !activation.equals(that.activation) : that.activation != null)   return false;
   if (activationFunctionForLayer != null ? !activationFunctionForLayer.equals(that.activationFunctionForLayer) : that.activationFunctionForLayer != null)   return false;

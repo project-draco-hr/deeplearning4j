@@ -16,8 +16,8 @@
     }
     layer.setInput(currInput);
     l.setInput(currInput);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !useHiddenActivationsForwardProp) {
-      currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !sampleFromHiddenActivations) {
+      currInput=l.activate(currInput);
       if (roundCodeLayerInput && (layer instanceof RBM)) {
         RBM r=(RBM)layer;
         if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
@@ -25,8 +25,8 @@
         }
       }
     }
- else     if (useHiddenActivationsForwardProp) {
-      currInput=l.activate(currInput);
+ else     if (sampleFromHiddenActivations) {
+      currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
       if (roundCodeLayerInput && (layer instanceof RBM)) {
         RBM r=(RBM)layer;
         if (r.getHiddenType() != RBM.HiddenUnit.GAUSSIAN) {
