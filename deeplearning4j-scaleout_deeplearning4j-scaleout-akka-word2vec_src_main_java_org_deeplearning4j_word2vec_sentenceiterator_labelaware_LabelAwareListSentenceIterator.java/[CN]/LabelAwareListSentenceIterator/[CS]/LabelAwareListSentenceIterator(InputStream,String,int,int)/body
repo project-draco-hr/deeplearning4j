@@ -1,7 +1,4 @@
 {
-  this.delimiter=delimiter;
-  this.labelPosition=labelPosition;
-  this.textPosition=textPosition;
   StringGrid grid=StringGrid.fromInput(is,delimiter);
   labels=grid.getColumn(labelPosition);
   text=grid.getColumn(textPosition);

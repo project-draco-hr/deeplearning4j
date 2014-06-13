@@ -6,6 +6,7 @@
       String sentence=iter.nextSentence();
       if (sentence.isEmpty())       continue;
       List<Window> windows=Windows.windows(sentence,vec.getTokenizerFactory(),vec.getWindow());
+      if (windows.isEmpty() && !sentence.isEmpty())       throw new IllegalStateException("Empty window on sentence");
       for (      Window w : windows)       w.setLabel(iter.currentLabel());
       cachedWindow.addAll(windows);
     }

@@ -1,8 +1,19 @@
 {
+  if (cachedWindow.isEmpty()) {
+    while (cachedWindow.size() < num && iter.hasNext()) {
+      String sentence=iter.nextSentence();
+      if (sentence.isEmpty())       continue;
+      List<Window> windows=Windows.windows(sentence,vec.getTokenizerFactory(),vec.getWindow());
+      for (      Window w : windows)       w.setLabel(iter.currentLabel());
+      cachedWindow.addAll(windows);
+    }
+  }
   List<Window> windows=new ArrayList<>(num);
   for (int i=0; i < num; i++) {
+    if (cachedWindow.isEmpty())     break;
     windows.add(cachedWindow.remove(0));
   }
+  if (windows.isEmpty())   return null;
   DoubleMatrix inputs=new DoubleMatrix(num,inputColumns());
   for (int i=0; i < inputs.rows; i++) {
     inputs.putRow(i,WindowConverter.asExampleMatrix(windows.get(i),vec));

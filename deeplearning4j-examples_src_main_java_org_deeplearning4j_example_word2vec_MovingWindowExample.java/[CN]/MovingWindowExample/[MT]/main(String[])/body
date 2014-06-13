@@ -20,6 +20,7 @@
  else   vec.setTokenizerFactory(tokenizerFactory);
   iterator.reset();
   DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1","2"));
+  if (!iter.hasNext())   throw new IllegalStateException("No data found");
   HazelCastStateTracker tracker=new HazelCastStateTracker(2200);
   Conf c=new Conf();
   c.setFinetuneEpochs(10000);

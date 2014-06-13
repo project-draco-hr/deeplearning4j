@@ -6,12 +6,11 @@
     CAS cas=this.pool.getCas(Integer.MAX_VALUE);
     cas.setDocumentText(tokens);
     this.engine.process(cas);
-    for (    Sentence s : JCasUtil.select(cas.getJCas(),Sentence.class)) {
-      for (      Token t : JCasUtil.selectCovered(Token.class,s)) {
-        if (valid(t.getCoveredText()))         if (t.getLemma() != null)         this.tokens.add(t.getLemma());
- else         if (t.getStem() != null)         this.tokens.add(t.getStem());
- else         this.tokens.add(t.getCoveredText());
-      }
+    Collection<Token> tokenList=JCasUtil.select(cas.getJCas(),Token.class);
+    for (    Token t : tokenList) {
+      if (valid(t.getCoveredText()))       if (t.getLemma() != null)       this.tokens.add(t.getLemma());
+ else       if (t.getStem() != null)       this.tokens.add(t.getStem());
+ else       this.tokens.add(t.getCoveredText());
     }
     pool.releaseCas(cas);
   }
