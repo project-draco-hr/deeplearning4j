@@ -1,7 +1,10 @@
 {
   trainSentence(sentence,totalWords);
-  if (numSentencesProcessed % 10000 == 0) {
-    alpha=new Float(Math.max(MIN_ALPHA,alpha * (1 - 1.0 * totalWords.totalCount() / allWordsCount)));
+  if (numSentencesProcessed.get() % 10000 == 0) {
+    float newAlpha=alpha.floatValue() * (1 - (float)totalWords.totalCount() / allWordsCount);
+    float oldAlpha=alpha.floatValue();
+    if (Float.isNaN(newAlpha))     newAlpha=oldAlpha;
+    alpha.set(Math.max(MIN_ALPHA,newAlpha));
     log.info("Alpha updated " + alpha + " progress "+ numSentencesProcessed);
   }
 }

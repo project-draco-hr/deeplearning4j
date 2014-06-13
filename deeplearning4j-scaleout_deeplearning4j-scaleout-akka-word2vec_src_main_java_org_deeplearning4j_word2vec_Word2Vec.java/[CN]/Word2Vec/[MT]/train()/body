@@ -1,15 +1,22 @@
 {
-  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  if (trainingSystem == null) {
+    trainingSystem=ActorSystem.create();
+    sentenceReport=trainingSystem.scheduler().schedule(Duration.create(0,TimeUnit.SECONDS),Duration.create(30,TimeUnit.SECONDS),new Runnable(){
+      @Override public void run(){
+        log.info("Num sentences so far  " + totalWords.totalCount());
+      }
+    }
+,trainingSystem.dispatcher());
+  }
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
-  final Counter<String> totalWords=Util.parallelCounter();
   getSentenceIter().reset();
   final AtomicLong changed=new AtomicLong(System.currentTimeMillis());
   trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(new SentenceActor.SentenceActorCreator(this)).withDispatcher("akka.actor.worker-dispatcher")));
   if (syn0.rows != this.vocab.size())   throw new IllegalStateException("We appear to be missing vectors here. Unable to train. Please ensure vectors were loaded properly.");
   while (getSentenceIter().hasNext()) {
     final String sentence=sentenceIter.nextSentence();
-    if (sentence != null) {
+    if (sentence != null && !sentence.isEmpty()) {
       Future<Void> f=Futures.future(new Callable<Void>(){
         @Override public Void call() throws Exception {
           processSentence(sentence,totalWords);
@@ -20,7 +27,7 @@
       f.onComplete(new OnComplete<Void>(){
         @Override public void onComplete(        Throwable arg0,        Void arg1) throws Throwable {
           if (arg0 != null)           throw arg0;
-          numSentencesProcessed++;
+          numSentencesProcessed.incrementAndGet();
           changed.set(System.currentTimeMillis());
         }
       }
@@ -44,5 +51,6 @@
     }
   }
   log.info("Shutting down system; done training");
+  if (sentenceReport != null)   sentenceReport.cancel();
   if (trainingSystem != null)   trainingSystem.shutdown();
 }
