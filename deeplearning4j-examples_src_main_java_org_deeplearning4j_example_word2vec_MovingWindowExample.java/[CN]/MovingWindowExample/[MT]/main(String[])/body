@@ -19,7 +19,7 @@
   }
  else   vec.setTokenizerFactory(tokenizerFactory);
   iterator.reset();
-  DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1"));
+  DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1","2"));
   HazelCastStateTracker tracker=new HazelCastStateTracker(2200);
   if (!tracker.isPretrain())   throw new IllegalStateException("Tracker should be on pretrain");
   Conf c=new Conf();
@@ -30,6 +30,7 @@
   c.setUseAdaGrad(true);
   c.setMomentum(0.3);
   c.setnOut(2);
+  c.setFunction(Activations.hardTanh());
   c.setSplit(10);
   c.setnIn(vec.getLayerSize() * vec.getWindow());
   c.setHiddenUnit(RBM.HiddenUnit.RECTIFIED);
