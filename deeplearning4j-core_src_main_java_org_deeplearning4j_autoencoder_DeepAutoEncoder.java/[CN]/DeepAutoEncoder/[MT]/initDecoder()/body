@@ -51,6 +51,9 @@
   for (int i=0; i < decoderLayers.length; i++)   decoderLayers[i]=cloned[i];
   HiddenLayer[] decoderHiddenLayers=new HiddenLayer[clonedHidden.length - 1];
   for (int i=0; i < decoderHiddenLayers.length; i++)   decoderHiddenLayers[i]=clonedHidden[i];
+  RBM decoderRBM=(RBM)decoder.getLayers()[0];
+  RBM finalEncoderRBM=(RBM)encoder.getLayers()[encoder.getLayers().length - 1];
+  decoderRBM.setVisibleType(RBMUtil.inverse(finalEncoderRBM.getHiddenType()));
   decoder.setSigmoidLayers(decoderHiddenLayers);
   decoder.setLayers(decoderLayers);
   DoubleMatrix encoded=encodeWithScaling(input);
