@@ -20,18 +20,28 @@
  else   vec.setTokenizerFactory(tokenizerFactory);
   iterator.reset();
   DataSetIterator iter=new Word2VecDataSetIterator(vec,iterator,Arrays.asList("0","1","2"));
+  List<DataSet> allData=new ArrayList<>();
+  while (iter.hasNext()) {
+    allData.add(iter.next());
+  }
+  DataSet all=DataSet.merge(allData);
+  all.shuffle();
+  int twentyPercent=(int)Math.round(0.2 * all.numExamples());
+  Pair<DataSet,DataSet> trainTest=all.splitTestAndTrain(twentyPercent);
+  iter=new ListDataSetIterator(trainTest.getFirst().asList(),1000);
+  DataSetIterator testIter=trainTest.getSecond().iterator(1000);
   log.info("Training on num columns " + iter.inputColumns());
   if (!iter.hasNext())   throw new IllegalStateException("No data found");
-  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).withL2(2e-4).useRegularization(true).numberOfInputs(vec.getWindow() * vec.getLayerSize()).hiddenLayerSizes(new int[]{200}).numberOfOutPuts(3).withActivation(Activations.hardTanh()).build();
+  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).withL2(2e-4).useRegularization(true).withSparsity(0.1).withMomentum(0.9).numberOfInputs(vec.getWindow() * vec.getLayerSize()).hiddenLayerSizes(new int[]{200,150,125}).numberOfOutPuts(3).withActivation(Activations.hardTanh()).build();
   while (iter.hasNext()) {
     DataSet d=iter.next();
     dbn.setInput(d.getFirst());
-    dbn.finetune(d.getSecond(),1e-2,1000);
+    dbn.finetune(d.getSecond(),1e-6,10000);
   }
   iter.reset();
   Evaluation eval=new Evaluation();
-  while (iter.hasNext()) {
-    DataSet d=iter.next();
+  while (testIter.hasNext()) {
+    DataSet d=testIter.next();
     eval.eval(d.getSecond(),dbn.output(d.getFirst()));
   }
   log.info(eval.stats());

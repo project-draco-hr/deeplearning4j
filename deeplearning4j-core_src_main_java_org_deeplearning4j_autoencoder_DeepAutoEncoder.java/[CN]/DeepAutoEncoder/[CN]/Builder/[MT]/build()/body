@@ -1,0 +1,50 @@
+{
+  int inverseCount=encoder.getLayers().length - 1;
+  NeuralNetwork[] autoEncoders=new NeuralNetwork[encoder.getLayers().length * 2 - 1];
+  HiddenLayer[] hiddenLayers=new HiddenLayer[encoder.getLayers().length * 2 - 1];
+  for (int i=0; i < autoEncoders.length; i++) {
+    if (i < encoder.getLayers().length) {
+      AutoEncoder a=new AutoEncoder.Builder().withActivation(i < encoder.getLayers().length - 1 ? Activations.sigmoid() : Activations.linear()).numberOfVisible(encoder.getLayers()[i].getnVisible()).numHidden(encoder.getLayers()[i].getnHidden()).withWeights(encoder.getLayers()[i].getW().dup()).applySparsity(encoder.getLayers()[i].isApplySparsity()).normalizeByInputRows(encoder.getLayers()[i].normalizeByInputRows()).withDropOut(encoder.getLayers()[i].dropOut()).useRegularization(encoder.getLayers()[i].isUseRegularization()).useAdaGrad(encoder.getLayers()[i].isUseAdaGrad()).withVisibleBias(encoder.getLayers()[i].getvBias().dup()).withHBias(encoder.getLayers()[i].gethBias().dup()).withDistribution(encoder.getLayers()[i].getDist()).renderWeights(encoder.getLayers()[i].getRenderEpochs()).withL2(encoder.getLayers()[i].getL2()).withMomentum(encoder.getLayers()[i].getMomentum()).withLossFunction(encoder.getLayers()[i].getLossFunction()).withRandom(encoder.getLayers()[i].getRng()).build();
+      HiddenLayer h=encoder.getSigmoidLayers()[i].clone();
+      h.setActivationFunction(Activations.linear());
+      hiddenLayers[i]=h;
+      autoEncoders[i]=a;
+    }
+ else {
+      AutoEncoder a=new AutoEncoder.Builder().numberOfVisible(encoder.getLayers()[inverseCount].getnHidden()).numHidden(encoder.getLayers()[inverseCount].getnVisible()).withWeights(encoder.getLayers()[inverseCount].getW().transpose()).applySparsity(encoder.getLayers()[inverseCount].isApplySparsity()).normalizeByInputRows(encoder.getLayers()[inverseCount].normalizeByInputRows()).withDropOut(encoder.getLayers()[inverseCount].dropOut()).useRegularization(encoder.getLayers()[inverseCount].isUseRegularization()).useAdaGrad(encoder.getLayers()[inverseCount].isUseAdaGrad()).withVisibleBias(encoder.getLayers()[inverseCount].gethBias().dup()).withHBias(encoder.getLayers()[inverseCount].getvBias().dup()).withDistribution(encoder.getLayers()[inverseCount].getDist()).renderWeights(encoder.getLayers()[inverseCount].getRenderEpochs()).withL2(encoder.getLayers()[inverseCount].getL2()).withMomentum(encoder.getLayers()[inverseCount].getMomentum()).withLossFunction(encoder.getLayers()[inverseCount].getLossFunction()).withRandom(encoder.getLayers()[inverseCount].getRng()).build();
+      autoEncoders[i]=a;
+      hiddenLayers[i]=encoder.getSigmoidLayers()[inverseCount].transpose();
+      hiddenLayers[i].setActivationFunction(Activations.linear());
+      inverseCount--;
+    }
+  }
+  OutputLayer o=new OutputLayer.Builder().normalizeByInputRows(encoder.getLayers()[0].normalizeByInputRows()).numberOfInputs(encoder.getLayers()[0].getnHidden()).numberOfOutputs(encoder.getnIns()).useAdaGrad(encoder.getLayers()[0].isUseAdaGrad()).useRegularization(encoder.getLayers()[0].isUseRegularization()).withBias(encoder.getLayers()[0].getvBias()).withActivationFunction(encoder.getOutputActivationFunction()).withL2(encoder.getLayers()[0].getL2()).withWeights(encoder.getLayers()[0].getW().transpose()).build();
+  DeepAutoEncoder e=new DeepAutoEncoder();
+  e.setLayers(autoEncoders);
+  e.setSigmoidLayers(hiddenLayers);
+  e.setOutputLayer(o);
+  e.setLossFunctionByLayer(encoder.getLossFunctionByLayer());
+  e.setSampleOrActivate(encoder.getSampleOrActivate());
+  e.setRenderByLayer(encoder.getRenderByLayer());
+  e.setNormalizeByInputRows(encoder.isNormalizeByInputRows());
+  e.setnOuts(encoder.getnIns());
+  e.setnIns(encoder.getnIns());
+  e.setRng(encoder.getRng());
+  e.setShouldBackProp(this.backProp);
+  e.setSampleFromHiddenActivations(encoder.isSampleFromHiddenActivations());
+  e.setLineSearchBackProp(encoder.isLineSearchBackProp());
+  e.setMomentum(encoder.getMomentum());
+  e.activationFunctionForLayer.putAll(encoder.getActivationFunctionForLayer());
+  e.setSparsity(encoder.getSparsity());
+  e.setRenderWeightsEveryNEpochs(encoder.getRenderWeightsEveryNEpochs());
+  e.setL2(encoder.getL2());
+  e.setForceNumEpochs(shouldForceEpochs);
+  e.setUseRegularization(encoder.isUseRegularization());
+  e.setUseAdaGrad(encoder.isUseAdaGrad());
+  e.setDropOut(encoder.getDropOut());
+  e.setOptimizationAlgorithm(encoder.getOptimizationAlgorithm());
+  e.setLossFunction(encoder.getLossFunction());
+  e.setOutputActivationFunction(encoder.getOutputActivationFunction());
+  e.setOutputLossFunction(encoder.getOutputLossFunction());
+  return e;
+}

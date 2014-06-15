@@ -1,0 +1,13 @@
+{
+  double lr=(double)params[0];
+  if (wAdaGrad != null)   this.wAdaGrad.setMasterStepSize(lr);
+  if (hBiasAdaGrad != null)   this.hBiasAdaGrad.setMasterStepSize(lr);
+  if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(lr);
+  DoubleMatrix out=reconstruct(input);
+  DoubleMatrix diff=input.sub(out);
+  DoubleMatrix backWard=diff.mul(input).mul(out).mul(out.neg().addi(1));
+  DoubleMatrix wGradient=backWard.transpose().mmul(W);
+  DoubleMatrix hBiasGradient=wGradient.columnMeans();
+  DoubleMatrix vBiasGradient=DoubleMatrix.zeros(vBias.rows,vBias.columns);
+  return new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
+}

@@ -10,9 +10,7 @@
     Pair<DoubleMatrix,DoubleMatrix> sample=sampleHiddenGivenVisible(input);
     DoubleMatrix hiddenSample=sample.getSecond().transpose();
     DoubleMatrix scaledInput=input.dup();
-    MatrixUtil.normalizeZeroMeanAndUnitVariance(scaledInput);
     DoubleMatrix z=reconstruct(input);
-    MatrixUtil.normalizeZeroMeanAndUnitVariance(z);
     DoubleMatrix outputDiff=z.sub(scaledInput);
     DoubleMatrix delta=hiddenSample.mmul(outputDiff).transpose();
     DoubleMatrix hBiasMean=sample.getFirst().columnSums().transpose();

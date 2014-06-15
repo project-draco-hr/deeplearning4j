@@ -4,7 +4,7 @@
   activations.add(currInput);
   NeuralNetwork[] layers=getLayers();
   for (int i=0; i < layers.length; i++) {
-    NeuralNetwork layer=getLayers()[i];
+    AutoEncoder layer=(AutoEncoder)getLayers()[i];
     HiddenLayer l=getSigmoidLayers()[i];
     if (layer == null) {
       log.warn("Null layer found going to break");
@@ -17,22 +17,10 @@
     layer.setInput(currInput);
     l.setInput(currInput);
     if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !sampleFromHiddenActivations) {
-      currInput=l.activate(currInput);
-      if (roundCodeLayerInput && (layer instanceof RBM)) {
-        RBM r=(RBM)layer;
-        if (r.getHiddenType() == RBM.HiddenUnit.GAUSSIAN) {
-          currInput=round(currInput);
-        }
-      }
+      currInput=layer.reconstruct(currInput);
     }
  else     if (sampleFromHiddenActivations) {
       currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
-      if (roundCodeLayerInput && (layer instanceof RBM)) {
-        RBM r=(RBM)layer;
-        if (r.getHiddenType() != RBM.HiddenUnit.GAUSSIAN) {
-          currInput=round(currInput);
-        }
-      }
     }
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     activations.add(currInput);

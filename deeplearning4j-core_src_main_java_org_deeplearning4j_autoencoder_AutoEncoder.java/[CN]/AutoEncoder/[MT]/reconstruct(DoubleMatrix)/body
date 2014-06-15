@@ -1,0 +1,3 @@
+{
+  return act.apply(x.mmul(W).addRowVector(hBias));
+}

@@ -1,0 +1,5 @@
+{
+  AutoEncoder ret=super.build();
+  ret.act=this.act;
+  return ret;
+}

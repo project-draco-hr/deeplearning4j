@@ -1,0 +1,9 @@
+{
+  if (!iter.hasNext()) {
+    if (passes < numPasses) {
+      passes++;
+      iter.reset();
+    }
+  }
+  return iter.next();
+}
