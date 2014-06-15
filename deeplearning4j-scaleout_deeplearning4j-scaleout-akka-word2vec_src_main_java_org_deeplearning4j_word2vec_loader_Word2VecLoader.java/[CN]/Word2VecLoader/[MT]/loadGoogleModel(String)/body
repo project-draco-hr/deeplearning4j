@@ -31,7 +31,6 @@
       }
       wordIndex.add(word);
       wordVectors.putRow(i,new FloatMatrix(vectors));
-      dis.read();
     }
   }
   finally {
