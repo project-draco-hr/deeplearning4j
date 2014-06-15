@@ -10,4 +10,5 @@
     this.columns=t.columns;
   }
  else   this.data=t.data;
+  this.length=this.rows * this.columns;
 }

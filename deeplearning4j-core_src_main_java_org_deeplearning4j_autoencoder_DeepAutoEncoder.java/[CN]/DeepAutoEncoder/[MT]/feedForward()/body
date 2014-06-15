@@ -10,7 +10,7 @@
       currInput=layer.reconstruct(currInput);
     }
  else     if (sampleFromHiddenActivations) {
-      currInput=layer.sampleHiddenGivenVisible(layer.reconstruct(currInput)).getSecond();
+      currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     }
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     activations.add(currInput);

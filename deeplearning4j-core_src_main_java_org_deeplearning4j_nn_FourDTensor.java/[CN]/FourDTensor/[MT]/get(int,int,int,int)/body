@@ -1,3 +1,4 @@
 {
-  return getSliceOfTensor(tensor,slice).get(row,column);
+  int tensorIndex=tensor * slices();
+  return super.get(tensorIndex + slice + row,column);
 }
