@@ -5,6 +5,9 @@
   for (int i=0; i < autoEncoders.length; i++) {
     if (i < encoder.getLayers().length) {
       AutoEncoder a=new AutoEncoder.Builder().withActivation(i < encoder.getLayers().length - 1 ? Activations.sigmoid() : Activations.linear()).numberOfVisible(encoder.getLayers()[i].getnVisible()).numHidden(encoder.getLayers()[i].getnHidden()).withWeights(encoder.getLayers()[i].getW().dup()).applySparsity(encoder.getLayers()[i].isApplySparsity()).normalizeByInputRows(encoder.getLayers()[i].normalizeByInputRows()).withDropOut(encoder.getLayers()[i].dropOut()).useRegularization(encoder.getLayers()[i].isUseRegularization()).useAdaGrad(encoder.getLayers()[i].isUseAdaGrad()).withVisibleBias(encoder.getLayers()[i].getvBias().dup()).withHBias(encoder.getLayers()[i].gethBias().dup()).withDistribution(encoder.getLayers()[i].getDist()).renderWeights(encoder.getLayers()[i].getRenderEpochs()).withL2(encoder.getLayers()[i].getL2()).withMomentum(encoder.getLayers()[i].getMomentum()).withLossFunction(encoder.getLayers()[i].getLossFunction()).withRandom(encoder.getLayers()[i].getRng()).build();
+      if (i == encoder.getLayers().length - 1) {
+        a.act=Activations.linear();
+      }
       HiddenLayer h=encoder.getSigmoidLayers()[i].clone();
       h.setActivationFunction(Activations.linear());
       hiddenLayers[i]=h;

@@ -14,6 +14,11 @@
       currInput=layer.sampleHiddenGivenVisible(layer.reconstruct(currInput)).getSecond();
     }
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
+    if (i == layers.length / 2) {
+      DoubleMatrix sigma=columnVariance(currInput);
+      DoubleMatrix add=normal(getRng(),currInput,sigma);
+      currInput.addi(add);
+    }
     activations.add(currInput);
   }
   if (getOutputLayer() != null) {
