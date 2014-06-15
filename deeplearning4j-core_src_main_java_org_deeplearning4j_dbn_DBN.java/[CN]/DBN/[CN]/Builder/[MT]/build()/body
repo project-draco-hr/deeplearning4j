@@ -1,5 +1,6 @@
 {
   DBN ret=super.build();
+  ret.useRBMPropUpAsActivations=useRBMPropUpAsActivation;
   ret.hiddenUnit=hiddenUnit;
   ret.visibleUnit=visibleUnit;
   ret.visibleUnitByLayer.putAll(visibleUnitByLayer);

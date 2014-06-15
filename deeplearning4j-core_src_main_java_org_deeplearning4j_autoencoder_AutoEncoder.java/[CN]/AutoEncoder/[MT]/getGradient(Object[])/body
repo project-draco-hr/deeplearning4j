@@ -9,5 +9,7 @@
   DoubleMatrix wGradient=backWard.transpose().mmul(W);
   DoubleMatrix hBiasGradient=wGradient.columnMeans();
   DoubleMatrix vBiasGradient=DoubleMatrix.zeros(vBias.rows,vBias.columns);
-  return new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
+  NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
+  updateGradientAccordingToParams(ret,lr);
+  return ret;
 }
