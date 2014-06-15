@@ -3,7 +3,6 @@
   DeepAutoEncoder encoder=SerializationUtils.readObject(new File(args[0]));
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    log.info("Encoded " + encoder.encode(first.getFirst()));
     DoubleMatrix reconstruct=encoder.reconstruct(first.getFirst());
     for (int j=0; j < first.numExamples(); j++) {
       DoubleMatrix draw1=first.get(j).getFirst().mul(255);

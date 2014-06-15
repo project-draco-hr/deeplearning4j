@@ -11,6 +11,7 @@
     if (useRBMPropUpAsActivations) {
       RBM r=(RBM)layer;
       currInput=r.propUp(currInput);
+      if (sampleFromHiddenActivations)       currInput=layer.sampleVisibleGivenHidden(currInput).getSecond();
     }
  else     if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidLayers()[i].activate(layer.reconstruct(currInput));
  else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
