@@ -12,7 +12,14 @@
     log.info("Resetting adagrad");
   }
   DoubleMatrix wLearningRates=wAdaGrad.getLearningRates(wGradient);
-  double momentum=momentumAfter.get(iteration) != null ? momentumAfter.get(iteration) : this.momentum;
+  double momentum=this.momentum;
+  if (momentumAfter != null && !momentumAfter.isEmpty()) {
+    int key=momentumAfter.keySet().iterator().next();
+    if (iteration >= key) {
+      momentum=momentumAfter.get(key);
+    }
+  }
+  log.info("Using momentum " + momentum);
   if (useAdaGrad)   wGradient.muli(wLearningRates);
  else   wGradient.muli(learningRate);
   if (useAdaGrad)   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient));
