@@ -9,6 +9,8 @@
         ret=(E)curr.newInstance(input,numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
         ret.cacheInput=cacheInput;
         ret.sparsity=this.sparsity;
+        ret.resetAdaGradIterations=resetAdaGradIterations;
+        ret.momentumAfter=momentumAfter;
         ret.applySparsity=this.applySparsity;
         ret.normalizeByInputRows=this.normalizeByInputRows;
         ret.renderWeightsEveryNumEpochs=this.renderWeightsEveryNumEpochs;

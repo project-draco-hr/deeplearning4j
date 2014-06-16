@@ -1,13 +1,13 @@
 {
   int k=(int)params[0];
   double learningRate=(double)params[1];
-  int iteration=(int)params[2];
+  int iteration=params[params.length - 1] == null ? 0 : (int)params[params.length - 1];
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
   DoubleMatrix chainStart=probHidden.getSecond();
-  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices=null;
+  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices;
   DoubleMatrix nvMeans=null;
   DoubleMatrix nvSamples=null;
   DoubleMatrix nhMeans=null;
@@ -21,7 +21,7 @@
     nhSamples=matrices.getSecond().getSecond();
   }
   DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
-  DoubleMatrix hBiasGradient=null;
+  DoubleMatrix hBiasGradient;
   if (sparsity != 0)   hBiasGradient=mean(scalarMinus(sparsity,probHidden.getSecond()),0);
  else   hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
   DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);

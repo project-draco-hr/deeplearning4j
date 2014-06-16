@@ -1,7 +1,8 @@
 {
   this.network=network;
   this.lr=lr;
-  this.extraParams=trainingParams;
+  this.extraParams=new Object[trainingParams.length + 1];
+  System.arraycopy(trainingParams,0,extraParams,0,trainingParams.length);
   this.optimizationAlgorithm=optimizationAlgorithm;
   this.lossFunction=lossFunction;
 }

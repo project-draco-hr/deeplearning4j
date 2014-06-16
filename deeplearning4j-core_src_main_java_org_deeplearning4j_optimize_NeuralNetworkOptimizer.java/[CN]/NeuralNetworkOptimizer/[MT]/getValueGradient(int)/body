@@ -1,6 +1,16 @@
 {
-  double[] d=new double[getNumParameters()];
-  this.currIteration=currIteration;
-  getValueGradient(d);
-  return new DoubleMatrix(d);
+  if (iteration >= 1)   extraParams[extraParams.length - 1]=iteration;
+  NeuralNetworkGradient g=network.getGradient(extraParams);
+  double[] buffer=new double[getNumParameters()];
+  int idx=0;
+  for (int i=0; i < g.getwGradient().length; i++) {
+    buffer[idx++]=g.getwGradient().get(i);
+  }
+  for (int i=0; i < g.getvBiasGradient().length; i++) {
+    buffer[idx++]=g.getvBiasGradient().get(i);
+  }
+  for (int i=0; i < g.gethBiasGradient().length; i++) {
+    buffer[idx++]=g.gethBiasGradient().get(i);
+  }
+  return new DoubleMatrix(buffer);
 }

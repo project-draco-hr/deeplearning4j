@@ -1,5 +1,3 @@
 {
-  double[] params=new double[getNumParameters()];
-  getParameters(params);
-  return new DoubleMatrix(params);
+  return new DoubleMatrix(ArrayUtil.combine(network.getW().data,network.getvBias().data,network.gethBias().data));
 }

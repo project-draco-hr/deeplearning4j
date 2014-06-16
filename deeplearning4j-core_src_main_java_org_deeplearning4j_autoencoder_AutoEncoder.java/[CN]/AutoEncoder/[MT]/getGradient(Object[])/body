@@ -3,7 +3,7 @@
   int iterations=(int)params[1];
   DoubleMatrix out=reconstruct(input);
   DoubleMatrix diff=input.sub(out);
-  DoubleMatrix backWard=diff.mul(input).mul(out).mul(out.neg().addi(1));
+  DoubleMatrix backWard=diff.mul(input).neg().mul(act.applyDerivative(out));
   DoubleMatrix wGradient=backWard.transpose().mmul(W);
   DoubleMatrix hBiasGradient=wGradient.columnMeans();
   DoubleMatrix vBiasGradient=DoubleMatrix.zeros(vBias.rows,vBias.columns);
