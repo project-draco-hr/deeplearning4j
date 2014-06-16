@@ -8,7 +8,7 @@
       for (int epoch=0; epoch < epochs; epoch++) {
         getLayers()[i].train(layerInput,lr,new Object[]{corruptionLevel,lr});
         log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
-        getLayers()[i].epochDone(epoch);
+        getLayers()[i].iterationDone(epoch);
       }
     }
  else     getLayers()[i].trainTillConvergence(layerInput,lr,new Object[]{corruptionLevel,lr,epochs});

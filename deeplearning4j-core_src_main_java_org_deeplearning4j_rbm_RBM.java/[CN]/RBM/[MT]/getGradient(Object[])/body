@@ -1,6 +1,7 @@
 {
   int k=(int)params[0];
   double learningRate=(double)params[1];
+  int iteration=(int)params[2];
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
@@ -25,6 +26,6 @@
  else   hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
   DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  updateGradientAccordingToParams(ret,learningRate);
+  updateGradientAccordingToParams(ret,iteration,learningRate);
   return ret;
 }

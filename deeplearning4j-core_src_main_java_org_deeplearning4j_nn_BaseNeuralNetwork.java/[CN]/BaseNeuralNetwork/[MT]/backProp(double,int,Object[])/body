@@ -2,11 +2,8 @@
   double currRecon=squaredLoss();
   boolean train=true;
   NeuralNetwork revert=clone();
-  int numEpochs=0;
   while (train) {
-    if (numEpochs > epochs)     break;
-    NeuralNetworkGradient gradient=getGradient(extraParams);
-    updateGradientAccordingToParams(gradient,lr);
+    if (iterations > iterations)     break;
     double newRecon=this.squaredLoss();
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
@@ -24,11 +21,11 @@
       revert=clone();
       log.info("Recon went down " + currRecon);
     }
-    numEpochs++;
-    int plotEpochs=getRenderEpochs();
-    if (plotEpochs > 0) {
+    iterations++;
+    int plotIterations=getRenderIterations();
+    if (plotIterations > 0) {
       NeuralNetPlotter plotter=new NeuralNetPlotter();
-      if (numEpochs % plotEpochs == 0) {
+      if (iterations % plotIterations == 0) {
         plotter.plotNetworkGradient(this,getGradient(extraParams),getInput().rows);
       }
     }

@@ -1,5 +1,0 @@
-{
-  double[] d=new double[getNumParameters()];
-  getValueGradient(d);
-  return new DoubleMatrix(d);
-}

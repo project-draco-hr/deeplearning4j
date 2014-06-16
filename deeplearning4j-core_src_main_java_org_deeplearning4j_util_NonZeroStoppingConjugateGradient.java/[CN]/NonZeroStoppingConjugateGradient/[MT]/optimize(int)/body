@@ -17,7 +17,7 @@
   long curr=0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     curr=System.currentTimeMillis();
-    if (listener != null)     listener.epochDone(iterationCount);
+    if (listener != null)     listener.iterationDone(iterationCount);
     logger.info(myName + " ConjugateGradient: At iteration " + iterations+ ", cost = "+ fp+ " -"+ (curr - last));
     last=curr;
     try {
@@ -68,7 +68,7 @@
       eval.evaluate(optimizable,iterations);
     }
     if (listener != null) {
-      listener.epochDone(iterationCount);
+      listener.iterationDone(iterationCount);
     }
   }
   return false;

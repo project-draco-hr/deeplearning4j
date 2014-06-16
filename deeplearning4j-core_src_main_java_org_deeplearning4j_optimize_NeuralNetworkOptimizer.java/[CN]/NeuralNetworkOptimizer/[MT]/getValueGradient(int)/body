@@ -1,0 +1,6 @@
+{
+  double[] d=new double[getNumParameters()];
+  this.currIteration=currIteration;
+  getValueGradient(d);
+  return new DoubleMatrix(d);
+}

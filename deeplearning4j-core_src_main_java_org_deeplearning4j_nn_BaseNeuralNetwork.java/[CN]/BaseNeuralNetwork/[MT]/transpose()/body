@@ -3,6 +3,8 @@
     Constructor<?> c=Dl4jReflection.getEmptyConstructor(getClass());
     c.setAccessible(true);
     NeuralNetwork ret=(NeuralNetwork)c.newInstance();
+    ret.setMomentumAfter(momentumAfter);
+    ret.setResetAdaGradIterations(resetAdaGradIterations);
     ret.setVBiasAdaGrad(hBiasAdaGrad);
     ret.sethBias(vBias.dup());
     ret.setvBias(DoubleMatrix.zeros(hBias.rows,hBias.columns));
@@ -11,7 +13,7 @@
     ret.setW(W.transpose());
     ret.setL2(l2);
     ret.setMomentum(momentum);
-    ret.setRenderEpochs(getRenderEpochs());
+    ret.setRenderEpochs(getRenderIterations());
     ret.setSparsity(sparsity);
     ret.setRng(getRng());
     ret.setDist(getDist());

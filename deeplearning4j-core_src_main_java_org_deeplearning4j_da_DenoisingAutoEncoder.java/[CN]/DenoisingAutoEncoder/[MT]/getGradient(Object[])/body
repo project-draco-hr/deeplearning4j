@@ -1,6 +1,7 @@
 {
   double corruptionLevel=(double)params[0];
   double lr=(double)params[1];
+  int iteration=(int)params[2];
   if (wAdaGrad != null)   this.wAdaGrad.setMasterStepSize(lr);
   if (hBiasAdaGrad != null)   this.hBiasAdaGrad.setMasterStepSize(lr);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(lr);
@@ -15,6 +16,6 @@
   DoubleMatrix hBiasGradient=L_hbias.columnMeans();
   DoubleMatrix vBiasGradient=L_vbias.columnMeans();
   NeuralNetworkGradient gradient=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  updateGradientAccordingToParams(gradient,lr);
+  updateGradientAccordingToParams(gradient,iteration,lr);
   return gradient;
 }

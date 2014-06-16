@@ -4,6 +4,10 @@
     Constructor<?> c=Dl4jReflection.getEmptyConstructor(clazz);
     c.setAccessible(true);
     ret=(E)c.newInstance();
+    ret.setResetAdaGradIterations(resetAdaGradIterations);
+    ret.setResetAdaGradIterationsByLayer(resetAdaGradIterationsByLayer);
+    ret.setMomentumAfter(momentumAfter);
+    ret.setMomentumAfterByLayer(momentumAfterByLayer);
     ret.setLossFunctionByLayer(lossFunctionByLayer);
     ret.setSampleOrActivate(sampleOrActivateByLayer);
     ret.setRenderByLayer(renderByLayer);
@@ -22,7 +26,6 @@
     ret.setLineSearchBackProp(lineSearchBackProp);
     ret.setMomentum(momentum);
     ret.setLabels(labels);
-    ret.setFanIn(fanIn);
     ret.activationFunctionForLayer.putAll(activationForLayer);
     ret.setSparsity(sparsity);
     ret.setRenderWeightsEveryNEpochs(renderWeithsEveryNEpochs);

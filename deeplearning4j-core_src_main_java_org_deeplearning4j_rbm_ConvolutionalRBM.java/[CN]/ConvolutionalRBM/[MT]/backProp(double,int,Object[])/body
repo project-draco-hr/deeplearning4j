@@ -4,7 +4,7 @@
   NeuralNetwork revert=clone();
   int numEpochs=0;
   while (train) {
-    if (numEpochs > epochs)     break;
+    if (numEpochs > iterations)     break;
     NeuralNetworkGradient gradient=getGradient(extraParams);
     DoubleMatrix wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
     DoubleMatrix z=reconstruct(input);
@@ -34,7 +34,7 @@
       log.info("Recon went down " + currRecon);
     }
     numEpochs++;
-    int plotEpochs=getRenderEpochs();
+    int plotEpochs=getRenderIterations();
     if (plotEpochs > 0) {
       NeuralNetPlotter plotter=new NeuralNetPlotter();
       if (numEpochs % plotEpochs == 0) {

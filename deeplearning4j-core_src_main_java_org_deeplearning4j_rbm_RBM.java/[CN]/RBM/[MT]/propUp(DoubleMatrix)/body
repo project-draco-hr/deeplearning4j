@@ -6,8 +6,7 @@
     return preSig;
   }
  else   if (hiddenType == HiddenUnit.GAUSSIAN) {
-    this.hiddenSigma=columnVariance(preSig);
-    DoubleMatrix add=normal(getRng(),preSig,this.hiddenSigma);
+    DoubleMatrix add=preSig.add(MatrixUtil.randn(rng,preSig.rows,preSig.columns));
     preSig.addi(add);
     return preSig;
   }
