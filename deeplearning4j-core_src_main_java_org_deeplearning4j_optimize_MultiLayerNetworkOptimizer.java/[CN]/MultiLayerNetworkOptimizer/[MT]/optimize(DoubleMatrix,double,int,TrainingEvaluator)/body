@@ -1,7 +1,6 @@
 {
   network.getOutputLayer().setLabels(labels);
   if (!network.isForceNumEpochs()) {
-    network.getOutputLayer().trainTillConvergence(labels,lr,epochs,eval);
     if (network.isShouldBackProp())     network.backProp(lr,epochs,eval);
   }
  else {

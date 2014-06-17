@@ -34,7 +34,6 @@
   e.setnOuts(encoder.getnIns());
   e.setnIns(encoder.getnIns());
   e.setRng(encoder.getRng());
-  e.setShouldBackProp(this.backProp);
   e.setSampleFromHiddenActivations(encoder.isSampleFromHiddenActivations());
   e.setLineSearchBackProp(encoder.isLineSearchBackProp());
   e.setMomentum(encoder.getMomentum());
@@ -49,8 +48,7 @@
   e.setUseAdaGrad(encoder.isUseAdaGrad());
   e.setDropOut(encoder.getDropOut());
   e.setOptimizationAlgorithm(encoder.getOptimizationAlgorithm());
-  e.setLossFunction(encoder.getLossFunction());
-  e.setOutputActivationFunction(encoder.getOutputActivationFunction());
-  e.setOutputLossFunction(encoder.getOutputLossFunction());
+  e.setOutputActivationFunction(Activations.sigmoid());
+  e.setOutputLossFunction(OutputLayer.LossFunction.RMSE_XENT);
   return e;
 }

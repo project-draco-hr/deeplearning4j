@@ -19,7 +19,6 @@
       momentum=momentumAfter.get(key);
     }
   }
-  log.info("Using momentum " + momentum);
   if (useAdaGrad)   wGradient.muli(wLearningRates);
  else   wGradient.muli(learningRate);
   if (useAdaGrad)   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient));

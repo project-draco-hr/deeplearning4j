@@ -1,9 +1,12 @@
 {
-  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().withSparsity(1e-1).renderWeights(1).numberOfVisible(784).numHidden(600).build();
+  DenoisingAutoEncoder autoEncoder=new DenoisingAutoEncoder.Builder().withSparsity(1e-1).numberOfVisible(784).numHidden(600).build();
   DataSetIterator iter=new MnistDataSetIterator(10,30);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    autoEncoder.trainTillConvergence(next.getFirst(),1e-1,new Object[]{0.6,1e-1,1000});
+    for (int i=0; i < 100; i++) {
+      autoEncoder.train(next.getFirst(),1e-1,new Object[]{0.6,1e-1,1000});
+      log.info("Error " + autoEncoder.getReConstructionCrossEntropy());
+    }
   }
   iter.reset();
   FilterRenderer render=new FilterRenderer();

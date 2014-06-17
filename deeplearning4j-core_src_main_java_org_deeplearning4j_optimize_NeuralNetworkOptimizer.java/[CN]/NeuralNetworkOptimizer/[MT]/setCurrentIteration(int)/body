@@ -1,6 +1,5 @@
 {
   if (value < 1) {
-    log.info("Not setting iteration with value " + value);
     return;
   }
   this.currIteration=value;

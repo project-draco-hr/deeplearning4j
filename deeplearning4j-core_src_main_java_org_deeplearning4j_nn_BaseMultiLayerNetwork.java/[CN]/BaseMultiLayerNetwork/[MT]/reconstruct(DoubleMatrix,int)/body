@@ -1,5 +1,5 @@
 {
   DoubleMatrix currInput=x;
   List<DoubleMatrix> forward=feedForward(currInput);
-  return getLayers()[layerNum - 1].reconstruct(forward.get(layerNum - 1));
+  return forward.get(layerNum - 1);
 }
