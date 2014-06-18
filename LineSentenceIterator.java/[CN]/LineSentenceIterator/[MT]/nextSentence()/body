@@ -1,7 +1,0 @@
-{
-  String line=iter.nextLine();
-  if (preProcessor != null) {
-    line=preProcessor.preProcess(line);
-  }
-  return line;
-}
