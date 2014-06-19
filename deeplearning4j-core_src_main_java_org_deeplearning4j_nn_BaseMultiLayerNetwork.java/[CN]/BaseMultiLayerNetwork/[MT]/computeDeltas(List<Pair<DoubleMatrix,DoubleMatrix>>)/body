@@ -21,6 +21,7 @@
  else {
       derivative=activationFunctions.get(i);
       deltas[i]=deltas[i + 1].mmul(weights.get(i).transpose()).muli(derivative.applyDerivative(activations.get(i)));
+      applyDropConnectIfNecessary(deltas[i]);
       DoubleMatrix newGradient=deltas[i + 1].transpose().mmul((derivative.applyDerivative(activations.get(i))));
       gradients[i]=newGradient;
     }
