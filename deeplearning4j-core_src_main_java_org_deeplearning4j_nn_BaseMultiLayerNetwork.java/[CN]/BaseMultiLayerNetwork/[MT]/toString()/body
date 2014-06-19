@@ -14,7 +14,6 @@
   sb.append(", activation=").append(activation);
   sb.append(", l2=").append(l2);
   sb.append(", shouldInit=").append(shouldInit);
-  sb.append(", fanIn=").append(fanIn);
   sb.append(", renderWeightsEveryNEpochs=").append(renderWeightsEveryNEpochs);
   sb.append(", useRegularization=").append(useRegularization);
   sb.append(", weightTransforms=").append(weightTransforms);

@@ -23,7 +23,7 @@
       this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
     }
   }
-  this.outputLayer=new OutputLayer.Builder().useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(getSigmoidLayers()[getSigmoidLayers().length - 1].nOut).numberOfOutputs(nOuts).withL2(l2).build();
+  this.outputLayer=new OutputLayer.Builder().withDropout(outputLayerDropout).useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(getSigmoidLayers()[getSigmoidLayers().length - 1].nOut).numberOfOutputs(nOuts).withL2(l2).build();
   synchonrizeRng();
   dimensionCheck();
   applyTransforms();

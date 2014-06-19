@@ -4,7 +4,6 @@
   BaseMultiLayerNetwork that=(BaseMultiLayerNetwork)o;
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
   if (Double.compare(that.errorTolerance,errorTolerance) != 0)   return false;
-  if (Double.compare(that.fanIn,fanIn) != 0)   return false;
   if (forceNumEpochs != that.forceNumEpochs)   return false;
   if (initCalled != that.initCalled)   return false;
   if (Double.compare(that.l2,l2) != 0)   return false;

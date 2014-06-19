@@ -5,6 +5,7 @@
       layers[i].getW().subi(deltas.get(i).getFirst());
       layers[i].gethBias().subi(deltas.get(i).getSecond());
       sigmoidLayers[i].setW(layers[i].getW());
+      sigmoidLayers[i].setB(layers[i].gethBias());
     }
   }
   outputLayer.getW().subi(deltas.get(deltas.size() - 1).getFirst());

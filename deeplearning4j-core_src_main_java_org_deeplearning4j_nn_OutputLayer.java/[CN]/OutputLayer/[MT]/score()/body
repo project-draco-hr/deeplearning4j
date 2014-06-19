@@ -1,25 +1,33 @@
 {
   MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
   DoubleMatrix z=output(input);
+  double ret=0;
+  double reg=0.5 * l2 * MatrixFunctions.pow(this.W,2).sum();
 switch (lossFunction) {
 case MCXENT:
     DoubleMatrix mcXEntLogZ=log(z);
-  return -labels.mul(mcXEntLogZ).columnSums().sum() / labels.rows;
+  ret=-labels.mul(mcXEntLogZ).columnSums().sum() / labels.rows;
+break;
 case XENT:
 DoubleMatrix xEntLogZ=log(z);
 DoubleMatrix xEntOneMinusLabelsOut=oneMinus(labels);
 DoubleMatrix xEntOneMinusLogOneMinusZ=oneMinus(log(z));
-return -labels.mul(xEntLogZ).add(xEntOneMinusLabelsOut).mul(xEntOneMinusLogOneMinusZ).columnSums().sum() / labels.rows;
+ret=-labels.mul(xEntLogZ).add(xEntOneMinusLabelsOut).mul(xEntOneMinusLogOneMinusZ).columnSums().sum() / labels.rows;
+break;
 case RMSE_XENT:
-return pow(labels.sub(z),2).columnSums().sum() / labels.rows;
+ret=pow(labels.sub(z),2).columnSums().sum() / labels.rows;
+break;
 case MSE:
 DoubleMatrix mseDelta=labels.sub(z);
-return 0.5 * pow(mseDelta,2).columnSums().sum() / labels.rows;
+ret=0.5 * pow(mseDelta,2).columnSums().sum() / labels.rows;
+break;
 case EXPLL:
 DoubleMatrix expLLLogZ=log(z);
-return -z.sub(labels.mul(expLLLogZ)).columnSums().sum() / labels.rows;
+ret=-z.sub(labels.mul(expLLLogZ)).columnSums().sum() / labels.rows;
+break;
 case SQUARED_LOSS:
-return pow(labels.sub(z),2).columnSums().sum() / labels.rows;
+ret=pow(labels.sub(z),2).columnSums().sum() / labels.rows;
 }
-throw new IllegalStateException("No loss function found");
+if (useRegularization && l2 > 0) ret+=reg;
+return ret;
 }

@@ -8,7 +8,8 @@
     log.info("Training for " + epochs + " epochs");
     for (int i=0; i < epochs; i++) {
       network.getOutputLayer().train(lr);
-      log.info("Error on epoch " + i + " is  "+ network.getOutputLayer().score());
+      if (i % network.getResetAdaGradIterations() == 0)       network.getOutputLayer().getAdaGrad().historicalGradient=null;
+      log.info("Error on iteration " + i + " is  "+ network.score());
     }
     if (network.isShouldBackProp())     network.backProp(lr,epochs);
   }

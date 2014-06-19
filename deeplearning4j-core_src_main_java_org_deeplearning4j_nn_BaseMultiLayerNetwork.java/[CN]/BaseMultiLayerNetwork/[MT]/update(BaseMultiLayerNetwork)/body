@@ -13,6 +13,7 @@
   this.layerLearningRates=network.layerLearningRates;
   this.normalizeByInputRows=network.normalizeByInputRows;
   this.useAdaGrad=network.useAdaGrad;
+  this.outputLayerDropout=network.outputLayerDropout;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
   if (network.outputLayer != null)   this.outputLayer=network.outputLayer.clone();
   this.nIns=network.nIns;
@@ -30,7 +31,6 @@
   this.forceNumEpochs=network.forceNumEpochs;
   this.input=network.input;
   this.l2=network.l2;
-  this.fanIn=network.fanIn;
   this.labels=network.labels;
   this.momentum=network.momentum;
   this.learningRateUpdate=network.learningRateUpdate;

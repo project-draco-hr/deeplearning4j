@@ -15,7 +15,6 @@
   temp=Double.doubleToLongBits(l2);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (shouldInit ? 1 : 0);
-  temp=Double.doubleToLongBits(fanIn);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + renderWeightsEveryNEpochs;
   result=31 * result + (useRegularization ? 1 : 0);

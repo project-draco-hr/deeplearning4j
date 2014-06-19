@@ -1,0 +1,16 @@
+{
+  List<DoubleMatrix> R=new ArrayList<>();
+  List<DoubleMatrix> acts=feedForward();
+  R.add(DoubleMatrix.zeros(input.rows,input.columns));
+  List<Pair<DoubleMatrix,DoubleMatrix>> vWvB=new ArrayList<>();
+  for (int i=0; i < layers.length; i++) {
+    vWvB.add(new Pair<>(layers[i].getW(),layers[i].gethBias()));
+  }
+  vWvB.add(new Pair<>(outputLayer.getW(),outputLayer.getB()));
+  for (int i=0; i < layers.length; i++) {
+    DoubleMatrix bz=DoubleMatrix.zeros(layers[i].gethBias().rows,layers[i].gethBias().columns);
+    DoubleMatrix activation=R.get(i).mmul(layers[i].getW().addRowVector(bz)).add(acts.get(i).mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond())));
+    R.add(getSigmoidLayers()[i].getActivationFunction().apply(activation));
+  }
+  return R;
+}

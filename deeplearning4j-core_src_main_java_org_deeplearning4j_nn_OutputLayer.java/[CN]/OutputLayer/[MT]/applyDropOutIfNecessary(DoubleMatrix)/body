@@ -1,0 +1,7 @@
+{
+  if (dropOut > 0) {
+    this.dropoutMask=DoubleMatrix.rand(input.rows,this.nOut).gt(dropOut);
+  }
+ else   this.dropoutMask=DoubleMatrix.ones(input.rows,this.nOut);
+  input.muli(dropoutMask);
+}

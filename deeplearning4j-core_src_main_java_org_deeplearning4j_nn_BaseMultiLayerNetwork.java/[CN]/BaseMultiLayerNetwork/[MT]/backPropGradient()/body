@@ -12,7 +12,7 @@
   DoubleMatrix biasGradient=deltas.get(getnLayers() + 1).getSecond().columnSums();
   if (getOutputLayer().getB().length != biasGradient.length) {
     DoubleMatrix add=DoubleMatrix.ones(getOutputLayer().getB().rows,getOutputLayer().getB().columns);
-    add.addi(biasGradient.mean());
+    add.addi(biasGradient.sum());
     biasGradient=add;
   }
   list.add(new Pair<>(logLayerGradient,biasGradient));

@@ -1,21 +1,27 @@
 {
   DoubleMatrix[] gradients=new DoubleMatrix[getnLayers() + 2];
   DoubleMatrix[] deltas=new DoubleMatrix[getnLayers() + 2];
-  ActivationFunction derivative=getSigmoidLayers()[0].getActivationFunction();
+  ActivationFunction derivative;
   ActivationFunction outputDerivative=outputLayer.getActivationFunction();
   DoubleMatrix delta;
   List<DoubleMatrix> activations=feedForward();
   List<DoubleMatrix> weights=new ArrayList<>();
-  for (int j=0; j < getLayers().length; j++)   weights.add(getLayers()[j].getW());
+  List<ActivationFunction> activationFunctions=new ArrayList<>();
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getW());
+    activationFunctions.add(getSigmoidLayers()[j].getActivationFunction());
+  }
   weights.add(getOutputLayer().getW());
+  activationFunctions.add(outputLayer.getActivationFunction());
   for (int i=getnLayers() + 1; i >= 0; i--) {
     if (i >= getnLayers() + 1) {
       delta=labels.sub(activations.get(i)).neg().mul(outputDerivative.applyDerivative(activations.get(i)));
       deltas[i]=delta;
     }
  else {
+      derivative=activationFunctions.get(i);
       deltas[i]=deltas[i + 1].mmul(weights.get(i).transpose()).muli(derivative.applyDerivative(activations.get(i)));
-      DoubleMatrix newGradient=deltas[i + 1].transpose().mmul(activations.get(i));
+      DoubleMatrix newGradient=deltas[i + 1].transpose().mmul((derivative.applyDerivative(activations.get(i))));
       gradients[i]=newGradient;
     }
   }

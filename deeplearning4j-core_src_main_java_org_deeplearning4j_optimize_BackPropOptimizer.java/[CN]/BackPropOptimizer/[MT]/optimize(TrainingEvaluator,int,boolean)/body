@@ -5,6 +5,7 @@
     BaseMultiLayerNetwork revert=network.clone();
     if (network.isForceNumEpochs()) {
       for (int i=0; i < epochs; i++) {
+        if (i % network.getResetAdaGradIterations() == 0)         network.getOutputLayer().getAdaGrad().historicalGradient=null;
         network.backPropStep();
         log.info("Iteration " + i + " error "+ network.score());
       }
@@ -49,14 +50,12 @@
     NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getOptimizationAlgorithm();
     if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
       VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this);
-      g.setTolerance(1e-3);
       g.setTrainingEvaluator(eval);
       g.setMaxIterations(numEpochs);
       g.optimize(numEpochs);
     }
  else {
       VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this);
-      g.setTolerance(1e-3);
       g.setTrainingEvaluator(eval);
       g.optimize(numEpochs);
     }

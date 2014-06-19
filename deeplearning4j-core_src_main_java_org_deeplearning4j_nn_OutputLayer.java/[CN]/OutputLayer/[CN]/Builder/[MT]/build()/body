@@ -2,6 +2,7 @@
   ret=new OutputLayer(input,nIn,nOut);
   if (W != null)   ret.W=W;
   if (b != null)   ret.b=b;
+  ret.dropOut=dropOut;
   ret.optimizationAlgorithm=optimizationAlgorithm;
   ret.normalizeByInputRows=normalizeByInputRows;
   ret.useRegularization=useRegualarization;

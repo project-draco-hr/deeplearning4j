@@ -1,7 +1,5 @@
 {
   MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
-  if (adaGrad.historicalGradient.rows != W.rows || adaGrad.historicalGradient.columns != W.columns)   adaGrad=new AdaGrad(W.rows,W.columns);
-  if (biasAdaGrad.historicalGradient.rows != b.rows || biasAdaGrad.historicalGradient.columns != b.columns)   biasAdaGrad=new AdaGrad(b.rows,b.columns);
   adaGrad.setMasterStepSize(lr);
   biasAdaGrad.setMasterStepSize(lr);
   DoubleMatrix netOut=output(input);
