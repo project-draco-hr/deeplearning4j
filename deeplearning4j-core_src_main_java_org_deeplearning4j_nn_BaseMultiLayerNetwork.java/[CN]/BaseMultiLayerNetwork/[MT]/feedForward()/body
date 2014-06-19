@@ -11,6 +11,7 @@
     if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidLayers()[i].activate(layer.reconstruct(currInput));
  else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
+    applyDropConnectIfNecessary(currInput);
     activations.add(currInput);
   }
   if (getOutputLayer() != null) {
