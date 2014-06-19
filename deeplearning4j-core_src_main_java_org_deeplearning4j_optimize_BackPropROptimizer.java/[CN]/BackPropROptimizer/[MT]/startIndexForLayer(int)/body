@@ -1,0 +1,15 @@
+{
+  int start=0;
+  for (int i=0; i < layer; i++) {
+    start+=network.getLayers()[i].getW().length;
+    start+=network.getLayers()[i].gethBias().length;
+  }
+  if (layer < network.getLayers().length) {
+    int wEnd=start + network.getLayers()[layer].getW().length;
+    return new ParamRange(start,wEnd,wEnd,wEnd + network.getLayers()[layer].gethBias().length);
+  }
+ else {
+    int wEnd=start + network.getOutputLayer().getW().length;
+    return new ParamRange(start,wEnd,wEnd,wEnd + network.getOutputLayer().getB().length);
+  }
+}

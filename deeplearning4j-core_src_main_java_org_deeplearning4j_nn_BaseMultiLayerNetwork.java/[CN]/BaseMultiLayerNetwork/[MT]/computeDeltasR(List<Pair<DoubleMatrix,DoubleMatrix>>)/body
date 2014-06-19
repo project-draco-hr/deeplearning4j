@@ -5,7 +5,7 @@
   ActivationFunction outputDerivative=outputLayer.getActivationFunction();
   DoubleMatrix delta;
   List<DoubleMatrix> activations=feedForward();
-  List<DoubleMatrix> rActivations=feedForwardROperator();
+  List<DoubleMatrix> rActivations=feedForwardR();
   List<DoubleMatrix> weights=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++) {
