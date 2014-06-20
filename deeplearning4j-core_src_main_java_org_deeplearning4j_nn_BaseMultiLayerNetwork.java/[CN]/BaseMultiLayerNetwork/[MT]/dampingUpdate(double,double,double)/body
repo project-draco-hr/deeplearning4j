@@ -1,0 +1,6 @@
+{
+  if (rho < 0.25 || Double.isNaN(rho)) {
+    this.dampingFactor*=boost;
+  }
+ else   if (rho > 0.75)   this.dampingFactor*=decrease;
+}

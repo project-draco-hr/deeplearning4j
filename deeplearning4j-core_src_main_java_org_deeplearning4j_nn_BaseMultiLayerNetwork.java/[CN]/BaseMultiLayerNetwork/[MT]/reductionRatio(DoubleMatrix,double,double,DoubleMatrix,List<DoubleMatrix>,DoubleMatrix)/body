@@ -1,0 +1,6 @@
+{
+  double denom=getBackPropRGradient().mul(0.5).mul(p).columnSums().sum() - gradient.mul(p).columnSums().sum();
+  double rho=(currScore - score) / denom;
+  if (score - currScore > 0)   return Double.NEGATIVE_INFINITY;
+  return rho;
+}
