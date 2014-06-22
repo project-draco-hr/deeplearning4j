@@ -21,6 +21,7 @@
     ret.setAdaGrad(wAdaGrad);
     ret.setLossFunction(lossFunction);
     ret.setOptimizationAlgorithm(optimizationAlgo);
+    ret.setConstrainGradientToUnitNorm(constrainGradientToUnitNorm);
     return ret;
   }
  catch (  Exception e) {

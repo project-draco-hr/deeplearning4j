@@ -4,6 +4,9 @@
   this.hBias=n.hBias;
   this.vBias=n.vBias;
   this.l2=n.l2;
+  this.dropOut=n.dropOut;
+  this.applySparsity=n.applySparsity;
+  this.momentumAfter=n.momentumAfter;
   this.useRegularization=n.useRegularization;
   this.momentum=n.momentum;
   this.nHidden=n.nHidden;
@@ -16,4 +19,5 @@
   this.optimizationAlgo=n.optimizationAlgo;
   this.lossFunction=n.lossFunction;
   this.cacheInput=n.cacheInput;
+  this.constrainGradientToUnitNorm=n.constrainGradientToUnitNorm;
 }

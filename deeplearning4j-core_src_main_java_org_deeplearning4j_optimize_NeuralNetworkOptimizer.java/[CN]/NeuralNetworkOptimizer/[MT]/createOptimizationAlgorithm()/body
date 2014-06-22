@@ -1,11 +1,11 @@
 {
   if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
-    ((VectorizedNonZeroStoppingConjugateGradient)opt).setTolerance(tolerance);
+    opt.setTolerance(tolerance);
   }
  else {
     opt=new VectorizedDeepLearningGradientAscent(this,this);
-    ((VectorizedDeepLearningGradientAscent)opt).setTolerance(tolerance);
+    opt.setTolerance(tolerance);
     if (maxStep > 0)     ((VectorizedDeepLearningGradientAscent)opt).setMaxStepSize(maxStep);
   }
 }

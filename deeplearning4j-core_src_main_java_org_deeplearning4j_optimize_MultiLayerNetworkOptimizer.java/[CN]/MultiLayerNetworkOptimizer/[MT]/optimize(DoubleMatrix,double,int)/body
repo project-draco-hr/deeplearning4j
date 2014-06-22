@@ -2,15 +2,15 @@
   network.getOutputLayer().setLabels(labels);
   network.feedForward();
   if (!network.isForceNumEpochs()) {
-    if (network.isShouldBackProp())     network.backProp(lr,epochs);
+    if (network.isShouldBackProp())     network.backProp(lr,iteration);
   }
  else {
-    log.info("Training for " + epochs + " epochs");
-    for (int i=0; i < epochs; i++) {
+    log.info("Training for " + iteration + " iteration");
+    for (int i=0; i < iteration; i++) {
       network.getOutputLayer().train(lr);
       if (i % network.getResetAdaGradIterations() == 0)       network.getOutputLayer().getAdaGrad().historicalGradient=null;
       log.info("Error on iteration " + i + " is  "+ network.score());
     }
-    if (network.isShouldBackProp())     network.backProp(lr,epochs);
+    if (network.isShouldBackProp())     network.backProp(lr,iteration);
   }
 }

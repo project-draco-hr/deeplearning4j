@@ -3,6 +3,7 @@
   reg.b=b.dup();
   reg.W=W.dup();
   reg.l2=this.l2;
+  reg.constrainGradientToUniNorm=this.constrainGradientToUniNorm;
   if (this.labels != null)   reg.labels=this.labels.dup();
   reg.nIn=this.nIn;
   reg.nOut=this.nOut;

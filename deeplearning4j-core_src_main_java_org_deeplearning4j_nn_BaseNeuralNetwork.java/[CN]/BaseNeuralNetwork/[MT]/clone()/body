@@ -20,6 +20,7 @@
     ret.setDist(getDist());
     ret.setAdaGrad(wAdaGrad);
     ret.setLossFunction(lossFunction);
+    ret.setConstrainGradientToUnitNorm(constrainGradientToUnitNorm);
     ret.setOptimizationAlgorithm(optimizationAlgo);
     return ret;
   }
