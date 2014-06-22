@@ -12,5 +12,9 @@
  else   dy.muli(lr);
   if (normalizeByInputRows)   dy.divi(input.rows);
   DoubleMatrix bGradient=dy;
+  if (constrainGradientToUniNorm) {
+    wGradient.divi(wGradient.norm2());
+    bGradient.divi(bGradient.norm2());
+  }
   return new OutputLayerGradient(wGradient,bGradient);
 }

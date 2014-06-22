@@ -38,6 +38,11 @@
     if (useAdaGrad)     wGradient.subi(W.mul(l2).mul(wLearningRates));
  else     wGradient.subi(W.mul(l2 * learningRate));
   }
+  if (constrainGradientToUnitNorm) {
+    wGradient.divi(wGradient.norm2());
+    vBiasGradient.divi(vBiasGradient.norm2());
+    hBiasGradient.divi(hBiasGradient.norm2());
+  }
   this.wGradient=wGradient;
   this.vBiasGradient=vBiasGradient;
   this.hBiasGradient=hBiasGradient;

@@ -1,0 +1,36 @@
+{
+  myName=Thread.currentThread().getName();
+  if (converged)   return true;
+  long last=System.currentTimeMillis();
+  long curr=0;
+  for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
+    curr=System.currentTimeMillis();
+    logger.info(myName + " ConjugateGradient: At iteration " + iterations+ ", cost = "+ fp+ " -"+ (curr - last));
+    last=curr;
+    double oldScore=network.score();
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(optimizable,listener);
+    g.optimize(numIterations);
+    if (network != null) {
+      double rho=network.reductionRatio(g.getH(),network.score(),oldScore,g.getG());
+      VectorizedBackTrackLineSearch search=new VectorizedBackTrackLineSearch(optimizable);
+      double newPoint=search.optimize(g.getXi(),1000,network.score());
+      this.fp=newPoint;
+    }
+    iterations++;
+    if (iterations > maxIterations) {
+      logger.info("Passed max number of iterations");
+      converged=true;
+      if (listener != null) {
+        listener.iterationDone(iterationCount);
+      }
+      return true;
+    }
+    if (listener != null) {
+      listener.iterationDone(iterationCount);
+    }
+    if (eval != null && eval.shouldStop(iterations)) {
+      return true;
+    }
+  }
+  return false;
+}

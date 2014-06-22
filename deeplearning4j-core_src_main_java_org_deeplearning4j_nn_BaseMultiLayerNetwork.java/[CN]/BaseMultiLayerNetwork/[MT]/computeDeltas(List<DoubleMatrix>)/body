@@ -27,5 +27,8 @@
       if (i > 0)       ix=ix.mmul(weightsPlusBias).mul(activationFunctions.get(i - 1).applyDerivative(activation)).div(input.rows);
     }
   }
-  for (int i=0; i < deltas.length; i++)   deltaRet.add(deltas[i]);
+  for (int i=0; i < deltas.length; i++) {
+    if (constrainGradientToUnitNorm)     deltaRet.add(deltas[i].divi(deltas[i].norm2()));
+ else     deltaRet.add(deltas[i]);
+  }
 }

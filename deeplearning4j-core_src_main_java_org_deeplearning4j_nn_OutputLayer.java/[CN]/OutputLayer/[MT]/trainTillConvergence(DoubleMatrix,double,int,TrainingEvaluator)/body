@@ -10,6 +10,12 @@
     g.setMaxIterations(numEpochs);
     g.optimize(numEpochs);
   }
+ else   if (optimizationAlgorithm == OptimizationAlgorithm.HESSIAN_FREE) {
+    StochasticHessianFree o=new StochasticHessianFree(opt,null);
+    o.setTolerance(1e-3);
+    o.setTrainingEvaluator(eval);
+    o.optimize(numEpochs);
+  }
  else {
     VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
     g.setTolerance(1e-3);

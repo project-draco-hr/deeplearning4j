@@ -1,6 +1,5 @@
 {
   network.getOutputLayer().setLabels(labels);
-  network.feedForward();
   if (!network.isForceNumEpochs()) {
     if (network.isShouldBackProp())     network.backProp(lr,iteration);
   }

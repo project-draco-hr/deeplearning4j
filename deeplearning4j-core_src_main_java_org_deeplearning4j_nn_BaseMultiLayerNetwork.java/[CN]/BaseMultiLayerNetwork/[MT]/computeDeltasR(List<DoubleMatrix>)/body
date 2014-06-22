@@ -28,5 +28,8 @@
       ;
     }
   }
-  for (int i=0; i < deltas.length; i++)   deltaRet.add(deltas[i]);
+  for (int i=0; i < deltas.length; i++) {
+    if (constrainGradientToUnitNorm)     deltaRet.add(deltas[i].divi(deltas[i].normmax()));
+ else     deltaRet.add(deltas[i]);
+  }
 }

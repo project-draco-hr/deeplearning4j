@@ -1,0 +1,5 @@
+{
+  DataSet next=iter.next();
+  next.setSecond(next.getFirst());
+  return next;
+}

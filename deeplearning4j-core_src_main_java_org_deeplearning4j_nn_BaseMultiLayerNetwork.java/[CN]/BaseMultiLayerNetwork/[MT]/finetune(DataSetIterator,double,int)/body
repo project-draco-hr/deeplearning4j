@@ -5,6 +5,7 @@
     if (data.getFirst() == null || data.getSecond() == null)     break;
     setInput(data.getFirst());
     setLabels(data.getSecond());
+    feedForward();
     this.fineTuneLearningRate=lr;
     optimizer=new MultiLayerNetworkOptimizer(this,lr);
     optimizer.optimize(data.getSecond(),lr,iterations);
