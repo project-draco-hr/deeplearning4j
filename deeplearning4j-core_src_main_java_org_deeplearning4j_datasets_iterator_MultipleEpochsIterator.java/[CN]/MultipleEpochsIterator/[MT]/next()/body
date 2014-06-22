@@ -2,8 +2,11 @@
   if (!iter.hasNext()) {
     if (passes < numPasses) {
       passes++;
+      batch=0;
+      log.info("Epoch " + passes + " batch "+ batch);
       iter.reset();
     }
   }
+  batch++;
   return iter.next();
 }
