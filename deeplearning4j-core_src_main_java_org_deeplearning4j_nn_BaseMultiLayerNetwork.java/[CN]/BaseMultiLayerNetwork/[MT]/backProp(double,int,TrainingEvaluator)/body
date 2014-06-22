@@ -1,4 +1,10 @@
 {
-  BackPropOptimizer opt=new BackPropOptimizer(this,lr,epochs);
-  opt.optimize(eval,epochs,lineSearchBackProp);
+  if (useGaussNewtonVectorProductBackProp) {
+    BackPropROptimizer opt=new BackPropROptimizer(this,lr,epochs);
+    opt.optimize(eval,epochs,lineSearchBackProp);
+  }
+ else {
+    BackPropOptimizer opt=new BackPropOptimizer(this,lr,epochs);
+    opt.optimize(eval,epochs,lineSearchBackProp);
+  }
 }

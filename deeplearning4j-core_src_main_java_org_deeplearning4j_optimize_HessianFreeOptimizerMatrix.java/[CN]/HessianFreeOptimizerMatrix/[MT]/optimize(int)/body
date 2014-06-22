@@ -43,7 +43,7 @@
     dgg=xi.mul(xi.sub(g)).sum();
     gam=dgg / gg;
     g=xi.dup();
-    h=xi.dup().add(h.mul(gam));
+    h=xi.add(h.mul(gam));
     assert(!MatrixUtil.isNaN(h));
     if (SimpleBlas.dot(xi,h) > 0) {
       xi=h.dup();

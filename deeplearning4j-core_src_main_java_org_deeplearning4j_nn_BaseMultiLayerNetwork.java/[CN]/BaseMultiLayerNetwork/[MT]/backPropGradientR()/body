@@ -1,20 +1,21 @@
 {
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
+  List<DoubleMatrix> deltas=new ArrayList<>();
   computeDeltasR(deltas);
+  List<Pair<DoubleMatrix,DoubleMatrix>> vWvB=new ArrayList<>();
+  for (int i=0; i < layers.length; i++) {
+    vWvB.add(new Pair<>(layers[i].getW(),layers[i].gethBias()));
+  }
+  vWvB.add(new Pair<>(outputLayer.getW(),outputLayer.getB()));
   List<Pair<DoubleMatrix,DoubleMatrix>> list=new ArrayList<>();
   for (int l=0; l < getnLayers(); l++) {
-    DoubleMatrix gradientChange=deltas.get(l).getFirst();
+    DoubleMatrix gradientChange=deltas.get(l);
     if (gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
-    DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+    DoubleMatrix deltaColumnSums=deltas.get(l).columnSums();
+    if (deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias change not equal to weight change");
     list.add(new Pair<>(gradientChange,deltaColumnSums));
   }
-  DoubleMatrix logLayerGradient=deltas.get(getnLayers()).getFirst();
-  DoubleMatrix biasGradient=deltas.get(getnLayers() + 1).getSecond().columnSums();
-  if (getOutputLayer().getB().length != biasGradient.length) {
-    DoubleMatrix add=DoubleMatrix.ones(getOutputLayer().getB().rows,getOutputLayer().getB().columns);
-    add.addi(biasGradient.sum());
-    biasGradient=add;
-  }
+  DoubleMatrix logLayerGradient=deltas.get(getnLayers());
+  DoubleMatrix biasGradient=deltas.get(getnLayers() + 1).columnSums();
   list.add(new Pair<>(logLayerGradient,biasGradient));
   return list;
 }

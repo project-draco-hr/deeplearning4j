@@ -60,4 +60,5 @@
       g.optimize(numEpochs);
     }
   }
+  network.getOutputLayer().trainTillConvergence(lr,numEpochs,eval);
 }

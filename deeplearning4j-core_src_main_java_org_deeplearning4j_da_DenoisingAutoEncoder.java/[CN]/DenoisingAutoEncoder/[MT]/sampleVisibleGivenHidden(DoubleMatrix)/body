@@ -1,4 +1,4 @@
 {
-  DoubleMatrix ret=this.getReconstructedInput(h);
+  DoubleMatrix ret=getReconstructedInput(h);
   return new Pair<>(ret,ret);
 }

@@ -1,11 +1,11 @@
 {
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=new ArrayList<>();
+  List<DoubleMatrix> deltas=new ArrayList<>();
   computeDeltas(deltas);
   for (int l=1; l < getnLayers(); l++) {
     ConvolutionalRBM r=(ConvolutionalRBM)getLayers()[l];
     ConvolutionalRBM prevR=(ConvolutionalRBM)getLayers()[l - 1];
-    FourDTensor wGradient=(FourDTensor)deltas.get(l).getFirst();
-    DoubleMatrix biasGradient=deltas.get(l).getSecond();
+    FourDTensor wGradient=(FourDTensor)deltas.get(l);
+    DoubleMatrix biasGradient=deltas.get(l).columnMeans();
     FourDTensorAdaGrad wAdaGrad=(FourDTensorAdaGrad)r.getAdaGrad();
     DoubleMatrix biasLearningRates=null;
     if (useAdaGrad)     biasLearningRates=layers[l].gethBiasAdaGrad().getLearningRates(biasGradient);
@@ -24,7 +24,7 @@
         }
       }
     }
-    DoubleMatrix gradientChange=deltas.get(l).getFirst();
+    DoubleMatrix gradientChange=deltas.get(l);
     if (isUseAdaGrad())     gradientChange.muli(getLayers()[l].getAdaGrad().getLearningRates(gradientChange));
  else     gradientChange.muli(lr);
     if (useRegularization)     gradientChange.muli(getLayers()[l].getW().mul(l2));
@@ -32,7 +32,7 @@
     if (isNormalizeByInputRows())     gradientChange.divi(input.rows);
     getLayers()[l].getW().subi(gradientChange);
     getSigmoidLayers()[l].setW(layers[l].getW());
-    DoubleMatrix deltaColumnSums=deltas.get(l + 1).getSecond().columnSums();
+    DoubleMatrix deltaColumnSums=deltas.get(l).columnMeans();
     if (sparsity != 0)     deltaColumnSums=MatrixUtil.scalarMinus(sparsity,deltaColumnSums);
     if (useAdaGrad)     deltaColumnSums.muli(layers[l].gethBiasAdaGrad().getLearningRates(deltaColumnSums));
  else     deltaColumnSums.muli(lr);
@@ -41,8 +41,8 @@
     getLayers()[l].gethBias().subi(deltaColumnSums);
     getSigmoidLayers()[l].setB(getLayers()[l].gethBias());
   }
-  DoubleMatrix logLayerGradient=deltas.get(getnLayers()).getFirst();
-  DoubleMatrix biasGradient=deltas.get(getnLayers()).getSecond().columnSums();
+  DoubleMatrix logLayerGradient=deltas.get(getnLayers());
+  DoubleMatrix biasGradient=deltas.get(getnLayers()).columnMeans();
   if (momentum != 0)   logLayerGradient.muli(momentum);
   if (useAdaGrad)   logLayerGradient.muli(outputLayer.getAdaGrad().getLearningRates(logLayerGradient));
  else   logLayerGradient.muli(lr);

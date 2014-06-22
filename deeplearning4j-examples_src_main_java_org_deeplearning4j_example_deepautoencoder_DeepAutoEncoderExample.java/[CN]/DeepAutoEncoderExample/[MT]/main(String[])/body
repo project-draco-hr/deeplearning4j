@@ -4,19 +4,22 @@
   Map<Integer,Double> layerLearningRates=new HashMap<>();
   layerLearningRates.put(codeLayer,1e-1);
   RandomGenerator rng=new MersenneTwister(123);
-  DBN dbn=new DBN.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{1000,500,250,30}).withRng(rng).useRBMPropUpAsActivation(true).activateForLayer(Collections.singletonMap(3,Activations.linear())).withHiddenUnitsByLayer(Collections.singletonMap(codeLayer,RBM.HiddenUnit.GAUSSIAN)).numberOfInputs(784).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).sampleFromHiddenActivations(true).forceEpochs().useRegularization(true).withL2(2e-5).resetAdaGradIterations(10).numberOfOutPuts(784).withMomentum(0.5).momentumAfter(Collections.singletonMap(10,0.9)).build();
+  DBN dbn=new DBN.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{1000,500,250,30}).withRng(rng).useRBMPropUpAsActivation(true).activateForLayer(Collections.singletonMap(3,Activations.linear())).withHiddenUnitsByLayer(Collections.singletonMap(codeLayer,RBM.HiddenUnit.GAUSSIAN)).numberOfInputs(784).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).sampleFromHiddenActivations(true).useRegularization(true).withL2(2e-5).resetAdaGradIterations(10).numberOfOutPuts(784).withMomentum(0.5).momentumAfter(Collections.singletonMap(10,0.9)).build();
   log.info("Training with layers of " + RBMUtil.architecture(dbn));
   log.info("Begin training ");
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.pretrain(next.getFirst(),1,1e-1,30);
+    dbn.pretrain(next.getFirst(),1,1e-1,1000);
   }
-  DeepAutoEncoder encoder=new DeepAutoEncoder.Builder().withEncoder(dbn).build();
   iter.reset();
-  encoder.setForceNumEpochs(true);
+  DeepAutoEncoder encoder=new DeepAutoEncoder.Builder().withEncoder(dbn).build();
+  encoder.setUseGaussNewtonVectorProductBackProp(false);
+  iter.reset();
+  encoder.setForceNumEpochs(false);
+  encoder.setLineSearchBackProp(false);
   while (iter.hasNext()) {
     DataSet data=iter.next();
-    encoder.finetune(data.getFirst(),1e-5,5000);
+    encoder.finetune(data.getFirst(),1e-3,1000);
   }
   iter.reset();
   while (iter.hasNext()) {

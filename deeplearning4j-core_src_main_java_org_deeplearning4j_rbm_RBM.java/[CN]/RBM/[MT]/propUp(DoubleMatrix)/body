@@ -1,6 +1,8 @@
 {
   if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=columnVariance(v).divi(input.rows);
-  DoubleMatrix preSig=v.mmul(W).addiRowVector(hBias);
+  DoubleMatrix preSig=v.mmul(W);
+  if (concatBiases)   preSig=DoubleMatrix.concatHorizontally(preSig,hBias);
+ else   preSig.addiRowVector(hBias);
   if (hiddenType == HiddenUnit.RECTIFIED) {
     max(0,preSig);
     return preSig;

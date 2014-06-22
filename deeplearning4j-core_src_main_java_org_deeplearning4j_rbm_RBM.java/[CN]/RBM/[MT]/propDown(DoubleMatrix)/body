@@ -1,20 +1,20 @@
 {
+  DoubleMatrix vMean=h.mmul(W.transpose());
+  if (concatBiases)   vMean=DoubleMatrix.concatHorizontally(vMean,vBias);
+ else   vMean.addiRowVector(vBias);
   if (visibleType == VisibleUnit.GAUSSIAN) {
-    DoubleMatrix vMean=h.mmul(W.transpose()).addRowVector(vBias);
     vMean.addi(normal(rng,vMean,1.0));
     return vMean;
   }
  else   if (visibleType == VisibleUnit.LINEAR) {
-    DoubleMatrix vMean=normal(getRng(),h.mmul(W.transpose()).addRowVector(vBias),1);
+    vMean=normal(getRng(),vMean,1);
     return vMean;
   }
  else   if (visibleType == VisibleUnit.BINARY) {
-    DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
-    return sigmoid(preSig);
+    return sigmoid(vMean);
   }
  else   if (visibleType == VisibleUnit.SOFTMAX) {
-    DoubleMatrix preSig=h.mmul(W.transpose()).addRowVector(vBias);
-    return softmax(preSig);
+    return softmax(vMean);
   }
   throw new IllegalStateException("Visible unit type should either be binary or gaussian");
 }

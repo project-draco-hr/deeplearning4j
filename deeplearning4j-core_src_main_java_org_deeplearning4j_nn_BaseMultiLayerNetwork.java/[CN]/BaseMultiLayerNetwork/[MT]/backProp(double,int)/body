@@ -1,4 +1,3 @@
 {
-  BackPropOptimizer opt=new BackPropOptimizer(this,lr,epochs);
-  opt.optimize(null,epochs,lineSearchBackProp);
+  backProp(lr,epochs,null);
 }

@@ -1,23 +1,11 @@
 {
-  DataSetIterator iter=new MnistDataSetIterator(100,100);
+  DataSetIterator iter=new MultipleEpochsIterator(50,new MnistDataSetIterator(10,10));
   DataSet ne=iter.next();
-  ne.filterAndStrip(new int[]{0,1});
-  iter=ne.iterator(10);
   RandomGenerator rng=new MersenneTwister(123);
-  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{600,500,400}).withRng(rng).numberOfInputs(784).numberOfOutPuts(2).withMomentum(0.5).build();
-  for (int i=0; i < 10; i++) {
-    while (iter.hasNext()) {
-      DataSet next=iter.next();
-      dbn.setInput(next.getFirst());
-      dbn.pretrain(next.getFirst(),new Object[]{1,1e-1,1000});
-    }
-    iter.reset();
-  }
-  while (iter.hasNext()) {
-    DataSet next=iter.next();
-    dbn.setInput(next.getFirst());
-    dbn.finetune(next.getSecond(),1e-1,1000);
-  }
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{600,500,400}).withRng(rng).useRegularization(true).withL2(2e-5).numberOfInputs(784).numberOfOutPuts(iter.totalOutcomes()).build();
+  dbn.pretrain(iter,1,1e-1,1);
+  iter.reset();
+  dbn.finetune(iter,1e-1,1);
   BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-dbn.bin"));
   dbn.write(bos);
   bos.flush();

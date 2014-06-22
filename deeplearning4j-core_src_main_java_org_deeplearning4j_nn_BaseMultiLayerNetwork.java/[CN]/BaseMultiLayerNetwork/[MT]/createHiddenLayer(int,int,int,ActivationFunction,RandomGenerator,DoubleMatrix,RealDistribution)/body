@@ -1,3 +1,3 @@
 {
-  return new HiddenLayer.Builder().nIn(nIn).nOut(nOut).withActivation(activationFunctionForLayer.get(index) != null ? activationFunctionForLayer.get(index) : activation).withRng(rng).withInput(layerInput).dist(dist).build();
+  return new HiddenLayer.Builder().nIn(nIn).nOut(nOut).concatBiases(concatBiases).withActivation(activationFunctionForLayer.get(index) != null ? activationFunctionForLayer.get(index) : activation).withRng(rng).withInput(layerInput).dist(dist).build();
 }

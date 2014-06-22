@@ -4,6 +4,8 @@
     Constructor<?> c=Dl4jReflection.getEmptyConstructor(clazz);
     c.setAccessible(true);
     ret=(E)c.newInstance();
+    ret.concatBiases=concatBiases;
+    ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
     ret.setUseDropConnect(useDropConnect);
     ret.setOutputLayerDropout(outputLayerDropout);
     ret.setResetAdaGradIterations(resetAdaGradIterations);

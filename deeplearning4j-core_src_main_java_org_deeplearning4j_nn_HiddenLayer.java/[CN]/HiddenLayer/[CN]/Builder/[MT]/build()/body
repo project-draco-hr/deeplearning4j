@@ -1,6 +1,7 @@
 {
   HiddenLayer ret=new HiddenLayer(nIn,nOut,W,b,rng,input);
   ret.activationFunction=activationFunction;
+  ret.concatBiases=concatBiases;
   ret.dist=dist;
   return ret;
 }

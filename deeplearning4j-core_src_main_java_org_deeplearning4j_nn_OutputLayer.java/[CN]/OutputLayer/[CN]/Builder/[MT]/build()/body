@@ -10,5 +10,6 @@
   ret.useAdaGrad=useAdaGrad;
   ret.lossFunction=lossFunction;
   ret.activationFunction=activationFunction;
+  ret.concatBiases=concatBiases;
   return ret;
 }

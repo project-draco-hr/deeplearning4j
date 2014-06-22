@@ -4,7 +4,7 @@
   Map<Integer,Double> layerLearningRates=new HashMap<>();
   layerLearningRates.put(codeLayer,1e-3);
   RandomGenerator rng=new MersenneTwister(123);
-  StackedDenoisingAutoEncoder dbn=new StackedDenoisingAutoEncoder.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{500,250,100,50,25,10}).withRng(rng).activateForLayer(Collections.singletonMap(3,Activations.sigmoid())).numberOfInputs(784).sampleFromHiddenActivations(true).lineSearchBackProp(false).useRegularization(true).forceEpochs().withL2(2e-4).withOutputActivationFunction(Activations.sigmoid()).numberOfOutPuts(784).withOutputLossFunction(OutputLayer.LossFunction.XENT).build();
+  StackedDenoisingAutoEncoder dbn=new StackedDenoisingAutoEncoder.Builder().learningRateForLayer(layerLearningRates).hiddenLayerSizes(new int[]{500,250,100,50,25,10}).withRng(rng).activateForLayer(Collections.singletonMap(3,Activations.sigmoid())).numberOfInputs(784).sampleFromHiddenActivations(true).lineSearchBackProp(false).useRegularization(true).forceEpochs().withL2(2e-4).withOutputActivationFunction(Activations.sigmoid()).numberOfOutPuts(784).withOutputLossFunction(OutputLayer.LossFunction.RMSE_XENT).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.pretrain(next.getFirst(),new Object[]{0.3,1e-1,1000});

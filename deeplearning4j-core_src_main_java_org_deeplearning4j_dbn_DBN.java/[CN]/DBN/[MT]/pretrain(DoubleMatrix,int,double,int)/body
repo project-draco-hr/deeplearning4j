@@ -1,4 +1,7 @@
 {
+  if (isUseGaussNewtonVectorProductBackProp()) {
+    log.warn("WARNING; Gauss newton back vector back propagation is primarily used for hessian free which does not involve pretrain; just finetune. Use this at your own risk");
+  }
   if (this.getInput() == null || this.getLayers() == null || this.getLayers()[0] == null || this.getSigmoidLayers() == null || this.getSigmoidLayers()[0] == null) {
     setInput(input);
     initializeLayers(input);

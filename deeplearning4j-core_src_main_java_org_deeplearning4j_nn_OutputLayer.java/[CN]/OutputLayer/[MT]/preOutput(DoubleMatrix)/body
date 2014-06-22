@@ -1,0 +1,8 @@
+{
+  if (x == null)   throw new IllegalArgumentException("No null input allowed");
+  this.input=x;
+  DoubleMatrix ret=this.input.mmul(W);
+  if (concatBiases)   ret=DoubleMatrix.concatHorizontally(ret,b);
+ else   ret.addiRowVector(b);
+  return ret;
+}

@@ -1,7 +1,8 @@
 {
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
   this.input=x;
-  DoubleMatrix ret=activationFunction.apply(this.input.mmul(W).addRowVector(b));
+  DoubleMatrix preOutput=preOutput(x);
+  DoubleMatrix ret=activationFunction.apply(preOutput);
   applyDropOutIfNecessary(ret);
   return ret;
 }

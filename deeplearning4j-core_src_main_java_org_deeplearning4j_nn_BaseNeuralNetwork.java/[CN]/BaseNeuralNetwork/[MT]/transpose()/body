@@ -4,6 +4,7 @@
     c.setAccessible(true);
     NeuralNetwork ret=(NeuralNetwork)c.newInstance();
     ret.setMomentumAfter(momentumAfter);
+    ret.setConcatBiases(concatBiases);
     ret.setResetAdaGradIterations(resetAdaGradIterations);
     ret.setVBiasAdaGrad(hBiasAdaGrad);
     ret.sethBias(vBias.dup());

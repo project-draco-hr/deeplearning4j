@@ -13,6 +13,7 @@
   reg.useAdaGrad=this.useAdaGrad;
   reg.setOptimizationAlgorithm(this.getOptimizationAlgorithm());
   reg.lossFunction=this.lossFunction;
+  reg.concatBiases=this.concatBiases;
   if (this.input != null)   reg.input=this.input.dup();
   return reg;
 }

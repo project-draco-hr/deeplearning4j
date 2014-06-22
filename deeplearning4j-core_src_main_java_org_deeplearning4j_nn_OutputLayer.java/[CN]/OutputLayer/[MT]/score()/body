@@ -2,7 +2,7 @@
   MatrixUtil.complainAboutMissMatchedMatrices(input,labels);
   DoubleMatrix z=output(input);
   double ret=0;
-  double reg=0.5 * l2 * MatrixFunctions.pow(this.W,2).sum();
+  double reg=0.5 * l2;
 switch (lossFunction) {
 case MCXENT:
     DoubleMatrix mcXEntLogZ=log(z);

@@ -7,6 +7,7 @@
   layer.activationFunction=activationFunction;
   layer.nOut=nIn;
   layer.nIn=nOut;
+  layer.concatBiases=concatBiases;
   layer.rng=rng;
   return layer;
 }
