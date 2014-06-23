@@ -1,0 +1,19 @@
+{
+  double[][] list=new double[layers.length * 2 + 2][];
+  double[][] list2=new double[layers.length * 2 + 2][];
+  int length=0;
+  List<Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>>> deltas=backPropGradientR2();
+  int deltaCount=0;
+  for (int i=0; i < list.length - 1; i+=2) {
+    list[i]=deltas.get(deltaCount).getFirst().getFirst().reshape(1,deltas.get(deltaCount).getFirst().getFirst().length).data;
+    list[i + 1]=deltas.get(deltaCount).getFirst().getSecond().reshape(1,deltas.get(deltaCount).getFirst().getSecond().length).data;
+    list2[i]=deltas.get(deltaCount).getSecond().getFirst().reshape(1,deltas.get(deltaCount).getFirst().getFirst().length).data;
+    list[i + 1]=deltas.get(deltaCount).getSecond().getSecond().reshape(1,deltas.get(deltaCount).getFirst().getSecond().length).data;
+    length+=deltas.get(deltaCount).getFirst().getFirst().length;
+    length+=list[i + 1].length;
+    deltaCount++;
+  }
+  double[] data=ArrayUtil.combine(list);
+  double[] data2=ArrayUtil.combine(list2);
+  return new Pair<>(new DoubleMatrix(data).reshape(1,length),new DoubleMatrix(data2).reshape(1,length));
+}

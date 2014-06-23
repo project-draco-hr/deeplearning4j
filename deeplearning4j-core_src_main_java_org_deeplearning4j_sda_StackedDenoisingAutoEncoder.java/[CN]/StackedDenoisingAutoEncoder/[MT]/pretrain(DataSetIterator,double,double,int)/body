@@ -36,7 +36,7 @@
         double realLearningRate=layerLearningRates.get(i) != null ? layerLearningRates.get(i) : lr;
         if (isForceNumEpochs()) {
           for (int iteration=0; iteration < iterations; iteration++) {
-            log.info("Error on epoch " + iteration + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
+            log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
             getLayers()[i].train(layerInput,realLearningRate,new Object[]{corruptionLevel,lr});
             getLayers()[i].iterationDone(iteration);
           }

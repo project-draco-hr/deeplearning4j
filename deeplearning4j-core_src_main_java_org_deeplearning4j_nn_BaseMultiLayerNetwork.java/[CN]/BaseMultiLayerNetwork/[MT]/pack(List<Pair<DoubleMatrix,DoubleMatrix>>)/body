@@ -1,0 +1,10 @@
+{
+  double[][] allMatrices=new double[layers.size() * 2][];
+  int count=0;
+  for (int i=0; i < layers.size(); i++) {
+    allMatrices[count++]=layers.get(i).getFirst().data;
+    allMatrices[count++]=layers.get(i).getSecond().data;
+  }
+  DoubleMatrix ret=new DoubleMatrix(ArrayUtil.combine(allMatrices));
+  return ret.reshape(1,ret.length);
+}

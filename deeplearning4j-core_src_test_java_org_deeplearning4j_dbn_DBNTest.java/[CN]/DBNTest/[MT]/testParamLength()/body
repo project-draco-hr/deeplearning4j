@@ -1,0 +1,12 @@
+{
+  double preTrainLr=0.01;
+  int preTrainEpochs=10000;
+  int k=1;
+  int nIns=4, nOuts=3;
+  int[] hiddenLayerSizes=new int[]{4,3,2};
+  double fineTuneLr=0.01;
+  int fineTuneEpochs=10000;
+  DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.tanh()).hiddenLayerSizes(hiddenLayerSizes).build();
+  DoubleMatrix params=dbn.params();
+  List<Pair<DoubleMatrix,DoubleMatrix>> unpacked=dbn.unPack(params);
+}

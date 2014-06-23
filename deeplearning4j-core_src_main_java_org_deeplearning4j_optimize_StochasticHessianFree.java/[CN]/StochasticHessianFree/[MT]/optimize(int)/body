@@ -2,6 +2,13 @@
   myName=Thread.currentThread().getName();
   if (converged)   return true;
   long last=System.currentTimeMillis();
+  List<DoubleMatrix> is=new ArrayList<>();
+  List<DoubleMatrix> xs=new ArrayList<>();
+  xi=optimizable.getValueGradient(0);
+  Pair<DoubleMatrix,DoubleMatrix> backward=multiLayerNetwork.getBackPropRGradient2();
+  DoubleMatrix gradient=backward.getFirst().neg();
+  DoubleMatrix precon=backward.getSecond();
+  DoubleMatrix r=multiLayerNetwork.getBackPropRGradient().sub(xi);
   long curr=0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     curr=System.currentTimeMillis();

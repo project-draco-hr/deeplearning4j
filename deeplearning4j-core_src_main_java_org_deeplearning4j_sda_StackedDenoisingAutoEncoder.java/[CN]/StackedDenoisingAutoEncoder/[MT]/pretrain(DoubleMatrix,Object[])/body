@@ -4,6 +4,6 @@
   }
   Double lr=(Double)otherParams[0];
   Double corruptionLevel=(Double)otherParams[1];
-  Integer epochs=(Integer)otherParams[2];
-  pretrain(input,lr,corruptionLevel,epochs);
+  Integer iterations=(Integer)otherParams[2];
+  pretrain(input,lr,corruptionLevel,iterations);
 }

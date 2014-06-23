@@ -1,0 +1,29 @@
+{
+  int numParams=numParams();
+  if (param.length != numParams)   throw new IllegalArgumentException("Parameter vector not equal of length to " + numParams);
+  List<Pair<DoubleMatrix,DoubleMatrix>> ret=new ArrayList<>();
+  int curr=0;
+  for (int i=0; i < layers.length; i++) {
+    int layerLength=layers[i].getW().length + layers[i].gethBias().length;
+    DoubleMatrix subMatrix=param.get(RangeUtils.all(),RangeUtils.interval(curr,curr + layerLength));
+    DoubleMatrix weightPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(0,layers[i].getW().length));
+    int beginHBias=layers[i].getW().length;
+    int endHbias=subMatrix.length;
+    DoubleMatrix hBiasPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(beginHBias,endHbias));
+    int layerLengthSum=weightPortion.length + hBiasPortion.length;
+    if (layerLengthSum != layerLength) {
+      if (hBiasPortion.length != layers[i].gethBias().length)       throw new IllegalStateException("Hidden bias on layer " + i + " was off");
+      if (weightPortion.length != layers[i].getW().length)       throw new IllegalStateException("Weight portion on layer " + i + " was off");
+    }
+    ret.add(new Pair<>(weightPortion,hBiasPortion));
+    curr+=layerLength;
+  }
+  int outputLayerWeightLength=outputLayer.getW().length;
+  int biasLength=outputLayer.getB().length;
+  int layerLength=outputLayerWeightLength + biasLength;
+  DoubleMatrix subMatrix=param.get(RangeUtils.all(),RangeUtils.interval(curr,curr + layerLength));
+  DoubleMatrix weightPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(0,outputLayer.getW().length));
+  DoubleMatrix hBiasPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(weightPortion.length,subMatrix.length));
+  ret.add(new Pair<>(weightPortion,hBiasPortion));
+  return ret;
+}
