@@ -1,3 +1,3 @@
 {
-  System.arraycopy(network.getBackPropRGradient().data,0,buffer,0,buffer.length);
+  System.arraycopy(network.getBackPropRGradient(h.xi).data,0,buffer,0,buffer.length);
 }

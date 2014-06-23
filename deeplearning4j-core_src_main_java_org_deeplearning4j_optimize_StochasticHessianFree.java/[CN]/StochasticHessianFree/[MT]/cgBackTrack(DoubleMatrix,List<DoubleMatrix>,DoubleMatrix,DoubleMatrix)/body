@@ -1,0 +1,13 @@
+{
+  double score=network.score(p.add(xi));
+  int i=chs.size() - 2;
+  for (; i >= 0; i--) {
+    double score2=network.score(xi.add(chs.get(i)));
+    if (score2 < score) {
+      i++;
+      break;
+    }
+    score=score2;
+  }
+  return new Pair<>(chs.get(i),score);
+}

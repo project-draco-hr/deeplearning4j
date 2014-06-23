@@ -1,0 +1,36 @@
+{
+  List<Integer> is=new ArrayList<>();
+  List<DoubleMatrix> xs=new ArrayList<>();
+  xi=optimizable.getValueGradient(0);
+  Pair<DoubleMatrix,DoubleMatrix> backward=multiLayerNetwork.getBackPropRGradient2();
+  DoubleMatrix gradient=backward.getFirst().neg();
+  DoubleMatrix precon=backward.getSecond();
+  DoubleMatrix r=multiLayerNetwork.getBackPropRGradient(ch).sub(xi);
+  DoubleMatrix y=r.div(precon);
+  DoubleMatrix p=y.neg();
+  DoubleMatrix x=xi;
+  double deltaNew=r.mul(y).sum();
+  long curr=0;
+  for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
+    DoubleMatrix Ap=network.getBackPropRGradient(p);
+    double pAp=p.mul(Ap).sum();
+    if (pAp < 0)     throw new IllegalStateException("Negative curature!");
+    double alpha=deltaNew / pAp;
+    x.addi(p.mul(alpha));
+    DoubleMatrix rNew=r.add(alpha).mul(Ap);
+    DoubleMatrix yNew=rNew.div(precon);
+    double deltaOld=deltaNew;
+    deltaNew=rNew.mul(yNew).sum();
+    double beta=deltaNew / deltaOld;
+    p=yNew.neg().add(beta).mul(p);
+    r=rNew;
+    y=yNew;
+    is.add(iterationCount);
+    xs.add(x);
+    curr=System.currentTimeMillis();
+    if (listener != null) {
+      listener.iterationDone(iterationCount);
+    }
+  }
+  return new Pair<>(is,xs);
+}

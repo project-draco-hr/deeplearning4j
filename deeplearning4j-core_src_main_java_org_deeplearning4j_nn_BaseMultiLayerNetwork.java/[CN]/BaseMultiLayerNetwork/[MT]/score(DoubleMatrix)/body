@@ -1,0 +1,5 @@
+{
+  double ret=outputLayer.score();
+  double regCost=0.5 * l2 * MatrixFunctions.pow(mask.mul(param),2).sum();
+  return ret + regCost;
+}

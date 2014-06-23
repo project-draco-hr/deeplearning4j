@@ -55,7 +55,7 @@
       g.optimize(numEpochs);
     }
  else     if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE) {
-      StochasticHessianFree h=new StochasticHessianFree(this,network);
+      h=new StochasticHessianFree(this,network);
       h.setTrainingEvaluator(eval);
       h.optimize(numEpochs);
     }

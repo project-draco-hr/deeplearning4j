@@ -1,43 +1,12 @@
 {
   myName=Thread.currentThread().getName();
   if (converged)   return true;
-  long last=System.currentTimeMillis();
-  List<DoubleMatrix> is=new ArrayList<>();
-  List<DoubleMatrix> xs=new ArrayList<>();
-  xi=optimizable.getValueGradient(0);
-  Pair<DoubleMatrix,DoubleMatrix> backward=multiLayerNetwork.getBackPropRGradient2();
-  DoubleMatrix gradient=backward.getFirst().neg();
-  DoubleMatrix precon=backward.getSecond();
-  DoubleMatrix r=multiLayerNetwork.getBackPropRGradient().sub(xi);
-  long curr=0;
-  for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
-    curr=System.currentTimeMillis();
-    logger.info(myName + " ConjugateGradient: At iteration " + iterations+ ", cost = "+ fp+ " -"+ (curr - last));
-    last=curr;
-    double oldScore=network.score();
-    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(optimizable,listener);
-    g.optimize(numIterations);
-    if (network != null) {
-      double rho=network.reductionRatio(g.getH(),network.score(),oldScore,g.getG());
-      VectorizedBackTrackLineSearch search=new VectorizedBackTrackLineSearch(optimizable);
-      double newPoint=search.optimize(g.getXi(),1000,network.score());
-      this.fp=newPoint;
-    }
-    iterations++;
-    if (iterations > maxIterations) {
-      logger.info("Passed max number of iterations");
-      converged=true;
-      if (listener != null) {
-        listener.iterationDone(iterationCount);
-      }
-      return true;
-    }
-    if (listener != null) {
-      listener.iterationDone(iterationCount);
-    }
-    if (eval != null && eval.shouldStop(iterations)) {
-      return true;
-    }
-  }
-  return false;
+  Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(numIterations);
+  Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getFirst(),cg.getSecond(),network.getInput(),network.getLabels());
+  double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),xi);
+  VectorizedBackTrackLineSearch l=new VectorizedBackTrackLineSearch(optimizable);
+  double step=l.optimize(cg.getFirst(),numIterations,rho);
+  network.dampingUpdate(rho,boost,decrease);
+  xi.addi(cgBackTrack.getFirst().mul(step * network.getLearningRateUpdate()));
+  return true;
 }
