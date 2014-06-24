@@ -9,12 +9,17 @@
   double deltaNew=r.mul(y).sum();
   long curr=0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
-    DoubleMatrix Ap=network.getBackPropRGradient(p);
-    double pAp=p.mul(Ap).sum();
-    if (pAp < 0 || Double.isNaN(pAp) || Double.isInfinite(pAp)) {
-      log.warn("Bad pap breaking");
+    if (MatrixUtil.isNaN(p)) {
+      log.warn("Bad p NaN breaking");
       break;
     }
+    DoubleMatrix Ap=network.getBackPropRGradient(p);
+    if (MatrixUtil.isNaN(Ap)) {
+      log.warn("Bad Ap; NaN breaking");
+      break;
+    }
+    double pAp=p.mul(Ap).sum();
+    if (pAp < 0)     log.warn("Negative curve!");
     log.info("Iteration " + iterationCount);
     double alpha=deltaNew / pAp;
     if (Double.isNaN(alpha) || Double.isInfinite(alpha)) {
@@ -22,13 +27,13 @@
       break;
     }
     x.addi(p.mul(alpha));
-    DoubleMatrix rNew=r.add(alpha).mul(Ap);
+    DoubleMatrix rNew=r.add(Ap.mul(alpha));
     DoubleMatrix yNew=rNew.div(preCon);
     double deltaOld=deltaNew;
     deltaNew=rNew.mul(yNew).sum();
     double beta=deltaNew / deltaOld;
-    p=yNew.neg().add(beta).mul(p);
-    r=rNew;
+    p=yNew.neg().add(p.mul(beta));
+    c r=rNew;
     y=yNew;
     is.add(iterationCount);
     xs.add(x.dup());

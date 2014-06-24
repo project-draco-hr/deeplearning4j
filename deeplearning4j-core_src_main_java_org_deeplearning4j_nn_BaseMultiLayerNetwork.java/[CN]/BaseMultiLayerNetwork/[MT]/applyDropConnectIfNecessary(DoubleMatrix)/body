@@ -1,6 +1,6 @@
 {
   if (useDropConnect) {
-    DoubleMatrix mask=MatrixUtil.binomial(MatrixUtil.valueMatrixOf(0.5,input.rows,input.columns),1,rng);
+    DoubleMatrix mask=binomial(valueMatrixOf(0.5,input.rows,input.columns),1,rng);
     input.muli(mask);
     if (l2 > 0)     input.muli(l2);
   }

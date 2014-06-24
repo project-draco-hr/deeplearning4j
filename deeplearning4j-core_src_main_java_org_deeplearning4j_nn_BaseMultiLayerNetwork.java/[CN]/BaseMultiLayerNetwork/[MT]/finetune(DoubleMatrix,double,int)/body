@@ -1,7 +1,7 @@
 {
   this.labels=labels;
   feedForward();
-  MatrixUtil.complainAboutMissMatchedMatrices(labels,outputLayer.getInput());
+  complainAboutMissMatchedMatrices(labels,outputLayer.getInput());
   if (labels != null)   this.labels=labels;
   this.fineTuneLearningRate=lr;
   optimizer=new MultiLayerNetworkOptimizer(this,lr);

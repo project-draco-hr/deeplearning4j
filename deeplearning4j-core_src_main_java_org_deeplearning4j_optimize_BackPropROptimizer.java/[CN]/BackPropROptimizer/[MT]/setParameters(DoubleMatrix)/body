@@ -13,5 +13,4 @@
   int rows=network.getOutputLayer().getW().rows, columns=network.getOutputLayer().getW().columns;
   network.getOutputLayer().setW(w.reshape(rows,columns));
   network.getOutputLayer().setB(bias.reshape(network.getOutputLayer().getB().rows,network.getOutputLayer().getB().columns));
-  network.getOutputLayer().trainTillConvergence(lr,epochs);
 }

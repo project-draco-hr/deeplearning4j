@@ -1,0 +1,5 @@
+{
+  feedForward(data.getFirst());
+  setLabels(data.getSecond());
+  return score();
+}

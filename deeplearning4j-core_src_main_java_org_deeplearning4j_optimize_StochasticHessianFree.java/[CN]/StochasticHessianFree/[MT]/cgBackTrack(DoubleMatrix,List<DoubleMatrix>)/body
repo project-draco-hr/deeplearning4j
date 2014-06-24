@@ -10,5 +10,9 @@
     }
     score=score2;
   }
-  return new Pair<>(chs.get(i),score);
+  if (chs.isEmpty()) {
+    log.warn("No chs; exiting with old ch value");
+  }
+  DoubleMatrix ret=!chs.isEmpty() && i >= 0 ? chs.get(i) : ch;
+  return new Pair<>(ret,score);
 }
