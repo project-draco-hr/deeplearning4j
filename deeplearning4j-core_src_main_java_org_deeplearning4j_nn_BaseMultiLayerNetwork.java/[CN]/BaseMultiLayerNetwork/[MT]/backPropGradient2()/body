@@ -1,0 +1,31 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=computeDeltas2();
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltas2=computeDeltas2();
+  List<Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>>> list=new ArrayList<>();
+  List<Pair<DoubleMatrix,DoubleMatrix>> grad=new ArrayList<>();
+  List<Pair<DoubleMatrix,DoubleMatrix>> preCon=new ArrayList<>();
+  for (int l=0; l < deltas.size(); l++) {
+    DoubleMatrix gradientChange=deltas.get(l).getFirst();
+    DoubleMatrix preConGradientChange=deltas.get(l).getSecond();
+    if (l < getLayers().length && gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
+ else     if (l == getLayers().length && gradientChange.length != outputLayer.getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
+    DoubleMatrix deltaColumnSums=deltas.get(l).getFirst().columnSums();
+    DoubleMatrix preConColumnSums=deltas.get(l).getSecond().columnSums();
+    grad.add(new Pair<>(gradientChange,deltaColumnSums));
+    preCon.add(new Pair<>(preConGradientChange,preConColumnSums));
+    if (l < getLayers().length && deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias change not equal to weight change");
+ else     if (l == getLayers().length && deltaColumnSums.length != outputLayer.getB().length)     throw new IllegalStateException("Bias change not equal to weight change");
+  }
+  DoubleMatrix g=pack(grad);
+  DoubleMatrix con=pack(preCon);
+  DoubleMatrix theta=params();
+  if (mask == null)   initMask();
+  g.addi(theta.mul(l2).mul(mask));
+  con.addi(MatrixFunctions.powi(mask.mul(l2).add(DoubleMatrix.ones(g.rows,g.columns).mul(dampingFactor)),3.0 / 4.0));
+  List<Pair<DoubleMatrix,DoubleMatrix>> gUnpacked=unPack(g);
+  List<Pair<DoubleMatrix,DoubleMatrix>> conUnpacked=unPack(con);
+  for (int i=0; i < gUnpacked.size(); i++) {
+    list.add(new Pair<>(gUnpacked.get(i),conUnpacked.get(i)));
+  }
+  return list;
+}

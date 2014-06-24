@@ -15,7 +15,7 @@
       if (hBiasPortion.length != layers[i].gethBias().length)       throw new IllegalStateException("Hidden bias on layer " + i + " was off");
       if (weightPortion.length != layers[i].getW().length)       throw new IllegalStateException("Weight portion on layer " + i + " was off");
     }
-    ret.add(new Pair<>(weightPortion,hBiasPortion));
+    ret.add(new Pair<>(weightPortion.reshape(layers[i].getW().rows,layers[i].getW().columns),hBiasPortion.reshape(layers[i].gethBias().rows,layers[i].gethBias().columns)));
     curr+=layerLength;
   }
   int outputLayerWeightLength=outputLayer.getW().length;
@@ -24,6 +24,6 @@
   DoubleMatrix subMatrix=param.get(RangeUtils.all(),RangeUtils.interval(curr,curr + layerLength));
   DoubleMatrix weightPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(0,outputLayer.getW().length));
   DoubleMatrix hBiasPortion=subMatrix.get(RangeUtils.all(),RangeUtils.interval(weightPortion.length,subMatrix.length));
-  ret.add(new Pair<>(weightPortion,hBiasPortion));
+  ret.add(new Pair<>(weightPortion.reshape(outputLayer.getW().rows,outputLayer.getW().columns),hBiasPortion.reshape(outputLayer.getB().rows,outputLayer.getB().columns)));
   return ret;
 }

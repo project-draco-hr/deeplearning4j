@@ -9,7 +9,7 @@
       AutoEncoder a=(AutoEncoder)getLayers()[i];
       derivative=a.getAct();
     }
-    DoubleMatrix currR=R.get(i).mmul(layers[i].getW());
+    DoubleMatrix currR=R.get(i).mmul(vWvB.get(i).getFirst());
     DoubleMatrix nextAct=acts.get(i + 1);
     DoubleMatrix currAct=acts.get(i);
     DoubleMatrix secondFigure=currAct.mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond()));

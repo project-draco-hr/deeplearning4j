@@ -1,0 +1,41 @@
+{
+  List<Integer> is=new ArrayList<>();
+  List<DoubleMatrix> xs=new ArrayList<>();
+  if (xi == null)   setup();
+  DoubleMatrix r=network.getBackPropRGradient(ch).sub(grad);
+  DoubleMatrix y=r.div(preCon);
+  p=y.neg();
+  DoubleMatrix x=ch.dup();
+  double deltaNew=r.mul(y).sum();
+  long curr=0;
+  for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
+    DoubleMatrix Ap=network.getBackPropRGradient(p);
+    double pAp=p.mul(Ap).sum();
+    if (pAp < 0 || Double.isNaN(pAp) || Double.isInfinite(pAp)) {
+      log.warn("Bad pap breaking");
+      break;
+    }
+    log.info("Iteration " + iterationCount);
+    double alpha=deltaNew / pAp;
+    if (Double.isNaN(alpha) || Double.isInfinite(alpha)) {
+      log.warn("bad alpha breaking");
+      break;
+    }
+    x.addi(p.mul(alpha));
+    DoubleMatrix rNew=r.add(alpha).mul(Ap);
+    DoubleMatrix yNew=rNew.div(preCon);
+    double deltaOld=deltaNew;
+    deltaNew=rNew.mul(yNew).sum();
+    double beta=deltaNew / deltaOld;
+    p=yNew.neg().add(beta).mul(p);
+    r=rNew;
+    y=yNew;
+    is.add(iterationCount);
+    xs.add(x.dup());
+    curr=System.currentTimeMillis();
+    if (listener != null) {
+      listener.iterationDone(iterationCount);
+    }
+  }
+  return new Pair<>(is,xs);
+}

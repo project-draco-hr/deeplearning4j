@@ -4,7 +4,8 @@
   DataSet d=fetcher.next();
   DBN dbn=new DBN.Builder().withActivation(Activations.sigmoid()).hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0.5).normalizeByInputRows(true).numberOfInputs(784).useAdaGrad(true).numberOfOutPuts(2).build();
   dbn.setInput(d.getFirst());
-  List<DoubleMatrix> activations=dbn.feedForwardR();
+  DoubleMatrix params=dbn.params();
+  List<DoubleMatrix> activations=dbn.feedForwardR(params);
   List<DoubleMatrix> activationsNorm=dbn.feedForward();
   assertEquals(activations.size(),activationsNorm.size());
 }

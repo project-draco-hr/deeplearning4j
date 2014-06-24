@@ -1,7 +1,7 @@
 {
   DoubleMatrix[] deltas=new DoubleMatrix[getnLayers() + 2];
   List<DoubleMatrix> activations=feedForward();
-  List<DoubleMatrix> rActivations=feedForwardR();
+  List<DoubleMatrix> rActivations=feedForwardR(v);
   List<DoubleMatrix> weights=new ArrayList<>();
   List<DoubleMatrix> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
@@ -29,7 +29,7 @@
     }
   }
   for (int i=0; i < deltas.length; i++) {
-    if (constrainGradientToUnitNorm)     deltaRet.add(deltas[i].divi(deltas[i].normmax()));
+    if (constrainGradientToUnitNorm)     deltaRet.add(deltas[i].divi(deltas[i].norm2()));
  else     deltaRet.add(deltas[i]);
   }
 }

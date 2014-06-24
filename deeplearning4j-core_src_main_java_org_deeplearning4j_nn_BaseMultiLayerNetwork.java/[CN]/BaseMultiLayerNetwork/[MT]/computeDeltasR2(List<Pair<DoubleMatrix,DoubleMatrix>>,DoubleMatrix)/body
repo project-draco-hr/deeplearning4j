@@ -1,4 +1,5 @@
 {
+  if (mask == null)   initMask();
   DoubleMatrix[] deltas=new DoubleMatrix[getnLayers() + 2];
   DoubleMatrix[] preCons=new DoubleMatrix[getnLayers() + 2];
   List<DoubleMatrix> activations=feedForward();
@@ -19,16 +20,17 @@
     if (i >= getnLayers() + 1) {
       deltas[i]=rix;
       preCons[i]=MatrixFunctions.pow(rix,2);
+      preCons[i].addi(MatrixFunctions.pow(DoubleMatrix.ones(1,preCons[i].length).mul(dampingFactor).add(DoubleMatrix.ones(1,preCons[i].length).mul(l2)),3.0 / 4.0));
       applyDropConnectIfNecessary(deltas[i]);
     }
  else {
       deltas[i]=activations.get(i).transpose().mmul(rix);
       preCons[i]=MatrixFunctions.pow(activations.get(i).transpose(),2).mmul(MatrixFunctions.pow(rix,2));
+      preCons[i].addi(MatrixFunctions.pow(DoubleMatrix.ones(1,preCons[i].length).mul(dampingFactor).add(DoubleMatrix.ones(1,preCons[i].length).mul(l2)),3.0 / 4.0));
       applyDropConnectIfNecessary(deltas[i]);
       DoubleMatrix weightsPlusBias=weights.get(i).addRowVector(biases.get(i).transpose()).transpose();
       DoubleMatrix activation=activations.get(i);
       if (i > 0)       rix=rix.mmul(weightsPlusBias).mul(activationFunctions.get(i - 1).applyDerivative(activation)).div(input.rows);
-      ;
     }
   }
   for (int i=0; i < deltas.length; i++) {

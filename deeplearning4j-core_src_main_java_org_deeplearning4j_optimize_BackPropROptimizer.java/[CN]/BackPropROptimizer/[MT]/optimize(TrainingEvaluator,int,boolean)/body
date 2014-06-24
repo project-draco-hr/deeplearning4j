@@ -6,7 +6,7 @@
     if (network.isForceNumEpochs()) {
       for (int i=0; i < epochs; i++) {
         if (i % network.getResetAdaGradIterations() == 0)         network.getOutputLayer().getAdaGrad().historicalGradient=null;
-        network.backPropStepR();
+        network.backPropStepR(null);
         log.info("Iteration " + i + " error "+ network.score());
       }
     }
@@ -21,7 +21,7 @@
           break;
         }
         count++;
-        network.backPropStepR();
+        network.backPropStepR(null);
         Double entropy=network.score();
         if (lastEntropy == null || entropy < lastEntropy) {
           double diff=Math.abs(entropy - lastEntropy);
