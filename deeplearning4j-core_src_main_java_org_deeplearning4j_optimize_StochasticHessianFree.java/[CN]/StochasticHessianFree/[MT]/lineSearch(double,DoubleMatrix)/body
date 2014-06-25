@@ -1,0 +1,12 @@
+{
+  double rate=1.0;
+  double c=1e-2;
+  int j=0;
+  while (j < 60) {
+    if (newScore <= gradient.mul(p).mul(score + c * rate).sum())     break;
+ else     rate*=0.8;
+    newScore=network.score(params.add(p.mul(rate)));
+  }
+  if (j == 60)   rate=0.0;
+  return rate;
+}

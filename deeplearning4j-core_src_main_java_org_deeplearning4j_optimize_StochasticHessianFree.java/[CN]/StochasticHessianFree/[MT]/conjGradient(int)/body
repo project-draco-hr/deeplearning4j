@@ -1,19 +1,14 @@
 {
   List<Integer> is=new ArrayList<>();
   List<DoubleMatrix> xs=new ArrayList<>();
-  if (xi == null)   setup();
-  DoubleMatrix r=network.getBackPropRGradient(ch).sub(grad);
+  DoubleMatrix r=network.getBackPropRGradient(ch).sub(gradient);
   DoubleMatrix y=r.div(preCon);
   p=y.neg();
   DoubleMatrix x=ch.dup();
   double deltaNew=r.mul(y).sum();
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     DoubleMatrix Ap=network.getBackPropRGradient(p);
-    if (MatrixUtil.isNaN(Ap)) {
-      log.warn("Bad Ap; NaN breaking");
-      break;
-    }
-    double pAp=p.mul(Ap).sum();
+    double pAp=Ap.mul(p).sum();
     if (pAp < 0)     log.warn("Negative curve!");
     log.info("Iteration " + iterationCount);
     double alpha=deltaNew / pAp;
@@ -25,12 +20,8 @@
     double beta=deltaNew / deltaOld;
     p=yNew.neg().add(p.mul(beta));
     r=rNew;
-    y=yNew;
     is.add(iterationCount);
     xs.add(x);
-    if (listener != null) {
-      listener.iterationDone(iterationCount);
-    }
   }
   return new Pair<>(is,xs);
 }
