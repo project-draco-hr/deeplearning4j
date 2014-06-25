@@ -14,8 +14,7 @@
   DoubleMatrix biasGradient=deltas.get(getnLayers()).columnSums();
   list.add(new Pair<>(logLayerGradient,biasGradient));
   DoubleMatrix pack=pack(list);
-  if (l2 > 0)   pack.addi(mask.mul(v).mul(l2));
- else   pack.addi(mask.mul(v));
+  if (l2 > 0)   pack.addi(mask.mul(v).mul(l2 > 0 ? l2 : 1.0));
   pack.addi(v.mul(dampingFactor));
   return unPack(pack);
 }

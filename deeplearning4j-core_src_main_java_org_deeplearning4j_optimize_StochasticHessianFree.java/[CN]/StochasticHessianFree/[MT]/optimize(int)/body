@@ -29,7 +29,7 @@
       score=network.score();
       xi=params.dup();
       revert=network.clone();
-      optimizable.setParameters(params);
+      network.setParameters(params);
       log.info("New score " + score);
     }
  else {

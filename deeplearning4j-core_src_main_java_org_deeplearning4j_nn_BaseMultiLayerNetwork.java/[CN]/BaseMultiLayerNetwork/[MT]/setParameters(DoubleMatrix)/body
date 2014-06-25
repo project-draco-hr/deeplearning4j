@@ -1,0 +1,16 @@
+{
+  for (int i=0; i < getLayers().length; i++) {
+    ParamRange range=startIndexForLayer(i);
+    DoubleMatrix w=params.get(RangeUtils.all(),RangeUtils.interval(range.getwStart(),range.getwEnd()));
+    DoubleMatrix bias=params.get(RangeUtils.all(),RangeUtils.interval(range.getBiasStart(),range.getBiasEnd()));
+    int rows=getLayers()[i].getW().rows, columns=getLayers()[i].getW().columns;
+    getLayers()[i].setW(w.reshape(rows,columns));
+    getLayers()[i].sethBias(bias.reshape(getLayers()[i].gethBias().rows,getLayers()[i].gethBias().columns));
+  }
+  ParamRange range=startIndexForLayer(getLayers().length);
+  DoubleMatrix w=params.get(RangeUtils.all(),RangeUtils.interval(range.getwStart(),range.getwEnd()));
+  DoubleMatrix bias=params.get(RangeUtils.all(),RangeUtils.interval(range.getBiasStart(),range.getBiasEnd()));
+  int rows=getOutputLayer().getW().rows, columns=getOutputLayer().getW().columns;
+  getOutputLayer().setW(w.reshape(rows,columns));
+  getOutputLayer().setB(bias.reshape(getOutputLayer().getB().rows,getOutputLayer().getB().columns));
+}

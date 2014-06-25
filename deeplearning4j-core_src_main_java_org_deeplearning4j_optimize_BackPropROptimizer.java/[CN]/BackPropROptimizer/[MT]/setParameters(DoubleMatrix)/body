@@ -1,16 +1,3 @@
 {
-  for (int i=0; i < network.getLayers().length; i++) {
-    ParamRange range=startIndexForLayer(i);
-    DoubleMatrix w=params.get(RangeUtils.all(),RangeUtils.interval(range.getwStart(),range.getwEnd()));
-    DoubleMatrix bias=params.get(RangeUtils.all(),RangeUtils.interval(range.getBiasStart(),range.getBiasEnd()));
-    int rows=network.getLayers()[i].getW().rows, columns=network.getLayers()[i].getW().columns;
-    network.getLayers()[i].setW(w.reshape(rows,columns));
-    network.getLayers()[i].sethBias(bias.reshape(network.getLayers()[i].gethBias().rows,network.getLayers()[i].gethBias().columns));
-  }
-  ParamRange range=startIndexForLayer(network.getLayers().length);
-  DoubleMatrix w=params.get(RangeUtils.all(),RangeUtils.interval(range.getwStart(),range.getwEnd()));
-  DoubleMatrix bias=params.get(RangeUtils.all(),RangeUtils.interval(range.getBiasStart(),range.getBiasEnd()));
-  int rows=network.getOutputLayer().getW().rows, columns=network.getOutputLayer().getW().columns;
-  network.getOutputLayer().setW(w.reshape(rows,columns));
-  network.getOutputLayer().setB(bias.reshape(network.getOutputLayer().getB().rows,network.getOutputLayer().getB().columns));
+  network.setParameters(params);
 }
