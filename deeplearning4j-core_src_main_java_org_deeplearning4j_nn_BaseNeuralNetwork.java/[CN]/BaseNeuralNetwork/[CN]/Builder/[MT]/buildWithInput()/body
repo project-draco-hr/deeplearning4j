@@ -8,6 +8,8 @@
       try {
         ret=(E)curr.newInstance(input,numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
         ret.cacheInput=cacheInput;
+        ret.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
+        ret.weightInit=weightInit;
         ret.concatBiases=concatBiases;
         ret.sparsity=this.sparsity;
         ret.resetAdaGradIterations=resetAdaGradIterations;

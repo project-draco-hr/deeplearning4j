@@ -9,7 +9,7 @@
     if (l < getLayers().length && gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
  else     if (l == getLayers().length && gradientChange.length != outputLayer.getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
     DoubleMatrix deltaColumnSums=deltas.get(l).getFirst().columnSums();
-    DoubleMatrix preConColumnSums=deltas.get(l).getSecond().columnSums();
+    DoubleMatrix preConColumnSums=deltas.get(l).getSecond().columnSums().div(input.rows);
     grad.add(new Pair<>(gradientChange,deltaColumnSums));
     preCon.add(new Pair<>(preConGradientChange,preConColumnSums));
     if (l < getLayers().length && deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias change not equal to weight change");

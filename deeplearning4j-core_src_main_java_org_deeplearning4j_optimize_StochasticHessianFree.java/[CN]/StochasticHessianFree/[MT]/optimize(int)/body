@@ -4,10 +4,12 @@
   score=network.score();
   xi=optimizable.getParameters();
   BaseMultiLayerNetwork revert=network.clone();
-  for (int i=0; i < 1000; i++) {
+  for (int i=0; i < numIterations; i++) {
     Pair<DoubleMatrix,DoubleMatrix> backPropGradient=network.getBackPropGradient2();
     gradient=backPropGradient.getFirst().neg();
+    log.info("Gradient mean " + gradient.mean());
     preCon=backPropGradient.getSecond();
+    log.info("precon mean " + preCon.mean());
     if (ch == null)     setup();
     ch.muli(pi);
     Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(numIterations);

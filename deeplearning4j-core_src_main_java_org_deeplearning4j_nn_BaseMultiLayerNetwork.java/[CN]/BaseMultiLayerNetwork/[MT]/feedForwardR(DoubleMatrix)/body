@@ -13,10 +13,9 @@
     DoubleMatrix nextAct=acts.get(i + 1);
     DoubleMatrix currAct=acts.get(i);
     DoubleMatrix secondFigure=currAct.mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond()));
-    DoubleMatrix activation=currR.add(secondFigure);
+    DoubleMatrix activation=currR.addi(secondFigure);
     activation.muli((derivative.applyDerivative(nextAct)));
     R.add(activation);
-    assertNaN(currR,nextAct,currAct,secondFigure,activation);
   }
   DoubleMatrix currR=R.get(R.size() - 1).mmul(outputLayer.getW());
   DoubleMatrix nextAct=acts.get(acts.size() - 1);

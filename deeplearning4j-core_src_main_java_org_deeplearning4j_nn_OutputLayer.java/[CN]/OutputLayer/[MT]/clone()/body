@@ -15,6 +15,7 @@
   reg.setOptimizationAlgorithm(this.getOptimizationAlgorithm());
   reg.lossFunction=this.lossFunction;
   reg.concatBiases=this.concatBiases;
+  reg.weightinit=weightinit;
   if (this.input != null)   reg.input=this.input.dup();
   return reg;
 }

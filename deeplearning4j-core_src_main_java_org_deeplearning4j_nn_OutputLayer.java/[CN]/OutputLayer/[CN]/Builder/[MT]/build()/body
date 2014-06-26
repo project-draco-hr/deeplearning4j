@@ -1,7 +1,9 @@
 {
-  ret=new OutputLayer(input,nIn,nOut);
+  ret=new OutputLayer(input,labels,nIn,nOut,weightInit);
   if (W != null)   ret.W=W;
   if (b != null)   ret.b=b;
+  ret.weightinit=weightInit;
+  ret.constrainGradientToUniNorm=constrainGradientToUniNorm;
   ret.dropOut=dropOut;
   ret.optimizationAlgorithm=optimizationAlgorithm;
   ret.normalizeByInputRows=normalizeByInputRows;

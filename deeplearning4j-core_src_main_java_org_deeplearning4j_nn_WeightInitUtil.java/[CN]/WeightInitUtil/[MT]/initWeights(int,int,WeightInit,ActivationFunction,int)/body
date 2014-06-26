@@ -1,0 +1,26 @@
+{
+  DoubleMatrix ret=DoubleMatrix.randn(nIn,nOut);
+switch (initScheme) {
+case SI:
+    double shift=0, initCoeff=1;
+  int smallVal=0;
+if (act instanceof RectifiedLinear) {
+  shift=1e-1;
+  initCoeff=0.25;
+}
+double fanOut=nOut;
+for (int i=0; i < nOut; i++) {
+int[] perm=Permutations.randomPermutation(nIn);
+for (int j=0; j < perm.length; j++) {
+ret.put(perm[j],j,ret.get(perm[j],j) * smallVal);
+}
+}
+ret.muli(initCoeff).add(shift);
+return ret;
+case VI:
+double r=Math.sqrt(6) / Math.sqrt(nIn + nOut + 1);
+ret.muli(2).muli(r).subi(r);
+return ret;
+}
+throw new IllegalStateException("Illegal weight init value");
+}

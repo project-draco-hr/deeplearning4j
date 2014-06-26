@@ -1,6 +1,0 @@
-{
-  DataSetIterator mnist=new MnistDataSetIterator(10,10);
-  RBM r=new RBM.Builder().numberOfVisible(784).numHidden(5).build();
-  r.setInput(mnist.next().getFirst());
-  r.getGradient(Conf.getDefaultRbmParams());
-}

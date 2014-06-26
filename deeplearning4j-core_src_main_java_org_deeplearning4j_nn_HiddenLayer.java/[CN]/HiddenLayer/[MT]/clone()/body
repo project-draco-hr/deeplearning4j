@@ -6,6 +6,7 @@
   if (dist != null)   layer.dist=dist;
   layer.activationFunction=activationFunction;
   layer.nOut=nOut;
+  layer.weightInit=weightInit;
   layer.nIn=nIn;
   layer.rng=rng;
   return layer;

@@ -6,6 +6,7 @@
   if (dist != null)   layer.dist=dist;
   layer.activationFunction=activationFunction;
   layer.nOut=nIn;
+  layer.weightInit=weightInit;
   layer.nIn=nOut;
   layer.concatBiases=concatBiases;
   layer.rng=rng;

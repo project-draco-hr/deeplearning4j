@@ -5,6 +5,9 @@
     c.setAccessible(true);
     ret=(E)c.newInstance();
     ret.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
+    ret.weightInit=weightInit;
+    ret.weightInitByLayer=weightInitByLayer;
+    ret.outputLayerWeightInit=outputLayerWeightInit;
     ret.concatBiases=concatBiases;
     ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
     ret.setUseDropConnect(useDropConnect);
