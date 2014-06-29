@@ -10,7 +10,7 @@
   for (int l=0; l < getnLayers(); l++) {
     DoubleMatrix gradientChange=deltas.get(l).div(input.rows);
     if (gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
-    DoubleMatrix deltaColumnSums=deltas.get(l).columnSums().div(input.rows);
+    DoubleMatrix deltaColumnSums=deltas.get(l).columnMeans().div(input.rows);
     list.add(new Pair<>(gradientChange,deltaColumnSums));
   }
   DoubleMatrix logLayerGradient=deltas.get(getnLayers());
