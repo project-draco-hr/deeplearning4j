@@ -1,0 +1,6 @@
+{
+  List<DoubleMatrix> ret=new ArrayList<>();
+  for (int i=0; i < layers.length; i++)   ret.add(layers[i].getW());
+  ret.add(outputLayer.getW());
+  return ret;
+}

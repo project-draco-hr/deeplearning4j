@@ -21,7 +21,6 @@
           break;
         }
         count++;
-        network.backPropStepR(null);
         Double entropy=network.score();
         if (lastEntropy == null || entropy < lastEntropy) {
           double diff=Math.abs(entropy - lastEntropy);

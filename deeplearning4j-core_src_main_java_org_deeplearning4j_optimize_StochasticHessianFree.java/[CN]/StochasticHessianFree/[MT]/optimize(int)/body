@@ -2,43 +2,23 @@
   myName=Thread.currentThread().getName();
   if (converged)   return true;
   score=network.score();
-  xi=optimizable.getParameters();
-  BaseMultiLayerNetwork revert=network.clone();
-  for (int i=0; i < numIterations; i++) {
-    Pair<DoubleMatrix,DoubleMatrix> backPropGradient=network.getBackPropGradient2();
-    gradient=backPropGradient.getFirst().neg();
-    log.info("Gradient mean " + gradient.mean());
-    preCon=backPropGradient.getSecond();
-    log.info("precon mean " + preCon.mean());
-    if (ch == null)     setup();
-    ch.muli(pi);
-    Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(numIterations);
-    p=cg.getFirst();
-    Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getFirst(),cg.getSecond());
-    p=cgBackTrack.getFirst();
-    double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
-    DoubleMatrix revertParams=xi.dup();
-    double newScore=network.score(xi);
-    try {
-      step=lineSearch(newScore,ch);
-      network.dampingUpdate(rho,boost,decrease);
-      xi.addi(p.mul(f * step));
-    }
- catch (    Exception e) {
-      log.warn("Rejected update; continuing");
-    }
-    newScore=network.score(xi);
-    if (newScore < score) {
-      score=newScore;
-      revert=network.clone();
-      network.setParameters(xi.dup());
-      log.info("New score " + score);
-    }
- else {
-      xi=revertParams;
-      network.update(revert);
-      log.info("Reverting to score " + score + " from  "+ newScore);
-    }
-  }
+  xi=network.params();
+  Pair<DoubleMatrix,DoubleMatrix> backPropGradient=network.getBackPropGradient2();
+  gradient=backPropGradient.getFirst().neg();
+  DoubleMatrix preCon=backPropGradient.getSecond();
+  if (ch == null)   setup();
+  ch.muli(pi);
+  Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(preCon,numIterations);
+  p=cg.getFirst();
+  Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getSecond());
+  p=cgBackTrack.getFirst();
+  double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
+  double newScore=network.score(cgBackTrack.getFirst());
+  step=lineSearch(newScore,gradient);
+  network.dampingUpdate(rho,boost,decrease);
+  DoubleMatrix proposedUpdate=xi.add(p.mul(f * step));
+  double proposedUpdateScore=network.score(proposedUpdate);
+  double currScore=network.score();
+  network.setParameters(proposedUpdate);
   return true;
 }

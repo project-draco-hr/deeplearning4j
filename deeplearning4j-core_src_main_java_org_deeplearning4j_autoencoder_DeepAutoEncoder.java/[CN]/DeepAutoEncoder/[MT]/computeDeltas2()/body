@@ -1,0 +1,32 @@
+{
+  List<Pair<DoubleMatrix,DoubleMatrix>> deltaRet=new ArrayList<>();
+  List<DoubleMatrix> activations=feedForward();
+  DoubleMatrix[] deltas=new DoubleMatrix[activations.size() - 1];
+  DoubleMatrix[] preCons=new DoubleMatrix[activations.size() - 1];
+  DoubleMatrix ix=activations.get(activations.size() - 1).sub(labels).divi(labels.rows);
+  List<DoubleMatrix> weights=new ArrayList<>();
+  List<DoubleMatrix> biases=new ArrayList<>();
+  List<ActivationFunction> activationFunctions=new ArrayList<>();
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getW());
+    biases.add(getLayers()[j].gethBias());
+    AutoEncoder a=(AutoEncoder)getLayers()[j];
+    activationFunctions.add(a.getAct());
+  }
+  biases.add(getOutputLayer().getB());
+  weights.add(getOutputLayer().getW());
+  activationFunctions.add(outputLayer.getActivationFunction());
+  for (int i=weights.size() - 1; i >= 0; i--) {
+    deltas[i]=activations.get(i).transpose().mmul(ix);
+    preCons[i]=powi(activations.get(i).transpose(),2).mmul(pow(ix,2)).muli(labels.rows);
+    applyDropConnectIfNecessary(deltas[i]);
+    if (i > 0) {
+      ix=ix.mmul(weights.get(i).transpose()).muli(activationFunctions.get(i - 1).applyDerivative(activations.get(i)));
+    }
+  }
+  for (int i=0; i < deltas.length; i++) {
+    if (constrainGradientToUnitNorm)     deltaRet.add(new Pair<>(deltas[i].divi(deltas[i].norm2()),preCons[i]));
+ else     deltaRet.add(new Pair<>(deltas[i],preCons[i]));
+  }
+  return deltaRet;
+}

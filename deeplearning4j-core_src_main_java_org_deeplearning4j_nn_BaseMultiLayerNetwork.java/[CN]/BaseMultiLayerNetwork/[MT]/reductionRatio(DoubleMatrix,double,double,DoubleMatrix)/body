@@ -1,6 +1,11 @@
 {
-  double denom=getBackPropRGradient(gradient).mul(0.5).mul(p).columnSums().sum() - gradient.mul(p).columnSums().sum();
-  double rho=(currScore - score) / denom;
+  double currentDamp=dampingFactor;
+  this.dampingFactor=0;
+  DoubleMatrix denom=getBackPropRGradient(p);
+  denom.muli(0.5).muli(p.mul(denom)).rowSums();
+  denom.subi(gradient.mul(p).rowSums());
+  double rho=(currScore - score) / denom.get(0);
+  this.dampingFactor=currentDamp;
   if (score - currScore > 0)   return Double.NEGATIVE_INFINITY;
   return rho;
 }

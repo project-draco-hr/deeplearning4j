@@ -1,7 +1,7 @@
 {
   DoubleMatrix[] deltas=new DoubleMatrix[getnLayers() + 2];
-  DoubleMatrix ix=null;
   List<DoubleMatrix> activations=feedForward();
+  DoubleMatrix ix=activations.get(activations.size() - 1).sub(labels).divi(input.rows);
   List<DoubleMatrix> weights=new ArrayList<>();
   List<DoubleMatrix> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
@@ -15,16 +15,15 @@
   activationFunctions.add(outputLayer.getActivationFunction());
   for (int i=getnLayers() + 1; i >= 0; i--) {
     if (i >= getnLayers() + 1) {
-      ix=labels.sub(activations.get(i)).neg().mul(getOutputActivationFunction().applyDerivative(activations.get(i))).div(input.rows);
       deltas[i]=ix;
     }
  else {
       DoubleMatrix delta=activations.get(i).transpose().mmul(ix);
       deltas[i]=delta;
       applyDropConnectIfNecessary(deltas[i]);
-      DoubleMatrix weightsPlusBias=weights.get(i).addRowVector(biases.get(i).transpose()).transpose();
+      DoubleMatrix weightsPlusBias=weights.get(i).addRowVector(biases.get(i)).transpose();
       DoubleMatrix activation=activations.get(i);
-      if (i > 0)       ix=ix.mmul(weightsPlusBias).mul(activationFunctions.get(i - 1).applyDerivative(activation));
+      if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(activationFunctions.get(i - 1).applyDerivative(activation));
     }
   }
   for (int i=0; i < deltas.length; i++) {

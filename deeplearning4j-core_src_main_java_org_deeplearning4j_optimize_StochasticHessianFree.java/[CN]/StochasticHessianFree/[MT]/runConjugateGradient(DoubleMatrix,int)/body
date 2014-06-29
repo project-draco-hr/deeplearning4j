@@ -1,0 +1,5 @@
+{
+  Pair<List<Integer>,List<DoubleMatrix>> cg=conjGradient(gradient.dup(),ch.dup(),preCon,numIterations);
+  ch=cg.getSecond().get(cg.getSecond().size() - 1);
+  return new Triple<>(ch,cg.getSecond(),ch);
+}
