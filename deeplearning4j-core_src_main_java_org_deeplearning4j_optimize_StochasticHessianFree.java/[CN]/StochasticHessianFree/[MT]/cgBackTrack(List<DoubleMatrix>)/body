@@ -11,7 +11,7 @@
       log.info("Breaking on new score " + score2 + " with iteration "+ i+ " with current minimum of "+ currMin);
       break;
     }
-    log.info("Trial " + i + " with trial score of "+ score);
+    log.info("Trial " + i + " with trial score of "+ score2);
   }
   return new Pair<>(chs.get(i),score);
 }
