@@ -8,7 +8,7 @@
   vWvB.add(new Pair<>(outputLayer.getW(),outputLayer.getB()));
   List<Pair<DoubleMatrix,DoubleMatrix>> list=new ArrayList<>();
   for (int l=0; l < getnLayers(); l++) {
-    DoubleMatrix gradientChange=deltas.get(l).div(input.rows);
+    DoubleMatrix gradientChange=deltas.get(l);
     if (gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
     DoubleMatrix deltaColumnSums=deltas.get(l).columnMeans();
     list.add(new Pair<>(gradientChange,deltaColumnSums));
