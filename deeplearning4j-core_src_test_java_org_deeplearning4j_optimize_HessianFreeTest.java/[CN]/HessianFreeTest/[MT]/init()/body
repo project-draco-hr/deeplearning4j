@@ -1,0 +1,27 @@
+{
+  if (a == null) {
+    ClassPathResource r=new ClassPathResource("gauss-vector.txt");
+    DoubleMatrix d=DoubleMatrix.loadCSVFile(r.getFile().getAbsolutePath());
+    assertEquals(2837314,d.length);
+    int codeLayer=3;
+    Map<Integer,Double> layerLearningRates=new HashMap<>();
+    layerLearningRates.put(codeLayer,1e-1);
+    RandomGenerator rng=new MersenneTwister(123);
+    StackedDenoisingAutoEncoder dbn=new StackedDenoisingAutoEncoder.Builder().learningRateForLayer(layerLearningRates).constrainGradientToUnitNorm(false).hiddenLayerSizes(new int[]{1000,500,250,30}).withRng(rng).activateForLayer(Collections.singletonMap(3,Activations.sigmoid())).useGaussNewtonVectorProductBackProp(true).numberOfInputs(784).sampleFromHiddenActivations(false).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE).lineSearchBackProp(false).useRegularization(true).forceEpochs().weightInit(WeightInit.SI).outputLayerWeightInit(WeightInit.SI).withL2(0).lineSearchBackProp(true).withOutputActivationFunction(Activations.sigmoid()).numberOfOutPuts(784).withOutputLossFunction(OutputLayer.LossFunction.RMSE_XENT).build();
+    a=new DeepAutoEncoder.Builder().withEncoder(dbn).build();
+    a.setParameters(d);
+    assertEquals(a.pack(),d);
+    r=new ClassPathResource("inputs.txt");
+    DoubleMatrix miniBatch=DoubleMatrix.loadAsciiFile(r.getFile().getAbsolutePath());
+    r=new ClassPathResource("labels.txt");
+    DoubleMatrix labels=DoubleMatrix.loadAsciiFile(r.getFile().getAbsolutePath());
+    assertEquals(10,miniBatch.rows);
+    assertEquals(10,labels.rows);
+    assertEquals(784,miniBatch.columns);
+    assertEquals(784,miniBatch.columns);
+    assertEquals(miniBatch,labels);
+    a.setInput(miniBatch);
+    a.setLabels(labels);
+    o=new BackPropROptimizer(a,1e-1,1000);
+  }
+}

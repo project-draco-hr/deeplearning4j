@@ -6,7 +6,9 @@
   for (int i=0; i < layers.length; i++) {
     AutoEncoder layer=(AutoEncoder)getLayers()[i];
     layer.setInput(currInput);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !sampleFromHiddenActivations)     currInput=layer.reconstruct(currInput);
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i) || !sampleFromHiddenActivations) {
+      currInput=layer.reconstruct(currInput);
+    }
  else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     activations.add(currInput);

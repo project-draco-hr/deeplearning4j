@@ -9,16 +9,14 @@
   if (ch == null)   setup();
   ch.muli(pi);
   Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(preCon,numIterations);
-  p=cg.getFirst();
-  Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getSecond());
+  DoubleMatrix p=cg.getFirst();
+  Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getSecond(),p);
   p=cgBackTrack.getFirst();
   double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
   double newScore=network.score(cgBackTrack.getFirst());
-  step=lineSearch(newScore,gradient);
+  step=lineSearch(newScore,gradient,p);
   network.dampingUpdate(rho,boost,decrease);
   DoubleMatrix proposedUpdate=xi.add(p.mul(f * step));
-  double proposedUpdateScore=network.score(proposedUpdate);
-  double currScore=network.score();
   network.setParameters(proposedUpdate);
   return true;
 }

@@ -19,8 +19,8 @@
   DoubleMatrix con=pack(preCon);
   DoubleMatrix theta=params();
   if (mask == null)   initMask();
-  g.addi(theta.muli(l2).muli(mask));
-  DoubleMatrix conAdd=powi(mask.muli(l2).add(valueMatrixOf(dampingFactor,g.rows,g.columns)),3.0 / 4.0);
+  g.addi(theta.mul(l2).muli(mask));
+  DoubleMatrix conAdd=powi(mask.mul(l2).add(valueMatrixOf(dampingFactor,g.rows,g.columns)),3.0 / 4.0);
   con.addi(conAdd);
   List<Pair<DoubleMatrix,DoubleMatrix>> gUnpacked=unPack(g);
   List<Pair<DoubleMatrix,DoubleMatrix>> conUnpacked=unPack(con);

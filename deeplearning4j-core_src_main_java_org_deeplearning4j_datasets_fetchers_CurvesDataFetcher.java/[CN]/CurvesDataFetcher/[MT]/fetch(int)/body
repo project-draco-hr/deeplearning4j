@@ -1,0 +1,9 @@
+{
+  if (cursor >= data.numExamples()) {
+    cursor=data.numExamples();
+  }
+  curr=data.get(MatrixUtil.toIndices(RangeUtils.interval(cursor,cursor + numExamples)));
+  log.info("Fetched " + curr.numExamples());
+  if (cursor + numExamples < data.numExamples())   cursor+=numExamples;
+ else   if (cursor + numExamples > data.numExamples())   cursor=data.numExamples() - 1;
+}

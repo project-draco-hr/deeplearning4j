@@ -2,8 +2,11 @@
   double rate=1.0;
   double c=Math.pow(1,-2);
   int j=0;
-  int numSearches=60;
+  int numSearches=100;
   while (j < numSearches) {
+    if (10 % numSearches == 0) {
+      log.info("Iteration " + j + " on line search with current rate of "+ rate);
+    }
     if (newScore <= gradient.mul(p).mul(score + c * rate).columnSums().sum()) {
       break;
     }

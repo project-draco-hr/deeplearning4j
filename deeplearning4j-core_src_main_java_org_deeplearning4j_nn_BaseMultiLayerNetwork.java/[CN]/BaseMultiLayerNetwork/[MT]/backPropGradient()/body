@@ -15,6 +15,10 @@
   }
   DoubleMatrix logLayerGradient=deltas.get(getnLayers());
   DoubleMatrix biasGradient=deltas.get(getnLayers()).columnMeans();
+  if (mask == null)   initMask();
   list.add(new Pair<>(logLayerGradient,biasGradient));
+  DoubleMatrix gradient=pack(list);
+  gradient.addi(mask.mul(params()).mul(l2));
+  list=unPack(gradient);
   return list;
 }

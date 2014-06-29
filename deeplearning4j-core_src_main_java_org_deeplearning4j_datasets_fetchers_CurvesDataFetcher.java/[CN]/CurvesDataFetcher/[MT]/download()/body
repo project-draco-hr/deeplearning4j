@@ -1,0 +1,13 @@
+{
+  File tmpDir=new File(System.getProperty("user.home"));
+  File baseDir=new File(tmpDir,LOCAL_DIR_NAME);
+  if (!(baseDir.isDirectory() || baseDir.mkdir())) {
+    throw new IOException("Could not mkdir " + baseDir);
+  }
+  File dataFile=new File(baseDir,CURVES_FILE_NAME);
+  if (!dataFile.exists() || !dataFile.isFile()) {
+    log.info("Downloading curves dataset...");
+    FileUtils.copyURLToFile(new URL(CURVES_URL),dataFile);
+  }
+  data=SerializationUtils.readObject(dataFile);
+}

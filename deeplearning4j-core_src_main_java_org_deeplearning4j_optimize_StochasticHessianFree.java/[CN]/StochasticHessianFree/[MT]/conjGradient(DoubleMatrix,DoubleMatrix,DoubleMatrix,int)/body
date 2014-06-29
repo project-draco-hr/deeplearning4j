@@ -4,8 +4,8 @@
   DoubleMatrix r=network.getBackPropRGradient(x0).subi(b);
   DoubleMatrix y=r.div(preCon);
   double deltaNew=r.mul(y).sum();
-  p=y.neg();
-  DoubleMatrix x=x0;
+  DoubleMatrix p=y.neg();
+  DoubleMatrix x=x0.dup();
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     DoubleMatrix Ap=network.getBackPropRGradient(p);
     double pAp=Ap.mul(p).sum();
@@ -14,8 +14,8 @@
     log.info("Iteration on conjugate gradient " + iterationCount + " with value "+ val);
     double alpha=deltaNew / pAp;
     x.addi(p.mul(alpha));
-    DoubleMatrix rNew=r.add(Ap.muli(alpha));
-    DoubleMatrix yNew=rNew.divi(preCon);
+    DoubleMatrix rNew=r.add(Ap.mul(alpha));
+    DoubleMatrix yNew=rNew.div(preCon);
     double deltaOld=deltaNew;
     deltaNew=rNew.mul(yNew).sum();
     double beta=deltaNew / deltaOld;
