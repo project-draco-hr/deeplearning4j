@@ -5,11 +5,17 @@
   DoubleMatrix y=r.div(preCon);
   double deltaNew=r.mul(y).sum();
   DoubleMatrix p=y.neg();
-  DoubleMatrix x=x0.dup();
+  DoubleMatrix x=x0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
+    if (MatrixUtil.isNaN(p)) {
+      log.warn("P is NaN breaking");
+      break;
+    }
     DoubleMatrix Ap=network.getBackPropRGradient(p);
     double pAp=Ap.mul(p).sum();
-    if (pAp < 0)     log.warn("Negative curve!");
+    if (pAp < 0) {
+      log.info("Negative slope: " + pAp + " breaking");
+    }
     double val=0.5 * SimpleBlas.dot(b.neg().add(r).transpose(),x);
     log.info("Iteration on conjugate gradient " + iterationCount + " with value "+ val);
     double alpha=deltaNew / pAp;

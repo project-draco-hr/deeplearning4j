@@ -9,7 +9,7 @@
       throw new IllegalStateException("Gradient change was NaN");
     }
     if (gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
-    DoubleMatrix deltaColumnSums=deltas.get(l).columnMeans().add(1);
+    DoubleMatrix deltaColumnSums=deltas.get(l).columnMeans();
     if (deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias change not equal to weight change");
     list.add(new Pair<>(gradientChange,deltaColumnSums));
   }

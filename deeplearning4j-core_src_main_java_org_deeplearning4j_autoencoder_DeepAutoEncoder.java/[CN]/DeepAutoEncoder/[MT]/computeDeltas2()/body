@@ -3,9 +3,7 @@
   List<DoubleMatrix> activations=feedForward();
   DoubleMatrix[] deltas=new DoubleMatrix[activations.size() - 1];
   DoubleMatrix[] preCons=new DoubleMatrix[activations.size() - 1];
-  log.info("Activation sum " + activations.get(activations.size() - 1).sum());
   DoubleMatrix ix=activations.get(activations.size() - 1).sub(labels).divi(labels.rows);
-  log.info("Ix sum " + ix.sum());
   List<DoubleMatrix> weights=new ArrayList<>();
   List<DoubleMatrix> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();

@@ -15,7 +15,7 @@
   weights.add(getOutputLayer().getW());
   biases.add(getOutputLayer().getB());
   activationFunctions.add(outputLayer.getActivationFunction());
-  DoubleMatrix rix=rActivations.get(rActivations.size() - 1).divi(input.rows);
+  DoubleMatrix rix=rActivations.get(rActivations.size() - 1).div(input.rows);
   for (int i=getnLayers(); i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(rix);
     applyDropConnectIfNecessary(deltas[i]);
