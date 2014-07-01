@@ -10,8 +10,9 @@
     c2.setDocumentText(sentence.getCoveredText());
     tokenizer.process(c2);
     parser.process(c2);
-    TopTreebankNode node=JCasUtil.selectSingle(c.getJCas(),TopTreebankNode.class);
+    TopTreebankNode node=JCasUtil.selectSingle(c2.getJCas(),TopTreebankNode.class);
     ret.add(TreeFactory.buildTree(node));
+    c2.reset();
   }
   return ret;
 }
