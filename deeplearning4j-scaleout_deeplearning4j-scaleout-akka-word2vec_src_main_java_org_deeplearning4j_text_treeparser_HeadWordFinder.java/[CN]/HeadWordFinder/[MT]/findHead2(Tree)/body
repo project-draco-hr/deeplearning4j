@@ -1,0 +1,8 @@
+{
+  List<Tree> childNodes=parentNode.children();
+  List<String> childTypes=new ArrayList<>(childNodes.size());
+  String parentType=parentNode.getType();
+  for (  Tree childNode : childNodes)   childTypes.add(childNode.getType());
+  int headIndex=findHead3(parentType,childTypes);
+  return childNodes.get(headIndex);
+}
