@@ -1,7 +1,0 @@
-{
-  CAS c=pool.getCas();
-  c.setDocumentText(text);
-  parser.process(c.getJCas());
-  TopTreebankNode node=JCasUtil.selectSingle(c.getJCas(),TopTreebankNode.class);
-  return node;
-}

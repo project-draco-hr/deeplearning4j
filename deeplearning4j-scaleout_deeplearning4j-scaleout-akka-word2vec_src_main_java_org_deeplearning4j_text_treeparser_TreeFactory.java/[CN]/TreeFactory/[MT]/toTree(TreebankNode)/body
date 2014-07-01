@@ -1,0 +1,7 @@
+{
+  List<String> tokens=tokens(node);
+  Tree ret=new Tree(tokens);
+  ret.setValue(node.getNodeValue());
+  ret.setType(node.getNodeType());
+  return ret;
+}

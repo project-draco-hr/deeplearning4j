@@ -1,6 +1,7 @@
 {
   if (parser == null) {
     parser=getParser();
-    pool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,parser);
   }
+  if (tokenizer == null)   tokenizer=getTokenizer();
+  if (pool == null)   pool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,parser);
 }
