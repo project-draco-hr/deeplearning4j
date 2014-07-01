@@ -1,0 +1,10 @@
+{
+  List<Tree> trees=parser.getTrees("This is one sentence. This is another sentence.");
+  TreeTransformer t=new BinarizeTreeTransformer();
+  for (  Tree t2 : trees) {
+    t2=t.transform(t2);
+    for (    Tree child : t2.children()) {
+      assertEquals(true,child.isLeaf() || child.isPreTerminal() || child.children().size() <= 2);
+    }
+  }
+}
