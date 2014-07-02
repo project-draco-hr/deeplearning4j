@@ -1,5 +1,4 @@
 {
   TreeParser parser=new TreeParser();
-  TopTreebankNode node=parser.getTree("This is a tree.");
-  log.info(node.getTreebankParse());
+  List<Tree> node=parser.getTrees("This is a tree.");
 }
