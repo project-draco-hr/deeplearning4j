@@ -1,0 +1,7 @@
+{
+  String topCat=t.label();
+  String labelStr="@" + topCat;
+  String word=t.value();
+  String tag=t.tags() != null ? t.tags().get(0) : "";
+  return topCat + labelStr + word+ tag;
+}

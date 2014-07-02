@@ -1,0 +1,16 @@
+{
+  int result;
+  long temp;
+  result=vector != null ? vector.hashCode() : 0;
+  result=31 * result + (prediction != null ? prediction.hashCode() : 0);
+  result=31 * result + (children != null ? children.hashCode() : 0);
+  temp=Double.doubleToLongBits(error);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
+  result=31 * result + (parent != null ? parent.hashCode() : 0);
+  result=31 * result + (value != null ? value.hashCode() : 0);
+  result=31 * result + (label != null ? label.hashCode() : 0);
+  result=31 * result + (type != null ? type.hashCode() : 0);
+  result=31 * result + goldLabel;
+  result=31 * result + (tokens != null ? tokens.hashCode() : 0);
+  return result;
+}

@@ -1,0 +1,9 @@
+{
+  this.vector=tree.vector;
+  this.prediction=tree.prediction;
+  this.value=tree.value;
+  this.label=tree.label;
+  this.type=tree.type;
+  this.goldLabel=tree.goldLabel;
+  this.tokens=new ArrayList<>(tree.tokens);
+}

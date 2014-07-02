@@ -1,0 +1,41 @@
+{
+  String topCat=t.label();
+  List<Tree> children=t.children();
+  String leftString;
+  if (left == 0) {
+    leftString="[ ";
+  }
+ else {
+    leftString=" ";
+  }
+  String rightString;
+  if (right == children.size() - 1) {
+    rightString=" ]";
+  }
+ else {
+    rightString=" ";
+  }
+  for (int i=0; i < markovOrder; i++) {
+    if (left < headLoc) {
+      leftString=leftString + children.get(left).label() + " ";
+      left++;
+    }
+ else     if (right > headLoc) {
+      rightString=" " + children.get(right).label() + rightString;
+      right--;
+    }
+ else {
+      break;
+    }
+  }
+  if (right > headLoc) {
+    rightString="..." + rightString;
+  }
+  if (left < headLoc) {
+    leftString=leftString + "...";
+  }
+  String labelStr="@" + topCat + "| "+ leftString+ "["+ t.children().get(headLoc).label()+ "]"+ rightString;
+  String word=t.value();
+  String tag=t.tags().get(0);
+  return labelStr + "/" + word+ "/"+ tag;
+}

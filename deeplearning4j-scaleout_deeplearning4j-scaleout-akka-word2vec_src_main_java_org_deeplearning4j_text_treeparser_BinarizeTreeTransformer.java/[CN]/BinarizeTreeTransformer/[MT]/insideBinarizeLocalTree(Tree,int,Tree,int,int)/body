@@ -1,0 +1,61 @@
+{
+  String word=head.value();
+  String tag=head.tags().get(0);
+  List<Tree> newChildren=new ArrayList<>(2);
+  if (t.children().size() <= leftProcessed + rightProcessed + 2) {
+    Tree leftChild=t.children().get(leftProcessed);
+    newChildren.add(leftChild);
+    if (t.children().size() == leftProcessed + rightProcessed + 1) {
+      String finalCat=t.label();
+      Tree ret=new Tree(t);
+      ret.setTags(Collections.singletonList(tag));
+      ret.setValue(word);
+      ret.setHeadWord(finalCat);
+      ret.setChildren(newChildren);
+      return ret;
+    }
+    Tree rightChild=t.children().get(leftProcessed + 1);
+    newChildren.add(rightChild);
+    String labelStr=t.label();
+    if (leftProcessed != 0 || rightProcessed != 0) {
+      labelStr=("@ " + leftChild.label() + " "+ rightChild.label());
+    }
+    Tree ret=new Tree(t);
+    ret.setLabel(labelStr);
+    ret.setValue(word);
+    ret.setTags(Collections.singletonList(tag));
+    ret.setChildren(newChildren);
+    return ret;
+  }
+  if (headNum > leftProcessed) {
+    Tree leftChild=t.children().get(leftProcessed);
+    Tree rightChild=insideBinarizeLocalTree(t,headNum,head,leftProcessed + 1,rightProcessed);
+    newChildren.add(leftChild);
+    newChildren.add(rightChild);
+    String labelStr=("@ " + leftChild.label() + " "+ rightChild.label().substring(2));
+    if (leftProcessed == 0 && rightProcessed == 0) {
+      labelStr=t.label();
+    }
+    Tree ret=new Tree(t);
+    ret.setChildren(newChildren);
+    ret.setHeadWord(tag);
+    ret.setLabel(labelStr);
+    ret.setValue(word);
+    return ret;
+  }
+ else {
+    Tree leftChild=insideBinarizeLocalTree(t,headNum,head,leftProcessed,rightProcessed + 1);
+    Tree rightChild=t.children().get(t.children().size() - rightProcessed - 1);
+    newChildren.add(leftChild);
+    newChildren.add(rightChild);
+    String labelStr=("@ " + leftChild.label().substring(2) + " "+ rightChild.label());
+    if (leftProcessed == 0 && rightProcessed == 0) {
+      labelStr=t.label();
+    }
+    Tree ret=new Tree(t);
+    ret.setLabel(labelStr);
+    ret.setValue(word);
+    ret.setChildren(newChildren);
+    return ret;
+  }
+}

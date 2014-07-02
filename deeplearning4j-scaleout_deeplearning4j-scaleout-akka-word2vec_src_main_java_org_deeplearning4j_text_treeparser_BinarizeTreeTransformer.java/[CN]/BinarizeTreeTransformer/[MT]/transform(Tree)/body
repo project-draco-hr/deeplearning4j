@@ -1,17 +1,34 @@
 {
-  if (t.isLeaf() || t.isPreTerminal())   return t.clone();
- else {
-    List<Tree> children=t.children();
-    while (children.size() == 1 && !children.get(0).isLeaf()) {
-      children=children.get(0).children();
-    }
-    List<Tree> processedChildren=new ArrayList<>();
-    for (    Tree child : children) {
-      processedChildren.add(transform(child));
-    }
-    Tree ret=new Tree(t.getTokens());
-    ret.setLabel(t.label());
-    ret.connect(processedChildren);
-    return ret;
+  String tLabelVal=t.value();
+  if (t.isLeaf())   return t.clone();
+ else   if (t.isPreTerminal()) {
+    Tree child=transform(t.firstChild());
+    String val=child.value();
+    List<Tree> newChildren=new ArrayList<>();
+    Tree add=new Tree(child.getTokens());
+    add.setLabel(child.value());
+    add.setType(child.getType());
+    add.setValue(val);
+    newChildren.add(add);
+    child.connect(newChildren);
+    return child;
   }
+  Tree head=headWordFinder.findHead(t);
+  int headNum=-1;
+  List<Tree> children=head.children();
+  List<Tree> newChildren=new ArrayList<>();
+  for (int i=0; i < children.size(); i++) {
+    Tree child=children.get(i);
+    Tree childResult=transform(child);
+    if (childResult == head)     headNum=i;
+    newChildren.add(child);
+  }
+  Tree result=null;
+  if (t.label().charAt(0) == 'S')   result=new Tree(t);
+ else {
+    String word=t.value();
+    String tag=t.label();
+    return binarizeLocalTree(t,headNum,head);
+  }
+  return result;
 }
