@@ -1,0 +1,3 @@
+{
+  super(batch,numExamples,new CSVDataFetcher(is,labelColumn,skipLines));
+}
