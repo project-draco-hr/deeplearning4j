@@ -36,7 +36,7 @@
  else {
       binaryCD.put(leftCategory,rightCategory,binaryCD.get(leftCategory,rightCategory).add(localCD));
     }
-    DoubleMatrix currentVectorDerivative=activationFunction.apply(currentVector);
+    DoubleMatrix currentVectorDerivative=activationFunction.applyDerivative(currentVector);
     DoubleMatrix deltaFromClass=getBinaryClassification(leftCategory,rightCategory).transpose().mmul(deltaClass);
     deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,1),RangeUtils.interval(0,numHidden)).mul(currentVectorDerivative);
     DoubleMatrix deltaFull=deltaFromClass.add(deltaUp);

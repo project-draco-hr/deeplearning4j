@@ -1,0 +1,8 @@
+{
+  int labelVal=Integer.parseInt(data[labelColumn]);
+  List<Double> vals=new ArrayList<>();
+  for (int i=0; i < data.length; i++)   if (i != labelVal)   vals.add(Double.parseDouble(data[i]));
+  double[] d=new double[vals.size()];
+  DoubleMatrix d1=new DoubleMatrix(d).reshape(1,d.length);
+  return new Pair<>(d1,labelVal);
+}

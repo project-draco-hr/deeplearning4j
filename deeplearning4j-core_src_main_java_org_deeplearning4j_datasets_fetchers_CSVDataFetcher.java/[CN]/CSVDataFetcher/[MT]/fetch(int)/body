@@ -1,0 +1,5 @@
+{
+  int end=cursor + numExamples;
+  if (end >= all.numExamples())   end=all.numExamples();
+  initializeCurrFromList(all.asList().subList(cursor,end));
+}

@@ -1,6 +1,6 @@
 {
-  DoubleMatrix nodeVector=null;
-  DoubleMatrix classification=null;
+  DoubleMatrix nodeVector;
+  DoubleMatrix classification;
   if (tree.isLeaf()) {
     throw new AssertionError("We should not have reached leaves in forwardPropagate");
   }
