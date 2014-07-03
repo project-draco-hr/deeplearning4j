@@ -1,0 +1,30 @@
+{
+  final CountDownLatch c=new CountDownLatch(iterate.size());
+  for (  final E e : iterate) {
+    Future<E> f=Futures.future(new Callable<E>(){
+      /** 
+ * Computes a result, or throws an exception if unable to do so.
+ * @return computed result
+ * @throws Exception if unable to compute a result
+ */
+      @Override public E call() throws Exception {
+        loop.run(e,otherArgs);
+        return e;
+      }
+    }
+,actorSystem.dispatcher());
+    f.onComplete(new OnComplete<E>(){
+      @Override public void onComplete(      Throwable throwable,      E e) throws Throwable {
+        if (postDone != null)         postDone.run(e,otherArgs);
+        c.countDown();
+      }
+    }
+,actorSystem.dispatcher());
+  }
+  try {
+    c.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

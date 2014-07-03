@@ -1,0 +1,8 @@
+{
+  Map<String,DoubleMatrix> ret=new HashMap<>();
+  for (int i=0; i < getWordIndex().size(); i++) {
+    String word=(String)wordIndex.get(i);
+    ret.put(word,MatrixUtil.toDoubleMatrix(getWordVectorMatrix(word)));
+  }
+  return ret;
+}

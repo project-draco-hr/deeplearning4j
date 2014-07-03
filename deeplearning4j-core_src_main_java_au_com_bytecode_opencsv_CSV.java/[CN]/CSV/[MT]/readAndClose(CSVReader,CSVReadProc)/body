@@ -1,0 +1,12 @@
+{
+  try {
+    read(reader,proc);
+  }
+  finally {
+    try {
+      reader.close();
+    }
+ catch (    IOException e) {
+    }
+  }
+}

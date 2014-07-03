@@ -1,0 +1,19 @@
+{
+  try {
+    writer.write(proc);
+  }
+ catch (  RuntimeException re) {
+    try {
+      writer.close();
+    }
+ catch (    Exception e) {
+    }
+    throw re;
+  }
+  try {
+    writer.close();
+  }
+ catch (  Exception e) {
+    throw new CSVRuntimeException(e);
+  }
+}

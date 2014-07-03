@@ -1,0 +1,8 @@
+{
+  try {
+    return writer(new FileOutputStream(file));
+  }
+ catch (  FileNotFoundException e) {
+    throw new CSVRuntimeException(e);
+  }
+}
