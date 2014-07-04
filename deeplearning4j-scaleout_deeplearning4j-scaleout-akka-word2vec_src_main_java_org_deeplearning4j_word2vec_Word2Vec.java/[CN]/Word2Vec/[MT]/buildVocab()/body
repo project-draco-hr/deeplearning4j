@@ -9,8 +9,8 @@
     String sentence=getSentenceIter().nextSentence();
     if (sentence == null)     continue;
     vocabActor.tell(sentence,vocabActor);
-    log.info("Sent " + queued);
     queued++;
+    log.info("Sent " + queued);
   }
   boolean done=false;
   long fiveMinutes=TimeUnit.MINUTES.toMillis(1);

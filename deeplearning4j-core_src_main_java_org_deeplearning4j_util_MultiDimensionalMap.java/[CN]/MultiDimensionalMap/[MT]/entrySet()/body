@@ -1,3 +1,7 @@
 {
-  return null;
+  Set<Entry<K,T,V>> ret=new HashSet<>();
+  for (  Pair<K,T> pair : backedMap.keySet()) {
+    ret.add(new Entry<>(pair.getFirst(),pair.getSecond(),backedMap.get(pair)));
+  }
+  return ret;
 }

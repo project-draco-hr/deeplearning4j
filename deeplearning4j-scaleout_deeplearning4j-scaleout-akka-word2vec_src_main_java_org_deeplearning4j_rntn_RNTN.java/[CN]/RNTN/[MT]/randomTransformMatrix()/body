@@ -1,6 +1,6 @@
 {
   DoubleMatrix binary=new DoubleMatrix(numHidden,numHidden * 2 + 1);
   DoubleMatrix block=randomTransformBlock();
-  binary.put(RangeUtils.interval(0,block.rows),RangeUtils.interval(numHidden,block.columns),block);
+  binary.put(RangeUtils.interval(0,block.rows),RangeUtils.interval(0,block.columns),block);
   return SimpleBlas.scal(scalingForInit,binary);
 }

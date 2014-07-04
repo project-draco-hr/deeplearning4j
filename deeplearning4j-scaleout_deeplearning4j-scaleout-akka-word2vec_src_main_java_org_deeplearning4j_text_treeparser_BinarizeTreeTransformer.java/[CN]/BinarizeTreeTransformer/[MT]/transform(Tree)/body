@@ -23,7 +23,7 @@
     if (childResult == head)     headNum=i;
     newChildren.add(child);
   }
-  Tree result=null;
+  Tree result;
   if (t.label().charAt(0) == 'S')   result=new Tree(t);
  else {
     String word=t.value();

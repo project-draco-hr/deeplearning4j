@@ -1,3 +1,6 @@
 {
   vectorizer=new TreeVectorizer();
+  sentenceIter=new CollectionSentenceIterator(Arrays.asList("This is one sentence."));
+  vec=new Word2Vec(sentenceIter);
+  vec.train();
 }
