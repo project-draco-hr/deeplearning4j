@@ -10,7 +10,7 @@
     }
     if (unaryAtTop) {
       result=new Tree(t);
-      result.setChildren(Collections.singletonList(markovInsideBinarizeLocalTreeNew(t,headLoc,left,right,false)));
+      result.connect(Collections.singletonList(markovInsideBinarizeLocalTreeNew(t,headLoc,left,right,false)));
       return result;
     }
   }
@@ -53,6 +53,7 @@
     stateCounter.incrementCount(label,1.0);
   }
   result=new Tree(t);
-  result.setChildren(newChildren);
+  result.setLabel(label);
+  result.connect(newChildren);
   return result;
 }

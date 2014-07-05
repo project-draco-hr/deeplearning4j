@@ -1,0 +1,6 @@
+{
+  for (  Tree child : tree.children()) {
+    assertChildSize(child);
+  }
+  assertEquals(true,tree.isLeaf() || tree.isPreTerminal() || tree.children().size() <= 2);
+}

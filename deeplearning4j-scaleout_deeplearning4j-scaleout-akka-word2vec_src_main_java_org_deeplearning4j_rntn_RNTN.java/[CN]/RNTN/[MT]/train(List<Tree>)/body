@@ -1,4 +1,7 @@
 {
   this.trainingTrees=trainingBatch;
-  getValueGradient(0);
+  for (  Tree t : trainingBatch) {
+    forwardPropagateTree(t);
+    getValueGradient(0);
+  }
 }

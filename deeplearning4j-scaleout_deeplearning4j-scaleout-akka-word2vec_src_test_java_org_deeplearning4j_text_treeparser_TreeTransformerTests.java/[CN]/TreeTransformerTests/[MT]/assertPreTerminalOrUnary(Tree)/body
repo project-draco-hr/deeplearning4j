@@ -1,0 +1,6 @@
+{
+  for (  Tree child : tree.children()) {
+    assertPreTerminalOrUnary(child);
+  }
+  assertEquals(true,tree.children().size() == 1 || tree.isPreTerminal() || tree.isLeaf());
+}

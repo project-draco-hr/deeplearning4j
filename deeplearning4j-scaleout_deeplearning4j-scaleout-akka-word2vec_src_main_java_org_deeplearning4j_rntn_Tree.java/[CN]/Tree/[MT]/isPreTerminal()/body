@@ -1,3 +1,4 @@
 {
+  if (children == null && label != null && !label.equals("TOP"))   children=new ArrayList<>();
   return children.size() == 1 && children.get(0).isLeaf();
 }

@@ -2,7 +2,7 @@
   DoubleMatrix nodeVector;
   DoubleMatrix classification;
   if (tree.isLeaf()) {
-    throw new AssertionError("We should not have reached leaves in forwardPropagate");
+    return;
   }
  else   if (tree.isPreTerminal()) {
     classification=getUnaryClassification(tree.label());

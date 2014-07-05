@@ -1,10 +1,18 @@
 {
-  List<String> window=new ArrayList<String>();
+  List<String> window=new ArrayList<>();
+  List<String> onlyTokens=new ArrayList<>();
   int contextSize=(int)Math.floor((windowSize - 1) / 2);
   for (int i=wordPos - contextSize; i <= wordPos + contextSize; i++) {
     if (i < 0)     window.add("<s>");
  else     if (i >= sentence.size())     window.add("</s>");
- else     window.add(sentence.get(i));
+ else {
+      onlyTokens.add(sentence.get(i));
+      window.add(sentence.get(i));
+    }
   }
-  return new Window(window);
+  String wholeSentence=StringUtils.join(sentence);
+  String window2=StringUtils.join(onlyTokens);
+  int begin=wholeSentence.indexOf(window2);
+  int end=begin + window2.length();
+  return new Window(window,begin,end);
 }

@@ -1,10 +1,3 @@
 {
-  super();
-  this.tokenizer=tokenizer;
-  try {
-    pool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,tokenizer);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  this(tokenizer,true);
 }

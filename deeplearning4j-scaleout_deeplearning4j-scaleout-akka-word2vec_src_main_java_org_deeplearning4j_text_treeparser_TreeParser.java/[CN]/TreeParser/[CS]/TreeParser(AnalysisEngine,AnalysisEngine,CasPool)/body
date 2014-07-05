@@ -2,4 +2,5 @@
   this.parser=parser;
   this.tokenizer=tokenizer;
   this.pool=pool;
+  tf=new UimaTokenizerFactory(tokenizer,true);
 }
