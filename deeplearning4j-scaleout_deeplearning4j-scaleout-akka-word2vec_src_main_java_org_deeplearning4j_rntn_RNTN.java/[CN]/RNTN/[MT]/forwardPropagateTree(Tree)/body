@@ -6,8 +6,12 @@
   }
  else   if (tree.isPreTerminal()) {
     classification=getUnaryClassification(tree.label());
-    String word=tree.children().get(0).label();
+    String word=tree.children().get(0).value();
     DoubleMatrix wordVector=getFeatureVector(word);
+    if (wordVector == null) {
+      log.warn("Unknown word: returning...");
+      return;
+    }
     nodeVector=activationFunction.apply(wordVector);
   }
  else   if (tree.children().size() == 1) {
@@ -36,7 +40,8 @@
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  DoubleMatrix predictions=MatrixUtil.softmax(classification.mmul(DoubleMatrix.concatHorizontally(nodeVector,DoubleMatrix.ones(nodeVector.columns,1))));
+  DoubleMatrix inputWithBias=DoubleMatrix.concatVertically(nodeVector.transpose(),DoubleMatrix.scalar(1.0));
+  DoubleMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
   int index=SimpleBlas.iamax(predictions);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);

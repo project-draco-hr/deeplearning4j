@@ -14,11 +14,15 @@
     c2.setDocumentText(stringsWithLabels.getFirst());
     tokenizer.process(c2);
     parser.process(c2);
-    TopTreebankNode node=JCasUtil.selectSingle(c2.getJCas(),TopTreebankNode.class);
-    log.info("Tree bank parse " + node.getTreebankParse());
-    for (    TreebankNode node2 : JCasUtil.select(c2.getJCas(),TreebankNode.class)) {
-      log.info("Node val " + node2.getNodeValue() + " and label "+ node2.getNodeType()+ " and tags was "+ node2.getNodeTags());
+    List<TopTreebankNode> nodes=new ArrayList<>(JCasUtil.select(c2.getJCas(),TopTreebankNode.class));
+    if (nodes.size() > 1) {
+      log.warn("More than one top level node for a treebank parse. Only accepting first input node.");
     }
+ else     if (nodes.isEmpty()) {
+      c2.reset();
+      continue;
+    }
+    TopTreebankNode node=nodes.get(0);
     ret.add(TreeFactory.buildTree(node,stringsWithLabels,labels));
     c2.reset();
   }

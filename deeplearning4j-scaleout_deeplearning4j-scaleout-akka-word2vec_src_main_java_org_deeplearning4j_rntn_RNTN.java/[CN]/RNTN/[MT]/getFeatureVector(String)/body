@@ -1,3 +1,4 @@
 {
-  return featureVectors.get(getVocabWord(word));
+  DoubleMatrix ret=featureVectors.get(getVocabWord(word));
+  return ret;
 }

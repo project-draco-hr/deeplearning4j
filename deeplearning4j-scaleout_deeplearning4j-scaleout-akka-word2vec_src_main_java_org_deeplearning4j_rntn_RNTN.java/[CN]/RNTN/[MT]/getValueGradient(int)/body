@@ -47,11 +47,11 @@
   Parallelization.iterateInParallel(forwardPropTrees,new Parallelization.RunnableWithParams<Tree>(){
     @Override public void run(    Tree currentItem,    Object[] args){
       backpropDerivativesAndError(currentItem,binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD);
+      error.addAndGet(currentItem.errorSum());
     }
   }
 ,new Parallelization.RunnableWithParams<Tree>(){
     @Override public void run(    Tree currentItem,    Object[] args){
-      error.addAndGet(currentItem.errorSum());
     }
   }
 ,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD});

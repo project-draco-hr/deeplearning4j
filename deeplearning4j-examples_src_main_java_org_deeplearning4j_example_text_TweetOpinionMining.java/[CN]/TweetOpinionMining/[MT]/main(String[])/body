@@ -1,6 +1,6 @@
 {
   InputStream is=FileUtils.openInputStream(new File(args[0]));
-  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is);
+  LabelAwareSentenceIterator iterator=new LabelAwareListSentenceIterator(is);
   iterator.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
       return new InputHomogenization(sentence).transform();

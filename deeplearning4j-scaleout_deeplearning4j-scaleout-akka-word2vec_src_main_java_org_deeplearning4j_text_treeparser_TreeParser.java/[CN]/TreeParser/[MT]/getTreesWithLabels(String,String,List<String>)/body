@@ -1,0 +1,39 @@
+{
+  CAS c=pool.getCas();
+  c.setDocumentText("<" + label + "> "+ text+ "</"+ label+ ">");
+  tokenizer.process(c);
+  List<String> lowerCaseLabels=new ArrayList<>();
+  for (  String s : labels)   lowerCaseLabels.add(s.toLowerCase());
+  labels=lowerCaseLabels;
+  List<Tree> ret=new ArrayList<>();
+  CAS c2=pool.getCas();
+  for (  Sentence sentence : JCasUtil.select(c.getJCas(),Sentence.class)) {
+    List<String> tokens=new ArrayList<>();
+    for (    Token t : JCasUtil.selectCovered(Token.class,sentence))     tokens.add(t.getCoveredText());
+    try {
+      Pair<String,MultiDimensionalMap<Integer,Integer,String>> stringsWithLabels=ContextLabelRetriever.stringWithLabels(sentence.getCoveredText(),tf);
+      c2.setDocumentText(stringsWithLabels.getFirst());
+      tokenizer.process(c2);
+      parser.process(c2);
+      List<TopTreebankNode> nodes=new ArrayList<>(JCasUtil.select(c2.getJCas(),TopTreebankNode.class));
+      if (nodes.size() > 1) {
+        log.warn("More than one top level node for a treebank parse. Only accepting first input node.");
+      }
+ else       if (nodes.isEmpty()) {
+        c2.reset();
+        continue;
+      }
+      TopTreebankNode node=nodes.get(0);
+      ret.add(TreeFactory.buildTree(node,stringsWithLabels,labels));
+      c2.reset();
+    }
+ catch (    Exception e) {
+      log.warn("Unable to parse " + sentence.getCoveredText());
+      c2.reset();
+      continue;
+    }
+  }
+  pool.releaseCas(c);
+  pool.releaseCas(c2);
+  return ret;
+}

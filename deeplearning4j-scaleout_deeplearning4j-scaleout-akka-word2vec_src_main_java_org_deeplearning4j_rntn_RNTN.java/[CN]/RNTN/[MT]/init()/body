@@ -1,4 +1,5 @@
 {
+  if (rng == null)   rng=new MersenneTwister(123);
   MultiDimensionalSet<String,String> binaryProductions=MultiDimensionalSet.hashSet();
   if (simplifiedModel) {
     binaryProductions.add("","");

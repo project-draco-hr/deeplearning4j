@@ -1,0 +1,24 @@
+{
+  InputStream is=new ClassPathResource("tweets_clean.txt").getInputStream();
+  LabelAwareSentenceIterator lineIter=new LabelAwareListSentenceIterator(is);
+  lineIter.setPreProcessor(new SentencePreProcessor(){
+    @Override public String preProcess(    String sentence){
+      String base=new InputHomogenization(sentence).transform();
+      base=base.replaceAll("@.*","");
+      return base;
+    }
+  }
+);
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  Word2Vec vec=new Word2Vec(tokenizerFactory,lineIter,5);
+  vec.train();
+  lineIter.reset();
+  RNTN r=new RNTN.Builder().setActivationFunction(Activations.hardTanh()).setNumHidden(50).setFeatureVectors(vec).setCombineClassification(true).build();
+  tokenizerFactory=new UimaTokenizerFactory(false);
+  TreeVectorizer vectorizer=new TreeVectorizer();
+  while (lineIter.hasNext()) {
+    String sentence=lineIter.nextSentence();
+    List<Tree> trees=vectorizer.getTreesWithLabels(sentence,lineIter.currentLabel(),Arrays.asList("0","1","2"));
+    for (int i=0; i < 10; i++)     r.train(trees);
+  }
+}

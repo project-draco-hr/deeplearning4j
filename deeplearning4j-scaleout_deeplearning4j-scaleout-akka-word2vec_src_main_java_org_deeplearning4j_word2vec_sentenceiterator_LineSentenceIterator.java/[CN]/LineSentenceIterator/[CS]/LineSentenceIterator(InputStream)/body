@@ -1,6 +1,6 @@
 {
   try {
-    this.file.reset();
+    this.file=is;
     iter=IOUtils.lineIterator(this.file,"UTF-8");
   }
  catch (  IOException e) {
