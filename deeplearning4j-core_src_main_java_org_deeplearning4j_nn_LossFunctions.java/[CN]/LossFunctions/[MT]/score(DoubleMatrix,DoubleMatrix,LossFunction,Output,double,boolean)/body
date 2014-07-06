@@ -1,0 +1,32 @@
+{
+  double ret=0.0;
+  double reg=0.5 * l2;
+  DoubleMatrix z=output.output(input);
+switch (lossFunction) {
+case MCXENT:
+    DoubleMatrix mcXEntLogZ=log(z);
+  ret=-labels.mul(mcXEntLogZ).columnSums().sum() / labels.rows;
+break;
+case XENT:
+DoubleMatrix xEntLogZ=log(z);
+DoubleMatrix xEntOneMinusLabelsOut=oneMinus(labels);
+DoubleMatrix xEntOneMinusLogOneMinusZ=oneMinus(log(z));
+ret=-labels.mul(xEntLogZ).add(xEntOneMinusLabelsOut).mul(xEntOneMinusLogOneMinusZ).columnSums().sum() / labels.rows;
+break;
+case RMSE_XENT:
+ret=pow(labels.sub(z),2).columnSums().sum() / labels.rows;
+break;
+case MSE:
+DoubleMatrix mseDelta=labels.sub(z);
+ret=0.5 * pow(mseDelta,2).columnSums().sum() / labels.rows;
+break;
+case EXPLL:
+DoubleMatrix expLLLogZ=log(z);
+ret=-z.sub(labels.mul(expLLLogZ)).columnSums().sum() / labels.rows;
+break;
+case SQUARED_LOSS:
+ret=pow(labels.sub(z),2).columnSums().sum() / labels.rows;
+}
+if (useRegularization && l2 > 0) ret+=reg;
+return ret;
+}

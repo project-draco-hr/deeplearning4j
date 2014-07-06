@@ -1,5 +1,5 @@
 {
-  this.gradient=gradient.dup();
+  this.gradient=gradient;
   DoubleMatrix squaredGradient=pow(this.gradient,2);
   if (this.historicalGradient == null || this.historicalGradient.length != this.gradient.length)   this.historicalGradient=DoubleMatrix.zeros(this.gradient.rows,this.gradient.columns);
   this.historicalGradient.addi(squaredGradient);

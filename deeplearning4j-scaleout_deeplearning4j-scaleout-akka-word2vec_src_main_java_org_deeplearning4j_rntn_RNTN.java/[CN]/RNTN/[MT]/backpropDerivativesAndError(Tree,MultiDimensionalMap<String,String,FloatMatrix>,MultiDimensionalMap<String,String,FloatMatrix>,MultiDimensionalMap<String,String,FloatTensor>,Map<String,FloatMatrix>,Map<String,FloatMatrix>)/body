@@ -1,0 +1,4 @@
+{
+  FloatMatrix delta=new FloatMatrix(numHidden,1);
+  backpropDerivativesAndError(tree,binaryTD,binaryCD,binaryFloatTensorTD,unaryCD,wordVectorD,delta);
+}

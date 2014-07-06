@@ -1,4 +1,4 @@
 {
-  DoubleMatrix ret=featureVectors.get(getVocabWord(word));
+  FloatMatrix ret=featureVectors.get(getVocabWord(word));
   return ret;
 }

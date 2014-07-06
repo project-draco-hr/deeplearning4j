@@ -1,13 +1,11 @@
 {
-  FloatMatrix ret=new FloatMatrix(1,length);
-  int linearIndex=0;
+  List<float[]> gradient=new ArrayList<>();
   for (  Iterator<? extends FloatMatrix> iter : matrices) {
     while (iter.hasNext()) {
       FloatMatrix d=iter.next();
-      for (int i=0; i < d.length; i++) {
-        ret.put(linearIndex++,d.get(i));
-      }
+      gradient.add(d.data);
     }
   }
-  return ret;
+  FloatMatrix ret2=new FloatMatrix(ArrayUtil.combineFloat(gradient));
+  return ret2.reshape(1,ret2.length);
 }

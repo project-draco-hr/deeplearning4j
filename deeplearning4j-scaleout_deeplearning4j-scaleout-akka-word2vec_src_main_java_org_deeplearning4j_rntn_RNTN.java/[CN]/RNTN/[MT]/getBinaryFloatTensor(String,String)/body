@@ -1,0 +1,5 @@
+{
+  left=basicCategory(left);
+  right=basicCategory(right);
+  return binaryFloatTensors.get(left,right);
+}

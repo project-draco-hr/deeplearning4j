@@ -1,6 +1,8 @@
 {
   if (markovFactor) {
     String topCat=t.label();
+    String newLabel=topCat + "[" + word+ "/"+ tag+ "]";
+    t.setLabel(newLabel);
     Tree t2;
     if (insideFactor) {
       t2=markovInsideBinarizeLocalTreeNew(t,headNum,0,t.children().size() - 1,true);

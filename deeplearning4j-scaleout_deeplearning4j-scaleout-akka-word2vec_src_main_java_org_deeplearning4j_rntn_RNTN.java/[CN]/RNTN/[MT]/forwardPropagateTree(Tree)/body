@@ -1,16 +1,15 @@
 {
-  DoubleMatrix nodeVector;
-  DoubleMatrix classification;
+  FloatMatrix nodeVector;
+  FloatMatrix classification;
   if (tree.isLeaf()) {
     return;
   }
  else   if (tree.isPreTerminal()) {
-    classification=getUnaryClassification(tree.label());
+    classification=getUnaryClassification(tree.value());
     String word=tree.children().get(0).value();
-    DoubleMatrix wordVector=getFeatureVector(word);
+    FloatMatrix wordVector=getFeatureVector(word);
     if (wordVector == null) {
-      log.warn("Unknown word: returning...");
-      return;
+      wordVector=featureVectors.get(UNKNOWN_FEATURE);
     }
     nodeVector=activationFunction.apply(wordVector);
   }
@@ -22,16 +21,16 @@
     forwardPropagateTree(tree.children().get(1));
     String leftCategory=tree.children().get(0).label();
     String rightCategory=tree.children().get(1).label();
-    DoubleMatrix W=getBinaryTransform(leftCategory,rightCategory);
+    FloatMatrix W=getBinaryTransform(leftCategory,rightCategory);
     classification=getBinaryClassification(leftCategory,rightCategory);
-    DoubleMatrix leftVector=tree.children().get(0).vector();
-    DoubleMatrix rightVector=tree.children().get(1).vector();
-    DoubleMatrix childrenVector=DoubleMatrix.concatHorizontally(leftVector,rightVector);
-    if (useTensors) {
-      Tensor tensor=getBinaryTensor(leftCategory,rightCategory);
-      DoubleMatrix tensorIn=DoubleMatrix.concatHorizontally(leftVector,rightVector);
-      DoubleMatrix tensorOut=tensor.bilinearProducts(tensorIn);
-      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(tensorOut));
+    FloatMatrix leftVector=tree.children().get(0).vector();
+    FloatMatrix rightVector=tree.children().get(1).vector();
+    FloatMatrix childrenVector=FloatMatrix.concatHorizontally(leftVector,rightVector);
+    if (useFloatTensors) {
+      FloatTensor FloatTensor=getBinaryFloatTensor(leftCategory,rightCategory);
+      FloatMatrix FloatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
+      FloatMatrix FloatTensorOut=FloatTensor.bilinearProducts(FloatTensorIn);
+      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(FloatTensorOut));
     }
  else {
       nodeVector=activationFunction.apply(W.mmul(childrenVector));
@@ -40,8 +39,8 @@
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  DoubleMatrix inputWithBias=DoubleMatrix.concatVertically(nodeVector.transpose(),DoubleMatrix.scalar(1.0));
-  DoubleMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
+  FloatMatrix inputWithBias=FloatMatrix.concatVertically(nodeVector.transpose(),FloatMatrix.scalar(1.0f));
+  FloatMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
   int index=SimpleBlas.iamax(predictions);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);

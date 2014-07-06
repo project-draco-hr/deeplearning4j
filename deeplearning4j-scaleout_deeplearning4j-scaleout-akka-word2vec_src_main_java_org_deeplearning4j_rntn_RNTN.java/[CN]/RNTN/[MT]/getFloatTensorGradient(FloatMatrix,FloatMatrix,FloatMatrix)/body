@@ -1,0 +1,9 @@
+{
+  int size=deltaFull.length;
+  FloatTensor Wt_df=new FloatTensor(size * 2,size * 2,size);
+  FloatMatrix fullVector=FloatMatrix.concatHorizontally(leftVector,rightVector);
+  for (int slice=0; slice < size; ++slice) {
+    Wt_df.setSlice(slice,SimpleBlas.scal(deltaFull.get(slice),fullVector).mmul(fullVector.transpose()));
+  }
+  return Wt_df;
+}

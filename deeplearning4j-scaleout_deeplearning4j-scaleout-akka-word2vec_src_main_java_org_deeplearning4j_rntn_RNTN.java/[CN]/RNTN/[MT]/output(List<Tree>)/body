@@ -1,5 +1,5 @@
 {
-  List<DoubleMatrix> ret=new ArrayList<>();
+  List<FloatMatrix> ret=new ArrayList<>();
   for (  Tree t : trees) {
     forwardPropagateTree(t);
     ret.add(t.prediction());

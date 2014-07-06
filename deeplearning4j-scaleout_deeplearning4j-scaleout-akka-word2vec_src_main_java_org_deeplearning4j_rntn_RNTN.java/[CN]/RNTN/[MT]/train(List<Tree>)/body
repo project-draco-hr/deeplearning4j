@@ -2,6 +2,6 @@
   this.trainingTrees=trainingBatch;
   for (  Tree t : trainingBatch) {
     forwardPropagateTree(t);
-    setParameters(getParameters().sub(getValueGradient(0)));
+    if (!t.isLeaf())     setParameters(getParameters().sub(getValueGradient(0)));
   }
 }

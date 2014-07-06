@@ -16,7 +16,7 @@
   }
   this.featureVectors=new TreeMap<>();
   for (  String word : words) {
-    DoubleMatrix vector=randomWordVector();
+    FloatMatrix vector=randomWordVector();
     featureVectors.put(word,vector);
   }
 }

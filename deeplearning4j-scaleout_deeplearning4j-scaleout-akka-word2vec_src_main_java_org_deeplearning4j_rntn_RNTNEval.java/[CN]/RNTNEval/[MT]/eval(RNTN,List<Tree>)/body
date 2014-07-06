@@ -1,0 +1,6 @@
+{
+  for (  Tree t : trees) {
+    rntn.forwardPropagateTree(t);
+    count(t);
+  }
+}

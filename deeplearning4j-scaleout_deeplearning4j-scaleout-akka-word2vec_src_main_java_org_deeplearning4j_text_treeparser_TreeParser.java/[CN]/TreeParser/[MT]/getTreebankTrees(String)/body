@@ -1,4 +1,5 @@
 {
+  if (text.isEmpty())   return new ArrayList<>();
   CAS c=pool.getCas();
   c.setDocumentText(text);
   tokenizer.process(c);

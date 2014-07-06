@@ -11,7 +11,7 @@
     String val=child.value();
     List<Tree> newChildren=new ArrayList<>(1);
     Tree add=new Tree(child.getTokens());
-    add.setLabel(child.label());
+    add.setLabel(tLabelVal + "[" + val+ "/"+ tLabelVal+ "]");
     add.setTags(Arrays.asList(tLabelVal));
     add.setType(child.getType());
     add.setValue(val);
@@ -20,18 +20,18 @@
     return child;
   }
   Tree head=headWordFinder.findHead(t);
-  if (head == null && !t.label().equals("S") || !t.label().equals("TOP"))   log.warn("No head found");
+  if (head == null && !tLabelVal.equals("S") && !t.label().equals("TOP"))   log.warn("No head found");
   int headNum=-1;
-  List<Tree> children=head.children();
+  List<Tree> children=t.children();
   List<Tree> newChildren=new ArrayList<>();
   for (int i=0; i < children.size(); i++) {
     Tree child=children.get(i);
     Tree childResult=transform(child);
-    if (childResult == head)     headNum=i;
-    newChildren.add(child);
+    if (child == head)     headNum=i;
+    newChildren.add(childResult);
   }
   Tree result;
-  if (t.label().charAt(0) == 'S' || t.label().equals("TOP")) {
+  if (t.label().equals("TOP")) {
     result=new Tree(t);
     result.connect(newChildren);
   }

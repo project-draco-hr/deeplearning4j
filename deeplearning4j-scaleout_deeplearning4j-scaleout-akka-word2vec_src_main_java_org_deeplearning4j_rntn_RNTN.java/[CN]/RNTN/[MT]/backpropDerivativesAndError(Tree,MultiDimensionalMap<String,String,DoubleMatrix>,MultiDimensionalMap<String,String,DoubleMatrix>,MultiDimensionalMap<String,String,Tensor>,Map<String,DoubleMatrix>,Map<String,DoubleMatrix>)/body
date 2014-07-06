@@ -1,4 +1,0 @@
-{
-  DoubleMatrix delta=new DoubleMatrix(numHidden,1);
-  backpropDerivativesAndError(tree,binaryTD,binaryCD,binaryTensorTD,unaryCD,wordVectorD,delta);
-}

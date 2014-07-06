@@ -1,0 +1,8 @@
+{
+  if (tree.isLeaf())   return;
+  if (tree.prediction() == null) {
+    return;
+  }
+  for (  Tree t : tree.children())   count(t);
+  cf.add(SimpleBlas.iamax(tree.prediction()),tree.goldLabel());
+}
