@@ -26,7 +26,7 @@
     classification=getBinaryClassification(leftCategory,rightCategory);
     FloatMatrix leftVector=tree.children().get(0).vector();
     FloatMatrix rightVector=tree.children().get(1).vector();
-    FloatMatrix childrenVector=FloatMatrix.concatHorizontally(FloatMatrix.concatHorizontally(leftVector,rightVector),FloatMatrix.ones(leftVector.rows,1));
+    FloatMatrix childrenVector=MatrixUtil.appendBias(leftVector,rightVector);
     if (useFloatTensors) {
       FloatTensor FloatTensor=getBinaryFloatTensor(leftCategory,rightCategory);
       FloatMatrix FloatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
@@ -34,7 +34,7 @@
       nodeVector=activationFunction.apply(W.mmul(childrenVector).add(FloatTensorOut));
     }
  else {
-      nodeVector=activationFunction.apply(W.transpose().mmul(childrenVector));
+      nodeVector=activationFunction.apply(W.mmul(childrenVector));
     }
   }
  else {
