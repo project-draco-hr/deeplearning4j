@@ -1,6 +1,6 @@
 {
   Tree ret=new Tree(tokens);
-  ret.connect(children());
+  ret.connect(new ArrayList<>(children()));
   ret.setError(error);
   ret.setValue(value);
   ret.setVector(vector);

@@ -16,7 +16,7 @@
   log.info("Initialized word vectors of size " + vec.getLayerSize());
   vec.setTokenizerFactory(tokenizerFactory);
   lineIter.reset();
-  RNTN r=new RNTN.Builder().setActivationFunction(Activations.hardTanh()).setNumHidden(50).setFeatureVectors(vec).setCombineClassification(true).build();
+  RNTN r=new RNTN.Builder().setActivationFunction(Activations.hardTanh()).setNumHidden(50).setFeatureVectors(vec).setCombineClassification(false).build();
   tokenizerFactory=new UimaTokenizerFactory(false);
   TreeVectorizer vectorizer=new TreeVectorizer();
   while (lineIter.hasNext()) {

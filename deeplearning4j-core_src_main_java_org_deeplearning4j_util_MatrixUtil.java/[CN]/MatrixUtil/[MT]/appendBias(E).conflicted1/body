@@ -1,0 +1,15 @@
+{
+  int size=0;
+  for (  E vector : vectors) {
+    size+=vector.rows;
+  }
+  size++;
+  FloatMatrix result=new FloatMatrix(size,vectors[0].columns);
+  int index=0;
+  for (  E vector : vectors) {
+    result.put(RangeUtils.interval(index,index + vector.rows),RangeUtils.all(),vector);
+    index+=vector.rows;
+  }
+  result.put(RangeUtils.interval(index,result.rows),RangeUtils.all(),FloatMatrix.ones(1,result.columns));
+  return createBasedOn(result,vectors[0]);
+}

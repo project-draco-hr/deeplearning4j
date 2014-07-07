@@ -19,5 +19,8 @@
     ret.add(TreeFactory.buildTree(node));
   }
   pool.releaseCas(c2);
+  for (  Tree t : ret) {
+    addPreTerminal(t);
+  }
   return ret;
 }

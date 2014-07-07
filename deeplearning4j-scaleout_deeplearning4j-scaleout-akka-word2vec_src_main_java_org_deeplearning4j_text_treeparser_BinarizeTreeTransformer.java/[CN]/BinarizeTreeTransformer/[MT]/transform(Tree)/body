@@ -1,49 +1,45 @@
 {
   if (t == null)   return null;
-  String tLabelVal=t.label();
-  if (t.isLeaf()) {
-    Tree ret=new Tree(t);
-    ret.setLabel(tLabelVal);
-    return ret;
-  }
-  if (t.isPreTerminal()) {
-    Tree child=transform(t.firstChild());
-    String val=child.value();
-    List<Tree> newChildren=new ArrayList<>(1);
-    Tree add=new Tree(child.getTokens());
-    add.setLabel(tLabelVal + "[" + val+ "/"+ tLabelVal+ "]");
-    add.setTags(Arrays.asList(tLabelVal));
-    add.setType(child.getType());
-    add.setValue(val);
-    newChildren.add(add);
-    child.connect(newChildren);
-    return child;
-  }
-  Tree head=headWordFinder.findHead(t);
-  if (head == null && !tLabelVal.equals("S") && !t.label().equals("TOP"))   log.warn("No head found");
-  int headNum=-1;
-  List<Tree> children=t.children();
-  List<Tree> newChildren=new ArrayList<>();
-  for (int i=0; i < children.size(); i++) {
-    Tree child=children.get(i);
-    Tree childResult=transform(child);
-    if (child == head)     headNum=i;
-    newChildren.add(childResult);
-  }
-  Tree result;
-  if (t.label().equals("TOP")) {
-    result=new Tree(t);
-    result.connect(newChildren);
-  }
+  Stack<Pair<Tree,String>> stack=new Stack<>();
+  stack.add(new Pair<>(t,t.label()));
+  String originalLabel=t.label();
+  while (!stack.isEmpty()) {
+    Pair<Tree,String> curr=stack.pop();
+    Tree node=curr.getFirst();
+    for (    Tree child : node.children())     stack.add(new Pair<>(child,curr.getSecond()));
+    if (node.children().size() > 2) {
+      List<String> children=new ArrayList<>();
+      for (int i=0; i < node.children().size(); i++)       children.add(node.children().get(i).label());
+      Tree copy=node.clone();
+      node.children().clear();
+      Tree currNode=node;
+      for (int i=1; i < children.size() - 1; i++) {
+        if (factor.equals("right")) {
+          Tree newNode=new Tree(currNode);
+          List<String> subChildren=children.subList(i,Math.min(i + horizontonalMarkov,children.size()));
+          newNode.setLabel(originalLabel + "-" + "("+ StringUtils.join(subChildren,"-"));
+          newNode.setParent(currNode);
+          currNode.children().add(copy.children().remove(0));
+          currNode.firstChild().setParent(currNode);
+          currNode.children().add(newNode);
+          currNode=newNode;
+        }
  else {
-    String word=head.value();
-    String tag=head.tags().get(0);
-    result=new Tree(t.getTokens());
-    result.connect(newChildren);
-    result.setTags(Arrays.asList(tag));
-    result.setLabel(tLabelVal + "[" + word+ "/"+ tag+ "]");
-    result.setValue(word);
-    result=binarizeLocalTree(t,headNum,word,tag);
+          Tree newNode=new Tree(currNode);
+          newNode.setParent(copy.firstChild());
+          List<String> childLabels=children.subList(Math.max(children.size() - i - horizontonalMarkov,0),i);
+          Collections.reverse(childLabels);
+          newNode.setLabel(originalLabel + "-" + "("+ StringUtils.join(childLabels,"-"));
+          currNode.children().add(newNode);
+          currNode.firstChild().setParent(currNode);
+          currNode.children().add(copy.children().remove(copy.children().size() - 1));
+          currNode.lastChild().setParent(currNode);
+          currNode=newNode;
+        }
+      }
+      currNode.children().addAll(new ArrayList<>(copy.children()));
+    }
   }
-  return result;
+  addPreTerminal(t);
+  return t;
 }

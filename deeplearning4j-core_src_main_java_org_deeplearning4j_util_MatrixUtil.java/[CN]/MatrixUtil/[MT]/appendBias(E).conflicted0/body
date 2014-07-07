@@ -1,0 +1,15 @@
+{
+  int size=0;
+  for (  E vector : vectors) {
+    size+=vector.rows;
+  }
+  size++;
+  DoubleMatrix result=new DoubleMatrix(size,1);
+  int index=0;
+  for (  E vector : vectors) {
+    result.put(RangeUtils.interval(index,index + vector.rows),RangeUtils.all(),vector);
+    index+=vector.rows;
+  }
+  result.put(RangeUtils.interval(index,result.rows),RangeUtils.all(),DoubleMatrix.ones(1,result.columns));
+  return createBasedOn(result,vectors[0]);
+}

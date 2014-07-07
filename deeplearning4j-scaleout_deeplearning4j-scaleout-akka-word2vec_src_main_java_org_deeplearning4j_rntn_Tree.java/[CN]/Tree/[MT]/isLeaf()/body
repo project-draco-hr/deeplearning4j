@@ -1,3 +1,3 @@
 {
-  return children.isEmpty();
+  return children == null || children.isEmpty();
 }

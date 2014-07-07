@@ -2,10 +2,10 @@
   FloatMatrix nodeVector;
   FloatMatrix classification;
   if (tree.isLeaf()) {
-    return;
+    throw new AssertionError("We should not have reached leaves in forwardPropagate");
   }
  else   if (tree.isPreTerminal()) {
-    classification=getUnaryClassification(tree.value());
+    classification=getUnaryClassification(tree.label());
     String word=tree.children().get(0).value();
     FloatMatrix wordVector=getFeatureVector(word);
     if (wordVector == null) {
@@ -17,15 +17,16 @@
     throw new AssertionError("Non-preterminal nodes of size 1 should have already been collapsed");
   }
  else   if (tree.children().size() == 2) {
-    forwardPropagateTree(tree.children().get(0));
-    forwardPropagateTree(tree.children().get(1));
+    Tree left=tree.firstChild(), right=tree.lastChild();
+    forwardPropagateTree(left);
+    forwardPropagateTree(right);
     String leftCategory=tree.children().get(0).label();
     String rightCategory=tree.children().get(1).label();
     FloatMatrix W=getBinaryTransform(leftCategory,rightCategory);
     classification=getBinaryClassification(leftCategory,rightCategory);
     FloatMatrix leftVector=tree.children().get(0).vector();
     FloatMatrix rightVector=tree.children().get(1).vector();
-    FloatMatrix childrenVector=FloatMatrix.concatHorizontally(leftVector,rightVector);
+    FloatMatrix childrenVector=FloatMatrix.concatHorizontally(FloatMatrix.concatHorizontally(leftVector,rightVector),FloatMatrix.ones(leftVector.rows,1));
     if (useFloatTensors) {
       FloatTensor FloatTensor=getBinaryFloatTensor(leftCategory,rightCategory);
       FloatMatrix FloatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
@@ -33,16 +34,15 @@
       nodeVector=activationFunction.apply(W.mmul(childrenVector).add(FloatTensorOut));
     }
  else {
-      nodeVector=activationFunction.apply(W.mmul(childrenVector));
+      nodeVector=activationFunction.apply(W.transpose().mmul(childrenVector));
     }
   }
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  FloatMatrix inputWithBias=FloatMatrix.concatVertically(nodeVector.transpose(),FloatMatrix.scalar(1.0f));
+  FloatMatrix inputWithBias=MatrixUtil.appendBias(nodeVector);
   FloatMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
   int index=SimpleBlas.iamax(predictions);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);
-  tree.setLabel(String.valueOf(index));
 }
