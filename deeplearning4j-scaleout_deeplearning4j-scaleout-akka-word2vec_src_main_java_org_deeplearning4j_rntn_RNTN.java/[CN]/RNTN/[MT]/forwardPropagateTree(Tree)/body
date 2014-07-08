@@ -33,16 +33,13 @@
       FloatMatrix FloatTensorOut=FloatTensor.bilinearProducts(FloatTensorIn);
       nodeVector=activationFunction.apply(W.mmul(childrenVector).add(FloatTensorOut));
     }
- else {
-      nodeVector=activationFunction.apply(W.mmul(childrenVector));
-    }
+ else     nodeVector=activationFunction.apply(W.mmul(childrenVector));
   }
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
   FloatMatrix inputWithBias=MatrixUtil.appendBias(nodeVector);
   FloatMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
-  int index=SimpleBlas.iamax(predictions);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);
 }

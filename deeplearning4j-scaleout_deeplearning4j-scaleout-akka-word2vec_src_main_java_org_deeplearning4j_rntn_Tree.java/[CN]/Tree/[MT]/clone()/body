@@ -1,8 +1,5 @@
 {
-  Tree ret=new Tree(tokens);
+  Tree ret=new Tree(this);
   ret.connect(new ArrayList<>(children()));
-  ret.setError(error);
-  ret.setValue(value);
-  ret.setVector(vector);
   return ret;
 }

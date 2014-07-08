@@ -4,5 +4,8 @@
     return;
   }
   for (  Tree t : tree.children())   count(t);
-  cf.add(SimpleBlas.iamax(tree.prediction()),tree.goldLabel());
+  int treeGoldLabel=tree.goldLabel();
+  int predictionLabel=SimpleBlas.iamax(tree.prediction());
+  if (treeGoldLabel < 0 || predictionLabel < 0)   log.warn("hmm");
+  cf.add(treeGoldLabel,predictionLabel);
 }

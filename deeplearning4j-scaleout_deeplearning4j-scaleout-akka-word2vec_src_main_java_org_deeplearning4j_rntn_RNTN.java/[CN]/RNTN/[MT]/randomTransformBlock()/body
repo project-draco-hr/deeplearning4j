@@ -1,4 +1,6 @@
 {
   float range=1.0f / (float)(Math.sqrt((float)numHidden) * 2.0f);
-  return MatrixUtil.rand(numHidden,numHidden,-range,range,rng).add(identity);
+  FloatMatrix ret=FloatMatrix.randn(numHidden,numHidden);
+  ret.muli(2).muli(range).subi(range).add(identity);
+  return ret;
 }

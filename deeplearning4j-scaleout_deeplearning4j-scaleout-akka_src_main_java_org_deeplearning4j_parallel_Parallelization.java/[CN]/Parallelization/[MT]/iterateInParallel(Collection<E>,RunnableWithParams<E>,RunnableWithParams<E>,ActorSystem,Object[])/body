@@ -15,6 +15,7 @@
 ,actorSystem.dispatcher());
     f.onComplete(new OnComplete<E>(){
       @Override public void onComplete(      Throwable throwable,      E e) throws Throwable {
+        if (throwable != null)         log.warn("Error occurred processing data",throwable);
         if (postDone != null)         postDone.run(e,otherArgs);
         c.countDown();
       }

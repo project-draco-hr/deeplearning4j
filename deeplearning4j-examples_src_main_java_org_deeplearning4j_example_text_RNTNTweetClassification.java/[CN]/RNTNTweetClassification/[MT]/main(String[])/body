@@ -12,20 +12,23 @@
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
   File wordVectors=new File("tweet-wordvectors.ser");
   Word2Vec vec=wordVectors.exists() ? (Word2Vec)SerializationUtils.readObject(wordVectors) : new Word2Vec(tokenizerFactory,lineIter,5);
-  if (!wordVectors.exists())   vec.train();
+  if (!wordVectors.exists()) {
+    vec.train();
+    SerializationUtils.saveObject(vec,wordVectors);
+  }
   log.info("Initialized word vectors of size " + vec.getLayerSize());
   vec.setTokenizerFactory(tokenizerFactory);
   lineIter.reset();
-  RNTN r=new RNTN.Builder().setActivationFunction(Activations.hardTanh()).setNumHidden(50).setFeatureVectors(vec).setCombineClassification(false).build();
+  RNTN r=new RNTN.Builder().setActivationFunction(Activations.tanh()).setNumHidden(vec.getLayerSize()).setFeatureVectors(vec).build();
   tokenizerFactory=new UimaTokenizerFactory(false);
   TreeVectorizer vectorizer=new TreeVectorizer();
-  while (lineIter.hasNext()) {
-    String sentence=lineIter.nextSentence();
-    List<Tree> trees=vectorizer.getTreesWithLabels(sentence,lineIter.currentLabel(),Arrays.asList("0","1","2"));
+  RNTNEval eval=new RNTNEval();
+  Iterator<List<Tree>> treeIter=new TreeIterator(lineIter,Arrays.asList("0","1","2"),vectorizer,100);
+  while (treeIter.hasNext()) {
+    List<Tree> trees=treeIter.next();
     if (trees.isEmpty())     continue;
     r.train(trees);
-    RNTNEval eval=new RNTNEval();
-    eval.eval(r,trees);
+    log.info("Value for batch " + r.getValue());
     log.info("Eval stats " + eval.stats());
   }
 }
