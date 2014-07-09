@@ -23,5 +23,6 @@
     l.add(new DataSet(features.get(i),MatrixUtil.toOutcomeVector(rowLabels.get(i),labels.size())));
   }
   this.numOutcomes=labels.size();
+  this.totalExamples=l.size();
   all=DataSet.merge(l);
 }
