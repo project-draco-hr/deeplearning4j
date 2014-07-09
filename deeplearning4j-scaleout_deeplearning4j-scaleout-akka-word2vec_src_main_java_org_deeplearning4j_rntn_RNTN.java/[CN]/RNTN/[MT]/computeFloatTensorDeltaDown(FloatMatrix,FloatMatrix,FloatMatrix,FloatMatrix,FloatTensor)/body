@@ -1,6 +1,6 @@
 {
   FloatMatrix WTDelta=W.transpose().mmul(deltaFull);
-  FloatMatrix WTDeltaNoBias=WTDelta.get(RangeUtils.interval(0,1),RangeUtils.interval(0,deltaFull.rows * 2));
+  FloatMatrix WTDeltaNoBias=WTDelta.get(interval(0,1),interval(0,deltaFull.rows * 2));
   int size=deltaFull.length;
   FloatMatrix deltaFloatTensor=new FloatMatrix(size * 2,1);
   FloatMatrix fullVector=FloatMatrix.concatHorizontally(leftVector,rightVector);

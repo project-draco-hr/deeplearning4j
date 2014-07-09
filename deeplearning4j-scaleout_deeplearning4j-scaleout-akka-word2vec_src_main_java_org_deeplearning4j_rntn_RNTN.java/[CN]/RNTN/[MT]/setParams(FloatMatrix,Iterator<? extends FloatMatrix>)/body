@@ -3,8 +3,7 @@
   for (  Iterator<? extends FloatMatrix> matrixIterator : matrices) {
     while (matrixIterator.hasNext()) {
       FloatMatrix matrix=matrixIterator.next();
-      int numElements=matrix.length;
-      for (int i=0; i < numElements; ++i) {
+      for (int i=0; i < matrix.length; ++i) {
         matrix.put(i,theta.get(index));
         ++index;
       }

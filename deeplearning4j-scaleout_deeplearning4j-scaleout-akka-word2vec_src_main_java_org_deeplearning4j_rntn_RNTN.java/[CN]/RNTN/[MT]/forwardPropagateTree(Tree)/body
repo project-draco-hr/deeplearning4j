@@ -26,7 +26,7 @@
     classification=getBinaryClassification(leftCategory,rightCategory);
     FloatMatrix leftVector=tree.children().get(0).vector();
     FloatMatrix rightVector=tree.children().get(1).vector();
-    FloatMatrix childrenVector=MatrixUtil.appendBias(leftVector,rightVector);
+    FloatMatrix childrenVector=appendBias(leftVector,rightVector);
     if (useFloatTensors) {
       FloatTensor FloatTensor=getBinaryFloatTensor(leftCategory,rightCategory);
       FloatMatrix FloatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
@@ -38,7 +38,7 @@
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  FloatMatrix inputWithBias=MatrixUtil.appendBias(nodeVector);
+  FloatMatrix inputWithBias=appendBias(nodeVector);
   FloatMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);

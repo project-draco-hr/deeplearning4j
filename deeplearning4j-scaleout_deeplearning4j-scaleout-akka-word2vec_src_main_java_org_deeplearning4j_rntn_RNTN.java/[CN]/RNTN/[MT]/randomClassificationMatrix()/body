@@ -3,6 +3,6 @@
   FloatMatrix ret=FloatMatrix.zeros(numOuts,numHidden + 1);
   FloatMatrix insert=FloatMatrix.randn(numOuts,numHidden);
   insert.muli(2).muli(range).subi(range);
-  ret.put(RangeUtils.interval(0,insert.rows),RangeUtils.interval(0,insert.columns),insert);
+  ret.put(interval(0,insert.rows),interval(0,insert.columns),insert);
   return ret;
 }

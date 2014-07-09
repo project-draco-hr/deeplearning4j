@@ -14,7 +14,7 @@
   if (nodeWeight == null)   nodeWeight=1.0f;
   FloatMatrix predictions=tree.prediction();
   FloatMatrix deltaClass=goldClass >= 0 ? SimpleBlas.scal(nodeWeight,predictions.sub(goldLabel)) : new FloatMatrix(predictions.rows,predictions.columns);
-  FloatMatrix localCD=deltaClass.mmul(MatrixUtil.appendBias(currentVector).transpose());
+  FloatMatrix localCD=deltaClass.mmul(appendBias(currentVector).transpose());
   float error=-(MatrixFunctions.log(predictions).muli(goldLabel).sum());
   error=error * nodeWeight;
   tree.setError(error);
@@ -24,7 +24,7 @@
     word=getVocabWord(word);
     FloatMatrix currentVectorDerivative=activationFunction.apply(currentVector);
     FloatMatrix deltaFromClass=getUnaryClassification(category).transpose().mmul(deltaClass);
-    deltaFromClass=deltaFromClass.get(RangeUtils.interval(0,numHidden),RangeUtils.interval(0,1)).mul(currentVectorDerivative);
+    deltaFromClass=deltaFromClass.get(interval(0,numHidden),interval(0,1)).mul(currentVectorDerivative);
     FloatMatrix deltaFull=deltaFromClass.add(deltaUp);
     wordVectorD.put(word,wordVectorD.get(word).add(deltaFull));
   }
@@ -39,12 +39,12 @@
     }
     FloatMatrix currentVectorDerivative=activationFunction.applyDerivative(currentVector);
     FloatMatrix deltaFromClass=getBinaryClassification(leftCategory,rightCategory).transpose().mmul(deltaClass);
-    FloatMatrix mult=deltaFromClass.get(RangeUtils.interval(0,numHidden),RangeUtils.interval(0,1));
+    FloatMatrix mult=deltaFromClass.get(interval(0,numHidden),interval(0,1));
     deltaFromClass=mult.muli(currentVectorDerivative);
     FloatMatrix deltaFull=deltaFromClass.add(deltaUp);
     FloatMatrix leftVector=tree.children().get(0).vector();
     FloatMatrix rightVector=tree.children().get(1).vector();
-    FloatMatrix childrenVector=MatrixUtil.appendBias(leftVector,rightVector);
+    FloatMatrix childrenVector=appendBias(leftVector,rightVector);
     FloatMatrix add=binaryTD.get(leftCategory,rightCategory);
     FloatMatrix W_df=deltaFromClass.mmul(childrenVector.transpose());
     binaryTD.put(leftCategory,rightCategory,add.add(W_df));
@@ -59,8 +59,8 @@
     }
     FloatMatrix leftDerivative=activationFunction.apply(leftVector);
     FloatMatrix rightDerivative=activationFunction.apply(rightVector);
-    FloatMatrix leftDeltaDown=deltaDown.get(RangeUtils.interval(0,deltaFull.rows),RangeUtils.interval(0,1));
-    FloatMatrix rightDeltaDown=deltaDown.get(RangeUtils.interval(deltaFull.rows,deltaFull.rows * 2),RangeUtils.interval(0,1));
+    FloatMatrix leftDeltaDown=deltaDown.get(interval(0,deltaFull.rows),interval(0,1));
+    FloatMatrix rightDeltaDown=deltaDown.get(interval(deltaFull.rows,deltaFull.rows * 2),interval(0,1));
     backpropDerivativesAndError(tree.children().get(0),binaryTD,binaryCD,binaryFloatTensorTD,unaryCD,wordVectorD,leftDerivative.mul(leftDeltaDown));
     backpropDerivativesAndError(tree.children().get(1),binaryTD,binaryCD,binaryFloatTensorTD,unaryCD,wordVectorD,rightDerivative.mul(rightDeltaDown));
   }
