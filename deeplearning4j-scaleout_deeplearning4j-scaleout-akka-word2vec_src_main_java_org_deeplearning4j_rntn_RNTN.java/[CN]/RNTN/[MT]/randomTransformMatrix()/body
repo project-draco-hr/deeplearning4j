@@ -2,5 +2,6 @@
   FloatMatrix binary=new FloatMatrix(numHidden,numHidden * 2 + 1);
   FloatMatrix block=randomTransformBlock();
   binary.put(interval(0,block.rows),interval(0,block.columns),block);
+  binary.put(interval(0,block.rows),interval(numHidden,numHidden + block.columns),randomTransformBlock());
   return SimpleBlas.scal(scalingForInit,binary);
 }

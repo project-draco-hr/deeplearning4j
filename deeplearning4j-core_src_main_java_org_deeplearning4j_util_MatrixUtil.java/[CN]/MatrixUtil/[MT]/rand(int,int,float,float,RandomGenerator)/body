@@ -1,7 +1,8 @@
 {
   FloatMatrix ret=new FloatMatrix(rows,columns);
+  float r=max - min;
   for (int i=0; i < ret.length; i++) {
-    ret.put(i,MathUtils.randomNumberBetween(min,max,rng));
+    ret.put(i,r * rng.nextFloat() + min);
   }
   return ret;
 }

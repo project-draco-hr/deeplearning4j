@@ -1,6 +1,5 @@
 {
-  FloatMatrix max=input.rowMaxs();
-  FloatMatrix diff=MatrixFunctions.exp(input.subColumnVector(max));
-  diff.diviColumnVector(diff.rowSums());
+  FloatMatrix diff=MatrixFunctions.exp(input);
+  diff=SimpleBlas.scal(1.0f / diff.sum(),diff);
   return createBasedOn(diff,input);
 }

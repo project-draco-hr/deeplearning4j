@@ -39,7 +39,8 @@
     throw new AssertionError("Tree not correctly binarized");
   }
   FloatMatrix inputWithBias=appendBias(nodeVector);
-  FloatMatrix predictions=outputActivation.apply(classification.mmul(inputWithBias));
+  FloatMatrix preAct=classification.mmul(inputWithBias);
+  FloatMatrix predictions=outputActivation.apply(preAct);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);
 }

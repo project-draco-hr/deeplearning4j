@@ -1,8 +1,7 @@
 {
   float range=1.0f / (float)(Math.sqrt((float)numHidden));
   FloatMatrix ret=FloatMatrix.zeros(numOuts,numHidden + 1);
-  FloatMatrix insert=FloatMatrix.randn(numOuts,numHidden);
-  insert.muli(2).muli(range).subi(range);
-  ret.put(interval(0,insert.rows),interval(0,insert.columns),insert);
-  return ret;
+  FloatMatrix insert=MatrixUtil.rand(numOuts,numHidden,-range,range,rng);
+  ret.put(interval(0,numOuts),interval(0,numHidden),insert);
+  return SimpleBlas.scal(scalingForInit,ret);
 }
