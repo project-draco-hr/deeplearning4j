@@ -1,6 +1,6 @@
 {
-  InputStream is=FileUtils.openInputStream(new File(args[0]));
-  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is,"\t");
+  InputStream is=new ClassPathResource("sentiment-milliontweets.csv").getInputStream();
+  LabelAwareSentenceIterator iterator=new LabelAwareListSentenceIterator(is,",",1,3);
   iterator.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
       String base=new InputHomogenization(sentence).transform();

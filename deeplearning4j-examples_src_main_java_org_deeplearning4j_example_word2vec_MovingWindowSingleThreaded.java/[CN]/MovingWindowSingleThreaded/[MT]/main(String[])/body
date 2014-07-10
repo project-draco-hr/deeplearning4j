@@ -1,8 +1,9 @@
 {
-  InputStream is=FileUtils.openInputStream(new File(args[0]));
-  LabelAwareListSentenceIterator iterator=new LabelAwareListSentenceIterator(is,"\t");
+  InputStream is=new ClassPathResource(args[0]).getInputStream();
+  LabelAwareSentenceIterator iterator=new LabelAwareListSentenceIterator(is,",",1,3);
   iterator.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
+      log.info("Processing sentence " + sentence);
       String base=new InputHomogenization(sentence).transform();
       base=base.replaceAll("@.*","");
       return base;
@@ -42,7 +43,8 @@
   Evaluation eval=new Evaluation();
   while (testIter.hasNext()) {
     DataSet d=testIter.next();
-    eval.eval(d.getSecond(),dbn.output(d.getFirst()));
+    DoubleMatrix probabilities=dbn.output(d.getFirst());
+    eval.eval(d.getSecond(),probabilities);
   }
   log.info(eval.stats());
 }

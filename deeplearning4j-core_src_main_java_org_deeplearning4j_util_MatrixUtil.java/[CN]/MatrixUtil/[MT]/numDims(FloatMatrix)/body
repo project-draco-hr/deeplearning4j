@@ -1,0 +1,5 @@
+{
+  if (input instanceof FloatFourDTensor)   return 4;
+  if (input instanceof FloatTensor)   return 3;
+ else   return 2;
+}
