@@ -1,0 +1,17 @@
+{
+  DoubleMatrix weights=WeightInitUtil.initWeights(10,20,WeightInit.VI,Activations.softmax());
+  DoubleMatrix rand=MatrixUtil.randDouble(20,10,0,1,new MersenneTwister(123));
+  DoubleMatrix randRows=MatrixUtil.randDouble(10,20,0,1,new MersenneTwister(123));
+  DoubleMatrix mult=rand.mmul(weights);
+  ActivationFunction softMaxColumns=Activations.softmax();
+  DoubleMatrix activation=softMaxColumns.apply(mult);
+  double columnSum=activation.sum() / activation.rows;
+  double diffFrom1=Math.abs(1 - columnSum);
+  assertEquals(true,diffFrom1 <= 1e-1);
+  DoubleMatrix rowWiseActivation=randRows.mmul(weights.transpose());
+  ActivationFunction softMaxRows=Activations.softMaxRows();
+  DoubleMatrix softMaxRowResult=softMaxRows.apply(rowWiseActivation);
+  double rowSum=softMaxRowResult.sum() / softMaxRowResult.columns;
+  double diffFrom1Row=Math.abs(1 - rowSum);
+  assertEquals(true,diffFrom1Row <= 1e-1);
+}
