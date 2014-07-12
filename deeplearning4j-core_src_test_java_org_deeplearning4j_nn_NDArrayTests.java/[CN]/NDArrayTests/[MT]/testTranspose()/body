@@ -1,0 +1,6 @@
+{
+  NDArray n=new NDArray(DoubleMatrix.ones(100).data,new int[]{5,5,4});
+  NDArray transpose=n.transpose();
+  assertEquals(n.length,transpose.length);
+  assertEquals(true,Arrays.equals(new int[]{4,5,5},transpose.shape()));
+}

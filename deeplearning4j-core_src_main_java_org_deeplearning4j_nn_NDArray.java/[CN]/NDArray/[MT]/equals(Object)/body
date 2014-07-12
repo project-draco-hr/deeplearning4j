@@ -1,0 +1,8 @@
+{
+  if (!o.getClass().isAssignableFrom(NDArray.class))   return false;
+  NDArray n=(NDArray)o;
+  if (!Arrays.equals(shape(),n.shape()))   return false;
+  if (!Arrays.equals(stride(),n.stride()))   return false;
+  DoubleMatrix diff=MatrixFunctions.absi(sub(n));
+  return diff.max() / (length) < 1e-6;
+}

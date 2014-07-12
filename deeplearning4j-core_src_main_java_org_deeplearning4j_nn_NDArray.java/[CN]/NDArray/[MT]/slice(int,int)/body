@@ -1,0 +1,8 @@
+{
+  if (dimension == 0)   return slice(index);
+  if (shape.length == 2) {
+    if (dimension != 1)     throw new IllegalArgumentException("Unable to retrieve dimension " + dimension + " from a 2d array");
+    return new NDArray(data,new int[]{shape[0]},new int[]{stride[0]},offset + index * stride[1]);
+  }
+  return new NDArray(data,ArrayUtil.removeIndex(shape,index),ArrayUtil.removeIndex(stride,index),offset + index * stride[dimension]);
+}

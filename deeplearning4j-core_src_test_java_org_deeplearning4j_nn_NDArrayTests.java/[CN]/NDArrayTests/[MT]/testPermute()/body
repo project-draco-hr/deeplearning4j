@@ -1,0 +1,7 @@
+{
+  NDArray n=new NDArray(DoubleMatrix.rand(20).data,new int[]{5,4});
+  NDArray transpose=n.transpose();
+  NDArray permute=n.permute(new int[]{1,0});
+  assertEquals(permute,transpose);
+  assertEquals(transpose.length,permute.length,1e-1);
+}

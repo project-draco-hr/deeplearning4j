@@ -1,0 +1,7 @@
+{
+  if (data != null && data.length > 0)   this.data=data;
+  this.shape=shape;
+  this.offset=offset;
+  this.stride=stride;
+  this.length=ArrayUtil.prod(shape);
+}

@@ -1,0 +1,4 @@
+{
+  NDArray ret=(NDArray)super.subi(v,new NDArray(new double[data.length],shape,stride,offset));
+  return ret;
+}
