@@ -1,4 +1,4 @@
 {
-  if (isVector())   return super.prod();
+  if (isVector() || shape().length == 2)   return super.prod();
   return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.PROD,this);
 }

@@ -1,0 +1,6 @@
+{
+  NDArray n=new NDArray(DoubleMatrix.ones(27).data,new int[]{3,3,3});
+  NDArray newSlice=NDArray.wrap(DoubleMatrix.zeros(3,3));
+  n.putSlice(0,newSlice);
+  assertEquals(newSlice,n.slice(0));
+}

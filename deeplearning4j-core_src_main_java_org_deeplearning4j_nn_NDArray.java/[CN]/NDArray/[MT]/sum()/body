@@ -1,4 +1,4 @@
 {
-  if (isVector())   return super.sum();
+  if (isVector() || shape().length == 2)   return super.sum();
   return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.SUM,this);
 }

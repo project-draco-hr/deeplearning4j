@@ -1,6 +1,5 @@
 {
-  int dims=shape().length;
-  if (dims == 0) {
+  if (isVector() || isScalar()) {
     put(0,v + data[0]);
   }
  else {

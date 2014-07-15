@@ -1,4 +1,4 @@
 {
-  if (isVector())   return super.min();
+  if (isVector() || shape().length == 2)   return super.min();
   return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.MIN,this);
 }

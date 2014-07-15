@@ -1,0 +1,7 @@
+{
+  DoubleMatrix d=DoubleMatrix.linspace(1,4,4).reshape(2,2);
+  DoubleMatrix columnMaxs=d.columnMaxs();
+  NDArray n=NDArray.wrap(d);
+  NDArray nColumnMaxes=n.columnMaxs();
+  assertEquals(columnMaxs,nColumnMaxes);
+}

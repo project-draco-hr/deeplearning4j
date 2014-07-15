@@ -1,9 +1,16 @@
 {
-  if (!o.getClass().isAssignableFrom(NDArray.class))   return false;
-  NDArray n=(NDArray)o;
+  NDArray n=null;
+  if (o.getClass().isAssignableFrom(DoubleMatrix.class)) {
+    if (shape().length > 2)     return false;
+ else {
+      DoubleMatrix d=(DoubleMatrix)o;
+      n=NDArray.wrap(this,d);
+    }
+  }
+ else   if (!o.getClass().isAssignableFrom(NDArray.class))   return false;
+  if (n == null)   n=(NDArray)o;
   if (!Arrays.equals(shape(),n.shape()))   return false;
   if (!Arrays.equals(stride(),n.stride()))   return false;
-  if (!Arrays.equals(n.data,data))   return false;
   if (isScalar())   return Math.abs(get(0) - n.get(0)) < 1e-6;
  else   if (isVector()) {
     for (int i=0; i < length; i++)     if (Math.abs(get(i) - n.get(i)) > 1e-6)     return false;

@@ -6,12 +6,8 @@
   assertEquals(true,Arrays.equals(shape,n.shape()));
   DoubleMatrix r1=d.getColumn(0);
   NDArray r2=n.getColumn(0);
-  double[] r2Column=r2.toArray();
-  double[] r1Column=r1.data;
-  assertEquals(true,Arrays.equals(r1Column,r2Column));
+  assertEquals(r2,r1);
   DoubleMatrix r12=d.getColumn(1);
   NDArray r22=n.getColumn(1);
-  double[] r12Column=r12.toArray();
-  double[] r22Column=r22.toArray();
-  assertEquals(true,Arrays.equals(r12Column,r22Column));
+  assertEquals(r22,r12);
 }

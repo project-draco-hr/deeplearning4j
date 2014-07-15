@@ -1,4 +1,4 @@
 {
-  if (isVector())   return super.argmax();
+  if (isVector() || shape().length == 2)   return super.argmax();
   return (int)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.ARG_MAX,this);
 }
