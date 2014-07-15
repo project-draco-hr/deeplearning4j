@@ -29,6 +29,15 @@ case ARG_MAX:
 double argMax=arr.slice(i).argmax();
 if (argMax > ret) ret=argMax;
 break;
+case NORM_1:
+ret+=arr.slice(i).norm1();
+break;
+case NORM_2:
+ret+=arr.slice(i).norm2();
+break;
+case NORM_MAX:
+ret+=arr.slice(i).normmax();
+break;
 }
 }
 return ret;

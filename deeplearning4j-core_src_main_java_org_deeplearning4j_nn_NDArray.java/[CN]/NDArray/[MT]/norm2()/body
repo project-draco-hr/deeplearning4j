@@ -1,0 +1,4 @@
+{
+  if (isVector() || shape().length == 2)   return super.norm2();
+  return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.NORM_2,this);
+}
