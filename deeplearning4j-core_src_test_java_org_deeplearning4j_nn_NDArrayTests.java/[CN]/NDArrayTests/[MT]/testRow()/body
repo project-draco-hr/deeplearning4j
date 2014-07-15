@@ -1,0 +1,8 @@
+{
+  int[] shape={2,4};
+  DoubleMatrix d=DoubleMatrix.linspace(1,8,8).reshape(shape[0],shape[1]);
+  NDArray n=new NDArray(Arrays.copyOf(d.data,d.data.length),shape);
+  assertEquals(true,Arrays.equals(shape,n.shape()));
+  DoubleMatrix r1=d.getRow(0);
+  NDArray r2=n.getRow(0);
+}

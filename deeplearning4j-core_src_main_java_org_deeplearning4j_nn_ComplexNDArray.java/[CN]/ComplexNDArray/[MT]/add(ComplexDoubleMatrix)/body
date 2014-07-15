@@ -1,0 +1,4 @@
+{
+  ComplexNDArray ret=(ComplexNDArray)super.addi(other,new ComplexNDArray(new double[data.length],shape,stride,offset));
+  return ret;
+}

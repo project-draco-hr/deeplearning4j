@@ -1,4 +1,26 @@
 {
-  NDArray ret=(NDArray)super.subi(other,new NDArray(new double[data.length],shape,stride,offset));
-  return ret;
+  NDArray a=NDArray.wrap(this,other);
+  int dims=shape().length;
+  if (dims == 0) {
+    sub(data[0]);
+    return this;
+  }
+  int n=slices();
+  int na=a.slices();
+  int adims=a.shape().length;
+  if (dims == adims) {
+    if (n != na)     throw new IllegalArgumentException("Invalid shapes ");
+    for (int i=0; i < n; i++) {
+      slice(i).sub(a.slice(i));
+    }
+  }
+ else   if (adims < dims) {
+    for (int i=0; i < n; i++) {
+      slice(i).sub(a);
+    }
+  }
+ else {
+    throw new IllegalArgumentException("Invalid shape ");
+  }
+  return this;
 }

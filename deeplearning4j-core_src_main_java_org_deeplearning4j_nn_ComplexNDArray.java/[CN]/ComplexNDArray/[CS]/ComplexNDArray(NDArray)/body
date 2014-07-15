@@ -1,0 +1,7 @@
+{
+  super(arr.data);
+  this.stride=arr.stride();
+  this.shape=arr.shape();
+  this.offset=arr.offset();
+  this.data=arr.data;
+}

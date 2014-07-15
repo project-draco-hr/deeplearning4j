@@ -1,0 +1,29 @@
+{
+  int dims=Math.max(input.shape().length,kernel.shape().length);
+  List<Range> results=new ArrayList<>();
+  ComplexNDArray inputComplex=new ComplexNDArray(input);
+  ComplexNDArray kernelComplex=new ComplexNDArray(kernel);
+  for (int i=0; i < dims; i++) {
+    int m=input.size(i);
+    int n=kernel.size(i);
+    int l=m + n - 1;
+    if (i == 0) {
+      inputComplex=ComplexNDArray.wrap(inputComplex,fft(input,l,i));
+      kernelComplex=ComplexNDArray.wrap(kernelComplex,fft(kernel,l,i));
+    }
+ else {
+      inputComplex=ComplexNDArray.wrap(inputComplex,fft(inputComplex,l,i));
+      kernelComplex=ComplexNDArray.wrap(kernelComplex,fft(kernelComplex,l,i));
+    }
+    Range r=rangeFor(m,n,type);
+    results.add(r);
+  }
+  inputComplex.muli(kernelComplex);
+  for (int i=0; i < input.shape().length; i++) {
+    input=NDArray.wrap(input,ifft(inputComplex,inputComplex.rows,i).getReal());
+  }
+  for (int i=0; i < input.shape().length; i++) {
+    NDArray slice=input.slice(i);
+  }
+  return input;
+}

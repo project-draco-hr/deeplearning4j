@@ -1,0 +1,6 @@
+{
+  int[] shape=NDArray.shapeFor(n.shape(),new Object[]{':',':',0},true);
+  assertEquals(true,Arrays.equals(new int[]{2,2},shape));
+  NDArray n3=n.slice(0,0);
+  assertEquals(true,Arrays.equals(new int[]{2,2},n3.shape()));
+}

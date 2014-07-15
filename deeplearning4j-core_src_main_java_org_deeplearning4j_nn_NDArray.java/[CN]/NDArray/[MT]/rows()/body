@@ -1,0 +1,4 @@
+{
+  if (shape.length == 2)   return shape[0];
+  throw new IllegalStateException("Unable to get number of rows for a non 2d matrix");
+}

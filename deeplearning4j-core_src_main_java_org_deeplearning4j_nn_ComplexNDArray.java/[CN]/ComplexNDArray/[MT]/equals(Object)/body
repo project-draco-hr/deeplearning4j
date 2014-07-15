@@ -1,0 +1,8 @@
+{
+  if (!o.getClass().isAssignableFrom(NDArray.class))   return false;
+  ComplexNDArray n=(ComplexNDArray)o;
+  if (!Arrays.equals(shape(),n.shape()))   return false;
+  if (!Arrays.equals(stride(),n.stride()))   return false;
+  ComplexDoubleMatrix diff=MatrixFunctions.absi(sub(n));
+  return diff.real().max() / (length) < 1e-6;
+}

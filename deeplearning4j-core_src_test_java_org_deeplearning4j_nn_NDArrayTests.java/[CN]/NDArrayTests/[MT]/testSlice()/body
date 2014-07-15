@@ -1,0 +1,9 @@
+{
+  assertEquals(8,n.length);
+  assertEquals(true,Arrays.equals(new int[]{2,2,2},n.shape()));
+  NDArray slice=n.slice(0);
+  assertEquals(true,Arrays.equals(new int[]{2,2},slice.shape()));
+  NDArray slice1=n.slice(1);
+  assertEquals(true,Arrays.equals(slice.shape(),slice1.shape()));
+  assertNotEquals(true,Arrays.equals(slice.toArray(),slice1.toArray()));
+}

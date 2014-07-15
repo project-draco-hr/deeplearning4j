@@ -2,7 +2,11 @@
   NDArray n=new NDArray(DoubleMatrix.ones(27).data,new int[]{3,3,3});
   assertEquals(27,n.length);
   n.checkDimensions(n.addi(1));
-  assertEquals(54,n.sum(),1e-1);
+  n.checkDimensions(n.subi(1.0));
+  n.checkDimensions(n.muli(1.0));
+  n.checkDimensions(n.divi(1.0));
+  n=new NDArray(DoubleMatrix.ones(27).data,new int[]{3,3,3});
+  assertEquals(27,n.sum(),1e-1);
   NDArray a=n.slice(2);
   assertEquals(true,Arrays.equals(new int[]{3,3},a.shape()));
 }

@@ -1,4 +1,4 @@
 {
-  NDArray n=new NDArray(data,ArrayUtil.reverseCopy(shape),ArrayUtil.reverseCopy(stride),offset);
+  NDArray n=new NDArray(data,reverseCopy(shape),ArrayUtil.reverseCopy(stride),offset);
   return n;
 }

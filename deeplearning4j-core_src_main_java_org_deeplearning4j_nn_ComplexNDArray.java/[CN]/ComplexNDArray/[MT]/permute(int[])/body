@@ -1,0 +1,7 @@
+{
+  checkArrangeArray(rearrange);
+  int[] newDims=doPermuteSwap(shape,rearrange);
+  int[] newStrides=doPermuteSwap(stride,rearrange);
+  ComplexNDArray ret=new ComplexNDArray(data,newDims,newStrides,offset);
+  return ret;
+}

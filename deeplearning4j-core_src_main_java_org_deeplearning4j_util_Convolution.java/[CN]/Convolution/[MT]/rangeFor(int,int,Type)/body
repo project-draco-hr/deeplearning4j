@@ -1,0 +1,12 @@
+{
+switch (type) {
+case SAME:
+    return RangeUtils.interval((int)Math.ceil(n / 2),m);
+case FULL:
+  return RangeUtils.interval(0,m + n);
+case VALID:
+return RangeUtils.interval(m,n);
+default :
+throw new IllegalStateException("This should never happen");
+}
+}

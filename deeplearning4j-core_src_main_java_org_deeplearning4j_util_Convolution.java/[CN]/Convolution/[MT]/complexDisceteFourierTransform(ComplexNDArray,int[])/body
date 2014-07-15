@@ -1,0 +1,20 @@
+{
+  ComplexNDArray base;
+  if (ArrayUtil.anyLess(input.shape(),shape))   base=MatrixUtil.complexPadWithZeros(input,shape);
+ else   if (ArrayUtil.anyMore(input.shape(),shape)) {
+    base=new ComplexNDArray(shape);
+    for (int i=0; i < ArrayUtil.prod(shape); i++)     base.put(i,input.get(i));
+  }
+ else   base=input;
+  ComplexNDArray temp=new ComplexNDArray(shape);
+  ComplexNDArray ret=new ComplexNDArray(shape);
+  for (int i=0; i < base.columns; i++) {
+    ComplexDoubleMatrix column=base.getColumn(i);
+    temp.putColumn(i,complexDiscreteFourierTransform1d(column));
+  }
+  for (int i=0; i < ret.rows; i++) {
+    ComplexDoubleMatrix row=temp.getRow(i);
+    ret.putRow(i,complexDiscreteFourierTransform1d(row));
+  }
+  return ret;
+}

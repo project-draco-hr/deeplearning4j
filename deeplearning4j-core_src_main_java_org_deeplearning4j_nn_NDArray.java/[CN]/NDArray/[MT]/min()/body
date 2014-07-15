@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.min();
+  return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.MIN,this);
+}

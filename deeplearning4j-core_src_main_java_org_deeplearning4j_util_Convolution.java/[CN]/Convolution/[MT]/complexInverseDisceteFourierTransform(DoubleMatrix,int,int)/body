@@ -1,5 +1,5 @@
 {
-  ComplexDoubleMatrix base=null;
+  ComplexDoubleMatrix base;
   StopWatch watch=new StopWatch();
   watch.start();
   if (input.rows < rows || input.columns < cols)   base=MatrixUtil.complexPadWithZeros(input,rows,cols);

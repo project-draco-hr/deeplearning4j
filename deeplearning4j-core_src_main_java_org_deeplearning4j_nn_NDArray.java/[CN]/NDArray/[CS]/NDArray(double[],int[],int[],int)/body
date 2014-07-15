@@ -1,7 +1,12 @@
 {
+  if (offset >= data.length)   throw new IllegalArgumentException("Invalid offset: must be < data.length");
   if (data != null && data.length > 0)   this.data=data;
   this.shape=shape;
   this.offset=offset;
   this.stride=stride;
   this.length=ArrayUtil.prod(shape);
+  if (this.shape.length == 2) {
+    rows=shape[0];
+    columns=shape[1];
+  }
 }

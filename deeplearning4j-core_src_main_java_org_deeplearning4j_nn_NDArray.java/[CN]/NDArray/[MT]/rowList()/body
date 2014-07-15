@@ -1,0 +1,6 @@
+{
+  if (shape.length == 1)   return new ArrayList<>(Collections.singletonList(NDArray.scalar(this,1)));
+ else   if (shape.length == 2) {
+  }
+  return new ArrayList<>();
+}

@@ -1,0 +1,9 @@
+{
+  super(newRows,newColumns);
+  if (newRows > 1 && newColumns > 1)   this.shape=new int[]{newRows,newColumns};
+ else   if (newRows > 1)   this.shape=new int[]{newRows};
+ else   this.shape=new int[]{newColumns};
+  offset=0;
+  stride=ArrayUtil.calcStrides(this.shape);
+  this.length=newRows * newColumns;
+}

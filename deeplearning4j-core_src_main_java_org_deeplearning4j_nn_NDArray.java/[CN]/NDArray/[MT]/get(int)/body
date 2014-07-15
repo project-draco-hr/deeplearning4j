@@ -1,3 +1,5 @@
 {
-  return super.get(offset + i);
+  if (shape().length > 1)   throw new IllegalArgumentException("Unable to do linear indexing with dimensions greater than 1");
+  int realStride=stride[0];
+  return data[offset + i * realStride];
 }

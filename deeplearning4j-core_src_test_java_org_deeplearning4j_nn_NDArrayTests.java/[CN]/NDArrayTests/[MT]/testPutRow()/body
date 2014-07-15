@@ -1,0 +1,16 @@
+{
+  DoubleMatrix d=DoubleMatrix.linspace(1,4,4).reshape(2,2);
+  NDArray n=new NDArray(Arrays.copyOf(d.data,d.data.length),new int[]{2,2});
+  double nFirst=3;
+  double dFirst=d.get(0,1);
+  assertEquals(nFirst,dFirst,1e-1);
+  assertEquals(true,Arrays.equals(d.toArray(),n.toArray()));
+  assertEquals(true,Arrays.equals(new int[]{2,2},n.shape()));
+  DoubleMatrix newRow=DoubleMatrix.rand(1,2);
+  n.putRow(0,newRow);
+  d.putRow(0,newRow);
+  NDArray testRow=n.getRow(0);
+  assertEquals(newRow.length,testRow.length);
+  assertEquals(true,Arrays.equals(new int[]{2},testRow.shape()));
+  assertEquals(newRow,d.getRow(0));
+}

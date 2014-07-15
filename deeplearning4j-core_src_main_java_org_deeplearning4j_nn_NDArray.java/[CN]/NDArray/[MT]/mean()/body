@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.mean();
+  return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.MEAN,this);
+}

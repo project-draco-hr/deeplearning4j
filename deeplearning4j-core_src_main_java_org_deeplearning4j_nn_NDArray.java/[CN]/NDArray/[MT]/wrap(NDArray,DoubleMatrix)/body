@@ -1,0 +1,5 @@
+{
+  if (toWrap instanceof NDArray)   return (NDArray)toWrap;
+  NDArray ret=new NDArray(toWrap.data,ndArray.shape(),ndArray.stride(),ndArray.offset);
+  return ret;
+}

@@ -1,0 +1,4 @@
+{
+  ComplexNDArray ret=new ComplexNDArray(toWrap.data,ndArray.shape(),ndArray.stride(),ndArray.offset);
+  return ret;
+}

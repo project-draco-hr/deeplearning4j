@@ -1,0 +1,6 @@
+{
+  double[] dupData=new double[data.length];
+  System.arraycopy(data,0,dupData,0,dupData.length);
+  ComplexNDArray ret=new ComplexNDArray(dupData,shape,stride,offset);
+  return ret;
+}

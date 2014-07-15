@@ -1,0 +1,5 @@
+{
+  DoubleMatrix d=DoubleMatrix.linspace(1,4,4).reshape(2,2);
+  NDArray n=new NDArray(Arrays.copyOf(d.data,d.data.length),new int[]{2,2});
+  n.toArray();
+}

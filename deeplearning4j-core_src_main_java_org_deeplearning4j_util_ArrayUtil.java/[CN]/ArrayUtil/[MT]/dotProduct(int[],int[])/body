@@ -1,0 +1,9 @@
+{
+  int result=0;
+  int n=xs.length;
+  if (ys.length != n)   throw new IllegalArgumentException("Different array sizes");
+  for (int i=0; i < n; i++) {
+    result+=xs[i] * ys[i];
+  }
+  return result;
+}

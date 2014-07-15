@@ -1,5 +1,5 @@
 {
-  ComplexFloatMatrix base=null;
+  ComplexFloatMatrix base;
   if (input.rows < rows || input.columns < cols)   base=MatrixUtil.complexPadWithZeros(input,rows,cols);
  else   if (input.rows > rows || input.columns > cols) {
     base=new ComplexFloatMatrix(input);

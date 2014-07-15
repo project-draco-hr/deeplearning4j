@@ -1,0 +1,4 @@
+{
+  NDArray a=NDArray.scalar(1.0);
+  assertEquals(true,Arrays.equals(new int[]{1},a.shape()));
+}

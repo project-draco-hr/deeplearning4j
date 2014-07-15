@@ -1,4 +1,11 @@
 {
-  NDArray ret=(NDArray)super.muli(v,new NDArray(new double[data.length],shape,stride,offset));
-  return ret;
+  int dims=shape().length;
+  if (dims == 0 || shape().length == 1 && shape[0] == 1) {
+    put(0,v * data[0]);
+  }
+ else {
+    int n=slices();
+    for (int i=0; i < n; i++)     slice(i).muli(v);
+  }
+  return this;
 }

@@ -1,0 +1,17 @@
+{
+  Integer[] realShape={3,2,1};
+  Integer[] test={1,2,3};
+  Integer[] testShape=NDArray.shapeForObject(realShape,test);
+  assertEquals(true,Arrays.equals(realShape,testShape));
+  Object[] nextTest={':',':',3};
+  assertEquals(true,Arrays.equals(realShape,NDArray.shapeForObject(realShape,nextTest)));
+  Object[] nextTest2={':',':',':'};
+  assertEquals(true,Arrays.equals(realShape,NDArray.shapeForObject(realShape,nextTest2)));
+  Integer[] subSetTest={1,1,1};
+  assertEquals(true,Arrays.equals(subSetTest,NDArray.shapeForObject(realShape,subSetTest)));
+  Integer[] singular={1,1};
+  assertEquals(true,Arrays.equals(singular,NDArray.shapeForObject(realShape,singular)));
+  Integer[] zeroTest={0,1,1};
+  Integer[] zeroTestResult={1,1};
+  assertEquals(true,Arrays.equals(zeroTestResult,NDArray.shapeForObject(realShape,zeroTest)));
+}

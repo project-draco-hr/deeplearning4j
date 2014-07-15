@@ -1,9 +1,7 @@
 {
   int ix=offset;
   if (indexes.length != shape.length)   throw new IllegalArgumentException("Unable to set values: number of indices must be equal to the shape");
-  for (int i=0; i < shape.length; i++) {
-    ix+=indexes[i] * stride[i];
-  }
+  for (int i=0; i < shape.length; i++)   ix+=indexes[i] * stride[i];
   data[ix]=value;
   return this;
 }

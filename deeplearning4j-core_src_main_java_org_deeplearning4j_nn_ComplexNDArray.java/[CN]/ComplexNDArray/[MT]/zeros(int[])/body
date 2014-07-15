@@ -1,0 +1,3 @@
+{
+  return new ComplexNDArray(new double[ArrayUtil.prod(shape)],shape);
+}

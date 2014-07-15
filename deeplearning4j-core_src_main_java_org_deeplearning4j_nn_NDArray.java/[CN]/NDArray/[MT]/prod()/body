@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.prod();
+  return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.PROD,this);
+}

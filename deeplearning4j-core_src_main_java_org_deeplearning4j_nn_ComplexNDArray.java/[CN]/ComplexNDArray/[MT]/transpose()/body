@@ -1,0 +1,4 @@
+{
+  ComplexNDArray n=new ComplexNDArray(data,ArrayUtil.reverseCopy(shape),ArrayUtil.reverseCopy(stride),offset);
+  return n;
+}
