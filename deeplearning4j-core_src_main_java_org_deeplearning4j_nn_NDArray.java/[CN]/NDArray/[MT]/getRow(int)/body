@@ -1,4 +1,4 @@
 {
-  if (shape.length == 2)   return new NDArray(data,new int[]{shape[1]},new int[]{shape[0]},offset + r * columns());
+  if (shape.length == 2)   return new NDArray(data,new int[]{shape[1]},new int[]{shape[0]},r * columns());
  else   throw new IllegalArgumentException("Unable to get row of non 2d matrix");
 }

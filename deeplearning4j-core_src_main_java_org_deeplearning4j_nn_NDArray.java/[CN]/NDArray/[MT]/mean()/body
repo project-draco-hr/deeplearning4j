@@ -1,4 +1,4 @@
 {
-  if (isVector() || shape().length == 2)   return super.mean();
+  if (isVector())   return super.mean();
   return NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.MEAN,this);
 }

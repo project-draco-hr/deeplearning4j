@@ -1,6 +1,9 @@
 {
   if (toWrap instanceof NDArray)   return (NDArray)toWrap;
-  int[] shape=new int[]{toWrap.rows,toWrap.columns};
+  int[] shape;
+  if (toWrap.isColumnVector())   shape=new int[]{toWrap.rows};
+ else   if (toWrap.isRowVector())   shape=new int[]{toWrap.columns};
+ else   shape=new int[]{toWrap.rows,toWrap.columns};
   NDArray ret=new NDArray(toWrap.data,shape,ArrayUtil.calcStrides(shape));
   return ret;
 }
