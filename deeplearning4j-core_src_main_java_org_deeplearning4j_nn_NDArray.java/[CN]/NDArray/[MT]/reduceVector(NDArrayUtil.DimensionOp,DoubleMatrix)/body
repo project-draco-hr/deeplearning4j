@@ -1,0 +1,20 @@
+{
+switch (op) {
+case SUM:
+    return vector.sum();
+case MEAN:
+  return vector.mean();
+case MIN:
+return vector.min();
+case MAX:
+return vector.max();
+case NORM_1:
+return vector.norm1();
+case NORM_2:
+return vector.norm2();
+case NORM_MAX:
+return vector.normmax();
+default :
+throw new IllegalArgumentException("Illegal operation");
+}
+}

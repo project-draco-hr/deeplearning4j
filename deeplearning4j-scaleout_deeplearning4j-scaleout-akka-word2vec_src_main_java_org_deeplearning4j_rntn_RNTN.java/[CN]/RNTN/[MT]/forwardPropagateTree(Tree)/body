@@ -28,10 +28,10 @@
     FloatMatrix rightVector=tree.children().get(1).vector();
     FloatMatrix childrenVector=appendBias(leftVector,rightVector);
     if (useFloatTensors) {
-      FloatTensor FloatTensor=getBinaryFloatTensor(leftCategory,rightCategory);
-      FloatMatrix FloatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
-      FloatMatrix FloatTensorOut=FloatTensor.bilinearProducts(FloatTensorIn);
-      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(FloatTensorOut));
+      FloatTensor floatT=getBinaryFloatTensor(leftCategory,rightCategory);
+      FloatMatrix floatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
+      FloatMatrix floatTensorOut=floatT.bilinearProducts(floatTensorIn);
+      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(floatTensorOut));
     }
  else     nodeVector=activationFunction.apply(W.mmul(childrenVector));
   }

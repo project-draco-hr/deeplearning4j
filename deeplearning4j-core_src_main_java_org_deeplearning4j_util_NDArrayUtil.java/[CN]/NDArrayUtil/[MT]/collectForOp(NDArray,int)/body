@@ -1,0 +1,10 @@
+{
+  int num=from.shape()[dimension];
+  double[] d=new double[num];
+  int idx=0;
+  for (int k=0; k < d.length; k++) {
+    d[k]=from.data[idx];
+    idx+=num;
+  }
+  return d;
+}

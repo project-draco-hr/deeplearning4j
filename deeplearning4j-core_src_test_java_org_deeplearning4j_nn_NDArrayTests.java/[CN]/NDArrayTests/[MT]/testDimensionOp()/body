@@ -1,0 +1,10 @@
+{
+  NDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  int[] shape=ArrayUtil.removeIndex(arr.shape(),0);
+  int[] stride=ArrayUtil.removeIndex(arr.stride(),0);
+  NDArray firstSlice=arr.slice(0);
+  double sum=firstSlice.sum();
+  String s=firstSlice.toString();
+  NDArrayUtil.collectForOp(arr,0);
+  log.info("Is this a cell? " + sum);
+}
