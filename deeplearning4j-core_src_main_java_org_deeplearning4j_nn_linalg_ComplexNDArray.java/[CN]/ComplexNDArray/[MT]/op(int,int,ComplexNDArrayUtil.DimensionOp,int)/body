@@ -1,0 +1,11 @@
+{
+  double[] dim=new double[this.shape[dimension]];
+  int count=0;
+  boolean newSlice=false;
+  for (int j=offset; count < dim.length; j+=this.stride[dimension]) {
+    double d=data[j];
+    dim[count++]=d;
+    if (j >= currOffsetForSlice)     newSlice=true;
+  }
+  return new Pair<>(reduceVector(op,new ComplexDoubleMatrix(dim)),newSlice);
+}

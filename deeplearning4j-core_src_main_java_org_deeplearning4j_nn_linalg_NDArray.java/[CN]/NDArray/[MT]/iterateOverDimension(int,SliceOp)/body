@@ -1,0 +1,27 @@
+{
+  int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
+  if (dimension == 0) {
+    int numTimes=ArrayUtil.prod(shape);
+    for (int offset=this.offset; offset < numTimes; offset++) {
+      NDArray vector=vectorForDimensionAndOffset(dimension,offset);
+      op.operate(vector);
+    }
+  }
+ else {
+    double[] data2=new double[ArrayUtil.prod(shape)];
+    int dataIter=0;
+    int[] sliceIndices=endsForSlices();
+    int currOffset=0;
+    int numTimes=ArrayUtil.prod(shape);
+    for (int offset=this.offset; offset < numTimes; offset++) {
+      if (dataIter >= data2.length)       break;
+      Pair<Boolean,NDArray> pair=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
+      op.operate(pair.getSecond());
+      if (pair.getFirst()) {
+        offset=sliceIndices[currOffset];
+        numTimes+=sliceIndices[currOffset];
+        currOffset++;
+      }
+    }
+  }
+}

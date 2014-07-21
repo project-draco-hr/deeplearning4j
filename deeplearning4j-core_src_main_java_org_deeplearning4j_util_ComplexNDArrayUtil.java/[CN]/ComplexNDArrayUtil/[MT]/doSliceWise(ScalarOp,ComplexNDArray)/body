@@ -1,0 +1,26 @@
+{
+  if (arr.isScalar())   return arr.get(0);
+ else {
+    ComplexDouble ret=new ComplexDouble(0);
+    for (int i=0; i < arr.slices(); i++) {
+switch (op) {
+case MEAN:
+        ret.addi(arr.slice(i).mean());
+      break;
+case SUM:
+    ret.addi(arr.slice(i).sum());
+  break;
+case NORM_1:
+ret.addi(arr.slice(i).norm1());
+break;
+case NORM_2:
+ret.addi(arr.slice(i).norm2());
+break;
+case NORM_MAX:
+ret.addi(arr.slice(i).normmax());
+break;
+}
+}
+return ret;
+}
+}

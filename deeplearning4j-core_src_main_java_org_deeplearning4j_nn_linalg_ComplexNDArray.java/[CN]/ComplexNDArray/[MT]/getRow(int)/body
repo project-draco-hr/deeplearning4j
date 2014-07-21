@@ -1,0 +1,4 @@
+{
+  if (shape.length == 2)   return new ComplexNDArray(data,ArrayUtil.of(shape[1]),ArrayUtil.of(shape[0]),r * columns());
+ else   throw new IllegalArgumentException("Unable to get row of non 2d matrix");
+}

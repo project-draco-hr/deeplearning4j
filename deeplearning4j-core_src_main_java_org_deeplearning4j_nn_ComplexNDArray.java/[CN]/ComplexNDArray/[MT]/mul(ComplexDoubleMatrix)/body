@@ -1,4 +1,0 @@
-{
-  ComplexNDArray ret=(ComplexNDArray)super.muli(other,new ComplexNDArray(new double[data.length],shape,stride,offset));
-  return ret;
-}

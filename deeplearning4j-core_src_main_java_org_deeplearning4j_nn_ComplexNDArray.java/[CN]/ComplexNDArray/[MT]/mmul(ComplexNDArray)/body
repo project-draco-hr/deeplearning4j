@@ -1,7 +1,0 @@
-{
-  List<ComplexDoubleMatrix> ret=new ArrayList<>();
-  for (int i=0; i < shape.length; i++) {
-    ret.add(slice(i).mmul(arr.slice(i)));
-  }
-  return new ComplexNDArray(ret,ArrayUtil.consArray(shape[0],new int[]{ret.get(0).rows,ret.get(0).columns}));
-}

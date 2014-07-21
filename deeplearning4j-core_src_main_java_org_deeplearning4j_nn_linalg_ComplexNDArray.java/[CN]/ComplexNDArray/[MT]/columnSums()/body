@@ -1,0 +1,6 @@
+{
+  if (shape().length == 2) {
+    return ComplexNDArray.wrap(super.columnSums());
+  }
+ else   return ComplexNDArrayUtil.doSliceWise(ComplexNDArrayUtil.MatrixOp.COLUMN_SUM,this);
+}

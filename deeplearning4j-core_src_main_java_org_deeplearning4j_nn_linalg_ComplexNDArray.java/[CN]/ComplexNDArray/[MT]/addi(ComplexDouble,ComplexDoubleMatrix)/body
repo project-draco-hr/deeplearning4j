@@ -1,0 +1,5 @@
+{
+  ComplexNDArray arr=ComplexNDArray.wrap(this,result);
+  for (int i=0; i < length; i++)   result.put(i,get(i).add(v));
+  return arr;
+}

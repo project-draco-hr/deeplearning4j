@@ -1,0 +1,5 @@
+{
+  if (shape.length == 2)   data[offset + 2 * index(row,column)]=value;
+ else   throw new UnsupportedOperationException("Invalid set for a non 2d array");
+  return this;
+}

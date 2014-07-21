@@ -1,0 +1,5 @@
+{
+  this(m.rows,m.columns);
+  this.shape=m.shape();
+  NativeBlas.dcopy(m.length,m.data,0,1,data,0,2);
+}

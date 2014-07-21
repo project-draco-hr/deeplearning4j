@@ -1,0 +1,5 @@
+{
+  ComplexDouble c=new ComplexDouble(0.0);
+  for (int i=0; i < length; i++)   put(i,get(i,c).conji());
+  return this;
+}

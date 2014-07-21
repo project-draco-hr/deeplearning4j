@@ -1,0 +1,9 @@
+{
+  int count=0;
+  ComplexNDArray ret=new ComplexNDArray(new int[]{shape[dimension]});
+  for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
+    ComplexDouble d=new ComplexDouble(data[j],data[j + 1]);
+    ret.put(count++,d);
+  }
+  return ret;
+}

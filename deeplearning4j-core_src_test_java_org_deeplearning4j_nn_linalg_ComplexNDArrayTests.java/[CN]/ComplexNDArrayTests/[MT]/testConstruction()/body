@@ -1,0 +1,6 @@
+{
+  ComplexNDArray arr=new ComplexNDArray(new double[]{0,1},new int[]{1});
+  assertEquals(1,arr.length);
+  assertEquals(2,arr.data.length);
+  assertEquals(0,arr.get(0).real(),1e-1);
+}

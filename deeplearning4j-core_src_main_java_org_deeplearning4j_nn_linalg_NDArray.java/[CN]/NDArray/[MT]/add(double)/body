@@ -1,0 +1,10 @@
+{
+  if (isVector() || isScalar()) {
+    put(0,v + data[0]);
+  }
+ else {
+    int n=slices();
+    for (int i=0; i < n; i++)     slice(i).add(v);
+  }
+  return this;
+}
