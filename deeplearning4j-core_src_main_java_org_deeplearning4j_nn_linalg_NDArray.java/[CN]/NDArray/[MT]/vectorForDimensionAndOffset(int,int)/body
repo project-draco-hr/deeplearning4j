@@ -1,9 +1,11 @@
 {
   int count=0;
+  List<Integer> indices=new ArrayList<>();
   NDArray ret=new NDArray(new int[]{shape[dimension]});
   for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
     double d=data[j];
     ret.put(count++,d);
+    indices.add(j);
   }
-  return ret;
+  return new DimensionSlice(false,ret,ArrayUtil.toArray(indices));
 }

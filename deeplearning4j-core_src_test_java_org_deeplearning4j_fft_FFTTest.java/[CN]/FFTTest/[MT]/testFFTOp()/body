@@ -1,0 +1,6 @@
+{
+  NDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  log.info("Before " + arr);
+  arr.iterateOverDimension(0,new FFTSliceOp(arr));
+  log.info("After " + arr);
+}

@@ -2,10 +2,12 @@
   int count=0;
   NDArray ret=new NDArray(new int[]{shape[dimension]});
   boolean newSlice=false;
+  List<Integer> indices=new ArrayList<>();
   for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
     double d=data[j];
     ret.put(count++,d);
     if (j >= currOffsetForSlice)     newSlice=true;
+    indices.add(j);
   }
-  return new Pair<>(newSlice,ret);
+  return new DimensionSlice(newSlice,ret,ArrayUtil.toArray(indices));
 }

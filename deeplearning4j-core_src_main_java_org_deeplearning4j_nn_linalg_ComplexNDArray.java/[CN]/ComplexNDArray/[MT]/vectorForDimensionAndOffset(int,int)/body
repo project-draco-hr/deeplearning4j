@@ -1,9 +1,11 @@
 {
   int count=0;
   ComplexNDArray ret=new ComplexNDArray(new int[]{shape[dimension]});
+  List<Integer> indices=new ArrayList<>();
   for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
     ComplexDouble d=new ComplexDouble(data[j],data[j + 1]);
     ret.put(count++,d);
+    indices.add(j);
   }
-  return ret;
+  return new DimensionSlice(false,ret,ArrayUtil.toArray(indices));
 }
