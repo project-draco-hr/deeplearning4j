@@ -14,7 +14,7 @@
     int currOffset=0;
     int numTimes=ArrayUtil.prod(shape);
     for (int offset=this.offset; offset < numTimes; offset++) {
-      if (dataIter >= data2.length)       break;
+      if (dataIter >= data2.length || currOffset >= sliceIndices.length)       break;
       DimensionSlice result=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
       op.operate(result);
       if (result.isNextSlice()) {
