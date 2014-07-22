@@ -1,0 +1,5 @@
+{
+  ComplexNDArray result=transform.dup();
+  result.iterateOverDimension(dimension,new IFFTSliceOp(transform,numElements));
+  return result;
+}

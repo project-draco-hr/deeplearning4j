@@ -1,0 +1,8 @@
+{
+  DoubleMatrix d=DoubleMatrix.linspace(1,6,6);
+  ComplexDoubleMatrix d2=new ComplexDoubleMatrix(d);
+  ComplexDoubleMatrix fft=FFT.ifft(FFT.fft(d2));
+  assertEquals(6,fft.length);
+  log.info("IFFT " + fft);
+  assertEquals(d2,fft);
+}

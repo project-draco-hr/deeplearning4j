@@ -1,0 +1,5 @@
+{
+  ComplexNDArray result=new ComplexNDArray(transform);
+  result.iterateOverDimension(dimension,new FFTSliceOp(transform,numElements));
+  return result;
+}

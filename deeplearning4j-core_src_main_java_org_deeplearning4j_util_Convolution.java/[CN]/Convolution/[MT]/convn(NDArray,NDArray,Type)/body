@@ -8,22 +8,19 @@
     int n=kernel.size(i);
     int l=m + n - 1;
     if (i == 0) {
-      inputComplex=ComplexNDArray.wrap(inputComplex,fft(input,l,i));
-      kernelComplex=ComplexNDArray.wrap(kernelComplex,fft(kernel,l,i));
+      inputComplex=ComplexNDArray.wrap(inputComplex,FFT.fftn(input,l,i));
+      kernelComplex=ComplexNDArray.wrap(kernelComplex,FFT.fftn(kernel,l,i));
     }
  else {
-      inputComplex=ComplexNDArray.wrap(inputComplex,fft(inputComplex,l,i));
-      kernelComplex=ComplexNDArray.wrap(kernelComplex,fft(kernelComplex,l,i));
+      inputComplex=ComplexNDArray.wrap(inputComplex,FFT.fftn(inputComplex,l,i));
+      kernelComplex=ComplexNDArray.wrap(kernelComplex,FFT.fftn(kernelComplex,l,i));
     }
     Range r=rangeFor(m,n,type);
     results.add(r);
   }
   inputComplex.muli(kernelComplex);
   for (int i=0; i < input.shape().length; i++) {
-    input=NDArray.wrap(input,ifft(inputComplex,inputComplex.rows,i).getReal());
-  }
-  for (int i=0; i < input.shape().length; i++) {
-    NDArray slice=input.slice(i,0);
+    input=NDArray.wrap(input,FFT.ifftn(inputComplex,inputComplex.rows,i).getReal());
   }
   return input;
 }
