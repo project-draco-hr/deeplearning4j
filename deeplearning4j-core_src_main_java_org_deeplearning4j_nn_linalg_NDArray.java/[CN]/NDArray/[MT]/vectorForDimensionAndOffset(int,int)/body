@@ -1,11 +1,23 @@
 {
-  int count=0;
-  List<Integer> indices=new ArrayList<>();
-  NDArray ret=new NDArray(new int[]{shape[dimension]});
-  for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
-    double d=data[j];
-    ret.put(count++,d);
-    indices.add(j);
+  if (isScalar() && dimension == 0 && offset == 0)   return new DimensionSlice(false,ComplexNDArray.scalar(get(offset)),new int[]{offset});
+ else   if (isVector()) {
+    if (dimension == 0) {
+      int[] indices=new int[length];
+      for (int i=0; i < indices.length; i++)       indices[i]=i;
+      return new DimensionSlice(false,dup(),indices);
+    }
+ else     if (dimension == 1)     return new DimensionSlice(false,NDArray.scalar(get(offset)),new int[]{offset});
+ else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
   }
-  return new DimensionSlice(false,ret,ArrayUtil.toArray(indices));
+ else {
+    int count=0;
+    List<Integer> indices=new ArrayList<>();
+    NDArray ret=new NDArray(new int[]{shape[dimension]});
+    for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
+      double d=data[j];
+      ret.put(count++,d);
+      indices.add(j);
+    }
+    return new DimensionSlice(false,ret,ArrayUtil.toArray(indices));
+  }
 }

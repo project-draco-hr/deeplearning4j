@@ -7,15 +7,15 @@
   }
  else   if (!o.getClass().isAssignableFrom(NDArray.class))   return false;
   if (n == null)   n=(NDArray)o;
-  if (!Arrays.equals(shape(),n.shape()))   return false;
-  if (isScalar())   return Math.abs(get(0) - n.get(0)) < 1e-6;
- else   if (isVector()) {
+  if (isScalar() && n.isScalar())   return Math.abs(get(0) - n.get(0)) < 1e-6;
+ else   if (isVector() && n.isVector()) {
     for (int i=0; i < length; i++) {
       double curr=get(i);
       double comp=n.get(i);
       if (Math.abs(curr - comp) > 1e-6)       return false;
     }
   }
+  if (!Arrays.equals(shape(),n.shape()))   return false;
   for (int i=0; i < slices(); i++) {
     if (!(slice(i).equals(n.slice(i))))     return false;
   }

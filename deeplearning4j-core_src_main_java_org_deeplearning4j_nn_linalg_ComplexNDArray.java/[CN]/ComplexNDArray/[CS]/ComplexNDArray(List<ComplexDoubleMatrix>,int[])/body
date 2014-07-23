@@ -4,7 +4,6 @@
   this.data=ArrayUtil.combine(list);
   this.shape=shape;
   this.length=ArrayUtil.prod(shape);
-  ensureDataLength();
   if (this.shape.length == 2) {
     rows=shape[0];
     columns=shape[1];

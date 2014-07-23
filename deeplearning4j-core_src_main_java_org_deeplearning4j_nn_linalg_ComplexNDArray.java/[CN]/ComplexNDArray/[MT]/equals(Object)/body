@@ -7,6 +7,16 @@
   }
  else   if (!o.getClass().isAssignableFrom(ComplexNDArray.class))   return false;
   if (n == null)   n=(ComplexNDArray)o;
+  if (isScalar() && n.isScalar())   return Math.abs(get(0).sub(n.get(0)).real()) < 1e-6;
+ else   if (isVector() && n.isVector()) {
+    for (int i=0; i < length; i++) {
+      double curr=get(i).real();
+      double comp=n.get(i).real();
+      double currImag=get(i).imag();
+      double compImag=n.get(i).imag();
+      if (Math.abs(curr - comp) > 1e-6 || Math.abs(currImag - compImag) > 1e-6)       return false;
+    }
+  }
   if (!Arrays.equals(shape(),n.shape()))   return false;
   if (isScalar())   return get(0).sub(n.get(0)).abs() < 1e-6;
  else   if (isVector()) {

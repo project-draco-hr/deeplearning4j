@@ -1,0 +1,11 @@
+{
+  DoubleMatrix d=DoubleMatrix.linspace(1,8,8);
+  NDArray arr=new NDArray(d.data,new int[]{8});
+  ComplexNDArray arr2=FFT.fftn(arr,0,1);
+  assertEquals(arr,arr2.getReal());
+  ComplexNDArray other=FFT.fftn(arr,1,1);
+  assertEquals(1,other.length);
+  NDArray single=NDArray.scalar(1.0);
+  NDArray real=other.getReal();
+  assertEquals(single,real);
+}

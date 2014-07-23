@@ -1,0 +1,6 @@
+{
+  NDArray ret=new NDArray(new int[]{2,5});
+  NDArray test=NDArrayUtil.padWithZeros(ret,new int[]{2,5,5});
+  assertEquals(true,Arrays.equals(new int[]{2,5,5},test.shape()));
+  assertEquals(ret.sum(),test.sum(),1e-1);
+}

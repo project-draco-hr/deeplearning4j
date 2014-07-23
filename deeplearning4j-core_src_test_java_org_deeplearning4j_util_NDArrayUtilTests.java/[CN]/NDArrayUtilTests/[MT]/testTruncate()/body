@@ -1,0 +1,5 @@
+{
+  NDArray ret=new NDArray(new int[]{2,1});
+  NDArray truncated=NDArrayUtil.truncate(ret,new int[]{2});
+  assertEquals(true,Arrays.equals(new int[]{2},truncated.shape()));
+}

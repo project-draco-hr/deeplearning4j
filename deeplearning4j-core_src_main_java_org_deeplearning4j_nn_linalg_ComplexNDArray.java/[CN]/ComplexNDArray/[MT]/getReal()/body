@@ -1,5 +1,5 @@
 {
-  NDArray result=new NDArray(shape());
+  NDArray result=new NDArray(shape(),stride());
   NativeBlas.dcopy(length,data,0,2,result.data,0,1);
   return result;
 }

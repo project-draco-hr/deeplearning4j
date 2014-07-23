@@ -1,26 +1,49 @@
 {
-  int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
-  if (dimension == 0) {
-    int numTimes=ArrayUtil.prod(shape);
-    for (int offset=this.offset; offset < numTimes; offset++) {
-      DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
-      op.operate(vector);
+  if (isScalar()) {
+    if (dimension > 1)     throw new IllegalArgumentException("Dimension must be 0 for a scalar");
+ else {
+      DimensionSlice slice=this.vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
     }
   }
+ else   if (isVector()) {
+    if (dimension == 0) {
+      DimensionSlice slice=vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
+    }
+ else     if (dimension == 1) {
+      for (int i=0; i < length; i++) {
+        DimensionSlice slice=vectorForDimensionAndOffset(dimension,i);
+        op.operate(slice);
+      }
+    }
+ else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
+  }
  else {
-    double[] data2=new double[ArrayUtil.prod(shape)];
-    int dataIter=0;
-    int[] sliceIndices=endsForSlices();
-    int currOffset=0;
-    int numTimes=ArrayUtil.prod(shape);
-    for (int offset=this.offset; offset < numTimes; offset++) {
-      if (dataIter >= data2.length || currOffset >= sliceIndices.length)       break;
-      DimensionSlice pair=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
-      op.operate(pair);
-      if (pair.isNextSlice()) {
-        offset=sliceIndices[currOffset];
-        numTimes+=sliceIndices[currOffset];
-        currOffset++;
+    if (dimension >= shape.length)     throw new IllegalArgumentException("Unable to remove dimension  " + dimension + " was >= shape length");
+    int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
+    if (dimension == 0) {
+      int numTimes=ArrayUtil.prod(shape);
+      for (int offset=this.offset; offset < numTimes; offset++) {
+        DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
+        op.operate(vector);
+      }
+    }
+ else {
+      double[] data2=new double[ArrayUtil.prod(shape) * 2];
+      int dataIter=0;
+      int[] sliceIndices=endsForSlices();
+      int currOffset=0;
+      int numTimes=ArrayUtil.prod(shape);
+      for (int offset=this.offset; offset < numTimes; offset++) {
+        if (dataIter >= data2.length || currOffset >= sliceIndices.length)         break;
+        DimensionSlice pair=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
+        op.operate(pair);
+        if (pair.isNextSlice()) {
+          offset=sliceIndices[currOffset];
+          numTimes+=sliceIndices[currOffset];
+          currOffset++;
+        }
       }
     }
   }

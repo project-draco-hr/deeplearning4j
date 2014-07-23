@@ -1,0 +1,5 @@
+{
+  ComplexNDArray ret=new ComplexNDArray(new int[]{2,1});
+  ComplexNDArray truncated=ComplexNDArrayUtil.truncate(ret,new int[]{2});
+  assertEquals(true,Arrays.equals(new int[]{2},truncated.shape()));
+}
