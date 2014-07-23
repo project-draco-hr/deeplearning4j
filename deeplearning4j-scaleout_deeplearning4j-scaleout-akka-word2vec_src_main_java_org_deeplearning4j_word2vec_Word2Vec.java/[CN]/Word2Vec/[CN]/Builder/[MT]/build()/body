@@ -1,0 +1,35 @@
+{
+  if (iter == null) {
+    Word2Vec ret=new Word2Vec();
+    ret.layerSize=layerSize;
+    ret.window=window;
+    ret.stopWords=stopWords;
+    ret.minWordFrequency=minWordFrequency;
+    try {
+      if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+    ret.tokenizerFactory=tokenizerFactory;
+    ret.wordIndex=vocab;
+    return ret;
+  }
+ else {
+    Word2Vec ret=new Word2Vec(iter);
+    ret.layerSize=layerSize;
+    ret.window=window;
+    ret.stopWords=stopWords;
+    ret.minWordFrequency=minWordFrequency;
+    ret.minWordFrequency=minWordFrequency;
+    try {
+      if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+    ret.tokenizerFactory=tokenizerFactory;
+    ret.wordIndex=vocab;
+    return ret;
+  }
+}
