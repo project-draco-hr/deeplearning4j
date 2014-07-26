@@ -16,4 +16,16 @@
   NDArray row=nLast.getRow(1);
   NDArray row1=new NDArray(new double[]{3,4},new int[]{2});
   assertEquals(row,row1);
+  NDArray arr=new NDArray(new int[]{3,2});
+  NDArray evenRow=new NDArray(new double[]{1,2},new int[]{2});
+  arr.putRow(0,evenRow);
+  NDArray firstRow=arr.getRow(0);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},firstRow.shape()));
+  NDArray testRowEven=arr.getRow(0);
+  assertEquals(evenRow,testRowEven);
+  NDArray row12=new NDArray(new double[]{5,6},new int[]{2});
+  arr.putRow(1,row12);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},arr.getRow(0).shape()));
+  NDArray testRow1=arr.getRow(1);
+  assertEquals(row12,testRow1);
 }

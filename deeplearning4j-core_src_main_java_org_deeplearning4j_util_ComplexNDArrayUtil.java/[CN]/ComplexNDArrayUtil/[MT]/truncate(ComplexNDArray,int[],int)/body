@@ -1,0 +1,23 @@
+{
+  if (Arrays.equals(nd.shape(),targetShape))   return nd;
+  if (ArrayUtil.prod(nd.shape()) == ArrayUtil.prod(targetShape))   return nd.reshape(targetShape);
+  final ComplexNDArray ret=new ComplexNDArray(targetShape);
+  if (ret.isVector()) {
+    final AtomicInteger currentSlice=new AtomicInteger(0);
+    nd.iterateOverDimension(dimension,new SliceOp(){
+      @Override public void operate(      DimensionSlice nd){
+        ComplexNDArray result=(ComplexNDArray)nd.getResult();
+        for (int i=0; i < 1; i++) {
+          ret.put(currentSlice.getAndIncrement(),result.get(i));
+        }
+      }
+    }
+);
+    return ret;
+  }
+  int[] sliceShape=ArrayUtil.removeIndex(targetShape,0);
+  for (int i=0; i < ret.slices(); i++) {
+    ret.putSlice(i,truncate(nd.slice(i),sliceShape,dimension));
+  }
+  return ret;
+}

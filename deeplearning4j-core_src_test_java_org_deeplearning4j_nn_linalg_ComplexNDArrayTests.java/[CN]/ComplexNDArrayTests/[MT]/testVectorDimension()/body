@@ -1,5 +1,37 @@
 {
-  ComplexNDArray test=new ComplexNDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
-  ComplexNDArray dimension=(ComplexNDArray)test.vectorForDimensionAndOffset(1,1).getResult();
-  log.info("Dimension " + dimension);
+  ComplexNDArray test=new ComplexNDArray(new double[]{1,0,2,0,3,0,4,0},new int[]{2,2});
+  final AtomicInteger count=new AtomicInteger(0);
+  test.iterateOverDimension(1,new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      log.info("Operator " + nd);
+      ComplexNDArray test=(ComplexNDArray)nd.getResult();
+      if (count.get() == 0) {
+        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2});
+        assertEquals(firstDimension,test);
+      }
+ else {
+        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{3,0,4,0},new int[]{2});
+        assertEquals(firstDimension,test);
+      }
+      count.incrementAndGet();
+    }
+  }
+);
+  count.set(0);
+  test.iterateOverDimension(0,new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      log.info("Operator " + nd);
+      ComplexNDArray test=(ComplexNDArray)nd.getResult();
+      if (count.get() == 0) {
+        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{1,0,3,0},new int[]{2});
+        assertEquals(firstDimension,test);
+      }
+ else {
+        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{2,0,4,0},new int[]{2});
+        assertEquals(firstDimension,test);
+      }
+      count.incrementAndGet();
+    }
+  }
+);
 }

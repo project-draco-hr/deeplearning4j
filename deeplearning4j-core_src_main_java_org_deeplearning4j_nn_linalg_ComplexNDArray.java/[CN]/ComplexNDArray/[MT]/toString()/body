@@ -1,19 +1,30 @@
 {
+  StringBuilder sb=new StringBuilder();
   if (isScalar()) {
     return String.valueOf(get(0));
   }
  else   if (isVector()) {
-    StringBuilder sb=new StringBuilder();
-    sb.append("[");
+    sb.append("[ ");
     for (int i=0; i < length; i++) {
       if (linearIndex(i) >= data.length)       throw new IllegalArgumentException("Illegal index greater than length " + i);
       sb.append(get(i));
-      if (i < length - 1)       sb.append(',');
+      if (i < length - 1)       sb.append(" ,");
     }
     sb.append("]\n");
     return sb.toString();
   }
-  StringBuilder sb=new StringBuilder();
+ else   if (isMatrix()) {
+    sb.append('[');
+    for (int i=0; i < rows(); i++) {
+      for (int j=0; j < columns(); j++) {
+        sb.append(get(i,j));
+        if (j < columns() - 1)         sb.append(" ,");
+      }
+      if (i < rows() - 1)       sb.append(" ;");
+    }
+    sb.append(" ]");
+    return sb.toString();
+  }
   int length=shape[0];
   sb.append("[");
   if (length > 0) {
