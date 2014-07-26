@@ -1,24 +1,2 @@
 {
-  if (numElements < 1)   throw new IllegalArgumentException("No elements specified");
-  ComplexNDArray result=transform.dup();
-  if (dimension == 0 && transform.shape().length <= 1)   return result;
-  int desiredElementsAlongDimension=result.size(dimension);
-  if (numElements > desiredElementsAlongDimension) {
-    int[] targetShape=ArrayUtil.copy(result.shape());
-    targetShape[dimension]=numElements;
-    result=ComplexNDArrayUtil.padWithZeros(result,targetShape);
-  }
- else   if (numElements < desiredElementsAlongDimension) {
-    int[] targetShape;
-    if (result.isVector() && dimension == 0 || dimension == 1) {
-      targetShape=new int[]{numElements};
-    }
- else {
-      targetShape=ArrayUtil.copy(result.shape());
-      targetShape[dimension]=numElements;
-    }
-    result=ComplexNDArrayUtil.truncate(result,targetShape);
-  }
-  result.iterateOverDimension(dimension,new IFFTSliceOp(transform,numElements));
-  return result;
 }

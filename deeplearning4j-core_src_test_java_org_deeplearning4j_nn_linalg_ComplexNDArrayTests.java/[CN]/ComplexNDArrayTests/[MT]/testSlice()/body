@@ -1,0 +1,8 @@
+{
+  NDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  ComplexNDArray arr2=new ComplexNDArray(arr);
+  assertEquals(arr,arr2.getReal());
+  NDArray firstSlice=arr.slice(0);
+  NDArray firstSliceTest=arr2.slice(0).getReal();
+  assertEquals(firstSlice,firstSliceTest);
+}

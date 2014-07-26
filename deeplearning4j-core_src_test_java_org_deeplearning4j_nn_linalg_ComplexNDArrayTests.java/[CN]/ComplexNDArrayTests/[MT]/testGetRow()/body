@@ -1,0 +1,14 @@
+{
+  ComplexNDArray arr=new ComplexNDArray(new int[]{3,2});
+  ComplexNDArray row=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2});
+  arr.putRow(0,row);
+  ComplexNDArray firstRow=arr.getRow(0);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},firstRow.shape()));
+  ComplexNDArray testRow=arr.getRow(0);
+  assertEquals(row,testRow);
+  ComplexNDArray row1=new ComplexNDArray(new double[]{1,0,3,0},new int[]{2});
+  arr.putRow(1,row1);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},arr.getRow(0).shape()));
+  ComplexNDArray testRow1=arr.getRow(1);
+  assertEquals(row1,testRow1);
+}

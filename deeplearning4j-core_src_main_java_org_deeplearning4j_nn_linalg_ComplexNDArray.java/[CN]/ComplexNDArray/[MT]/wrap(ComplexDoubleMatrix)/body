@@ -4,6 +4,6 @@
   if (toWrap.isColumnVector())   shape=new int[]{toWrap.rows};
  else   if (toWrap.isRowVector())   shape=new int[]{toWrap.columns};
  else   shape=new int[]{toWrap.rows,toWrap.columns};
-  ComplexNDArray ret=new ComplexNDArray(toWrap.data,shape,ArrayUtil.calcStrides(shape));
+  ComplexNDArray ret=new ComplexNDArray(toWrap.data,shape);
   return ret;
 }

@@ -1,0 +1,9 @@
+{
+  if (shape1.length == 0) {
+    if (shape2.length == 1 && shape2[0] == 1)     return true;
+  }
+ else   if (shape2.length == 0) {
+    if (shape1.length == 1 && shape1[0] == 1)     return true;
+  }
+  return false;
+}

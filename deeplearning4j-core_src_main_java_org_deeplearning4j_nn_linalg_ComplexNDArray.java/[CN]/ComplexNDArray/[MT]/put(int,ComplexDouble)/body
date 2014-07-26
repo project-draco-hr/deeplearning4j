@@ -1,0 +1,5 @@
+{
+  data[offset + 2 * i]=v.real();
+  data[offset + (2 * i) + 1]=v.imag();
+  return this;
+}

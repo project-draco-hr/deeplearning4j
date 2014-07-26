@@ -15,7 +15,7 @@
       if (Math.abs(curr - comp) > 1e-6)       return false;
     }
   }
-  if (!Arrays.equals(shape(),n.shape()))   return false;
+  if (!Shape.shapeEquals(shape(),n.shape()))   return false;
   for (int i=0; i < slices(); i++) {
     if (!(slice(i).equals(n.slice(i))))     return false;
   }

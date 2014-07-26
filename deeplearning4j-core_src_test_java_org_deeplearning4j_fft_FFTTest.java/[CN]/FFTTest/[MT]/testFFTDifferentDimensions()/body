@@ -1,0 +1,6 @@
+{
+  NDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  ComplexNDArray arr2=FFT.fftn(arr,1,1);
+  assertEquals(true,Shape.shapeEquals(new int[]{4,2},arr2.shape()));
+  assertEquals(8,arr2.length);
+}

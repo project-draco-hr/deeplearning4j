@@ -1,4 +1,4 @@
 {
-  if (shape.length == 2)   return new ComplexNDArray(data,ArrayUtil.of(shape[1]),ArrayUtil.of(shape[0]),r * columns());
+  if (shape.length == 2)   return new ComplexNDArray(data,new int[]{shape[1]},new int[]{stride[1]},offset + 2 * r);
  else   throw new IllegalArgumentException("Unable to get row of non 2d matrix");
 }
