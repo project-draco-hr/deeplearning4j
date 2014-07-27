@@ -1,0 +1,5 @@
+{
+  ComplexNDArray arr=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2}));
+  int[] endsForSlices=arr.endsForSlices();
+  assertEquals(true,Arrays.equals(new int[]{0,12,24,36},endsForSlices));
+}

@@ -24,7 +24,7 @@
     int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
     if (dimension == 0) {
       int numTimes=ArrayUtil.prod(shape);
-      for (int offset=this.offset; offset < numTimes; offset+=2) {
+      for (int offset=this.offset; offset < numTimes * 2; offset+=2) {
         DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
         op.operate(vector);
       }
@@ -34,15 +34,14 @@
       int dataIter=0;
       int[] sliceIndices=endsForSlices();
       int currOffset=0;
-      int numTimes=ArrayUtil.prod(shape);
-      for (int offset=this.offset; offset < numTimes; offset++) {
+      for (int offset=this.offset; ; ) {
         if (dataIter >= data2.length || currOffset >= sliceIndices.length)         break;
         DimensionSlice pair=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
         op.operate(pair);
         if (pair.isNextSlice()) {
-          offset=sliceIndices[currOffset] * 4;
-          numTimes+=sliceIndices[currOffset];
-          currOffset+=2;
+          currOffset++;
+          if (currOffset >= sliceIndices.length)           break;
+          offset=sliceIndices[currOffset];
         }
       }
     }

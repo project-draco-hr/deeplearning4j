@@ -1,8 +1,8 @@
 {
   int[] ret=new int[slices()];
-  int currOffset=offset + stride[0] - 1;
+  int currOffset=offset;
   for (int i=0; i < slices(); i++) {
-    ret[i]=currOffset;
+    ret[i]=(currOffset * 2);
     currOffset+=stride[0];
   }
   return ret;
