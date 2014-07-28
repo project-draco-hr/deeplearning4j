@@ -1,7 +1,7 @@
 {
   if (shape.length == 2) {
-    if (slice != 1)     throw new IllegalArgumentException("Unable to retrieve dimension " + slice + " from a 2d array");
-    return new ComplexNDArray(data,ArrayUtil.of(shape[0]),ArrayUtil.of(stride[0]),offset + dimension * stride[1]);
+    if (slice != 1)     throw new IllegalArgumentException("Unable to retrieve slice " + slice + " from a 2d array");
+    return new ComplexNDArray(data,ArrayUtil.of(shape[0]),ArrayUtil.of(stride[0] * 2),offset + dimension * stride[1]);
   }
   if (slice == 0)   return slice(dimension);
   return new ComplexNDArray(data,ArrayUtil.removeIndex(shape,dimension),ArrayUtil.removeIndex(stride,dimension),offset + dimension * stride[slice]);

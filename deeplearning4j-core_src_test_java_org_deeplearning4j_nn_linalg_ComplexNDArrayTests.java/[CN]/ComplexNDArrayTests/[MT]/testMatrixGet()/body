@@ -1,0 +1,7 @@
+{
+  ComplexNDArray arr=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,4,4).data,new int[]{2,2}));
+  assertEquals(1,arr.get(0,0).real(),1e-1);
+  assertEquals(2,arr.get(0,1).real(),1e-1);
+  assertEquals(3,arr.get(1,0).real(),1e-1);
+  assertEquals(4,arr.get(1,1).real(),1e-1);
+}

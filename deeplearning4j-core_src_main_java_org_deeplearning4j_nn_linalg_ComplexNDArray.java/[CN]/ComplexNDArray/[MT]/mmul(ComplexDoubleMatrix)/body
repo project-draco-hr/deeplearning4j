@@ -1,6 +1,6 @@
 {
   ComplexNDArray arr=ComplexNDArray.wrap(this,a);
-  List<ComplexDoubleMatrix> ret=new ArrayList<>();
+  List<ComplexNDArray> ret=new ArrayList<>();
   if (shape().length == 2) {
     rows=shape[0];
     columns=shape[1];

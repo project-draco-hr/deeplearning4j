@@ -5,4 +5,10 @@
   NDArray firstSlice=arr.slice(0);
   NDArray firstSliceTest=arr2.slice(0).getReal();
   assertEquals(firstSlice,firstSliceTest);
+  NDArray slice0=new NDArray(new double[]{1,2,3,4,5,6},new int[]{3,2});
+  NDArray slice2=new NDArray(new double[]{7,8,9,10,11,12},new int[]{3,2});
+  NDArray testSlice0=arr2.slice(0).getReal();
+  NDArray testSlice1=arr2.slice(1).getReal();
+  assertEquals(slice0,testSlice0);
+  assertEquals(slice2,testSlice1);
 }

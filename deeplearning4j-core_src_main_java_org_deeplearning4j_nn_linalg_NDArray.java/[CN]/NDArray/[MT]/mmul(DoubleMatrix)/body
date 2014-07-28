@@ -1,6 +1,6 @@
 {
   NDArray arr=NDArray.wrap(this,a);
-  List<DoubleMatrix> ret=new ArrayList<>();
+  List<NDArray> ret=new ArrayList<>();
   if (shape().length == 2) {
     rows=shape[0];
     columns=shape[1];

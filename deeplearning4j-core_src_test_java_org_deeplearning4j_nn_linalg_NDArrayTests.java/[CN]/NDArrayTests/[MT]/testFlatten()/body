@@ -1,0 +1,9 @@
+{
+  NDArray arr=new NDArray(DoubleMatrix.linspace(1,4,4).data,new int[]{2,2});
+  NDArray flattened=arr.flatten();
+  assertEquals(arr.length,flattened.length);
+  assertEquals(true,Arrays.equals(new int[]{1,arr.length},flattened.shape()));
+  for (int i=0; i < arr.length; i++) {
+    assertEquals(i + 1,flattened.get(i),1e-1);
+  }
+}

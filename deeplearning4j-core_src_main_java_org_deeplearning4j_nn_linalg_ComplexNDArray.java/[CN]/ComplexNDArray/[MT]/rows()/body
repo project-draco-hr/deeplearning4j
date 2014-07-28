@@ -1,4 +1,5 @@
 {
-  if (shape.length == 2)   return shape[0];
-  throw new IllegalStateException("Unable to get number of rows for a non 2d matrix");
+  if (isMatrix())   if (shape().length > 2)   return Shape.squeeze(shape)[0];
+ else   if (shape().length == 2)   return shape[0];
+  throw new IllegalStateException("Unable to get number of of rows for a non 2d matrix");
 }

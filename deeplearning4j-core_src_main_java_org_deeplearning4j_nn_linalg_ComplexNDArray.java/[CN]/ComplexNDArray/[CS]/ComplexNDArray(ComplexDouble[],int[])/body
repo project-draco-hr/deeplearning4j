@@ -1,4 +1,10 @@
 {
   super(newData);
   this.shape=shape;
+  this.stride=ArrayUtil.calcStrides(shape);
+  this.length=ArrayUtil.prod(shape);
+  if (this.shape.length == 2) {
+    rows=shape[0];
+    columns=shape[1];
+  }
 }

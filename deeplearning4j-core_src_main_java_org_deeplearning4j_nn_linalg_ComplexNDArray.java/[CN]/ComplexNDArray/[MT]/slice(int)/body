@@ -2,9 +2,9 @@
   if (shape.length == 0)   throw new IllegalArgumentException("Can't slice a 0-d ComplexNDArray");
  else   if (shape.length == 1)   return new ComplexNDArray(data,ArrayUtil.empty(),ArrayUtil.empty(),offset + slice * stride[0]);
  else   if (shape.length == 2) {
-    int st=stride[0];
+    int st=getRealStrideForLinearIndex();
     if (st == 1)     return new ComplexNDArray(data,ArrayUtil.of(shape[1]),offset + slice * stride[0]);
  else     return new ComplexNDArray(data,ArrayUtil.of(shape[1]),ArrayUtil.of(stride[1]),offset + slice * stride[0]);
   }
- else   return new ComplexNDArray(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + slice * stride[0]);
+ else   return new ComplexNDArray(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + (slice * 2) * stride[0]);
 }

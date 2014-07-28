@@ -1,0 +1,7 @@
+{
+  if (stride.length != shape.length)   throw new IllegalStateException("Stride and shape not equal length");
+  if (stride == null || stride().length < 1)   return 1;
+  if (stride.length == 2 && shape[0] == 1)   return stride[1];
+  if (shape.length == 2 && shape[1] == 1)   return stride[0];
+  return stride[0];
+}
