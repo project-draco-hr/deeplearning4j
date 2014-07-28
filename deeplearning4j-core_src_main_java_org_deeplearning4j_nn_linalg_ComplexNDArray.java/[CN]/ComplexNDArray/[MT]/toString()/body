@@ -28,9 +28,9 @@
   sb.append("[");
   if (length > 0) {
     sb.append(slice(0).toString());
-    for (int i=1; i < length; i++) {
+    for (int i=1; i < slices(); i++) {
       sb.append(slice(i).toString());
-      if (i < length - 1)       sb.append(',');
+      if (i < slices() - 1)       sb.append(',');
     }
   }
   sb.append("]\n");

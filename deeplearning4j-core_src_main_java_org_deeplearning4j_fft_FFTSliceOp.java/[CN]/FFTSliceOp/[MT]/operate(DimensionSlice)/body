@@ -11,8 +11,11 @@
     ComplexNDArray a=(ComplexNDArray)nd.getResult();
     int n=this.n < 1 ? a.length : this.n;
     ComplexDoubleMatrix result=FFT.fft(a,n);
+    int count=0;
     for (int i=0; i < n; i++) {
-      operateOnComplex.put(nd.getIndices()[i],result.get(i));
+      operateOnComplex.data[nd.getIndices()[count]]=result.get(i).real();
+      operateOnComplex.data[nd.getIndices()[count] + 1]=result.get(i).imag();
+      count+=2;
     }
   }
 }
