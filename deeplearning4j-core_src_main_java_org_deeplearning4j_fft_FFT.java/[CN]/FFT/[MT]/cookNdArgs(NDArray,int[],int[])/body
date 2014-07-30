@@ -1,0 +1,8 @@
+{
+  if (shape == null)   shape=ArrayUtil.copy(arr.shape());
+  if (axes == null) {
+    axes=ArrayUtil.range(-shape.length,0);
+  }
+  if (shape.length != axes.length)   throw new IllegalArgumentException("Shape and axes must be same length");
+  return new Pair<>(shape,axes);
+}

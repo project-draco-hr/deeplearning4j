@@ -1,3 +1,9 @@
 {
-  return fft((ComplexDoubleMatrix)inputC,n);
+  if (!inputC.isVector())   throw new IllegalArgumentException("Illegal input: Must be a vector");
+  double len=inputC.length;
+  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI).divi(len);
+  ComplexNDArray range=ComplexNDArray.wrap(MatrixUtil.complexRangeVector(0,len));
+  ComplexNDArray matrix=ComplexNDArray.wrap(ComplexNDArrayUtil.exp(range.mmul(range.mul(c2))));
+  ComplexNDArray complexRet=inputC.mmul(matrix);
+  return ComplexNDArray.wrap(complexRet);
 }

@@ -1,0 +1,9 @@
+{
+  ComplexDoubleMatrix c=new ComplexDoubleMatrix(DoubleMatrix.linspace(1,4,4).reshape(2,2));
+  ComplexNDArray wrapped=ComplexNDArray.wrap(c);
+  assertEquals(true,Arrays.equals(new int[]{2,2},wrapped.shape()));
+  ComplexDoubleMatrix vec=new ComplexDoubleMatrix(DoubleMatrix.linspace(1,4,4));
+  ComplexNDArray wrappedVector=ComplexNDArray.wrap(vec);
+  assertEquals(true,wrappedVector.isVector());
+  assertEquals(true,Shape.shapeEquals(new int[]{4},wrappedVector.shape()));
+}

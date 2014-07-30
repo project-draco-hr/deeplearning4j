@@ -1,6 +1,5 @@
 {
-  int diff=(int)Math.abs(end - begin);
-  ComplexDoubleMatrix ret=new ComplexDoubleMatrix(1,diff);
-  for (int i=0; i < ret.length; i++)   ret.put(i,i);
-  return ret.transpose();
+  double[] data=ArrayUtil.toDoubles(ArrayUtil.range((int)begin,(int)end));
+  ComplexDoubleMatrix ret=new ComplexDoubleMatrix((new DoubleMatrix(data)));
+  return ret;
 }

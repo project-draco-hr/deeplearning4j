@@ -1,8 +1,14 @@
 {
-  DoubleMatrix d=DoubleMatrix.linspace(1,4,4);
-  ComplexDoubleMatrix d2=new ComplexDoubleMatrix(d);
+  DoubleMatrix d=DoubleMatrix.linspace(1,8,8);
+  ComplexNDArray d2=ComplexNDArray.wrap(new ComplexDoubleMatrix(d));
   ComplexDoubleMatrix fft=FFT.fft(d2);
-  assertEquals(4,fft.length);
-  ComplexDoubleMatrix test=new ComplexDoubleMatrix(new double[]{10,0,-2,2,-2,0,-2,-2});
+  assertEquals(8,fft.length);
+  ComplexDoubleMatrix test=new ComplexDoubleMatrix(new double[]{36,0,-4,9.65685425,-4,4,-4,1.65685425,-4,0,-4,-1.65685425,-4,-4,-4,-9.65685425});
+  assertEquals(fft.rows,test.rows);
+  assertEquals(fft.columns,test.columns);
   assertEquals(fft,test);
+  ComplexNDArray three=new ComplexNDArray(new NDArray(new double[]{3,4},new int[]{2}));
+  ComplexNDArray threeAnswer=new ComplexNDArray(new double[]{7,0,-1,0},new int[]{2});
+  ComplexNDArray fftedThree=FFT.fft(three);
+  assertEquals(threeAnswer,fftedThree);
 }

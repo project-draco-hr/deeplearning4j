@@ -1,0 +1,5 @@
+{
+  NDArray flattened=toExp.flatten();
+  for (int i=0; i < flattened.length; i++)   flattened.put(i,Math.exp(flattened.get(i)));
+  return flattened.reshape(toExp.shape());
+}

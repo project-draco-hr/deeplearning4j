@@ -8,4 +8,8 @@
   NDArray single=NDArray.scalar(1.0);
   NDArray real=other.getReal();
   assertEquals(single,real);
+  NDArray n=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  ComplexNDArray fftedResult=FFT.fftn(n,1,1);
+  ComplexNDArray test=new ComplexNDArray(new NDArray(new double[]{1,2,7,8,13,14,19,20},new int[]{4,1,2}));
+  assertEquals(test,fftedResult);
 }

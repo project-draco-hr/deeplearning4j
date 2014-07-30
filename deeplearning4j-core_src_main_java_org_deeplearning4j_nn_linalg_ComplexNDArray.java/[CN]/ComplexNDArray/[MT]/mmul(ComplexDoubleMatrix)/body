@@ -1,13 +1,3 @@
 {
-  ComplexNDArray arr=ComplexNDArray.wrap(this,a);
-  List<ComplexNDArray> ret=new ArrayList<>();
-  if (shape().length == 2) {
-    rows=shape[0];
-    columns=shape[1];
-    return ComplexNDArray.wrap(super.mmul(a));
-  }
-  for (int i=0; i < shape.length; i++) {
-    ret.add(slice(i).mmul(arr.slice(i)));
-  }
-  return new ComplexNDArray(ret,ArrayUtil.consArray(shape[0],new int[]{ret.get(0).rows,ret.get(0).columns}));
+  return mmuli(other,new ComplexDoubleMatrix(rows,other.columns));
 }

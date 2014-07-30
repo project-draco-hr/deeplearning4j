@@ -1,0 +1,6 @@
+{
+  int[] shape=ArrayUtil.range(0,shape().length);
+  shape[dimension]=with;
+  shape[with]=dimension;
+  return permute(shape);
+}

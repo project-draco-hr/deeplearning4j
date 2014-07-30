@@ -1,0 +1,12 @@
+{
+  double[] data=DoubleMatrix.linspace(1,10,10).data;
+  NDArray n=new NDArray(data,new int[]{10});
+  NDArray transposed=n.transpose();
+  assertEquals(true,n.isRowVector());
+  assertEquals(true,transposed.isColumnVector());
+  NDArray innerProduct=n.mmul(transposed);
+  NDArray scalar=NDArray.scalar(385);
+  assertEquals(scalar,innerProduct);
+  NDArray outerProduct=transposed.mmul(n);
+  assertEquals(true,Shape.shapeEquals(new int[]{10,10},outerProduct.shape()));
+}

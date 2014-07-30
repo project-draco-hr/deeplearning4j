@@ -2,11 +2,5 @@
   List<double[]> list=new ArrayList<>();
   for (int i=0; i < slices.size(); i++)   list.add(slices.get(i).data);
   this.data=ArrayUtil.combine(list);
-  this.shape=shape;
-  this.length=ArrayUtil.prod(shape);
-  this.stride=ArrayUtil.calcStrides(shape);
-  if (this.shape.length == 2) {
-    rows=shape[0];
-    columns=shape[1];
-  }
+  initShape(shape);
 }

@@ -1,0 +1,17 @@
+{
+  ComplexNDArray c=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(0,29,30).data,new int[]{3,5,2}));
+  final AtomicInteger i=new AtomicInteger(0);
+  final Set<ComplexNDArray> set=new HashSet<>();
+  c.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      ComplexNDArray result=(ComplexNDArray)nd.getResult();
+      int curr=i.get();
+      i.incrementAndGet();
+      ComplexNDArray test=new ComplexNDArray(new double[]{curr * 2,0,curr * 2 + 1,0},new int[]{2});
+      assertEquals(result,test);
+      assertEquals(true,!set.contains(test));
+      set.add(result);
+    }
+  }
+);
+}

@@ -1,13 +1,13 @@
 {
   if (row) {
     DoubleMatrix max=input.rowMaxs();
-    DoubleMatrix diff=MatrixFunctions.exp(input.subColumnVector(max));
+    DoubleMatrix diff=exp(input.subColumnVector(max));
     diff.diviColumnVector(diff.rowSums());
     return createBasedOn(diff,input);
   }
  else {
     DoubleMatrix max=input.columnMaxs();
-    DoubleMatrix diff=MatrixFunctions.exp(input.subRowVector(max));
+    DoubleMatrix diff=exp(input.subRowVector(max));
     diff.diviRowVector(diff.columnSums());
     return createBasedOn(diff,input);
   }

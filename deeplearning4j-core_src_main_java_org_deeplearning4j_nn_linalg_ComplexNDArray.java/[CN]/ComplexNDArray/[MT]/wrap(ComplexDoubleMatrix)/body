@@ -1,8 +1,8 @@
 {
   if (toWrap instanceof ComplexNDArray)   return (ComplexNDArray)toWrap;
   int[] shape;
-  if (toWrap.isColumnVector())   shape=new int[]{toWrap.rows};
- else   if (toWrap.isRowVector())   shape=new int[]{toWrap.columns};
+  if (toWrap.isColumnVector())   shape=new int[]{toWrap.columns};
+ else   if (toWrap.isRowVector())   shape=new int[]{toWrap.rows};
  else   shape=new int[]{toWrap.rows,toWrap.columns};
   ComplexNDArray ret=new ComplexNDArray(toWrap.data,shape);
   return ret;

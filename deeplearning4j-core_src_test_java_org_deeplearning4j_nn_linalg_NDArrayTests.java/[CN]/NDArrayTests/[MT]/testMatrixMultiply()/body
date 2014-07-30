@@ -1,7 +1,0 @@
-{
-  DoubleMatrix d=DoubleMatrix.linspace(1,2,4).reshape(2,2);
-  NDArray n=new NDArray(Arrays.copyOf(d.data,d.data.length),new int[]{2,2});
-  DoubleMatrix d2=DoubleMatrix.linspace(1,2,4).reshape(2,2);
-  NDArray n2=new NDArray(Arrays.copyOf(d.data,d.data.length),new int[]{2,2});
-  n.mmul(n2);
-}

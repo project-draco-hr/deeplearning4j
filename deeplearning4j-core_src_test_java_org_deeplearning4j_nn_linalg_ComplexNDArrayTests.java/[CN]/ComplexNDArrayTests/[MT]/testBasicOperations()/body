@@ -2,12 +2,10 @@
   ComplexNDArray arr=new ComplexNDArray(new double[]{0,1,2,1,1,2,3,4},new int[]{2,2});
   double sum=arr.sum().real();
   assertEquals(4,sum,1e-1);
-  log.info("Sum " + sum);
   arr.addi(1);
   sum=arr.sum().real();
   assertEquals(6,sum,1e-1);
-  log.info("Sum " + sum);
   arr.subi(1);
   sum=arr.sum().real();
-  assertEquals(2,sum,1e-1);
+  assertEquals(4,sum,1e-1);
 }

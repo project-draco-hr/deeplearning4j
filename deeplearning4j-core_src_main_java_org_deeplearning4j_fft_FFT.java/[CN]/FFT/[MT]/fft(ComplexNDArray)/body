@@ -1,0 +1,7 @@
+{
+  if (inputC.isVector())   return fft(ComplexNDArray.wrap(inputC),inputC.shape()[0]);
+ else {
+    inputC.iterateOverAllRows(new FFTSliceOp(inputC.shape()[0]));
+    return inputC;
+  }
+}

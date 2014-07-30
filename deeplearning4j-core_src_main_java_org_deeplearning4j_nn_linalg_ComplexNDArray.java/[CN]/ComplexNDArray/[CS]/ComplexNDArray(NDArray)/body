@@ -1,6 +1,4 @@
 {
   this(m.shape());
-  this.shape=m.shape();
-  this.length=m.length;
   NativeBlas.dcopy(m.length,m.data,0,1,data,0,2);
 }

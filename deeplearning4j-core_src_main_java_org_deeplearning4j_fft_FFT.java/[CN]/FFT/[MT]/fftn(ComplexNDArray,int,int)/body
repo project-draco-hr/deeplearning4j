@@ -1,2 +1,17 @@
 {
+  if (numElements < 1)   throw new IllegalArgumentException("No elements specified");
+  int[] finalShape=ArrayUtil.replace(transform.shape(),dimension,numElements);
+  ComplexNDArray result=transform.dup();
+  for (int i=transform.shape().length - 1; i >= 0; i--) {
+    result.iterateOverDimension(dimension,new FFTSliceOp(result.size(i)));
+  }
+  if (dimension == 0 && result.shape().length <= 1)   return result;
+  int desiredElementsAlongDimension=result.size(dimension);
+  if (numElements > desiredElementsAlongDimension) {
+    result=ComplexNDArrayUtil.padWithZeros(result,finalShape);
+  }
+ else   if (numElements < desiredElementsAlongDimension) {
+    result=ComplexNDArrayUtil.truncate(result,numElements,dimension);
+  }
+  return result;
 }

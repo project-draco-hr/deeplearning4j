@@ -12,11 +12,5 @@
     data[count + 1]=list.get(i).imag();
     count+=2;
   }
-  this.shape=shape;
-  this.stride=ArrayUtil.calcStrides(shape);
-  this.length=ArrayUtil.prod(shape);
-  if (this.shape.length == 2) {
-    rows=shape[0];
-    columns=shape[1];
-  }
+  initShape(shape);
 }
