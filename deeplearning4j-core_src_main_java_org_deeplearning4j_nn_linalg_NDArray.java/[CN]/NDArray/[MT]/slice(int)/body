@@ -6,5 +6,5 @@
     if (st == 1)     return new NDArray(data,ArrayUtil.of(shape[1]),offset + slice * stride[0]);
  else     return new NDArray(data,ArrayUtil.of(shape[1]),ArrayUtil.of(stride[1]),offset + slice * stride[0]);
   }
- else   return new NDArray(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + slice * stride[0]);
+ else   return new NDArray(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + (slice * stride[0]));
 }

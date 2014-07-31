@@ -1,25 +1,3 @@
 {
-  NDArray other=(NDArray)o;
-  int dims=shape.length;
-  if (dims == 0 || shape.length == 1 && shape[0] == 1) {
-    return add(data[0]);
-  }
-  int adims=other.shape().length;
-  int n=slices();
-  int na=other.slices();
-  if (dims == adims) {
-    if (n != na)     throw new IllegalArgumentException("Must have same number of slices");
-    for (int i=0; i < n; i++) {
-      slice(i).add(other.slice(i));
-    }
-  }
- else   if (adims < dims) {
-    for (int i=0; i < n; i++) {
-      slice(i).add(other);
-    }
-  }
- else {
-    throw new IllegalArgumentException("Invalid shapes for addition");
-  }
-  return this;
+  return dup().addi(o);
 }
