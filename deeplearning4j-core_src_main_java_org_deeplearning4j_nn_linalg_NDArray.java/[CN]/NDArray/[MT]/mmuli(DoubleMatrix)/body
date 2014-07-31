@@ -1,4 +1,3 @@
 {
-  super.mmuli(result);
-  return this;
+  return NDArray.wrap(super.mmuli(result));
 }

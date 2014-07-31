@@ -1,6 +1,8 @@
 {
-  if (isMatrix())   if (shape().length > 2)   return Shape.squeeze(shape)[1];
- else   if (shape().length == 2)   return shape[1];
+  if (isMatrix()) {
+    if (shape().length > 2)     return Shape.squeeze(shape)[1];
+ else     if (shape().length == 2)     return shape[1];
+  }
   if (isVector()) {
     if (isColumnVector())     return 1;
  else     return shape[1];

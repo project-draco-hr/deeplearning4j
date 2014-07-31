@@ -11,7 +11,7 @@
   d.putRow(0,newRow);
   NDArray testRow=n.getRow(0);
   assertEquals(newRow.length,testRow.length);
-  assertEquals(true,Arrays.equals(new int[]{2},testRow.shape()));
+  assertEquals(true,Shape.shapeEquals(new int[]{2},testRow.shape()));
   NDArray nLast=new NDArray(DoubleMatrix.linspace(1,4,4).data,new int[]{2,2});
   NDArray row=nLast.getRow(1);
   NDArray row1=new NDArray(new double[]{3,4},new int[]{2});

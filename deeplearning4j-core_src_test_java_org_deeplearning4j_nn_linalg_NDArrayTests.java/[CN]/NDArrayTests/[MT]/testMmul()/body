@@ -4,9 +4,25 @@
   NDArray transposed=n.transpose();
   assertEquals(true,n.isRowVector());
   assertEquals(true,transposed.isColumnVector());
+  DoubleMatrix d=new DoubleMatrix(n.rows(),n.columns());
+  d.data=n.data;
+  DoubleMatrix dTransposed=d.transpose();
+  DoubleMatrix result2=d.mmul(dTransposed);
   NDArray innerProduct=n.mmul(transposed);
   NDArray scalar=NDArray.scalar(385);
   assertEquals(scalar,innerProduct);
   NDArray outerProduct=transposed.mmul(n);
   assertEquals(true,Shape.shapeEquals(new int[]{10,10},outerProduct.shape()));
+  NDArray testMatrix=new NDArray(data,new int[]{5,2});
+  NDArray row1=testMatrix.getRow(0).transpose();
+  NDArray row2=testMatrix.getRow(1);
+  DoubleMatrix row12=DoubleMatrix.linspace(1,2,2).reshape(2,1);
+  DoubleMatrix row22=DoubleMatrix.linspace(3,4,2).reshape(1,2);
+  DoubleMatrix rowResult=row12.mmul(row22);
+  NDArray row122=NDArray.wrap(row12);
+  NDArray row222=NDArray.wrap(row22);
+  NDArray rowResult2=row122.mmul(row222);
+  NDArray mmul=row1.mmul(row2);
+  NDArray result=new NDArray(new double[]{3,6,4,8},new int[]{2,2});
+  assertEquals(result,mmul);
 }

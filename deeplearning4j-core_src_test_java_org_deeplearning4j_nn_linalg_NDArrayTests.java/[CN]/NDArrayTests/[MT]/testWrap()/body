@@ -10,4 +10,12 @@
   assertEquals(3,testVector.length);
   assertEquals(true,testVector.isVector());
   assertEquals(true,Shape.shapeEquals(new int[]{3},testVector.shape()));
+  DoubleMatrix row12=DoubleMatrix.linspace(1,2,2).reshape(2,1);
+  DoubleMatrix row22=DoubleMatrix.linspace(3,4,2).reshape(1,2);
+  NDArray row122=NDArray.wrap(row12);
+  NDArray row222=NDArray.wrap(row22);
+  assertEquals(row122.rows(),2);
+  assertEquals(row122.columns(),1);
+  assertEquals(row222.rows(),1);
+  assertEquals(row222.columns(),2);
 }

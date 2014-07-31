@@ -1,4 +1,6 @@
 {
   NativeBlas.zgemm('N','N',c.rows(),c.columns(),a.columns(),alpha,a.data,a.offset(),a.rows(),b.data,b.offset(),b.rows(),beta,c.data,c.offset(),c.rows);
+  int rowStride=c.stride()[0];
+  int columnStride=c.stride()[1];
   return c;
 }
