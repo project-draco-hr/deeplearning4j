@@ -2,28 +2,15 @@
   if (nd.getResult() instanceof NDArray) {
     NDArray a=(NDArray)nd.getResult();
     int n=this.n < 1 ? a.length : this.n;
-    DoubleMatrix result=FFT.fft(a,a.length).getReal();
-    if (nd.getIndices() == null) {
-      for (int i=0; i < result.length; i++)       a.put(i,result.get(i));
-    }
- else     for (int i=0; i < n; i++) {
-      a.data[nd.getIndices()[i]]=result.get(i);
-    }
+    NDArray result=FFT.fft(a,n).getReal();
+    for (int i=0; i < result.length; i++)     a.put(i,result.get(i));
   }
  else   if (nd.getResult() instanceof ComplexNDArray) {
     ComplexNDArray a=(ComplexNDArray)nd.getResult();
     int n=a.length;
     ComplexDoubleMatrix result=FFT.fft(a,n);
-    if (nd.getIndices() == null) {
-      for (int i=0; i < a.length; i++)       a.put(i,result.get(i));
-    }
- else {
-      int count=0;
-      for (int i=0; i < n; i++) {
-        a.data[nd.getIndices()[count]]=result.get(i).real();
-        a.data[nd.getIndices()[count] + 1]=result.get(i).imag();
-        count++;
-      }
+    for (int i=0; i < result.length; i++) {
+      a.put(i,result.get(i));
     }
   }
 }

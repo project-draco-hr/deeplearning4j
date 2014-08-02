@@ -1,4 +1,4 @@
 {
   if (!inputC.isVector())   throw new IllegalArgumentException("Input to this function must be a vector");
-  return ifft(inputC,inputC.rows);
+  return ifft(inputC,inputC.length);
 }

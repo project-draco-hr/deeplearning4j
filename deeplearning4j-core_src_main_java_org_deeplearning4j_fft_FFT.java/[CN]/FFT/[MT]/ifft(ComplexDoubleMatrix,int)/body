@@ -6,14 +6,14 @@
   ComplexDoubleMatrix div2=range.transpose().mul(c2);
   ComplexDoubleMatrix div3=range.mmul(div2).negi();
   ComplexDoubleMatrix matrix=exp(div3).div(len);
-  ComplexDoubleMatrix complexRet=inputC.isRowVector() ? matrix.mmul(inputC) : inputC.mmul(matrix);
+  ComplexDoubleMatrix complexRet=inputC.mmul(matrix);
   if (n != complexRet.length) {
     ComplexDoubleMatrix newRet=new ComplexDoubleMatrix(1,n);
     for (int i=0; i < n; i++) {
       if (i >= complexRet.length)       break;
       newRet.put(i,complexRet.get(i));
     }
-    return newRet;
+    return ComplexNDArray.wrap(newRet);
   }
-  return complexRet;
+  return ComplexNDArray.wrap(complexRet);
 }

@@ -1,5 +1,5 @@
 {
   ComplexNDArray result=transform.dup();
-  for (int i=transform.shape().length - 1; i >= 0; i--)   result.iterateOverDimension(axes[i],new IFFTSliceOp(shape[i]));
+  for (int i=transform.shape().length - 1; i >= 0; i--)   result.iterateOverDimension(axes[i],new IFFTSliceOp(shape[i]),true);
   return result;
 }

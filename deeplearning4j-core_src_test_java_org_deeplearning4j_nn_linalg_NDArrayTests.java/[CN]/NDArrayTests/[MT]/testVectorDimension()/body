@@ -16,7 +16,7 @@
       count.incrementAndGet();
     }
   }
-);
+,false);
   count.set(0);
   test.iterateOverDimension(0,new SliceOp(){
     @Override public void operate(    DimensionSlice nd){
@@ -33,5 +33,5 @@
       count.incrementAndGet();
     }
   }
-);
+,false);
 }
