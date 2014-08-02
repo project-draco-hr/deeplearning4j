@@ -1,4 +1,4 @@
 {
-  int index=offset + 2 * index(rowIndex,columnIndex);
+  int index=offset + index(rowIndex,columnIndex);
   return new ComplexDouble(data[index],data[index + 1]);
 }

@@ -1,6 +1,6 @@
 {
   if (shape.length == 2) {
-    int offset=this.offset > 0 ? this.offset / 2 + c : this.offset + c;
+    int offset=this.offset + c * 2;
     return new ComplexNDArray(data,new int[]{shape[0],1},new int[]{stride[0],2},offset);
   }
  else   throw new IllegalArgumentException("Unable to get row of non 2d matrix");

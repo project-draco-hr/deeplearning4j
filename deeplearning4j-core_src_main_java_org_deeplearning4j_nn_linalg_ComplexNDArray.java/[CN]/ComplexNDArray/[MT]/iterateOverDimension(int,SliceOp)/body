@@ -24,13 +24,13 @@
     int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
     if (dimension == 0) {
       int numTimes=ArrayUtil.prod(shape);
-      for (int offset=this.offset; offset < numTimes * 2; offset+=2) {
+      for (int offset=this.offset; offset < numTimes; offset+=2) {
         DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
         op.operate(vector);
       }
     }
  else {
-      double[] data2=new double[ArrayUtil.prod(shape) * 2];
+      double[] data2=new double[ArrayUtil.prod(shape)];
       int dataIter=0;
       int[] sliceIndices=endsForSlices();
       int currOffset=0;

@@ -1,5 +1,5 @@
 {
-  int offset=this.offset + (slice * stride[0] * 2);
+  int offset=this.offset + (slice * stride[0]);
   if (shape.length == 0)   throw new IllegalArgumentException("Can't slice a 0-d ComplexNDArray");
  else   if (shape.length == 1)   return new ComplexNDArray(data,ArrayUtil.empty(),ArrayUtil.empty(),offset);
  else   if (shape.length == 2) {

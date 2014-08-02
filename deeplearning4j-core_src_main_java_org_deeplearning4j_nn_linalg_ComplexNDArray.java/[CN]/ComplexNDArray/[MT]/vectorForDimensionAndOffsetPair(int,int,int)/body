@@ -3,7 +3,7 @@
   ComplexNDArray ret=new ComplexNDArray(new int[]{shape[dimension]});
   boolean newSlice=false;
   List<Integer> indices=new ArrayList<>();
-  for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension] * 2) {
+  for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
     ComplexDouble d=new ComplexDouble(data[j],data[j + 1]);
     indices.add(j);
     ret.put(count++,d);

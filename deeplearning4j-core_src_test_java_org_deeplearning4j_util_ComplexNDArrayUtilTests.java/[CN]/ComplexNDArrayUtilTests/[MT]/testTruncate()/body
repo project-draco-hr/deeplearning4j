@@ -1,7 +1,6 @@
 {
   ComplexNDArray ret=new ComplexNDArray(new double[]{1,0,2,0,3,0,4,0},new int[]{2,2});
   ComplexNDArray truncated=ComplexNDArrayUtil.truncate(ret,1,0);
-  truncated.toString();
   ComplexNDArray answer=new ComplexNDArray(new double[]{1,0,2,0},new int[]{1,2});
   assertEquals(answer,truncated);
   ComplexNDArray answer0=new ComplexNDArray(new double[]{1,0,3,0},new int[]{1,2});

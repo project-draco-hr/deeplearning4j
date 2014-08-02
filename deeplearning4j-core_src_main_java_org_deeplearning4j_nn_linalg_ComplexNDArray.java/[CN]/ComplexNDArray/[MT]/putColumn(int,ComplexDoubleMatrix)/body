@@ -2,6 +2,6 @@
   ComplexNDArray n=ComplexNDArray.wrap(this,v);
   if (n.isVector() && n.length != rows())   throw new IllegalArgumentException("Unable to put row, mis matched columns");
   for (int i=0; i < v.length; i++) {
-    put(c + i * stride[0],v.get(i));
+    put(c + i * stride[0] / 2,v.get(i));
   }
 }

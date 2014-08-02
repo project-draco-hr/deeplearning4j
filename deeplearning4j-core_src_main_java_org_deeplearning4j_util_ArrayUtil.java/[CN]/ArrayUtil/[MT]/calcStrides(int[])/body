@@ -1,10 +1,3 @@
 {
-  int dimensions=shape.length;
-  int[] stride=new int[dimensions];
-  int st=1;
-  for (int j=dimensions - 1; j >= 0; j--) {
-    stride[j]=st;
-    st*=shape[j];
-  }
-  return stride;
+  return calcStrides(shape,1);
 }

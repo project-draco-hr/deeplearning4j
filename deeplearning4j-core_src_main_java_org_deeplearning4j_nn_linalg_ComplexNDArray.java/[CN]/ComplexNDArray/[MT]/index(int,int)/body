@@ -1,8 +1,4 @@
 {
   if (!isMatrix())   throw new IllegalStateException("Unable to get row/column from a non matrix");
-  if (shape().length > 2) {
-    int[] stride=nonOneStride();
-    return row * stride[0] + column * stride[1];
-  }
   return row * stride[0] + column * stride[1];
 }

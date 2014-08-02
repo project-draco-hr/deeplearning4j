@@ -3,6 +3,6 @@
   if (!n.isVector())   throw new IllegalArgumentException("Unable to insert matrix, wrong shape " + Arrays.toString(n.shape()));
   if (n.isVector() && n.length != columns())   throw new IllegalArgumentException("Unable to put row, mis matched columns");
   for (int i=0; i < v.length; i++) {
-    put(r * 2 + i * stride[1],v.get(i));
+    put(offset + i + (r * (stride[1] / 2) * columns()),v.get(i));
   }
 }

@@ -6,7 +6,7 @@
       log.info("Operator " + nd);
       ComplexNDArray test=(ComplexNDArray)nd.getResult();
       if (count.get() == 0) {
-        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2});
+        ComplexNDArray firstDimension=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2,1});
         assertEquals(firstDimension,test);
       }
  else {

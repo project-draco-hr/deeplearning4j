@@ -10,8 +10,10 @@
     columns=this.shape[1];
   }
   this.length=ArrayUtil.prod(this.shape);
-  if (this.stride == null)   this.stride=ArrayUtil.calcStrides(this.shape);
+  if (this.stride == null) {
+    this.stride=ArrayUtil.calcStrides(this.shape,2);
+  }
   if (this.stride.length != this.shape.length) {
-    this.stride=ArrayUtil.calcStrides(this.shape);
+    this.stride=ArrayUtil.calcStrides(this.shape,2);
   }
 }
