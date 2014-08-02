@@ -1,30 +1,3 @@
 {
-  ComplexNDArray a=ComplexNDArray.wrap(this,other);
-  int dims=a.shape().length;
-  if (dims == 0) {
-    put(0,data[0] * a.data[0]);
-    return this;
-  }
-  int adims=a.shape().length;
-  if (adims == 0) {
-    muli(a.data[0]);
-    return this;
-  }
-  int n=slices();
-  int na=a.slices();
-  if (dims == adims) {
-    if (n != na)     throw new IllegalArgumentException("Invalid shape");
-    for (int i=0; i < n; i++) {
-      slice(i).muli(a.slice(i));
-    }
-  }
- else   if (adims < dims) {
-    for (int i=0; i < n; i++) {
-      slice(i).muli(a);
-    }
-  }
- else {
-    throw new IllegalArgumentException("Invalid shape");
-  }
-  return this;
+  return dup().muli(other);
 }

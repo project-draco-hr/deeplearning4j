@@ -7,5 +7,5 @@
     SimpleBlas.copy(this,result);
     SimpleBlas.axpy(ComplexDouble.UNIT,other,result);
   }
-  return result;
+  return ComplexNDArray.wrap(result);
 }

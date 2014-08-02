@@ -1,11 +1,5 @@
 {
-  int dims=shape().length;
-  if (dims == 0) {
-    put(0,data[0] / v);
-  }
- else {
-    int n=slices();
-    for (int i=0; i < n; i++)     slice(i).divi(v);
-  }
+  ComplexNDArray flatten=flatten();
+  for (int i=0; i < flatten.length; i++)   flatten.put(i,flatten.get(i).divi(v));
   return this;
 }

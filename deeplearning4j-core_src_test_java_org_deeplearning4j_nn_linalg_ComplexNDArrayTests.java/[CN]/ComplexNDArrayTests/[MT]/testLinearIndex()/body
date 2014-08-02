@@ -1,0 +1,8 @@
+{
+  ComplexNDArray n=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,8,8).data,new int[]{8}));
+  for (int i=0; i < n.length; i++) {
+    int linearIndex=n.linearIndex(i);
+    assertEquals(i,linearIndex);
+    assertEquals(i + 1,n.get(i).real(),1e-1);
+  }
+}
