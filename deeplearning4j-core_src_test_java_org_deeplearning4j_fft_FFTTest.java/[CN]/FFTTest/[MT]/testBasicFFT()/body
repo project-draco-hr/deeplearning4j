@@ -3,7 +3,7 @@
   ComplexNDArray d2=ComplexNDArray.wrap(new ComplexDoubleMatrix(d));
   ComplexDoubleMatrix fft=FFT.fft(d2);
   assertEquals(8,fft.length);
-  ComplexDoubleMatrix test=new ComplexDoubleMatrix(new double[]{36,0,-4,9.65685425,-4,4,-4,1.65685425,-4,0,-4,-1.65685425,-4,-4,-4,-9.65685425});
+  ComplexDoubleMatrix test=new ComplexDoubleMatrix(new double[]{36,0,-4,9.65685425,-4,4,-4,1.65685425,-4,0,-4,-1.65685425,-4,-4,-4,-9.65685425}).reshape(1,8);
   assertEquals(fft.rows,test.rows);
   assertEquals(fft.columns,test.columns);
   assertEquals(fft,test);

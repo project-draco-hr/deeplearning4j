@@ -1,0 +1,6 @@
+{
+  ComplexNDArray wrap=ComplexNDArray.wrap(result);
+  ComplexDouble c=new ComplexDouble(0.0);
+  for (int i=0; i < length; i++)   wrap.put(i,get(i,c).muli(v));
+  return wrap;
+}
