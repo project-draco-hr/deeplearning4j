@@ -6,5 +6,5 @@
     }
     result.iterateOverAllRows(new FFTSliceOp(shape[i]));
   }
-  return result;
+  return result.reshape(transform.shape());
 }

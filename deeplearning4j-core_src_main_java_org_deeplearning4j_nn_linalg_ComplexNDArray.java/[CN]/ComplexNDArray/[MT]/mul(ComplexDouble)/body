@@ -1,3 +1,3 @@
 {
-  return muli(v,new ComplexDoubleMatrix(rows,columns));
+  return dup().muli(v,new ComplexDoubleMatrix(rows,columns));
 }

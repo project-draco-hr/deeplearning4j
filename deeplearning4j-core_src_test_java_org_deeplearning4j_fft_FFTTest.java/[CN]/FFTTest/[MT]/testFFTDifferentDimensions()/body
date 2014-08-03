@@ -1,6 +1,6 @@
 {
   ComplexNDArray fftTest=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,30,30).data,new int[]{3,5,2}));
-  ComplexNDArray result=FFT.fft(fftTest.dup());
+  ComplexNDArray result=FFT.fft(fftTest);
   ComplexNDArray assertion=new ComplexNDArray(new double[]{3,0,-1,0,7,0,-1,0,11,0,-1,0,15,0,-1,0,19,0,-1,0,23,0,-1,0,27,0,-1,0,31,0,-1,0,35,0,-1,0,39,0,-1,0,43,0,-1,0,47,0,-1,0,51,0,-1,0,55,0,-1,0,59,0,-1,0},new int[]{3,5,2});
   assertEquals(assertion.length,ArrayUtil.prod(assertion.shape()));
   assertEquals(assertion,result);
