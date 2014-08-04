@@ -1,10 +1,7 @@
 {
   ComplexNDArray result=transform.dup();
   for (int i=transform.shape().length - 1; i >= 0; i--) {
-    if (i < transform.shape().length) {
-      result=result.swapAxes(axes[axes.length - 1],i);
-    }
-    result.iterateOverAllRows(new FFTSliceOp(shape[i]));
+    result=FFT.rawfft(result,shape[i],axes[i]);
   }
-  return result.reshape(transform.shape());
+  return result;
 }

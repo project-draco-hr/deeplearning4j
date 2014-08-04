@@ -1,3 +1,10 @@
 {
-  return reshape(new int[]{ArrayUtil.prod(shape())});
+  ComplexNDArray ret=new ComplexNDArray(new int[]{1,length});
+  List<ComplexNDArray> list=new ArrayList<>();
+  sliceVectors(list);
+  int count=0;
+  for (int i=0; i < list.size(); i++) {
+    for (int j=0; j < list.get(i).length; j++)     ret.put(count++,list.get(i).get(j));
+  }
+  return ret;
 }

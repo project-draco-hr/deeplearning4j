@@ -1,0 +1,9 @@
+{
+  if (offset == 0)   return data;
+  double[] data=new double[length * 2];
+  int count=0;
+  for (int i=0; i < length; i++) {
+    data[count++]=get(i);
+  }
+  return data;
+}

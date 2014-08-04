@@ -1,3 +1,4 @@
 {
-  return dup().mmuli(other,new ComplexDoubleMatrix(rows,other.columns));
+  ComplexNDArray n=ComplexNDArray.wrap(other);
+  return dup().mmuli(other,new ComplexDoubleMatrix(rows(),n.columns()));
 }

@@ -1,0 +1,10 @@
+{
+  double[] ret=new double[length * 2];
+  ComplexNDArray flattened=flatten();
+  int count=0;
+  for (int i=0; i < flattened.length; i++) {
+    ret[count++]=flattened.get(i).real();
+    ret[count++]=flattened.get(i).imag();
+  }
+  return ret;
+}

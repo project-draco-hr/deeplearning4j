@@ -12,18 +12,6 @@
     sb.append("]\n");
     return sb.toString();
   }
- else   if (isMatrix()) {
-    sb.append('[');
-    for (int i=0; i < rows(); i++) {
-      for (int j=0; j < columns(); j++) {
-        sb.append(get(i,j));
-        if (j < columns() - 1)         sb.append(" ,");
-      }
-      if (i < rows() - 1)       sb.append(" ;");
-    }
-    sb.append(" ]");
-    return sb.toString();
-  }
   int length=shape[0];
   sb.append("[");
   if (length > 0) {

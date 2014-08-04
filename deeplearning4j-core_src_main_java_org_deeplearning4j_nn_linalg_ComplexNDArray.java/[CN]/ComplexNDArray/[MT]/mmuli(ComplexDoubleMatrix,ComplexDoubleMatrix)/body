@@ -8,12 +8,14 @@
  else     throw new SizeException("Cannot resize result matrix because it is used in-place.");
   }
   if (result == this || result == other) {
-    ComplexNDArray temp=new ComplexNDArray(result.rows,result.columns);
+    ComplexNDArray temp=new ComplexNDArray(resultArray.shape());
     NDArrayBlas.gemm(ComplexDouble.UNIT,this,otherArray,ComplexDouble.ZERO,temp);
     NDArrayBlas.copy(temp,resultArray);
   }
  else {
-    NDArrayBlas.gemm(ComplexDouble.UNIT,this,otherArray,ComplexDouble.ZERO,resultArray);
+    otherArray=otherArray.flatten().reshape(otherArray.shape);
+    ComplexNDArray thisInput=this.flatten().reshape(shape());
+    NDArrayBlas.gemm(ComplexDouble.UNIT,thisInput,otherArray,ComplexDouble.ZERO,resultArray);
   }
   return resultArray;
 }

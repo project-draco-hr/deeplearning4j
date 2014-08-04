@@ -16,6 +16,7 @@
       double compImag=n.get(i).imag();
       if (Math.abs(curr - comp) > 1e-6 || Math.abs(currImag - compImag) > 1e-6)       return false;
     }
+    return true;
   }
   if (!Shape.shapeEquals(shape(),n.shape()))   return false;
   if (isScalar())   return get(0).sub(n.get(0)).abs() < 1e-6;
