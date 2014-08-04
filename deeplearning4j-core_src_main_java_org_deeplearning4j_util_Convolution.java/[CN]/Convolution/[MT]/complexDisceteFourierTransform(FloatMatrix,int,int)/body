@@ -10,11 +10,11 @@
   ComplexFloatMatrix ret=new ComplexFloatMatrix(base.rows,base.columns);
   for (int i=0; i < base.columns; i++) {
     ComplexFloatMatrix column=base.getColumn(i);
-    temp.putColumn(i,complexDiscreteFourierTransform1d(column));
+    temp.putColumn(i,new VectorFloatFFT(column.length).apply(column));
   }
   for (int i=0; i < ret.rows; i++) {
     ComplexFloatMatrix row=temp.getRow(i);
-    ret.putRow(i,complexDiscreteFourierTransform1d(row));
+    ret.putRow(i,new VectorFloatFFT(row.length).apply(row));
   }
   return ret;
 }

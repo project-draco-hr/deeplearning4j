@@ -11,7 +11,7 @@
   ComplexFloatMatrix fftInput=complexDisceteFourierTransform(input,retRows,retCols);
   ComplexFloatMatrix fftKernel=complexDisceteFourierTransform(kernel,retRows,retCols);
   ComplexFloatMatrix mul=fftKernel.mul(fftInput);
-  ComplexFloatMatrix retComplex=complexInverseDisceteFourierTransform(mul);
+  ComplexFloatMatrix retComplex=complexInverseDisceteFourierTransform(mul,mul.rows,mul.columns);
   FloatMatrix ret=retComplex.getReal();
   if (type == Type.VALID) {
     FloatMatrix validShape=xShape.subi(yShape).add(1);

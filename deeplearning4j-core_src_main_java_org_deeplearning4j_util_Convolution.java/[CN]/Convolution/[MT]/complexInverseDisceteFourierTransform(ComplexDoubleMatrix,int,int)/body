@@ -1,6 +1,6 @@
 {
   ComplexDoubleMatrix base;
-  if (input.rows < rows || input.columns < cols)   base=MatrixUtil.padWithZeros(input,rows,cols);
+  if (input.rows < rows || input.columns < cols)   base=MatrixUtil.complexPadWithZeros(input,rows,cols);
  else   if (input.rows > rows || input.columns > cols) {
     base=input.dup();
     base=base.get(MatrixUtil.toIndices(RangeUtils.interval(0,rows)),MatrixUtil.toIndices(RangeUtils.interval(0,cols)));
@@ -10,11 +10,11 @@
   ComplexDoubleMatrix ret=new ComplexDoubleMatrix(base.rows,base.columns);
   for (int i=0; i < base.columns; i++) {
     ComplexDoubleMatrix column=base.getColumn(i);
-    temp.putColumn(i,complexInverseDisceteFourierTransform1d(column));
+    temp.putColumn(i,new VectorIFFT(column.length).apply(ComplexNDArray.wrap(column)));
   }
   for (int i=0; i < ret.rows; i++) {
     ComplexDoubleMatrix row=temp.getRow(i);
-    ret.putRow(i,complexInverseDisceteFourierTransform1d(row));
+    ret.putRow(i,new VectorIFFT(row.length).apply(ComplexNDArray.wrap(row)));
   }
   return ret;
 }

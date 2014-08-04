@@ -10,11 +10,11 @@
   ComplexDoubleMatrix ret=new ComplexDoubleMatrix(base.rows,base.columns);
   for (int i=0; i < base.columns; i++) {
     ComplexDoubleMatrix column=base.getColumn(i);
-    temp.putColumn(i,complexDiscreteFourierTransform1d(column));
+    temp.putColumn(i,new VectorFFT(column.length).apply((ComplexNDArray.wrap(column))));
   }
   for (int i=0; i < ret.rows; i++) {
     ComplexDoubleMatrix row=temp.getRow(i);
-    ret.putRow(i,complexDiscreteFourierTransform1d(row));
+    ret.putRow(i,new VectorFFT(row.length).apply((ComplexNDArray.wrap(row))));
   }
   return ret;
 }

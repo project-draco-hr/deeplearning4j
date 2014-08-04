@@ -1,9 +1,0 @@
-{
-  if (inputC.rows != 1 && inputC.columns != 1)   throw new IllegalArgumentException("Illegal input: Must be a vector");
-  float len=Math.max(inputC.rows,inputC.columns);
-  ComplexFloat c2=new ComplexFloat(0,-2).muli((float)FastMath.PI).divi(len);
-  ComplexFloatMatrix range=MatrixUtil.complexRangeVector(0,len);
-  ComplexFloatMatrix matrix=exp(range.mmul(range.transpose().mul(c2)));
-  ComplexFloatMatrix complexRet=inputC.isRowVector() ? matrix.mmul(inputC) : inputC.mmul(matrix);
-  return complexRet;
-}

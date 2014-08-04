@@ -1,9 +1,0 @@
-{
-  if (inputC.shape().length != 1)   throw new IllegalArgumentException("Illegal input: Must be a vector");
-  double len=Math.max(inputC.rows,inputC.columns);
-  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI).divi(len);
-  ComplexDoubleMatrix range=MatrixUtil.complexRangeVector(0,len);
-  ComplexDoubleMatrix matrix=exp(range.mmul(range.transpose().mul(c2)));
-  ComplexDoubleMatrix complexRet=matrix.mmul(inputC);
-  return ComplexNDArray.wrap(inputC,complexRet);
-}

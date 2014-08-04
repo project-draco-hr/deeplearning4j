@@ -1,5 +1,0 @@
-{
-  DoubleMatrix rightOutput=new DoubleMatrix(new double[][]{{2.90476,-0.94045,0.551310,0.27009,0.27009,0.55131,-0.94045},{0.76190,-0.47462,-0.42926,0.20312,0.44260,-0.27237,-0.06470},{0.76190,-0.06470,-0.27237,0.44260,0.20312,-0.42926,-0.47462}});
-  DoubleMatrix testOutput=Convolution.inverseDisceteFourierTransform(image,3,7);
-  assertEquals(rightOutput,testOutput);
-}

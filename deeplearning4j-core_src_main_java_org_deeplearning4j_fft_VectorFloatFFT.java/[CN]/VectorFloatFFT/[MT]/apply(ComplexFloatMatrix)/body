@@ -1,0 +1,9 @@
+{
+  float len=n;
+  ComplexFloat c2=new ComplexFloat(0,-2).muli((float)FastMath.PI).divi(len);
+  ComplexFloatMatrix range=MatrixUtil.complexRangeVectorFloat(0,len);
+  ComplexFloatMatrix rangeTimesC2=range.mul(c2);
+  ComplexFloatMatrix matrix=MatrixUtil.exp(range.transpose().mmul(rangeTimesC2));
+  ComplexFloatMatrix complexRet=ndArray.mmul(matrix);
+  return complexRet;
+}

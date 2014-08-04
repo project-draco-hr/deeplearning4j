@@ -1,4 +1,5 @@
 {
+  if (e.length < 1)   return e;
   int[] copy=new int[e.length];
   for (int i=0; i <= e.length / 2; i++) {
     int temp=e[i];

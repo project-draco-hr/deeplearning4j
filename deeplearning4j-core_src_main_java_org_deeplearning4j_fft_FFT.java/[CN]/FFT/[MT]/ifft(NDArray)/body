@@ -1,4 +1,0 @@
-{
-  if (!transform.isVector())   throw new IllegalArgumentException("Input to this function must be a vector");
-  return ifft(new ComplexNDArray(transform),transform.size(0));
-}

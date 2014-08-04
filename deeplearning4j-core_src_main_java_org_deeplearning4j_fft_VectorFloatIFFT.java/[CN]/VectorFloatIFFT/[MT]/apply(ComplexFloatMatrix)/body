@@ -1,0 +1,18 @@
+{
+  float len=MatrixUtil.length(input);
+  ComplexFloat c2=new ComplexFloat(0,-2).muli((float)FastMath.PI).divi(len);
+  ComplexFloatMatrix range=MatrixUtil.complexRangeVectorFloat(0,len);
+  ComplexFloatMatrix div2=range.transpose().mul(c2);
+  ComplexFloatMatrix div3=range.mmul(div2).negi();
+  ComplexFloatMatrix matrix=exp(div3).div(len);
+  ComplexFloatMatrix complexRet=input.mmul(matrix);
+  if (n != complexRet.length) {
+    ComplexFloatMatrix newRet=new ComplexFloatMatrix(1,n);
+    for (int i=0; i < n; i++) {
+      if (i >= complexRet.length)       break;
+      newRet.put(i,complexRet.get(i));
+    }
+    return newRet;
+  }
+  return complexRet;
+}
