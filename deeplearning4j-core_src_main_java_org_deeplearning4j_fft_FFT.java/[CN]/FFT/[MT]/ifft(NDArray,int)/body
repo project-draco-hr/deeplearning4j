@@ -2,6 +2,6 @@
   ComplexNDArray inputC=new ComplexNDArray(transform);
   if (inputC.isVector())   return new VectorFFT(inputC.length).apply(inputC);
  else {
-    return rawfft(inputC,numElements,inputC.shape().length - 1);
+    return rawifft(inputC,numElements,inputC.shape().length - 1);
   }
 }

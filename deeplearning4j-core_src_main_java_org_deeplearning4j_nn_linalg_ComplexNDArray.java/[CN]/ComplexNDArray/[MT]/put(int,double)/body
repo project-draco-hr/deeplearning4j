@@ -1,4 +1,5 @@
 {
-  data[2 * i + offset]=v;
+  if (!isVector() && !isScalar())   throw new IllegalArgumentException("Unable to do linear indexing with dimensions greater than 1");
+  data[linearIndex(i)]=v;
   return this;
 }

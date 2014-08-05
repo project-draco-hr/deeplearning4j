@@ -1,9 +1,11 @@
 {
   DoubleMatrix d=DoubleMatrix.linspace(1,6,6);
   ComplexNDArray d2=ComplexNDArray.wrap(new ComplexDoubleMatrix(d));
-  int n=d2.shape()[d2.shape().length - 1];
-  int dimension=d2.shape().length - 1;
-  ComplexDoubleMatrix fft=FFT.rawifft(FFT.rawfft(d2,n,dimension),n,dimension);
+  ComplexNDArray ffted=FFT.ifft(d2);
+  double[] data=new double[]{3.5,0.,-0.5,-8.66025404e-01,-0.5,-2.88675135e-01,-0.5,-5.18104078e-16,-0.5,2.88675135e-01,-0.5,8.66025404e-01};
+  ComplexNDArray assertion=new ComplexNDArray(data,new int[]{ffted.length});
+  assertEquals(ffted,assertion);
+  ComplexDoubleMatrix fft=FFT.ifft(FFT.fft(d2));
   assertEquals(6,fft.length);
   assertEquals(d2,fft);
 }

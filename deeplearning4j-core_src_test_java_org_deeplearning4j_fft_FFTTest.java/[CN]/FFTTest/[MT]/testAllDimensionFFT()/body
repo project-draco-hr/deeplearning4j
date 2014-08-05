@@ -1,0 +1,11 @@
+{
+  NDArray n=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  ComplexNDArray afterLastDimension=new ComplexNDArray(new double[]{3.,0,-1.,0,7.,0,-1.,0,11.,0,-1.,0,15.,0,-1.,0,19.,0,-1.,0,23.,0,-1.,0,27.,0,-1.,0,31.,0,-1.,0,35.,0,-1.,0,39.,0,-1.,0,43.,0,-1.,0,47.,0,-1.,0},new int[]{4,3,2});
+  ComplexNDArray afterLastDimensionTest=FFT.fft(n);
+  assertEquals(afterLastDimension,afterLastDimensionTest);
+  ComplexNDArray afterSecondDimension=new ComplexNDArray(new double[]{21.,0.,-3.,0.,-6.,3.46410162,0.,0.,-6.,-3.46410162,0.,0.,57.,0.,-3.,0.,-6.,3.46410162,0.,0.,-6.,-3.46410162,0.,0.,93.,0.,-3.,0.,-6.,3.46410162,0.,0.,-6.,-3.46410162,0.,0.,129,0.,-3.,0.,-6.,3.46410162,0.,0.,-6.,-3.46410162,0.,0.},new int[]{4,3,2});
+  ComplexNDArray afterSecondDimensionTest=FFT.fft(afterLastDimensionTest,3,1);
+  assertEquals(afterSecondDimension,afterSecondDimensionTest);
+  ComplexNDArray afterFirstDimension=new ComplexNDArray(new double[]{300.,0,-12.,0,-24.,13.85640646,0.,0,-24.,-13.85640646,0.,0,-72.,72,0.,0,0.,0,0.,0,0.,0,0.,0,-72.,0,0.,0,0.,0,0.,0,0.,0,0.,0,0,-72.,-72,0.,0,0.,0,0.,0,0.,0,0.,0},new int[]{4,3,2});
+  ComplexNDArray afterFirstDimensionTest=FFT.fft(afterSecondDimensionTest,4,0);
+}

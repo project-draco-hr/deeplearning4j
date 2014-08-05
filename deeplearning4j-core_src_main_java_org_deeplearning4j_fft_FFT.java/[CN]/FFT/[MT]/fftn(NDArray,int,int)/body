@@ -1,7 +1,7 @@
 {
   if (numElements < 1)   throw new IllegalArgumentException("No elements specified");
   int[] finalShape=ArrayUtil.replace(transform.shape(),dimension,numElements);
-  int[] axes=ArrayUtil.reverseCopy(ArrayUtil.range(0,dimension));
+  int[] axes=ArrayUtil.range(0,finalShape.length);
   ComplexNDArray result=new ComplexNDArray(transform);
   int desiredElementsAlongDimension=result.size(dimension);
   if (numElements > desiredElementsAlongDimension) {

@@ -1,6 +1,7 @@
 {
   if (i > length)   throw new IllegalArgumentException("Unable to insert element " + v + " at index "+ i+ " with length "+ length);
-  data[offset + (2 * i)]=v.real();
-  data[offset + (2 * i) + 1]=v.imag();
+  int linearIndex=linearIndex(i);
+  data[linearIndex]=v.real();
+  data[linearIndex + 1]=v.imag();
   return this;
 }

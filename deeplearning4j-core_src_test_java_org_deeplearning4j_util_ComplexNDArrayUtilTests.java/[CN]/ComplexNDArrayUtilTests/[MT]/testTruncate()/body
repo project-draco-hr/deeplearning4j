@@ -22,4 +22,9 @@
   ComplexNDArray dimension1=new ComplexNDArray(new NDArray(new double[]{1,2,3,4,7,8,9,10,13,14,15,16,19,20,21,22},new int[]{4,2,2}));
   ComplexNDArray truncatedTest=ComplexNDArrayUtil.truncate(arr2,2,1);
   assertEquals(dimension1,truncatedTest);
+  ComplexNDArray vectorTest=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2});
+  ComplexNDArray vectorAnswer=new ComplexNDArray(new double[]{1,0},new int[]{1});
+  ComplexNDArray vectorTruncated=ComplexNDArrayUtil.truncate(vectorTest,1,0);
+  assertEquals(vectorAnswer,vectorTruncated);
+  assertEquals(1,vectorTruncated.length);
 }
