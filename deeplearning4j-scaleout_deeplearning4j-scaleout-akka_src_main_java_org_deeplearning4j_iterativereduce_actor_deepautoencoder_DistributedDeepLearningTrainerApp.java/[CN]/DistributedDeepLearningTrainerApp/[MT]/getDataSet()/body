@@ -1,7 +1,7 @@
 {
   if (type.equals("worker"))   return;
   try {
-    if (this.dataPath != null && this.dataSet != null)     throw new IllegalStateException("Can't have both a data set and a dataset path defined");
+    if (this.dataPath != null && this.dataSet != null)     throw new IllegalStateException("Can't have both a data applyTransformToDestination and a dataset path defined");
  else     if (dataPath != null) {
       DataSet data=DataSet.load(new File(dataPath));
       this.iter=new ListDataSetIterator(data.asList(),split);

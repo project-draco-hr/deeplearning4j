@@ -1,7 +1,6 @@
 {
   NDArray n=NDArray.wrap(v);
   if (n.isVector() && n.length != columns())   throw new IllegalArgumentException("Unable to put row, mis matched columns");
-  for (int i=0; i < v.length; i++) {
-    put(offset + i + (r * stride[1] * columns()),v.get(i));
-  }
+  NDArray row=getRow(r);
+  for (int i=0; i < v.length; i++)   row.put(i,v.get(i));
 }

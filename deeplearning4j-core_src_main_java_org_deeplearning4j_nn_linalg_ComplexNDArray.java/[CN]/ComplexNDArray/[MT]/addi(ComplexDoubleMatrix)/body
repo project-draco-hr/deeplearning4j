@@ -1,5 +1,5 @@
 {
-  ComplexNDArray flatten=flatten();
-  for (int i=0; i < flatten.length; i++)   flatten.put(i,flatten.get(i).addi(result.get(i)));
+  ComplexNDArray r=ComplexNDArray.wrap(other);
+  new AddOp(this,this,r).exec();
   return this;
 }

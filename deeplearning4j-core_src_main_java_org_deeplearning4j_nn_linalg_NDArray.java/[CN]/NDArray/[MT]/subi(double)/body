@@ -1,3 +1,4 @@
 {
-  return sub(v);
+  new SubtractOp(this,v).exec();
+  return this;
 }

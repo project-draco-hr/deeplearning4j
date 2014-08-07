@@ -1,6 +1,6 @@
 {
   int curr=0;
-  if (!hasNext())   throw new IllegalStateException("Unable to get next; no more data found");
+  if (!hasNext())   throw new IllegalStateException("Unable to getFromOrigin next; no more data found");
   List<DataSet> d=new ArrayList<DataSet>();
   while (files.hasNext() && curr < num) {
     File next=files.next();

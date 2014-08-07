@@ -1,7 +1,4 @@
 {
-  NDArray wrapped=NDArray.wrap(result);
-  for (int i=0; i < length; i++) {
-    result.put(i,get(i) * v);
-  }
-  return wrapped;
+  new MultiplyOp(NDArray.wrap(result),v).exec();
+  return NDArray.wrap(result);
 }

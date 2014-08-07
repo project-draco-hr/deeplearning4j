@@ -1,4 +1,5 @@
 {
+  if (arr.length < ArrayUtil.prod(shape))   return arr;
   DoubleMatrix shapeMatrix=MatrixUtil.toMatrix(shape);
   DoubleMatrix currShape=MatrixUtil.toMatrix(arr.shape());
   DoubleMatrix startIndex=currShape.sub(shapeMatrix).div(2);

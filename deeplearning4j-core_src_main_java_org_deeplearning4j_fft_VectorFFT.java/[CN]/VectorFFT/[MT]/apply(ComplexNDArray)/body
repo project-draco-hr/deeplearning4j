@@ -1,6 +1,8 @@
 {
   double len=n;
   int desiredElementsAlongDimension=ndArray.length;
+  boolean transpose=ndArray.isColumnVector();
+  if (transpose)   ndArray=ndArray.transpose();
   if (len > desiredElementsAlongDimension) {
     ndArray=ComplexNDArrayUtil.padWithZeros(ndArray,new int[]{n});
   }
@@ -12,5 +14,5 @@
   ComplexNDArray rangeTimesC2=range.mul(c2);
   ComplexNDArray matrix=ComplexNDArray.wrap(ComplexNDArrayUtil.exp(range.transpose().mmul(rangeTimesC2)));
   ComplexNDArray complexRet=ndArray.mmul(matrix);
-  return ComplexNDArray.wrap(complexRet);
+  return transpose ? complexRet.transpose() : complexRet;
 }

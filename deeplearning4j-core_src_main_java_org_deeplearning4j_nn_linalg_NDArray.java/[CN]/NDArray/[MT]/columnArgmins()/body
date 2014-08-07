@@ -1,6 +1,6 @@
 {
   if (shape().length == 2)   return super.columnArgmins();
  else {
-    throw new IllegalStateException("Unable to get column mins for dimensions more than 2");
+    throw new IllegalStateException("Unable to getFromOrigin column mins for dimensions more than 2");
   }
 }

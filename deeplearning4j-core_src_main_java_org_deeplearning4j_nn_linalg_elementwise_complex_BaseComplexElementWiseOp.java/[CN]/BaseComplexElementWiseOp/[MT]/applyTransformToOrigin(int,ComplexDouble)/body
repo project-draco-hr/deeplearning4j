@@ -1,0 +1,5 @@
+{
+  ComplexDouble ret=apply(valueToApply,i);
+  from.data[from.unSafeLinearIndex(i)]=ret.real();
+  from.data[from.unSafeLinearIndex(i) + 1]=ret.imag();
+}

@@ -1,13 +1,18 @@
 {
-  if (shape.length == 1) {
-    this.shape=new int[2];
-    this.shape[0]=1;
-    this.shape[1]=shape[0];
-  }
- else   this.shape=shape;
+  this.shape=shape;
   if (this.shape.length == 2) {
-    rows=this.shape[0];
-    columns=this.shape[1];
+    if (this.shape[0] == 1) {
+      this.shape=new int[1];
+      this.shape[0]=shape[1];
+    }
+    if (this.shape.length == 1) {
+      rows=1;
+      columns=shape[1];
+    }
+ else {
+      rows=shape[0];
+      columns=shape[1];
+    }
   }
   this.length=ArrayUtil.prod(this.shape);
   if (this.stride == null) {

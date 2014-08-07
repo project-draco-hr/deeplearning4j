@@ -1,3 +1,7 @@
 {
-  return ComplexNDArray.wrap(this,super.addi(v,result));
+  ComplexNDArray r=ComplexNDArray.wrap(result);
+  for (int i=0; i < length; i++) {
+    result.data[r.unSafeLinearIndex(i)]=data[unSafeLinearIndex(i)] + v;
+  }
+  return r;
 }

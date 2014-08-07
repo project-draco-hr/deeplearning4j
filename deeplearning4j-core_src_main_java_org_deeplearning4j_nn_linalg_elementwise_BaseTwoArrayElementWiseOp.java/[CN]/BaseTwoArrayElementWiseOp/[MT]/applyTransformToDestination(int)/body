@@ -1,0 +1,8 @@
+{
+  if (Double.isInfinite(scalarValue)) {
+    to.data[to.unSafeLinearIndex(i)]=apply(getFromDestination(i),i);
+  }
+ else {
+    to.data[to.unSafeLinearIndex(i)]=apply(scalarValue,i);
+  }
+}

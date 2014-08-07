@@ -1,7 +1,4 @@
 {
-  NDArray flatten=result.flatten();
-  for (int i=0; i < flatten.length; i++) {
-    flatten.put(i,get(i) + v);
-  }
-  return result;
+  new AddOp(this,result,v).exec();
+  return this;
 }

@@ -1,0 +1,16 @@
+{
+  NDArray n1=NDArray.scalar(1);
+  NDArray n2=NDArray.scalar(2);
+  assertEquals(NDArray.scalar(3),n1.add(n2));
+  assertFalse(n1.add(n2).equals(n1));
+  NDArray n3=NDArray.scalar(3);
+  NDArray n4=NDArray.scalar(4);
+  NDArray subbed=n4.sub(n3);
+  NDArray mulled=n4.mul(n3);
+  NDArray div=n4.div(n3);
+  assertFalse(subbed.equals(n4));
+  assertFalse(mulled.equals(n4));
+  assertEquals(NDArray.scalar(1),subbed);
+  assertEquals(NDArray.scalar(12),mulled);
+  assertEquals(NDArray.scalar(1),div);
+}

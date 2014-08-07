@@ -4,7 +4,7 @@
   DataSet d=fetcher.next();
   log.info("Training on " + d.numExamples());
   StopWatch watch=new StopWatch();
-  log.info("Data set " + d);
+  log.info("Data applyTransformToDestination " + d);
   StackedDenoisingAutoEncoder stackedDenoisingAutoEncoder=new StackedDenoisingAutoEncoder.Builder().hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0.5).numberOfInputs(784).numberOfOutPuts(fetcher.totalOutcomes()).build();
   watch.start();
   stackedDenoisingAutoEncoder.pretrain(d.getFirst(),1,1e-2,300);

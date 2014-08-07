@@ -1,0 +1,4 @@
+{
+  List<String> myLabels=Arrays.asList("1","2");
+  DoubleMatrix labelMatrix=MatrixUtil.toOutcomeVector(0,myLabels.size());
+}

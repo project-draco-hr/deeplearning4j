@@ -1,20 +1,4 @@
 {
-  ensureSameShape(other,result);
-  if (other.isScalar()) {
-    return addi(other.get(0),result);
-  }
-  if (isScalar()) {
-    return other.addi(get(0),result);
-  }
-  assertSameLength(other);
-  if (result == this) {
-    SimpleBlas.axpy(1.0,other,result);
-  }
- else   if (result == other) {
-    SimpleBlas.axpy(1.0,this,result);
-  }
- else {
-    JavaBlas.rzgxpy(length,result.data,data,other.data);
-  }
+  new AddOp(other,result,this).exec();
   return result;
 }

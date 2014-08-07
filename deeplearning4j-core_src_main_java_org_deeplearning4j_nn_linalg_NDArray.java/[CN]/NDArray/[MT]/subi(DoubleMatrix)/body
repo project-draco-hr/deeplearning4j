@@ -1,31 +1,5 @@
 {
-  NDArray a=NDArray.wrap(result);
-  int dims=shape().length;
-  if (isScalar()) {
-    return subi(result.get(0));
-  }
-  int n=slices();
-  int na=a.slices();
-  int adims=a.shape().length;
-  if (dims == adims) {
-    if (na == 1) {
-      if (isVector())       for (int i=0; i < length; i++)       put(i,get(i) - a.get(0));
- else {
-        NDArray flattened=flatten();
-        for (int i=0; i < flattened.length; i++)         flattened.put(i,flattened.get(i) - a.get(0));
-      }
-      return this;
-    }
- else {
-      if (n != na)       throw new IllegalArgumentException("Invalid shapes ");
-      for (int i=0; i < n; i++) {
-        slice(i).subi(a.slice(i));
-      }
-    }
-  }
- else   if (adims < dims) {
-    for (int i=0; i < n; i++)     slice(i).subi(a);
-  }
- else   throw new IllegalArgumentException("Invalid shape ");
+  NDArray ret=NDArray.wrap(result);
+  new SubtractOp(this,this,ret).exec();
   return this;
 }

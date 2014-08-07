@@ -1,3 +1,4 @@
 {
-  return dup().subi(v);
+  new MultiplyOp(this,new ComplexDouble(v)).exec();
+  return this;
 }

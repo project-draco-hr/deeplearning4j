@@ -4,6 +4,6 @@
     updateSaver().cleanup();
   }
  catch (  Exception e) {
-    log.warn("Hazelcast already shutdown...done() being set is pointless");
+    log.warn("Hazelcast already shutdown...done() being applyTransformToDestination is pointless");
   }
 }

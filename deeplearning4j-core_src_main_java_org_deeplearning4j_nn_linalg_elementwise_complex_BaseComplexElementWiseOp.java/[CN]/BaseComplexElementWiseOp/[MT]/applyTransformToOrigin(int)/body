@@ -1,0 +1,5 @@
+{
+  ComplexDouble get=apply(getFromOrigin(i),i);
+  from.data[from.unSafeLinearIndex(i)]=get.real();
+  from.data[from.unSafeLinearIndex(i) + 1]=get.abs();
+}

@@ -56,7 +56,7 @@
     cluster.join(a);
     try {
       String host=a.host().get();
-      if (host == null)       throw new IllegalArgumentException("No host set for worker");
+      if (host == null)       throw new IllegalArgumentException("No host applyTransformToDestination for worker");
       String connectionString=conf.getStateTrackerConnectionString();
       log.info("Creating state tracker with connection string " + connectionString);
       if (stateTracker == null)       stateTracker=new HazelCastStateTracker(connectionString);

@@ -5,6 +5,6 @@
     return new DataSet(loader.asRowVector(image),MatrixUtil.toOutcomeVector(outcome,outcomes.size()));
   }
  catch (  Exception e) {
-    throw new IllegalStateException("Unable to get data for image " + i + " for path "+ images.get(i));
+    throw new IllegalStateException("Unable to getFromOrigin data for image " + i + " for path "+ images.get(i));
   }
 }

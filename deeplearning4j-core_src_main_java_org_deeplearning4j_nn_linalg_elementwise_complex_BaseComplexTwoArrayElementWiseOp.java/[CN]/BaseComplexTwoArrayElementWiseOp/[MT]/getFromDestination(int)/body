@@ -1,0 +1,3 @@
+{
+  return new ComplexDouble(other.data[other.unSafeLinearIndex(i)],other.data[other.unSafeLinearIndex(i) + 1]);
+}

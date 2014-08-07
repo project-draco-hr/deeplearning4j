@@ -1,0 +1,12 @@
+{
+  if (Double.isInfinite(scalarValue.real())) {
+    ComplexDouble ret=apply(getFromDestination(i),i);
+    to.data[to.unSafeLinearIndex(i)]=ret.real();
+    to.data[to.unSafeLinearIndex(i) + 1]=ret.imag();
+  }
+ else {
+    ComplexDouble c=apply(scalarValue,i);
+    to.data[to.unSafeLinearIndex(i)]=c.real();
+    to.data[to.unSafeLinearIndex(i) + 1]=c.imag();
+  }
+}

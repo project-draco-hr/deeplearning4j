@@ -1,5 +1,4 @@
 {
-  NDArray flatten=flatten();
-  for (int i=0; i < flatten.length; i++)   flatten.put(i,flatten.get(i) / v);
+  new DivideOp(this,v).exec();
   return this;
 }

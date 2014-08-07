@@ -6,7 +6,7 @@
   assertEquals(nFirst,dFirst,1e-1);
   assertEquals(true,Arrays.equals(d.toArray(),n.toArray()));
   assertEquals(true,Arrays.equals(new int[]{2,2},n.shape()));
-  DoubleMatrix newRow=DoubleMatrix.linspace(1,2,2);
+  DoubleMatrix newRow=DoubleMatrix.linspace(5,6,2);
   n.putRow(0,newRow);
   d.putRow(0,newRow);
   NDArray testRow=n.getRow(0);

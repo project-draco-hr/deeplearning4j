@@ -1,5 +1,5 @@
 {
-  ComplexNDArray flatten=flatten();
-  for (int i=0; i < flatten.length; i++)   flatten.put(i,flatten.get(i).divi(result.get(i)));
+  ComplexNDArray flatten=ComplexNDArray.wrap(result);
+  new DivideOp(this,this,flatten).exec();
   return this;
 }

@@ -1,10 +1,10 @@
 {
-  if (index >= slices())   throw new IllegalArgumentException("Unable to get slice " + index + " out of bounds");
+  if (index >= slices())   throw new IllegalArgumentException("Unable to getFromOrigin slice " + index + " out of bounds");
   try {
     DoubleMatrix slice=get(RangeUtils.interval(index,index + rows()),RangeUtils.interval(0,columns()));
     return slice;
   }
  catch (  Exception e) {
-    throw new IllegalArgumentException("Unable to get a slice ",e);
+    throw new IllegalArgumentException("Unable to getFromOrigin a slice ",e);
   }
 }

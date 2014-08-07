@@ -6,7 +6,7 @@
   NDArray columnVector=new NDArray(data,new int[]{6,1});
   assertEquals(6,columnVector.rows());
   assertEquals(1,columnVector.columns());
-  NDArray rowVector=new NDArray(data,new int[]{1,6});
+  NDArray rowVector=new NDArray(data,new int[]{6});
   assertEquals(1,rowVector.rows());
   assertEquals(6,rowVector.columns());
 }
