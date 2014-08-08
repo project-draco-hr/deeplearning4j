@@ -3,7 +3,8 @@
   DoubleMatrix shape=MatrixUtil.toMatrix(input.shape()).add(MatrixUtil.toMatrix(kernel.shape())).subi(1);
   int[] intShape=MatrixUtil.toInts(shape);
   int[] axes=ArrayUtil.range(0,intShape.length);
-  ComplexNDArray ret=FFT.rawifftn(FFT.rawfftn(new ComplexNDArray(input),intShape,axes).muli(FFT.rawfftn(new ComplexNDArray(kernel),intShape,axes)),intShape,axes);
+  ComplexNDArray convolution=FFT.rawfftn(new ComplexNDArray(input),intShape,axes).muli(FFT.rawfftn(new ComplexNDArray(kernel),intShape,axes));
+  ComplexNDArray ret=FFT.rawifftn(convolution,intShape,axes);
 switch (type) {
 case FULL:
     return ret.getReal();
