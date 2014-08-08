@@ -1,18 +1,22 @@
 {
   double len=n;
   int desiredElementsAlongDimension=ndArray.length;
-  boolean transpose=ndArray.isRowVector();
-  if (transpose)   ndArray=ndArray.transpose();
   if (len > desiredElementsAlongDimension) {
     ndArray=ComplexNDArrayUtil.padWithZeros(ndArray,new int[]{n});
   }
  else   if (len < desiredElementsAlongDimension) {
     ndArray=ComplexNDArrayUtil.truncate(ndArray,n,0);
   }
-  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI).divi(len);
-  ComplexNDArray range=ComplexNDArray.wrap(MatrixUtil.complexRangeVector(0,len));
-  ComplexNDArray rangeTimesC2=range.mul(c2);
-  ComplexNDArray matrix=ComplexNDArray.wrap(ComplexNDArrayUtil.exp(range.transpose().mmul(rangeTimesC2)));
-  ComplexNDArray complexRet=ndArray.mmul(matrix);
-  return transpose ? complexRet.transpose() : complexRet;
+  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI);
+  ComplexNDArray n=ComplexNDArray.wrap(MatrixUtil.complexRangeVector(0d,this.n));
+  ComplexNDArray k=n.reshape(new int[]{n.length,1});
+  ComplexNDArray nk=k.mmul(n);
+  ComplexNDArray nkc2=k.mmul(n).muli(c2);
+  ComplexNDArray nkc2div=k.mmul(n).muli(c2).divi(len);
+  ComplexNDArray M=exp(k.mmul(n).muli(c2).divi(len));
+  ComplexNDArray matrix=M.mmul(ndArray.reshape(new int[]{ndArray.length,1}));
+  if (originalN > 0) {
+    matrix=ComplexNDArrayUtil.truncate(matrix,originalN,0);
+  }
+  return matrix;
 }

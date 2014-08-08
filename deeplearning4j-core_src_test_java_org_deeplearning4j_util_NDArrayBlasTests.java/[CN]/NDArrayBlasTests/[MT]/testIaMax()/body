@@ -1,0 +1,7 @@
+{
+  NDArray n=new NDArray(new double[]{1,2,3,4},new int[]{4});
+  ComplexNDArray complex=new ComplexNDArray(new double[]{1,0,2,0,3,0,4,0},new int[]{4});
+  int maxIndex=3;
+  assertEquals(maxIndex,NDArrayBlas.iamax(n));
+  assertEquals(maxIndex,NDArrayBlas.iamax(complex));
+}

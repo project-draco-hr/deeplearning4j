@@ -1,45 +1,35 @@
 {
-  if (arr.isScalar())   return arr.get(0);
- else {
-    double ret=0;
-    for (int i=0; i < arr.slices(); i++) {
+  arr=arr.reshape(new int[]{1,arr.length});
+  if (op == ScalarOp.NORM_1) {
+    return NDArrayBlas.asum(arr);
+  }
+ else   if (op == ScalarOp.NORM_2) {
+    return NDArrayBlas.nrm2(arr);
+  }
+ else   if (op == ScalarOp.NORM_MAX) {
+    int i=NDArrayBlas.iamax(arr);
+    return arr.get(i);
+  }
+  double s=0.0;
+  for (int i=0; i < arr.length; i++) {
 switch (op) {
-case MEAN:
-        ret+=arr.slice(i).mean();
-      break;
 case SUM:
-    ret+=arr.slice(i).sum();
-  break;
-case PROD:
-ret+=arr.slice(i).prod();
+      s+=arr.unSafeGet(i);
+    break;
+case MEAN:
+  s+=arr.unSafeGet(i);
 break;
 case MAX:
-double max=arr.slice(i).max();
-if (max > ret) ret=max;
+if (arr.unSafeGet(i) > s) s=arr.unSafeGet(i);
 break;
 case MIN:
-double min=arr.slice(i).min();
-if (min < ret) ret=min;
+if (arr.unSafeGet(i) < s) s=arr.unSafeGet(i);
 break;
-case ARG_MIN:
-double argMin=arr.slice(i).argmin();
-if (argMin < ret) ret=argMin;
-break;
-case ARG_MAX:
-double argMax=arr.slice(i).argmax();
-if (argMax > ret) ret=argMax;
-break;
-case NORM_1:
-ret+=arr.slice(i).norm1();
-break;
-case NORM_2:
-ret+=arr.slice(i).norm2();
-break;
-case NORM_MAX:
-ret+=arr.slice(i).normmax();
+case PROD:
+s*=arr.get(i);
 break;
 }
 }
-return ret;
-}
+if (op == ScalarOp.MEAN) s/=arr.length;
+return s;
 }
