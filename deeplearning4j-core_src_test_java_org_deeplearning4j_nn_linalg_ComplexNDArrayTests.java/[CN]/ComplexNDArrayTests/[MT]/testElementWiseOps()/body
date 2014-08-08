@@ -10,7 +10,7 @@
   ComplexNDArray div=n4.div(n3);
   assertFalse(subbed.equals(n4));
   assertFalse(mulled.equals(n4));
-  assertEquals(NDArray.scalar(1),subbed);
+  assertEquals(ComplexNDArray.scalar(1),subbed);
   assertEquals(ComplexNDArray.scalar(12),mulled);
-  assertEquals(ComplexNDArray.scalar(1),div);
+  assertEquals(ComplexNDArray.scalar(new ComplexDouble(1.3333333333333333)),div);
 }

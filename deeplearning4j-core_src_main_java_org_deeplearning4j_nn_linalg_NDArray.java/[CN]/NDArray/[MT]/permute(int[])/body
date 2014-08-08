@@ -1,7 +1,6 @@
 {
   checkArrangeArray(rearrange);
-  int[] newDims=doPermuteSwap(shape,rearrange);
-  int[] newStrides=doPermuteSwap(stride,rearrange);
-  NDArray ret=new NDArray(data,newDims,newStrides,offset);
-  return ret;
+  int[] newShape=doPermuteSwap(shape,rearrange);
+  int[] newStride=doPermuteSwap(stride,rearrange);
+  return new NDArray(data,newShape,newStride,offset);
 }

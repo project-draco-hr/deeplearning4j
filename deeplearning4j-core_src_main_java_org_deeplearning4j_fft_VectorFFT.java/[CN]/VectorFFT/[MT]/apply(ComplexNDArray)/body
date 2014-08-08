@@ -1,7 +1,7 @@
 {
   double len=n;
   int desiredElementsAlongDimension=ndArray.length;
-  boolean transpose=ndArray.isColumnVector();
+  boolean transpose=ndArray.isRowVector();
   if (transpose)   ndArray=ndArray.transpose();
   if (len > desiredElementsAlongDimension) {
     ndArray=ComplexNDArrayUtil.padWithZeros(ndArray,new int[]{n});

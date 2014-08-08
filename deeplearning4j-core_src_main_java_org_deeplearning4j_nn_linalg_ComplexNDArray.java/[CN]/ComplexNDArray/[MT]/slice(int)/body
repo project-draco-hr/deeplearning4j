@@ -3,9 +3,7 @@
   if (shape.length == 0)   throw new IllegalArgumentException("Can't slice a 0-d ComplexNDArray");
  else   if (shape.length == 1)   return new ComplexNDArray(data,ArrayUtil.empty(),ArrayUtil.empty(),offset);
  else   if (shape.length == 2) {
-    int st=getRealStrideForLinearIndex();
-    if (st == 1)     return new ComplexNDArray(data,ArrayUtil.of(1,shape[0]),offset);
- else     return new ComplexNDArray(data,ArrayUtil.of(1,shape[1]),ArrayUtil.of(1,stride[1]),offset);
+    return new ComplexNDArray(data,ArrayUtil.of(shape[1]),Arrays.copyOfRange(stride,1,stride.length),offset);
   }
  else {
     if (offset >= data.length)     throw new IllegalArgumentException("Offset index is > data.length");

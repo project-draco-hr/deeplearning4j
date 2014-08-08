@@ -1,5 +1,5 @@
 {
-  ComplexNDArray n=new ComplexNDArray(new NDArray(new double[]{1,2,3},new int[]{3}));
+  ComplexNDArray n=new ComplexNDArray(new NDArray(new double[]{1,2,3},new int[]{3,1}));
   ComplexNDArray swapped=n.swapAxes(1,0);
   assertEquals(n.transpose(),swapped);
   assertEquals(swapped.get(0),n.get(0));
@@ -9,7 +9,7 @@
   ComplexNDArray assertion=n2.permute(new int[]{2,1,0});
   ComplexNDArray validate=new ComplexNDArray(new NDArray(new double[]{0,4,2,6,1,5,3,7},new int[]{2,2,2}));
   assertEquals(validate,assertion);
-  ComplexNDArray v1=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,8,8).data,new int[]{8}));
+  ComplexNDArray v1=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,8,8).data,new int[]{8,1}));
   ComplexNDArray swap=v1.swapAxes(1,0);
   ComplexNDArray transposed=v1.transpose();
   assertEquals(swap,transposed);

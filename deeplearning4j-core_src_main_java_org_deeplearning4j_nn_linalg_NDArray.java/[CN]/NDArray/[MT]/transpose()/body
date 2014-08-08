@@ -1,6 +1,6 @@
 {
   if (isRowVector())   return new NDArray(data,new int[]{shape[0],1},offset);
  else   if (isColumnVector())   return new NDArray(data,new int[]{shape[1]},offset);
-  NDArray n=new NDArray(data,reverseCopy(shape),ArrayUtil.reverseCopy(stride),offset);
+  NDArray n=new NDArray(data,reverseCopy(shape),reverseCopy(stride),offset);
   return n;
 }
