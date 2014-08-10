@@ -1,5 +1,0 @@
-{
-  ComplexNDArray n=new VectorFFT(10).apply(ComplexNDArray.linspace(1,10,10));
-  ComplexNDArray assertion=new ComplexNDArray(testVector,new int[]{10});
-  assertEquals(n,assertion);
-}
