@@ -1,7 +1,3 @@
 {
   this.n=n;
-  if (Math.log(n) % 1 != 0) {
-    this.n=(int)MathUtils.nextPowOf2(n);
-    this.originalN=n;
-  }
 }

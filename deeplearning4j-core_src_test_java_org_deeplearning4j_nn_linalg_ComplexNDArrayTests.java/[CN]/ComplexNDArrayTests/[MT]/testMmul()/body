@@ -37,4 +37,12 @@
   ComplexNDArray testNdArrayM=transposed2.mmul(M);
   ComplexNDArray assertion=new ComplexNDArray(testVector,new int[]{16});
   assertEquals(assertion,testNdArrayM);
+  ComplexNDArray M2=new ComplexNDArray(new double[]{1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,0.30901699437494745,-0.9510565162951535,-0.8090169943749473,-0.5877852522924732,-0.8090169943749478,0.5877852522924727,0.30901699437494723,0.9510565162951536,1.0,0.0,-0.8090169943749473,-0.5877852522924732,0.30901699437494723,0.9510565162951536,0.30901699437494856,-0.9510565162951532,-0.8090169943749477,0.5877852522924728,1.0,0.0,-0.8090169943749478,0.5877852522924727,0.30901699437494856,-0.9510565162951532,0.309016994374947,0.9510565162951538,-0.809016994374946,-0.587785252292475,1.0,0.0,0.30901699437494723,0.9510565162951536,-0.8090169943749477,0.5877852522924728,-0.809016994374946,-0.587785252292475,0.3090169943749482,-0.9510565162951533},new int[]{5,5});
+  NDArray n2=new NDArray(DoubleMatrix.linspace(1,30,30).data,new int[]{3,5,2});
+  NDArray swapped=n2.swapAxes(n2.shape().length - 1,1);
+  NDArray firstSlice=swapped.slice(0).slice(0);
+  ComplexNDArray testSlice=new ComplexNDArray(firstSlice);
+  ComplexNDArray testNoOffset=new ComplexNDArray(new double[]{1,0,3,0,5,0,7,0,9,0},new int[]{5});
+  assertEquals(testSlice,testNoOffset);
+  assertEquals(testSlice.mmul(M2),testNoOffset.mmul(M2));
 }

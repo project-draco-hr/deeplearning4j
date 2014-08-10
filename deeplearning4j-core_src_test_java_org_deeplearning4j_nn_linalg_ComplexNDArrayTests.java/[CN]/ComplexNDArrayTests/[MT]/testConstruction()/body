@@ -9,4 +9,11 @@
   assertEquals(1,arr.length);
   assertEquals(2,arr.data.length);
   assertEquals(0,arr.get(0).real(),1e-1);
+  ComplexDouble[] two=new ComplexDouble[2];
+  two[0]=new ComplexDouble(1,0);
+  two[1]=new ComplexDouble(2,0);
+  double[] testArr={1,0,2,0};
+  ComplexNDArray assertComplexDouble=new ComplexNDArray(testArr,new int[]{2});
+  ComplexNDArray testComplexDouble=new ComplexNDArray(two,new int[]{2});
+  assertEquals(assertComplexDouble,testComplexDouble);
 }

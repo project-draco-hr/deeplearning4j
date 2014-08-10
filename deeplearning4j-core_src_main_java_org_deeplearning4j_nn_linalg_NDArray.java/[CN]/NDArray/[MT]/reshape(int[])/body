@@ -7,6 +7,6 @@
   }
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
-  NDArray ndArray=new NDArray(data,shape,ArrayUtil.calcStrides(shape),offset);
+  NDArray ndArray=new NDArray(data,shape,stride,offset);
   return ndArray;
 }

@@ -1,6 +1,6 @@
 {
   double[] ret=new double[length * 2];
-  ComplexNDArray flattened=flatten();
+  ComplexNDArray flattened=ravel();
   int count=0;
   for (int i=0; i < flattened.length; i++) {
     ret[count++]=flattened.get(i).real();

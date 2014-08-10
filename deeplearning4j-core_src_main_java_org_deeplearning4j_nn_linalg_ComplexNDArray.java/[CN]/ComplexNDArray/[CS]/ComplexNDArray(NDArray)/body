@@ -1,4 +1,8 @@
 {
   this(m.shape());
-  NativeBlas.dcopy(m.length,m.data,m.offset(),1,data,offset,2);
+  NDArray flattened=m.reshape(new int[]{1,m.length});
+  ComplexNDArray flatten=reshape(1,length);
+  for (int i=0; i < length; i++) {
+    flatten.put(i,new ComplexDouble(flattened.get(i),0));
+  }
 }
