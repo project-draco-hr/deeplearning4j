@@ -8,7 +8,7 @@
  else     throw new SizeException("Cannot resize result matrix because it is used in-place.");
   }
   if (result == this || result == other) {
-    ComplexNDArray temp=new ComplexNDArray(resultArray.shape());
+    ComplexNDArray temp=new ComplexNDArray(resultArray.shape(),ArrayUtil.calcStridesFortran(resultArray.shape()));
     NDArrayBlas.gemm(ComplexDouble.UNIT,this,otherArray,ComplexDouble.ZERO,temp);
     NDArrayBlas.copy(temp,resultArray);
   }

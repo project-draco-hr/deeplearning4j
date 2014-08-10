@@ -1,18 +1,4 @@
 {
-  double len=MatrixUtil.length(input);
-  ComplexDouble c2=new ComplexDouble(0,-2).muli(FastMath.PI).divi(len);
-  ComplexDoubleMatrix range=MatrixUtil.complexRangeVector(0,len);
-  ComplexDoubleMatrix div2=range.transpose().mul(c2);
-  ComplexDoubleMatrix div3=range.mmul(div2).negi();
-  ComplexDoubleMatrix matrix=exp(div3).div(len);
-  ComplexDoubleMatrix complexRet=input.mmul(matrix);
-  if (n != complexRet.length) {
-    ComplexDoubleMatrix newRet=new ComplexDoubleMatrix(1,n);
-    for (int i=0; i < n; i++) {
-      if (i >= complexRet.length)       break;
-      newRet.put(i,complexRet.get(i));
-    }
-    return ComplexNDArray.wrap(newRet);
-  }
-  return ComplexNDArray.wrap(complexRet);
+  ComplexNDArray ret=new VectorFFT(ndArray.length).apply(ndArray.conj()).conj().divi(ndArray.length);
+  return originalN > 0 ? ComplexNDArrayUtil.truncate(ret,originalN,0) : ret;
 }

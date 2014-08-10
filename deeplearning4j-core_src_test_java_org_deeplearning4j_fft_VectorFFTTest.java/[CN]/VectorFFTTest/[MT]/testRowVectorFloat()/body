@@ -1,5 +1,0 @@
-{
-  ComplexFloatMatrix n=new VectorFloatFFT(10).apply(new ComplexFloatMatrix(FloatMatrix.linspace(1,10,10)));
-  ComplexFloatMatrix assertion=new ComplexFloatMatrix(testFloatVector);
-  assertEquals(n,assertion);
-}

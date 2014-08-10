@@ -1,0 +1,5 @@
+{
+  ComplexNDArray wrapped=ComplexNDArray.wrap(result);
+  new SubtractOp(this,wrapped,v).exec();
+  return wrapped;
+}
