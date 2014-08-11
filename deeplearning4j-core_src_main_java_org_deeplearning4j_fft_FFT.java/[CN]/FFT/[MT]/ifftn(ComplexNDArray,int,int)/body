@@ -1,2 +1,12 @@
 {
+  if (numElements < 1)   throw new IllegalArgumentException("No elements specified");
+  int[] finalShape=ArrayUtil.replace(transform.shape(),dimension,numElements);
+  int[] axes=ArrayUtil.range(0,finalShape.length);
+  ComplexNDArray result=transform.dup();
+  int desiredElementsAlongDimension=result.size(dimension);
+  if (numElements > desiredElementsAlongDimension) {
+    result=ComplexNDArrayUtil.padWithZeros(result,finalShape);
+  }
+ else   if (numElements < desiredElementsAlongDimension)   result=ComplexNDArrayUtil.truncate(result,numElements,dimension);
+  return rawifftn(result,finalShape,axes);
 }
