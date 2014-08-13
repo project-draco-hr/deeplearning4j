@@ -1,0 +1,84 @@
+{
+  if (isScalar()) {
+    if (dimension > 1)     throw new IllegalArgumentException("Dimension must be 0 for a scalar");
+ else {
+      DimensionSlice slice=this.vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
+      if (modify && slice.getIndices() != null) {
+        ComplexNDArray result=(ComplexNDArray)slice.getResult();
+        for (int i=0; i < slice.getIndices().length; i++) {
+          data[slice.getIndices()[i]]=result.get(i).realComponent();
+          data[slice.getIndices()[i] + 1]=result.get(i).imaginaryComponent();
+        }
+      }
+    }
+  }
+ else   if (isVector()) {
+    if (dimension == 0) {
+      DimensionSlice slice=vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
+      if (modify && slice.getIndices() != null) {
+        ComplexNDArray result=(ComplexNDArray)slice.getResult();
+        for (int i=0; i < slice.getIndices().length; i++) {
+          data[slice.getIndices()[i]]=result.get(i).realComponent();
+          data[slice.getIndices()[i] + 1]=result.get(i).imaginaryComponent();
+        }
+      }
+    }
+ else     if (dimension == 1) {
+      for (int i=0; i < length; i++) {
+        DimensionSlice slice=vectorForDimensionAndOffset(dimension,i);
+        op.operate(slice);
+        if (modify && slice.getIndices() != null) {
+          ComplexNDArray result=(ComplexNDArray)slice.getResult();
+          for (int j=0; j < slice.getIndices().length; j++) {
+            data[slice.getIndices()[j]]=result.get(j).realComponent();
+            data[slice.getIndices()[j] + 1]=result.get(j).imaginaryComponent();
+          }
+        }
+      }
+    }
+ else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
+  }
+ else {
+    if (dimension >= shape.length)     throw new IllegalArgumentException("Unable to remove dimension  " + dimension + " was >= shape length");
+    int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
+    if (dimension == 0) {
+      int numTimes=ArrayUtil.prod(shape);
+      for (int offset=this.offset; offset < numTimes; offset+=2) {
+        DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
+        op.operate(vector);
+        if (modify && vector.getIndices() != null) {
+          ComplexNDArray result=(ComplexNDArray)vector.getResult();
+          for (int i=0; i < vector.getIndices().length; i++) {
+            data[vector.getIndices()[i]]=result.get(i).realComponent();
+            data[vector.getIndices()[i] + 1]=result.get(i).imaginaryComponent();
+          }
+        }
+      }
+    }
+ else {
+      double[] data2=new double[ArrayUtil.prod(shape)];
+      int dataIter=0;
+      int[] sliceIndices=endsForSlices();
+      int currOffset=0;
+      for (int offset=this.offset; ; ) {
+        if (dataIter >= data2.length || currOffset >= sliceIndices.length)         break;
+        DimensionSlice pair=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
+        op.operate(pair);
+        if (modify && pair.getIndices() != null) {
+          ComplexNDArray result=(ComplexNDArray)pair.getResult();
+          for (int i=0; i < pair.getIndices().length; i++) {
+            data[pair.getIndices()[i]]=result.get(i).realComponent();
+            data[pair.getIndices()[i] + 1]=result.get(i).imaginaryComponent();
+          }
+        }
+        if (pair.isNextSlice()) {
+          currOffset++;
+          if (currOffset >= sliceIndices.length)           break;
+          offset=sliceIndices[currOffset];
+        }
+      }
+    }
+  }
+}

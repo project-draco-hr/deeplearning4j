@@ -1,0 +1,8 @@
+{
+  if (this == o)   return true;
+  if (!(o instanceof IterationResult))   return false;
+  IterationResult that=(IterationResult)o;
+  if (nextSlice != that.nextSlice)   return false;
+  if (Double.compare(that.result,result) != 0)   return false;
+  return true;
+}

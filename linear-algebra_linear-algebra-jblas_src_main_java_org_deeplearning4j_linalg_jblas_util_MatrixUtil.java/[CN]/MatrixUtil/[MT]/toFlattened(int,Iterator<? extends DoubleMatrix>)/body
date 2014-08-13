@@ -1,0 +1,13 @@
+{
+  DoubleMatrix ret=new DoubleMatrix(1,length);
+  int linearIndex=0;
+  List<double[]> gradient=new ArrayList<>();
+  for (  Iterator<? extends DoubleMatrix> iter : matrices) {
+    while (iter.hasNext()) {
+      DoubleMatrix d=iter.next();
+      gradient.add(d.data);
+    }
+  }
+  DoubleMatrix ret2=new DoubleMatrix(ArrayUtil.combine(gradient));
+  return ret2.reshape(1,ret2.length);
+}

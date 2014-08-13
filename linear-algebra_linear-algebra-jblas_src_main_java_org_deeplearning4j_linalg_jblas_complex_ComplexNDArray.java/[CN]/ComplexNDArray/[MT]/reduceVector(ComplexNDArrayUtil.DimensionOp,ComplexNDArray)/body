@@ -1,0 +1,17 @@
+{
+switch (op) {
+case SUM:
+    return (ComplexDouble)vector.sum(0).element();
+case MEAN:
+  return (ComplexDouble)vector.mean(0).element();
+case NORM_1:
+return new ComplexDouble(vector.norm1());
+case NORM_2:
+return new ComplexDouble(vector.norm2());
+case NORM_MAX:
+return new ComplexDouble(vector.normmax());
+case FFT:
+default :
+throw new IllegalArgumentException("Illegal operation");
+}
+}

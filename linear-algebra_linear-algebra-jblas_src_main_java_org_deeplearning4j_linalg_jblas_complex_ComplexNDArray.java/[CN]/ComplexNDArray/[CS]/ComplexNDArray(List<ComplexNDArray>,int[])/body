@@ -1,0 +1,16 @@
+{
+  super(new double[ArrayUtil.prod(shape) * 2]);
+  List<ComplexDouble> list=new ArrayList<>();
+  for (int i=0; i < slices.size(); i++) {
+    ComplexNDArray flattened=slices.get(i).ravel();
+    for (int j=0; j < flattened.length; j++)     list.add(flattened.get(j));
+  }
+  this.data=new double[ArrayUtil.prod(shape) * 2];
+  int count=0;
+  for (int i=0; i < list.size(); i++) {
+    data[count]=list.get(i).realComponent();
+    data[count + 1]=list.get(i).imaginaryComponent();
+    count+=2;
+  }
+  initShape(shape);
+}

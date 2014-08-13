@@ -1,0 +1,11 @@
+{
+  if (other.isScalar())   return addi(new ComplexDouble(other.scalar()),ComplexNDArray.wrap(result));
+  assertSameLength(other);
+  if (result == this)   SimpleBlas.axpy(ComplexDouble.UNIT,other,result);
+ else   if (result == other)   SimpleBlas.axpy(ComplexDouble.UNIT,this,result);
+ else {
+    SimpleBlas.copy(this,result);
+    SimpleBlas.axpy(ComplexDouble.UNIT,other,result);
+  }
+  return ComplexNDArray.wrap(result);
+}

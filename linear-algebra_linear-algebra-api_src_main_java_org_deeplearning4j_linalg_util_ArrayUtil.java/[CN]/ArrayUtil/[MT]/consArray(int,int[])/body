@@ -1,0 +1,7 @@
+{
+  int len=as.length;
+  int[] nas=new int[len + 1];
+  nas[0]=a;
+  System.arraycopy(as,0,nas,1,len);
+  return nas;
+}

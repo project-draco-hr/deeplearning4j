@@ -1,0 +1,4 @@
+{
+  if (!isMatrix())   throw new IllegalStateException("Unable to getFromOrigin row/column from a non matrix");
+  return row * stride[0] + column * stride[1];
+}

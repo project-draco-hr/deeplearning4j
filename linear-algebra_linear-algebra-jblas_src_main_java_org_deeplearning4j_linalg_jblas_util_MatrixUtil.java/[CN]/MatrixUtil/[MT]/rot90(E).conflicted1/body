@@ -1,0 +1,3 @@
+{
+  for (int i=0; i < toRotate.rows; i++)   for (int j=0; j < toRotate.columns; j++)   toRotate.put(i,j,toRotate.get(toRotate.columns - i - 1));
+}

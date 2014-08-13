@@ -1,0 +1,14 @@
+{
+  int n=shape.length;
+  if (offsets.length != n)   throw new IllegalArgumentException("Invalid offset " + Arrays.toString(offsets));
+  if (shape.length != n)   throw new IllegalArgumentException("Invalid shape " + Arrays.toString(shape));
+  if (Arrays.equals(shape,this.shape)) {
+    if (ArrayUtil.isZero(offsets)) {
+      return this;
+    }
+ else {
+      throw new IllegalArgumentException("Invalid subArray offsets");
+    }
+  }
+  return new ComplexNDArray(data,Arrays.copyOf(shape,shape.length),stride,offset + ArrayUtil.dotProduct(offsets,stride));
+}

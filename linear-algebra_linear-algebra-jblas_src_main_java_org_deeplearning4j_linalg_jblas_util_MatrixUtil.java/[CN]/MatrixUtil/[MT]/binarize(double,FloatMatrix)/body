@@ -1,0 +1,4 @@
+{
+  for (int i=0; i < input.length; i++)   if (input.get(i) > cutoff)   input.put(i,1);
+ else   input.put(i,0);
+}

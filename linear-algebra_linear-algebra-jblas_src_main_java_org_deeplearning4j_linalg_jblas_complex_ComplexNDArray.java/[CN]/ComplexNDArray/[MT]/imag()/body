@@ -1,0 +1,5 @@
+{
+  NDArray ret=new NDArray(shape());
+  NativeBlas.dcopy(length,data,1,2,ret.data,0,1);
+  return ret;
+}

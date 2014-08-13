@@ -1,0 +1,3 @@
+{
+  return NDArray.wrap(new DoubleMatrix(ArrayUtil.toDoubles(ArrayUtil.range((int)begin,(int)end))).transpose());
+}

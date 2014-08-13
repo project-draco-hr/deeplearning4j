@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.normmax();
+  return (double)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.NORM_MAX,this).element();
+}

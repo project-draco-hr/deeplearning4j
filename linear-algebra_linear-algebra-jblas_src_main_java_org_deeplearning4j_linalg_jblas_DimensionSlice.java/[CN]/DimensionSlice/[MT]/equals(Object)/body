@@ -1,0 +1,9 @@
+{
+  if (this == o)   return true;
+  if (!(o instanceof DimensionSlice))   return false;
+  DimensionSlice that=(DimensionSlice)o;
+  if (nextSlice != that.nextSlice)   return false;
+  if (!Arrays.equals(indices,that.indices))   return false;
+  if (result != null ? !result.equals(that.result) : that.result != null)   return false;
+  return true;
+}

@@ -1,0 +1,5 @@
+{
+  DoubleMatrix put=(NDArray)toPut;
+  putRow(row,put);
+  return this;
+}

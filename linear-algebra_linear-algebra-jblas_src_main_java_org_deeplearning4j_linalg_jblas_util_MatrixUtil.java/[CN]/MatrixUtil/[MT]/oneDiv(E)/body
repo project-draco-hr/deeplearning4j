@@ -1,0 +1,10 @@
+{
+  for (int i=0; i < ep.rows; i++) {
+    for (int j=0; j < ep.columns; j++) {
+      if (ep.get(i,j) == 0) {
+        ep.put(i,j,0.01);
+      }
+    }
+  }
+  return createBasedOn(DoubleMatrix.ones(ep.rows,ep.columns).div(ep),ep);
+}

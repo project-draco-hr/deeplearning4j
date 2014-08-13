@@ -1,0 +1,28 @@
+{
+  this.shape=shape;
+  if (this.shape.length == 2) {
+    if (this.shape[0] == 1) {
+      this.shape=new int[1];
+      this.shape[0]=shape[1];
+    }
+    if (this.shape.length == 1) {
+      rows=1;
+      columns=shape[1];
+    }
+ else {
+      rows=shape[0];
+      columns=shape[1];
+    }
+  }
+ else   if (this.shape.length == 1) {
+    columns=this.shape[0];
+    rows=1;
+  }
+  this.length=ArrayUtil.prod(this.shape);
+  if (this.stride == null) {
+    this.stride=ArrayUtil.calcStrides(this.shape,2);
+  }
+  if (this.stride.length != this.shape.length) {
+    this.stride=ArrayUtil.calcStrides(this.shape,2);
+  }
+}

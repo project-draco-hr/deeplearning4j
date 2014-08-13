@@ -1,0 +1,19 @@
+{
+  Object[] copy=reverseCopy(o);
+  Integer[] ret=new Integer[o.length];
+  for (int i=0; i < o.length; i++) {
+    if ((char)copy[i] == ':')     ret[i]=shape[i];
+ else     if (copy[i] instanceof Number)     ret[i]=(Integer)copy[i];
+ else     if (copy[i] instanceof Range) {
+      Range r=(Range)copy[i];
+      int len=MatrixUtil.toIndices(r).length;
+      ret[i]=len;
+    }
+ else     throw new IllegalArgumentException("Unknown kind of index of type: " + o[i].getClass());
+  }
+  Integer[] realRet=ret;
+  for (int i=0; i < ret.length; i++) {
+    if (ret[i] <= 0)     realRet=ArrayUtil.removeIndex(ret,i);
+  }
+  return realRet;
+}

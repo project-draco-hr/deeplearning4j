@@ -1,0 +1,4 @@
+{
+  new TwoArrayOps().from(this).scalar(ComplexNDArray.scalar(v)).op(SubtractOp.class).build().exec();
+  return this;
+}

@@ -1,0 +1,8 @@
+{
+  int result1;
+  long temp;
+  temp=Double.doubleToLongBits(result);
+  result1=(int)(temp ^ (temp >>> 32));
+  result1=31 * result1 + (nextSlice ? 1 : 0);
+  return result1;
+}

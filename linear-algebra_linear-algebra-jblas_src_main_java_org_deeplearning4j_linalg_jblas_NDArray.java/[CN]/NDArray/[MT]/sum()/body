@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.sum();
+  return (double)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.SUM,this).element();
+}

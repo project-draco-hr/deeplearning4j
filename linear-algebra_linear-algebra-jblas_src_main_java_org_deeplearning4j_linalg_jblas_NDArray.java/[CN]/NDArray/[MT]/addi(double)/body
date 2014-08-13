@@ -1,0 +1,4 @@
+{
+  new TwoArrayOps().from(this).to(this).scalar(NDArray.scalar(v)).op(AddOp.class).build().exec();
+  return this;
+}

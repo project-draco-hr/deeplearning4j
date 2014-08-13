@@ -1,0 +1,4 @@
+{
+  new TwoArrayOps().from(this).to(this).other(NDArray.wrap(other)).op(MultiplyOp.class).build().exec();
+  return this;
+}

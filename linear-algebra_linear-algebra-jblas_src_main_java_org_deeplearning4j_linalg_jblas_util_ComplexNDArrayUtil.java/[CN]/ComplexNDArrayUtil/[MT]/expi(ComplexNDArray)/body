@@ -1,0 +1,5 @@
+{
+  ComplexNDArray flattened=toExp.ravel();
+  for (int i=0; i < flattened.length; i++)   flattened.put(i,ComplexUtil.exp(flattened.get(i)));
+  return flattened.reshape(toExp.shape());
+}

@@ -1,0 +1,11 @@
+{
+  if (isScalar()) {
+    if (dimension == 0)     return length;
+ else     throw new IllegalArgumentException("Illegal dimension for scalar " + dimension);
+  }
+ else   if (isVector()) {
+    if (dimension == 0 || dimension == 1)     return length;
+ else     throw new IllegalArgumentException("No dimension for vector " + dimension);
+  }
+  return shape[dimension];
+}

@@ -1,0 +1,5 @@
+{
+  ComplexNDArray wrap=ComplexNDArray.wrap(result);
+  new TwoArrayOps().from(this).to(wrap).scalar(ComplexNDArray.scalar(new ComplexDouble(v))).op(MultiplyOp.class).build().exec();
+  return this;
+}

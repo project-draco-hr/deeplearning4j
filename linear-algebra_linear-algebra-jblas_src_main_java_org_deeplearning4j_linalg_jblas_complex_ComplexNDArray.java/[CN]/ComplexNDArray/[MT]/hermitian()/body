@@ -1,0 +1,6 @@
+{
+  ComplexNDArray result=new ComplexNDArray(shape());
+  ComplexDouble c=new ComplexDouble(0);
+  for (int i=0; i < slices(); i++)   for (int j=0; j < columns; j++)   result.put(j,i,get(i,j,c).conji());
+  return result;
+}

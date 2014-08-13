@@ -1,0 +1,6 @@
+{
+  ComplexNDArray reshaped=reshape(1,length);
+  ComplexDouble c=new ComplexDouble(0.0);
+  for (int i=0; i < length; i++)   reshaped.put(i,reshaped.get(i,c).conji());
+  return this;
+}

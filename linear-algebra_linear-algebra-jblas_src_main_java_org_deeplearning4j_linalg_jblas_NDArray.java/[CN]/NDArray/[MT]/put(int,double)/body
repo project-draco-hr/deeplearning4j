@@ -1,0 +1,6 @@
+{
+  if (!isVector() && !isScalar())   throw new IllegalStateException("Unable to do linear indexing on a non vector");
+  int idx=linearIndex(i);
+  data[idx]=v;
+  return this;
+}

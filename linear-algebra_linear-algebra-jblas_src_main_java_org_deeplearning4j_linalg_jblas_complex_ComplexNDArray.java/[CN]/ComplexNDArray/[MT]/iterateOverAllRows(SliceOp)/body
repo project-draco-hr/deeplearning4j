@@ -1,0 +1,9 @@
+{
+  if (isVector())   op.operate(new DimensionSlice(false,this,null));
+ else {
+    for (int i=0; i < slices(); i++) {
+      ComplexNDArray slice=slice(i);
+      slice.iterateOverAllRows(op);
+    }
+  }
+}
