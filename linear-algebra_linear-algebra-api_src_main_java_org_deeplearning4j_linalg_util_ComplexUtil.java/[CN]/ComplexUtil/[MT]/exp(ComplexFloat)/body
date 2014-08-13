@@ -1,3 +1,0 @@
-{
-  return new ComplexFloat((float)FastMath.exp(d.real()) * (float)FastMath.cos(d.imag()),(float)FastMath.exp(d.real()) * (float)FastMath.sin(d.imag()));
-}

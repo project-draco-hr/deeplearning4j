@@ -1,0 +1,6 @@
+{
+  float newR=real() * c.realComponent().floatValue() - imag() * c.imaginaryComponent().floatValue();
+  float newI=real() * c.imaginaryComponent().floatValue() + imag() * c.realComponent().floatValue();
+  result.set(newR,newI);
+  return result;
+}

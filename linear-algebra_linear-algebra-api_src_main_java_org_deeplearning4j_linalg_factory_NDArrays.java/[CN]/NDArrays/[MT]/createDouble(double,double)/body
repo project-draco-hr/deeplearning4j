@@ -1,0 +1,9 @@
+{
+  try {
+    Constructor c=complexDoubleClazz.getConstructor(double.class,double.class);
+    return (IComplexDouble)c.newInstance(real,imag);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

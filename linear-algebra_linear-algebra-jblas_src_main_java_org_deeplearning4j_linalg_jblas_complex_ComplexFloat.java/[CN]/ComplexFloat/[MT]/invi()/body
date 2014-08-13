@@ -1,0 +1,5 @@
+{
+  float d=realComponent() * realComponent() + imaginaryComponent() * imaginaryComponent();
+  set(realComponent() / d,-imaginaryComponent() / d);
+  return this;
+}
