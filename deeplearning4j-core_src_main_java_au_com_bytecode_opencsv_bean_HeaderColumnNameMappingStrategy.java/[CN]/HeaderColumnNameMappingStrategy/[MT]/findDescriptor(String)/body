@@ -1,4 +1,0 @@
-{
-  if (null == descriptorMap)   descriptorMap=loadDescriptorMap(getType());
-  return descriptorMap.get(name.toUpperCase().trim());
-}

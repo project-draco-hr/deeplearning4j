@@ -1,8 +1,0 @@
-{
-  try {
-    return reader(new FileInputStream(file));
-  }
- catch (  IOException e) {
-    throw new CSVRuntimeException(e);
-  }
-}

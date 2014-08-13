@@ -1,9 +1,3 @@
 {
-  try {
-    Constructor c=clazz.getConstructor(int[].class);
-    return (INDArray)c.newInstance(shape);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  return create(shape,ArrayUtil.calcStrides(shape),0);
 }
