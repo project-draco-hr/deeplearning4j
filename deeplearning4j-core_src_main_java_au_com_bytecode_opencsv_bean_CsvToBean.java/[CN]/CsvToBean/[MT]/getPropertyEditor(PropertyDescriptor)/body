@@ -1,5 +1,0 @@
-{
-  Class<?> cls=desc.getPropertyEditorClass();
-  if (null != cls)   return (PropertyEditor)cls.newInstance();
-  return getPropertyEditorValue(desc.getPropertyType());
-}
