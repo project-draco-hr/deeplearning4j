@@ -1,0 +1,16 @@
+{
+  int len=end - start - increment;
+  if (len >= end)   len=end;
+  int[] ret=new int[len];
+  int idx=0;
+  int count=0;
+  for (int i=0; i < len; i++) {
+    ret[i]=idx;
+    idx+=increment;
+    if (idx >= len)     break;
+    count++;
+  }
+  int[] realRet=new int[count];
+  System.arraycopy(ret,0,realRet,0,realRet.length);
+  return realRet;
+}

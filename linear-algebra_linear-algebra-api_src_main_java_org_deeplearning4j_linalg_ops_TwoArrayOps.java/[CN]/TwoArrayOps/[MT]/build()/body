@@ -1,0 +1,13 @@
+{
+  try {
+    BaseTwoArrayElementWiseOp op=clazz.newInstance();
+    op.from=from;
+    op.to=to;
+    op.other=other;
+    op.scalarValue=scalar;
+    return op;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

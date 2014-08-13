@@ -1,0 +1,9 @@
+{
+  if (this == result) {
+    set(real() / v.doubleValue(),imag());
+  }
+ else {
+    result.set(result.realComponent().doubleValue() / v.doubleValue(),imaginaryComponent());
+  }
+  return result;
+}

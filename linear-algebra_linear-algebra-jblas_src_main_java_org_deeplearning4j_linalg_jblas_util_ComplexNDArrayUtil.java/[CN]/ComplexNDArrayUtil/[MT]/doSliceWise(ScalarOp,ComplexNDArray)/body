@@ -1,0 +1,35 @@
+{
+  arr=arr.reshape(new int[]{1,arr.length});
+  if (op == ScalarOp.NORM_1) {
+    return new ComplexDouble(NDArrayBlas.asum(arr));
+  }
+ else   if (op == ScalarOp.NORM_2) {
+    return new ComplexDouble(NDArrayBlas.nrm2(arr));
+  }
+ else   if (op == ScalarOp.NORM_MAX) {
+    int i=NDArrayBlas.iamax(arr);
+    return arr.unSafeGet(i);
+  }
+  ComplexDouble s=new ComplexDouble(0.0);
+  for (int i=0; i < arr.length; i++) {
+    ComplexDouble curr=arr.get(i);
+switch (op) {
+case SUM:
+      s.addi(curr);
+    break;
+case MEAN:
+  s.addi(arr.get(i));
+break;
+case MAX:
+if (arr.get(i).absoluteValue() > s.abs()) s.set(arr.get(i).realComponent(),arr.get(i).imaginaryComponent());
+break;
+case MIN:
+if (arr.get(i).absoluteValue() < s.abs()) s.set(arr.get(i).realComponent(),arr.get(i).imaginaryComponent());
+case PROD:
+s.muli(curr);
+break;
+}
+}
+if (op == ScalarOp.MEAN) s.divi(arr.length);
+return s;
+}

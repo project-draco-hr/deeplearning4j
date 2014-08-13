@@ -1,0 +1,5 @@
+{
+  NDArray ret=NDArray.wrap(other);
+  new TwoArrayOps().from(this).to(this).other(ret).op(SubtractOp.class).build().exec();
+  return this;
+}

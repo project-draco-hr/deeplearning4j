@@ -1,0 +1,12 @@
+{
+  int length=0;
+  for (  DoubleMatrix m : matrices)   length+=m.length;
+  DoubleMatrix ret=new DoubleMatrix(1,length);
+  int linearIndex=0;
+  for (  DoubleMatrix d : matrices) {
+    for (int i=0; i < d.length; i++) {
+      ret.put(linearIndex++,d.get(i));
+    }
+  }
+  return ret;
+}

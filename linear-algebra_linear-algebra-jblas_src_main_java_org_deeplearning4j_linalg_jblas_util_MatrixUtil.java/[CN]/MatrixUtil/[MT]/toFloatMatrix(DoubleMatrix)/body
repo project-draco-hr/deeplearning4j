@@ -1,0 +1,5 @@
+{
+  FloatMatrix d=new FloatMatrix(arr.rows,arr.columns);
+  for (int i=0; i < arr.rows; i++)   for (int j=0; j < arr.columns; j++)   d.put(i,j,(float)arr.get(i,j));
+  return d;
+}

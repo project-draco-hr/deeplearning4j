@@ -1,0 +1,7 @@
+{
+  FloatMatrix rowSums=m.rowSums();
+  for (int i=0; i < m.rows; i++) {
+    m.putRow(i,m.getRow(i).div(rowSums.get(i)));
+  }
+  return m;
+}

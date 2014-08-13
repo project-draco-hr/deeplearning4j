@@ -1,0 +1,34 @@
+{
+  int columns=isColumnOp(op) ? arr.columns() : arr.rows();
+  int[] shape={arr.slices(),columns};
+  NDArray ret=new NDArray(shape);
+  for (int i=0; i < arr.slices(); i++) {
+switch (op) {
+case COLUMN_MIN:
+      ret.putSlice(i,arr.slice(i).columnMins());
+    break;
+case COLUMN_MAX:
+  ret.putSlice(i,arr.slice(i).columnMaxs());
+break;
+case COLUMN_SUM:
+ret.putSlice(i,arr.slice(i).columnSums());
+break;
+case COLUMN_MEAN:
+ret.putSlice(i,arr.slice(i).columnMeans());
+break;
+case ROW_MIN:
+ret.putSlice(i,arr.slice(i).rowMins());
+break;
+case ROW_MAX:
+ret.putSlice(i,arr.slice(i).rowMaxs());
+break;
+case ROW_SUM:
+ret.putSlice(i,arr.slice(i).rowSums());
+break;
+case ROW_MEAN:
+ret.putSlice(i,arr.slice(i).rowMeans());
+break;
+}
+}
+return ret;
+}

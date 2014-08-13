@@ -1,0 +1,4 @@
+{
+  if (isVector())   return super.norm2();
+  return ComplexNDArrayUtil.doSliceWise(ComplexNDArrayUtil.ScalarOp.NORM_1,this).real();
+}

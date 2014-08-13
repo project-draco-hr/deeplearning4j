@@ -1,0 +1,9 @@
+{
+  double realMin=1.1755e-38;
+  double cutOff=FastMath.log(realMin);
+  for (int i=0; i < input.length; i++) {
+    if (input.get(i) * k > -cutOff)     input.put(i,-cutOff / k);
+ else     if (input.get(i) * k < cutOff)     input.put(i,cutOff / k);
+  }
+  return input;
+}

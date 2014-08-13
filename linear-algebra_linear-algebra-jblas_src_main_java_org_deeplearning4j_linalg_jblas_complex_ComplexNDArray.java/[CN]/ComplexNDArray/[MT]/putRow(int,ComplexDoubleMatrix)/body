@@ -1,0 +1,7 @@
+{
+  ComplexNDArray n=ComplexNDArray.wrap(v);
+  if (!n.isVector())   throw new IllegalArgumentException("Unable to insert matrix, wrong shape " + Arrays.toString(n.shape()));
+  if (n.isVector() && n.length != columns())   throw new IllegalArgumentException("Unable to put row, mis matched columns");
+  ComplexNDArray row=getRow(r);
+  for (int i=0; i < v.length; i++)   row.put(i,v.get(i));
+}

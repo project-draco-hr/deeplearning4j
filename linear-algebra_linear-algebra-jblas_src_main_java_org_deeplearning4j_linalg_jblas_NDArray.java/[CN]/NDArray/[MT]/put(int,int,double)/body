@@ -1,0 +1,5 @@
+{
+  if (shape.length == 2)   data[offset + row * stride[0] + column * stride[1]]=value;
+ else   throw new UnsupportedOperationException("Invalid applyTransformToDestination for a non 2d array");
+  return this;
+}

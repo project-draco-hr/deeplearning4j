@@ -1,0 +1,12 @@
+{
+  int offset=this.offset + (slice * stride[0]);
+  if (shape.length == 0)   throw new IllegalArgumentException("Can't slice a 0-d ComplexNDArray");
+ else   if (shape.length == 1)   return new ComplexNDArray(data,ArrayUtil.empty(),ArrayUtil.empty(),offset);
+ else   if (shape.length == 2) {
+    return new ComplexNDArray(data,ArrayUtil.of(shape[1]),Arrays.copyOfRange(stride,1,stride.length),offset);
+  }
+ else {
+    if (offset >= data.length)     throw new IllegalArgumentException("Offset index is > data.length");
+    return new ComplexNDArray(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset);
+  }
+}

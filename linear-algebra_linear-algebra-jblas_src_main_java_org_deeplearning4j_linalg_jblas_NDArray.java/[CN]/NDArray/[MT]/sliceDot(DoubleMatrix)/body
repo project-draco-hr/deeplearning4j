@@ -1,0 +1,17 @@
+{
+  int dims=shape.length;
+switch (dims) {
+case 1:
+{
+      return DoubleMatrix.scalar(SimpleBlas.dot(this,a));
+    }
+case 2:
+{
+    return DoubleMatrix.scalar(SimpleBlas.dot(this,a));
+  }
+}
+int sc=shape[0];
+DoubleMatrix d=new DoubleMatrix(1,sc);
+for (int i=0; i < sc; i++) d.put(i,slice(i).dot(a));
+return d;
+}

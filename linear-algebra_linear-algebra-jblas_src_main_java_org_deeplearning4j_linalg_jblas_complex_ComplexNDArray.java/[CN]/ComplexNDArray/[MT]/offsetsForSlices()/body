@@ -1,0 +1,9 @@
+{
+  int[] ret=new int[slices()];
+  int currOffset=offset;
+  for (int i=0; i < slices(); i++) {
+    ret[i]=currOffset;
+    currOffset+=stride[0];
+  }
+  return ret;
+}

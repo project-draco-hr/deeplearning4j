@@ -1,0 +1,5 @@
+{
+  NDArray ret=NDArray.wrap(other);
+  new TwoArrayOps().from(this).to(this).other(NDArray.wrap(other)).op(AddOp.class).build().exec();
+  return this;
+}

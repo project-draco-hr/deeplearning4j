@@ -1,0 +1,9 @@
+{
+  DoubleMatrix shapeMatrix=MatrixUtil.toMatrix(shape);
+  DoubleMatrix currShape=MatrixUtil.toMatrix(arr.shape());
+  NDArray centered=(NDArray)arr;
+  DoubleMatrix startIndex=currShape.sub(shapeMatrix).div(2);
+  DoubleMatrix endIndex=startIndex.add(shapeMatrix);
+  arr=NDArray.wrap(centered.get(RangeUtils.interval((int)startIndex.get(0),(int)endIndex.get(0)),RangeUtils.interval((int)startIndex.get(1),(int)endIndex.get(1))));
+  return arr;
+}

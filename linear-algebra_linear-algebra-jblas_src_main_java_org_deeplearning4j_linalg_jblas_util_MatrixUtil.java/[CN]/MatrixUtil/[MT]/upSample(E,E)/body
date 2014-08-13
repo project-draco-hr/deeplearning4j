@@ -1,0 +1,11 @@
+{
+  DoubleMatrix shape=size(d);
+  DoubleMatrix idx=new DoubleMatrix(shape.length,1);
+  for (int i=0; i < shape.length; i++) {
+    DoubleMatrix tmp=DoubleMatrix.zeros((int)shape.get(i) * (int)scale.get(i),1);
+    int[] indices=indicesCustomRange(0,(int)scale.get(i),(int)scale.get(i) * (int)shape.get(i));
+    tmp.put(indices,1.0);
+    idx.put(i,cumsum(tmp).sum());
+  }
+  return createBasedOn(idx,d);
+}

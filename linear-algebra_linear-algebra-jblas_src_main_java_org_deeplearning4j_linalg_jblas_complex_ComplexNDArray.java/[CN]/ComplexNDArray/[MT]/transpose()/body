@@ -1,0 +1,6 @@
+{
+  if (isRowVector())   return new ComplexNDArray(data,new int[]{shape[0],1},offset);
+ else   if (isColumnVector())   return new ComplexNDArray(data,new int[]{shape[0]},offset);
+  ComplexNDArray n=new ComplexNDArray(data,reverseCopy(shape),reverseCopy(stride),offset);
+  return n;
+}

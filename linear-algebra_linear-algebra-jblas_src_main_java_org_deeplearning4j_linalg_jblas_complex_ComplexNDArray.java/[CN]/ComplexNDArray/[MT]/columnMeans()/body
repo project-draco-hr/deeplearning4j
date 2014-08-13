@@ -1,0 +1,6 @@
+{
+  if (shape().length == 2) {
+    return ComplexNDArray.wrap(super.columnMeans());
+  }
+ else   return ComplexNDArrayUtil.doSliceWise(ComplexNDArrayUtil.MatrixOp.COLUMN_MEAN,this);
+}

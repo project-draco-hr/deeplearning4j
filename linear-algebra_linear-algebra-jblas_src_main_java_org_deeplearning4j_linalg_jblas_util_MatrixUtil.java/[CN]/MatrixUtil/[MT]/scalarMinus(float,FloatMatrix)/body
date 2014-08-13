@@ -1,0 +1,5 @@
+{
+  FloatMatrix d=new FloatMatrix(ep.rows,ep.columns);
+  d.addi(scalar);
+  return d.sub(ep);
+}

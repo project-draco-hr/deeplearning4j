@@ -1,0 +1,11 @@
+{
+  try {
+    BaseElementWiseOp op=clazz.newInstance();
+    op.from=from;
+    op.scalarValue=scalar;
+    return op;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

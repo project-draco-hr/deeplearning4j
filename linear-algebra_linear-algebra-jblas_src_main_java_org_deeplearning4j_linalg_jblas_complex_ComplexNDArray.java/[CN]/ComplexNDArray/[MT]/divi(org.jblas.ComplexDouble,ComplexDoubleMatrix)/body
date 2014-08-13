@@ -1,0 +1,5 @@
+{
+  ComplexNDArray flatten=ComplexNDArray.wrap(result);
+  new TwoArrayOps().from(this).to(flatten).scalar(ComplexNDArray.scalar(new ComplexDouble(a))).build().exec();
+  return flatten;
+}

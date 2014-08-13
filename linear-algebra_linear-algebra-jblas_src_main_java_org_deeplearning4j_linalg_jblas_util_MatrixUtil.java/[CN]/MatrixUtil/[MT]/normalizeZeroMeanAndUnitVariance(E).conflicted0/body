@@ -1,0 +1,7 @@
+{
+  DoubleMatrix columnMeans=toNormalize.columnMeans();
+  DoubleMatrix columnStds=columnStdDeviation(toNormalize);
+  toNormalize.subiRowVector(columnMeans);
+  columnStds.addi(1e-6);
+  toNormalize.diviRowVector(columnStds);
+}

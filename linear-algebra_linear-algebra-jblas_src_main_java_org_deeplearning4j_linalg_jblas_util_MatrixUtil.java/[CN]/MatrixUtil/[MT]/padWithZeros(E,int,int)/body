@@ -1,0 +1,21 @@
+{
+  if (rows < 1)   throw new IllegalArgumentException("Illegal number of rows " + rows);
+  if (cols < 1)   throw new IllegalArgumentException("Illegal number of columns " + cols);
+  DoubleMatrix ret=null;
+  if (toPad.rows >= rows) {
+    if (toPad.columns >= cols)     return createBasedOn(toPad.dup(),toPad);
+ else     ret=new DoubleMatrix(toPad.rows,cols);
+  }
+ else   if (toPad.columns >= cols) {
+    if (toPad.rows >= rows)     return createBasedOn(toPad.dup(),toPad);
+ else     ret=new DoubleMatrix(rows,toPad.columns);
+  }
+ else   ret=new DoubleMatrix(rows,cols);
+  for (int i=0; i < toPad.rows; i++) {
+    for (int j=0; j < toPad.columns; j++) {
+      double d=toPad.get(i,j);
+      ret.put(i,j,d);
+    }
+  }
+  return createBasedOn(ret,toPad);
+}

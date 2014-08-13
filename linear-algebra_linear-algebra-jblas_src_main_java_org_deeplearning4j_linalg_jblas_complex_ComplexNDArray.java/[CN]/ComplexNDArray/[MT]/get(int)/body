@@ -1,0 +1,5 @@
+{
+  if (!isVector() && !isScalar())   throw new IllegalArgumentException("Unable to do linear indexing with dimensions greater than 1");
+  int idx=linearIndex(i);
+  return new ComplexDouble(data[idx],data[idx + 1]);
+}
