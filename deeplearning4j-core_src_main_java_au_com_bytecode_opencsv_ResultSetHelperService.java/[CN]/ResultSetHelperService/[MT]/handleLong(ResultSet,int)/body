@@ -1,4 +1,0 @@
-{
-  long lv=rs.getLong(columnIndex);
-  return rs.wasNull() ? "" : Long.toString(lv);
-}

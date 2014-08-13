@@ -1,9 +1,0 @@
-{
-  try {
-    writer.write(proc);
-    writer.flush();
-  }
- catch (  IOException e) {
-    throw new CSVRuntimeException(e);
-  }
-}
