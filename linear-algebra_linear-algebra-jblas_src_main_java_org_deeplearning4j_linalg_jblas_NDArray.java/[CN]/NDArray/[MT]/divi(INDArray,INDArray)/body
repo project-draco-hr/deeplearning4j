@@ -1,3 +1,4 @@
 {
-  return null;
+  new TwoArrayOps().from(this).other(other).op(DivideOp.class).to(result).build().exec();
+  return (NDArray)result;
 }

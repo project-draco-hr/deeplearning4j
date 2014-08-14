@@ -1,3 +1,4 @@
 {
-  return null;
+  new TwoArrayOps().from(this).other(other).op(SubtractOp.class).to(result).build().exec();
+  return (NDArray)result;
 }
