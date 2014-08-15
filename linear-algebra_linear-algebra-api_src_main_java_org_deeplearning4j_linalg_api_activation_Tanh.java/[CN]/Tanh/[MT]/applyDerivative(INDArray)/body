@@ -1,0 +1,6 @@
+{
+  if (input instanceof IComplexNDArray) {
+    return NDArrays.complexOnes(input.shape()).subi(input);
+  }
+ else   return NDArrays.ones(input.shape()).subi(input);
+}

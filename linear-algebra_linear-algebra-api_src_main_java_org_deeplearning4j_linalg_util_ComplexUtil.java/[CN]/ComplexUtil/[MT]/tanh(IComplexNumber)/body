@@ -1,0 +1,4 @@
+{
+  Complex c=new Complex(num.realComponent().doubleValue(),num.imaginaryComponent().doubleValue()).tanh();
+  return NDArrays.createDouble(c.getReal(),c.getImaginary());
+}

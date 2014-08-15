@@ -1,0 +1,4 @@
+{
+  if (reverse)   Collections.reverse(opsToExecute);
+  for (  ElementWiseOp op : opsToExecute)   op.exec();
+}

@@ -1,0 +1,4 @@
+{
+  if (input instanceof IComplexNDArray)   return softmax(input,rows).mul(NDArrays.complexOnes(input.shape()).subi(softmax(input,rows)));
+ else   return softmax(input,rows).mul(NDArrays.ones(input.shape()).subi(softmax(input,rows)));
+}

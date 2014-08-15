@@ -1,0 +1,10 @@
+{
+  if (value instanceof IComplexNDArray) {
+    IComplexNumber c=(IComplexNumber)value;
+    return NDArrays.scalar(ComplexUtil.exp(c));
+  }
+ else {
+    double val=(double)value.element();
+    return NDArrays.scalar(Math.exp(val));
+  }
+}
