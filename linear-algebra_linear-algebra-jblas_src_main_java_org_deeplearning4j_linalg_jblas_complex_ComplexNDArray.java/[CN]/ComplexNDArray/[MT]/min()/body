@@ -1,0 +1,10 @@
+{
+  IComplexNDArray reshape=ravel();
+  IComplexNumber min=(IComplexNumber)reshape.getScalar(0).element();
+  for (int i=1; i < reshape.length(); i++) {
+    IComplexNumber curr=(IComplexNumber)reshape.getScalar(i).element();
+    double val=curr.realComponent().doubleValue();
+    if (val < curr.realComponent().doubleValue())     min=curr;
+  }
+  return min;
+}
