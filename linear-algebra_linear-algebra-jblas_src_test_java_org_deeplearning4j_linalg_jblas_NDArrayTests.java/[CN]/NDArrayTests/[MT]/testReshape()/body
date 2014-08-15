@@ -1,0 +1,7 @@
+{
+  INDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  INDArray reshaped=arr.reshape(new int[]{2,3,4});
+  assertEquals(arr.length(),reshaped.length());
+  assertEquals(true,Arrays.equals(new int[]{4,3,2},arr.shape()));
+  assertEquals(true,Arrays.equals(new int[]{2,3,4},reshaped.shape()));
+}

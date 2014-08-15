@@ -1,3 +1,32 @@
 {
-  return getFromOrigin(i).divi(value);
+  if (!value.isScalar())   throw new IllegalArgumentException("Unable to access individual element with a scalar");
+  INDArray origin=getFromOrigin(i);
+  if (value instanceof IComplexNDArray) {
+    IComplexNDArray complexValue=(IComplexNDArray)origin;
+    IComplexNumber otherValue=(IComplexNumber)complexValue.element();
+    if (origin instanceof IComplexNDArray) {
+      IComplexNDArray originComplex=(IComplexNDArray)origin;
+      IComplexNumber originValue=(IComplexNumber)originComplex.element();
+      return NDArrays.scalar(originValue.div(otherValue));
+    }
+ else {
+      double element=(double)origin.element();
+      IComplexNumber result=otherValue.div(element);
+      return NDArrays.scalar(result);
+    }
+  }
+ else {
+    if (origin instanceof IComplexNDArray) {
+      IComplexNDArray originComplexValue=(IComplexNDArray)origin;
+      IComplexNumber firstValue=(IComplexNumber)originComplexValue.element();
+      double realValue=(double)value.element();
+      IComplexNumber retValue=firstValue.div(realValue);
+      return NDArrays.scalar(retValue);
+    }
+ else {
+      double firstElement=(double)origin.element();
+      double secondElement=(double)value.element();
+      return NDArrays.scalar(firstElement / secondElement);
+    }
+  }
 }

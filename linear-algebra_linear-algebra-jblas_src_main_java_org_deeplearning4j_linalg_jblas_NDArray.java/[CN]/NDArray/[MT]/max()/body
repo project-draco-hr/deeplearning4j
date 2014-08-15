@@ -1,4 +1,10 @@
 {
-  if (isVector())   return super.max();
+  if (isVector()) {
+    double ret=Double.NEGATIVE_INFINITY;
+    for (int i=0; i < length; i++) {
+      if (get(i) > ret)       ret=get(i);
+    }
+    return ret;
+  }
   return (double)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.MAX,this).element();
 }

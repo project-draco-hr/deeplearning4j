@@ -1,5 +1,5 @@
 {
-  if (scalarValue != null) {
+  if (scalarValue == null) {
     to.put(i,apply(getFromDestination(i),i));
   }
  else {

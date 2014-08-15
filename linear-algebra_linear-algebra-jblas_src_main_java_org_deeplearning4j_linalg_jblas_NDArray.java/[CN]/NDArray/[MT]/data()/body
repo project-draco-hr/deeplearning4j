@@ -1,9 +1,10 @@
 {
   if (offset == 0)   return data;
+  INDArray linear=reshape(new int[]{1,length});
   double[] data=new double[length];
   int count=0;
   for (int i=0; i < length; i++) {
-    data[count++]=(double)getScalar(i).element();
+    data[count++]=(double)linear.getScalar(i).element();
   }
   return data;
 }

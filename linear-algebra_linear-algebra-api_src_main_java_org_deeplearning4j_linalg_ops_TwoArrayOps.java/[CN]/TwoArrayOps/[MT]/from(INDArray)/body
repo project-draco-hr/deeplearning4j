@@ -1,4 +1,4 @@
 {
-  this.from=from;
+  this.from=from.reshape(new int[]{1,from.length()});
   return this;
 }

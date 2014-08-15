@@ -1,4 +1,10 @@
 {
-  if (isVector())   return super.sum();
+  if (isVector()) {
+    double ret=0.0;
+    for (int i=0; i < length; i++) {
+      ret+=get(i);
+    }
+    return ret;
+  }
   return (double)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.SUM,this).element();
 }

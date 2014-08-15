@@ -1,7 +1,3 @@
 {
-  NDArray result=new NDArray(data,new int[]{1,indices.length},stride,offset);
-  for (int i=0; i < indices.length; i++) {
-    result.put(i,getScalar(indices[i]));
-  }
-  return result;
+  return (NDArray)getScalar(indices);
 }

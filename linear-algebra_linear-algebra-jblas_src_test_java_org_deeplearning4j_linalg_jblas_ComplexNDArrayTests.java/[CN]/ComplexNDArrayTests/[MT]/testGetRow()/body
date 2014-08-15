@@ -1,0 +1,20 @@
+{
+  IComplexNDArray arr=new ComplexNDArray(new int[]{3,2});
+  IComplexNDArray row=new ComplexNDArray(new double[]{1,0,2,0},new int[]{2});
+  arr.putRow(0,row);
+  IComplexNDArray firstRow=arr.getRow(0);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},firstRow.shape()));
+  IComplexNDArray testRow=arr.getRow(0);
+  assertEquals(row,testRow);
+  IComplexNDArray row1=new ComplexNDArray(new double[]{3,0,4,0},new int[]{2});
+  arr.putRow(1,row1);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},arr.getRow(0).shape()));
+  IComplexNDArray testRow1=arr.getRow(1);
+  assertEquals(row1,testRow1);
+  IComplexNDArray multiRow=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,16,16).data,new int[]{4,2,2}));
+  IComplexNDArray test=new ComplexNDArray(new NDArray(new double[]{7,8},new int[]{1,2}));
+  IComplexNDArray multiRowSlice1=multiRow.slice(0);
+  IComplexNDArray multiRowSlice=multiRow.slice(1);
+  IComplexNDArray testMultiRow=multiRowSlice.getRow(1);
+  assertEquals(test,testMultiRow);
+}

@@ -1,0 +1,10 @@
+{
+  INDArray n=new NDArray(DoubleMatrix.ones(100).data,new int[]{5,5,4});
+  INDArray transpose=n.transpose();
+  assertEquals(n.length(),transpose.length());
+  assertEquals(true,Arrays.equals(new int[]{4,5,5},transpose.shape()));
+  INDArray rowVector=NDArray.linspace(1,10,10);
+  assertTrue(rowVector.isRowVector());
+  INDArray columnVector=rowVector.transpose();
+  assertTrue(columnVector.isColumnVector());
+}

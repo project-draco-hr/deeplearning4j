@@ -1,0 +1,9 @@
+{
+  INDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  INDArray reduced=arr.reduce(Ops.DimensionOp.MAX,1);
+  log.info("Reduced " + reduced);
+  reduced=arr.reduce(Ops.DimensionOp.MAX,1);
+  log.info("Reduced " + reduced);
+  reduced=arr.reduce(Ops.DimensionOp.MAX,2);
+  log.info("Reduced " + reduced);
+}

@@ -1,0 +1,16 @@
+{
+  INDArray n1=NDArray.scalar(1);
+  INDArray n2=NDArray.scalar(2);
+  assertEquals(NDArray.scalar(3),n1.add(n2));
+  assertFalse(n1.add(n2).equals(n1));
+  INDArray n3=NDArray.scalar(3);
+  INDArray n4=NDArray.scalar(4);
+  INDArray subbed=n4.sub(n3);
+  INDArray mulled=n4.mul(n3);
+  INDArray div=n4.div(n3);
+  assertFalse(subbed.equals(n4));
+  assertFalse(mulled.equals(n4));
+  assertEquals(NDArray.scalar(1),subbed);
+  assertEquals(NDArray.scalar(12),mulled);
+  assertEquals(NDArray.scalar(1.333333333333333333333),div);
+}

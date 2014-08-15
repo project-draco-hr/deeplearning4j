@@ -1,0 +1,8 @@
+{
+  INDArray n=NDArrays.create(new double[]{1,2,3,4},new int[]{4});
+  assertTrue(n.isVector());
+  for (int i=0; i < n.length(); i++) {
+    INDArray scalar=NDArrays.scalar((double)i + 1);
+    assertEquals(scalar,n.getScalar(i));
+  }
+}

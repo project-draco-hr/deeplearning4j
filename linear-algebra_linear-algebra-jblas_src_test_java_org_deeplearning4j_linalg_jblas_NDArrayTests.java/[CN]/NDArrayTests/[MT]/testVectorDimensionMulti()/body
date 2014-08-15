@@ -1,0 +1,41 @@
+{
+  INDArray arr=new NDArray(DoubleMatrix.linspace(1,24,24).data,new int[]{4,3,2});
+  final AtomicInteger count=new AtomicInteger(0);
+  arr.iterateOverDimension(0,new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      INDArray test=(NDArray)nd.getResult();
+      if (count.get() == 0) {
+        INDArray answer=new NDArray(new double[]{1,7,13,19},new int[]{4});
+        assertEquals(answer,test);
+      }
+ else       if (count.get() == 1) {
+        INDArray answer=new NDArray(new double[]{2,8,14,20},new int[]{4});
+        assertEquals(answer,test);
+      }
+ else       if (count.get() == 2) {
+        INDArray answer=new NDArray(new double[]{3,9,15,21},new int[]{4});
+        assertEquals(answer,test);
+      }
+ else       if (count.get() == 3) {
+        INDArray answer=new NDArray(new double[]{4,10,16,22},new int[]{4});
+        assertEquals(answer,test);
+      }
+ else       if (count.get() == 4) {
+        INDArray answer=new NDArray(new double[]{5,11,17,23},new int[]{4});
+        assertEquals(answer,test);
+      }
+ else       if (count.get() == 5) {
+        INDArray answer=new NDArray(new double[]{6,12,18,24},new int[]{4});
+        assertEquals(answer,test);
+      }
+      count.incrementAndGet();
+    }
+    /** 
+ * Operates on an ndarray slice
+ * @param nd the result to operate on
+ */
+    @Override public void operate(    INDArray nd){
+    }
+  }
+,false);
+}

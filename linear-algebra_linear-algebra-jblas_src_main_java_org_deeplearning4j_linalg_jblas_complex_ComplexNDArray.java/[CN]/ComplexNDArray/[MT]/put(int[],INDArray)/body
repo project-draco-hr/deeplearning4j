@@ -1,0 +1,10 @@
+{
+  if (!element.isScalar())   throw new IllegalArgumentException("Unable to insert anything but a scalar");
+  int ix=offset;
+  if (indices.length != shape.length)   throw new IllegalArgumentException("Unable to applyTransformToDestination values: number of indices must be equal to the shape");
+  for (int i=0; i < shape.length; i++)   ix+=indices[i] * stride[i];
+  IComplexNumber element2=(IComplexNumber)element.element();
+  data[ix]=(double)element2.realComponent();
+  data[ix + 1]=(double)element2.imaginaryComponent();
+  return this;
+}

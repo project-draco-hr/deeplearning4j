@@ -1,5 +1,5 @@
 {
   DoubleMatrix put=(NDArray)toPut;
-  putRow(column,put);
+  putColumn(column,put);
   return this;
 }

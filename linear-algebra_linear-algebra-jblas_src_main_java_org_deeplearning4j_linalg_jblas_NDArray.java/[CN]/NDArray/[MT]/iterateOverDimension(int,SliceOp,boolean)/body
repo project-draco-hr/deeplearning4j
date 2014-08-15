@@ -40,39 +40,16 @@
   }
  else {
     int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
-    if (dimension == 0) {
-      int numTimes=ArrayUtil.prod(shape);
-      for (int offset=this.offset; offset < numTimes; offset++) {
-        DimensionSlice vector=vectorForDimensionAndOffset(dimension,offset);
-        op.operate(vector);
-        if (modify && vector.getIndices() != null) {
-          NDArray result=(NDArray)vector.getResult();
-          for (int i=0; i < vector.getIndices().length; i++) {
-            data[vector.getIndices()[i]]=(double)result.getScalar(i).element();
-          }
-        }
-      }
-    }
+    int[] stride=ArrayUtil.reverseCopy(ArrayUtil.removeIndex(this.stride,dimension));
+    for (int currSlice=0; currSlice < shape[0]; currSlice++) {
+      NDArray ret=new NDArray(data,shape,stride,currSlice);
+      for (int j=0; j < ret.slices(); j++) {
+        NDArray slice=ret.slice(j);
+        if (slice.isVector())         op.operate(slice);
  else {
-      double[] data2=new double[ArrayUtil.prod(shape)];
-      int dataIter=0;
-      int[] sliceIndices=endsForSlices();
-      int currOffset=0;
-      int numTimes=ArrayUtil.prod(shape);
-      for (int offset=this.offset; offset < numTimes; offset++) {
-        if (dataIter >= data2.length || currOffset >= sliceIndices.length)         break;
-        DimensionSlice dimensionResult=vectorForDimensionAndOffsetPair(dimension,offset,sliceIndices[currOffset]);
-        op.operate(dimensionResult);
-        if (modify && dimensionResult.getIndices() != null) {
-          NDArray result=(NDArray)dimensionResult.getResult();
-          for (int i=0; i < dimensionResult.getIndices().length; i++) {
-            data[dimensionResult.getIndices()[i]]=(double)result.getScalar(i).element();
+          for (int i=0; i < slice.slices(); i++) {
+            iterateOverDimension(dimension,op,modify);
           }
-        }
-        if (dimensionResult.isNextSlice()) {
-          offset=sliceIndices[currOffset];
-          numTimes+=sliceIndices[currOffset];
-          currOffset++;
         }
       }
     }

@@ -1,0 +1,6 @@
+{
+  INDArray n=new NDArray(DoubleMatrix.linspace(1,8,8).data,new int[]{2,2,2});
+  INDArray test=NDArrays.create(new double[]{6,8,10,12},new int[]{2,2});
+  INDArray sum=n.sum(n.shape().length - 1);
+  assertEquals(test,sum);
+}
