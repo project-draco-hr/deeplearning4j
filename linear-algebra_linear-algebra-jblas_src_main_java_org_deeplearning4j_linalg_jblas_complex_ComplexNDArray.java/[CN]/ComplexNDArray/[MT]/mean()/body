@@ -13,5 +13,6 @@
       d.addi(d2);
     }
   }
+  d.divi(new org.jblas.ComplexDouble(length(),length()));
   return d;
 }

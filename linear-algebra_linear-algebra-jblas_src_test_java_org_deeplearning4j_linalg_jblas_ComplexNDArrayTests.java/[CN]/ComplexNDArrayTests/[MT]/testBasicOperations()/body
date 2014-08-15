@@ -1,14 +1,14 @@
 {
   IComplexNDArray arr=new ComplexNDArray(new double[]{0,1,2,1,1,2,3,4},new int[]{2,2});
-  IComplexDouble scalar=(IComplexDouble)arr.sum(arr.shape().length - 1).element();
+  IComplexDouble scalar=(IComplexDouble)arr.sum(Integer.MAX_VALUE).element();
   double sum=scalar.realComponent();
   assertEquals(6,sum,1e-1);
   arr.addi(NDArrays.scalar(1));
-  scalar=(IComplexDouble)arr.sum(arr.shape().length - 1).element();
+  scalar=(IComplexDouble)arr.sum(Integer.MAX_VALUE).element();
   sum=scalar.realComponent();
   assertEquals(10,sum,1e-1);
   arr.subi(NDArrays.scalar(1));
-  scalar=(IComplexDouble)arr.sum(arr.shape().length - 1).element();
+  scalar=(IComplexDouble)arr.sum(Integer.MAX_VALUE).element();
   sum=scalar.realComponent();
   assertEquals(6,sum,1e-1);
 }

@@ -17,6 +17,8 @@
  * @param nd the result to operate on
  */
       @Override public void operate(      INDArray nd){
+        arr.put(i.get(),nd.mean(0));
+        i.incrementAndGet();
       }
     }
 ,false);

@@ -1,4 +1,5 @@
 {
-  new TwoArrayOps().from(this).other(other).op(DivideOp.class).to(result).build().exec();
+  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other).op(DivideOp.class).to(result).build().exec();
+ else   new TwoArrayOps().from(this).other(other).op(DivideOp.class).to(result).build().exec();
   return (IComplexNDArray)result;
 }

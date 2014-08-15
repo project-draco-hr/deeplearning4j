@@ -1,4 +1,5 @@
 {
+  if (dimension == Integer.MAX_VALUE)   return ComplexNDArray.scalar(norm2());
   if (isVector()) {
     return ComplexNDArray.scalar(sum().divi(length()));
   }
@@ -17,6 +18,8 @@
  * @param nd the result to operate on
  */
       @Override public void operate(      INDArray nd){
+        arr.put(i.get(),nd.norm1(0));
+        i.incrementAndGet();
       }
     }
 ,false);

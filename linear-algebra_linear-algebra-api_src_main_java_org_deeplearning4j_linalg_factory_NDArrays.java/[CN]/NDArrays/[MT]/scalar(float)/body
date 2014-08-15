@@ -1,3 +1,4 @@
 {
-  return create(new float[]{value},new int[]{1},new int[]{1},0);
+  if (dtype.equals("float"))   return create(new float[]{value},new int[]{1},new int[]{1},0);
+ else   return scalar((double)value);
 }

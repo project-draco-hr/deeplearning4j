@@ -1,3 +1,4 @@
 {
-  return dup().mmuli(other);
+  int[] shape={rows(),other.columns()};
+  return mmuli(other,NDArrays.create(shape));
 }
