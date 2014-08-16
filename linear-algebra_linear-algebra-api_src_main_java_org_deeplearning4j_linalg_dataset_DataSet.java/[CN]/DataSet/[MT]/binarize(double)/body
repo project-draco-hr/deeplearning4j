@@ -1,0 +1,7 @@
+{
+  for (int i=0; i < getFeatures().length(); i++) {
+    double curr=(double)getFeatures().getScalar(i).element();
+    if (curr > cutoff)     getFeatures().put(i,NDArrays.scalar(1));
+ else     getFeatures().put(i,NDArrays.scalar(0));
+  }
+}

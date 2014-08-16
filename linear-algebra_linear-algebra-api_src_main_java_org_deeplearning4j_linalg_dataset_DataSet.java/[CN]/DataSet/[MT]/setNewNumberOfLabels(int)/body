@@ -1,0 +1,5 @@
+{
+  int examples=numExamples();
+  INDArray newOutcomes=NDArrays.create(examples,labels);
+  setLabels(newOutcomes);
+}

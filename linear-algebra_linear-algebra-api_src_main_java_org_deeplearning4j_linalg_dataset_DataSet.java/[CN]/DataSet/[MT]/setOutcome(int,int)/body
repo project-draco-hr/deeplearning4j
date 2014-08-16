@@ -1,0 +1,6 @@
+{
+  if (example > numExamples())   throw new IllegalArgumentException("No example at " + example);
+  if (label > numOutcomes() || label < 0)   throw new IllegalArgumentException("Illegal label");
+  INDArray outcome=FeatureUtil.toOutcomeVector(label,numOutcomes());
+  getLabels().putRow(example,outcome);
+}

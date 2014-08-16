@@ -1,0 +1,12 @@
+{
+  if (A.columns() != B.columns()) {
+    throw new IllegalArgumentException("Matrices don't have same number of columns (" + A.columns() + " != "+ B.columns()+ ".");
+  }
+  INDArray result=NDArrays.create(A.rows() + B.rows(),A.columns());
+  copy(A,result);
+  int count=0;
+  for (int i=A.columns(); i < B.columns(); i++) {
+    result.putColumn(i,B.getColumn(count++));
+  }
+  return result;
+}
