@@ -46,7 +46,6 @@
     ret.setLossFunction(lossFunction);
     ret.setOutputActivationFunction(outputActivationFunction);
     ret.setOutputLossFunction(outputLossFunction);
-    ret.initializeLayers(DoubleMatrix.zeros(1,nIns));
     if (activation != null)     ret.setActivation(activation);
     if (dist != null)     ret.setDist(dist);
     ret.getWeightTransforms().putAll(weightTransforms);

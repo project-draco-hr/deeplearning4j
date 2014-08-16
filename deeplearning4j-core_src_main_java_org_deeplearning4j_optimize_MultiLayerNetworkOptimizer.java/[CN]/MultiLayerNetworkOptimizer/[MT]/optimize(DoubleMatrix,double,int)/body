@@ -2,6 +2,7 @@
   network.getOutputLayer().setLabels(labels);
   if (!network.isForceNumEpochs()) {
     if (network.isShouldBackProp())     network.backProp(lr,iteration);
+    network.getOutputLayer().trainTillConvergence(lr,iteration);
   }
  else {
     log.info("Training for " + iteration + " iteration");
