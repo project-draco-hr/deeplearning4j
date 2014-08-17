@@ -1,6 +1,0 @@
-{
-  FloatTensor ret=new FloatTensor(SimpleBlas.scal(value,this));
-  ret.slices=slices;
-  ret.perMatrixRows=perMatrixRows;
-  return ret;
-}

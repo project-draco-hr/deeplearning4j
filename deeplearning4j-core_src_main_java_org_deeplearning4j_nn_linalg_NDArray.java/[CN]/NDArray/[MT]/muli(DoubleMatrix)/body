@@ -1,5 +1,0 @@
-{
-  NDArray ret=NDArray.wrap(result);
-  new MultiplyOp(this,this,ret).exec();
-  return this;
-}

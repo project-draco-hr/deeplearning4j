@@ -1,8 +1,0 @@
-{
-  Tensor ret=new Tensor(1,rows(),slices);
-  for (int i=0; i < slices(); i++) {
-    DoubleMatrix rowSums=getSlice(i).rowSums().transpose();
-    ret.setSlice(i,rowSums);
-  }
-  return ret;
-}

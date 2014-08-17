@@ -1,8 +1,0 @@
-{
-  Tensor ret=new Tensor(this);
-  for (int i=0; i < slices(); i++) {
-    DoubleMatrix slice=MatrixUtil.reverse(getSlice(i));
-    setSlice(i,slice);
-  }
-  return ret;
-}

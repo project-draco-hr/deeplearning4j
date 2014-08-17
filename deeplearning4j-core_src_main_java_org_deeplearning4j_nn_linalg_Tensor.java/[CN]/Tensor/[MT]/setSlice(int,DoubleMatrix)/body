@@ -1,8 +1,0 @@
-{
-  if (slice.rows != rows() || slice.columns != columns()) {
-    if (slice.rows < rows() || slice.columns < columns())     slice=MatrixUtil.padWithZeros(slice,rows(),columns());
- else     slice=MatrixUtil.truncate(slice,rows(),columns());
-    if (slice.rows != rows() || slice.columns != columns())     throw new IllegalStateException("WTF IS THIS");
-  }
-  put(RangeUtils.interval(index,index + rows()),RangeUtils.interval(0,slice.columns),slice);
-}

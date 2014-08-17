@@ -1,8 +1,0 @@
-{
-  ComplexNDArray r=ComplexNDArray.wrap(result);
-  for (int i=0; i < length; i++) {
-    result.data[r.unSafeLinearIndex(i)]=data[unSafeLinearIndex(i)] + v.real();
-    result.data[unSafeLinearIndex(i) + 1]=data[unSafeLinearIndex(i)] + v.imag();
-  }
-  return r;
-}

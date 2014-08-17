@@ -1,8 +1,0 @@
-{
-  int tensorIndex=tensor * slices();
-  int row=tensorIndex * slice;
-  Range rows=RangeUtils.interval(row,row + perMatrixRows);
-  Range columns=RangeUtils.interval(0,columns());
-  DoubleMatrix ret=get(rows,columns);
-  return ret;
-}

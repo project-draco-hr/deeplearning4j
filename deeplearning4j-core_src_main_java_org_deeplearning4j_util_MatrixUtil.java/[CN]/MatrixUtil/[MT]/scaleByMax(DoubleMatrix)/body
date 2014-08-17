@@ -1,7 +1,0 @@
-{
-  DoubleMatrix scale=toScale.rowMaxs();
-  for (int i=0; i < toScale.rows; i++) {
-    double scaleBy=scale.get(i,0);
-    toScale.putRow(i,toScale.getRow(i).divi(scaleBy));
-  }
-}

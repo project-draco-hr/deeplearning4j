@@ -1,7 +1,0 @@
-{
-  DoubleMatrix ret=input.reshape(rows * numSlices,columns);
-  FourDTensor retTensor=new FourDTensor(ret,false);
-  retTensor.setSlices(numSlices);
-  retTensor.setNumTensor(numTensors);
-  return retTensor;
-}

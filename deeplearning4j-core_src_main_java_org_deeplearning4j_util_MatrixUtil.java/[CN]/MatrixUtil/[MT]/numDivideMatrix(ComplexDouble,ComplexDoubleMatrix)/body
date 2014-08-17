@@ -1,8 +1,0 @@
-{
-  ComplexDoubleMatrix ret=new ComplexDoubleMatrix(toDiv.rows,toDiv.columns);
-  for (int i=0; i < ret.length; i++) {
-    ComplexDouble curr=toDiv.get(i).addi(1e-6);
-    ret.put(i,div.div(curr));
-  }
-  return ret;
-}

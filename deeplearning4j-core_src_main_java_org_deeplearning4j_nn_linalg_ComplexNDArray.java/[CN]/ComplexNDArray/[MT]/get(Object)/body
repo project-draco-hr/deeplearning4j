@@ -1,9 +1,0 @@
-{
-  int[] shape=shapeFor(shape(),o,true);
-  int[] indexingShape=shapeFor(shape(),o,false);
-  int[] stride=calcStrides(shape);
-  int[] query=queryForObject(shape(),o);
-  if (query.length == 1)   return ComplexNDArray.scalar(this,query[0]);
-  int index=offset + indexingShape[0] * stride[0];
-  return new ComplexNDArray(data,shape,stride,index);
-}

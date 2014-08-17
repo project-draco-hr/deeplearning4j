@@ -1,7 +1,0 @@
-{
-  Tensor ret=new Tensor(1,columns(),slices);
-  for (int i=0; i < slices(); i++) {
-    ret.setSlice(i,getSlice(i).columnSums());
-  }
-  return ret;
-}

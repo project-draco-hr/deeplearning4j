@@ -1,5 +1,0 @@
-{
-  FloatMatrix ret=new FloatMatrix(x.rows,x.columns);
-  for (int i=0; i < ret.length; i++)   ret.put(i,x.get(i) > 0 ? (float)FastMath.sqrt(x.get(i)) : 0.0f);
-  return createBasedOn(ret,x);
-}

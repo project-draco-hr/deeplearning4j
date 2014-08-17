@@ -1,7 +1,0 @@
-{
-  DoubleMatrix U=new DoubleMatrix(rows,columns);
-  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++) {
-    U.put(i,j,rng.nextGaussian());
-  }
-  return U;
-}

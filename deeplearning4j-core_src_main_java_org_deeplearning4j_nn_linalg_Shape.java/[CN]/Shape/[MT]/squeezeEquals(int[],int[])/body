@@ -1,5 +1,0 @@
-{
-  int[] s1=squeeze(test1);
-  int[] s2=squeeze(test2);
-  return scalarEquals(s1,s2) || Arrays.equals(s1,s2);
-}

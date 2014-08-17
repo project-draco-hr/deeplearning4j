@@ -1,9 +1,0 @@
-{
-  FloatMatrix ret=d.mul(num);
-  for (int i=0; i < d.rows; i++)   for (int j=0; j < d.columns; j++) {
-    float d2=d.get(i,j);
-    float newNum=MathUtils.roundFloat(d2,num);
-    ret.put(i,j,newNum);
-  }
-  return createBasedOn(ret,d);
-}

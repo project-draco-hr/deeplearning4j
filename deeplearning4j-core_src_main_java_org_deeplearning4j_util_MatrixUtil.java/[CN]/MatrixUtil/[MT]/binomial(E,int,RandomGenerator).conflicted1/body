@@ -1,7 +1,0 @@
-{
-  FloatMatrix ret=new FloatMatrix(p.rows,p.columns);
-  for (int i=0; i < ret.length; i++) {
-    ret.put(i,MathUtils.binomial(rng,n,p.get(i)));
-  }
-  return createBasedOn(ret,p);
-}

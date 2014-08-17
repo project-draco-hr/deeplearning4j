@@ -1,8 +1,0 @@
-{
-  FloatTensor t=new FloatTensor(1,columns,slices);
-  for (int i=0; i < slices(); i++) {
-    FloatMatrix sums=getSlice(i).columnSums();
-    t.putRow(i,sums);
-  }
-  return t;
-}

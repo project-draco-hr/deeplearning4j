@@ -1,5 +1,0 @@
-{
-  int start=slice * rows();
-  int end=(slice * rows()) + rows();
-  return RangeUtils.interval(start,end);
-}

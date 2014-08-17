@@ -1,8 +1,0 @@
-{
-  if (Double.isInfinite(scalarValue)) {
-    to.put(i,apply(getFromDestination(i),i));
-  }
- else {
-    to.put(i,apply(scalarValue,i));
-  }
-}

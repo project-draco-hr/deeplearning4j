@@ -1,4 +1,0 @@
-{
-  FloatMatrix ones=FloatMatrix.ones(x.rows,x.columns);
-  return createBasedOn(ones.div(ones.add(exp(x.neg()))),x);
-}

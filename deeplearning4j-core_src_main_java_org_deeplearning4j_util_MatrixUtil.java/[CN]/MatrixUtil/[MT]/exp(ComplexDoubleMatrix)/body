@@ -1,7 +1,0 @@
-{
-  ComplexDoubleMatrix ret=new ComplexDoubleMatrix(input.rows,input.columns);
-  for (int i=0; i < ret.length; i++) {
-    ret.put(i,ComplexUtil.exp(input.get(i)));
-  }
-  return ret;
-}

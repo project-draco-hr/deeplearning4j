@@ -1,4 +1,0 @@
-{
-  if (this.numExamples() > 1)   throw new IllegalStateException("Unable to derive outcome for dataset greater than one row");
-  return SimpleBlas.iamax(getSecond());
-}

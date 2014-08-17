@@ -1,5 +1,0 @@
-{
-  FloatMatrix ret=new FloatMatrix(toDiv.rows,toDiv.columns);
-  for (int i=0; i < ret.length; i++)   ret.put(i,div / toDiv.get(i) + 1e-6f);
-  return createBasedOn(ret,toDiv);
-}

@@ -1,7 +1,0 @@
-{
-  FourDTensor tensor=new FourDTensor(rows,cols,slices,numTensor);
-  for (int i=0; i < tensor.rows; i++) {
-    tensor.putRow(i,new DoubleMatrix(sample.sample(cols)));
-  }
-  return tensor;
-}

@@ -1,7 +1,0 @@
-{
-  if (d instanceof Tensor) {
-    Tensor t=(Tensor)d;
-    return MathUtils.max(new double[]{t.rows(),t.columns(),t.slices()});
-  }
- else   return Math.max(d.rows,d.columns);
-}

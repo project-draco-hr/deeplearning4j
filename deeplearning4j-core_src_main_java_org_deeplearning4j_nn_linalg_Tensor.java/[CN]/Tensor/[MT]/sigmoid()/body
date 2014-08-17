@@ -1,5 +1,0 @@
-{
-  Tensor copy=dup();
-  for (int i=0; i < length; i++)   copy.put(i,MathUtils.sigmoid(get(i)));
-  return copy;
-}

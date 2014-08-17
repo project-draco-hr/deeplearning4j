@@ -1,5 +1,0 @@
-{
-  float[] data=ArrayUtil.toFloats(ArrayUtil.range((int)begin,(int)end));
-  ComplexFloatMatrix ret=new ComplexFloatMatrix((new FloatMatrix(data)));
-  return ret;
-}

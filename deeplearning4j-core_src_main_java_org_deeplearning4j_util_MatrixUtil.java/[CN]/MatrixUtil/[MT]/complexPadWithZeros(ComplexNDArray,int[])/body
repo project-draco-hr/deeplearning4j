@@ -1,5 +1,0 @@
-{
-  ComplexNDArray ret=ComplexNDArray.zeros(newShape);
-  for (int i=0; i < toPad.length; i++)   ret.put(i,toPad.get(i));
-  return ret;
-}

@@ -1,6 +1,0 @@
-{
-  FloatTensor ret=new FloatTensor(super.add(tensor));
-  ret.slices=slices;
-  ret.perMatrixRows=perMatrixRows;
-  return ret;
-}

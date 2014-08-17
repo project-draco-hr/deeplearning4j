@@ -1,5 +1,0 @@
-{
-  NDArray r=NDArray.wrap(result);
-  new DivideOp(this,r,this).exec();
-  return r;
-}

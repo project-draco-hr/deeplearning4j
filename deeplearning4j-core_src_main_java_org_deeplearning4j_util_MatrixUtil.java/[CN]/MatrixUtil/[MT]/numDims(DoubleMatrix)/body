@@ -1,5 +1,0 @@
-{
-  if (input instanceof FourDTensor)   return 4;
-  if (input instanceof Tensor)   return 3;
- else   return 2;
-}

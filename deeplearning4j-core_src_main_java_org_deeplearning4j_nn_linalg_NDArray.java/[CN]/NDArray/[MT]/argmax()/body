@@ -1,4 +1,0 @@
-{
-  if (isVector())   return super.argmax();
-  return (int)NDArrayUtil.doSliceWise(NDArrayUtil.ScalarOp.ARG_MAX,this);
-}

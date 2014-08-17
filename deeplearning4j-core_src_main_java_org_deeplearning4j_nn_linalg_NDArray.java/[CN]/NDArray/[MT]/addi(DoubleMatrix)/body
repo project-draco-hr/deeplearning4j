@@ -1,5 +1,0 @@
-{
-  NDArray ret=NDArray.wrap(other);
-  new AddOp(this,this,ret).exec();
-  return this;
-}

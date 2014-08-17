@@ -1,3 +1,0 @@
-{
-  return softmax(input,rows).mul(oneMinus(softmax(input,rows)));
-}

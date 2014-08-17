@@ -1,7 +1,0 @@
-{
-  DoubleMatrix rows=new DoubleMatrix(slices(),columns());
-  for (int i=0; i < slices(); i++) {
-    rows.putRow(i,getSlice(i).getColumn(column));
-  }
-  return rows;
-}

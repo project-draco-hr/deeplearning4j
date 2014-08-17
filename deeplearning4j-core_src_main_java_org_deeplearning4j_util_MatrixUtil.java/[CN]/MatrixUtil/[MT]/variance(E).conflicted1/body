@@ -1,6 +1,0 @@
-{
-  FloatMatrix means=(E)input.columnMeans();
-  FloatMatrix diff=MatrixFunctions.pow(input.subRowVector(means),2);
-  FloatMatrix variance=diff.columnMeans().div(input.rows);
-  return createBasedOn(variance,input);
-}

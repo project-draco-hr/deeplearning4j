@@ -1,5 +1,0 @@
-{
-  ComplexNDArray wrap=ComplexNDArray.wrap(result);
-  new MultiplyOp(this,wrap,v).exec();
-  return this;
-}
