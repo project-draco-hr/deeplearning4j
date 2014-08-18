@@ -39,10 +39,19 @@
  else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
   }
  else {
-    int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
-    int[] stride=ArrayUtil.reverseCopy(ArrayUtil.removeIndex(this.stride,dimension));
-    for (int currSlice=0; currSlice < shape[0]; currSlice++) {
-      NDArray ret=new NDArray(data,shape,stride,currSlice);
+    if (dimension == Integer.MAX_VALUE) {
+      for (int i=0; i < slices(); i++) {
+        INDArray slice=slice(i);
+        if (slice.isVector())         op.operate(slice);
+ else {
+          slice.iterateOverDimension(dimension,op,modify);
+        }
+      }
+    }
+ else {
+      int[] shape=ArrayUtil.removeIndex(this.shape,0);
+      int[] stride=ArrayUtil.removeIndex(this.stride,0);
+      NDArray ret=new NDArray(data,shape,stride,offset);
       for (int j=0; j < ret.slices(); j++) {
         NDArray slice=ret.slice(j);
         if (slice.isVector())         op.operate(slice);
