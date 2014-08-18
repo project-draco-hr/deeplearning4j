@@ -1,6 +1,6 @@
 {
-  setInput(data.getFirst());
-  feedForward(data.getFirst());
-  this.labels=data.getSecond();
+  setInput(data.getFeatureMatrix());
+  feedForward(data.getFeatureMatrix());
+  this.labels=data.getLabels();
   outputLayer.setLabels(labels);
 }

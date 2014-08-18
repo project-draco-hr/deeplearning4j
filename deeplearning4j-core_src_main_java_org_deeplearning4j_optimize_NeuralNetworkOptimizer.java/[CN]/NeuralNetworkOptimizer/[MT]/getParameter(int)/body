@@ -1,10 +1,10 @@
 {
-  if (index >= network.getW().length) {
+  if (index >= network.getW().length()) {
     int i=getAdjustedIndex(index);
-    if (index >= network.getvBias().length + network.getW().length) {
-      return network.gethBias().get(i);
+    if (index >= network.getvBias().length() + network.getW().length()) {
+      return (double)network.gethBias().getScalar(i).element();
     }
- else     return network.getvBias().get(i);
+ else     return (double)network.getvBias().getScalar(i).element();
   }
- else   return network.getW().get(index);
+ else   return (double)network.getW().getScalar(index).element();
 }

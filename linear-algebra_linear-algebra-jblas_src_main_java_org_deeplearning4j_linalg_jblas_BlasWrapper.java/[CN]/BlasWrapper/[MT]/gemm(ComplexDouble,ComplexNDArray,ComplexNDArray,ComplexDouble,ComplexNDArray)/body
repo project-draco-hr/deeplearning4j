@@ -1,0 +1,4 @@
+{
+  NativeBlas.zgemm('N','N',c.rows,c.columns,a.columns,alpha,a.data,0,a.rows,b.data,0,b.rows,beta,c.data,0,c.rows);
+  return c;
+}

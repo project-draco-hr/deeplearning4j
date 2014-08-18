@@ -1,0 +1,3 @@
+{
+  return NativeBlas.idamax(x.length,x.data,0,1) - 1;
+}

@@ -1,0 +1,5 @@
+{
+  int k=tau.length;
+  int info=NativeBlas.dormqr(side,trans,C.rows,C.columns,k,A.data,0,A.rows,tau.data,0,C.data,0,C.rows);
+  checkInfo("ORMQR",info);
+}

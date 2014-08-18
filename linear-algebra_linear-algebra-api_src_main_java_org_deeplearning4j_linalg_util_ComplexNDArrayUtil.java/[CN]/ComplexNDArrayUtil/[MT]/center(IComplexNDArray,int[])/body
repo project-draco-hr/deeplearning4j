@@ -1,0 +1,20 @@
+{
+  if (arr.length() < ArrayUtil.prod(shape))   return arr;
+  INDArray shapeMatrix=ArrayUtil.toNDArray(shape);
+  INDArray currShape=ArrayUtil.toNDArray(arr.shape());
+  INDArray startIndex=currShape.sub(shapeMatrix).divi(NDArrays.scalar(2));
+  INDArray endIndex=startIndex.add(shapeMatrix);
+  if (shapeMatrix.length() > 1) {
+    arr=NDArrays.createComplex(arr.get(NDArrayIndex.interval((int)startIndex.getScalar(0).element(),(int)endIndex.getScalar(0).element()),NDArrayIndex.interval((int)startIndex.getScalar(1).element(),(int)endIndex.getScalar(1).element())));
+  }
+ else {
+    IComplexNDArray ret=NDArrays.createComplex(new int[]{(int)shapeMatrix.getScalar(0).element()});
+    int start=(int)startIndex.getScalar(0).element();
+    int end=(int)endIndex.getScalar(0).element();
+    int count=0;
+    for (int i=start; i < end; i++) {
+      ret.put(count++,arr.getScalar(i));
+    }
+  }
+  return arr;
+}

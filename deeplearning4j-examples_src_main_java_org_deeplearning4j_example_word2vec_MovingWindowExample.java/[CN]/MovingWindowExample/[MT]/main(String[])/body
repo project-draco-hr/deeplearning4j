@@ -46,11 +46,11 @@
   runner.setup(c);
   runner.train();
   iterator.reset();
-  Viterbi viterbi=new Viterbi(new DoubleMatrix(new double[]{0,1}));
+  Viterbi viterbi=new Viterbi(NDArrays.create(new double[]{0,1}));
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    Pair<Double,DoubleMatrix> decoded=viterbi.decode(next.getSecond());
+    Pair<Double,INDArray> decoded=viterbi.decode(next.getLabels());
     log.info("Pair " + decoded.getSecond());
   }
 }

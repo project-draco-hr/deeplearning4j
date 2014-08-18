@@ -1,5 +1,5 @@
 {
-  feedForward(data.getFirst());
-  setLabels(data.getSecond());
+  feedForward(data.getFeatureMatrix());
+  setLabels(data.getLabels());
   return score();
 }

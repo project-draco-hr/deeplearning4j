@@ -1,7 +1,7 @@
 {
-  List<Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>>> deltas=backPropGradient2();
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltaNormal=new ArrayList<>();
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltasPreCon=new ArrayList<>();
+  List<Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>>> deltas=backPropGradient2();
+  List<Pair<INDArray,INDArray>> deltaNormal=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> deltasPreCon=new ArrayList<>();
   for (int i=0; i < deltas.size(); i++) {
     deltaNormal.add(deltas.get(i).getFirst());
     deltasPreCon.add(deltas.get(i).getSecond());

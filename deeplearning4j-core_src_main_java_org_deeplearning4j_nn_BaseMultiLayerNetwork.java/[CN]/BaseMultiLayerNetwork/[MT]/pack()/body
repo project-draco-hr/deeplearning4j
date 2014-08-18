@@ -1,5 +1,5 @@
 {
-  List<Pair<DoubleMatrix,DoubleMatrix>> vWvB=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> vWvB=new ArrayList<>();
   for (int i=0; i < layers.length; i++) {
     vWvB.add(new Pair<>(layers[i].getW(),layers[i].gethBias()));
   }

@@ -1,0 +1,11 @@
+{
+  double currentDamp=dampingFactor;
+  this.dampingFactor=0;
+  INDArray denom=getBackPropRGradient(p);
+  denom.muli(0.5).muli(p.mul(denom)).sum(0);
+  denom.subi(gradient.mul(p).sum(0));
+  double rho=(currScore - score) / (double)denom.getScalar(0).element();
+  this.dampingFactor=currentDamp;
+  if (score - currScore > 0)   return Double.NEGATIVE_INFINITY;
+  return rho;
+}

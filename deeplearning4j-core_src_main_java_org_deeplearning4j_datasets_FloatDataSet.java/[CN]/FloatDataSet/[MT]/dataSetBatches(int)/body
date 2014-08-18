@@ -1,6 +1,0 @@
-{
-  List<List<FloatDataSet>> list=Lists.partition(asList(),num);
-  List<FloatDataSet> ret=new ArrayList<>();
-  for (  List<FloatDataSet> l : list)   ret.add(FloatDataSet.merge(l));
-  return ret;
-}

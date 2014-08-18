@@ -1,7 +1,0 @@
-{
-  FloatMatrix columnMeans=getFirst().columnMeans();
-  FloatMatrix columnStds=MatrixUtil.columnStdDeviation(getFirst());
-  setFirst(getFirst().subiRowVector(columnMeans));
-  columnStds.addi(1e-6f);
-  setFirst(getFirst().diviRowVector(columnStds));
-}

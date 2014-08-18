@@ -5,6 +5,6 @@
   ret.visibleUnit=visibleUnit;
   ret.visibleUnitByLayer.putAll(visibleUnitByLayer);
   ret.hiddenUnitByLayer.putAll(hiddenUnitByLayer);
-  ret.initializeLayers(DoubleMatrix.zeros(1,ret.getnIns()));
+  ret.initializeLayers(NDArrays.zeros(1,ret.getnIns()));
   return ret;
 }

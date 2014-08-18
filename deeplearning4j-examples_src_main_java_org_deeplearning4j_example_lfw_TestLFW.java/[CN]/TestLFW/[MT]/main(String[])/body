@@ -4,7 +4,7 @@
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    eval.eval(next.getSecond(),d.output(next.getFirst()));
+    eval.eval(next.getLabels(),d.output(next.getFeatureMatrix()));
     log.info(eval.stats());
   }
   log.info(eval.stats());

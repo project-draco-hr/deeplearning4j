@@ -4,5 +4,5 @@
     i=wordIndex.indexOf("STOP");
     if (i < 0)     return oob;
   }
-  return syn0.getRow(i).toArray();
+  return syn0.getRow(i).floatData();
 }

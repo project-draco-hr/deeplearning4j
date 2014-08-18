@@ -1,0 +1,10 @@
+{
+  int info=NativeBlas.dsygvd(itype,jobz,uplo,A.rows,A.data,0,A.rows,B.data,0,B.rows,W.data,0);
+  if (info == 0)   return 0;
+ else {
+    if (info < 0)     throw new LapackArgumentException("DSYGVD",-info);
+    if (info <= A.rows && jobz == 'N')     throw new LapackConvergenceException("DSYGVD",info + " off-diagonal elements did not converge to 0.");
+    if (info <= A.rows && jobz == 'V')     throw new LapackException("DSYGVD","Failed to compute an eigenvalue while working on a sub-matrix  " + info + ".");
+ else     throw new LapackException("DSYGVD","The leading minor of order " + (info - A.rows) + " of B is not positive definite.");
+  }
+}

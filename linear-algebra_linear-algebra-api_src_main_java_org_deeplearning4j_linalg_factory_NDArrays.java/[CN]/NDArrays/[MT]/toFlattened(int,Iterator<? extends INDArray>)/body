@@ -1,0 +1,13 @@
+{
+  INDArray ret=NDArrays.create(length);
+  int linearIndex=0;
+  List<double[]> gradient=new ArrayList<>();
+  for (  Iterator<? extends INDArray> iter : matrices) {
+    while (iter.hasNext()) {
+      INDArray d=iter.next();
+      gradient.add(d.data());
+    }
+  }
+  INDArray ret2=NDArrays.create(ArrayUtil.combine(gradient));
+  return ret2.reshape(1,ret2.length());
+}

@@ -1,8 +1,0 @@
-{
-  int[] shape=arr.shape();
-  ComplexNDArray ret=arr.dup();
-  for (int i=0; i < shape.length - 1; i++) {
-    ret=FFT.ifftn(ret,i,shape[i]);
-  }
-  return irfft(ret,0);
-}

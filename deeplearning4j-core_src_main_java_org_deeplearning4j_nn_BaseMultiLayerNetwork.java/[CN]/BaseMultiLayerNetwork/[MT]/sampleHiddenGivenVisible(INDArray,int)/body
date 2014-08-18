@@ -1,0 +1,5 @@
+{
+  INDArray currInput=x;
+  List<INDArray> forward=feedForward(currInput);
+  return getLayers()[layerNum - 1].sampleHiddenGivenVisible(forward.get(layerNum - 1)).getSecond();
+}

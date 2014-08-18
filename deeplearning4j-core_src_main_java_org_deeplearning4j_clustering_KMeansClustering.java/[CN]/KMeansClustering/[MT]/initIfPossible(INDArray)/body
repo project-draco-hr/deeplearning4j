@@ -1,0 +1,7 @@
+{
+  this.initFeatures.add(features);
+  log.info("Added feature vector of length " + features.length());
+  if (this.initFeatures.size() >= 10 * this.nbCluster) {
+    this.initCentroids();
+  }
+}

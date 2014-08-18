@@ -1,0 +1,10 @@
+{
+  INDArray ret=NDArrays.create(reverse.shape());
+  if (reverse.isVector())   return reverse(reverse);
+ else {
+    for (int i=0; i < reverse.slices(); i++) {
+      ret.putSlice(i,reverse(reverse.slice(i)));
+    }
+  }
+  return ret.reshape(reverse.shape());
+}

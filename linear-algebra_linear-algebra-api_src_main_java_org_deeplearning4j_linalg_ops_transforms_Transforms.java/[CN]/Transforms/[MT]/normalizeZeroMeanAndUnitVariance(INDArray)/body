@@ -1,0 +1,8 @@
+{
+  INDArray columnMeans=toNormalize.mean(1);
+  INDArray columnStds=toNormalize.std(1);
+  toNormalize.subiRowVector(columnMeans);
+  columnStds.addi(1e-6);
+  toNormalize.diviRowVector(columnStds);
+  return toNormalize;
+}

@@ -1,13 +1,13 @@
 {
-  FloatMatrix nodeVector;
-  FloatMatrix classification;
+  INDArray nodeVector;
+  INDArray classification;
   if (tree.isLeaf()) {
     throw new AssertionError("We should not have reached leaves in forwardPropagate");
   }
  else   if (tree.isPreTerminal()) {
     classification=getUnaryClassification(tree.label());
     String word=tree.children().get(0).value();
-    FloatMatrix wordVector=getFeatureVector(word);
+    INDArray wordVector=getFeatureVector(word);
     if (wordVector == null) {
       wordVector=featureVectors.get(UNKNOWN_FEATURE);
     }
@@ -22,25 +22,25 @@
     forwardPropagateTree(right);
     String leftCategory=tree.children().get(0).label();
     String rightCategory=tree.children().get(1).label();
-    FloatMatrix W=getBinaryTransform(leftCategory,rightCategory);
+    INDArray W=getBinaryTransform(leftCategory,rightCategory);
     classification=getBinaryClassification(leftCategory,rightCategory);
-    FloatMatrix leftVector=tree.children().get(0).vector();
-    FloatMatrix rightVector=tree.children().get(1).vector();
-    FloatMatrix childrenVector=appendBias(leftVector,rightVector);
-    if (useFloatTensors) {
-      FloatTensor floatT=getBinaryFloatTensor(leftCategory,rightCategory);
-      FloatMatrix floatTensorIn=FloatMatrix.concatHorizontally(leftVector,rightVector);
-      FloatMatrix floatTensorOut=floatT.bilinearProducts(floatTensorIn);
-      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(floatTensorOut));
+    INDArray leftVector=tree.children().get(0).vector();
+    INDArray rightVector=tree.children().get(1).vector();
+    INDArray childrenVector=NDArrays.appendBias(leftVector,rightVector);
+    if (useINDArrays) {
+      INDArray floatT=getBinaryINDArray(leftCategory,rightCategory);
+      INDArray INDArrayIn=NDArrays.concatHorizontally(leftVector,rightVector);
+      INDArray INDArrayOut=NDArrays.bilinearProducts(floatT,INDArrayIn);
+      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(INDArrayOut));
     }
  else     nodeVector=activationFunction.apply(W.mmul(childrenVector));
   }
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  FloatMatrix inputWithBias=appendBias(nodeVector);
-  FloatMatrix preAct=classification.mmul(inputWithBias);
-  FloatMatrix predictions=outputActivation.apply(preAct);
+  INDArray inputWithBias=NDArrays.appendBias(nodeVector);
+  INDArray preAct=classification.mmul(inputWithBias);
+  INDArray predictions=outputActivation.apply(preAct);
   tree.setPrediction(predictions);
   tree.setVector(nodeVector);
 }

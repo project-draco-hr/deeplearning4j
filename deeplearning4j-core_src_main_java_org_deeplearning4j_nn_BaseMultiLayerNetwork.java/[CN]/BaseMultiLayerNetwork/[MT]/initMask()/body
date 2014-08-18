@@ -1,6 +1,6 @@
 {
-  setMask(DoubleMatrix.ones(1,pack().length));
-  List<Pair<DoubleMatrix,DoubleMatrix>> mask=unPack(getMask());
-  for (int i=0; i < mask.size(); i++)   mask.get(i).setSecond(DoubleMatrix.zeros(mask.get(i).getSecond().rows,mask.get(i).getSecond().columns));
+  setMask(NDArrays.ones(1,pack().length()));
+  List<Pair<INDArray,INDArray>> mask=unPack(getMask());
+  for (int i=0; i < mask.size(); i++)   mask.get(i).setSecond(NDArrays.zeros(mask.get(i).getSecond().rows(),mask.get(i).getSecond().columns()));
   setMask(pack(mask));
 }

@@ -1,14 +1,14 @@
 {
-  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new DoubleMatrix[]{network.getW(),network.gethBias(),network.getvBias(),gradient.getwGradient(),gradient.gethBiasGradient(),gradient.getvBiasGradient()});
+  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getW(),network.gethBias(),network.getvBias(),gradient.getwGradient(),gradient.gethBiasGradient(),gradient.getvBiasGradient()});
   plotActivations(network);
   FilterRenderer render=new FilterRenderer();
   try {
-    if (network.getW() instanceof Tensor) {
-      Tensor w=(Tensor)network.getW().dup();
-      DoubleMatrix render2=w.reshape(w.rows() * w.columns(),w.slices());
+    if (network.getW().shape().length > 2) {
+      INDArray w=(INDArray)network.getW().dup();
+      INDArray render2=w.transpose();
       render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
     }
- else     render.renderFilters(network.getW().dup(),"currimg.png",(int)Math.sqrt(network.getW().rows),(int)Math.sqrt(network.getW().rows),patchesPerRow);
+ else     render.renderFilters(network.getW().dup(),"currimg.png",(int)Math.sqrt(network.getW().rows()),(int)Math.sqrt(network.getW().rows()),patchesPerRow);
   }
  catch (  Exception e) {
     log.error("Unable to plot filter, continuing...",e);

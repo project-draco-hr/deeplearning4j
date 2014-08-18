@@ -1,9 +1,0 @@
-{
-  for (int i=0; i < x.length; i++) {
-    double comp=Math.abs(x.get(i) - xold.get(i));
-    if (comp > absTolx) {
-      return false;
-    }
-  }
-  return true;
-}

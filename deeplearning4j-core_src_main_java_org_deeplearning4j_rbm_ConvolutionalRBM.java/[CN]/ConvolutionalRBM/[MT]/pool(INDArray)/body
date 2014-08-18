@@ -1,0 +1,24 @@
+{
+  int nCols=input.columns();
+  int nRows=input.rows();
+  int yStride=stride[0];
+  int xStride=stride[1];
+  INDArray ret=NDArrays.create(input.shape());
+  int endRowBlock=(int)Math.ceil(nRows / yStride);
+  for (int i=1; i < endRowBlock; i++) {
+    int rowsMin=(i - 1) * yStride + 1;
+    int rowsMax=i * yStride;
+    int endColBlock=(int)Math.ceil(nCols / xStride);
+    for (int j=1; j < endColBlock; j++) {
+      int cols=(j - 1) * xStride + 1;
+      int colsMax=j * xStride;
+      double blockVal=(double)input.sum(1).sum(Integer.MAX_VALUE).element();
+      int rowLength=rowsMax - rowsMin;
+      int colLength=colsMax - cols;
+      INDArray block=NDArrays.create(rowLength,colLength);
+      block.assign(blockVal);
+      ret.put(new NDArrayIndex[]{NDArrayIndex.interval(rowsMin,rowsMax),NDArrayIndex.interval(cols,colsMax)},block);
+    }
+  }
+  return ret;
+}

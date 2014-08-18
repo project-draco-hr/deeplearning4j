@@ -1,0 +1,4 @@
+{
+  if (input != null)   this.input=Transforms.stabilize(input.dup(),1);
+  return activate();
+}

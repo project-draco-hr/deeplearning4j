@@ -2,7 +2,7 @@
   if (cursor >= data.numExamples()) {
     cursor=data.numExamples();
   }
-  curr=data.get(MatrixUtil.toIndices(RangeUtils.interval(cursor,cursor + numExamples)));
+  curr=data.get(NDArrayIndex.interval(cursor,cursor + numExamples).indices());
   log.info("Fetched " + curr.numExamples());
   if (cursor + numExamples < data.numExamples())   cursor+=numExamples;
  else   if (cursor + numExamples > data.numExamples())   cursor=data.numExamples() - 1;

@@ -1,4 +1,4 @@
 {
-  if (index >= logReg.getW().length)   logReg.getB().put(index - logReg.getW().length,value);
- else   logReg.getW().put(index,value);
+  if (index >= logReg.getW().length())   logReg.getB().putScalar(index - logReg.getW().length(),value);
+ else   logReg.getW().putScalar(index,value);
 }

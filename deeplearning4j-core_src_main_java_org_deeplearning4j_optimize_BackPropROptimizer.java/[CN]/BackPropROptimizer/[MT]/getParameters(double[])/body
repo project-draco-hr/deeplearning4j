@@ -1,3 +1,3 @@
 {
-  System.arraycopy(getParameters().data,0,buffer,0,buffer.length);
+  System.arraycopy(getParameters().data(),0,buffer,0,buffer.length);
 }

@@ -12,7 +12,7 @@
       rows=Integer.parseInt(split[0]);
       vectorSize=Integer.parseInt(split[1]);
       ret.setLayerSize(vectorSize);
-      ret.setSyn0(new FloatMatrix(rows - 1,vectorSize));
+      ret.setSyn0(NDArrays.create(rows - 1,vectorSize));
       first=false;
     }
  else {
@@ -24,7 +24,7 @@
       while (tokenizer.hasMoreTokens()) {
         vec[count++]=Float.parseFloat(tokenizer.nextToken());
       }
-      ret.getSyn0().putRow(currRow,new FloatMatrix(vec));
+      ret.getSyn0().putRow(currRow,NDArrays.create(vec));
       currRow++;
     }
   }

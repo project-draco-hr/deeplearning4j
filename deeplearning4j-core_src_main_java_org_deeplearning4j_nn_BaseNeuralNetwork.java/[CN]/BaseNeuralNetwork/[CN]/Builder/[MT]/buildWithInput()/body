@@ -4,7 +4,7 @@
     Constructor<?> curr=c[i];
     curr.setAccessible(true);
     Class<?>[] classes=curr.getParameterTypes();
-    if (classes != null && classes.length > 0 && classes[0].isAssignableFrom(DoubleMatrix.class)) {
+    if (classes != null && classes.length > 0 && classes[0].isAssignableFrom(INDArray.class)) {
       try {
         ret=(E)curr.newInstance(input,numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
         ret.cacheInput=cacheInput;

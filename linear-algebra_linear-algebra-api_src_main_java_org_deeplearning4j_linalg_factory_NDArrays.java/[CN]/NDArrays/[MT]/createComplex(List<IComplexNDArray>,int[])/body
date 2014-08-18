@@ -1,0 +1,9 @@
+{
+  try {
+    Constructor c=complexClazz.getConstructor(ReflectionUtil.classesFor(new Object[]{arrs,shape}));
+    return (IComplexNDArray)c.newInstance(arrs,shape);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

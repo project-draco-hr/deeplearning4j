@@ -1,0 +1,5 @@
+{
+  int info=NativeBlas.dgeev(jobvl,jobvr,A.rows,A.data,0,A.rows,WR.data,0,WI.data,0,VL.data,0,VL.rows,VR.data,0,VR.rows);
+  if (info > 0)   throw new LapackConvergenceException("DGEEV","First " + info + " eigenvalues have not converged.");
+  return info;
+}

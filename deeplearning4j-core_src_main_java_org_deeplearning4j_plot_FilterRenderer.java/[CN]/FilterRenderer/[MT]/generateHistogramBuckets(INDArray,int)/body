@@ -1,0 +1,25 @@
+{
+  Map<Integer,Integer> mapHistory=new TreeMap<>();
+  double min=(double)data.min(Integer.MAX_VALUE).element();
+  double max=(double)data.max(Integer.MAX_VALUE).element();
+  double range=max - min;
+  double stepSize=range / numberBins;
+  for (int row=0; row < data.rows(); row++) {
+    for (int col=0; col < data.columns(); col++) {
+      double matrix_value=(double)data.getScalar(row,col).element();
+      int bucket_key=this.computeHistogramBucketIndex(min,stepSize,matrix_value,numberBins);
+      int entry=0;
+      if (mapHistory.containsKey(bucket_key)) {
+        entry=mapHistory.get(bucket_key);
+        entry++;
+        mapHistory.put(bucket_key,entry);
+      }
+ else {
+        String bucket_label=buildBucketLabel(bucket_key,stepSize,min);
+        entry=1;
+        mapHistory.put(bucket_key,entry);
+      }
+    }
+  }
+  return mapHistory;
+}

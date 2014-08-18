@@ -1,0 +1,35 @@
+{
+  arr=arr.reshape(new int[]{1,arr.length()});
+  if (op == ScalarOp.NORM_1) {
+    return NDArrays.getBlasWrapper().asum(arr);
+  }
+ else   if (op == ScalarOp.NORM_2) {
+    return (NDArrays.getBlasWrapper().nrm2(arr));
+  }
+ else   if (op == ScalarOp.NORM_MAX) {
+    int i=NDArrays.getBlasWrapper().iamax(arr);
+    return arr.getScalar(i).element();
+  }
+  IComplexDouble s=NDArrays.createDouble(0.0,0);
+  for (int i=0; i < arr.length(); i++) {
+    IComplexDouble curr=(IComplexDouble)arr.getScalar(i).element();
+switch (op) {
+case SUM:
+      s.addi(curr);
+    break;
+case MEAN:
+  s.addi(curr);
+break;
+case MAX:
+if (curr.absoluteValue().doubleValue() > s.absoluteValue().doubleValue()) s.set(curr.realComponent().doubleValue(),curr.imaginaryComponent().doubleValue());
+break;
+case MIN:
+if (curr.absoluteValue().doubleValue() < s.absoluteValue().doubleValue()) s.set(curr.realComponent().doubleValue(),curr.imaginaryComponent().doubleValue());
+case PROD:
+s.muli(curr);
+break;
+}
+}
+if (op == ScalarOp.MEAN) s.divi(arr.length());
+return s;
+}

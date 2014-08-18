@@ -1,7 +1,6 @@
 {
-  Tensor input=(Tensor)this.input;
   if (!(rng instanceof SynchronizedRandomGenerator))   rng=new SynchronizedRandomGenerator(rng);
-  if (getnLayers() < 1)   throw new IllegalStateException("Unable to create network layers; number specified is less than 1");
+  if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network layers; number specified is less than 1");
   if (this.dist == null)   dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   this.layers=new NeuralNetwork[getnLayers()];
   int nInY, nInX, nInFM, nFm=-1;
@@ -18,17 +17,17 @@
       nInFM=prevLayer.getFmSize()[0];
     }
     nFm=this.nFm[i];
-    DoubleMatrix filterSize=MatrixUtil.toMatrix(this.filterSizes[i]);
-    DoubleMatrix fmSize=MatrixUtil.toMatrix(new int[]{nInY,nInX}).sub(filterSize).add(1);
-    double prodFilterSize=MatrixUtil.prod(filterSize);
-    DoubleMatrix stride=MatrixUtil.toMatrix(this.stride[i]);
+    INDArray filterSize=ArrayUtil.toNDArray(this.filterSizes[i]);
+    INDArray fmSize=ArrayUtil.toNDArray(new int[]{nInY,nInX}).sub(filterSize).add(1);
+    double prodFilterSize=ArrayUtil.prod(this.filterSizes[i]);
+    INDArray stride=ArrayUtil.toNDArray(this.stride[i]);
     double fanIn=nInFM * prodFilterSize;
     double fanOut=nFm * prodFilterSize;
     double range=2 * FastMath.sqrt(6 / fanIn + fanOut);
-    FourDTensor W=FourDTensor.rand((int)filterSize.get(0),(int)filterSize.get(1),nInFM,nFm,dist).mul(range);
-    ConvolutionalRBM r=new ConvolutionalRBM.Builder().withDistribution(getDist()).withDropOut(getDropOut()).withOptmizationAlgo(getOptimizationAlgorithm()).withFilterSize(MatrixUtil.toInts(filterSize)).withInput(input).numberOfVisible(1).useAdaGrad(isUseAdaGrad()).normalizeByInputRows(normalizeByInputRows).numHidden(1).withHBias(DoubleMatrix.zeros(nFm,1)).withMomentum(getMomentum()).withL2(getL2()).useRegularization(isUseRegularization()).withRandom(rng).withLossFunction(getLossFunction()).withFmSize(MatrixUtil.toInts(fmSize)).withStride(this.stride[i]).withNumFilters(new int[]{nFm,nFm}).withSparseGain(sparseGain).withSparsity(getSparsity()).withWeights(W).build();
+    INDArray W=NDArrays.rand(new int[]{(int)filterSize.getScalar(0).element(),(int)filterSize.getScalar(1).element(),nInFM,nFm},dist).mul(range);
+    ConvolutionalRBM r=new ConvolutionalRBM.Builder().withDistribution(getDist()).withDropOut(getDropOut()).withOptmizationAlgo(getOptimizationAlgorithm()).withFilterSize(ArrayUtil.toInts(filterSize)).withInput(input).numberOfVisible(1).useAdaGrad(isUseAdaGrad()).normalizeByInputRows(normalizeByInputRows).numHidden(1).withHBias(NDArrays.zeros(nFm,1)).withMomentum(getMomentum()).withL2(getL2()).useRegularization(isUseRegularization()).withRandom(rng).withLossFunction(getLossFunction()).withFmSize(ArrayUtil.toInts(fmSize)).withStride(this.stride[i]).withNumFilters(new int[]{nFm,nFm}).withSparseGain(sparseGain).withSparsity(getSparsity()).withWeights(W).build();
     this.layers[i]=r;
-    DownSamplingLayer d=new DownSamplingLayer.Builder().dist(dist).withStride(this.stride[i]).withFmSize(MatrixUtil.floor(MatrixUtil.toMatrix(r.getFmSize()).div(stride))).numFeatureMaps(nFm).withBias(r.gethBias()).withRng(rng).build();
+    DownSamplingLayer d=new DownSamplingLayer.Builder().dist(dist).withStride(this.stride[i]).withFmSize(Transforms.floor(ArrayUtil.toNDArray(r.getFmSize()).div(stride))).numFeatureMaps(nFm).withBias(r.gethBias()).withRng(rng).build();
     this.sigmoidLayers[i]=d;
   }
   ConvolutionalRBM r=(ConvolutionalRBM)getLayers()[getLayers().length - 1];

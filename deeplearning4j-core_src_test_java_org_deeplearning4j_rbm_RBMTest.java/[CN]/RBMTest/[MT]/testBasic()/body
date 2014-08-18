@@ -1,10 +1,10 @@
 {
-  double[][] data=new double[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0},{0,0,1,1,1,0}};
-  DoubleMatrix d=new DoubleMatrix(data);
+  double[] data=new double[]{1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,1,1,0,0,0,1,1,1,0};
+  INDArray d=NDArrays.create(data,new int[]{7,6});
   RandomGenerator g=new MersenneTwister(123);
-  RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.columns).numHidden(4).withRandom(g).build();
+  RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
   r.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
-  DoubleMatrix v=new DoubleMatrix(new double[][]{{1,1,0,0,0,0},{0,0,0,1,1,0}});
+  INDArray v=new NDArray(new double[]{1,1,0,0,0,0,0,0,0,1,1,0},new int[]{2,6});
   log.info("Reconstruction " + r.reconstruct(v).toString());
   NeuralNetwork r2=r.clone();
   assertEquals(r2.getnVisible(),r.getnVisible());

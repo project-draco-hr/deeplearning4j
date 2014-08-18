@@ -5,6 +5,6 @@
   }
   for (  Tree t : tree.children())   count(t);
   int treeGoldLabel=tree.goldLabel();
-  int predictionLabel=SimpleBlas.iamax(tree.prediction());
+  int predictionLabel=NDArrays.getBlasWrapper().iamax(tree.prediction());
   cf.add(treeGoldLabel,predictionLabel);
 }

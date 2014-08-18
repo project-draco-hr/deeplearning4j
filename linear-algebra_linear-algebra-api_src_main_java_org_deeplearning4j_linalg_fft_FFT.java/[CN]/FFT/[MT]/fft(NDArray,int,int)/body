@@ -1,7 +1,0 @@
-{
-  ComplexNDArray inputC=new ComplexNDArray(transform);
-  if (inputC.isVector())   return new VectorFFT(numElements).apply(inputC);
- else {
-    return rawfft(inputC,numElements,dimension);
-  }
-}

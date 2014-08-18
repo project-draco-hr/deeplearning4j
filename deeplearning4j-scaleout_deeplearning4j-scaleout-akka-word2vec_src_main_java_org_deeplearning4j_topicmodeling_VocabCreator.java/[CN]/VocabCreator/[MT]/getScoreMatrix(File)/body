@@ -13,10 +13,10 @@
  catch (  IOException e) {
     throw new IllegalStateException("Unable to read file",e);
   }
-  DoubleMatrix ret=new DoubleMatrix(1,currVocab.size());
+  INDArray ret=NDArrays.create(1,currVocab.size());
   for (int i=0; i < currVocab.size(); i++) {
     if (docWords.getCount(currVocab.get(i).toString()) > 0) {
-      ret.put(i,wordScores.getCount(currVocab.get(i).toString()));
+      ret.putScalar(i,wordScores.getCount(currVocab.get(i).toString()));
     }
   }
   return ret;

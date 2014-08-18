@@ -1,5 +1,0 @@
-{
-  DoubleMatrix currInput=x;
-  List<DoubleMatrix> forward=feedForward(currInput);
-  return getLayers()[layerNum - 1].sampleHiddenGivenVisible(forward.get(layerNum - 1)).getSecond();
-}

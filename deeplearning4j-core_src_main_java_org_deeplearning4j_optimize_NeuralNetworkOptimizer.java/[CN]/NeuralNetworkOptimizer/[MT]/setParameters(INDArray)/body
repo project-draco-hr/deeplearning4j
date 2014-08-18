@@ -1,0 +1,4 @@
+{
+  if (network.isConstrainGradientToUnitNorm())   params.divi(params.normmax(Integer.MAX_VALUE));
+  for (int i=0; i < params.length(); i++)   setParameter(i,(double)params.getScalar(i).element());
+}

@@ -1,0 +1,16 @@
+{
+  double realMin=1.1755e-38;
+  double cutOff=FastMath.log(realMin);
+  if (value instanceof IComplexNDArray) {
+    IComplexNumber c=(IComplexNumber)value.element();
+    double curr=c.realComponent().doubleValue();
+    if (curr * k > -cutOff)     return NDArrays.scalar(NDArrays.createDouble(-cutOff / k,c.imaginaryComponent().doubleValue()));
+ else     if (curr * k < cutOff)     return NDArrays.scalar(NDArrays.createDouble(cutOff / k,c.imaginaryComponent().doubleValue()));
+  }
+ else {
+    double curr=(double)value.element();
+    if (curr * k > -cutOff)     return NDArrays.scalar(-cutOff / k);
+ else     if (curr * k < cutOff)     return NDArrays.scalar(cutOff / k);
+  }
+  return null;
+}

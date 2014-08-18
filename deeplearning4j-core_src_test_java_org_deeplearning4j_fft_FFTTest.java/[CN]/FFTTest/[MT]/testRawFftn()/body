@@ -1,7 +1,0 @@
-{
-  ComplexNDArray test=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,30,30).data,new int[]{3,5,2}));
-  ComplexNDArray result=new ComplexNDArray(new double[]{465.,0.,-15.,0.,-30.,41.29145761,0.,0.,-30.,9.74759089,0.,0.,-30,-9.74759089,0.,0.,-30,-41.29145761,0.,0.,-150.,86.60254038,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,-150,-86.60254038,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.},new int[]{3,5,2});
-  ComplexNDArray ffted=FFT.rawfftn(test,test.shape(),ArrayUtil.range(0,3));
-  assertEquals(true,Shape.shapeEquals(result.shape(),ffted.shape()));
-  assertEquals(result,ffted);
-}

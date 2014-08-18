@@ -14,9 +14,9 @@
  else {
     throw new UnsupportedOperationException("Not yet implemented");
   }
-  identity=FloatMatrix.eye(numHidden);
+  identity=NDArrays.eye(numHidden);
   binaryTransform=MultiDimensionalMap.newTreeBackedMap();
-  binaryFloatTensors=MultiDimensionalMap.newTreeBackedMap();
+  binaryINDArrays=MultiDimensionalMap.newTreeBackedMap();
   binaryClassification=MultiDimensionalMap.newTreeBackedMap();
   for (  Pair<String,String> binary : binaryProductions) {
     String left=basicCategory(binary.getFirst());
@@ -25,8 +25,8 @@
       continue;
     }
     binaryTransform.put(left,right,randomTransformMatrix());
-    if (useFloatTensors) {
-      binaryFloatTensors.put(left,right,randomBinaryFloatTensor());
+    if (useINDArrays) {
+      binaryINDArrays.put(left,right,randomBinaryINDArray());
     }
     if (!combineClassification) {
       binaryClassification.put(left,right,randomClassificationMatrix());
@@ -34,11 +34,11 @@
   }
   numBinaryMatrices=binaryTransform.size();
   binaryTransformSize=numHidden * (2 * numHidden + 1);
-  if (useFloatTensors) {
-    binaryFloatTensorSize=numHidden * numHidden * numHidden* 4;
+  if (useINDArrays) {
+    binaryINDArraySize=numHidden * numHidden * numHidden* 4;
   }
  else {
-    binaryFloatTensorSize=0;
+    binaryINDArraySize=0;
   }
   binaryClassificationSize=(combineClassification) ? 0 : numOuts * (numHidden + 1);
   unaryClassification=new TreeMap<>();

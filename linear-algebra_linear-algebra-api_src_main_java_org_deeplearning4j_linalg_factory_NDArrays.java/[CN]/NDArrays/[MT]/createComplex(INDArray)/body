@@ -1,0 +1,9 @@
+{
+  try {
+    Constructor c=complexClazz.getConstructor(INDArray.class);
+    return (IComplexNDArray)c.newInstance(arr);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

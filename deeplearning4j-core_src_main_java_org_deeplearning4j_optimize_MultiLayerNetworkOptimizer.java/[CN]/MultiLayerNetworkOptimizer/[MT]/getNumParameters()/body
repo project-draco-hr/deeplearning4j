@@ -1,3 +1,3 @@
 {
-  return network.getOutputLayer().getW().length + network.getOutputLayer().getB().length;
+  return network.getOutputLayer().getW().length() + network.getOutputLayer().getB().length();
 }

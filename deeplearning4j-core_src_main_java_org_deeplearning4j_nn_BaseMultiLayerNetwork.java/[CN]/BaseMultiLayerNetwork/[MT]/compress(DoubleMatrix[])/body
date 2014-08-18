@@ -1,6 +1,0 @@
-{
-  double[][] data=new double[matrices.length][];
-  for (int i=0; i < data.length; i++)   data[i]=matrices[i].data;
-  DoubleMatrix ret=new DoubleMatrix(ArrayUtil.combine(data));
-  return ret.reshape(1,ret.length);
-}

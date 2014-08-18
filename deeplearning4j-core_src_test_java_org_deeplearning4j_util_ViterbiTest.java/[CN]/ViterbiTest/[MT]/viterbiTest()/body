@@ -1,5 +1,0 @@
-{
-  Viterbi v=new Viterbi(new DoubleMatrix(new double[]{1,2}));
-  DoubleMatrix label=new DoubleMatrix(new double[][]{{1},{2},{2},{1}});
-  log.info(String.valueOf(v.decode(label,false)));
-}

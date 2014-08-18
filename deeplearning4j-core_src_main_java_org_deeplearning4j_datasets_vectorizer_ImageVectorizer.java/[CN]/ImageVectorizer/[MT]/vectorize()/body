@@ -1,17 +1,17 @@
 {
   try {
-    DoubleMatrix d=loader.asMatrix(image);
-    DoubleMatrix label2=MatrixUtil.toOutcomeVector(label,numLabels);
+    INDArray d=loader.asMatrix(image);
+    INDArray label2=FeatureUtil.toOutcomeVector(label,numLabels);
     if (normalize) {
       d=d.div(255);
     }
  else     if (binarize) {
-      for (int i=0; i < d.length; i++) {
-        double curr=d.get(i);
+      for (int i=0; i < d.length(); i++) {
+        double curr=(double)d.getScalar(i).element();
         if (curr > threshold) {
-          d.put(i,1);
+          d.putScalar(i,1);
         }
- else         d.put(i,0);
+ else         d.putScalar(i,0);
       }
     }
     return new DataSet(d,label2);

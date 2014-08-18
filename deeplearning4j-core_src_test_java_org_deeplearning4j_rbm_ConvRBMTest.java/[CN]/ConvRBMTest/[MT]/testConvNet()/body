@@ -3,6 +3,6 @@
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
   fetcher.fetch(1);
   DataSet d=fetcher.next();
-  DoubleMatrix train=d.getFirst().reshape(28,28);
+  INDArray train=d.getFeatureMatrix().reshape(28,28);
   rbm.trainTillConvergence(train,1e-2,new Object[]{1,1e-2,100});
 }

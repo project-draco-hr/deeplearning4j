@@ -1,4 +1,4 @@
 {
-  DoubleMatrix hbiasMean=getInput().mmul(getW()).addRowVector(gethBias());
+  INDArray hbiasMean=getInput().mmul(getW()).addRowVector(gethBias());
   return hbiasMean;
 }

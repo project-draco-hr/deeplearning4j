@@ -1,5 +1,5 @@
 {
   float range=1.0f / (float)(Math.sqrt((float)numHidden) * 2.0f);
-  FloatMatrix ret=MatrixUtil.rand(numHidden,numHidden,-range,range,rng).add(identity);
+  INDArray ret=NDArrays.rand(numHidden,numHidden,-range,range,rng).add(identity);
   return ret;
 }

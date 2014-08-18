@@ -1,5 +1,5 @@
 {
-  DoubleMatrix ret=DoubleMatrix.randn(nIn,nOut);
+  INDArray ret=NDArrays.randn(nIn,nOut);
 switch (initScheme) {
 case SI:
     double shift=0, initCoeff=1;
@@ -10,16 +10,16 @@ if (act instanceof RectifiedLinear) {
 }
 double fanOut=nOut;
 for (int i=0; i < nOut; i++) {
-int[] perm=Permutations.randomPermutation(nIn);
+int[] perm=ArrayUtil.randomPermutation(nIn);
 for (int j=0; j < perm.length; j++) {
-ret.put(perm[j],j,ret.get(perm[j],j) * smallVal);
+ret.put(perm[j],j,ret.getScalar(perm[j],j).muli(NDArrays.scalar(smallVal)));
 }
 }
-ret.muli(initCoeff).add(shift);
+ret.muli(NDArrays.scalar(initCoeff)).add(NDArrays.scalar(shift));
 return ret;
 case VI:
 double r=Math.sqrt(6) / Math.sqrt(nIn + nOut + 1);
-ret.muli(2).muli(r).subi(r);
+ret.muli(NDArrays.scalar(2)).muli(NDArrays.scalar(r)).subi(NDArrays.scalar(r));
 return ret;
 }
 throw new IllegalStateException("Illegal weight init value");

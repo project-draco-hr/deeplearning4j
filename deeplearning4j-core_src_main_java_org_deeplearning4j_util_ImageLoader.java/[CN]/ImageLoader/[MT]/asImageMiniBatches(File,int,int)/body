@@ -1,7 +1,7 @@
 {
   try {
-    DoubleMatrix d=asMatrix(f);
-    Tensor f2=new Tensor(d,numRowsPerSlice,d.columns,numMiniBatches);
+    INDArray d=asMatrix(f);
+    INDArray f2=NDArrays.create(new int[]{numMiniBatches,numRowsPerSlice,d.columns()});
     return f2;
   }
  catch (  Exception e) {

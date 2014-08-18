@@ -1,0 +1,15 @@
+{
+  int size=0;
+  for (  INDArray vector : vectors) {
+    size+=vector.rows();
+  }
+  size++;
+  INDArray result=NDArrays.create(size,1);
+  int index=0;
+  for (  INDArray vector : vectors) {
+    result.put(new NDArrayIndex[]{NDArrayIndex.interval(index,index + vector.rows()),NDArrayIndex.interval(0,result.columns())},vector);
+    index+=vector.rows();
+  }
+  result.put(new NDArrayIndex[]{NDArrayIndex.interval(index,result.rows()),NDArrayIndex.interval(0,result.columns())},NDArrays.ones(1,result.columns()));
+  return result;
+}

@@ -9,13 +9,13 @@
   DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).lineSearchBackProp(true).hiddenLayerSizes(new int[]{600,500,400}).useRegularization(true).sampleFromHiddenActivations(true).withL2(1e-4).withSparsity(1e-1).renderByLayer(Collections.singletonMap(0,10)).withDropOut(0.5).withActivation(Activations.tanh()).withMomentum(0.5).numberOfInputs(iter.inputColumns()).numberOfOutPuts(load.numOutcomes()).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.pretrain(next.getFirst(),new Object[]{1,1e-2,1000,1});
+    dbn.pretrain(next.getFeatureMatrix(),new Object[]{1,1e-2,1000,1});
   }
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.setInput(next.getFirst());
-    dbn.finetune(next.getSecond(),1e-3,100);
+    dbn.setInput(next.getFeatureMatrix());
+    dbn.finetune(next.getLabels(),1e-3,100);
   }
   BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("lfw-dbn.bin"));
   dbn.write(bos);
@@ -26,8 +26,8 @@
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    DoubleMatrix predict=dbn.output(next.getFirst());
-    DoubleMatrix labels=next.getSecond();
+    INDArray predict=dbn.output(next.getFeatureMatrix());
+    INDArray labels=next.getLabels();
     eval.eval(labels,predict);
   }
   log.info("Prediction f scores and accuracy");

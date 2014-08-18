@@ -1,0 +1,22 @@
+{
+  int columns=isColumnOp(op) ? arr.columns() : arr.rows();
+  int[] shape={arr.slices(),columns};
+  IComplexNDArray ret=NDArrays.createComplex(shape);
+  for (int i=0; i < arr.slices(); i++) {
+switch (op) {
+case COLUMN_SUM:
+      ret.putSlice(i,arr.slice(i).sum(1));
+    break;
+case COLUMN_MEAN:
+  ret.putSlice(i,arr.slice(i).mean(1));
+break;
+case ROW_SUM:
+ret.putSlice(i,arr.slice(i).sum(0));
+break;
+case ROW_MEAN:
+ret.putSlice(i,arr.slice(i).mean(0));
+break;
+}
+}
+return ret;
+}

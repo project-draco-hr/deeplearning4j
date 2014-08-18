@@ -1,0 +1,31 @@
+{
+  if (hiddenType == HiddenUnit.RECTIFIED) {
+    INDArray h1Mean=propUp(v);
+    INDArray sigH1Mean=sigmoid(h1Mean);
+    INDArray sqrtSigH1Mean=sqrt(sigH1Mean);
+    INDArray h1Sample=h1Mean.addi(Sampling.normal(getRng(),h1Mean,1).mul(sqrtSigH1Mean));
+    h1Sample=Transforms.max(h1Sample);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+ else   if (hiddenType == HiddenUnit.GAUSSIAN) {
+    INDArray h1Mean=propUp(v);
+    this.hiddenSigma=h1Mean.var(1);
+    INDArray h1Sample=h1Mean.addi(Sampling.normal(getRng(),h1Mean,this.hiddenSigma));
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+ else   if (hiddenType == HiddenUnit.SOFTMAX) {
+    INDArray h1Mean=propUp(v);
+    INDArray h1Sample=Activations.softMaxRows().apply(h1Mean);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+ else   if (hiddenType == HiddenUnit.BINARY) {
+    INDArray h1Mean=propUp(v);
+    INDArray h1Sample=Sampling.binomial(h1Mean,1,rng);
+    applyDropOutIfNecessary(h1Sample);
+    return new Pair<>(h1Mean,h1Sample);
+  }
+  throw new IllegalStateException("Hidden unit type must either be rectified linear or binary");
+}

@@ -1,13 +1,13 @@
 {
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    DoubleMatrix reconstruct=null;
-    if (reconLayer < 0)     reconstruct=network.output(first.getFirst());
- else     reconstruct=network.reconstruct(first.getFirst(),reconLayer);
+    INDArray reconstruct=null;
+    if (reconLayer < 0)     reconstruct=network.output(first.getFeatureMatrix());
+ else     reconstruct=network.reconstruct(first.getFeatureMatrix(),reconLayer);
     for (int j=0; j < first.numExamples(); j++) {
-      DoubleMatrix draw1=first.get(j).getFirst().mul(255);
-      DoubleMatrix reconstructed2=reconstruct.getRow(j);
-      DoubleMatrix draw2=reconstructed2.mul(255 * 255);
+      INDArray draw1=first.get(j).getFeatureMatrix().mul(255);
+      INDArray reconstructed2=reconstruct.getRow(j);
+      INDArray draw2=reconstructed2.mul(255 * 255);
       DrawReconstruction d=new DrawReconstruction(draw1);
       d.title="REAL";
       d.draw();

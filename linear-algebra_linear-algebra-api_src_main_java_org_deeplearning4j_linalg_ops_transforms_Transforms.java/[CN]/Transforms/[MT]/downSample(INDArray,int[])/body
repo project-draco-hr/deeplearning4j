@@ -1,0 +1,7 @@
+{
+  INDArray d=NDArrays.ones(stride);
+  d.divi(ArrayUtil.prod(stride));
+  INDArray ret=Convolution.convn(d1,d,Convolution.Type.VALID);
+  ret=ret.get(NDArrayIndex.interval(0,stride[0]),NDArrayIndex.interval(0,stride[1]));
+  return ret;
+}

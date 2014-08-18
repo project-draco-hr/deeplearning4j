@@ -1,0 +1,6 @@
+{
+  d1=unitVec(d1);
+  d2=unitVec(d2);
+  double ret=NDArrays.getBlasWrapper().dot(d1,d2);
+  return ret;
+}

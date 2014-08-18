@@ -1,38 +1,38 @@
 {
-  final MultiDimensionalMap<String,String,FloatMatrix> binaryTD=MultiDimensionalMap.newTreeBackedMap();
-  final MultiDimensionalMap<String,String,FloatTensor> binaryFloatTensorTD=MultiDimensionalMap.newTreeBackedMap();
-  final MultiDimensionalMap<String,String,FloatMatrix> binaryCD=MultiDimensionalMap.newTreeBackedMap();
-  final Map<String,FloatMatrix> unaryCD=new TreeMap<>();
-  final Map<String,FloatMatrix> wordVectorD=new TreeMap<>();
-  for (  MultiDimensionalMap.Entry<String,String,FloatMatrix> entry : binaryTransform.entrySet()) {
-    int numRows=entry.getValue().rows;
-    int numCols=entry.getValue().columns;
-    binaryTD.put(entry.getFirstKey(),entry.getSecondKey(),new FloatMatrix(numRows,numCols));
+  final MultiDimensionalMap<String,String,INDArray> binaryTD=MultiDimensionalMap.newTreeBackedMap();
+  final MultiDimensionalMap<String,String,INDArray> binaryINDArrayTD=MultiDimensionalMap.newTreeBackedMap();
+  final MultiDimensionalMap<String,String,INDArray> binaryCD=MultiDimensionalMap.newTreeBackedMap();
+  final Map<String,INDArray> unaryCD=new TreeMap<>();
+  final Map<String,INDArray> wordVectorD=new TreeMap<>();
+  for (  MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryTransform.entrySet()) {
+    int numRows=entry.getValue().rows();
+    int numCols=entry.getValue().columns();
+    binaryTD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(numRows,numCols));
   }
   if (!combineClassification) {
-    for (    MultiDimensionalMap.Entry<String,String,FloatMatrix> entry : binaryClassification.entrySet()) {
-      int numRows=entry.getValue().rows;
-      int numCols=entry.getValue().columns;
-      binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),new FloatMatrix(numRows,numCols));
-    }
-  }
-  if (useFloatTensors) {
-    for (    MultiDimensionalMap.Entry<String,String,FloatTensor> entry : binaryFloatTensors.entrySet()) {
+    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryClassification.entrySet()) {
       int numRows=entry.getValue().rows();
-      int numCols=entry.getValue().columns;
-      int numSlices=entry.getValue().slices();
-      binaryFloatTensorTD.put(entry.getFirstKey(),entry.getSecondKey(),new FloatTensor(numRows,numCols,numSlices));
+      int numCols=entry.getValue().columns();
+      binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(numRows,numCols));
     }
   }
-  for (  Map.Entry<String,FloatMatrix> entry : unaryClassification.entrySet()) {
-    int numRows=entry.getValue().rows;
-    int numCols=entry.getValue().columns;
-    unaryCD.put(entry.getKey(),new FloatMatrix(numRows,numCols));
+  if (useINDArrays) {
+    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINDArrays.entrySet()) {
+      int numRows=entry.getValue().rows();
+      int numCols=entry.getValue().columns();
+      int numSlices=entry.getValue().slices();
+      binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(new int[]{numRows,numCols,numSlices}));
+    }
   }
-  for (  Map.Entry<String,FloatMatrix> entry : featureVectors.entrySet()) {
-    int numRows=entry.getValue().rows;
-    int numCols=entry.getValue().columns;
-    wordVectorD.put(entry.getKey(),new FloatMatrix(numRows,numCols));
+  for (  Map.Entry<String,INDArray> entry : unaryClassification.entrySet()) {
+    int numRows=entry.getValue().rows();
+    int numCols=entry.getValue().columns();
+    unaryCD.put(entry.getKey(),NDArrays.create(numRows,numCols));
+  }
+  for (  Map.Entry<String,INDArray> entry : featureVectors.entrySet()) {
+    int numRows=entry.getValue().rows();
+    int numCols=entry.getValue().columns();
+    wordVectorD.put(entry.getKey(),NDArrays.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
@@ -47,7 +47,7 @@
   final AtomicDouble error=new AtomicDouble(0);
   Parallelization.iterateInParallel(forwardPropTrees,new Parallelization.RunnableWithParams<Tree>(){
     public void run(    Tree currentItem,    Object[] args){
-      backpropDerivativesAndError(currentItem,binaryTD,binaryCD,binaryFloatTensorTD,unaryCD,wordVectorD);
+      backpropDerivativesAndError(currentItem,binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD);
       error.addAndGet(currentItem.errorSum());
     }
   }
@@ -55,16 +55,16 @@
     public void run(    Tree currentItem,    Object[] args){
     }
   }
-,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryFloatTensorTD,unaryCD,wordVectorD});
+,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD});
   float scale=(1.0f / trainingTrees.size());
   value=error.floatValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
-  value+=scaleAndRegularizeFloatTensor(binaryFloatTensorTD,binaryFloatTensors,scale,regTransformFloatTensor);
+  value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryINDArrays,scale,regTransformINDArray);
   value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
   value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
-  FloatMatrix derivative=MatrixUtil.toFlattenedFloat(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryFloatTensorTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
-  if (paramAdaGrad == null)   paramAdaGrad=new AdaGradFloat(1,derivative.columns);
+  INDArray derivative=NDArrays.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
+  if (paramAdaGrad == null)   paramAdaGrad=new AdaGrad(1,derivative.columns());
   derivative.muli(paramAdaGrad.getLearningRates(derivative));
   return derivative;
 }

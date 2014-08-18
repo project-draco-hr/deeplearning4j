@@ -4,12 +4,11 @@
   BaseNeuralNetwork network=(BaseNeuralNetwork)ois.readObject();
   DataSet test=null;
   while (iter.hasNext()) {
-    test=iter.next();
-    DoubleMatrix reconstructed=network.reconstruct(test.getFirst());
+    INDArray reconstructed=network.reconstruct(test.getFeatureMatrix());
     for (int i=0; i < test.numExamples(); i++) {
-      DoubleMatrix draw1=test.get(i).getFirst().mul(255);
-      DoubleMatrix reconstructed2=reconstructed.getRow(i);
-      DoubleMatrix draw2=MatrixUtil.binomial(reconstructed2,1,new MersenneTwister(123)).mul(255);
+      INDArray draw1=test.get(i).getFeatureMatrix().mul(255);
+      INDArray reconstructed2=reconstructed.getRow(i);
+      INDArray draw2=Sampling.binomial(reconstructed2,1,new MersenneTwister(123)).mul(255);
       DrawReconstruction d=new DrawReconstruction(draw1);
       d.title="REAL";
       d.draw();

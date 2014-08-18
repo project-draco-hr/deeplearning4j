@@ -1,6 +1,0 @@
-{
-  for (int i=0; i < getFirst().length; i++) {
-    if (getFirst().get(i) < min)     getFirst().put(i,min);
- else     if (getFirst().get(i) > max)     getFirst().put(i,max);
-  }
-}

@@ -1,0 +1,7 @@
+{
+  INDArray ret=p.reshape(new int[]{1,p.length()}).dup();
+  for (int i=0; i < ret.length(); i++) {
+    ret.putScalar(i,MathUtils.binomial(rng,n,(Double)p.getScalar(i).element()));
+  }
+  return ret.reshape(p.shape());
+}

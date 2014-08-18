@@ -11,7 +11,7 @@
  else   network=this.network;
   if (conf.getColumnMeans() != null)   network.setColumnMeans(conf.getColumnMeans());
   if (conf.getColumnStds() != null)   network.setColumnStds(conf.getColumnStds());
-  network.initializeLayers(DoubleMatrix.zeros(1,conf.getnIn()));
+  network.initializeLayers(NDArrays.zeros(1,conf.getnIn()));
   UpdateableImpl masterResults=new UpdateableImpl(network);
   try {
     this.stateTracker.setCurrent(masterResults);

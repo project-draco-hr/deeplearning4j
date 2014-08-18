@@ -1,6 +1,5 @@
 {
-  this.rows=rows;
-  this.cols=cols;
+  this.shape=new int[]{rows,cols};
   createHistoricalGradient();
   createAdjustedGradient();
   this.masterStepSize=gamma;

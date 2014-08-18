@@ -1,5 +1,5 @@
 {
   double[] d=new double[getNumParameters()];
   this.getParameters(d);
-  return new DoubleMatrix(d);
+  return NDArrays.create(d);
 }

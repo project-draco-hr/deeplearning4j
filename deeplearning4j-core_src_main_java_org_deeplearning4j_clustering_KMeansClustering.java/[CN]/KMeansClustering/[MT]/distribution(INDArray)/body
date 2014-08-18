@@ -1,0 +1,12 @@
+{
+  if (!this.isReady()) {
+    throw new IllegalStateException("KMeans is not ready yet");
+  }
+  INDArray distribution=NDArrays.create(1,this.nbCluster);
+  INDArray currentCentroid;
+  for (int i=0; i < this.nbCluster; i++) {
+    currentCentroid=this.centroids.getRow(i);
+    distribution.putScalar(i,getDistance(currentCentroid,features));
+  }
+  return distribution;
+}

@@ -1,9 +1,9 @@
 {
   int idx=0;
-  for (int i=0; i < network.getOutputLayer().getW().length; i++) {
-    buffer[idx++]=network.getOutputLayer().getW().get(i);
+  for (int i=0; i < network.getOutputLayer().getW().length(); i++) {
+    buffer[idx++]=(double)network.getOutputLayer().getW().getScalar(i).element();
   }
-  for (int i=0; i < network.getOutputLayer().getB().length; i++) {
-    buffer[idx++]=network.getOutputLayer().getB().get(i);
+  for (int i=0; i < network.getOutputLayer().getB().length(); i++) {
+    buffer[idx++]=(double)network.getOutputLayer().getB().getScalar(i).element();
   }
 }

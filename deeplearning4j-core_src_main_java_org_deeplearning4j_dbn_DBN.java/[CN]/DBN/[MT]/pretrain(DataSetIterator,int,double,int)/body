@@ -1,10 +1,10 @@
 {
-  DoubleMatrix layerInput;
+  INDArray layerInput;
   for (int i=0; i < getnLayers(); i++) {
     if (i == 0) {
       while (iter.hasNext()) {
         DataSet next=iter.next();
-        this.input=next.getFirst();
+        this.input=next.getFeatureMatrix();
         if (this.getInput() == null || this.getLayers() == null || this.getLayers()[0] == null || this.getSigmoidLayers() == null || this.getSigmoidLayers()[0] == null) {
           setInput(input);
           initializeLayers(input);
@@ -14,11 +14,11 @@
         if (isForceNumEpochs()) {
           for (int epoch=0; epoch < epochs; epoch++) {
             log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getLayers()[i].getReConstructionCrossEntropy());
-            getLayers()[i].train(next.getFirst(),realLearningRate,new Object[]{k,learningRate});
+            getLayers()[i].train(next.getFeatureMatrix(),realLearningRate,new Object[]{k,learningRate});
             getLayers()[i].iterationDone(epoch);
           }
         }
- else         getLayers()[i].trainTillConvergence(next.getFirst(),realLearningRate,new Object[]{k,realLearningRate,epochs});
+ else         getLayers()[i].trainTillConvergence(next.getFeatureMatrix(),realLearningRate,new Object[]{k,realLearningRate,epochs});
       }
       iter.reset();
     }
@@ -26,7 +26,7 @@
       boolean activateOnly=getSampleOrActivate() != null && getSampleOrActivate().get(i) != null ? getSampleOrActivate().get(i) : !sampleFromHiddenActivations;
       while (iter.hasNext()) {
         DataSet next=iter.next();
-        layerInput=next.getFirst();
+        layerInput=next.getFeatureMatrix();
         for (int j=1; j <= i; j++) {
           if (useRBMPropUpAsActivations) {
             RBM r=(RBM)layers[i];

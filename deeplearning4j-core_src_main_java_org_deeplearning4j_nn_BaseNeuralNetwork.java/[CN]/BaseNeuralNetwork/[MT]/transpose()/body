@@ -8,7 +8,7 @@
     ret.setResetAdaGradIterations(resetAdaGradIterations);
     ret.setVBiasAdaGrad(hBiasAdaGrad);
     ret.sethBias(vBias.dup());
-    ret.setvBias(DoubleMatrix.zeros(hBias.rows,hBias.columns));
+    ret.setvBias(NDArrays.zeros(hBias.rows(),hBias.columns()));
     ret.setnHidden(getnVisible());
     ret.setnVisible(getnHidden());
     ret.setW(W.transpose());

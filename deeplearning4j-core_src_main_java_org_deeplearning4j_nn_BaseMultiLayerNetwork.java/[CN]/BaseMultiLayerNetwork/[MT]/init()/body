@@ -1,8 +1,8 @@
 {
-  DoubleMatrix layerInput=input;
+  INDArray layerInput=input;
   if (!(rng instanceof SynchronizedRandomGenerator))   rng=new SynchronizedRandomGenerator(rng);
   int inputSize;
-  if (getnLayers() < 1)   throw new IllegalStateException("Unable to create network layers; number specified is less than 1");
+  if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network layers; number specified is less than 1");
   if (this.dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   if (this.layers == null || sigmoidLayers == null || this.sigmoidLayers[0] == null || this.layers[0] == null) {
     this.layers=new NeuralNetwork[getnLayers()];

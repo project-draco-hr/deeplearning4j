@@ -1,12 +1,12 @@
 {
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltaRet=new ArrayList<>();
-  List<DoubleMatrix> activations=feedForward();
-  DoubleMatrix[] deltas=new DoubleMatrix[activations.size() - 1];
-  DoubleMatrix[] preCons=new DoubleMatrix[activations.size() - 1];
-  DoubleMatrix ix=activations.get(activations.size() - 1).sub(labels).div(labels.rows);
-  log.info("Ix mean " + ix.sum());
-  List<DoubleMatrix> weights=new ArrayList<>();
-  List<DoubleMatrix> biases=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> deltaRet=new ArrayList<>();
+  List<INDArray> activations=feedForward();
+  INDArray[] deltas=new INDArray[activations.size() - 1];
+  INDArray[] preCons=new INDArray[activations.size() - 1];
+  INDArray ix=activations.get(activations.size() - 1).sub(labels).div(labels.rows());
+  log.info("Ix mean " + ix.sum(Integer.MAX_VALUE));
+  List<INDArray> weights=new ArrayList<>();
+  List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++) {
     weights.add(getLayers()[j].getW());
@@ -18,15 +18,15 @@
   activationFunctions.add(outputLayer.getActivationFunction());
   for (int i=weights.size() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(ix);
-    log.info("Delta sum at " + i + " is "+ deltas[i].sum());
-    preCons[i]=powi(activations.get(i).transpose(),2).mmul(pow(ix,2)).mul(labels.rows);
+    log.info("Delta sum at " + i + " is "+ deltas[i].sum(Integer.MAX_VALUE));
+    preCons[i]=Transforms.pow(activations.get(i).transpose(),2).mmul(Transforms.pow(ix,2)).mul(labels.rows());
     applyDropConnectIfNecessary(deltas[i]);
     if (i > 0) {
       ix=ix.mmul(weights.get(i).transpose()).muli(activationFunctions.get(i - 1).applyDerivative(activations.get(i)));
     }
   }
   for (int i=0; i < deltas.length; i++) {
-    if (constrainGradientToUnitNorm)     deltaRet.add(new Pair<>(deltas[i].divi(deltas[i].norm2()),preCons[i]));
+    if (constrainGradientToUnitNorm)     deltaRet.add(new Pair<>(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)),preCons[i]));
  else     deltaRet.add(new Pair<>(deltas[i],preCons[i]));
   }
   return deltaRet;

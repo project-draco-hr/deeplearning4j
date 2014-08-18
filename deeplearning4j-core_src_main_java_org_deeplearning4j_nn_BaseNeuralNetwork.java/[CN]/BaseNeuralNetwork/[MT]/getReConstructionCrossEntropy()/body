@@ -1,10 +1,10 @@
 {
-  DoubleMatrix preSigH=input.mmul(W).addRowVector(hBias);
-  DoubleMatrix sigH=sigmoid(preSigH);
-  DoubleMatrix preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
-  DoubleMatrix sigV=sigmoid(preSigV);
-  DoubleMatrix inner=input.mul(log(sigV)).add(oneMinus(input).mul(log(oneMinus(sigV))));
-  double ret=inner.rowSums().mean();
-  if (normalizeByInputRows)   ret/=input.rows;
+  INDArray preSigH=input.mmul(W).addRowVector(hBias);
+  INDArray sigH=sigmoid(preSigH);
+  INDArray preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
+  INDArray sigV=sigmoid(preSigV);
+  INDArray inner=input.mul(log(sigV)).add(input.rsub(1).mul(log(sigV.rsub(1))));
+  double ret=(double)inner.sum(0).mean(Integer.MAX_VALUE).element();
+  if (normalizeByInputRows)   ret/=input.rows();
   return ret;
 }

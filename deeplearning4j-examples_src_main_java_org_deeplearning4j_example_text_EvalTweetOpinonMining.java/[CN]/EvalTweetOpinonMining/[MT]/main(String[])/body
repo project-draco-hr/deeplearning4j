@@ -17,7 +17,7 @@
   DBN d=SerializationUtils.readObject(new File("model-saver"));
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    eval.eval(next.getSecond(),d.output(next.getFirst()));
+    eval.eval(next.getLabels(),d.output(next.getFeatureMatrix()));
   }
   log.info(eval.stats());
 }

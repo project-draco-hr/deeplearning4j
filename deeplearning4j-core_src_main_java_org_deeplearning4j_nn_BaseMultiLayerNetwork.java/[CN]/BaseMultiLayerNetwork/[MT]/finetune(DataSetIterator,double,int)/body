@@ -2,12 +2,12 @@
   iter.reset();
   while (iter.hasNext()) {
     DataSet data=iter.next();
-    if (data.getFirst() == null || data.getSecond() == null)     break;
-    setInput(data.getFirst());
-    setLabels(data.getSecond());
+    if (data.getFeatureMatrix() == null || data.getLabels() == null)     break;
+    setInput(data.getFeatureMatrix());
+    setLabels(data.getLabels());
     feedForward();
     this.fineTuneLearningRate=lr;
     optimizer=new MultiLayerNetworkOptimizer(this,lr);
-    optimizer.optimize(data.getSecond(),lr,iterations);
+    optimizer.optimize(data.getLabels(),lr,iterations);
   }
 }

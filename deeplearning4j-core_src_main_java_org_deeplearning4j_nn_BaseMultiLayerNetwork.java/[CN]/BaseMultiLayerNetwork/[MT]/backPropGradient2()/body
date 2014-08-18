@@ -1,29 +1,29 @@
 {
-  List<Pair<DoubleMatrix,DoubleMatrix>> deltas=computeDeltas2();
-  List<Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>>> list=new ArrayList<>();
-  List<Pair<DoubleMatrix,DoubleMatrix>> grad=new ArrayList<>();
-  List<Pair<DoubleMatrix,DoubleMatrix>> preCon=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> deltas=computeDeltas2();
+  List<Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>>> list=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> grad=new ArrayList<>();
+  List<Pair<INDArray,INDArray>> preCon=new ArrayList<>();
   for (int l=0; l < deltas.size(); l++) {
-    DoubleMatrix gradientChange=deltas.get(l).getFirst();
-    DoubleMatrix preConGradientChange=deltas.get(l).getSecond();
-    if (l < getLayers().length && gradientChange.length != getLayers()[l].getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
- else     if (l == getLayers().length && gradientChange.length != outputLayer.getW().length)     throw new IllegalStateException("Gradient change not equal to weight change");
-    DoubleMatrix deltaColumnSums=deltas.get(l).getFirst().columnMeans();
-    DoubleMatrix preConColumnSums=deltas.get(l).getSecond().columnMeans();
+    INDArray gradientChange=deltas.get(l).getFirst();
+    INDArray preConGradientChange=deltas.get(l).getSecond();
+    if (l < getLayers().length && gradientChange.length() != getLayers()[l].getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
+ else     if (l == getLayers().length && gradientChange.length() != outputLayer.getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
+    INDArray deltaColumnSums=deltas.get(l).getFirst().mean(1);
+    INDArray preConColumnSums=deltas.get(l).getSecond().mean(1);
     grad.add(new Pair<>(gradientChange,deltaColumnSums));
     preCon.add(new Pair<>(preConGradientChange,preConColumnSums));
-    if (l < getLayers().length && deltaColumnSums.length != layers[l].gethBias().length)     throw new IllegalStateException("Bias change not equal to weight change");
- else     if (l == getLayers().length && deltaColumnSums.length != outputLayer.getB().length)     throw new IllegalStateException("Bias change not equal to weight change");
+    if (l < getLayers().length && deltaColumnSums.length() != layers[l].gethBias().length())     throw new IllegalStateException("Bias change not equal to weight change");
+ else     if (l == getLayers().length && deltaColumnSums.length() != outputLayer.getB().length())     throw new IllegalStateException("Bias change not equal to weight change");
   }
-  DoubleMatrix g=pack(grad);
-  DoubleMatrix con=pack(preCon);
-  DoubleMatrix theta=params();
+  INDArray g=pack(grad);
+  INDArray con=pack(preCon);
+  INDArray theta=params();
   if (mask == null)   initMask();
   g.addi(theta.mul(l2).muli(mask));
-  DoubleMatrix conAdd=powi(mask.mul(l2).add(valueMatrixOf(dampingFactor,g.rows,g.columns)),3.0 / 4.0);
+  INDArray conAdd=Transforms.pow(mask.mul(l2).add(NDArrays.valueArrayOf(g.rows(),g.columns(),dampingFactor)),3.0 / 4.0);
   con.addi(conAdd);
-  List<Pair<DoubleMatrix,DoubleMatrix>> gUnpacked=unPack(g);
-  List<Pair<DoubleMatrix,DoubleMatrix>> conUnpacked=unPack(con);
+  List<Pair<INDArray,INDArray>> gUnpacked=unPack(g);
+  List<Pair<INDArray,INDArray>> conUnpacked=unPack(con);
   for (int i=0; i < gUnpacked.size(); i++)   list.add(new Pair<>(gUnpacked.get(i),conUnpacked.get(i)));
   return list;
 }

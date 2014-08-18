@@ -1,6 +1,6 @@
 {
   int totalSize;
-  totalSize=numBinaryMatrices * (binaryTransform.size() + binaryClassificationSize) + binaryFloatTensorSize;
+  totalSize=numBinaryMatrices * (binaryTransform.size() + binaryClassificationSize) + binaryINDArraySize;
   totalSize+=numUnaryMatrices * unaryClassification.size();
   totalSize+=featureVectors.size() * numHidden;
   return totalSize;

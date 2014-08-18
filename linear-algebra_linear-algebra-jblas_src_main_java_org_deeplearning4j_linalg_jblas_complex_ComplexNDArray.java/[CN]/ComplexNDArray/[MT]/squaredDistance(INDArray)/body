@@ -1,0 +1,9 @@
+{
+  double sd=0.0;
+  for (int i=0; i < length; i++) {
+    IComplexNumber diff=(IComplexNumber)getScalar(i).sub(other.getScalar(i)).element();
+    double d=(double)diff.absoluteValue();
+    sd+=d * d;
+  }
+  return sd;
+}

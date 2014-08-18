@@ -22,18 +22,18 @@
   log.info("Training on " + miniBatches.size() + " minibatches");
   for (int i=0; i < miniBatches.size(); i++) {
     DataSet curr=miniBatches.get(i);
-    dbn.pretrain(curr.getFirst(),k,preTrainLr,preTrainEpochs);
+    dbn.pretrain(curr.getFeatureMatrix(),k,preTrainLr,preTrainEpochs);
   }
   Evaluation eval=new Evaluation();
   for (int i=0; i < miniBatches.size(); i++) {
     DataSet curr=miniBatches.get(i);
-    dbn.setInput(curr.getFirst());
-    dbn.finetune(curr.getSecond(),fineTuneLr,fineTuneEpochs);
+    dbn.setInput(curr.getFeatureMatrix());
+    dbn.finetune(curr.getLabels(),fineTuneLr,fineTuneEpochs);
   }
   for (int i=0; i < miniBatches.size(); i++) {
     DataSet test=miniBatches.get(i);
-    DoubleMatrix predicted=dbn.output(test.getFirst());
-    DoubleMatrix real=test.getSecond();
+    INDArray predicted=dbn.output(test.getFeatureMatrix());
+    INDArray real=test.getLabels();
     eval.eval(real,predicted);
   }
   log.info("Evaled " + eval.stats());

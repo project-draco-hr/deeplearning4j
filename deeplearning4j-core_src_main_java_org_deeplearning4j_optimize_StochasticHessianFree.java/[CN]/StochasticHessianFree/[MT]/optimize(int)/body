@@ -3,20 +3,20 @@
   if (converged)   return true;
   score=network.score();
   xi=network.params();
-  Pair<DoubleMatrix,DoubleMatrix> backPropGradient=network.getBackPropGradient2();
+  Pair<INDArray,INDArray> backPropGradient=network.getBackPropGradient2();
   gradient=backPropGradient.getFirst().neg();
-  DoubleMatrix preCon=backPropGradient.getSecond();
+  INDArray preCon=backPropGradient.getSecond();
   if (ch == null)   setup();
   ch.muli(pi);
-  Triple<DoubleMatrix,List<DoubleMatrix>,DoubleMatrix> cg=runConjugateGradient(preCon,numIterations);
-  DoubleMatrix p=cg.getFirst();
-  Pair<DoubleMatrix,Double> cgBackTrack=cgBackTrack(cg.getSecond(),p);
+  Triple<INDArray,List<INDArray>,INDArray> cg=runConjugateGradient(preCon,numIterations);
+  INDArray p=cg.getFirst();
+  Pair<INDArray,Double> cgBackTrack=cgBackTrack(cg.getSecond(),p);
   p=cgBackTrack.getFirst();
   double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
   double newScore=network.score(cgBackTrack.getFirst());
   step=lineSearch(newScore,gradient,p);
   network.dampingUpdate(rho,boost,decrease);
-  DoubleMatrix proposedUpdate=xi.add(p.mul(f * step));
+  INDArray proposedUpdate=xi.add(p.mul(f * step));
   network.setParameters(proposedUpdate);
   return true;
 }

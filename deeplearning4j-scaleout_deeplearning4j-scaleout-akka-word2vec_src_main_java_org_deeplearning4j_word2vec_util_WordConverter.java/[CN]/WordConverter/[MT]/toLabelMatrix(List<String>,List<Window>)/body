@@ -1,8 +1,8 @@
 {
   int columns=labels.size();
-  DoubleMatrix ret=new DoubleMatrix(windows.size(),columns);
-  for (int i=0; i < ret.rows; i++) {
-    ret.putRow(i,MatrixUtil.toOutcomeVector(labels.indexOf(windows.get(i).getLabel()),labels.size()));
+  INDArray ret=NDArrays.create(windows.size(),columns);
+  for (int i=0; i < ret.rows(); i++) {
+    ret.putRow(i,FeatureUtil.toOutcomeVector(labels.indexOf(windows.get(i).getLabel()),labels.size()));
   }
   return ret;
 }

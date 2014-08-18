@@ -1,0 +1,11 @@
+{
+  this.gradient=gradient;
+  INDArray squaredGradient=pow(this.gradient,2);
+  if (this.historicalGradient == null || this.historicalGradient.length() != this.gradient.length())   this.historicalGradient=NDArrays.zeros(this.gradient.rows(),this.gradient.columns());
+  this.historicalGradient.addi(squaredGradient);
+  numIterations++;
+  INDArray sqrtGradient=sqrt(historicalGradient).add(fudgeFactor);
+  INDArray div=abs(gradient).div(sqrtGradient);
+  this.adjustedGradient=div.mul(masterStepSize);
+  return adjustedGradient;
+}

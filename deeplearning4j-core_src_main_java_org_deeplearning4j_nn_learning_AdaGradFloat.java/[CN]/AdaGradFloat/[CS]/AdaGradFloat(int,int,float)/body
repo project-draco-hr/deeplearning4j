@@ -1,8 +1,0 @@
-{
-  this.rows=rows;
-  this.cols=cols;
-  createHistoricalGradient();
-  createAdjustedGradient();
-  this.masterStepSize=gamma;
-  this.decayLr=false;
-}

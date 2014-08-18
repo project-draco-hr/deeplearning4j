@@ -7,10 +7,10 @@
   double fineTuneLr=0.01;
   int fineTuneEpochs=10000;
   DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).numberOfInputs(nIns).numberOfOutPuts(nOuts).withActivation(Activations.tanh()).hiddenLayerSizes(hiddenLayerSizes).build();
-  DoubleMatrix params=dbn.params();
-  assertEquals(1,params.rows);
-  assertEquals(params.columns,params.length);
-  dbn.setLabels(new DoubleMatrix(1,nOuts));
+  INDArray params=dbn.params();
+  assertEquals(1,params.rows());
+  assertEquals(params.columns(),params.length());
+  dbn.setLabels(new NDArray(new DoubleMatrix(1,nOuts)));
   assertEquals(RBM.HiddenUnit.RECTIFIED,dbn.getHiddenUnit());
   assertEquals(RBM.VisibleUnit.GAUSSIAN,dbn.getVisibleUnit());
   RBM r=(RBM)dbn.getLayers()[0];

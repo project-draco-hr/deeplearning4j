@@ -1,8 +1,8 @@
 {
-  FloatMatrix vec=this.getWordVectorMatrix(word);
+  INDArray vec=this.getWordVectorMatrix(word);
   if (vec == null)   return new ArrayList<>();
   Counter<String> distances=new Counter<String>();
-  for (int i=0; i < syn0.rows; i++) {
+  for (int i=0; i < syn0.rows(); i++) {
     double sim=similarity(word,wordIndex.get(i).toString());
     distances.incrementCount(wordIndex.get(i).toString(),sim);
   }

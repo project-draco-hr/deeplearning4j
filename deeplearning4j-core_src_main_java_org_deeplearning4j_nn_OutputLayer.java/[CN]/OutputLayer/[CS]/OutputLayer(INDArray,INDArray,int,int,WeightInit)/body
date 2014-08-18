@@ -1,0 +1,14 @@
+{
+  this.input=input;
+  this.labels=labels;
+  this.nIn=nIn;
+  this.nOut=nOut;
+  this.weightinit=weightInit;
+  if (weightInit != null) {
+    W=WeightInitUtil.initWeights(nIn,nOut,weightInit,activationFunction);
+  }
+ else   W=NDArrays.zeros(nIn,nOut);
+  adaGrad=new AdaGrad(nIn,nOut);
+  b=NDArrays.zeros(1,nOut);
+  biasAdaGrad=new AdaGrad(b.rows(),b.columns());
+}

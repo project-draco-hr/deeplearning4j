@@ -1,6 +1,0 @@
-{
-  this.possibleLabels=possibleLabels;
-  this.states=possibleLabels.length;
-  logOfDiangnalTProb=FastMath.log(1 - metaStability / states - 1);
-  this.logStates=FastMath.log(states);
-}

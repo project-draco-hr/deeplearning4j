@@ -1,10 +1,10 @@
 {
   if (examples.isEmpty())   log.warn("Warning: empty dataset from the fetcher");
-  DoubleMatrix inputs=createInputMatrix(examples.size());
-  DoubleMatrix labels=createOutputMatrix(examples.size());
+  INDArray inputs=createInputMatrix(examples.size());
+  INDArray labels=createOutputMatrix(examples.size());
   for (int i=0; i < examples.size(); i++) {
-    inputs.putRow(i,examples.get(i).getFirst());
-    labels.putRow(i,examples.get(i).getSecond());
+    inputs.putRow(i,examples.get(i).getFeatureMatrix());
+    labels.putRow(i,examples.get(i).getLabels());
   }
   curr=new DataSet(inputs,labels);
 }

@@ -4,14 +4,14 @@
   while (iter.hasNext()) {
     DataSet next=iter.next();
     next.normalizeZeroMeanZeroUnitVariance();
-    dbn.pretrain(next.getFirst(),1,0.0001,10000);
+    dbn.pretrain(next.getFeatureMatrix(),1,0.0001,10000);
   }
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     next.normalizeZeroMeanZeroUnitVariance();
-    dbn.setInput(next.getFirst());
-    dbn.finetune(next.getSecond(),0.001,10000);
+    dbn.setInput(next.getFeatureMatrix());
+    dbn.finetune(next.getLabels(),0.001,10000);
   }
   BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-dbn.bin"));
   dbn.write(bos);
@@ -22,8 +22,8 @@
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    DoubleMatrix predict=dbn.output(next.getFirst());
-    DoubleMatrix labels=next.getSecond();
+    INDArray predict=dbn.output(next.getFeatureMatrix());
+    INDArray labels=next.getLabels();
     eval.eval(labels,predict);
   }
   log.info("Prediciton f scores and accuracy");

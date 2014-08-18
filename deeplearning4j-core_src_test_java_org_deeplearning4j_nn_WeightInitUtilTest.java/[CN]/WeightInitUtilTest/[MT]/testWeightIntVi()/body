@@ -1,4 +1,0 @@
-{
-  DoubleMatrix si=WeightInitUtil.initWeights(784,1000,WeightInit.VI,Activations.sigmoid());
-  DoubleMatrix si2=WeightInitUtil.initWeights(784,1000,WeightInit.VI,Activations.rectifiedLinear());
-}

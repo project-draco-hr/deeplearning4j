@@ -19,12 +19,12 @@
     log.info("Training on " + next.numExamples());
     FilterRenderer f2=new FilterRenderer();
     f2.renderFilters(encoder.getOutputLayer().getW(),"outputlayer.png",28,28,next.numExamples());
-    DoubleMatrix recon=encoder.output(next.getFirst());
-    encoder.finetune(next.getFirst(),1e-3,10);
+    INDArray recon=encoder.output(next.getFeatureMatrix());
+    encoder.finetune(next.getFeatureMatrix(),1e-3,10);
     if (count % 10 == 0) {
       NeuralNetPlotter plotter=new NeuralNetPlotter();
       String[] layers=new String[encoder.getLayers().length];
-      DoubleMatrix[] weights=new DoubleMatrix[layers.length];
+      INDArray[] weights=new INDArray[layers.length];
       for (int i=0; i < encoder.getLayers().length; i++) {
         layers[i]="" + i;
         weights[i]=encoder.getLayers()[i].getW();
@@ -32,8 +32,6 @@
       plotter.scatter(layers,weights);
       FilterRenderer f=new FilterRenderer();
       f.renderFilters(encoder.getOutputLayer().getW(),"outputlayer.png",28,28,next.numExamples());
-      DeepAutoEncoderDataSetReconstructionRender render=new DeepAutoEncoderDataSetReconstructionRender(next.iterator(next.numExamples()),encoder,28,28);
-      render.draw();
     }
     count++;
   }

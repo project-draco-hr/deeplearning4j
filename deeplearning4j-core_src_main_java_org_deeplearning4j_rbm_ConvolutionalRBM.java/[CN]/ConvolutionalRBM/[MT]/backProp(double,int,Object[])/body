@@ -6,20 +6,20 @@
   while (train) {
     if (numEpochs > iterations)     break;
     NeuralNetworkGradient gradient=getGradient(extraParams);
-    DoubleMatrix wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
-    DoubleMatrix z=reconstruct(input);
-    DoubleMatrix scaledInput=input.dup();
-    normalizeZeroMeanAndUnitVariance(scaledInput);
-    normalizeZeroMeanAndUnitVariance(z);
-    DoubleMatrix outputDiff=z.sub(scaledInput);
-    DoubleMatrix delta=W.mmul(outputDiff);
-    DoubleMatrix hBiasMean=z.columnSums().transpose();
+    INDArray wLearningRates=getAdaGrad().getLearningRates(gradient.getwGradient());
+    INDArray z=reconstruct(input);
+    INDArray scaledInput=input.dup();
+    Transforms.normalizeZeroMeanAndUnitVariance(scaledInput);
+    Transforms.normalizeZeroMeanAndUnitVariance(z);
+    INDArray outputDiff=z.sub(scaledInput);
+    INDArray delta=W.mmul(outputDiff);
+    INDArray hBiasMean=z.sum(1).transpose();
     if (isUseAdaGrad()) {
       delta.muli(wLearningRates);
     }
  else     delta.muli(lr);
     if (momentum != 0)     delta.muli(momentum).add(delta.mul(1 - momentum));
-    if (normalizeByInputRows)     delta.divi(input.rows);
+    if (normalizeByInputRows)     delta.divi(input.rows());
     getW().addi(W.sub(delta));
     double newRecon=this.getReConstructionCrossEntropy();
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {

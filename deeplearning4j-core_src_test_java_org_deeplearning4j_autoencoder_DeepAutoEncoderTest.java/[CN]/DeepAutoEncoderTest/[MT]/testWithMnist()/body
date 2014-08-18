@@ -5,15 +5,15 @@
   data.filterAndStrip(new int[]{0,1});
   log.info("Training on " + data.numExamples());
   DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{1000,500,250,10}).numberOfInputs(784).useRBMPropUpAsActivation(true).withHiddenUnitsByLayer(Collections.singletonMap(3,RBM.HiddenUnit.GAUSSIAN)).numberOfOutPuts(2).sampleFromHiddenActivations(true).activateForLayer(Collections.singletonMap(3,Activations.linear())).build();
-  dbn.pretrain(data.getFirst(),new Object[]{1,1e-1,1000});
+  dbn.pretrain(data.getFeatureMatrix(),new Object[]{1,1e-1,1000});
   DeepAutoEncoder encoder=new DeepAutoEncoder.Builder().withEncoder(dbn).build();
   assertEquals(7,encoder.getLayers().length);
   assertEquals(7,encoder.getSigmoidLayers().length);
-  assertEquals(encoder.getLayers()[0].getW().length,encoder.getOutputLayer().getW().length);
+  assertEquals(encoder.getLayers()[0].getW().length(),encoder.getOutputLayer().getW().length());
   for (int i=0; i < encoder.getLayers().length; i++)   assumeNotNull("Layer " + i + " was null",encoder.getLayers()[i]);
-  assertEquals(encoder.getLayers()[1].getW().length,encoder.getLayers()[encoder.getLayers().length - 1].getW().length);
-  assertEquals(encoder.getLayers()[2].getW().length,encoder.getLayers()[encoder.getLayers().length - 2].getW().length);
+  assertEquals(encoder.getLayers()[1].getW().length(),encoder.getLayers()[encoder.getLayers().length - 1].getW().length());
+  assertEquals(encoder.getLayers()[2].getW().length(),encoder.getLayers()[encoder.getLayers().length - 2].getW().length());
   assertEquals(7,encoder.getSigmoidLayers().length);
-  encoder.finetune(data.getFirst(),1e-1,1000);
-  assertEquals(encoder.getLayers()[0].getW().length,encoder.getOutputLayer().getW().length);
+  encoder.finetune(data.getFeatureMatrix(),1e-1,1000);
+  assertEquals(encoder.getLayers()[0].getW().length(),encoder.getOutputLayer().getW().length());
 }

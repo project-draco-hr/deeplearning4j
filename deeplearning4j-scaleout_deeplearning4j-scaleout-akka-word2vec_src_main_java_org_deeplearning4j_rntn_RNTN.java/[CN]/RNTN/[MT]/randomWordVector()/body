@@ -1,3 +1,3 @@
 {
-  return randomWordVector(numHidden,rng);
+  return NDArrays.rand(numHidden,1,rng);
 }

@@ -1,0 +1,8 @@
+{
+  LinAlgExceptions.assertRows(x,y);
+  adaGrad.setMasterStepSize(learningRate);
+  biasAdaGrad.setMasterStepSize(learningRate);
+  this.input=x;
+  this.labels=y;
+  trainTillConvergence(learningRate,epochs);
+}

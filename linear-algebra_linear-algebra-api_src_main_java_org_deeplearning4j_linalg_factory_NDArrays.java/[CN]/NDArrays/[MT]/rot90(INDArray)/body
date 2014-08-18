@@ -1,0 +1,5 @@
+{
+  if (!toRotate.isMatrix())   throw new IllegalArgumentException("Only rotating matrices");
+  INDArray start=toRotate.transpose();
+  for (int i=0; i < start.rows(); i++)   start.putRow(i,reverse(start.getRow(i)));
+}

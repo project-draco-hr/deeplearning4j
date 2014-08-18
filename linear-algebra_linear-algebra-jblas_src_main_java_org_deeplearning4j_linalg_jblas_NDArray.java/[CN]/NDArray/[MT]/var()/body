@@ -1,0 +1,4 @@
+{
+  double mean=(double)mean(Integer.MAX_VALUE).element();
+  return StatUtils.variance(data(),mean);
+}

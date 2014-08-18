@@ -1,5 +1,0 @@
-{
-  ComplexNDArray negative=new ComplexNDArray(new double[]{1,-1,2,-1},new int[]{1});
-  ComplexNDArray positive=new ComplexNDArray(new double[]{1,1,2,1},new int[]{1});
-  assertEquals(negative,positive.conj());
-}

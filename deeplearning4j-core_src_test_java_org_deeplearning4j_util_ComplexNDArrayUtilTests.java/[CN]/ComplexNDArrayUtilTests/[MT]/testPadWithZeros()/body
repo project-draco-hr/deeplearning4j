@@ -1,6 +1,0 @@
-{
-  ComplexNDArray ret=new ComplexNDArray(new int[]{2,5});
-  ComplexNDArray test=ComplexNDArrayUtil.padWithZeros(ret,new int[]{2,5,5});
-  assertEquals(true,Arrays.equals(new int[]{2,5,5},test.shape()));
-  assertEquals(ret.sum().real(),test.sum().real(),1e-1);
-}

@@ -14,10 +14,4 @@
   encoder.setLineSearchBackProp(true);
   encoder.finetune(iter,1e-2,1000);
   iter.reset();
-  while (iter.hasNext()) {
-    DataSet data=iter.next();
-    DeepAutoEncoderDataSetReconstructionRender r=new DeepAutoEncoderDataSetReconstructionRender(data.iterator(data.numExamples()),encoder,28,28);
-    r.setPicDraw(MatrixTransformations.multiplyScalar(255));
-    r.draw();
-  }
 }

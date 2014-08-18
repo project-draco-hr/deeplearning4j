@@ -1,0 +1,5 @@
+{
+  double length=(double)toScale.norm2(Integer.MAX_VALUE).element();
+  if (length > 0)   return NDArrays.getBlasWrapper().scal(1.0 / length,toScale);
+  return toScale;
+}

@@ -1,4 +1,0 @@
-{
-  if (concatBiases)   return DoubleMatrix.concatHorizontally(input,DoubleMatrix.ones(input.rows,1));
-  return input;
-}

@@ -2,12 +2,12 @@
   int rows=10;
   int cols=2;
   AdaGrad grad=new AdaGrad(rows,cols,0.1);
-  DoubleMatrix W=DoubleMatrix.zeros(rows,cols);
+  INDArray W=NDArrays.zeros(rows,cols);
   RealDistribution dist=Distributions.normal(new MersenneTwister(123),1);
-  for (int i=0; i < W.rows; i++)   W.putRow(i,new DoubleMatrix(dist.sample(W.columns)));
+  for (int i=0; i < W.rows(); i++)   W.putRow(i,NDArrays.create(dist.sample(W.columns())));
   for (int i=0; i < 5; i++) {
     String learningRates=String.valueOf("\nAdagrad\n " + grad.getLearningRates(W)).replaceAll(";","\n");
     log.info(learningRates);
-    W.addi(DoubleMatrix.randn(rows,cols));
+    W.addi(NDArrays.randn(rows,cols));
   }
 }

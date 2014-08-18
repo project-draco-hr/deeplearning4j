@@ -1,0 +1,7 @@
+{
+  List<Pair<INDArray,INDArray>> list=new ArrayList<>();
+  for (int i=0; i < inputs.rows(); i++) {
+    list.add(new Pair<>(inputs.getRow(i),outcomes.getRow(i)));
+  }
+  splitInputs(list,train,test,split);
+}

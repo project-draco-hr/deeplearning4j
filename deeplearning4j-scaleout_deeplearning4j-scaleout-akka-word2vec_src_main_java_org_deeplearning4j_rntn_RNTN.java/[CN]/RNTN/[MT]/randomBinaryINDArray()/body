@@ -1,0 +1,5 @@
+{
+  float range=1.0f / (4.0f * numHidden);
+  INDArray ret=NDArrays.rand(new int[]{numHidden * 2,numHidden * 2,numHidden},-range,range,rng);
+  return ret.muli(scalingForInit);
+}

@@ -1,5 +1,0 @@
-{
-  float range=1.0f / (4.0f * numHidden);
-  FloatTensor floatTensor=FloatTensor.rand(numHidden * 2,numHidden * 2,numHidden,-range,range,rng);
-  return floatTensor.scale(scalingForInit);
-}

@@ -1,3 +1,3 @@
 {
-  return new DoubleMatrix(ArrayUtil.combine(network.getW().data,network.getvBias().data,network.gethBias().data));
+  return NDArrays.create(Doubles.concat(network.getW().data(),network.getvBias().data(),network.gethBias().data()));
 }

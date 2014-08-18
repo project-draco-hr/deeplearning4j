@@ -1,19 +1,19 @@
 {
-  FloatMatrix wordVector=getWordVectorMatrix(word);
+  INDArray wordVector=getWordVectorMatrix(word);
   if (wordVector == null) {
     return null;
   }
-  FloatMatrix tempVector=null;
+  INDArray tempVector=null;
   List<VocabWord> wordEntrys=new ArrayList<>(topNSize);
   String name;
-  for (int i=0; i < syn0.rows; i++) {
+  for (int i=0; i < syn0.rows(); i++) {
     name=wordIndex.get(i).toString();
     if (name.equals(word)) {
       continue;
     }
     double dist=0;
     tempVector=syn0.getRow(i);
-    dist=wordVector.dot(tempVector);
+    dist=NDArrays.getBlasWrapper().dot(wordVector,tempVector);
     insertTopN(name,dist,wordEntrys);
   }
   return new TreeSet<>(wordEntrys);

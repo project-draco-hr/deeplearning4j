@@ -1,0 +1,6 @@
+{
+  if (input != null && cacheInput)   this.input=input;
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=input.var(1).divi(input.rows());
+  optimizer=new RBMOptimizer(this,learningRate,new Object[]{k,learningRate},optimizationAlgo,lossFunction);
+  optimizer.train(input);
+}

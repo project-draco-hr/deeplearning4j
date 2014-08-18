@@ -1,5 +1,5 @@
 {
   DataSet next=iter.next();
-  next.setSecond(next.getFirst());
+  next.setLabels(next.getFeatureMatrix());
   return next;
 }

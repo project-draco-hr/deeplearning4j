@@ -1,15 +1,3 @@
 {
-  int diff=Math.abs(from - to);
-  int[] ret=new int[diff];
-  if (from < to) {
-    int count=0;
-    for (int i=from; i < to; i++) {
-      ret[count++]=i;
-    }
-  }
- else   if (from > to) {
-    int count=0;
-    for (int i=from; i >= to; i--)     ret[count++]=i;
-  }
-  return ret;
+  return range(from,to,1);
 }

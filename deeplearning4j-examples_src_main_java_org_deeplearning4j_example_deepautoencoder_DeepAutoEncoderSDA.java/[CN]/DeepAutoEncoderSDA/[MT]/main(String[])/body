@@ -11,15 +11,12 @@
   a.setLineSearchBackProp(true);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    a.setInput(next.getFirst());
-    a.finetune(next.getFirst(),1e-1,50);
+    a.setInput(next.getFeatureMatrix());
+    a.finetune(next.getFeatureMatrix(),1e-1,50);
   }
   iter.reset();
   SerializationUtils.saveObject(a,new File("deepautoencoder.ser"));
   while (iter.hasNext()) {
     DataSet data=iter.next();
-    DeepAutoEncoderDataSetReconstructionRender r=new DeepAutoEncoderDataSetReconstructionRender(data.iterator(data.numExamples()),a,28,28);
-    r.setPicDraw(MatrixTransformations.multiplyScalar(255));
-    r.draw();
   }
 }

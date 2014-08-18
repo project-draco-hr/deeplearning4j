@@ -4,9 +4,9 @@
   for (int i=0; i < numExamples; i++, cursor++) {
     if (!hasMore())     break;
     try {
-      DoubleMatrix load=loader.asMatrix(fileIterator.next());
-      load=load.reshape(1,load.length);
-      toConvert.add(new DataSet(load,MatrixUtil.toOutcomeVector(1,2)));
+      INDArray load=loader.asMatrix(fileIterator.next());
+      load=load.reshape(1,load.length());
+      toConvert.add(new DataSet(load,FeatureUtil.toOutcomeVector(1,2)));
     }
  catch (    Exception e) {
       throw new RuntimeException(e);

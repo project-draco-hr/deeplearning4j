@@ -7,12 +7,12 @@
   log.info("Data applyTransformToDestination " + d);
   StackedDenoisingAutoEncoder stackedDenoisingAutoEncoder=new StackedDenoisingAutoEncoder.Builder().hiddenLayerSizes(new int[]{500,250,100}).withMomentum(0.5).numberOfInputs(784).numberOfOutPuts(fetcher.totalOutcomes()).build();
   watch.start();
-  stackedDenoisingAutoEncoder.pretrain(d.getFirst(),1,1e-2,300);
-  stackedDenoisingAutoEncoder.finetune(d.getSecond(),1e-2,100);
+  stackedDenoisingAutoEncoder.pretrain(d.getFeatureMatrix(),1,1e-2,300);
+  stackedDenoisingAutoEncoder.finetune(d.getLabels(),1e-2,100);
   watch.stop();
   log.info("Took " + watch.getTime());
   Evaluation eval=new Evaluation();
-  DoubleMatrix predict=stackedDenoisingAutoEncoder.output(d.getFirst());
-  eval.eval(d.getSecond(),predict);
+  INDArray predict=stackedDenoisingAutoEncoder.output(d.getFeatureMatrix());
+  eval.eval(d.getLabels(),predict);
   log.info(eval.stats());
 }

@@ -1,5 +1,5 @@
 {
-  DoubleMatrix row=DoubleMatrix.ones(1,states).mul(logOfDiangnalTProb);
-  row.put(k,logMetaInstability);
+  INDArray row=NDArrays.ones(1,states).muli(logOfDiangnalTProb);
+  row.putScalar(k,logMetaInstability);
   return row;
 }

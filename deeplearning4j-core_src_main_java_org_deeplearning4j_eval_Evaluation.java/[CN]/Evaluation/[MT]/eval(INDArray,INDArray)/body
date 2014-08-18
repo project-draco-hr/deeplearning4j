@@ -1,0 +1,20 @@
+{
+  if (realOutcomes.length() != guesses.length())   throw new IllegalArgumentException("Unable to evaluate. Outcome matrices not same length");
+  for (int i=0; i < realOutcomes.rows(); i++) {
+    INDArray currRow=realOutcomes.getRow(i);
+    INDArray guessRow=guesses.getRow(i);
+    int currMax=NDArrays.getBlasWrapper().iamax(currRow);
+    int guessMax=NDArrays.getBlasWrapper().iamax(guessRow);
+    addToConfusion(currMax,guessMax);
+    if (currMax == guessMax) {
+      incrementTruePositives();
+      for (      Integer clazz : confusion.getClasses()) {
+        if (clazz != guessMax)         trueNegative.incrementCount(clazz,1.0);
+      }
+    }
+ else {
+      incrementFalseNegatives();
+      incrementFalsePositives(guessMax);
+    }
+  }
+}

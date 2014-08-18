@@ -1,15 +1,15 @@
 {
-  if (index >= network.getW().length) {
-    if (index >= network.getvBias().length + network.getW().length) {
+  if (index >= network.getW().length()) {
+    if (index >= network.getvBias().length() + network.getW().length()) {
       int i=getAdjustedIndex(index);
-      network.gethBias().put(i,value);
+      network.gethBias().putScalar(i,value);
     }
  else {
       int i=getAdjustedIndex(index);
-      network.getvBias().put(i,value);
+      network.getvBias().putScalar(i,value);
     }
   }
  else {
-    network.getW().put(index,value);
+    network.getW().putScalar(index,value);
   }
 }

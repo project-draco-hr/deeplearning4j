@@ -5,13 +5,13 @@
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
   if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
-  Pair<DoubleMatrix,DoubleMatrix> probHidden=sampleHiddenGivenVisible(input);
-  DoubleMatrix chainStart=probHidden.getSecond();
-  Pair<Pair<DoubleMatrix,DoubleMatrix>,Pair<DoubleMatrix,DoubleMatrix>> matrices;
-  DoubleMatrix nvMeans=null;
-  DoubleMatrix nvSamples=null;
-  DoubleMatrix nhMeans=null;
-  DoubleMatrix nhSamples=null;
+  Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(input);
+  INDArray chainStart=probHidden.getSecond();
+  Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>> matrices;
+  INDArray nvMeans=null;
+  INDArray nvSamples=null;
+  INDArray nhMeans=null;
+  INDArray nhSamples=null;
   for (int i=0; i < k; i++) {
     if (i == 0)     matrices=gibbhVh(chainStart);
  else     matrices=gibbhVh(nhSamples);
@@ -20,11 +20,11 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  DoubleMatrix wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
-  DoubleMatrix hBiasGradient;
-  if (sparsity != 0)   hBiasGradient=mean(scalarMinus(sparsity,probHidden.getSecond()),0);
- else   hBiasGradient=mean(probHidden.getSecond().sub(nhMeans),0);
-  DoubleMatrix vBiasGradient=mean(input.sub(nvSamples),0);
+  INDArray wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
+  INDArray hBiasGradient;
+  if (sparsity != 0)   hBiasGradient=probHidden.getSecond().rsubi(sparsity).mean(0);
+ else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);
+  INDArray vBiasGradient=input.sub(nvSamples).mean(0);
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
   updateGradientAccordingToParams(ret,iteration,learningRate);
   return ret;

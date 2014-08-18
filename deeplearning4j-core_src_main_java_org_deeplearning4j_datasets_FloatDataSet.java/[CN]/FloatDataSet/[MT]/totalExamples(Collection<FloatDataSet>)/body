@@ -1,5 +1,0 @@
-{
-  int count=0;
-  for (  FloatDataSet d : coll)   count+=d.numExamples();
-  return count;
-}

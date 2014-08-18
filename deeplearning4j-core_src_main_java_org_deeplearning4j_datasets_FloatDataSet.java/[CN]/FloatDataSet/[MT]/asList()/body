@@ -1,7 +1,0 @@
-{
-  List<FloatDataSet> list=new ArrayList<>(numExamples());
-  for (int i=0; i < numExamples(); i++) {
-    list.add(new FloatDataSet(getFirst().getRow(i),getSecond().getRow(i)));
-  }
-  return list;
-}

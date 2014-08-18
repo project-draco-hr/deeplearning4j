@@ -8,10 +8,9 @@
   DataSetIterator iter=new MnistDataSetIterator(1,200);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    log.info("Len " + next.getFirst().length);
-    log.info("This is a " + next.labelDistribution());
-    DoubleMatrix reshape=next.getFirst().reshape(rows,cols);
-    Tensor W=(Tensor)r.getW();
+    log.info("Len " + next.getFeatureMatrix().length());
+    INDArray reshape=next.getFeatureMatrix().reshape(rows,cols);
+    INDArray W=(INDArray)r.getW();
     log.info("W shape " + W.shape());
     r.trainTillConvergence(reshape,5e-2,new Object[]{1,5e-2,20});
   }

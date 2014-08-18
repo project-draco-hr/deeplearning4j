@@ -1,0 +1,18 @@
+{
+  if (in.columns() != 1) {
+    throw new AssertionError("Expected a column vector");
+  }
+  if (in.rows() != curr.columns()) {
+    throw new AssertionError("Number of rows in the input does not match number of columns in tensor");
+  }
+  if (curr.rows() != curr.columns()) {
+    throw new AssertionError("Can only perform this operation on a SimpleTensor with square slices");
+  }
+  INDArray inT=in.transpose();
+  INDArray out=NDArrays.create(curr.slices(),1);
+  for (int slice=0; slice < curr.slices(); ++slice) {
+    float result=(float)inT.mul(curr.slice(slice)).mul(in).getScalar(0).element();
+    out.putScalar(slice,result);
+  }
+  return out;
+}

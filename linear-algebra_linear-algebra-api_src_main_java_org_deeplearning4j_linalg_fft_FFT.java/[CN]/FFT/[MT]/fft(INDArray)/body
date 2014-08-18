@@ -1,0 +1,4 @@
+{
+  IComplexNDArray inputC=NDArrays.createComplex(input);
+  return fft(inputC);
+}

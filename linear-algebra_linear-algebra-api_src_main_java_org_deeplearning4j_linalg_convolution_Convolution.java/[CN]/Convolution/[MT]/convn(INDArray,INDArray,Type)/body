@@ -1,0 +1,19 @@
+{
+  if (kernel.isScalar() && input.isScalar())   return kernel.mul(input);
+  INDArray shape=ArrayUtil.toNDArray(input.shape()).add(ArrayUtil.toNDArray(kernel.shape())).subi(1);
+  int[] intShape=ArrayUtil.toInts(shape);
+  int[] axes=ArrayUtil.range(0,intShape.length);
+  IComplexNDArray fftedInput=FFT.rawfftn(NDArrays.createComplex(input),intShape,axes);
+  IComplexNDArray fftedKernel=FFT.rawfftn(NDArrays.createComplex(kernel),intShape,axes);
+  IComplexNDArray inputTimesKernel=fftedInput.muli(fftedKernel);
+  IComplexNDArray convolution=FFT.ifftn(inputTimesKernel);
+switch (type) {
+case FULL:
+    return convolution.getReal();
+case SAME:
+  return ComplexNDArrayUtil.center(convolution,input.shape()).getReal();
+case VALID:
+return ComplexNDArrayUtil.center(convolution,ArrayUtil.toInts(ArrayUtil.toNDArray(input.shape()).sub(ArrayUtil.toNDArray(kernel.shape())).addi(1))).getReal();
+}
+return convolution.getReal();
+}

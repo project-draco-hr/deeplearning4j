@@ -1,0 +1,5 @@
+{
+  List<INDArray> activations=feedForward(x);
+  INDArray predicted=activations.get(activations.size() - 1);
+  return predicted;
+}

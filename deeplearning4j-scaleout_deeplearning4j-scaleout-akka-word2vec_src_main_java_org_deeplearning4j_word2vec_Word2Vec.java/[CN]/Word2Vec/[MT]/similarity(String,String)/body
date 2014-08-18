@@ -1,11 +1,11 @@
 {
   if (word.equals(word2))   return 1.0;
-  FloatMatrix vector=getWordVectorMatrixNormalized(word);
-  FloatMatrix vector2=getWordVectorMatrixNormalized(word2);
+  INDArray vector=getWordVectorMatrixNormalized(word);
+  INDArray vector2=getWordVectorMatrixNormalized(word2);
   if (vector == null || vector2 == null)   return -1;
-  FloatMatrix d1=MatrixUtil.unitVec(vector);
-  FloatMatrix d2=MatrixUtil.unitVec(vector2);
-  double ret=SimpleBlas.dot(d1,d2);
+  INDArray d1=Transforms.unitVec(vector);
+  INDArray d2=Transforms.unitVec(vector2);
+  double ret=NDArrays.getBlasWrapper().dot(d1,d2);
   if (ret < 0)   return 0;
   return ret;
 }

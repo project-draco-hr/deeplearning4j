@@ -1,4 +1,4 @@
 {
-  ch=DoubleMatrix.zeros(1,optimizable.getNumParameters());
+  ch=NDArrays.zeros(1,optimizable.getNumParameters());
   xi=network.pack();
 }

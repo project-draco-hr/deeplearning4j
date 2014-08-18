@@ -4,8 +4,8 @@
   Evaluation eval=new Evaluation();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    DoubleMatrix predict=dbn.output(next.getFirst());
-    DoubleMatrix labels=next.getSecond();
+    INDArray predict=dbn.output(next.getFeatureMatrix());
+    INDArray labels=next.getLabels();
     eval.eval(labels,predict);
     log.info("Current stats " + eval.stats());
   }

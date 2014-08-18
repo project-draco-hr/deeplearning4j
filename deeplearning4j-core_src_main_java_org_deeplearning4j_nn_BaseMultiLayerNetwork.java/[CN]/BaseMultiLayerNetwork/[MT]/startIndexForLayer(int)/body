@@ -1,15 +1,15 @@
 {
   int start=0;
   for (int i=0; i < layer; i++) {
-    start+=getLayers()[i].getW().length;
-    start+=getLayers()[i].gethBias().length;
+    start+=getLayers()[i].getW().length();
+    start+=getLayers()[i].gethBias().length();
   }
   if (layer < getLayers().length) {
-    int wEnd=start + getLayers()[layer].getW().length;
-    return new ParamRange(start,wEnd,wEnd,wEnd + getLayers()[layer].gethBias().length);
+    int wEnd=start + getLayers()[layer].getW().length();
+    return new ParamRange(start,wEnd,wEnd,wEnd + getLayers()[layer].gethBias().length());
   }
  else {
-    int wEnd=start + getOutputLayer().getW().length;
-    return new ParamRange(start,wEnd,wEnd,wEnd + getOutputLayer().getB().length);
+    int wEnd=start + getOutputLayer().getW().length();
+    return new ParamRange(start,wEnd,wEnd,wEnd + getOutputLayer().getB().length());
   }
 }

@@ -33,18 +33,18 @@
   }
   if (conf.isNormalizeZeroMeanAndUnitVariance())   d.normalizeZeroMeanZeroUnitVariance();
   if (conf.isScale())   d.scale();
-  if (d.getFirst() == null || d.getSecond() == null)   throw new IllegalStateException("Input cant be null");
+  if (d.getFeatureMatrix() == null || d.getLabels() == null)   throw new IllegalStateException("Input cant be null");
   if (tracker.isPretrain()) {
     int numTries=0;
     boolean done=false;
     while (!done && numTries < 3) {
       try {
         log.info("Worker " + id + " pretraining");
-        network.getEncoder().pretrain(d.getFirst(),conf.getDeepLearningParams());
+        network.getEncoder().pretrain(d.getFeatureMatrix(),conf.getDeepLearningParams());
         done=true;
       }
  catch (      Exception e) {
-        if (d.getFirst() == null) {
+        if (d.getFeatureMatrix() == null) {
           d=(DataSet)currentJob.getWork();
         }
         numTries++;
@@ -66,7 +66,7 @@
     boolean done=false;
     while (!done && numTries < 3) {
       try {
-        network.finetune(d.getFirst(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs());
+        network.finetune(d.getFeatureMatrix(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs());
         log.info("Worker " + id + " finetune");
         done=true;
       }

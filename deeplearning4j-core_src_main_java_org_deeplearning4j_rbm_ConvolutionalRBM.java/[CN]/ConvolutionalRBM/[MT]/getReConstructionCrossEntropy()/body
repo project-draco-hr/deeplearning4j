@@ -1,5 +1,5 @@
 {
   if (eVis == null)   reconstruct(input);
-  double squaredLoss=MatrixFunctions.pow(eVis.sub(input),2).sum();
+  double squaredLoss=(double)Transforms.pow(eVis.sub(input),2).sum(Integer.MAX_VALUE).element();
   return squaredLoss;
 }

@@ -1,7 +1,7 @@
 {
-  if (index >= network.getOutputLayer().getW().length) {
-    int i=index - network.getOutputLayer().getB().length;
-    network.getOutputLayer().getB().put(i,value);
+  if (index >= network.getOutputLayer().getW().length()) {
+    int i=index - network.getOutputLayer().getB().length();
+    network.getOutputLayer().getB().putScalar(i,value);
   }
- else   network.getOutputLayer().getW().put(index,value);
+ else   network.getOutputLayer().getW().putScalar(index,value);
 }

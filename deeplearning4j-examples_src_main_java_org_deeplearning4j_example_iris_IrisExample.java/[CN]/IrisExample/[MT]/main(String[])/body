@@ -8,11 +8,11 @@
   next.shuffle();
   next.scale();
   dbn.setInput(next.getFeatureMatrix());
-  dbn.pretrain(next.getFirst(),1,1e-1,100);
-  dbn.finetune(next.getSecond(),1e-1,100);
+  dbn.pretrain(next.getFeatureMatrix(),1,1e-1,100);
+  dbn.finetune(next.getLabels(),1e-1,100);
   Evaluation eval=new Evaluation();
-  DoubleMatrix predict=dbn.output(next.getFirst());
-  eval.eval(predict,next.getSecond());
+  INDArray predict=dbn.output(next.getFeatureMatrix());
+  eval.eval(predict,next.getLabels());
   double f1=eval.f1();
   if (f1 >= 0.9) {
     log.info("Saving model with high f1 of " + f1);

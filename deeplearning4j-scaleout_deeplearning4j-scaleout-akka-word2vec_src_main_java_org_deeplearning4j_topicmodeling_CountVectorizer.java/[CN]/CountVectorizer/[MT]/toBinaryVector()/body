@@ -1,5 +1,5 @@
 {
-  DoubleMatrix d=new DoubleMatrix(1,wordsToCount.size());
+  INDArray d=NDArrays.create(1,wordsToCount.size());
   Counter<String> wordFrequencies=new Counter<String>();
   while (iter.hasNext()) {
     String sentence=iter.nextSentence();
@@ -13,7 +13,7 @@
   }
   for (int i=0; i < wordsToCount.size(); i++) {
     double count=wordFrequencies.getCount(wordsToCount.get(i).toString());
-    d.put(i,count > 0 ? 1 : 0);
+    d.putScalar(i,count > 0 ? 1 : 0);
   }
   return d;
 }
