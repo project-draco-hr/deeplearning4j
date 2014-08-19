@@ -25,6 +25,6 @@
       }
     }
 ,false);
-    return arr.reshape(shape).transpose();
+    return arr.reshape(shape);
   }
 }

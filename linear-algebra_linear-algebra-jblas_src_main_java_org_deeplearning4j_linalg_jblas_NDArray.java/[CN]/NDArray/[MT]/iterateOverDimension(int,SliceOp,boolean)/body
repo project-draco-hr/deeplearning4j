@@ -41,25 +41,23 @@
  else {
     if (dimension == Integer.MAX_VALUE) {
       for (int i=0; i < slices(); i++) {
-        INDArray slice=slice(i);
+        INDArray slice=slice(i,dimension);
         if (slice.isVector())         op.operate(slice);
  else {
           slice.iterateOverDimension(dimension,op,modify);
         }
       }
     }
+ else     if (shape.length == 2) {
+      if (dimension == 0) {
+      }
+ else       if (dimension == 1) {
+      }
+    }
  else {
-      int[] shape=ArrayUtil.removeIndex(this.shape,0);
-      int[] stride=ArrayUtil.removeIndex(this.stride,0);
-      NDArray ret=new NDArray(data,shape,stride,offset);
-      for (int j=0; j < ret.slices(); j++) {
-        NDArray slice=ret.slice(j);
-        if (slice.isVector())         op.operate(slice);
- else {
-          for (int i=0; i < slice.slices(); i++) {
-            iterateOverDimension(dimension,op,modify);
-          }
-        }
+      for (int s=0; s < this.shape[dimension]; s++) {
+        NDArray ret=slice(s,dimension);
+        op.operate(ret);
       }
     }
   }

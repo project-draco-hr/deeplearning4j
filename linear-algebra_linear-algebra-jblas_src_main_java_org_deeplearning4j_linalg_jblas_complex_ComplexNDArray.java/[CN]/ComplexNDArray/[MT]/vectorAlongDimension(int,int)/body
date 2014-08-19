@@ -1,0 +1,3 @@
+{
+  return new ComplexNDArray(data,new int[]{shape[dimension]},new int[]{stride[dimension]},offset + index);
+}

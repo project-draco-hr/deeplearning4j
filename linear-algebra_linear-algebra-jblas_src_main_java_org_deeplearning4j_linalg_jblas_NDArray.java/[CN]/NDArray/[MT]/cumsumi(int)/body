@@ -6,25 +6,21 @@
       put(i,s);
     }
   }
- else {
-    final AtomicInteger i=new AtomicInteger(0);
-    iterateOverDimension(dimension,new SliceOp(){
-      @Override public void operate(      DimensionSlice nd){
-        INDArray arr2=(INDArray)nd.getResult();
-        arr2.cumsum(0);
-        i.incrementAndGet();
-      }
-      /** 
- * Operates on an ndarray slice
- * @param nd the result to operate on
- */
-      @Override public void operate(      INDArray nd){
-        INDArray arr2=nd;
-        arr2.cumsum(0);
-        i.incrementAndGet();
-      }
+ else   if (dimension == Integer.MAX_VALUE || dimension == shape.length - 1) {
+    INDArray flattened=ravel().dup();
+    double prevVal=(double)flattened.getScalar(0).element();
+    for (int i=1; i < flattened.length(); i++) {
+      double d=prevVal + (double)flattened.getScalar(i).element();
+      flattened.putScalar(i,d);
+      prevVal=d;
     }
-,false);
+    return flattened;
+  }
+ else {
+    for (int i=0; i < vectorsAlongDimension(dimension); i++) {
+      INDArray vec=vectorAlongDimension(i,dimension);
+      vec.cumsumi(0);
+    }
   }
   return this;
 }

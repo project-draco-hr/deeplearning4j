@@ -1,0 +1,4 @@
+{
+  INDArray arr=NDArrays.linspace(1,24,24).reshape(new int[]{4,3,2});
+  assertEquals(12,arr.vectorsAlongDimension(2));
+}
