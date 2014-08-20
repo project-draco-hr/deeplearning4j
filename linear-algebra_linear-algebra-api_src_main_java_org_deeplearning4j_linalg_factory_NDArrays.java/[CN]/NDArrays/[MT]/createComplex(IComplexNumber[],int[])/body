@@ -1,6 +1,6 @@
 {
   try {
-    Constructor c=complexClazz.getConstructor(ReflectionUtil.classesFor(new Object[]{data,shape}));
+    Constructor c=complexClazz.getConstructor(IComplexNumber[].class,int[].class);
     return (IComplexNDArray)c.newInstance(data,shape);
   }
  catch (  Exception e) {
