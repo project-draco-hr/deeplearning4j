@@ -1,9 +1,0 @@
-{
-  double[] data=DoubleMatrix.linspace(1,4,4).data;
-  IComplexNDArray arr=new ComplexNDArray(data,new int[]{4});
-  assertEquals(true,arr.isRowVector());
-  IComplexNDArray arr2=new ComplexNDArray(data,new int[]{1,4});
-  assertEquals(true,arr2.isRowVector());
-  IComplexNDArray columnVector=new ComplexNDArray(data,new int[]{4,1});
-  assertEquals(true,columnVector.isColumnVector());
-}

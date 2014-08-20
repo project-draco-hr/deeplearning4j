@@ -1,0 +1,16 @@
+{
+  assertEquals(8,n.length());
+  assertEquals(true,Arrays.equals(new int[]{2,2,2},n.shape()));
+  INDArray slice=n.slice(0);
+  assertEquals(true,Arrays.equals(new int[]{2,2},slice.shape()));
+  INDArray slice1=n.slice(1);
+  assertEquals(true,Arrays.equals(slice.shape(),slice1.shape()));
+  assertNotEquals(true,Arrays.equals(slice.data(),slice1.data()));
+  INDArray arr=NDArrays.create(NDArrays.linspace(1,24,24).data(),new int[]{4,3,2});
+  INDArray slice0=NDArrays.create(new double[]{1,2,3,4,5,6},new int[]{3,2});
+  INDArray slice2=NDArrays.create(new double[]{7,8,9,10,11,12},new int[]{3,2});
+  INDArray testSlice0=arr.slice(0);
+  INDArray testSlice1=arr.slice(1);
+  assertEquals(slice0,testSlice0);
+  assertEquals(slice2,testSlice1);
+}

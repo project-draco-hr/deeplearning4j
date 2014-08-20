@@ -1,0 +1,74 @@
+{
+  IComplexNDArray c=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(0,29,30).data(),new int[]{3,5,2}));
+  final AtomicInteger i=new AtomicInteger(0);
+  final Set<IComplexNDArray> set=new HashSet<>();
+  c.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      IComplexNDArray result=(IComplexNDArray)nd.getResult();
+      int curr=i.get();
+      i.incrementAndGet();
+      IComplexNDArray test=NDArrays.createComplex(new double[]{curr * 2,0,curr * 2 + 1,0},new int[]{2});
+      assertEquals(result,test);
+      assertEquals(true,!set.contains(test));
+      set.add(result);
+      result.put(0,NDArrays.scalar((curr + 1) * 3));
+      result.put(1,NDArrays.scalar((curr + 2) * 3));
+      IComplexNumber n=(IComplexNumber)result.getScalar(0).element();
+      IComplexNumber n2=(IComplexNumber)result.getScalar(1).element();
+      assertEquals((curr + 1) * 3,n.realComponent().doubleValue(),1e-1);
+      assertEquals((curr + 2) * 3,n2.realComponent().doubleValue(),1e-1);
+    }
+    /** 
+ * Operates on an ndarray slice
+ * @param nd the result to operate on
+ */
+    @Override public void operate(    INDArray nd){
+    }
+  }
+);
+  IComplexNDArray permuted=c.permute(new int[]{2,1,0});
+  set.clear();
+  i.set(0);
+  permuted.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      IComplexNDArray result=(IComplexNDArray)nd.getResult();
+      int curr=i.get();
+      i.incrementAndGet();
+      result.put(0,NDArrays.scalar((curr + 1) * 3));
+      result.put(1,NDArrays.scalar((curr + 2) * 3));
+      IComplexNumber n=(IComplexNumber)result.getScalar(0).element();
+      IComplexNumber n2=(IComplexNumber)result.getScalar(1).element();
+      assertEquals((curr + 1) * 3,n.realComponent().doubleValue(),1e-1);
+      assertEquals((curr + 2) * 3,n2.realComponent().doubleValue(),1e-1);
+    }
+    /** 
+ * Operates on an ndarray slice
+ * @param nd the result to operate on
+ */
+    @Override public void operate(    INDArray nd){
+    }
+  }
+);
+  IComplexNDArray swapped=c.swapAxes(2,1);
+  i.set(0);
+  swapped.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      IComplexNDArray result=(IComplexNDArray)nd.getResult();
+      int curr=i.get();
+      i.incrementAndGet();
+      result.put(0,NDArrays.scalar((curr + 1) * 3));
+      result.put(1,NDArrays.scalar((curr + 2) * 3));
+      IComplexNumber n=(IComplexNumber)result.getScalar(0).element();
+      IComplexNumber n2=(IComplexNumber)result.getScalar(1).element();
+      assertEquals((curr + 1) * 3,n.realComponent().doubleValue(),1e-1);
+      assertEquals((curr + 2) * 3,n2.realComponent().doubleValue(),1e-1);
+    }
+    /** 
+ * Operates on an ndarray slice
+ * @param nd the result to operate on
+ */
+    @Override public void operate(    INDArray nd){
+    }
+  }
+);
+}

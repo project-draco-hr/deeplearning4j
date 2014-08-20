@@ -39,26 +39,9 @@
  else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
   }
  else {
-    if (dimension == Integer.MAX_VALUE) {
-      for (int i=0; i < slices(); i++) {
-        INDArray slice=slice(i,dimension);
-        if (slice.isVector())         op.operate(slice);
- else {
-          slice.iterateOverDimension(dimension,op,modify);
-        }
-      }
-    }
- else     if (shape.length == 2) {
-      if (dimension == 0) {
-      }
- else       if (dimension == 1) {
-      }
-    }
- else {
-      for (int s=0; s < this.shape[dimension]; s++) {
-        NDArray ret=slice(s,dimension);
-        op.operate(ret);
-      }
+    for (int i=0; i < vectorsAlongDimension(dimension); i++) {
+      INDArray vector=vectorAlongDimension(i,dimension);
+      op.operate(vector);
     }
   }
 }

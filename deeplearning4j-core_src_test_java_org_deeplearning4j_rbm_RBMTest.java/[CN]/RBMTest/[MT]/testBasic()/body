@@ -2,7 +2,7 @@
   double[] data=new double[]{1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,1,1,0,0,0,1,1,1,0};
   INDArray d=NDArrays.create(data,new int[]{7,6});
   RandomGenerator g=new MersenneTwister(123);
-  RBM r=new RBM.Builder().useAdaGrad(true).numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
+  RBM r=new RBM.Builder().numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
   r.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
   INDArray v=new NDArray(new double[]{1,1,0,0,0,0,0,0,0,1,1,0},new int[]{2,6});
   log.info("Reconstruction " + r.reconstruct(v).toString());

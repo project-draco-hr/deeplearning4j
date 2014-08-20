@@ -1,0 +1,6 @@
+{
+  INDArray arr=NDArrays.create(NDArrays.linspace(1,24,24).data(),new int[]{4,3,2});
+  for (int i=0; i < arr.slices(); i++) {
+    assertEquals(2,arr.slice(i).slice(1).slices());
+  }
+}

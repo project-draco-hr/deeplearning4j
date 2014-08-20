@@ -1,7 +1,7 @@
 {
-  INDArray preSigH=input.mmul(W).addRowVector(hBias);
+  INDArray preSigH=input.mmul(W).addiRowVector(hBias);
   INDArray sigH=sigmoid(preSigH);
-  INDArray preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
+  INDArray preSigV=sigH.mmul(W.transpose()).addiRowVector(vBias);
   INDArray sigV=sigmoid(preSigV);
   INDArray inner=input.mul(log(sigV)).add(input.rsub(1).mul(log(sigV.rsub(1))));
   double ret=(double)inner.sum(0).mean(Integer.MAX_VALUE).element();

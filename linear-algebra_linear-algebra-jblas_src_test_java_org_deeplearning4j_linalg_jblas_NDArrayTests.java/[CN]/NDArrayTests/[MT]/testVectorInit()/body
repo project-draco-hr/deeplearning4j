@@ -1,9 +1,0 @@
-{
-  double[] data=DoubleMatrix.linspace(1,4,4).data;
-  INDArray arr=new NDArray(data,new int[]{4});
-  assertEquals(true,arr.isRowVector());
-  INDArray arr2=new NDArray(data,new int[]{1,4});
-  assertEquals(true,arr2.isRowVector());
-  INDArray columnVector=new NDArray(data,new int[]{4,1});
-  assertEquals(true,columnVector.isColumnVector());
-}

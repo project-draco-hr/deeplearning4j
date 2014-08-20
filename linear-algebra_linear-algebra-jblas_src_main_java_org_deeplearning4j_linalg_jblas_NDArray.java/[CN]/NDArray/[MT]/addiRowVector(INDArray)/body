@@ -1,6 +1,2 @@
 {
-  for (int i=0; i < rows(); i++) {
-    getRow(i).addi(rowVector.getScalar(i));
-  }
-  return this;
 }

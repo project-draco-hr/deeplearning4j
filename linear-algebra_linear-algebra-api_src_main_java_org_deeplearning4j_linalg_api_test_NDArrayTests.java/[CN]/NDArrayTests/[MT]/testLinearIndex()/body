@@ -1,0 +1,9 @@
+{
+  INDArray n=NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{8});
+  for (int i=0; i < n.length(); i++) {
+    int linearIndex=n.linearIndex(i);
+    assertEquals(i,linearIndex);
+    double d=(double)n.getScalar(i).element();
+    assertEquals(i + 1,d,1e-1);
+  }
+}

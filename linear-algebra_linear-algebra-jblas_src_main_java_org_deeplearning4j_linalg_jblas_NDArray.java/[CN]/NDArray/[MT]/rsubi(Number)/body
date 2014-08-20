@@ -1,3 +1,3 @@
 {
-  return rsubi(NDArrays.scalar(n));
+  return rsubi(NDArrays.valueArrayOf(shape(),n.doubleValue()));
 }

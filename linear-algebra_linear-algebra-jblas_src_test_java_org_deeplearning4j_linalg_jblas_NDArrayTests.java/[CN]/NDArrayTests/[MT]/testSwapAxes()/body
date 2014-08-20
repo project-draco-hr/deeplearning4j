@@ -1,7 +1,0 @@
-{
-  INDArray n=new NDArray(DoubleMatrix.linspace(0,7,8).data,new int[]{2,2,2});
-  INDArray assertion=n.permute(new int[]{2,1,0});
-  double[] data=assertion.data();
-  INDArray validate=new NDArray(new double[]{0,4,2,6,1,5,3,7},new int[]{2,2,2});
-  assertEquals(validate,assertion);
-}

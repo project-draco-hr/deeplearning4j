@@ -12,5 +12,5 @@
     if (curr * k > -cutOff)     return NDArrays.scalar(-cutOff / k);
  else     if (curr * k < cutOff)     return NDArrays.scalar(cutOff / k);
   }
-  return null;
+  return value;
 }

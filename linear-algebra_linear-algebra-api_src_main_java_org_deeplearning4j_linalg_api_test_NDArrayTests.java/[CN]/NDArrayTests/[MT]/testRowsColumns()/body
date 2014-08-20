@@ -1,0 +1,12 @@
+{
+  double[] data=NDArrays.linspace(1,6,6).data();
+  INDArray rows=NDArrays.create(data,new int[]{2,3});
+  assertEquals(2,rows.rows());
+  assertEquals(3,rows.columns());
+  INDArray columnVector=NDArrays.create(data,new int[]{6,1});
+  assertEquals(6,columnVector.rows());
+  assertEquals(1,columnVector.columns());
+  INDArray rowVector=NDArrays.create(data,new int[]{6});
+  assertEquals(1,rowVector.rows());
+  assertEquals(6,rowVector.columns());
+}

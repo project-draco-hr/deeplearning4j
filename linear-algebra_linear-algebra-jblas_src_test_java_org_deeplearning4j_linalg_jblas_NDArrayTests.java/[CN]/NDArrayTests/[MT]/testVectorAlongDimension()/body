@@ -1,9 +1,0 @@
-{
-  INDArray arr=NDArrays.linspace(1,24,24).reshape(new int[]{4,3,2});
-  INDArray test=arr.vectorAlongDimension(0,2);
-  INDArray assertion=NDArrays.create(new double[]{1,2},new int[]{2});
-  assertEquals(assertion,test);
-  INDArray testColumn=NDArrays.create(new double[]{1,3,5});
-  INDArray testColumnAssertion=arr.vectorAlongDimension(0,1);
-  assertEquals(testColumnAssertion,testColumn);
-}

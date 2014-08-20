@@ -1,4 +1,4 @@
 {
-  this.from=from;
+  this.from=from.ravel();
   return this;
 }

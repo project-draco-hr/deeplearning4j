@@ -1,0 +1,6 @@
+{
+  INDArray n2=NDArrays.valueArrayOf(new int[]{2},4);
+  INDArray n2Assertion=NDArrays.valueArrayOf(new int[]{2},0.5);
+  INDArray nRsubi=n2.rdivi(2);
+  assertEquals(n2Assertion,nRsubi);
+}

@@ -1,0 +1,10 @@
+{
+  IComplexNDArray arr=NDArrays.createComplex(NDArrays.create(new double[]{1,2,3,4},new int[]{2,2}));
+  assertEquals(4,arr.length());
+  assertEquals(8,arr.data().length);
+  arr.put(1,1,NDArrays.scalar(5.0));
+  IComplexNumber n1=(IComplexNumber)arr.getScalar(1,1).element();
+  IComplexNumber n2=(IComplexNumber)arr.getScalar(1,1).element();
+  assertEquals(5.0,n1.realComponent().doubleValue(),1e-1);
+  assertEquals(0.0,n2.imaginaryComponent().doubleValue(),1e-1);
+}

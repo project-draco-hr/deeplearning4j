@@ -1,4 +1,0 @@
-{
-  IComplexNDArray n=new ComplexNDArray(new NDArray(DoubleMatrix.linspace(1,8,8).data,new int[]{2,2,2}));
-  assertEquals(new ComplexDouble(36),n.sum(Integer.MAX_VALUE).element());
-}

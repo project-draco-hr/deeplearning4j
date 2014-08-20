@@ -1,0 +1,9 @@
+{
+  double[] data=NDArrays.linspace(1,4,4).data();
+  IComplexNDArray arr=NDArrays.createComplex(data,new int[]{4});
+  assertEquals(true,arr.isRowVector());
+  IComplexNDArray arr2=NDArrays.createComplex(data,new int[]{1,4});
+  assertEquals(true,arr2.isRowVector());
+  IComplexNDArray columnVector=NDArrays.createComplex(data,new int[]{4,1});
+  assertEquals(true,columnVector.isColumnVector());
+}

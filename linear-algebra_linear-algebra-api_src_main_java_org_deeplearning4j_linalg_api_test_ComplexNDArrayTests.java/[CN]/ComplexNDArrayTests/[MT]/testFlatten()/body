@@ -1,0 +1,10 @@
+{
+  IComplexNDArray arr=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,4,4).data(),new int[]{2,2}));
+  IComplexNDArray flattened=arr.ravel();
+  assertEquals(arr.length(),flattened.length());
+  assertTrue(Shape.shapeEquals(new int[]{1,4},flattened.shape()));
+  for (int i=0; i < arr.length(); i++) {
+    IComplexNumber get=(IComplexNumber)flattened.getScalar(i).element();
+    assertEquals(i + 1,get.realComponent().doubleValue(),1e-1);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    Constructor c=clazz.getConstructor(List.class,int[].class);
+    return (INDArray)c.newInstance(list,shape);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

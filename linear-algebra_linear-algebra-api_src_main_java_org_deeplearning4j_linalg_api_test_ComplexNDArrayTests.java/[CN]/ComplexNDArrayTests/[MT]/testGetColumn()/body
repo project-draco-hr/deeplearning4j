@@ -1,0 +1,26 @@
+{
+  IComplexNDArray arr=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{2,4}));
+  IComplexNDArray column2=arr.getColumn(1);
+  IComplexNDArray result=NDArrays.createComplex(NDArrays.create(new double[]{2,6},new int[]{1,2}));
+  assertEquals(result,column2);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},column2.shape()));
+  IComplexNDArray column=NDArrays.createComplex(new double[]{11,0,12,0},new int[]{2});
+  arr.putColumn(1,column);
+  IComplexNDArray firstColumn=arr.getColumn(1);
+  assertEquals(column,firstColumn);
+  IComplexNDArray column1=NDArrays.createComplex(new double[]{5,0,6,0},new int[]{2});
+  arr.putColumn(1,column1);
+  assertEquals(true,Shape.shapeEquals(new int[]{2},arr.getColumn(1).shape()));
+  IComplexNDArray testC=arr.getColumn(1);
+  assertEquals(column1,testC);
+  IComplexNDArray multiSlice=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,32,32).data(),new int[]{4,4,2}));
+  IComplexNDArray testColumn=NDArrays.createComplex(NDArrays.create(new double[]{10,12,14,16},new int[]{4}));
+  IComplexNDArray sliceColumn=multiSlice.slice(1).getColumn(1);
+  assertEquals(sliceColumn,testColumn);
+  IComplexNDArray testColumn2=NDArrays.createComplex(NDArrays.create(new double[]{17,19,21,23},new int[]{4}));
+  IComplexNDArray testSlice2=multiSlice.slice(2).getColumn(0);
+  assertEquals(testColumn2,testSlice2);
+  IComplexNDArray testColumn3=NDArrays.createComplex(NDArrays.create(new double[]{18,20,22,24},new int[]{4}));
+  IComplexNDArray testSlice3=multiSlice.slice(2).getColumn(1);
+  assertEquals(testColumn3,testSlice3);
+}

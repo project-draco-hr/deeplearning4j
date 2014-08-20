@@ -1,4 +1,5 @@
 {
-  new ArrayOps().from(indArray).op(clazz).extraArgs(extraArgs).build().exec();
-  return indArray;
+  ElementWiseOp ops=new ArrayOps().from(indArray).op(clazz).extraArgs(extraArgs).build();
+  ops.exec();
+  return ops.from().reshape(indArray.shape());
 }

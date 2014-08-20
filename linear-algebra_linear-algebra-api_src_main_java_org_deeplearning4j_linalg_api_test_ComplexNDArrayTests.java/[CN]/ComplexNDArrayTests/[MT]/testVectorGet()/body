@@ -1,0 +1,16 @@
+{
+  IComplexNDArray arr=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{8}));
+  for (int i=0; i < arr.length(); i++) {
+    IComplexNumber curr=(IComplexNumber)arr.getScalar(i).element();
+    assertEquals(NDArrays.createDouble(i + 1,0),curr);
+  }
+  IComplexNDArray matrix=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{2,4}));
+  IComplexNDArray row=matrix.getRow(1);
+  IComplexNDArray column=matrix.getColumn(1);
+  IComplexNDArray validate=NDArrays.createComplex(NDArrays.create(new double[]{5,6,7,8},new int[]{4}));
+  IComplexDouble d=(IComplexDouble)row.getScalar(3).element();
+  assertEquals(NDArrays.createDouble(8,0),d);
+  assertEquals(row,validate);
+  IComplexDouble d2=(IComplexDouble)column.getScalar(1).element();
+  assertEquals(NDArrays.createDouble(6,0),d2);
+}
