@@ -1,7 +1,12 @@
 {
   int ix=offset;
-  for (int i=0; i < shape.length; i++) {
-    ix+=indexes[i] * stride[i];
+  int trackStride=shape[0];
+  ix+=indexes[0] * stride[shape.length - 1];
+  for (int i=1; i < shape.length; i++) {
+    int firstTerm=(indexes[i]);
+    int strideVal=stride[shape.length - 1 - i];
+    ix+=firstTerm * (trackStride);
+    trackStride*=strideVal;
   }
   return NDArrays.scalar(data[ix]);
 }
