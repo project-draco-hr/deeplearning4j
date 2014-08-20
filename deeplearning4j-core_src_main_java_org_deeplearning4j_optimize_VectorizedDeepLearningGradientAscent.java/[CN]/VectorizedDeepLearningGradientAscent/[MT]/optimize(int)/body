@@ -15,7 +15,7 @@
     try {
       step=lineMaximizer.optimize(xi,iterations,step);
     }
- catch (    Exception e) {
+ catch (    InvalidStepException e) {
       logger.warn("Error during computation",e);
       continue;
     }

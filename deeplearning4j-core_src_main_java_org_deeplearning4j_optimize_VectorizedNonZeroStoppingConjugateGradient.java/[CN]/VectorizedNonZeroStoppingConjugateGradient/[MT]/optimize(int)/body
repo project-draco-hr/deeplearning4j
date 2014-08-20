@@ -18,7 +18,7 @@
     try {
       step=lineMaximizer.optimize(xi,iterationCount,step);
     }
- catch (    Throwable e) {
+ catch (    InvalidStepException e) {
       logger.warn("Breaking: negative slope");
     }
     fret=optimizable.getValue();
