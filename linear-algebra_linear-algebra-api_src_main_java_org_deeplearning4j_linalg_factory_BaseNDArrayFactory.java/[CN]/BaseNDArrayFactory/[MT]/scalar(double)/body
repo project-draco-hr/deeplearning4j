@@ -1,0 +1,4 @@
+{
+  if (dtype.equals("double"))   return create(new double[]{value},new int[]{1},new int[]{1},0);
+ else   return scalar((float)value);
+}

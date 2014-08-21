@@ -1,5 +1,3 @@
 {
-  INDArray create=create(rows,columns);
-  create.assign(value);
-  return create;
+  return INSTANCE.valueArrayOf(rows,columns,value);
 }

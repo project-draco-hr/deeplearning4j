@@ -1,0 +1,5 @@
+{
+  INDArray create=create(rows,columns);
+  create.assign(value);
+  return create;
+}

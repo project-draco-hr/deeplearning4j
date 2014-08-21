@@ -1,5 +1,3 @@
 {
-  if (dtype.equals("double"))   return scalar(value.asDouble(),0);
-  if (dtype.equals("float"))   return scalar(value.asFloat(),0);
-  throw new IllegalStateException("Illegal data type " + dtype);
+  return INSTANCE.scalar(value);
 }

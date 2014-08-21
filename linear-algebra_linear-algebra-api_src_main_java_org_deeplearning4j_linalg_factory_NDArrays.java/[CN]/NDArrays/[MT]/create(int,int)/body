@@ -1,3 +1,3 @@
 {
-  return create(new int[]{rows,columns});
+  return INSTANCE.create(rows,columns);
 }

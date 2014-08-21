@@ -1,5 +1,3 @@
 {
-  INDArray ret=create(new int[]{1,ArrayUtil.prod(shape)});
-  for (int i=0; i < ret.length(); i++)   ret.put(i,NDArrays.scalar(r.sample()));
-  return ret.reshape(shape);
+  return INSTANCE.rand(shape,r);
 }

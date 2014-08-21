@@ -1,9 +1,3 @@
 {
-  try {
-    Constructor c=complexDoubleClazz.getConstructor(float.class,float.class);
-    return (IComplexFloat)c.newInstance(real,imag);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  return INSTANCE.createFloat(real,imag);
 }

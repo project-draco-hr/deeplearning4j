@@ -1,9 +1,3 @@
 {
-  try {
-    Constructor c=retrieveConstructor(List.class,int[].class);
-    return (INDArray)c.newInstance(list,shape);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  return INSTANCE.create(list,shape);
 }

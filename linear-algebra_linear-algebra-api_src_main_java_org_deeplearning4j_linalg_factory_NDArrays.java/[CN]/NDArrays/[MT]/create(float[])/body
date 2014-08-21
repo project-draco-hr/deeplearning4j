@@ -1,3 +1,3 @@
 {
-  return create(data,new int[]{data.length});
+  return INSTANCE.create(data);
 }

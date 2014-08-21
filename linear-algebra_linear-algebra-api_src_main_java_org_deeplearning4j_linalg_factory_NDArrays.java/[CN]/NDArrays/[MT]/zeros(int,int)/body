@@ -1,3 +1,3 @@
 {
-  return zeros(new int[]{rows,columns});
+  return INSTANCE.zeros(rows,columns);
 }

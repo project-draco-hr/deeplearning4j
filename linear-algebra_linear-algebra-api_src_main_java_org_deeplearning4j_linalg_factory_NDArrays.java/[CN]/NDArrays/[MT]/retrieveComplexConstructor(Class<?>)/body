@@ -1,8 +1,0 @@
-{
-  Constructor ret=complexConstructors.get(Arrays.toString(args));
-  if (ret == null) {
-    ret=complexClazz.getConstructor(args);
-    complexConstructors.put(Arrays.toString(args),ret);
-  }
-  return ret;
-}

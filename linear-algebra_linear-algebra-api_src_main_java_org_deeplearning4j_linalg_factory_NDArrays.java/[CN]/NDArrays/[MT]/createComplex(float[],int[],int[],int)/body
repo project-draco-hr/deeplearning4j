@@ -1,9 +1,3 @@
 {
-  try {
-    Constructor c=retrieveComplexConstructor(float[].class,int[].class,int[].class,int.class);
-    return (IComplexNDArray)c.newInstance(data,shape,stride,offset);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  return INSTANCE.createComplex(data,shape,stride,offset);
 }

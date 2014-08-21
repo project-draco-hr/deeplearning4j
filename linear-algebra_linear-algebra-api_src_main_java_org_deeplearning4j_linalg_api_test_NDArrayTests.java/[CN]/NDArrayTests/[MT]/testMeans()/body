@@ -2,4 +2,5 @@
   INDArray a=NDArrays.linspace(1,4,4).reshape(2,2);
   assertEquals(NDArrays.create(new double[]{2,3}),a.mean(0));
   assertEquals(NDArrays.create(new double[]{1.5,3.5}),a.mean(1));
+  assertEquals(2.5,(double)a.mean(Integer.MAX_VALUE).element(),1e-1);
 }

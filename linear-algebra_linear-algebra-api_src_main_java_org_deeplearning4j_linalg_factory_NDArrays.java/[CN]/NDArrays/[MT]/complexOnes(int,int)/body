@@ -1,3 +1,3 @@
 {
-  return createComplex(new int[]{rows,columns});
+  return INSTANCE.complexOnes(rows,columns);
 }

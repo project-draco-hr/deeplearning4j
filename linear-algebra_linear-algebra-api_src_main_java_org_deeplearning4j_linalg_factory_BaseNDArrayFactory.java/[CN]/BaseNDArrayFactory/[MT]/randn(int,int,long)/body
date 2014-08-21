@@ -1,0 +1,3 @@
+{
+  return randn(new int[]{rows,columns},new MersenneTwister(seed));
+}
