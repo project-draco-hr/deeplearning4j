@@ -1,6 +1,6 @@
 {
   try {
-    Constructor c=clazz.getConstructor(List.class,int[].class);
+    Constructor c=retrieveConstructor(List.class,int[].class);
     return (INDArray)c.newInstance(list,shape);
   }
  catch (  Exception e) {

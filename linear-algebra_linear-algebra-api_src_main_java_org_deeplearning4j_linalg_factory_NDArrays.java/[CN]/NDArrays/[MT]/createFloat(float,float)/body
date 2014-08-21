@@ -1,6 +1,6 @@
 {
   try {
-    Constructor c=complexDoubleClazz.getConstructor(double.class,double.class);
+    Constructor c=complexDoubleClazz.getConstructor(float.class,float.class);
     return (IComplexFloat)c.newInstance(real,imag);
   }
  catch (  Exception e) {

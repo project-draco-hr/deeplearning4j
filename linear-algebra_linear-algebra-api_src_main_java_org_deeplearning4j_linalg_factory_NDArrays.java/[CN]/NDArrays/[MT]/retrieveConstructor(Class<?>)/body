@@ -1,0 +1,8 @@
+{
+  Constructor ret=constructors.get(Arrays.toString(args));
+  if (ret == null) {
+    ret=clazz.getConstructor(args);
+    constructors.put(Arrays.toString(args),ret);
+  }
+  return ret;
+}

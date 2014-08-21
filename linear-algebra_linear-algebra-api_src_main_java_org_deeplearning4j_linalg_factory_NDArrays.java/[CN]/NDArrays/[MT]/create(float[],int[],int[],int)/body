@@ -1,6 +1,6 @@
 {
   try {
-    Constructor c=clazz.getConstructor(float[].class,int[].class,int[].class,int.class);
+    Constructor c=retrieveConstructor(float[].class,int[].class,int[].class,int.class);
     return (INDArray)c.newInstance(data,shape,stride,offset);
   }
  catch (  Exception e) {

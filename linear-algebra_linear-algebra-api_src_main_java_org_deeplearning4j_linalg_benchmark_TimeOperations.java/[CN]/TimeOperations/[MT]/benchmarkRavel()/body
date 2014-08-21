@@ -1,0 +1,9 @@
+{
+  System.out.println("Benchmarking ravel...");
+  System.out.println(runNTimes(new Runnable(){
+    @Override public void run(){
+      testing.ravel();
+    }
+  }
+).getMean() + " milliseconds");
+}

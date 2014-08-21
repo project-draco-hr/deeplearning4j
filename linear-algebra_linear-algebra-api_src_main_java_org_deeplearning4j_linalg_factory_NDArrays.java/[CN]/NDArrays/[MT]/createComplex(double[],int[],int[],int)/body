@@ -1,6 +1,6 @@
 {
   try {
-    Constructor c=complexClazz.getConstructor(double[].class,int[].class,int[].class,int.class);
+    Constructor c=retrieveComplexConstructor(double[].class,int[].class,int[].class,int.class);
     return (IComplexNDArray)c.newInstance(data,shape,stride,offset);
   }
  catch (  Exception e) {
