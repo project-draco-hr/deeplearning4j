@@ -1,3 +1,4 @@
 {
-  return new ComplexNDArray(data,shape);
+  if (order == FORTRAN)   return new ComplexNDArray(data,shape,ArrayUtil.calcStridesFortran(shape));
+ else   return new ComplexNDArray(data,shape);
 }

@@ -23,7 +23,9 @@
   INDArray row222=row22;
   INDArray rowResult2=row122.mmul(row222);
   INDArray mmul=row1.mmul(row2);
+  NDArrays.factory().setOrder('f');
   INDArray result=NDArrays.create(new double[]{3,6,4,8},new int[]{2,2});
+  NDArrays.factory().setOrder('c');
   assertEquals(result,mmul);
   INDArray three=NDArrays.create(new double[]{3,4},new int[]{2});
   INDArray test=NDArrays.create(NDArrays.linspace(1,30,30).data(),new int[]{3,5,2});

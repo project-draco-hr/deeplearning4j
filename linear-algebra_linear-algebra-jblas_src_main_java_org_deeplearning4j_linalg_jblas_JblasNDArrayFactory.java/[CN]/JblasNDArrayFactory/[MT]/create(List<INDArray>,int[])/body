@@ -1,3 +1,4 @@
 {
-  return new NDArray(list,shape);
+  if (order == FORTRAN)   return new NDArray(list,shape,ArrayUtil.calcStridesFortran(shape));
+ else   return new NDArray(list,shape);
 }

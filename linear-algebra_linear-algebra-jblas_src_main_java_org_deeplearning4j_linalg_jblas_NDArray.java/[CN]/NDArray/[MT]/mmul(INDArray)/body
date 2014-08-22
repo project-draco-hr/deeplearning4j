@@ -1,4 +1,12 @@
 {
   int[] shape={rows(),other.columns()};
-  return mmuli(other,NDArrays.create(shape));
+  char order=NDArrays.factory().order();
+  boolean switchedOrder=false;
+  if (order != NDArrayFactory.FORTRAN) {
+    NDArrays.factory().setOrder(NDArrayFactory.C);
+    switchedOrder=true;
+  }
+  INDArray result=NDArrays.create(shape);
+  if (switchedOrder)   NDArrays.factory().setOrder(NDArrayFactory.C);
+  return mmuli(other,result);
 }

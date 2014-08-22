@@ -1,0 +1,10 @@
+{
+  NDArrays.factory().setOrder('c');
+  NDArrays.factory().setDType("double");
+  INDArray data=NDArrays.create(new double[]{1,2,3,4},new int[]{2,2});
+  assertEquals(2.0,(double)data.getScalar(0,1).element(),1e-1);
+  NDArrays.factory().setOrder('f');
+  INDArray data2=NDArrays.create(new double[]{1,2,3,4},new int[]{2,2});
+  assertNotEquals(data2.getScalar(0,1),data.getScalar(0,1));
+  NDArrays.factory().setOrder('c');
+}

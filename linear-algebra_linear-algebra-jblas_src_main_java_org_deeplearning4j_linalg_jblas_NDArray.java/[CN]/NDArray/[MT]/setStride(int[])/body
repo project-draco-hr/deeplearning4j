@@ -1,3 +1,4 @@
 {
+  this.oldStride=ArrayUtil.copy(this.stride);
   this.stride=stride;
 }

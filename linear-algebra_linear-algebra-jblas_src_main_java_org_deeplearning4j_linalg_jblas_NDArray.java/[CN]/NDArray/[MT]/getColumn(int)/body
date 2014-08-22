@@ -1,4 +1,5 @@
 {
-  if (shape.length == 2)   return new NDArray(data,new int[]{shape[0]},new int[]{stride[0]},offset + c);
+  if (shape.length == 2)   if (oldStride == null)   return new NDArray(data,new int[]{shape[0]},new int[]{stride[0]},offset + c);
+ else   return new NDArray(data,new int[]{shape[0]},new int[]{oldStride[0]},offset + c);
  else   throw new IllegalArgumentException("Unable to getFromOrigin column of non 2d matrix");
 }

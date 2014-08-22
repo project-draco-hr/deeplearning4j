@@ -1,3 +1,4 @@
 {
+  if (order == FORTRAN)   return create(data,shape,ArrayUtil.calcStridesFortran(shape),0);
   return create(data,shape,ArrayUtil.calcStrides(shape),0);
 }
