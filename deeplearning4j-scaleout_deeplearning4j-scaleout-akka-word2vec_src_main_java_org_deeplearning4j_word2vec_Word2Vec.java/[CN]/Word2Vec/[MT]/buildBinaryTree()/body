@@ -1,5 +1,5 @@
 {
-  PriorityQueue<VocabWord> heap=new PriorityQueue<VocabWord>(vocab.values());
+  PriorityQueue<VocabWord> heap=new PriorityQueue<>(vocab.values());
   int i=0;
   while (heap.size() > 1) {
     VocabWord min1=heap.poll();

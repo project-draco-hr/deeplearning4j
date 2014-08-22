@@ -5,9 +5,9 @@
   INDArray ga=NDArrays.ones(fa.length()).subi(ArrayUtil.toNDArray(w1.getCodes())).sub(fa).mul(alpha.floatValue());
   INDArray outer=ga.mmul(l1);
   for (int i=0; i < w1.getPoints().length; i++) {
-    INDArray toAdd=l2a.getRow(i).add(outer.getRow(i));
+    INDArray toAdd=l2a.getRow(i).addi(outer.getRow(i));
     syn1.putRow(w1.getPoints()[i],toAdd);
   }
-  INDArray updatedInput=l1.add(ga.mmul(l2a));
+  INDArray updatedInput=l1.addi(ga.mmul(l2a));
   syn0.putRow(w2.getIndex(),updatedInput);
 }
