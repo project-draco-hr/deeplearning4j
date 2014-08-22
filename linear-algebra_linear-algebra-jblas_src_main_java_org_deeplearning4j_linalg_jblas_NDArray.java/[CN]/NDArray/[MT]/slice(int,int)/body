@@ -5,5 +5,6 @@
  else     throw new IllegalAccessError("Illegal dimension for matrix");
   }
   if (slice == shape.length - 1)   return slice(dimension);
-  return new NDArray(data,ArrayUtil.removeIndex(shape,dimension),ArrayUtil.removeIndex(stride,dimension),offset + slice * stride[dimension]);
+  NDArray ret=new NDArray(data,ArrayUtil.removeIndex(shape,dimension),ArrayUtil.removeIndex(stride,dimension),offset + slice * stride[dimension],ordering);
+  return ret;
 }

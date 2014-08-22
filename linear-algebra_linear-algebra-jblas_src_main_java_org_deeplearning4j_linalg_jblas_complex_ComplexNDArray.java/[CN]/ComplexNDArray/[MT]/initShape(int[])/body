@@ -19,11 +19,13 @@
     rows=1;
   }
   this.length=ArrayUtil.prod(this.shape);
+  if (this.ordering == '\u0000')   this.ordering=NDArrays.order();
   if (this.stride == null) {
-    this.stride=ArrayUtil.calcStrides(this.shape,2);
+    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(shape,2);
+ else     this.stride=ArrayUtil.calcStrides(this.shape,2);
   }
   if (this.stride.length != this.shape.length) {
-    this.stride=ArrayUtil.calcStrides(this.shape,2);
+    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(shape,2);
+ else     this.stride=ArrayUtil.calcStrides(this.shape,2);
   }
-  this.ordering=NDArrays.order();
 }

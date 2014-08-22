@@ -20,10 +20,14 @@
     columns=this.shape[0];
     rows=1;
   }
+  if (this.ordering == '\u0000')   this.ordering=NDArrays.order();
   this.length=ArrayUtil.prod(this.shape);
-  if (this.stride == null)   this.stride=ArrayUtil.calcStrides(this.shape);
-  if (this.stride.length != this.shape.length) {
-    this.stride=ArrayUtil.calcStrides(this.shape);
+  if (this.stride == null) {
+    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(shape);
+ else     this.stride=ArrayUtil.calcStrides(this.shape);
   }
-  this.ordering=NDArrays.factory().order();
+  if (this.stride.length != this.shape.length) {
+    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(shape);
+ else     this.stride=ArrayUtil.calcStrides(this.shape);
+  }
 }

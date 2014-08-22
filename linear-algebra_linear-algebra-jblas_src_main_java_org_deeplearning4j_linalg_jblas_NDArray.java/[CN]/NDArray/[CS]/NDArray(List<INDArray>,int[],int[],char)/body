@@ -1,0 +1,8 @@
+{
+  List<double[]> list=new ArrayList<>();
+  for (int i=0; i < slices.size(); i++)   list.add(slices.get(i).data());
+  this.ordering=ordering;
+  this.data=ArrayUtil.combine(list);
+  this.stride=stride;
+  initShape(shape);
+}

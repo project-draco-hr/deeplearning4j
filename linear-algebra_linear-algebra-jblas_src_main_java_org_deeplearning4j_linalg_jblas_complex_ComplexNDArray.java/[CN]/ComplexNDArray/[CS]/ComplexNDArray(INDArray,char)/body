@@ -1,0 +1,3 @@
+{
+  this(m,ordering == NDArrayFactory.C ? ArrayUtil.calcStrides(m.shape(),2) : ArrayUtil.calcStridesFortran(m.shape(),2),ordering);
+}

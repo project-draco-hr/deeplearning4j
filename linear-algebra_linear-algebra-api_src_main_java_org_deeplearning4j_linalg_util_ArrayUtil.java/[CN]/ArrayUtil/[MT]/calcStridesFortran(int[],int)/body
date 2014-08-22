@@ -1,0 +1,10 @@
+{
+  int dimensions=shape.length;
+  int[] stride=new int[dimensions];
+  int st=startNum;
+  for (int j=0; j < stride.length; j++) {
+    stride[j]=st;
+    st*=shape[j];
+  }
+  return stride;
+}

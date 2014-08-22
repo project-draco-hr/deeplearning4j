@@ -1,4 +1,3 @@
 {
-  super(newRows,newColumns);
-  initShape(new int[]{newRows,newColumns});
+  this(newRows,newColumns,NDArrays.order());
 }

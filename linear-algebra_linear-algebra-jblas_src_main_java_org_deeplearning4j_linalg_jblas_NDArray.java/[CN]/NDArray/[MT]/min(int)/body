@@ -7,7 +7,7 @@
   }
  else {
     int[] shape=ArrayUtil.removeIndex(shape(),dimension);
-    final INDArray arr=NDArrays.create(new int[]{ArrayUtil.prod(shape)});
+    final NDArray arr=(NDArray)NDArrays.create(new int[]{ArrayUtil.prod(shape)});
     final AtomicInteger i=new AtomicInteger(0);
     iterateOverDimension(dimension,new SliceOp(){
       @Override public void operate(      DimensionSlice nd){

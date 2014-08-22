@@ -9,7 +9,7 @@
   }
   if (result == this || result == other) {
     otherArray=otherArray.ravel().reshape(otherArray.shape);
-    ComplexNDArray temp=new ComplexNDArray(resultArray.shape(),ArrayUtil.calcStridesFortran(resultArray.shape()));
+    ComplexNDArray temp=new ComplexNDArray(resultArray.shape(),ArrayUtil.calcStridesFortran(resultArray.shape()),ordering);
     NDArrayBlas.gemm(ComplexDouble.UNIT,this,otherArray,ComplexDouble.ZERO,temp);
     NDArrayBlas.copy(temp,resultArray);
   }

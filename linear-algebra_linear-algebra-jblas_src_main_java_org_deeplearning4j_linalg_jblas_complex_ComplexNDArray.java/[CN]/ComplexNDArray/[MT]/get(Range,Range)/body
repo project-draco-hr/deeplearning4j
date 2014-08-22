@@ -2,6 +2,7 @@
   rs.init(0,rows());
   cs.init(0,columns());
   ComplexNDArray result=new ComplexNDArray(rs.length(),cs.length());
+  result.ordering=ordering;
   for (; rs.hasMore(); rs.next()) {
     cs.init(0,columns());
     for (; cs.hasMore(); cs.next()) {

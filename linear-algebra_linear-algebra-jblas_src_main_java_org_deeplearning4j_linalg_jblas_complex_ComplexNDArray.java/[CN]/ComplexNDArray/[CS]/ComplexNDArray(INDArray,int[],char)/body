@@ -1,0 +1,8 @@
+{
+  this(m.shape(),stride,ordering);
+  INDArray flattened=m.reshape(new int[]{1,m.length()});
+  ComplexNDArray flatten=reshape(1,length);
+  for (int i=0; i < length; i++) {
+    flatten.put(i,flattened.getScalar(i));
+  }
+}

@@ -3,7 +3,7 @@
   char order=NDArrays.factory().order();
   boolean switchedOrder=false;
   if (order != NDArrayFactory.FORTRAN) {
-    NDArrays.factory().setOrder(NDArrayFactory.C);
+    NDArrays.factory().setOrder(NDArrayFactory.FORTRAN);
     switchedOrder=true;
   }
   INDArray result=NDArrays.create(shape);

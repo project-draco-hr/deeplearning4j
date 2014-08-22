@@ -1,0 +1,3 @@
+{
+  this(shape,ordering == NDArrayFactory.C ? calcStrides(shape,2) : calcStridesFortran(shape,2),offset,ordering);
+}

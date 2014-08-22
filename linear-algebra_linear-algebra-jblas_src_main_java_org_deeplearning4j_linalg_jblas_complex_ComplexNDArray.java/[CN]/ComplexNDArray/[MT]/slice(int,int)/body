@@ -1,6 +1,7 @@
 {
   int offset=this.offset + dimension * stride[slice];
   if (this.offset == 0)   offset*=2;
+  ComplexNDArray ret;
   if (shape.length == 2) {
     int st=stride[1];
     if (st == 1) {

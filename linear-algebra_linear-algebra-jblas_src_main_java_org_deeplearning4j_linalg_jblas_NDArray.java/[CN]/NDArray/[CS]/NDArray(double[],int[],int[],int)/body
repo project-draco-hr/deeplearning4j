@@ -1,7 +1,3 @@
 {
-  if (offset >= data.length)   throw new IllegalArgumentException("Invalid offset: must be < data.length");
-  this.offset=offset;
-  this.stride=stride;
-  initShape(shape);
-  if (data != null && data.length > 0)   this.data=data;
+  this(data,shape,stride,offset,NDArrays.order());
 }

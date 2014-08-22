@@ -1,3 +1,3 @@
 {
-  this(slices,shape,ArrayUtil.calcStrides(shape,2));
+  this(slices,shape,NDArrays.order());
 }
