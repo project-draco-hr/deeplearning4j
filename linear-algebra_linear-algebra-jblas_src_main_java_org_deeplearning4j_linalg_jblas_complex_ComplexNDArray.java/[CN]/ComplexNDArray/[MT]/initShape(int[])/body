@@ -25,4 +25,5 @@
   if (this.stride.length != this.shape.length) {
     this.stride=ArrayUtil.calcStrides(this.shape,2);
   }
+  this.ordering=NDArrays.order();
 }
