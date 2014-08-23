@@ -1,0 +1,12 @@
+{
+  DoubleMatrix d=new DoubleMatrix();
+  ClassPathResource c=new ClassPathResource("/test-matrix.ser");
+  d.in(new DataInputStream(c.getInputStream()));
+  INDArray assertion=JblasSerde.readJblasBinary(new DataInputStream(c.getInputStream()));
+  assertTrue(Arrays.equals(new int[]{d.rows,d.columns},assertion.shape()));
+  for (int i=0; i < d.rows; i++) {
+    for (int j=0; j < d.columns; j++) {
+      assertEquals(d.get(i,j),(double)assertion.getScalar(i,j).element(),1e-1);
+    }
+  }
+}

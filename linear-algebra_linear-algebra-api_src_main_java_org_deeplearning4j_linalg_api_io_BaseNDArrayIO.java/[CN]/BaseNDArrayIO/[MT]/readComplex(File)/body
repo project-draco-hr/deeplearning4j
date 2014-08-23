@@ -1,0 +1,6 @@
+{
+  FileInputStream fis=new FileInputStream(file);
+  IComplexNDArray ret=readComplex(fis);
+  fis.close();
+  return ret;
+}

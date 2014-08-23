@@ -1,8 +1,9 @@
 {
   double[] data=new double[]{1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,1,1,0,0,0,1,1,1,0};
+  ClassPathResource r3=new ClassPathResource("/test-matrix.ser");
   INDArray d=NDArrays.create(data,new int[]{7,6});
   RandomGenerator g=new MersenneTwister(123);
-  RBM r=new RBM.Builder().numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
+  RBM r=new RBM.Builder().weightInit(WeightInit.SI).numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
   r.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
   double d5=r.getReConstructionCrossEntropy();
   INDArray v=new NDArray(new double[]{1,1,0,0,0,0,0,0,0,1,1,0},new int[]{2,6});
@@ -14,5 +15,4 @@
   assertEquals(r2.gethBias(),r.gethBias());
   assertEquals(r2.getvBias(),r.getvBias());
   r2.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
-  log.info("Cross entropy " + r.getReConstructionCrossEntropy());
 }

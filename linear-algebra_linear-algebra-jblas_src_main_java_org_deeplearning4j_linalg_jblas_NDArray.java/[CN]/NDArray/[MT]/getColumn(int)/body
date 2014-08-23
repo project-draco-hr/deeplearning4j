@@ -1,7 +1,13 @@
 {
   if (shape.length == 2) {
-    NDArray ret=new NDArray(data,new int[]{shape[0]},new int[]{stride[0]},offset + c,ordering);
-    return ret;
+    if (ordering == NDArrayFactory.C) {
+      NDArray ret=new NDArray(data,new int[]{shape[0]},new int[]{stride[0]},offset + c,ordering);
+      return ret;
+    }
+ else {
+      NDArray ret=new NDArray(data,new int[]{shape[0]},new int[]{stride[1]},offset + c,ordering);
+      return ret;
+    }
   }
  else   throw new IllegalArgumentException("Unable to getFromOrigin column of non 2d matrix");
 }

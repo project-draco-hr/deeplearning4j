@@ -7,7 +7,11 @@
   }
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
-  ComplexNDArray ndArray=new ComplexNDArray(data,shape,stride,offset);
-  ndArray.ordering=ordering;
+  if (isVector() && shape.length != this.shape.length) {
+    ComplexNDArray ndArray=new ComplexNDArray(data,shape,NDArrays.getComplexStrides(shape,'c'),offset,ordering);
+    ndArray.ordering=ordering;
+    return ndArray;
+  }
+  ComplexNDArray ndArray=new ComplexNDArray(data,shape,stride,offset,ordering);
   return ndArray;
 }

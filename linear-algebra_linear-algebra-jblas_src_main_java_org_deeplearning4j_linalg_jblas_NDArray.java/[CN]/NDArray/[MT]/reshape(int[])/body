@@ -7,6 +7,10 @@
   }
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
+  if (isRowVector() && shape.length != 1 && ordering == NDArrayFactory.FORTRAN) {
+    NDArray ndArray=new NDArray(data,shape,NDArrays.getStrides(shape,'c'),offset,ordering);
+    return ndArray;
+  }
   NDArray ndArray=new NDArray(data,shape,stride,offset,ordering);
   return ndArray;
 }

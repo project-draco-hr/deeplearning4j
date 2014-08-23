@@ -1,0 +1,3 @@
+{
+  return JblasSerde.readJblasBinary(new DataInputStream(is));
+}

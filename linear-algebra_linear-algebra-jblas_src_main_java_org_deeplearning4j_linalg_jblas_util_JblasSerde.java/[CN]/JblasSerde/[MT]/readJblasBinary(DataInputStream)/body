@@ -1,0 +1,5 @@
+{
+  DoubleMatrix d=new DoubleMatrix();
+  d.in(dataInputStream);
+  return new NDArray(d);
+}
