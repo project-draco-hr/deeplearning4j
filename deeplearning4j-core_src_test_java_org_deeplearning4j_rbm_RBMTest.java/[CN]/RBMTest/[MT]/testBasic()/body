@@ -1,7 +1,8 @@
 {
-  double[] data=new double[]{1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,1,1,0,0,0,1,1,1,0};
+  double[][] data=new double[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0},{0,0,1,1,1,0}};
   ClassPathResource r3=new ClassPathResource("/test-matrix.ser");
-  INDArray d=NDArrays.create(data,new int[]{7,6});
+  NDArrays.factory().setOrder('f');
+  INDArray d=NDArrays.create(data);
   RandomGenerator g=new MersenneTwister(123);
   RBM r=new RBM.Builder().weightInit(WeightInit.SI).numberOfVisible(d.columns()).numHidden(4).withRandom(g).build();
   r.trainTillConvergence(d,0.01,new Object[]{1,0.01,1000});
