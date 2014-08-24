@@ -1,0 +1,12 @@
+{
+  Pointer d_A=new Pointer();
+  int length=x.length();
+  JCublas.cublasInit();
+  JCublas.setExceptionsEnabled(true);
+  JCublas.cublasAlloc(length,Sizeof.DOUBLE,d_A);
+  OnePointerV(d_A,x);
+  JCublas.cublasDscal(length,alpha,d_A,1);
+  gv(d_A,x);
+  JCublas.cublasFree(d_A);
+  return x;
+}

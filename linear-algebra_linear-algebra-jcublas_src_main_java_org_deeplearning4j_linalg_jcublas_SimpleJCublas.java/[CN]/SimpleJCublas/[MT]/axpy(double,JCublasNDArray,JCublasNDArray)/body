@@ -1,0 +1,14 @@
+{
+  Pointer d_A=new Pointer();
+  Pointer d_B=new Pointer();
+  int length=A.length();
+  int length_o=B.length();
+  if (length != length_o)   return;
+  JCublas.cublasInit();
+  JCublas.setExceptionsEnabled(true);
+  TwoPointersV(d_A,d_B,A,B);
+  JCublas.cublasDaxpy(length,da,d_A,1,d_B,1);
+  gv(d_B,B);
+  JCublas.cublasFree(d_A);
+  JCublas.cublasFree(d_B);
+}

@@ -1,0 +1,9 @@
+{
+  Pointer X=new Pointer();
+  int max;
+  JCublas.cublasInit();
+  JCublas.setExceptionsEnabled(true);
+  OnePointerV(X,x);
+  max=JCublas.cublasIdamax(x.length(),X,1);
+  return max;
+}
