@@ -1,4 +1,7 @@
 {
-  if (!isMatrix())   throw new IllegalStateException("Unable to getFromOrigin row/column from a non matrix");
+  if (!isMatrix()) {
+    if (stride.length < 2 && row >= 1 && column >= 1)     throw new IllegalStateException("Unable to getFromOrigin row/column from a non matrix");
+  }
+  if (stride.length < 2)   return row * stride[0] + column;
   return row * stride[0] + column * stride[1];
 }

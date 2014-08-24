@@ -1,6 +1,6 @@
 {
   INDArray n=null;
-  if (!o.getClass().isAssignableFrom(INDArray.class))   return false;
+  if (!(o instanceof INDArray))   return false;
   if (n == null)   n=(INDArray)o;
   if (isScalar() && n.isScalar()) {
     double val=(double)element();

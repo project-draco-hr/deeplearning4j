@@ -1,6 +1,6 @@
 {
-  if (dimension == Integer.MAX_VALUE) {
-    return reshape(new int[]{1,length}).mean(Integer.MAX_VALUE);
+  if (dimension == Integer.MAX_VALUE || isVector()) {
+    return NDArrays.scalar(Ops.mean(this));
   }
  else   if (isVector()) {
     return NDArrays.scalar((double)sum(Integer.MAX_VALUE).element() / length());
