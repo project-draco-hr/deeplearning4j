@@ -1,0 +1,45 @@
+{
+  int[][] oldShapeAndStride=getNonOneStridesAndShape();
+  int[] oldShape=oldShapeAndStride[0];
+  int[] oldStride=oldShapeAndStride[1];
+  int newNd=shape.length;
+  int oldNd=oldShapeAndStride[0].length;
+  int np, op;
+  int nk;
+  if (ArrayUtil.prod(shape) != ArrayUtil.prod(oldShape))   return null;
+  if (ArrayUtil.prod(shape) == 0)   return null;
+  int[] newStrides=new int[oldStride.length];
+  int ni=0, oi=0, nj=1, oj=1;
+  for (; ni < newNd && oi < oldNd; ni=nj++, oi=oj++) {
+    np=shape[ni];
+    op=oldShape[oi];
+    while (np != op) {
+      if (np < op)       np*=shape[nj++];
+ else       op*=oldShape[oj++];
+    }
+    for (int ok=oi; ok < oj - 1; ok++) {
+      if (ordering == NDArrayFactory.FORTRAN) {
+        if (oldStride[ok + 1] != oldStride[ok] * oldStride[ok])         return null;
+      }
+ else {
+        if (oldStride[ok] != oldShape[ok + 1] * oldStride[ok + 1])         return null;
+      }
+    }
+    if (ordering == NDArrayFactory.FORTRAN) {
+      newStrides[ni]=oldStride[oi];
+      for (nk=ni + 1; nk < nj; nk++) {
+        newStrides[nk]=newStrides[nk - 1] * shape[nk - 1];
+      }
+    }
+ else {
+      newStrides[nj - 1]=oldStride[oj - 1];
+      for (nk=nj - 1; nk > ni; nk--)       newStrides[nk - 1]=newStrides[nk] * shape[nk];
+    }
+  }
+  int last_stride=0;
+  if (ni >= 1)   last_stride=newStrides[ni - 1];
+ else   last_stride=shape[shape.length - 1];
+  if (ordering == NDArrayFactory.FORTRAN)   last_stride*=shape[ni - 1];
+  for (nk=ni; nk < newNd; nk++)   newStrides[nk]=last_stride;
+  return newStrides;
+}

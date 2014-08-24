@@ -8,10 +8,52 @@
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
   if (Arrays.equals(shape(),shape))   return this;
-  if (ordering == NDArrayFactory.FORTRAN) {
-    INDArray ndArray=NDArrays.create(data,shape,stride,offset,ordering);
+  int[] newStrides=newStridesReshape(shape);
+  if (newStrides != null) {
+    INDArray ndArray=NDArrays.create(data,shape,newStrides,offset,ordering);
     return ndArray;
   }
-  INDArray ndArray=NDArrays.create(data,shape,stride,offset,ordering);
-  return ndArray;
+ else {
+    INDArray create=NDArrays.create(shape,NDArrays.getStrides(shape,ordering));
+    final INDArray flattened=ravel();
+    int vectorSize=create.size(create.shape().length - 1);
+    final AtomicInteger vectorCounter=new AtomicInteger(0);
+    if (ordering == NDArrayFactory.C) {
+      create.iterateOverAllRows(new SliceOp(){
+        @Override public void operate(        DimensionSlice nd){
+          INDArray nd1=(INDArray)nd.getResult();
+          for (int i=0; i < nd1.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd1.put(i,flattened.getScalar(element));
+          }
+        }
+        @Override public void operate(        INDArray nd){
+          for (int i=0; i < nd.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd.put(i,flattened.getScalar(element));
+          }
+        }
+      }
+);
+    }
+ else     if (ordering == NDArrayFactory.FORTRAN) {
+      create.iterateOverAllColumns(new SliceOp(){
+        @Override public void operate(        DimensionSlice nd){
+          INDArray nd1=(INDArray)nd.getResult();
+          for (int i=0; i < nd1.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd1.put(i,flattened.getScalar(element));
+          }
+        }
+        @Override public void operate(        INDArray nd){
+          for (int i=0; i < nd.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd.put(i,flattened.getScalar(element));
+          }
+        }
+      }
+);
+    }
+    return create;
+  }
 }

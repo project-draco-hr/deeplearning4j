@@ -1,3 +1,27 @@
 {
-  return reshape(new int[]{1,length()});
+  final INDArray ret=NDArrays.create(length,'c');
+  final AtomicInteger counter=new AtomicInteger(0);
+  SliceOp op=new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+      INDArray nd1=(INDArray)nd.getResult();
+      for (int i=0; i < nd1.length(); i++) {
+        int element=counter.getAndIncrement();
+        ret.putScalar(element,nd1.get(i));
+      }
+    }
+    @Override public void operate(    INDArray nd){
+      for (int i=0; i < nd.length(); i++) {
+        int element=counter.getAndIncrement();
+        ret.putScalar(element,nd.get(i));
+      }
+    }
+  }
+;
+  if (ordering == NDArrayFactory.C) {
+    iterateOverAllRows(op);
+  }
+ else   if (ordering == NDArrayFactory.FORTRAN) {
+    iterateOverAllColumns(op);
+  }
+  return ret;
 }
