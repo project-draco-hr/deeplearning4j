@@ -8,6 +8,16 @@
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
   if (Arrays.equals(shape(),shape))   return this;
+  if (isRowVector()) {
+    if (Shape.isColumnVectorShape(shape)) {
+      return NDArrays.create(data,shape,NDArrays.getStrides(shape,ordering),offset,ordering);
+    }
+  }
+  if (isColumnVector()) {
+    if (Shape.isRowVectorShape(shape)) {
+      return NDArrays.create(data,shape,NDArrays.getStrides(shape,ordering),offset,ordering);
+    }
+  }
   int[] newStrides=newStridesReshape(shape);
   if (newStrides != null) {
     INDArray ndArray=NDArrays.create(data,shape,newStrides,offset,ordering);
