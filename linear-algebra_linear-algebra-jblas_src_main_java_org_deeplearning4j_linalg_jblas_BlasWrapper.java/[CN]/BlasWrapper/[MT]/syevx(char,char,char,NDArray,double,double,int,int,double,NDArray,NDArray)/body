@@ -1,10 +1,10 @@
 {
-  int n=a.rows;
+  int n=a.rows();
   int[] iwork=new int[5 * n];
   int[] ifail=new int[n];
   int[] m=new int[1];
   int info;
-  info=NativeBlas.dsyevx(jobz,range,uplo,n,a.data,0,a.rows,vl,vu,il,iu,abstol,m,0,w.data,0,z.data,0,z.rows,iwork,0,ifail,0);
+  info=NativeBlas.dsyevx(jobz,range,uplo,n,a.data(),0,a.rows(),vl,vu,il,iu,abstol,m,0,w.data(),0,z.data(),0,z.rows(),iwork,0,ifail,0);
   if (info > 0) {
     StringBuilder msg=new StringBuilder();
     msg.append("Not all eigenvalues converged. Non-converging eigenvalues were: ");

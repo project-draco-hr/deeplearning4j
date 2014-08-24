@@ -1,4 +1,4 @@
 {
-  int info=NativeBlas.dgeqrf(A.rows,A.columns,A.data,0,A.rows,tau.data,0);
+  int info=NativeBlas.dgeqrf(A.rows(),A.columns(),A.data(),0,A.rows(),tau.data(),0);
   checkInfo("GEQRF",info);
 }

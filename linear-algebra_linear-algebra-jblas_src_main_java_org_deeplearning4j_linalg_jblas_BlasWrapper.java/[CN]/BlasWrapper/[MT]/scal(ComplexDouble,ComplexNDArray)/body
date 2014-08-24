@@ -1,4 +1,4 @@
 {
-  NativeBlas.zscal(x.length,alpha,x.data,0,1);
+  NativeBlas.zscal(x.length(),alpha,x.data(),0,1);
   return x;
 }

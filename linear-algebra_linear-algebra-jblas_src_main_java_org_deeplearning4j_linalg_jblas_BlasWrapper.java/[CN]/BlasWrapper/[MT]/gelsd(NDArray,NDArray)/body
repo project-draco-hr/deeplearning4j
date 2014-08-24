@@ -1,10 +1,10 @@
 {
-  int m=A.rows;
-  int n=A.columns;
-  int nrhs=B.columns;
+  int m=A.rows();
+  int n=A.columns();
+  int nrhs=B.columns();
   int minmn=min(m,n);
   int maxmn=max(m,n);
-  if (B.rows < maxmn) {
+  if (B.rows() < maxmn) {
     throw new SizeException("Result matrix B must be padded to contain the solution matrix X!");
   }
   int smlsiz=NativeBlas.ilaenv(9,"DGELSD","",m,n,nrhs,0);
@@ -12,7 +12,7 @@
   int[] iwork=new int[3 * minmn * nlvl + 11 * minmn];
   double[] s=new double[minmn];
   int[] rank=new int[1];
-  int info=NativeBlas.dgelsd(m,n,nrhs,A.data,0,m,B.data,0,B.rows,s,0,-1,rank,0,iwork,0);
+  int info=NativeBlas.dgelsd(m,n,nrhs,A.data(),0,m,B.data(),0,B.rows(),s,0,-1,rank,0,iwork,0);
   if (info == 0) {
     return;
   }

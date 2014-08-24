@@ -1,7 +1,7 @@
 {
-  int n=A.rows;
-  int nrhs=B.columns;
-  int info=NativeBlas.dposv(uplo,n,nrhs,A.data,0,A.rows,B.data,0,B.rows);
+  int n=A.rows();
+  int nrhs=B.columns();
+  int info=NativeBlas.dposv(uplo,n,nrhs,A.data(),0,A.rows(),B.data(),0,B.rows());
   checkInfo("DPOSV",info);
   if (info > 0)   throw new LapackArgumentException("DPOSV","Leading minor of order i of A is not positive definite.");
 }
