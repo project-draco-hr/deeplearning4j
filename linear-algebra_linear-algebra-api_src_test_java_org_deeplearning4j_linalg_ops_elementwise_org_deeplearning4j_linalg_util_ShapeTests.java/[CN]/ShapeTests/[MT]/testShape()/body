@@ -1,0 +1,7 @@
+{
+  assertTrue(Shape.isColumnVectorShape(new int[]{10,1}));
+  assertFalse(Shape.isColumnVectorShape(new int[]{1,10}));
+  assertTrue(Shape.isRowVectorShape(new int[]{1}));
+  assertTrue(Shape.isRowVectorShape(new int[]{10}));
+  assertTrue(Shape.isRowVectorShape(new int[]{1,10}));
+}
