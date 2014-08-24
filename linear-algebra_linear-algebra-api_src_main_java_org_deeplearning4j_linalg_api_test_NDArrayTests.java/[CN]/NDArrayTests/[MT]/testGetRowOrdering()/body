@@ -2,6 +2,6 @@
   INDArray row1=NDArrays.linspace(1,4,4).reshape(2,2);
   NDArrays.factory().setOrder('f');
   INDArray row1Fortran=NDArrays.linspace(1,4,4).reshape(2,2);
-  assertEquals(row1.getScalar(0,1),row1Fortran.getScalar(0,1));
+  assertNotEquals(row1.getScalar(0,1),row1Fortran.getScalar(0,1));
   NDArrays.factory().setOrder('c');
 }
