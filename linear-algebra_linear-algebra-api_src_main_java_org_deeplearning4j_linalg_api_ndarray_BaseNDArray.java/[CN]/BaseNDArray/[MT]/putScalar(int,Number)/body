@@ -1,3 +1,5 @@
 {
-  return put(i,NDArrays.scalar(value));
+  int idx=linearIndex(i);
+  data[idx]=value.doubleValue();
+  return this;
 }
