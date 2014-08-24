@@ -1,3 +1,7 @@
 {
-  return null;
+  double a=absoluteValue();
+  double s2=(double)Math.sqrt(2);
+  double p=(double)Math.sqrt(a + realComponent()) / s2;
+  double q=(double)Math.sqrt(a - realComponent()) / s2 * Math.signum(imaginaryComponent());
+  return new JCublasComplexDouble(p,q);
 }

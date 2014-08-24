@@ -1,0 +1,7 @@
+{
+  double a=abs();
+  double s2=(double)Math.sqrt(2);
+  double p=(double)Math.sqrt(a + r) / s2;
+  double q=(double)Math.sqrt(a - r) / s2 * Math.signum(i);
+  return new ComplexDouble(p,q);
+}

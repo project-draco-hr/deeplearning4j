@@ -1,7 +1,6 @@
 {
+  init();
   Pointer X=new Pointer();
-  JCublas.cublasInit();
-  JCublas.setExceptionsEnabled(true);
   OnePointerV(X,x);
   double sum=0;
   sum=JCublas.cublasDasum(x.length(),X,1);

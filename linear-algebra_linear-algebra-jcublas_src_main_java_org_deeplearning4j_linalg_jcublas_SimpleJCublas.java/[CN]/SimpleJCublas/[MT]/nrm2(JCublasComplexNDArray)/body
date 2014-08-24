@@ -1,3 +1,8 @@
 {
-  return 0;
+  init();
+  Pointer d_A=new Pointer();
+  OnePointerVi(d_A,A);
+  double s=JCublas.cublasDnrm2(A.length(),d_A,2);
+  JCublas.cublasShutdown();
+  return s;
 }

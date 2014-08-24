@@ -1,0 +1,10 @@
+{
+  if (this == result) {
+    r-=a;
+  }
+ else {
+    result.r=r - a;
+    result.i=i;
+  }
+  return result;
+}

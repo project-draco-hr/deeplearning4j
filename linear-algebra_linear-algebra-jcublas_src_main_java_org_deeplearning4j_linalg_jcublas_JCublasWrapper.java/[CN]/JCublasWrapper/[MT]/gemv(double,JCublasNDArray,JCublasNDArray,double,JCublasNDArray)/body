@@ -1,4 +1,4 @@
 {
-  c=SimpleJCublas.gemm(a,b,alpha,beta);
+  c=SimpleJCublas.gemv(a,b,c,alpha,beta);
   return c;
 }

@@ -1,0 +1,8 @@
+{
+  double d=c.r * c.r + c.i * c.i;
+  double newR=(r * c.r + i * c.i) / d;
+  double newI=(i * c.r - r * c.i) / d;
+  result.r=newR;
+  result.i=newI;
+  return result;
+}

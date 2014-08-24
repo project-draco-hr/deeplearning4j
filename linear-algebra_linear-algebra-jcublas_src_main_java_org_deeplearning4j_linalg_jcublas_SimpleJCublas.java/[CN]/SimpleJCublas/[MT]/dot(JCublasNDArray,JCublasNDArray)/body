@@ -1,6 +1,7 @@
 {
   Pointer d_A=new Pointer();
   Pointer d_B=new Pointer();
+  init();
   TwoPointersV(d_A,d_B,x,y);
   double dott=0;
   dott=JCublas.cublasDdot(x.length(),d_A,1,d_B,1);

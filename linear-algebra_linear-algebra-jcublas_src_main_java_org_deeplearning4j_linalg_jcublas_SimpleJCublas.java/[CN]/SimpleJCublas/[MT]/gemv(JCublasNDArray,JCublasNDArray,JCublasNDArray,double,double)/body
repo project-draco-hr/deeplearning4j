@@ -1,0 +1,14 @@
+{
+  init();
+  Pointer d_A=new Pointer();
+  Pointer d_B=new Pointer();
+  Pointer d_C=new Pointer();
+  ThreePointersV(d_A,d_B,d_C,A,B);
+  JCublas.cublasDgemv('n',A.rows(),B.columns(),alpha,d_A,A.rows(),d_B,1,beta,d_C,1);
+  gv(d_C,C);
+  JCublas.cublasFree(d_A);
+  JCublas.cublasFree(d_B);
+  JCublas.cublasFree(d_C);
+  JCublas.cublasShutdown();
+  return C;
+}

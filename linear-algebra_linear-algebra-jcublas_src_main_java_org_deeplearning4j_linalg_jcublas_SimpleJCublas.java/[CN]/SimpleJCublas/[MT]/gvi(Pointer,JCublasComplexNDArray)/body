@@ -1,0 +1,3 @@
+{
+  JCublas.cublasGetVector(B.length(),Sizeof.DOUBLE,d_A,1,Pointer.to(B.data()),1);
+}
