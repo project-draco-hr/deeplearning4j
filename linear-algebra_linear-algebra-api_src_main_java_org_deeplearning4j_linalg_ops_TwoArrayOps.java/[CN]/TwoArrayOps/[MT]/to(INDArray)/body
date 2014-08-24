@@ -1,4 +1,5 @@
 {
-  this.to=to.reshape(new int[]{1,to.length()});
+  if (!to.isVector())   this.to=to.reshape(new int[]{1,to.length()});
+ else   this.to=to;
   return this;
 }

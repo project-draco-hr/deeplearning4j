@@ -1,4 +1,5 @@
 {
-  this.other=other.reshape(new int[]{1,other.length()});
+  if (!other.isVector())   this.other=other.reshape(new int[]{1,other.length()});
+ else   this.other=other;
   return this;
 }
