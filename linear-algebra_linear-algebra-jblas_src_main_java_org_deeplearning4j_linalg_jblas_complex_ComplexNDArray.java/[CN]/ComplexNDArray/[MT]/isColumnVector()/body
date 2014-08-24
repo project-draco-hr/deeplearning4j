@@ -1,5 +1,0 @@
-{
-  if (shape().length == 1)   return false;
-  if (isVector())   return shape()[1] == 1;
-  return false;
-}

@@ -1,0 +1,6 @@
+{
+  checkArrangeArray(rearrange);
+  int[] newShape=doPermuteSwap(shape,rearrange);
+  int[] newStride=doPermuteSwap(stride,rearrange);
+  return NDArrays.create(data,newShape,newStride,offset,ordering);
+}

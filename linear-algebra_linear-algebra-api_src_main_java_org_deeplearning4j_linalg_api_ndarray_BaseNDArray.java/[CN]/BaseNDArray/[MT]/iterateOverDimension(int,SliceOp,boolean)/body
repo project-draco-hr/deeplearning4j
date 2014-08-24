@@ -1,0 +1,47 @@
+{
+  if (dimension >= shape.length)   throw new IllegalArgumentException("Unable to remove dimension  " + dimension + " was >= shape length");
+  if (isScalar()) {
+    if (dimension > 0)     throw new IllegalArgumentException("Dimension must be 0 for a scalar");
+ else {
+      DimensionSlice slice=this.vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
+      if (modify && slice.getIndices() != null) {
+        INDArray result=(INDArray)slice.getResult();
+        for (int i=0; i < slice.getIndices().length; i++) {
+          data[slice.getIndices()[i]]=(double)result.getScalar(i).element();
+        }
+      }
+    }
+  }
+ else   if (isVector()) {
+    if (dimension == 0) {
+      DimensionSlice slice=this.vectorForDimensionAndOffset(0,0);
+      op.operate(slice);
+      if (modify && slice.getIndices() != null) {
+        INDArray result=(INDArray)slice.getResult();
+        for (int i=0; i < slice.getIndices().length; i++) {
+          data[slice.getIndices()[i]]=(double)result.getScalar(i).element();
+        }
+      }
+    }
+ else     if (dimension == 1) {
+      for (int i=0; i < length; i++) {
+        DimensionSlice slice=vectorForDimensionAndOffset(dimension,i);
+        op.operate(slice);
+        if (modify && slice.getIndices() != null) {
+          INDArray result=(INDArray)slice.getResult();
+          for (int j=0; j < slice.getIndices().length; j++) {
+            data[slice.getIndices()[j]]=(double)result.getScalar(j).element();
+          }
+        }
+      }
+    }
+ else     throw new IllegalArgumentException("Illegal dimension for vector " + dimension);
+  }
+ else {
+    for (int i=0; i < vectorsAlongDimension(dimension); i++) {
+      INDArray vector=vectorAlongDimension(i,dimension);
+      op.operate(vector);
+    }
+  }
+}

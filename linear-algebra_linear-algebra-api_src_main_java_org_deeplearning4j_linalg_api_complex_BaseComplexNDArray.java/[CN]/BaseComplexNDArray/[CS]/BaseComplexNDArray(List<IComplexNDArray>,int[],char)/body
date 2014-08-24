@@ -1,0 +1,3 @@
+{
+  this(slices,shape,ordering == NDArrayFactory.C ? ArrayUtil.calcStrides(shape,2) : ArrayUtil.calcStridesFortran(shape,2),ordering);
+}

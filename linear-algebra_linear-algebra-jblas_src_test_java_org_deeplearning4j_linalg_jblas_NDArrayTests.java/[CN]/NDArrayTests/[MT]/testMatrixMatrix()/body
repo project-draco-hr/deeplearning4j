@@ -1,0 +1,16 @@
+{
+  double[][] data=new double[][]{{1,2,3,4},{5,6,7,8}};
+  NDArrays.factory().setOrder('f');
+  double[][] mmul={{1,2,3,4},{5,6,7,8}};
+  DoubleMatrix d=new DoubleMatrix(data).reshape(4,2);
+  INDArray d2=NDArrays.create(data).reshape(4,2);
+  assertEquals(d.rows,d2.rows());
+  assertEquals(d.columns,d2.columns());
+  verifyElements(d,d2);
+  INDArray toMmulD2=NDArrays.create(mmul);
+  DoubleMatrix toMmulD=new DoubleMatrix(mmul);
+  DoubleMatrix mmulResultD=d.mmul(toMmulD);
+  INDArray mmulResultD2=d2.mmul(toMmulD2);
+  verifyElements(mmulResultD,mmulResultD2);
+  NDArrays.factory().setOrder('c');
+}

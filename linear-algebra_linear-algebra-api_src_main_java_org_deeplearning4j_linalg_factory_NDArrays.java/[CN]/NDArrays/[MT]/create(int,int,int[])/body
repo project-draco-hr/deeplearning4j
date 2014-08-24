@@ -1,3 +1,3 @@
 {
-  return INSTANCE.create(rows,columns,stride);
+  return create(rows,columns,stride,order());
 }

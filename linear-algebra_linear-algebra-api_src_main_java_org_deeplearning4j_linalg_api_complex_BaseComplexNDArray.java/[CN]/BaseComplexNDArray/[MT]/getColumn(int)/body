@@ -1,0 +1,8 @@
+{
+  if (shape.length == 2) {
+    int offset=this.offset + c * 2;
+    IComplexNDArray ret=NDArrays.createComplex(data,new int[]{shape[0],1},new int[]{stride[0],2},offset,ordering);
+    return ret;
+  }
+ else   throw new IllegalArgumentException("Unable to getFromOrigin row of non 2d matrix");
+}

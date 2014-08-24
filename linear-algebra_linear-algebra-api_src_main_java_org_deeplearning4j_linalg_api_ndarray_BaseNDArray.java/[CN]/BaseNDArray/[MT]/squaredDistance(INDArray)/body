@@ -1,0 +1,8 @@
+{
+  double sd=0.0;
+  for (int i=0; i < length; i++) {
+    double d=(double)getScalar(i).element() - (double)other.getScalar(i).element();
+    sd+=d * d;
+  }
+  return sd;
+}

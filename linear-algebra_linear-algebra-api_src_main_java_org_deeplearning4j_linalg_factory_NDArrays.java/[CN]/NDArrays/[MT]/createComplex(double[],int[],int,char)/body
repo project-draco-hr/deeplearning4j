@@ -1,0 +1,3 @@
+{
+  return INSTANCE.createComplex(data,ints,ArrayUtil.calcStrides(ints,2),offset,ordering);
+}

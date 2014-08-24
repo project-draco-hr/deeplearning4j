@@ -1,0 +1,10 @@
+{
+  double[] ret=new double[length * 2];
+  IComplexNDArray flattened=ravel();
+  int count=0;
+  for (int i=0; i < flattened.length(); i++) {
+    ret[count++]=flattened.getComplex(i).realComponent().doubleValue();
+    ret[count++]=flattened.getComplex(i).imaginaryComponent().doubleValue();
+  }
+  return ret;
+}

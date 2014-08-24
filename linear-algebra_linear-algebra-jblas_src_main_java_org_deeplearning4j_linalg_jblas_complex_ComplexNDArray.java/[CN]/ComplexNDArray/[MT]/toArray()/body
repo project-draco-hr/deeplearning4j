@@ -1,6 +1,0 @@
-{
-  length=ArrayUtil.prod(shape);
-  ComplexDouble[] ret=new ComplexDouble[length];
-  for (int i=0; i < ret.length; i++)   ret[i]=get(i);
-  return ret;
-}

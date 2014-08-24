@@ -1,0 +1,6 @@
+{
+  if (isRowVector())   return NDArrays.createComplex(data,new int[]{shape[0],1},offset);
+ else   if (isColumnVector())   return NDArrays.createComplex(data,new int[]{shape[0]},offset);
+  IComplexNDArray n=NDArrays.createComplex(data,reverseCopy(shape),reverseCopy(stride),offset);
+  return n;
+}

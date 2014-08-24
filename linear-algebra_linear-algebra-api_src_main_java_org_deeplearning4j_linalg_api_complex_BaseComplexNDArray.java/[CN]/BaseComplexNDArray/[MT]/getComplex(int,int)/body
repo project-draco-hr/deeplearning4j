@@ -1,0 +1,4 @@
+{
+  int idx=index(i,j);
+  return NDArrays.createDouble(data[idx],data[idx + 1]);
+}

@@ -1,0 +1,6 @@
+{
+  length=ArrayUtil.prod(shape);
+  IComplexNumber[] ret=new IComplexNumber[length];
+  for (int i=0; i < ret.length; i++)   ret[i]=getComplex(i);
+  return ret;
+}

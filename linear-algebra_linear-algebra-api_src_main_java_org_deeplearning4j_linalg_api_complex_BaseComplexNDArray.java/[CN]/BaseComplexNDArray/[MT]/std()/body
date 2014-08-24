@@ -1,0 +1,8 @@
+{
+  StandardDeviation dev=new StandardDeviation();
+  INDArray real=getReal();
+  INDArray imag=imag();
+  double std=dev.evaluate(real.data());
+  double std2=dev.evaluate(imag.data());
+  return NDArrays.createDouble(std,std2);
+}

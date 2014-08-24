@@ -1,0 +1,13 @@
+{
+  int count=0;
+  IComplexNDArray ret=NDArrays.createComplex(new int[]{shape[dimension]});
+  boolean newSlice=false;
+  List<Integer> indices=new ArrayList<>();
+  for (int j=offset; count < this.shape[dimension]; j+=this.stride[dimension]) {
+    IComplexDouble d=NDArrays.createDouble(data[j],data[j + 1]);
+    indices.add(j);
+    ret.putScalar(count++,d);
+    if (j >= currOffsetForSlice)     newSlice=true;
+  }
+  return new DimensionSlice(newSlice,ret,ArrayUtil.toArray(indices));
+}

@@ -1,0 +1,4 @@
+{
+  double curr=(double)arr.getScalar(i).element();
+  return soFar < curr ? soFar : curr;
+}

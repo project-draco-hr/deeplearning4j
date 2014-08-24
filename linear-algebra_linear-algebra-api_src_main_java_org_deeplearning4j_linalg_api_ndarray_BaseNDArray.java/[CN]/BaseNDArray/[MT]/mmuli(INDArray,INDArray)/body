@@ -1,0 +1,25 @@
+{
+  INDArray otherArray=other;
+  INDArray resultArray=result;
+  if (other.isScalar()) {
+    return muli((INDArray)otherArray.element(),resultArray);
+  }
+  if (isScalar()) {
+    return otherArray.muli((INDArray)element(),resultArray);
+  }
+  if (result == this || result == other) {
+    INDArray temp=NDArrays.create(resultArray.shape(),ArrayUtil.calcStridesFortran(resultArray.shape()));
+    if (otherArray.columns() == 1) {
+      NDArrays.getBlasWrapper().gemv(1.0,this,otherArray,0.0,temp);
+    }
+ else {
+      NDArrays.getBlasWrapper().gemm(1.0,this,otherArray,0.0,temp);
+    }
+    NDArrays.getBlasWrapper().copy(temp,resultArray);
+  }
+ else {
+    if (otherArray.columns() == 1)     NDArrays.getBlasWrapper().gemv(1.0,this,otherArray,0.0,resultArray);
+ else     NDArrays.getBlasWrapper().gemm(1.0,this,otherArray,0.0,resultArray);
+  }
+  return resultArray;
+}

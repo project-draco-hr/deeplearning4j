@@ -1,8 +1,0 @@
-{
-  if (stride.length > indexes.length)   throw new IllegalArgumentException("Invalid number of items in stride array: should be <= number of indexes");
-  int ix=offset;
-  for (int i=0; i < indexes.length; i++) {
-    ix+=indexes[i] * stride[i];
-  }
-  return ix;
-}

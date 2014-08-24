@@ -1,0 +1,7 @@
+{
+  if (shape.length == 2) {
+    IComplexNDArray ret=NDArrays.createComplex(data,new int[]{shape[1]},new int[]{stride[1]},offset + (r * 2) * columns());
+    return ret;
+  }
+ else   throw new IllegalArgumentException("Unable to getFromOrigin row of non 2d matrix");
+}

@@ -1,0 +1,6 @@
+{
+  IComplexNDArray reshaped=reshape(1,length);
+  IComplexDouble c=NDArrays.createDouble(0.0,0);
+  for (int i=0; i < length; i++)   reshaped.putScalar(i,reshaped.getComplex(i,c).conji());
+  return this;
+}

@@ -1,0 +1,7 @@
+{
+  checkArrangeArray(rearrange);
+  int[] newDims=doPermuteSwap(shape,rearrange);
+  int[] newStrides=doPermuteSwap(stride,rearrange);
+  IComplexNDArray ret=NDArrays.createComplex(data,newDims,newStrides,offset,ordering);
+  return ret;
+}

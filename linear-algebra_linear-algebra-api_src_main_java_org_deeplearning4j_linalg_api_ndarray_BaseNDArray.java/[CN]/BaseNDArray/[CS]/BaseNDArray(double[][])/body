@@ -1,0 +1,11 @@
+{
+  this(data.length,data[0].length);
+  for (int r=0; r < rows; r++) {
+    assert(data[r].length == columns);
+  }
+  for (int r=0; r < rows; r++) {
+    for (int c=0; c < columns; c++) {
+      putScalar(new int[]{r,c},data[r][c]);
+    }
+  }
+}

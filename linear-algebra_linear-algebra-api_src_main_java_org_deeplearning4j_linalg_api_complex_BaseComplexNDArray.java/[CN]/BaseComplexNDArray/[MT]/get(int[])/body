@@ -1,0 +1,7 @@
+{
+  IComplexNDArray result=NDArrays.createComplex(data,new int[]{1,indices.length},stride,offset,ordering);
+  for (int i=0; i < indices.length; i++) {
+    result.putScalar(i,get(indices[i]));
+  }
+  return result;
+}

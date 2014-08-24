@@ -1,0 +1,6 @@
+{
+  IComplexNDArray result=NDArrays.createComplex(shape());
+  IComplexDouble c=NDArrays.createDouble(0,0);
+  for (int i=0; i < slices(); i++)   for (int j=0; j < columns; j++)   result.putScalar(j,i,getComplex(i,j,c).conji());
+  return result;
+}

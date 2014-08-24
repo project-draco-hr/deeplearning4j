@@ -1,0 +1,13 @@
+{
+  double[] dim=new double[this.shape[dimension]];
+  int count=0;
+  boolean newSlice=false;
+  for (int j=offset; count < dim.length; j+=this.stride[dimension]) {
+    double d=data[j];
+    dim[count++]=d;
+    if (j >= currOffsetForSlice)     newSlice=true;
+  }
+  IComplexNDArray r=NDArrays.createComplex(dim);
+  IComplexDouble r2=reduceVector(op,r);
+  return new ComplexIterationResult(newSlice,r2);
+}

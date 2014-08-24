@@ -1,0 +1,12 @@
+{
+  if (shape.length == 0)   throw new IllegalArgumentException("Can't slice a 0-d NDArray");
+ else   if (shape.length == 1)   return NDArrays.create(data,ArrayUtil.empty(),ArrayUtil.empty(),offset + slice * stride[0]);
+ else   if (shape.length == 2) {
+    INDArray slice2=NDArrays.create(data,ArrayUtil.of(shape[1]),Arrays.copyOfRange(stride,1,stride.length),offset + slice * stride[0],ordering);
+    return slice2;
+  }
+ else {
+    INDArray slice2=NDArrays.create(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + (slice * stride[0]),ordering);
+    return slice2;
+  }
+}
