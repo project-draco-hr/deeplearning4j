@@ -25,21 +25,6 @@
         if (oldStride[ok] != oldShape[ok + 1] * oldStride[ok + 1])         return null;
       }
     }
-    if (ordering == NDArrayFactory.FORTRAN) {
-      newStrides[ni]=oldStride[oi];
-      for (nk=ni + 1; nk < nj; nk++) {
-        newStrides[nk]=newStrides[nk - 1] * shape[nk - 1];
-      }
-    }
- else {
-      newStrides[nj - 1]=oldStride[oj - 1];
-      for (nk=nj - 1; nk > ni; nk--)       newStrides[nk - 1]=newStrides[nk] * shape[nk];
-    }
   }
-  int last_stride=0;
-  if (ni >= 1)   last_stride=newStrides[ni - 1];
- else   last_stride=shape[shape.length - 1];
-  if (ordering == NDArrayFactory.FORTRAN)   last_stride*=shape[ni - 1];
-  for (nk=ni; nk < newNd; nk++)   newStrides[nk]=last_stride;
-  return newStrides;
+  return NDArrays.getStrides(shape,ordering);
 }
