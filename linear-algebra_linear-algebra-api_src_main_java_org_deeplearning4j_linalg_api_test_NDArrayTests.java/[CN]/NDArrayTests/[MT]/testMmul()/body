@@ -1,5 +1,5 @@
 {
-  NDArrays.factory().setOrder('f');
+  NDArrays.factory().setOrder('c');
   double[] data=NDArrays.linspace(1,10,10).data();
   INDArray n=NDArrays.create(data,new int[]{10});
   INDArray transposed=n.transpose();
@@ -23,9 +23,11 @@
   INDArray row122=row12;
   INDArray row222=row22;
   INDArray rowResult2=row122.mmul(row222);
-  INDArray mmul=row1.mmul(row2);
-  INDArray result=NDArrays.create(new double[]{3,6,4,8},new int[]{2,2});
-  assertEquals(result,mmul);
+  INDArray d3=NDArrays.create(new double[]{1,2}).reshape(2,1);
+  INDArray d4=NDArrays.create(new double[]{3,4});
+  INDArray resultNDArray=d3.mmul(d4);
+  INDArray result=NDArrays.create(new double[][]{{3,4},{6,8}});
+  assertEquals(result,resultNDArray);
   INDArray three=NDArrays.create(new double[]{3,4},new int[]{2});
   INDArray test=NDArrays.create(NDArrays.linspace(1,30,30).data(),new int[]{3,5,2});
   INDArray sliceRow=test.slice(0).getRow(1);
@@ -39,5 +41,4 @@
   INDArray k1=n1.transpose();
   INDArray testVectorVector=k1.mmul(n1);
   assertEquals(vectorVector,testVectorVector);
-  NDArrays.factory().setOrder('c');
 }
