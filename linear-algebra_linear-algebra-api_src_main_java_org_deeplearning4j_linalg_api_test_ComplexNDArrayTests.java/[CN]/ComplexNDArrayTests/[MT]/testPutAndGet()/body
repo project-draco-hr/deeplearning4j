@@ -3,8 +3,8 @@
   assertEquals(4,arr.length());
   assertEquals(8,arr.data().length);
   arr.put(1,1,NDArrays.scalar(5.0));
-  IComplexNumber n1=(IComplexNumber)arr.getScalar(1,1).element();
-  IComplexNumber n2=(IComplexNumber)arr.getScalar(1,1).element();
+  IComplexNumber n1=arr.getComplex(1,1);
+  IComplexNumber n2=arr.getComplex(1,1);
   assertEquals(5.0,n1.realComponent().doubleValue(),1e-1);
   assertEquals(0.0,n2.imaginaryComponent().doubleValue(),1e-1);
 }

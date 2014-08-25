@@ -1,3 +1,30 @@
 {
-  return NDArrays.createComplex(super.normmax(dimension));
+  if (dimension == Integer.MAX_VALUE) {
+    return NDArrays.scalar(ComplexOps.normmax(this));
+  }
+ else   if (isVector()) {
+    return sum(Integer.MAX_VALUE);
+  }
+ else {
+    int[] shape=ArrayUtil.removeIndex(shape(),dimension);
+    final IComplexNDArray arr=NDArrays.createComplex(new int[]{ArrayUtil.prod(shape)});
+    final AtomicInteger i=new AtomicInteger(0);
+    iterateOverDimension(dimension,new SliceOp(){
+      @Override public void operate(      DimensionSlice nd){
+        IComplexNDArray arr2=(IComplexNDArray)nd.getResult();
+        arr.put(i.get(),arr2.normmax(0));
+        i.incrementAndGet();
+      }
+      /** 
+ * Operates on an ndarray slice
+ * @param nd the result to operate on
+ */
+      @Override public void operate(      INDArray nd){
+        arr.put(i.get(),nd.normmax(0));
+        i.incrementAndGet();
+      }
+    }
+,false);
+    return arr.reshape(shape);
+  }
 }

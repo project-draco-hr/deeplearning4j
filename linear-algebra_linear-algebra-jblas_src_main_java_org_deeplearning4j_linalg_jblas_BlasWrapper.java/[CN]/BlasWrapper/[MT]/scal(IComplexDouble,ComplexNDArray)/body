@@ -1,3 +1,4 @@
 {
-  return null;
+  NativeBlas.zscal(x.length(),new ComplexDouble(alpha.realComponent(),alpha.imaginaryComponent()),x.data(),x.offset(),1);
+  return x;
 }

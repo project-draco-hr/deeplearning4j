@@ -1,3 +1,4 @@
 {
-  return null;
+  NativeBlas.zaxpy(dx.length(),new org.jblas.ComplexDouble(da.realComponent(),da.imaginaryComponent()),dx.data(),0,1,dy.data(),0,1);
+  return dy;
 }

@@ -1,0 +1,4 @@
+{
+  IComplexNumber curr=(IComplexNumber)arr.getScalar(i).element();
+  return soFar.absoluteValue().doubleValue() > curr.absoluteValue().doubleValue() ? soFar : curr;
+}

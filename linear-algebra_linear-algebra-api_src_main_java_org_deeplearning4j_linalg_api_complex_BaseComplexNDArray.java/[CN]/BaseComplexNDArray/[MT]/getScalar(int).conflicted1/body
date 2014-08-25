@@ -1,3 +1,4 @@
 {
-  return NDArrays.complexScalar(get(i));
+  int idx=linearIndex(i);
+  return NDArrays.scalar(NDArrays.createDouble(data[idx],data[idx + 1]));
 }
