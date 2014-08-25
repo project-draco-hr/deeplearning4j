@@ -6,6 +6,7 @@
   OnePointerV(d_A,x);
   JCublas.cublasDscal(length,alpha,d_A,1);
   gv(d_A,x);
+  JCublas.cublasShutdown();
   JCublas.cublasFree(d_A);
   return x;
 }
