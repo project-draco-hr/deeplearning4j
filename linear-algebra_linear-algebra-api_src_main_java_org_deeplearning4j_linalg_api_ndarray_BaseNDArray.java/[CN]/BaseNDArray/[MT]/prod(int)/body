@@ -1,6 +1,6 @@
 {
   if (dimension == Integer.MAX_VALUE) {
-    return reshape(new int[]{1,length}).prod(Integer.MAX_VALUE);
+    return NDArrays.scalar(Ops.prod(this));
   }
  else   if (isVector()) {
     return prod(Integer.MAX_VALUE);
@@ -11,7 +11,7 @@
     final AtomicInteger i=new AtomicInteger(0);
     iterateOverDimension(dimension,new SliceOp(){
       @Override public void operate(      DimensionSlice nd){
-        IComplexNDArray arr2=(IComplexNDArray)nd.getResult();
+        INDArray arr2=(INDArray)nd.getResult();
         arr.put(i.get(),arr2.prod(0));
         i.incrementAndGet();
       }

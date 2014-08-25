@@ -1,6 +1,6 @@
 {
   IComplexNDArray n=null;
-  if (!o.getClass().isAssignableFrom(IComplexNDArray.class))   return false;
+  if (!(o instanceof IComplexNDArray))   return false;
   if (n == null)   n=(IComplexNDArray)o;
   if (isScalar() && n.isScalar()) {
     IComplexNumber c=n.getComplex(0);

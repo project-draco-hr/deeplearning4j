@@ -1,0 +1,4 @@
+{
+  IComplexNumber mean=new Mean().apply(arr);
+  return NDArrays.createDouble(StatUtils.variance(arr.data(),mean.absoluteValue().doubleValue()),0);
+}

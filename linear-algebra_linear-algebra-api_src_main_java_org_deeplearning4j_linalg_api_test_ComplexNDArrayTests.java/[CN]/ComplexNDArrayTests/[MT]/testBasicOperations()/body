@@ -3,7 +3,7 @@
   IComplexDouble scalar=(IComplexDouble)arr.sum(Integer.MAX_VALUE).element();
   double sum=scalar.realComponent();
   assertEquals(6,sum,1e-1);
-  arr.addi(NDArrays.scalar(1));
+  arr.addi(1);
   scalar=(IComplexDouble)arr.sum(Integer.MAX_VALUE).element();
   sum=scalar.realComponent();
   assertEquals(10,sum,1e-1);

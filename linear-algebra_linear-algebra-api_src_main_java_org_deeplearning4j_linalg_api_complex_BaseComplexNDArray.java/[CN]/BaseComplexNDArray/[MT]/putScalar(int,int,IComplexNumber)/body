@@ -1,3 +1,6 @@
 {
-  return null;
+  int idx=index(j,i);
+  data[idx]=conji.realComponent().doubleValue();
+  data[idx + 1]=conji.imaginaryComponent().doubleValue();
+  return this;
 }

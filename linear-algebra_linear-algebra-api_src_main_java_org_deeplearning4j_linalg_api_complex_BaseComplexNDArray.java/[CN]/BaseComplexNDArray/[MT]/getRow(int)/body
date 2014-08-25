@@ -1,7 +1,13 @@
 {
   if (shape.length == 2) {
-    IComplexNDArray ret=NDArrays.createComplex(data,new int[]{shape[1]},new int[]{stride[1]},offset + (r * 2) * columns());
-    return ret;
+    if (ordering == NDArrayFactory.C) {
+      IComplexNDArray ret=NDArrays.createComplex(data,new int[]{shape[1]},new int[]{stride[1]},offset + (r * 2) * columns(),ordering);
+      return ret;
+    }
+ else {
+      IComplexNDArray ret=NDArrays.createComplex(data,new int[]{shape[1]},new int[]{stride[1]},offset + (r * 2) * columns(),ordering);
+      return ret;
+    }
   }
  else   throw new IllegalArgumentException("Unable to getFromOrigin row of non 2d matrix");
 }

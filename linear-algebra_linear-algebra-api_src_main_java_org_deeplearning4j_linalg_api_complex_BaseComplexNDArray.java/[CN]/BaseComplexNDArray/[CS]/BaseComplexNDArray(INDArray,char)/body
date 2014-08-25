@@ -3,6 +3,6 @@
   INDArray flattened=m.reshape(new int[]{1,m.length()});
   IComplexNDArray flatten=reshape(1,length);
   for (int i=0; i < length; i++) {
-    flatten.put(i,flattened.getScalar(i));
+    flatten.putScalar(i,flattened.get(i));
   }
 }

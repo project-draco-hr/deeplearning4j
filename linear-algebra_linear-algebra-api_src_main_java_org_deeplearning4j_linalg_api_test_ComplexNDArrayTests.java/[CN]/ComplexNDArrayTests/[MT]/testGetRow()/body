@@ -12,6 +12,7 @@
   IComplexNDArray testRow1=arr.getRow(1);
   assertEquals(row1,testRow1);
   IComplexNDArray multiRow=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,16,16).data(),new int[]{4,2,2}));
+  multiRow.toString();
   IComplexNDArray test=NDArrays.createComplex(NDArrays.create(new double[]{7,8},new int[]{1,2}));
   IComplexNDArray multiRowSlice1=multiRow.slice(0);
   IComplexNDArray multiRowSlice=multiRow.slice(1);

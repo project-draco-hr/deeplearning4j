@@ -1,0 +1,7 @@
+{
+  if (i < arr.length() - 1)   return soFar.addi(arr.getComplex(i));
+ else {
+    soFar.addi(arr.getComplex(i));
+    return soFar.div(arr.length());
+  }
+}

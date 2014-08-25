@@ -7,15 +7,15 @@
   }
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
-  if (Arrays.equals(shape(),shape))   return this;
+  if (Shape.shapeEquals(shape(),shape))   return this;
   if (isRowVector()) {
     if (Shape.isColumnVectorShape(shape)) {
-      return NDArrays.create(data,shape,NDArrays.getStrides(shape,ordering),offset,ordering);
+      return NDArrays.create(data,shape,new int[]{stride[0],1},offset,ordering);
     }
   }
   if (isColumnVector()) {
     if (Shape.isRowVectorShape(shape)) {
-      return NDArrays.create(data,shape,NDArrays.getStrides(shape,ordering),offset,ordering);
+      return NDArrays.create(data,shape,new int[]{stride[0]},offset,ordering);
     }
   }
   int[] newStrides=newStridesReshape(shape);

@@ -7,10 +7,63 @@
   }
   int n=(int)ec;
   if (ec != n)   throw new IllegalArgumentException("Too many elements");
-  if (isVector() && shape.length != this.shape.length) {
-    IComplexNDArray ndArray=NDArrays.createComplex(data,shape,NDArrays.getComplexStrides(shape,'c'),offset,ordering);
+  if (Shape.shapeEquals(shape(),shape))   return this;
+  if (isRowVector()) {
+    if (Shape.isColumnVectorShape(shape)) {
+      return NDArrays.createComplex(data,shape,NDArrays.getComplexStrides(shape,ordering),offset,ordering);
+    }
+  }
+  if (isColumnVector()) {
+    if (Shape.isRowVectorShape(shape)) {
+      return NDArrays.createComplex(data,shape,NDArrays.getComplexStrides(shape,ordering),offset,ordering);
+    }
+  }
+  int[] newStrides=newStridesReshape(shape);
+  if (newStrides != null) {
+    IComplexNDArray ndArray=NDArrays.createComplex(data,shape,newStrides,offset,ordering);
     return ndArray;
   }
-  IComplexNDArray ndArray=NDArrays.createComplex(data,shape,stride,offset,ordering);
-  return ndArray;
+ else {
+    IComplexNDArray create=NDArrays.createComplex(shape,NDArrays.getComplexStrides(shape,ordering));
+    final IComplexNDArray flattened=ravel();
+    int vectorSize=create.size(create.shape().length - 1);
+    final AtomicInteger vectorCounter=new AtomicInteger(0);
+    if (ordering == NDArrayFactory.C) {
+      create.iterateOverAllRows(new SliceOp(){
+        @Override public void operate(        DimensionSlice nd){
+          IComplexNDArray nd1=(IComplexNDArray)nd.getResult();
+          for (int i=0; i < nd1.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd1.put(i,flattened.getScalar(element));
+          }
+        }
+        @Override public void operate(        INDArray nd){
+          for (int i=0; i < nd.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd.put(i,flattened.getScalar(element));
+          }
+        }
+      }
+);
+    }
+ else     if (ordering == NDArrayFactory.FORTRAN) {
+      create.iterateOverAllColumns(new SliceOp(){
+        @Override public void operate(        DimensionSlice nd){
+          IComplexNDArray nd1=(IComplexNDArray)nd.getResult();
+          for (int i=0; i < nd1.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd1.put(i,flattened.getScalar(element));
+          }
+        }
+        @Override public void operate(        INDArray nd){
+          for (int i=0; i < nd.length(); i++) {
+            int element=vectorCounter.getAndIncrement();
+            nd.put(i,flattened.getScalar(element));
+          }
+        }
+      }
+);
+    }
+    return create;
+  }
 }
