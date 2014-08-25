@@ -1,7 +1,14 @@
 {
   if (!isMatrix()) {
-    if (stride.length < 2 && row >= 1 && column >= 1)     throw new IllegalStateException("Unable to getFromOrigin row/column from a non matrix");
+    if (isColumnVector()) {
+      int idx=linearIndex(row);
+      return idx;
+    }
+ else     if (isRowVector()) {
+      int idx=linearIndex(column);
+      return idx;
+    }
+ else     throw new IllegalStateException("Unable to getFromOrigin row/column from a non matrix");
   }
-  if (stride.length < 2)   return offset + (row * stride[0] + column);
-  return offset + (row * stride[0] + column * stride[1]);
+  return row * stride[0] + column * stride[1];
 }

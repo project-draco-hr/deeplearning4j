@@ -7,8 +7,12 @@
   assertEquals(d.rows,d2.rows());
   assertEquals(d.columns,d2.columns());
   verifyElements(d,d2);
-  INDArray toMmulD2=NDArrays.create(mmul).reshape(new int[]{mmul.length,1});
+  INDArray toMmulD2=NDArrays.create(mmul).transpose();
   DoubleMatrix toMmulD=new DoubleMatrix(mmul);
+  assertEquals(d.rows,d2.rows());
+  assertEquals(d.columns,d2.columns());
+  assertEquals(toMmulD.rows,toMmulD2.rows());
+  assertEquals(toMmulD.columns,toMmulD2.columns());
   DoubleMatrix mmulResultD=d.mmul(toMmulD);
   INDArray mmulResultD2=d2.mmul(toMmulD2);
   verifyElements(mmulResultD,mmulResultD2);

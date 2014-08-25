@@ -19,7 +19,6 @@
   INDArray row2=testMatrix.getRow(1);
   INDArray row12=NDArrays.linspace(1,2,2).reshape(2,1);
   INDArray row22=NDArrays.linspace(3,4,2).reshape(1,2);
-  INDArray rowResult=row12.mmul(row22);
   INDArray row122=row12;
   INDArray row222=row22;
   INDArray rowResult2=row122.mmul(row222);
