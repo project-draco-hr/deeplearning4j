@@ -2,11 +2,10 @@
   Pointer d_A=new Pointer();
   Pointer d_B=new Pointer();
   Pointer d_C=new Pointer();
-  init();
   cuDoubleComplex alpha=cuDoubleComplex.cuCmplx(Alpha.realComponent(),Alpha.imaginaryComponent());
-  ThreePointerMi(d_A,d_B,d_C,A,B,C);
+  ThreePointerMi(d_A,d_B,d_C,A,B,C,Sizeof.FLOAT);
   JCublas.cublasZgeru(A.rows(),A.columns(),alpha,d_A,A.rows(),d_B,B.rows(),d_C,C.rows());
-  gmi(d_C,C);
+  gmi(d_C,C,Sizeof.FLOAT);
   JCublas.cublasFree(d_A);
   JCublas.cublasFree(d_B);
   JCublas.cublasFree(d_C);

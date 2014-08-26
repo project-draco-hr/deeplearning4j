@@ -1,8 +1,7 @@
 {
   Pointer d_A=new Pointer();
   Pointer d_B=new Pointer();
-  init();
-  TwoPointersVi(d_A,d_B,x,y);
+  TwoPointersVi(d_A,d_B,x,y,Sizeof.FLOAT);
   jcuda.cuDoubleComplex dott=jcuda.cuDoubleComplex.cuCmplx(0,0);
   dott=JCublas.cublasZdotu(x.length(),d_A,1,d_B,1);
   JCublas.cublasShutdown();

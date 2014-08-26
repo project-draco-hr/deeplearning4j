@@ -1,10 +1,9 @@
 {
   Pointer X=new Pointer();
   Pointer Y=new Pointer();
-  init();
-  TwoPointersV(X,Y,x,y);
+  TwoPointersV(X,Y,x,y,Sizeof.FLOAT);
   JCublas.cublasDcopy(x.length(),X,1,Y,1);
-  gv(Y,y);
+  gv(Y,y,Sizeof.FLOAT);
   JCublas.cublasFree(X);
   JCublas.cublasFree(Y);
   JCublas.cublasShutdown();
