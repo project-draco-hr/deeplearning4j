@@ -2,5 +2,10 @@
   checkArrangeArray(rearrange);
   int[] newShape=doPermuteSwap(shape,rearrange);
   int[] newStride=doPermuteSwap(stride,rearrange);
-  return NDArrays.create(data,newShape,newStride,offset,ordering);
+  if (ordering == NDArrayFactory.C)   return NDArrays.create(data,newShape,newStride,offset,ordering);
+ else {
+    INDArray shape=NDArrays.create(newShape,ordering);
+    copyRealTo(shape);
+    return shape;
+  }
 }

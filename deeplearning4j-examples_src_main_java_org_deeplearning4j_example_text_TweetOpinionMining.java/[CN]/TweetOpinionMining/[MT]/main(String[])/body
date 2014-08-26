@@ -17,13 +17,13 @@
   DBN dbn=new DBN.Builder().hiddenLayerSizes(new int[]{iter.inputColumns() / 2,iter.inputColumns() / 4,iter.inputColumns() / 6}).numberOfInputs(iter.inputColumns()).numberOfOutPuts(iter.totalOutcomes()).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.pretrain(next.getFeatureMatrix(),1,1e-1,10000);
+    dbn.pretrain(next.getFeatureMatrix(),1,1e-1f,10000);
   }
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.setInput(next.getFeatureMatrix());
-    dbn.finetune(next.getLabels(),1e-1,10000);
+    dbn.finetune(next.getLabels(),1e-1f,10000);
   }
   Evaluation eval=new Evaluation();
   eval.eval(data.getLabels(),dbn.output(data.getFeatureMatrix()));

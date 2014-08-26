@@ -3,7 +3,7 @@
   DataSetIterator iter=new MnistDataSetIterator(10,10);
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFeatureMatrix(),1e-1,new Object[]{1,1e-1,5000});
+    r.trainTillConvergence(next.getFeatureMatrix(),1e-1f,new Object[]{1,1e-1f,5000});
   }
   iter.reset();
   while (iter.hasNext()) {

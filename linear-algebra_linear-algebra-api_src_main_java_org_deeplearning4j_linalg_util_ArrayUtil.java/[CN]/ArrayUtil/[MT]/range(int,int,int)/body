@@ -9,7 +9,7 @@
   }
  else   if (from > to) {
     int count=0;
-    for (int i=from; i >= to; i-=increment)     ret[count++]=i;
+    for (int i=from; i > to; i-=increment)     ret[count++]=i;
   }
   return ret;
 }

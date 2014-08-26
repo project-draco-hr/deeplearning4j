@@ -21,7 +21,7 @@
     iterateOverAllRows(op);
   }
  else   if (ordering == NDArrayFactory.FORTRAN) {
-    iterateOverAllColumns(op);
+    iterateOverAllRows(op);
   }
   return ret;
 }

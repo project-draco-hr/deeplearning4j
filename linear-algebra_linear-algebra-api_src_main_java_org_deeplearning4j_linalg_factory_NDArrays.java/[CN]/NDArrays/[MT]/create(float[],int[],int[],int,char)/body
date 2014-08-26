@@ -1,3 +1,3 @@
 {
-  return INSTANCE.create(data,shape,stride,offset);
+  return INSTANCE.create(data,shape,stride,offset,ordering);
 }

@@ -8,8 +8,8 @@
   next.shuffle();
   next.scale();
   dbn.setInput(next.getFeatureMatrix());
-  dbn.pretrain(next.getFeatureMatrix(),1,1e-1,100);
-  dbn.finetune(next.getLabels(),1e-1,100);
+  dbn.pretrain(next.getFeatureMatrix(),1,1e-1f,100);
+  dbn.finetune(next.getLabels(),1e-1f,100);
   Evaluation eval=new Evaluation();
   INDArray predict=dbn.output(next.getFeatureMatrix());
   eval.eval(predict,next.getLabels());
