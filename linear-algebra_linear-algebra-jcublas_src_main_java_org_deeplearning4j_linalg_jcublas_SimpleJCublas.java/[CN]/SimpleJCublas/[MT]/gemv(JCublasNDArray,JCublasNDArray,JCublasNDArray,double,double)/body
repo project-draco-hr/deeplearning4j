@@ -3,8 +3,12 @@
   Pointer d_A=new Pointer();
   Pointer d_B=new Pointer();
   Pointer d_C=new Pointer();
-  ThreePointersV(d_A,d_B,d_C,A,B);
-  JCublas.cublasDgemv('n',A.rows(),B.columns(),alpha,d_A,A.rows(),d_B,1,beta,d_C,1);
+  ThreePointerM(d_A,d_B,d_C,A,B,C);
+  char trans='n';
+  if (A.rows() == B.columns()) {
+    trans='T';
+  }
+  JCublas.cublasDgemv('n',A.rows(),A.columns(),alpha,d_A,A.rows(),d_B,1,beta,d_C,1);
   gv(d_C,C);
   JCublas.cublasFree(d_A);
   JCublas.cublasFree(d_B);

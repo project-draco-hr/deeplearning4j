@@ -3,6 +3,6 @@
   JCublas.cublasAlloc(B.rows() * B.columns(),Sizeof.DOUBLE,d_B);
   JCublas.cublasAlloc(A.rows() * B.columns(),Sizeof.DOUBLE,d_C);
   int ret;
-  ret=JCublas.cublasSetMatrix(A.rows(),A.columns(),Sizeof.DOUBLE,d_A,A.rows(),d_A,A.rows());
-  ret=JCublas.cublasSetMatrix(B.rows(),B.columns(),Sizeof.DOUBLE,d_B,B.rows(),d_B,B.rows());
+  ret=JCublas.cublasSetMatrix(A.rows(),A.columns(),Sizeof.DOUBLE,Pointer.to(A.data()),A.rows(),d_A,A.rows());
+  ret=JCublas.cublasSetMatrix(B.rows(),B.columns(),Sizeof.DOUBLE,Pointer.to(B.data()),B.rows(),d_B,B.rows());
 }
