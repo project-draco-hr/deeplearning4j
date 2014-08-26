@@ -1,0 +1,16 @@
+{
+  INDArray n=NDArrays.linspace(1,8,8).reshape(2,4);
+  IComplexNDArray nComplex=NDArrays.createComplex(NDArrays.linspace(1,8,8)).reshape(2,4);
+  assertEquals(n.vectorsAlongDimension(0),nComplex.vectorsAlongDimension(0));
+  for (int i=0; i < n.vectorsAlongDimension(0); i++) {
+    INDArray vec=n.vectorAlongDimension(i,0);
+    IComplexNDArray vecComplex=nComplex.vectorAlongDimension(i,0);
+    assertEquals(vec.length(),vecComplex.length());
+    for (int j=0; j < vec.length(); j++) {
+      IComplexNumber currComplex=vecComplex.getComplex(j);
+      double curr=vec.get(j);
+      assertEquals(curr,currComplex.realComponent().doubleValue(),1e-1);
+    }
+    assertEquals(vec,vecComplex.getReal());
+  }
+}

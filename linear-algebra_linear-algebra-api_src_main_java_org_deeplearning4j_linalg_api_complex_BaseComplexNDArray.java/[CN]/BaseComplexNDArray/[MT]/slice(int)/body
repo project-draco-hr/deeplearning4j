@@ -10,5 +10,6 @@
     if (offset >= data.length)     throw new IllegalArgumentException("Offset index is > data.length");
     ret=NDArrays.createComplex(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset,ordering);
   }
+  ret.toString();
   return ret;
 }

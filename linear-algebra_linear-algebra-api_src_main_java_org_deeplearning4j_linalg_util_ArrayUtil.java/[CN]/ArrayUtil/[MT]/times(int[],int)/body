@@ -1,0 +1,5 @@
+{
+  int[] ret=new int[ints.length];
+  for (int i=0; i < ints.length; i++)   ret[i]=ints[i] * mult;
+  return ret;
+}

@@ -1,0 +1,10 @@
+{
+  double[][] data=new double[][]{{1,2,3,4},{5,6,7,8}};
+  INDArray toRavel=NDArrays.create(data);
+  NDArrays.factory().setOrder('f');
+  INDArray toRavelF=NDArrays.create(data);
+  INDArray ravel=toRavel.ravel();
+  INDArray ravelF=toRavelF.ravel();
+  assertNotEquals(ravel,ravelF);
+  NDArrays.factory().setOrder('c');
+}

@@ -1,5 +1,5 @@
 {
-  final INDArray ret=NDArrays.create(length,'c');
+  final INDArray ret=NDArrays.create(length,ordering);
   final AtomicInteger counter=new AtomicInteger(0);
   SliceOp op=new SliceOp(){
     @Override public void operate(    DimensionSlice nd){

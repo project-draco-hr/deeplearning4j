@@ -1,0 +1,16 @@
+{
+  INDArray fourTwoTwo=NDArrays.linspace(1,16,16).reshape(new int[]{4,2,2});
+  IComplexNDArray test=NDArrays.createComplex(new int[]{4,2,2});
+  for (int i=0; i < test.vectorsAlongDimension(0); i++) {
+    INDArray vector=fourTwoTwo.vectorAlongDimension(i,0);
+    IComplexNDArray complexVector=test.vectorAlongDimension(i,0);
+    for (int j=0; j < complexVector.length(); j++) {
+      complexVector.putReal(j,vector.get(j));
+    }
+  }
+  for (int i=0; i < test.vectorsAlongDimension(0); i++) {
+    INDArray vector=fourTwoTwo.vectorAlongDimension(i,0);
+    IComplexNDArray complexVector=test.vectorAlongDimension(i,0);
+    assertEquals(vector,complexVector.real());
+  }
+}

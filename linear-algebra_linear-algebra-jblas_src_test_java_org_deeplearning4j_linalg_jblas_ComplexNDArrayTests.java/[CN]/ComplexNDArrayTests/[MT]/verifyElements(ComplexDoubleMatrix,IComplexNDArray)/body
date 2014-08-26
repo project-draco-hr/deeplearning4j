@@ -1,0 +1,10 @@
+{
+  for (int i=0; i < d.rows; i++) {
+    for (int j=0; j < d.columns; j++) {
+      ComplexDouble test1=d.get(i,j);
+      IComplexNumber test2=d2.getComplex(i,j);
+      assertEquals(test1.real(),test2.realComponent().doubleValue(),1e-6);
+      assertEquals(test1.imag(),test2.imaginaryComponent().doubleValue(),1e-6);
+    }
+  }
+}

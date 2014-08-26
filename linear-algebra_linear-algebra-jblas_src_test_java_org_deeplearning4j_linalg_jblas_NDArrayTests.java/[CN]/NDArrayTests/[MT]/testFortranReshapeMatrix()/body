@@ -9,4 +9,5 @@
   DoubleMatrix reshapedD=d.reshape(4,2);
   INDArray reshapedD2=d2.reshape(4,2);
   verifyElements(reshapedD,reshapedD2);
+  NDArrays.factory().setOrder('c');
 }

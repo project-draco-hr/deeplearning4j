@@ -1,0 +1,16 @@
+{
+  NDArrays.factory().setOrder('f');
+  DoubleMatrix oneThroughFourJblas=DoubleMatrix.linspace(1,4,4).reshape(2,2);
+  DoubleMatrix fiveThroughEightJblas=DoubleMatrix.linspace(5,8,4).reshape(2,2);
+  INDArray oneThroughFour=NDArrays.linspace(1,4,4).reshape(2,2);
+  INDArray fiveThroughEight=NDArrays.linspace(5,8,4).reshape(2,2);
+  verifyElements(oneThroughFourJblas,oneThroughFour);
+  verifyElements(fiveThroughEightJblas,fiveThroughEight);
+  ComplexDoubleMatrix complexOneThroughForJblas=new ComplexDoubleMatrix(oneThroughFourJblas);
+  ComplexDoubleMatrix complexFiveThroughEightJblas=new ComplexDoubleMatrix(fiveThroughEightJblas);
+  IComplexNDArray complexOneThroughFour=NDArrays.createComplex(oneThroughFour);
+  IComplexNDArray complexFiveThroughEight=NDArrays.createComplex(fiveThroughEight);
+  verifyElements(complexOneThroughForJblas,complexOneThroughFour);
+  verifyElements(complexFiveThroughEightJblas,complexFiveThroughEight);
+  NDArrays.factory().setOrder('c');
+}

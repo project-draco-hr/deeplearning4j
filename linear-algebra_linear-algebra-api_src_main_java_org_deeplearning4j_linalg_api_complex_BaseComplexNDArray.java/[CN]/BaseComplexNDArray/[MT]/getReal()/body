@@ -1,5 +1,11 @@
 {
   INDArray result=NDArrays.create(shape());
-  NDArrays.getBlasWrapper().dcopy(length,data,offset,2,result.data(),0,1);
+  for (int i=0; i < vectorsAlongDimension(0); i++) {
+    INDArray vector=result.vectorAlongDimension(i,0);
+    IComplexNDArray complexVector=vectorAlongDimension(i,0);
+    for (int j=0; j < complexVector.length(); j++) {
+      vector.putScalar(j,complexVector.getComplex(j).realComponent().doubleValue());
+    }
+  }
   return result;
 }

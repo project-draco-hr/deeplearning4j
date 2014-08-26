@@ -27,7 +27,7 @@
  else     this.stride=ArrayUtil.calcStrides(this.shape);
   }
   if (this.stride.length != this.shape.length) {
-    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(shape);
+    if (ordering == NDArrayFactory.FORTRAN)     this.stride=ArrayUtil.calcStridesFortran(this.shape);
  else     this.stride=ArrayUtil.calcStrides(this.shape);
   }
 }

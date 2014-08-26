@@ -11,8 +11,8 @@
   assertEquals(true,Shape.shapeEquals(new int[]{2},arr.getRow(0).shape()));
   IComplexNDArray testRow1=arr.getRow(1);
   assertEquals(row1,testRow1);
-  IComplexNDArray multiRow=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,16,16).data(),new int[]{4,2,2}));
-  multiRow.toString();
+  INDArray fourTwoTwo=NDArrays.linspace(1,16,16).reshape(new int[]{4,2,2});
+  IComplexNDArray multiRow=NDArrays.createComplex(fourTwoTwo);
   IComplexNDArray test=NDArrays.createComplex(NDArrays.create(new double[]{7,8},new int[]{1,2}));
   IComplexNDArray multiRowSlice1=multiRow.slice(0);
   IComplexNDArray multiRowSlice=multiRow.slice(1);

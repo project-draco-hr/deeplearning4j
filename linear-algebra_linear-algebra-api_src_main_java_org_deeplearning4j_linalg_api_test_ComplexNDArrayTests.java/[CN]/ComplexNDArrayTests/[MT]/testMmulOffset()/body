@@ -1,0 +1,11 @@
+{
+  IComplexNDArray three=NDArrays.createComplex(NDArrays.create(new double[]{3,4},new int[]{2}));
+  IComplexNDArray test=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,30,30).data(),new int[]{3,5,2}));
+  IComplexNDArray sliceRow=test.slice(0).getRow(1);
+  assertEquals(three,sliceRow);
+  IComplexNDArray twoSix=NDArrays.createComplex(NDArrays.create(new double[]{2,6},new int[]{2,1}));
+  IComplexNDArray threeTwoSix=three.mmul(twoSix);
+  IComplexNDArray sliceRowTwoSix=sliceRow.mmul(twoSix);
+  verifyElements(three,sliceRow);
+  assertEquals(threeTwoSix,sliceRowTwoSix);
+}

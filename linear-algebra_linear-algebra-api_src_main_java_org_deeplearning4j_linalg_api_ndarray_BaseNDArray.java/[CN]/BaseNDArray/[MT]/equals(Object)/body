@@ -9,11 +9,10 @@
   }
  else   if (isVector() && n.isVector()) {
     for (int i=0; i < length; i++) {
-      double curr=(double)getScalar(i).element();
-      double comp=(double)n.getScalar(i).element();
+      double curr=get(i);
+      double comp=n.get(i);
       if (Math.abs(curr - comp) > 1e-6)       return false;
     }
-    if (!Shape.shapeEquals(shape(),n.shape()))     return false;
     return true;
   }
   if (!Shape.shapeEquals(shape(),n.shape()))   return false;

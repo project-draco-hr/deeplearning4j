@@ -1,6 +1,7 @@
 {
   INDArray otherArray=other;
   INDArray resultArray=result;
+  LinAlgExceptions.assertMultiplies(this,other);
   if (other.isScalar()) {
     return muli((INDArray)otherArray.element(),resultArray);
   }

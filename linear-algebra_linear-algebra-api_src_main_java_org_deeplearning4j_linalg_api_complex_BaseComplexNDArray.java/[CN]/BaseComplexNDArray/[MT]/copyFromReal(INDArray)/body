@@ -1,0 +1,9 @@
+{
+  for (int i=0; i < vectorsAlongDimension(0); i++) {
+    INDArray vector=real.vectorAlongDimension(i,0);
+    IComplexNDArray complexVector=vectorAlongDimension(i,0);
+    for (int j=0; j < complexVector.length(); j++) {
+      complexVector.putScalar(j,NDArrays.createDouble(vector.get(j),0));
+    }
+  }
+}

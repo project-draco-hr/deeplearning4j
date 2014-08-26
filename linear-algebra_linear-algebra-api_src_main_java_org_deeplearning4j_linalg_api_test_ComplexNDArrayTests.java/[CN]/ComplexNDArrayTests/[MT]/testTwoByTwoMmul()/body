@@ -1,0 +1,7 @@
+{
+  IComplexNDArray oneThroughFour=NDArrays.createComplex(NDArrays.linspace(1,4,4).reshape(2,2));
+  IComplexNDArray fiveThroughEight=NDArrays.createComplex(NDArrays.linspace(5,8,4).reshape(2,2));
+  IComplexNDArray solution=NDArrays.createComplex(NDArrays.create(new double[][]{{19,22},{43,50}}));
+  IComplexNDArray test=oneThroughFour.mmul(fiveThroughEight);
+  assertEquals(solution,test);
+}
