@@ -5,6 +5,6 @@
   INDArray toRavelF=NDArrays.create(data);
   INDArray ravel=toRavel.ravel();
   INDArray ravelF=toRavelF.ravel();
-  assertNotEquals(ravel,ravelF);
+  assertEquals(ravel,ravelF);
   NDArrays.factory().setOrder('c');
 }
