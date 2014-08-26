@@ -1,4 +1,4 @@
 {
   int ret;
-  ret=JCublas.cublasGetMatrix(C.rows(),C.columns(),sze,d_C,C.rows(),Pointer.to(C.data()),C.rows());
+  ret=JCublas.cublasGetMatrix(C.rows(),C.columns(),sze,d_C,C.rows(),Pointer.to(C.data()).withByteOffset((C.offset())),C.rows());
 }

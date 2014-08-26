@@ -1,4 +1,4 @@
 {
   JCublas.cublasAlloc(A.length(),sze,d_A);
-  JCublas.cublasSetVector(A.length(),sze,Pointer.to(A.data()),1,d_A,1);
+  JCublas.cublasSetVector(A.length(),sze,Pointer.to(A.data()).withByteOffset((A.offset())),1,d_A,1);
 }

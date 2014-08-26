@@ -5,7 +5,6 @@
   TwoPointersVi(X,Y,x,y,Sizeof.FLOAT);
   JCublas.cublasZcopy(x.length(),X,1,Y,1);
   gvi(Y,y,Sizeof.FLOAT);
-  JCublas.cublasShutdown();
   JCublas.cublasFree(X);
   JCublas.cublasFree(Y);
 }

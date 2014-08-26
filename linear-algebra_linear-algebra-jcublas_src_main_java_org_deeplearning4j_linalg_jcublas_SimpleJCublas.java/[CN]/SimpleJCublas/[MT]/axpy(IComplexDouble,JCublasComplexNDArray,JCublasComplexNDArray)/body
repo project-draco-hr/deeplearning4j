@@ -7,7 +7,6 @@
   TwoPointersVi(d_A,d_B,A,B,Sizeof.FLOAT);
   JCublas.cublasZaxpy(length,jcuda.cuDoubleComplex.cuCmplx(da.realComponent(),da.imaginaryComponent()),d_A,1,d_B,1);
   gvi(d_B,B,Sizeof.FLOAT);
-  JCublas.cublasShutdown();
   JCublas.cublasFree(d_A);
   JCublas.cublasFree(d_B);
 }

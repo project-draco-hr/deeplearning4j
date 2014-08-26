@@ -3,7 +3,6 @@
   double normal2;
   OnePointerV(X,x,Sizeof.FLOAT);
   normal2=JCublas.cublasDnrm2(x.length(),X,1);
-  JCublas.cublasShutdown();
   JCublas.cublasFree(X);
   return normal2;
 }

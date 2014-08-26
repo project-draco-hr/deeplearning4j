@@ -6,5 +6,4 @@
   gv(Y,y,Sizeof.FLOAT);
   JCublas.cublasFree(X);
   JCublas.cublasFree(Y);
-  JCublas.cublasShutdown();
 }

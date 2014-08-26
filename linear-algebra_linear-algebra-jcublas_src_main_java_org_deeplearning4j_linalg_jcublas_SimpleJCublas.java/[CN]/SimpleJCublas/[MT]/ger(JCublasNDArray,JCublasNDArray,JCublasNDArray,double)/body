@@ -8,6 +8,5 @@
   JCublas.cublasFree(d_A);
   JCublas.cublasFree(d_B);
   JCublas.cublasFree(d_C);
-  JCublas.cublasShutdown();
   return C;
 }
