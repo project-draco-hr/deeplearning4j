@@ -1,0 +1,7 @@
+{
+  NDArrays.factory().setOrder('f');
+  DoubleMatrix dJblas=DoubleMatrix.linspace(1,4,4);
+  INDArray d=NDArrays.linspace(1,4,4);
+  verifyElements(dJblas,d);
+  NDArrays.factory().setOrder('c');
+}

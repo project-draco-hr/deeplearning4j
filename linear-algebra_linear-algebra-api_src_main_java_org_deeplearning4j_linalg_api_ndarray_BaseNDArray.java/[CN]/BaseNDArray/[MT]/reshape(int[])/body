@@ -20,7 +20,7 @@
   }
   int[] newStrides=newStridesReshape(shape);
   if (newStrides != null) {
-    INDArray ndArray=NDArrays.create(data,shape,newStrides,offset,ordering);
+    INDArray ndArray=NDArrays.create(data,shape,stride,offset,ordering);
     return ndArray;
   }
  else {

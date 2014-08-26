@@ -5,7 +5,7 @@
       return ret;
     }
  else {
-      INDArray ret=NDArrays.create(data,new int[]{shape[0]},new int[]{stride[1]},offset + c,ordering);
+      INDArray ret=NDArrays.create(data,new int[]{shape[0]},new int[]{stride[0]},offset + c * rows(),ordering);
       return ret;
     }
   }

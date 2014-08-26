@@ -1,9 +1,9 @@
 {
-  IComplexNDArray arr=NDArrays.createComplex(NDArrays.create(NDArrays.linspace(1,4,4).data(),new int[]{2,2}));
-  IComplexNumber n1=(IComplexNumber)arr.getScalar(0,0).element();
-  IComplexNumber n2=(IComplexNumber)arr.getScalar(0,1).element();
-  IComplexNumber n3=(IComplexNumber)arr.getScalar(1,0).element();
-  IComplexNumber n4=(IComplexNumber)arr.getScalar(1,1).element();
+  IComplexNDArray arr=NDArrays.createComplex((NDArrays.linspace(1,4,4))).reshape(2,2);
+  IComplexNumber n1=arr.getComplex(0,0);
+  IComplexNumber n2=arr.getComplex(0,1);
+  IComplexNumber n3=arr.getComplex(1,0);
+  IComplexNumber n4=arr.getComplex(1,1);
   assertEquals(1,n1.realComponent().doubleValue(),1e-1);
   assertEquals(2,n2.realComponent().doubleValue(),1e-1);
   assertEquals(3,n3.realComponent().doubleValue(),1e-1);

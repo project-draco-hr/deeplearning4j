@@ -1,4 +1,4 @@
 {
-  data[2 * index(rowIndex,columnIndex) + 1 + offset]=value;
+  data[index(rowIndex,columnIndex) + 1 + offset]=value;
   return this;
 }

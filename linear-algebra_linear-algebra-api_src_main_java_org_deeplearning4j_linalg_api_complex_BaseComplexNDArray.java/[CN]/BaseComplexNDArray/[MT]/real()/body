@@ -1,5 +1,5 @@
 {
   INDArray ret=NDArrays.create(shape);
-  NDArrays.getBlasWrapper().dcopy(length,data,0,2,ret.data(),0,1);
+  copyRealTo(ret);
   return ret;
 }

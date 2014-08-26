@@ -8,10 +8,10 @@
   this.ordering=ordering;
   this.data=new double[ArrayUtil.prod(shape) * 2];
   this.stride=stride;
+  initShape(shape);
   int count=0;
   for (int i=0; i < list.size(); i++) {
     putScalar(count,list.get(i));
     count++;
   }
-  initShape(shape);
 }

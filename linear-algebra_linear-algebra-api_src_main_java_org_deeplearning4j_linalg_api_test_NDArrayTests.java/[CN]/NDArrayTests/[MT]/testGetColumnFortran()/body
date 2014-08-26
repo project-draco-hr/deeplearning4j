@@ -1,0 +1,11 @@
+{
+  NDArrays.factory().setOrder('f');
+  INDArray n=NDArrays.create(NDArrays.linspace(1,4,4).data(),new int[]{2,2});
+  INDArray column=NDArrays.create(new double[]{1,2});
+  INDArray column2=NDArrays.create(new double[]{3,4});
+  INDArray testColumn=n.getColumn(0);
+  INDArray testColumn1=n.getColumn(1);
+  assertEquals(column,testColumn);
+  assertEquals(column2,testColumn1);
+  NDArrays.factory().setOrder('c');
+}

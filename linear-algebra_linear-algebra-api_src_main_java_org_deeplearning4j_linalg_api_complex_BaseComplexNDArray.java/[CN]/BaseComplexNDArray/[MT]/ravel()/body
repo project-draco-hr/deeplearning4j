@@ -1,5 +1,5 @@
 {
-  final IComplexNDArray ret=NDArrays.createComplex(length,'c');
+  final IComplexNDArray ret=NDArrays.createComplex(length,ordering);
   final AtomicInteger counter=new AtomicInteger(0);
   SliceOp op=new SliceOp(){
     @Override public void operate(    DimensionSlice nd){
