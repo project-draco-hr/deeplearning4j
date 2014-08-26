@@ -1,3 +1,4 @@
 {
-  return null;
+  a=SimpleJCublas.ger(x,y,a,alpha);
+  return a;
 }
