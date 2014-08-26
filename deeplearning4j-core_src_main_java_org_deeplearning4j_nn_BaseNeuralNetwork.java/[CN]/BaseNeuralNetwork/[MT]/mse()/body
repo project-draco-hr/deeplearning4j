@@ -1,6 +1,6 @@
 {
   INDArray reconstructed=reconstruct(input);
   INDArray diff=reconstructed.sub(input);
-  double sum=0.5 * (double)pow(diff,2).sum(1).sum(Integer.MAX_VALUE).element() / input.rows();
+  float sum=0.5f * (float)pow(diff,2).sum(1).sum(Integer.MAX_VALUE).element() / input.rows();
   return sum;
 }

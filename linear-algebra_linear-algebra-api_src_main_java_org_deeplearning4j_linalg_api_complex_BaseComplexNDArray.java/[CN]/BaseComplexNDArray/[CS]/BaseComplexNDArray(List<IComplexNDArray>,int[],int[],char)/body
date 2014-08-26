@@ -1,12 +1,12 @@
 {
-  this(new double[ArrayUtil.prod(shape) * 2]);
+  this(new float[ArrayUtil.prod(shape) * 2]);
   List<IComplexNumber> list=new ArrayList<>();
   for (int i=0; i < slices.size(); i++) {
     IComplexNDArray flattened=slices.get(i).ravel();
     for (int j=0; j < flattened.length(); j++)     list.add(flattened.getComplex(j));
   }
   this.ordering=ordering;
-  this.data=new double[ArrayUtil.prod(shape) * 2];
+  this.data=new float[ArrayUtil.prod(shape) * 2];
   this.stride=stride;
   initShape(shape);
   int count=0;

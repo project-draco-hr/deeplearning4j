@@ -3,14 +3,14 @@
   if (!(o instanceof INDArray))   return false;
   if (n == null)   n=(INDArray)o;
   if (isScalar() && n.isScalar()) {
-    double val=(double)element();
-    double val2=(double)n.element();
+    float val=(float)element();
+    float val2=(float)n.element();
     return Math.abs(val - val2) < 1e-6;
   }
  else   if (isVector() && n.isVector()) {
     for (int i=0; i < length; i++) {
-      double curr=get(i);
-      double comp=n.get(i);
+      float curr=get(i);
+      float comp=n.get(i);
       if (Math.abs(curr - comp) > 1e-6)       return false;
     }
     return true;

@@ -1,6 +1,6 @@
 {
   int k=(Integer)otherParams[0];
-  double lr=(Double)otherParams[1];
+  float lr=(Float)otherParams[1];
   int epochs=(Integer)otherParams[2];
   pretrain(input,k,lr,epochs);
 }

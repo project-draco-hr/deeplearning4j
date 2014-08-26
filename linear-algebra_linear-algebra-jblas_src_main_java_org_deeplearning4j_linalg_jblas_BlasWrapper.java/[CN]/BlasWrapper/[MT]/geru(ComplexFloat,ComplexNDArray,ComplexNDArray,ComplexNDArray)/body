@@ -1,0 +1,4 @@
+{
+  NativeBlas.cgeru(a.rows(),a.columns(),new ComplexFloat(alpha.realComponent(),alpha.imaginaryComponent()),x.data(),x.offset(),1,y.data(),y.offset(),1,a.data(),a.offset(),a.rows());
+  return a;
+}

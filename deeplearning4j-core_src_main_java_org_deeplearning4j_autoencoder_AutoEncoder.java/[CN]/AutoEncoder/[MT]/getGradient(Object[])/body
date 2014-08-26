@@ -1,5 +1,5 @@
 {
-  double lr=(double)params[0];
+  float lr=(float)params[0];
   int iterations=(int)params[1];
   INDArray out=reconstruct(input);
   INDArray diff=input.sub(out);

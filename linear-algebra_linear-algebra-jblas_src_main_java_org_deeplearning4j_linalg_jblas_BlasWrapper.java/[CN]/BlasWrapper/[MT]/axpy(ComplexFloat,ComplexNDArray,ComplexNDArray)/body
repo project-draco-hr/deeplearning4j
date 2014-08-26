@@ -1,0 +1,4 @@
+{
+  NativeBlas.caxpy(dx.length(),new org.jblas.ComplexFloat(da.realComponent(),da.imaginaryComponent()),dx.data(),0,1,dy.data(),0,1);
+  return dy;
+}

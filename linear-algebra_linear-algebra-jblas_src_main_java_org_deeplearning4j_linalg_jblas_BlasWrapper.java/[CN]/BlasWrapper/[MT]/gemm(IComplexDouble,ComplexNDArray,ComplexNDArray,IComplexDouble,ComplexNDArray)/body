@@ -1,4 +1,0 @@
-{
-  NativeBlas.zgemm('N','N',c.rows(),c.columns(),a.columns(),new ComplexDouble(alpha.realComponent().doubleValue(),alpha.imaginaryComponent().doubleValue()),a.data(),a.offset() / 2,a.rows(),b.data(),b.offset() / 2,b.rows(),new ComplexDouble(beta.realComponent().doubleValue(),beta.imaginaryComponent().doubleValue()),c.data(),c.offset() / 2,c.rows());
-  return c;
-}

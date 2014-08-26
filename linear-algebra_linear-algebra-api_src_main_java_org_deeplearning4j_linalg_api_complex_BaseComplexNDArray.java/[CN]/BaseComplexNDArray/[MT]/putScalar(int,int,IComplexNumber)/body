@@ -1,6 +1,6 @@
 {
   int idx=index(j,i);
-  data[idx]=conji.realComponent().doubleValue();
-  data[idx + 1]=conji.imaginaryComponent().doubleValue();
+  data[idx]=conji.realComponent().floatValue();
+  data[idx + 1]=conji.imaginaryComponent().floatValue();
   return this;
 }

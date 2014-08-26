@@ -1,7 +1,7 @@
 {
   INDArray a=NDArrays.scalar(1.0);
   assertEquals(true,a.isScalar());
-  INDArray n=NDArrays.create(new double[]{1.0},new int[]{1,1});
+  INDArray n=NDArrays.create(new float[]{1.0f},new int[]{1,1});
   assertEquals(n,a);
   assertTrue(n.isScalar());
 }

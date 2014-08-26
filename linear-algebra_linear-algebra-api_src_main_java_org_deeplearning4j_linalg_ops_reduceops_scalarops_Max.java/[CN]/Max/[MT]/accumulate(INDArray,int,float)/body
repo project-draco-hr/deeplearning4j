@@ -1,0 +1,4 @@
+{
+  float curr=(float)arr.getScalar(i).element();
+  return soFar > curr ? soFar : curr;
+}

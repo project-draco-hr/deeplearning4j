@@ -1,8 +1,8 @@
 {
   INDArray squaredDiff=pow(reconstruct(input).sub(input),2);
-  double loss=(double)squaredDiff.sum(Integer.MAX_VALUE).element() / input.rows();
+  float loss=(float)squaredDiff.sum(Integer.MAX_VALUE).element() / input.rows();
   if (this.useRegularization) {
-    loss+=0.5 * l2 * (double)pow(W,2).sum(Integer.MAX_VALUE).element();
+    loss+=0.5 * l2 * (float)pow(W,2).sum(Integer.MAX_VALUE).element();
   }
   return loss;
 }

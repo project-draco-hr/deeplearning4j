@@ -1,6 +1,6 @@
 {
   int k=(int)params[0];
-  double learningRate=(double)params[1];
+  float learningRate=(float)params[1];
   int iteration=params[params.length - 1] == null ? 0 : (int)params[params.length - 1];
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
   if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);

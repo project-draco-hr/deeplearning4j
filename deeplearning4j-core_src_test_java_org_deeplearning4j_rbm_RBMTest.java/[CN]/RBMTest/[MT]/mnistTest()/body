@@ -4,5 +4,5 @@
   DataSet d=fetcher.next();
   RandomGenerator g=new MersenneTwister(123);
   RBM r=new RBM.Builder().numberOfVisible(d.numInputs()).numHidden(600).build();
-  r.trainTillConvergence(d.getFeatureMatrix(),1e-2,new Object[]{1,1e-1,100});
+  r.trainTillConvergence(d.getFeatureMatrix(),1e-2f,new Object[]{1,1e-1f,100});
 }

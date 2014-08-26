@@ -4,14 +4,14 @@
   biasAdaGrad.setMasterStepSize(learningRate);
   if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
-    g.setTolerance(1e-3);
+    g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
     g.setMaxIterations(numEpochs);
     g.optimize(numEpochs);
   }
  else {
     VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
-    g.setTolerance(1e-3);
+    g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
     g.optimize(numEpochs);
   }

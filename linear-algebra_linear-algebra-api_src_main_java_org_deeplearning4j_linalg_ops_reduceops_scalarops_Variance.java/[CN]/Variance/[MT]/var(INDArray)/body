@@ -1,4 +1,4 @@
 {
   double mean=new Mean().apply(arr);
-  return StatUtils.variance(arr.data(),mean);
+  return (float)StatUtils.variance(ArrayUtil.doubleCopyOf(arr.data()),mean);
 }

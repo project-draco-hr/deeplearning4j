@@ -4,14 +4,14 @@
   if (n == null)   n=(IComplexNDArray)o;
   if (isScalar() && n.isScalar()) {
     IComplexNumber c=n.getComplex(0);
-    return Math.abs(getComplex(0).sub(c).realComponent().doubleValue()) < 1e-6;
+    return Math.abs(getComplex(0).sub(c).realComponent().floatValue()) < 1e-6;
   }
  else   if (isVector() && n.isVector()) {
     for (int i=0; i < length; i++) {
-      double curr=getComplex(i).realComponent().doubleValue();
-      double comp=n.getComplex(i).realComponent().doubleValue();
-      double currImag=getComplex(i).imaginaryComponent().doubleValue();
-      double compImag=n.getComplex(i).imaginaryComponent().doubleValue();
+      float curr=getComplex(i).realComponent().floatValue();
+      float comp=n.getComplex(i).realComponent().floatValue();
+      float currImag=getComplex(i).imaginaryComponent().floatValue();
+      float compImag=n.getComplex(i).imaginaryComponent().floatValue();
       if (Math.abs(curr - comp) > 1e-6 || Math.abs(currImag - compImag) > 1e-6)       return false;
     }
     return true;

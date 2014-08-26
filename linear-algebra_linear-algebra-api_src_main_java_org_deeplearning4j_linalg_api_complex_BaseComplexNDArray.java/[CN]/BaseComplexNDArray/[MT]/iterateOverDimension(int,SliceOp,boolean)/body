@@ -7,8 +7,8 @@
       if (modify && slice.getIndices() != null) {
         IComplexNDArray result=(IComplexNDArray)slice.getResult();
         for (int i=0; i < slice.getIndices().length; i++) {
-          data[slice.getIndices()[i]]=result.getComplex(i).realComponent().doubleValue();
-          data[slice.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().doubleValue();
+          data[slice.getIndices()[i]]=result.getComplex(i).realComponent().floatValue();
+          data[slice.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().floatValue();
         }
       }
     }
@@ -20,8 +20,8 @@
       if (modify && slice.getIndices() != null) {
         IComplexNDArray result=(IComplexNDArray)slice.getResult();
         for (int i=0; i < slice.getIndices().length; i++) {
-          data[slice.getIndices()[i]]=result.getComplex(i).realComponent().doubleValue();
-          data[slice.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().doubleValue();
+          data[slice.getIndices()[i]]=result.getComplex(i).realComponent().floatValue();
+          data[slice.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().floatValue();
         }
       }
     }
@@ -32,8 +32,8 @@
         if (modify && slice.getIndices() != null) {
           IComplexNDArray result=(IComplexNDArray)slice.getResult();
           for (int j=0; j < slice.getIndices().length; j++) {
-            data[slice.getIndices()[j]]=result.getComplex(j).realComponent().doubleValue();
-            data[slice.getIndices()[j] + 1]=result.getComplex(j).imaginaryComponent().doubleValue();
+            data[slice.getIndices()[j]]=result.getComplex(j).realComponent().floatValue();
+            data[slice.getIndices()[j] + 1]=result.getComplex(j).imaginaryComponent().floatValue();
           }
         }
       }
@@ -51,14 +51,14 @@
         if (modify && vector.getIndices() != null) {
           IComplexNDArray result=(IComplexNDArray)vector.getResult();
           for (int i=0; i < vector.getIndices().length; i++) {
-            data[vector.getIndices()[i]]=result.getComplex(i).realComponent().doubleValue();
-            data[vector.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().doubleValue();
+            data[vector.getIndices()[i]]=result.getComplex(i).realComponent().floatValue();
+            data[vector.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().floatValue();
           }
         }
       }
     }
  else {
-      double[] data2=new double[ArrayUtil.prod(shape)];
+      float[] data2=new float[ArrayUtil.prod(shape)];
       int dataIter=0;
       int[] sliceIndices=endsForSlices();
       int currOffset=0;
@@ -69,8 +69,8 @@
         if (modify && pair.getIndices() != null) {
           IComplexNDArray result=(IComplexNDArray)pair.getResult();
           for (int i=0; i < pair.getIndices().length; i++) {
-            data[pair.getIndices()[i]]=result.getComplex(i).realComponent().doubleValue();
-            data[pair.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().doubleValue();
+            data[pair.getIndices()[i]]=result.getComplex(i).realComponent().floatValue();
+            data[pair.getIndices()[i] + 1]=result.getComplex(i).imaginaryComponent().floatValue();
           }
         }
         if (pair.isNextSlice()) {

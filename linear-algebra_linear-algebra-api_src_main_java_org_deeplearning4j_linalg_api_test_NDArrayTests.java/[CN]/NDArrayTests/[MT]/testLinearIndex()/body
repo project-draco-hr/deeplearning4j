@@ -3,7 +3,7 @@
   for (int i=0; i < n.length(); i++) {
     int linearIndex=n.linearIndex(i);
     assertEquals(i,linearIndex);
-    double d=(double)n.getScalar(i).element();
+    float d=(float)n.getScalar(i).element();
     assertEquals(i + 1,d,1e-1);
   }
 }

@@ -3,13 +3,13 @@
   DBN dbn=new DBN.Builder().withHiddenUnits(RBM.HiddenUnit.RECTIFIED).withVisibleUnits(RBM.VisibleUnit.GAUSSIAN).hiddenLayerSizes(new int[]{250,150,100}).withOptimizationAlgorithm(NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT).numberOfInputs(iter.inputColumns()).numberOfOutPuts(iter.totalOutcomes()).build();
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    dbn.pretrain(next.getFeatureMatrix(),1,1e-5,1000);
+    dbn.pretrain(next.getFeatureMatrix(),1,1e-5f,1000);
   }
   iter.reset();
   while (iter.hasNext()) {
     DataSet next=iter.next();
     dbn.setInput(next.getFeatureMatrix());
-    dbn.finetune(next.getLabels(),1e-4,1000);
+    dbn.finetune(next.getLabels(),1e-4f,1000);
   }
   iter.reset();
   Evaluation eval=new Evaluation();

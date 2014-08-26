@@ -1,4 +1,4 @@
 {
   this(new int[]{doubleMatrix.rows,doubleMatrix.columns});
-  this.data=doubleMatrix.data;
+  this.data=ArrayUtil.floatCopyOf(doubleMatrix.data);
 }

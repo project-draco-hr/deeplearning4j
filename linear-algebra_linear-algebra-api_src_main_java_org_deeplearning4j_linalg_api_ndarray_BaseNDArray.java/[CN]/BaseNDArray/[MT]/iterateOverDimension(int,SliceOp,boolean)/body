@@ -8,7 +8,7 @@
       if (modify && slice.getIndices() != null) {
         INDArray result=(INDArray)slice.getResult();
         for (int i=0; i < slice.getIndices().length; i++) {
-          data[slice.getIndices()[i]]=(double)result.getScalar(i).element();
+          data[slice.getIndices()[i]]=(float)result.getScalar(i).element();
         }
       }
     }
@@ -20,7 +20,7 @@
       if (modify && slice.getIndices() != null) {
         INDArray result=(INDArray)slice.getResult();
         for (int i=0; i < slice.getIndices().length; i++) {
-          data[slice.getIndices()[i]]=(double)result.getScalar(i).element();
+          data[slice.getIndices()[i]]=(float)result.getScalar(i).element();
         }
       }
     }
@@ -31,7 +31,7 @@
         if (modify && slice.getIndices() != null) {
           INDArray result=(INDArray)slice.getResult();
           for (int j=0; j < slice.getIndices().length; j++) {
-            data[slice.getIndices()[j]]=(double)result.getScalar(j).element();
+            data[slice.getIndices()[j]]=(float)result.getScalar(j).element();
           }
         }
       }

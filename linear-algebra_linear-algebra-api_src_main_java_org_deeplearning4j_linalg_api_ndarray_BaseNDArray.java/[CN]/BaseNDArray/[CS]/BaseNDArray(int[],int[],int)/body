@@ -1,3 +1,3 @@
 {
-  this(new double[ArrayUtil.prod(shape)],shape,stride,offset,NDArrays.order());
+  this(new float[ArrayUtil.prod(shape)],shape,stride,offset,NDArrays.order());
 }

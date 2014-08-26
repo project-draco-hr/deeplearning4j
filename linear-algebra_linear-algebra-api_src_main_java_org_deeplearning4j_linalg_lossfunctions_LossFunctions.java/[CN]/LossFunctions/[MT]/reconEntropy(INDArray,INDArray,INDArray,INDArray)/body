@@ -7,7 +7,7 @@
   INDArray inner=input.mul(log(sigV.dup())).addi(input.rsub(1).muli(log(sigV.rsubi(1))));
   INDArray rows=inner.sum(0);
   INDArray mean=rows.mean(Integer.MAX_VALUE);
-  double ret=(double)inner.sum(0).mean(Integer.MAX_VALUE).element();
+  float ret=(float)inner.sum(0).mean(Integer.MAX_VALUE).element();
   ret/=input.rows();
-  return ret;
+  return (float)ret;
 }

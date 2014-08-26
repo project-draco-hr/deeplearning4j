@@ -1,5 +1,5 @@
 {
   if (eVis == null)   reconstruct(input);
-  double squaredLoss=(double)Transforms.pow(eVis.sub(input),2).sum(Integer.MAX_VALUE).element();
+  float squaredLoss=(float)Transforms.pow(eVis.sub(input),2).sum(Integer.MAX_VALUE).element();
   return squaredLoss;
 }
