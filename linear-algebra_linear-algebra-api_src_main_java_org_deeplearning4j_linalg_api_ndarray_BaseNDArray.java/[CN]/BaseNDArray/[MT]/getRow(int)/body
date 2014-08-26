@@ -2,6 +2,7 @@
   if (shape.length == 2) {
     if (ordering == NDArrayFactory.C) {
       INDArray ret=NDArrays.create(data,new int[]{shape[1]},new int[]{stride[1]},offset + r * columns(),ordering);
+      ret.toString();
       return ret;
     }
  else {
