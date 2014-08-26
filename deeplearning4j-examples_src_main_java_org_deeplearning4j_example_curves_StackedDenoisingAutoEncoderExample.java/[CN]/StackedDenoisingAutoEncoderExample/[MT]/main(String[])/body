@@ -2,10 +2,10 @@
   DataSetIterator iter=new MultipleEpochsIterator(50,new MnistDataSetIterator(10,10));
   DataSet ne=iter.next();
   RandomGenerator rng=new MersenneTwister(123);
-  StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder.Builder().hiddenLayerSizes(new int[]{600,500,400}).withRng(rng).useRegularization(true).withL2(2e-5).numberOfInputs(784).numberOfOutPuts(iter.totalOutcomes()).build();
-  sda.pretrain(iter,1,1e-1,1);
+  StackedDenoisingAutoEncoder sda=new StackedDenoisingAutoEncoder.Builder().hiddenLayerSizes(new int[]{600,500,400}).withRng(rng).useRegularization(true).withL2(2e-5f).numberOfInputs(784).numberOfOutPuts(iter.totalOutcomes()).build();
+  sda.pretrain(iter,1,1e-1f,1);
   iter.reset();
-  sda.finetune(iter,1e-1,1);
+  sda.finetune(iter,1e-1f,1);
   BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream("mnist-dbn.bin"));
   sda.write(bos);
   bos.flush();
