@@ -6,9 +6,9 @@
   ThreePointerM(d_A,d_B,d_C,A,B,C);
   JCublas.cublasDgemm('n','n',A.rows(),B.columns(),B.rows(),alpha,d_A,A.rows(),d_B,B.rows(),beta,d_C,C.rows());
   gm(d_C,C);
+  JCublas.cublasShutdown();
   JCublas.cublasFree(d_A);
   JCublas.cublasFree(d_B);
   JCublas.cublasFree(d_C);
-  JCublas.cublasShutdown();
   return C;
 }

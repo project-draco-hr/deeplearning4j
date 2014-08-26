@@ -1,5 +1,0 @@
-{
-  INDArray n=NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{2,2,2});
-  JCublasNDArray d=(JCublasNDArray)n;
-  n=d.norm2(0);
-}

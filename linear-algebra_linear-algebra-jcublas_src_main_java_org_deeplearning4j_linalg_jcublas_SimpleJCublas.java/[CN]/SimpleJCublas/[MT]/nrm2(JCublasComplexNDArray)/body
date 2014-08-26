@@ -4,5 +4,6 @@
   OnePointerVi(d_A,A);
   double s=JCublas.cublasDnrm2(A.length(),d_A,2);
   JCublas.cublasShutdown();
+  JCublas.cublasFree(d_A);
   return s;
 }

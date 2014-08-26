@@ -1,4 +1,4 @@
 {
-  super.set(realComponent(),-imaginaryComponent());
+  super.set((double)realComponent(),-imaginaryComponent());
   return this;
 }

@@ -1,3 +1,10 @@
 {
-  return 0;
+  Pointer X=new Pointer();
+  int max;
+  init();
+  OnePointerVi(X,x);
+  max=JCublas.cublasIzamax(x.length(),X,1);
+  JCublas.cublasShutdown();
+  JCublas.cublasFree(X);
+  return max;
 }

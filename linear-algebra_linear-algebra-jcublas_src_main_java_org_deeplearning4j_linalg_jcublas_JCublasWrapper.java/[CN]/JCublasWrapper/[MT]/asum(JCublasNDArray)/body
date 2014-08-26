@@ -1,5 +1,3 @@
 {
-  double sum=0;
-  sum=SimpleJCublas.asum(x);
-  return sum;
+  return SimpleJCublas.asum(x);
 }

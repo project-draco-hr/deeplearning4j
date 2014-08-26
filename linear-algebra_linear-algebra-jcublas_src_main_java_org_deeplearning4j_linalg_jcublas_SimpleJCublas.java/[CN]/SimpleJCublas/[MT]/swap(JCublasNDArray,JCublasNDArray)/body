@@ -8,7 +8,7 @@
   TwoPointersV(X,Y,x,y);
   JCublas.cublasDswap(length,X,1,Y,1);
   gv(Y,y);
+  JCublas.cublasShutdown();
   JCublas.cublasFree(X);
   JCublas.cublasFree(Y);
-  JCublas.cublasShutdown();
 }

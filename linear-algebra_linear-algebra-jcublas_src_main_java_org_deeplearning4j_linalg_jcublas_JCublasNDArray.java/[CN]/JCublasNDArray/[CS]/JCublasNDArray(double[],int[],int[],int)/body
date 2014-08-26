@@ -1,3 +1,6 @@
 {
-  super(data,shape,stride,offset);
+  this.data=ArrayUtil.floatCopyOf(data);
+  this.stride=stride;
+  this.offset=offset;
+  initShape(shape);
 }

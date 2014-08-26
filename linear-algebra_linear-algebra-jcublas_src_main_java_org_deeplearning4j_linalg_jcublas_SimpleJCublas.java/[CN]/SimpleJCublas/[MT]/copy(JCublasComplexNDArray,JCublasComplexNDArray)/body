@@ -3,9 +3,9 @@
   Pointer Y=new Pointer();
   init();
   TwoPointersVi(X,Y,x,y);
-  JCublas.cublasDcopy(x.length(),X,1,Y,1);
+  JCublas.cublasZcopy(x.length(),X,1,Y,1);
   gvi(Y,y);
+  JCublas.cublasShutdown();
   JCublas.cublasFree(X);
   JCublas.cublasFree(Y);
-  JCublas.cublasShutdown();
 }
