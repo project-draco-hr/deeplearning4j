@@ -1,5 +1,5 @@
 {
-  double[] data=NDArrays.linspace(1,6,6).data();
+  float[] data=NDArrays.linspace(1,6,6).data();
   INDArray rows=NDArrays.create(data,new int[]{2,3});
   assertEquals(2,rows.rows());
   assertEquals(3,rows.columns());

@@ -1,6 +1,6 @@
 {
   if (layers.size() != this.layers.length + 1)   throw new IllegalArgumentException("Illegal number of layers passed in. Was " + layers.size() + " when should have been "+ (this.layers.length + 1));
-  double[][] allMatrices=new double[(this.layers.length + 1) * 2][];
+  float[][] allMatrices=new float[(this.layers.length + 1) * 2][];
   int count=0;
   for (int i=0; i < this.layers.length; i++) {
     allMatrices[count++]=layers.get(i).getFirst().data();

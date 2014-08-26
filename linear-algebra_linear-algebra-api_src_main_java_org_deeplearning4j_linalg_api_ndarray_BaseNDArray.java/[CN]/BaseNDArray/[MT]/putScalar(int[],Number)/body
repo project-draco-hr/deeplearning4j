@@ -3,6 +3,6 @@
   for (int i=0; i < shape.length; i++) {
     ix+=indexes[i] * stride[i];
   }
-  data[ix]=value.doubleValue();
+  data[ix]=value.floatValue();
   return this;
 }

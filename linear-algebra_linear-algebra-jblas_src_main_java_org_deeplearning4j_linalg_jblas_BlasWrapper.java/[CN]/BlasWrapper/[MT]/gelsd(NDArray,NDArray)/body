@@ -10,9 +10,9 @@
   int smlsiz=NativeBlas.ilaenv(9,"DGELSD","",m,n,nrhs,0);
   int nlvl=max(0,(int)log2(minmn / (smlsiz + 1)) + 1);
   int[] iwork=new int[3 * minmn * nlvl + 11 * minmn];
-  double[] s=new double[minmn];
+  float[] s=new float[minmn];
   int[] rank=new int[1];
-  int info=NativeBlas.dgelsd(m,n,nrhs,A.data(),0,m,B.data(),0,B.rows(),s,0,-1,rank,0,iwork,0);
+  int info=NativeBlas.sgelsd(m,n,nrhs,A.data(),0,m,B.data(),0,B.rows(),s,0,-1,rank,0,iwork,0);
   if (info == 0) {
     return;
   }

@@ -1,5 +1,5 @@
 {
-  int info=NativeBlas.dsygvd(itype,jobz,uplo,A.rows(),A.data(),0,A.rows(),B.data(),0,B.rows(),W.data(),0);
+  int info=NativeBlas.ssygvd(itype,jobz,uplo,A.rows(),A.data(),0,A.rows(),B.data(),0,B.rows(),W.data(),0);
   if (info == 0)   return 0;
  else {
     if (info < 0)     throw new LapackArgumentException("DSYGVD",-info);

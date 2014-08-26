@@ -2,15 +2,15 @@
   if (isVector()) {
     double s=0.0;
     for (int i=0; i < length; i++) {
-      s+=(double)getScalar(i).element();
+      s+=(float)getScalar(i).element();
       putScalar(i,s);
     }
   }
  else   if (dimension == Integer.MAX_VALUE || dimension == shape.length - 1) {
     INDArray flattened=ravel().dup();
-    double prevVal=(double)flattened.getScalar(0).element();
+    float prevVal=(float)flattened.getScalar(0).element();
     for (int i=1; i < flattened.length(); i++) {
-      double d=prevVal + (double)flattened.getScalar(i).element();
+      float d=prevVal + (float)flattened.getScalar(i).element();
       flattened.putScalar(i,d);
       prevVal=d;
     }

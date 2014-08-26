@@ -5,27 +5,27 @@
     @Override public void operate(    DimensionSlice nd){
       INDArray test=(INDArray)nd.getResult();
       if (count.get() == 0) {
-        INDArray answer=NDArrays.create(new double[]{1,7,13,19},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{1,7,13,19},new int[]{4});
         assertEquals(answer,test);
       }
  else       if (count.get() == 1) {
-        INDArray answer=NDArrays.create(new double[]{2,8,14,20},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{2,8,14,20},new int[]{4});
         assertEquals(answer,test);
       }
  else       if (count.get() == 2) {
-        INDArray answer=NDArrays.create(new double[]{3,9,15,21},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{3,9,15,21},new int[]{4});
         assertEquals(answer,test);
       }
  else       if (count.get() == 3) {
-        INDArray answer=NDArrays.create(new double[]{4,10,16,22},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{4,10,16,22},new int[]{4});
         assertEquals(answer,test);
       }
  else       if (count.get() == 4) {
-        INDArray answer=NDArrays.create(new double[]{5,11,17,23},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{5,11,17,23},new int[]{4});
         assertEquals(answer,test);
       }
  else       if (count.get() == 5) {
-        INDArray answer=NDArrays.create(new double[]{6,12,18,24},new int[]{4});
+        INDArray answer=NDArrays.create(new float[]{6,12,18,24},new int[]{4});
         assertEquals(answer,test);
       }
       count.incrementAndGet();
@@ -37,27 +37,27 @@
     @Override public void operate(    INDArray nd){
       INDArray test=nd;
       if (count.get() == 0) {
-        INDArray answer=NDArrays.create(new double[]{1,2},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{1,2},new int[]{2});
         assertEquals(answer,test);
       }
  else       if (count.get() == 1) {
-        INDArray answer=NDArrays.create(new double[]{3,4},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{3,4},new int[]{2});
         assertEquals(answer,test);
       }
  else       if (count.get() == 2) {
-        INDArray answer=NDArrays.create(new double[]{5,6},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{5,6},new int[]{2});
         assertEquals(answer,test);
       }
  else       if (count.get() == 3) {
-        INDArray answer=NDArrays.create(new double[]{7,8},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{7,8},new int[]{2});
         assertEquals(answer,test);
       }
  else       if (count.get() == 4) {
-        INDArray answer=NDArrays.create(new double[]{9,10},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{9,10},new int[]{2});
         assertEquals(answer,test);
       }
  else       if (count.get() == 5) {
-        INDArray answer=NDArrays.create(new double[]{11,12},new int[]{2});
+        INDArray answer=NDArrays.create(new float[]{11,12},new int[]{2});
         assertEquals(answer,test);
       }
       count.incrementAndGet();

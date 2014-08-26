@@ -1,5 +1,5 @@
 {
   int idx=linearIndex(i);
-  data[idx]=value.doubleValue();
+  data[idx]=value.floatValue();
   return this;
 }

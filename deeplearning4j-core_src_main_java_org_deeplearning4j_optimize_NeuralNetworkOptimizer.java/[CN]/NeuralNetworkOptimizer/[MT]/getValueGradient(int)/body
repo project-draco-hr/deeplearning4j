@@ -1,8 +1,8 @@
 {
   if (iteration >= 1)   extraParams[extraParams.length - 1]=iteration;
   NeuralNetworkGradient g=network.getGradient(extraParams);
-  if (NDArrays.dataType().equals("double")) {
-    double[] buffer=Doubles.concat(g.getwGradient().data(),g.getvBiasGradient().data(),g.gethBiasGradient().data());
+  if (NDArrays.dataType().equals("float")) {
+    float[] buffer=Floats.concat(g.getwGradient().data(),g.getvBiasGradient().data(),g.gethBiasGradient().data());
     return NDArrays.create(buffer);
   }
  else {

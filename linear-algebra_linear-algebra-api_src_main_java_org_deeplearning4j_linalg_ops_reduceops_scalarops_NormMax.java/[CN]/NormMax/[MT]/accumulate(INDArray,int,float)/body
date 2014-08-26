@@ -1,0 +1,4 @@
+{
+  float abs=Math.abs((float)arr.getScalar(i).element());
+  return abs > soFar ? abs : soFar;
+}

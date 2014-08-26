@@ -1,6 +1,6 @@
 {
-  double corruptionLevel=(double)params[0];
-  double lr=(double)params[1];
+  float corruptionLevel=(float)params[0];
+  float lr=(float)params[1];
   int iteration=(int)params[2];
   if (wAdaGrad != null)   this.wAdaGrad.setMasterStepSize(lr);
   if (hBiasAdaGrad != null)   this.hBiasAdaGrad.setMasterStepSize(lr);

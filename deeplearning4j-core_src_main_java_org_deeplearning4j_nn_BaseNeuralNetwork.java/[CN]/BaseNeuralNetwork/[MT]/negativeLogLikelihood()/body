@@ -1,12 +1,12 @@
 {
   INDArray z=this.reconstruct(input);
   if (this.useRegularization) {
-    double reg=(2 / l2) * (double)pow(this.W,2).sum(Integer.MAX_VALUE).element();
-    double ret=-(double)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element() + reg;
+    float reg=(2 / l2) * (float)pow(this.W,2).sum(Integer.MAX_VALUE).element();
+    float ret=-(float)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element() + reg;
     if (this.normalizeByInputRows)     ret/=input.rows();
     return ret;
   }
-  double likelihood=-(double)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element();
+  float likelihood=-(float)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element();
   if (this.normalizeByInputRows)   likelihood/=input.rows();
   return likelihood;
 }

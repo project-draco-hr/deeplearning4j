@@ -12,7 +12,7 @@
     for (int j=1; j < endColBlock; j++) {
       int cols=(j - 1) * xStride + 1;
       int colsMax=j * xStride;
-      double blockVal=(double)input.sum(1).sum(Integer.MAX_VALUE).element();
+      float blockVal=(float)input.sum(1).sum(Integer.MAX_VALUE).element();
       int rowLength=rowsMax - rowsMin;
       int colLength=colsMax - cols;
       INDArray block=NDArrays.create(rowLength,colLength);

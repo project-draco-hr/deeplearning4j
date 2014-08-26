@@ -29,7 +29,7 @@
       return true;
     }
     fp=fret;
-    double twoNorm=(double)xi.norm2(Integer.MAX_VALUE).element();
+    float twoNorm=(float)xi.norm2(Integer.MAX_VALUE).element();
     if (twoNorm < gradientTolerance) {
       logger.info("ConjugateGradient converged: gradient two norm " + twoNorm + ", less than "+ gradientTolerance);
       converged=true;
@@ -38,9 +38,9 @@
       }
       return true;
     }
-    dgg=gg=0.0;
-    gg=(double)Transforms.pow(g,2).sum(Integer.MAX_VALUE).element();
-    dgg=(double)xi.mul(xi.sub(g)).sum(Integer.MAX_VALUE).element();
+    dgg=gg=0.0f;
+    gg=(float)Transforms.pow(g,2).sum(Integer.MAX_VALUE).element();
+    dgg=(float)xi.mul(xi.sub(g)).sum(Integer.MAX_VALUE).element();
     gam=dgg / gg;
     g=xi.dup();
     h=xi.dup().add(h.mul(gam));

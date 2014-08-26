@@ -10,10 +10,10 @@
   ch.muli(pi);
   Triple<INDArray,List<INDArray>,INDArray> cg=runConjugateGradient(preCon,numIterations);
   INDArray p=cg.getFirst();
-  Pair<INDArray,Double> cgBackTrack=cgBackTrack(cg.getSecond(),p);
+  Pair<INDArray,Float> cgBackTrack=cgBackTrack(cg.getSecond(),p);
   p=cgBackTrack.getFirst();
-  double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
-  double newScore=network.score(cgBackTrack.getFirst());
+  Float rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
+  Float newScore=network.score(cgBackTrack.getFirst());
   step=lineSearch(newScore,gradient,p);
   network.dampingUpdate(rho,boost,decrease);
   INDArray proposedUpdate=xi.add(p.mul(f * step));

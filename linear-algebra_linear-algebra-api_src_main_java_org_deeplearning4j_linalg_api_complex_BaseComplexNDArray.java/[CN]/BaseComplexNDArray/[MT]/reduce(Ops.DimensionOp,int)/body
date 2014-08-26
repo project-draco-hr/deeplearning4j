@@ -3,18 +3,18 @@
   if (isVector())   return NDArrays.scalar(reduceVector(op,this));
   int[] shape=ArrayUtil.removeIndex(this.shape,dimension);
   if (dimension == 0) {
-    double[] data2=new double[ArrayUtil.prod(shape) * 2];
+    float[] data2=new float[ArrayUtil.prod(shape) * 2];
     int dataIter=0;
     int numTimes=ArrayUtil.prod(shape);
     for (int offset=this.offset; offset < numTimes; offset++) {
-      IComplexDouble reduce=op(dimension,offset,op);
-      data2[dataIter++]=reduce.realComponent();
-      data2[dataIter++]=reduce.imaginaryComponent();
+      IComplexNumber reduce=op(dimension,offset,op);
+      data2[dataIter++]=reduce.realComponent().floatValue();
+      data2[dataIter++]=reduce.imaginaryComponent().floatValue();
     }
     return NDArrays.createComplex(data2,shape);
   }
  else {
-    double[] data2=new double[ArrayUtil.prod(shape)];
+    float[] data2=new float[ArrayUtil.prod(shape)];
     int dataIter=0;
     int[] sliceIndices=endsForSlices();
     int currOffset=0;
@@ -23,8 +23,8 @@
       if (dataIter >= data2.length || currOffset >= sliceIndices.length)       break;
       ComplexIterationResult pair=op(dimension,offset,op,sliceIndices[currOffset]);
       IComplexNumber reduce=pair.getNumber();
-      data2[dataIter++]=reduce.realComponent().doubleValue();
-      data2[dataIter++]=reduce.imaginaryComponent().doubleValue();
+      data2[dataIter++]=reduce.realComponent().floatValue();
+      data2[dataIter++]=reduce.imaginaryComponent().floatValue();
       if (pair.isNextIteration()) {
         offset=sliceIndices[currOffset];
         numTimes+=sliceIndices[currOffset];

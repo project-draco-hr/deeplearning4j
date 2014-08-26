@@ -1,0 +1,49 @@
+{
+  INDArray wGradient=gradient.getwGradient();
+  INDArray hBiasGradient=gradient.gethBiasGradient();
+  INDArray vBiasGradient=gradient.getvBiasGradient();
+  if (iteration != 0 && resetAdaGradIterations > 0 && iteration % resetAdaGradIterations == 0) {
+    wAdaGrad.historicalGradient=null;
+    hBiasAdaGrad.historicalGradient=null;
+    vBiasAdaGrad.historicalGradient=null;
+    if (this.W != null && this.wAdaGrad == null)     this.wAdaGrad=new AdaGrad(this.W.rows(),this.W.columns());
+    if (this.vBias != null && this.vBiasAdaGrad == null)     this.vBiasAdaGrad=new AdaGrad(this.vBias.rows(),this.vBias.columns());
+    if (this.hBias != null && this.hBiasAdaGrad == null)     this.hBiasAdaGrad=new AdaGrad(this.hBias.rows(),this.hBias.columns());
+    log.info("Resetting adagrad");
+  }
+  INDArray wLearningRates=wAdaGrad.getLearningRates(wGradient);
+  float momentum=this.momentum;
+  if (momentumAfter != null && !momentumAfter.isEmpty()) {
+    int key=momentumAfter.keySet().iterator().next();
+    if (iteration >= key) {
+      momentum=momentumAfter.get(key);
+    }
+  }
+  if (useAdaGrad)   wGradient.muli(wLearningRates);
+ else   wGradient.muli(learningRate);
+  if (useAdaGrad)   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient));
+ else   hBiasGradient=hBiasGradient.mul(learningRate);
+  if (useAdaGrad)   vBiasGradient=vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient));
+ else   vBiasGradient=vBiasGradient.mul(learningRate);
+  if (applySparsity && this.hBiasGradient != null)   applySparsity(hBiasGradient,learningRate);
+  if (momentum != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(momentum).add(wGradient.mul(1 - momentum)));
+  if (momentum != 0 && this.vBiasGradient != null)   vBiasGradient.addi(this.vBiasGradient.mul(momentum).add(vBiasGradient.mul(1 - momentum)));
+  if (momentum != 0 && this.hBiasGradient != null)   hBiasGradient.addi(this.hBiasGradient.mul(momentum).add(hBiasGradient.mul(1 - momentum)));
+  if (normalizeByInputRows) {
+    wGradient.divi(lastMiniBatchSize);
+    vBiasGradient.divi(lastMiniBatchSize);
+    hBiasGradient.divi(lastMiniBatchSize);
+  }
+  if (useRegularization && l2 > 0) {
+    if (useAdaGrad)     wGradient.subi(W.mul(l2).mul(wLearningRates));
+ else     wGradient.subi(W.mul(l2 * learningRate));
+  }
+  if (constrainGradientToUnitNorm) {
+    wGradient.divi(wGradient.norm2(Integer.MAX_VALUE));
+    vBiasGradient.divi(vBiasGradient.norm2(Integer.MAX_VALUE));
+    hBiasGradient.divi(hBiasGradient.norm2(Integer.MAX_VALUE));
+  }
+  this.wGradient=wGradient;
+  this.vBiasGradient=vBiasGradient;
+  this.hBiasGradient=hBiasGradient;
+}

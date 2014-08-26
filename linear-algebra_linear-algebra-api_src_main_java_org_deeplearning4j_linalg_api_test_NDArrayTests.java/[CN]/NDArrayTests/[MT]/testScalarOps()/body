@@ -6,7 +6,7 @@
   n.checkDimensions(n.muli(NDArrays.scalar(1.0d)));
   n.checkDimensions(n.divi(NDArrays.scalar(1.0d)));
   n=NDArrays.create(NDArrays.ones(27).data(),new int[]{3,3,3});
-  assertEquals(27,(double)n.sum(Integer.MAX_VALUE).element(),1e-1);
+  assertEquals(27,(float)n.sum(Integer.MAX_VALUE).element(),1e-1);
   INDArray a=n.slice(2);
   assertEquals(true,Arrays.equals(new int[]{3,3},a.shape()));
 }

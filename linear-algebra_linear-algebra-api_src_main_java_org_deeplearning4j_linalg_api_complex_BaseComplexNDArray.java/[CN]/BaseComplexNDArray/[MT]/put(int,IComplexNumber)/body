@@ -1,5 +1,5 @@
 {
   int idx=linearIndex(i);
-  data[idx]=element.realComponent().doubleValue();
-  data[idx + 1]=element.imaginaryComponent().doubleValue();
+  data[idx]=element.realComponent().floatValue();
+  data[idx + 1]=element.imaginaryComponent().floatValue();
 }

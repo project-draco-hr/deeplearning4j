@@ -1,9 +1,9 @@
 {
   INDArray n=NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{2,2,2});
   INDArray eightFirstTest=n.vectorAlongDimension(0,2);
-  INDArray eightFirstAssertion=NDArrays.create(new double[]{1,2},new int[]{2});
+  INDArray eightFirstAssertion=NDArrays.create(new float[]{1,2},new int[]{2});
   assertEquals(eightFirstAssertion,eightFirstTest);
   INDArray eightFirstTestSecond=n.vectorAlongDimension(1,2);
-  INDArray eightFirstTestSecondAssertion=NDArrays.create(new double[]{3,4});
+  INDArray eightFirstTestSecondAssertion=NDArrays.create(new float[]{3,4});
   assertEquals(eightFirstTestSecondAssertion,eightFirstTestSecond);
 }

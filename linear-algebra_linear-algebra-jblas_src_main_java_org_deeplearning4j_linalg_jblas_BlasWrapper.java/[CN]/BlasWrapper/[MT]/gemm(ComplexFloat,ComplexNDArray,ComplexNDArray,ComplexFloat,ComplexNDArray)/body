@@ -1,0 +1,4 @@
+{
+  NativeBlas.cgemm('N','N',c.rows(),c.columns(),a.columns(),new ComplexFloat(alpha.realComponent().floatValue(),alpha.imaginaryComponent().floatValue()),a.data(),a.offset() / 2,a.rows(),b.data(),b.offset() / 2,b.rows(),new ComplexFloat(beta.realComponent().floatValue(),beta.imaginaryComponent().floatValue()),c.data(),c.offset() / 2,c.rows());
+  return c;
+}

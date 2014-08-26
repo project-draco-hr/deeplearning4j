@@ -1,4 +1,0 @@
-{
-  NativeBlas.daxpy(dx.length(),da,dx.data(),dx.offset(),1,dy.data(),dy.offset(),1);
-  return dy;
-}

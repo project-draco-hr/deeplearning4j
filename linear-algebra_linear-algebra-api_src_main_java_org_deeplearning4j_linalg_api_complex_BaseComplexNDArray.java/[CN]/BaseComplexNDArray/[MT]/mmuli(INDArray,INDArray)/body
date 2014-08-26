@@ -5,12 +5,12 @@
   IComplexNDArray resultArray=NDArrays.createComplex(result);
   if (result == this || result == other) {
     IComplexNDArray temp=NDArrays.createComplex(resultArray.shape(),ArrayUtil.calcStrides(resultArray.shape()));
-    NDArrays.getBlasWrapper().gemm(NDArrays.createDouble(1,0),this,otherArray,NDArrays.createDouble(0,0),temp);
+    NDArrays.getBlasWrapper().gemm(NDArrays.createFloat(1,0),this,otherArray,NDArrays.createFloat(0,0),temp);
     NDArrays.getBlasWrapper().copy(temp,resultArray);
   }
  else {
     IComplexNDArray thisInput=this;
-    NDArrays.getBlasWrapper().gemm(NDArrays.createDouble(1,0),thisInput,otherArray,NDArrays.createDouble(0,0),resultArray);
+    NDArrays.getBlasWrapper().gemm(NDArrays.createFloat(1,0),thisInput,otherArray,NDArrays.createFloat(0,0),resultArray);
   }
   return resultArray;
 }

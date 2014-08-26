@@ -14,6 +14,6 @@
   assertEquals(encoder.getLayers()[1].getW().length(),encoder.getLayers()[encoder.getLayers().length - 1].getW().length());
   assertEquals(encoder.getLayers()[2].getW().length(),encoder.getLayers()[encoder.getLayers().length - 2].getW().length());
   assertEquals(7,encoder.getSigmoidLayers().length);
-  encoder.finetune(data.getFeatureMatrix(),1e-1,1000);
+  encoder.finetune(data.getFeatureMatrix(),1e-1f,1000);
   assertEquals(encoder.getLayers()[0].getW().length(),encoder.getOutputLayer().getW().length());
 }

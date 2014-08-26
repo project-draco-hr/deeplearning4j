@@ -3,6 +3,6 @@
   int ix=offset;
   if (indices.length != shape.length)   throw new IllegalArgumentException("Unable to applyTransformToDestination values: number of indices must be equal to the shape");
   for (int i=0; i < shape.length; i++)   ix+=indices[i] * stride[i];
-  data[ix]=(double)element.element();
+  data[ix]=(float)element.element();
   return this;
 }
