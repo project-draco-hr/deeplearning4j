@@ -1,0 +1,6 @@
+{
+  double d=r * r + i * i;
+  r=r / d;
+  i=-i / d;
+  return this;
+}

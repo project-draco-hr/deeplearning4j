@@ -1,0 +1,8 @@
+{
+  Pointer X=new Pointer();
+  OnePointerV(X,x,Sizeof.FLOAT);
+  double sum=0;
+  sum=JCublas.cublasDasum(x.length(),X,1);
+  JCublas.cublasFree(X);
+  return sum;
+}

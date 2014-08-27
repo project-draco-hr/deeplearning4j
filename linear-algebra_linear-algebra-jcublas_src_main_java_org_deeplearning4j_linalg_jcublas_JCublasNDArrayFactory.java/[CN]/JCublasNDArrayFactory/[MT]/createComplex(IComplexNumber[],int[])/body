@@ -1,0 +1,4 @@
+{
+  if (order == FORTRAN)   return new JCublasComplexNDArray(data,shape,ArrayUtil.calcStridesFortran(shape));
+ else   return new JCublasComplexNDArray(data,shape);
+}

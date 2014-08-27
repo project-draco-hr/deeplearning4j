@@ -1,0 +1,10 @@
+{
+  Pointer d_A=new Pointer();
+  int length=x.length();
+  JCublas.cublasAlloc(length,Sizeof.FLOAT,d_A);
+  OnePointerV(d_A,x,Sizeof.FLOAT);
+  JCublas.cublasDscal(length,alpha,d_A,1);
+  gv(d_A,x,Sizeof.FLOAT);
+  JCublas.cublasFree(d_A);
+  return x;
+}

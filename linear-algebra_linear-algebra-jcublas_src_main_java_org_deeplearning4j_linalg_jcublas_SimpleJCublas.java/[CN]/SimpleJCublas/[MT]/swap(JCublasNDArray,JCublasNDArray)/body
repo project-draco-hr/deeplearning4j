@@ -1,0 +1,12 @@
+{
+  Pointer X=new Pointer();
+  Pointer Y=new Pointer();
+  int length=x.length();
+  int length_o=y.length();
+  if (length != length_o)   return;
+  TwoPointersV(X,Y,x,y,Sizeof.FLOAT);
+  JCublas.cublasDswap(length,X,1,Y,1);
+  gv(Y,y,Sizeof.FLOAT);
+  JCublas.cublasFree(X);
+  JCublas.cublasFree(Y);
+}

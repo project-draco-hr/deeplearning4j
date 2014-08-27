@@ -1,0 +1,16 @@
+{
+  Pointer d_A=new Pointer();
+  Pointer d_B=new Pointer();
+  Pointer d_C=new Pointer();
+  ThreePointerM(d_A,d_B,d_C,A,B,C,Sizeof.DOUBLE);
+  char trans='n';
+  if (A.rows() == B.columns()) {
+    trans='T';
+  }
+  JCublas.cublasDgemv('n',A.rows(),A.columns(),alpha,d_A,A.rows(),d_B,B.rows(),beta,d_C,1);
+  gv(d_C,C,Sizeof.DOUBLE);
+  JCublas.cublasFree(d_A);
+  JCublas.cublasFree(d_B);
+  JCublas.cublasFree(d_C);
+  return C;
+}

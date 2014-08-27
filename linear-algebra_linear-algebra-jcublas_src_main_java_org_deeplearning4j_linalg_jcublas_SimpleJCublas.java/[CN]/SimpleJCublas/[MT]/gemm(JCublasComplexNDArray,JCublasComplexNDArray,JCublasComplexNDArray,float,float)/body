@@ -1,0 +1,14 @@
+{
+  Pointer d_A=new Pointer();
+  Pointer d_B=new Pointer();
+  Pointer d_C=new Pointer();
+  ThreePointerMi(d_A,d_B,d_C,A,B,C,Sizeof.FLOAT);
+  cuComplex alpha=cuComplex.cuCmplx(Alpha,0);
+  cuComplex beta=cuComplex.cuCmplx(Beta,0);
+  JCublas.cublasCgemm('n','n',A.rows(),B.columns(),B.rows(),alpha,d_A,A.rows(),d_B,B.rows(),beta,d_C,C.rows());
+  gvi(d_C,C,Sizeof.FLOAT);
+  JCublas.cublasFree(d_A);
+  JCublas.cublasFree(d_B);
+  JCublas.cublasFree(d_C);
+  return C;
+}
