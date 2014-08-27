@@ -15,7 +15,7 @@
   this.useAdaGrad=network.useAdaGrad;
   this.outputLayerDropout=network.outputLayerDropout;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
-  if (network.outputLayer != null)   this.outputLayer=network.outputLayer.clone();
+  if (network.outputLayer != null)   this.outputLayer=(OutputLayer)network.outputLayer.clone();
   this.nIns=network.nIns;
   this.nOuts=network.nOuts;
   this.rng=network.rng;
@@ -49,8 +49,8 @@
   this.useDropConnect=network.useDropConnect;
   this.useGaussNewtonVectorProductBackProp=network.useGaussNewtonVectorProductBackProp;
   this.constrainGradientToUnitNorm=network.constrainGradientToUnitNorm;
-  if (network.sigmoidLayers != null && network.sigmoidLayers.length > 0) {
-    this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
-    for (int i=0; i < sigmoidLayers.length; i++)     this.getSigmoidLayers()[i]=network.getSigmoidLayers()[i].clone();
+  if (network.sigmoidHiddeenLayers != null && network.sigmoidHiddeenLayers.length > 0) {
+    this.sigmoidHiddeenLayers=new HiddenLayer[network.sigmoidHiddeenLayers.length];
+    for (int i=0; i < sigmoidHiddeenLayers.length; i++)     this.getSigmoidHiddeenLayers()[i]=network.getSigmoidHiddeenLayers()[i].clone();
   }
 }

@@ -1,8 +1,0 @@
-{
-  if (sparsity != 0) {
-    INDArray negMean=NDArrays.scalar(sparseGain * (sparsity - (float)chainStart.mean(1).mean(Integer.MAX_VALUE).element()));
-    if (useAdaGrad)     negMean.muli(hBiasAdaGrad.getLearningRates(hBiasGradient));
- else     negMean.muli(learningRate);
-    hBias.addi(negMean);
-  }
-}

@@ -4,8 +4,8 @@
     NeuralNetwork n=layers[i];
     NeuralNetwork otherNetwork=network.layers[i];
     n.merge(otherNetwork,batchSize);
-    getSigmoidLayers()[i].setB(n.gethBias());
-    getSigmoidLayers()[i].setW(n.getW());
+    getSigmoidHiddeenLayers()[i].setB(n.gethBias());
+    getSigmoidHiddeenLayers()[i].setW(n.getW());
   }
   getOutputLayer().merge(network.outputLayer,batchSize);
 }

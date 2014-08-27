@@ -3,12 +3,12 @@
   DataSetIterator iter=new MultipleEpochsIterator(250,new CurvesDataSetIterator(100,100));
   while (iter.hasNext()) {
     DataSet next=iter.next();
-    r.trainTillConvergence(next.getFeatureMatrix(),1e-2f,new Object[]{1,1e-2f,5000});
+    r.fit(next.getFeatureMatrix(),1e-2f,new Object[]{1,1e-2f,5000});
   }
   iter.reset();
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    INDArray reconstruct=r.reconstruct(first.getFeatureMatrix());
+    INDArray reconstruct=r.transform(first.getFeatureMatrix());
     for (int j=0; j < first.numExamples(); j++) {
       INDArray draw1=first.get(j).getFeatureMatrix().mul(255);
       INDArray reconstructed2=reconstruct.getRow(j);

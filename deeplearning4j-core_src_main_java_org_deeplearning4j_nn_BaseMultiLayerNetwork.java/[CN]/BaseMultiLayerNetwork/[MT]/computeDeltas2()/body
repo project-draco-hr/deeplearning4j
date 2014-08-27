@@ -11,7 +11,7 @@
   for (int j=0; j < getLayers().length; j++) {
     weights.add(getLayers()[j].getW());
     biases.add(getLayers()[j].gethBias());
-    activationFunctions.add(getSigmoidLayers()[j].getActivationFunction());
+    activationFunctions.add(getSigmoidHiddeenLayers()[j].getActivationFunction());
   }
   biases.add(getOutputLayer().getB());
   weights.add(getOutputLayer().getW());

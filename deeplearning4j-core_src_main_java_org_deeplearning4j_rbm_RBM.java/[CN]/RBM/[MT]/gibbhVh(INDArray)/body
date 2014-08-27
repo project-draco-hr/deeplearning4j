@@ -1,6 +1,0 @@
-{
-  Pair<INDArray,INDArray> v1MeanAndSample=sampleVisibleGivenHidden(h);
-  INDArray vSample=v1MeanAndSample.getSecond();
-  Pair<INDArray,INDArray> h1MeanAndSample=sampleHiddenGivenVisible(vSample);
-  return new Pair<>(v1MeanAndSample,h1MeanAndSample);
-}

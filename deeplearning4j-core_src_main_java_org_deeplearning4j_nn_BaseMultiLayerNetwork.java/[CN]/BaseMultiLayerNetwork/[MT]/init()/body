@@ -4,26 +4,26 @@
   int inputSize;
   if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network layers; number specified is less than 1");
   if (this.dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
-  if (this.layers == null || sigmoidLayers == null || this.sigmoidLayers[0] == null || this.layers[0] == null) {
+  if (this.layers == null || sigmoidHiddeenLayers == null || this.sigmoidHiddeenLayers[0] == null || this.layers[0] == null) {
     this.layers=new NeuralNetwork[getnLayers()];
     for (int i=0; i < this.getnLayers(); i++) {
       ActivationFunction currLayerActivation=activationFunctionForLayer.get(i) != null ? activationFunctionForLayer.get(i) : activation;
       if (i == 0)       inputSize=this.nIns;
  else       inputSize=this.hiddenLayerSizes[i - 1];
       if (i == 0) {
-        sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
+        sigmoidHiddeenLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
       }
  else {
         if (input != null) {
           if (this.sampleFromHiddenActivations)           layerInput=layers[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
  else           layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
         }
-        sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
+        sigmoidHiddeenLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
       }
-      this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
+      this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidHiddeenLayers[i].getW(),this.sigmoidHiddeenLayers[i].getB(),null,rng,i);
     }
   }
-  this.outputLayer=new OutputLayer.Builder().withDropout(outputLayerDropout).weightInit(outputLayerWeightInit).useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(getSigmoidLayers()[getSigmoidLayers().length - 1].nOut).numberOfOutputs(nOuts).withL2(l2).build();
+  this.outputLayer=new OutputLayer.Builder().withDropout(outputLayerDropout).weightInit(outputLayerWeightInit).useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(getSigmoidHiddeenLayers()[getSigmoidHiddeenLayers().length - 1].getnOut()).numberOfOutputs(nOuts).withL2(l2).build();
   synchonrizeRng();
   dimensionCheck();
   applyTransforms();

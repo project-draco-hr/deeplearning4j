@@ -1,5 +1,5 @@
 {
-  INDArray reconstructed=reconstruct(input);
+  INDArray reconstructed=transform(input);
   INDArray diff=reconstructed.sub(input);
   float sum=0.5f * (float)pow(diff,2).sum(1).sum(Integer.MAX_VALUE).element() / input.rows();
   return sum;

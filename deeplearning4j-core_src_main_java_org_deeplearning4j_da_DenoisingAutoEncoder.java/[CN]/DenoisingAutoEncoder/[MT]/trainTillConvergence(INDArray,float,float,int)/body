@@ -1,6 +1,0 @@
-{
-  if (x != null)   input=preProcessInput(x);
-  this.lastMiniBatchSize=x.rows();
-  optimizer=new DenoisingAutoEncoderOptimizer(this,lr,new Object[]{corruptionLevel,lr,iterations},optimizationAlgo,lossFunction);
-  optimizer.train(x);
-}

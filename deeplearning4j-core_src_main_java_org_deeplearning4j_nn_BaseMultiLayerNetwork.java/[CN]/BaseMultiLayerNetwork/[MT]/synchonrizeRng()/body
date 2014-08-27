@@ -2,6 +2,6 @@
   RandomGenerator rgen=new SynchronizedRandomGenerator(rng);
   for (int i=0; i < getnLayers(); i++) {
     layers[i].setRng(rgen);
-    sigmoidLayers[i].setRng(rgen);
+    sigmoidHiddeenLayers[i].setRng(rgen);
   }
 }

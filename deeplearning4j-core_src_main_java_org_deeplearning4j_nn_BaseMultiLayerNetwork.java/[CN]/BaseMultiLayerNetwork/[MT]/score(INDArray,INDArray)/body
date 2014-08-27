@@ -1,5 +1,7 @@
 {
   feedForward(input);
   setLabels(labels);
-  return score();
+  Evaluation eval=new Evaluation();
+  eval.eval(labels,labelProbabilities(input));
+  return (float)eval.f1();
 }

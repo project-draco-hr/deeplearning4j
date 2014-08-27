@@ -28,7 +28,7 @@
     ret.setnLayers(this.nLayers);
     ret.setRng(this.rng);
     ret.setShouldBackProp(this.backProp);
-    ret.setSigmoidLayers(new HiddenLayer[ret.getnLayers()]);
+    ret.setSigmoidHiddeenLayers(new HiddenLayer[ret.getnLayers()]);
     ret.setSampleFromHiddenActivations(useHiddenActivationsForwardProp);
     ret.setInput(this.input);
     ret.setLineSearchBackProp(lineSearchBackProp);

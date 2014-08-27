@@ -1,6 +1,6 @@
 {
   Word2Vec vec=Word2VecLoader.loadModel(new File(args[0]));
-  vec.train();
+  vec.fit();
   BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
   String line=null;
   while (true) {

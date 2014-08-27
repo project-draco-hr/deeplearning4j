@@ -4,7 +4,7 @@
   for (int i=0; i < dbn.getLayers().length; i++) {
     RBM r=(RBM)dbn.getLayers()[i];
     builder.append(architecure(r,i));
-    builder.append(" activation -> " + dbn.getSigmoidLayers()[i].getActivationFunction() + "\n");
+    builder.append(" activation -> " + dbn.getSigmoidHiddeenLayers()[i].getActivationFunction() + "\n");
   }
   return builder.toString();
 }

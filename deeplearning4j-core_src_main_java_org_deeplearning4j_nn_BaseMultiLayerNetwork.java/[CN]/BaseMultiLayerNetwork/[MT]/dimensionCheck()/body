@@ -1,15 +1,15 @@
 {
   for (int i=0; i < getnLayers(); i++) {
-    HiddenLayer h=sigmoidLayers[i];
+    Layer h=sigmoidHiddeenLayers[i];
     NeuralNetwork network=layers[i];
     LinAlgExceptions.assertSameShape(network.getW(),h.getW());
     LinAlgExceptions.assertSameShape(h.getB(),network.gethBias());
     if (i < getnLayers() - 1) {
-      HiddenLayer h1=sigmoidLayers[i + 1];
+      Layer h1=sigmoidHiddeenLayers[i + 1];
       NeuralNetwork network1=layers[i + 1];
       if (h1.getnIn() != h.getnOut())       throw new IllegalStateException("Invalid structure: hidden layer in for " + (i + 1) + " not equal to number of ins "+ i);
       if (network.getnHidden() != network1.getnVisible())       throw new IllegalStateException("Invalid structure: network hidden for " + (i + 1) + " not equal to number of visible "+ i);
     }
   }
-  if (sigmoidLayers[sigmoidLayers.length - 1].getnOut() != outputLayer.getnIn())   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
+  if (sigmoidHiddeenLayers[sigmoidHiddeenLayers.length - 1].getnOut() != outputLayer.getnIn())   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
 }

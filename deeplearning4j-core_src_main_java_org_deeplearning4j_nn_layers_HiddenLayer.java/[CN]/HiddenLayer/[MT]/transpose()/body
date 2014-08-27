@@ -1,0 +1,14 @@
+{
+  HiddenLayer hiddeenLayer=new HiddenLayer();
+  hiddeenLayer.b=b.dup();
+  hiddeenLayer.W=W.transpose();
+  if (input != null)   hiddeenLayer.input=input.transpose();
+  if (dist != null)   hiddeenLayer.dist=dist;
+  hiddeenLayer.activationFunction=activationFunction;
+  hiddeenLayer.nOut=nIn;
+  hiddeenLayer.weightInit=weightInit;
+  hiddeenLayer.nIn=nOut;
+  hiddeenLayer.concatBiases=concatBiases;
+  hiddeenLayer.rng=rng;
+  return hiddeenLayer;
+}

@@ -1,5 +1,5 @@
 {
-  INDArray z=this.reconstruct(input);
+  INDArray z=this.transform(input);
   if (this.useRegularization) {
     float reg=(2 / l2) * (float)pow(this.W,2).sum(Integer.MAX_VALUE).element();
     float ret=-(float)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element() + reg;

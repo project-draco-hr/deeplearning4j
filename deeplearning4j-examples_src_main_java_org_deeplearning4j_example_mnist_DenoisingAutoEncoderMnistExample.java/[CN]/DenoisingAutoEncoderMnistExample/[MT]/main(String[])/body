@@ -10,7 +10,7 @@
   render.renderFilters(autoEncoder.getW(),"example-render.jpg",28,28,10);
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    INDArray reconstruct=autoEncoder.reconstruct(first.getFeatureMatrix());
+    INDArray reconstruct=autoEncoder.transform(first.getFeatureMatrix());
     for (int j=0; j < first.numExamples(); j++) {
       INDArray draw1=first.get(j).getFeatureMatrix().mul(255);
       INDArray reconstructed2=reconstruct.getRow(j);

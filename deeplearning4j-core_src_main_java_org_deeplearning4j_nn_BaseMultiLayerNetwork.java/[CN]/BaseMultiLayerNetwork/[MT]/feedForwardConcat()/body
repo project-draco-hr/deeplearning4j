@@ -5,10 +5,10 @@
   activations.add(currInput);
   for (int i=0; i < getnLayers(); i++) {
     NeuralNetwork layer=getLayers()[i];
-    HiddenLayer l=getSigmoidLayers()[i];
+    Layer l=getSigmoidHiddeenLayers()[i];
     layer.setInput(currInput);
     l.setInput(currInput);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidLayers()[i].activate(layer.sampleHiddenGivenVisible(currInput).getSecond());
+    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidHiddeenLayers()[i].activate(layer.sampleHiddenGivenVisible(currInput).getSecond());
  else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     applyDropConnectIfNecessary(currInput);

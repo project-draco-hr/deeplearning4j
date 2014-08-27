@@ -14,7 +14,7 @@
   File vecModel=new File("tweet-wordvectors.ser");
   Word2Vec vec=vecModel.exists() ? (Word2Vec)SerializationUtils.readObject(vecModel) : new Word2Vec(tokenizerFactory,iterator,5);
   if (!vecModel.exists()) {
-    vec.train();
+    vec.fit();
     log.info("Saving word 2 vec model...");
     SerializationUtils.saveObject(vec,new File("tweet-wordvectors.ser"));
   }

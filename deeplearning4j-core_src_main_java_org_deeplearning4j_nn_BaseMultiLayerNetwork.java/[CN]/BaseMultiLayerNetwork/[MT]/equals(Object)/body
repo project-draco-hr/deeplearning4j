@@ -35,7 +35,7 @@
   if (outputActivationFunction != null ? !outputActivationFunction.equals(that.outputActivationFunction) : that.outputActivationFunction != null)   return false;
   if (outputLayer != null ? !outputLayer.equals(that.outputLayer) : that.outputLayer != null)   return false;
   if (outputLossFunction != that.outputLossFunction)   return false;
-  if (!Arrays.equals(sigmoidLayers,that.sigmoidLayers))   return false;
+  if (!Arrays.equals(sigmoidHiddeenLayers,that.sigmoidHiddeenLayers))   return false;
   if (visibleBiasTransforms != null ? !visibleBiasTransforms.equals(that.visibleBiasTransforms) : that.visibleBiasTransforms != null)   return false;
   if (weightTransforms != null ? !weightTransforms.equals(that.weightTransforms) : that.weightTransforms != null)   return false;
   return true;

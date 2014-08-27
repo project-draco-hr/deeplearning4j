@@ -1,0 +1,5 @@
+{
+  Evaluation eval=new Evaluation();
+  eval.eval(labels,labelProbabilities(examples));
+  return (float)eval.f1();
+}

@@ -13,7 +13,7 @@
   File wordVectors=new File("tweet-wordvectors.ser");
   Word2Vec vec=wordVectors.exists() ? (Word2Vec)SerializationUtils.readObject(wordVectors) : new Word2Vec(tokenizerFactory,lineIter,5);
   if (!wordVectors.exists()) {
-    vec.train();
+    vec.fit();
     SerializationUtils.saveObject(vec,wordVectors);
   }
   log.info("Initialized word vectors of size " + vec.getLayerSize());

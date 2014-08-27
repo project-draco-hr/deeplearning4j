@@ -11,7 +11,7 @@
   while (iter.hasNext()) {
     DataSet curr=iter.next();
     curr.normalizeZeroMeanZeroUnitVariance();
-    r.trainTillConvergence(curr.getFeatureMatrix(),1e-1f,new Object[]{1,1e-1f,10000});
+    r.fit(curr.getFeatureMatrix(),1e-1f,new Object[]{1,1e-1f,10000});
     if (numIter % 10 == 0) {
       FilterRenderer render=new FilterRenderer();
       try {
@@ -29,7 +29,7 @@
   iter.reset();
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    INDArray reconstruct=r.reconstruct(first.getFeatureMatrix());
+    INDArray reconstruct=r.transform(first.getFeatureMatrix());
     for (int j=0; j < first.numExamples(); j++) {
       INDArray draw1=first.get(j).getFeatureMatrix().mul(255);
       INDArray reconstructed2=reconstruct.getRow(j).div(255);

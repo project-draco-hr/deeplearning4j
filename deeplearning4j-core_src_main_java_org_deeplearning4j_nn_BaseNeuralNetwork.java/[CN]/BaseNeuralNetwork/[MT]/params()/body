@@ -1,0 +1,3 @@
+{
+  return NDArrays.concatHorizontally(NDArrays.concatHorizontally(W.ravel(),vBias.ravel()),hBias.ravel());
+}

@@ -12,7 +12,7 @@
     INDArray reshape=next.getFeatureMatrix().reshape(rows,cols);
     INDArray W=(INDArray)r.getW();
     log.info("W shape " + W.shape());
-    r.trainTillConvergence(reshape,5e-2f,new Object[]{1,5e-2f,20});
+    r.fit(reshape,5e-2f,new Object[]{1,5e-2f,20});
   }
   ;
   FileUtils.writeObject(new File("mnist-conv.ser"),r);

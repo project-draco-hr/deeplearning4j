@@ -1,0 +1,4 @@
+{
+  List<INDArray> feed=feedForward(examples);
+  outputLayer.fit(feed.get(feed.size() - 1),labels);
+}
