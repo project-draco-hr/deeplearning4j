@@ -1,0 +1,12 @@
+{
+switch (visible) {
+case BINARY:
+    return VisibleUnit.BINARY;
+case GAUSSIAN:
+  return VisibleUnit.GAUSSIAN;
+case SOFTMAX:
+return VisibleUnit.SOFTMAX;
+default :
+return null;
+}
+}
