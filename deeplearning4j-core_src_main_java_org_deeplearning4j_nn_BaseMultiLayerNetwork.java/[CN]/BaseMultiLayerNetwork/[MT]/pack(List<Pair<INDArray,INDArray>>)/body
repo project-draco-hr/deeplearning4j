@@ -1,12 +1,12 @@
 {
-  if (layers.size() != this.layers.length + 1)   throw new IllegalArgumentException("Illegal number of layers passed in. Was " + layers.size() + " when should have been "+ (this.layers.length + 1));
-  float[][] allMatrices=new float[(this.layers.length + 1) * 2][];
+  if (layers.size() != this.neuralNets.length + 1)   throw new IllegalArgumentException("Illegal number of neuralNets passed in. Was " + layers.size() + " when should have been "+ (this.neuralNets.length + 1));
+  float[][] allMatrices=new float[(this.neuralNets.length + 1) * 2][];
   int count=0;
-  for (int i=0; i < this.layers.length; i++) {
+  for (int i=0; i < this.neuralNets.length; i++) {
     allMatrices[count++]=layers.get(i).getFirst().data();
-    if (allMatrices[count - 1].length != getLayers()[i].getW().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getLayers()[i].getW().length());
+    if (allMatrices[count - 1].length != getNeuralNets()[i].getW().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getNeuralNets()[i].getW().length());
     allMatrices[count++]=layers.get(i).getSecond().data();
-    if (allMatrices[count - 1].length != getLayers()[i].gethBias().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getLayers()[i].gethBias().length());
+    if (allMatrices[count - 1].length != getNeuralNets()[i].gethBias().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getNeuralNets()[i].gethBias().length());
   }
   allMatrices[count++]=layers.get(layers.size() - 1).getFirst().data();
   allMatrices[count++]=layers.get(layers.size() - 1).getSecond().data();

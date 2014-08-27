@@ -1,10 +1,9 @@
 {
   if (this.nVisible < 1)   throw new IllegalStateException("Number of visible can not be less than 1");
   if (this.nHidden < 1)   throw new IllegalStateException("Number of hidden can not be less than 1");
-  if (this.dist == null)   dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   if (this.W == null) {
     this.W=NDArrays.zeros(nVisible,nHidden);
-    for (int i=0; i < this.W.rows(); i++)     this.W.putRow(i,NDArrays.create(dist.sample(this.W.columns())));
+    for (int i=0; i < this.W.rows(); i++)     this.W.putRow(i,NDArrays.create(conf.getDist().sample(this.W.columns())));
   }
   this.wAdaGrad=new AdaGrad(this.W.rows(),this.W.columns());
   if (this.hBias == null) {
@@ -12,9 +11,7 @@
   }
   this.hBiasAdaGrad=new AdaGrad(hBias.rows(),hBias.columns());
   if (this.vBias == null) {
-    if (this.input != null) {
-      this.vBias=NDArrays.zeros(nVisible);
-    }
+    if (this.input != null)     this.vBias=NDArrays.zeros(nVisible);
  else     this.vBias=NDArrays.zeros(nVisible);
   }
   this.vBiasAdaGrad=new AdaGrad(vBias.rows(),vBias.columns());

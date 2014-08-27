@@ -2,7 +2,7 @@
   OutputLayerOptimizer opt=new OutputLayerOptimizer(this,learningRate);
   adaGrad.setMasterStepSize(learningRate);
   biasAdaGrad.setMasterStepSize(learningRate);
-  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+  if (conf.getOptimizationAlgo() == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
     g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);

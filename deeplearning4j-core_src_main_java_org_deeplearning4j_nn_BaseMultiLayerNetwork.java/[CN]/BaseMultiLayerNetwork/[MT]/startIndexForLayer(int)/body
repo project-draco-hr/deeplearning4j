@@ -1,12 +1,12 @@
 {
   int start=0;
   for (int i=0; i < layer; i++) {
-    start+=getLayers()[i].getW().length();
-    start+=getLayers()[i].gethBias().length();
+    start+=getNeuralNets()[i].getW().length();
+    start+=getNeuralNets()[i].gethBias().length();
   }
-  if (layer < getLayers().length) {
-    int wEnd=start + getLayers()[layer].getW().length();
-    return new ParamRange(start,wEnd,wEnd,wEnd + getLayers()[layer].gethBias().length());
+  if (layer < getNeuralNets().length) {
+    int wEnd=start + getNeuralNets()[layer].getW().length();
+    return new ParamRange(start,wEnd,wEnd,wEnd + getNeuralNets()[layer].gethBias().length());
   }
  else {
     int wEnd=start + getOutputLayer().getW().length();

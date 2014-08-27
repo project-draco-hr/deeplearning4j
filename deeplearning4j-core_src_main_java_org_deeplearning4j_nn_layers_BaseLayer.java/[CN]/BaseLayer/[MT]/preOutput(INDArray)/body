@@ -1,0 +1,8 @@
+{
+  if (x == null)   throw new IllegalArgumentException("No null input allowed");
+  this.input=x;
+  INDArray ret=this.input.mmul(W);
+  if (conf.isConcatBiases())   ret=NDArrays.concatHorizontally(ret,b);
+ else   ret.addiRowVector(b);
+  return ret;
+}

@@ -4,20 +4,18 @@
   List<INDArray> activations=new ArrayList<>();
   activations.add(currInput);
   for (int i=0; i < getnLayers(); i++) {
-    NeuralNetwork layer=getLayers()[i];
-    Layer l=getSigmoidHiddeenLayers()[i];
+    NeuralNetwork layer=getNeuralNets()[i];
+    Layer l=getLayers()[i];
     layer.setInput(currInput);
     l.setInput(currInput);
-    if (getSampleOrActivate() != null && getSampleOrActivate().get(i) != null && getSampleOrActivate().get(i))     currInput=getSigmoidHiddeenLayers()[i].activate(layer.transform(currInput));
- else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(l.getActivationFunction().apply(currInput)).getSecond();
+    if (l.conf().isUseHiddenActivationsForwardProp())     currInput=getLayers()[i].activate(layer.transform(currInput));
+ else     if (sampleFromHiddenActivations)     currInput=layer.sampleHiddenGivenVisible(l.conf().getActivationFunction().apply(currInput)).getSecond();
  else     currInput=layer.sampleHiddenGivenVisible(currInput).getSecond();
     applyDropConnectIfNecessary(currInput);
     activations.add(currInput);
   }
   if (getOutputLayer() != null) {
     getOutputLayer().setInput(activations.get(activations.size() - 1));
-    if (getOutputLayer().getActivationFunction() == null)     if (outputActivationFunction != null)     outputLayer.setActivationFunction(outputActivationFunction);
- else     outputLayer.setActivationFunction(Activations.sigmoid());
     activations.add(getOutputLayer().output(activations.get(activations.size() - 1)));
   }
   return activations;

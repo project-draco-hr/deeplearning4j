@@ -1,0 +1,12 @@
+{
+  this.nVisible=nVisible;
+  this.nHidden=nHidden;
+  this.input=input;
+  this.W=W;
+  if (this.W != null)   this.wAdaGrad=new AdaGrad(this.W.rows(),this.W.columns());
+  this.vBias=vbias;
+  if (this.vBias != null)   this.vBiasAdaGrad=new AdaGrad(this.vBias.rows(),this.vBias.columns());
+  this.hBias=hbias;
+  if (this.hBias != null)   this.hBiasAdaGrad=new AdaGrad(this.hBias.rows(),this.hBias.columns());
+  initWeights();
+}

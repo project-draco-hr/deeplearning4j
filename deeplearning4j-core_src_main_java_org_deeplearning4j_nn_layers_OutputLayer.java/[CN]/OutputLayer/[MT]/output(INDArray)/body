@@ -2,7 +2,7 @@
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
   this.input=x;
   INDArray preOutput=preOutput(x);
-  INDArray ret=activationFunction.apply(preOutput);
+  INDArray ret=conf.getActivationFunction().apply(preOutput);
   applyDropOutIfNecessary(ret);
   return ret;
 }

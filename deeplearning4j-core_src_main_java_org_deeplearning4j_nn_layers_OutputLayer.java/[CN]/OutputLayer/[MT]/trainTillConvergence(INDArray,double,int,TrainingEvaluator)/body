@@ -3,14 +3,14 @@
   OutputLayerOptimizer opt=new OutputLayerOptimizer(this,learningRate);
   adaGrad.setMasterStepSize(learningRate);
   biasAdaGrad.setMasterStepSize(learningRate);
-  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+  if (conf.getOptimizationAlgo() == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
     g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
     g.setMaxIterations(numEpochs);
     g.optimize(numEpochs);
   }
- else   if (optimizationAlgorithm == OptimizationAlgorithm.HESSIAN_FREE) {
+ else   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.HESSIAN_FREE) {
     StochasticHessianFree o=new StochasticHessianFree(opt,null);
     o.setTolerance(1e-3f);
     o.setTrainingEvaluator(eval);

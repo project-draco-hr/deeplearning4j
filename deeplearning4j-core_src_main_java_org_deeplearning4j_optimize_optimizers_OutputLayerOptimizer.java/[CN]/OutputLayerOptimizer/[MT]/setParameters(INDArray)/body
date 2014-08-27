@@ -1,4 +1,4 @@
 {
-  if (logReg.isConstrainGradientToUniNorm())   params.divi(params.normmax(Integer.MAX_VALUE));
+  if (logReg.conf().isConstrainGradientToUnitNorm())   params.divi(params.normmax(Integer.MAX_VALUE));
   this.setParameters(params.data());
 }

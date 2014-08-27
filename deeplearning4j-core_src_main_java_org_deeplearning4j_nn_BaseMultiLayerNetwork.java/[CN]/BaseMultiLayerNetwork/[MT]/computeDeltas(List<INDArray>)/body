@@ -5,14 +5,11 @@
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
-  for (int j=0; j < getLayers().length; j++) {
-    weights.add(getLayers()[j].getW());
-    biases.add(getLayers()[j].gethBias());
-    activationFunctions.add(getSigmoidHiddeenLayers()[j].getActivationFunction());
+  for (int j=0; j < getNeuralNets().length; j++) {
+    weights.add(getNeuralNets()[j].getW());
+    biases.add(getNeuralNets()[j].gethBias());
+    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
   }
-  biases.add(getOutputLayer().getB());
-  weights.add(getOutputLayer().getW());
-  activationFunctions.add(outputLayer.getActivationFunction());
   for (int i=getnLayers() + 1; i >= 0; i--) {
     if (i >= getnLayers() + 1) {
       deltas[i]=ix;
@@ -27,7 +24,7 @@
     }
   }
   for (int i=0; i < deltas.length; i++) {
-    if (constrainGradientToUnitNorm)     deltaRet.add(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)));
+    if (defaultConfiguration.isConstrainGradientToUnitNorm())     deltaRet.add(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)));
  else     deltaRet.add(deltas[i]);
   }
 }

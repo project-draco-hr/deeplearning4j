@@ -1,15 +1,14 @@
 {
   for (int i=0; i < getnLayers(); i++) {
-    Layer h=sigmoidHiddeenLayers[i];
-    NeuralNetwork network=layers[i];
+    org.deeplearning4j.nn.api.Layer h=layers[i];
+    NeuralNetwork network=neuralNets[i];
     LinAlgExceptions.assertSameShape(network.getW(),h.getW());
     LinAlgExceptions.assertSameShape(h.getB(),network.gethBias());
     if (i < getnLayers() - 1) {
-      Layer h1=sigmoidHiddeenLayers[i + 1];
-      NeuralNetwork network1=layers[i + 1];
-      if (h1.getnIn() != h.getnOut())       throw new IllegalStateException("Invalid structure: hidden layer in for " + (i + 1) + " not equal to number of ins "+ i);
-      if (network.getnHidden() != network1.getnVisible())       throw new IllegalStateException("Invalid structure: network hidden for " + (i + 1) + " not equal to number of visible "+ i);
+      NeuralNetwork h1=neuralNets[i + 1];
+      NeuralNetwork network1=neuralNets[i + 1];
+      if (h1.conf().getnIn() != h.conf().getnOut())       throw new IllegalStateException("Invalid structure: hidden layer in for " + (i + 1) + " not equal to number of ins "+ i);
+      if (network.conf().getnOut() != network1.conf().getnIn())       throw new IllegalStateException("Invalid structure: network hidden for " + (i + 1) + " not equal to number of visible "+ i);
     }
   }
-  if (sigmoidHiddeenLayers[sigmoidHiddeenLayers.length - 1].getnOut() != outputLayer.getnIn())   throw new IllegalStateException("Number of outputs for final hidden layer not equal to the number of logistic input units for output layer");
 }

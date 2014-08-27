@@ -1,4 +1,0 @@
-{
-  List<String> myLabels=Arrays.asList("1","2");
-  INDArray labelMatrix=FeatureUtil.toOutcomeVector(0,myLabels.size());
-}

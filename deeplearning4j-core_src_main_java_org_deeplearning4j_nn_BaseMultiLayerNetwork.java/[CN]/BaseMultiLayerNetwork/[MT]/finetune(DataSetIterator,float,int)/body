@@ -6,7 +6,6 @@
     setInput(data.getFeatureMatrix());
     setLabels(data.getLabels());
     feedForward();
-    this.fineTuneLearningRate=lr;
     optimizer=new MultiLayerNetworkOptimizer(this,lr);
     optimizer.optimize(data.getLabels(),lr,iterations);
   }

@@ -5,7 +5,6 @@
     if (data.getFeatureMatrix() == null || data.getLabels() == null)     break;
     setInput(data.getFeatureMatrix());
     setLabels(data.getLabels());
-    this.fineTuneLearningRate=lr;
     optimizer=new MultiLayerNetworkOptimizer(this,lr);
     optimizer.optimize(this.labels,lr,iterations,eval);
   }

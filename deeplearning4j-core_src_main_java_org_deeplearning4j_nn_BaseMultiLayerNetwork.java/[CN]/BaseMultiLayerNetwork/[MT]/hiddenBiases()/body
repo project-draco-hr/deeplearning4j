@@ -1,6 +1,6 @@
 {
   List<INDArray> ret=new ArrayList<>();
-  for (int i=0; i < layers.length; i++)   ret.add(layers[i].gethBias());
-  ret.add(outputLayer.getB());
+  for (int i=0; i < neuralNets.length; i++)   ret.add(neuralNets[i].gethBias());
+  ret.add(getOutputLayer().getB());
   return ret;
 }

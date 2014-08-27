@@ -1,4 +1,4 @@
 {
-  if (concatBiases)   return NDArrays.concatHorizontally(input,NDArrays.ones(input.rows(),1));
+  if (conf.isConcatBiases())   return NDArrays.concatHorizontally(input,NDArrays.ones(input.rows(),1));
   return input;
 }

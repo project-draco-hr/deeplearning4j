@@ -1,0 +1,7 @@
+{
+  if (conf.getDropOut() > 0) {
+    this.dropoutMask=NDArrays.rand(input.rows(),conf.getnOut()).gt(conf.getDropOut());
+  }
+ else   this.dropoutMask=NDArrays.ones(input.rows(),conf.getnOut());
+  input.muli(dropoutMask);
+}

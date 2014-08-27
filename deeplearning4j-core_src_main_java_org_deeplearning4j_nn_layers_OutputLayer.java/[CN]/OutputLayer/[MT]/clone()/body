@@ -1,21 +1,8 @@
 {
-  OutputLayer reg=new OutputLayer();
-  reg.b=b.dup();
-  reg.W=W.dup();
-  reg.l2=this.l2;
-  reg.constrainGradientToUniNorm=this.constrainGradientToUniNorm;
+  OutputLayer reg=new OutputLayer(conf,W,b);
   if (this.labels != null)   reg.labels=this.labels.dup();
-  reg.nIn=this.nIn;
-  reg.nOut=this.nOut;
-  reg.useRegularization=this.useRegularization;
-  reg.normalizeByInputRows=this.normalizeByInputRows;
   reg.biasAdaGrad=this.biasAdaGrad;
   reg.adaGrad=this.adaGrad;
-  reg.useAdaGrad=this.useAdaGrad;
-  reg.setOptimizationAlgorithm(this.getOptimizationAlgorithm());
-  reg.lossFunction=this.lossFunction;
-  reg.concatBiases=this.concatBiases;
-  reg.weightinit=weightinit;
   if (this.input != null)   reg.input=this.input.dup();
   return reg;
 }

@@ -1,13 +1,11 @@
 {
   List<Pair<INDArray,INDArray>> deltas=backPropGradient();
-  for (int i=0; i < layers.length; i++) {
-    if (deltas.size() < layers.length) {
-      layers[i].getW().subi(deltas.get(i).getFirst());
-      layers[i].gethBias().subi(deltas.get(i).getSecond());
-      sigmoidHiddeenLayers[i].setW(layers[i].getW());
-      sigmoidHiddeenLayers[i].setB(layers[i].gethBias());
+  for (int i=0; i < neuralNets.length; i++) {
+    if (deltas.size() < neuralNets.length) {
+      neuralNets[i].getW().subi(deltas.get(i).getFirst());
+      neuralNets[i].gethBias().subi(deltas.get(i).getSecond());
+      layers[i].setW(neuralNets[i].getW());
+      layers[i].setB(neuralNets[i].gethBias());
     }
   }
-  outputLayer.getW().subi(deltas.get(deltas.size() - 1).getFirst());
-  outputLayer.getB().subi(deltas.get(deltas.size() - 1).getSecond());
 }

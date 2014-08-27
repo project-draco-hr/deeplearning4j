@@ -5,7 +5,7 @@
   List<Pair<INDArray,INDArray>> ret=new ArrayList<>();
   int curr=0;
   for (int i=0; i < layers.length; i++) {
-    int layerLength=layers[i].getW().length() + layers[i].gethBias().length();
+    int layerLength=layers[i].getW().length() + layers[i].getB().length();
     INDArray subMatrix=param.get(NDArrayIndex.interval(0,param.rows()),NDArrayIndex.interval(curr,curr + layerLength));
     INDArray weightPortion=subMatrix.get(NDArrayIndex.interval(0,subMatrix.rows()),NDArrayIndex.interval(0,layers[i].getW().length()));
     int beginHBias=layers[i].getW().length();
@@ -13,18 +13,18 @@
     INDArray hBiasPortion=subMatrix.get(NDArrayIndex.interval(0,subMatrix.rows()),NDArrayIndex.interval(beginHBias,endHbias));
     int layerLengthSum=weightPortion.length() + hBiasPortion.length();
     if (layerLengthSum != layerLength) {
-      if (hBiasPortion.length() != layers[i].gethBias().length())       throw new IllegalStateException("Hidden bias on layer " + i + " was off");
+      if (hBiasPortion.length() != layers[i].getB().length())       throw new IllegalStateException("Hidden bias on layer " + i + " was off");
       if (weightPortion.length() != layers[i].getW().length())       throw new IllegalStateException("Weight portion on layer " + i + " was off");
     }
-    ret.add(new Pair<>(weightPortion.reshape(layers[i].getW().rows(),layers[i].getW().columns()),hBiasPortion.reshape(layers[i].gethBias().rows(),layers[i].gethBias().columns())));
+    ret.add(new Pair<>(weightPortion.reshape(layers[i].getW().rows(),layers[i].getW().columns()),hBiasPortion.reshape(layers[i].getB().rows(),layers[i].getB().columns())));
     curr+=layerLength;
   }
-  int outputLayerWeightLength=outputLayer.getW().length();
-  int biasLength=outputLayer.getB().length();
+  int outputLayerWeightLength=getOutputLayer().getW().length();
+  int biasLength=getOutputLayer().getB().length();
   int layerLength=outputLayerWeightLength + biasLength;
   INDArray subMatrix=param.get(NDArrayIndex.interval(0,param.rows()),NDArrayIndex.interval(curr,curr + layerLength));
-  INDArray weightPortion=subMatrix.get(NDArrayIndex.interval(0,subMatrix.rows()),NDArrayIndex.interval(0,outputLayer.getW().length()));
+  INDArray weightPortion=subMatrix.get(NDArrayIndex.interval(0,subMatrix.rows()),NDArrayIndex.interval(0,getOutputLayer().getW().length()));
   INDArray hBiasPortion=subMatrix.get(NDArrayIndex.interval(0,subMatrix.rows()),NDArrayIndex.interval(weightPortion.length(),subMatrix.length()));
-  ret.add(new Pair<>(weightPortion.reshape(outputLayer.getW().rows(),outputLayer.getW().columns()),hBiasPortion.reshape(outputLayer.getB().rows(),outputLayer.getB().columns())));
+  ret.add(new Pair<>(weightPortion.reshape(getOutputLayer().getW().rows(),getOutputLayer().getW().columns()),hBiasPortion.reshape(getOutputLayer().getB().rows(),getOutputLayer().getB().columns())));
   return ret;
 }

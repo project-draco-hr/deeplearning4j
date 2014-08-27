@@ -1,4 +1,4 @@
 {
   feedForward();
-  return outputLayer.score();
+  return getOutputLayer().score();
 }

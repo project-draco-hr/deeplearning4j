@@ -2,14 +2,14 @@
   List<INDArray> deltas=new ArrayList<>();
   computeDeltas(deltas);
   List<Pair<INDArray,INDArray>> vWvB=new ArrayList<>();
-  for (int i=0; i < layers.length; i++) {
-    vWvB.add(new Pair<>(layers[i].getW(),layers[i].gethBias()));
+  for (int i=0; i < neuralNets.length; i++) {
+    vWvB.add(new Pair<>(neuralNets[i].getW(),neuralNets[i].gethBias()));
   }
-  vWvB.add(new Pair<>(outputLayer.getW(),outputLayer.getB()));
+  vWvB.add(new Pair<>(getOutputLayer().getW(),getOutputLayer().getB()));
   List<Pair<INDArray,INDArray>> list=new ArrayList<>();
   for (int l=0; l < getnLayers(); l++) {
     INDArray gradientChange=deltas.get(l);
-    if (gradientChange.length() != getLayers()[l].getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
+    if (gradientChange.length() != getNeuralNets()[l].getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
     INDArray deltaColumnSums=deltas.get(l).mean(1);
     list.add(new Pair<>(gradientChange,deltaColumnSums));
   }
@@ -18,7 +18,7 @@
   if (mask == null)   initMask();
   list.add(new Pair<>(logLayerGradient,biasGradient));
   INDArray gradient=pack(list);
-  gradient.addi(mask.mul(params()).mul(l2));
+  gradient.addi(mask.mul(params()).mul(defaultConfiguration.getL2()));
   list=unPack(gradient);
   return list;
 }

@@ -1,0 +1,28 @@
+{
+  this.sparsity=sparsity;
+  this.useAdaGrad=useAdaGrad;
+  this.lr=lr;
+  this.momentum=momentum;
+  this.l2=l2;
+  this.useRegularization=useRegularization;
+  this.momentumAfter=momentumAfter;
+  this.resetAdaGradIterations=resetAdaGradIterations;
+  this.dropOut=dropOut;
+  this.applySparsity=applySparsity;
+  this.weightInit=weightInit;
+  this.optimizationAlgo=optimizationAlgo;
+  this.lossFunction=lossFunction;
+  this.renderWeightsEveryNumEpochs=renderWeightsEveryNumEpochs;
+  this.concatBiases=concatBiases;
+  this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
+  this.rng=rng;
+  this.dist=dist;
+  this.seed=seed;
+  this.nIn=nIn;
+  this.nOut=nOut;
+  this.activationFunction=activationFunction;
+  this.useHiddenActivationsForwardProp=useHiddenActivationsForwardProp;
+  this.visibleUnit=visibleUnit;
+  if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  this.hiddenUnit=hiddenUnit;
+}

@@ -1,6 +1,6 @@
 {
   INDArray z=output(input);
-switch (lossFunction) {
+switch (conf.getLossFunction()) {
 case MCXENT:
     INDArray p_y_given_x=sigmoid(input.mmul(W).addRowVector(b));
   INDArray dy=labels.sub(p_y_given_x);

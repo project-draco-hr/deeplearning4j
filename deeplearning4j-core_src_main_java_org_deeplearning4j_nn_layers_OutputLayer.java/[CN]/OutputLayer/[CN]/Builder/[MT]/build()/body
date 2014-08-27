@@ -1,17 +1,7 @@
 {
-  ret=new OutputLayer(input,labels,nIn,nOut,weightInit);
+  ret=new OutputLayer(conf,input,labels);
   if (W != null)   ret.W=W;
   if (b != null)   ret.b=b;
-  ret.weightinit=weightInit;
-  ret.constrainGradientToUniNorm=constrainGradientToUniNorm;
-  ret.dropOut=dropOut;
-  ret.optimizationAlgorithm=optimizationAlgorithm;
-  ret.normalizeByInputRows=normalizeByInputRows;
-  ret.useRegularization=useRegualarization;
-  ret.l2=l2;
-  ret.useAdaGrad=useAdaGrad;
-  ret.lossFunction=lossFunction;
-  ret.activationFunction=activationFunction;
-  ret.concatBiases=concatBiases;
+  ret.conf=conf;
   return ret;
 }

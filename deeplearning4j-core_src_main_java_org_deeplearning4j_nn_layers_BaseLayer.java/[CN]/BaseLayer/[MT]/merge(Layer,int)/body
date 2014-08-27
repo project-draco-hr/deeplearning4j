@@ -1,0 +1,10 @@
+{
+  if (conf.isUseRegularization()) {
+    W.addi(l.getW().subi(W).div(batchSize));
+    b.addi(l.getB().subi(b).div(batchSize));
+  }
+ else {
+    W.addi(l.getW().subi(W));
+    b.addi(l.getB().subi(b));
+  }
+}

@@ -1,7 +1,0 @@
-{
-  DataSetIterator iter=new ReutersNewsGroupsDataSetIterator(10,10,true);
-  while (iter.hasNext()) {
-    DataSet next=iter.next();
-    log.info("Data dims " + next.numInputs() + " labels "+ next.numOutcomes());
-  }
-}

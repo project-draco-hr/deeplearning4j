@@ -1,7 +1,6 @@
 {
   feedForward();
   if (labels != null)   this.labels=labels;
-  this.fineTuneLearningRate=lr;
   optimizer=new MultiLayerNetworkOptimizer(this,lr);
   optimizer.optimize(this.labels,lr,iterations,eval);
 }

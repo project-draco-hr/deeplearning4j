@@ -1,8 +1,0 @@
-{
-  StringBuilder builder=new StringBuilder();
-  builder.append("LAYER " + (i + 1));
-  builder.append(" " + r.getVisibleType() + " -> "+ r.getHiddenType());
-  builder.append(" " + r.getnVisible() + " -> "+ r.getnHidden());
-  builder.append("\n");
-  return builder.toString();
-}

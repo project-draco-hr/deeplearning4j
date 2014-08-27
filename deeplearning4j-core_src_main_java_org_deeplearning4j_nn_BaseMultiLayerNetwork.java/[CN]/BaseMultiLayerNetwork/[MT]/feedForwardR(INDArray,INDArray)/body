@@ -1,5 +1,0 @@
-{
-  if (input == null)   throw new IllegalStateException("Unable to perform feed forward; no input found");
- else   this.input=input;
-  return feedForwardR(v);
-}

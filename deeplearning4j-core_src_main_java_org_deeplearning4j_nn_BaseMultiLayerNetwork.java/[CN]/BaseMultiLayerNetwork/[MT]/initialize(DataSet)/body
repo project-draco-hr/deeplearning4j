@@ -2,5 +2,5 @@
   setInput(data.getFeatureMatrix());
   feedForward(data.getFeatureMatrix());
   this.labels=data.getLabels();
-  outputLayer.setLabels(labels);
+  getOutputLayer().setLabels(labels);
 }

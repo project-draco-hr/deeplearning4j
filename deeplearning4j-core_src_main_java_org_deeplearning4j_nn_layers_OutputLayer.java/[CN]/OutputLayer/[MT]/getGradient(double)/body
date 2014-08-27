@@ -4,15 +4,15 @@
   biasAdaGrad.setMasterStepSize(lr);
   INDArray netOut=output(input);
   INDArray dy=labels.sub(netOut);
-  if (normalizeByInputRows)   dy.divi(input.rows());
+  dy.divi(input.rows());
   INDArray wGradient=getWeightGradient();
-  if (useAdaGrad)   wGradient.muli(adaGrad.getLearningRates(wGradient));
+  if (conf.isUseAdaGrad())   wGradient.muli(adaGrad.getLearningRates(wGradient));
  else   wGradient.muli(lr);
-  if (useAdaGrad)   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.mean(1)));
+  if (conf.isUseAdaGrad())   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.mean(1)));
  else   dy.muli(lr);
-  if (normalizeByInputRows)   dy.divi(input.rows());
+  dy.divi(input.rows());
   INDArray bGradient=dy;
-  if (constrainGradientToUniNorm) {
+  if (conf.isConstrainGradientToUnitNorm()) {
     wGradient.divi(wGradient.norm2(Integer.MAX_VALUE));
     bGradient.divi(bGradient.norm2(Integer.MAX_VALUE));
   }

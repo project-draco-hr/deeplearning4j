@@ -1,5 +1,5 @@
 {
-  int plotEpochs=getRenderIterations();
+  int plotEpochs=conf.getRenderWeightsEveryNumEpochs();
   if (plotEpochs <= 0)   return;
   if (epoch % plotEpochs == 0 || epoch == 0) {
     NeuralNetPlotter plotter=new NeuralNetPlotter();

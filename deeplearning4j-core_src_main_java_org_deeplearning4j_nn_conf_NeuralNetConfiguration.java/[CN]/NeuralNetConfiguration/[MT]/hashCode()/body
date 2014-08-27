@@ -1,0 +1,24 @@
+{
+  int result=(sparsity != +0.0f ? Float.floatToIntBits(sparsity) : 0);
+  result=31 * result + (useAdaGrad ? 1 : 0);
+  result=31 * result + (lr != +0.0f ? Float.floatToIntBits(lr) : 0);
+  result=31 * result + (momentum != +0.0f ? Float.floatToIntBits(momentum) : 0);
+  result=31 * result + (l2 != +0.0f ? Float.floatToIntBits(l2) : 0);
+  result=31 * result + (useRegularization ? 1 : 0);
+  result=31 * result + (momentumAfter != null ? momentumAfter.hashCode() : 0);
+  result=31 * result + resetAdaGradIterations;
+  result=31 * result + (dropOut != +0.0f ? Float.floatToIntBits(dropOut) : 0);
+  result=31 * result + (applySparsity ? 1 : 0);
+  result=31 * result + weightInit.hashCode();
+  result=31 * result + optimizationAlgo.hashCode();
+  result=31 * result + renderWeightsEveryNumEpochs;
+  result=31 * result + (concatBiases ? 1 : 0);
+  result=31 * result + (constrainGradientToUnitNorm ? 1 : 0);
+  result=31 * result + (rng != null ? rng.hashCode() : 0);
+  result=31 * result + (dist != null ? dist.hashCode() : 0);
+  result=31 * result + (int)(seed ^ (seed >>> 32));
+  result=31 * result + nIn;
+  result=31 * result + nOut;
+  result=31 * result + activationFunction.hashCode();
+  return result;
+}
