@@ -1,0 +1,13 @@
+{
+  List<INDArray> R=new ArrayList<>();
+  R.add(NDArrays.zeros(input.rows(),input.columns()));
+  List<Pair<INDArray,INDArray>> vWvB=unPack(v);
+  List<INDArray> W=weightMatrices();
+  for (int i=0; i < neuralNets.length; i++) {
+    AutoEncoder a=(AutoEncoder)getNeuralNets()[i];
+    ActivationFunction derivative=a.conf().getActivationFunction();
+    R.add(R.get(i).mmul(W.get(i)).add(acts.get(i).mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond())).add(1)).mul((derivative.applyDerivative(acts.get(i + 1)))));
+  }
+  R.add(R.get(R.size() - 1).mmul(W.get(W.size() - 1)).add(acts.get(acts.size() - 2).mmul(vWvB.get(vWvB.size() - 1).getFirst().addRowVector(vWvB.get(vWvB.size() - 1).getSecond()))).mul((getOutputLayer().conf().getActivationFunction().applyDerivative(acts.get(acts.size() - 1)))));
+  return R;
+}

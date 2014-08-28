@@ -1,0 +1,3 @@
+{
+  return conf.getActivationFunction().apply(x.mmul(W).addiRowVector(hBias));
+}

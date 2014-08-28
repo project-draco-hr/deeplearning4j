@@ -1,0 +1,12 @@
+{
+  INDArray h1=h;
+  for (int i=0; i < numFilters[0]; i++) {
+    for (int j=0; j < numFilters[1]; j++) {
+      visI.put(j,i,Transforms.sigmoid(Convolution.convn(h1.slice(i),W.slice(i),Convolution.Type.FULL)));
+    }
+  }
+  INDArray I=visI.sum(visI.shape().length - 1).add(vBias);
+  if (visibleType == VisibleUnit.BINARY)   I=Transforms.sigmoid(I);
+  this.eVis=I.dup();
+  return this.eVis;
+}

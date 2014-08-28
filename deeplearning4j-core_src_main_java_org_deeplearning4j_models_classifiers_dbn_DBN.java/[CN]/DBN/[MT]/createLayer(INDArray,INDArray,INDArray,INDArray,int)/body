@@ -1,0 +1,4 @@
+{
+  RBM ret=new RBM.Builder().withWeights(W).withHBias(hBias).withVisibleBias(vBias).configure(layerWiseConfigurations.get(index)).build();
+  return ret;
+}

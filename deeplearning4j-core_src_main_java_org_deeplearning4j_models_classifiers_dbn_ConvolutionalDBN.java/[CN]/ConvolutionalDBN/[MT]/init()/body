@@ -1,0 +1,38 @@
+{
+  this.neuralNets=new NeuralNetwork[getnLayers()];
+  int nInY, nInX, nInFM, nFm=-1;
+  for (int i=0; i < getnLayers(); i++) {
+    ConvolutionalRBM prevLayer=(ConvolutionalRBM)getNeuralNets()[i];
+    if (i == 0) {
+      nInY=input.rows();
+      nInX=input.columns();
+      nInFM=input.slices();
+    }
+ else {
+      nInX=prevLayer.getFmSize()[1];
+      nInY=prevLayer.getFmSize()[0];
+      nInFM=prevLayer.getFmSize()[0];
+    }
+    nFm=this.nFm[i];
+    INDArray filterSize=ArrayUtil.toNDArray(this.filterSizes[i]);
+    INDArray fmSize=ArrayUtil.toNDArray(new int[]{nInY,nInX}).sub(filterSize).add(1);
+    float prodFilterSize=ArrayUtil.prod(this.filterSizes[i]);
+    INDArray stride=ArrayUtil.toNDArray(this.stride[i]);
+    float fanIn=nInFM * prodFilterSize;
+    float fanOut=nFm * prodFilterSize;
+    float range=2 * (float)FastMath.sqrt(6 / fanIn + fanOut);
+    INDArray W=NDArrays.rand(new int[]{(int)filterSize.getScalar(0).element(),(int)filterSize.getScalar(1).element(),nInFM,nFm},layerWiseConfigurations.get(i).getDist()).mul(range);
+    ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(ArrayUtil.toInts(filterSize)).withInput(input).withHBias(NDArrays.zeros(nFm,1)).withFmSize(ArrayUtil.toInts(fmSize)).withStride(this.stride[i]).withNumFilters(new int[]{nFm,nFm}).withSparseGain(sparseGain).withWeights(W).build();
+    this.neuralNets[i]=r;
+    DownSamplingLayer d=new DownSamplingLayer.Builder().withStride(this.stride[i]).withFmSize(Transforms.floor(ArrayUtil.toNDArray(r.getFmSize()).div(stride))).numFeatureMaps(nFm).withBias(r.gethBias()).build();
+    this.layers[i]=d;
+  }
+  ConvolutionalRBM r=(ConvolutionalRBM)getNeuralNets()[getNeuralNets().length - 1];
+  int nFmIn=r.getNumFilters()[0];
+  int nOuts=r.getFmSize()[0] * r.getFmSize()[1] * nFmIn;
+  layerWiseConfigurations.get(layerWiseConfigurations.size() - 1).setnIn(nFmIn);
+  layerWiseConfigurations.get(layerWiseConfigurations.size() - 1).setnOut(nOuts);
+  this.layers[layers.length - 1]=new OutputLayer.Builder().configure(layerWiseConfigurations.get(layerWiseConfigurations.size() - 1)).build();
+  applyTransforms();
+  initCalled=true;
+}

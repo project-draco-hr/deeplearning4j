@@ -1,0 +1,5 @@
+{
+  ConvolutionalRBM r=(ConvolutionalRBM)getNeuralNets()[index - 1];
+  DownSamplingLayer layer=new DownSamplingLayer.Builder().withInput(layerInput).withFmSize(Transforms.floor(ArrayUtil.toNDArray(r.getFmSize())).div(ArrayUtil.toNDArray(stride[index]))).numFeatureMaps(nFm[index]).build();
+  return layer;
+}

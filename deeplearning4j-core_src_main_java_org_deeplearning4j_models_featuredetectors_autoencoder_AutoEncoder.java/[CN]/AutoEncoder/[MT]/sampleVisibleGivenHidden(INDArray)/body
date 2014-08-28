@@ -1,0 +1,4 @@
+{
+  INDArray out=transform(h);
+  return new Pair<>(out,out);
+}

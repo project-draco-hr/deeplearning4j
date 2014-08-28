@@ -1,0 +1,5 @@
+{
+  if (eVis == null)   transform(input);
+  float squaredLoss=(float)Transforms.pow(eVis.sub(input),2).sum(Integer.MAX_VALUE).element();
+  return squaredLoss;
+}

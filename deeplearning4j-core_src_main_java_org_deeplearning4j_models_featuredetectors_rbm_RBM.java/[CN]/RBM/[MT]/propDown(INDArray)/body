@@ -1,0 +1,20 @@
+{
+  INDArray vMean=h.mmul(W.transpose());
+  if (conf.isConcatBiases())   vMean=NDArrays.concatHorizontally(vMean,vBias);
+ else   vMean.addiRowVector(vBias);
+  if (visibleType == VisibleUnit.GAUSSIAN) {
+    vMean.addi(Sampling.normal(conf.getRng(),vMean,1.0));
+    return vMean;
+  }
+ else   if (visibleType == VisibleUnit.LINEAR) {
+    vMean=Sampling.normal(conf.getRng(),vMean,1);
+    return vMean;
+  }
+ else   if (visibleType == VisibleUnit.BINARY) {
+    return sigmoid(vMean);
+  }
+ else   if (visibleType == VisibleUnit.SOFTMAX) {
+    return Activations.softMaxRows().apply(vMean);
+  }
+  throw new IllegalStateException("Visible unit type should either be binary or gaussian");
+}

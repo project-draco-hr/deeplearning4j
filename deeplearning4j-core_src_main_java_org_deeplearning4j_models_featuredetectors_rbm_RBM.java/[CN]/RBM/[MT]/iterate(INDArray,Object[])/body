@@ -1,0 +1,5 @@
+{
+  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=input.var(1).divi(input.rows());
+  int k=(int)params[0];
+  contrastiveDivergence(conf.getLr(),k,input);
+}

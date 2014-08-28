@@ -1,0 +1,6 @@
+{
+  INDArray h1Mean=propUp(v);
+  INDArray h1Sample=Sampling.binomial(h1Mean,1,conf.getRng());
+  applyDropOutIfNecessary(h1Sample);
+  return new Pair<>(h1Mean,h1Sample);
+}

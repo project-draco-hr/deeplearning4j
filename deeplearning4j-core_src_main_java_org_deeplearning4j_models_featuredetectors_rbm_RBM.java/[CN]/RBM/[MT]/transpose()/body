@@ -1,0 +1,12 @@
+{
+  RBM r=(RBM)super.transpose();
+  HiddenUnit h=RBMUtil.inverse(visibleType);
+  VisibleUnit v=RBMUtil.inverse(hiddenType);
+  if (h == null)   h=hiddenType;
+  if (v == null)   v=visibleType;
+  r.setHiddenType(h);
+  r.setVisibleType(v);
+  r.sigma=sigma;
+  r.hiddenSigma=hiddenSigma;
+  return r;
+}

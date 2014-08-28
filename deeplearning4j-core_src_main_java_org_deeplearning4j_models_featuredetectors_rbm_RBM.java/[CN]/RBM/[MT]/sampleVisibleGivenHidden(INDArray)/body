@@ -1,0 +1,20 @@
+{
+  INDArray v1Mean=propDown(h);
+  if (visibleType == VisibleUnit.GAUSSIAN) {
+    INDArray v1Sample=v1Mean.add(NDArrays.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
+    return new Pair<>(v1Mean,v1Sample);
+  }
+ else   if (visibleType == VisibleUnit.LINEAR) {
+    INDArray v1Sample=Sampling.normal(conf.getRng(),v1Mean,1);
+    return new Pair<>(v1Mean,v1Sample);
+  }
+ else   if (visibleType == VisibleUnit.SOFTMAX) {
+    INDArray v1Sample=Activations.softMaxRows().apply(v1Mean);
+    return new Pair<>(v1Mean,v1Sample);
+  }
+ else   if (visibleType == VisibleUnit.BINARY) {
+    INDArray v1Sample=Sampling.binomial(v1Mean,1,conf.getRng());
+    return new Pair<>(v1Mean,v1Sample);
+  }
+  throw new IllegalStateException("Visible type must either be binary,gaussian, softmax, or linear");
+}

@@ -1,0 +1,5 @@
+{
+  if (visibleSize == null || visibleSize.length != 2)   throw new IllegalArgumentException("Visible size must be of length 2");
+  this.visibleSize=visibleSize;
+  return this;
+}

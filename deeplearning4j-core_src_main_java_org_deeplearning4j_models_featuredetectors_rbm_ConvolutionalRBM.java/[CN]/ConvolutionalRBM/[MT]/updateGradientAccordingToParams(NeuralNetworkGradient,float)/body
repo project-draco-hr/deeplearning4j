@@ -1,0 +1,30 @@
+{
+  INDArray wGradient=gradient.getwGradient();
+  INDArray hBiasGradient=gradient.gethBiasGradient();
+  INDArray vBiasGradient=gradient.getvBiasGradient();
+  INDArray wLearningRates=wAdaGrad.getLearningRates(wGradient);
+  if (conf.isUseAdaGrad())   wGradient.muli(wLearningRates);
+ else   wGradient.muli(learningRate);
+  if (conf.isUseAdaGrad())   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient)).add(hBiasGradient.mul(conf.getMomentum()));
+ else   hBiasGradient=hBiasGradient.mul(learningRate).add(hBiasGradient.mul(conf.getMomentum()));
+  if (conf.isUseAdaGrad())   vBiasGradient=vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient)).add(vBiasGradient.mul(conf.getMomentum()));
+ else   vBiasGradient=vBiasGradient.mul(learningRate).add(vBiasGradient.mul(conf.getMomentum()));
+  if (this.hBiasGradient != null)   applySparsity(hBiasGradient);
+  if (conf.getMomentum() != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(conf.getMomentum()).add(wGradient.mul(1 - conf.getMomentum())));
+  if (conf.getMomentum() != 0 && this.vBiasGradient != null)   vBiasGradient.addi(this.vBiasGradient.mul(conf.getMomentum()).add(vBiasGradient.mul(1 - conf.getMomentum())));
+  if (conf.getMomentum() != 0 && this.hBiasGradient != null)   hBiasGradient.addi(this.hBiasGradient.mul(conf.getMomentum()).add(hBiasGradient.mul(1 - conf.getMomentum())));
+  if (conf.isUseRegularization()) {
+    if (conf.getL2() > 0) {
+      INDArray penalized=W.mul(conf.getL2());
+      if (conf.isUseAdaGrad())       penalized.muli(wAdaGrad.getLearningRates(wGradient));
+ else       penalized.muli(learningRate);
+      wGradient.subi(penalized);
+    }
+  }
+  wGradient.divi(lastMiniBatchSize);
+  vBiasGradient.divi(lastMiniBatchSize);
+  hBiasGradient.divi(lastMiniBatchSize);
+  this.wGradient=wGradient;
+  this.vBiasGradient=vBiasGradient;
+  this.hBiasGradient=hBiasGradient;
+}

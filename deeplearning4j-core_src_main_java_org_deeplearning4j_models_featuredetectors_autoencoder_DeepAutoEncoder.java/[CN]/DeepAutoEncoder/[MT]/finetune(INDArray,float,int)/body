@@ -1,0 +1,6 @@
+{
+  this.input=input;
+  setInput(input);
+  setLabels(input);
+  super.finetune(input,lr,iterations);
+}
