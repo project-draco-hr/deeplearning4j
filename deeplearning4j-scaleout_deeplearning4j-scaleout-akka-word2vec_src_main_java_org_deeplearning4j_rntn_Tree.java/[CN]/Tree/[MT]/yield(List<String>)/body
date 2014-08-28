@@ -1,6 +1,6 @@
 {
   labels.add(label);
-  for (  Tree t : children) {
+  for (  Tree t : children()) {
     labels.addAll(t.yield());
   }
   return labels;
