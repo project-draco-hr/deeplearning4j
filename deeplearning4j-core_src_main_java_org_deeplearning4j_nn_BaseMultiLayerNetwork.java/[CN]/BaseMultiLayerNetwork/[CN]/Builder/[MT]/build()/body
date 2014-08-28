@@ -8,8 +8,6 @@
     ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
     ret.setUseDropConnect(useDropConnect);
     ret.setInput(this.input);
-    ret.setnOuts(this.nOuts);
-    ret.setnIns(this.nIns);
     ret.setLabels(this.labels);
     ret.setHiddenLayerSizes(this.hiddenLayerSizes);
     ret.setnLayers(this.nLayers);

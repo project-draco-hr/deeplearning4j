@@ -6,7 +6,7 @@
   int[] hiddenLayerSizes=new int[]{4,3,2};
   double fineTuneLr=0.01;
   int fineTuneEpochs=10000;
-  DBN dbn=new DBN.Builder().numberOfInputs(nIns).numberOfOutPuts(nOuts).hiddenLayerSizes(hiddenLayerSizes).build();
+  DBN dbn=new DBN.Builder().hiddenLayerSizes(hiddenLayerSizes).build();
   INDArray params=dbn.params();
   assertEquals(1,params.rows());
   assertEquals(params.columns(),params.length());
