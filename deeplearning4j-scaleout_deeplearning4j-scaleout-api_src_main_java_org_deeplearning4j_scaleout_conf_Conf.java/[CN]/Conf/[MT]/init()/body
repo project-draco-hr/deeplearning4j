@@ -1,6 +1,6 @@
 {
   if (getMultiLayerClazz().isAssignableFrom(DBN.class)) {
-    return new DBN.Builder().withHiddenUnits(getHiddenUnit()).withVisibleUnits(getVisibleUnit()).withVisibleUnitsByLayer(getVisibleUnitByLayer()).withHiddenUnitsByLayer(getHiddenUnitByLayer()).numberOfInputs(getnIn()).numberOfOutPuts(getnOut()).withClazz(getMultiLayerClazz()).lineSearchBackProp(isLineSearchBackProp()).hiddenLayerSizes(getLayerSizes()).useDropConnection(isUseDropConnect()).build();
+    return new DBN.Builder().configure(conf).withClazz(getMultiLayerClazz()).lineSearchBackProp(isLineSearchBackProp()).hiddenLayerSizes(getLayerSizes()).useDropConnection(isUseDropConnect()).build();
   }
  else {
     return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).lineSearchBackProp(isLineSearchBackProp()).useDropConnection(isUseDropConnect()).build();
