@@ -6,7 +6,7 @@
     Class<?>[] classes=curr.getParameterTypes();
     if (classes != null && classes.length > 0 && classes[0].isAssignableFrom(INDArray.class)) {
       try {
-        ret=(E)curr.newInstance(input,W,hBias,vBias);
+        ret=(E)curr.newInstance(input,W,hBias,vBias,conf);
         return ret;
       }
  catch (      Exception e) {

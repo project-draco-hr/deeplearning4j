@@ -1,0 +1,7 @@
+{
+  if (layerWiseConfigurations == null)   layerWiseConfigurations=new ArrayList<>();
+  if (defaultConfiguration == null)   defaultConfiguration=new NeuralNetConfiguration.Builder().build();
+  for (int i=0; i < hiddenLayerSizes.length + 1; i++) {
+    layerWiseConfigurations.add(defaultConfiguration);
+  }
+}

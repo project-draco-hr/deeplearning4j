@@ -1,0 +1,6 @@
+{
+  int rows=10;
+  int cols=2;
+  AdaGrad grad=new AdaGrad(rows,cols,0.1);
+  INDArray W=NDArrays.zeros(rows,cols);
+}

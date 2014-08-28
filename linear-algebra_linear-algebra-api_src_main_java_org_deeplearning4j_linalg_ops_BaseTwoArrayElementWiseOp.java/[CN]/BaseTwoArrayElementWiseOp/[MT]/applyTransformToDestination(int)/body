@@ -1,6 +1,6 @@
 {
-  if (scalarValue == null)   to.put(i,apply(getFromDestination(i),i));
+  if (scalarValue == null)   currTo.put(i,apply(getFromDestination(i),i));
  else {
-    to.put(i,apply(scalarValue,i));
+    currTo.put(i,apply(scalarValue,i));
   }
 }

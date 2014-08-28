@@ -7,5 +7,6 @@
   this.nOuts=nOuts;
   this.setnLayers(nLayers);
   this.layers=new org.deeplearning4j.nn.layers.Layer[nLayers];
+  intializeConfigurations();
   if (input != null)   initializeLayers(input);
 }

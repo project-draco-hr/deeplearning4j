@@ -4,6 +4,7 @@
     Constructor<?> c=Dl4jReflection.getEmptyConstructor(clazz);
     c.setAccessible(true);
     ret=(E)c.newInstance();
+    ret.setDefaultConfiguration(conf);
     ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
     ret.setUseDropConnect(useDropConnect);
     ret.setInput(this.input);

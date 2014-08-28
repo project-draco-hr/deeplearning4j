@@ -6,4 +6,15 @@
   INDArray rowSums=rows.sum(1);
   DoubleMatrix jblasRowSums=rowsJblas.rowSums();
   verifyElements(jblasRowSums,rowSums);
+  float[][] data=new float[][]{{1,2},{3,4}};
+  INDArray rowSumsData=NDArrays.create(data);
+  NDArrays.factory().setOrder('c');
+  INDArray rowSumsCOrder=NDArrays.create(data);
+  assertEquals(rowSumsData,rowSumsCOrder);
+  INDArray rowSumsDataSum=rowSumsData.sum(1);
+  INDArray rowSumsCOrderSum=rowSumsCOrder.sum(1);
+  assertEquals(rowSumsDataSum,rowSumsCOrderSum);
+  INDArray assertion=NDArrays.create(new float[]{3,7});
+  assertEquals(assertion,rowSumsCOrderSum);
+  assertEquals(assertion,rowSumsDataSum);
 }

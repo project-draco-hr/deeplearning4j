@@ -1,3 +1,9 @@
 {
-  for (int i=0; i < from.length(); i++)   applyTransformToOrigin(i);
+  for (int i=0; i < from.vectorsAlongDimension(0); i++) {
+    INDArray vectorAlongDim=from.vectorAlongDimension(i,0);
+    currVector=vectorAlongDim;
+    for (int j=0; j < vectorAlongDim.length(); j++) {
+      vectorAlongDim.put(j,apply(vectorAlongDim.getScalar(j),j));
+    }
+  }
 }
