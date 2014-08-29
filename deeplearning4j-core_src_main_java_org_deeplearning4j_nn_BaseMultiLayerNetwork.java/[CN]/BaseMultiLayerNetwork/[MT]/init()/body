@@ -24,9 +24,13 @@
         layerWiseConfigurations.get(i).setnOut(this.hiddenLayerSizes[i]);
         layers[i]=createHiddenLayer(i,layerInput);
       }
-      this.neuralNets[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.neuralNets[i].getW(),this.neuralNets[i].gethBias(),null,i);
+      this.neuralNets[i]=createLayer(layerInput,this.layers[i].getW(),this.layers[i].getB(),null,i);
     }
   }
+  NeuralNetConfiguration last=layerWiseConfigurations.get(layerWiseConfigurations.size() - 1);
+  NeuralNetConfiguration secondToLast=layerWiseConfigurations.get(layerWiseConfigurations.size() - 2);
+  last.setnIn(secondToLast.getnOut());
+  this.layers[layers.length - 1]=new OutputLayer.Builder().configure(last).build();
   dimensionCheck();
   applyTransforms();
   initCalled=true;

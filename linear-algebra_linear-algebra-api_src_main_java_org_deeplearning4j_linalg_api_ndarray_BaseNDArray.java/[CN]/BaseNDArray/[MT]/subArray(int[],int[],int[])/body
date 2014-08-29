@@ -10,5 +10,6 @@
       throw new IllegalArgumentException("Invalid subArray offsets");
     }
   }
-  return NDArrays.create(data,Arrays.copyOf(shape,shape.length),stride,offset + ArrayUtil.dotProduct(offsets,stride),ordering);
+  int offset=this.offset + ArrayUtil.dotProduct(offsets,stride);
+  return NDArrays.create(data,Arrays.copyOf(shape,shape.length),stride,offset,ordering);
 }

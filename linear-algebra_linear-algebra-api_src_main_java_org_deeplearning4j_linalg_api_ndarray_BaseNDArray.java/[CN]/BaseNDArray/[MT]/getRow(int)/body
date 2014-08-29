@@ -9,5 +9,6 @@
       return ret;
     }
   }
+ else   if (isRowVector() && r == 0)   return this;
  else   throw new IllegalArgumentException("Unable to getFromOrigin row of non 2d matrix");
 }

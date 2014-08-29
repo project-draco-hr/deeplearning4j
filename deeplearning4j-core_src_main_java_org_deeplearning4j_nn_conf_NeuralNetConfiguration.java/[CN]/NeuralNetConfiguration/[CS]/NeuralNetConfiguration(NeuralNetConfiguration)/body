@@ -1,0 +1,28 @@
+{
+  this.sparsity=neuralNetConfiguration.sparsity;
+  this.useAdaGrad=neuralNetConfiguration.useAdaGrad;
+  this.lr=neuralNetConfiguration.lr;
+  this.momentum=neuralNetConfiguration.momentum;
+  this.l2=l2;
+  this.useRegularization=neuralNetConfiguration.useRegularization;
+  this.momentumAfter=neuralNetConfiguration.momentumAfter;
+  this.resetAdaGradIterations=neuralNetConfiguration.resetAdaGradIterations;
+  this.dropOut=neuralNetConfiguration.dropOut;
+  this.applySparsity=neuralNetConfiguration.applySparsity;
+  this.weightInit=neuralNetConfiguration.weightInit;
+  this.optimizationAlgo=neuralNetConfiguration.optimizationAlgo;
+  this.lossFunction=neuralNetConfiguration.lossFunction;
+  this.renderWeightsEveryNumEpochs=neuralNetConfiguration.renderWeightsEveryNumEpochs;
+  this.concatBiases=neuralNetConfiguration.concatBiases;
+  this.constrainGradientToUnitNorm=neuralNetConfiguration.constrainGradientToUnitNorm;
+  this.rng=neuralNetConfiguration.rng;
+  this.dist=neuralNetConfiguration.dist;
+  this.seed=neuralNetConfiguration.seed;
+  this.nIn=neuralNetConfiguration.nIn;
+  this.nOut=neuralNetConfiguration.nOut;
+  this.activationFunction=neuralNetConfiguration.activationFunction;
+  this.useHiddenActivationsForwardProp=neuralNetConfiguration.useHiddenActivationsForwardProp;
+  this.visibleUnit=neuralNetConfiguration.visibleUnit;
+  if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
+}

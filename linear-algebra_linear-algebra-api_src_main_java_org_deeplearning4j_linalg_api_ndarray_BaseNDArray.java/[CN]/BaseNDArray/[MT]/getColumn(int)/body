@@ -9,5 +9,6 @@
       return ret;
     }
   }
+ else   if (isColumnVector() && c == 0)   return this;
  else   throw new IllegalArgumentException("Unable to getFromOrigin column of non 2d matrix");
 }

@@ -6,7 +6,8 @@
     return slice2;
   }
  else {
-    INDArray slice2=NDArrays.create(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset + (slice * stride[0]),ordering);
+    int offset=this.offset + (slice * stride[0]);
+    INDArray slice2=NDArrays.create(data,Arrays.copyOfRange(shape,1,shape.length),Arrays.copyOfRange(stride,1,stride.length),offset,ordering);
     return slice2;
   }
 }

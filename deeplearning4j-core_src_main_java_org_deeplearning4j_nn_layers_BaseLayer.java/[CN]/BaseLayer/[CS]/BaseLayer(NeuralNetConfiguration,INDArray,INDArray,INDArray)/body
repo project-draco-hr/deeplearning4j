@@ -7,4 +7,5 @@
  else   this.W=W;
   if (b == null)   this.b=NDArrays.zeros(conf.getnOut());
  else   this.b=b;
+  this.conf=conf;
 }

@@ -1,5 +1,7 @@
 {
-  if (indexes.length < shape().length) {
-  }
-  return null;
+  indexes=Indices.adjustIndices(shape(),indexes);
+  int[] strides=ArrayUtil.copy(stride());
+  int[] offsets=Indices.offsets(indexes);
+  int[] shape=Indices.shape(shape(),indexes);
+  return subArray(offsets,shape,strides);
 }

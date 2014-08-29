@@ -1,0 +1,9 @@
+{
+  int[] ret=new int[indices.length];
+  for (int i=0; i < indices.length; i++) {
+    int offset=indices[i].offset();
+    if (offset == 0 && i > 0 && i < indices.length - 1)     ret[i]=1;
+ else     ret[i]=indices[i].offset();
+  }
+  return ret;
+}

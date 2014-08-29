@@ -1,0 +1,3 @@
+{
+  return new NDArrayIndex(ArrayUtil.range(begin,inclusive ? end + 1 : end));
+}

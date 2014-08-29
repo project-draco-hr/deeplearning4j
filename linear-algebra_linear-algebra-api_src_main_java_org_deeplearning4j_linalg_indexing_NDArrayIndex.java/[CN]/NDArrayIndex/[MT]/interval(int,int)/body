@@ -1,3 +1,3 @@
 {
-  return new NDArrayIndex(ArrayUtil.range(begin,end));
+  return interval(begin,end,false);
 }
