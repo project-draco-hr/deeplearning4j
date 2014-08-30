@@ -10,12 +10,12 @@
       this.shape[0]=shape[1];
       rows=1;
       columns=shape[1];
+      if (stride != null && ordering == NDArrayFactory.FORTRAN)       this.stride=new int[]{ArrayUtil.nonOneStride(this.stride)};
     }
  else {
       rows=shape[0];
       columns=shape[1];
     }
-    this.stride=new int[]{ArrayUtil.nonOneStride(this.stride)};
   }
  else   if (this.shape.length == 1) {
     columns=this.shape[0];
