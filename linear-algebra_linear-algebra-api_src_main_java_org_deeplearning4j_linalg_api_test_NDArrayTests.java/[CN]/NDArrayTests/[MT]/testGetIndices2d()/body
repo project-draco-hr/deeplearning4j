@@ -1,0 +1,15 @@
+{
+  NDArrays.factory().setOrder('f');
+  INDArray twoByTwo=NDArrays.linspace(1,6,6).reshape(3,2);
+  INDArray firstRow=twoByTwo.getRow(0);
+  INDArray secondRow=twoByTwo.getRow(1);
+  INDArray firstAndSecondRow=twoByTwo.getRows(new int[]{1,2});
+  INDArray firstRowViaIndexing=twoByTwo.get(NDArrayIndex.interval(0,1));
+  assertEquals(firstRow,firstRowViaIndexing);
+  INDArray secondRowViaIndexing=twoByTwo.get(NDArrayIndex.interval(1,2));
+  assertEquals(secondRow,secondRowViaIndexing);
+  INDArray individualElement=twoByTwo.get(NDArrayIndex.interval(1,2),NDArrayIndex.interval(1,2));
+  assertEquals(NDArrays.create(new float[]{5}),individualElement);
+  INDArray firstAndSecondRowTest=twoByTwo.get(NDArrayIndex.interval(1,3));
+  assertEquals(firstAndSecondRow,firstAndSecondRowTest);
+}

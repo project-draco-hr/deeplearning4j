@@ -15,6 +15,7 @@
       rows=shape[0];
       columns=shape[1];
     }
+    this.stride=new int[]{ArrayUtil.nonOneStride(this.stride)};
   }
  else   if (this.shape.length == 1) {
     columns=this.shape[0];

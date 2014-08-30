@@ -1,7 +1,7 @@
 {
   indexes=Indices.adjustIndices(shape(),indexes);
-  int[] strides=ArrayUtil.copy(stride());
   int[] offsets=Indices.offsets(indexes);
   int[] shape=Indices.shape(shape(),indexes);
+  int[] strides=ArrayUtil.copy(stride());
   return subArray(offsets,shape,strides);
 }

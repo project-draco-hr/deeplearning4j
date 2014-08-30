@@ -1,4 +1,4 @@
 {
   if (!isScalar())   throw new IllegalStateException("Unable to retrieve element from non scalar matrix");
-  return data[0];
+  return data[offset];
 }

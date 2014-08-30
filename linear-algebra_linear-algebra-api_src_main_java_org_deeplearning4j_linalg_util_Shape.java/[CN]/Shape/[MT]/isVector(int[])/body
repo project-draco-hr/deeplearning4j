@@ -1,0 +1,7 @@
+{
+  if (shape.length > 2)   return false;
+ else {
+    int len=ArrayUtil.prod(shape);
+    return shape[0] == len || shape[1] == len;
+  }
+}

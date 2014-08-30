@@ -1,4 +1,5 @@
 {
+  NDArrays.factory().setOrder('f');
   INDArray test=NDArrays.linspace(1,24,24).reshape(new int[]{4,3,2});
   NDArrayIndex oneTwo=NDArrayIndex.interval(1,2);
   NDArrayIndex twoToThree=NDArrayIndex.interval(1,3);

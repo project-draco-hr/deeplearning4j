@@ -1,0 +1,11 @@
+{
+  INDArray a=NDArrays.linspace(1,4,4).reshape(2,2);
+  float element=a.get(0,1);
+  float element2=(float)a.getScalar(0,1).element();
+  assertEquals(element,element2,1e-1);
+  NDArrays.factory().setOrder('f');
+  INDArray a2=NDArrays.linspace(1,4,4).reshape(2,2);
+  float element23=a2.get(0,1);
+  float element22=(float)a2.getScalar(0,1).element();
+  assertEquals(element23,element22,1e-1);
+}

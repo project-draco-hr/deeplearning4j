@@ -10,6 +10,18 @@
       throw new IllegalArgumentException("Invalid subArray offsets");
     }
   }
+  if (isVector()) {
+    return NDArrays.create(data,shape,stride,offsets[0]);
+  }
+ else   if (isMatrix() && Shape.isMatrix(shape)) {
+    int startRow=offsets[0];
+    INDArray ret=NDArrays.create(shape);
+    int count=0;
+    for (int i=startRow; i < shape[0] + 1; i++) {
+      ret.putRow(count++,getRow(i).get(NDArrayIndex.interval(offsets[1],shape[1])));
+    }
+    return ret;
+  }
   int offset=this.offset + ArrayUtil.dotProduct(offsets,stride);
   return NDArrays.create(data,Arrays.copyOf(shape,shape.length),stride,offset,ordering);
 }
