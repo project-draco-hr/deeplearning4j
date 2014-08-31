@@ -1,0 +1,10 @@
+{
+  NDArrays.factory().setOrder('c');
+  INDArray test=NDArrays.linspace(1,4,4).reshape(2,2);
+  INDArray softMaxColumns=Activations.softmax().apply(test);
+  INDArray softMaxRows=Activations.softMaxRows().apply(test);
+  float columnSums=softMaxColumns.sum(0).get(0);
+  float rowSums=softMaxRows.sum(1).get(0);
+  assertEquals(2,softMaxColumns.sum(Integer.MAX_VALUE).get(0),1e-1);
+  assertEquals(2,softMaxRows.sum(Integer.MAX_VALUE).get(0),1e-1);
+}
