@@ -2,6 +2,7 @@
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
   this.input=x;
   INDArray ret=this.input.mmul(W);
+  if (ret.columns() != b.columns())   throw new IllegalStateException("This is weird");
   if (conf.isConcatBiases())   ret=NDArrays.concatHorizontally(ret,b);
  else   ret.addiRowVector(b);
   return ret;

@@ -8,10 +8,10 @@
   INDArray wGradient=getWeightGradient();
   if (conf.isUseAdaGrad())   wGradient.muli(adaGrad.getLearningRates(wGradient));
  else   wGradient.muli(lr);
-  if (conf.isUseAdaGrad())   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.mean(1)));
+  if (conf.isUseAdaGrad())   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.mean(0)));
  else   dy.muli(lr);
   dy.divi(input.rows());
-  INDArray bGradient=dy;
+  INDArray bGradient=dy.mean(0);
   if (conf.isConstrainGradientToUnitNorm()) {
     wGradient.divi(wGradient.norm2(Integer.MAX_VALUE));
     bGradient.divi(bGradient.norm2(Integer.MAX_VALUE));

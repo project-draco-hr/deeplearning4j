@@ -1,4 +1,4 @@
 {
-  new ArrayOps().from(input).op(transformClazz()).build().exec();
+  new ArrayOps().from(input.linearView()).op(transformClazz()).build().exec();
   return input;
 }

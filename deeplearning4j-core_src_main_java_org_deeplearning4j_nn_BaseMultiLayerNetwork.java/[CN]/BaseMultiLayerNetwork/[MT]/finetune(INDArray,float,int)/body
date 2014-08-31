@@ -1,7 +1,7 @@
 {
   this.labels=labels;
+  getOutputLayer().setLabels(labels);
   feedForward();
-  LinAlgExceptions.assertRows(labels,getOutputLayer().getLabels());
   if (labels != null)   this.labels=labels;
   optimizer=new MultiLayerNetworkOptimizer(this,lr);
   optimizer.optimize(this.labels,lr,iterations);
