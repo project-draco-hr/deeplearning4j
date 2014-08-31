@@ -1,0 +1,9 @@
+{
+  Results r=cache.createQuery().addCriteria(Query.KEY.ilike(VOCAB)).execute();
+  List<Result> results=r.all();
+  List<VocabWord> ret=new ArrayList<>();
+  for (  Result r2 : results) {
+    ret.add((VocabWord)r2.getValue());
+  }
+  return ret;
+}

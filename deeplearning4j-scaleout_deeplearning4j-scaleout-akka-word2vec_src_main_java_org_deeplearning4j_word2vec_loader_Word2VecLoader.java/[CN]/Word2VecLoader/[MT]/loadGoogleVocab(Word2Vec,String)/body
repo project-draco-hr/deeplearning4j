@@ -1,16 +1,11 @@
 {
   BufferedReader reader=new BufferedReader(new FileReader(new File(path)));
   String temp=null;
-  vec.setWordIndex(new Index());
-  vec.getVocab().clear();
   while ((temp=reader.readLine()) != null) {
     String[] split=temp.split(" ");
     if (split[0].equals("</s>"))     continue;
     int freq=Integer.parseInt(split[1]);
     VocabWord realWord=new VocabWord(freq,vec.getLayerSize());
-    realWord.setIndex(vec.getVocab().size());
-    vec.getVocab().put(split[0],realWord);
-    vec.getWordIndex().add(split[0]);
   }
   reader.close();
   return vec;

@@ -1,10 +1,9 @@
 {
   readStopWords();
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
-  final Counter<String> rawVocab=Util.parallelCounter();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger queued=new AtomicInteger(0);
-  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,wordIndex,minWordFrequency,vocab,layerSize,stopWords,rawVocab,semaphore)));
+  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,layerSize,stopWords,semaphore)));
   int numCores=Runtime.getRuntime().availableProcessors();
   final CountDownLatch latch=new CountDownLatch(numCores);
   for (int i=0; i < numCores; i++) {
@@ -15,7 +14,7 @@
           if (sentence == null)           return null;
           vocabActor.tell(sentence,vocabActor);
           queued.incrementAndGet();
-          log.info("Sent " + queued);
+          if (queued.get() % 10000 == 0)           log.info("Sent " + queued);
         }
         return null;
       }

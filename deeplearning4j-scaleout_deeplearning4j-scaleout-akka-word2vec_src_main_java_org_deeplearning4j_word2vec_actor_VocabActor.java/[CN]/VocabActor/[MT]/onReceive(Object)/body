@@ -10,13 +10,13 @@
     Collection<String> tokens=(Collection<String>)message;
     for (    String token : tokens) {
       if (stopWords.contains(token))       token="STOP";
-      rawVocab.incrementCount(token,1.0);
+      cache.incrementWordCount(token);
       if (!Util.matchesAnyStopWord(stopWords,token)) {
-        if (!vocab.containsKey(token)) {
-          VocabWord word=new VocabWord(rawVocab.getCount(token),layerSize);
-          word.setIndex(vocab.size());
-          vocab.put(token,word);
-          wordIndex.add(token);
+        if (!cache.containsWord(token)) {
+          VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
+          word.setIndex(cache.numWords());
+          cache.putVocabWord(token,word);
+          cache.addWordToIndex(cache.numWords(),token);
         }
       }
     }

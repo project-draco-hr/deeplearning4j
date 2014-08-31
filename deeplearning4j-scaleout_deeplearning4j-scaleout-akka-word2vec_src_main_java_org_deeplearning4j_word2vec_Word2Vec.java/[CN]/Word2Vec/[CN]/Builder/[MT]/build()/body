@@ -12,7 +12,6 @@
       throw new RuntimeException(e);
     }
     ret.tokenizerFactory=tokenizerFactory;
-    ret.wordIndex=vocab;
     return ret;
   }
  else {
@@ -29,7 +28,6 @@
       throw new RuntimeException(e);
     }
     ret.tokenizerFactory=tokenizerFactory;
-    ret.wordIndex=vocab;
     return ret;
   }
 }

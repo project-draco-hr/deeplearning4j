@@ -1,0 +1,10 @@
+{
+  ClassPathResource resource=new ClassPathResource("ehcache.xml");
+  try {
+    cacheManager=CacheManager.create(resource.getURL());
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  cache=cacheManager.getCache(CACHE_NAME);
+}

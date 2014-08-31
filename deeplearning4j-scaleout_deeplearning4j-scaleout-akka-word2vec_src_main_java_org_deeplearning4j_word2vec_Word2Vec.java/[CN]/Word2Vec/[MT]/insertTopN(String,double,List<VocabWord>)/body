@@ -1,7 +1,7 @@
 {
   if (wordsEntrys.size() < topNSize) {
     VocabWord v=new VocabWord(score,layerSize);
-    v.setIndex(wordIndex.indexOf(name));
+    v.setIndex(cache.indexOf(name));
     wordsEntrys.add(v);
     return;
   }

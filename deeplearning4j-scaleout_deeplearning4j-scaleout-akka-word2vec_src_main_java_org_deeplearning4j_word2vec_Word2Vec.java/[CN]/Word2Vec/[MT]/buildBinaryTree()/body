@@ -1,11 +1,11 @@
 {
-  PriorityQueue<VocabWord> heap=new PriorityQueue<>(vocab.values());
+  PriorityQueue<VocabWord> heap=new PriorityQueue<>(cache.vocabWords());
   int i=0;
   while (heap.size() > 1) {
     VocabWord min1=heap.poll();
     VocabWord min2=heap.poll();
     VocabWord add=new VocabWord(min1.getWordFrequency() + min2.getWordFrequency(),layerSize);
-    int index=(vocab.size() + i);
+    int index=(cache.numWords() + i);
     add.setIndex(index);
     add.setLeft(min1);
     add.setRight(min2);
@@ -28,12 +28,12 @@
       log.info("Node was null");
       continue;
     }
-    if (node.getIndex() < vocab.size()) {
+    if (node.getIndex() < cache.numWords()) {
       node.setCodes(codes);
       node.setPoints(points);
     }
  else {
-      int[] copy=plus(points,node.getIndex() - vocab.size());
+      int[] copy=plus(points,node.getIndex() - cache.numWords());
       points=copy;
       triple.setThird(points);
       stack.add(new Triple<>(node.getLeft(),plus(codes,0),points));

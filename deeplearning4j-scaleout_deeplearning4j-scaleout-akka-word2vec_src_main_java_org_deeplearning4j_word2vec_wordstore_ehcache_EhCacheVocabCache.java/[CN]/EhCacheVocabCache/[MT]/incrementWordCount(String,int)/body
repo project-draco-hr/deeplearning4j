@@ -1,0 +1,11 @@
+{
+  Integer val=retrieve(word + "-" + COUNT);
+  if (val != null) {
+    Integer count=val;
+    cache.put(new Element(word + "-" + COUNT,count + increment));
+  }
+ else {
+    Element e=new Element(word + "-" + COUNT,increment);
+    cache.put(e);
+  }
+}

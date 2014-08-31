@@ -1,7 +1,7 @@
 {
-  int i=this.wordIndex.indexOf(word);
+  int i=this.cache.indexOf(word);
   if (oob == null)   oob=new float[layerSize];
-  if (i < 0)   return NDArrays.zeros(syn0.getRow(0).columns());
-  INDArray r=syn0.getRow(i);
+  if (i < 0)   return NDArrays.zeros(layerSize);
+  INDArray r=cache.vector(word);
   return r.div((NDArrays.getBlasWrapper().nrm2(r)));
 }

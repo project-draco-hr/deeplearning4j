@@ -3,18 +3,16 @@
   if (wordVector == null) {
     return null;
   }
-  INDArray tempVector=null;
+  INDArray tempVector;
   List<VocabWord> wordEntrys=new ArrayList<>(topNSize);
   String name;
-  for (int i=0; i < syn0.rows(); i++) {
-    name=wordIndex.get(i).toString();
+  for (int i=0; i < cache.numWords(); i++) {
+    name=cache.wordAtIndex(i);
     if (name.equals(word)) {
       continue;
     }
-    double dist=0;
-    tempVector=syn0.getRow(i);
-    dist=NDArrays.getBlasWrapper().dot(wordVector,tempVector);
-    insertTopN(name,dist,wordEntrys);
+    tempVector=cache.vector(cache.wordAtIndex(i));
+    insertTopN(name,NDArrays.getBlasWrapper().dot(wordVector,tempVector),wordEntrys);
   }
   return new TreeSet<>(wordEntrys);
 }

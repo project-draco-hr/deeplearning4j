@@ -2,9 +2,9 @@
   INDArray vec=this.getWordVectorMatrix(word);
   if (vec == null)   return new ArrayList<>();
   Counter<String> distances=new Counter<String>();
-  for (int i=0; i < syn0.rows(); i++) {
-    double sim=similarity(word,wordIndex.get(i).toString());
-    distances.incrementCount(wordIndex.get(i).toString(),sim);
+  for (int i=0; i < cache.numWords(); i++) {
+    double sim=similarity(word,cache.wordAtIndex(i).toString());
+    distances.incrementCount(cache.wordAtIndex(i).toString(),sim);
   }
   distances.keepTopNKeys(n);
   return distances.keySet();

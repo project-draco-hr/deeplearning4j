@@ -37,7 +37,5 @@
     bis.close();
     dis.close();
   }
-  ret.setWordIndex(wordIndex);
-  ret.setSyn0(wordVectors);
   return ret;
 }

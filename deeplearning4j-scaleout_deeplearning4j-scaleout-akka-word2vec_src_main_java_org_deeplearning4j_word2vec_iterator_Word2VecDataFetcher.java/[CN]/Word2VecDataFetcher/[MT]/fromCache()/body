@@ -1,7 +1,7 @@
 {
   INDArray outcomes=null;
   INDArray input=null;
-  input=NDArrays.create(batch,vec.getSyn1().columns() * vec.getWindow());
+  input=NDArrays.create(batch,vec.getLayerSize() * vec.getWindow());
   outcomes=NDArrays.create(batch,labels.size());
   for (int i=0; i < batch; i++) {
     input.putRow(i,NDArrays.create(WindowConverter.asExample(cache.get(i),vec)));

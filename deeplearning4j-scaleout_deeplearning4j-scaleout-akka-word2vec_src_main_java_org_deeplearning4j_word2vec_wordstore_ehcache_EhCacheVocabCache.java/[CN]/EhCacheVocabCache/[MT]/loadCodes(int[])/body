@@ -1,0 +1,8 @@
+{
+  List<INDArray> vectors=new ArrayList<>();
+  for (  int i : codes) {
+    INDArray a=retrieve(i + "-" + CODE);
+    vectors.add(a);
+  }
+  return NDArrays.create(vectors,new int[]{codes.length,vectors.get(0).columns()});
+}

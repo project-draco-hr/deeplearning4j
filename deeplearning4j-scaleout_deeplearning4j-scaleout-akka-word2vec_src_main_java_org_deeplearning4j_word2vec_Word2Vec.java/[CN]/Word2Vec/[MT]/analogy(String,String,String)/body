@@ -7,12 +7,12 @@
   INDArray tempVector;
   String name;
   List<VocabWord> wordEntrys=new ArrayList<>(topNSize);
-  for (int i=0; i < syn0.rows(); i++) {
-    name=wordIndex.get(i).toString();
+  for (int i=0; i < cache.numWords(); i++) {
+    name=cache.wordAtIndex(i);
     if (name.equals(word0) || name.equals(word1) || name.equals(word2)) {
       continue;
     }
-    tempVector=syn0.getRow(i);
+    tempVector=cache.vector(cache.wordAtIndex(i));
     double dist=NDArrays.getBlasWrapper().dot(wordVector,tempVector);
     insertTopN(name,dist,wordEntrys);
   }

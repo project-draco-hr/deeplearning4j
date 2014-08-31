@@ -1,8 +1,3 @@
 {
-  syn1=NDArrays.zeros(vocab.size(),layerSize);
-  syn0=NDArrays.zeros(vocab.size(),layerSize);
-  RandomGenerator g=new MersenneTwister(123);
-  for (int i=0; i < syn0.rows(); i++)   for (int j=0; j < syn0.columns(); j++) {
-    syn0.put(i,j,(float)(g.nextFloat() - 0.5) / layerSize);
-  }
+  for (int i=0; i < cache.numWords(); i++)   cache.putVector(cache.wordAtIndex(i),randomVector());
 }
