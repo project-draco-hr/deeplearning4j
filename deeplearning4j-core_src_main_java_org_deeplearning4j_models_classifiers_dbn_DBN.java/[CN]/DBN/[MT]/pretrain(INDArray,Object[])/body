@@ -1,6 +1,3 @@
 {
-  int k=(Integer)otherParams[0];
-  float lr=(Float)otherParams[1];
-  int epochs=(Integer)otherParams[2];
-  pretrain(input,k,lr,epochs);
+  pretrain(input,defaultConfiguration.getK(),defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
 }

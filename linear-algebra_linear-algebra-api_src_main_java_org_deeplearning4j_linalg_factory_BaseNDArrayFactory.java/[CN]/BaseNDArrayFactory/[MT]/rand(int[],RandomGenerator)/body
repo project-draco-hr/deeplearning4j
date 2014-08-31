@@ -1,5 +1,5 @@
 {
   INDArray ret=create(new int[]{1,ArrayUtil.prod(shape)});
-  for (int i=0; i < ret.length(); i++)   ret.put(i,NDArrays.scalar(r.nextDouble()));
+  for (int i=0; i < ret.length(); i++)   ret.putScalar(i,r.nextFloat());
   return ret.reshape(shape);
 }

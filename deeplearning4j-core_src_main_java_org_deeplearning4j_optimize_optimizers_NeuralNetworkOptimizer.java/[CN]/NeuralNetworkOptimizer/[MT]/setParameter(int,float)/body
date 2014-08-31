@@ -1,15 +1,3 @@
 {
-  if (index >= network.getW().length()) {
-    if (index >= network.getvBias().length() + network.getW().length()) {
-      int i=getAdjustedIndex(index);
-      network.gethBias().putScalar(i,value);
-    }
- else {
-      int i=getAdjustedIndex(index);
-      network.getvBias().putScalar(i,value);
-    }
-  }
- else {
-    network.getW().ravel().putScalar(index,value);
-  }
+  throw new UnsupportedOperationException();
 }

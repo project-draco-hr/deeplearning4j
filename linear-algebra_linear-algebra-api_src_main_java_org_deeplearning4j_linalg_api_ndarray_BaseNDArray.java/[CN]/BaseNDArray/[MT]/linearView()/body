@@ -1,0 +1,4 @@
+{
+  if (linearView == null)   linearView=NDArrays.create(data,new int[]{1,length},offset());
+  return linearView;
+}

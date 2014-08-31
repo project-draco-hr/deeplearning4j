@@ -1,7 +1,7 @@
 {
   int[] equiv=new int[data.length()];
   int numberCols=data.columns();
-  double approx=(double)numberCols / (double)patchesPerRow;
+  float approx=(float)numberCols / (float)patchesPerRow;
   int numPatchRows=(int)Math.round(approx);
   if (numPatchRows < 1)   numPatchRows=1;
   int patchBorder=2;
@@ -16,11 +16,11 @@
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);
     INDArray column=data.getColumn(col);
-    double col_max=(double)column.min(Integer.MAX_VALUE).element();
-    double col_min=(double)column.max(Integer.MAX_VALUE).element();
+    float col_max=(float)column.min(Integer.MAX_VALUE).element();
+    float col_min=(float)column.max(Integer.MAX_VALUE).element();
     log.debug("rendering " + column.length() + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
     for (int i=0; i < column.length(); i++) {
-      double patch_normal=((double)column.getScalar(i).element() - col_min) / (col_max - col_min + 0.000001);
+      float patch_normal=((float)column.getScalar(i).element() - col_min) / (col_max - col_min + 0.000001f);
       equiv[i]=(int)(255 * patch_normal);
     }
     boolean outOfBounds=false;

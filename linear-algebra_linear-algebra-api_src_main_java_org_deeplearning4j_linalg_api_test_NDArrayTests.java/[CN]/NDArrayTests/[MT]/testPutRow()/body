@@ -2,7 +2,7 @@
   INDArray d=NDArrays.linspace(1,4,4).reshape(2,2);
   INDArray n=d.dup();
   float nFirst=2;
-  float dFirst=(float)d.getScalar(0,1).element();
+  float dFirst=d.get(0,1);
   assertEquals(nFirst,dFirst,1e-1);
   assertEquals(true,Arrays.equals(d.data(),n.data()));
   assertEquals(true,Arrays.equals(new int[]{2,2},n.shape()));

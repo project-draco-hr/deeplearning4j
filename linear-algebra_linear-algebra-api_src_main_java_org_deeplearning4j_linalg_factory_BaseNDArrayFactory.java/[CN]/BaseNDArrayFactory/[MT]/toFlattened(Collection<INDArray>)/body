@@ -4,8 +4,9 @@
   INDArray ret=NDArrays.create(length);
   int linearIndex=0;
   for (  INDArray d : matrices) {
+    INDArray flattend=NDArrays.create(d.data(),new int[]{1,d.length()},d.offset());
     for (int i=0; i < d.length(); i++) {
-      ret.put(linearIndex++,d.getScalar(i));
+      ret.putScalar(linearIndex++,flattend.get(i));
     }
   }
   return ret;

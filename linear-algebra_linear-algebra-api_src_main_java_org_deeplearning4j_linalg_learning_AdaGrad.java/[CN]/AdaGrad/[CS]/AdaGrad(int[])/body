@@ -2,6 +2,6 @@
   this.shape=shape;
   createHistoricalGradient();
   createAdjustedGradient();
-  this.masterStepSize=1e-2;
+  this.masterStepSize=1e-1;
   this.decayLr=false;
 }

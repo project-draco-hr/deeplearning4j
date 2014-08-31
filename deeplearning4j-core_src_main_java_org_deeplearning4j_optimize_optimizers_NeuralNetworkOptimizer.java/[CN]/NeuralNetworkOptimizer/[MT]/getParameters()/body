@@ -1,3 +1,3 @@
 {
-  return NDArrays.create(Floats.concat(network.getW().data(),network.getvBias().data(),network.gethBias().data()));
+  return network.params();
 }

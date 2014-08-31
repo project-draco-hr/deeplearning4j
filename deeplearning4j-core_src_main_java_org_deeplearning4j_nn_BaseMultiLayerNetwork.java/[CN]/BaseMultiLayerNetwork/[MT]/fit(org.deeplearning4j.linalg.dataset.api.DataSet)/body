@@ -1,3 +1,3 @@
 {
-  getOutputLayer().fit(data);
+  fit(data.getFeatureMatrix(),data.getLabels());
 }

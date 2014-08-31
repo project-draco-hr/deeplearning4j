@@ -1,10 +1,3 @@
 {
-  if (index >= network.getW().length()) {
-    int i=getAdjustedIndex(index);
-    if (index >= network.getvBias().length() + network.getW().length()) {
-      return (float)network.gethBias().getScalar(i).element();
-    }
- else     return (float)network.getvBias().getScalar(i).element();
-  }
- else   return (float)network.getW().getScalar(index).element();
+  throw new UnsupportedOperationException();
 }

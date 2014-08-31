@@ -4,7 +4,6 @@
   if (this.neuralNets == null)   this.neuralNets=new NeuralNetwork[getnLayers()];
   for (int i=0; i < hiddenLayerSizes.length; i++)   if (hiddenLayerSizes[i] < 1)   throw new IllegalArgumentException("All hidden layer sizes must be >= 1");
   this.input=input.dup();
-  this.input.toString();
   if (!initCalled) {
     init();
     log.info("Initializing neuralNets with input of dims " + input.rows() + " x "+ input.columns());

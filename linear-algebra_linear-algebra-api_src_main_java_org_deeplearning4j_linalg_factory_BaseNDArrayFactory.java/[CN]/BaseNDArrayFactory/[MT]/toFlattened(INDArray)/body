@@ -4,6 +4,7 @@
   INDArray ret=NDArrays.create(1,length);
   int linearIndex=0;
   for (  INDArray d : matrices) {
+    if (!d.isVector())     d=NDArrays.create(d.data(),new int[]{1,d.length()},d.offset());
     for (int i=0; i < d.length(); i++) {
       ret.put(linearIndex++,d.getScalar(i));
     }

@@ -1,0 +1,10 @@
+{
+  INDArray two=NDArrays.create(new float[]{2,2,2,2});
+  INDArray div=two.div(two);
+  assertEquals(NDArrays.ones(4),div);
+  INDArray half=NDArrays.create(new float[]{0.5f,0.5f,0.5f,0.5f},new int[]{2,2});
+  INDArray divi=NDArrays.create(new float[]{0.3f,0.6f,0.9f,0.1f},new int[]{2,2});
+  INDArray assertion=NDArrays.create(new float[]{1.6666666f,0.8333333f,0.5555556f,5},new int[]{2,2});
+  INDArray result=half.div(divi);
+  assertEquals(assertion,result);
+}

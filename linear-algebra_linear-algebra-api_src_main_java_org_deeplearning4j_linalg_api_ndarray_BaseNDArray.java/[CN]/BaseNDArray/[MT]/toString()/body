@@ -9,7 +9,7 @@
       sb.append(get(i));
       if (i < length - 1)       sb.append(" ,");
     }
-    sb.append("]n\n");
+    sb.append("]\n");
     return sb.toString();
   }
   StringBuilder sb=new StringBuilder();

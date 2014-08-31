@@ -1,3 +1,4 @@
 {
+  if (dimension >= shape.length)   return length / size(shape.length - 1);
   return length / size(dimension);
 }

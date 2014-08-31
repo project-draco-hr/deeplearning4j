@@ -7,4 +7,6 @@
     this.data=data;
     if (offset >= data.length)     throw new IllegalArgumentException("Invalid offset: must be < data.length");
   }
+  if (isVector())   linearView=this;
+ else   this.linearView=NDArrays.create(data,new int[]{1,length},offset());
 }

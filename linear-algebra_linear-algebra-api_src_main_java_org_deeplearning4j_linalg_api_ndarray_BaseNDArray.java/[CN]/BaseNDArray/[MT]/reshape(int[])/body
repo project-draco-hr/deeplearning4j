@@ -12,44 +12,14 @@
     return NDArrays.create(data,shape,offset);
   }
   INDArray create=NDArrays.create(shape,NDArrays.getStrides(shape,ordering));
-  final INDArray flattened=ravel();
-  int vectorSize=create.size(create.shape().length - 1);
-  final AtomicInteger vectorCounter=new AtomicInteger(0);
-  if (ordering == NDArrayFactory.C) {
-    create.iterateOverAllRows(new SliceOp(){
-      @Override public void operate(      DimensionSlice nd){
-        INDArray nd1=(INDArray)nd.getResult();
-        for (int i=0; i < nd1.length(); i++) {
-          int element=vectorCounter.getAndIncrement();
-          nd1.put(i,flattened.getScalar(element));
-        }
-      }
-      @Override public void operate(      INDArray nd){
-        for (int i=0; i < nd.length(); i++) {
-          int element=vectorCounter.getAndIncrement();
-          nd.put(i,flattened.getScalar(element));
-        }
-      }
+  INDArray flattened=ravel();
+  int dimension=shape().length == 2 ? 1 : shape.length - 1;
+  int count=0;
+  for (int i=0; i < create.vectorsAlongDimension(dimension); i++) {
+    INDArray vec=create.vectorAlongDimension(i,dimension);
+    for (int j=0; j < vec.length(); j++) {
+      vec.putScalar(j,flattened.get(count++));
     }
-);
-  }
- else   if (ordering == NDArrayFactory.FORTRAN) {
-    create.iterateOverAllRows(new SliceOp(){
-      @Override public void operate(      DimensionSlice nd){
-        INDArray nd1=(INDArray)nd.getResult();
-        for (int i=0; i < nd1.length(); i++) {
-          int element=vectorCounter.getAndIncrement();
-          nd1.put(i,flattened.getScalar(element));
-        }
-      }
-      @Override public void operate(      INDArray nd){
-        for (int i=0; i < nd.length(); i++) {
-          int element=vectorCounter.getAndIncrement();
-          nd.put(i,flattened.getScalar(element));
-        }
-      }
-    }
-);
   }
   return create;
 }
