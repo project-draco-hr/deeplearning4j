@@ -4,6 +4,6 @@
   fetcher.fetch(10);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  Model rbm=new RBM.Builder().configure(conf).withInput(input).build();
+  RBM rbm=new RBM.Builder().configure(conf).withInput(input).build();
   rbm.fit(input);
 }

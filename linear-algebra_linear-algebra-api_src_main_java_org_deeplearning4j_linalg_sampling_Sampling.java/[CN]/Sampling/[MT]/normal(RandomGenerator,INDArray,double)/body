@@ -1,7 +1,7 @@
 {
-  INDArray iter=mean.ravel().dup();
+  INDArray iter=mean.linearView();
   for (int i=0; i < iter.length(); i++) {
-    RealDistribution reals=new NormalDistribution(rng,(double)mean.getScalar(i).element(),FastMath.sqrt(sigma),NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+    RealDistribution reals=new NormalDistribution(rng,mean.get(i),FastMath.sqrt(sigma),NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
     iter.putScalar(i,reals.sample());
   }
   return iter.reshape(mean.shape());

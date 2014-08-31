@@ -1,5 +1,5 @@
 {
-  int k=(int)params[0];
+  int k=conf.getK();
   float learningRate=conf.getLr();
   int iteration=params[params.length - 1] == null ? 0 : (int)params[params.length - 1];
   if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
@@ -20,6 +20,10 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
+  INDArray transpose=input.transpose();
+  INDArray inputTimesProbHidden=transpose.mmul(probHidden.getSecond());
+  INDArray samplesTimesNhMeans=nvSamples.transpose().mmul(nhMeans);
+  INDArray sub=inputTimesProbHidden.sub(samplesTimesNhMeans);
   INDArray wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
   INDArray hBiasGradient;
   if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsubi(conf.getSparsity()).mean(0);
