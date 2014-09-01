@@ -1,18 +1,31 @@
 {
+  final CountDownLatch latch=new CountDownLatch(from.vectorsAlongDimension(0));
   for (int i=0; i < from.vectorsAlongDimension(0); i++) {
-    INDArray vectorAlongDim=from.vectorAlongDimension(i,0);
-    currVector=vectorAlongDim;
-    for (int j=0; j < vectorAlongDim.length(); j++) {
-      if (vectorAlongDim instanceof IComplexNDArray) {
-        IComplexNDArray c=(IComplexNDArray)vectorAlongDim;
-        IComplexNumber result=(IComplexNumber)apply(c,c.getComplex(j),j);
-        c.putScalar(i,result);
-      }
+    final int dupI=i;
+    dimensionThreads.submit(new Runnable(){
+      @Override public void run(){
+        INDArray vectorAlongDim=from.vectorAlongDimension(dupI,0);
+        for (int j=0; j < vectorAlongDim.length(); j++) {
+          if (vectorAlongDim instanceof IComplexNDArray) {
+            IComplexNDArray c=(IComplexNDArray)vectorAlongDim;
+            IComplexNumber result=apply(c,c.getComplex(j),j);
+            c.putScalar(j,result);
+          }
  else {
-        Object apply=apply(vectorAlongDim,vectorAlongDim.get(j),j);
-        float f=(float)apply;
-        vectorAlongDim.putScalar(j,f);
+            float apply=apply(vectorAlongDim,vectorAlongDim.get(j),j);
+            float f=apply;
+            vectorAlongDim.putScalar(j,f);
+          }
+        }
+        latch.countDown();
       }
     }
+);
+  }
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
   }
 }

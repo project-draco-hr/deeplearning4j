@@ -2,13 +2,13 @@
   if (valueToApply instanceof IComplexNumber) {
     if (origin instanceof IComplexNDArray) {
       IComplexNDArray c2=(IComplexNDArray)origin;
-      IComplexNumber apply=(IComplexNumber)apply(origin,valueToApply,i);
+      IComplexNumber apply=apply(origin,valueToApply,i);
       c2.putScalar(i,apply);
     }
  else     throw new IllegalArgumentException("Unable to apply a non complex number to a real ndarray");
   }
  else {
-    float f=(float)apply(origin,valueToApply,i);
+    float f=apply(origin,valueToApply,i);
     origin.putScalar(i,f);
   }
 }
