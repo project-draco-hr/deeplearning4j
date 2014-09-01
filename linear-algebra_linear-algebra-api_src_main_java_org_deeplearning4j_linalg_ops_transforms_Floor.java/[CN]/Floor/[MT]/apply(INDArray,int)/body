@@ -1,8 +1,0 @@
-{
-  if (value instanceof IComplexNDArray) {
-    IComplexNumber c=(IComplexNumber)value.getScalar(0).element();
-    return NDArrays.scalar(ComplexUtil.floor(c));
-  }
-  double val=(double)value.getScalar(0).element();
-  return NDArrays.scalar(Math.floor(val));
-}

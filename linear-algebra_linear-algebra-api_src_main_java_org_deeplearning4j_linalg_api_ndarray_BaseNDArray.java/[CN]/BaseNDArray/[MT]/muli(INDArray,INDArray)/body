@@ -1,5 +1,5 @@
 {
-  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other).op(MultiplyOp.class).to(result).build().exec();
+  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other.element()).op(MultiplyOp.class).to(result).build().exec();
  else   new TwoArrayOps().from(this).other(other).op(MultiplyOp.class).to(result).build().exec();
   return result;
 }

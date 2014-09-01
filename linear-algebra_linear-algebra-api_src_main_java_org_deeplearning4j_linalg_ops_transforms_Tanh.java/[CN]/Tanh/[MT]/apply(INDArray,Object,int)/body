@@ -1,0 +1,10 @@
+{
+  if (value instanceof IComplexNumber) {
+    IComplexNumber element=(IComplexNumber)value;
+    return ComplexUtil.tanh(element);
+  }
+ else {
+    float d=(float)value;
+    return Math.tanh(d);
+  }
+}

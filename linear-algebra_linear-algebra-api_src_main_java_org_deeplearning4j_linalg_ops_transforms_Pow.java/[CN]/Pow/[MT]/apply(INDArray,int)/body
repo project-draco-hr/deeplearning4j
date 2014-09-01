@@ -1,8 +1,0 @@
-{
-  if (value instanceof IComplexNDArray) {
-    IComplexNumber n=(IComplexNumber)value.element();
-    return NDArrays.scalar(ComplexUtil.pow(n,power));
-  }
-  float d=(float)value.element();
-  return NDArrays.scalar(Math.pow(d,power));
-}

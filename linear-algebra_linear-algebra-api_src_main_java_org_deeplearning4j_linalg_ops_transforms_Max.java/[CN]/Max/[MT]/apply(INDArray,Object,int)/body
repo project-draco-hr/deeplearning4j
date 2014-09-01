@@ -1,0 +1,9 @@
+{
+  if (value instanceof IComplexNumber) {
+    IComplexNumber num=(IComplexNumber)value;
+    if (num.realComponent().doubleValue() > max)     return num;
+    return num.set(max,num.imaginaryComponent());
+  }
+  float val=(float)value;
+  return Math.max(max,val);
+}

@@ -1,7 +1,7 @@
 {
-  if (i < arr.length() - 1)   return soFar + (float)arr.getScalar(i).element();
+  if (i < arr.length() - 1)   return soFar + arr.get(i);
  else {
-    soFar+=(float)arr.getScalar(i).element();
+    soFar+=arr.get(i);
     return soFar / arr.length();
   }
 }

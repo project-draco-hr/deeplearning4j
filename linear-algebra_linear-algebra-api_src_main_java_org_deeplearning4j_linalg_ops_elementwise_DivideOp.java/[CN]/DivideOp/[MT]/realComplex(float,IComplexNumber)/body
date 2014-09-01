@@ -1,0 +1,3 @@
+{
+  return NDArrays.createDouble(real / other.asFloat().realComponent(),other.asFloat().imaginaryComponent());
+}

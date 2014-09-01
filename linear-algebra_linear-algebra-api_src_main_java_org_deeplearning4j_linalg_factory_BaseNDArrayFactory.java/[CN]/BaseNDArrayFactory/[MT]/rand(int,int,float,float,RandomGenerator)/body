@@ -1,8 +1,9 @@
 {
-  INDArray ret=NDArrays.create(rows,columns).ravel();
+  INDArray ret=NDArrays.create(rows,columns);
+  INDArray linear=ret.linearView();
   float r=max - min;
   for (int i=0; i < ret.length(); i++) {
-    ret.putScalar(i,r * rng.nextFloat() + min);
+    linear.putScalar(i,r * rng.nextFloat() + min);
   }
-  return ret.reshape(rows,columns);
+  return ret;
 }

@@ -1,0 +1,11 @@
+{
+  if (origin instanceof IComplexNumber) {
+    IComplexNDArray c2=(IComplexNDArray)origin;
+    IComplexNumber transformed=(IComplexNumber)apply(origin,getFromOrigin(origin,i),i);
+    c2.putScalar(i,transformed);
+  }
+ else {
+    float f=(float)apply(origin,getFromOrigin(origin,i),i);
+    origin.putScalar(i,f);
+  }
+}

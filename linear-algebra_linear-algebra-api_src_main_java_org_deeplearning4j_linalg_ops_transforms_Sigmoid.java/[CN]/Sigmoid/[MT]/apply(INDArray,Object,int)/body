@@ -1,0 +1,14 @@
+{
+  if (input instanceof IComplexNumber) {
+    IComplexNumber number=(IComplexNumber)input;
+    float arg=number.complexArgument().floatValue();
+    float sigArg=1 / 1 + ((float)Math.exp(-arg)) - 1 + .5f;
+    float ret=(float)Math.exp(sigArg);
+    return NDArrays.createDouble(ret,0);
+  }
+ else {
+    float inputf=(float)input;
+    float val=1 / (1 + (float)Math.exp(-inputf));
+    return val;
+  }
+}

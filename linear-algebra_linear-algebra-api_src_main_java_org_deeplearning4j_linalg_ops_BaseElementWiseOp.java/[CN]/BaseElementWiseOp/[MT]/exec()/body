@@ -3,7 +3,16 @@
     INDArray vectorAlongDim=from.vectorAlongDimension(i,0);
     currVector=vectorAlongDim;
     for (int j=0; j < vectorAlongDim.length(); j++) {
-      vectorAlongDim.put(j,apply(vectorAlongDim.getScalar(j),j));
+      if (vectorAlongDim instanceof IComplexNDArray) {
+        IComplexNDArray c=(IComplexNDArray)vectorAlongDim;
+        IComplexNumber result=(IComplexNumber)apply(c,c.getComplex(j),j);
+        c.putScalar(i,result);
+      }
+ else {
+        Object apply=apply(vectorAlongDim,vectorAlongDim.get(j),j);
+        float f=(float)apply;
+        vectorAlongDim.putScalar(j,f);
+      }
     }
   }
 }

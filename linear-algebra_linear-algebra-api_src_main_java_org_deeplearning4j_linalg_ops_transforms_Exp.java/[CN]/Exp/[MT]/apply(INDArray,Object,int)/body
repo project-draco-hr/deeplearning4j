@@ -1,0 +1,10 @@
+{
+  if (value instanceof IComplexNumber) {
+    IComplexNumber c=(IComplexNumber)value;
+    return ComplexUtil.exp(c);
+  }
+ else {
+    float val=(float)value;
+    return (float)Math.exp(val);
+  }
+}
