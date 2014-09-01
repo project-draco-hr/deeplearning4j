@@ -1,5 +1,5 @@
 {
-  if (hiddenType == HiddenUnit.RECTIFIED) {
+  if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
     INDArray h1Mean=propUp(v);
     INDArray sigH1Mean=sigmoid(h1Mean);
     INDArray sqrtSigH1Mean=sqrt(sigH1Mean);
@@ -8,20 +8,20 @@
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
- else   if (hiddenType == HiddenUnit.GAUSSIAN) {
+ else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
     INDArray h1Mean=propUp(v);
     this.hiddenSigma=h1Mean.var(1);
     INDArray h1Sample=h1Mean.addi(Sampling.normal(conf.getRng(),h1Mean,this.hiddenSigma));
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
- else   if (hiddenType == HiddenUnit.SOFTMAX) {
+ else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX) {
     INDArray h1Mean=propUp(v);
     INDArray h1Sample=Activations.softMaxRows().apply(h1Mean);
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
- else   if (hiddenType == HiddenUnit.BINARY) {
+ else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
     INDArray h1Mean=propUp(v);
     INDArray h1Sample=Sampling.binomial(h1Mean,1,conf.getRng());
     applyDropOutIfNecessary(h1Sample);

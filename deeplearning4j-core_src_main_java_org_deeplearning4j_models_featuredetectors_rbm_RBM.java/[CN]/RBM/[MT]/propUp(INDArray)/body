@@ -1,20 +1,20 @@
 {
-  if (visibleType == VisibleUnit.GAUSSIAN)   this.sigma=v.var(1).divi(input.rows());
+  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W);
   if (conf.isConcatBiases())   preSig=NDArrays.concatHorizontally(preSig,hBias);
  else   preSig.addiRowVector(hBias);
-  if (hiddenType == HiddenUnit.RECTIFIED) {
+  if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
     preSig=Transforms.max(preSig);
     return preSig;
   }
- else   if (hiddenType == HiddenUnit.GAUSSIAN) {
+ else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
     INDArray add=preSig.add(NDArrays.randn(preSig.rows(),preSig.columns(),conf.getRng()));
     preSig.addi(add);
     return preSig;
   }
- else   if (hiddenType == HiddenUnit.BINARY) {
+ else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
     return sigmoid(preSig);
   }
- else   if (hiddenType == HiddenUnit.SOFTMAX)   return Activations.softMaxRows().apply(preSig);
+ else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX)   return Activations.softMaxRows().apply(preSig);
   throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
 }

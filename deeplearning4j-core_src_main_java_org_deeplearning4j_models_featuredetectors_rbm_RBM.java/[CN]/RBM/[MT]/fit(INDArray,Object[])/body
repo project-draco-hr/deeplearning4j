@@ -1,8 +1,8 @@
 {
   if (input != null)   this.input=Transforms.stabilize(input,1);
   this.lastMiniBatchSize=input.rows();
-  if (visibleType == VisibleUnit.GAUSSIAN) {
-    this.sigma=input.var(1);
+  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
+    this.sigma=input.var(0);
     this.sigma.divi(input.rows());
   }
   optimizer=new RBMOptimizer(this,conf.getLr(),params,conf.getOptimizationAlgo(),conf.getLossFunction());

@@ -6,7 +6,7 @@
     }
   }
   INDArray I=visI.sum(visI.shape().length - 1).add(vBias);
-  if (visibleType == VisibleUnit.BINARY)   I=Transforms.sigmoid(I);
+  if (conf.getVisibleUnit() == VisibleUnit.BINARY)   I=Transforms.sigmoid(I);
   this.eVis=I.dup();
   return this.eVis;
 }
