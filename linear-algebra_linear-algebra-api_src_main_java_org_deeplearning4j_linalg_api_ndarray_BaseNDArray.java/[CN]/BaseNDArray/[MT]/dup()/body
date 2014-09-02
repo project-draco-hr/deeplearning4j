@@ -1,3 +1,3 @@
 {
-  return NDArrays.create(Arrays.copyOf(data,data.length),shape,stride,offset,ordering);
+  return NDArrays.create(Arrays.copyOf(data,data.length),Arrays.copyOf(shape,shape.length),Arrays.copyOf(stride,stride.length),offset,ordering);
 }

@@ -2,7 +2,7 @@
   final CountDownLatch latch=new CountDownLatch(from.vectorsAlongDimension(0));
   for (int i=0; i < from.vectorsAlongDimension(0); i++) {
     final int dupI=i;
-    dimensionThreads.submit(new Runnable(){
+    getThreads().execute(new Runnable(){
       @Override public void run(){
         INDArray vectorAlongDim=from.vectorAlongDimension(dupI,0);
         for (int j=0; j < vectorAlongDim.length(); j++) {
@@ -13,8 +13,7 @@
           }
  else {
             float apply=apply(vectorAlongDim,vectorAlongDim.get(j),j);
-            float f=apply;
-            vectorAlongDim.putScalar(j,f);
+            vectorAlongDim.putScalar(j,apply);
           }
         }
         latch.countDown();

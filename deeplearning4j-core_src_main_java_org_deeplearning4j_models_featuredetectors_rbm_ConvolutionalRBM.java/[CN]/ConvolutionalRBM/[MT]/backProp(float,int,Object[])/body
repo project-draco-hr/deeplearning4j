@@ -1,6 +1,7 @@
 {
   boolean train=false;
-  float currRecon=this.getReConstructionCrossEntropy();
+  float currRecon=LossFunctions.reconEntropy(input,hBias,vBias,W);
+  ;
   NeuralNetwork revert=clone();
   int numEpochs=0;
   while (train) {
@@ -21,7 +22,7 @@
     if (conf.getMomentum() != 0)     delta.muli(conf.getMomentum()).add(delta.mul(1 - conf.getMomentum()));
     delta.divi(input.rows());
     getW().addi(W.sub(delta));
-    float newRecon=this.getReConstructionCrossEntropy();
+    float newRecon=LossFunctions.reconEntropy(input,hBias,vBias,W);
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");

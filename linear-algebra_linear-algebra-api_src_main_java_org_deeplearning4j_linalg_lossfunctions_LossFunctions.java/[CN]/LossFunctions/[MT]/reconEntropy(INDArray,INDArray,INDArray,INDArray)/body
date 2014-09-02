@@ -1,10 +1,9 @@
 {
-  INDArray inputTimesW=input.mmul(W);
   INDArray preSigH=input.mmul(W).addRowVector(hBias);
-  INDArray sigH=sigmoid(preSigH.dup());
+  INDArray sigH=sigmoid(preSigH);
   INDArray preSigV=sigH.mmul(W.transpose()).addRowVector(vBias);
-  INDArray sigV=sigmoid(preSigV.dup());
-  INDArray inner=input.mul(log(sigV.dup())).addi(input.rsub(1).muli(log(sigV.rsub(1))));
+  INDArray sigV=sigmoid(preSigV);
+  INDArray inner=input.mul(log(sigV)).addi(input.rsub(1).muli(log(sigV.rsub(1))));
   INDArray rows=inner.sum(0);
   INDArray mean=rows.mean(Integer.MAX_VALUE);
   float ret=(float)mean.element();

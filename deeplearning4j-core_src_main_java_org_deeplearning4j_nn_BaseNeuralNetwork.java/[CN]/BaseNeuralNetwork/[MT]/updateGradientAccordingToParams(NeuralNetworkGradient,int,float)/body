@@ -26,14 +26,14 @@
   if (conf.isUseAdaGrad())   vBiasGradient.muli(vBiasAdaGrad.getLearningRates(vBiasGradient));
  else   vBiasGradient.muli(learningRate);
   if (this.hBiasGradient != null && conf.getSparsity() != 0)   applySparsity(hBiasGradient);
-  if (momentum != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(momentum).add(wGradient.mul(1 - momentum)));
-  if (momentum != 0 && this.vBiasGradient != null)   vBiasGradient.addi(this.vBiasGradient.mul(momentum).add(vBiasGradient.mul(1 - momentum)));
-  if (momentum != 0 && this.hBiasGradient != null)   hBiasGradient.addi(this.hBiasGradient.mul(momentum).add(hBiasGradient.mul(1 - momentum)));
+  if (momentum != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(momentum).addi(wGradient.mul(1 - momentum)));
+  if (momentum != 0 && this.vBiasGradient != null)   vBiasGradient.addi(this.vBiasGradient.mul(momentum).addi(vBiasGradient.mul(1 - momentum)));
+  if (momentum != 0 && this.hBiasGradient != null)   hBiasGradient.addi(this.hBiasGradient.mul(momentum).addi(hBiasGradient.mul(1 - momentum)));
   wGradient.divi(lastMiniBatchSize);
   vBiasGradient.divi(lastMiniBatchSize);
   hBiasGradient.divi(lastMiniBatchSize);
   if (conf.isUseRegularization() && conf.getL2() > 0) {
-    if (conf.isUseAdaGrad())     wGradient.subi(W.mul(conf.getL2()).mul(wLearningRates));
+    if (conf.isUseAdaGrad())     wGradient.subi(W.mul(conf.getL2()).muli(wLearningRates));
  else     wGradient.subi(W.mul(conf.getL2() * learningRate));
   }
   if (conf.isConstrainGradientToUnitNorm()) {

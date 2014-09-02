@@ -1,6 +1,6 @@
 {
-  double realMin=1.1755e-38;
-  double cutOff=FastMath.log(realMin);
+  float realMin=1.1755e-38f;
+  float cutOff=(float)FastMath.log(realMin);
   if (value instanceof IComplexNumber) {
     IComplexNumber c=(IComplexNumber)value;
     float curr=c.realComponent().floatValue();
@@ -9,8 +9,8 @@
   }
  else {
     float curr=(float)value;
-    if (curr * k > -cutOff)     return -cutOff / k;
- else     if (curr * k < cutOff)     return cutOff / k;
+    if (curr * k > -cutOff)     return (float)-cutOff / k;
+ else     if (curr * k < cutOff)     return (float)cutOff / k;
   }
   return value;
 }

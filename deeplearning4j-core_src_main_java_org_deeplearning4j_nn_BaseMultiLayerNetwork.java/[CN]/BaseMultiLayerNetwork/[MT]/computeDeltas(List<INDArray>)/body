@@ -1,7 +1,7 @@
 {
   INDArray[] deltas=new INDArray[getnLayers() + 2];
   List<INDArray> activations=feedForward();
-  INDArray ix=activations.get(activations.size() - 1).sub(labels).divi(input.rows());
+  INDArray ix=labels.sub(activations.get(activations.size() - 1)).negi().subi(getOutputLayer().conf().getActivationFunction().applyDerivative(activations.get(activations.size() - 1)));
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();

@@ -5,7 +5,7 @@
   d.getOutputLayer().conf().setActivationFunction(Activations.softMaxRows());
   d.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.MCXENT);
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
-  fetcher.fetch(2);
+  fetcher.fetch(10);
   DataSet d2=fetcher.next();
   d2.filterAndStrip(new int[]{0,1});
   INDArray rowSums=d2.getFeatureMatrix().sum(0);

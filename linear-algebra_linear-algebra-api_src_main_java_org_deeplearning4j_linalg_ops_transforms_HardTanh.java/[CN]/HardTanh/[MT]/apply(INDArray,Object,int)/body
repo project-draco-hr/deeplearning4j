@@ -10,7 +10,7 @@
     float d=(float)value;
     float ret=(float)Math.tanh(d);
     if (ret < -1)     return -1;
- else     if (ret > 1)     return 1;
+ else     if (ret > 1)     return (float)1;
  else     return ret;
   }
 }
