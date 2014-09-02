@@ -2,8 +2,9 @@
   INDArray z=output(input);
 switch (conf.getLossFunction()) {
 case MCXENT:
-    INDArray p_y_given_x=conf.getActivationFunction().apply(input.mmul(W).addRowVector(b));
-  INDArray dy=labels.sub(p_y_given_x);
+    INDArray preOut=preOutput(input);
+  INDArray p_y_given_x=Activations.sigmoid().apply(preOut);
+INDArray dy=labels.sub(p_y_given_x);
 return input.transpose().mmul(dy);
 case XENT:
 INDArray xEntDiff=z.sub(labels);

@@ -1,4 +1,5 @@
 {
-  new ArrayOps().from(input.linearView()).op(transformClazz()).build().exec();
-  return input;
+  ElementWiseOp op=new ArrayOps().from(input.dup()).op(transformClazz()).build();
+  op.exec();
+  return op.from();
 }

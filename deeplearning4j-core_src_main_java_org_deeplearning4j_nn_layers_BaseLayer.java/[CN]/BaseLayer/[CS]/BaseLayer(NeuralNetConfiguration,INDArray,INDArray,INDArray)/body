@@ -1,11 +1,8 @@
 {
   this.input=input;
-  if (W == null) {
-    this.W=NDArrays.zeros(conf.getnIn(),conf.getnOut());
-    for (int i=0; i < this.W.rows(); i++)     this.W.putRow(i,NDArrays.create(conf.getDist().sample(this.W.columns())));
-  }
- else   this.W=W;
-  if (b == null)   this.b=NDArrays.zeros(conf.getnOut());
- else   this.b=b;
   this.conf=conf;
+  if (W == null)   this.W=createWeightMatrix();
+ else   this.W=W;
+  if (b == null)   this.b=createBias();
+ else   this.b=b;
 }
