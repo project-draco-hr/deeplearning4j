@@ -1,0 +1,9 @@
+{
+  INDArray labels=FeatureUtil.toOutcomeMatrix(new int[]{0,1,2,1,2,2,0,1,2,1},3);
+  DataSet d=new org.deeplearning4j.linalg.dataset.DataSet(NDArrays.ones(10,2),labels);
+  d.filterAndStrip(new int[]{1,2});
+  for (int i=0; i < d.numExamples(); i++) {
+    int outcome=d.get(i).outcome();
+    assertTrue(outcome == 0 || outcome == 1);
+  }
+}

@@ -6,7 +6,7 @@
       c2.putScalar(i,number);
     }
  else {
-      float f=(float)apply(destination,getOther(other,i),i);
+      float f=(float)apply(from,getOther(other,i),i);
       destination.putScalar(i,f);
     }
   }
@@ -16,7 +16,7 @@
       IComplexNumber n=(IComplexNumber)apply(destination,scalarValue,i);
       c2.putScalar(i,n);
     }
-    float f=(float)apply(destination,scalarValue,i);
+    float f=(float)apply(from,scalarValue,i);
     destination.putScalar(i,f);
   }
 }

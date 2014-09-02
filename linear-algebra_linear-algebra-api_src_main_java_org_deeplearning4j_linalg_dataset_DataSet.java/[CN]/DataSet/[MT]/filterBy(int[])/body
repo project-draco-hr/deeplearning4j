@@ -4,7 +4,8 @@
   List<Integer> labelList=new ArrayList<>();
   for (  int i : labels)   labelList.add(i);
   for (  DataSet d : list) {
-    if (labelList.contains(d.getLabel(d))) {
+    int outcome=d.outcome();
+    if (labelList.contains(outcome)) {
       newList.add(d);
     }
   }
