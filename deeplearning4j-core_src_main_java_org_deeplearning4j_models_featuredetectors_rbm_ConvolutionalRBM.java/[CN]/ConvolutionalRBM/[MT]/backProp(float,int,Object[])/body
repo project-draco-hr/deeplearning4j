@@ -1,6 +1,6 @@
 {
   boolean train=false;
-  float currRecon=LossFunctions.reconEntropy(input,hBias,vBias,W);
+  float currRecon=LossFunctions.reconEntropy(input,hBias,vBias,W,conf.getActivationFunction());
   ;
   NeuralNetwork revert=clone();
   int numEpochs=0;
@@ -22,7 +22,7 @@
     if (conf.getMomentum() != 0)     delta.muli(conf.getMomentum()).add(delta.mul(1 - conf.getMomentum()));
     delta.divi(input.rows());
     getW().addi(W.sub(delta));
-    float newRecon=LossFunctions.reconEntropy(input,hBias,vBias,W);
+    float newRecon=LossFunctions.reconEntropy(input,hBias,vBias,W,conf.getActivationFunction());
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");
