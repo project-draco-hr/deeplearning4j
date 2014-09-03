@@ -1,3 +1,4 @@
 {
-  return muli(NDArrays.scalar(n));
+  new TwoArrayOps().from(this).scalar(n).op(MultiplyOp.class).to(this).build().exec();
+  return this;
 }

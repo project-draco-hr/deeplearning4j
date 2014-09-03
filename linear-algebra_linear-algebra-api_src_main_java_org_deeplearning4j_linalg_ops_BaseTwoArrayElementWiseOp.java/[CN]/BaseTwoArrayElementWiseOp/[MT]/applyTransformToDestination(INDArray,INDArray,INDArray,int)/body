@@ -1,22 +1,22 @@
 {
-  if (scalarValue == null) {
-    if (currTo instanceof IComplexNDArray) {
-      IComplexNumber number=(IComplexNumber)apply(destination,getOther(other,i),i);
+  if (scalarValue != null) {
+    if (destination instanceof IComplexNDArray) {
+      IComplexNumber number=(IComplexNumber)apply(destination,(float)scalarValue,i);
       IComplexNDArray c2=(IComplexNDArray)destination;
       c2.putScalar(i,number);
     }
  else {
-      float f=(float)apply(from,getOther(other,i),i);
+      float f=(float)apply(from,(float)scalarValue,i);
       destination.putScalar(i,f);
     }
   }
  else {
     if (destination instanceof IComplexNDArray) {
       IComplexNDArray c2=(IComplexNDArray)destination;
-      IComplexNumber n=(IComplexNumber)apply(destination,scalarValue,i);
+      IComplexNumber n=(IComplexNumber)apply(destination,getOther(other,i),i);
       c2.putScalar(i,n);
     }
-    float f=(float)apply(from,scalarValue,i);
+    float f=(float)apply(from,getOther(other,i),i);
     destination.putScalar(i,f);
   }
 }

@@ -1,3 +1,4 @@
 {
-  return subi(NDArrays.scalar(n));
+  new TwoArrayOps().from(this).scalar(n).op(SubtractOp.class).to(this).build().exec();
+  return this;
 }

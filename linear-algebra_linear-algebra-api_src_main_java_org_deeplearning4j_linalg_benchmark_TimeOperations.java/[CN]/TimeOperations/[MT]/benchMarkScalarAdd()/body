@@ -1,0 +1,8 @@
+{
+  System.out.println("Scalar addition took " + runNTimes(new Runnable(){
+    @Override public void run(){
+      testing.add(1);
+    }
+  }
+).getMean() + " milliseconds");
+}

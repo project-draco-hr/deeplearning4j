@@ -1,3 +1,4 @@
 {
-  return divi(NDArrays.scalar(n));
+  new TwoArrayOps().from(this).scalar(n).op(DivideOp.class).to(this).build().exec();
+  return this;
 }

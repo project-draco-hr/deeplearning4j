@@ -1,5 +1,5 @@
 {
-  if (currOther instanceof IComplexNDArray) {
+  if (other instanceof IComplexNDArray) {
     IComplexNDArray c=(IComplexNDArray)other;
     return c.getComplex(i);
   }

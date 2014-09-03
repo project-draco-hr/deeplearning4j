@@ -1,0 +1,8 @@
+{
+  System.out.println("Element wise  addition took " + runNTimes(new Runnable(){
+    @Override public void run(){
+      testing.add(other);
+    }
+  }
+).getMean() + " milliseconds");
+}
