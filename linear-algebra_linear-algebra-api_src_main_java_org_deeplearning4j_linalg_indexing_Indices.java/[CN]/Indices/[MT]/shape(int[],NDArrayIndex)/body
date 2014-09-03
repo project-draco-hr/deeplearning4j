@@ -1,4 +1,5 @@
 {
+  if (indices.length > shape.length)   return shape;
   int[] ret=new int[indices.length];
   for (int i=0; i < ret.length; i++) {
     int[] currIndices=indices[i].indices();

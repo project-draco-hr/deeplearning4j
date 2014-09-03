@@ -1,6 +1,6 @@
 {
   int ix=offset;
-  for (int i=0; i < shape.length; i++) {
+  for (int i=0; i < indexes.length; i++) {
     ix+=indexes[i] * stride[i];
   }
   if (ix >= data.length)   throw new IllegalArgumentException("Illegal index " + Arrays.toString(indexes));
