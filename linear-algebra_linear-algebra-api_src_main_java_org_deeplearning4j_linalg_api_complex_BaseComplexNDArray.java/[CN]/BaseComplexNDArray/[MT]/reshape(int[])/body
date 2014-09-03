@@ -26,7 +26,6 @@
  else {
     IComplexNDArray create=NDArrays.createComplex(shape,NDArrays.getComplexStrides(shape,ordering));
     final IComplexNDArray flattened=ravel();
-    int vectorSize=create.size(create.shape().length - 1);
     final AtomicInteger vectorCounter=new AtomicInteger(0);
     if (ordering == NDArrayFactory.C) {
       create.iterateOverAllRows(new SliceOp(){

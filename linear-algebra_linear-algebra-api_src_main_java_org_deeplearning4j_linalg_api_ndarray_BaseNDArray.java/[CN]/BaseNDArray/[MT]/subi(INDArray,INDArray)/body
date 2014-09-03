@@ -1,5 +1,20 @@
 {
-  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other.element()).op(SubtractOp.class).to(result).build().exec();
- else   new TwoArrayOps().from(this).other(other).op(SubtractOp.class).to(result).build().exec();
+  if (other.isScalar()) {
+    return subi(other.get(0),result);
+  }
+  if (isScalar()) {
+    return other.rsubi(get(0),result);
+  }
+  if (result == this) {
+    NDArrays.getBlasWrapper().axpy(-1.0f,other,result);
+  }
+ else   if (result == other) {
+    NDArrays.getBlasWrapper().scal(-1.0f,result);
+    NDArrays.getBlasWrapper().axpy(1.0f,this,result);
+  }
+ else {
+    NDArrays.getBlasWrapper().copy(this,result);
+    NDArrays.getBlasWrapper().axpy(-1.0f,other,result);
+  }
   return result;
 }

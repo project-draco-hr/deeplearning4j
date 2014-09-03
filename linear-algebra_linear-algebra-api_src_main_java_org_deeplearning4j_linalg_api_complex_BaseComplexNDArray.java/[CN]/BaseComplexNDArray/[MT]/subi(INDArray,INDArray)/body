@@ -1,5 +1,15 @@
 {
-  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other).op(SubtractOp.class).to(result).build().exec();
- else   new TwoArrayOps().from(this).other(other).op(SubtractOp.class).to(result).build().exec();
-  return (IComplexNDArray)result;
+  IComplexNDArray cOther=(IComplexNDArray)other;
+  IComplexNDArray cResult=(IComplexNDArray)result;
+  if (other.isScalar())   return subi(cOther.getComplex(0),result);
+  if (result == this)   NDArrays.getBlasWrapper().axpy(NDArrays.NEG_UNIT,cOther,cResult);
+ else   if (result == other) {
+    NDArrays.getBlasWrapper().scal(NDArrays.NEG_UNIT,cResult);
+    NDArrays.getBlasWrapper().axpy(NDArrays.UNIT,this,cResult);
+  }
+ else {
+    NDArrays.getBlasWrapper().copy(this,result);
+    NDArrays.getBlasWrapper().axpy(NDArrays.NEG_UNIT,cOther,cResult);
+  }
+  return cResult;
 }

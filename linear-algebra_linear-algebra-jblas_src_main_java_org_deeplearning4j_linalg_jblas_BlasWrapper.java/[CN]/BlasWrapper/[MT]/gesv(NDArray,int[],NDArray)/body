@@ -1,6 +1,0 @@
-{
-  int info=NativeBlas.sgesv(a.rows(),b.columns(),a.data(),0,a.rows(),ipiv,0,b.data(),0,b.rows());
-  checkInfo("DGESV",info);
-  if (info > 0)   throw new LapackException("DGESV","Linear equation cannot be solved because the matrix was singular.");
-  return b;
-}

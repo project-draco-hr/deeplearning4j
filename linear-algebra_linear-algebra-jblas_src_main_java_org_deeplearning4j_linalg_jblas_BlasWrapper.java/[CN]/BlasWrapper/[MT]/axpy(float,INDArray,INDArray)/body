@@ -1,0 +1,4 @@
+{
+  JavaBlas.raxpy(dx.length(),da,dx.data(),dx.offset(),dx.stride()[0],dy.data(),dy.offset(),dy.stride()[0]);
+  return dy;
+}

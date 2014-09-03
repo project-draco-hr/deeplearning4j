@@ -1,3 +1,4 @@
 {
-  return (IComplexNDArray)super.linearView();
+  if (linearView == null)   linearView=NDArrays.createComplex(data,new int[]{1,length},offset());
+  return (IComplexNDArray)linearView;
 }

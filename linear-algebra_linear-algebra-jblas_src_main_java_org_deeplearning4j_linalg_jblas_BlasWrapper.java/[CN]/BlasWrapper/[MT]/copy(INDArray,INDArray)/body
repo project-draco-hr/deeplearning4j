@@ -1,0 +1,4 @@
+{
+  JavaBlas.rcopy(x.length(),x.data(),x.offset(),1,y.data(),y.offset(),1);
+  return y;
+}

@@ -1,0 +1,9 @@
+{
+  int ix=offset;
+  for (int i=0; i < shape.length; i++) {
+    ix+=indexes[i] * stride[i];
+  }
+  data[ix]=complexNumber.asFloat().realComponent();
+  data[ix + 1]=complexNumber.asFloat().imaginaryComponent();
+  return this;
+}

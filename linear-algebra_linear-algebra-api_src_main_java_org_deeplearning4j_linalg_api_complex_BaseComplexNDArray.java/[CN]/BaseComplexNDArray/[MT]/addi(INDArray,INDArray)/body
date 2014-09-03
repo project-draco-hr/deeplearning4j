@@ -1,5 +1,25 @@
 {
-  if (other.isScalar())   new TwoArrayOps().from(this).scalar(other).op(AddOp.class).to(result).build().exec();
- else   new TwoArrayOps().from(this).other(other).op(AddOp.class).to(result).build().exec();
+  IComplexNDArray cOther=(IComplexNDArray)other;
+  IComplexNDArray cResult=(IComplexNDArray)result;
+  if (cOther.isScalar()) {
+    return cResult.addi(cOther.getComplex(0),result);
+  }
+  if (isScalar()) {
+    return cOther.addi(getComplex(0),result);
+  }
+  if (result == this) {
+    NDArrays.getBlasWrapper().axpy(NDArrays.UNIT,cOther,cResult);
+  }
+ else   if (result == other) {
+    NDArrays.getBlasWrapper().axpy(NDArrays.UNIT,this,cResult);
+  }
+ else {
+    INDArray resultLinear=result.linearView();
+    INDArray otherLinear=other.linearView();
+    INDArray linear=linearView();
+    for (int i=0; i < resultLinear.length(); i++) {
+      resultLinear.putScalar(i,otherLinear.get(i) + linear.get(i));
+    }
+  }
   return (IComplexNDArray)result;
 }

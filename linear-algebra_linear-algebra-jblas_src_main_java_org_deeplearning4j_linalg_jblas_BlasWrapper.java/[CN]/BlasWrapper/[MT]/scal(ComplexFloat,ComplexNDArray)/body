@@ -1,4 +1,0 @@
-{
-  NativeBlas.cscal(x.length(),new ComplexFloat(alpha.realComponent(),alpha.imaginaryComponent()),x.data(),x.offset(),1);
-  return x;
-}
