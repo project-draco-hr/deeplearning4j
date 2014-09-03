@@ -1,0 +1,15 @@
+{
+  if (curr == neuralNets.length) {
+    return getOutputLayer().labelProbabilities(input);
+  }
+switch (layers[curr].conf().getActivationType()) {
+case HIDDEN_LAYER_ACTIVATION:
+    return layers[curr].activate(input);
+case NET_ACTIVATION:
+  return neuralNets[curr].transform(input);
+case SAMPLE:
+return neuralNets[curr].sampleHiddenGivenVisible(input).getSecond();
+default :
+throw new IllegalStateException("Invalid activation type");
+}
+}

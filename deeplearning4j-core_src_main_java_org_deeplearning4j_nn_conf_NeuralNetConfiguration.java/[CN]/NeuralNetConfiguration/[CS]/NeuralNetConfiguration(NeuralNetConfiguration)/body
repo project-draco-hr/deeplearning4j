@@ -21,8 +21,8 @@
   this.nIn=neuralNetConfiguration.nIn;
   this.nOut=neuralNetConfiguration.nOut;
   this.activationFunction=neuralNetConfiguration.activationFunction;
-  this.useHiddenActivationsForwardProp=neuralNetConfiguration.useHiddenActivationsForwardProp;
   this.visibleUnit=neuralNetConfiguration.visibleUnit;
+  this.activationType=neuralNetConfiguration.activationType;
   if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

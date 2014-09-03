@@ -1,5 +1,4 @@
 {
-  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,renderWeightsEveryNumEpochs,concatBiases,constrainGradientToUnitNorm,rng,dist,seed,nIn,nOut,activationFunction,useHiddenActivationsForwardProp,visibleUnit,hiddenUnit);
-  ret.numIterations=numIterations;
+  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,renderWeightsEveryNumEpochs,concatBiases,constrainGradientToUnitNorm,rng,dist,seed,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,activationType);
   return ret;
 }

@@ -1,0 +1,11 @@
+{
+  INDArray preAct;
+  if (conf.isConcatBiases()) {
+    INDArray concat=NDArrays.concatVertically(W,hBias.transpose());
+    preAct=x.mmul(concat);
+  }
+ else   preAct=x.mmul(W).addiRowVector(hBias);
+  INDArray ret=Transforms.sigmoid(preAct);
+  applyDropOutIfNecessary(ret);
+  return ret;
+}

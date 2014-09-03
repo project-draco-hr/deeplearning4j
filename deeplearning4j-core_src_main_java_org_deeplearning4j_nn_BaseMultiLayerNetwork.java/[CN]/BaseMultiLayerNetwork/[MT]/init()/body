@@ -16,10 +16,7 @@
         layers[i]=createHiddenLayer(i,layerInput);
       }
  else {
-        if (input != null) {
-          if (this.sampleFromHiddenActivations)           layerInput=neuralNets[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
- else           layerInput=getNeuralNets()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
-        }
+        if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
         layerWiseConfigurations.get(i).setnIn(inputSize);
         layerWiseConfigurations.get(i).setnOut(this.hiddenLayerSizes[i]);
         layers[i]=createHiddenLayer(i,layerInput);

@@ -1,7 +1,7 @@
 {
   RandomGenerator gen=new MersenneTwister(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().hiddenUnit(RBM.HiddenUnit.RECTIFIED).regularization(true).useHiddenActivationsForwardProp(false).visibleUnit(RBM.VisibleUnit.GAUSSIAN).momentum(5e-1f).l2(1e-2f).activationFunction(Activations.tanh()).iterations(100).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-2f).nIn(4).nOut(3).build();
-  DBN d=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{3,2}).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().hiddenUnit(RBM.HiddenUnit.RECTIFIED).visibleUnit(RBM.VisibleUnit.GAUSSIAN).activationFunction(Activations.tanh()).iterations(100).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-2f).nIn(4).nOut(3).build();
+  DBN d=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{4}).build();
   d.getOutputLayer().conf().setActivationFunction(Activations.softMaxRows());
   d.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.MCXENT);
   DataSetIterator iter=new IrisDataSetIterator(150,150);

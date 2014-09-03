@@ -2,6 +2,9 @@
   int result=(sparsity != +0.0f ? Float.floatToIntBits(sparsity) : 0);
   result=31 * result + (useAdaGrad ? 1 : 0);
   result=31 * result + (lr != +0.0f ? Float.floatToIntBits(lr) : 0);
+  result=31 * result + k;
+  result=31 * result + (corruptionLevel != +0.0f ? Float.floatToIntBits(corruptionLevel) : 0);
+  result=31 * result + numIterations;
   result=31 * result + (momentum != +0.0f ? Float.floatToIntBits(momentum) : 0);
   result=31 * result + (l2 != +0.0f ? Float.floatToIntBits(l2) : 0);
   result=31 * result + (useRegularization ? 1 : 0);
@@ -11,6 +14,7 @@
   result=31 * result + (applySparsity ? 1 : 0);
   result=31 * result + weightInit.hashCode();
   result=31 * result + optimizationAlgo.hashCode();
+  result=31 * result + lossFunction.hashCode();
   result=31 * result + renderWeightsEveryNumEpochs;
   result=31 * result + (concatBiases ? 1 : 0);
   result=31 * result + (constrainGradientToUnitNorm ? 1 : 0);
@@ -20,5 +24,7 @@
   result=31 * result + nIn;
   result=31 * result + nOut;
   result=31 * result + activationFunction.hashCode();
+  result=31 * result + visibleUnit.hashCode();
+  result=31 * result + hiddenUnit.hashCode();
   return result;
 }

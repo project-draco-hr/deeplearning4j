@@ -1,6 +1,9 @@
 float sparsity
 boolean useAdaGrad
 float lr
+int k
+float corruptionLevel
+int numIterations
 float momentum
 float l2
 boolean useRegularization
@@ -20,6 +23,6 @@ long seed
 int nIn
 int nOut
 ActivationFunction activationFunction
-boolean useHiddenActivationsForwardProp
 RBM.VisibleUnit visibleUnit
 RBM.HiddenUnit hiddenUnit
+ActivationType activationType
