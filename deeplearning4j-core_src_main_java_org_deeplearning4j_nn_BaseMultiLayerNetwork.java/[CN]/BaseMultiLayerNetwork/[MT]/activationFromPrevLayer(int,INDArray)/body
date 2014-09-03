@@ -6,7 +6,7 @@ switch (layers[curr].conf().getActivationType()) {
 case HIDDEN_LAYER_ACTIVATION:
     return layers[curr].activate(input);
 case NET_ACTIVATION:
-  return neuralNets[curr].transform(input);
+  return neuralNets[curr].hiddenActivation(input);
 case SAMPLE:
 return neuralNets[curr].sampleHiddenGivenVisible(input).getSecond();
 default :
