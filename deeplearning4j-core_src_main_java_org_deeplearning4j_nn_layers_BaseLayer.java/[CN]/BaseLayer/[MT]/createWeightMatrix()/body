@@ -1,5 +1,4 @@
 {
-  INDArray W=NDArrays.zeros(conf.getnIn(),conf.getnOut());
-  for (int i=0; i < W.rows(); i++)   W.putRow(i,NDArrays.create(conf.getDist().sample(W.columns())));
+  INDArray W=WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),conf.getActivationFunction(),conf.getDist());
   return W;
 }
