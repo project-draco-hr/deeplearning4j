@@ -1,6 +1,8 @@
 {
   JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
-  JCublas.cublasCscal(x.length(),cuComplex.cuCmplx(alpha.realComponent(),alpha.imaginaryComponent()),xC.pointer(),x.stride()[0]);
+  alloc(xC);
+  JCublas.cublasCscal(x.length(),cuComplex.cuCmplx(alpha.realComponent(),alpha.imaginaryComponent()),xC.pointer(),1);
   xC.getData();
+  free(xC);
   return x;
 }

@@ -1,5 +1,7 @@
 {
   JCublasComplexNDArray cA=(JCublasComplexNDArray)A;
+  alloc(cA);
   float s=JCublas.cublasSnrm2(A.length(),cA.pointer(),2);
+  free(cA);
   return s;
 }

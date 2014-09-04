@@ -1,6 +1,8 @@
 {
   JCublasNDArray xC=(JCublasNDArray)x;
-  JCublas.cublasDscal(xC.length(),alpha,xC.pointer(),xC.stride()[0]);
+  alloc(xC);
+  JCublas.cublasSscal(xC.length(),alpha,xC.pointer(),x.stride()[0]);
   xC.getData();
+  free(xC);
   return x;
 }

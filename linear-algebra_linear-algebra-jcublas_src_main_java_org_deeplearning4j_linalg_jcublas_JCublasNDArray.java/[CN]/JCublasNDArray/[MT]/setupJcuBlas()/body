@@ -1,6 +1,5 @@
 {
   if (pointer != null)   return;
-  pointer=new Pointer().withByteOffset(offset());
-  JCublas.cublasAlloc(length,Sizeof.FLOAT,pointer);
-  JCublas.cublasSetVector(length,Sizeof.FLOAT,Pointer.to(data()),stride[0],pointer,stride[0]);
+  pointer=new Pointer().withByteOffset(offset() * Sizeof.FLOAT);
+  if (data != null)   dataPointer=Pointer.to(data()).withByteOffset(offset() * Sizeof.FLOAT);
 }

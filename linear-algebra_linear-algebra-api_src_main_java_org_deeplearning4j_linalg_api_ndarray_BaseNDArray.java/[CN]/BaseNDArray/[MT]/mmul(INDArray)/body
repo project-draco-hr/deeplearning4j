@@ -7,6 +7,6 @@
     switchedOrder=true;
   }
   INDArray result=NDArrays.create(shape);
-  if (switchedOrder)   NDArrays.factory().setOrder(NDArrayFactory.C);
+  if (switchedOrder && order != NDArrayFactory.FORTRAN)   NDArrays.factory().setOrder(NDArrayFactory.C);
   return mmuli(other,result);
 }

@@ -1,6 +1,8 @@
 {
   JCublasComplexNDArray aC=(JCublasComplexNDArray)A;
   JCublasComplexNDArray bC=(JCublasComplexNDArray)B;
-  JCublas.cublasCaxpy(aC.length(),jcuda.cuComplex.cuCmplx(da.realComponent().floatValue(),da.imaginaryComponent().floatValue()),aC.pointer(),A.stride()[0],bC.pointer(),B.stride()[0]);
+  alloc(aC,bC);
+  JCublas.cublasCaxpy(aC.length(),jcuda.cuComplex.cuCmplx(da.realComponent().floatValue(),da.imaginaryComponent().floatValue()),aC.pointer(),1,bC.pointer(),1);
   ((JCublasComplexNDArray)B).getData();
+  free(aC,bC);
 }

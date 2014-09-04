@@ -1,6 +1,18 @@
 {
   JCublasNDArray xA=(JCublasNDArray)A;
   JCublasNDArray xB=(JCublasNDArray)B;
-  JCublas.cublasDaxpy(xA.length(),da,xA.pointer(),A.stride()[0],xB.pointer(),B.stride()[0]);
-  xB.getData();
+  alloc(xA,xB);
+  float[] xAData=new float[xA.length()];
+  float[] xBData=new float[xB.length()];
+  xA.getData(xAData);
+  xB.getData(xBData);
+  if (xA.ordering() == NDArrayFactory.C) {
+    JCublas.cublasSaxpy(xA.length(),da,xA.pointer(),xA.stride()[0],xB.pointer(),1);
+    xB.getData();
+  }
+ else {
+    JCublas.cublasSaxpy(xA.length(),da,xA.pointer(),1,xB.pointer(),1);
+    xB.getData();
+  }
+  free(xA,xB);
 }

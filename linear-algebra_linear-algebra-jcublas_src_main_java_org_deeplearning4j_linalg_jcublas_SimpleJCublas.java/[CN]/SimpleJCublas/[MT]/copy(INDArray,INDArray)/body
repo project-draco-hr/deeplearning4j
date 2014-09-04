@@ -1,6 +1,8 @@
 {
   JCublasNDArray xC=(JCublasNDArray)x;
   JCublasNDArray yC=(JCublasNDArray)y;
-  JCublas.cublasDcopy(x.length(),xC.pointer(),xC.stride()[0],yC.pointer(),yC.stride()[0]);
+  alloc(xC,yC);
+  JCublas.cublasDcopy(x.length(),xC.pointer(),1,yC.pointer(),1);
   ((JCublasNDArray)y).getData();
+  free(xC,yC);
 }

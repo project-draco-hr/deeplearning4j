@@ -1,5 +1,7 @@
 {
   JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  alloc(xC);
   int max=JCublas.cublasIzamax(x.length(),xC.pointer(),x.stride()[0]);
+  free(xC);
   return max;
 }

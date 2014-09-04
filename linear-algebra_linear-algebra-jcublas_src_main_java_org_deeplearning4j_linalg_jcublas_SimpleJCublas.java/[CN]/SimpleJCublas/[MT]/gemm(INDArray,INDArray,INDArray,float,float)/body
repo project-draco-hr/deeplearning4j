@@ -2,7 +2,9 @@
   JCublasNDArray cA=(JCublasNDArray)A;
   JCublasNDArray cB=(JCublasNDArray)B;
   JCublasNDArray cC=(JCublasNDArray)C;
+  alloc(cA,cB,cC);
   JCublas.cublasSgemm('n','n',A.rows(),B.columns(),B.rows(),alpha,cA.pointer(),A.rows(),cB.pointer(),B.rows(),beta,cC.pointer(),C.rows());
   cC.getData();
+  free(cA,cB,cC);
   return C;
 }

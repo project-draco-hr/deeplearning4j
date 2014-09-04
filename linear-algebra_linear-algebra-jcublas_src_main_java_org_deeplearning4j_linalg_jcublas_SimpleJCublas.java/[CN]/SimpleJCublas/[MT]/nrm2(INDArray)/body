@@ -1,5 +1,7 @@
 {
   JCublasNDArray xC=(JCublasNDArray)x;
-  float normal2=JCublas.cublasSnrm2(x.length(),xC.pointer(),x.stride()[0]);
+  alloc(xC);
+  float normal2=JCublas.cublasSnrm2(x.length(),xC.pointer(),1);
+  free(xC);
   return normal2;
 }

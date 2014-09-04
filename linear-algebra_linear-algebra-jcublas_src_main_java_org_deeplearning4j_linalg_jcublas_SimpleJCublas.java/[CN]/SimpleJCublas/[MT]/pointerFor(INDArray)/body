@@ -1,6 +1,0 @@
-{
-  Pointer ret=Pointer.to(arr.data()).withByteOffset(arr.offset());
-  JCublas.cublasAlloc(arr.length(),arr.length(),ret);
-  JCublas.cublasSetVector(arr.length(),arr.length(),ret,arr.stride()[0],Pointer.to(ret),arr.stride()[0]);
-  return ret;
-}

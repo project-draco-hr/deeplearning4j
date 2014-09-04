@@ -1,5 +1,7 @@
 {
   JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  alloc(xC);
   float sum=JCublas.cublasScasum(x.length(),xC.pointer(),1);
+  free(xC);
   return sum;
 }

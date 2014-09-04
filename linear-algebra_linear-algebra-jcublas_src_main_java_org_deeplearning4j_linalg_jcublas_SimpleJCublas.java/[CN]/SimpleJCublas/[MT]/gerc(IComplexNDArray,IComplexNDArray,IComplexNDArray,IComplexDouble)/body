@@ -2,8 +2,10 @@
   JCublasComplexNDArray aC=(JCublasComplexNDArray)A;
   JCublasComplexNDArray bC=(JCublasComplexNDArray)B;
   JCublasComplexNDArray cC=(JCublasComplexNDArray)C;
+  alloc(aC,bC,cC);
   cuDoubleComplex alpha=cuDoubleComplex.cuCmplx(Alpha.realComponent(),Alpha.imaginaryComponent());
   JCublas.cublasZgerc(A.rows(),A.columns(),alpha,aC.pointer(),A.rows(),bC.pointer(),B.rows(),cC.pointer(),C.rows());
   cC.getData();
+  free(aC,bC,cC);
   return C;
 }

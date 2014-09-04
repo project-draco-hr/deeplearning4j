@@ -2,11 +2,9 @@
   JCublasNDArray cA=(JCublasNDArray)A;
   JCublasNDArray cB=(JCublasNDArray)B;
   JCublasNDArray cC=(JCublasNDArray)C;
-  char trans='n';
-  if (A.rows() == B.columns()) {
-    trans='T';
-  }
-  JCublas.cublasDgemv('n',A.rows(),A.columns(),alpha,cA.pointer(),A.rows(),cB.pointer(),B.rows(),beta,cC.pointer(),cC.stride()[0]);
+  alloc(cA,cB,cC);
+  JCublas.cublasSgemv('N',A.rows(),A.columns(),alpha,cA.pointer(),A.rows(),cB.pointer(),1,beta,cC.pointer(),1);
   cC.getData();
+  free(cA,cB,cC);
   return C;
 }
