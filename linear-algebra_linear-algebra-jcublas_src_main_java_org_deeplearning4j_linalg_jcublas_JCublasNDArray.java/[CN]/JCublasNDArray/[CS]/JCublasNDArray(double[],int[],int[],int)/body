@@ -3,4 +3,5 @@
   this.stride=stride;
   this.offset=offset;
   initShape(shape);
+  setupJcuBlas();
 }

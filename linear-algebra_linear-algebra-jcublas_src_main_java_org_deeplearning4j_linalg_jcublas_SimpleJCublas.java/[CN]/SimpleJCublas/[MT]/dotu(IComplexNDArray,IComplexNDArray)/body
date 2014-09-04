@@ -1,10 +1,6 @@
 {
-  Pointer d_A=new Pointer();
-  Pointer d_B=new Pointer();
-  twoPointersV(d_A,d_B,x,y,Sizeof.FLOAT);
-  jcuda.cuDoubleComplex dott=jcuda.cuDoubleComplex.cuCmplx(0,0);
-  dott=JCublas.cublasZdotu(x.length(),d_A,1,d_B,1);
-  JCublas.cublasFree(d_A);
-  JCublas.cublasFree(d_B);
+  JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  JCublasComplexNDArray yC=(JCublasComplexNDArray)y;
+  jcuda.cuDoubleComplex dott=JCublas.cublasZdotu(x.length(),xC.pointer(),x.stride()[0],yC.pointer(),yC.stride()[0]);
   return NDArrays.createDouble(dott.x,dott.y);
 }

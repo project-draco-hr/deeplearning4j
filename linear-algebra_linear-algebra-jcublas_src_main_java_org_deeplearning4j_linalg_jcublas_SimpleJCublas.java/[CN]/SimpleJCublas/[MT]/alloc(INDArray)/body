@@ -1,0 +1,4 @@
+{
+  Pointer p=pointerFor(toAlloc);
+  JCublas.cublasSetVector(toAlloc.length(),toAlloc.length(),p,toAlloc.stride()[0],Pointer.to(p),toAlloc.stride()[0]);
+}

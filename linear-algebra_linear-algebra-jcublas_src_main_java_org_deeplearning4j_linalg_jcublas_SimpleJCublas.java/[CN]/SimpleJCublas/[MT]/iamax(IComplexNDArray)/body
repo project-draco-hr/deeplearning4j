@@ -1,9 +1,5 @@
 {
-  Pointer X=new Pointer();
-  int max;
-  ;
-  onePointerVi(X,x,Sizeof.FLOAT);
-  max=JCublas.cublasIzamax(x.length(),X,1);
-  JCublas.cublasFree(X);
+  JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  int max=JCublas.cublasIzamax(x.length(),xC.pointer(),x.stride()[0]);
   return max;
 }

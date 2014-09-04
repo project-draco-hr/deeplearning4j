@@ -1,12 +1,6 @@
 {
-  Pointer d_A=new Pointer();
-  Pointer d_B=new Pointer();
-  int length=A.length();
-  int length_o=B.length();
-  if (length != length_o)   return;
-  twoPointers(d_A,d_B,A,B,Sizeof.FLOAT);
-  JCublas.cublasDaxpy(length,da,d_A,1,d_B,1);
-  gv(d_B,B,Sizeof.FLOAT);
-  JCublas.cublasFree(d_A);
-  JCublas.cublasFree(d_B);
+  JCublasNDArray xA=(JCublasNDArray)A;
+  JCublasNDArray xB=(JCublasNDArray)B;
+  JCublas.cublasDaxpy(xA.length(),da,xA.pointer(),A.stride()[0],xB.pointer(),B.stride()[0]);
+  xB.getData();
 }

@@ -1,7 +1,5 @@
 {
-  Pointer X=new Pointer();
-  onePointerVi(X,x,Sizeof.FLOAT);
-  float sum=JCublas.cublasScasum(x.length(),X,1);
-  JCublas.cublasFree(X);
+  JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  float sum=JCublas.cublasScasum(x.length(),xC.pointer(),1);
   return sum;
 }

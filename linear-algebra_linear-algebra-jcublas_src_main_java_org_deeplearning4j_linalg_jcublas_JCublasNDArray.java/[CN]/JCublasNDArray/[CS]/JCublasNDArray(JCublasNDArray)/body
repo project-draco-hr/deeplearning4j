@@ -1,4 +1,5 @@
 {
   this(new int[]{doubleMatrix.rows,doubleMatrix.columns});
   this.data=dup().data();
+  setupJcuBlas();
 }

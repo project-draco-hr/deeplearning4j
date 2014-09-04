@@ -1,8 +1,6 @@
 {
-  Pointer dA=new Pointer();
-  onePointerVi(dA,x,Sizeof.FLOAT);
-  JCublas.cublasCscal(x.length(),cuComplex.cuCmplx(alpha.realComponent(),alpha.imaginaryComponent()),dA,2);
-  gvi(dA,x,Sizeof.FLOAT);
-  JCublas.cublasFree(dA);
+  JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  JCublas.cublasCscal(x.length(),cuComplex.cuCmplx(alpha.realComponent(),alpha.imaginaryComponent()),xC.pointer(),x.stride()[0]);
+  xC.getData();
   return x;
 }

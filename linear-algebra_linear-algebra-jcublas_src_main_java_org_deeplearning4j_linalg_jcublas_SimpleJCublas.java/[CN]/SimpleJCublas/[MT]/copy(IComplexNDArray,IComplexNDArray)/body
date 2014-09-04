@@ -1,10 +1,6 @@
 {
-  Pointer X=new Pointer();
-  Pointer Y=new Pointer();
-  ;
-  twoPointersV(X,Y,x,y,Sizeof.FLOAT);
-  JCublas.cublasZcopy(x.length(),X,1,Y,1);
-  gvi(Y,y,Sizeof.FLOAT);
-  JCublas.cublasFree(X);
-  JCublas.cublasFree(Y);
+  JCublasComplexNDArray xC=(JCublasComplexNDArray)x;
+  JCublasComplexNDArray yC=(JCublasComplexNDArray)y;
+  JCublas.cublasZcopy(x.length(),xC.pointer(),xC.stride()[0],yC.pointer(),yC.stride()[0]);
+  yC.getData();
 }

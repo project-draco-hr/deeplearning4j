@@ -1,12 +1,8 @@
 {
-  Pointer d_A=new Pointer();
-  Pointer d_B=new Pointer();
-  Pointer d_C=new Pointer();
-  ThreePointerM(d_A,d_B,d_C,A,B,C,Sizeof.FLOAT);
-  JCublas.cublasDgemm('n','n',A.rows(),B.columns(),B.rows(),(float)alpha,d_A,A.rows(),d_B,B.rows(),(float)beta,d_C,C.rows());
-  gm(d_C,C,Sizeof.FLOAT);
-  JCublas.cublasFree(d_A);
-  JCublas.cublasFree(d_B);
-  JCublas.cublasFree(d_C);
+  JCublasNDArray cA=(JCublasNDArray)A;
+  JCublasNDArray cB=(JCublasNDArray)B;
+  JCublasNDArray cC=(JCublasNDArray)C;
+  JCublas.cublasSgemm('n','n',A.rows(),B.columns(),B.rows(),alpha,cA.pointer(),A.rows(),cB.pointer(),B.rows(),beta,cC.pointer(),C.rows());
+  cC.getData();
   return C;
 }

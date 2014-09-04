@@ -1,8 +1,5 @@
 {
-  Pointer X=new Pointer();
-  float normal2;
-  onePointerV(X,x,Sizeof.FLOAT);
-  normal2=JCublas.cublasSnrm2(x.length(),X,1);
-  JCublas.cublasFree(X);
+  JCublasNDArray xC=(JCublasNDArray)x;
+  float normal2=JCublas.cublasSnrm2(x.length(),xC.pointer(),x.stride()[0]);
   return normal2;
 }

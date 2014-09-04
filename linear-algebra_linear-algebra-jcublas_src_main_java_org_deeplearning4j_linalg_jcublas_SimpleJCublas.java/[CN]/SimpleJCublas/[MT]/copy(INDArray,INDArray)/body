@@ -1,9 +1,6 @@
 {
-  Pointer X=pointerFor(x);
-  Pointer Y=pointerFor(y);
-  twoPointers(X,Y,x,y,Sizeof.FLOAT);
-  JCublas.cublasDcopy(x.length(),X,1,Y,1);
-  gv(Y,y,Sizeof.FLOAT);
-  JCublas.cublasFree(X);
-  JCublas.cublasFree(Y);
+  JCublasNDArray xC=(JCublasNDArray)x;
+  JCublasNDArray yC=(JCublasNDArray)y;
+  JCublas.cublasDcopy(x.length(),xC.pointer(),xC.stride()[0],yC.pointer(),yC.stride()[0]);
+  ((JCublasNDArray)y).getData();
 }

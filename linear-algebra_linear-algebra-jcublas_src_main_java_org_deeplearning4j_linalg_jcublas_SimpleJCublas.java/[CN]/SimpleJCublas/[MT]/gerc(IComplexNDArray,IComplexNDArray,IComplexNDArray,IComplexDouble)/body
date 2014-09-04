@@ -1,13 +1,9 @@
 {
-  Pointer dA=new Pointer();
-  Pointer dB=new Pointer();
-  Pointer dC=new Pointer();
+  JCublasComplexNDArray aC=(JCublasComplexNDArray)A;
+  JCublasComplexNDArray bC=(JCublasComplexNDArray)B;
+  JCublasComplexNDArray cC=(JCublasComplexNDArray)C;
   cuDoubleComplex alpha=cuDoubleComplex.cuCmplx(Alpha.realComponent(),Alpha.imaginaryComponent());
-  ThreePointerMi(dA,dB,dC,A,B,C,Sizeof.FLOAT);
-  JCublas.cublasZgerc(A.rows(),A.columns(),alpha,dA,A.rows(),dB,B.rows(),dC,C.rows());
-  gmi(dC,C,Sizeof.FLOAT);
-  JCublas.cublasFree(dA);
-  JCublas.cublasFree(dB);
-  JCublas.cublasFree(dC);
+  JCublas.cublasZgerc(A.rows(),A.columns(),alpha,aC.pointer(),A.rows(),bC.pointer(),B.rows(),cC.pointer(),C.rows());
+  cC.getData();
   return C;
 }
