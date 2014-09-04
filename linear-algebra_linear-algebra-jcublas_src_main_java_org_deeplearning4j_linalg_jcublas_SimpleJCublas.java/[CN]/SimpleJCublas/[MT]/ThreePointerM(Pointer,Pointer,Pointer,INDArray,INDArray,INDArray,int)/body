@@ -1,0 +1,7 @@
+{
+  JCublas.cublasAlloc(A.rows() * A.columns(),sze,dA);
+  JCublas.cublasAlloc(B.rows() * B.columns(),sze,dB);
+  JCublas.cublasAlloc(A.rows() * B.columns(),sze,dC);
+  JCublas.cublasSetMatrix(A.rows(),A.columns(),sze,Pointer.to(A.data()),A.rows(),dA,A.rows());
+  JCublas.cublasSetMatrix(B.rows(),B.columns(),sze,Pointer.to(B.data()),B.rows(),dB,B.rows());
+}

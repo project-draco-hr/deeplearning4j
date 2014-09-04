@@ -5,10 +5,10 @@
   INDArray wLearningRates=wAdaGrad.getLearningRates(wGradient);
   if (conf.isUseAdaGrad())   wGradient.muli(wLearningRates);
  else   wGradient.muli(learningRate);
-  if (conf.isUseAdaGrad())   hBiasGradient=hBiasGradient.mul(hBiasAdaGrad.getLearningRates(hBiasGradient)).add(hBiasGradient.mul(conf.getMomentum()));
- else   hBiasGradient=hBiasGradient.mul(learningRate).add(hBiasGradient.mul(conf.getMomentum()));
-  if (conf.isUseAdaGrad())   vBiasGradient=vBiasGradient.mul(vBiasAdaGrad.getLearningRates(vBiasGradient)).add(vBiasGradient.mul(conf.getMomentum()));
- else   vBiasGradient=vBiasGradient.mul(learningRate).add(vBiasGradient.mul(conf.getMomentum()));
+  if (conf.isUseAdaGrad())   hBiasGradient.muli(hBiasAdaGrad.getLearningRates(hBiasGradient)).add(hBiasGradient.mul(conf.getMomentum()));
+ else   hBiasGradient.muli(learningRate).add(hBiasGradient.mul(conf.getMomentum()));
+  if (conf.isUseAdaGrad())   vBiasGradient.muli(vBiasAdaGrad.getLearningRates(vBiasGradient)).add(vBiasGradient.mul(conf.getMomentum()));
+ else   vBiasGradient.muli(learningRate).add(vBiasGradient.mul(conf.getMomentum()));
   if (this.hBiasGradient != null)   applySparsity(hBiasGradient);
   if (conf.getMomentum() != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(conf.getMomentum()).add(wGradient.mul(1 - conf.getMomentum())));
   if (conf.getMomentum() != 0 && this.vBiasGradient != null)   vBiasGradient.addi(this.vBiasGradient.mul(conf.getMomentum()).add(vBiasGradient.mul(1 - conf.getMomentum())));

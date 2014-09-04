@@ -1,0 +1,12 @@
+{
+  Pointer dA=new Pointer();
+  Pointer dB=new Pointer();
+  Pointer dC=new Pointer();
+  ThreePointerM(dA,dB,dC,A,B,C,Sizeof.FLOAT);
+  JCublas.cublasSger(A.rows(),A.columns(),alpha,dA,A.rows(),dB,B.rows(),dC,C.rows());
+  gm(dC,C,Sizeof.FLOAT);
+  JCublas.cublasFree(dA);
+  JCublas.cublasFree(dB);
+  JCublas.cublasFree(dC);
+  return C;
+}

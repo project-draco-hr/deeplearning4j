@@ -1,6 +1,5 @@
 {
-  double d=r * r + i * i;
-  r=r / d;
-  i=-i / d;
+  double d=realComponent() * realComponent() + imaginaryComponent() * imaginaryComponent();
+  set(realComponent() / d,-imaginaryComponent() / d);
   return this;
 }

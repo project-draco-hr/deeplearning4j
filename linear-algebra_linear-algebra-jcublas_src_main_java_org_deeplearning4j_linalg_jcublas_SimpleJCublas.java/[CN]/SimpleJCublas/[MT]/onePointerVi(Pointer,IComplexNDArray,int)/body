@@ -1,0 +1,4 @@
+{
+  JCublas.cublasAlloc(A.length(),sze,dA);
+  JCublas.cublasSetVector(A.length(),sze,pointerFor(A),1,dA,1);
+}

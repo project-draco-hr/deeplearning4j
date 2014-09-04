@@ -1,7 +1,3 @@
 {
-  if (!(o instanceof ComplexDouble)) {
-    return false;
-  }
-  ComplexDouble c=(ComplexDouble)o;
-  return eq(c);
+  return super.equals(o);
 }

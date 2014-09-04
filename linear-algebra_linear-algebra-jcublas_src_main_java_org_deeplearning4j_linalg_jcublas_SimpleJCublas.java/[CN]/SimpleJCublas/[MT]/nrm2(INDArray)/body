@@ -1,0 +1,8 @@
+{
+  Pointer X=new Pointer();
+  float normal2;
+  onePointerV(X,x,Sizeof.FLOAT);
+  normal2=JCublas.cublasSnrm2(x.length(),X,1);
+  JCublas.cublasFree(X);
+  return normal2;
+}

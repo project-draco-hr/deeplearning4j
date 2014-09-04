@@ -1,3 +1,4 @@
 {
-  return divi(v,this);
+  this.real/=v;
+  return this;
 }

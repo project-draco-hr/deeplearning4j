@@ -1,5 +1,4 @@
 {
-  r=-r;
-  i=-i;
+  set(-realComponent(),-imaginaryComponent());
   return this;
 }

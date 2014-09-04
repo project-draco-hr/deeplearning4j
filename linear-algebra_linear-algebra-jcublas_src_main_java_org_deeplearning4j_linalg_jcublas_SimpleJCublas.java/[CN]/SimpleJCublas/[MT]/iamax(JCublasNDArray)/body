@@ -1,8 +1,0 @@
-{
-  Pointer X=new Pointer();
-  int max;
-  OnePointerV(X,x,Sizeof.FLOAT);
-  max=JCublas.cublasIdamax(x.length(),X,1);
-  JCublas.cublasFree(X);
-  return max;
-}

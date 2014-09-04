@@ -1,8 +1,0 @@
-{
-  Pointer d_A=new Pointer();
-  OnePointerVi(d_A,x,Sizeof.FLOAT);
-  JCublas.cublasZscal(x.length(),jcuda.cuDoubleComplex.cuCmplx(alpha.realComponent(),alpha.imaginaryComponent()),d_A,2);
-  gvi(d_A,x,Sizeof.FLOAT);
-  JCublas.cublasFree(d_A);
-  return x;
-}

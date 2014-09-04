@@ -1,0 +1,6 @@
+{
+  float newR=realComponent() * c.realComponent().floatValue() - imaginaryComponent() * c.imaginaryComponent().floatValue();
+  float newI=realComponent() * c.imaginaryComponent().floatValue() + imaginaryComponent() * c.realComponent().floatValue();
+  result.set(newR,newI);
+  return result;
+}
