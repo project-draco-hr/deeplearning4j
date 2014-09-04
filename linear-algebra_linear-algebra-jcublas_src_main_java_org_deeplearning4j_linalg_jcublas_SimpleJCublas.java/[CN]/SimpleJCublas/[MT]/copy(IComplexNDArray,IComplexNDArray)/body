@@ -2,7 +2,7 @@
   Pointer X=new Pointer();
   Pointer Y=new Pointer();
   ;
-  TwoPointersVi(X,Y,x,y,Sizeof.FLOAT);
+  twoPointersV(X,Y,x,y,Sizeof.FLOAT);
   JCublas.cublasZcopy(x.length(),X,1,Y,1);
   gvi(Y,y,Sizeof.FLOAT);
   JCublas.cublasFree(X);

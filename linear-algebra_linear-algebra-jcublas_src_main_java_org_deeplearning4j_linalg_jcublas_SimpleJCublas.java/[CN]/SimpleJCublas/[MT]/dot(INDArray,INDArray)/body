@@ -1,7 +1,7 @@
 {
   Pointer d_A=new Pointer();
   Pointer d_B=new Pointer();
-  TwoPointersV(d_A,d_B,x,y,Sizeof.FLOAT);
+  twoPointers(d_A,d_B,x,y,Sizeof.FLOAT);
   float dott=0;
   dott=JCublas.cublasSdot(x.length(),d_A,1,d_B,1);
   JCublas.cublasFree(d_A);
