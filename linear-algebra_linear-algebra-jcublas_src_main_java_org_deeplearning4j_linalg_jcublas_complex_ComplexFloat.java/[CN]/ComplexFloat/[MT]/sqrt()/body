@@ -1,7 +1,0 @@
-{
-  float a=absoluteValue();
-  float s2=(float)Math.sqrt(2);
-  float p=(float)Math.sqrt(a + realComponent()) / s2;
-  float q=(float)Math.sqrt(a - realComponent()) / s2 * Math.signum(imaginaryComponent());
-  return new ComplexFloat(p,q);
-}

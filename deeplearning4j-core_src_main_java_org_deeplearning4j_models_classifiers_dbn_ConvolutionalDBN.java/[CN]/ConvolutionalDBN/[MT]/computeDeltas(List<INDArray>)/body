@@ -7,7 +7,7 @@
   ConvolutionalRBM rbm=(ConvolutionalRBM)getNeuralNets()[getnLayers() - 1];
   INDArray[] errorSignals=new INDArray[getnLayers()];
   INDArray[] biasGradients=new INDArray[getnLayers()];
-  INDArray layerErrorSignal=NDArrays.zeros(d.getFeatureMap().shape());
+  INDArray layerErrorSignal=Nd4j.zeros(d.getFeatureMap().shape());
   errorSignals[errorSignals.length - 1]=es;
   int nMap=layerErrorSignal.size(0) * layerErrorSignal.size(1);
   for (int i=0; i < rbm.getNumFilters()[0]; i++) {
@@ -22,16 +22,16 @@
     DownSamplingLayer forwardDownSamplingLayer=(DownSamplingLayer)getNeuralNets()[i + 1];
     ConvolutionalRBM forwardRBM=(ConvolutionalRBM)getNeuralNets()[i + 1];
     int[] stride=forwardRBM.getStride();
-    INDArray propErrorSignal=NDArrays.zeros(d.getFeatureMap().shape());
+    INDArray propErrorSignal=Nd4j.zeros(d.getFeatureMap().shape());
     for (int k=0; k < layer.getNumFeatureMaps(); k++) {
-      INDArray rotFilter=NDArrays.rot(forwardRBM.getW().slice(i).slice(k));
+      INDArray rotFilter=Nd4j.rot(forwardRBM.getW().slice(i).slice(k));
       INDArray tensor=errorSignals[i + 1];
       INDArray currEs=tensor.slice(k);
       propErrorSignal.addi(Convolution.convn(currEs,rotFilter,Convolution.Type.FULL));
     }
     errorSignals[i]=propErrorSignal;
     INDArray mapSize=forwardRBM.getFeatureMap();
-    INDArray rbmEs=NDArrays.zeros(mapSize.shape());
+    INDArray rbmEs=Nd4j.zeros(mapSize.shape());
     for (int k=0; k < rbm.getNumFilters()[0]; k++) {
       INDArray propEs=Transforms.upSample(forwardDownSamplingLayer.getFeatureMap().slice(k),ArrayUtil.toNDArray(new int[]{stride[0],stride[1],1,1})).divi(ArrayUtil.prod(stride));
       rbmEs.putSlice(k,propEs);
@@ -42,11 +42,11 @@
     ConvolutionalRBM r2=(ConvolutionalRBM)getNeuralNets()[i];
     ConvolutionalRBM prevRBM=(ConvolutionalRBM)getNeuralNets()[i - 1];
     INDArray errorSignal=errorSignals[i - 1];
-    INDArray biasGradient=NDArrays.create(1,r2.getNumFilters()[0]);
+    INDArray biasGradient=Nd4j.create(1,r2.getNumFilters()[0]);
     for (int j=0; j < r2.getNumFilters()[0]; j++) {
       INDArray es2=errorSignal.slice(j);
       for (int k=0; k < prevRBM.getNumFilters()[0]; k++) {
-        INDArray flipped=NDArrays.reverse(prevRBM.getFeatureMap().slice(k));
+        INDArray flipped=Nd4j.reverse(prevRBM.getFeatureMap().slice(k));
         INDArray dedFilter=Convolution.convn(flipped,es2,Convolution.Type.VALID);
         r2.getdWeights().put(j,k,dedFilter);
       }

@@ -1,5 +1,0 @@
-{
-  if (!isScalar())   throw new IllegalStateException("Unable to get the element of a non scalar");
-  int idx=linearIndex(0);
-  return NDArrays.createDouble(data[idx],data[idx + 1]);
-}

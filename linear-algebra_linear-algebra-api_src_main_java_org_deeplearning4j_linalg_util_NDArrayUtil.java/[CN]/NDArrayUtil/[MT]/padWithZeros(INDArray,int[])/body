@@ -1,7 +1,0 @@
-{
-  if (Arrays.equals(nd.shape(),targetShape))   return nd;
-  if (ArrayUtil.prod(nd.shape()) >= ArrayUtil.prod(targetShape))   return nd;
-  INDArray ret=NDArrays.create(targetShape);
-  System.arraycopy(nd.data(),0,ret.data(),0,nd.data().length);
-  return ret;
-}

@@ -1,9 +1,0 @@
-{
-  IComplexNDArray c=NDArrays.createComplex(NDArrays.linspace(1,4,4).reshape(2,2));
-  IComplexNDArray wrapped=c;
-  assertEquals(true,Arrays.equals(new int[]{2,2},wrapped.shape()));
-  IComplexNDArray vec=NDArrays.createComplex(NDArrays.linspace(1,4,4));
-  IComplexNDArray wrappedVector=vec;
-  assertEquals(true,wrappedVector.isVector());
-  assertEquals(true,Shape.shapeEquals(new int[]{4},wrappedVector.shape()));
-}

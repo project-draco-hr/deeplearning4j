@@ -1,4 +1,0 @@
-{
-  super.putScalar(i,value);
-  return putScalar(i,NDArrays.createComplexNumber(value.floatValue(),0));
-}

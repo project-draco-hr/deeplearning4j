@@ -1,6 +1,0 @@
-{
-  ElementWiseOp ops=new ArrayOps().from(indArray.dup()).op(clazz).extraArgs(extraArgs).build();
-  ops.exec();
-  IComplexNDArray n=(IComplexNDArray)ops.from();
-  return n;
-}

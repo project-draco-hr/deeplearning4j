@@ -1,8 +1,0 @@
-{
-  INDArray linear=linearView();
-  INDArray resultLinear=result.linearView();
-  for (int i=0; i < length; i++) {
-    resultLinear.putScalar(i,linear.get(i) * n.floatValue());
-  }
-  return result;
-}

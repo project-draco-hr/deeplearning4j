@@ -1,9 +1,0 @@
-{
-  if (value instanceof IComplexNumber) {
-    return ComplexUtil.neg((org.deeplearning4j.linalg.api.complex.IComplexNumber)value);
-  }
- else {
-    float val=(float)value;
-    return -val;
-  }
-}

@@ -1,6 +1,6 @@
 {
   List<INDArray> R=new ArrayList<>();
-  R.add(NDArrays.zeros(input.rows(),input.columns()));
+  R.add(Nd4j.zeros(input.rows(),input.columns()));
   List<Pair<INDArray,INDArray>> vWvB=unPack(v);
   List<INDArray> W=weightMatrices();
   for (int i=0; i < neuralNets.length; i++) {

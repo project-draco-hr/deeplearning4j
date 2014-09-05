@@ -1,8 +1,0 @@
-{
-  IComplexNDArray linear=linearView();
-  IComplexNDArray cResult=(IComplexNDArray)result.linearView();
-  for (int i=0; i < length(); i++) {
-    cResult.putScalar(i,linear.getComplex(i).add(n));
-  }
-  return (IComplexNDArray)result;
-}

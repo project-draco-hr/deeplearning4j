@@ -7,32 +7,32 @@
   for (  MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryTransform.entrySet()) {
     int numRows=entry.getValue().rows();
     int numCols=entry.getValue().columns();
-    binaryTD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(numRows,numCols));
+    binaryTD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(numRows,numCols));
   }
   if (!combineClassification) {
     for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryClassification.entrySet()) {
       int numRows=entry.getValue().rows();
       int numCols=entry.getValue().columns();
-      binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(numRows,numCols));
+      binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(numRows,numCols));
     }
   }
-  if (useINDArrays) {
-    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINDArrays.entrySet()) {
+  if (useINd4j) {
+    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINd4j.entrySet()) {
       int numRows=entry.getValue().rows();
       int numCols=entry.getValue().columns();
       int numSlices=entry.getValue().slices();
-      binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),NDArrays.create(new int[]{numRows,numCols,numSlices}));
+      binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(new int[]{numRows,numCols,numSlices}));
     }
   }
   for (  Map.Entry<String,INDArray> entry : unaryClassification.entrySet()) {
     int numRows=entry.getValue().rows();
     int numCols=entry.getValue().columns();
-    unaryCD.put(entry.getKey(),NDArrays.create(numRows,numCols));
+    unaryCD.put(entry.getKey(),Nd4j.create(numRows,numCols));
   }
   for (  Map.Entry<String,INDArray> entry : featureVectors.entrySet()) {
     int numRows=entry.getValue().rows();
     int numCols=entry.getValue().columns();
-    wordVectorD.put(entry.getKey(),NDArrays.create(numRows,numCols));
+    wordVectorD.put(entry.getKey(),Nd4j.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
@@ -60,10 +60,10 @@
   value=error.floatValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
-  value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryINDArrays,scale,regTransformINDArray);
+  value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryINd4j,scale,regTransformINDArray);
   value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
   value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
-  INDArray derivative=NDArrays.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
+  INDArray derivative=Nd4j.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
   if (paramAdaGrad == null)   paramAdaGrad=new AdaGrad(1,derivative.columns());
   derivative.muli(paramAdaGrad.getLearningRates(derivative));
   return derivative;

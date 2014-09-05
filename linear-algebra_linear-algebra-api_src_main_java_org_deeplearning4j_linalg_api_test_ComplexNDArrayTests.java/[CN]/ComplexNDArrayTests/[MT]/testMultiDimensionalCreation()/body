@@ -1,6 +1,0 @@
-{
-  INDArray fourTwoTwo=NDArrays.linspace(1,16,16).reshape(new int[]{4,2,2});
-  IComplexNDArray multiRow=NDArrays.createComplex(fourTwoTwo);
-  multiRow.toString();
-  assertEquals(fourTwoTwo,multiRow.getReal());
-}

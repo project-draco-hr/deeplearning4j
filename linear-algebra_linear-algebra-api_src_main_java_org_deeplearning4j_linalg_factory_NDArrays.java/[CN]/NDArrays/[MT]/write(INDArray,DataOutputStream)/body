@@ -1,9 +1,0 @@
-{
-  dataOutputStream.writeInt(arr.shape().length);
-  for (int i=0; i < arr.shape().length; i++)   dataOutputStream.writeInt(arr.size(i));
-  for (int i=0; i < arr.stride().length; i++)   dataOutputStream.writeInt(arr.stride()[i]);
-  dataOutputStream.writeUTF(dataType());
-  dataOutputStream.writeUTF("real");
-  if (dataType().equals("float"))   ArrayUtil.write(arr.floatData(),dataOutputStream);
- else   ArrayUtil.write(arr.data(),dataOutputStream);
-}

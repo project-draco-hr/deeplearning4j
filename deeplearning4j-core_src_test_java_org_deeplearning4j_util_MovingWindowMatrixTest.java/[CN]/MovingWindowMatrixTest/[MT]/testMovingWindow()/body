@@ -1,5 +1,5 @@
 {
-  INDArray ones=NDArrays.ones(4,4);
+  INDArray ones=Nd4j.ones(4,4);
   MovingWindowMatrix m=new MovingWindowMatrix(ones,2,2);
   List<INDArray> windows=m.windows();
   assertEquals(4,windows.size());

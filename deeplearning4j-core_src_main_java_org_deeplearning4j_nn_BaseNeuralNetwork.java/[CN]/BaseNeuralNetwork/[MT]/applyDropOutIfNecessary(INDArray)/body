@@ -1,7 +1,7 @@
 {
   if (conf.getDropOut() > 0) {
-    this.doMask=NDArrays.rand(input.rows(),input.columns()).gt(conf.getDropOut());
+    this.doMask=Nd4j.rand(input.rows(),input.columns()).gt(conf.getDropOut());
   }
- else   this.doMask=NDArrays.ones(input.rows(),input.columns());
+ else   this.doMask=Nd4j.ones(input.rows(),input.columns());
   input.muli(doMask);
 }

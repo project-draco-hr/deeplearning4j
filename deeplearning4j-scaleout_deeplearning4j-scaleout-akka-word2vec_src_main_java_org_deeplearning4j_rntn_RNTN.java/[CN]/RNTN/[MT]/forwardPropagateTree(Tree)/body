@@ -26,11 +26,11 @@
     classification=getBinaryClassification(leftCategory,rightCategory);
     INDArray leftVector=tree.children().get(0).vector();
     INDArray rightVector=tree.children().get(1).vector();
-    INDArray childrenVector=NDArrays.appendBias(leftVector,rightVector);
-    if (useINDArrays) {
+    INDArray childrenVector=Nd4j.appendBias(leftVector,rightVector);
+    if (useINd4j) {
       INDArray floatT=getBinaryINDArray(leftCategory,rightCategory);
-      INDArray INDArrayIn=NDArrays.concatHorizontally(leftVector,rightVector);
-      INDArray INDArrayOut=NDArrays.bilinearProducts(floatT,INDArrayIn);
+      INDArray INDArrayIn=Nd4j.concatHorizontally(leftVector,rightVector);
+      INDArray INDArrayOut=Nd4j.bilinearProducts(floatT,INDArrayIn);
       nodeVector=activationFunction.apply(W.mmul(childrenVector).add(INDArrayOut));
     }
  else     nodeVector=activationFunction.apply(W.mmul(childrenVector));
@@ -38,7 +38,7 @@
  else {
     throw new AssertionError("Tree not correctly binarized");
   }
-  INDArray inputWithBias=NDArrays.appendBias(nodeVector);
+  INDArray inputWithBias=Nd4j.appendBias(nodeVector);
   INDArray preAct=classification.mmul(inputWithBias);
   INDArray predictions=outputActivation.apply(preAct);
   tree.setPrediction(predictions);

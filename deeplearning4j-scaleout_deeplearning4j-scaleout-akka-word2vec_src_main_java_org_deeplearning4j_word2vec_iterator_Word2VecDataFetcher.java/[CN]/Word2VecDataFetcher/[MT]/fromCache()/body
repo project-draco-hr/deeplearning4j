@@ -1,10 +1,10 @@
 {
   INDArray outcomes=null;
   INDArray input=null;
-  input=NDArrays.create(batch,vec.getLayerSize() * vec.getWindow());
-  outcomes=NDArrays.create(batch,labels.size());
+  input=Nd4j.create(batch,vec.getLayerSize() * vec.getWindow());
+  outcomes=Nd4j.create(batch,labels.size());
   for (int i=0; i < batch; i++) {
-    input.putRow(i,NDArrays.create(WindowConverter.asExample(cache.get(i),vec)));
+    input.putRow(i,Nd4j.create(WindowConverter.asExample(cache.get(i),vec)));
     int idx=labels.indexOf(cache.get(i).getLabel());
     if (idx < 0)     idx=0;
     outcomes.putRow(i,FeatureUtil.toOutcomeVector(idx,labels.size()));

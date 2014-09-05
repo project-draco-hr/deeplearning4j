@@ -5,5 +5,5 @@
     params.add(getNeuralNets()[i].gethBias());
   }
   params.add(getOutputLayer().params());
-  return NDArrays.toFlattened(params);
+  return Nd4j.toFlattened(params);
 }

@@ -1,6 +1,0 @@
-{
-  IComplexNDArray cResult=(IComplexNDArray)result;
-  IComplexNDArray cResultLinear=cResult.linearView();
-  for (int i=0; i < length; i++)   cResultLinear.putScalar(i,getComplex(i).div(n));
-  return cResult;
-}

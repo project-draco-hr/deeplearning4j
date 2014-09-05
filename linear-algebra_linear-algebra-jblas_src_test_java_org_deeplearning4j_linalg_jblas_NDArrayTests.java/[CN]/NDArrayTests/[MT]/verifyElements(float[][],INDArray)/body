@@ -1,9 +1,0 @@
-{
-  for (int i=0; i < d2.rows(); i++) {
-    for (int j=0; j < d2.columns(); j++) {
-      float test1=d[i][j];
-      float test2=(float)d2.getScalar(i,j).element();
-      assertEquals(test1,test2,1e-6);
-    }
-  }
-}

@@ -1,5 +1,0 @@
-{
-  if (pointer != null)   return;
-  pointer=new Pointer().withByteOffset(offset() * Sizeof.FLOAT);
-  if (data != null)   dataPointer=Pointer.to(data()).withByteOffset(offset() * Sizeof.FLOAT);
-}

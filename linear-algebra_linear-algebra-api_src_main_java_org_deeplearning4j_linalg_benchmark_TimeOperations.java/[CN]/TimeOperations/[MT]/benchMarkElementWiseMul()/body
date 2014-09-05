@@ -1,8 +1,0 @@
-{
-  System.out.println("Element wise  multiplication took " + runNTimes(new Runnable(){
-    @Override public void run(){
-      testing.mul(other);
-    }
-  }
-).getMean() + " milliseconds");
-}

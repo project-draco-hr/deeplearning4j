@@ -1,7 +1,0 @@
-{
-  IComplexNDArray inputC=NDArrays.createComplex(transform);
-  if (inputC.isVector())   return new VectorIFFT(numElements).apply(inputC);
- else {
-    return rawifft(inputC,numElements,dimension);
-  }
-}

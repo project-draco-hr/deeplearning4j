@@ -5,7 +5,7 @@
   INDArray currentVector=tree.vector();
   String category=tree.label();
   category=basicCategory(category);
-  INDArray goldLabel=NDArrays.create(numOuts,1);
+  INDArray goldLabel=Nd4j.create(numOuts,1);
   int goldClass=tree.goldLabel();
   if (goldClass >= 0) {
     goldLabel.putScalar(goldClass,1.0f);
@@ -13,8 +13,8 @@
   Float nodeWeight=classWeights.get(goldClass);
   if (nodeWeight == null)   nodeWeight=1.0f;
   INDArray predictions=tree.prediction();
-  INDArray deltaClass=goldClass >= 0 ? NDArrays.getBlasWrapper().scal(nodeWeight,predictions.sub(goldLabel)) : NDArrays.create(predictions.rows(),predictions.columns());
-  INDArray localCD=deltaClass.mmul(NDArrays.appendBias(currentVector).transpose());
+  INDArray deltaClass=goldClass >= 0 ? Nd4j.getBlasWrapper().scal(nodeWeight,predictions.sub(goldLabel)) : Nd4j.create(predictions.rows(),predictions.columns());
+  INDArray localCD=deltaClass.mmul(Nd4j.appendBias(currentVector).transpose());
   float error=-(float)(Transforms.log(predictions).muli(goldLabel).sum(Integer.MAX_VALUE).element());
   error=error * nodeWeight;
   tree.setError(error);
@@ -44,12 +44,12 @@
     INDArray deltaFull=deltaFromClass.add(deltaUp);
     INDArray leftVector=tree.children().get(0).vector();
     INDArray rightVector=tree.children().get(1).vector();
-    INDArray childrenVector=NDArrays.appendBias(leftVector,rightVector);
+    INDArray childrenVector=Nd4j.appendBias(leftVector,rightVector);
     INDArray add=binaryTD.get(leftCategory,rightCategory);
     INDArray W_df=deltaFromClass.mmul(childrenVector.transpose());
     binaryTD.put(leftCategory,rightCategory,add.add(W_df));
     INDArray deltaDown;
-    if (useINDArrays) {
+    if (useINd4j) {
       INDArray Wt_df=getINDArrayGradient(deltaFull,leftVector,rightVector);
       binaryINDArrayTD.put(leftCategory,rightCategory,binaryINDArrayTD.get(leftCategory,rightCategory).add(Wt_df));
       deltaDown=computeINDArrayDeltaDown(deltaFull,leftVector,rightVector,getBinaryTransform(leftCategory,rightCategory),getBinaryINDArray(leftCategory,rightCategory));

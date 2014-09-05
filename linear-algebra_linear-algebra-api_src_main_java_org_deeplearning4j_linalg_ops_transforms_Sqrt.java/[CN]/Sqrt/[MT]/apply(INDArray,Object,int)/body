@@ -1,6 +1,0 @@
-{
-  if (value instanceof IComplexNDArray) {
-    return ComplexUtil.sqrt((org.deeplearning4j.linalg.api.complex.IComplexNumber)value);
-  }
-  return (float)Math.sqrt((float)value);
-}

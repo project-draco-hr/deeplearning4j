@@ -1,7 +1,7 @@
 {
   INDArray v1Mean=propDown(h);
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
-    INDArray v1Sample=v1Mean.add(NDArrays.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
+    INDArray v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {

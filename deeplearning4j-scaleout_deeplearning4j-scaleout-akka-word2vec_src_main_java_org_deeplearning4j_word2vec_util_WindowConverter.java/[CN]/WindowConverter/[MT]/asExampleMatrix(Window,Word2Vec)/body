@@ -1,3 +1,3 @@
 {
-  return NDArrays.create(asExample(window,vec));
+  return Nd4j.create(asExample(window,vec));
 }

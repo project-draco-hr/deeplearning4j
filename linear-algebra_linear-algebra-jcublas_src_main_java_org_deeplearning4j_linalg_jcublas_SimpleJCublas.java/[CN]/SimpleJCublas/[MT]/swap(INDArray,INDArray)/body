@@ -1,8 +1,0 @@
-{
-  JCublasNDArray xC=(JCublasNDArray)x;
-  JCublasNDArray yC=(JCublasNDArray)y;
-  alloc(xC,yC);
-  JCublas.cublasSswap(xC.length(),xC.pointer(),1,yC.pointer(),1);
-  yC.getData();
-  free(xC,yC);
-}

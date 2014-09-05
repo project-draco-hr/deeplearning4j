@@ -1,14 +1,14 @@
 {
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W);
-  if (conf.isConcatBiases())   preSig=NDArrays.concatHorizontally(preSig,hBias);
+  if (conf.isConcatBiases())   preSig=Nd4j.concatHorizontally(preSig,hBias);
  else   preSig.addiRowVector(hBias);
   if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
     preSig=Transforms.max(preSig);
     return preSig;
   }
  else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
-    INDArray add=preSig.add(NDArrays.randn(preSig.rows(),preSig.columns(),conf.getRng()));
+    INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
     preSig.addi(add);
     return preSig;
   }

@@ -1,5 +1,0 @@
-{
-  IComplexNDArray one=reshape(new int[]{1,length});
-  for (int i=0; i < one.length(); i++)   one.putScalar(i,NDArrays.createDouble(value.doubleValue(),0));
-  return one;
-}

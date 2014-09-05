@@ -12,7 +12,7 @@
     Map<String,INDArray> wordMap=new HashMap<>();
     int words=Integer.parseInt(readString(dis));
     int size=Integer.parseInt(readString(dis));
-    wordVectors=NDArrays.create(words,size);
+    wordVectors=Nd4j.create(words,size);
     String word;
     float[] vectors=null;
     for (int i=0; i < words; i++) {
@@ -30,7 +30,7 @@
         vectors[j]/=len;
       }
       wordIndex.add(word);
-      wordVectors.putRow(i,NDArrays.create(vectors));
+      wordVectors.putRow(i,Nd4j.create(vectors));
     }
   }
   finally {

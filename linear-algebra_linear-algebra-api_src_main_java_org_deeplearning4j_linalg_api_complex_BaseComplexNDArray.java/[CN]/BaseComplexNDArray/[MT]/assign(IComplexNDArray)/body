@@ -1,5 +1,0 @@
-{
-  LinAlgExceptions.assertSameShape(this,arr);
-  System.arraycopy(arr.data(),arr.offset(),data(),offset(),arr.length());
-  return this;
-}

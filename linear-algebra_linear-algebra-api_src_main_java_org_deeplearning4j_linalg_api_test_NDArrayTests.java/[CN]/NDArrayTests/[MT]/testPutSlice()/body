@@ -1,6 +1,0 @@
-{
-  INDArray n=NDArrays.create(NDArrays.ones(27).data(),new int[]{3,3,3});
-  INDArray newSlice=NDArrays.zeros(3,3);
-  n.putSlice(0,newSlice);
-  assertEquals(newSlice,n.slice(0));
-}

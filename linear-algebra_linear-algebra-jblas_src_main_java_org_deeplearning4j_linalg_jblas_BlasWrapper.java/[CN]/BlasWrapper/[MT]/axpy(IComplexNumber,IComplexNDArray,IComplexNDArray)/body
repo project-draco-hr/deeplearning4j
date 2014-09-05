@@ -1,4 +1,0 @@
-{
-  NativeBlas.caxpy(dx.length(),new org.jblas.ComplexFloat(da.realComponent().floatValue(),da.imaginaryComponent().floatValue()),dx.data(),dx.offset(),1,dy.data(),dy.offset(),1);
-  return dy;
-}

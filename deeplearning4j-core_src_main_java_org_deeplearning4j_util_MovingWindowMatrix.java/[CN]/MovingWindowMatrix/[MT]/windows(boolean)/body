@@ -7,13 +7,13 @@
     for (int count=0; count < this.windowRowSize * this.windowColumnSize; count++) {
       w[count]=(double)toSlice.getScalar(count + window).element();
     }
-    INDArray add=NDArrays.create(w);
+    INDArray add=Nd4j.create(w);
     if (flattened)     add=add.ravel();
  else     add=add.reshape(windowRowSize,windowColumnSize);
     if (addRotate) {
       INDArray currRotation=add.dup();
       for (int rotation=0; rotation < 3; rotation++) {
-        NDArrays.rot90(currRotation);
+        Nd4j.rot90(currRotation);
         ret.add(currRotation.dup());
       }
     }

@@ -1,4 +1,0 @@
-{
-  if (this.numExamples() > 1)   throw new IllegalStateException("Unable to derive outcome for dataset greater than one row");
-  return NDArrays.getBlasWrapper().iamax(getLabels());
-}

@@ -6,7 +6,7 @@
     ret.setVBiasAdaGrad(hBiasAdaGrad);
     ret.sethBias(vBias.dup());
     ret.setConf(conf);
-    ret.setvBias(NDArrays.zeros(hBias.rows(),hBias.columns()));
+    ret.setvBias(Nd4j.zeros(hBias.rows(),hBias.columns()));
     ret.setW(W.transpose());
     return ret;
   }

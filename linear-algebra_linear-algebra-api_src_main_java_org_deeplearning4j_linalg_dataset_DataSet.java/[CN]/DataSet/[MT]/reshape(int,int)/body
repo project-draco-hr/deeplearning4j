@@ -1,4 +1,0 @@
-{
-  DataSet ret=new DataSet(getFeatures().reshape(new int[]{rows,cols}),getLabels());
-  return ret;
-}

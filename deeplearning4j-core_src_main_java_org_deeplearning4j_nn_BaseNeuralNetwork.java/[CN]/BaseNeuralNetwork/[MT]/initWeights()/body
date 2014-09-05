@@ -4,17 +4,17 @@
   int nVisible=conf.getnIn();
   int nHidden=conf.getnOut();
   if (this.W == null) {
-    this.W=NDArrays.zeros(nVisible,nHidden);
-    for (int i=0; i < this.W.rows(); i++)     this.W.putRow(i,NDArrays.create(conf.getDist().sample(this.W.columns())));
+    this.W=Nd4j.zeros(nVisible,nHidden);
+    for (int i=0; i < this.W.rows(); i++)     this.W.putRow(i,Nd4j.create(conf.getDist().sample(this.W.columns())));
   }
   this.wAdaGrad=new AdaGrad(this.W.rows(),this.W.columns());
   if (this.hBias == null) {
-    this.hBias=NDArrays.zeros(nHidden);
+    this.hBias=Nd4j.zeros(nHidden);
   }
   this.hBiasAdaGrad=new AdaGrad(hBias.rows(),hBias.columns());
   if (this.vBias == null) {
-    if (this.input != null)     this.vBias=NDArrays.zeros(nVisible);
- else     this.vBias=NDArrays.zeros(nVisible);
+    if (this.input != null)     this.vBias=Nd4j.zeros(nVisible);
+ else     this.vBias=Nd4j.zeros(nVisible);
   }
   this.vBiasAdaGrad=new AdaGrad(vBias.rows(),vBias.columns());
 }

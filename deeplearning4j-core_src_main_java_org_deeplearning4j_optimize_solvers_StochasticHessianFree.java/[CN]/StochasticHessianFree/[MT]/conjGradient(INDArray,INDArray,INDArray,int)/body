@@ -12,7 +12,7 @@
     if (pAp < 0) {
       log.info("Negative slope: " + pAp + " breaking");
     }
-    Float val=0.5f * NDArrays.getBlasWrapper().dot(b.neg().add(r).transpose(),x);
+    Float val=0.5f * Nd4j.getBlasWrapper().dot(b.neg().add(r).transpose(),x);
     log.info("Iteration on conjugate gradient " + iterationCount + " with value "+ val);
     Float alpha=deltaNew / pAp;
     x.addi(p.mul(alpha));

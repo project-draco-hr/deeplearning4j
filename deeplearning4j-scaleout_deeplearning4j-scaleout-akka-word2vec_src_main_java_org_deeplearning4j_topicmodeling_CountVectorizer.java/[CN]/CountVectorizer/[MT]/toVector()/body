@@ -1,5 +1,5 @@
 {
-  INDArray d=NDArrays.create(1,wordsToCount.size());
+  INDArray d=Nd4j.create(1,wordsToCount.size());
   Counter<String> wordFrequencies=new Counter<String>();
   while (iter.hasNext()) {
     String sentence=iter.nextSentence();

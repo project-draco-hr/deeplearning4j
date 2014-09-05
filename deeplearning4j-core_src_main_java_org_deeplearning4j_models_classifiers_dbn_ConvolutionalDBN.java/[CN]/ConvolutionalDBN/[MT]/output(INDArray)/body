@@ -6,7 +6,7 @@
   int nM=lastLayer.shape()[1];
   int noBs=lastLayer.slices();
   int nMap=nY * nX;
-  INDArray features=NDArrays.create(nMap * nM,noBs);
+  INDArray features=Nd4j.create(nMap * nM,noBs);
   for (int j=0; j < d.getNumFeatureMaps(); j++) {
     INDArray map=d.getFeatureMap().slice(j);
     features.put(new NDArrayIndex[]{NDArrayIndex.interval(j * nMap + 1,j * nMap),NDArrayIndex.interval(0,features.columns())},map.reshape(nMap,noBs));

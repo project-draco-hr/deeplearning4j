@@ -15,5 +15,5 @@
   for (int i=0; i < L_hbias_mean.length(); i++) {
     buffer[idx++]=(float)L_hbias_mean.getScalar(i).element();
   }
-  return NDArrays.create(buffer);
+  return Nd4j.create(buffer);
 }

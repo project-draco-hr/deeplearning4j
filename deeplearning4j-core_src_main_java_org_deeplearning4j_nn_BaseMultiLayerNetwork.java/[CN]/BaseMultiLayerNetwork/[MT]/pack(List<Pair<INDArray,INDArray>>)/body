@@ -5,7 +5,7 @@
     list.add(layers.get(i).getFirst());
     list.add(layers.get(i).getSecond());
   }
-  INDArray ret=NDArrays.toFlattened(list);
+  INDArray ret=Nd4j.toFlattened(list);
   if (ret.length() != numParams())   throw new IllegalStateException("Illegal number of parameters found in the layers with a difference of " + Math.abs(ret.length() - numParams()));
   return ret;
 }

@@ -1,5 +1,0 @@
-{
-  INDArray n=NDArrays.create(new float[]{1,2,3,4});
-  float assertion=5.47722557505f;
-  assertEquals(assertion,n.norm2(Integer.MAX_VALUE).get(0),1e-1);
-}

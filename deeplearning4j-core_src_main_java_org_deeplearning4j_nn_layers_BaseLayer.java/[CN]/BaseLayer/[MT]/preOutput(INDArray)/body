@@ -3,7 +3,7 @@
   this.input=x;
   INDArray ret=this.input.mmul(W);
   if (ret.columns() != b.columns())   throw new IllegalStateException("This is weird");
-  if (conf.isConcatBiases())   ret=NDArrays.concatHorizontally(ret,b);
+  if (conf.isConcatBiases())   ret=Nd4j.concatHorizontally(ret,b);
  else   ret.addiRowVector(b);
   return ret;
 }

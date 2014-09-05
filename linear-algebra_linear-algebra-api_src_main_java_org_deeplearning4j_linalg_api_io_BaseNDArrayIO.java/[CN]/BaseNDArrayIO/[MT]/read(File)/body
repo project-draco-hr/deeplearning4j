@@ -1,6 +1,0 @@
-{
-  FileInputStream fis=new FileInputStream(file);
-  INDArray ret=read(fis);
-  fis.close();
-  return ret;
-}

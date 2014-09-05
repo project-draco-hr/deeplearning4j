@@ -1,7 +1,0 @@
-{
-  for (int i=0; i < getFeatures().length(); i++) {
-    double curr=(double)getFeatures().getScalar(i).element();
-    if (curr < min)     getFeatures().put(i,NDArrays.scalar(min));
- else     if (curr > max)     getFeatures().put(i,NDArrays.scalar(max));
-  }
-}

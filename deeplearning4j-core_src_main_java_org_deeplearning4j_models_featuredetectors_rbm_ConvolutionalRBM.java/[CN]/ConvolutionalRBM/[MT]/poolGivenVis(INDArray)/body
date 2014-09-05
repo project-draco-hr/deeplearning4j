@@ -1,13 +1,13 @@
 {
   INDArray eHid=propUp(input);
-  INDArray I=NDArrays.create(eHid.shape());
+  INDArray I=Nd4j.create(eHid.shape());
   for (int i=0; i < W.slices(); i++) {
     for (int j=0; j < W.slices(); j++) {
-      I.putSlice(i,Convolution.convn(input,NDArrays.reverse(W.slice(i)),Convolution.Type.VALID).addi(hBias.getScalar(i)));
-      I.put(j,i,Convolution.convn(input,NDArrays.reverse(W.slice(i)),Convolution.Type.VALID).addi(hBias.getScalar(i)));
+      I.putSlice(i,Convolution.convn(input,Nd4j.reverse(W.slice(i)),Convolution.Type.VALID).addi(hBias.getScalar(i)));
+      I.put(j,i,Convolution.convn(input,Nd4j.reverse(W.slice(i)),Convolution.Type.VALID).addi(hBias.getScalar(i)));
     }
   }
-  INDArray ret=NDArrays.ones(I.shape());
+  INDArray ret=Nd4j.ones(I.shape());
   INDArray poolExpI=pool(Transforms.exp(I)).add(1);
   INDArray sub=ret.div(poolExpI);
   ret.subi(sub);

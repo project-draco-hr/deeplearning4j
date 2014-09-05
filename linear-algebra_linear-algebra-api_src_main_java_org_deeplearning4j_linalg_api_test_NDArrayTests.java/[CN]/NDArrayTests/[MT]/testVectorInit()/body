@@ -1,9 +1,0 @@
-{
-  float[] data=NDArrays.linspace(1,4,4).data();
-  INDArray arr=NDArrays.create(data,new int[]{4});
-  assertEquals(true,arr.isRowVector());
-  INDArray arr2=NDArrays.create(data,new int[]{1,4});
-  assertEquals(true,arr2.isRowVector());
-  INDArray columnVector=NDArrays.create(data,new int[]{4,1});
-  assertEquals(true,columnVector.isColumnVector());
-}

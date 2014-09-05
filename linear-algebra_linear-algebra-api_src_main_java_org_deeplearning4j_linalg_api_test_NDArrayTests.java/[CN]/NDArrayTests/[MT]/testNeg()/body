@@ -1,6 +1,0 @@
-{
-  INDArray n=NDArrays.create(new float[]{1,2,3,4});
-  INDArray assertion=NDArrays.create(new float[]{-1,-2,-3,-4});
-  INDArray neg=Transforms.neg(n);
-  assertEquals(assertion,neg);
-}

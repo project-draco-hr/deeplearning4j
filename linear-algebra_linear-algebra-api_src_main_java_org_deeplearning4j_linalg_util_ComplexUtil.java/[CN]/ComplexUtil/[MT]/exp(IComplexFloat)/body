@@ -1,3 +1,0 @@
-{
-  return NDArrays.createFloat((float)FastMath.exp(d.realComponent()) * (float)FastMath.cos(d.imaginaryComponent()),(float)FastMath.exp(d.realComponent()) * (float)FastMath.sin(d.imaginaryComponent()));
-}

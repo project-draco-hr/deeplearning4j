@@ -1,6 +1,0 @@
-{
-  INDArray n=NDArrays.create(new float[]{1,2,3,4});
-  INDArray assertion=NDArrays.create(new float[]{0.73105858f,0.88079708f,0.95257413f,0.98201379f});
-  INDArray sigmoid=Transforms.sigmoid(n);
-  assertEquals(assertion,sigmoid);
-}

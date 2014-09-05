@@ -1,7 +1,0 @@
-{
-  SummaryStatistics sum=new SummaryStatistics();
-  for (int i=0; i < numTimesRun; i++) {
-    sum.addValue(timeOp(run));
-  }
-  return sum;
-}

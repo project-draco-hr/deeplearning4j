@@ -1,9 +1,0 @@
-{
-  JCublasComplexNDArray aC=(JCublasComplexNDArray)x;
-  JCublasComplexNDArray bC=(JCublasComplexNDArray)y;
-  alloc(aC,bC);
-  jcuda.cuDoubleComplex dott=JCublas.cublasZdotc(x.length(),aC.pointer(),1,bC.pointer(),1);
-  IComplexDouble ret=NDArrays.createDouble(dott.x,dott.y);
-  free(aC,bC);
-  return ret;
-}

@@ -1,7 +1,0 @@
-{
-  float d=c.realComponent().floatValue() * c.realComponent().floatValue() + c.imaginaryComponent().floatValue() * c.imaginaryComponent().floatValue();
-  float newR=(realComponent() * c.realComponent().floatValue() + imaginaryComponent() * c.imaginaryComponent().floatValue()) / d;
-  float newI=(imaginaryComponent() * c.realComponent().floatValue() - realComponent() * c.imaginaryComponent().floatValue()) / d;
-  result.set(newR,newI);
-  return result;
-}

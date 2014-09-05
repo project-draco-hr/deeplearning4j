@@ -1,5 +1,5 @@
 {
-  INDArray tilde_x=NDArrays.zeros(x.rows(),x.columns());
+  INDArray tilde_x=Nd4j.zeros(x.rows(),x.columns());
   for (int i=0; i < x.rows(); i++)   for (int j=0; j < x.columns(); j++)   tilde_x.put(i,j,binomial(conf.getRng(),1,1 - corruptionLevel));
   INDArray ret=tilde_x.mul(x);
   return ret;

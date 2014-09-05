@@ -1,5 +1,0 @@
-{
-  float ret=soFar + (float)Math.pow(arr.get(i),2);
-  if (i == arr.length() - 1)   return (float)Math.sqrt(ret);
-  return ret;
-}

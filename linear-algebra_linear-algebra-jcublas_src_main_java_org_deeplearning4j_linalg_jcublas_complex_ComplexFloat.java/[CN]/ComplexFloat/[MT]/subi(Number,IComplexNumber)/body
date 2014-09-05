@@ -1,9 +1,0 @@
-{
-  if (this == result) {
-    set(realComponent() - a.floatValue(),imaginaryComponent());
-  }
- else {
-    result.set(result.realComponent().floatValue() - a.floatValue(),imaginaryComponent());
-  }
-  return result;
-}

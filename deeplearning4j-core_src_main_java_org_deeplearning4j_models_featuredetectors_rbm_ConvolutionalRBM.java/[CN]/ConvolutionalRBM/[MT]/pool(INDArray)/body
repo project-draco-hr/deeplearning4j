@@ -3,7 +3,7 @@
   int nRows=input.rows();
   int yStride=stride[0];
   int xStride=stride[1];
-  INDArray ret=NDArrays.create(input.shape());
+  INDArray ret=Nd4j.create(input.shape());
   int endRowBlock=(int)Math.ceil(nRows / yStride);
   for (int i=1; i < endRowBlock; i++) {
     int rowsMin=(i - 1) * yStride + 1;
@@ -15,7 +15,7 @@
       float blockVal=(float)input.sum(1).sum(Integer.MAX_VALUE).element();
       int rowLength=rowsMax - rowsMin;
       int colLength=colsMax - cols;
-      INDArray block=NDArrays.create(rowLength,colLength);
+      INDArray block=Nd4j.create(rowLength,colLength);
       block.assign(blockVal);
       ret.put(new NDArrayIndex[]{NDArrayIndex.interval(rowsMin,rowsMax),NDArrayIndex.interval(cols,colsMax)},block);
     }

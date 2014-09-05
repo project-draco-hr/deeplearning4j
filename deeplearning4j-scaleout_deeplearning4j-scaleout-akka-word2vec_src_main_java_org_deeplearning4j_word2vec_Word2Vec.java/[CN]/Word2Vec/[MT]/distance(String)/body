@@ -12,7 +12,7 @@
       continue;
     }
     tempVector=cache.vector(cache.wordAtIndex(i));
-    insertTopN(name,NDArrays.getBlasWrapper().dot(wordVector,tempVector),wordEntrys);
+    insertTopN(name,Nd4j.getBlasWrapper().dot(wordVector,tempVector),wordEntrys);
   }
   return new TreeSet<>(wordEntrys);
 }

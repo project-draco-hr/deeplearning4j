@@ -1,4 +1,0 @@
-{
-  if (arr instanceof IComplexNDArray)   return (IComplexNDArray)arr;
-  return INSTANCE.createComplex(arr);
-}

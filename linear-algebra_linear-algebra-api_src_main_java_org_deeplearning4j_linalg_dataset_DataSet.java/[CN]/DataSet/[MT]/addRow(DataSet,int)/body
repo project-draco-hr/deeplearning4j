@@ -1,5 +1,0 @@
-{
-  if (i > numExamples() || d == null)   throw new IllegalArgumentException("Invalid index for adding a row");
-  getFeatures().putRow(i,d.getFeatures());
-  getLabels().putRow(i,d.getLabels());
-}

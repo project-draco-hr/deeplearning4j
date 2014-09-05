@@ -21,8 +21,8 @@
     float fanIn=nInFM * prodFilterSize;
     float fanOut=nFm * prodFilterSize;
     float range=2 * (float)FastMath.sqrt(6 / fanIn + fanOut);
-    INDArray W=NDArrays.rand(new int[]{(int)filterSize.getScalar(0).element(),(int)filterSize.getScalar(1).element(),nInFM,nFm},layerWiseConfigurations.get(i).getDist()).mul(range);
-    ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(ArrayUtil.toInts(filterSize)).withInput(input).withHBias(NDArrays.zeros(nFm,1)).withFmSize(ArrayUtil.toInts(fmSize)).withStride(this.stride[i]).withNumFilters(new int[]{nFm,nFm}).withSparseGain(sparseGain).withWeights(W).build();
+    INDArray W=Nd4j.rand(new int[]{(int)filterSize.getScalar(0).element(),(int)filterSize.getScalar(1).element(),nInFM,nFm},layerWiseConfigurations.get(i).getDist()).mul(range);
+    ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(ArrayUtil.toInts(filterSize)).withInput(input).withHBias(Nd4j.zeros(nFm,1)).withFmSize(ArrayUtil.toInts(fmSize)).withStride(this.stride[i]).withNumFilters(new int[]{nFm,nFm}).withSparseGain(sparseGain).withWeights(W).build();
     this.neuralNets[i]=r;
     DownSamplingLayer d=new DownSamplingLayer.Builder().withStride(this.stride[i]).withFmSize(Transforms.floor(ArrayUtil.toNDArray(r.getFmSize()).div(stride))).numFeatureMaps(nFm).withBias(r.gethBias()).build();
     this.layers[i]=d;

@@ -1,6 +1,0 @@
-{
-  INDArray n=NDArrays.create(NDArrays.linspace(1,8,8).data(),new int[]{2,2,2});
-  INDArray test=NDArrays.create(new float[]{3,7,11,15},new int[]{2,2});
-  INDArray sum=n.sum(n.shape().length - 1);
-  assertEquals(test,sum);
-}

@@ -1,6 +1,0 @@
-{
-  for (int i=0; i < getFeatures().length(); i++) {
-    double curr=(double)getFeatures().getScalar(i).element();
-    getFeatures().put(i,NDArrays.scalar(MathUtils.roundDouble(curr,roundTo)));
-  }
-}

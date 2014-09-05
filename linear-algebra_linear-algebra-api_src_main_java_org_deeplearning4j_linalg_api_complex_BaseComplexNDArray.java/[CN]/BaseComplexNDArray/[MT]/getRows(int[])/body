@@ -1,7 +1,0 @@
-{
-  INDArray rows=NDArrays.create(rindices.length,columns());
-  for (int i=0; i < rindices.length; i++) {
-    rows.putRow(i,getRow(rindices[i]));
-  }
-  return (IComplexNDArray)rows;
-}

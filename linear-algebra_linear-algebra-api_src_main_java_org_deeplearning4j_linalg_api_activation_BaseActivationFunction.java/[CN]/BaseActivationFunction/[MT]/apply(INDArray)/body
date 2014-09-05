@@ -1,5 +1,0 @@
-{
-  ElementWiseOp op=new ArrayOps().from(input.dup()).op(transformClazz()).build();
-  op.exec();
-  return op.from();
-}

@@ -1,8 +1,0 @@
-{
-  watch.start();
-  run.run();
-  watch.stop();
-  long time=watch.getTime();
-  watch.reset();
-  return time;
-}

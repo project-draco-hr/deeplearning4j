@@ -1,9 +1,0 @@
-{
-  if (this == result) {
-    set(realComponent() + c.realComponent().doubleValue(),imaginaryComponent() + c.imaginaryComponent().doubleValue());
-  }
- else {
-    result.set(result.realComponent().doubleValue() + c.realComponent().doubleValue(),result.imaginaryComponent().doubleValue() + c.imaginaryComponent().doubleValue());
-  }
-  return this;
-}

@@ -1,7 +1,0 @@
-{
-  if (i < arr.length() - 1)   return soFar + arr.get(i);
- else {
-    soFar+=arr.get(i);
-    return soFar / arr.length();
-  }
-}

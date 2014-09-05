@@ -1,6 +1,0 @@
-{
-  INDArray n=NDArrays.create(new float[]{1,2,3,4});
-  INDArray assertion=NDArrays.create(new float[]{2.71828183f,7.3890561f,20.08553692f,54.59815003f});
-  INDArray exped=Transforms.exp(n);
-  assertEquals(assertion,exped);
-}

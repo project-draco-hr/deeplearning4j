@@ -1,8 +1,0 @@
-{
-  JCublasNDArray xC=(JCublasNDArray)x;
-  JCublasNDArray yC=(JCublasNDArray)y;
-  alloc(xC,yC);
-  float ret=JCublas.cublasSdot(x.length(),xC.pointer(),1,yC.pointer(),1);
-  free(xC,yC);
-  return ret;
-}

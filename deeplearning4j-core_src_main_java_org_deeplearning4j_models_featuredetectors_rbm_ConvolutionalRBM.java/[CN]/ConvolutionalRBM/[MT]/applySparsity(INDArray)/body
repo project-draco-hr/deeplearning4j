@@ -1,6 +1,6 @@
 {
   if (conf.getSparsity() != 0) {
-    INDArray negMean=NDArrays.scalar(sparseGain * (conf.getSparsity() - (float)chainStart.mean(1).mean(Integer.MAX_VALUE).element()));
+    INDArray negMean=Nd4j.scalar(sparseGain * (conf.getSparsity() - (float)chainStart.mean(1).mean(Integer.MAX_VALUE).element()));
     if (conf.isUseAdaGrad())     negMean.muli(hBiasAdaGrad.getLearningRates(hBiasGradient));
  else     negMean.muli(conf.getLr());
     hBias.addi(negMean);

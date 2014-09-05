@@ -1,6 +1,0 @@
-{
-  int idx=linearIndex(i);
-  data[idx]=value.realComponent().floatValue();
-  data[idx + 1]=value.imaginaryComponent().floatValue();
-  return this;
-}

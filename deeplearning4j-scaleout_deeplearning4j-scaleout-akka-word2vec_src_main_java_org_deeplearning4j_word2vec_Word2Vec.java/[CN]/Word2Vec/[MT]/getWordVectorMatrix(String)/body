@@ -1,6 +1,6 @@
 {
   int i=this.cache.indexOf(word);
   if (oob == null)   oob=new float[layerSize];
-  if (i < 0)   return NDArrays.create(oob,new int[]{layerSize});
+  if (i < 0)   return Nd4j.create(oob,new int[]{layerSize});
   return cache.vector(word);
 }

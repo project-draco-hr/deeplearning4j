@@ -1,5 +1,0 @@
-{
-  ElementWiseOp ops=new ArrayOps().from(indArray.dup()).op(clazz).extraArgs(extraArgs).build();
-  ops.exec();
-  return ops.from();
-}

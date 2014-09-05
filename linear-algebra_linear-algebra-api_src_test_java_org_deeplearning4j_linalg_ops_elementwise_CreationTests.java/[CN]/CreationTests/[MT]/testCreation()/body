@@ -1,6 +1,0 @@
-{
-  TwoArrayElementWiseOp add=new TwoArrayOps().from(new DummyNDArray()).to(new DummyNDArray()).op(AddOp.class).build();
-  TwoArrayElementWiseOp sub=new TwoArrayOps().from(new DummyNDArray()).to(new DummyNDArray()).op(SubtractOp.class).build();
-  TwoArrayElementWiseOp multiply=new TwoArrayOps().from(new DummyNDArray()).to(new DummyNDArray()).op(MultiplyOp.class).build();
-  TwoArrayElementWiseOp divide=new TwoArrayOps().from(new DummyNDArray()).to(new DummyNDArray()).op(DivideOp.class).build();
-}

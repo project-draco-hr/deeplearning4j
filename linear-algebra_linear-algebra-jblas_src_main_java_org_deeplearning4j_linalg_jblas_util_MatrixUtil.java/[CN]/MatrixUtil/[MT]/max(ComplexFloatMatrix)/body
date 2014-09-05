@@ -1,5 +1,0 @@
-{
-  ComplexFloat max=matrix.get(0);
-  for (int i=1; i < matrix.length; i++)   if (compare(max,matrix.get(i)) > 0)   max=matrix.get(i);
-  return max;
-}

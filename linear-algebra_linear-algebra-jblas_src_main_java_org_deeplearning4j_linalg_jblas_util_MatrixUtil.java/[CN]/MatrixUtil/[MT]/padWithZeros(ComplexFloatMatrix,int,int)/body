@@ -1,9 +1,0 @@
-{
-  ComplexFloatMatrix ret=ComplexFloatMatrix.zeros(rows,cols);
-  for (int i=0; i < toPad.rows; i++) {
-    for (int j=0; j < toPad.columns; j++) {
-      ret.put(i,j,toPad.get(i,j));
-    }
-  }
-  return ret;
-}

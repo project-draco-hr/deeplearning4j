@@ -1,7 +1,0 @@
-{
-  if (other instanceof IComplexNDArray) {
-    IComplexNDArray c=(IComplexNDArray)other;
-    return c.getComplex(i);
-  }
-  return other.get(i);
-}

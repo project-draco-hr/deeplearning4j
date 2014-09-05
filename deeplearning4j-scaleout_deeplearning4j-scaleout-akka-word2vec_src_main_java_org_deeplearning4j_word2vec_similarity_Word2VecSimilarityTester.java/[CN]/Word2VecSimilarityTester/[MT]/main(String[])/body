@@ -27,17 +27,17 @@
       Set<String> inter=SetUtils.intersection(d1.getWordCounts().keySet(),d2.getWordCounts().keySet());
       inter.removeAll(remove);
       List<String> wordList=new ArrayList<>(vocab);
-      INDArray a1Matrix=NDArrays.create(wordList.size(),vec.getLayerSize());
-      INDArray a2Matrix=NDArrays.create(wordList.size(),vec.getLayerSize());
+      INDArray a1Matrix=Nd4j.create(wordList.size(),vec.getLayerSize());
+      INDArray a2Matrix=Nd4j.create(wordList.size(),vec.getLayerSize());
       for (int i=0; i < wordList.size(); i++) {
         if (d1.getWordCounts().getCount(wordList.get(i)) > 0) {
           a1Matrix.putRow(i,vec.getWordVectorMatrix(wordList.get(i)));
         }
- else         a1Matrix.putRow(i,NDArrays.zeros(vec.getLayerSize()));
+ else         a1Matrix.putRow(i,Nd4j.zeros(vec.getLayerSize()));
         if (d2.getWordCounts().getCount(wordList.get(i)) > 0) {
           a2Matrix.putRow(i,vec.getWordVectorMatrix(wordList.get(i)));
         }
- else         a2Matrix.putRow(i,NDArrays.zeros(vec.getLayerSize()));
+ else         a2Matrix.putRow(i,Nd4j.zeros(vec.getLayerSize()));
       }
       double wordSim=(double)inter.size() / (double)wordList.size();
       double finalScore=Transforms.cosineSim(a1Matrix,a2Matrix) * wordSim;

@@ -1,5 +1,0 @@
-{
-  int[] indexing=Indices.shape(NDArrayIndex.interval(2,4),NDArrayIndex.interval(3,5));
-  int[] shape={2,2};
-  assertTrue(Arrays.equals(shape,indexing));
-}

@@ -4,5 +4,5 @@
     INDArray a=retrieve(i + "-" + CODE);
     vectors.add(a);
   }
-  return NDArrays.create(vectors,new int[]{codes.length,vectors.get(0).columns()});
+  return Nd4j.create(vectors,new int[]{codes.length,vectors.get(0).columns()});
 }

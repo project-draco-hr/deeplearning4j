@@ -1,7 +1,0 @@
-{
-  FileOutputStream fos=new FileOutputStream(to);
-  BufferedOutputStream bos=new BufferedOutputStream(fos);
-  write(out,bos);
-  bos.flush();
-  bos.close();
-}

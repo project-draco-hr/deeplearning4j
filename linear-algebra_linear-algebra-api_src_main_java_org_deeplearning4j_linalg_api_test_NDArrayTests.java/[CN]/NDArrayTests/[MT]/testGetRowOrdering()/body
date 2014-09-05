@@ -1,7 +1,0 @@
-{
-  INDArray row1=NDArrays.linspace(1,4,4).reshape(2,2);
-  NDArrays.factory().setOrder('f');
-  INDArray row1Fortran=NDArrays.linspace(1,4,4).reshape(2,2);
-  assertNotEquals(row1.get(0,1),row1Fortran.get(0,1),1e-1);
-  NDArrays.factory().setOrder('c');
-}

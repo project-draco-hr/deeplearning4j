@@ -1,3 +1,0 @@
-{
-  return NativeBlas.isamax(x.length(),x.data(),x.offset(),x.stride()[0]) - 1;
-}

@@ -1,6 +1,6 @@
 int numHidden
 RandomGenerator rng
-boolean useINDArrays
+boolean useINd4j
 boolean combineClassification
 boolean simplifiedModel
 boolean randomFeatureVectors
@@ -12,7 +12,7 @@ float regTransformINDArray
 Map<String,INDArray> featureVectors
 int numBinaryMatrices
 int binaryTransformSize
-int binaryINDArraySize
+int binaryINd4jize
 int binaryClassificationSize
 int numUnaryMatrices
 int unaryClassificationSize

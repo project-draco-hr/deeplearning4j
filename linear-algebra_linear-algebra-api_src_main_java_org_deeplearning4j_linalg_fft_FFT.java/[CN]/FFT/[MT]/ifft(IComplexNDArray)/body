@@ -1,6 +1,0 @@
-{
-  if (inputC.isVector())   return new VectorIFFT(inputC.length()).apply(inputC);
- else {
-    return rawifft(inputC,inputC.size(inputC.shape().length - 1),inputC.shape().length - 1);
-  }
-}

@@ -1,7 +1,0 @@
-{
-  IComplexNDArray rows=NDArrays.createComplex(rows(),cindices.length);
-  for (int i=0; i < cindices.length; i++) {
-    rows.putColumn(i,getColumn(cindices[i]));
-  }
-  return rows;
-}

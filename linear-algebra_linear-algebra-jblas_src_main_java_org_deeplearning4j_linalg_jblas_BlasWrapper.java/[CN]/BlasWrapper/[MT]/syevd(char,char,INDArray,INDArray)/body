@@ -1,6 +1,0 @@
-{
-  int n=A.rows();
-  int info=NativeBlas.ssyevd(jobz,uplo,n,A.data(),0,A.rows(),w.data(),0);
-  if (info > 0)   throw new LapackConvergenceException("SYEVD","Not all eigenvalues converged.");
-  return info;
-}

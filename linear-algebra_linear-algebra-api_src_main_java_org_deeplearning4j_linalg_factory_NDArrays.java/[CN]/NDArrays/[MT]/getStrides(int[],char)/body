@@ -1,4 +1,0 @@
-{
-  if (order == NDArrayFactory.FORTRAN)   return ArrayUtil.calcStridesFortran(shape);
-  return ArrayUtil.calcStrides(shape);
-}

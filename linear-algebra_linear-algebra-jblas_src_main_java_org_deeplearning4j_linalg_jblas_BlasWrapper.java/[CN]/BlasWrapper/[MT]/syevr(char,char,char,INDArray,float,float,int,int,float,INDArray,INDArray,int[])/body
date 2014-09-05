@@ -1,7 +1,0 @@
-{
-  int n=a.rows();
-  int[] m=new int[1];
-  int info=NativeBlas.ssyevr(jobz,range,uplo,n,a.data(),0,a.rows(),vl,vu,il,iu,abstol,m,0,w.data(),0,z.data(),0,z.rows(),isuppz,0);
-  checkInfo("SYEVR",info);
-  return info;
-}

@@ -1,5 +1,5 @@
 {
   float[] buffer=new float[getNumParameters()];
   getValueGradient(buffer);
-  return NDArrays.create(buffer);
+  return Nd4j.create(buffer);
 }

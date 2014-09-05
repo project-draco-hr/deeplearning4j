@@ -1,6 +1,6 @@
 {
   DBN ret=super.build();
   ret.useRBMPropUpAsActivations=useRBMPropUpAsActivation;
-  ret.initializeLayers(NDArrays.zeros(1,ret.defaultConfiguration.getnIn()));
+  ret.initializeLayers(Nd4j.zeros(1,ret.defaultConfiguration.getnIn()));
   return ret;
 }

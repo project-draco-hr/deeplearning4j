@@ -1,9 +1,0 @@
-{
-  System.out.println("Benchmarking creation...");
-  System.out.println(runNTimes(new Runnable(){
-    @Override public void run(){
-      NDArrays.create(new double[]{10000},new int[]{2,5000});
-    }
-  }
-).getMean() + " milliseconds");
-}
