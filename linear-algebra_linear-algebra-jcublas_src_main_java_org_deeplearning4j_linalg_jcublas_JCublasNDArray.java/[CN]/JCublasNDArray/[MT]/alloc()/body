@@ -5,7 +5,7 @@
     if (isMatrix() || isColumnVector()) {
       JCublas.cublasSetMatrix(rows(),columns(),Sizeof.FLOAT,dataPointer,rows(),pointer,rows());
     }
- else     JCublas.cublasSetVector(length,Sizeof.FLOAT,dataPointer,stride[0],pointer,stride[0]);
+ else     JCublas.cublasSetVector(length,Sizeof.FLOAT,dataPointer,1,pointer,1);
   }
  else {
     JCublas.cublasSetVector(length,Sizeof.FLOAT,dataPointer,1,pointer,1);

@@ -1,14 +1,14 @@
 {
   INDArray arr=NDArrays.create(new int[]{3,2});
   INDArray column2=arr.getColumn(0);
-  assertEquals(true,Shape.shapeEquals(new int[]{3},column2.shape()));
+  assertEquals(true,Shape.shapeEquals(new int[]{3,1},column2.shape()));
   INDArray column=NDArrays.create(new float[]{1,2,3},new int[]{3});
   arr.putColumn(0,column);
   INDArray firstColumn=arr.getColumn(0);
   assertEquals(column,firstColumn);
   INDArray column1=NDArrays.create(new float[]{4,5,6},new int[]{3});
   arr.putColumn(1,column1);
-  assertEquals(true,Shape.shapeEquals(new int[]{3},arr.getColumn(1).shape()));
+  assertEquals(true,Shape.shapeEquals(new int[]{3,1},arr.getColumn(1).shape()));
   INDArray testRow1=arr.getColumn(1);
   assertEquals(column1,testRow1);
   INDArray evenArr=NDArrays.create(new float[]{1,2,3,4},new int[]{2,2});
