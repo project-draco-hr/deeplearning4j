@@ -1,0 +1,7 @@
+{
+  float prod=ArrayUtil.prod(ArrayUtil.removeIndex(shape,0));
+  float min=-1 / prod;
+  float max=1 / prod;
+  RealDistribution dist=new UniformRealDistribution(conf.getRng(),min,max);
+  return Nd4j.rand(shape,dist);
+}

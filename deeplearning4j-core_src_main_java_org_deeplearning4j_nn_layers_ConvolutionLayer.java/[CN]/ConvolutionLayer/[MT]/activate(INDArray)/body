@@ -1,0 +1,8 @@
+{
+  ActivationFunction f=conf.getActivationFunction();
+  INDArray convolution=Convolution.conv2d(input,getW(),Convolution.Type.VALID);
+  INDArray pooled=Transforms.maxPool(convolution,numFilters,true);
+  INDArray bias=b.broadcast(new int[]{1,numFilters[0],1,1});
+  pooled.addi(bias);
+  return f.apply(pooled);
+}

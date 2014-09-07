@@ -1,7 +1,0 @@
-{
-  DownSamplingLayer layer=new DownSamplingLayer(conf,W,b,input);
-  layer.fmSize=fmSize;
-  layer.numFeatureMaps=numFeatureMaps;
-  layer.stride=stride;
-  return layer;
-}
