@@ -23,6 +23,10 @@
   this.activationFunction=neuralNetConfiguration.activationFunction;
   this.visibleUnit=neuralNetConfiguration.visibleUnit;
   this.activationType=neuralNetConfiguration.activationType;
+  this.weightShape=neuralNetConfiguration.weightShape;
+  this.stride=neuralNetConfiguration.stride;
+  this.numFeatureMaps=neuralNetConfiguration.numFeatureMaps;
+  this.filterSize=neuralNetConfiguration.filterSize;
   if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

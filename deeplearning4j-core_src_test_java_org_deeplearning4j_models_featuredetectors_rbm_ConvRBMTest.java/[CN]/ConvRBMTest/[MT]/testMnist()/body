@@ -1,9 +1,0 @@
-{
-  MnistDataFetcher fetcher=new MnistDataFetcher(true);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.5f).lossFunction(LossFunctions.LossFunction.RMSE_XENT).rng(new MersenneTwister(123)).learningRate(1e-1f).nIn(784).nOut(600).build();
-  fetcher.fetch(10);
-  DataSet d2=fetcher.next();
-  INDArray input=d2.getFeatureMatrix();
-  ConvolutionalRBM c=new ConvolutionalRBM.Builder().configure(conf).withFilterSize(new int[]{2,2}).withVisibleSize(new int[]{4,4}).withFmSize(new int[]{2,2}).build();
-  c.fit(input);
-}

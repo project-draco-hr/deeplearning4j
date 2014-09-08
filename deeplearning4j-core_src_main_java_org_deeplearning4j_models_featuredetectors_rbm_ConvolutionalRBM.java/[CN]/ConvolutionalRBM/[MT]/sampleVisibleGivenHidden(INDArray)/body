@@ -1,5 +1,0 @@
-{
-  INDArray v1Mean=propDown(h);
-  INDArray v1Sample=Sampling.binomial(v1Mean,1,conf.getRng());
-  return new Pair<>(v1Mean,v1Sample);
-}
