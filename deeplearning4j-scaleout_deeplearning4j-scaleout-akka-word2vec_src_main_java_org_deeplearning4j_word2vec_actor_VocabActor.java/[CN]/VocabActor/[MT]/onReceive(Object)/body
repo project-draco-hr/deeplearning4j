@@ -2,7 +2,7 @@
   if (message instanceof String) {
     String sentence=message.toString();
     Tokenizer t=tokenizer.create(sentence);
-    List<String> tokens=new ArrayList<String>();
+    List<String> tokens=new ArrayList<>();
     while (t.hasMoreTokens())     tokens.add(t.nextToken());
     getSelf().tell(tokens,getSelf());
   }
@@ -11,6 +11,7 @@
     for (    String token : tokens) {
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
+      log.info("Incremented token " + token);
       if (!Util.matchesAnyStopWord(stopWords,token)) {
         if (!cache.containsWord(token)) {
           VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
