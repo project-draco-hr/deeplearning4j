@@ -27,6 +27,7 @@
   this.stride=neuralNetConfiguration.stride;
   this.numFeatureMaps=neuralNetConfiguration.numFeatureMaps;
   this.filterSize=neuralNetConfiguration.filterSize;
+  this.featureMapSize=neuralNetConfiguration.featureMapSize;
   if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }
