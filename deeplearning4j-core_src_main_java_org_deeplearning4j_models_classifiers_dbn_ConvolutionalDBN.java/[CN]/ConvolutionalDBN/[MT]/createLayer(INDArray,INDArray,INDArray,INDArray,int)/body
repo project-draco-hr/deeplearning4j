@@ -1,4 +1,0 @@
-{
-  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withFilterSize(filterSizes[index]).withInput(input).withHBias(hbias).configure(layerWiseConfigurations.get(index)).withStride(stride[index]).withNumFilters(numFilters[index]).withSparseGain(sparseGain).withWeights(W).build();
-  return r;
-}

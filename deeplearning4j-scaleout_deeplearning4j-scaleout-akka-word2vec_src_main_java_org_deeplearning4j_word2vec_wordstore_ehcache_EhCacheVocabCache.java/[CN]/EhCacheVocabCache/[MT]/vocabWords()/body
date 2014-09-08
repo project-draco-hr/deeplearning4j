@@ -8,9 +8,6 @@
         VocabWord w=(VocabWord)val;
         ret.add(w);
       }
- else {
-        System.out.println("Weirdness");
-      }
     }
   }
   return ret;
