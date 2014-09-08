@@ -11,7 +11,7 @@
     for (    String token : tokens) {
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
-      log.info("Incremented token " + token);
+      System.out.println("Incremented token " + token);
       if (!Util.matchesAnyStopWord(stopWords,token)) {
         if (!cache.containsWord(token)) {
           VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
