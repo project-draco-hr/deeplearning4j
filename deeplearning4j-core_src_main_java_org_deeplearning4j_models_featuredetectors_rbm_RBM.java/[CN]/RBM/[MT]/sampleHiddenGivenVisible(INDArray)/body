@@ -2,8 +2,11 @@
   if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
     INDArray h1Mean=propUp(v);
     INDArray sigH1Mean=sigmoid(h1Mean);
+    RandomGenerator gen=new MersenneTwister(123);
     INDArray sqrtSigH1Mean=sqrt(sigH1Mean);
-    INDArray h1Sample=h1Mean.addi(Sampling.normal(conf.getRng(),h1Mean,1).mul(sqrtSigH1Mean));
+    INDArray sample=Sampling.normal(gen,h1Mean,1);
+    sample.muli(sqrtSigH1Mean);
+    INDArray h1Sample=h1Mean.add(sample);
     h1Sample=Transforms.max(h1Sample);
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
