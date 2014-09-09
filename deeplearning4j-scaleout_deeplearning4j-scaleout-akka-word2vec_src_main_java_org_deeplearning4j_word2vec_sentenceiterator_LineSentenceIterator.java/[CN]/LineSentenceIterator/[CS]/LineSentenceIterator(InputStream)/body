@@ -1,9 +1,0 @@
-{
-  try {
-    this.file=is;
-    iter=IOUtils.lineIterator(this.file,"UTF-8");
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
-}

@@ -1,5 +1,0 @@
-{
-  Element e=cache.get(key);
-  if (e != null)   return (E)cache.get(key).getObjectValue();
-  return null;
-}

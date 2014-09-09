@@ -1,6 +1,0 @@
-{
-  if (file.isDirectory())   throw new IllegalArgumentException("File must not be a directory");
-  this.words=words;
-  initializedWithCounter=true;
-  convert(file);
-}

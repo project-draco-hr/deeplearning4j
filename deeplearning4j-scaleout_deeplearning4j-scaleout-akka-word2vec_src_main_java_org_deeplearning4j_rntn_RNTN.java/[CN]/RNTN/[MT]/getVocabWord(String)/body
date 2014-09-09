@@ -1,9 +1,0 @@
-{
-  if (lowerCasefeatureNames) {
-    word=word.toLowerCase();
-  }
-  if (featureVectors.containsKey(word)) {
-    return word;
-  }
-  return UNKNOWN_FEATURE;
-}

@@ -1,5 +1,0 @@
-{
-  float range=1.0f / (float)(Math.sqrt((float)numHidden) * 2.0f);
-  INDArray ret=Nd4j.rand(numHidden,numHidden,-range,range,rng).add(identity);
-  return ret;
-}

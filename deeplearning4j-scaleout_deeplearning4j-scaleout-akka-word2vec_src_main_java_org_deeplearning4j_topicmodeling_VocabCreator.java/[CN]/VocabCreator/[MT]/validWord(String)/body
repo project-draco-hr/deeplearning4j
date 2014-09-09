@@ -1,3 +1,0 @@
-{
-  return !stopWords.contains(test) && !punct.matcher(test).matches();
-}

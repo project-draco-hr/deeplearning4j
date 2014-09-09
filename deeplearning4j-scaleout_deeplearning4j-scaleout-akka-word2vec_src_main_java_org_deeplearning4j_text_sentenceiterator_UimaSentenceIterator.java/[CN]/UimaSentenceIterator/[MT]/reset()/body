@@ -1,8 +1,0 @@
-{
-  try {
-    this.reader=FilesCollectionReader.getCollectionReader(path);
-  }
- catch (  ResourceInitializationException e) {
-    throw new RuntimeException(e);
-  }
-}

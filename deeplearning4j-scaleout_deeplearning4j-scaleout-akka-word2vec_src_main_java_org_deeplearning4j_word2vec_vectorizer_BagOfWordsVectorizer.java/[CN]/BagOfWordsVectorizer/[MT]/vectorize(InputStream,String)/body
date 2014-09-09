@@ -1,9 +1,0 @@
-{
-  try {
-    String inputString=IOUtils.toString(is);
-    return vectorize(inputString,label);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

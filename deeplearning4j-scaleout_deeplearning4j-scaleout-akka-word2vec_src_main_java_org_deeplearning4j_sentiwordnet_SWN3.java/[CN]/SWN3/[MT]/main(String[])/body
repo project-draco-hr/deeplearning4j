@@ -1,4 +1,0 @@
-{
-  SWN3 swn=new SWN3("/sentiment/sentiwordnet.txt");
-  System.out.println(swn.classForScore(swn.extract("sad")));
-}

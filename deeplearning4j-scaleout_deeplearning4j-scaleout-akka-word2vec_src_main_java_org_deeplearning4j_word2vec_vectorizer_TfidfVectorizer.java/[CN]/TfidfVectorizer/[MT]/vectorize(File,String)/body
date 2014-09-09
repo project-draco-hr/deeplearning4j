@@ -1,8 +1,0 @@
-{
-  try {
-    return vectorize(FileUtils.readFileToString(input),label);
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
-}

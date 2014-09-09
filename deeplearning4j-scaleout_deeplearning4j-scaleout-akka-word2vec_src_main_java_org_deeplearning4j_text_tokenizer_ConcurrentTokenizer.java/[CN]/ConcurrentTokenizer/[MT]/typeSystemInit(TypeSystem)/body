@@ -1,4 +1,0 @@
-{
-  super.typeSystemInit(typeSystem);
-  probabilityFeature=AnnotatorUtil.getOptionalFeatureParameter(context,tokenType,UimaUtil.PROBABILITY_FEATURE_PARAMETER,CAS.TYPE_NAME_DOUBLE);
-}

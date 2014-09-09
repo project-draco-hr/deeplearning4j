@@ -1,6 +1,0 @@
-{
-  CAS cas=analysisEngine.newCAS();
-  cas.setDocumentText(words);
-  analysisEngine.process(cas);
-  return score(cas);
-}

@@ -1,7 +1,0 @@
-{
-  Tokenizer tokenizer=tokenizerFactory.create(words);
-  List<String> list=new ArrayList<>();
-  while (tokenizer.hasMoreTokens())   list.add(tokenizer.nextToken());
-  if (list.isEmpty())   throw new IllegalStateException("No tokens found for windows");
-  return windows(list,windowSize);
-}

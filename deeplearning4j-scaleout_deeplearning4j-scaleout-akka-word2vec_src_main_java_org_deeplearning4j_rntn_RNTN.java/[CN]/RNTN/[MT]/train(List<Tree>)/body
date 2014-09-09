@@ -1,7 +1,0 @@
-{
-  this.trainingTrees=trainingBatch;
-  for (  Tree t : trainingBatch) {
-    forwardPropagateTree(t);
-    setParameters(getParameters().subi(getValueGradient(0)));
-  }
-}
