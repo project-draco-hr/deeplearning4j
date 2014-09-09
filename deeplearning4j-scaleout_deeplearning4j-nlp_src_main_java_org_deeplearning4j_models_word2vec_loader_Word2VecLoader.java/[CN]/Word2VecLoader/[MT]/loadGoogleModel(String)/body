@@ -1,0 +1,41 @@
+{
+  DataInputStream dis=null;
+  BufferedInputStream bis=null;
+  double len=0;
+  float vector=0;
+  Word2Vec ret=new Word2Vec();
+  Index wordIndex=new Index();
+  INDArray wordVectors=null;
+  try {
+    bis=new BufferedInputStream(path.endsWith(".gz") ? new GZIPInputStream(new FileInputStream(path)) : new FileInputStream(path));
+    dis=new DataInputStream(bis);
+    Map<String,INDArray> wordMap=new HashMap<>();
+    int words=Integer.parseInt(readString(dis));
+    int size=Integer.parseInt(readString(dis));
+    wordVectors=Nd4j.create(words,size);
+    String word;
+    float[] vectors=null;
+    for (int i=0; i < words; i++) {
+      word=readString(dis);
+      log.info("Loaded " + word);
+      vectors=new float[size];
+      len=0;
+      for (int j=0; j < size; j++) {
+        vector=readFloat(dis);
+        len+=vector * vector;
+        vectors[j]=vector;
+      }
+      len=Math.sqrt(len);
+      for (int j=0; j < size; j++) {
+        vectors[j]/=len;
+      }
+      wordIndex.add(word);
+      wordVectors.putRow(i,Nd4j.create(vectors));
+    }
+  }
+  finally {
+    bis.close();
+    dis.close();
+  }
+  return ret;
+}

@@ -1,0 +1,4 @@
+{
+  INDArray ret=featureVectors.get(getVocabWord(word)).transpose();
+  return ret;
+}

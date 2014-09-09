@@ -1,0 +1,16 @@
+{
+  SentenceIterator iter=new FileSentenceIterator(new File("dir"));
+  assertTrue(iter.hasNext());
+  String sentence=iter.nextSentence();
+  assertTrue(iter.hasNext());
+  assertEquals("Hello",sentence);
+  assertEquals("My",iter.nextSentence());
+  assertEquals("Name",iter.nextSentence());
+  assertFalse(iter.hasNext());
+  SentenceIterator multiIter=new FileSentenceIterator(new File("dir"));
+  assertTrue(multiIter.hasNext());
+  for (int i=0; i < 6; i++) {
+    multiIter.nextSentence();
+  }
+  assertFalse(multiIter.hasNext());
+}

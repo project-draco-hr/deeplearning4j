@@ -1,0 +1,5 @@
+{
+  Tree ret=new Tree(this);
+  ret.connect(new ArrayList<>(children()));
+  return ret;
+}

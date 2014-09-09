@@ -1,0 +1,11 @@
+{
+  File rootDir=new ClassPathResource("rootdir").getFile();
+  LabelAwareSentenceIterator iter=new LabelAwareFileSentenceIterator(rootDir);
+  List<String> labels=Arrays.asList("label1","label2");
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  TextVectorizer vectorizer=new TfidfVectorizer(iter,tokenizerFactory,labels);
+  DataSet vectorized=vectorizer.vectorize();
+  assertEquals(3,vectorized.numInputs());
+  assertEquals(2,vectorized.numOutcomes());
+  log.info("Vectorized " + vectorized.toString());
+}

@@ -1,0 +1,8 @@
+{
+  try {
+    return AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),StemmerAnnotator.getDescription("English")));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

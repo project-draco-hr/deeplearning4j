@@ -1,0 +1,10 @@
+{
+  if (combineClassification) {
+    return unaryClassification.get("");
+  }
+ else {
+    left=basicCategory(left);
+    right=basicCategory(right);
+    return binaryClassification.get(left,right);
+  }
+}

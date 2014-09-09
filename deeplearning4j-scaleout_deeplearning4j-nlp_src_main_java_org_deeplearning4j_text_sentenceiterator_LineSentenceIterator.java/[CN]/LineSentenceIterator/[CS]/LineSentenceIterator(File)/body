@@ -1,0 +1,10 @@
+{
+  if (!f.exists() || !f.isFile())   throw new IllegalArgumentException("Please specify an existing file");
+  try {
+    this.file=new BufferedInputStream(new FileInputStream(f));
+    iter=IOUtils.lineIterator(this.file,"UTF-8");
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

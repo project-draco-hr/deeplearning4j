@@ -1,0 +1,10 @@
+{
+  List<Tree> ret=new ArrayList<>();
+  List<Tree> baseTrees=parser.getTreesWithLabels(sentences,labels);
+  for (  Tree t : baseTrees) {
+    Tree binarized=treeTransformer.transform(t);
+    binarized=cnfTransformer.transform(binarized);
+    ret.add(binarized);
+  }
+  return ret;
+}

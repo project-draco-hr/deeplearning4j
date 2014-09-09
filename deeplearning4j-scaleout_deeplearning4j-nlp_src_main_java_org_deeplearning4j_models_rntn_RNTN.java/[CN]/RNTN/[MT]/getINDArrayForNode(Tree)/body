@@ -1,0 +1,18 @@
+{
+  if (!useINd4j) {
+    throw new AssertionError("Not using INd4j");
+  }
+  if (node.children().size() == 2) {
+    String leftLabel=node.children().get(0).value();
+    String leftBasic=basicCategory(leftLabel);
+    String rightLabel=node.children().get(1).value();
+    String rightBasic=basicCategory(rightLabel);
+    return binaryINd4j.get(leftBasic,rightBasic);
+  }
+ else   if (node.children().size() == 1) {
+    throw new AssertionError("No unary applyTransformToOrigin matrices, only unary classification");
+  }
+ else {
+    throw new AssertionError("Unexpected tree children size of " + node.children().size());
+  }
+}

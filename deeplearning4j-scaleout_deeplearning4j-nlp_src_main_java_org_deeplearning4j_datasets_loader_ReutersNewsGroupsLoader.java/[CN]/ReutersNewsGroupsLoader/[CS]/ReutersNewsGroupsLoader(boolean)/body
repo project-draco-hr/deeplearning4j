@@ -1,0 +1,12 @@
+{
+  getIfNotExists();
+  LabelAwareSentenceIterator iter=new LabelAwareFileSentenceIterator(reutersRootDir);
+  List<String> labels=new ArrayList<>();
+  for (  File f : reutersRootDir.listFiles()) {
+    if (f.isDirectory())     labels.add(f.getName());
+  }
+  TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
+  if (tfidf)   this.textVectorizer=new TfidfVectorizer(iter,tokenizerFactory,labels);
+ else   this.textVectorizer=new BagOfWordsVectorizer(iter,tokenizerFactory,labels);
+  load=this.textVectorizer.vectorize();
+}

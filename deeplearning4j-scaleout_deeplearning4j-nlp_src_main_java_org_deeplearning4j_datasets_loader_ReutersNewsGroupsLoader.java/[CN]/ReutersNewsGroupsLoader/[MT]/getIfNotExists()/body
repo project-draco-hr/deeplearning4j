@@ -1,0 +1,16 @@
+{
+  String home=System.getProperty("user.home");
+  String rootDir=home + File.separator + "reuters";
+  reutersRootDir=new File(rootDir);
+  if (!reutersRootDir.exists())   reutersRootDir.mkdir();
+ else   if (reutersRootDir.exists())   return;
+  File rootTarFile=new File(reutersRootDir,"20news-18828.tar.gz");
+  if (rootTarFile.exists())   rootTarFile.delete();
+  rootTarFile.createNewFile();
+  FileUtils.copyURLToFile(new URL(NEWSGROUP_URL),rootTarFile);
+  ArchiveUtils.unzipFileTo(rootTarFile.getAbsolutePath(),reutersRootDir.getAbsolutePath());
+  rootTarFile.delete();
+  FileUtils.copyDirectory(new File(reutersRootDir,"20news-18828"),reutersRootDir);
+  FileUtils.deleteDirectory(new File(reutersRootDir,"20news-18828"));
+  if (reutersRootDir.listFiles() == null)   throw new IllegalStateException("No files found!");
+}

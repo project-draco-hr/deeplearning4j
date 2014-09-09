@@ -1,0 +1,8 @@
+{
+  super();
+  this.tokenizer=tokenizer;
+  this.layerSize=layerSize;
+  this.stopWords=stopWords;
+  this.lastUpdate=lastUpdate;
+  this.cache=cache;
+}

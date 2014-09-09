@@ -1,0 +1,46 @@
+{
+  INDArray nodeVector;
+  INDArray classification;
+  if (tree.isLeaf()) {
+    throw new AssertionError("We should not have reached leaves in forwardPropagate");
+  }
+ else   if (tree.isPreTerminal()) {
+    classification=getUnaryClassification(tree.label());
+    String word=tree.children().get(0).value();
+    INDArray wordVector=getFeatureVector(word);
+    if (wordVector == null) {
+      wordVector=featureVectors.get(UNKNOWN_FEATURE);
+    }
+    nodeVector=activationFunction.apply(wordVector);
+  }
+ else   if (tree.children().size() == 1) {
+    throw new AssertionError("Non-preterminal nodes of size 1 should have already been collapsed");
+  }
+ else   if (tree.children().size() == 2) {
+    Tree left=tree.firstChild(), right=tree.lastChild();
+    forwardPropagateTree(left);
+    forwardPropagateTree(right);
+    String leftCategory=tree.children().get(0).label();
+    String rightCategory=tree.children().get(1).label();
+    INDArray W=getBinaryTransform(leftCategory,rightCategory);
+    classification=getBinaryClassification(leftCategory,rightCategory);
+    INDArray leftVector=tree.children().get(0).vector();
+    INDArray rightVector=tree.children().get(1).vector();
+    INDArray childrenVector=Nd4j.appendBias(leftVector,rightVector);
+    if (useINd4j) {
+      INDArray floatT=getBinaryINDArray(leftCategory,rightCategory);
+      INDArray INDArrayIn=Nd4j.concatHorizontally(leftVector,rightVector);
+      INDArray INDArrayOut=Nd4j.bilinearProducts(floatT,INDArrayIn);
+      nodeVector=activationFunction.apply(W.mmul(childrenVector).add(INDArrayOut));
+    }
+ else     nodeVector=activationFunction.apply(W.mmul(childrenVector));
+  }
+ else {
+    throw new AssertionError("Tree not correctly binarized");
+  }
+  INDArray inputWithBias=Nd4j.appendBias(nodeVector);
+  INDArray preAct=classification.mmul(inputWithBias);
+  INDArray predictions=outputActivation.apply(preAct);
+  tree.setPrediction(predictions);
+  tree.setVector(nodeVector);
+}

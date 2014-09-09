@@ -1,0 +1,23 @@
+{
+  if (text.isEmpty())   return new ArrayList<>();
+  CAS c=pool.getCas();
+  c.setDocumentText(text);
+  tokenizer.process(c);
+  List<TreebankNode> ret=new ArrayList<>();
+  for (  Sentence sentence : JCasUtil.select(c.getJCas(),Sentence.class)) {
+    List<String> tokens=new ArrayList<>();
+    CAS c2=tokenizer.newCAS();
+    for (    Token t : JCasUtil.selectCovered(Token.class,sentence))     tokens.add(t.getCoveredText());
+    c2.setDocumentText(sentence.getCoveredText());
+    tokenizer.process(c2);
+    parser.process(c2);
+    TopTreebankNode node=JCasUtil.selectSingle(c2.getJCas(),TopTreebankNode.class);
+    log.info("Tree bank parse " + node.getTreebankParse());
+    for (    TreebankNode node2 : JCasUtil.select(c2.getJCas(),TreebankNode.class)) {
+      log.info("Node val " + node2.getNodeValue() + " and label "+ node2.getNodeType()+ " and tags was "+ node2.getNodeTags());
+    }
+    ret.add(node);
+  }
+  pool.releaseCas(c);
+  return ret;
+}

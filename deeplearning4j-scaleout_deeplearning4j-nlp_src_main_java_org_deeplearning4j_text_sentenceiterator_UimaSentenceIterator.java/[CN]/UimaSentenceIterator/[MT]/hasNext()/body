@@ -1,0 +1,8 @@
+{
+  try {
+    return reader.hasNext() || sentences != null && sentences.hasNext();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

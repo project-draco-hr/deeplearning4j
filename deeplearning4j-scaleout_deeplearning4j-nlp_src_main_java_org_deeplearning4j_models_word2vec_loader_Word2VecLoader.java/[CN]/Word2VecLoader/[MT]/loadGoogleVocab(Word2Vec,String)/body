@@ -1,0 +1,12 @@
+{
+  BufferedReader reader=new BufferedReader(new FileReader(new File(path)));
+  String temp=null;
+  while ((temp=reader.readLine()) != null) {
+    String[] split=temp.split(" ");
+    if (split[0].equals("</s>"))     continue;
+    int freq=Integer.parseInt(split[1]);
+    VocabWord realWord=new VocabWord(freq,vec.getLayerSize());
+  }
+  reader.close();
+  return vec;
+}

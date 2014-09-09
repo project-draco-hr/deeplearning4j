@@ -1,0 +1,10 @@
+{
+  while (sentenceIter.hasNext()) {
+    Tokenizer tokenizer=tokenizerFactory.create(sentenceIter.nextSentence());
+    List<String> tokens=tokenizer.getTokens();
+    for (    String token : tokens)     if (!stopWords.contains(token)) {
+      wordCounts.incrementCount(token,1.0);
+      if (vocab.indexOf(token) < 0)       vocab.add(token);
+    }
+  }
+}

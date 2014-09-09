@@ -1,0 +1,5 @@
+{
+  Element element=cache.get(word + "-" + FREQUENCY);
+  if (element != null && element.getObjectValue() != null)   return (Integer)element.getObjectValue();
+  return 0;
+}

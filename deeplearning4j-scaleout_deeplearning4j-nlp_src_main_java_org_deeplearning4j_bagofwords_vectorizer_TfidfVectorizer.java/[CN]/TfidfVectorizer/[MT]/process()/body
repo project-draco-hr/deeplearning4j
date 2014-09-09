@@ -1,0 +1,63 @@
+{
+  if (!process)   return;
+  ActorSystem actorSystem=ActorSystem.create("Tfidf-vectorizer");
+  List<Future<Void>> futures=new ArrayList<>();
+  while (sentenceIterator.hasNext()) {
+    final Counter<String> runningTotal=Util.parallelCounter();
+    final Counter<String> documentOccurrences=Util.parallelCounter();
+    final String sentence=sentenceIterator.nextSentence();
+    futures.add(Futures.future(new Callable<Void>(){
+      /** 
+ * Computes a result, or throws an exception if unable to do so.
+ * @return computed result
+ * @throws Exception if unable to compute a result
+ */
+      @Override public Void call() throws Exception {
+        log.info("Handling " + sentence);
+        Tokenizer tokenizer=tokenizerFactory.create(sentence);
+        numDocs++;
+        for (        String token : tokenizer.getTokens()) {
+          if (stopWords.contains(token))           continue;
+          runningTotal.incrementCount(token,1.0);
+          if (!documentOccurrences.containsKey(token))           documentOccurrences.setMinCount(token,1.0);
+        }
+        idf.incrementAll(documentOccurrences);
+        tf.incrementAll(runningTotal);
+        return null;
+      }
+    }
+,actorSystem.dispatcher()));
+    try {
+      Thread.sleep(5);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+  try {
+    Thread.sleep(10000);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+  log.info("Number of documents was " + futures.size());
+  Iterable<Future<Void>> fIter=(Iterable<Future<Void>>)futures;
+  try {
+    Future<Iterable<Void>> composed=Futures.sequence(fIter,actorSystem.dispatcher());
+    log.info("Awaiting futures results");
+    Await.result(composed,Duration.Inf());
+  }
+ catch (  Exception e) {
+    log.warn("Done...");
+  }
+  actorSystem.shutdown();
+  tfIdfWeights=tfIdfWeights();
+  if (numTop > 0)   tfIdfWeights.keepTopNKeys(numTop);
+  vocab=new Index();
+  List<String> reversed=new ArrayList<>(tfIdfWeights.getSortedKeys());
+  Collections.reverse(reversed);
+  for (  String key : reversed) {
+    vocab.add(key);
+  }
+  process=false;
+}

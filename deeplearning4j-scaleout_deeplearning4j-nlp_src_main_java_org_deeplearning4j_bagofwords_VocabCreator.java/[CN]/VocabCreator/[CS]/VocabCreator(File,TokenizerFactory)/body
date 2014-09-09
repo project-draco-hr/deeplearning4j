@@ -1,0 +1,7 @@
+{
+  super();
+  this.stopWords=StopWords.getStopWords();
+  this.rootDir=rootDir;
+  this.tokenizerFactory=tokenizerFactory;
+  system=ActorSystem.create("WordFrequencySystem");
+}

@@ -1,0 +1,22 @@
+{
+  Set<String> encountered=new HashSet<String>();
+  SentenceIterator iter=new LineSentenceIterator(doc);
+  while (iter.hasNext()) {
+    String line=iter.nextSentence();
+    if (line == null)     continue;
+    Tokenizer tokenizer=tokenizerFactory.create(new InputHomogenization(line).transform());
+    while (tokenizer.hasMoreTokens()) {
+      String token=tokenizer.nextToken();
+      java.util.regex.Matcher m=punct.matcher(token);
+      if (validWord(token)) {
+        documentWordFrequencies.incrementCount(token,doc.getAbsolutePath(),1.0);
+        tf.incrementCount(token,1.0);
+        if (!encountered.contains(token)) {
+          idf.incrementCount(token,1.0);
+          encountered.add(token);
+        }
+      }
+    }
+    iter.finish();
+  }
+}

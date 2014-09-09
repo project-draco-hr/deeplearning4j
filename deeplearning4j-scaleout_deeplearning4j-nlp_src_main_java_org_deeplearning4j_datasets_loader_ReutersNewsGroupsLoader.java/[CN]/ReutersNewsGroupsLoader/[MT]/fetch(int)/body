@@ -1,0 +1,7 @@
+{
+  List<DataSet> newData=new ArrayList<>();
+  for (int grabbed=0; grabbed < numExamples && cursor < load.numExamples(); cursor++, grabbed++) {
+    newData.add(load.get(cursor));
+  }
+  this.curr=DataSet.merge(newData);
+}

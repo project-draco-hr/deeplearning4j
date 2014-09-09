@@ -1,0 +1,3 @@
+{
+  for (int i=0; i < cache.numWords(); i++)   cache.putVector(cache.wordAtIndex(i),randomVector());
+}

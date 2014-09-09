@@ -1,0 +1,12 @@
+{
+  INDArray WTDelta=W.transpose().mmul(deltaFull);
+  INDArray WTDeltaNoBias=WTDelta.get(interval(0,1),interval(0,deltaFull.rows() * 2));
+  int size=deltaFull.length();
+  INDArray deltaINDArray=Nd4j.create(size * 2,1);
+  INDArray fullVector=Nd4j.concatHorizontally(leftVector,rightVector);
+  for (int slice=0; slice < size; ++slice) {
+    INDArray scaledFullVector=Nd4j.getBlasWrapper().scal((float)deltaFull.getScalar(slice).element(),fullVector);
+    deltaINDArray=deltaINDArray.add(Wt.slice(slice).add(Wt.slice(slice).transpose()).mmul(scaledFullVector));
+  }
+  return deltaINDArray.add(WTDeltaNoBias);
+}

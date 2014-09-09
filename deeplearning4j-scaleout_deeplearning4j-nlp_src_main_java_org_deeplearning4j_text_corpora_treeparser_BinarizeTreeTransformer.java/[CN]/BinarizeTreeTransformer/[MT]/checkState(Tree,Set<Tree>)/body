@@ -1,0 +1,10 @@
+{
+  for (  Tree t : tree.children()) {
+    checkState(t,nonBinarized);
+  }
+  if (tree.children().size() > 2) {
+    Tree parent=tree.parent();
+    if (parent == null)     return;
+    nonBinarized.add(tree);
+  }
+}

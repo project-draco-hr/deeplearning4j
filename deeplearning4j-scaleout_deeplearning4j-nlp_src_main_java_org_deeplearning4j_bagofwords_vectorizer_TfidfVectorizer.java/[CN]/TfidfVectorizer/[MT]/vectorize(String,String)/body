@@ -1,0 +1,5 @@
+{
+  INDArray tfidf=tfidfForInput(text);
+  INDArray label2=FeatureUtil.toOutcomeVector(labels.indexOf(label),labels.size());
+  return new DataSet(tfidf,label2);
+}
