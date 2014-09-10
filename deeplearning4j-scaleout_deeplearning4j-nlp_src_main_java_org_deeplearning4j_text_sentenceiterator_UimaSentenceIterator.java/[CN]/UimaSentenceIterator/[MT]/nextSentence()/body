@@ -4,7 +4,13 @@
       if (reader.hasNext()) {
         CAS cas=engine.newCAS();
 synchronized (reader) {
-          reader.getNext(cas);
+          try {
+            reader.getNext(cas);
+          }
+ catch (          Exception e) {
+            log.warn("Done iterating returning an empty string");
+            return "";
+          }
         }
 synchronized (engine) {
           engine.process(cas);
