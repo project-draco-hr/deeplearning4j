@@ -1,33 +1,36 @@
 {
   if (sentences == null || !sentences.hasNext()) {
     try {
-      CAS cas=engine.newCAS();
+      if (reader.hasNext()) {
+        CAS cas=engine.newCAS();
 synchronized (reader) {
-        reader.getNext(cas);
-      }
-synchronized (engine) {
-        engine.process(cas);
-      }
-      List<String> list=new ArrayList<>();
-      for (      Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
-        list.add(sentence.getCoveredText());
-      }
-      sentences=list.iterator();
-      while (!sentences.hasNext()) {
-        if (reader.hasNext()) {
-          cas.reset();
           reader.getNext(cas);
-          engine.process(cas);
-          for (          Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
-            list.add(sentence.getCoveredText());
-          }
-          sentences=list.iterator();
         }
- else         return null;
+synchronized (engine) {
+          engine.process(cas);
+        }
+        List<String> list=new ArrayList<>();
+        for (        Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+          list.add(sentence.getCoveredText());
+        }
+        sentences=list.iterator();
+        while (!sentences.hasNext()) {
+          if (reader.hasNext()) {
+            cas.reset();
+            reader.getNext(cas);
+            engine.process(cas);
+            for (            Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+              list.add(sentence.getCoveredText());
+            }
+            sentences=list.iterator();
+          }
+ else           return null;
+        }
+        String ret=sentences.next();
+        if (this.getPreProcessor() != null)         ret=this.getPreProcessor().preProcess(ret);
+        return ret;
       }
-      String ret=sentences.next();
-      if (this.getPreProcessor() != null)       ret=this.getPreProcessor().preProcess(ret);
-      return ret;
+      return null;
     }
  catch (    Exception e) {
       throw new RuntimeException(e);
