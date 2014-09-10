@@ -1,10 +1,15 @@
 {
   if (sentences == null || !sentences.hasNext()) {
     try {
+      CAS cas=engine.newCAS();
       if (cas == null)       cas=engine.newCAS();
       cas.reset();
-      reader.getNext(cas);
-      engine.process(cas);
+synchronized (reader) {
+        reader.getNext(cas);
+      }
+synchronized (engine) {
+        engine.process(cas);
+      }
       List<String> list=new ArrayList<>();
       for (      Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
         list.add(sentence.getCoveredText());
