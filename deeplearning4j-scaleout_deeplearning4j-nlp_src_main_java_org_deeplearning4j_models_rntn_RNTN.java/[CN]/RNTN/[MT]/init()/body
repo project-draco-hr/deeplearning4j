@@ -25,7 +25,7 @@
       continue;
     }
     binaryTransform.put(left,right,randomTransformMatrix());
-    if (useINd4j) {
+    if (useFloatTensors) {
       binaryINd4j.put(left,right,randomBinaryINDArray());
     }
     if (!combineClassification) {
@@ -34,7 +34,7 @@
   }
   numBinaryMatrices=binaryTransform.size();
   binaryTransformSize=numHidden * (2 * numHidden + 1);
-  if (useINd4j) {
+  if (useFloatTensors) {
     binaryINd4jize=numHidden * numHidden * numHidden* 4;
   }
  else {

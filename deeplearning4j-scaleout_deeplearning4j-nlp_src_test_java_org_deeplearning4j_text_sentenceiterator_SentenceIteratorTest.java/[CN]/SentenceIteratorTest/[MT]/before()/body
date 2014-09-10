@@ -6,6 +6,6 @@
   File multiDir=new File("multidir");
   for (int i=0; i < 2; i++) {
     File newTestFile=new File(multiDir,"testfile-" + i);
-    FileUtils.writeLines(newTestFile,Arrays.asList("Hello","My","Name"));
+    FileUtils.writeLines(newTestFile,Arrays.asList("Sentence 1.","Sentence 2.","Sentence 3."));
   }
 }

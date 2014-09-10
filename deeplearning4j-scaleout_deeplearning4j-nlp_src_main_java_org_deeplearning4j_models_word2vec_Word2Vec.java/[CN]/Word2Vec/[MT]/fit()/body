@@ -2,6 +2,7 @@
   if (trainingSystem == null) {
     trainingSystem=ActorSystem.create();
   }
+  buildVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   final AtomicLong changed=new AtomicLong(System.currentTimeMillis());

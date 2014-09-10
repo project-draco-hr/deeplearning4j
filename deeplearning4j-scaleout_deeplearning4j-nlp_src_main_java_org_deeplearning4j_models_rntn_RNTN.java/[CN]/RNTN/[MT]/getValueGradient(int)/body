@@ -16,7 +16,7 @@
       binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(numRows,numCols));
     }
   }
-  if (useINd4j) {
+  if (useFloatTensors) {
     for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINd4j.entrySet()) {
       int numRows=entry.getValue().rows();
       int numCols=entry.getValue().columns();

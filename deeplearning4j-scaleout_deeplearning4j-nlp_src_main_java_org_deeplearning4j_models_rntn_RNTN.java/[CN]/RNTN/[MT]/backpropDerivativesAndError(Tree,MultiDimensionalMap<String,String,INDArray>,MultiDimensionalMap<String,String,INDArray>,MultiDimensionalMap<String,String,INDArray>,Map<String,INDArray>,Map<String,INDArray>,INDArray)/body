@@ -49,7 +49,7 @@
     INDArray W_df=deltaFromClass.mmul(childrenVector.transpose());
     binaryTD.put(leftCategory,rightCategory,add.add(W_df));
     INDArray deltaDown;
-    if (useINd4j) {
+    if (useFloatTensors) {
       INDArray Wt_df=getINDArrayGradient(deltaFull,leftVector,rightVector);
       binaryINDArrayTD.put(leftCategory,rightCategory,binaryINDArrayTD.get(leftCategory,rightCategory).add(Wt_df));
       deltaDown=computeINDArrayDeltaDown(deltaFull,leftVector,rightVector,getBinaryTransform(leftCategory,rightCategory),getBinaryINDArray(leftCategory,rightCategory));

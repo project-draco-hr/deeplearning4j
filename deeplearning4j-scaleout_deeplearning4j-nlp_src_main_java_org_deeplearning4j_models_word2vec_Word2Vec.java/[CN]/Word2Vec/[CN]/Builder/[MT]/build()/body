@@ -4,6 +4,7 @@
     ret.layerSize=layerSize;
     ret.window=window;
     ret.stopWords=stopWords;
+    ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
@@ -20,6 +21,7 @@
     ret.window=window;
     ret.stopWords=stopWords;
     ret.minWordFrequency=minWordFrequency;
+    ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
