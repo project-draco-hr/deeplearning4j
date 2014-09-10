@@ -18,8 +18,8 @@
   }
   if (useFloatTensors) {
     for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINd4j.entrySet()) {
-      int numRows=entry.getValue().rows();
-      int numCols=entry.getValue().columns();
+      int numRows=entry.getValue().size(1);
+      int numCols=entry.getValue().size(2);
       int numSlices=entry.getValue().slices();
       binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(new int[]{numRows,numCols,numSlices}));
     }

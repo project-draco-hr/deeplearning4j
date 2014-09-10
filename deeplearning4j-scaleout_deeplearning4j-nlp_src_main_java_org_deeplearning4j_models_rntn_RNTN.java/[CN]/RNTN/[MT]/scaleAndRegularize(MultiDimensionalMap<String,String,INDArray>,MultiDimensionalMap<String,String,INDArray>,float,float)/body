@@ -4,7 +4,7 @@
     INDArray D=derivatives.get(entry.getFirstKey(),entry.getSecondKey());
     D=Nd4j.getBlasWrapper().scal(scale,D).add(Nd4j.getBlasWrapper().scal(regCost,entry.getValue()));
     derivatives.put(entry.getFirstKey(),entry.getSecondKey(),D);
-    cost+=(double)entry.getValue().mul(entry.getValue()).sum(Integer.MAX_VALUE).element() * regCost / 2.0;
+    cost+=(float)entry.getValue().mul(entry.getValue()).sum(Integer.MAX_VALUE).element() * regCost / 2.0;
   }
   return cost;
 }
