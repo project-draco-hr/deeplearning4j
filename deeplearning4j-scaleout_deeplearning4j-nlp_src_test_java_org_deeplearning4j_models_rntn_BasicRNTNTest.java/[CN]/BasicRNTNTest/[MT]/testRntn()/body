@@ -1,5 +1,5 @@
 {
-  RNTN rntn=new RNTN.Builder().setActivationFunction(Activations.tanh()).setAdagradResetFrequency(1).setCombineClassification(true).setFeatureVectors(vec).setRandomFeatureVectors(false).setRng(new MersenneTwister(123)).setUseTensors(true).setNumHidden(25).build();
+  RNTN rntn=new RNTN.Builder().setActivationFunction(Activations.tanh()).setAdagradResetFrequency(1).setCombineClassification(true).setFeatureVectors(vec).setRandomFeatureVectors(false).setRng(new MersenneTwister(123)).setUseTensors(true).build();
   List<Tree> trees=vectorizer.getTreesWithLabels(sentence,Arrays.asList("LABEL"));
   rntn.fit(trees);
 }

@@ -2,6 +2,14 @@
   vectorizer=new TreeVectorizer();
   tokenizerFactory=new UimaTokenizerFactory(false);
   sentenceIter=new CollectionSentenceIterator(Arrays.asList(sentence));
-  vec=new Word2Vec(sentenceIter);
-  vec.fit();
+  File vectors=new File("wordvectors.ser");
+  if (!vectors.exists()) {
+    vec=new Word2Vec(sentenceIter);
+    vec.fit();
+    SerializationUtils.saveObject(vec,new File("wordvectors.ser"));
+  }
+ else {
+    vec=SerializationUtils.readObject(vectors);
+    vec.setCache(new EhCacheVocabCache());
+  }
 }
