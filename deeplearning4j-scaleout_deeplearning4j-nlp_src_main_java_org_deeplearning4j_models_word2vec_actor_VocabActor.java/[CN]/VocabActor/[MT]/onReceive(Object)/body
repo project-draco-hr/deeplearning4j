@@ -1,6 +1,7 @@
 {
   if (message instanceof String) {
     String sentence=message.toString();
+    if (sentence.isEmpty())     return;
     Tokenizer t=tokenizer.create(sentence);
     List<String> tokens=new ArrayList<>();
     while (t.hasMoreTokens())     tokens.add(t.nextToken());

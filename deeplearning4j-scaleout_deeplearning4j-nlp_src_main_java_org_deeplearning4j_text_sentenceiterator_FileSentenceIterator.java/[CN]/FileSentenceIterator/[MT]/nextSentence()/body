@@ -10,7 +10,7 @@
     for (int i=0; i < 100000; i++) {
       if (currLineIterator != null && currLineIterator.hasNext()) {
         String line=currLineIterator.nextLine();
-        if (line != null)         cache.add(currLineIterator.nextLine());
+        if (line != null)         cache.add(line);
  else         break;
       }
  else       break;
