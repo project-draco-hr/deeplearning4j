@@ -2,8 +2,6 @@
   if (sentences == null || !sentences.hasNext()) {
     try {
       CAS cas=engine.newCAS();
-      if (cas == null)       cas=engine.newCAS();
-      cas.reset();
 synchronized (reader) {
         reader.getNext(cas);
       }
