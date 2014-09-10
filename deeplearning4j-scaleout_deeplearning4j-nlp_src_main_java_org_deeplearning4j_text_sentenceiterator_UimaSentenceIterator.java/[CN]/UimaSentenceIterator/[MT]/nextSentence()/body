@@ -1,11 +1,11 @@
 {
   if (sentences == null || !sentences.hasNext()) {
     try {
-      if (reader.hasNext()) {
+      if (getReader().hasNext()) {
         CAS cas=engine.newCAS();
 synchronized (reader) {
           try {
-            reader.getNext(cas);
+            getReader().getNext(cas);
           }
  catch (          Exception e) {
             log.warn("Done iterating returning an empty string");
@@ -23,7 +23,7 @@ synchronized (engine) {
         while (!sentences.hasNext()) {
           if (reader.hasNext()) {
             cas.reset();
-            reader.getNext(cas);
+            getReader().getNext(cas);
             engine.process(cas);
             for (            Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
               list.add(sentence.getCoveredText());
