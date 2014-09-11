@@ -8,4 +8,5 @@
     Element e=new Element(word + "-" + COUNT,increment);
     cache.put(e);
   }
+  incrementWordCountBy(increment);
 }

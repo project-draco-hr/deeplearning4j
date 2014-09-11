@@ -2,7 +2,5 @@
   this.minWordFrequency=minWordFrequency;
   this.sentenceIter=new CollectionSentenceIterator(sentences);
   this.buildVocab();
-  oob=new float[layerSize];
-  Arrays.fill(oob,0.0f);
   readStopWords();
 }

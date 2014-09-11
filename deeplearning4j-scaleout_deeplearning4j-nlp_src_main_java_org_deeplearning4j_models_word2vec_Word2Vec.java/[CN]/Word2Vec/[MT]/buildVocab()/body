@@ -40,7 +40,7 @@
     long curr=System.currentTimeMillis();
     long lastChanged=semaphore.get();
     long diff=Math.abs(curr - lastChanged);
-    log.info("Waiting on setup...");
+    log.info("Building vocab...");
     if (diff >= fiveMinutes) {
       done=true;
     }

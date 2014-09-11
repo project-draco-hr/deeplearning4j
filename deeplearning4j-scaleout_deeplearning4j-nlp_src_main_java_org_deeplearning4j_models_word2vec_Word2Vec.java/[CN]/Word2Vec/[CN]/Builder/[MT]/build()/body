@@ -3,7 +3,7 @@
     Word2Vec ret=new Word2Vec();
     ret.layerSize=layerSize;
     ret.window=window;
-    ret.stopWords=stopWords;
+    ret.stopWords=StopWords.getStopWords();
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
     try {

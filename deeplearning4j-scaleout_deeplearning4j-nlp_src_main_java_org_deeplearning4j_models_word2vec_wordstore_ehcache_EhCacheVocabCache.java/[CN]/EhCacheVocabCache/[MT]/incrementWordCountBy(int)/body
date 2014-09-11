@@ -1,5 +1,3 @@
 {
-  Integer curr=retrieve(NUM_WORDS);
-  if (curr == null)   curr=0;
-  store(NUM_WORDS,curr + num);
+  numWords.set(numWords.get() + num);
 }

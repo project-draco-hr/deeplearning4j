@@ -1,5 +1,3 @@
 {
-  Integer numWords=retrieve(NUM_WORDS);
-  if (numWords == null)   return 0;
-  return numWords;
+  return numWords.get();
 }

@@ -1,7 +1,6 @@
 {
   int i=this.cache.indexOf(word);
-  if (oob == null)   oob=new float[layerSize];
-  if (i < 0)   return Nd4j.zeros(layerSize);
+  if (i < 0)   return cache.vector(UNK);
   INDArray r=cache.vector(word);
   return r.div((Nd4j.getBlasWrapper().nrm2(r)));
 }

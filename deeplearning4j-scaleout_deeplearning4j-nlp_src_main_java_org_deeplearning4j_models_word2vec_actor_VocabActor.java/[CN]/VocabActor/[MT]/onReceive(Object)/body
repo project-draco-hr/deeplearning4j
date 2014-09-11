@@ -15,9 +15,11 @@
       if (!Util.matchesAnyStopWord(stopWords,token)) {
         if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
           VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
-          word.setIndex(cache.numWords());
+          int idx=cache.numWords();
+          word.setIndex(idx);
           cache.putVocabWord(token,word);
-          cache.addWordToIndex(cache.numWords(),token);
+          cache.addWordToIndex(idx,token);
+          log.info("Adding word " + token + " at index "+ idx);
         }
       }
     }
