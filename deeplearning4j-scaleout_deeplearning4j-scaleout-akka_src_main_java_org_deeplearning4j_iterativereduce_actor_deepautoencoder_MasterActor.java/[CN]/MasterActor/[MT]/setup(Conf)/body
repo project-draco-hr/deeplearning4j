@@ -20,7 +20,6 @@
  else   network=this.network;
   network.setOutputLayerActivation(conf.getOutputActivationFunction());
   network.setRoundCodeLayerInput(conf.isRoundCodeLayer());
-  network.setOutputLayerLossFunction(conf.getOutputLayerLossFunction());
   network.setNormalizeCodeLayerOutput(conf.isNormalizeCodeLayer());
   UpdateableEncoderImpl masterResults=new UpdateableEncoderImpl(network);
   try {

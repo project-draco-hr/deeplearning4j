@@ -1,0 +1,6 @@
+{
+  RBM r=(RBM)super.clone();
+  r.sigma=sigma;
+  r.hiddenSigma=hiddenSigma;
+  return r;
+}

@@ -1,0 +1,8 @@
+{
+  this.labels=labels;
+  getOutputLayer().setLabels(labels);
+  feedForward();
+  if (labels != null)   this.labels=labels;
+  optimizer=new MultiLayerNetworkOptimizer(this,lr);
+  optimizer.optimize(this.labels,lr,iterations);
+}

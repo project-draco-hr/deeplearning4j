@@ -1,0 +1,5 @@
+{
+  float[] d=new float[getNumParameters()];
+  this.getParameters(d);
+  return Nd4j.create(d);
+}

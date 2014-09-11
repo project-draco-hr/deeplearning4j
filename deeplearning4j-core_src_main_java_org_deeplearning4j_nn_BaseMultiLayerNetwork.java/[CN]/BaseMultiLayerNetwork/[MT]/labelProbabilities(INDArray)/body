@@ -1,0 +1,4 @@
+{
+  List<INDArray> feed=feedForward(examples);
+  return getOutputLayer().labelProbabilities(feed.get(feed.size() - 1));
+}

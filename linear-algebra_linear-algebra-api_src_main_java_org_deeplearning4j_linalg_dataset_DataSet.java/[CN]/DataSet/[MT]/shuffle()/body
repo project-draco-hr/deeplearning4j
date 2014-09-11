@@ -1,7 +1,0 @@
-{
-  List<DataSet> list=asList();
-  Collections.shuffle(list);
-  DataSet ret=DataSet.merge(list);
-  setFeatures(ret.getFeatures());
-  setLabels(ret.getLabels());
-}

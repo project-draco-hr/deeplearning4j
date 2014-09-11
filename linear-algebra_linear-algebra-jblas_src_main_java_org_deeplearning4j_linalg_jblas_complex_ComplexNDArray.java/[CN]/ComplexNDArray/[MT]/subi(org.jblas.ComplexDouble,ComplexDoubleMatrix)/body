@@ -1,5 +1,0 @@
-{
-  ComplexNDArray wrapped=ComplexNDArray.wrap(result);
-  new TwoArrayOps().from(this).to(wrapped).op(SubtractOp.class).scalar(ComplexNDArray.scalar(new ComplexDouble(v))).build().exec();
-  return wrapped;
-}

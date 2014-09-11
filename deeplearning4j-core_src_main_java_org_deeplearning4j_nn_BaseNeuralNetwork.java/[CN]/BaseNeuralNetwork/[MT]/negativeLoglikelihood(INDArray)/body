@@ -1,8 +1,0 @@
-{
-  INDArray z=this.reconstruct(input);
-  if (this.useRegularization) {
-    double reg=(2 / l2) * (double)pow(this.W,2).sum(Integer.MAX_VALUE).element();
-    return -(double)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element() + reg;
-  }
-  return -(double)input.mul(log(z)).add(input.rsub(1).muli(log(z.rsub(1)))).sum(1).mean(Integer.MAX_VALUE).element();
-}

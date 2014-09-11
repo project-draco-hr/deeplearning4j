@@ -1,0 +1,5 @@
+{
+  float[] buffer=new float[getNumParameters()];
+  getValueGradient(buffer);
+  return Nd4j.create(buffer);
+}

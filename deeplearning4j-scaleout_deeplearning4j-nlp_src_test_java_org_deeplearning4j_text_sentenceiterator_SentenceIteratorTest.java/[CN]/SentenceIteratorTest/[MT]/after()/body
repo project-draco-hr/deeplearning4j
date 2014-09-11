@@ -1,0 +1,6 @@
+{
+  File test=new File("dir");
+  test.mkdir();
+  FileUtils.deleteDirectory(test);
+  FileUtils.deleteDirectory(new File("multidir"));
+}

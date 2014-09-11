@@ -1,4 +1,0 @@
-{
-  if (isVector())   return super.normmax();
-  return ComplexNDArrayUtil.doSliceWise(ComplexNDArrayUtil.ScalarOp.NORM_MAX,this).real();
-}

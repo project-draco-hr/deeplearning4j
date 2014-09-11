@@ -1,6 +1,0 @@
-{
-  if (shape().length == 2) {
-    return NDArray.wrap(super.rowMins());
-  }
- else   return NDArrayUtil.doSliceWise(NDArrayUtil.MatrixOp.ROW_MIN,this);
-}

@@ -1,0 +1,7 @@
+{
+  List<String> ret=new ArrayList<>();
+  for (int i=0; i < cache.numWords(); i++) {
+    if (MathUtils.stringSimilarity(word,cache.wordAtIndex(i)) >= accuracy)     ret.add(cache.wordAtIndex(i));
+  }
+  return ret;
+}

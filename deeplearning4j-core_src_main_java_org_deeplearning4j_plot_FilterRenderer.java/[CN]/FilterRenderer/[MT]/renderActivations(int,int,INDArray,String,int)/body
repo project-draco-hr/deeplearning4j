@@ -7,11 +7,11 @@
   this.widthOffset=widthOffset;
   WritableRaster r=img.getRaster();
   int[] equiv=new int[activation_data.length()];
-  double max=0.1 * scale;
-  double min=-0.1 * scale;
-  double range=max - min;
+  float max=0.1f * scale;
+  float min=-0.1f * scale;
+  float range=max - min;
   for (int i=0; i < equiv.length; i++) {
-    equiv[i]=(int)Math.round((double)activation_data.getScalar(i).element() * 255);
+    equiv[i]=Math.round((float)activation_data.getScalar(i).element() * 255);
   }
   log.debug("activations size: Cols: " + activation_data.columns() + ", Rows: "+ activation_data.rows());
   r.setPixels(0,0,width,height,equiv);

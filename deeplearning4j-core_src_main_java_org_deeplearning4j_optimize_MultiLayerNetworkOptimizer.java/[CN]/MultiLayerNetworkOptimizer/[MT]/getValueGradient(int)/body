@@ -1,5 +1,0 @@
-{
-  double[] buffer=new double[getNumParameters()];
-  getValueGradient(buffer);
-  return NDArrays.create(buffer);
-}

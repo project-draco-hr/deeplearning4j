@@ -1,0 +1,9 @@
+{
+  for (int i=0; i < x.length(); i++) {
+    float comp=Math.abs((float)x.getScalar(i).element() - (float)xold.getScalar(i).element());
+    if (comp > absTolx) {
+      return false;
+    }
+  }
+  return true;
+}

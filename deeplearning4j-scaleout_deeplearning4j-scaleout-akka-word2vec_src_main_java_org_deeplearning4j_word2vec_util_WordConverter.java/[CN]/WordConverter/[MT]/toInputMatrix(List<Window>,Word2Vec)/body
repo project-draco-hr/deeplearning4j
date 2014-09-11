@@ -1,9 +1,0 @@
-{
-  int columns=vec.getLayerSize() * vec.getWindow();
-  int rows=windows.size();
-  INDArray ret=NDArrays.create(rows,columns);
-  for (int i=0; i < rows; i++) {
-    ret.putRow(i,NDArrays.create(WindowConverter.asExample(windows.get(i),vec)));
-  }
-  return ret;
-}

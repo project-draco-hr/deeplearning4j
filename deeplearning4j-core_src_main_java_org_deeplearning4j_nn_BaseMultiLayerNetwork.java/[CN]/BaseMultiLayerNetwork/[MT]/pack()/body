@@ -1,8 +1,8 @@
 {
   List<Pair<INDArray,INDArray>> vWvB=new ArrayList<>();
-  for (int i=0; i < layers.length; i++) {
-    vWvB.add(new Pair<>(layers[i].getW(),layers[i].gethBias()));
+  for (int i=0; i < neuralNets.length; i++) {
+    vWvB.add(new Pair<>(neuralNets[i].getW(),neuralNets[i].gethBias()));
   }
-  vWvB.add(new Pair<>(outputLayer.getW(),outputLayer.getB()));
+  vWvB.add(new Pair<>(getOutputLayer().getW(),getOutputLayer().getB()));
   return pack(vWvB);
 }

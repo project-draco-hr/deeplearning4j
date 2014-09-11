@@ -1,5 +1,5 @@
 {
-  INDArray dxs=NDArrays.create(this.initFeatures.size(),this.initFeatures.get(0).columns());
+  INDArray dxs=Nd4j.create(this.initFeatures.size(),this.initFeatures.get(0).columns());
   int sum=0;
   INDArray features;
   int nearestCentroidIndex;

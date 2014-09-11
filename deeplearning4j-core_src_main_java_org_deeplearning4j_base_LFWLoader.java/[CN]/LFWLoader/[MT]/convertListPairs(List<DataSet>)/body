@@ -1,6 +1,6 @@
 {
-  INDArray inputs=NDArrays.create(images.size(),numPixelColumns);
-  INDArray outputs=NDArrays.create(images.size(),numNames);
+  INDArray inputs=Nd4j.create(images.size(),numPixelColumns);
+  INDArray outputs=Nd4j.create(images.size(),numNames);
   for (int i=0; i < images.size(); i++) {
     inputs.putRow(i,images.get(i).getFeatureMatrix());
     outputs.putRow(i,images.get(i).getLabels());

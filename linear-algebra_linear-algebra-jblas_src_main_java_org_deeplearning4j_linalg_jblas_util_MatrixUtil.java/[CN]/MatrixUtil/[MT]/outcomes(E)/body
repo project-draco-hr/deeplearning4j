@@ -1,5 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(d.rows,1);
-  for (int i=0; i < d.rows; i++)   ret.put(i,SimpleBlas.iamax(d.getRow(i)));
-  return createBasedOn(ret,d);
-}

@@ -1,0 +1,29 @@
+{
+  int inverseCount=encoder.getNeuralNets().length - 1;
+  NeuralNetwork[] autoEncoders=new NeuralNetwork[encoder.getNeuralNets().length * 2 - 1];
+  Layer[] hiddenLayers=new Layer[encoder.getNeuralNets().length * 2 - 1];
+  for (int i=0; i < autoEncoders.length; i++) {
+    if (i < encoder.getNeuralNets().length) {
+      AutoEncoder a=new AutoEncoder.Builder().configure(encoder.getNeuralNets()[i].conf()).withVisibleBias(encoder.getNeuralNets()[i].getvBias().dup()).withHBias(encoder.getNeuralNets()[i].gethBias().dup()).build();
+      Layer h=(Layer)encoder.getNeuralNets()[i].clone();
+      hiddenLayers[i]=h;
+      autoEncoders[i]=a;
+      if (i == encoder.getNeuralNets().length - 1)       a.conf().setActivationFunction(Activations.linear());
+    }
+ else {
+      AutoEncoder a=new AutoEncoder.Builder().configure(encoder.getNeuralNets()[inverseCount].conf()).withWeights(encoder.getNeuralNets()[inverseCount].getW().transpose()).withVisibleBias(encoder.getNeuralNets()[inverseCount].gethBias().dup()).withHBias(encoder.getNeuralNets()[inverseCount].getvBias().dup()).build();
+      autoEncoders[i]=a;
+      hiddenLayers[i]=(Layer)encoder.getNeuralNets()[inverseCount].transpose();
+      inverseCount--;
+    }
+  }
+  OutputLayer o=new OutputLayer.Builder().withBias(encoder.getNeuralNets()[0].getvBias()).withWeights(encoder.getNeuralNets()[0].getW().transpose()).build();
+  DeepAutoEncoder e=new DeepAutoEncoder();
+  e.setLayers(autoEncoders);
+  e.setUseDropConnect(encoder.isUseDropConnect());
+  e.setUseGaussNewtonVectorProductBackProp(encoder.isUseGaussNewtonVectorProductBackProp());
+  e.setSampleFromHiddenActivations(encoder.isSampleFromHiddenActivations());
+  e.setLineSearchBackProp(encoder.isLineSearchBackProp());
+  e.setForceNumEpochs(shouldForceEpochs);
+  return e;
+}

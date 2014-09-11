@@ -5,8 +5,8 @@
   }
   Future<E> f=Futures.future(new Callable<E>(){
     @Override public E call() throws Exception {
-      INDArray newInput=NDArrays.create(list.size(),list.get(0).getFeatureMatrix().columns());
-      INDArray newOutput=NDArrays.create(list.size(),list.get(0).getLabels().columns());
+      INDArray newInput=Nd4j.create(list.size(),list.get(0).getFeatureMatrix().columns());
+      INDArray newOutput=Nd4j.create(list.size(),list.get(0).getLabels().columns());
       for (int i=0; i < list.size(); i++) {
         newInput.putRow(i,list.get(i).getFeatureMatrix());
         newOutput.putRow(i,list.get(i).getLabels());

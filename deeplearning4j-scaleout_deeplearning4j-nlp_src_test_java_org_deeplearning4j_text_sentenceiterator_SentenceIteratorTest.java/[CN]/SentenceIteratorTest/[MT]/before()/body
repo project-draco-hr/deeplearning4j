@@ -1,0 +1,11 @@
+{
+  File test=new File("dir");
+  test.mkdir();
+  File testFile=new File(test,"test.txt");
+  FileUtils.writeLines(testFile,Arrays.asList("Hello","My","Name"));
+  File multiDir=new File("multidir");
+  for (int i=0; i < 2; i++) {
+    File newTestFile=new File(multiDir,"testfile-" + i);
+    FileUtils.writeLines(newTestFile,Arrays.asList("Sentence 1.","Sentence 2.","Sentence 3."));
+  }
+}

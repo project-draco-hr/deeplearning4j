@@ -1,0 +1,5 @@
+{
+  setFeatureVectors(vec.toVocabFloat());
+  this.numHidden=vec.getLayerSize();
+  return this;
+}

@@ -1,0 +1,9 @@
+{
+  int k=extraParams != null && extraParams.length < 1 ? 1 : (int)extraParams[0];
+  numTimesIterated++;
+  if (this.k <= 0)   this.k=k;
+  if (numTimesIterated % 10 == 0) {
+    this.k++;
+  }
+  return super.getValueGradient(iteration);
+}

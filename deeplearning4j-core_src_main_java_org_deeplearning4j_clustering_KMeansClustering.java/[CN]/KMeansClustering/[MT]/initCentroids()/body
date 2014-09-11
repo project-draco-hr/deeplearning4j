@@ -5,7 +5,7 @@
   }
   Random random=new Random();
   final INDArray firstCentroid=this.initFeatures.remove(random.nextInt(this.initFeatures.size()));
-  this.centroids=NDArrays.create(this.nbCluster,firstCentroid.columns());
+  this.centroids=Nd4j.create(this.nbCluster,firstCentroid.columns());
   this.centroids.putRow(0,firstCentroid);
   log.info("Added initial centroid");
   INDArray dxs;

@@ -1,0 +1,27 @@
+{
+  if (message instanceof String) {
+    String sentence=message.toString();
+    if (sentence.isEmpty())     return;
+    Tokenizer t=tokenizer.create(sentence);
+    List<String> tokens=new ArrayList<>();
+    while (t.hasMoreTokens())     tokens.add(t.nextToken());
+    getSelf().tell(tokens,getSelf());
+  }
+ else   if (message instanceof Collection) {
+    Collection<String> tokens=(Collection<String>)message;
+    for (    String token : tokens) {
+      if (stopWords.contains(token))       token="STOP";
+      cache.incrementWordCount(token);
+      if (!Util.matchesAnyStopWord(stopWords,token)) {
+        if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
+          VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
+          word.setIndex(cache.numWords());
+          cache.putVocabWord(token,word);
+          cache.addWordToIndex(cache.numWords(),token);
+        }
+      }
+    }
+    lastUpdate.getAndSet(System.currentTimeMillis());
+  }
+ else   unhandled(message);
+}

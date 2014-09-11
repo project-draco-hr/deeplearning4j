@@ -1,8 +1,0 @@
-{
-  HiddenLayer ret=new HiddenLayer(nIn,nOut,W,b,rng,input,weightInit);
-  ret.weightInit=weightInit;
-  ret.activationFunction=activationFunction;
-  ret.concatBiases=concatBiases;
-  ret.dist=dist;
-  return ret;
-}

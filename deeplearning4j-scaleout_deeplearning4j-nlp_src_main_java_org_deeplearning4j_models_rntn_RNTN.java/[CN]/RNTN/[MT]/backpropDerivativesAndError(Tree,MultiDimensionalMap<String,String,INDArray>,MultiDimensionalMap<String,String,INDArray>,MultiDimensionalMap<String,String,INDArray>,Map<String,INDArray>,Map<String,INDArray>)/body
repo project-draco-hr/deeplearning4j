@@ -1,0 +1,4 @@
+{
+  INDArray delta=Nd4j.create(numHidden,1);
+  backpropDerivativesAndError(tree,binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD,delta);
+}

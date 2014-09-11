@@ -1,0 +1,3 @@
+{
+  return Nd4j.toFlattened(getNumParameters(),binaryTransform.values().iterator(),binaryClassification.values().iterator(),binaryINd4j.values().iterator(),unaryClassification.values().iterator(),featureVectors.values().iterator());
+}

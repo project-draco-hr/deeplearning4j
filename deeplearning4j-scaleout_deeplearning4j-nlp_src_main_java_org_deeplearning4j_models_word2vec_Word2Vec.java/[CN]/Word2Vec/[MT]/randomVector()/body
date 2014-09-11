@@ -1,0 +1,7 @@
+{
+  INDArray ret=Nd4j.create(layerSize);
+  for (int i=0; i < ret.length(); i++) {
+    ret.putScalar(i,g.nextFloat() - 0.5f / layerSize);
+  }
+  return ret;
+}

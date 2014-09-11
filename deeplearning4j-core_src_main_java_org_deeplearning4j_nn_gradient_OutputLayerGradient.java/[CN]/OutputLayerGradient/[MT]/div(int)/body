@@ -1,4 +1,4 @@
 {
-  wGradient.divi(NDArrays.scalar(num));
-  bGradient.divi(NDArrays.scalar(num));
+  wGradient.divi(Nd4j.scalar(num));
+  bGradient.divi(Nd4j.scalar(num));
 }

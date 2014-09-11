@@ -1,8 +1,0 @@
-{
-  FloatMatrix U=new FloatMatrix(standardDeviations.rows,standardDeviations.columns);
-  for (int i=0; i < U.rows; i++)   for (int j=0; j < U.columns; j++) {
-    RealDistribution reals=new NormalDistribution(0,standardDeviations.get(i,j));
-    U.put(i,j,(float)reals.sample());
-  }
-  return U;
-}

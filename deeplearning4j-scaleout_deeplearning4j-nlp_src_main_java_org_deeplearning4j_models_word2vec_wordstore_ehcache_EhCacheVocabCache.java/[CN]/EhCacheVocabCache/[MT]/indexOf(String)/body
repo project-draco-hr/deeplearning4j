@@ -1,0 +1,5 @@
+{
+  Element ele=cache.get(word + "-" + INDEX);
+  if (ele != null && ele.getObjectValue() != null)   return (Integer)ele.getObjectValue();
+  return -1;
+}

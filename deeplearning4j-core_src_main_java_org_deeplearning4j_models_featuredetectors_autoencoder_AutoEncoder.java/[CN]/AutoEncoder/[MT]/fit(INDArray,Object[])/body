@@ -1,0 +1,4 @@
+{
+  AutoEncoderOptimizer o=new AutoEncoderOptimizer(this,conf.getLr(),params,conf.getOptimizationAlgo(),conf.getLossFunction());
+  o.train(input);
+}

@@ -4,13 +4,13 @@
   ActorNetworkRunner runner=new ActorNetworkRunner(iter);
   Conf conf=new Conf();
   conf.setFinetuneEpochs(1000);
-  conf.setPretrainLearningRate(0.0001);
+  conf.setPretrainLearningRate(0.0001f);
   conf.setLayerSizes(new int[]{500,250,100});
   conf.setMultiLayerClazz(DBN.class);
   conf.setnOut(10);
-  conf.setFinetuneLearningRate(0.0001);
+  conf.setFinetuneLearningRate(0.0001f);
   conf.setnIn(784);
-  conf.setL2(0.001);
+  conf.setL2(0.001f);
   conf.setMomentum(0);
   conf.setSplit(10);
   conf.setUseRegularization(false);

@@ -1,9 +1,0 @@
-{
-  double[] sample=new double[l];
-  for (int i=0; i < l; i++) {
-    int rand1=randomNumberBetween(0,doubles.length - 1);
-    int rand2=randomNumberBetween(0,doubles[i].length);
-    sample[i]=doubles[rand1][rand2];
-  }
-  return sample;
-}

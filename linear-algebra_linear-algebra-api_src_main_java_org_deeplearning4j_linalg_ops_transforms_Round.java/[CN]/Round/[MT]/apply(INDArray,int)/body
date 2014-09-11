@@ -1,9 +1,0 @@
-{
-  if (value instanceof IComplexNDArray) {
-    return NDArrays.scalar(ComplexUtil.round((org.deeplearning4j.linalg.api.complex.IComplexNumber)value.element()));
-  }
- else {
-    double val=(double)value.element();
-    return NDArrays.scalar(Math.round(val));
-  }
-}

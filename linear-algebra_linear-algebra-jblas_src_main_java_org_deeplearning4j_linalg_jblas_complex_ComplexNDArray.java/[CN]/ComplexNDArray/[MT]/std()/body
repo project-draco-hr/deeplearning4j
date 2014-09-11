@@ -1,8 +1,0 @@
-{
-  StandardDeviation dev=new StandardDeviation();
-  INDArray real=getReal();
-  NDArray imag=imag();
-  double std=dev.evaluate(real.data());
-  double std2=dev.evaluate(imag.data());
-  return new ComplexDouble(std,std2);
-}

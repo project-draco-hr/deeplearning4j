@@ -1,9 +1,0 @@
-{
-  try {
-    Constructor c=complexClazz.getConstructor(float[].class,int[].class,int[].class,int.class);
-    return (IComplexNDArray)c.newInstance(data,shape,stride,offset);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

@@ -1,7 +1,0 @@
-{
-  float range=1.0f / (float)(Math.sqrt((float)numHidden));
-  INDArray ret=NDArrays.zeros(numOuts,numHidden + 1);
-  INDArray insert=NDArrays.rand(numOuts,numHidden,-range,range,rng);
-  ret.put(new NDArrayIndex[]{interval(0,numOuts),interval(0,numHidden)},insert);
-  return NDArrays.getBlasWrapper().scal(scalingForInit,ret);
-}

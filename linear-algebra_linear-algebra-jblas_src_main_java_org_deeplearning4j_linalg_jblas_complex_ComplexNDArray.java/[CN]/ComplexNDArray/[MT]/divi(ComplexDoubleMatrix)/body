@@ -1,5 +1,0 @@
-{
-  ComplexNDArray flatten=ComplexNDArray.wrap(result);
-  new TwoArrayOps().from(this).to(this).other(flatten).op(DivideOp.class).build().exec();
-  return this;
-}

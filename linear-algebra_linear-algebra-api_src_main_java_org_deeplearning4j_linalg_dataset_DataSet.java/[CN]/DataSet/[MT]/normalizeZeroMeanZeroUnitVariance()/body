@@ -1,7 +1,0 @@
-{
-  INDArray columnMeans=getFeatures().mean(1);
-  INDArray columnStds=getFeatureMatrix().std(1);
-  setFeatures(getFeatures().subiRowVector(columnMeans));
-  columnStds.addi(NDArrays.scalar(1e-6));
-  setFeatures(getFeatures().diviRowVector(columnStds));
-}

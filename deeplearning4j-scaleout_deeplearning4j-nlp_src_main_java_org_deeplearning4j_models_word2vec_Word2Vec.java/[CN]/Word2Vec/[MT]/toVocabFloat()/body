@@ -1,0 +1,8 @@
+{
+  Map<String,INDArray> ret=new HashMap<>();
+  for (int i=0; i < cache.numWords(); i++) {
+    String word=cache.wordAtIndex(i);
+    ret.put(word,getWordVectorMatrix(word));
+  }
+  return ret;
+}

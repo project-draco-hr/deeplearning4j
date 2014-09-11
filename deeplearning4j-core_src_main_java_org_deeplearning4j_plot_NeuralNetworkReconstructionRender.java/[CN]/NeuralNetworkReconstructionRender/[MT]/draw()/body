@@ -1,7 +1,7 @@
 {
   while (iter.hasNext()) {
     DataSet first=iter.next();
-    INDArray reconstruct=network.reconstruct(first.getFeatureMatrix());
+    INDArray reconstruct=network.transform(first.getFeatureMatrix());
     for (int j=0; j < first.numExamples(); j++) {
       INDArray draw1=first.get(j).getFeatureMatrix().mul(255);
       INDArray reconstructed2=reconstruct.getRow(j);

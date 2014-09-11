@@ -1,4 +1,0 @@
-{
-  if (d instanceof IComplexFloat)   return exp((IComplexFloat)d);
-  return exp((IComplexDouble)d);
-}

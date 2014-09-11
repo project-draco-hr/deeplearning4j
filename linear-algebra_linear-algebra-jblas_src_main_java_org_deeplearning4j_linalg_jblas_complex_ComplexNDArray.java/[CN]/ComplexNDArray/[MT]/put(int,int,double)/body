@@ -1,5 +1,0 @@
-{
-  if (shape.length == 2)   put(row,column,new ComplexDouble(value));
- else   throw new UnsupportedOperationException("Invalid applyTransformToDestination for a non 2d array");
-  return this;
-}

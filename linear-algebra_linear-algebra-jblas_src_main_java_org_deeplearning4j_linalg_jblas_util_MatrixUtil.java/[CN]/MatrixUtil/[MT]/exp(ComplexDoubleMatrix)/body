@@ -1,8 +1,0 @@
-{
-  ComplexDoubleMatrix ret=new ComplexDoubleMatrix(input.rows,input.columns);
-  for (int i=0; i < ret.length; i++) {
-    org.deeplearning4j.linalg.jblas.complex.ComplexDouble d=(org.deeplearning4j.linalg.jblas.complex.ComplexDouble)ComplexUtil.exp(new org.deeplearning4j.linalg.jblas.complex.ComplexDouble(input.get(i)));
-    ret.put(i,d);
-  }
-  return ret;
-}

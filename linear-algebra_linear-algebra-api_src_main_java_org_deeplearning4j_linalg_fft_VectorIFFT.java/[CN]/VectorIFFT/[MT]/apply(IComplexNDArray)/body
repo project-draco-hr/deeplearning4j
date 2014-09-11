@@ -1,4 +1,0 @@
-{
-  IComplexNDArray ret=new VectorFFT(n).apply(ndArray.conj()).conj().divi(NDArrays.scalar(n));
-  return originalN > 0 ? ComplexNDArrayUtil.truncate(ret,originalN,0) : ret;
-}

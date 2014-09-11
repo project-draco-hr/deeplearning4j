@@ -1,0 +1,16 @@
+{
+  Layer layer=null;
+  try {
+    layer=getClass().newInstance();
+  }
+ catch (  InstantiationException e) {
+    e.printStackTrace();
+  }
+catch (  IllegalAccessException e) {
+    e.printStackTrace();
+  }
+  layer.setB(b.dup());
+  layer.setW(W.transpose().dup());
+  if (input != null)   layer.setInput(input.transpose().dup());
+  return layer;
+}

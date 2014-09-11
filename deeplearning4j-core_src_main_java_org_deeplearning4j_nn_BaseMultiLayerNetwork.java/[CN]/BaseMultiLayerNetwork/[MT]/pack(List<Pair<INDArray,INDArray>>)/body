@@ -1,17 +1,11 @@
 {
-  if (layers.size() != this.layers.length + 1)   throw new IllegalArgumentException("Illegal number of layers passed in. Was " + layers.size() + " when should have been "+ (this.layers.length + 1));
-  double[][] allMatrices=new double[(this.layers.length + 1) * 2][];
-  int count=0;
-  for (int i=0; i < this.layers.length; i++) {
-    allMatrices[count++]=layers.get(i).getFirst().data();
-    if (allMatrices[count - 1].length != getLayers()[i].getW().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getLayers()[i].getW().length());
-    allMatrices[count++]=layers.get(i).getSecond().data();
-    if (allMatrices[count - 1].length != getLayers()[i].gethBias().length())     throw new IllegalArgumentException("Unable to convert the given matrix to the given length. not of same length as W. Length is " + allMatrices[count].length + " when should be "+ getLayers()[i].gethBias().length());
+  if (layers.size() != this.neuralNets.length + 1)   throw new IllegalArgumentException("Illegal number of neuralNets passed in. Was " + layers.size() + " when should have been "+ (this.neuralNets.length + 1));
+  List<INDArray> list=new ArrayList<>();
+  for (int i=0; i < layers.size(); i++) {
+    list.add(layers.get(i).getFirst());
+    list.add(layers.get(i).getSecond());
   }
-  allMatrices[count++]=layers.get(layers.size() - 1).getFirst().data();
-  allMatrices[count++]=layers.get(layers.size() - 1).getSecond().data();
-  INDArray ret=NDArrays.create(ArrayUtil.combine(allMatrices));
-  int params=numParams();
-  if (ret.length() != params)   throw new IllegalStateException("Returning an invalid matrix of length " + ret.length() + " when should have been "+ params);
-  return ret.reshape(1,ret.length());
+  INDArray ret=Nd4j.toFlattened(list);
+  if (ret.length() != numParams())   throw new IllegalStateException("Illegal number of parameters found in the layers with a difference of " + Math.abs(ret.length() - numParams()));
+  return ret;
 }

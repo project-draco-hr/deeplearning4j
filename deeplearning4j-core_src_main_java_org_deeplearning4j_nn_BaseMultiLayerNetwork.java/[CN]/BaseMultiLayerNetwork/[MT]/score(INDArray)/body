@@ -1,8 +1,8 @@
 {
   INDArray params=params();
   setParameters(param);
-  double ret=score();
-  double regCost=0.5 * l2 * (double)Transforms.pow(mask.mul(param),2).sum(Integer.MAX_VALUE).element();
+  float ret=score();
+  float regCost=0.5f * defaultConfiguration.getL2() * (float)Transforms.pow(mask.mul(param),2).sum(Integer.MAX_VALUE).element();
   setParameters(params);
   return ret + regCost;
 }

@@ -1,6 +1,0 @@
-{
-  double combo=MathUtils.combination(n,k);
-  double p=successProb;
-  double q=1 - successProb;
-  return combo * Math.pow(p,k) * Math.pow(q,n - k);
-}

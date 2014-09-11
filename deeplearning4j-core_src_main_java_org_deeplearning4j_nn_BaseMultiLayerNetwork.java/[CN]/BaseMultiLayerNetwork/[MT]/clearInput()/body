@@ -1,5 +1,7 @@
 {
   this.input=null;
-  for (int i=0; i < layers.length; i++)   layers[i].clearInput();
-  outputLayer.setInput(null);
+  for (int i=0; i < neuralNets.length; i++) {
+    neuralNets[i].clearInput();
+    layers[i].setInput(null);
+  }
 }

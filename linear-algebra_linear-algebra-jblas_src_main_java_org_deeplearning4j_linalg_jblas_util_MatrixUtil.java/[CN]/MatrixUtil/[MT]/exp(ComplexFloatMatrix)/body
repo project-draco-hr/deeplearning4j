@@ -1,8 +1,0 @@
-{
-  ComplexFloatMatrix ret=new ComplexFloatMatrix(input.rows,input.columns);
-  for (int i=0; i < ret.length; i++) {
-    org.jblas.ComplexFloat f=(org.deeplearning4j.linalg.jblas.complex.ComplexFloat)ComplexUtil.exp(new org.deeplearning4j.linalg.jblas.complex.ComplexFloat(input.get(i)));
-    ret.put(i,f);
-  }
-  return ret;
-}

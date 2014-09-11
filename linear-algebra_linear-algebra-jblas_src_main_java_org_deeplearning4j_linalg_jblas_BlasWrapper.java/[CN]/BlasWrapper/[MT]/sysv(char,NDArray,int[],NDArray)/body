@@ -1,6 +1,0 @@
-{
-  int info=NativeBlas.dsysv(uplo,a.rows,b.columns,a.data,0,a.rows,ipiv,0,b.data,0,b.rows);
-  checkInfo("SYSV",info);
-  if (info > 0)   throw new LapackSingularityException("SYV","Linear equation cannot be solved because the matrix was singular.");
-  return b;
-}

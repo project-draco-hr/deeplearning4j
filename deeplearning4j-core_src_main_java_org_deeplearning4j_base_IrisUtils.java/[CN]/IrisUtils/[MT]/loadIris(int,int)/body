@@ -2,7 +2,7 @@
   ClassPathResource resource=new ClassPathResource("/iris.dat");
   @SuppressWarnings("unchecked") List<String> lines=IOUtils.readLines(resource.getInputStream());
   List<DataSet> list=new ArrayList<>();
-  INDArray ret=NDArrays.ones(to,4);
+  INDArray ret=Nd4j.ones(to,4);
   List<String> outcomeTypes=new ArrayList<>();
   double[][] outcomes=new double[lines.size()][3];
   for (int i=from; i < to; i++) {
@@ -15,6 +15,6 @@
     rowOutcome[outcomeTypes.indexOf(outcome)]=1;
     outcomes[i]=rowOutcome;
   }
-  for (int i=0; i < ret.rows(); i++)   list.add(new DataSet(ret.getRow(i),NDArrays.create(outcomes[i]).transpose()));
+  for (int i=0; i < ret.rows(); i++)   list.add(new DataSet(ret.getRow(i),Nd4j.create(outcomes[i])));
   return list;
 }

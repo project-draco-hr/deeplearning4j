@@ -1,9 +1,0 @@
-{
-  if (value instanceof IComplexNDArray) {
-    IComplexNumber num=(IComplexNumber)value.element();
-    if (num.realComponent().doubleValue() > max)     return NDArrays.scalar(num);
-    return NDArrays.scalar(num.set(max,num.imaginaryComponent()));
-  }
-  double val=(double)value.element();
-  return NDArrays.scalar(Math.max(max,val));
-}

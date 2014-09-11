@@ -1,5 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(toDiv.rows,toDiv.columns);
-  for (int i=0; i < ret.length; i++)   ret.put(i,div / toDiv.get(i) + 1e-6);
-  return createBasedOn(ret,toDiv);
-}

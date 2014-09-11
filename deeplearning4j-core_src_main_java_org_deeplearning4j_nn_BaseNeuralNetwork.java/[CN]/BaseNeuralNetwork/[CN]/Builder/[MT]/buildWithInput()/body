@@ -6,24 +6,7 @@
     Class<?>[] classes=curr.getParameterTypes();
     if (classes != null && classes.length > 0 && classes[0].isAssignableFrom(INDArray.class)) {
       try {
-        ret=(E)curr.newInstance(input,numVisible,numHidden,W,hBias,vBias,gen,fanIn,dist);
-        ret.cacheInput=cacheInput;
-        ret.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
-        ret.weightInit=weightInit;
-        ret.concatBiases=concatBiases;
-        ret.sparsity=this.sparsity;
-        ret.resetAdaGradIterations=resetAdaGradIterations;
-        ret.momentumAfter=momentumAfter;
-        ret.applySparsity=this.applySparsity;
-        ret.normalizeByInputRows=this.normalizeByInputRows;
-        ret.renderWeightsEveryNumEpochs=this.renderWeightsEveryNumEpochs;
-        ret.l2=this.l2;
-        ret.momentum=this.momentum;
-        ret.useRegularization=this.useRegularization;
-        ret.useAdaGrad=this.useAdaGrad;
-        ret.dropOut=this.dropOut;
-        ret.optimizationAlgo=this.optimizationAlgo;
-        ret.lossFunction=this.lossFunction;
+        ret=(E)curr.newInstance(input,W,hBias,vBias,conf);
         return ret;
       }
  catch (      Exception e) {

@@ -1,0 +1,6 @@
+{
+  INDArray wxB=visibleSample.mmul(W).addiRowVector(hBias);
+  double vBiasTerm=Nd4j.getBlasWrapper().dot(visibleSample,vBias);
+  double hBiasTerm=(double)log(exp(wxB).add(1)).sum(Integer.MAX_VALUE).element();
+  return -hBiasTerm - vBiasTerm;
+}

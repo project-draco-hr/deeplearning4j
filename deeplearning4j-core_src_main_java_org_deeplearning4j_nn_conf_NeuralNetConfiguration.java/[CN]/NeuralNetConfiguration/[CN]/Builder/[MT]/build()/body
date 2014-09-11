@@ -1,0 +1,4 @@
+{
+  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,renderWeightsEveryNumEpochs,concatBiases,constrainGradientToUnitNorm,rng,dist,seed,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,activationType,weightShape,filterSize,numFeatureMaps,stride,featureMapSize,numInFeatureMaps);
+  return ret;
+}

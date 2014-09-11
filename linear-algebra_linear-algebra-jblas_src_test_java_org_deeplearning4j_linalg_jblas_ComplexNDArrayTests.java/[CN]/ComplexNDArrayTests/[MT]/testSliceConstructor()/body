@@ -1,7 +1,0 @@
-{
-  List<ComplexNDArray> testList=new ArrayList<>();
-  for (int i=0; i < 5; i++)   testList.add(ComplexNDArray.scalar(i + 1));
-  IComplexNDArray test=new ComplexNDArray(testList,new int[]{testList.size()});
-  IComplexNDArray expected=new ComplexNDArray(new NDArray(new double[]{1,2,3,4,5},new int[]{5}));
-  assertEquals(expected,test);
-}

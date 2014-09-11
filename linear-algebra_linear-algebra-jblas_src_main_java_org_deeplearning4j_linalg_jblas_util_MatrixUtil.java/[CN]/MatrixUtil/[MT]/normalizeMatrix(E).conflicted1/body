@@ -1,7 +1,0 @@
-{
-  FloatMatrix columnMeans=toNormalize.columnMeans();
-  toNormalize.subiRowVector(columnMeans);
-  FloatMatrix std=columnStd(toNormalize);
-  std.addi(1e-6f);
-  toNormalize.diviRowVector(std);
-}

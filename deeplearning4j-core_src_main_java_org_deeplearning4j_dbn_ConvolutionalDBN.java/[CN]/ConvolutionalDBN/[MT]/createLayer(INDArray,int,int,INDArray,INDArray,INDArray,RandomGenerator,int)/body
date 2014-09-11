@@ -1,4 +1,0 @@
-{
-  ConvolutionalRBM r=new ConvolutionalRBM.Builder().withDistribution(getDist()).withDropOut(getDropOut()).withOptmizationAlgo(getOptimizationAlgorithm()).withFilterSize(filterSizes[index]).withInput(input).numberOfVisible(nVisible).useAdaGrad(isUseAdaGrad()).normalizeByInputRows(normalizeByInputRows).numHidden(nHidden).withHBias(hbias).withMomentum(getMomentum()).withL2(getL2()).useRegularization(isUseRegularization()).withRandom(rng).withLossFunction(getLossFunction()).withStride(stride[index]).withNumFilters(numFilters[index]).withSparseGain(sparseGain).withSparsity(getSparsity()).withWeights(W).build();
-  return r;
-}

@@ -1,9 +1,9 @@
 {
   Map<Integer,Integer> mapHistory=this.generateHistogramBuckets(data,numberBins);
-  double min=(double)data.min(Integer.MAX_VALUE).element();
-  double max=(double)data.max(Integer.MAX_VALUE).element();
-  double range=max - min;
-  double stepSize=range / numberBins;
+  float min=(float)data.min(Integer.MAX_VALUE).element();
+  float max=(float)data.max(Integer.MAX_VALUE).element();
+  float range=max - min;
+  float stepSize=range / numberBins;
   int xOffset=50;
   int yOffset=-50;
   int graphWidth=600;
@@ -22,11 +22,11 @@
     int value=mapHistory.get(key);
     maxValue=Math.max(maxValue,value);
   }
-  double plotAreaHeight=(graphHeight + yOffset);
-  double yScaleStepSize=plotAreaHeight / 4;
-  double yLabelStepSize=(double)maxValue / 4.0;
+  float plotAreaHeight=(graphHeight + yOffset);
+  float yScaleStepSize=plotAreaHeight / 4;
+  float yLabelStepSize=(float)maxValue / 4.0f;
   for (int yStep=0; yStep < 5; yStep++) {
-    double curLabel=yStep * yLabelStepSize;
+    float curLabel=yStep * yLabelStepSize;
     int curY=(graphHeight + yOffset) - Math.round(((float)(curLabel) / (float)maxValue) * (graphHeight + yOffset - 20));
     g2d.setColor(Color.BLACK);
     g2d.drawString("" + curLabel,10,curY);

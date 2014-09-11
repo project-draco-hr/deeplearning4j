@@ -1,3 +1,0 @@
-{
-  if (getFeatures().rows() != getLabels().rows())   throw new IllegalStateException("Invalid dataset");
-}

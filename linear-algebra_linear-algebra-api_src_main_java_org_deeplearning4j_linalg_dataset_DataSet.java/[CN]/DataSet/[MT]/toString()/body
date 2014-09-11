@@ -1,5 +1,0 @@
-{
-  StringBuilder builder=new StringBuilder();
-  builder.append("===========INPUT===================\n").append(getFeatures().toString().replaceAll(";","\n")).append("\n=================OUTPUT==================\n").append(getLabels().toString().replaceAll(";","\n"));
-  return builder.toString();
-}

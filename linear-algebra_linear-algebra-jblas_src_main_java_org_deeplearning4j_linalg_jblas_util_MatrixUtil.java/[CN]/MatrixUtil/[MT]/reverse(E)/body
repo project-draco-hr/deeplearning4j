@@ -1,8 +1,0 @@
-{
-  DoubleMatrix ret=new DoubleMatrix(toReverse.rows,toReverse.columns);
-  int reverseIndex=0;
-  for (int i=toReverse.length - 1; i >= 0; i--) {
-    ret.put(reverseIndex++,toReverse.get(i));
-  }
-  return createBasedOn(ret,toReverse);
-}

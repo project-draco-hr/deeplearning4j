@@ -1,56 +1,29 @@
 {
-  if (network.layers != null && network.getnLayers() > 0) {
-    this.setnLayers(network.getLayers().length);
-    this.layers=new NeuralNetwork[network.getLayers().length];
-    for (int i=0; i < layers.length; i++)     if ((this.getnLayers()) > i && (network.getnLayers() > i)) {
-      if (network.getLayers()[i] == null) {
+  if (network.neuralNets != null && network.getnLayers() > 0) {
+    this.setnLayers(network.getNeuralNets().length);
+    this.neuralNets=new NeuralNetwork[network.getNeuralNets().length];
+    for (int i=0; i < neuralNets.length; i++)     if ((this.getnLayers()) > i && (network.getnLayers() > i)) {
+      if (network.getNeuralNets()[i] == null) {
         throw new IllegalStateException("Will not clone uninitialized network, layer " + i + " of network was null");
       }
-      this.getLayers()[i]=network.getLayers()[i].clone();
+      this.getNeuralNets()[i]=network.getNeuralNets()[i].clone();
     }
   }
-  this.sampleOrActivate=network.sampleOrActivate;
-  this.layerLearningRates=network.layerLearningRates;
-  this.normalizeByInputRows=network.normalizeByInputRows;
-  this.useAdaGrad=network.useAdaGrad;
-  this.outputLayerDropout=network.outputLayerDropout;
   this.hiddenLayerSizes=network.hiddenLayerSizes;
-  if (network.outputLayer != null)   this.outputLayer=network.outputLayer.clone();
-  this.nIns=network.nIns;
-  this.nOuts=network.nOuts;
-  this.rng=network.rng;
-  this.dist=network.dist;
-  this.renderByLayer=network.renderByLayer;
-  this.activation=network.activation;
-  this.useRegularization=network.useRegularization;
-  this.columnMeans=network.columnMeans;
-  this.columnStds=network.columnStds;
-  this.columnSums=network.columnSums;
+  this.defaultConfiguration=network.defaultConfiguration;
   this.errorTolerance=network.errorTolerance;
-  this.renderWeightsEveryNEpochs=network.renderWeightsEveryNEpochs;
   this.forceNumEpochs=network.forceNumEpochs;
   this.input=network.input;
-  this.l2=network.l2;
   this.labels=network.labels;
-  this.momentum=network.momentum;
   this.learningRateUpdate=network.learningRateUpdate;
   this.shouldBackProp=network.shouldBackProp;
   this.weightTransforms=network.weightTransforms;
-  this.sparsity=network.sparsity;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
-  this.dropOut=network.dropOut;
-  this.optimizationAlgorithm=network.optimizationAlgorithm;
-  this.lossFunction=network.lossFunction;
-  this.outputLayer=network.outputLayer;
-  this.outputActivationFunction=network.outputActivationFunction;
-  this.lossFunctionByLayer=network.lossFunctionByLayer;
-  this.outputLossFunction=network.outputLossFunction;
   this.useDropConnect=network.useDropConnect;
   this.useGaussNewtonVectorProductBackProp=network.useGaussNewtonVectorProductBackProp;
-  this.constrainGradientToUnitNorm=network.constrainGradientToUnitNorm;
-  if (network.sigmoidLayers != null && network.sigmoidLayers.length > 0) {
-    this.sigmoidLayers=new HiddenLayer[network.sigmoidLayers.length];
-    for (int i=0; i < sigmoidLayers.length; i++)     this.getSigmoidLayers()[i]=network.getSigmoidLayers()[i].clone();
+  if (network.neuralNets != null && network.neuralNets.length > 0) {
+    this.neuralNets=new NeuralNetwork[network.neuralNets.length];
+    for (int i=0; i < neuralNets.length; i++)     this.getNeuralNets()[i]=network.getNeuralNets()[i].clone();
   }
 }

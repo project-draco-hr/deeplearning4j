@@ -1,4 +1,0 @@
-{
-  if (!isScalar())   throw new IllegalStateException("Unable to get the element of a non scalar");
-  return get(0);
-}

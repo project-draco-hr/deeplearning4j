@@ -1,5 +1,0 @@
-{
-  int info=NativeBlas.dsyev(jobz,uplo,a.rows,a.data,0,a.rows,w.data,0);
-  if (info > 0)   throw new LapackConvergenceException("SYEV","Eigenvalues could not be computed " + info + " off-diagonal elements did not converge");
-  return info;
-}

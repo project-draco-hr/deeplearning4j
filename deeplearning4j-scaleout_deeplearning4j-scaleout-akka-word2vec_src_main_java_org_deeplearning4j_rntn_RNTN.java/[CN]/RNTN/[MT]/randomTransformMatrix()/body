@@ -1,7 +1,0 @@
-{
-  INDArray binary=NDArrays.create(numHidden,numHidden * 2 + 1);
-  INDArray block=randomTransformBlock();
-  binary.put(new NDArrayIndex[]{interval(0,block.rows()),interval(0,block.columns())},block);
-  binary.put(new NDArrayIndex[]{interval(0,block.rows()),interval(numHidden,numHidden + block.columns())},randomTransformBlock());
-  return NDArrays.getBlasWrapper().scal(scalingForInit,binary);
-}

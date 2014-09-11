@@ -1,0 +1,55 @@
+{
+  readStopWords();
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
+  final AtomicInteger queued=new AtomicInteger(0);
+  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,layerSize,stopWords,semaphore,minWordFrequency)));
+  int numCores=Runtime.getRuntime().availableProcessors();
+  final CountDownLatch latch=new CountDownLatch(numCores);
+  for (int i=0; i < numCores; i++) {
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      @Override public Void call() throws Exception {
+        while (getSentenceIter().hasNext()) {
+          String sentence=getSentenceIter().nextSentence();
+          if (sentence == null)           return null;
+          vocabActor.tell(sentence,vocabActor);
+          queued.incrementAndGet();
+          if (queued.get() % 10000 == 0)           log.info("Sent " + queued);
+        }
+        return null;
+      }
+    }
+,trainingSystem.dispatcher());
+    f.onComplete(new OnComplete<Void>(){
+      @Override public void onComplete(      Throwable failure,      Void success) throws Throwable {
+        if (failure != null)         log.error("Error thrown ",failure);
+        latch.countDown();
+      }
+    }
+,trainingSystem.dispatcher());
+  }
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+  boolean done=false;
+  long fiveMinutes=TimeUnit.MINUTES.toMillis(1);
+  while (!done) {
+    long curr=System.currentTimeMillis();
+    long lastChanged=semaphore.get();
+    long diff=Math.abs(curr - lastChanged);
+    log.info("Waiting on setup...");
+    if (diff >= fiveMinutes) {
+      done=true;
+    }
+ else     try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+  setup();
+}

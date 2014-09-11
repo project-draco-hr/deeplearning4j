@@ -1,0 +1,21 @@
+{
+  INDArray vMean=h.mmul(W.transpose());
+  if (conf.isConcatBiases())   vMean=Nd4j.concatHorizontally(vMean,vBias);
+ else   vMean.addiRowVector(vBias);
+  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
+    INDArray sample=Sampling.normal(conf.getRng(),vMean,1.0);
+    vMean.addi(sample);
+    return vMean;
+  }
+ else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {
+    vMean=Sampling.normal(conf.getRng(),vMean,1);
+    return vMean;
+  }
+ else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {
+    return sigmoid(vMean);
+  }
+ else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
+    return Activations.softMaxRows().apply(vMean);
+  }
+  throw new IllegalStateException("Visible unit type should either be binary or gaussian");
+}

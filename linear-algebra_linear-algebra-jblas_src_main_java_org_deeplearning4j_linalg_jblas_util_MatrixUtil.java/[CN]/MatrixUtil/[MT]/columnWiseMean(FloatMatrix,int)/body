@@ -1,7 +1,0 @@
-{
-  FloatMatrix ret=FloatMatrix.zeros(x.columns);
-  for (int i=0; i < x.columns; i++) {
-    ret.put(i,x.getColumn(axis).mean());
-  }
-  return ret;
-}

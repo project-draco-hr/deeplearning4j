@@ -1,0 +1,69 @@
+{
+  if (!lineSearch) {
+    log.info("BEGIN BACKPROP WITH SCORE OF " + network.score());
+    Float lastEntropy=network.score();
+    BaseMultiLayerNetwork revert=network.clone();
+    if (network.isForceNumEpochs()) {
+      for (int i=0; i < epochs; i++) {
+        if (i % network.getDefaultConfiguration().getResetAdaGradIterations() == 0)         network.getOutputLayer().getAdaGrad().historicalGradient=null;
+        network.backPropStep();
+        log.info("Iteration " + i + " error "+ network.score());
+      }
+    }
+ else {
+      boolean train=true;
+      int count=0;
+      float changeTolerance=1e-6f;
+      int backPropIterations=0;
+      while (train) {
+        if (backPropIterations >= epochs) {
+          log.info("Backprop number of iterations max hit; converging");
+          break;
+        }
+        count++;
+        network.backPropStep();
+        Float entropy=network.score();
+        if (lastEntropy == null || entropy < lastEntropy) {
+          float diff=Math.abs(entropy - lastEntropy);
+          if (diff < changeTolerance) {
+            log.info("Not enough of a change on back prop...breaking");
+            break;
+          }
+ else           lastEntropy=entropy;
+          log.info("New score " + lastEntropy);
+          revert=network.clone();
+        }
+ else         if (count >= epochs) {
+          log.info("Hit max number of epochs...breaking");
+          train=false;
+        }
+ else         if (entropy >= lastEntropy) {
+          train=false;
+          network.update(revert);
+          log.info("Reverting to best score " + lastEntropy);
+        }
+        backPropIterations++;
+      }
+    }
+  }
+ else {
+    NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getDefaultConfiguration().getOptimizationAlgo();
+    if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+      VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this);
+      g.setTrainingEvaluator(eval);
+      g.setMaxIterations(numEpochs);
+      g.optimize(numEpochs);
+    }
+ else     if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE) {
+      StochasticHessianFree s=new StochasticHessianFree(this,network);
+      s.setTrainingEvaluator(eval);
+      s.setMaxIterations(numEpochs);
+      s.optimize(numEpochs);
+    }
+ else {
+      VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this);
+      g.setTrainingEvaluator(eval);
+      g.optimize(numEpochs);
+    }
+  }
+}

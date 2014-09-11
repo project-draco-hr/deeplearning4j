@@ -1,4 +1,0 @@
-{
-  if (index >= logReg.getW().length())   return (double)logReg.getB().getScalar(index - logReg.getW().length()).element();
-  return (double)logReg.getW().getScalar(index).element();
-}

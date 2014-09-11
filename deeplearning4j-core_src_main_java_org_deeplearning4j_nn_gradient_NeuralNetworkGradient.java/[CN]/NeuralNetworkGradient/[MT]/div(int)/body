@@ -1,5 +1,5 @@
 {
-  wGradient.divi(NDArrays.scalar(num));
-  vBiasGradient.divi(NDArrays.scalar(num));
-  hBiasGradient.divi(NDArrays.scalar(num));
+  wGradient.divi(Nd4j.scalar(num));
+  vBiasGradient.divi(Nd4j.scalar(num));
+  hBiasGradient.divi(Nd4j.scalar(num));
 }

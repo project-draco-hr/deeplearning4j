@@ -1,7 +1,0 @@
-{
-  StringBuilder builder=new StringBuilder();
-  builder.append(" " + r.getVisibleType() + " -> "+ r.getHiddenType());
-  builder.append(" " + r.getnVisible() + " -> "+ r.getnHidden());
-  builder.append("\n");
-  return builder.toString();
-}

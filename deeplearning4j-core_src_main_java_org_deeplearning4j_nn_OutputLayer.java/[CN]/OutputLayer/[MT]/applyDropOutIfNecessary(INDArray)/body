@@ -1,7 +1,0 @@
-{
-  if (dropOut > 0) {
-    this.dropoutMask=NDArrays.rand(input.rows(),this.nOut).gt(dropOut);
-  }
- else   this.dropoutMask=NDArrays.ones(input.rows(),this.nOut);
-  input.muli(dropoutMask);
-}

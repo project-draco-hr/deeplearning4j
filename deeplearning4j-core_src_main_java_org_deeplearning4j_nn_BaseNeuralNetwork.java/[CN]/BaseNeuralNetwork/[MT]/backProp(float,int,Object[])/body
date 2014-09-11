@@ -1,0 +1,33 @@
+{
+  float currRecon=squaredLoss();
+  boolean train=true;
+  NeuralNetwork revert=clone();
+  while (train) {
+    if (iterations > iterations)     break;
+    float newRecon=this.squaredLoss();
+    if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
+      update((BaseNeuralNetwork)revert);
+      log.info("Converged for new recon; breaking...");
+      break;
+    }
+ else     if (Double.isNaN(newRecon) || Double.isInfinite(newRecon)) {
+      update((BaseNeuralNetwork)revert);
+      log.info("Converged for new recon; breaking...");
+      break;
+    }
+ else     if (newRecon == currRecon)     break;
+ else {
+      currRecon=newRecon;
+      revert=clone();
+      log.info("Recon went down " + currRecon);
+    }
+    iterations++;
+    int plotIterations=conf.getRenderWeightsEveryNumEpochs();
+    if (plotIterations > 0) {
+      NeuralNetPlotter plotter=new NeuralNetPlotter();
+      if (iterations % plotIterations == 0) {
+        plotter.plotNetworkGradient(this,getGradient(extraParams),getInput().rows());
+      }
+    }
+  }
+}

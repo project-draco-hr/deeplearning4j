@@ -1,7 +1,0 @@
-{
-  double d=c.realComponent().doubleValue() * c.realComponent().doubleValue() + c.imaginaryComponent().doubleValue() * c.imaginaryComponent().doubleValue();
-  double newR=(real() * c.realComponent().doubleValue() + imag() * c.imaginaryComponent().doubleValue()) / d;
-  double newI=(imag() * c.realComponent().doubleValue() - real() * c.imaginaryComponent().doubleValue()) / d;
-  result.set(newR,newI);
-  return result;
-}

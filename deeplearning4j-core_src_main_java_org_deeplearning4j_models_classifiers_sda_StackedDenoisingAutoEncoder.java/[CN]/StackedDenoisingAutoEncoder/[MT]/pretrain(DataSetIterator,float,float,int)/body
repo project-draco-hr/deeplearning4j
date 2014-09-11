@@ -1,0 +1,44 @@
+{
+  INDArray layerInput;
+  for (int i=0; i < getnLayers(); i++) {
+    if (i == 0) {
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        this.input=next.getFeatureMatrix();
+        if (this.getInput() == null || this.getNeuralNets() == null || this.getNeuralNets()[0] == null || this.getNeuralNets() == null || this.getNeuralNets()[0] == null) {
+          setInput(input);
+          initializeLayers(input);
+        }
+ else         setInput(input);
+        float realLearningRate=layerWiseConfigurations.get(i).getLr();
+        if (isForceNumEpochs()) {
+          for (int iteration=0; iteration < iterations; iteration++) {
+            log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
+            getNeuralNets()[i].iterate(next.getFeatureMatrix(),new Object[]{corruptionLevel,lr});
+            getNeuralNets()[i].iterationDone(iteration);
+          }
+        }
+ else         getNeuralNets()[i].fit(next.getFeatureMatrix(),new Object[]{corruptionLevel,realLearningRate,iterations});
+      }
+      iter.reset();
+    }
+ else {
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        layerInput=next.getFeatureMatrix();
+        for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j,layerInput);
+        log.info("Training on layer " + (i + 1));
+        float realLearningRate=layerWiseConfigurations.get(i).getLr();
+        if (isForceNumEpochs()) {
+          for (int iteration=0; iteration < iterations; iteration++) {
+            log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
+            getNeuralNets()[i].iterate(layerInput,new Object[]{corruptionLevel,lr});
+            getNeuralNets()[i].iterationDone(iteration);
+          }
+        }
+ else         getNeuralNets()[i].fit(layerInput,new Object[]{corruptionLevel,realLearningRate,iterations});
+      }
+      iter.reset();
+    }
+  }
+}

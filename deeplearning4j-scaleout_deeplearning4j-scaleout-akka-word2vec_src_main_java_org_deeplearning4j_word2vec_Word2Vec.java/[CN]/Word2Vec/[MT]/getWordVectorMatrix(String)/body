@@ -1,6 +1,0 @@
-{
-  int i=this.wordIndex.indexOf(word);
-  if (oob == null)   oob=new float[layerSize];
-  if (i < 0)   return NDArrays.create(oob,new int[]{layerSize});
-  return syn0.getRow(i);
-}

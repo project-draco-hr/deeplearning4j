@@ -1,0 +1,50 @@
+{
+  if (sentences == null || !sentences.hasNext()) {
+    try {
+      if (getReader().hasNext()) {
+        CAS cas=engine.newCAS();
+synchronized (reader) {
+          try {
+            getReader().getNext(cas);
+          }
+ catch (          Exception e) {
+            log.warn("Done iterating returning an empty string");
+            return "";
+          }
+        }
+synchronized (engine) {
+          engine.process(cas);
+        }
+        List<String> list=new ArrayList<>();
+        for (        Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+          list.add(sentence.getCoveredText());
+        }
+        sentences=list.iterator();
+        while (!sentences.hasNext()) {
+          if (reader.hasNext()) {
+            cas.reset();
+            getReader().getNext(cas);
+            engine.process(cas);
+            for (            Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+              list.add(sentence.getCoveredText());
+            }
+            sentences=list.iterator();
+          }
+ else           return null;
+        }
+        String ret=sentences.next();
+        if (this.getPreProcessor() != null)         ret=this.getPreProcessor().preProcess(ret);
+        return ret;
+      }
+      return null;
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+ else {
+    String ret=sentences.next();
+    if (this.getPreProcessor() != null)     ret=this.getPreProcessor().preProcess(ret);
+    return ret;
+  }
+}

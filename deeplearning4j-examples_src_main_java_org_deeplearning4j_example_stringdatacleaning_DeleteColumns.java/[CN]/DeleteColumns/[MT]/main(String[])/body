@@ -1,9 +1,0 @@
-{
-  StringGrid grid=StringGrid.fromFile(args[0],",");
-  String[] columnsToDelete=args[1].split(",");
-  Integer[] remove=new Integer[columnsToDelete.length];
-  for (int i=0; i < columnsToDelete.length; i++)   remove[i]=Integer.parseInt(columnsToDelete[i]);
-  grid.removeColumns(remove);
-  grid.head(10);
-  grid.writeLinesTo(args[2]);
-}

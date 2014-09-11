@@ -1,5 +1,0 @@
-{
-  INDArray flattened=toExp.ravel();
-  for (int i=0; i < flattened.length(); i++)   flattened.put(i,NDArray.scalar(Math.exp((double)flattened.getScalar(i).element())));
-  return flattened.reshape(toExp.shape());
-}

@@ -1,5 +1,14 @@
 {
-  BaseMultiLayerNetwork ret=new Builder<>().withClazz(getClass()).buildEmpty();
+  BaseMultiLayerNetwork ret=null;
+  try {
+    ret=getClass().newInstance();
+  }
+ catch (  InstantiationException e) {
+    e.printStackTrace();
+  }
+catch (  IllegalAccessException e) {
+    e.printStackTrace();
+  }
   ret.update(this);
   return ret;
 }

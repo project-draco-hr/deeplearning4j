@@ -1,8 +1,0 @@
-{
-  INDArray iter=mean.reshape(new int[]{1,mean.length()}).dup();
-  for (int i=0; i < iter.length(); i++) {
-    RealDistribution reals=new NormalDistribution(rng,(double)mean.getScalar(i).element(),FastMath.sqrt(sigma),NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
-    iter.putScalar(i,reals.sample());
-  }
-  return iter.reshape(mean.shape());
-}

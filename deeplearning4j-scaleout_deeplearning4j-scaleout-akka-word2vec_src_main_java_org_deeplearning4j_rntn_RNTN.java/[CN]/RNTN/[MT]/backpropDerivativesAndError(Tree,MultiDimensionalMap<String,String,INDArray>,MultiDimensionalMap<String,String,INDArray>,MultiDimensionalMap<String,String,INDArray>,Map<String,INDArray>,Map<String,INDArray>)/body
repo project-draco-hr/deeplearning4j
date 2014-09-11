@@ -1,4 +1,0 @@
-{
-  INDArray delta=NDArrays.create(numHidden,1);
-  backpropDerivativesAndError(tree,binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD,delta);
-}

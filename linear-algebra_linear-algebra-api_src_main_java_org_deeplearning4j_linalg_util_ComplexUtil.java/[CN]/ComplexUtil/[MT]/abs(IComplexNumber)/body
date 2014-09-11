@@ -1,4 +1,0 @@
-{
-  double c=new Complex(num.realComponent().doubleValue(),num.imaginaryComponent().doubleValue()).abs();
-  return NDArrays.createDouble(c,0);
-}

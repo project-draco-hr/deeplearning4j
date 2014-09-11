@@ -1,0 +1,59 @@
+{
+  if (rng == null)   rng=new MersenneTwister(123);
+  MultiDimensionalSet<String,String> binaryProductions=MultiDimensionalSet.hashSet();
+  if (simplifiedModel) {
+    binaryProductions.add("","");
+  }
+ else {
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+  Set<String> unaryProductions=new HashSet<>();
+  if (simplifiedModel) {
+    unaryProductions.add("");
+  }
+ else {
+    throw new UnsupportedOperationException("Not yet implemented");
+  }
+  identity=Nd4j.eye(numHidden);
+  binaryTransform=MultiDimensionalMap.newTreeBackedMap();
+  binaryINd4j=MultiDimensionalMap.newTreeBackedMap();
+  binaryClassification=MultiDimensionalMap.newTreeBackedMap();
+  for (  Pair<String,String> binary : binaryProductions) {
+    String left=basicCategory(binary.getFirst());
+    String right=basicCategory(binary.getSecond());
+    if (binaryTransform.contains(left,right)) {
+      continue;
+    }
+    binaryTransform.put(left,right,randomTransformMatrix());
+    if (useFloatTensors) {
+      binaryINd4j.put(left,right,randomBinaryINDArray());
+    }
+    if (!combineClassification) {
+      binaryClassification.put(left,right,randomClassificationMatrix());
+    }
+  }
+  numBinaryMatrices=binaryTransform.size();
+  binaryTransformSize=numHidden * (2 * numHidden + 1);
+  if (useFloatTensors) {
+    binaryINd4jize=numHidden * numHidden * numHidden* 4;
+  }
+ else {
+    binaryINd4jize=0;
+  }
+  binaryClassificationSize=(combineClassification) ? 0 : numOuts * (numHidden + 1);
+  unaryClassification=new TreeMap<>();
+  for (  String unary : unaryProductions) {
+    unary=basicCategory(unary);
+    if (unaryClassification.containsKey(unary)) {
+      continue;
+    }
+    unaryClassification.put(unary,randomClassificationMatrix());
+  }
+  binaryClassificationSize=(combineClassification) ? 0 : numOuts * (numHidden + 1);
+  numUnaryMatrices=unaryClassification.size();
+  unaryClassificationSize=numOuts * (numHidden + 1);
+  featureVectors.put(UNKNOWN_FEATURE,randomWordVector());
+  numUnaryMatrices=unaryClassification.size();
+  unaryClassificationSize=numOuts * (numHidden + 1);
+  classWeights=new HashMap<>();
+}

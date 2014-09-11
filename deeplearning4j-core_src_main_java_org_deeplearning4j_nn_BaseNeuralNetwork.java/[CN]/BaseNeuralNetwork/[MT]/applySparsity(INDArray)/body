@@ -1,0 +1,10 @@
+{
+  if (conf.isUseAdaGrad()) {
+    INDArray change=this.hBiasAdaGrad.getLearningRates(hBias).neg().muli(conf.getSparsity()).mul(hBiasGradient.mul(conf.getSparsity()));
+    hBiasGradient.addi(change);
+  }
+ else {
+    INDArray change=hBiasGradient.mul(conf.getSparsity()).mul(-conf.getLr() * conf.getSparsity());
+    hBiasGradient.addi(change);
+  }
+}

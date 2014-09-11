@@ -1,4 +1,0 @@
-{
-  double recon=(double)sqrt(pow(reconstruct(input).subi(input),2)).sum(Integer.MAX_VALUE).element();
-  return recon / input.rows();
-}

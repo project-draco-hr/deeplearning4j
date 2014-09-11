@@ -1,8 +1,0 @@
-{
-  double[] data=DoubleMatrix.linspace(1,8,8).data;
-  int[] shape=new int[]{1,8};
-  IComplexNDArray arr=new ComplexNDArray(shape);
-  for (int i=0; i < arr.length(); i++)   arr.put(i,NDArrays.scalar(data[i]));
-  NDArray arr2=new NDArray(data,shape);
-  assertEquals(arr2,arr.getReal());
-}

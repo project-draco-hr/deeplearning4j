@@ -1,6 +1,0 @@
-{
-  if (input != null && cacheInput)   this.input=input;
-  this.lastMiniBatchSize=input.rows();
-  optimizer=new DenoisingAutoEncoderOptimizer(this,lr,params,optimizationAlgo,lossFunction);
-  optimizer.train(input);
-}

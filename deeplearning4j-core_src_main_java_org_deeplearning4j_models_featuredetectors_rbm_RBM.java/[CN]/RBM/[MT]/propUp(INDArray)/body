@@ -1,0 +1,20 @@
+{
+  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
+  INDArray preSig=v.mmul(W);
+  if (conf.isConcatBiases())   preSig=Nd4j.concatHorizontally(preSig,hBias);
+ else   preSig.addiRowVector(hBias);
+  if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
+    preSig=Transforms.max(preSig);
+    return preSig;
+  }
+ else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
+    INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
+    preSig.addi(add);
+    return preSig;
+  }
+ else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
+    return sigmoid(preSig);
+  }
+ else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX)   return Activations.softMaxRows().apply(preSig);
+  throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
+}

@@ -1,0 +1,8 @@
+{
+  ActivationFunction f=conf.getActivationFunction();
+  INDArray convolution=Convolution.conv2d(input,getW(),Convolution.Type.VALID);
+  INDArray pooled=Transforms.maxPool(convolution,conf.getFilterSize(),true);
+  INDArray bias=b.dimShuffle(new Object[]{'x',0,'x','x'},new int[]{0},new boolean[]{false});
+  pooled.addi(bias.broadcast(pooled.shape()));
+  return f.apply(pooled);
+}

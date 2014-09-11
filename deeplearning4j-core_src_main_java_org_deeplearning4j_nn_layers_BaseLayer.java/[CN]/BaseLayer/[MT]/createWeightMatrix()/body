@@ -1,0 +1,4 @@
+{
+  INDArray W=WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),conf.getActivationFunction(),conf.getDist());
+  return W;
+}

@@ -1,30 +1,33 @@
 {
+  if (layerWiseConfigurations == null) {
+    intializeConfigurations();
+  }
   INDArray layerInput=input;
-  if (!(rng instanceof SynchronizedRandomGenerator))   rng=new SynchronizedRandomGenerator(rng);
   int inputSize;
-  if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network layers; number specified is less than 1");
-  if (this.dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
-  if (this.layers == null || sigmoidLayers == null || this.sigmoidLayers[0] == null || this.layers[0] == null) {
-    this.layers=new NeuralNetwork[getnLayers()];
+  if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
+  if (this.neuralNets == null || neuralNets == null || this.neuralNets[0] == null || this.neuralNets[0] == null) {
+    this.neuralNets=new NeuralNetwork[getnLayers()];
     for (int i=0; i < this.getnLayers(); i++) {
-      ActivationFunction currLayerActivation=activationFunctionForLayer.get(i) != null ? activationFunctionForLayer.get(i) : activation;
-      if (i == 0)       inputSize=this.nIns;
+      if (i == 0)       inputSize=defaultConfiguration.getnIn();
  else       inputSize=this.hiddenLayerSizes[i - 1];
       if (i == 0) {
-        sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
+        layerWiseConfigurations.get(i).setnIn(inputSize);
+        layerWiseConfigurations.get(i).setnOut(this.hiddenLayerSizes[i]);
+        layers[i]=createHiddenLayer(i,layerInput);
       }
  else {
-        if (input != null) {
-          if (this.sampleFromHiddenActivations)           layerInput=layers[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
- else           layerInput=getLayers()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
-        }
-        sigmoidLayers[i]=createHiddenLayer(i,inputSize,this.hiddenLayerSizes[i],currLayerActivation,rng,layerInput,dist);
+        if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
+        layerWiseConfigurations.get(i).setnIn(inputSize);
+        layerWiseConfigurations.get(i).setnOut(this.hiddenLayerSizes[i]);
+        layers[i]=createHiddenLayer(i,layerInput);
       }
-      this.layers[i]=createLayer(layerInput,inputSize,this.hiddenLayerSizes[i],this.sigmoidLayers[i].getW(),this.sigmoidLayers[i].getB(),null,rng,i);
+      this.neuralNets[i]=createLayer(layerInput,this.layers[i].getW(),this.layers[i].getB(),null,i);
     }
   }
-  this.outputLayer=new OutputLayer.Builder().withDropout(outputLayerDropout).weightInit(outputLayerWeightInit).useAdaGrad(useAdaGrad).optimizeBy(getOptimizationAlgorithm()).normalizeByInputRows(normalizeByInputRows).withLossFunction(outputLossFunction).useRegularization(useRegularization).withActivationFunction(outputActivationFunction).numberOfInputs(getSigmoidLayers()[getSigmoidLayers().length - 1].nOut).numberOfOutputs(nOuts).withL2(l2).build();
-  synchonrizeRng();
+  NeuralNetConfiguration last=layerWiseConfigurations.get(layerWiseConfigurations.size() - 1);
+  NeuralNetConfiguration secondToLast=layerWiseConfigurations.get(layerWiseConfigurations.size() - 2);
+  last.setnIn(secondToLast.getnOut());
+  this.layers[layers.length - 1]=new OutputLayer.Builder().configure(last).build();
   dimensionCheck();
   applyTransforms();
   initCalled=true;

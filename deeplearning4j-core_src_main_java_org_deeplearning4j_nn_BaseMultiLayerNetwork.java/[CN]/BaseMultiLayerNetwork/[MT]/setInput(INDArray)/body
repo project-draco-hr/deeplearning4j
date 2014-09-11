@@ -1,4 +1,4 @@
 {
-  if (input != null && this.layers == null)   this.initializeLayers(input);
+  if (input != null && this.neuralNets == null)   this.initializeLayers(input);
   this.input=input;
 }

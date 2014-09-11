@@ -1,7 +1,0 @@
-{
-  int plotEpochs=network.getRenderIterations();
-  if (plotEpochs <= 0)   return;
-  if (iterationDone % plotEpochs == 0) {
-    plotter.plotNetworkGradient(network,network.getGradient(extraParams),100);
-  }
-}

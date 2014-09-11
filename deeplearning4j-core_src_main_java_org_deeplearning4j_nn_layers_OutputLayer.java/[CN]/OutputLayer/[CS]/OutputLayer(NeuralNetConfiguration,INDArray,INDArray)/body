@@ -1,0 +1,7 @@
+{
+  super(conf,null,null,input);
+  this.labels=labels;
+  adaGrad=new AdaGrad(conf.getnIn(),conf.getnOut());
+  b=Nd4j.zeros(1,conf.getnOut());
+  biasAdaGrad=new AdaGrad(b.rows(),b.columns());
+}

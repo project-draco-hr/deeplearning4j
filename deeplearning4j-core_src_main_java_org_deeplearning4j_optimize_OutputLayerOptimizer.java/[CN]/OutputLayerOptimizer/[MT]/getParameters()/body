@@ -1,7 +1,0 @@
-{
-  INDArray params=NDArrays.create(getNumParameters());
-  for (int i=0; i < params.length(); i++) {
-    params.putScalar(i,getParameter(i));
-  }
-  return params;
-}

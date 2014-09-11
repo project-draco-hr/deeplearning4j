@@ -1,6 +1,0 @@
-{
-  if (toWrap instanceof ComplexNDArray)   return (ComplexNDArray)toWrap;
-  int[] stride=ndArray.stride();
-  ComplexNDArray ret=new ComplexNDArray(toWrap.data,ndArray.shape(),stride,ndArray.offset());
-  return ret;
-}

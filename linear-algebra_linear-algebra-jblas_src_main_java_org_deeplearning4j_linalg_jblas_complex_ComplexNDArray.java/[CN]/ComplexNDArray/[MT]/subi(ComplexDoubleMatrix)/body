@@ -1,5 +1,0 @@
-{
-  ComplexNDArray r=ComplexNDArray.wrap(other);
-  new TwoArrayOps().from(this).to(this).other(r).op(SubtractOp.class).build().exec();
-  return this;
-}

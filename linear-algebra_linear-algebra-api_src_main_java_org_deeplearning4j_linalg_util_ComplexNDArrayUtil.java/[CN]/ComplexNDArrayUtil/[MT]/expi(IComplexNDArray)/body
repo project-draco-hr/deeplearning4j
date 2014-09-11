@@ -1,8 +1,0 @@
-{
-  IComplexNDArray flattened=toExp.ravel();
-  for (int i=0; i < flattened.length(); i++) {
-    IComplexNumber n=(IComplexNumber)flattened.getScalar(i).element();
-    flattened.put(i,NDArrays.scalar(ComplexUtil.exp(n)));
-  }
-  return flattened.reshape(toExp.shape());
-}

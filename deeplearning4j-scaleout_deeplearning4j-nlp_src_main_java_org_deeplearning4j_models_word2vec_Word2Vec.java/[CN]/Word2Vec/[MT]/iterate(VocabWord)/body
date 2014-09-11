@@ -1,0 +1,12 @@
+{
+  INDArray l1=cache.vector(cache.wordAtIndex(w1.getIndex()));
+  INDArray l2a=cache.loadCodes(w1.getCodes());
+  INDArray fa=Transforms.sigmoid(l1.mmul(l2a.transpose()));
+  INDArray ga=Nd4j.ones(fa.length()).subi(ArrayUtil.toNDArray(w1.getCodes())).subi(fa).muli(alpha.floatValue());
+  INDArray outer=ga.mmul(l1);
+  for (int i=0; i < w1.getPoints().length; i++) {
+    INDArray toAdd=l2a.getRow(i).addi(outer.getRow(i));
+    cache.putCode(w1.getPoints()[i],toAdd);
+  }
+  cache.putVector(cache.wordAtIndex(w1.getIndex()),l1.addi(ga.mmul(l2a)));
+}

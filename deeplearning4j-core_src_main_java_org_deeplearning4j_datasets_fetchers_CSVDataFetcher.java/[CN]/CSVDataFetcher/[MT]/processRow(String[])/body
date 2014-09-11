@@ -10,6 +10,6 @@
       index++;
     }
   }
-  INDArray d1=NDArrays.create(d).reshape(1,d.length);
+  INDArray d1=Nd4j.create(d).reshape(1,d.length);
   return new Pair<>(d1,labelVal);
 }

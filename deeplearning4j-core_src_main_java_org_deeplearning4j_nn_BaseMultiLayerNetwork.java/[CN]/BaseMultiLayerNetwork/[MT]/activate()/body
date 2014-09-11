@@ -1,3 +1,3 @@
 {
-  return getSigmoidLayers()[getSigmoidLayers().length - 1].activate();
+  return getLayers()[getNeuralNets().length - 1].activate();
 }
