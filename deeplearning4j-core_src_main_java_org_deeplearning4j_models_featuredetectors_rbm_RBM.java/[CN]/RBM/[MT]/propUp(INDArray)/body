@@ -1,7 +1,7 @@
 {
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W);
-  if (conf.isConcatBiases())   preSig=Nd4j.concatHorizontally(preSig,hBias);
+  if (conf.isConcatBiases())   preSig=Nd4j.hstack(preSig,hBias);
  else   preSig.addiRowVector(hBias);
   if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
     preSig=Transforms.max(preSig);

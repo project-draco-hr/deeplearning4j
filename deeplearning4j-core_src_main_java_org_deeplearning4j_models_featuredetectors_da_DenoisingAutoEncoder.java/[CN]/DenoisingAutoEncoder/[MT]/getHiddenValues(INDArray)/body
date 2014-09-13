@@ -1,7 +1,7 @@
 {
   INDArray preAct;
   if (conf.isConcatBiases()) {
-    INDArray concat=Nd4j.concatVertically(W,hBias.transpose());
+    INDArray concat=Nd4j.hstack(W,hBias.transpose());
     preAct=x.mmul(concat);
   }
  else   preAct=x.mmul(W).addiRowVector(hBias);

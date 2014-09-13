@@ -1,6 +1,6 @@
 {
   INDArray vMean=h.mmul(W.transpose());
-  if (conf.isConcatBiases())   vMean=Nd4j.concatHorizontally(vMean,vBias);
+  if (conf.isConcatBiases())   vMean=Nd4j.hstack(vMean,vBias);
  else   vMean.addiRowVector(vBias);
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
     INDArray sample=Sampling.normal(conf.getRng(),vMean,1.0);
