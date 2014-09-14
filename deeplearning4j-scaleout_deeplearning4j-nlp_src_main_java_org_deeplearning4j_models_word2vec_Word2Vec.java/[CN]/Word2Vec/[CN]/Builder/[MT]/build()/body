@@ -13,6 +13,9 @@
       throw new RuntimeException(e);
     }
     ret.tokenizerFactory=tokenizerFactory;
+    vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
+    vocabCache.addWordToIndex(0,UNK);
+    vocabCache.putVocabWord(UNK,new VocabWord(1,layerSize));
     return ret;
   }
  else {
@@ -29,6 +32,10 @@
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
+    vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
+    vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
+    vocabCache.addWordToIndex(0,UNK);
+    vocabCache.putVocabWord(UNK,new VocabWord(1,layerSize));
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }

@@ -1,0 +1,5 @@
+{
+  if (!wordFrequencies.containsKey(word))   wordFrequencies.incrementCount(word,1);
+  if (!vocabs.containsKey(word))   vocabs.put(word,new VocabWord(1,vectorLength));
+  wordIndex.add(word);
+}

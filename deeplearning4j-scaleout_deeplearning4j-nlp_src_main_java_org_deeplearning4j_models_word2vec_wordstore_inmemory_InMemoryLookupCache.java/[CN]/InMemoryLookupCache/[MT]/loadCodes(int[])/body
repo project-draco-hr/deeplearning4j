@@ -1,0 +1,7 @@
+{
+  INDArray load=Nd4j.create(codes.length,codeLength);
+  for (int i=0; i < load.rows(); i++) {
+    load.putRow(i,this.codes.get(codes[i]));
+  }
+  return load;
+}
