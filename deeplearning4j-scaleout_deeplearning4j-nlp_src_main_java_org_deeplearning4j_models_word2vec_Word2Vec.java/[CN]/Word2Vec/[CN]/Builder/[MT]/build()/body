@@ -15,7 +15,7 @@
     ret.tokenizerFactory=tokenizerFactory;
     vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
     vocabCache.addWordToIndex(0,UNK);
-    vocabCache.putVocabWord(UNK,new VocabWord(1,layerSize));
+    vocabCache.putVocabWord(UNK,new VocabWord(1,UNK));
     return ret;
   }
  else {
@@ -35,7 +35,7 @@
     vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
     vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
     vocabCache.addWordToIndex(0,UNK);
-    vocabCache.putVocabWord(UNK,new VocabWord(1,layerSize));
+    vocabCache.putVocabWord(UNK,new VocabWord(1,UNK));
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }

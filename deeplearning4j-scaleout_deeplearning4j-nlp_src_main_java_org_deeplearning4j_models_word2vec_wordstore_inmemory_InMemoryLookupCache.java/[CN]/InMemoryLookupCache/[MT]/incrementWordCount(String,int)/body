@@ -1,3 +1,4 @@
 {
   wordFrequencies.incrementCount(word,1);
+  totalWordOccurrences.set(totalWordOccurrences.get() + increment);
 }

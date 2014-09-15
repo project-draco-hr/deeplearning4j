@@ -5,7 +5,7 @@
     String[] split=temp.split(" ");
     if (split[0].equals("</s>"))     continue;
     int freq=Integer.parseInt(split[1]);
-    VocabWord realWord=new VocabWord(freq,vec.getLayerSize());
+    VocabWord realWord=new VocabWord(freq,"");
   }
   reader.close();
   return vec;

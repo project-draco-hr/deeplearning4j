@@ -9,7 +9,6 @@
   }
  else   if (!codes.equals(other.codes))   return false;
   if (index != other.index)   return false;
-  if (layerSize != other.layerSize)   return false;
   if (left == null) {
     if (other.left != null)     return false;
   }

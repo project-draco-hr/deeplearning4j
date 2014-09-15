@@ -1,6 +1,6 @@
 {
   if (wordsEntrys.size() < topNSize) {
-    VocabWord v=new VocabWord(score,layerSize);
+    VocabWord v=new VocabWord(score,name);
     v.setIndex(cache.indexOf(name));
     wordsEntrys.add(v);
     return;
@@ -17,7 +17,7 @@
     }
   }
   if (score > min) {
-    VocabWord w=new VocabWord(score,layerSize);
+    VocabWord w=new VocabWord(score,VocabWord.PARENT_NODE);
     w.setIndex(minIndex);
     wordsEntrys.set(minOffe,w);
   }

@@ -1,8 +1,8 @@
 {
   Integer index=indexes.get(o);
   if (index == null) {
-    index=objects.size();
-    objects.put(index,o);
+    index=idx;
+    objects.put(idx,o);
     indexes.put(o,index);
     return true;
   }

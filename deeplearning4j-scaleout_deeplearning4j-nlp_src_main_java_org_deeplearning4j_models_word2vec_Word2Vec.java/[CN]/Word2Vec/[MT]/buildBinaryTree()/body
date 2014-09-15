@@ -10,7 +10,7 @@
     if (heapCount % 1000 == 0) {
       log.info("Heap progress o far " + heapCount);
     }
-    VocabWord add=new VocabWord(min1.getWordFrequency() + min2.getWordFrequency(),layerSize);
+    VocabWord add=new VocabWord(min1.getWordFrequency() + min2.getWordFrequency(),VocabWord.PARENT_NODE);
     int index=(cache.numWords() + i);
     add.setIndex(index);
     add.setLeft(min1);

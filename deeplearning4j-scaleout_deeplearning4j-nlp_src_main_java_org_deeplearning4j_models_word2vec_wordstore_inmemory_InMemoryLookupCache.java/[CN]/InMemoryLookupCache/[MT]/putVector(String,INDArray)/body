@@ -1,3 +1,5 @@
 {
+  if (word == null)   throw new IllegalArgumentException("No null words allowed");
+  if (vector == null)   throw new IllegalArgumentException("No null vectors allowed");
   vectors.put(word,vector);
 }

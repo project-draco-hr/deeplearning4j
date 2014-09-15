@@ -1,3 +1,5 @@
 {
+  addWordToIndex(vocabWord.getIndex(),word);
   vocabs.put(word,vocabWord);
+  wordIndex.add(word,vocabWord.getIndex());
 }

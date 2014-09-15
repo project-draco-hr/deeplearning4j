@@ -8,8 +8,8 @@
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
       if (!Util.matchesAnyStopWord(stopWords,token)) {
-        if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-          VocabWord word=new VocabWord(cache.wordFrequency(token),layerSize);
+        if (cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
+          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
           int idx=cache.numWords();
           word.setIndex(idx);
           cache.putVocabWord(token,word);

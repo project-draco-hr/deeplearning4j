@@ -1,4 +1,4 @@
 {
   int numWords=cache.numWords();
-  for (int i=0; i < numWords; i++)   cache.putVector(cache.wordAtIndex(i),randomVector());
+  for (  VocabWord word : cache.vocabWords())   cache.putVector(word.getWord(),randomVector());
 }

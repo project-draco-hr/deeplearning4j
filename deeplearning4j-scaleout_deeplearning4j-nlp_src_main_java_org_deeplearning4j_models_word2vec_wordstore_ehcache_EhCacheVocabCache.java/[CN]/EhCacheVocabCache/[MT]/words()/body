@@ -1,0 +1,11 @@
+{
+  List<Object> keys=cache.getKeys();
+  List<String> ret=new ArrayList<>();
+  for (  Object key : keys) {
+    if (key.toString().contains("-" + VOCAB)) {
+      String key2=key.toString().replace("-" + VOCAB,"");
+      ret.add(key2);
+    }
+  }
+  return ret;
+}

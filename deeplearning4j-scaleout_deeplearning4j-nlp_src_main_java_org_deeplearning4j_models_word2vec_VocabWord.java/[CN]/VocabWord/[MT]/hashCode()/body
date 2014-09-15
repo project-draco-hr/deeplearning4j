@@ -4,7 +4,6 @@
   result=prime * result + code;
   result=prime * result + ((codes == null) ? 0 : codes.hashCode());
   result=prime * result + index;
-  result=prime * result + layerSize;
   result=prime * result + ((left == null) ? 0 : left.hashCode());
   result=prime * result + ((points == null) ? 0 : points.hashCode());
   result=prime * result + ((right == null) ? 0 : right.hashCode());
