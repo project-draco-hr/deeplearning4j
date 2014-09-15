@@ -1,5 +1,6 @@
 {
   if (word == null)   throw new IllegalArgumentException("No null words allowed");
   if (vector == null)   throw new IllegalArgumentException("No null vectors allowed");
-  vectors.put(word,vector);
+  int idx=indexOf(word);
+  syn0.putRow(idx,vector);
 }

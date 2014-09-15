@@ -12,11 +12,15 @@
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
+    if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
     ret.tokenizerFactory=tokenizerFactory;
+    vocabCache.resetWeights();
     vocabCache.incrementWordCount(UNK,1);
-    vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
     vocabCache.addWordToIndex(0,UNK);
-    vocabCache.putVocabWord(UNK,new VocabWord(1,UNK));
+    VocabWord w=new VocabWord(1,UNK);
+    w.setIndex(0);
+    vocabCache.putVocabWord(UNK,w);
+    vocabCache.resetWeights();
     return ret;
   }
  else {
@@ -33,10 +37,13 @@
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
+    if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
     vocabCache.incrementWordCount(UNK,1);
-    vocabCache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
     vocabCache.addWordToIndex(0,UNK);
-    vocabCache.putVocabWord(UNK,new VocabWord(1,UNK));
+    VocabWord w=new VocabWord(1,UNK);
+    w.setIndex(0);
+    vocabCache.putVocabWord(UNK,w);
+    vocabCache.resetWeights();
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }

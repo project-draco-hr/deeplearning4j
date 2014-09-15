@@ -10,6 +10,6 @@
   }
  else {
     vec=SerializationUtils.readObject(vectors);
-    vec.setCache(new EhCacheVocabCache());
+    vec.setCache(new InMemoryLookupCache(vec.getLayerSize()));
   }
 }

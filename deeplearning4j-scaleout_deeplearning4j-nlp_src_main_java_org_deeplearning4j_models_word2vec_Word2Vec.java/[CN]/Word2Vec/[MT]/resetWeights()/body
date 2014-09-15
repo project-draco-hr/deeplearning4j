@@ -1,4 +1,4 @@
 {
-  int numWords=cache.numWords();
-  for (  VocabWord word : cache.vocabWords())   cache.putVector(word.getWord(),randomVector());
+  cache.resetWeights();
+  cache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
 }

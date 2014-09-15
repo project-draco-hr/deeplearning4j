@@ -1,8 +1,0 @@
-{
-  List<INDArray> vectors=new ArrayList<>();
-  for (  int i : codes) {
-    INDArray a=retrieve(i + "-" + CODE);
-    vectors.add(a);
-  }
-  return Nd4j.create(vectors,new int[]{codes.length,vectors.get(0).columns()});
-}

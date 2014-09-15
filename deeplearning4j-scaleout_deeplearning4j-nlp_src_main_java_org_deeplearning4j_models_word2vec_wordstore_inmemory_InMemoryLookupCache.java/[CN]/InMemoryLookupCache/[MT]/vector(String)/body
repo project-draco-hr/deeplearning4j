@@ -1,4 +1,4 @@
 {
   if (word == null)   return null;
-  return vectors.get(word);
+  return syn1.getRow(indexOf(word));
 }

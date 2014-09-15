@@ -1,7 +1,12 @@
 {
-  if (message instanceof String) {
-    String sentence=message.toString();
-    if (sentence.isEmpty())     return;
+  if (message instanceof VocabWork) {
+    VocabWork work=(VocabWork)message;
+    work.getCount().incrementAndGet();
+    String sentence=work.getWork();
+    if (sentence.isEmpty()) {
+      work.countDown();
+      return;
+    }
     Tokenizer t=tokenizer.create(sentence);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
@@ -17,6 +22,7 @@
         }
       }
     }
+    work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());
   }
  else   unhandled(message);
