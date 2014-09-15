@@ -10,7 +10,7 @@
     if (sentence == null)     break;
     vocabActor.tell(new VocabWork(latch,sentence),vocabActor);
     queued.incrementAndGet();
-    log.info("Sent " + queued);
+    if (queued.get() % 10000 == 0)     log.info("Sent " + queued);
   }
   try {
     Thread.sleep(10000);
