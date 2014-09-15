@@ -1,0 +1,15 @@
+{
+  DataSetIterator iter=new IrisDataSetIterator(150,150);
+  String irisData=new String("irisData.dat");
+  DataSet freshDataSet=iter.next(150);
+  SerializationUtils.saveObject(freshDataSet,new File(irisData));
+  DataSet readDataSet=SerializationUtils.readObject(new File(irisData));
+  assertEquals(freshDataSet.getFeatureMatrix(),readDataSet.getFeatureMatrix());
+  assertEquals(freshDataSet.getLabels(),readDataSet.getLabels());
+  try {
+    FileUtils.forceDelete(new File(irisData));
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}
