@@ -5,6 +5,7 @@
   buildVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
+  sentenceIter.reset();
   final AtomicLong changed=new AtomicLong(System.currentTimeMillis());
   trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(new SentenceActor.SentenceActorCreator(this)).withDispatcher("akka.actor.worker-dispatcher")));
   while (getSentenceIter().hasNext()) {

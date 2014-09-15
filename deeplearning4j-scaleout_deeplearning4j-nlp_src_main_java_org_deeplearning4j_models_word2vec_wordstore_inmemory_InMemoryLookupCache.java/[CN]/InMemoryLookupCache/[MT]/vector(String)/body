@@ -1,4 +1,4 @@
 {
   if (word == null)   return null;
-  return syn1.getRow(indexOf(word));
+  return syn0.getRow(indexOf(word));
 }

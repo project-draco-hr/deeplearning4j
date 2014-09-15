@@ -1,11 +1,11 @@
 {
   INDArray vec=this.getWordVectorMatrix(word);
   if (vec == null)   return new ArrayList<>();
-  Counter<String> distances=new Counter<String>();
-  for (int i=0; i < cache.numWords(); i++) {
-    double sim=similarity(word,cache.wordAtIndex(i).toString());
-    distances.incrementCount(cache.wordAtIndex(i).toString(),sim);
+  Counter<String> distances=new Counter<>();
+  for (  String s : cache.words()) {
+    double sim=similarity(word,s);
+    distances.incrementCount(s,sim);
   }
-  distances.keepTopNKeys(n);
+  distances.keepBottomNKeys(n);
   return distances.keySet();
 }
