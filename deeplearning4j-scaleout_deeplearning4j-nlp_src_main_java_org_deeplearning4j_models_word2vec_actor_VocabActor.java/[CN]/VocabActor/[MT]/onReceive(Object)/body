@@ -1,6 +1,7 @@
 {
   if (message instanceof VocabWork) {
     VocabWork work=(VocabWork)message;
+    if (work.getWork() == null || work.getWork().isEmpty())     return;
     work.getCount().incrementAndGet();
     String sentence=work.getWork();
     if (sentence.isEmpty()) {

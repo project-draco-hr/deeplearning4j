@@ -1,4 +1,5 @@
 {
+  if (sentence.isEmpty())   return new ArrayList<>();
   Tokenizer tokenizer=tokenizerFactory.create(sentence);
   List<VocabWord> sentence2=new ArrayList<>();
   while (tokenizer.hasMoreTokens()) {
