@@ -8,24 +8,47 @@
   sentenceIter.reset();
   final AtomicLong changed=new AtomicLong(System.currentTimeMillis());
   trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(new SentenceActor.SentenceActorCreator(this)).withDispatcher("akka.actor.worker-dispatcher")));
+  log.info("Processing sentences...");
+  final AtomicInteger wait=new AtomicInteger(0);
   while (getSentenceIter().hasNext()) {
     final String sentence=sentenceIter.nextSentence();
     if (sentence != null && !sentence.isEmpty()) {
       Future<Void> f=Futures.future(new Callable<Void>(){
         @Override public Void call() throws Exception {
           processSentence(sentence);
+          wait.incrementAndGet();
           return null;
         }
       }
 ,trainingSystem.dispatcher());
       f.onComplete(new OnComplete<Void>(){
         @Override public void onComplete(        Throwable arg0,        Void arg1) throws Throwable {
-          if (arg0 != null)           throw arg0;
+          if (arg0 != null) {
+            log.warn("Error occurred " + arg0);
+            wait.decrementAndGet();
+            throw arg0;
+          }
           numSentencesProcessed.incrementAndGet();
+          if (numSentencesProcessed.get() % 100 == 0)           log.info("Processed " + numSentencesProcessed.get());
           changed.set(System.currentTimeMillis());
+          wait.decrementAndGet();
         }
       }
 ,trainingSystem.dispatcher());
+    }
+  }
+  try {
+    Thread.sleep(1000);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+  while (wait.get() > 0) {
+    try {
+      Thread.sleep(1000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
   }
   if (trainingSystem != null)   trainingSystem.shutdown();

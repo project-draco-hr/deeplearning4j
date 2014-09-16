@@ -37,7 +37,6 @@
     int[] points=triple.getThird();
     VocabWord node=triple.getFirst();
     if (node == null) {
-      log.info("Node was null");
       continue;
     }
     if (node.getIndex() < cache.numWords()) {
