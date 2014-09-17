@@ -1,0 +1,7 @@
+{
+  if (message instanceof SkipGramMessage) {
+    SkipGramMessage m=(SkipGramMessage)message;
+    vec.skipGram(m.getI(),m.getSentence(),m.getB());
+  }
+ else   unhandled(message);
+}

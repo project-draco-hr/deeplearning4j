@@ -11,6 +11,6 @@
     }
     nextRandom=nextRandom * 25214903917L + 11;
     int b=(int)nextRandom % window;
-    skipGram(i,sentence,b);
+    skipGramActor.tell(new SkipGramMessage(i,b,sentence),skipGramActor);
   }
 }

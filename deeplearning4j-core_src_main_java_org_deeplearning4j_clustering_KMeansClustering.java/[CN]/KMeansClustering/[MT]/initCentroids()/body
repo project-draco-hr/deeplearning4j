@@ -4,7 +4,7 @@
     this.counts.add(0L);
   }
   Random random=new Random();
-  final INDArray firstCentroid=this.initFeatures.remove(random.nextInt(this.initFeatures.size()));
+  final INDArray firstCentroid=this.initFeatures.remove(random.nextInt(this.initFeatures.size())).linearView();
   this.centroids=Nd4j.create(this.nbCluster,firstCentroid.columns());
   this.centroids.putRow(0,firstCentroid);
   log.info("Added initial centroid");
@@ -12,9 +12,9 @@
   for (int j=1; j < this.nbCluster; j++) {
     dxs=this.computeDxs();
     INDArray features;
-    double r=random.nextDouble() * (double)dxs.getScalar(dxs.length() - 1).element();
+    double r=random.nextFloat() * dxs.get(dxs.length() - 1);
     for (int i=0; i < dxs.length(); i++) {
-      if ((double)dxs.getScalar(i).element() >= r) {
+      if (dxs.get(i) >= r) {
         features=this.initFeatures.remove(i);
         this.centroids.putRow(j,features);
         break;

@@ -6,14 +6,16 @@
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   sentenceIter.reset();
-  final AtomicLong latch=new AtomicLong(System.currentTimeMillis());
-  ActorRef ref=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(SentenceActor.class,this).withDispatcher("akka.actor.worker-dispatcher")));
+  final AtomicLong latch=new AtomicLong(0);
+  ActorRef skipgram=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(SkipGramActor.class,this).withDispatcher("akka.actor.worker-dispatcher")));
+  ActorRef ref=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(SentenceActor.class,this,skipgram).withDispatcher("akka.actor.worker-dispatcher")));
   log.info("Processing sentences...");
   while (getSentenceIter().hasNext()) {
     String sentence=sentenceIter.nextSentence();
     if (sentence == null)     continue;
     ref.tell(new SentenceMessage(sentence,latch),ref);
     numSentencesProcessed.incrementAndGet();
+    if (numSentencesProcessed.get() % 100 == 0)     log.info("Num sentences processed " + numSentencesProcessed.get());
   }
   try {
     Thread.sleep(10000);
@@ -22,9 +24,9 @@
     Thread.currentThread().interrupt();
   }
   while (latch.get() > 0) {
-    log.info("Waiting on sentences...");
+    log.info("Waiting on sentences...Num processed so far " + numSentencesProcessed.get() + " with latch count at "+ latch.get());
     try {
-      Thread.sleep(1000);
+      Thread.sleep(10000);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();

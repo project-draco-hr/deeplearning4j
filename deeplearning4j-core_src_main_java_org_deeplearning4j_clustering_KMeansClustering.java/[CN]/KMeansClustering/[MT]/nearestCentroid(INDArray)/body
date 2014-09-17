@@ -1,8 +1,8 @@
 {
   Integer nearestCentroidIndex=0;
-  Double minDistance=Double.MAX_VALUE;
+  Float minDistance=Float.MAX_VALUE;
   INDArray currentCentroid;
-  Double currentDistance;
+  Float currentDistance;
   for (int i=0; i < this.centroids.rows(); i++) {
     currentCentroid=this.centroids.getRow(i);
     if (currentCentroid != null) {

@@ -1,5 +1,5 @@
 {
-  trainSentence(sentence);
+  trainSentence(sentence,skipGramActor);
   if (numSentencesProcessed.get() % 10000 == 0) {
     float newAlpha=alpha.floatValue() * (1 - (float)cache.totalWordOccurrences() / allWordsCount);
     float oldAlpha=alpha.floatValue();
