@@ -6,6 +6,6 @@
     int c1=i - window + j;
     if (c1 < 0 || c1 >= sentence.size())     continue;
     VocabWord word2=sentence.get(c1);
-    iterate(word);
+    iterate(word,word2);
   }
 }

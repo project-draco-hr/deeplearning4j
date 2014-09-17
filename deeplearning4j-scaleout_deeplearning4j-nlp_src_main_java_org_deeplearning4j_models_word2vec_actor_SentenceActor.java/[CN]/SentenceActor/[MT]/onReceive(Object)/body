@@ -1,9 +1,13 @@
 {
   if (message instanceof SentenceMessage) {
-    SentenceMessage m2=(SentenceMessage)message;
-    m2.getChanged().incrementAndGet();
-    vec.processSentence(m2.getSentence(),skipGramActor);
-    m2.getChanged().decrementAndGet();
+    SentenceMessage message2=(SentenceMessage)message;
+    processMessage(message2);
+  }
+ else   if (message instanceof Collection) {
+    Collection<SentenceMessage> message2=(Collection<SentenceMessage>)message;
+    for (    SentenceMessage message3 : message2) {
+      processMessage(message3);
+    }
   }
  else   unhandled(message);
 }
