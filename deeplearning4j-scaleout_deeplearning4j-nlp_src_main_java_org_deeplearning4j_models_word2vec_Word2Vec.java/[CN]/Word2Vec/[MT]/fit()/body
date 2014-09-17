@@ -7,8 +7,8 @@
   log.info("Training word2vec multithreaded");
   sentenceIter.reset();
   final AtomicLong latch=new AtomicLong(0);
-  ActorRef skipgram=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(SkipGramActor.class,this).withDispatcher("akka.actor.worker-dispatcher")));
-  ActorRef ref=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors() * 3).props(Props.create(SentenceActor.class,this,skipgram).withDispatcher("akka.actor.worker-dispatcher")));
+  ActorRef skipgram=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(SkipGramActor.class,this).withDispatcher("akka.actor.worker-dispatcher")));
+  ActorRef ref=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(SentenceActor.class,this,skipgram).withDispatcher("akka.actor.worker-dispatcher")));
   log.info("Processing sentences...");
   List<SentenceMessage> batch=new ArrayList<>();
   while (getSentenceIter().hasNext()) {
