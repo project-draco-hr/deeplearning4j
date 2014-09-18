@@ -18,7 +18,7 @@
     }
   }
  else   network=this.network;
-  network.setOutputLayerActivation(conf.getOutputActivationFunction());
+  network.setOutputLayerActivation(conf.getConf().getActivationFunction());
   network.setRoundCodeLayerInput(conf.isRoundCodeLayer());
   network.setNormalizeCodeLayerOutput(conf.isNormalizeCodeLayer());
   UpdateableEncoderImpl masterResults=new UpdateableEncoderImpl(network);
