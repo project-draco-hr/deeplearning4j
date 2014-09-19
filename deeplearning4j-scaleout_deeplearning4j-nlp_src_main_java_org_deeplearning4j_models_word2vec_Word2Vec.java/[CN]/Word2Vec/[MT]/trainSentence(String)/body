@@ -9,6 +9,6 @@
     if (word == null)     continue;
     sentence2.add(word);
   }
-  trainSentence(sentence2,skipGramActor);
+  trainSentence(sentence2);
   return sentence2;
 }

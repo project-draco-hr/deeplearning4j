@@ -6,6 +6,7 @@
     ret.stopWords=StopWords.getStopWords();
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
+    ret.adaGrad=new AdaGrad(layerSize,1);
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -24,13 +25,15 @@
     return ret;
   }
  else {
-    Word2Vec ret=new Word2Vec(iter);
+    Word2Vec ret=new Word2Vec();
     ret.layerSize=layerSize;
+    ret.sentenceIter=iter;
     ret.window=window;
     ret.stopWords=stopWords;
     ret.minWordFrequency=minWordFrequency;
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
+    ret.adaGrad=new AdaGrad(layerSize,1);
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

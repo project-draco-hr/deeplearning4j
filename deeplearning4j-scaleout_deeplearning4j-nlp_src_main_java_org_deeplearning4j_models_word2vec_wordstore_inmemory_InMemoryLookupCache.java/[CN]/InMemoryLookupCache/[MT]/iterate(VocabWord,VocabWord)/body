@@ -1,0 +1,25 @@
+{
+  if (w1.getCodes() == null)   return;
+  if (w2.getIndex() >= syn0.rows())   return;
+  int l1=w2.getIndex();
+  INDArray syn0=this.syn0.getRow(l1);
+  INDArray neu1e=Nd4j.create(vectorLength);
+  float avgChange=0.0f;
+  for (int d=0; d < w1.getCodes().length; d++) {
+    int inner=w1.getPoints()[d];
+    int l2=inner;
+    INDArray syn1=this.syn1.getRow(l2);
+    if (l1 >= this.syn0.rows() || l2 >= this.syn1.rows())     break;
+    float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
+    if (dot <= -6 || dot >= 6)     continue;
+    float f=(float)MathUtils.sigmoid(dot);
+    float g=(1 - w1.getCodes()[d] - f);
+    float lr=w1.getLearningRate(d,g);
+    g*=lr;
+    avgChange+=g;
+    Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
+    Nd4j.getBlasWrapper().axpy(g,syn0,syn1);
+  }
+  avgChange/=w1.getCodes().length;
+  Nd4j.getBlasWrapper().axpy(avgChange,neu1e,syn0);
+}

@@ -2,5 +2,5 @@
   int i=this.cache.indexOf(word);
   if (i < 0)   return cache.vector(UNK);
   INDArray r=cache.vector(word);
-  return r.div((Nd4j.getBlasWrapper().nrm2(r)));
+  return r.div(Nd4j.getBlasWrapper().nrm2(r));
 }

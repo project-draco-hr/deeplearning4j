@@ -1,0 +1,11 @@
+{
+  if (historicalGradient == null) {
+    historicalGradient=Nd4j.zeros(getCodes().length);
+  }
+  float pow=(float)Math.pow(g,2);
+  historicalGradient.putScalar(index,historicalGradient.get(index) + pow);
+  float sqrt=(float)FastMath.sqrt(historicalGradient.get(index));
+  float abs=FastMath.abs(g) / (sqrt + 1e-6f);
+  float ret=abs * 1e-1f;
+  return ret;
+}
