@@ -2,6 +2,7 @@
   MnistDataSetIterator mnist=new MnistDataSetIterator(5,5);
   TestDataSetIterator iter=new TestDataSetIterator(mnist);
   ActorNetworkRunner runner=new ActorNetworkRunner(iter);
+  NeuralNetConfiguration conf2=new NeuralNetConfiguration.Builder().nIn(784).nOut(10).build();
   Conf conf=new Conf();
   conf.getConf().setFinetuneEpochs(1);
   conf.getConf().setPretrainEpochs(1);
