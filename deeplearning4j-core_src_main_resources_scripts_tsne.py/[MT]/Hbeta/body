@@ -3,5 +3,5 @@ def Hbeta(D=np.array([]), beta=1.0):
     P = np.exp(((- D.copy()) * beta))
     sumP = sum(P)
     H = (np.log(sumP) + ((beta * np.sum((D * P))) / sumP))
-    P = (P / sumP)
+    P = (P / (sumP + 1e-06))
     return (H, P)
