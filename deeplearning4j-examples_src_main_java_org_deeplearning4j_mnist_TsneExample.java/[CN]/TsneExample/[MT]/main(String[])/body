@@ -1,0 +1,7 @@
+{
+  Tsne tsne=new Tsne();
+  MnistDataFetcher fetcher=new MnistDataFetcher(true);
+  fetcher.fetch(10);
+  DataSet d2=fetcher.next();
+  tsne.plot(d2.getFeatureMatrix(),2,0.2f,28);
+}

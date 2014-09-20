@@ -1,0 +1,7 @@
+{
+  String path=writeMatrix(matrix);
+  String command=String.format(commandTemplate,path,nDims,perplexity,initialDims);
+  Process is=Runtime.getRuntime().exec(command);
+  log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
+  log.error(IOUtils.readLines(is.getErrorStream()).toString());
+}

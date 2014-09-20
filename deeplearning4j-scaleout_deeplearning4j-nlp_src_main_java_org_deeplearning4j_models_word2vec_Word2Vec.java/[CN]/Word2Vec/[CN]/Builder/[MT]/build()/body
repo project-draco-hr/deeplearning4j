@@ -6,7 +6,6 @@
     ret.stopWords=StopWords.getStopWords();
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
-    ret.adaGrad=new AdaGrad(layerSize,1);
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -33,7 +32,6 @@
     ret.minWordFrequency=minWordFrequency;
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
-    ret.adaGrad=new AdaGrad(layerSize,1);
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

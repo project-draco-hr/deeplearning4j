@@ -1,5 +1,5 @@
 import numpy as np
-import pylab as Plot
+import pylab as pl
 import argparse
 if (__name__ == '__main__'):
     parser = argparse.ArgumentParser(description='Arguments for tsne: path to ndarray text file, number of dimensions, perplexity')
@@ -8,6 +8,7 @@ if (__name__ == '__main__'):
     parser.add_argument('--perplexity', type=float, help='perplexity for tsne')
     parser.add_argument('--initialdims', type=int, help='initial number of dimensions for tsne')
     args = parser.parse_args()
-    X = np.loadtxt(args.path)
+    X = np.loadtxt(open(args.path, 'rb'), delimiter=',')
     Y = tsne(X, args.ndims, args.initialdims, args.perplexity)
-    Plot.scatter(Y[:, 0], Y[:, 1], 20)
+    pl.scatter(Y[:, 0], Y[:, 1], 20)
+    pl.show()

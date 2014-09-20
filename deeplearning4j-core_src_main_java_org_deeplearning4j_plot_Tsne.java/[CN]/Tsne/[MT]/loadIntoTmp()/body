@@ -1,0 +1,10 @@
+{
+  File script=new File("/tmp/tsne.py");
+  try {
+    List<String> lines=IOUtils.readLines(r.getInputStream());
+    FileUtils.writeLines(script,lines);
+  }
+ catch (  IOException e) {
+    throw new IllegalStateException("Unable to load python file");
+  }
+}
