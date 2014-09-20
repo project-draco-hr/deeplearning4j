@@ -2,7 +2,7 @@
   system=ActorSystem.create(systemName);
   ActorRefUtils.addShutDownForSystem(system);
   mediator=DistributedPubSubExtension.get(system).mediator();
-  epochs=conf.getPretrainEpochs();
+  epochs=conf.getConf().getPretrainEpochs();
   if (type.equals("master")) {
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to iterate");
     log.info("Starting master");

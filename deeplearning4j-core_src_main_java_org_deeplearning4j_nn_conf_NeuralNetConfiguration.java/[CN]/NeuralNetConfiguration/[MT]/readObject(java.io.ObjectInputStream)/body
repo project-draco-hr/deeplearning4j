@@ -1,0 +1,5 @@
+{
+  in.defaultReadObject();
+  rng=new MersenneTwister(seed);
+  dist=new UniformRealDistribution();
+}

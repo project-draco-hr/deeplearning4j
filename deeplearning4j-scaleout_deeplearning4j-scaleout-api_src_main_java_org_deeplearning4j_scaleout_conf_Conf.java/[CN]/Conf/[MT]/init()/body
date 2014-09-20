@@ -1,8 +1,8 @@
 {
   if (getMultiLayerClazz().isAssignableFrom(DBN.class)) {
-    return new DBN.Builder().configure(conf).withClazz(getMultiLayerClazz()).lineSearchBackProp(isLineSearchBackProp()).hiddenLayerSizes(getLayerSizes()).useDropConnection(isUseDropConnect()).build();
+    return new DBN.Builder().configure(conf).layerWiseCOnfiguration(layerConfigs).withClazz(getMultiLayerClazz()).lineSearchBackProp(isLineSearchBackProp()).hiddenLayerSizes(getLayerSizes()).build();
   }
  else {
-    return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).lineSearchBackProp(isLineSearchBackProp()).useDropConnection(isUseDropConnect()).build();
+    return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).lineSearchBackProp(isLineSearchBackProp()).build();
   }
 }
