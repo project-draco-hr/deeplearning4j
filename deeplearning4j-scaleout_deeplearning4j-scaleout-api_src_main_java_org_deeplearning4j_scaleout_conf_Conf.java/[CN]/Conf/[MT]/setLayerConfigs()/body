@@ -1,0 +1,7 @@
+{
+  List<NeuralNetConfiguration> layers=new ArrayList<>();
+  for (int i=0; i < layerSizes.length; i++) {
+    layers.add(conf.clone());
+  }
+  setLayerConfigs(layers);
+}

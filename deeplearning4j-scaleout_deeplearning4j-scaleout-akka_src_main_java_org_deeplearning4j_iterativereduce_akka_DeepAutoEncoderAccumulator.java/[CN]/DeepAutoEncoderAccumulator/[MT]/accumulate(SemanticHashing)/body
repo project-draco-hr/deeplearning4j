@@ -1,0 +1,6 @@
+{
+  if (averaged == null)   this.averaged=semanticHashing;
+ else {
+    averaged.getEncoder().merge(semanticHashing,numWorkers);
+  }
+}

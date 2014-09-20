@@ -1,16 +1,15 @@
 {
   Layer layer=null;
   try {
-    layer=getClass().newInstance();
+    Constructor c=getClass().getConstructor(NeuralNetConfiguration.class,INDArray.class,INDArray.class,INDArray.class);
+    NeuralNetConfiguration clone=conf.clone();
+    int nIn=clone.getnOut(), nOut=clone.getnIn();
+    clone.setnIn(nIn);
+    clone.setnOut(nOut);
+    layer=(Layer)c.newInstance(conf,W.transpose().dup(),b.transpose().dup(),input != null ? input.transpose().dup() : null);
   }
- catch (  InstantiationException e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
-catch (  IllegalAccessException e) {
-    e.printStackTrace();
-  }
-  layer.setB(b.dup());
-  layer.setW(W.transpose().dup());
-  if (input != null)   layer.setInput(input.transpose().dup());
   return layer;
 }
