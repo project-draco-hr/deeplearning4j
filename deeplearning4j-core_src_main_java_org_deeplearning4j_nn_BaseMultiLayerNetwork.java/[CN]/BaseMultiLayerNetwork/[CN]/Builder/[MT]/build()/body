@@ -12,6 +12,7 @@
     ret.setHiddenLayerSizes(this.hiddenLayerSizes);
     ret.setnLayers(this.nLayers);
     ret.setShouldBackProp(this.backProp);
+    ret.setLayerWiseConfigurations(layerWiseConfiguration);
     ret.neuralNets=new NeuralNetwork[nLayers];
     ret.setInput(this.input);
     ret.setLineSearchBackProp(lineSearchBackProp);
