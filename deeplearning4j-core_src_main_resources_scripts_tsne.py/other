@@ -1,0 +1,13 @@
+import numpy as np
+import pylab as Plot
+import argparse
+if (__name__ == '__main__'):
+    parser = argparse.ArgumentParser(description='Arguments for tsne: path to ndarray text file, number of dimensions, perplexity')
+    parser.add_argument('--path', help='path to the file')
+    parser.add_argument('--ndims', type=int, help='number of dimensions to perform embedding')
+    parser.add_argument('--perplexity', type=float, help='perplexity for tsne')
+    parser.add_argument('--initialdims', type=int, help='initial number of dimensions for tsne')
+    args = parser.parse_args()
+    X = np.loadtxt(args.path)
+    Y = tsne(X, args.ndims, args.initialdims, args.perplexity)
+    Plot.scatter(Y[:, 0], Y[:, 1], 20)

@@ -1,0 +1,37 @@
+def x2p(X=np.array([]), tol=1e-05, perplexity=30.0):
+    'Performs a binary search to get P-values in such a way that each conditional Gaussian has the same perplexity.'
+    print 'Computing pairwise distances...'
+    (n, d) = X.shape
+    sum_X = np.sum(np.square(X), 1)
+    D = np.add(np.add(((-2) * np.dot(X, X.T)), sum_X).T, sum_X)
+    P = np.zeros((n, n))
+    beta = np.ones((n, 1))
+    logU = np.log(perplexity)
+    for i in range(n):
+        if ((i % 500) == 0):
+            print 'Computing P-values for point ', i, ' of ', n, '...'
+        betamin = (- np.inf)
+        betamax = np.inf
+        Di = D[(i, np.concatenate((np.r_[0:i], np.r_[(i + 1):n])))]
+        (H, thisP) = Hbeta(Di, beta[i])
+        Hdiff = (H - logU)
+        tries = 0
+        while ((np.abs(Hdiff) > tol) and (tries < 50)):
+            if (Hdiff > 0):
+                betamin = beta[i]
+                if ((betamax == np.inf) or (betamax == (- np.inf))):
+                    beta[i] *= 2
+                else:
+                    beta[i] = ((beta[i] + betamax) / 2)
+            else:
+                betamax = beta[i]
+                if ((betamin == np.inf) or (betamin == (- np.inf))):
+                    beta[i] /= 2
+                else:
+                    beta[i] = ((beta[i] + betamin) / 2)
+            (H, thisP) = Hbeta(Di, beta[i])
+            Hdiff = (H - logU)
+            tries = (tries + 1)
+        P[(i, np.concatenate((np.r_[0:i], np.r_[(i + 1):n])))] = thisP
+    print 'Mean value of sigma: ', np.mean(np.sqrt((1 / beta)))
+    return P
