@@ -6,14 +6,14 @@
   p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
   system.actorOf(p,"worker");
   log.info("Broadcasting initial master network");
-  DeepAutoEncoder network;
+  SemanticHashing network;
   if (this.network == null) {
     if (encoder != null) {
-      network=new DeepAutoEncoder.Builder().withEncoder(this.network).build();
+      network=new SemanticHashing.Builder().withEncoder(this.network).build();
       this.network=network;
     }
  else {
-      network=new DeepAutoEncoder.Builder().withEncoder(conf.init()).build();
+      network=new SemanticHashing.Builder().withEncoder(conf.init()).build();
       this.network=network;
     }
   }

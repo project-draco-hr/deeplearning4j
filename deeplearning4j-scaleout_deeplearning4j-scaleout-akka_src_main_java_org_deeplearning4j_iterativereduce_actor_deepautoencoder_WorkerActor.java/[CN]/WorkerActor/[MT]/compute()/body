@@ -5,7 +5,7 @@
     return null;
   }
   log.info("Training network on worker " + id);
-  DeepAutoEncoder network=getResults().get();
+  SemanticHashing network=getResults().get();
   isWorking.set(true);
   while (network == null) {
     try {

@@ -1,0 +1,4 @@
+{
+  this.input=data.getFeatureMatrix();
+  finetune(data.getLabels(),defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
+}

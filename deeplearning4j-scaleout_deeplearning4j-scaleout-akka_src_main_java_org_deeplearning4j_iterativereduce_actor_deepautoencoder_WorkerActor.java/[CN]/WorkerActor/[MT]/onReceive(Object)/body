@@ -4,9 +4,9 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed to " + ack.toString());
   }
- else   if (message instanceof DeepAutoEncoder) {
-    if (results == null)     results=new UpdateableEncoderImpl((DeepAutoEncoder)message);
- else     results.set((DeepAutoEncoder)message);
+ else   if (message instanceof SemanticHashing) {
+    if (results == null)     results=new UpdateableEncoderImpl((SemanticHashing)message);
+ else     results.set((SemanticHashing)message);
     log.info("Set network");
   }
  else   if (message instanceof Ack) {

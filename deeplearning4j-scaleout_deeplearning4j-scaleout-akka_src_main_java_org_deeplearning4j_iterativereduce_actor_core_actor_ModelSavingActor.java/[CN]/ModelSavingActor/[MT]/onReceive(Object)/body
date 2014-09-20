@@ -7,8 +7,8 @@
       stateTracker.setCurrent(new UpdateableImpl(current));
       if (stateTracker.hasBegun())       modelSaver.save(current);
     }
- else     if (stateTracker.getCurrent().get().getClass().isAssignableFrom(DeepAutoEncoder.class)) {
-      DeepAutoEncoder current=(DeepAutoEncoder)stateTracker.getCurrent().get();
+ else     if (stateTracker.getCurrent().get().getClass().isAssignableFrom(SemanticHashing.class)) {
+      SemanticHashing current=(SemanticHashing)stateTracker.getCurrent().get();
       stateTracker.setCurrent(new UpdateableEncoderImpl(current));
       if (stateTracker.hasBegun())       modelSaver.save(current);
     }
