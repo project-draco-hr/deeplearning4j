@@ -43,9 +43,9 @@
     log.info("Worker " + id + " finetune");
     if (tracker.testSet() != null) {
       TrainingEvaluator eval=tracker.create(network);
-      network.finetune(d.getLabels(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs(),eval);
+      network.finetune(d.getLabels(),conf.getConf().getFinetuneLearningRate(),conf.getConf().getFinetuneEpochs(),eval);
     }
- else     network.finetune(d.getLabels(),conf.getFinetuneLearningRate(),conf.getFinetuneEpochs(),null);
+ else     network.finetune(d.getLabels(),conf.getConf().getFinetuneLearningRate(),conf.getConf().getFinetuneEpochs(),null);
   }
   try {
     if (!tracker.isDone())     tracker.clearJob(id);

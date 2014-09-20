@@ -1,5 +1,5 @@
 {
-  if (layerWiseConfigurations == null) {
+  if (layerWiseConfigurations == null || layers == null) {
     intializeConfigurations();
   }
   INDArray layerInput=input;
