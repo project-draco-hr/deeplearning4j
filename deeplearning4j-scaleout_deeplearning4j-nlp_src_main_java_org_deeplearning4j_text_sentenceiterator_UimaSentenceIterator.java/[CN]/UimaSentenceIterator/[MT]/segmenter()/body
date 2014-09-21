@@ -1,0 +1,9 @@
+{
+  try {
+    if (defaultAnalysisEngine == null)     defaultAnalysisEngine=AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription()));
+    return defaultAnalysisEngine;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

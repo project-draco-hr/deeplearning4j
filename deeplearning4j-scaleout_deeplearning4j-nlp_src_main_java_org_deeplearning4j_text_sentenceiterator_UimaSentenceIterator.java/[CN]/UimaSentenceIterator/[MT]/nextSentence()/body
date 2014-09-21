@@ -3,18 +3,14 @@
     try {
       if (getReader().hasNext()) {
         CAS cas=engine.newCAS();
-synchronized (reader) {
-          try {
-            getReader().getNext(cas);
-          }
- catch (          Exception e) {
-            log.warn("Done iterating returning an empty string");
-            return "";
-          }
+        try {
+          getReader().getNext(cas);
         }
-synchronized (engine) {
-          engine.process(cas);
+ catch (        Exception e) {
+          log.warn("Done iterating returning an empty string");
+          return "";
         }
+        engine.process(cas);
         List<String> list=new ArrayList<>();
         for (        Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
           list.add(sentence.getCoveredText());

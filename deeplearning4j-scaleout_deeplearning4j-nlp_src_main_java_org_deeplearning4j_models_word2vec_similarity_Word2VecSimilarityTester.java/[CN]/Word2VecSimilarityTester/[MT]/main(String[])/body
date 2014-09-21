@@ -1,5 +1,5 @@
 {
-  Word2Vec vec=Word2VecLoader.loadModel(new File(args[0]));
+  Word2Vec vec=Word2VecLoader.loadGoogleBinary(args[0]);
   File trainingDir=new File(args[1]);
   File[] dirs=trainingDir.listFiles();
   List<File> files=new ArrayList<File>();

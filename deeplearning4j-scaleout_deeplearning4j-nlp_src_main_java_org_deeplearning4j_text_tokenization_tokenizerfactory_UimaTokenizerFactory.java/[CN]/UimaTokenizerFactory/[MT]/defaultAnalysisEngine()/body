@@ -1,6 +1,7 @@
 {
   try {
-    return AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),StemmerAnnotator.getDescription("English")));
+    if (defaultAnalysisEngine == null)     defaultAnalysisEngine=AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),StemmerAnnotator.getDescription("English")));
+    return defaultAnalysisEngine;
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

@@ -1,0 +1,5 @@
+{
+  RandomAccessFile f=new RandomAccessFile("t","rw");
+  f.setLength(1024 * 1024 * 1024);
+  CorpusBreaker fileBreaker=new FileCorpusBreaker(new File("t"),1000,1000000);
+}

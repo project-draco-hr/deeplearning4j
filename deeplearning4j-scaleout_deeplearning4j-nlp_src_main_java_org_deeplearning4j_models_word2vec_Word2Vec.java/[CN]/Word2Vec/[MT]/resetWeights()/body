@@ -1,4 +1,4 @@
 {
   cache.resetWeights();
-  cache.putVector(UNK,Nd4j.randn(new int[]{layerSize}));
+  cache.putVector(UNK,randomVector());
 }
