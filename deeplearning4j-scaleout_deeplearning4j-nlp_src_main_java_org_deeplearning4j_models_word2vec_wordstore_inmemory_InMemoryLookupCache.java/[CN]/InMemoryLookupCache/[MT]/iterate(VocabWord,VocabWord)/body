@@ -14,7 +14,7 @@
     if (dot <= -6 || dot >= 6)     continue;
     float f=(float)MathUtils.sigmoid(dot);
     float g=(1 - w1.getCodes()[d] - f);
-    float lr=w1.getLearningRate(d,g);
+    float lr=useAdaGrad ? w1.getLearningRate(d,g) : this.lr;
     g*=lr;
     avgChange+=g;
     Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
