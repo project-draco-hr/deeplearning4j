@@ -7,22 +7,9 @@
   final AtomicInteger latch=new AtomicInteger(0);
   while (docIter != null && docIter.hasNext()) {
     InputStream is=docIter.nextDocument();
-    Tokenizer t=tokenizerFactory.create(is);
-    while (t.hasMoreTokens()) {
-      String token=t.nextToken();
-      if (stopWords.contains(token))       token="STOP";
-      cache.incrementWordCount(token);
-      if (!Util.matchesAnyStopWord(stopWords,token)) {
-        if (cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
-          int idx=cache.numWords();
-          word.setIndex(idx);
-          cache.putVocabWord(token,word);
-          cache.addWordToIndex(idx,token);
-        }
-      }
-    }
-    IOUtils.closeQuietly(is);
+    vocabActor.tell(new StreamWork(is,latch),vocabActor);
+    queued.incrementAndGet();
+    if (queued.get() % 10000 == 0)     log.info("Sent " + queued);
   }
   while (getSentenceIter() != null && getSentenceIter().hasNext()) {
     String sentence=getSentenceIter().nextSentence();

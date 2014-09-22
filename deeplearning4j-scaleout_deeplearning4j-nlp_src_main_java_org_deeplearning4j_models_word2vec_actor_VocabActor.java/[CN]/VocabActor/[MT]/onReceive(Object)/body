@@ -26,5 +26,27 @@
     work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());
   }
+ else   if (message instanceof StreamWork) {
+    StreamWork work=(StreamWork)message;
+    InputStream is=work.getIs();
+    Tokenizer t=tokenizer.create(is);
+    while (t.hasMoreTokens()) {
+      String token=t.nextToken();
+      if (stopWords.contains(token))       token="STOP";
+      cache.incrementWordCount(token);
+      if (!Util.matchesAnyStopWord(stopWords,token)) {
+        if (cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
+          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
+          int idx=cache.numWords();
+          word.setIndex(idx);
+          cache.putVocabWord(token,word);
+          cache.addWordToIndex(idx,token);
+        }
+      }
+    }
+    IOUtils.closeQuietly(is);
+    work.countDown();
+    lastUpdate.getAndSet(System.currentTimeMillis());
+  }
  else   unhandled(message);
 }
