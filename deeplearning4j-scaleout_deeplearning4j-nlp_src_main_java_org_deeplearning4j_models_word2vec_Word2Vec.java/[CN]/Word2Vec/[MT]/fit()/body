@@ -3,7 +3,8 @@
   buildVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
-  sentenceIter.reset();
+  if (sentenceIter != null)   sentenceIter.reset();
+  if (docIter != null)   docIter.reset();
   final AtomicLong latch=new AtomicLong(0);
   log.info("Processing sentences...");
   while (getSentenceIter() != null && getSentenceIter().hasNext()) {
