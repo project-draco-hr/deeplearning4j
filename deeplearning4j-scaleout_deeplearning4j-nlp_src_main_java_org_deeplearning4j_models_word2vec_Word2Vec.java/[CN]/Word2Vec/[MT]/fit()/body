@@ -6,12 +6,24 @@
   sentenceIter.reset();
   final AtomicLong latch=new AtomicLong(0);
   log.info("Processing sentences...");
-  while (getSentenceIter().hasNext()) {
+  while (getSentenceIter() != null && getSentenceIter().hasNext()) {
     String sentence=sentenceIter.nextSentence();
     if (sentence == null)     continue;
     trainSentence(sentence);
     numSentencesProcessed.incrementAndGet();
     if (numSentencesProcessed.get() % 100 == 0)     log.info("Num sentences processed " + numSentencesProcessed.get());
+  }
+  while (docIter != null && docIter.hasNext()) {
+    InputStream is=docIter.nextDocument();
+    trainSentence(is);
+    numSentencesProcessed.incrementAndGet();
+    if (numSentencesProcessed.get() % 100 == 0)     log.info("Num sentences processed " + numSentencesProcessed.get());
+    try {
+      is.close();
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
   }
   while (latch.get() > 0) {
     log.info("Waiting on sentences...Num processed so far " + numSentencesProcessed.get() + " with latch count at "+ latch.get());

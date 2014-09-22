@@ -1,0 +1,25 @@
+{
+  StringBuffer sb=new StringBuffer();
+  try {
+    streamTokenizer.nextToken();
+  }
+ catch (  IOException e1) {
+    throw new RuntimeException(e1);
+  }
+  if (streamTokenizer.ttype == StreamTokenizer.TT_WORD) {
+    sb.append(streamTokenizer.sval);
+  }
+ else   if (streamTokenizer.ttype == StreamTokenizer.TT_NUMBER) {
+    sb.append(streamTokenizer.nval);
+  }
+ else   if (streamTokenizer.ttype == StreamTokenizer.TT_EOL) {
+    try {
+      while (streamTokenizer.ttype == StreamTokenizer.TT_EOL)       streamTokenizer.nextToken();
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+    System.out.println();
+  }
+  return sb.toString();
+}
