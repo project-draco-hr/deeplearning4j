@@ -1,0 +1,9 @@
+{
+  String toTokenize="Mary had a little lamb.";
+  TokenizerFactory t=new DefaultTokenizerFactory();
+  Tokenizer tokenizer=t.create(toTokenize);
+  Tokenizer tokenizer2=t.create(new ByteArrayInputStream(toTokenize.getBytes()));
+  while (tokenizer.hasMoreTokens()) {
+    assertEquals(tokenizer.nextToken(),tokenizer2.nextToken());
+  }
+}
