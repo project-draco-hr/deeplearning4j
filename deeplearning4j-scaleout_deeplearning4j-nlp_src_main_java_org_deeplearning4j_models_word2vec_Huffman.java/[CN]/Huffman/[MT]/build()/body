@@ -1,5 +1,6 @@
 {
   heap.addAll(words);
+  int size=words.size();
   for (int i=0; i < words.size() - 1; i++) {
     VocabWord word1=heap.poll();
     VocabWord word2=heap.poll();
@@ -12,7 +13,7 @@
     word2.setParent(newWord);
     newWord.setLeft(word1);
     newWord.setRight(word2);
-    int idx=i + words.size();
+    int idx=i + size;
     newWord.setIndex(idx);
     heap.add(newWord);
   }
@@ -29,9 +30,6 @@
     int[] codes=triple.getSecond();
     int[] points=triple.getThird();
     VocabWord node=triple.getFirst();
-    if (node == null) {
-      continue;
-    }
     if (node.getIndex() < words.size()) {
       node.setCodes(codes);
       node.setPoints(points);

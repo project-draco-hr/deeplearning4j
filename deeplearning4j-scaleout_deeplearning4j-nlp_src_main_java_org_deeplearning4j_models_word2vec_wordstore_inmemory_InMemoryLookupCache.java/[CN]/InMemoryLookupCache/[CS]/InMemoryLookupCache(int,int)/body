@@ -1,4 +1,4 @@
 {
   this.vectorLength=vectorLength;
-  syn0=Nd4j.create(vocabSize,vectorLength);
+  syn0=Nd4j.rand(vocabSize,vectorLength);
 }
