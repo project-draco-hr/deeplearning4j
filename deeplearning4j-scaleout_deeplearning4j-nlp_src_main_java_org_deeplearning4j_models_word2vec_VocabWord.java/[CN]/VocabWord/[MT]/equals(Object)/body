@@ -21,6 +21,6 @@
     if (other.right != null)     return false;
   }
  else   if (!right.equals(other.right))   return false;
-  if (Double.doubleToLongBits(wordFrequency) != Double.doubleToLongBits(other.wordFrequency))   return false;
+  if (Double.doubleToLongBits(wordFrequency.get()) != Double.doubleToLongBits(other.wordFrequency.get()))   return false;
   return true;
 }

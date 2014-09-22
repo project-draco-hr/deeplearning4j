@@ -30,6 +30,7 @@
     int[] codes=triple.getSecond();
     int[] points=triple.getThird();
     VocabWord node=triple.getFirst();
+    if (node == null)     continue;
     if (node.getIndex() < words.size()) {
       node.setCodes(codes);
       node.setPoints(points);

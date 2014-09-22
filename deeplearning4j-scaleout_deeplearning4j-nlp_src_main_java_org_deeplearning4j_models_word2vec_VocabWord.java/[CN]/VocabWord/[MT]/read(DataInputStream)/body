@@ -1,4 +1,4 @@
 {
-  this.wordFrequency=dos.readDouble();
+  this.wordFrequency.set(dos.readDouble());
   return this;
 }

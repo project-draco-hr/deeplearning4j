@@ -1,8 +1,8 @@
 {
   VocabCache cache;
   if (vec == null && !new File("vec.ser").exists()) {
-    cache=new InMemoryLookupCache(100,true);
-    vec=new Word2Vec.Builder().minWordFrequency(1).vocabCache(cache).windowSize(5).layerSize(100).iterate(iter).tokenizerFactory(tokenizer).build();
+    cache=new InMemoryLookupCache(100,true,0.025f);
+    vec=new Word2Vec.Builder().minWordFrequency(5).vocabCache(cache).windowSize(5).layerSize(100).iterate(iter).tokenizerFactory(tokenizer).build();
     vec.setCache(cache);
     vec.fit();
     SerializationUtils.saveObject(vec,new File("vec.ser"));

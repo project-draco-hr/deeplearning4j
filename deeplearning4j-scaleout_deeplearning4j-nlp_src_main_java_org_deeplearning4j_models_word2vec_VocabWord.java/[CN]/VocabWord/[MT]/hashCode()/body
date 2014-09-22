@@ -8,7 +8,7 @@
   result=prime * result + ((points == null) ? 0 : points.hashCode());
   result=prime * result + ((right == null) ? 0 : right.hashCode());
   long temp;
-  temp=Double.doubleToLongBits(wordFrequency);
+  temp=Double.doubleToLongBits(wordFrequency.get());
   result=prime * result + (int)(temp ^ (temp >>> 32));
   return result;
 }
