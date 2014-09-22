@@ -1,0 +1,11 @@
+{
+  CAS cas=retrieve();
+  cas.setDocumentText(text);
+  try {
+    analysisEngine.process(cas);
+  }
+ catch (  AnalysisEngineProcessException e) {
+    throw new RuntimeException(e);
+  }
+  return cas;
+}

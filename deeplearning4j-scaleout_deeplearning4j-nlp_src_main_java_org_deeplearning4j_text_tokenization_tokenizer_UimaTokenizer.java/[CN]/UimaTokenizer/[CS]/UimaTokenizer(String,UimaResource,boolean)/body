@@ -1,21 +1,18 @@
 {
-  this.engine=engine;
-  this.pool=pool;
   this.checkForLabel=checkForLabel;
   this.tokens=new ArrayList<>();
   try {
-    CAS cas=this.pool.getCas(Integer.MAX_VALUE);
-    cas.setDocumentText(tokens);
-    this.engine.process(cas);
+    CAS cas=resource.process(tokens);
     Collection<Token> tokenList=JCasUtil.select(cas.getJCas(),Token.class);
     for (    Token t : tokenList) {
       if (!checkForLabel || valid(t.getCoveredText()))       if (t.getLemma() != null)       this.tokens.add(t.getLemma());
  else       if (t.getStem() != null)       this.tokens.add(t.getStem());
  else       this.tokens.add(t.getCoveredText());
     }
-    pool.releaseCas(cas);
+    resource.release(cas);
   }
  catch (  Exception e) {
+    e.printStackTrace();
     throw new RuntimeException(e);
   }
 }

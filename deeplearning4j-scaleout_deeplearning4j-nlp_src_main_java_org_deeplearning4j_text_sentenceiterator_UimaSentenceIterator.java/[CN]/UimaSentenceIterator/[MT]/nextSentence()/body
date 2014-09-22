@@ -2,7 +2,7 @@
   if (sentences == null || !sentences.hasNext()) {
     try {
       if (getReader().hasNext()) {
-        CAS cas=engine.newCAS();
+        CAS cas=resource.retrieve();
         try {
           getReader().getNext(cas);
         }
@@ -10,7 +10,7 @@
           log.warn("Done iterating returning an empty string");
           return "";
         }
-        engine.process(cas);
+        resource.getAnalysisEngine().process(cas);
         List<String> list=new ArrayList<>();
         for (        Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
           list.add(sentence.getCoveredText());
@@ -20,7 +20,7 @@
           if (reader.hasNext()) {
             cas.reset();
             getReader().getNext(cas);
-            engine.process(cas);
+            resource.getAnalysisEngine().process(cas);
             for (            Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
               list.add(sentence.getCoveredText());
             }

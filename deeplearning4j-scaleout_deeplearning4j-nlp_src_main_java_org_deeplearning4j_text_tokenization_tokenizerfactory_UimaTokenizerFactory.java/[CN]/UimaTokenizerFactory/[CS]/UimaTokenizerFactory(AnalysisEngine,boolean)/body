@@ -1,9 +1,8 @@
 {
   super();
-  this.tokenizer=tokenizer;
   this.checkForLabel=checkForLabel;
   try {
-    pool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,tokenizer);
+    this.uimaResource=new UimaResource(tokenizer);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

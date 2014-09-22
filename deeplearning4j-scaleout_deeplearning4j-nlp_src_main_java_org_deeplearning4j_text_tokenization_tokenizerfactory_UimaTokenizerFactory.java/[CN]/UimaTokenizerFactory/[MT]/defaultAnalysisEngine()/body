@@ -1,6 +1,6 @@
 {
   try {
-    if (defaultAnalysisEngine == null)     defaultAnalysisEngine=AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),StemmerAnnotator.getDescription("English")));
+    if (defaultAnalysisEngine == null)     defaultAnalysisEngine=AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription()));
     return defaultAnalysisEngine;
   }
  catch (  Exception e) {

@@ -1,3 +1,3 @@
 {
-  return new UimaSentenceIterator(path,AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(TokenizerAnnotator.getDescription(),SentenceAnnotator.getDescription())));
+  return new UimaSentenceIterator(path,new UimaResource(AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(TokenizerAnnotator.getDescription(),SentenceAnnotator.getDescription()))));
 }

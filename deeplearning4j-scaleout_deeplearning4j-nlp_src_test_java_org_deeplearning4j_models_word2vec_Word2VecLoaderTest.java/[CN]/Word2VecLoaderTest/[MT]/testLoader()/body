@@ -1,3 +1,4 @@
 {
   Word2Vec vec=Word2VecLoader.loadGoogleBinary("vectors.bin");
+  assertTrue(vec.getCache().numWords() > 0);
 }

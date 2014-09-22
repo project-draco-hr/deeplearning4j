@@ -1,0 +1,4 @@
+{
+  this.analysisEngine=analysisEngine;
+  this.casPool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,analysisEngine);
+}

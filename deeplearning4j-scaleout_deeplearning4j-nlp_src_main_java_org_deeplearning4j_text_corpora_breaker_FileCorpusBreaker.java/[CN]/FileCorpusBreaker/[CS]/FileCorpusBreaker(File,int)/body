@@ -1,0 +1,6 @@
+{
+  if (!file.exists())   throw new IllegalArgumentException("File must exist");
+  if (!file.isFile())   throw new IllegalArgumentException("Only accepts files at this time");
+  this.original=file;
+  this.segmentBy=segmentBy;
+}
