@@ -11,7 +11,6 @@
     INDArray syn1=this.syn1.getRow(l2);
     if (l1 >= this.syn0.rows() || l2 >= this.syn1.rows())     break;
     float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
-    if (dot <= -6 || dot >= 6)     continue;
     float f=(float)MathUtils.sigmoid(dot);
     float g=(1 - w1.getCodes()[d] - f);
     float lr=useAdaGrad ? w1.getLearningRate(d,g) : this.lr;
@@ -21,5 +20,6 @@
     Nd4j.getBlasWrapper().axpy(g,syn0,syn1);
   }
   avgChange/=w1.getCodes().length;
-  Nd4j.getBlasWrapper().axpy(avgChange,neu1e,syn0);
+  if (useAdaGrad)   Nd4j.getBlasWrapper().axpy(avgChange,neu1e,syn0);
+ else   Nd4j.getBlasWrapper().axpy(1,neu1e,syn0);
 }

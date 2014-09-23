@@ -20,5 +20,7 @@
       throw new RuntimeException(e);
     }
   }
-  return sb.toString();
+  String ret=sb.toString();
+  if (tokenPreProcess != null)   ret=tokenPreProcess.preProcess(ret);
+  return ret;
 }
