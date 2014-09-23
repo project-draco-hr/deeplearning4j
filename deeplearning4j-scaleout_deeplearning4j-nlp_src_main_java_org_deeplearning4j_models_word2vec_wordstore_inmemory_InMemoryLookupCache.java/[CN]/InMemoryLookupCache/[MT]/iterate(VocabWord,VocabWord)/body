@@ -11,7 +11,10 @@
     INDArray syn1=this.syn1.getRow(l2);
     if (l1 >= this.syn0.rows() || l2 >= this.syn1.rows())     break;
     float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
-    float f=(float)MathUtils.sigmoid(dot);
+    if (dot <= -6 || dot >= 6)     continue;
+    int idx=(int)((dot + MAX_EXP) * (expTable.length / MAX_EXP / 2));
+    if (idx >= expTable.length)     continue;
+    float f=(float)expTable[idx];
     float g=(1 - w1.getCodes()[d] - f);
     float lr=useAdaGrad ? w1.getLearningRate(d,g) : this.lr;
     g*=lr;
