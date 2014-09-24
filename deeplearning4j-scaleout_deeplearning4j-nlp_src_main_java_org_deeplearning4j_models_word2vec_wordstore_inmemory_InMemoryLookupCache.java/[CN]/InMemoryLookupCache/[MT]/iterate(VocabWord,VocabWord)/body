@@ -5,22 +5,25 @@
   INDArray syn0=this.syn0.getRow(l1);
   INDArray neu1e=Nd4j.create(vectorLength);
   float avgChange=0.0f;
-  for (int d=0; d < w1.getCodes().length; d++) {
-    int inner=w1.getPoints()[d];
+  int count=0;
+  if (w1.getConnections() == null)   return;
+  for (  VocabWord word : w1.getConnections()) {
+    int inner=w1.getIndex();
     int l2=inner;
     INDArray syn1=this.syn1.getRow(l2);
     if (l1 >= this.syn0.rows() || l2 >= this.syn1.rows())     break;
     float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
-    if (dot <= -6 || dot >= 6)     continue;
+    if (dot <= -MAX_EXP || dot >= MAX_EXP)     continue;
     int idx=(int)((dot + MAX_EXP) * (expTable.length / MAX_EXP / 2));
-    if (idx >= expTable.length)     continue;
     float f=(float)expTable[idx];
-    float g=(1 - w1.getCodes()[d] - f);
-    float lr=useAdaGrad ? w1.getLearningRate(d,g) : this.lr;
+    float g=(1 - w1.getCode() - f);
+    float lr=useAdaGrad ? w1.getLearningRate(count,g) : this.lr;
     g*=lr;
     avgChange+=g;
     Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
     Nd4j.getBlasWrapper().axpy(g,syn0,syn1);
+    avgChange/=w1.getCodes().length;
+    count++;
   }
   avgChange/=w1.getCodes().length;
   if (useAdaGrad)   Nd4j.getBlasWrapper().axpy(avgChange,neu1e,syn0);

@@ -1,7 +1,4 @@
 {
   this(vectorLength,true);
-  for (int i=0; i < expTable.length; i++) {
-    expTable[i]=(float)Math.exp((i / (int)expTable.length * 2 - 1) * MAX_EXP);
-    expTable[i]=expTable[i] / (expTable[i] + 1);
-  }
+  initExpTable();
 }

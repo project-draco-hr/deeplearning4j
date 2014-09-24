@@ -1,0 +1,6 @@
+{
+  for (int i=0; i < expTable.length; i++) {
+    float tmp=(float)Math.exp((2.0 * i / expTable.length - 1.0) * MAX_EXP);
+    expTable[i]=tmp / (tmp + 1);
+  }
+}

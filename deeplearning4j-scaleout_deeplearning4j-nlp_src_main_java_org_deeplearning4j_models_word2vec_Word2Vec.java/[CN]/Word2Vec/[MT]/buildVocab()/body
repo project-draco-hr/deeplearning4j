@@ -1,5 +1,11 @@
 {
   readStopWords();
+  if (cache.vocabExists()) {
+    log.info("Loading vocab...");
+    cache.loadVocab();
+    cache.resetWeights();
+    return;
+  }
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger queued=new AtomicInteger(0);

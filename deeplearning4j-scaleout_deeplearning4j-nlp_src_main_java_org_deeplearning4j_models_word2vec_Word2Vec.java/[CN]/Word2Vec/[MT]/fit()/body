@@ -1,6 +1,7 @@
 {
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   buildVocab();
+  cache.saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();

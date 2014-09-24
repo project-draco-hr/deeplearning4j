@@ -1,0 +1,14 @@
+{
+  VocabWord curr=this;
+  if (connections != null)   return;
+  connections=new ArrayList<>();
+  while ((curr=curr.parent) != null) {
+    connections.add(curr);
+  }
+  Collections.reverse(connections);
+  codes=new int[connections.size()];
+  for (int i=1; i < codes.length; i++) {
+    codes[i - 1]=connections.get(i).code;
+  }
+  codes[codes.length - 1]=code;
+}
