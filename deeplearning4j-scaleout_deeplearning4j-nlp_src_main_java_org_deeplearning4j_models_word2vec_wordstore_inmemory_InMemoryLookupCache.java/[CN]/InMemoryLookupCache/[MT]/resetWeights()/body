@@ -1,5 +1,5 @@
 {
   int words=vocabs.size();
-  syn0=Nd4j.rand(new int[]{words,vectorLength}).subi(0.5f).divi(vectorLength);
+  syn0=Nd4j.randn(new int[]{words,vectorLength}).subi(0.5f).divi(vectorLength);
   syn1=Nd4j.create(syn0.shape());
 }

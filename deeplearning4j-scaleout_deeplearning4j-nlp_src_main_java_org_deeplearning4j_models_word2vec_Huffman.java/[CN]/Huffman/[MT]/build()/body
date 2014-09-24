@@ -17,7 +17,7 @@
     newWord.setIndex(idx);
     heap.add(newWord);
   }
-  for (  VocabWord word : words) {
-    word.createLinks();
+  while (!heap.isEmpty()) {
+    heap.poll().createLinks();
   }
 }
