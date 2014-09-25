@@ -5,27 +5,16 @@
   VocabWord other=(VocabWord)obj;
   if (code != other.code)   return false;
   if (!Arrays.equals(codes,other.codes))   return false;
-  if (connections == null) {
-    if (other.connections != null)     return false;
-  }
- else   if (!connections.equals(other.connections))   return false;
   if (historicalGradient == null) {
     if (other.historicalGradient != null)     return false;
   }
  else   if (!historicalGradient.equals(other.historicalGradient))   return false;
   if (index != other.index)   return false;
-  if (left == null) {
-    if (other.left != null)     return false;
-  }
- else   if (!left.equals(other.left))   return false;
   if (parent == null) {
     if (other.parent != null)     return false;
   }
  else   if (!parent.equals(other.parent))   return false;
-  if (right == null) {
-    if (other.right != null)     return false;
-  }
- else   if (!right.equals(other.right))   return false;
+  if (!Arrays.equals(points,other.points))   return false;
   if (word == null) {
     if (other.word != null)     return false;
   }

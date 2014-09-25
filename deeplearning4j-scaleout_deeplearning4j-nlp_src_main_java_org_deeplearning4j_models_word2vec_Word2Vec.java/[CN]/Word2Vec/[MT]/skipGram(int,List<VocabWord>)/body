@@ -1,0 +1,16 @@
+{
+  final VocabWord word=sentence.get(i);
+  if (word == null)   return;
+  int b=g.nextInt(window);
+  int a=b;
+  while (a < window * 2 + 1 - b) {
+    if (a != window) {
+      int c=i - window + a;
+      if (c >= 0 && c < sentence.size()) {
+        VocabWord lastWord=sentence.get(c);
+        iterate(word,lastWord);
+      }
+    }
+    a++;
+  }
+}

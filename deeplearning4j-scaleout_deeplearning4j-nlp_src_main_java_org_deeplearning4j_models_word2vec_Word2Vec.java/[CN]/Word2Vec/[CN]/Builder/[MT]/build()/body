@@ -4,7 +4,7 @@
     ret.layerSize=layerSize;
     ret.window=window;
     ret.alpha.set(lr);
-    ret.stopWords=StopWords.getStopWords();
+    ret.stopWords=stopWords;
     ret.setCache(vocabCache);
     ret.minWordFrequency=minWordFrequency;
     try {
@@ -16,12 +16,6 @@
     if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
     ret.docIter=docIter;
     ret.tokenizerFactory=tokenizerFactory;
-    vocabCache.resetWeights();
-    vocabCache.incrementWordCount(UNK,1);
-    vocabCache.addWordToIndex(0,UNK);
-    VocabWord w=new VocabWord(1,UNK);
-    w.setIndex(0);
-    vocabCache.putVocabWord(UNK,w);
     vocabCache.resetWeights();
     return ret;
   }
@@ -43,12 +37,6 @@
       throw new RuntimeException(e);
     }
     if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
-    vocabCache.incrementWordCount(UNK,1);
-    vocabCache.addWordToIndex(0,UNK);
-    VocabWord w=new VocabWord(1,UNK);
-    w.setIndex(0);
-    vocabCache.putVocabWord(UNK,w);
-    vocabCache.resetWeights();
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }

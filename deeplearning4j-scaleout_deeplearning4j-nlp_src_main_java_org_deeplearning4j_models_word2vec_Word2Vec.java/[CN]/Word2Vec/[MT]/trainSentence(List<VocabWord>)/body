@@ -1,17 +1,3 @@
 {
-  final AtomicLong nextRandom=new AtomicLong(5);
-  for (int i=0; i < sentence.size(); i++) {
-    final VocabWord entry=sentence.get(i);
-    final int i1=i;
-    if (sample > 0) {
-      double ran=(Math.sqrt(entry.getWordFrequency() / (sample * trainWordsCount)) + 1) * (sample * trainWordsCount) / entry.getWordFrequency();
-      nextRandom.set(nextRandom.get() * 25214903917L + 11);
-      if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
-        continue;
-      }
-    }
-    nextRandom.set(nextRandom.get() * 25214903917L + 11);
-    int b=(int)nextRandom.get() % window;
-    skipGram(i1,sentence,b);
-  }
+  for (int i=0; i < sentence.size(); i++)   skipGram(i,sentence);
 }
