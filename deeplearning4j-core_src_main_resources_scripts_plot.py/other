@@ -4,6 +4,8 @@ import math
 from PIL import Image
 from matplotlib.pyplot import hist, title, subplot, scatter
 import matplotlib.pyplot as plot
+from mpltools import style, layout
+style.use('ggplot')
 if (__name__ == '__main__'):
     if (len(sys.argv) < 3):
         print 'Please specify a command: One of hbias,weights,plot and a file path'
