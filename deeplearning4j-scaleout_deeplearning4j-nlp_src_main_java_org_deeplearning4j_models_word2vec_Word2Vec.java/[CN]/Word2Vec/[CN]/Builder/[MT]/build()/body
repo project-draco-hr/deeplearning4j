@@ -16,7 +16,6 @@
     if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
     ret.docIter=docIter;
     ret.tokenizerFactory=tokenizerFactory;
-    vocabCache.resetWeights();
     return ret;
   }
  else {
