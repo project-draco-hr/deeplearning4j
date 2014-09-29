@@ -2,8 +2,14 @@
   log.info("Setting up hazelcast with type " + type + " connection string "+ connectionString+ " and port "+ stateTrackerPort);
   if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
     if (connectionString.equals("master")) {
-      String host="0.0.0.0";
-      this.connectionString=host + ":" + stateTrackerPort;
+      String hazelCastHost=null;
+      try {
+        hazelCastHost=System.getProperty(HAZELCAST_HOST,InetAddress.getLocalHost().getHostName());
+      }
+ catch (      Exception e) {
+        hazelCastHost="0.0.0.0";
+      }
+      this.connectionString=hazelCastHost + ":" + stateTrackerPort;
     }
     this.hazelCastPort=stateTrackerPort;
     config=hazelcast();

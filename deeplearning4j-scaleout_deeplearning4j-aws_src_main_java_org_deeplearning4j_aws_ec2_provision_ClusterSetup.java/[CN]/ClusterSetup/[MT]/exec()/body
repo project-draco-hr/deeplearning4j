@@ -1,5 +1,6 @@
 {
   Ec2BoxCreator boxCreator=new Ec2BoxCreator(ami,numWorkers,size,securityGroupName,keyPairName);
+  boxCreator.setRegion(Regions.fromName(region));
   boxCreator.create();
   boxCreator.blockTillAllRunning();
   List<String> hosts=boxCreator.getHosts();

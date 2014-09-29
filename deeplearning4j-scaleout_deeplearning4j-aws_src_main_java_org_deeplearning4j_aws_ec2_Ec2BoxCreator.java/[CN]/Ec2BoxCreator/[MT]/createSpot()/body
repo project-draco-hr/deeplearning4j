@@ -11,7 +11,7 @@
   requestRequest.setLaunchSpecification(launchSpecification);
   RequestSpotInstancesResult requestResult=getEc2().requestSpotInstances(requestRequest);
   List<SpotInstanceRequest> requestResponses=requestResult.getSpotInstanceRequests();
-  List<String> spotInstanceRequestIds=new ArrayList<String>();
+  List<String> spotInstanceRequestIds=new ArrayList<>();
   for (  SpotInstanceRequest requestResponse : requestResponses) {
     System.out.println("Created Spot Request: " + requestResponse.getSpotInstanceRequestId());
     spotInstanceRequestIds.add(requestResponse.getSpotInstanceRequestId());
