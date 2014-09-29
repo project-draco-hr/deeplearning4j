@@ -6,7 +6,9 @@
     ret.alpha.set(lr);
     ret.stopWords=stopWords;
     ret.setCache(vocabCache);
+    ret.numIterations=iterations;
     ret.minWordFrequency=minWordFrequency;
+    ret.seed=seed;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -29,6 +31,8 @@
     ret.setCache(vocabCache);
     ret.docIter=docIter;
     ret.minWordFrequency=minWordFrequency;
+    ret.numIterations=iterations;
+    ret.seed=seed;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

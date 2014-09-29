@@ -1,5 +1,3 @@
 {
-  this.vectorLength=vectorLength;
-  this.useAdaGrad=useAdaGrad;
-  initExpTable();
+  this(vectorLength,useAdaGrad,0.025f,new XorShift64StarRandomGenerator(123));
 }

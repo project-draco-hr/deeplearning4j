@@ -1,11 +1,11 @@
 {
   ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
   File file=resource.getFile().getParentFile();
-  DocumentIterator iter=new FileDocumentIterator(file);
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
   new File("cache.ser").delete();
-  TokenizerFactory t=new DefaultTokenizerFactory();
-  InMemoryLookupCache cache=new InMemoryLookupCache(100,true,0.0025f);
-  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(1).layerSize(100).stopWords(new ArrayList<String>()).vocabCache(cache).windowSize(5).iterate(iter).tokenizerFactory(t).build();
+  TokenizerFactory t=new UimaTokenizerFactory();
+  InMemoryLookupCache cache=new InMemoryLookupCache(100,false,0.025f);
+  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(1).iterations(5).layerSize(100).stopWords(new ArrayList<String>()).vocabCache(cache).windowSize(5).iterate(iter).tokenizerFactory(t).build();
   assertEquals(new ArrayList<String>(),vec.getStopWords());
   vec.fit();
   double sim=vec.similarity("Adam","deeplearning4j");

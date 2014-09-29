@@ -1,9 +1,0 @@
-{
-  HazelCastStateTracker master=new HazelCastStateTracker("localhost:" + HazelCastStateTracker.DEFAULT_HAZELCAST_PORT,"master",HazelCastStateTracker.DEFAULT_HAZELCAST_PORT);
-  Job j=new Job("1","hi");
-  master.addJobToCurrent(j);
-  assertEquals(true,master.jobFor("1") != null);
-  master.clearJob(j.getWorkerId());
-  assertEquals(true,master.jobFor("1") == null);
-  master.shutdown();
-}

@@ -1,13 +1,12 @@
 {
-  final int prime=31;
-  int result=1;
-  result=prime * result + code;
-  result=prime * result + Arrays.hashCode(codes);
-  result=prime * result + ((historicalGradient == null) ? 0 : historicalGradient.hashCode());
-  result=prime * result + index;
-  result=prime * result + ((parent == null) ? 0 : parent.hashCode());
-  result=prime * result + Arrays.hashCode(points);
-  result=prime * result + ((word == null) ? 0 : word.hashCode());
-  result=prime * result + ((wordFrequency == null) ? 0 : wordFrequency.hashCode());
+  int result=wordFrequency != null ? wordFrequency.hashCode() : 0;
+  result=31 * result + index;
+  result=31 * result + (left != null ? left.hashCode() : 0);
+  result=31 * result + (right != null ? right.hashCode() : 0);
+  result=31 * result + (parent != null ? parent.hashCode() : 0);
+  result=31 * result + (codes != null ? Arrays.hashCode(codes) : 0);
+  result=31 * result + (word != null ? word.hashCode() : 0);
+  result=31 * result + (historicalGradient != null ? historicalGradient.hashCode() : 0);
+  result=31 * result + (points != null ? Arrays.hashCode(points) : 0);
   return result;
 }

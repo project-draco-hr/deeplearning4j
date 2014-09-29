@@ -3,7 +3,4 @@
   Huffman huffman=new Huffman(cache.vocabWords());
   huffman.build();
   log.info("Built tree");
-  for (  VocabWord w : cache.vocabWords()) {
-    System.out.println(w);
-  }
 }

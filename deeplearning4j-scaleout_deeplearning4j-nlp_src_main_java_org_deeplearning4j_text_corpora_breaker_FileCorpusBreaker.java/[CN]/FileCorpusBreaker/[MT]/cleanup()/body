@@ -1,7 +1,0 @@
-{
-  if (locations != null) {
-    for (    URI location : locations) {
-      new File(location).delete();
-    }
-  }
-}

@@ -1,29 +1,22 @@
 {
-  if (w1.getCodes() == null)   return;
-  if (w2.getIndex() >= syn0.rows())   return;
-  int l1=w2.getIndex();
-  INDArray syn0=this.syn0.getRow(l1);
-  INDArray neu1e=Nd4j.create(vectorLength);
+  INDArray syn0=this.syn0.getRow(w2.getIndex());
+  INDArray work=Nd4j.create(vectorLength);
   float avgChange=0.0f;
-  int count=0;
-  if (w1.getPoints() == null)   return;
-  for (  int l2 : w1.getPoints()) {
-    INDArray syn1=this.syn1.getRow(l2);
-    if (l1 >= this.syn0.rows() || l2 >= this.syn1.rows())     break;
+  for (int i=0; i < w1.getCodeLength(); i++) {
+    int code=w1.getCodes()[i];
+    int point=w1.getPoints()[i];
+    INDArray syn1=this.syn1.getRow(point);
     float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
-    if (dot <= -MAX_EXP || dot >= MAX_EXP)     continue;
-    int idx=(int)((dot + MAX_EXP) * (expTable.length / MAX_EXP / 2.0));
+    if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;
+    int idx=(int)((dot + MAX_EXP) * ((float)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     float f=expTable[idx];
-    float g=(1 - w1.getCodes()[count] - f);
-    float lr=useAdaGrad ? w1.getLearningRate(count,g) : this.lr;
-    g*=lr;
+    float g=(1 - code - f) * this.lr;
     avgChange+=g;
-    Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
+    Nd4j.getBlasWrapper().axpy(g,syn1,work);
     Nd4j.getBlasWrapper().axpy(g,syn0,syn1);
-    count++;
   }
   avgChange/=w1.getCodes().length;
-  if (useAdaGrad)   Nd4j.getBlasWrapper().axpy(avgChange,neu1e,syn0);
- else   Nd4j.getBlasWrapper().axpy(1,neu1e,syn0);
+  if (useAdaGrad)   Nd4j.getBlasWrapper().axpy(avgChange,work,syn0);
+ else   Nd4j.getBlasWrapper().axpy(1,work,syn0);
 }

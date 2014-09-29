@@ -1,13 +1,10 @@
 {
-  if (message instanceof SentenceMessage) {
-    SentenceMessage message2=(SentenceMessage)message;
-    processMessage(message2);
+  if (message instanceof String) {
+    vec.trainSentence(message.toString());
   }
- else   if (message instanceof Collection) {
-    Collection<SentenceMessage> message2=(Collection<SentenceMessage>)message;
-    for (    SentenceMessage message3 : message2) {
-      processMessage(message3);
-    }
+ else   if (message instanceof SentenceMessage) {
+    ((SentenceMessage)message).getChanged().incrementAndGet();
+    vec.trainSentence(((SentenceMessage)message).getSentence());
+    ((SentenceMessage)message).getChanged().incrementAndGet();
   }
- else   unhandled(message);
 }

@@ -1,10 +1,11 @@
 {
+  new File("cache.ser").delete();
   vectorizer=new TreeVectorizer();
   tokenizerFactory=new UimaTokenizerFactory(false);
   sentenceIter=new CollectionSentenceIterator(Arrays.asList(sentence));
   File vectors=new File("wordvectors.ser");
   if (!vectors.exists()) {
-    vec=new Word2Vec.Builder().iterate(sentenceIter).build();
+    vec=new Word2Vec.Builder().vocabCache(new InMemoryLookupCache(100)).iterate(sentenceIter).build();
     vec.fit();
     SerializationUtils.saveObject(vec,new File("wordvectors.ser"));
   }
