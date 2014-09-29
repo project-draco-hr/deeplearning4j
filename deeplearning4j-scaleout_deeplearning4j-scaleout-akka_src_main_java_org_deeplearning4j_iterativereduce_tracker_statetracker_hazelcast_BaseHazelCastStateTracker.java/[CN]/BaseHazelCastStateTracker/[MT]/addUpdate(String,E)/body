@@ -1,4 +1,5 @@
 {
+  if (update == null)   return;
   try {
     updateSaver().save(id,update);
   }
