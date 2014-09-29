@@ -1,4 +1,10 @@
 {
-  iter=FileUtils.iterateFiles(path,null,true);
-  this.rootDir=path;
+  if (path.isFile()) {
+    iter=Arrays.asList(path).iterator();
+    this.rootDir=path;
+  }
+ else {
+    iter=FileUtils.iterateFiles(path,null,true);
+    this.rootDir=path;
+  }
 }

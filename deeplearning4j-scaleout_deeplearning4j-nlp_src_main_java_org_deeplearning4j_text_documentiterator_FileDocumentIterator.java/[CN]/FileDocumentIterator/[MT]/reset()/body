@@ -1,3 +1,4 @@
 {
-  iter=FileUtils.iterateFiles(rootDir,null,true);
+  if (rootDir.isDirectory())   iter=FileUtils.iterateFiles(rootDir,null,true);
+ else   iter=Arrays.asList(rootDir).iterator();
 }

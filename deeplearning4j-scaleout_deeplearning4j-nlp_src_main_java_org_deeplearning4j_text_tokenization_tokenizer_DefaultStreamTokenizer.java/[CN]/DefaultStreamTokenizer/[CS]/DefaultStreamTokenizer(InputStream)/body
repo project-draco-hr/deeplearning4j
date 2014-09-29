@@ -8,5 +8,5 @@
   streamTokenizer.whitespaceChars('\n','\n');
   streamTokenizer.whitespaceChars(separator,separator);
   streamTokenizer.whitespaceChars(' ',' ');
-  streamTokenizer.eolIsSignificant(true);
+  streamTokenizer.eolIsSignificant(false);
 }
