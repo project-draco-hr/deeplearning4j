@@ -1,0 +1,7 @@
+{
+  TsneCalculation calculation=new TsneCalculation.Builder().normallize(false).build();
+  ClassPathResource resource=new ClassPathResource("/mnist2500_X.txt");
+  File f=resource.getFile();
+  INDArray data=Nd4j.readTxt(f.getAbsolutePath(),"   ");
+  calculation.calculate(data,2,50,20);
+}

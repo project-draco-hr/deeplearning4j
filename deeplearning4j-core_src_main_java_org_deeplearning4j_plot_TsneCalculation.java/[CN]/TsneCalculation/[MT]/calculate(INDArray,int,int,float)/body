@@ -1,0 +1,41 @@
+{
+  X=pca(X,initialDims);
+  if (nDims > X.shape().length)   nDims=X.shape().length;
+  INDArray y=Nd4j.randn(X.rows(),nDims);
+  INDArray iy=Nd4j.create(X.rows(),nDims);
+  INDArray gains=Nd4j.ones(X.rows(),nDims);
+  INDArray p=x2p(X,1e-5f,perplexity);
+  p.addi(p.transpose());
+  p.divi(p.sum(Integer.MAX_VALUE));
+  p.muli(4);
+  p.addi(1e-6f);
+  float epsilon=500;
+  for (int i=0; i < maxIter; i++) {
+    INDArray sumY=Transforms.pow(y,2).sum(1);
+    INDArray inside=y.mmul(y.transpose()).muli(-2).addi(sumY).transpose().addi(sumY).addi(1);
+    INDArray num=Nd4j.ones(p.shape()).divi(inside);
+    num.put(new NDArrayIndex[]{NDArrayIndex.interval(0,X.rows()),NDArrayIndex.interval(0,X.rows())},Nd4j.create(X.shape()));
+    INDArray q=Transforms.max(num.div(num.sum(Integer.MAX_VALUE)),realMin);
+    INDArray L=p.sub(q).mul(num);
+    INDArray yGrads=Nd4j.diag(L.sum(0)).sub(L).mul(y);
+    gains=gains.add(.2f).muli(sign(yGrads).eps(sign(iy))).addi(gains.mul(0.8f)).muli(sign(yGrads).eq(sign(iy)));
+    BooleanIndexing.applyWhere(gains,new Condition(){
+      @Override public Boolean apply(      Number input){
+        return input.floatValue() < minGain;
+      }
+      @Override public Boolean apply(      IComplexNumber input){
+        return input.absoluteValue().floatValue() < minGain;
+      }
+    }
+,new Function<Number,Number>(){
+      @Override public Number apply(      Number input){
+        return minGain;
+      }
+    }
+);
+    iy.addi(iy.mul(momentum).sub(epsilon).mul(gains.mul(yGrads)));
+    y.addi(iy);
+    y.subiRowVector(y.mean(0));
+    if (i == switchMomentumIteration)     momentum=finalMomentum;
+  }
+}

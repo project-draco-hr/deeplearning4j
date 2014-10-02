@@ -1,12 +1,12 @@
 {
   RandomGenerator gen=new MersenneTwister(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(5e-1f).weightInit(WeightInit.DISTRIBUTION).dist(Distributions.uniform(gen,784,10)).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-1f).nIn(784).nOut(3).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().render(10).momentum(5e-1f).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-1f).nIn(784).nOut(3).build();
   DBN d=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{500,250,200}).build();
   d.getLayers()[0].conf().setRenderWeightsEveryNumEpochs(10);
   d.getOutputLayer().conf().setActivationFunction(Activations.softMaxRows());
   d.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.MCXENT);
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
-  fetcher.fetch(1000);
+  fetcher.fetch(10);
   DataSet d2=fetcher.next();
   d.fit(d2);
   INDArray predict2=d.output(d2.getFeatureMatrix());
