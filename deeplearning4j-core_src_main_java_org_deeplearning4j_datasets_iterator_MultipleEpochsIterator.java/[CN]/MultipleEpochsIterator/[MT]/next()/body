@@ -8,5 +8,7 @@
     }
   }
   batch++;
-  return iter.next();
+  DataSet next=iter.next();
+  if (preProcessor != null)   preProcessor.preProcess(next);
+  return next;
 }

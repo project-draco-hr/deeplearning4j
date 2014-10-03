@@ -1,6 +1,6 @@
 {
-  final Set<Integer> labels=new HashSet<>();
-  final List<Integer> rowLabels=new ArrayList<>();
+  final Set<String> labels=new HashSet<>();
+  final List<String> rowLabels=new ArrayList<>();
   final List<INDArray> features=new ArrayList<>();
   final AtomicInteger i1=new AtomicInteger(-1);
   csv.read(is,new CSVReadProc(){
@@ -11,7 +11,7 @@
         CSVDataFetcher.this.inputColumns=values.length - 1;
       }
  else       if (values.length - 1 != i1.get())       return;
-      Pair<INDArray,Integer> row=processRow(values);
+      Pair<INDArray,String> row=processRow(values);
       rowLabels.add(row.getSecond());
       labels.add(row.getSecond());
       features.add(row.getFirst());
@@ -19,8 +19,9 @@
   }
 );
   List<DataSet> l=new ArrayList<>();
+  List<String> labelIndices=new ArrayList<>(labels);
   for (int i=0; i < rowLabels.size(); i++) {
-    l.add(new DataSet(features.get(i),FeatureUtil.toOutcomeVector(rowLabels.get(i),labels.size())));
+    l.add(new DataSet(features.get(i),FeatureUtil.toOutcomeVector(labelIndices.indexOf(rowLabels.get(i)),labels.size())));
   }
   this.numOutcomes=labels.size();
   this.totalExamples=l.size();

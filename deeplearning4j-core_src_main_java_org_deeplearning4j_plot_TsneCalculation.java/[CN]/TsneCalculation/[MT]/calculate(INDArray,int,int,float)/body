@@ -38,4 +38,5 @@
     y.subiRowVector(y.mean(0));
     if (i == switchMomentumIteration)     momentum=finalMomentum;
   }
+  return y;
 }

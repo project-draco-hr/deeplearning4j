@@ -23,5 +23,7 @@
     String label=windows.get(i).getLabel();
     labelOutput.putRow(i,FeatureUtil.toOutcomeVector(labels.indexOf(label),labels.size()));
   }
-  return new DataSet(inputs,labelOutput);
+  DataSet ret=new DataSet(inputs,labelOutput);
+  if (preProcessor != null)   preProcessor.preProcess(ret);
+  return ret;
 }

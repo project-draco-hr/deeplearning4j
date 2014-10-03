@@ -1,7 +1,5 @@
 {
   String label=data[labelColumn].replaceAll(".\".","");
-  double labelDouble=Double.parseDouble(label);
-  int labelVal=(int)labelDouble;
   double[] d=new double[data.length - 1];
   int index=0;
   for (int i=0; i < data.length; i++) {
@@ -11,5 +9,5 @@
     }
   }
   INDArray d1=Nd4j.create(d).reshape(1,d.length);
-  return new Pair<>(d1,labelVal);
+  return new Pair<>(d1,label);
 }

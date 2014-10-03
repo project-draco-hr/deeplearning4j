@@ -13,5 +13,7 @@
       curr++;
     }
   }
-  return DataSet.merge(d);
+  DataSet ret=DataSet.merge(d);
+  if (preProcessor != null)   preProcessor.preProcess(ret);
+  return ret;
 }
