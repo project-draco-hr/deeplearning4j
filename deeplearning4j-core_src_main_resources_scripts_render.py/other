@@ -1,0 +1,6 @@
+'\nRender t-SNE text labels.\nRequires PIL (Python Imaging Library) and ImageMagick "convert" command.\n'
+import sys
+import Image, ImageFont, ImageDraw, ImageChops, string
+import os.path
+DEFAULT_FONT = None
+import tempfile

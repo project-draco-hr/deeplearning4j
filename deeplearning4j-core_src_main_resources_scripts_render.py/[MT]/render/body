@@ -1,0 +1,51 @@
+def render(points, filename, width=3000, height=1800, fontfile=DEFAULT_FONT, fontsize=12, margin=0.05, transparency=0.5):
+    '\n    Render t-SNE text points to an image file.\n    points is a list of tuples of the form (title, x, y).\n    filename should be a .png, typically.\n    margin is the amount of extra whitespace added at the edges.\n    transparency is the amount of transparency in the text.\n    @warning: Make sure you open the PNG in Gimp, or something that supports alpha channels. Otherwise, it will just look completely black.\n    '
+    W = width
+    H = height
+    im = Image.new('RGBA', (W, H), (0, 0, 0))
+    if (fontfile is not None):
+        assert os.path.exists(fontfile)
+        font = ImageFont.truetype(fontfile, fontsize)
+    minx = 0
+    maxx = 0
+    miny = 0
+    maxy = 0
+    for (title, x, y) in points:
+        if (minx > x):
+            minx = x
+        if (maxx < x):
+            maxx = x
+        if (miny > y):
+            miny = y
+        if (maxy < y):
+            maxy = y
+    dx = (maxx - minx)
+    dy = (maxy - miny)
+    assert (dx > 0)
+    assert (dy > 0)
+    minx -= (dx * margin)
+    miny -= (dy * margin)
+    maxx += (dx * margin)
+    maxy += (dy * margin)
+    alpha = Image.new('L', im.size, 'black')
+    for (idx, pt) in enumerate(points):
+        (title, x, y) = pt
+        x = (((1.0 * (x - minx)) / (maxx - minx)) * W)
+        y = (((1.0 * (y - miny)) / (maxy - miny)) * H)
+        pos = (x, y)
+        imtext = Image.new('L', im.size, 0)
+        drtext = ImageDraw.Draw(imtext)
+        print  >> sys.stderr, ('Rendering title (#%d):' % idx), repr(title)
+        if (fontfile is not None):
+            drtext.text(pos, title, font=font, fill=(256 - (256 * transparency)))
+        else:
+            drtext.text(pos, title, fill=(256 - (256 * transparency)))
+        alpha = ImageChops.add(alpha, imtext)
+        print  >> sys.stderr, ('Rendered word #%d' % idx)
+    im.putalpha(alpha)
+    tmpf = tempfile.NamedTemporaryFile(suffix='.png')
+    print  >> sys.stderr, 'Rendering alpha image to file', tmpf.name
+    im.save(tmpf.name)
+    cmd = ('convert %s -background white -flatten %s' % (tmpf.name, filename))
+    print  >> sys.stderr, 'Flattening image', tmpf.name, 'to', filename, 'using command:', cmd
+    os.system(cmd)
