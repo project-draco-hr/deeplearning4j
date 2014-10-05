@@ -8,7 +8,6 @@
   if (docIter != null)   docIter.reset();
   trainingSystem.shutdown();
   final AtomicLong latch=new AtomicLong(0);
-  final ActorRef sentenceActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(SentenceActor.class,this)));
   ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   log.info("Processing sentences...");
   if (getSentenceIter() != null && getSentenceIter().hasNext())   for (int i=0; i < numIterations; i++) {
