@@ -1,8 +1,0 @@
-{
-  if (d.length() != beta.length() && !beta.isScalar())   throw new IllegalArgumentException("D != beta");
-  INDArray P=Transforms.exp(d.neg().muli(beta));
-  float sum=P.sum(Integer.MAX_VALUE).get(0);
-  float H=(float)Math.log(sum) + Nd4j.getBlasWrapper().dot(d,P) / sum;
-  P.divi(sum + 1e-6f);
-  return new Pair<>(H,P);
-}

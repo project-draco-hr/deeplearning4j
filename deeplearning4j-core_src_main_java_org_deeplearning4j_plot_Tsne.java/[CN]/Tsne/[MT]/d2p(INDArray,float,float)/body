@@ -1,0 +1,46 @@
+{
+  int n=d.rows();
+  final INDArray p=Nd4j.create(n,n);
+  final INDArray beta=Nd4j.ones(n,1);
+  final float logU=(float)Math.log(u);
+  log.info("Calculating probabilities of data similarities..");
+  ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+  for (int i=0; i < n; i++) {
+    if (i % 500 == 0)     log.info("Handled " + i + " records");
+    final int j=i;
+    service.submit(new Runnable(){
+      @Override public void run(){
+        float betaMin=Float.NEGATIVE_INFINITY;
+        float betaMax=Float.POSITIVE_INFINITY;
+        Pair<Float,INDArray> pair=hBeta(d.getRow(j),beta.get(j));
+        float hDiff=pair.getFirst() - (logU);
+        int tries=0;
+        while (Math.abs(hDiff) > tolerance && tries < 50) {
+          if (hDiff > 0) {
+            betaMin=beta.get(j);
+            if (Float.isInfinite(betaMax))             beta.putScalar(j,beta.get(j) * 2);
+ else             beta.putScalar(j,(beta.get(j) + betaMax) / 2);
+          }
+ else {
+            betaMax=beta.get(j);
+            if (Float.isInfinite(betaMin))             beta.putScalar(j,beta.get(j) / 2);
+ else             beta.putScalar(j,(beta.get(j) + betaMin) / 2);
+          }
+          pair=hBeta(d.getRow(j),beta.get(j));
+          hDiff=pair.getFirst() - logU;
+          tries++;
+        }
+        p.putRow(j,pair.getSecond());
+      }
+    }
+);
+  }
+  service.shutdown();
+  try {
+    service.awaitTermination(1,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+  return p;
+}

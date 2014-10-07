@@ -1,7 +1,6 @@
 import numpy as np
 import pylab as pl
 import argparse
-import render
 if (__name__ == '__main__'):
     parser = argparse.ArgumentParser(description='Arguments for tsne: path to ndarray text file, number of dimensions, perplexity')
     parser.add_argument('--path', help='path to the file')

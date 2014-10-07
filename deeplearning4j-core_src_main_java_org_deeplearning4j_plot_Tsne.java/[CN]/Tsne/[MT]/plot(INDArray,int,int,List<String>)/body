@@ -1,0 +1,11 @@
+{
+  INDArray y=calculate(matrix,nDims,perplexity);
+  String path=writeMatrix(y);
+  String labelPath=UUID.randomUUID().toString();
+  File f=new File(labelPath);
+  FileUtils.writeLines(f,labels);
+  String command=String.format(commandTemplate,path,nDims,perplexity,initialDims,labelPath);
+  Process is=Runtime.getRuntime().exec(command);
+  log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
+  log.error(IOUtils.readLines(is.getErrorStream()).toString());
+}
