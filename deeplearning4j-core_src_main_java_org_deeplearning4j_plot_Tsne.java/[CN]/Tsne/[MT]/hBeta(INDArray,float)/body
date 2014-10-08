@@ -1,7 +1,6 @@
 {
-  INDArray P=Transforms.exp(d.neg().muli(beta));
-  float sum=P.sum(Integer.MAX_VALUE).get(0);
-  float H=(float)Math.log(sum) + beta * Nd4j.getBlasWrapper().dot(d,P) / sum;
-  P.divi(sum + 1e-6f);
+  INDArray P=exp(d.neg().muli(beta));
+  INDArray sum=P.sum(0);
+  INDArray H=log(sum).addi(beta).muli(d.mul(P).sum(0)).divi(sum);
   return new Pair<>(H,P);
 }
