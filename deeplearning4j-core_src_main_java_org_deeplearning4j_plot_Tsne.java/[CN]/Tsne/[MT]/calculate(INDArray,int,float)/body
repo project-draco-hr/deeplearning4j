@@ -9,6 +9,7 @@
   INDArray sumX=pow(X,2).sum(1);
   INDArray D=X.mmul(X.transpose()).muli(-2).addiColumnVector(sumX.transpose()).addiRowVector(sumX);
   INDArray y=Nd4j.randn(X.rows(),nDims).muli(1e-3f);
+  INDArray yGrads=Nd4j.create(y.shape());
   INDArray yIncs=Nd4j.create(y.shape());
   INDArray gains=Nd4j.ones(y.shape());
   INDArray p=d2p(D,perplexity,tolerance);
@@ -36,11 +37,10 @@
 );
   float constant=Nd4j.getBlasWrapper().dot(p,log(p));
   p.muli(4);
-  float epsilon=500;
   float costCheck=Float.NEGATIVE_INFINITY;
   for (int i=0; i < maxIter; i++) {
     INDArray sumY=pow(y,2).sum(1);
-    INDArray num=y.mmul(y.transpose()).muli(-2).addiRowVector(sumY).addiColumnVector(sumY.transpose()).addi(1).rdivi(1);
+    INDArray num=y.mmul(y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY.transpose()).addi(1).rdivi(1);
     Nd4j.doAlongDiagonal(num,new Function<Number,Number>(){
       @Override public Number apply(      Number input){
         return 0;
@@ -49,7 +49,7 @@
 );
     INDArray q=max(num.divi(num.sum(Integer.MAX_VALUE).addi(1e-6f)),realMin);
     INDArray L=p.sub(q).muli(num);
-    INDArray yGrads=Nd4j.diag(L.sum(0)).subi(L).muli(4).mmul(y);
+    yGrads=Nd4j.diag(L.sum(0)).subi(L).muli(4).mmul(y);
     if (useAdaGrad) {
       if (adaGrad == null) {
         adaGrad=new AdaGrad(yGrads.shape());
@@ -59,7 +59,7 @@
     }
  else     yGrads.muli(learningRate);
     gains=max(gains.add(.2f).muli(sign(yGrads).eps(sign(yIncs))).addi(gains.mul(0.8f)).muli(sign(yGrads).eq(sign(yIncs))),minGain);
-    yIncs=yIncs.mul(momentum).subi(gains.mul(yGrads).muli(epsilon));
+    yIncs=yIncs.mul(momentum).subi(gains.mul(yGrads));
     y.addi(yIncs).subiRowVector(y.mean(0));
     if (i == switchMomentumIteration)     momentum=finalMomentum;
     INDArray logQ=log(q);

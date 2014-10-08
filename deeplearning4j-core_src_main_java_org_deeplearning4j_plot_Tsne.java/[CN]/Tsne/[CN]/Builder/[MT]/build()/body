@@ -1,3 +1,3 @@
 {
-  return new Tsne(maxIter,realMin,initialMomentum,finalMomentum,eta,momentum,switchMomentumIteration,normalize,usePca,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity);
+  return new Tsne(maxIter,realMin,initialMomentum,finalMomentum,momentum,switchMomentumIteration,normalize,usePca,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity);
 }
