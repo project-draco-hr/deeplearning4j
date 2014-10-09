@@ -3,4 +3,11 @@
   buildBinaryTree();
   log.info("Resetting weights");
   if (shouldReset)   resetWeights();
+  InMemoryLookupCache l=(InMemoryLookupCache)cache;
+  try {
+    Nd4j.writeTxt(l.getSyn0(),"/home/agibsonccc/Desktop/syn0test-java.txt"," ");
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
 }

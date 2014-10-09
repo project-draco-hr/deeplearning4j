@@ -6,6 +6,6 @@
     double sim=similarity(word,s);
     distances.incrementCount(s,sim);
   }
-  distances.keepBottomNKeys(n);
+  distances.keepTopNKeys(n);
   return distances.keySet();
 }
