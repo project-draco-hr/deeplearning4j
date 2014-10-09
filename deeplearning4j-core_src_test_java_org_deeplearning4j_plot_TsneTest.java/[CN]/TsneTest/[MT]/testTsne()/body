@@ -1,5 +1,5 @@
 {
-  Tsne calculation=new Tsne.Builder().setMaxIter(10000).normalize(true).useAdaGrad(true).learningRate(500).build();
+  Tsne calculation=new Tsne.Builder().setMaxIter(10000).usePca(false).normalize(true).useAdaGrad(false).learningRate(500f).perplexity(20f).build();
   ClassPathResource resource=new ClassPathResource("/mnist2500_X.txt");
   File f=resource.getFile();
   INDArray data=Nd4j.readTxt(f.getAbsolutePath(),"   ");

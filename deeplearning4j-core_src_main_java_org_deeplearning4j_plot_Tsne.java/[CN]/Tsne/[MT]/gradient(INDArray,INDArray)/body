@@ -1,0 +1,18 @@
+{
+  INDArray sumY=pow(y,2).sum(1);
+  if (yIncs == null)   yIncs=zeros(y.shape());
+  if (gains == null)   gains=ones(y.shape());
+  INDArray qu=y.mmul(y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY).addi(1).rdivi(1);
+  doAlongDiagonal(qu,new Zero());
+  INDArray q=max(qu.div(qu.sum(Integer.MAX_VALUE)),realMin);
+  INDArray L=p.sub(q).mul(qu);
+  INDArray yGrads=diag(L.sum(0)).subi(L).muli(4).mmul(y);
+  gains=gains.add(.2f).mul(yGrads.cond(Conditions.greaterThan(0)).neq(yIncs.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8f).mul(yGrads.cond(Conditions.greaterThan(0)).eq(yIncs.cond(Conditions.greaterThan(0)))));
+  BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
+  INDArray gradChange=gains.mul(yGrads);
+  if (useAdaGrad)   gradChange.muli(adaGrad.getLearningRates(gradChange));
+ else   gradChange.muli(learningRate);
+  yIncs.muli(momentum).subi(gradChange);
+  float cost=p.mul(log(p.div(q))).sum(Integer.MAX_VALUE).get(0);
+  return new Pair<>(cost,yIncs);
+}

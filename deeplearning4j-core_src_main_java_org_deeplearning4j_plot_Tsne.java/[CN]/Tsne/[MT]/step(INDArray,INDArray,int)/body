@@ -1,0 +1,6 @@
+{
+  Pair<Float,INDArray> costGradient=gradient(y,p);
+  INDArray yIncs=costGradient.getSecond();
+  log.info("Cost at iteration " + i + " was "+ costGradient.getFirst());
+  y.addi(yIncs).subiRowVector(y.mean(0));
+}
