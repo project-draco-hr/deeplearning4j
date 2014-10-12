@@ -1,13 +1,13 @@
 {
   int iterations;
-  float fret;
-  float fp=optimizable.getValue();
+  double fret;
+  double fp=optimizable.getValue();
   INDArray xi=optimizable.getValueGradient(0);
   for (iterations=0; iterations < numIterations; iterations++) {
     logger.info("At iteration " + iterations + ", cost = "+ fp+ ", scaled = "+ maxStep+ " step = "+ step+ ", gradient infty-norm = "+ xi.normmax(Integer.MAX_VALUE));
     boolean calledEpochDone=false;
     optimizable.setCurrentIteration(iterations);
-    float sum=(float)xi.norm2(Integer.MAX_VALUE).element();
+    double sum=(double)xi.norm2(Integer.MAX_VALUE).element();
     if (sum > stpmax) {
       logger.info("*** Step 2-norm " + sum + " greater than max "+ stpmax+ "  Scaling...");
       xi.muli(stpmax / sum);

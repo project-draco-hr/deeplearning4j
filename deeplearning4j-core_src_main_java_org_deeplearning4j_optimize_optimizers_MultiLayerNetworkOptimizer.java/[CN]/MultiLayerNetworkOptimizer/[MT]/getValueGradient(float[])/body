@@ -1,8 +1,0 @@
-{
-  OutputLayerGradient gradient=network.getOutputLayer().getGradient(lr);
-  INDArray weightGradient=gradient.getwGradient();
-  INDArray biasGradient=gradient.getbGradient();
-  int idx=0;
-  for (int i=0; i < weightGradient.length(); i++)   buffer[idx++]=(float)weightGradient.getScalar(i).element();
-  for (int i=0; i < biasGradient.length(); i++)   buffer[idx++]=(float)biasGradient.getScalar(i).element();
-}

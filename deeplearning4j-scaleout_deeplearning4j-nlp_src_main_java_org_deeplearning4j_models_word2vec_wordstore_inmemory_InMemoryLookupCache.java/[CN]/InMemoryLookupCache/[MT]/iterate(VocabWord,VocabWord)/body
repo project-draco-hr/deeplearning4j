@@ -6,7 +6,7 @@
     int code=w1.getCodes()[i];
     int point=w1.getPoints()[i];
     INDArray syn1=this.syn1.slice(point);
-    float dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
+    double dot=Nd4j.getBlasWrapper().dot(syn0,syn1);
     if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;
     int idx=(int)((dot + MAX_EXP) * ((float)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;

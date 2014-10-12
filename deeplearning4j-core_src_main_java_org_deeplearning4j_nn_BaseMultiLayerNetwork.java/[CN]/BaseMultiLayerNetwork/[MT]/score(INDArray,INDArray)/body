@@ -3,5 +3,5 @@
   setLabels(labels);
   Evaluation eval=new Evaluation();
   eval.eval(labels,labelProbabilities(input));
-  return (float)eval.f1();
+  return eval.f1();
 }

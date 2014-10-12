@@ -1,10 +1,10 @@
 {
   INDArray params=network.params();
-  Float score=network.score(p.add(params));
-  Float currMin=network.score();
+  double score=network.score(p.add(params));
+  double currMin=network.score();
   int i=chs.size() - 2;
   for (; i > 0; i--) {
-    Float score2=network.score(params.add(chs.get(i)));
+    double score2=network.score(params.add(chs.get(i)));
     if (score2 < score || score2 < currMin) {
       i++;
       score=score2;

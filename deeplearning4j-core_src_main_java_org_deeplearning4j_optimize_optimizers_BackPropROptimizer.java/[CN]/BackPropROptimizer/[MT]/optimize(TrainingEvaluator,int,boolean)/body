@@ -1,7 +1,7 @@
 {
   if (!lineSearch) {
     log.info("BEGIN BACKPROP WITH SCORE OF " + network.score());
-    Float lastEntropy=network.score();
+    double lastEntropy=network.score();
     BaseMultiLayerNetwork revert=network.clone();
     if (network.isForceNumEpochs()) {
       for (int i=0; i < epochs; i++) {
@@ -21,8 +21,8 @@
           break;
         }
         count++;
-        Float entropy=network.score();
-        if (lastEntropy == null || entropy < lastEntropy) {
+        double entropy=network.score();
+        if (entropy < lastEntropy) {
           double diff=Math.abs(entropy - lastEntropy);
           if (diff < changeTolerance) {
             log.info("Not enough of a change on back prop...breaking");
@@ -36,7 +36,7 @@
           log.info("Hit max number of epochs...breaking");
           train=false;
         }
- else         if (entropy >= lastEntropy || Float.isNaN(entropy) || Float.isInfinite(entropy)) {
+ else         if (entropy >= lastEntropy || Double.isNaN(entropy) || Double.isInfinite(entropy)) {
           train=false;
           network.update(revert);
           log.info("Reverting to best score " + lastEntropy);

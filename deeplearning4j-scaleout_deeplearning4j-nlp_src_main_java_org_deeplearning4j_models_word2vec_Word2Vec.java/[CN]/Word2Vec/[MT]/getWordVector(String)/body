@@ -1,5 +1,5 @@
 {
   int i=this.cache.indexOf(word);
-  if (i < 0)   return cache.vector(UNK).ravel().data();
-  return cache.vector(word).ravel().data();
+  if (i < 0)   return cache.vector(UNK).ravel().data().asDouble();
+  return cache.vector(word).ravel().data().asDouble();
 }

@@ -56,8 +56,8 @@
     }
   }
 ,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD});
-  float scale=(1.0f / trainingTrees.size());
-  value=error.floatValue() * scale;
+  double scale=(1.0f / trainingTrees.size());
+  value=error.doubleValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
   value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryINd4j,scale,regTransformINDArray);
