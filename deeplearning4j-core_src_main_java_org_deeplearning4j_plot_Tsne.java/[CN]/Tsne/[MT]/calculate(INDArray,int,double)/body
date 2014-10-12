@@ -15,6 +15,7 @@
  catch (  IOException e) {
     throw new IllegalStateException("weird");
   }
+  INDArray otherD=null;
   INDArray p=d2p(D,perplexity,tolerance);
   p.muli(4);
   if (useAdaGrad) {
