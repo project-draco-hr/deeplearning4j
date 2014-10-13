@@ -3,19 +3,16 @@
   if (yIncs == null)   yIncs=zeros(y.shape());
   if (gains == null)   gains=ones(y.shape());
   INDArray qu=y.mmul(y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY).addi(1).rdivi(1);
+  int n=y.rows();
   doAlongDiagonal(qu,new Zero());
   INDArray q=max(qu.div(qu.sum(Integer.MAX_VALUE)),realMin);
   INDArray PQ=p.sub(q);
   INDArray yGrads=Nd4j.create(y.shape());
-  for (int i=0; i < yGrads.columns(); i++) {
-    INDArray toTile=PQ.getRow(i).mul(qu.getRow(i));
-    INDArray tiledTranspose=Nd4j.tile(toTile,new int[]{y.columns(),1}).transpose();
-    INDArray yBroadCast=y.getColumn(i).broadcast(y.shape());
-    INDArray mul=tiledTranspose.mul(yBroadCast).sub(y);
-    INDArray sum1=mul.sum(0);
+  for (int i=0; i < n; i++) {
+    INDArray sum1=Nd4j.tile(PQ.getRow(i).mul(qu.getRow(i)),new int[]{y.columns(),1}).transpose().mul(y.getRow(i).broadcast(y.shape()).sub(y)).sum(0);
     yGrads.putRow(i,sum1);
   }
-  gains=gains.add(.2f).mul(yGrads.cond(Conditions.greaterThan(0)).neq(yIncs.cond(Conditions.greaterThan(0)))).add(gains.mul(0.8f).mul(yGrads.cond(Conditions.greaterThan(0)).eq(yIncs.cond(Conditions.greaterThan(0)))));
+  gains=gains.add(.2).muli(yGrads.cond(Conditions.greaterThan(0)).neqi(yIncs.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8).muli(yGrads.cond(Conditions.greaterThan(0)).eqi(yIncs.cond(Conditions.greaterThan(0)))));
   BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
   INDArray gradChange=gains.mul(yGrads);
   if (useAdaGrad)   gradChange.muli(adaGrad.getLearningRates(gradChange));

@@ -16,7 +16,7 @@
     throw new IllegalStateException("weird");
   }
   INDArray otherD=null;
-  INDArray p=d2p(D,perplexity,tolerance);
+  INDArray p=d2p(D,perplexity);
   p.muli(4);
   if (useAdaGrad) {
     if (adaGrad == null) {
