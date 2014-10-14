@@ -1,6 +1,6 @@
 {
   RandomGenerator gen=new MersenneTwister(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().render(10).momentum(5e-1f).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-1f).nIn(784).nOut(3).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().render(10).momentum(5e-1f).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).learningRate(1e-1f).nIn(784).nOut(10).build();
   DBN d=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{500,250,200}).build();
   d.getLayers()[0].conf().setRenderWeightsEveryNumEpochs(10);
   d.getOutputLayer().conf().setActivationFunction(Activations.softMaxRows());
