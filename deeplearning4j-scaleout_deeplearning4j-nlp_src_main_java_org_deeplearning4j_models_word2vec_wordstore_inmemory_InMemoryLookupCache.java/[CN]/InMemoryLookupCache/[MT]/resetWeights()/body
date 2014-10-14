@@ -1,4 +1,4 @@
 {
-  syn0=Nd4j.rand(new int[]{vocabs.size(),vectorLength},rng).subi(0.5f).divi((float)vectorLength);
+  syn0=Nd4j.rand(new int[]{vocabs.size(),vectorLength},rng).subi(0.5).divi((double)vectorLength);
   syn1=Nd4j.create(syn0.shape());
 }

@@ -3,9 +3,8 @@
   if (word == null)   return;
   if (g == null)   g=new XorShift1024StarRandomGenerator(seed);
   int b=g.nextInt(window);
-  int start=Math.max(0,i - window - b);
-  int end=i + window + 1 - b;
-  for (int a=start; a < end; a++) {
+  int end=window * 2 + 1 - b;
+  for (int a=b; a < end; a++) {
     if (a != window) {
       int c=i - window + a;
       if (c >= 0 && c < sentence.size()) {

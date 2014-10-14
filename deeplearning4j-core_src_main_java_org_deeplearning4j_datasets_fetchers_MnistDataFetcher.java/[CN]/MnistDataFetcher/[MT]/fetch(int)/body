@@ -16,7 +16,7 @@
       INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(man.readImage()));
       if (binarize)       for (int d=0; d < in.length(); d++) {
         if (binarize) {
-          if ((float)in.getScalar(d).element() > 30) {
+          if (in.getDouble(d) > 30) {
             in.putScalar(d,1);
           }
  else           in.putScalar(d,0);

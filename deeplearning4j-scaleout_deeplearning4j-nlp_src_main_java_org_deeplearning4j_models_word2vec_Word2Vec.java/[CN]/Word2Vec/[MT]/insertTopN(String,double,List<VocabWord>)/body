@@ -5,7 +5,7 @@
     wordsEntrys.add(v);
     return;
   }
-  double min=Float.MAX_VALUE;
+  double min=Double.MAX_VALUE;
   int minOffe=0;
   int minIndex=-1;
   for (int i=0; i < topNSize; i++) {

@@ -3,7 +3,9 @@
   if (vec == null)   return new ArrayList<>();
   Counter<String> distances=new Counter<>();
   for (  String s : cache.words()) {
-    double sim=similarity(word,s);
+    if (s.equals(word))     continue;
+    INDArray otherVec=getWordVectorMatrix(s);
+    double sim=Transforms.cosineSim(vec,otherVec);
     distances.incrementCount(s,sim);
   }
   distances.keepTopNKeys(n);
