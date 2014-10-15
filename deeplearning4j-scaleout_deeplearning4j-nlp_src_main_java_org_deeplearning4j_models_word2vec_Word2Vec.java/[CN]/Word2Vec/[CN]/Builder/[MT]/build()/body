@@ -33,6 +33,7 @@
     ret.minWordFrequency=minWordFrequency;
     ret.numIterations=iterations;
     ret.seed=seed;
+    ret.numIterations=iterations;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

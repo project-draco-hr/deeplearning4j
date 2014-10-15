@@ -53,9 +53,8 @@
     parentNode[min2i]=words.size() + a;
     binary[min2i]=1;
   }
-  int i=0;
-  a=0;
-  int b=0;
+  int i;
+  int b;
   for (a=0; a < words.size(); a++) {
     b=a;
     i=0;

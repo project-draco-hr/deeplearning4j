@@ -1,4 +1,5 @@
 {
-  syn0=Nd4j.rand(new int[]{vocabs.size(),vectorLength},rng).subi(0.5).divi((double)vectorLength);
+  this.rng=new MersenneTwister(seed);
+  syn0=Nd4j.rand(new int[]{vocabs.size(),vectorLength},rng).subi(0.5).divi(vectorLength);
   syn1=Nd4j.create(syn0.shape());
 }
