@@ -36,6 +36,13 @@
     }
     if (sentenceIter != null)     sentenceIter.reset();
   }
+  try {
+    service.shutdown();
+    service.awaitTermination(1,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
   if (docIter != null && docIter.hasNext())   for (int iter=0; iter < numIterations; iter++) {
     while (docIter != null && docIter.hasNext()) {
       InputStream is=docIter.nextDocument();
