@@ -8,12 +8,29 @@
   if (docIter != null)   docIter.reset();
   trainingSystem.shutdown();
   final AtomicLong latch=new AtomicLong(0);
+  ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   log.info("Processing sentences...");
   if (getSentenceIter() != null && getSentenceIter().hasNext())   for (int i=0; i < numIterations; i++) {
     while (getSentenceIter() != null && getSentenceIter().hasNext()) {
       final String sentence=sentenceIter.nextSentence();
       if (sentence == null)       continue;
       trainSentence(sentence);
+      service.execute(new Runnable(){
+        /** 
+ * When an object implementing interface <code>Runnable</code> is used
+ * to create a thread, starting the thread causes the object's
+ * <code>run</code> method to be called in that separately executing
+ * thread.
+ * <p/>
+ * The general contract of the method <code>run</code> is that it may
+ * take any action whatsoever.
+ * @see Thread#run()
+ */
+        @Override public void run(){
+          trainSentence(sentence);
+        }
+      }
+);
       numSentencesProcessed.incrementAndGet();
       if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
     }
