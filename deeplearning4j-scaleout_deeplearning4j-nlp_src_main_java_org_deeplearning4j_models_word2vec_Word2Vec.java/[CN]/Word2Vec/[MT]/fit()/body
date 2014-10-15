@@ -14,7 +14,6 @@
     while (getSentenceIter() != null && getSentenceIter().hasNext()) {
       final String sentence=sentenceIter.nextSentence();
       if (sentence == null)       continue;
-      trainSentence(sentence);
       service.execute(new Runnable(){
         /** 
  * When an object implementing interface <code>Runnable</code> is used
