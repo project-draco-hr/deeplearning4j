@@ -3,7 +3,7 @@
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(5e-1f).weightInit(WeightInit.DISTRIBUTION).dist(Distributions.uniform(gen,784,10)).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RMSE_XENT).rng(gen).learningRate(1e-1f).nIn(784).nOut(d2.numOutcomes()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).momentum(5e-1f).weightInit(WeightInit.DISTRIBUTION).dist(Distributions.uniform(gen,784,10)).withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).lossFunction(LossFunctions.LossFunction.RMSE_XENT).rng(gen).learningRate(1e-1f).nIn(784).nOut(d2.numOutcomes()).build();
   DBN d=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{500,250,200}).build();
   d.getOutputLayer().conf().setActivationFunction(Activations.softMaxRows());
   d.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.MCXENT);
