@@ -1,5 +1,5 @@
 {
-  float val=min + (bucketIndex * stepSize);
+  double val=min + (bucketIndex * stepSize);
   String ret="" + round(val,2,BigDecimal.ROUND_HALF_UP);
   return ret;
 }

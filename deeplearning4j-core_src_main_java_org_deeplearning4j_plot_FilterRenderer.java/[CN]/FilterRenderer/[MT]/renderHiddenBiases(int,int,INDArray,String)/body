@@ -7,7 +7,7 @@
   WritableRaster r=img.getRaster();
   int[] equiv=new int[render_data.length()];
   for (int i=0; i < equiv.length; i++) {
-    equiv[i]=(int)Math.round((float)render_data.getScalar(i).element() * 256);
+    equiv[i]=(int)Math.round((double)render_data.getScalar(i).element() * 256);
     log.debug("> " + equiv[i]);
   }
   log.debug("hbias size: Cols: " + render_data.columns() + ", Rows: "+ render_data.rows());
