@@ -64,7 +64,7 @@
 );
       futures.add(f);
       numSentencesProcessed.incrementAndGet();
-      if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
+      if (numSentencesProcessed.get() % 1000 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
       while (futures.size() > 100) {
         Set<Future<?>> remove=new HashSet<>();
         for (        Future<?> f2 : futures) {

@@ -1,3 +1,5 @@
 {
-  return new DefaultStreamTokenizer(toTokenize);
+  Tokenizer t=new DefaultStreamTokenizer(toTokenize);
+  t.setTokenPreProcessor(tokenPreProcess);
+  return t;
 }

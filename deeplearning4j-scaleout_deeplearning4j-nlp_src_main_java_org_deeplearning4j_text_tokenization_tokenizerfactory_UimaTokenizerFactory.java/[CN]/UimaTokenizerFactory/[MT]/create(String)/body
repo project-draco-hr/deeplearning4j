@@ -1,4 +1,6 @@
 {
   if (toTokenize == null || toTokenize.isEmpty())   throw new IllegalArgumentException("Unable to proceed; on sentence to tokenize");
-  return new UimaTokenizer(toTokenize,uimaResource,checkForLabel);
+  Tokenizer ret=new UimaTokenizer(toTokenize,uimaResource,checkForLabel);
+  ret.setTokenPreProcessor(preProcess);
+  return ret;
 }

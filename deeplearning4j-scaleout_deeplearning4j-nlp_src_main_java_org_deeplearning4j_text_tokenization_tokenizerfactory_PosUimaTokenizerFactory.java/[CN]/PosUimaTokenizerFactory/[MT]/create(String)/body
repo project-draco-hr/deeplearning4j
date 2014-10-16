@@ -1,3 +1,5 @@
 {
-  return new PosUimaTokenizer(toTokenize,tokenizer,allowedPoSTags);
+  PosUimaTokenizer t=new PosUimaTokenizer(toTokenize,tokenizer,allowedPoSTags);
+  t.setTokenPreProcessor(tokenPreProcess);
+  return t;
 }

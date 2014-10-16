@@ -1,3 +1,5 @@
 {
-  return new DefaultTokenizer(toTokenize);
+  DefaultTokenizer t=new DefaultTokenizer(toTokenize);
+  t.setTokenPreProcessor(tokenPreProcess);
+  return t;
 }
