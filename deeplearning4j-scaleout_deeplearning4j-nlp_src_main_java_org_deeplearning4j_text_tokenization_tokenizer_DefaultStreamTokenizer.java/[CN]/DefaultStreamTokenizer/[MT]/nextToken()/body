@@ -1,11 +1,5 @@
 {
   StringBuffer sb=new StringBuffer();
-  try {
-    streamTokenizer.nextToken();
-  }
- catch (  IOException e1) {
-    throw new RuntimeException(e1);
-  }
   if (streamTokenizer.ttype == StreamTokenizer.TT_WORD) {
     sb.append(streamTokenizer.sval);
   }
@@ -20,6 +14,7 @@
       throw new RuntimeException(e);
     }
   }
+ else   if (hasMoreTokens())   return nextToken();
   String ret=sb.toString();
   if (tokenPreProcess != null)   ret=tokenPreProcess.preProcess(ret);
   return ret;

@@ -1,6 +1,12 @@
 {
   if (path.isFile()) {
     iter=Arrays.asList(path).iterator();
+    try {
+      lineIterator=FileUtils.lineIterator(path);
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
     this.rootDir=path;
   }
  else {

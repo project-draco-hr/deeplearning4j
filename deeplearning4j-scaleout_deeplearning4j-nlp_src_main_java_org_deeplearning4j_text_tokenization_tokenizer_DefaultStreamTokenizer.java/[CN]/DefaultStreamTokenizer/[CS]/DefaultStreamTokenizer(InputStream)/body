@@ -1,12 +1,4 @@
 {
   Reader r=new BufferedReader(new InputStreamReader(is));
   streamTokenizer=new StreamTokenizer(r);
-  char separator=',';
-  streamTokenizer.resetSyntax();
-  streamTokenizer.wordChars('\u0000',(char)(separator - 1));
-  streamTokenizer.wordChars((char)(separator + 1),'\u00ff');
-  streamTokenizer.whitespaceChars('\n','\n');
-  streamTokenizer.whitespaceChars(separator,separator);
-  streamTokenizer.whitespaceChars(' ',' ');
-  streamTokenizer.eolIsSignificant(false);
 }

@@ -1,8 +1,13 @@
 {
   try {
-    return new BufferedInputStream(new FileInputStream(iter.next()));
+    if (lineIterator != null && !lineIterator.hasNext()) {
+      File next=iter.next();
+      lineIterator.close();
+      lineIterator=FileUtils.lineIterator(next);
+    }
+    return new BufferedInputStream(IOUtils.toInputStream(lineIterator.nextLine()));
   }
- catch (  FileNotFoundException e) {
+ catch (  Exception e) {
     throw new RuntimeException(e);
   }
 }

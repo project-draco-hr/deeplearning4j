@@ -6,7 +6,6 @@
     if (stopWords.contains(next))     next=UNK;
     VocabWord word=cache.wordFor(next);
     if (word == null)     continue;
-    sentence2.add(word);
   }
   trainSentence(sentence2);
   return sentence2;

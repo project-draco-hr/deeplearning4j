@@ -1,5 +1,5 @@
 {
-  List<String> tokens=new ArrayList<String>();
+  List<String> tokens=new ArrayList<>();
   while (hasMoreTokens()) {
     tokens.add(nextToken());
   }

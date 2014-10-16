@@ -35,27 +35,52 @@
     }
     if (sentenceIter != null)     sentenceIter.reset();
   }
+  int processors=Runtime.getRuntime().availableProcessors();
+  if (docIter != null && docIter.hasNext())   for (int iter=0; iter < numIterations; iter++) {
+    List<Future<?>> futures=new ArrayList<>();
+    while (docIter != null && docIter.hasNext()) {
+      final InputStream is=docIter.nextDocument();
+      Future<?> f=service.submit(new Runnable(){
+        /** 
+ * When an object implementing interface <code>Runnable</code> is used
+ * to create a thread, starting the thread causes the object's
+ * <code>run</code> method to be called in that separately executing
+ * thread.
+ * <p/>
+ * The general contract of the method <code>run</code> is that it may
+ * take any action whatsoever.
+ * @see Thread#run()
+ */
+        @Override public void run(){
+          trainSentence(is);
+          try {
+            is.close();
+          }
+ catch (          IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      }
+);
+      futures.add(f);
+      numSentencesProcessed.incrementAndGet();
+      if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
+      while (futures.size() > 100) {
+        Set<Future<?>> remove=new HashSet<>();
+        for (        Future<?> f2 : futures) {
+          if (f2.isDone())           remove.add(f2);
+        }
+        futures.removeAll(remove);
+      }
+    }
+    if (docIter != null)     docIter.reset();
+  }
   try {
     service.shutdown();
     service.awaitTermination(1,TimeUnit.DAYS);
   }
  catch (  InterruptedException e) {
     Thread.currentThread().interrupt();
-  }
-  if (docIter != null && docIter.hasNext())   for (int iter=0; iter < numIterations; iter++) {
-    while (docIter != null && docIter.hasNext()) {
-      InputStream is=docIter.nextDocument();
-      trainSentence(is);
-      numSentencesProcessed.incrementAndGet();
-      if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
-      try {
-        is.close();
-      }
- catch (      IOException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    if (docIter != null)     docIter.reset();
   }
   while (latch.get() > 0) {
     log.info("Waiting on sentences...Num processed so far " + numSentencesProcessed.get() + " with latch count at "+ latch.get());
