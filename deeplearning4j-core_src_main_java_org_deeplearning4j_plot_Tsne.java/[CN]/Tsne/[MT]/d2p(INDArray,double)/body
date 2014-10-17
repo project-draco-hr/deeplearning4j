@@ -44,6 +44,7 @@
  catch (  InterruptedException e) {
     Thread.currentThread().interrupt();
   }
+  d.data().flush();
   log.info("Mean value of sigma " + sqrt(beta.rdiv(1)).mean(Integer.MAX_VALUE));
   BooleanIndexing.applyWhere(p,Conditions.isNan(),new Value(realMin));
   INDArray permute=p.transpose();
