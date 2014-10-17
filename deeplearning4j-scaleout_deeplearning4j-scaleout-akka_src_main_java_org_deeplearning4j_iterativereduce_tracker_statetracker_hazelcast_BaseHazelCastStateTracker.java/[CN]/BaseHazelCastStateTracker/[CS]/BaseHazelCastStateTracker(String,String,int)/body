@@ -80,4 +80,6 @@
     validationEpochs.set((int)Math.min(10,patience() / 2));
     numBatches.set(0);
   }
+  workRetriever=new LocalWorkRetriever(h);
+  cache=new LocalDataSetCache(".",h);
 }

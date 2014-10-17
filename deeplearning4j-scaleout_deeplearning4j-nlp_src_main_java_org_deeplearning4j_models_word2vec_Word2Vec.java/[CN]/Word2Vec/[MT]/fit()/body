@@ -35,7 +35,6 @@
     }
     if (sentenceIter != null)     sentenceIter.reset();
   }
-  int processors=Runtime.getRuntime().availableProcessors();
   if (docIter != null && docIter.hasNext())   for (int iter=0; iter < numIterations; iter++) {
     List<Future<?>> futures=new ArrayList<>();
     while (docIter != null && docIter.hasNext()) {

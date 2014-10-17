@@ -1,5 +1,0 @@
-{
-  File f=new File(worker + "-work");
-  SerializationUtils.saveObject(data,f);
-  workerData.put(worker,f.getAbsolutePath());
-}

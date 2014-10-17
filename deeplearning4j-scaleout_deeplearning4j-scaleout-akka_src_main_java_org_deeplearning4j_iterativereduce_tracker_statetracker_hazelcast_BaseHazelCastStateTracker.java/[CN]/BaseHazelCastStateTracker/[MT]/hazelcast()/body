@@ -35,8 +35,17 @@
   MapConfig heartbeatConfig=new MapConfig();
   heartbeatConfig.setName(HEART_BEAT);
   conf.addMapConfig(heartbeatConfig);
-  MapConfig workerEnabledConifg=new MapConfig();
-  workerEnabledConifg.setName(WORKER_ENABLED);
-  conf.addMapConfig(workerEnabledConifg);
+  MapConfig workerEnabledConfig=new MapConfig();
+  workerEnabledConfig.setName(WORKER_ENABLED);
+  conf.addMapConfig(workerEnabledConfig);
+  MapConfig dataSetCache=new MapConfig();
+  dataSetCache.setName(LocalDataSetCache.DATA_SET_MAP);
+  conf.addMapConfig(dataSetCache);
+  MapConfig fileUpdateSaver=new MapConfig();
+  fileUpdateSaver.setName(org.deeplearning4j.iterativereduce.tracker.statetracker.updatesaver.LocalFileUpdateSaver.UPDATE_SAVER);
+  conf.addMapConfig(fileUpdateSaver);
+  MapConfig workRetriever=new MapConfig();
+  workRetriever.setName(LocalWorkRetriever.WORK_RETRIEVER);
+  conf.addMapConfig(workRetriever);
   return conf;
 }
