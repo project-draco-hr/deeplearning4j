@@ -1,5 +1,5 @@
 {
-  y=calculate(matrix,nDims,perplexity);
+  calculate(matrix,nDims,perplexity);
   String path=writeMatrix(y);
   String labelPath=UUID.randomUUID().toString();
   File f=new File(labelPath);

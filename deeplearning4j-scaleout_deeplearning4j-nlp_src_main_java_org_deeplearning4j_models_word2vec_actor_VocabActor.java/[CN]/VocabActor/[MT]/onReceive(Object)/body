@@ -4,13 +4,14 @@
     if (work.getWork() == null || work.getWork().isEmpty())     return;
     work.getCount().incrementAndGet();
     String sentence=work.getWork();
-    if (sentence.isEmpty()) {
+    if (sentence.isEmpty() || sentence.length() <= 2) {
       work.countDown();
       return;
     }
     Tokenizer t=tokenizer.create(sentence);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
+      if (token.length() < 2)       continue;
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
       if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
