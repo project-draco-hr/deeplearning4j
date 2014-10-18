@@ -4,7 +4,7 @@
     log.info("Loading vocab...");
     cache.loadVocab();
     cache.resetWeights();
-    return;
+    return true;
   }
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
@@ -40,4 +40,5 @@
     }
   }
   setup();
+  return false;
 }

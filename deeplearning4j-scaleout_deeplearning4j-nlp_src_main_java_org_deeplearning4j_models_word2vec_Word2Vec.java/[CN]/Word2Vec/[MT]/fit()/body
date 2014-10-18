@@ -1,7 +1,7 @@
 {
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
-  buildVocab();
-  cache.saveVocab();
+  boolean loaded=buildVocab();
+  if (!loaded)   cache.saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
@@ -10,7 +10,7 @@
   final AtomicLong latch=new AtomicLong(0);
   ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   log.info("Processing sentences...");
-  if (getSentenceIter() != null && getSentenceIter().hasNext())   for (int i=0; i < numIterations; i++) {
+  for (int i=0; i < numIterations; i++) {
     while (getSentenceIter() != null && getSentenceIter().hasNext()) {
       final String sentence=sentenceIter.nextSentence();
       if (sentence == null)       continue;
@@ -35,7 +35,7 @@
     }
     if (sentenceIter != null)     sentenceIter.reset();
   }
-  if (docIter != null && docIter.hasNext())   for (int iter=0; iter < numIterations; iter++) {
+  for (int iter=0; iter < numIterations; iter++) {
     List<Future<?>> futures=new ArrayList<>();
     while (docIter != null && docIter.hasNext()) {
       final InputStream is=docIter.nextDocument();
