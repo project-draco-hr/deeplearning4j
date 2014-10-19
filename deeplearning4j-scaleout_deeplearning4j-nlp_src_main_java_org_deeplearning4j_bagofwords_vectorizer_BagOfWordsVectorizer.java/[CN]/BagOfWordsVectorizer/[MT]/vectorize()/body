@@ -1,9 +1,3 @@
 {
-  fit();
-  sentenceIter.reset();
-  List<DataSet> ret=new ArrayList<>();
-  while (sentenceIter.hasNext()) {
-    ret.add(vectorize(sentenceIter.nextSentence(),sentenceIter.currentLabel()));
-  }
-  return DataSet.merge(ret);
+  return null;
 }

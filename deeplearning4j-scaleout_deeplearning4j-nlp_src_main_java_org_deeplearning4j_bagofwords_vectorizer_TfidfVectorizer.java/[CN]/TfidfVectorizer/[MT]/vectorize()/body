@@ -1,13 +1,3 @@
 {
-  process();
-  sentenceIterator.reset();
-  List<DataSet> data=new ArrayList<>();
-  while (sentenceIterator.hasNext()) {
-    data.add(vectorize(sentenceIterator.nextSentence(),sentenceIterator.currentLabel()));
-  }
-  tf.clear();
-  idf.clear();
-  tfIdfWeights.clear();
-  allWords().clear();
-  return DataSet.merge(data);
+  return null;
 }

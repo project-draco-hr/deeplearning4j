@@ -1,4 +1,5 @@
 {
+  Set<String> encountered=new HashSet<>();
   if (message instanceof VocabWork) {
     VocabWork work=(VocabWork)message;
     if (work.getWork() == null || work.getWork().isEmpty())     return;
@@ -14,6 +15,10 @@
       if (token.length() < 2)       continue;
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
+      if (!encountered.contains(token)) {
+        cache.incrementDocCount(token,1);
+        encountered.add(token);
+      }
       if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
         if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
           VocabWord word=new VocabWord(cache.wordFrequency(token),token);
@@ -43,6 +48,10 @@
       String token=t.nextToken();
       if (stopWords.contains(token))       token="STOP";
       cache.incrementWordCount(token);
+      if (!encountered.contains(token)) {
+        cache.incrementDocCount(token,1);
+        encountered.add(token);
+      }
       if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
         if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
           VocabWord word=new VocabWord(cache.wordFrequency(token),token);
