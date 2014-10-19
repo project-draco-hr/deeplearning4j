@@ -49,6 +49,10 @@
   e.setSampleFromHiddenActivations(encoder.isSampleFromHiddenActivations());
   e.setLineSearchBackProp(encoder.isLineSearchBackProp());
   e.setForceNumEpochs(shouldForceEpochs);
+  List<NeuralNetConfiguration> confs=new ArrayList<>();
+  for (int i=0; i < e.layers.length; i++)   confs.add(e.layers[i].conf());
+  e.setLayerWiseConfigurations(confs);
+  e.setDefaultConfiguration(confs.get(0));
   e.dimensionCheck();
   return e;
 }

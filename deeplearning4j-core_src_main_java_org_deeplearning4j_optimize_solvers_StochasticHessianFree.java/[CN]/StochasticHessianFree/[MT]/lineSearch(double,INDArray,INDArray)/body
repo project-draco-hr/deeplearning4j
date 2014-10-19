@@ -7,7 +7,7 @@
     if (10 % numSearches == 0) {
       log.info("Iteration " + j + " on line search with current rate of "+ rate);
     }
-    if (newScore <= (double)gradient.mul(p).mul(score + c * rate).sum(Integer.MAX_VALUE).element()) {
+    if (newScore <= gradient.mul(p).mul(score + c * rate).sum(Integer.MAX_VALUE).getDouble(0)) {
       break;
     }
  else {

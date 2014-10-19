@@ -1,12 +1,10 @@
 {
-  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   boolean loaded=buildVocab();
   if (!loaded)   cache.saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
-  trainingSystem.shutdown();
   final AtomicLong latch=new AtomicLong(0);
   ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   log.info("Processing sentences...");
@@ -90,5 +88,4 @@
       Thread.currentThread().interrupt();
     }
   }
-  trainingSystem.shutdown();
 }

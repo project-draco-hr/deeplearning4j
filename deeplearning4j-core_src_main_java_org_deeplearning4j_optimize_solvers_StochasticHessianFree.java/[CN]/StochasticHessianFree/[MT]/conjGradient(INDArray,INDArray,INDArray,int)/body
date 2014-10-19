@@ -3,12 +3,12 @@
   List<INDArray> xs=new ArrayList<>();
   INDArray r=network.getBackPropRGradient(x0).subi(b);
   INDArray y=r.div(preCon);
-  double deltaNew=(double)r.mul(y).sum(Integer.MAX_VALUE).element();
+  double deltaNew=r.mul(y).sum(Integer.MAX_VALUE).getDouble(0);
   INDArray p=y.neg();
   INDArray x=x0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     INDArray Ap=network.getBackPropRGradient(p);
-    double pAp=(double)Ap.mul(p).sum(Integer.MAX_VALUE).element();
+    double pAp=Ap.mul(p).sum(Integer.MAX_VALUE).getDouble(0);
     if (pAp < 0) {
       log.info("Negative slope: " + pAp + " breaking");
     }
@@ -19,7 +19,7 @@
     INDArray rNew=r.add(Ap.mul(alpha));
     INDArray yNew=rNew.div(preCon);
     double deltaOld=deltaNew;
-    deltaNew=(double)rNew.mul(yNew).sum(Integer.MAX_VALUE).element();
+    deltaNew=rNew.mul(yNew).sum(Integer.MAX_VALUE).getDouble(0);
     double beta=deltaNew / deltaOld;
     p=yNew.neg().add(p.mul(beta));
     r=rNew;

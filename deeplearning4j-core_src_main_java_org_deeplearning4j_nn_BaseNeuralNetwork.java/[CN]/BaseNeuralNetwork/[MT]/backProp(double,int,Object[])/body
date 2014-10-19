@@ -1,10 +1,10 @@
 {
-  double currRecon=squaredLoss();
+  double currRecon=LossFunctions.score(input,LossFunctions.LossFunction.SQUARED_LOSS,this.transform(input),conf.getL2(),conf.isUseRegularization());
   boolean train=true;
   NeuralNetwork revert=clone();
   while (train) {
     if (iterations > iterations)     break;
-    double newRecon=this.squaredLoss();
+    double newRecon=LossFunctions.score(input,LossFunctions.LossFunction.SQUARED_LOSS,this.transform(input),conf.getL2(),conf.isUseRegularization());
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
       log.info("Converged for new recon; breaking...");

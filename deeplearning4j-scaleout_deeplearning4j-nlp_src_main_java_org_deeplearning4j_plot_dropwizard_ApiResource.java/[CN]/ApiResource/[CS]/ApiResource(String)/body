@@ -1,0 +1,3 @@
+{
+  if (coordPath != null && new File(coordPath).exists())   coords=FileUtils.readLines(new File(coordPath));
+}
