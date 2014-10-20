@@ -9,9 +9,10 @@
         lineIterator=FileUtils.lineIterator(next);
       }
     }
-    return new BufferedInputStream(IOUtils.toInputStream(lineIterator.nextLine()));
+    if (lineIterator.hasNext())     return new BufferedInputStream(IOUtils.toInputStream(lineIterator.nextLine()));
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
+  return null;
 }
