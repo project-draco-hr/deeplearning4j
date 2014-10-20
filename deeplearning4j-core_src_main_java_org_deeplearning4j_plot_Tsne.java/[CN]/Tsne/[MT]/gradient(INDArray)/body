@@ -5,7 +5,8 @@
   INDArray qu=y.mmul(y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY).addi(1).rdivi(1);
   int n=y.rows();
   doAlongDiagonal(qu,new Zero());
-  INDArray q=max(qu.div(qu.sum(Integer.MAX_VALUE)),realMin);
+  INDArray q=qu.div(qu.sum(Integer.MAX_VALUE));
+  BooleanIndexing.applyWhere(q,Conditions.lessThan(realMin),new Value(realMin));
   INDArray PQ=p.sub(q);
   INDArray yGrads=Nd4j.create(y.shape());
   for (int i=0; i < n; i++) {
@@ -18,6 +19,6 @@
   if (useAdaGrad)   gradChange.muli(adaGrad.getLearningRates(gradChange));
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);
-  double cost=p.mul(log(p.div(q))).sum(Integer.MAX_VALUE).getDouble(0);
+  double cost=p.mul(log(p.div(q),false)).sum(Integer.MAX_VALUE).getDouble(0);
   return new Pair<>(cost,yIncs);
 }

@@ -11,6 +11,7 @@
   X.data().flush();
   if (y == null)   y=randn(X.rows(),nDims,new MersenneTwister(123)).muli(1e-3f);
   INDArray p=d2p(D,perplexity);
+  D.data().flush();
   p.muli(4);
   if (useAdaGrad) {
     if (adaGrad == null) {
