@@ -43,6 +43,16 @@
  else   if (message instanceof StreamWork) {
     StreamWork work=(StreamWork)message;
     InputStream is=work.getIs();
+    boolean tryRead=false;
+    try {
+      if (is.available() > 0) {
+        tryRead=true;
+      }
+    }
+ catch (    Exception e) {
+      tryRead=false;
+    }
+    if (!tryRead)     return;
     Tokenizer t=tokenizer.create(is);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
