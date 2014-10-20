@@ -1,4 +1,5 @@
 {
   if (g == null)   g=new XorShift1024StarRandomGenerator(seed);
+  if (sentence.isEmpty())   return;
   for (int i=0; i < sentence.size(); i++)   skipGram(i,sentence,(int)g.nextDouble() % window);
 }

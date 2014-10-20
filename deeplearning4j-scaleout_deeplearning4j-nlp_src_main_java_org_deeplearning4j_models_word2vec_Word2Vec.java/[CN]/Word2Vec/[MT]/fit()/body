@@ -1,6 +1,6 @@
 {
   boolean loaded=buildVocab();
-  if (!loaded)   cache.saveVocab();
+  if (!loaded && saveVocab)   cache.saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();

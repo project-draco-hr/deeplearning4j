@@ -3,9 +3,8 @@
   LabelAwareSentenceIterator iter=new LabelAwareFileSentenceIterator(rootDir);
   List<String> labels=Arrays.asList("label1","label2");
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
-  TextVectorizer vectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).labels(labels).iterate(iter).build();
-  DataSet vectorized=vectorizer.vectorize();
-  assertEquals(4,vectorized.numInputs());
-  assertEquals(2,vectorized.numOutcomes());
-  log.info("Vectorized " + vectorized.toString());
+  TextVectorizer vectorizer=new TfidfVectorizer.Builder().minWords(1).stopWords(new ArrayList<String>()).tokenize(tokenizerFactory).labels(labels).iterate(iter).build();
+  vectorizer.fit();
+  VocabWord word=vectorizer.vocab().wordFor("This");
+  assumeNotNull(word);
 }

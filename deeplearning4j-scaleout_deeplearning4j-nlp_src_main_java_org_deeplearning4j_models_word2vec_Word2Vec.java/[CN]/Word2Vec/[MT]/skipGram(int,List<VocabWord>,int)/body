@@ -1,6 +1,6 @@
 {
   final VocabWord word=sentence.get(i);
-  if (word == null)   return;
+  if (word == null || sentence.isEmpty())   return;
   int end=window * 2 + 1 - b;
   for (int a=b; a < end; a++) {
     if (a != window) {

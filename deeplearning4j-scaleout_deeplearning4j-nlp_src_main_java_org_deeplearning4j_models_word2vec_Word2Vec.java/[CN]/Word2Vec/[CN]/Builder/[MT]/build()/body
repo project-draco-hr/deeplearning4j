@@ -9,6 +9,7 @@
     ret.numIterations=iterations;
     ret.minWordFrequency=minWordFrequency;
     ret.seed=seed;
+    ret.saveVocab=saveVocab;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -34,6 +35,7 @@
     ret.numIterations=iterations;
     ret.seed=seed;
     ret.numIterations=iterations;
+    ret.saveVocab=saveVocab;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

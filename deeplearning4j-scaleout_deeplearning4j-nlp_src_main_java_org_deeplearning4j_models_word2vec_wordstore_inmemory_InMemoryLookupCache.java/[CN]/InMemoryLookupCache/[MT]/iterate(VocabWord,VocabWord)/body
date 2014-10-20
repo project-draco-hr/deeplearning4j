@@ -14,10 +14,22 @@
     double f=expTable[idx];
     double g=(1 - code - f) * this.lr;
     avgChange+=g;
-    Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
-    Nd4j.getBlasWrapper().axpy(g,l1,syn1);
+    if (syn0.data().dataType().equals(DataBuffer.DOUBLE)) {
+      Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
+      Nd4j.getBlasWrapper().axpy(g,l1,syn1);
+    }
+ else {
+      Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
+      Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
+    }
   }
   avgChange/=w1.getCodes().length;
-  if (useAdaGrad)   Nd4j.getBlasWrapper().axpy(avgChange,neu1e,l1);
- else   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+  if (useAdaGrad) {
+    if (syn0.data().dataType().equals(DataBuffer.DOUBLE))     Nd4j.getBlasWrapper().axpy(avgChange,neu1e,l1);
+ else     Nd4j.getBlasWrapper().axpy((float)avgChange,neu1e,l1);
+  }
+ else {
+    if (syn0.data().dataType().equals(DataBuffer.DOUBLE))     Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+ else     Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
+  }
 }
