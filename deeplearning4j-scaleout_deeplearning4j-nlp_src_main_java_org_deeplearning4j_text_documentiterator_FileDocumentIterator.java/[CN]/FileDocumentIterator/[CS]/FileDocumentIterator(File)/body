@@ -11,6 +11,12 @@
   }
  else {
     iter=FileUtils.iterateFiles(path,null,true);
+    try {
+      lineIterator=FileUtils.lineIterator(iter.next());
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
     this.rootDir=path;
   }
 }
