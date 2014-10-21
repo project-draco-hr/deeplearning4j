@@ -1,7 +1,7 @@
 {
   List<VocabWord> wordsForDoc=docToWord.get(doc);
   if (wordsForDoc == null) {
-    wordsForDoc=new CopyOnWriteArrayList<>();
+    wordsForDoc=Collections.synchronizedList(new ArrayList<VocabWord>());
     docToWord.put(doc,wordsForDoc);
   }
   wordsForDoc.add(word);
