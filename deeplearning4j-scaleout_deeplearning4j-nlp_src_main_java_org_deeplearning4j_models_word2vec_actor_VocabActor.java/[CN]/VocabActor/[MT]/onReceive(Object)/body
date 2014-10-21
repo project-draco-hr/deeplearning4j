@@ -37,6 +37,7 @@
     Tokenizer t=tokenizer.create(is);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
+      if (token == null || token.isEmpty())       break;
       processToken(token,encountered,document);
     }
     index.addWordsToDoc(index.numDocuments(),document);
