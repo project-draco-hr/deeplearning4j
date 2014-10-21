@@ -1,0 +1,12 @@
+{
+  List<VocabWord> wordsForDoc=docToWord.get(doc);
+  if (wordsForDoc == null)   wordsForDoc=new ArrayList<>();
+  wordsForDoc.add(word);
+  List<Integer> docList=wordToDocs.get(word);
+  if (docList != null)   docList.add(doc);
+ else {
+    docList=new ArrayList<>();
+    docList.add(doc);
+    wordToDocs.put(word,docList);
+  }
+}

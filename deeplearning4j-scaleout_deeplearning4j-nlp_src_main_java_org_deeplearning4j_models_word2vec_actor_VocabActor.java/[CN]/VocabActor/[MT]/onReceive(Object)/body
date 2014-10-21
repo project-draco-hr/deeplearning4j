@@ -1,9 +1,9 @@
 {
   Set<String> encountered=new HashSet<>();
   if (message instanceof VocabWork) {
+    List<VocabWord> document=new ArrayList<>();
     VocabWork work=(VocabWork)message;
     if (work.getWork() == null || work.getWork().isEmpty())     return;
-    work.getCount().incrementAndGet();
     String sentence=work.getWork();
     if (sentence.isEmpty() || sentence.length() <= 2) {
       work.countDown();
@@ -12,36 +12,15 @@
     Tokenizer t=tokenizer.create(sentence);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
-      if (token.length() < 2)       continue;
-      if (stopWords.contains(token))       token="STOP";
-      cache.incrementWordCount(token);
-      if (!encountered.contains(token)) {
-        cache.incrementDocCount(token,1);
-        encountered.add(token);
-      }
-      if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
-        if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
-          int idx=cache.numWords();
-          word.setIndex(idx);
-          cache.putVocabWord(token,word);
-        }
-      }
- else       if (Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
-        token="STOP";
-        if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
-          int idx=cache.numWords();
-          word.setIndex(idx);
-          cache.putVocabWord(token,word);
-        }
-      }
+      processToken(token,encountered,document);
     }
+    index.addWordsToDoc(index.numDocuments(),document);
     work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());
   }
  else   if (message instanceof StreamWork) {
     StreamWork work=(StreamWork)message;
+    List<VocabWord> document=new ArrayList<>();
     InputStream is=work.getIs();
     if (is == null)     return;
     boolean tryRead=false;
@@ -57,30 +36,9 @@
     Tokenizer t=tokenizer.create(is);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
-      if (stopWords.contains(token))       token="STOP";
-      cache.incrementWordCount(token);
-      if (!encountered.contains(token)) {
-        cache.incrementDocCount(token,1);
-        encountered.add(token);
-      }
-      if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
-        if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-          VocabWord word=new VocabWord(cache.wordFrequency(token),token);
-          int idx=cache.numWords();
-          word.setIndex(idx);
-          cache.putVocabWord(token,word);
-        }
- else         if (Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
-          token="STOP";
-          if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
-            VocabWord word=new VocabWord(cache.wordFrequency(token),token);
-            int idx=cache.numWords();
-            word.setIndex(idx);
-            cache.putVocabWord(token,word);
-          }
-        }
-      }
+      processToken(token,encountered,document);
     }
+    index.addWordsToDoc(index.numDocuments(),document);
     IOUtils.closeQuietly(is);
     work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());

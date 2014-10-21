@@ -1,0 +1,7 @@
+TokenizerFactory tokenizer
+VocabCache cache
+List<String> stopWords
+AtomicLong lastUpdate
+int minWordFrequency
+AtomicInteger numWordsEncountered
+InvertedIndex index

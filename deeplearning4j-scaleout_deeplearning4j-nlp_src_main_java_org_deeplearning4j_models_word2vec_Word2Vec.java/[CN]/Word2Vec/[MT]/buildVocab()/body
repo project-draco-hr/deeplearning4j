@@ -6,7 +6,7 @@
     cache.resetWeights();
     return true;
   }
-  TextVectorizer vectorizer=new TfidfVectorizer.Builder().cache(cache).iterate(docIter).iterate(sentenceIter).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
+  vectorizer=new TfidfVectorizer.Builder().cache(cache).iterate(docIter).iterate(sentenceIter).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
   vectorizer.fit();
   setup();
   return false;

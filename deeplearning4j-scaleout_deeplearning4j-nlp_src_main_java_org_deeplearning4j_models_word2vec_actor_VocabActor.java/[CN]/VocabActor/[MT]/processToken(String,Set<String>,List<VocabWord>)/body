@@ -1,0 +1,30 @@
+{
+  if (stopWords.contains(token))   token="STOP";
+  cache.incrementWordCount(token);
+  if (!encountered.contains(token)) {
+    cache.incrementDocCount(token,1);
+    encountered.add(token);
+  }
+  VocabWord token2=null;
+  if (cache.hasToken(token))   token2=cache.tokenFor(token);
+ else {
+    token2=new VocabWord(1.0,token);
+    cache.addToken(token2);
+  }
+  words.add(token2);
+  if (!Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
+    if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
+      int idx=cache.numWords();
+      token2.setIndex(idx);
+      cache.putVocabWord(token);
+    }
+ else     if (Util.matchesAnyStopWord(stopWords,token) && token != null && !token.isEmpty()) {
+      token="STOP";
+      if (!cache.containsWord(token) && cache.wordFrequency(token) >= minWordFrequency) {
+        int idx=cache.numWords();
+        token2.setIndex(idx);
+        cache.putVocabWord(token);
+      }
+    }
+  }
+}

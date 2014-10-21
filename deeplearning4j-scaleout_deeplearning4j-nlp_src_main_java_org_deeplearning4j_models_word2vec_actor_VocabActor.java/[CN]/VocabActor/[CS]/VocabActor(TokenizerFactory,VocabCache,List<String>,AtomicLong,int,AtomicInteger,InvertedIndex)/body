@@ -1,0 +1,10 @@
+{
+  super();
+  this.tokenizer=tokenizer;
+  this.stopWords=stopWords;
+  this.lastUpdate=lastUpdate;
+  this.cache=cache;
+  this.minWordFrequency=minWordFrequency;
+  this.numWordsEncountered=numWordsEncountered;
+  this.index=index;
+}

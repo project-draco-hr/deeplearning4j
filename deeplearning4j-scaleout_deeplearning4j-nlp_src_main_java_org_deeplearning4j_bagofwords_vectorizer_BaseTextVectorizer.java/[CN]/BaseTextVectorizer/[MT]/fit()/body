@@ -2,7 +2,7 @@
   if (trainingSystem == null)   trainingSystem=ActorSystem.create();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger queued=new AtomicInteger(0);
-  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,layerSize,stopWords,semaphore,minWordFrequency)));
+  final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,stopWords,semaphore,minWordFrequency,numWordsEncountered,index)));
   final AtomicInteger latch=new AtomicInteger(0);
   while (docIter != null && docIter.hasNext()) {
     vocabActor.tell(new StreamWork(new DefaultInputStreamCreator(docIter),latch),vocabActor);
@@ -34,13 +34,14 @@
       }
     }
   }
-  while (latch.get() > 0) {
-    log.info("Building vocab...");
-    try {
-      Thread.sleep(1000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
+  boolean done=false;
+  while (!done) {
+    long sys=System.currentTimeMillis();
+    long curr=semaphore.get();
+    long diff=Math.abs(sys - curr);
+    if (diff > 10000) {
+      log.info("Done working");
+      done=true;
     }
   }
   trainingSystem.shutdown();
