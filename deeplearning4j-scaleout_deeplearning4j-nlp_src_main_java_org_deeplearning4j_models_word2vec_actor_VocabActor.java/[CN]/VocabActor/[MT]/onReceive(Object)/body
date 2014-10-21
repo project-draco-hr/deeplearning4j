@@ -15,6 +15,7 @@
       processToken(token,encountered,document);
     }
     index.addWordsToDoc(index.numDocuments(),document);
+    numWordsEncountered.set(numWordsEncountered.get() + document.size());
     work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());
   }
@@ -39,6 +40,7 @@
       processToken(token,encountered,document);
     }
     index.addWordsToDoc(index.numDocuments(),document);
+    numWordsEncountered.set(numWordsEncountered.get() + document.size());
     IOUtils.closeQuietly(is);
     work.countDown();
     lastUpdate.getAndSet(System.currentTimeMillis());
