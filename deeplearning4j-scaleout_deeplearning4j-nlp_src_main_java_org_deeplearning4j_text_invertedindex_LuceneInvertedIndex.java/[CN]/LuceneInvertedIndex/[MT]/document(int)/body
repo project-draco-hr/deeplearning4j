@@ -1,0 +1,15 @@
+{
+  List<VocabWord> ret=new ArrayList<>();
+  try {
+    Document doc=searcher.doc(index);
+    Iterator<IndexableField> iter=doc.iterator();
+    while (iter.hasNext()) {
+      IndexableField curr=iter.next();
+      VocabWord word=new VocabWord(1.0,curr.stringValue());
+    }
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  return null;
+}

@@ -1,0 +1,18 @@
+{
+  dir=FSDirectory.open(new File(indexPath));
+  reader=DirectoryReader.open(FSDirectory.open(new File("word2vec-index")));
+  searcher=new IndexSearcher(reader);
+  wordType=new FieldType();
+  wordType.setStoreTermVectors(true);
+  wordType.setStoreTermVectorPositions(true);
+  wordType.setIndexed(true);
+  IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_4_10_0,analyzer);
+  if (create) {
+    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+  }
+ else {
+    iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+  }
+  writer=new IndexWriter(dir,iwc);
+  writer.close();
+}
