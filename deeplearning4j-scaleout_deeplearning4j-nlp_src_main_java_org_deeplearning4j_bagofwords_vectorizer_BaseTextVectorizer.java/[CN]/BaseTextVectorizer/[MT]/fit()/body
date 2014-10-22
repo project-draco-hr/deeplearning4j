@@ -44,5 +44,6 @@
       done=true;
     }
   }
+  index.finish();
   trainingSystem.shutdown();
 }

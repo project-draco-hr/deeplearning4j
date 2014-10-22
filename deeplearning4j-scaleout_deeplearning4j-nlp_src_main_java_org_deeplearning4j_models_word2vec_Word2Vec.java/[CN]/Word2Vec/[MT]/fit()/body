@@ -6,10 +6,14 @@
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
   final AtomicLong latch=new AtomicLong(0);
+  final List<List<VocabWord>> docs=new ArrayList<>();
+  for (int i=0; i < vectorizer.index().numDocuments(); i++)   docs.add(vectorizer.index().document(i));
   ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   log.info("Processing sentences...");
   for (int i=0; i < numIterations; i++) {
-    for (int j=0; j < vectorizer.index().numDocuments(); j++) {
+    int numDocs=vectorizer.index().numDocuments();
+    log.info("Training on " + numDocs);
+    for (int j=0; j < numDocs; j++) {
       final int k=j;
       service.execute(new Runnable(){
         /** 
@@ -23,7 +27,7 @@
  * @see Thread#run()
  */
         @Override public void run(){
-          trainSentence(vectorizer.index().document(k));
+          trainSentence(docs.get(k),k);
         }
       }
 );

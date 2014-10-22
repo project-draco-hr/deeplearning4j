@@ -1,18 +1,23 @@
 {
-  dir=FSDirectory.open(new File(indexPath));
-  reader=DirectoryReader.open(FSDirectory.open(new File("word2vec-index")));
-  searcher=new IndexSearcher(reader);
-  wordType=new FieldType();
-  wordType.setStoreTermVectors(true);
-  wordType.setStoreTermVectorPositions(true);
-  wordType.setIndexed(true);
-  IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_4_10_0,analyzer);
+  File dir2=new File(indexPath);
+  if (!dir2.exists())   dir2.mkdir();
+  analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
   if (create) {
     iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
   }
  else {
     iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
   }
+  iwc.setRAMBufferSizeMB(5000);
+  dir=FSDirectory.open(dir2);
   writer=new IndexWriter(dir,iwc);
-  writer.close();
+  if (reader == null) {
+    try {
+      reader=DirectoryReader.open(dir);
+      searcher=new IndexSearcher(reader);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

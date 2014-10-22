@@ -8,5 +8,7 @@
   VocabWord word=vectorizer.vocab().wordFor("This");
   assumeNotNull(word);
   assertEquals(word,vectorizer.vocab().tokenFor("This"));
+  Collection<Integer> docs=vectorizer.index().allDocs();
+  assertEquals(2,docs.size());
   assertEquals(2,vectorizer.index().documents(word).size());
 }

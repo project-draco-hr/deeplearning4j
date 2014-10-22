@@ -1,8 +1,12 @@
 {
-  Field f=new Field("word",word.getWord(),wordType);
+  Field f=new TextField(WORD_FIELD,word.getWord(),Field.Store.YES);
   try {
     Document doc2=searcher.doc(doc);
-    doc2.add(f);
+    if (doc2 != null)     doc2.add(f);
+ else {
+      Document d=new Document();
+      d.add(f);
+    }
   }
  catch (  IOException e) {
     e.printStackTrace();

@@ -1,0 +1,19 @@
+{
+  try {
+    writer.forceMerge(1);
+    writer.commit();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  if (reader == null) {
+    try {
+      reader=DirectoryReader.open(dir);
+      searcher=new IndexSearcher(reader);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  numDocs=reader.numDocs();
+}

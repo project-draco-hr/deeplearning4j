@@ -9,6 +9,6 @@
     if (word == null)     continue;
     sentence2.add(word);
   }
-  trainSentence(sentence2);
+  trainSentence(sentence2,0);
   return sentence2;
 }

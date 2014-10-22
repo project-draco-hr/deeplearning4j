@@ -8,4 +8,5 @@
   this.sentenceIterator=sentenceIterator;
   this.labels=labels;
   this.index=index;
+  if (index == null)   this.index=new LuceneInvertedIndex(cache);
 }

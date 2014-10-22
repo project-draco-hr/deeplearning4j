@@ -1,0 +1,9 @@
+{
+  try {
+    index("word2vec-index",true);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  this.vocabCache=vocabCache;
+}

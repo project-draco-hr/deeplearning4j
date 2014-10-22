@@ -7,6 +7,6 @@
     VocabWord word=cache.wordFor(next);
     if (word == null)     continue;
   }
-  trainSentence(sentence2);
+  trainSentence(sentence2,0);
   return sentence2;
 }
