@@ -1,3 +1,14 @@
 {
-  return iter.next(num);
+  if (!iter.hasNext()) {
+    if (passes < numPasses) {
+      passes++;
+      batch=0;
+      log.info("Epoch " + passes + " batch "+ batch);
+      iter.reset();
+    }
+  }
+  batch++;
+  DataSet next=iter.next(num);
+  if (preProcessor != null)   preProcessor.preProcess(next);
+  return next;
 }
