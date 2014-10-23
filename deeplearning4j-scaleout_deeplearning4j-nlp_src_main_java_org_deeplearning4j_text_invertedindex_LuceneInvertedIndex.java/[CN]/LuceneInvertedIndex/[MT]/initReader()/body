@@ -1,0 +1,12 @@
+{
+  if (reader == null) {
+    try {
+      writer.commit();
+      reader=DirectoryReader.open(dir);
+      searcher=new IndexSearcher(reader);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

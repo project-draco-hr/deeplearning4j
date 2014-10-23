@@ -6,14 +6,6 @@
  catch (  IOException e) {
     e.printStackTrace();
   }
-  if (reader == null) {
-    try {
-      reader=DirectoryReader.open(dir);
-      searcher=new IndexSearcher(reader);
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+  initReader();
   numDocs=reader.numDocs();
 }

@@ -1,5 +1,6 @@
 {
   if (g == null)   g=new XorShift1024StarRandomGenerator(seed);
+  if (sentence == null)   return;
   numWordsSoFar.getAndAdd(sentence.size());
   if (doc % 1000 == 0) {
     alpha.set(Math.max(minLearningRate,alpha.get() * (1 - (1.0 * (double)doc / (double)vectorizer.index().numDocuments()))));

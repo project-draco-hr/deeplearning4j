@@ -11,13 +11,5 @@
   iwc.setRAMBufferSizeMB(5000);
   dir=FSDirectory.open(dir2);
   writer=new IndexWriter(dir,iwc);
-  if (reader == null) {
-    try {
-      reader=DirectoryReader.open(dir);
-      searcher=new IndexSearcher(reader);
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+  initReader();
 }

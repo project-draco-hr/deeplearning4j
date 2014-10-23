@@ -6,4 +6,5 @@
     throw new RuntimeException(e);
   }
   this.vocabCache=vocabCache;
+  this.cache=cache;
 }

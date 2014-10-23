@@ -1,5 +1,6 @@
 {
-  List<VocabWord> ret=new ArrayList<>();
+  if (cache)   return words.get(index);
+  List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
     Document doc=reader.document(index);
     String[] values=doc.getValues(WORD_FIELD);

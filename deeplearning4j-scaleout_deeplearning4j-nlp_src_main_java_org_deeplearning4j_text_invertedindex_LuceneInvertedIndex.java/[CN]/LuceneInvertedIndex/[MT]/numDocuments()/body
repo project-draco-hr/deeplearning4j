@@ -2,6 +2,7 @@
   if (numDocs > 0)   return numDocs;
   int ret=0;
   try {
+    initReader();
     ret=reader.numDocs();
   }
  catch (  Exception e) {
