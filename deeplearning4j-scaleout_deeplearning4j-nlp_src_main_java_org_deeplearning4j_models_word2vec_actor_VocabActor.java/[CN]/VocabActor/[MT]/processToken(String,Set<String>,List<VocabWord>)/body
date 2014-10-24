@@ -1,5 +1,6 @@
 {
   if (stopWords.contains(token))   token="STOP";
+  if (token.isEmpty())   return;
   cache.incrementWordCount(token);
   if (!encountered.contains(token)) {
     cache.incrementDocCount(token,1);
