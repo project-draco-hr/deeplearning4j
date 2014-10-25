@@ -8,8 +8,12 @@
     INDArray[] sorted=Nd4j.sortWithIndices(distances,0,false);
     INDArray sort=sorted[0];
     List<String> ret=new ArrayList<>();
+    VocabWord word2=cache.wordFor(word);
     if (n > sort.length())     n=sort.length();
-    for (int i=0; i < n; i++)     ret.add(cache.wordAtIndex(sort.getInt(i)));
+    for (int i=0; i < n + 1; i++) {
+      if (sort.getInt(i) == word2.getIndex())       continue;
+      ret.add(cache.wordAtIndex(sort.getInt(i)));
+    }
     return ret;
   }
   if (vec == null)   return new ArrayList<>();

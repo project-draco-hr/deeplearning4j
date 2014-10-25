@@ -5,63 +5,37 @@
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
-  final AtomicLong latch=new AtomicLong(0);
-  ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+  final ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+  final Collection<Integer> docs=vectorizer.index().allDocs();
+  final List<Callable<Void>> futures=new ArrayList<>();
   log.info("Processing sentences...");
   for (int i=0; i < numIterations; i++) {
-    log.info("Iteration " + (i + 1));
-    Collection<Integer> docs=vectorizer.index().allDocs();
-    log.info("Training on " + docs.size());
-    List<Future<?>> list=new ArrayList<>();
-    for (    int j : docs) {
-      final int k=j;
-      Future<?> f=service.submit(new Runnable(){
-        /** 
- * When an object implementing interface <code>Runnable</code> is used
- * to create a thread, starting the thread causes the object's
- * <code>run</code> method to be called in that separately executing
- * thread.
- * <p/>
- * The general contract of the method <code>run</code> is that it may
- * take any action whatsoever.
- * @see Thread#run()
- */
-        @Override public void run(){
-          trainSentence(vectorizer.index().document(k),k);
-        }
-      }
+    futures.add(new Callable<Void>(){
+      @Override public Void call(){
+        final AtomicInteger numSentencesProcessed=new AtomicInteger(0);
+        final AtomicDouble d=new AtomicDouble(alpha.doubleValue());
+        log.info("Training on " + docs.size());
+        for (        int j : docs) {
+          final int k=j;
+          service.submit(new Callable<Void>(){
+            @Override public Void call(){
+              trainSentence(vectorizer.index().document(k),k,numSentencesProcessed,d);
+              return null;
+            }
+          }
 );
-      numSentencesProcessed.incrementAndGet();
-      if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
-      list.add(f);
-    }
-    numSentencesProcessed.set(0);
-    for (    Future<?> f : list) {
-      try {
-        f.get();
-      }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-catch (      ExecutionException e) {
-        e.printStackTrace();
+        }
+        return null;
       }
     }
+);
   }
   try {
+    List<Future<Void>> f2=service.invokeAll(futures);
     service.shutdown();
-    service.awaitTermination(1,TimeUnit.DAYS);
+    while (!service.isTerminated())     Thread.sleep(1000);
   }
- catch (  InterruptedException e) {
+ catch (  Exception e) {
     Thread.currentThread().interrupt();
-  }
-  while (latch.get() > 0) {
-    log.info("Waiting on sentences...Num processed so far " + numSentencesProcessed.get() + " with latch count at "+ latch.get());
-    try {
-      Thread.sleep(1000);
-    }
- catch (    InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
   }
 }

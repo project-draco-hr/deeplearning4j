@@ -4,7 +4,6 @@
     Word2Vec vec=(Word2Vec)ois.readObject();
     this.alpha=vec.alpha;
     this.minWordFrequency=vec.minWordFrequency;
-    this.numSentencesProcessed=vec.numSentencesProcessed;
     this.sample=vec.sample;
     this.stopWords=vec.stopWords;
     this.topNSize=vec.topNSize;
