@@ -1,6 +1,6 @@
 {
   try {
-    index("word2vec-index",true);
+    index("word2vec-index",cache);
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

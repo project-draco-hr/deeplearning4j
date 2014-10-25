@@ -1,4 +1,9 @@
 {
+  if (cache) {
+    List<Integer> ret=new ArrayList<>();
+    for (int i=0; i < words.size(); i++)     ret.add(i);
+    return ret;
+  }
   List<Integer> docIds=new ArrayList<>();
   for (int i=0; i < reader.maxDoc(); i++)   docIds.add(i);
   return docIds;

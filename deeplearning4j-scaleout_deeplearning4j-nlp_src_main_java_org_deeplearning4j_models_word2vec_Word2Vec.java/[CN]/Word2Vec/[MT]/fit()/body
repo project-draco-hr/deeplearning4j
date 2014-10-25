@@ -10,11 +10,12 @@
   log.info("Processing sentences...");
   for (int i=0; i < numIterations; i++) {
     log.info("Iteration " + (i + 1));
-    int numDocs=vectorizer.index().numDocuments();
-    log.info("Training on " + numDocs);
-    for (int j=0; j < numDocs; j++) {
+    Collection<Integer> docs=vectorizer.index().allDocs();
+    log.info("Training on " + docs.size());
+    List<Future<?>> list=new ArrayList<>();
+    for (    int j : docs) {
       final int k=j;
-      service.execute(new Runnable(){
+      Future<?> f=service.submit(new Runnable(){
         /** 
  * When an object implementing interface <code>Runnable</code> is used
  * to create a thread, starting the thread causes the object's
@@ -32,8 +33,20 @@
 );
       numSentencesProcessed.incrementAndGet();
       if (numSentencesProcessed.get() % 100 == 0)       log.info("Num sentences processed " + numSentencesProcessed.get());
+      list.add(f);
     }
     numSentencesProcessed.set(0);
+    for (    Future<?> f : list) {
+      try {
+        f.get();
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+catch (      ExecutionException e) {
+        e.printStackTrace();
+      }
+    }
   }
   try {
     service.shutdown();
