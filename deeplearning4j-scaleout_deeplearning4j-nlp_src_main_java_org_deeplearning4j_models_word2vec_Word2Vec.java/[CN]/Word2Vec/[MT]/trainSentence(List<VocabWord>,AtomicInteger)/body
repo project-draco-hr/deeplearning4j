@@ -2,7 +2,9 @@
   if (g == null)   g=new XorShift1024StarRandomGenerator(seed);
   if (sentence == null || sentence.isEmpty())   return;
   numWordsSoFar.set(numWordsSoFar.get() + sentence.size());
-  if (numWordsSoFar.get() % learningRateDecayWords == 0) {
+  rateOfChange.set(rateOfChange.get() + sentence.size());
+  if (rateOfChange.get() >= learningRateDecayWords) {
+    rateOfChange.set(0);
     alpha.set(Math.max(minLearningRate,alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords))));
     log.info("Num words so far " + numWordsSoFar.get() + " alpha is "+ alpha.get()+ " out of "+ totalWords);
   }
