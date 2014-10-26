@@ -1,10 +1,10 @@
 {
   if (cache) {
-    Thread t=new Thread(new Runnable(){
+    indexManager.execute(new Runnable(){
       public void run(){
         try {
-          dir=FSDirectory.open(new File("word2vec-index"));
-          writer=new IndexWriter(dir,iwc);
+          if (dir == null)           dir=FSDirectory.open(new File("word2vec-index"));
+          if (writer == null)           writer=new IndexWriter(dir,iwc);
           writer.forceMerge(1);
           writer.commit();
           initReader();

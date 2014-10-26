@@ -7,4 +7,5 @@
   }
   this.vocabCache=vocabCache;
   this.cache=cache;
+  indexManager=Executors.newFixedThreadPool(1);
 }

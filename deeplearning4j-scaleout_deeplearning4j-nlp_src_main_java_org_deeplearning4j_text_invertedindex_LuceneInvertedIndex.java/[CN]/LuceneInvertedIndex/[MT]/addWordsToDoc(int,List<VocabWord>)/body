@@ -1,5 +1,26 @@
 {
-  if (cache)   this.words.add(words);
+  if (cache) {
+    this.words.add(words);
+    indexManager.execute(new Runnable(){
+      @Override public void run(){
+        try {
+          if (writer == null) {
+            index("word2vec-path",true);
+          }
+          Document d=new Document();
+          for (          VocabWord word : words) {
+            d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
+          }
+          writer.addDocument(d,analyzer);
+        }
+ catch (        IOException e) {
+          throw new RuntimeException(e);
+        }
+        initReader();
+      }
+    }
+);
+  }
  else {
     Document d=new Document();
     for (    VocabWord word : words) {
