@@ -7,31 +7,36 @@
   if (docIter != null)   docIter.reset();
   final ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   final Collection<Integer> docs=vectorizer.index().allDocs();
-  final List<Callable<Void>> futures=new ArrayList<>();
+  final AtomicInteger numSentencesProcessed=new AtomicInteger(0);
+  for (  int j : docs)   totalWords+=vectorizer.index().document(j).size();
+  totalWords*=numIterations;
   log.info("Processing sentences...");
+  final List<Future<?>> futures2=new ArrayList<>();
   for (int i=0; i < numIterations; i++) {
-    futures.add(new Callable<Void>(){
-      @Override public Void call(){
-        final AtomicInteger numSentencesProcessed=new AtomicInteger(0);
-        final AtomicDouble d=new AtomicDouble(alpha.doubleValue());
-        log.info("Training on " + docs.size());
-        for (        int j : docs) {
-          final int k=j;
-          service.submit(new Callable<Void>(){
-            @Override public Void call(){
-              trainSentence(vectorizer.index().document(k),k,numSentencesProcessed,d);
-              return null;
-            }
-          }
-);
-        }
-        return null;
+    log.info("Training on " + docs.size());
+    final List<VocabWord> docMiniBatch=new CopyOnWriteArrayList<>();
+    final List<List<VocabWord>> minibatches=new ArrayList<>();
+    for (    int j : docs) {
+      final int k=j;
+      docMiniBatch.addAll(vectorizer.index().document(k));
+      if (docMiniBatch.size() >= batchSize) {
+        minibatches.add(new ArrayList<>(docMiniBatch));
+        docMiniBatch.clear();
       }
     }
-);
+    for (    final List<VocabWord> batch : minibatches) {
+      futures2.add(service.submit(new Callable<Void>(){
+        @Override public Void call(){
+          trainSentence(batch,numSentencesProcessed);
+          docMiniBatch.clear();
+          return null;
+        }
+      }
+));
+    }
   }
   try {
-    List<Future<Void>> f2=service.invokeAll(futures);
+    for (    Future<?> f : futures2)     f.get();
     service.shutdown();
     while (!service.isTerminated())     Thread.sleep(1000);
   }

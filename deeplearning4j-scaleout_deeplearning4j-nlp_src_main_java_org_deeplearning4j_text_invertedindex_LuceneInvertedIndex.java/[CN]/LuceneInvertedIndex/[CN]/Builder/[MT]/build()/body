@@ -4,7 +4,7 @@
     if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream(StringUtils.join(stopWords,"\n").getBytes())));
     if (indexDir != null && dir != null)     throw new IllegalStateException("Please define only a directory or a file directory");
     if (iwc == null)     iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-    if (indexDir != null) {
+    if (indexDir != null && !cache) {
       if (!indexDir.exists())       indexDir.mkdirs();
       dir=FSDirectory.open(indexDir);
       if (writer == null)       writer=new IndexWriter(dir,iwc);
@@ -20,6 +20,7 @@
     ret.vocabCache=vocabCache;
   }
  catch (  Exception e) {
+    throw new RuntimeException(e);
   }
   return ret;
 }

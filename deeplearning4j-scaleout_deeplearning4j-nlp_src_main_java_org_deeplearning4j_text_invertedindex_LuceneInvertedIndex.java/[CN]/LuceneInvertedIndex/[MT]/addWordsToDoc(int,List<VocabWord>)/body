@@ -1,14 +1,16 @@
 {
-  Document d=new Document();
-  for (  VocabWord word : words) {
-    d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
-  }
-  try {
-    writer.addDocument(d,analyzer);
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
   if (cache)   this.words.add(words);
-  initReader();
+ else {
+    Document d=new Document();
+    for (    VocabWord word : words) {
+      d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
+    }
+    try {
+      writer.addDocument(d,analyzer);
+    }
+ catch (    IOException e) {
+      throw new RuntimeException(e);
+    }
+    initReader();
+  }
 }

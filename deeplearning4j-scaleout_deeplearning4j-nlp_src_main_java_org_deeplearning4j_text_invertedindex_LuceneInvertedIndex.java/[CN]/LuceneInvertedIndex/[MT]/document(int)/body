@@ -1,5 +1,12 @@
 {
-  if (cache)   return words.get(index);
+  if (cache) {
+    List<VocabWord> ret=words.get(index);
+    List<VocabWord> ret2=new ArrayList<>();
+    for (    VocabWord word : ret) {
+      if (vocabCache.containsWord(word.getWord()))       ret2.add(word);
+    }
+    return ret2;
+  }
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
     Document doc=reader.document(index);
