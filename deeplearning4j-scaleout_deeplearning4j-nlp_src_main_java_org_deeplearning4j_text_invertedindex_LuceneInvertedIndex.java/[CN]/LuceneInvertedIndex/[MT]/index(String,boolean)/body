@@ -10,6 +10,18 @@
   }
   iwc.setRAMBufferSizeMB(5000);
   dir=FSDirectory.open(dir2);
-  writer=new IndexWriter(dir,iwc);
+  if (!indexBeingCreated.get()) {
+    indexBeingCreated.set(true);
+    writer=new IndexWriter(dir,iwc);
+  }
+  while (writer == null) {
+    try {
+      Thread.sleep(10000);
+      log.info("Waiting on index creation...");
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
   initReader();
 }

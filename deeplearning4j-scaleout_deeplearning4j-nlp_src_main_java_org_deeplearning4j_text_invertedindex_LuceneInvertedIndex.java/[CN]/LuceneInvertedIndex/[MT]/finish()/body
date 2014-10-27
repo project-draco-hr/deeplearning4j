@@ -3,8 +3,9 @@
     indexManager.execute(new Runnable(){
       public void run(){
         try {
-          if (dir == null)           dir=FSDirectory.open(new File("word2vec-index"));
-          if (writer == null)           writer=new IndexWriter(dir,iwc);
+          if (dir == null)           dir=FSDirectory.open(new File(INDEX_PATH));
+          if (writer == null)           if (!indexBeingCreated.get())           writer=new IndexWriter(dir,iwc);
+ else           waitOnWriter();
           writer.forceMerge(1);
           writer.commit();
           initReader();

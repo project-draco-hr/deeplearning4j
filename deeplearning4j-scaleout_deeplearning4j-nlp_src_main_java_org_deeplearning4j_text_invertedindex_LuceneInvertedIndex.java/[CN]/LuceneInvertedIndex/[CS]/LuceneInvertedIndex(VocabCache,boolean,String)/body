@@ -1,6 +1,6 @@
 {
   try {
-    index(INDEX_PATH,cache);
+    index(indexPath,cache);
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

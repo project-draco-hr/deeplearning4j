@@ -5,7 +5,10 @@
       @Override public void run(){
         try {
           if (writer == null) {
-            index("word2vec-path",true);
+            if (!indexBeingCreated.get())             index("word2vec-path",true);
+ else {
+              waitOnWriter();
+            }
           }
           Document d=new Document();
           for (          VocabWord word : words) {

@@ -4,6 +4,7 @@
     ret.layerSize=layerSize;
     ret.window=window;
     ret.alpha.set(lr);
+    ret.vectorizer=textVectorizer;
     ret.stopWords=stopWords;
     ret.setCache(vocabCache);
     ret.numIterations=iterations;
@@ -28,6 +29,7 @@
     ret.layerSize=layerSize;
     ret.sentenceIter=iter;
     ret.window=window;
+    ret.vectorizer=textVectorizer;
     ret.stopWords=stopWords;
     ret.minWordFrequency=minWordFrequency;
     ret.setCache(vocabCache);
