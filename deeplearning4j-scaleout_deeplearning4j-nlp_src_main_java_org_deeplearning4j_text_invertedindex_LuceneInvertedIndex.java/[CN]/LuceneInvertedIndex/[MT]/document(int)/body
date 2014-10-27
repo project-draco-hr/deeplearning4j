@@ -9,6 +9,7 @@
   }
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
+    initReader();
     Document doc=reader.document(index);
     String[] values=doc.getValues(WORD_FIELD);
     for (    String s : values) {

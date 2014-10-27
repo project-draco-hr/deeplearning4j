@@ -22,11 +22,27 @@
     try {
       writer.forceMerge(1);
       writer.commit();
+      while (writer.hasPendingMerges() || writer.hasUncommittedChanges()) {
+        try {
+          Thread.sleep(10000);
+          log.info("Waiting on writer....");
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+      }
     }
  catch (    IOException e) {
       e.printStackTrace();
     }
     initReader();
     numDocs=reader.numDocs();
+    try {
+      reader.close();
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
   }
+  finishedCalled=new AtomicLong(System.currentTimeMillis());
 }
