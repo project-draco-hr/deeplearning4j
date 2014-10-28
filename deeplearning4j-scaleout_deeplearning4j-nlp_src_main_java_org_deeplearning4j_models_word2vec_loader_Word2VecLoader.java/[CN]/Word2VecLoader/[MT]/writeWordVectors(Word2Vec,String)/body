@@ -1,9 +1,7 @@
 {
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
   int words=0;
-  InMemoryLookupCache l=(InMemoryLookupCache)vec.getCache();
-  for (int i=0; i < l.getSyn0().rows(); i++) {
-    String word=l.wordAtIndex(i);
+  for (  String word : vec.getCache().words()) {
     if (word == null)     continue;
     StringBuffer sb=new StringBuffer();
     sb.append(word);
