@@ -1,5 +1,0 @@
-{
-  this(vectorLength,useAdaGrad,0.025f,new XorShift64StarRandomGenerator(123));
-  addWordToIndex(0,Word2Vec.UNK);
-  wordIndex.add(Word2Vec.UNK);
-}

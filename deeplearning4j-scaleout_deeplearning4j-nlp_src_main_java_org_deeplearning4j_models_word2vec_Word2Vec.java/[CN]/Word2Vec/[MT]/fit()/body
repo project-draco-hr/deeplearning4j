@@ -30,9 +30,20 @@
     log.info("Training on " + docs.size());
     final List<VocabWord> docMiniBatch=new CopyOnWriteArrayList<>();
     final List<List<VocabWord>> minibatches=new ArrayList<>();
+    final AtomicLong nextRandom=new AtomicLong(5);
     for (    int j : docs) {
       final int k=j;
-      docMiniBatch.addAll(vectorizer.index().document(k));
+      List<VocabWord> doc=vectorizer.index().document(k);
+      for (      VocabWord word : doc) {
+        if (sample > 0) {
+          double ran=(Math.sqrt(word.getWordFrequency() / (sample * numSentencesProcessed.get())) + 1) * (sample * numSentencesProcessed.get()) / word.getWordFrequency();
+          if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
+            continue;
+          }
+          docMiniBatch.add(word);
+        }
+ else         docMiniBatch.add(word);
+      }
       if (docMiniBatch.size() >= batchSize) {
         minibatches.add(new ArrayList<>(docMiniBatch));
         docMiniBatch.clear();
@@ -41,7 +52,7 @@
     for (    final List<VocabWord> batch : minibatches) {
       futures2.add(service.submit(new Callable<Void>(){
         @Override public Void call(){
-          trainSentence(batch,numSentencesProcessed);
+          trainSentence(batch,numSentencesProcessed,nextRandom);
           docMiniBatch.clear();
           return null;
         }

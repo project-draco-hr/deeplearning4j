@@ -13,7 +13,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=(1 - code - f) * this.lr;
+    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,this.lr.get()) : this.lr.get());
     avgChange+=g;
     if (syn0.data().dataType().equals(DataBuffer.DOUBLE)) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);

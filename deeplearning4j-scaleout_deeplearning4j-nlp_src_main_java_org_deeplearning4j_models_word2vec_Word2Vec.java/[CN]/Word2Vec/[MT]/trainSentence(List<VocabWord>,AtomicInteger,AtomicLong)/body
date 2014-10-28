@@ -1,0 +1,17 @@
+{
+  if (sentence == null || sentence.isEmpty())   return;
+  numWordsSoFar.set(numWordsSoFar.get() + sentence.size());
+  rateOfChange.set(rateOfChange.get() + sentence.size());
+  if (rateOfChange.get() >= learningRateDecayWords) {
+    rateOfChange.set(0);
+    if (!useAdaGrad) {
+      alpha.set(Math.max(minLearningRate,alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords))));
+      cache.setLearningRate(alpha.get());
+    }
+    log.info("Num words so far " + numWordsSoFar.get() + " alpha is "+ alpha.get()+ " out of "+ totalWords);
+  }
+  for (int i=0; i < sentence.size(); i++) {
+    nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    skipGram(i,sentence,(int)nextRandom.get() % window,nextRandom);
+  }
+}

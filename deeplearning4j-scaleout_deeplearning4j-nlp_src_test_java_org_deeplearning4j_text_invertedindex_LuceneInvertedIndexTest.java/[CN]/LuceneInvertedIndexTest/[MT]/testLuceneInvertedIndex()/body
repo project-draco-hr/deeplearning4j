@@ -1,5 +1,5 @@
 {
-  VocabCache cache=new InMemoryLookupCache(100);
+  VocabCache cache=new InMemoryLookupCacheBuilder().vectorLength(100).createInMemoryLookupCache();
   cache.addToken(new VocabWord(1,"hello"));
   cache.addToken(new VocabWord(2,"hello2"));
   cache.addWordToIndex(0,"hello");

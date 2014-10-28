@@ -10,7 +10,7 @@
     dis=new DataInputStream(bis);
     words=Integer.parseInt(readString(dis));
     size=Integer.parseInt(readString(dis));
-    cache=new InMemoryLookupCache(size,words);
+    cache=new InMemoryLookupCache.Builder().vectorLength(size).build();
     String word;
     float[] vectors=null;
     for (int i=0; i < words; i++) {

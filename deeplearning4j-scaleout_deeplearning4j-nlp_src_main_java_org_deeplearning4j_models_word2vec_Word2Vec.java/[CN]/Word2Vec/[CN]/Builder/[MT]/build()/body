@@ -12,13 +12,19 @@
     ret.seed=seed;
     ret.saveVocab=saveVocab;
     ret.batchSize=batchSize;
+    ret.useAdaGrad=useAdaGrad;
+    ret.minLearningRate=minLearningRate;
+    ret.sample=sampling;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
-    if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
+    if (vocabCache == null) {
+      vocabCache=new InMemoryLookupCache.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      ret.cache=vocabCache;
+    }
     ret.docIter=docIter;
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
@@ -29,6 +35,8 @@
     ret.layerSize=layerSize;
     ret.sentenceIter=iter;
     ret.window=window;
+    ret.useAdaGrad=useAdaGrad;
+    ret.minLearningRate=minLearningRate;
     ret.vectorizer=textVectorizer;
     ret.stopWords=stopWords;
     ret.minWordFrequency=minWordFrequency;
@@ -40,13 +48,17 @@
     ret.numIterations=iterations;
     ret.saveVocab=saveVocab;
     ret.batchSize=batchSize;
+    ret.sample=sampling;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
  catch (    Exception e) {
       throw new RuntimeException(e);
     }
-    if (vocabCache == null)     vocabCache=new InMemoryLookupCache(layerSize);
+    if (vocabCache == null) {
+      vocabCache=new InMemoryLookupCache.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      ret.cache=vocabCache;
+    }
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }

@@ -1,5 +1,5 @@
 {
-  InMemoryLookupCache cache=SerializationUtils.readObject(new File("cache.ser"));
+  InMemoryLookupCache cache=SerializationUtils.readObject(new File("ser"));
   this.codes=cache.codes;
   this.vocabs=cache.vocabs;
   this.vectorLength=cache.vectorLength;

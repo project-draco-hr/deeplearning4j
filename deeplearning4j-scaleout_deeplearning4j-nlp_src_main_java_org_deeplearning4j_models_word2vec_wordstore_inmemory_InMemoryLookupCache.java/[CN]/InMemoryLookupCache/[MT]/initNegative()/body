@@ -1,0 +1,6 @@
+{
+  if (negative > 0) {
+    syn1Neg=Nd4j.zeros(syn0.shape());
+    makeTable(10000,0.75);
+  }
+}

@@ -4,7 +4,7 @@
   SentenceIterator iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
   new File("cache.ser").delete();
   TokenizerFactory t=new UimaTokenizerFactory();
-  InMemoryLookupCache cache=new InMemoryLookupCache(100,false,0.025f);
+  InMemoryLookupCache cache=new InMemoryLookupCacheBuilder().vectorLength(100).useAdaGrad(false).lr(0.025f).createInMemoryLookupCache();
   Word2Vec vec=new Word2Vec.Builder().minWordFrequency(1).iterations(5).layerSize(100).stopWords(new ArrayList<String>()).vocabCache(cache).windowSize(5).iterate(iter).tokenizerFactory(t).build();
   assertEquals(new ArrayList<String>(),vec.getStopWords());
   vec.fit();

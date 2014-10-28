@@ -1,6 +1,6 @@
 {
   BufferedReader write=new BufferedReader(new FileReader(path));
-  InMemoryLookupCache l=new InMemoryLookupCache(100,false);
+  InMemoryLookupCache l=new InMemoryLookupCache.Builder().vectorLength(100).useAdaGrad(false).build();
   LineIterator iter=IOUtils.lineIterator(write);
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
