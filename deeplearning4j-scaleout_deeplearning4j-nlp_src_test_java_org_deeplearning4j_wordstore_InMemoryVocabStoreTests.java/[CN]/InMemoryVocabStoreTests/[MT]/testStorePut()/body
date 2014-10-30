@@ -1,5 +1,5 @@
 {
-  VocabCache cache=new InMemoryLookupCacheBuilder().vectorLength(50).createInMemoryLookupCache();
+  VocabCache cache=new InMemoryLookupCache.Builder().vectorLength(50).build();
   assertFalse(cache.containsWord("hello"));
   cache.addWordToIndex(0,"hello");
   assertTrue(cache.containsWord("hello"));

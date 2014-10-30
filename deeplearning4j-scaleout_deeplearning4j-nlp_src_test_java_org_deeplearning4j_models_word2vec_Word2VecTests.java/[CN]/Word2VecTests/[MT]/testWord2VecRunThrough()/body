@@ -4,7 +4,7 @@
   DocumentIterator iter=new FileDocumentIterator(file);
   new File("cache.ser").delete();
   TokenizerFactory t=new DefaultTokenizerFactory();
-  InMemoryLookupCache cache=new InMemoryLookupCacheBuilder().vectorLength(100).useAdaGrad(true).lr(0.025f).createInMemoryLookupCache();
+  InMemoryLookupCache cache=new InMemoryLookupCache.Builder().vectorLength(100).useAdaGrad(true).lr(0.025f).build();
   Word2Vec vec=new Word2Vec.Builder().minWordFrequency(1).layerSize(100).stopWords(new ArrayList<String>()).vocabCache(cache).windowSize(5).iterate(iter).tokenizerFactory(t).build();
   assertEquals(new ArrayList<String>(),vec.getStopWords());
   vec.fit();

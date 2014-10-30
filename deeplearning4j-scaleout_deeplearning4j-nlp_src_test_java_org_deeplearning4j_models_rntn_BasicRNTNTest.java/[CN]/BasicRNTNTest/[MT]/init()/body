@@ -5,12 +5,12 @@
   sentenceIter=new CollectionSentenceIterator(Arrays.asList(sentence));
   File vectors=new File("wordvectors.ser");
   if (!vectors.exists()) {
-    vec=new Word2Vec.Builder().vocabCache(new InMemoryLookupCacheBuilder().vectorLength(100).createInMemoryLookupCache()).iterate(sentenceIter).build();
+    vec=new Word2Vec.Builder().vocabCache(new InMemoryLookupCache.Builder().vectorLength(100).build()).iterate(sentenceIter).build();
     vec.fit();
     SerializationUtils.saveObject(vec,new File("wordvectors.ser"));
   }
  else {
     vec=SerializationUtils.readObject(vectors);
-    vec.setCache(new InMemoryLookupCacheBuilder().vectorLength(vec.getLayerSize()).createInMemoryLookupCache());
+    vec.setCache(new InMemoryLookupCache.Builder().vectorLength(vec.getLayerSize()).build());
   }
 }
