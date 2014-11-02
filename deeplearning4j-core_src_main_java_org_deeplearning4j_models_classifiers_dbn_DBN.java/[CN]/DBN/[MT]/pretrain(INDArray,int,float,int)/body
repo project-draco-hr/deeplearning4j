@@ -13,7 +13,7 @@
  else     layerInput=activationFromPrevLayer(i - 1,layerInput);
     log.info("Training on layer " + (i + 1));
     float realLearningRate=layers[i].conf().getLr();
-    if (isForceNumEpochs()) {
+    if (forceNumIterations()) {
       for (int epoch=0; epoch < epochs; epoch++) {
         log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
         getNeuralNets()[i].iterate(layerInput,new Object[]{k,learningRate});

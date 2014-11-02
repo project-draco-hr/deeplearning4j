@@ -3,7 +3,7 @@
   if (layers == null)   layers=new Layer[getnLayers() + 1];
   if (neuralNets == null)   neuralNets=new NeuralNetwork[getnLayers()];
   if (defaultConfiguration == null)   defaultConfiguration=new NeuralNetConfiguration.Builder().build();
-  for (int i=0; i < hiddenLayerSizes.length + 1; i++) {
+  if (layerWiseConfigurations == null || layerWiseConfigurations.isEmpty())   for (int i=0; i < hiddenLayerSizes.length + 1; i++) {
     layerWiseConfigurations.add(defaultConfiguration.clone());
   }
 }

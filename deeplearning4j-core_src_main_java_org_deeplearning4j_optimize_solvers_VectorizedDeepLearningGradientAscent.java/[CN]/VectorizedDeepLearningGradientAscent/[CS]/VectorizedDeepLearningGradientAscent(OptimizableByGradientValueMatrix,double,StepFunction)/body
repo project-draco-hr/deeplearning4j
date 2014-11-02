@@ -1,0 +1,5 @@
+{
+  this.optimizable=function;
+  this.lineMaximizer=new VectorizedBackTrackLineSearch(function,step);
+  lineMaximizer.setAbsTolx(tolerance);
+}

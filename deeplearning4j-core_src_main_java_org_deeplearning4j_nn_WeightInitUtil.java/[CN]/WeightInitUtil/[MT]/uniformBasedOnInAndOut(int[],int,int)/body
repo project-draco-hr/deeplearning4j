@@ -1,0 +1,5 @@
+{
+  double min=-4.0 * Math.sqrt(6.0 / (double)(nOut + nIn));
+  double max=4.0 * Math.sqrt(6.0 / (double)(nOut + nIn));
+  return Nd4j.rand(shape,Distributions.uniform(new MersenneTwister(123),min,max));
+}

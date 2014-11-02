@@ -1,0 +1,20 @@
+{
+  NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getDefaultConfiguration().getOptimizationAlgo();
+  if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this,new BackPropStepFunction(network));
+    g.setTrainingEvaluator(eval);
+    g.setMaxIterations(iterations);
+    g.optimize(iterations);
+  }
+ else   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE) {
+    StochasticHessianFree s=new StochasticHessianFree(this,network);
+    s.setTrainingEvaluator(eval);
+    s.setMaxIterations(iterations);
+    s.optimize(iterations);
+  }
+ else {
+    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this,new BackPropStepFunction(network));
+    g.setTrainingEvaluator(eval);
+    g.optimize(iterations);
+  }
+}

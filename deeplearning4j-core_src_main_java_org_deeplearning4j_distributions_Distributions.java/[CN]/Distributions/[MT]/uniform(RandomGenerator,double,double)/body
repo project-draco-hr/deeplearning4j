@@ -1,4 +1,3 @@
 {
-  fanIn=Math.abs(fanIn);
-  return new UniformRealDistribution(rng,fanIn,fanOut);
+  return new UniformRealDistribution(rng,min,max);
 }

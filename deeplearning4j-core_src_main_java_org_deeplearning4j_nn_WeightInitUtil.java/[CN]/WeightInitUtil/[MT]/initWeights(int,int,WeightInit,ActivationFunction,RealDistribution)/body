@@ -10,6 +10,8 @@ for (int i=0; i < ret.rows(); i++) {
 ret.putRow(i,Nd4j.create(dist.sample(ret.columns())));
 }
 return ret;
+case SIZE:
+return uniformBasedOnInAndOut(new int[]{nIn,nOut},nIn,nOut);
 }
 throw new IllegalStateException("Illegal weight init value");
 }

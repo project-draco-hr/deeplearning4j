@@ -1,7 +1,4 @@
 {
   this.input=data.getFeatureMatrix();
-  INDArray labels=data.getLabels();
-  double lr=layerWiseConfigurations.get(0).getLr();
-  int iterations=layerWiseConfigurations.get(0).getNumIterations();
-  finetune(labels,lr,iterations);
+  finetune(data.getLabels());
 }

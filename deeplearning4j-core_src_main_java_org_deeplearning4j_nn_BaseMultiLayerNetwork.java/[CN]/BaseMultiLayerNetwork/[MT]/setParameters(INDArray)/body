@@ -1,15 +1,15 @@
 {
   for (int i=0; i < getNeuralNets().length; i++) {
     ParamRange range=startIndexForLayer(i);
-    INDArray w=params.get(NDArrayIndex.interval(0,params.rows()),NDArrayIndex.interval(range.getwStart(),range.getwEnd()));
-    INDArray bias=params.get(NDArrayIndex.interval(0,params.rows()),NDArrayIndex.interval(range.getBiasStart(),range.getBiasEnd()));
+    INDArray w=params.get(NDArrayIndex.interval(range.getwStart(),range.getwEnd()));
+    INDArray bias=params.get(NDArrayIndex.interval(range.getBiasStart(),range.getBiasEnd()));
     int rows=getNeuralNets()[i].getW().rows(), columns=getNeuralNets()[i].getW().columns();
     getNeuralNets()[i].setW(w.reshape(rows,columns));
     getNeuralNets()[i].sethBias(bias.reshape(getNeuralNets()[i].gethBias().rows(),getNeuralNets()[i].gethBias().columns()));
   }
   ParamRange range=startIndexForLayer(getNeuralNets().length);
-  INDArray w=params.get(NDArrayIndex.interval(0,params.rows()),NDArrayIndex.interval(range.getwStart(),range.getwEnd()));
-  INDArray bias=params.get(NDArrayIndex.interval(0,params.rows()),NDArrayIndex.interval(range.getBiasStart(),range.getBiasEnd()));
+  INDArray w=params.get(NDArrayIndex.interval(range.getwStart(),range.getwEnd()));
+  INDArray bias=params.get(NDArrayIndex.interval(range.getBiasStart(),range.getBiasEnd()));
   int rows=getOutputLayer().getW().rows(), columns=getOutputLayer().getW().columns();
   getOutputLayer().setW(w.reshape(rows,columns));
   getOutputLayer().setB(bias.reshape(getOutputLayer().getB().rows(),getOutputLayer().getB().columns()));

@@ -3,7 +3,7 @@
 switch (conf.getLossFunction()) {
 case MCXENT:
     INDArray preOut=preOutput(input);
-  INDArray p_y_given_x=Activations.sigmoid().apply(preOut);
+  INDArray p_y_given_x=Activations.softMaxRows().apply(preOut);
 INDArray dy=labels.sub(p_y_given_x);
 return input.transpose().mmul(dy);
 case XENT:
@@ -18,6 +18,8 @@ case RMSE_XENT:
 return input.transpose().mmul(pow(labels.sub(z),2));
 case SQUARED_LOSS:
 return input.transpose().mmul(pow(labels.sub(z),2));
+case NEGATIVELOGLIKELIHOOD:
+return input.transpose().mmul(log(z).negi());
 }
 throw new IllegalStateException("Invalid loss function");
 }

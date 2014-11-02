@@ -1,0 +1,10 @@
+{
+  if (useGaussNewtonVectorProductBackProp) {
+    BackPropROptimizer opt=new BackPropROptimizer(this,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
+    opt.optimize(eval,lineSearchBackProp);
+  }
+ else {
+    BackPropOptimizer opt=new BackPropOptimizer(this,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
+    opt.optimize(eval,lineSearchBackProp);
+  }
+}

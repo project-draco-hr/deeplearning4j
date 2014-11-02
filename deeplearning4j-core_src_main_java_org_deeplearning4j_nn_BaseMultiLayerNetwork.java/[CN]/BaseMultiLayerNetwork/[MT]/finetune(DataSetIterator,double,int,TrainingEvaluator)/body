@@ -6,6 +6,6 @@
     setInput(data.getFeatureMatrix());
     setLabels(data.getLabels());
     optimizer=new MultiLayerNetworkOptimizer(this,lr);
-    optimizer.optimize(this.labels,lr,iterations,eval);
+    optimizer.optimize(this.labels,eval);
   }
 }

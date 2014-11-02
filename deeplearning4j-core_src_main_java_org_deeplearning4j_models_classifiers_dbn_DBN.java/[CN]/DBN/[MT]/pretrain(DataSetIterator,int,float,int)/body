@@ -11,7 +11,7 @@
         }
  else         setInput(input);
         float realLearningRate=layerWiseConfigurations.get(i).getLr();
-        if (isForceNumEpochs()) {
+        if (forceNumIterations()) {
           for (int epoch=0; epoch < epochs; epoch++) {
             log.info("Error on iteration " + epoch + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(next.getFeatureMatrix(),new Object[]{k,learningRate});
@@ -29,7 +29,7 @@
         for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j,layerInput);
         log.info("Training on layer " + (i + 1));
         float realLearningRate=layerWiseConfigurations.get(i).getLr();
-        if (isForceNumEpochs()) {
+        if (forceNumIterations()) {
           for (int epoch=0; epoch < epochs; epoch++) {
             log.info("Error on epoch " + epoch + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(layerInput,new Object[]{k,learningRate});

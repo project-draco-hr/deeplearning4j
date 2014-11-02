@@ -1,4 +1,4 @@
 {
   pretrain(examples,new Object[]{defaultConfiguration.getK(),defaultConfiguration.getLr()});
-  finetune(labels,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
+  finetune(labels);
 }
