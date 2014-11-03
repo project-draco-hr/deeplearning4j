@@ -1,4 +1,5 @@
 {
   conf.setActivationFunction(rows ? Activations.softMaxRows() : Activations.softmax());
   conf.setLossFunction(LossFunctions.LossFunction.MCXENT);
+  conf.setWeightInit(WeightInit.ZERO);
 }

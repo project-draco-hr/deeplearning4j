@@ -1,14 +1,4 @@
 {
-  if (!lineSearch) {
-    log.info("BEGIN BACKPROP WITH SCORE OF " + network.score());
-    if (network.forceNumIterations()) {
-      for (int i=0; i < iterations; i++) {
-        if (i % network.getDefaultConfiguration().getResetAdaGradIterations() == 0)         network.getOutputLayer().getAdaGrad().historicalGradient=null;
-        network.backPropStep();
-        log.info("Iteration " + i + " error "+ network.score());
-      }
-    }
- else     lineSearchBackProp(eval);
-  }
- else   lineSearchBackProp(eval);
+  lineSearchBackProp(eval);
+  network.getOutputLayer().fit(new DataSet(network.getOutputLayer().getInput(),network.getOutputLayer().getLabels()));
 }
