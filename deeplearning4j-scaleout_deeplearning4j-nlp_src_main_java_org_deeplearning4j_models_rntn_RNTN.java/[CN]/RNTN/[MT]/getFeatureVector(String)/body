@@ -1,5 +1,5 @@
 {
-  INDArray ret=featureVectors.get(getVocabWord(word));
+  INDArray ret=featureVectors.vector(getVocabWord(word));
   if (ret.isRowVector())   ret=ret.transpose();
   return ret;
 }

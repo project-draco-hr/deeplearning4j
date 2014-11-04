@@ -2,7 +2,7 @@
   if (lowerCasefeatureNames) {
     word=word.toLowerCase();
   }
-  if (featureVectors.containsKey(word)) {
+  if (featureVectors.containsWord(word)) {
     return word;
   }
   return UNKNOWN_FEATURE;

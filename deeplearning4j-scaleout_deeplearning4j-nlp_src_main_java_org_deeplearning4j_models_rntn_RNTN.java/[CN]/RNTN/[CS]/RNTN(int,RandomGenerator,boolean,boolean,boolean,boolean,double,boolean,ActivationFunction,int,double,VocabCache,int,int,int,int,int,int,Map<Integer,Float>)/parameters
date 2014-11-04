@@ -9,7 +9,7 @@ boolean lowerCasefeatureNames
 ActivationFunction activationFunction
 int adagradResetFrequency
 double regTransformINDArray
-Map<String,INDArray> featureVectors
+VocabCache featureVectors
 int numBinaryMatrices
 int binaryTransformSize
 int binaryINd4jize

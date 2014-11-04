@@ -52,7 +52,6 @@
   binaryClassificationSize=(combineClassification) ? 0 : numOuts * (numHidden + 1);
   numUnaryMatrices=unaryClassification.size();
   unaryClassificationSize=numOuts * (numHidden + 1);
-  featureVectors.put(UNKNOWN_FEATURE,randomWordVector());
   numUnaryMatrices=unaryClassification.size();
   unaryClassificationSize=numOuts * (numHidden + 1);
   classWeights=new HashMap<>();

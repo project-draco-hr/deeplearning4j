@@ -29,10 +29,11 @@
     int numCols=entry.getValue().columns();
     unaryCD.put(entry.getKey(),Nd4j.create(numRows,numCols));
   }
-  for (  Map.Entry<String,INDArray> entry : featureVectors.entrySet()) {
-    int numRows=entry.getValue().rows();
-    int numCols=entry.getValue().columns();
-    wordVectorD.put(entry.getKey(),Nd4j.create(numRows,numCols));
+  for (  String s : featureVectors.words()) {
+    INDArray vector=featureVectors.vector(s);
+    int numRows=vector.rows();
+    int numCols=vector.columns();
+    wordVectorD.put(s,Nd4j.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
