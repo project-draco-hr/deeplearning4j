@@ -1,7 +1,11 @@
 {
-  int totalSize;
-  totalSize=numBinaryMatrices * (binaryTransform.size() + binaryClassificationSize) + binaryINd4jize;
-  totalSize+=numUnaryMatrices * unaryClassification.size();
-  totalSize+=featureVectors.numWords() * numHidden;
-  return totalSize;
+  if (numParameters < 0) {
+    int totalSize=0;
+    List<Iterator<INDArray>> list=Arrays.asList(binaryTransform.values().iterator(),binaryClassification.values().iterator(),binaryINd4j.values().iterator(),unaryClassification.values().iterator(),featureVectors.vectors());
+    for (    Iterator<INDArray> iter : list) {
+      while (iter.hasNext())       totalSize+=iter.next().length();
+    }
+    numParameters=totalSize;
+  }
+  return numParameters;
 }

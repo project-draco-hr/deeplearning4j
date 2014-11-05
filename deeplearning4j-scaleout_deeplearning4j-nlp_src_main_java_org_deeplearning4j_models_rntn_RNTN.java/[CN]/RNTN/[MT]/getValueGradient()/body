@@ -16,7 +16,7 @@
       binaryCD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(numRows,numCols));
     }
   }
-  if (useFloatTensors) {
+  if (useDoubleTensors) {
     for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINd4j.entrySet()) {
       int numRows=entry.getValue().size(1);
       int numCols=entry.getValue().size(2);
@@ -36,7 +36,7 @@
     wordVectorD.put(s,Nd4j.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
-  Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
+  if (!forwardPropTrees.isEmpty())   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
     public void run(    Tree currentItem,    Object[] args){
       Tree trainingTree=new Tree(currentItem);
       trainingTree.connect(new ArrayList<>(currentItem.children()));
@@ -46,7 +46,7 @@
   }
 ,rnTnActorSystem);
   final AtomicDouble error=new AtomicDouble(0);
-  Parallelization.iterateInParallel(forwardPropTrees,new Parallelization.RunnableWithParams<Tree>(){
+  if (!forwardPropTrees.isEmpty())   Parallelization.iterateInParallel(forwardPropTrees,new Parallelization.RunnableWithParams<Tree>(){
     public void run(    Tree currentItem,    Object[] args){
       backpropDerivativesAndError(currentItem,binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD);
       error.addAndGet(currentItem.errorSum());
@@ -57,7 +57,7 @@
     }
   }
 ,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD});
-  double scale=(1.0f / trainingTrees.size());
+  double scale=trainingTrees == null || trainingTrees.isEmpty() ? 1.0f : (1.0f / trainingTrees.size());
   value=error.doubleValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
@@ -65,6 +65,7 @@
   value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
   value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
   INDArray derivative=Nd4j.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
+  if (derivative.length() != numParameters)   throw new IllegalStateException("Gradient has wrong number of parameters " + derivative.length() + " should have been "+ numParameters);
   if (paramAdaGrad == null)   paramAdaGrad=new AdaGrad(1,derivative.columns());
   derivative.muli(paramAdaGrad.getLearningRates(derivative));
   return derivative;

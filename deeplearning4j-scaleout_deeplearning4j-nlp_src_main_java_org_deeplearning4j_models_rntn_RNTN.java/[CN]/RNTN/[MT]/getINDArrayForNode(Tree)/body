@@ -1,5 +1,5 @@
 {
-  if (!useFloatTensors) {
+  if (!useDoubleTensors) {
     throw new AssertionError("Not using INd4j");
   }
   if (node.children().size() == 2) {

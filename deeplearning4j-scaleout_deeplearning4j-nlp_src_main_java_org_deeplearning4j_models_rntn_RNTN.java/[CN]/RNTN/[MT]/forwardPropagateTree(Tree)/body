@@ -27,7 +27,7 @@
     INDArray leftVector=tree.children().get(0).vector();
     INDArray rightVector=tree.children().get(1).vector();
     INDArray childrenVector=Nd4j.appendBias(leftVector,rightVector);
-    if (useFloatTensors) {
+    if (useDoubleTensors) {
       INDArray doubleT=getBinaryINDArray(leftCategory,rightCategory);
       INDArray INDArrayIn=Nd4j.concat(0,leftVector,rightVector);
       INDArray INDArrayOut=Nd4j.bilinearProducts(doubleT,INDArrayIn);

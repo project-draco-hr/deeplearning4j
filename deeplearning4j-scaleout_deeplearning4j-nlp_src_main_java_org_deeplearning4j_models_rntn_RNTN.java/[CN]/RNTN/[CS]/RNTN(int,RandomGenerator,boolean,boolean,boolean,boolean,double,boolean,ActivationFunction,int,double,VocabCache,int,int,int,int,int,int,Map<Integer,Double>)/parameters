@@ -1,6 +1,6 @@
 int numHidden
 RandomGenerator rng
-boolean useFloatTensors
+boolean useDoubleTensors
 boolean combineClassification
 boolean simplifiedModel
 boolean randomFeatureVectors
@@ -16,4 +16,4 @@ int binaryINd4jize
 int binaryClassificationSize
 int numUnaryMatrices
 int unaryClassificationSize
-Map<Integer,Float> classWeights
+Map<Integer,Double> classWeights
