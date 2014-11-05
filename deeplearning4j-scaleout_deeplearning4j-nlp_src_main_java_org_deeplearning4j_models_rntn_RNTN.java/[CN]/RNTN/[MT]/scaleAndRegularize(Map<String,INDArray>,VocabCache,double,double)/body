@@ -5,7 +5,7 @@
     INDArray vector=currentMatrices.vector(s);
     D=Nd4j.getBlasWrapper().scal(scale,D).addi(Nd4j.getBlasWrapper().scal(regCost,vector));
     derivatives.put(s,D);
-    cost+=(double)vector.mul(vector).sum(Integer.MAX_VALUE).element() * regCost / 2.0f;
+    cost+=vector.mul(vector).sum(Integer.MAX_VALUE).getDouble(0) * regCost / 2.0f;
   }
   return cost;
 }

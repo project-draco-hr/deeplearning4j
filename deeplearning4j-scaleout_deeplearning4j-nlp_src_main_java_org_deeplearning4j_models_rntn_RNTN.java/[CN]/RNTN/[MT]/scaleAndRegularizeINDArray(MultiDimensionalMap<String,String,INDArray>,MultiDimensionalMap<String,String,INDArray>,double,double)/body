@@ -4,7 +4,7 @@
     INDArray D=derivatives.get(entry.getFirstKey(),entry.getSecondKey());
     D=D.muli(scale).add(entry.getValue().muli(regCost));
     derivatives.put(entry.getFirstKey(),entry.getSecondKey(),D);
-    cost+=(double)entry.getValue().mul(entry.getValue()).sum(Integer.MAX_VALUE).element() * regCost / 2.0f;
+    cost+=entry.getValue().mul(entry.getValue()).sum(Integer.MAX_VALUE).getDouble(0) * regCost / 2.0f;
   }
   return cost;
 }
