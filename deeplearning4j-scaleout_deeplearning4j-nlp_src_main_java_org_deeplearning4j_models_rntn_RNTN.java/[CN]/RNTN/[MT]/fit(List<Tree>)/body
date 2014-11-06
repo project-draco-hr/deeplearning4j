@@ -1,10 +1,23 @@
 {
   this.trainingTrees=trainingBatch;
-  for (  Tree t : trainingBatch) {
-    forwardPropagateTree(t);
-    INDArray params=getParameters();
-    INDArray gradient=getValueGradient();
-    if (params.length() != gradient.length())     throw new IllegalStateException("Params not equal to gradient!");
-    setParameters(params.subi(gradient));
+  int count=0;
+  for (  final Tree t : trainingBatch) {
+    log.info("Working mini batch " + count++);
+    Futures.future(new Callable<Object>(){
+      @Override public Object call() throws Exception {
+        forwardPropagateTree(t);
+        try {
+          INDArray params=getParameters();
+          INDArray gradient=getValueGradient();
+          if (params.length() != gradient.length())           throw new IllegalStateException("Params not equal to gradient!");
+          setParameters(params.subi(gradient));
+        }
+ catch (        NegativeArraySizeException e) {
+          log.warn("Couldnt compute parameters due to negative array size...for trees " + t);
+        }
+        return null;
+      }
+    }
+,rnTnActorSystem.dispatcher());
   }
 }

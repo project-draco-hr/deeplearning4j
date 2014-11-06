@@ -6,12 +6,12 @@
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
-  for (int j=0; j < getNeuralNets().length; j++) {
-    weights.add(getNeuralNets()[j].getW());
-    biases.add(getNeuralNets()[j].gethBias());
-    activationFunctions.add(getNeuralNets()[j].conf().getActivationFunction());
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getW());
+    biases.add(getLayers()[j].getB());
+    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
   }
-  INDArray rix=rActivations.get(rActivations.size() - 1).divi(input.rows());
+  INDArray rix=rActivations.get(rActivations.size() - 1).divi((double)input.rows());
   LinAlgExceptions.assertValidNum(rix);
   for (int i=getnLayers(); i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(rix);

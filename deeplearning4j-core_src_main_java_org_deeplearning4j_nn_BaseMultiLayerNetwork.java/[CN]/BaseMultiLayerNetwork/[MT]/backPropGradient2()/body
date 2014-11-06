@@ -6,14 +6,14 @@
   for (int l=0; l < deltas.size(); l++) {
     INDArray gradientChange=deltas.get(l).getFirst();
     INDArray preConGradientChange=deltas.get(l).getSecond();
-    if (l < getNeuralNets().length && gradientChange.length() != getNeuralNets()[l].getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
+    if (l < layers.length && gradientChange.length() != layers[l].getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
  else     if (l == getNeuralNets().length && gradientChange.length() != getOutputLayer().getW().length())     throw new IllegalStateException("Gradient change not equal to weight change");
-    INDArray deltaColumnSums=deltas.get(l).getFirst().mean(1);
-    INDArray preConColumnSums=deltas.get(l).getSecond().mean(1);
+    INDArray deltaColumnSums=deltas.get(l).getFirst().mean(0);
+    INDArray preConColumnSums=deltas.get(l).getSecond().mean(0);
     grad.add(new Pair<>(gradientChange,deltaColumnSums));
     preCon.add(new Pair<>(preConGradientChange,preConColumnSums));
-    if (l < getNeuralNets().length && deltaColumnSums.length() != neuralNets[l].gethBias().length())     throw new IllegalStateException("Bias change not equal to weight change");
- else     if (l == getNeuralNets().length && deltaColumnSums.length() != getOutputLayer().getB().length())     throw new IllegalStateException("Bias change not equal to weight change");
+    if (l < layers.length && deltaColumnSums.length() != layers[l].getB().length())     throw new IllegalStateException("Bias change not equal to weight change");
+ else     if (l == getLayers().length && deltaColumnSums.length() != getOutputLayer().getB().length())     throw new IllegalStateException("Bias change not equal to weight change");
   }
   INDArray g=pack(grad);
   INDArray con=pack(preCon);

@@ -8,9 +8,9 @@
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
-  for (int j=0; j < getNeuralNets().length; j++) {
-    weights.add(getNeuralNets()[j].getW());
-    biases.add(getNeuralNets()[j].gethBias());
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getW());
+    biases.add(getLayers()[j].getB());
     activationFunctions.add(getLayers()[j].conf().getActivationFunction());
   }
   for (int i=weights.size() - 1; i >= 0; i--) {
