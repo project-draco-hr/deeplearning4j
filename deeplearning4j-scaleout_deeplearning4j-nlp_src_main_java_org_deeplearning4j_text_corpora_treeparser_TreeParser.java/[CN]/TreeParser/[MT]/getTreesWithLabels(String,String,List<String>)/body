@@ -25,13 +25,6 @@
         c2.reset();
         continue;
       }
-      Collection<String> labels2=stringsWithLabels.getSecond().values();
-      Set<String> diff=SetUtils.difference(labels2,labels);
-      if (!diff.isEmpty()) {
-        log.warn("Found invalid sentence. Skipping");
-        c2.reset();
-        continue;
-      }
       TopTreebankNode node=nodes.get(0);
       ret.add(TreeFactory.buildTree(node,stringsWithLabels,labels));
       c2.reset();
