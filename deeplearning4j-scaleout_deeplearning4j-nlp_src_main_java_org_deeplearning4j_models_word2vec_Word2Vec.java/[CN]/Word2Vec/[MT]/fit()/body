@@ -35,6 +35,7 @@
       final int k=j;
       List<VocabWord> doc=vectorizer.index().document(k);
       for (      VocabWord word : doc) {
+        if (word == null || word.getWord() == null)         continue;
         if (sample > 0) {
           double ran=(Math.sqrt(word.getWordFrequency() / (sample * numSentencesProcessed.get())) + 1) * (sample * numSentencesProcessed.get()) / word.getWordFrequency();
           if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
