@@ -9,4 +9,13 @@
       throw new RuntimeException(e);
     }
   }
+ else   if (readerClosed.get()) {
+    try {
+      reader=DirectoryReader.open(dir);
+      searcher=new IndexSearcher(reader);
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
