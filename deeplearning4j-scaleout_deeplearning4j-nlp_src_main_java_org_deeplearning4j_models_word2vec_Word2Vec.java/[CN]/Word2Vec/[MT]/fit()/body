@@ -22,7 +22,6 @@
     }
   }
   final AtomicInteger numSentencesProcessed=new AtomicInteger(0);
-  for (  int j : docs)   totalWords+=vectorizer.index().document(j).size();
   totalWords*=numIterations;
   log.info("Processing sentences...");
   final List<Future<?>> futures2=new ArrayList<>();
