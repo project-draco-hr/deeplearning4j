@@ -10,6 +10,7 @@
       if (writer == null)       writer=new IndexWriter(dir,iwc);
     }
     if (vocabCache == null)     throw new IllegalStateException("Vocab cache must not be null");
+    ret.batchSize=batchSize;
     ret.vocabCache=vocabCache;
     ret.dir=dir;
     ret.writer=writer;

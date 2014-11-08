@@ -1,0 +1,10 @@
+VocabCache cache
+TokenizerFactory tokenizerFactory
+List<String> stopWords
+int layerSize
+int minWordFrequency
+DocumentIterator docIter
+SentenceIterator sentenceIterator
+List<String> labels
+InvertedIndex index
+int batchSize

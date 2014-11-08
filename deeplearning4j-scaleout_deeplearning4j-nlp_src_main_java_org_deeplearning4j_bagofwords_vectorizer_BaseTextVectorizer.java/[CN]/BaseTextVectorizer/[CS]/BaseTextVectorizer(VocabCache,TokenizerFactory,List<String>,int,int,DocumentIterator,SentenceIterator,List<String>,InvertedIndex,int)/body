@@ -1,0 +1,13 @@
+{
+  this.cache=cache;
+  this.tokenizerFactory=tokenizerFactory;
+  this.stopWords=stopWords;
+  this.layerSize=layerSize;
+  this.minWordFrequency=minWordFrequency;
+  this.docIter=docIter;
+  this.sentenceIterator=sentenceIterator;
+  this.labels=labels;
+  this.index=index;
+  this.batchSize=batchSize;
+  if (index == null)   this.index=new LuceneInvertedIndex.Builder().batchSize(batchSize).indexDir(new File("word2vec-index")).cache(cache).build();
+}
