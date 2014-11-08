@@ -37,4 +37,5 @@
     }
     initReader();
   }
+  totalWords.set(totalWords.get() + words.size());
 }

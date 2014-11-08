@@ -13,4 +13,5 @@
       wordToDocs.put(word,docList);
     }
   }
+  totalWords.set(totalWords() + words.size());
 }

@@ -1,0 +1,8 @@
+{
+  wordFrequencies.incrementCount(word,1);
+  VocabWord token;
+  if (hasToken(word))   token=tokenFor(word);
+ else   token=new VocabWord(increment,word);
+  token.increment(increment);
+  totalWordOccurrences.set(totalWordOccurrences.get() + increment);
+}

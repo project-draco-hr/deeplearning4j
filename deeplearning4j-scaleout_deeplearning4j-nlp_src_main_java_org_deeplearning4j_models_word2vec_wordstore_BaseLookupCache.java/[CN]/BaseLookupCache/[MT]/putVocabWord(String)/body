@@ -1,0 +1,7 @@
+{
+  VocabWord token=tokenFor(word);
+  addWordToIndex(token.getIndex(),word);
+  if (!hasToken(word))   throw new IllegalStateException("Unable to add token " + word + " when not already a token");
+  vocabs.put(word,token);
+  wordIndex.add(word,token.getIndex());
+}

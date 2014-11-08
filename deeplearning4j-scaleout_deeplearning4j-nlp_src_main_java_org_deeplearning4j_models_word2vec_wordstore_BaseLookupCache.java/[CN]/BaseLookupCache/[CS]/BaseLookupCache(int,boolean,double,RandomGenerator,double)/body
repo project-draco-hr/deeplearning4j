@@ -1,0 +1,10 @@
+{
+  this.vectorLength=vectorLength;
+  this.useAdaGrad=useAdaGrad;
+  this.lr.set(lr);
+  this.rng=gen;
+  addToken(new VocabWord(1.0,Word2Vec.UNK));
+  addWordToIndex(0,Word2Vec.UNK);
+  putVocabWord(Word2Vec.UNK);
+  this.negative=negative;
+}
