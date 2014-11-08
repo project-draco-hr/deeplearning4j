@@ -16,7 +16,11 @@
       ret.add(vocabCache.wordFor(s));
     }
   }
- catch (  Exception e) {
+ catch (  AlreadyClosedException e1) {
+    reader=null;
+    return document(index);
+  }
+catch (  Exception e) {
     e.printStackTrace();
   }
   return ret;
