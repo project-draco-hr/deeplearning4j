@@ -9,5 +9,6 @@
   this.labels=labels;
   this.index=index;
   this.batchSize=batchSize;
-  if (index == null)   this.index=new LuceneInvertedIndex.Builder().batchSize(batchSize).indexDir(new File("word2vec-index")).cache(cache).build();
+  this.sample=sample;
+  if (index == null)   this.index=new LuceneInvertedIndex.Builder().batchSize(batchSize).indexDir(new File("word2vec-index")).sample(sample).cache(cache).build();
 }
