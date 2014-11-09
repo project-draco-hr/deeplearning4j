@@ -1,11 +1,6 @@
 {
-  try {
-    index(indexPath,cache);
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
   this.vocabCache=vocabCache;
   this.cache=cache;
+  this.indexPath=indexPath;
   indexManager=Executors.newFixedThreadPool(1);
 }

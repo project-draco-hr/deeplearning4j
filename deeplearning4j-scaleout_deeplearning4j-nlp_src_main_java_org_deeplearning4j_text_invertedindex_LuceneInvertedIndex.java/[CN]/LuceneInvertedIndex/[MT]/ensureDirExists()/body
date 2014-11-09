@@ -1,0 +1,7 @@
+{
+  if (dir == null) {
+    dir=FSDirectory.open(new File(indexPath));
+    File dir2=new File(indexPath);
+    if (!dir2.exists())     dir2.mkdir();
+  }
+}

@@ -5,7 +5,7 @@
       @Override public void run(){
         try {
           if (writer == null) {
-            if (!indexBeingCreated.get())             index("word2vec-path",true);
+            if (!indexBeingCreated.get())             createWriter();
  else {
               waitOnWriter();
             }
@@ -30,6 +30,12 @@
       d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
     }
     try {
+      while (writer == null) {
+        if (!indexBeingCreated.get() || writer == null)         createWriter();
+ else {
+          waitOnWriter();
+        }
+      }
       writer.addDocument(d,analyzer);
     }
  catch (    IOException e) {

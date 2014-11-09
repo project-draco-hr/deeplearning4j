@@ -3,9 +3,11 @@
     indexManager.execute(new Runnable(){
       public void run(){
         try {
+          IndexWriterConfig iwc=new IndexWriterConfig(Version.LATEST,analyzer);
           if (dir == null)           dir=FSDirectory.open(new File(INDEX_PATH));
           if (writer == null)           if (!indexBeingCreated.get())           writer=new IndexWriter(dir,iwc);
  else           waitOnWriter();
+          if (IndexWriter.isLocked(dir))           IndexWriter.unlock(dir);
           writer.forceMerge(1);
           writer.commit();
           initReader();
