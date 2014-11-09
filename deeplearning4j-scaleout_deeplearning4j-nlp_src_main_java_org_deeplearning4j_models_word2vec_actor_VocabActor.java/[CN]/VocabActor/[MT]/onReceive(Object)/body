@@ -5,7 +5,6 @@
     VocabWork work=(VocabWork)message;
     if (work.getWork() == null || work.getWork().isEmpty())     return;
     String sentence=work.getWork();
-    log.info("Processing " + sentence);
     if (sentence.isEmpty() || sentence.length() <= 2) {
       work.countDown();
       return;
