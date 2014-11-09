@@ -1,4 +1,3 @@
 {
-  new File("word2vec-index").delete();
-  new File("word2vec-path").delete();
+  FileUtils.deleteDirectory(new File("word2vec-index"));
 }

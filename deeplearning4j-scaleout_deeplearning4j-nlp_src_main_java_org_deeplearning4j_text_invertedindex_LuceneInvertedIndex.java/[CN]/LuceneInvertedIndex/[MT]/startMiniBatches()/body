@@ -1,0 +1,42 @@
+{
+  miniBatchManager.schedule(new Runnable(){
+    @Override public void run(){
+      List<VocabWord> currMiniBatch=new ArrayList<>();
+      while (miniBatchGoing.get()) {
+        List<VocabWord> words=miniBatchDocs.poll();
+        if (words == null || words.isEmpty()) {
+          try {
+            Thread.sleep(1000);
+          }
+ catch (          InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+          continue;
+        }
+        for (        VocabWord word : words) {
+          if (sample > 0) {
+            double ran=(Math.sqrt(word.getWordFrequency() / (sample * numDocuments())) + 1) * (sample * numDocuments()) / word.getWordFrequency();
+            if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
+              continue;
+            }
+            currMiniBatch.add(word);
+          }
+ else {
+            currMiniBatch.add(word);
+            if (currMiniBatch.size() >= batchSize) {
+              miniBatches.add(new ArrayList<>(currMiniBatch));
+              currMiniBatch.clear();
+            }
+          }
+        }
+        try {
+          Thread.sleep(1000);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+      }
+    }
+  }
+,1,TimeUnit.SECONDS);
+}

@@ -1,7 +1,3 @@
 {
-  if (!currMiniBatch.isEmpty()) {
-    miniBatches.add(new ArrayList<>(currMiniBatch));
-    currMiniBatch.clear();
-  }
   return miniBatches.iterator();
 }

@@ -40,4 +40,14 @@
     }
   }
   finishedCalled=new AtomicLong(System.currentTimeMillis());
+  indexManager.shutdown();
+  miniBatchManager.shutdown();
+  try {
+    indexManager.awaitTermination(1,TimeUnit.MINUTES);
+    miniBatchGoing.set(false);
+    miniBatchManager.awaitTermination(1,TimeUnit.MINUTES);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
 }
