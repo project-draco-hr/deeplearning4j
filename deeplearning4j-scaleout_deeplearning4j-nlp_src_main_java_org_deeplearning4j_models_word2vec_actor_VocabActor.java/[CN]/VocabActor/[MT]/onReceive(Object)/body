@@ -1,8 +1,8 @@
 {
   Set<String> encountered=new HashSet<>();
   if (message instanceof VocabWork) {
-    List<VocabWord> document=new ArrayList<>();
-    VocabWork work=(VocabWork)message;
+    final List<VocabWord> document=new ArrayList<>();
+    final VocabWork work=(VocabWork)message;
     if (work.getWork() == null || work.getWork().isEmpty())     return;
     String sentence=work.getWork();
     if (sentence.isEmpty() || sentence.length() <= 2) {
@@ -14,10 +14,22 @@
       String token=t.nextToken();
       processToken(token,encountered,document);
     }
-    index.addWordsToDoc(index.numDocuments(),document);
-    numWordsEncountered.set(numWordsEncountered.get() + document.size());
-    work.countDown();
-    lastUpdate.getAndSet(System.currentTimeMillis());
+    Future<Object> f=Futures.future(new Callable<Object>(){
+      @Override public Object call() throws Exception {
+        index.addWordsToDoc(index.numDocuments(),document);
+        numWordsEncountered.set(numWordsEncountered.get() + document.size());
+        work.countDown();
+        lastUpdate.getAndSet(System.currentTimeMillis());
+        return null;
+      }
+    }
+,context().dispatcher());
+    f.onFailure(new OnFailure(){
+      @Override public void onFailure(      Throwable failure) throws Throwable {
+        log.error("Failure on vocab actor ",failure);
+      }
+    }
+,context().dispatcher());
   }
  else   if (message instanceof StreamWork) {
     StreamWork work=(StreamWork)message;

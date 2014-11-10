@@ -1,0 +1,10 @@
+{
+  try {
+    this.dir=dir;
+    reader=DirectoryReader.open(dir);
+    docs=allDocs();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

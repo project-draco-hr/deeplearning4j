@@ -1,0 +1,12 @@
+{
+  Document doc=null;
+  try {
+    doc=reader.document(docs.get(index));
+    index++;
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  String[] values=doc.getValues(WORD_FIELD);
+  return StringUtils.join(values," ");
+}

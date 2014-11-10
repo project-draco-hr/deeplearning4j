@@ -1,0 +1,16 @@
+{
+  if (!miniBatchDocs.isEmpty())   return miniBatchDocs.poll();
+ else   if (!miniBatchManager.isShutdown()) {
+    while (miniBatchDocs.isEmpty()) {
+      try {
+        Thread.sleep(1000);
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      log.warn("Waiting on more data...");
+      if (miniBatchManager.isShutdown())       return miniBatchDocs.poll();
+    }
+  }
+  return null;
+}

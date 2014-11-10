@@ -1,0 +1,3 @@
+{
+  return !miniBatchDocs.isEmpty() || miniBatchGoing.get() || !miniBatchManager.isShutdown();
+}

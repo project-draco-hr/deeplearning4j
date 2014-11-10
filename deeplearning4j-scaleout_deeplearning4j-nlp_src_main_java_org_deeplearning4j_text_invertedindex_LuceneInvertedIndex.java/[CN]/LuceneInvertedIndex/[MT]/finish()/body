@@ -39,11 +39,10 @@
       e.printStackTrace();
     }
   }
-  finishedCalled=new AtomicLong(System.currentTimeMillis());
   indexManager.shutdown();
   miniBatchManager.shutdown();
   try {
-    indexManager.awaitTermination(1,TimeUnit.MINUTES);
+    indexManager.awaitTermination(1,TimeUnit.DAYS);
     miniBatchGoing.set(false);
     miniBatchManager.awaitTermination(1,TimeUnit.MINUTES);
   }
