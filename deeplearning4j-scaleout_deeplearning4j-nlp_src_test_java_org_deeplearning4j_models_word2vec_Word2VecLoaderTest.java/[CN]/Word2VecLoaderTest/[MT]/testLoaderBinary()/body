@@ -1,4 +1,4 @@
 {
   Word2Vec vec=Word2VecLoader.loadGoogleModel(binaryFile.getAbsolutePath(),true);
-  assertTrue(vec.getCache().numWords() > 0);
+  assertEquals(5,vec.getCache().numWords());
 }
