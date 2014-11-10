@@ -1,0 +1,29 @@
+{
+  this.dir=dir;
+  if (!dir.exists()) {
+    if (dir.isDirectory())     throw new IllegalArgumentException("Illegal queue: must be a directory");
+  }
+  if (!dir.exists())   dir.mkdirs();
+  if (dir.listFiles() != null && dir.listFiles().length > 1)   try {
+    FileUtils.deleteDirectory(dir);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  dir.mkdir();
+  executorService=Executors.newSingleThreadScheduledExecutor();
+  executorService.execute(new Runnable(){
+    @Override public void run(){
+      while (running.get()) {
+        while (!save.isEmpty())         addAndSave(save.poll());
+        try {
+          Thread.sleep(1000);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+      }
+    }
+  }
+);
+}

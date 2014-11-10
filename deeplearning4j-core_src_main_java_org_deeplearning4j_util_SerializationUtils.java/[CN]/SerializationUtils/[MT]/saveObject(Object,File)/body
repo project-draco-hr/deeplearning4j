@@ -1,9 +1,11 @@
 {
   try {
-    ObjectOutputStream os=new ObjectOutputStream(FileUtils.openOutputStream(saveTo));
+    OutputStream os1=FileUtils.openOutputStream(saveTo);
+    ObjectOutputStream os=new ObjectOutputStream(os1);
     os.writeObject(toSave);
     os.flush();
     os.close();
+    os1.close();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
