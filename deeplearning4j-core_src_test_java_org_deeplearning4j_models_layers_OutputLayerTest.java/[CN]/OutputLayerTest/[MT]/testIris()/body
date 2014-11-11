@@ -6,7 +6,6 @@
   DataSet next=iter.next(150);
   next.normalizeZeroMeanZeroUnitVariance();
   l.fit(next);
-  int[] predictions=l.predict(next.getFeatureMatrix());
   Evaluation eval=new Evaluation();
   INDArray output=l.output(next.getFeatureMatrix());
   eval.eval(next.getLabels(),output);

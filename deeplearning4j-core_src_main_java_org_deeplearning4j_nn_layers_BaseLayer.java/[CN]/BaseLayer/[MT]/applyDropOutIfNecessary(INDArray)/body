@@ -1,6 +1,8 @@
 {
   if (conf.getDropOut() > 0) {
-    this.dropoutMask=Nd4j.rand(input.rows(),conf.getnOut()).gt(conf.getDropOut());
+    INDArray mask=Nd4j.rand(input.rows(),input.columns());
+    mask.gti(2);
+    this.dropoutMask=Nd4j.rand(input.rows(),input.columns()).gt(conf.getDropOut());
   }
  else   this.dropoutMask=Nd4j.ones(input.rows(),conf.getnOut());
   input.muli(dropoutMask);
