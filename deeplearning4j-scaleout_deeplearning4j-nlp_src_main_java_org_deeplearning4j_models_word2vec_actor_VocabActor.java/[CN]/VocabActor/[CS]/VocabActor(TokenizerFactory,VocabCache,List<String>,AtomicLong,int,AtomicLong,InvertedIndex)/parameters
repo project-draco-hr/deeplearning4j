@@ -3,5 +3,5 @@ VocabCache cache
 List<String> stopWords
 AtomicLong lastUpdate
 int minWordFrequency
-AtomicInteger numWordsEncountered
+AtomicLong numWordsEncountered
 InvertedIndex index
