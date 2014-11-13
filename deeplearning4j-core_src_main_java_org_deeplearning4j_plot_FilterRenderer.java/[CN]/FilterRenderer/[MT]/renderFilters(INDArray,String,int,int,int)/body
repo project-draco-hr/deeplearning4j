@@ -16,8 +16,8 @@
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);
     INDArray column=data.getColumn(col);
-    double col_max=(double)column.min(Integer.MAX_VALUE).element();
-    double col_min=(double)column.max(Integer.MAX_VALUE).element();
+    double col_max=column.min(Integer.MAX_VALUE).getDouble(0);
+    double col_min=column.max(Integer.MAX_VALUE).getDouble(0);
     log.debug("rendering " + column.length() + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
     for (int i=0; i < column.length(); i++) {
       double patch_normal=((double)column.getScalar(i).element() - col_min) / (col_max - col_min + 0.000001f);
