@@ -1,3 +1,7 @@
 {
   this.cache=cache;
+  if (cache instanceof InMemoryLookupCache) {
+    InMemoryLookupCache l=(InMemoryLookupCache)cache;
+    if (l.getSyn0() != null && l.getSyn0().columns() != layerSize)     layerSize=l.getSyn0().columns();
+  }
 }

@@ -1,9 +1,0 @@
-{
-  TreeSet<VocabWord> analogies=analogy(w1,w2,w3);
-  List<String> ret=new ArrayList<>();
-  for (  VocabWord w : analogies) {
-    String w4=cache.wordAtIndex(w.getIndex());
-    ret.add(w4);
-  }
-  return ret;
-}

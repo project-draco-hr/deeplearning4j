@@ -1,18 +1,12 @@
 {
-  INDArray words=Nd4j.create(positive.size() + negative.size(),layerSize);
-  int row=0;
+  INDArray words=Nd4j.create(layerSize);
   Set<String> union=SetUtils.union(new HashSet<>(positive),new HashSet<>(negative));
-  for (  String s : positive) {
-    words.putRow(row++,cache.vector(s));
-  }
-  for (  String s : negative) {
-    words.putRow(row++,cache.vector(s).mul(-1));
-  }
-  INDArray mean=words.mean(0);
+  for (  String s : positive)   words.addi(cache.vector(s));
+  for (  String s : negative)   words.addi(cache.vector(s).mul(-1));
   if (cache instanceof InMemoryLookupCache) {
     InMemoryLookupCache l=(InMemoryLookupCache)cache;
     INDArray syn0=l.getSyn0();
-    INDArray weights=syn0.norm2(0).rdivi(1).muli(mean);
+    INDArray weights=syn0.norm2(0).rdivi(1).muli(words);
     INDArray distances=syn0.mulRowVector(weights).sum(1);
     INDArray[] sorted=Nd4j.sortWithIndices(distances,0,false);
     INDArray sort=sorted[0];
@@ -33,7 +27,7 @@
   Counter<String> distances=new Counter<>();
   for (  String s : cache.words()) {
     INDArray otherVec=getWordVectorMatrix(s);
-    double sim=Transforms.cosineSim(mean,otherVec);
+    double sim=Transforms.cosineSim(words,otherVec);
     distances.incrementCount(s,sim);
   }
   distances.keepTopNKeys(top);
