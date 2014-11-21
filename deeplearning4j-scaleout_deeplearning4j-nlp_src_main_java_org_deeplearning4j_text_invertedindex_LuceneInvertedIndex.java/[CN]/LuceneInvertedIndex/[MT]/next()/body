@@ -1,7 +1,7 @@
 {
-  if (!miniBatchDocs.isEmpty())   return miniBatchDocs.poll();
- else   if (!miniBatchManager.isShutdown()) {
-    while (miniBatchDocs.isEmpty()) {
+  if (!miniBatches.isEmpty())   return miniBatches.remove(0);
+ else   if (miniBatchGoing.get()) {
+    while (miniBatches.isEmpty()) {
       try {
         Thread.sleep(1000);
       }
@@ -9,7 +9,7 @@
         Thread.currentThread().interrupt();
       }
       log.warn("Waiting on more data...");
-      if (miniBatchManager.isShutdown())       return miniBatchDocs.poll();
+      if (!miniBatches.isEmpty())       return miniBatches.remove(0);
     }
   }
   return null;

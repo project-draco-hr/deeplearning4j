@@ -1,5 +1,5 @@
 {
-  if (w2.getIndex() < 0)   return;
+  if (w2 == null || w2.getIndex() < 0)   return;
   INDArray l1=this.syn0.slice(w2.getIndex());
   INDArray neu1e=Nd4j.create(vectorLength);
   double avgChange=0.0f;

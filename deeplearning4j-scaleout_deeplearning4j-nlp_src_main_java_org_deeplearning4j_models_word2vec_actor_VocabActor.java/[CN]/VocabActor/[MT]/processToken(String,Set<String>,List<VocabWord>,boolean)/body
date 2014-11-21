@@ -1,12 +1,18 @@
 {
   if (stopWords.contains(token))   token="STOP";
   if (token.isEmpty())   return;
+  if (stem) {
+synchronized (stemmer) {
+      stemmer.setCurrent(token);
+      if (stemmer.stem() && !stemmer.getCurrent().isEmpty())       token=stemmer.getCurrent();
+    }
+  }
   cache.incrementWordCount(token);
   if (!encountered.contains(token)) {
     cache.incrementDocCount(token,1);
     encountered.add(token);
   }
-  VocabWord token2=null;
+  VocabWord token2;
   if (cache.hasToken(token))   token2=cache.tokenFor(token);
  else {
     token2=new VocabWord(1.0,token);

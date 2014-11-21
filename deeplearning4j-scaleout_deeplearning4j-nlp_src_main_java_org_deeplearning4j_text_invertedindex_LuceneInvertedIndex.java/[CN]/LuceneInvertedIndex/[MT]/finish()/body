@@ -8,7 +8,6 @@
           if (writer == null)           if (!indexBeingCreated.get())           writer=new IndexWriter(dir,iwc);
  else           waitOnWriter();
           if (IndexWriter.isLocked(dir))           IndexWriter.unlock(dir);
-          writer.forceMerge(1);
           writer.commit();
           initReader();
           numDocs=reader.numDocs();
@@ -23,7 +22,6 @@
  else {
     try {
       log.info("Committing index...");
-      writer.forceMerge(1);
       writer.commit();
       log.info("Finished committing changes");
     }
@@ -40,11 +38,8 @@
     }
   }
   indexManager.shutdown();
-  miniBatchManager.shutdown();
   try {
     indexManager.awaitTermination(1,TimeUnit.DAYS);
-    miniBatchGoing.set(false);
-    miniBatchManager.awaitTermination(1,TimeUnit.MINUTES);
   }
  catch (  InterruptedException e) {
     Thread.currentThread().interrupt();

@@ -12,7 +12,7 @@
     Tokenizer t=tokenizer.create(sentence);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
-      processToken(token,encountered,document);
+      processToken(token,encountered,document,work.isStem());
     }
     Future<Object> f=Futures.future(new Callable<Object>(){
       @Override public Object call() throws Exception {
@@ -50,7 +50,7 @@
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
       if (token == null || token.isEmpty())       break;
-      processToken(token,encountered,document);
+      processToken(token,encountered,document,false);
     }
     index.addWordsToDoc(index.numDocuments(),document);
     numWordsEncountered.set(numWordsEncountered.get() + document.size());

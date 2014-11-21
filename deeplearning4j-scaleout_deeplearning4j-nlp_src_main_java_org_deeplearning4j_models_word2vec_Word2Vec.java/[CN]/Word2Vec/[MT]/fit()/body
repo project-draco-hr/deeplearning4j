@@ -5,7 +5,6 @@
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
-  final ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
   final Collection<Integer> docs=vectorizer.index().allDocs();
   int tries=0;
   while (docs.isEmpty()) {
@@ -25,28 +24,59 @@
   totalWords=vectorizer.numWordsEncountered();
   totalWords*=numIterations;
   log.info("Processing sentences...");
-  final List<Future<?>> futures2=new ArrayList<>();
-  for (int i=0; i < numIterations; i++) {
-    log.info("Training on " + docs.size());
-    final AtomicLong nextRandom=new AtomicLong(5);
-    Iterator<List<VocabWord>> minibatchesIter=vectorizer.index().miniBatches();
-    while (minibatchesIter.hasNext()) {
-      final List<VocabWord> batch=minibatchesIter.next();
-      futures2.add(service.submit(new Callable<Void>(){
-        @Override public Void call(){
-          trainSentence(batch,numSentencesProcessed,nextRandom);
-          return null;
+  List<Thread> work=new ArrayList<>();
+  for (int i=0; i < Runtime.getRuntime().availableProcessors(); i++) {
+    Thread t=new Thread(new Runnable(){
+      @Override public void run(){
+        final AtomicLong nextRandom=new AtomicLong(5);
+        while (true) {
+          List<VocabWord> sentence=jobQueue.poll();
+          if (sentence != null && sentence.isEmpty())           break;
+          if (sentence == null)           continue;
+          trainSentence(sentence,numSentencesProcessed,nextRandom);
         }
       }
-));
+    }
+);
+    t.setDaemon(true);
+    t.start();
+    work.add(t);
+  }
+  final List<VocabWord> batch=new ArrayList<>();
+  final AtomicLong nextRandom=new AtomicLong(5);
+  final File miniBatchDir=new File(".minibatches");
+  FileUtils.deleteDirectory(miniBatchDir);
+  miniBatchDir.mkdirs();
+  final AtomicInteger doc=new AtomicInteger(0);
+  vectorizer.index().eachDoc(new Function<List<VocabWord>,Void>(){
+    @Nullable @Override public Void apply(    @Nullable List<VocabWord> input){
+      addWords(input,nextRandom,batch);
+      if (batch.size() >= batchSize) {
+        SerializationUtils.saveObject(batch,new File(miniBatchDir,String.valueOf(doc)));
+        doc.incrementAndGet();
+        batch.clear();
+      }
+      return null;
     }
   }
-  try {
-    for (    Future<?> f : futures2)     f.get();
-    service.shutdown();
-    while (!service.isTerminated())     Thread.sleep(1000);
+);
+  Iterator<File> miniBatches=FileUtils.iterateFiles(miniBatchDir,null,false);
+  while (miniBatches.hasNext()) {
+    List<VocabWord> miniBatch=SerializationUtils.readObject(miniBatches.next());
+    jobQueue.add(miniBatch);
   }
- catch (  Exception e) {
+  if (!jobQueue.isEmpty()) {
+    jobQueue.add(new ArrayList<>(batch));
+    batch.clear();
+  }
+  for (int i=0; i < work.size(); i++)   jobQueue.add(new ArrayList<VocabWord>());
+  for (  Thread t : work)   try {
+    t.join();
+  }
+ catch (  InterruptedException e) {
     Thread.currentThread().interrupt();
+  }
+  for (int i=0; i < numIterations; i++) {
+    log.info("Training on " + docs.size());
   }
 }

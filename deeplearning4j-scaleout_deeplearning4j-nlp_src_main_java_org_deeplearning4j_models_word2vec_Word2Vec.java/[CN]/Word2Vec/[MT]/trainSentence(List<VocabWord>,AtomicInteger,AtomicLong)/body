@@ -12,6 +12,7 @@
   }
   for (int i=0; i < sentence.size(); i++) {
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    long begin=System.currentTimeMillis();
     skipGram(i,sentence,(int)nextRandom.get() % window,nextRandom);
   }
 }

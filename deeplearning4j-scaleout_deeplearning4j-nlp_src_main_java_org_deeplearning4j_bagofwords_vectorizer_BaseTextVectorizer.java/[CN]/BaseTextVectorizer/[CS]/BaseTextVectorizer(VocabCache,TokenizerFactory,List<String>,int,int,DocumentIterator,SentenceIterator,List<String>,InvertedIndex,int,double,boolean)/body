@@ -10,5 +10,6 @@
   this.index=index;
   this.batchSize=batchSize;
   this.sample=sample;
+  this.stem=stem;
   if (index == null)   this.index=new LuceneInvertedIndex.Builder().batchSize(batchSize).indexDir(new File("word2vec-index")).sample(sample).cache(cache).build();
 }

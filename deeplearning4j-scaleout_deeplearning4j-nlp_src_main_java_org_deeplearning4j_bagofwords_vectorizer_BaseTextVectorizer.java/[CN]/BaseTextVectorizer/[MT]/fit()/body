@@ -21,7 +21,7 @@
   while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
     String sentence=getSentenceIterator().nextSentence();
     if (sentence == null)     break;
-    vocabActor.tell(new VocabWork(latch,sentence),vocabActor);
+    vocabActor.tell(new VocabWork(latch,sentence,stem),vocabActor);
     queued.incrementAndGet();
     if (queued.get() % 10000 == 0) {
       log.info("Sent " + queued);

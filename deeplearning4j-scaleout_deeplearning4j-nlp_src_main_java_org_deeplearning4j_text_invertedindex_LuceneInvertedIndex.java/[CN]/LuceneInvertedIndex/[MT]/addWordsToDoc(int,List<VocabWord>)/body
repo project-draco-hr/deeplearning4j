@@ -44,5 +44,5 @@
     initReader();
   }
   totalWords.set(totalWords.get() + words.size());
-  miniBatchDocs.add(words);
+  addWords(words);
 }
