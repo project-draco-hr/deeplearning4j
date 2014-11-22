@@ -1,12 +1,14 @@
 {
   if (stopWords.contains(token))   token="STOP";
   if (token.isEmpty())   return;
+  String oldToken=token;
   if (stem) {
 synchronized (stemmer) {
       stemmer.setCurrent(token);
-      if (stemmer.stem() && !stemmer.getCurrent().isEmpty())       token=stemmer.getCurrent();
+      if (stemmer.stem() && stemmer.getCurrent() != null && !stemmer.getCurrent().isEmpty())       token=stemmer.getCurrent();
     }
   }
+  if (token.isEmpty())   token=oldToken;
   cache.incrementWordCount(token);
   if (!encountered.contains(token)) {
     cache.incrementDocCount(token,1);

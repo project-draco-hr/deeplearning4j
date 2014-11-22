@@ -12,6 +12,7 @@
     Tokenizer t=tokenizer.create(sentence);
     while (t.hasMoreTokens()) {
       String token=t.nextToken();
+      if (token.isEmpty())       break;
       processToken(token,encountered,document,work.isStem());
     }
     Future<Object> f=Futures.future(new Callable<Object>(){

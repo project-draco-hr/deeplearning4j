@@ -54,6 +54,7 @@
       if (batch.size() >= batchSize) {
         SerializationUtils.saveObject(batch,new File(miniBatchDir,String.valueOf(doc)));
         doc.incrementAndGet();
+        if (doc.get() % 10000 == 0)         log.info("Doc " + doc.get() + " done so far");
         batch.clear();
       }
       return null;
@@ -63,7 +64,19 @@
   Iterator<File> miniBatches=FileUtils.iterateFiles(miniBatchDir,null,false);
   while (miniBatches.hasNext()) {
     List<VocabWord> miniBatch=SerializationUtils.readObject(miniBatches.next());
-    jobQueue.add(miniBatch);
+    try {
+      while (!jobQueue.offerLast(miniBatch,100,TimeUnit.MILLISECONDS)) {
+        try {
+          Thread.sleep(100);
+        }
+ catch (        Exception e) {
+          Thread.currentThread().interrupt();
+        }
+      }
+    }
+ catch (    Exception e) {
+      Thread.currentThread().interrupt();
+    }
   }
   if (!jobQueue.isEmpty()) {
     jobQueue.add(new ArrayList<>(batch));
