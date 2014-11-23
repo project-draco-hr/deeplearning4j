@@ -21,9 +21,6 @@
       Thread.currentThread().interrupt();
       throw new RuntimeException(e1);
     }
-    if (startingNetwork != null) {
-      startingNetwork.setShouldBackProp(conf.isUseBackProp());
-    }
     log.info("Starting Save saver");
     if (modelSaver == null)     system.actorOf(Props.create(ModelSavingActor.class,"model-saver",stateTracker));
  else     system.actorOf(Props.create(ModelSavingActor.class,modelSaver,stateTracker));

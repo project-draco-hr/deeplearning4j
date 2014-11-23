@@ -1,3 +1,3 @@
 {
-  return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).configure(conf).lineSearchBackProp(isLineSearchBackProp()).build();
+  return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).configure(conf).build();
 }

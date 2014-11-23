@@ -1,8 +1,4 @@
 {
-  if (sample <= 0) {
-    currMiniBatch.add(sentence);
-    return;
-  }
   List<VocabWord> add=new ArrayList<>();
   for (  VocabWord word : sentence) {
     if (word == null)     continue;
@@ -16,5 +12,4 @@
     }
  else     add.add(word);
   }
-  currMiniBatch.add(add);
 }
