@@ -1,3 +1,4 @@
 {
+  if (!miniBatch)   throw new IllegalStateException("Mini batch mode turned off");
   return !miniBatchDocs.isEmpty() || miniBatchGoing.get();
 }

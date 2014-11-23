@@ -1,4 +1,5 @@
 {
+  if (!miniBatch)   throw new IllegalStateException("Mini batch mode turned off");
   if (!miniBatches.isEmpty())   return miniBatches.remove(0);
  else   if (miniBatchGoing.get()) {
     while (miniBatches.isEmpty()) {

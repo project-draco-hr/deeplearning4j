@@ -1,12 +1,10 @@
 {
-  int result=wordFrequency != null ? wordFrequency.hashCode() : 0;
+  int result=wordFrequency.hashCode();
   result=31 * result + index;
-  result=31 * result + (left != null ? left.hashCode() : 0);
-  result=31 * result + (right != null ? right.hashCode() : 0);
-  result=31 * result + (parent != null ? parent.hashCode() : 0);
-  result=31 * result + (codes != null ? Arrays.hashCode(codes) : 0);
-  result=31 * result + (word != null ? word.hashCode() : 0);
-  result=31 * result + (historicalGradient != null ? historicalGradient.hashCode() : 0);
-  result=31 * result + (points != null ? Arrays.hashCode(points) : 0);
+  result=31 * result + codes.hashCode();
+  result=31 * result + word.hashCode();
+  result=31 * result + historicalGradient.hashCode();
+  result=31 * result + points.hashCode();
+  result=31 * result + codeLength;
   return result;
 }

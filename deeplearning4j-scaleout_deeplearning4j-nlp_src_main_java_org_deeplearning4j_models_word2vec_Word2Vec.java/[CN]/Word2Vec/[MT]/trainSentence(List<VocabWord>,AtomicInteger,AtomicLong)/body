@@ -8,11 +8,17 @@
       alpha.set(Math.max(minLearningRate,alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords))));
       cache.setLearningRate(alpha.get());
     }
+    if (timeLastUpdated.get() == 0)     timeLastUpdated.set(System.currentTimeMillis());
+ else {
+      long curr=System.currentTimeMillis();
+      long diff=Math.abs(curr - timeLastUpdated.get());
+      log.info("Time since last update " + TimeUnit.SECONDS.convert(diff,TimeUnit.MILLISECONDS));
+      timeLastUpdated.set(curr);
+    }
     log.info("Num words so far " + numWordsSoFar.get() + " alpha is "+ alpha.get()+ " out of "+ totalWords);
   }
   for (int i=0; i < sentence.size(); i++) {
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
-    long begin=System.currentTimeMillis();
     skipGram(i,sentence,(int)nextRandom.get() % window,nextRandom);
   }
 }

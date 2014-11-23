@@ -1,8 +1,11 @@
 {
   NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getDefaultConfiguration().getOptimizationAlgo();
+  network.feedForward();
   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
-    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this,new BackPropStepFunction(network));
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this,new BackPropStepFunction(network),this);
     g.setTrainingEvaluator(eval);
+    if (network.getOutputLayer().conf().getRenderWeightIterations() > 0) {
+    }
     g.setMaxIterations(network.getOutputLayer().conf().getNumIterations());
     g.optimize(network.getOutputLayer().conf().getNumIterations());
   }
@@ -13,7 +16,7 @@
     s.optimize(network.getOutputLayer().conf().getNumIterations());
   }
  else {
-    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this,new BackPropStepFunction(network));
+    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this,1e-1,this,new BackPropStepFunction(network));
     g.setTrainingEvaluator(eval);
     g.optimize(network.getOutputLayer().conf().getNumIterations());
   }

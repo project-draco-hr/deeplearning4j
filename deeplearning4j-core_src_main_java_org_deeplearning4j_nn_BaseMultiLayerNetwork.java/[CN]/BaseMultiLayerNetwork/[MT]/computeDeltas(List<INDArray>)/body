@@ -21,7 +21,7 @@
       INDArray delta=activations.get(i).transpose().mmul(ix);
       deltas[i]=delta;
       applyDropConnectIfNecessary(deltas[i]);
-      INDArray weightsPlusBias=weights.get(i).addRowVector(biases.get(i)).transpose();
+      INDArray weightsPlusBias=weights.get(i).transpose();
       INDArray activation=activations.get(i);
       if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(activationFunctions.get(i - 1).applyDerivative(activation));
     }

@@ -1,5 +1,3 @@
 {
-  this.vocabCache=vocabCache;
-  this.cache=cache;
-  indexManager=Executors.newFixedThreadPool(1);
+  this(vocabCache,cache,false);
 }

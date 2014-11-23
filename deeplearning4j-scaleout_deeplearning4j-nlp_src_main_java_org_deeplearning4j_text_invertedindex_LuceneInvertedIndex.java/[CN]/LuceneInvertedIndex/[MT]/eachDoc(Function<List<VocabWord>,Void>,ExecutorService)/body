@@ -1,0 +1,35 @@
+{
+  int[] docIds=allDocs();
+  int[] currDocIds=null;
+  int cursor=0;
+  for (int i=0; i < docIds.length; i++) {
+    if (currDocIds == null) {
+      int size=Math.abs(i - docIds.length) > 100 ? 100 : Math.abs(i - docIds.length);
+      currDocIds=new int[size];
+      currDocIds[cursor++]=docIds[i];
+    }
+ else     if (cursor == currDocIds.length - 1) {
+      final List<List<VocabWord>> docs=new ArrayList<>();
+      for (      int i3 : currDocIds)       docs.add(document(i3));
+      exec.execute(new Runnable(){
+        @Override public void run(){
+          for (          List<VocabWord> doc : docs)           func.apply(doc);
+        }
+      }
+);
+      cursor=0;
+      currDocIds=null;
+    }
+ else {
+      currDocIds[cursor++]=docIds[i];
+    }
+  }
+  this.docIds=null;
+  exec.shutdown();
+  try {
+    exec.awaitTermination(1,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

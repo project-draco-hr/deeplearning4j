@@ -16,7 +16,6 @@
   this.input=network.input;
   this.labels=network.labels;
   this.learningRateUpdate=network.learningRateUpdate;
-  this.shouldBackProp=network.shouldBackProp;
   this.weightTransforms=network.weightTransforms;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;

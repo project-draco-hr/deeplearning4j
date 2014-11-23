@@ -1,6 +1,6 @@
 {
   if (historicalGradient == null) {
-    historicalGradient=Nd4j.zeros(getCodes().length);
+    historicalGradient=Nd4j.zeros(getCodes().size());
   }
   double pow=Math.pow(g,2);
   historicalGradient.putScalar(index,historicalGradient.getDouble(index) + pow);

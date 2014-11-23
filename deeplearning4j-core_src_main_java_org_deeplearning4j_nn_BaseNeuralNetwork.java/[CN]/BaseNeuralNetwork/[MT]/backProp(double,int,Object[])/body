@@ -22,7 +22,7 @@
       log.info("Recon went down " + currRecon);
     }
     iterations++;
-    int plotIterations=conf.getRenderWeightsEveryNumEpochs();
+    int plotIterations=conf.getRenderWeightIterations();
     if (plotIterations > 0) {
       NeuralNetPlotter plotter=new NeuralNetPlotter();
       if (iterations % plotIterations == 0) {

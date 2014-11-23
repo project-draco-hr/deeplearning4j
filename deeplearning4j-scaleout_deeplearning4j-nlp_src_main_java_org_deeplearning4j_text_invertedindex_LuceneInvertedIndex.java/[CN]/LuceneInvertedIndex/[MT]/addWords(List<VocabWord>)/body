@@ -1,4 +1,5 @@
 {
+  if (!miniBatch)   return;
   for (  VocabWord word : words) {
     if (sample > 0) {
       double ran=(Math.sqrt(word.getWordFrequency() / (sample * numDocuments())) + 1) * (sample * numDocuments()) / word.getWordFrequency();

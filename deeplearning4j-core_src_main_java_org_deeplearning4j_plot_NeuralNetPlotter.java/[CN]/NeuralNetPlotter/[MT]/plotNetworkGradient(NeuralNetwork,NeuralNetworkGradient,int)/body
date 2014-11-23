@@ -4,7 +4,7 @@
   FilterRenderer render=new FilterRenderer();
   try {
     if (network.getW().shape().length > 2) {
-      INDArray w=(INDArray)network.getW().dup();
+      INDArray w=network.getW().dup();
       INDArray render2=w.transpose();
       render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
     }

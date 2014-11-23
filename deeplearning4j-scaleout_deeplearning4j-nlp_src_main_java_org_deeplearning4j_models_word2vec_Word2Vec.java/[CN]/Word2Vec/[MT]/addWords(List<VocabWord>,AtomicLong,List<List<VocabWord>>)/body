@@ -1,0 +1,20 @@
+{
+  if (sample <= 0) {
+    currMiniBatch.add(sentence);
+    return;
+  }
+  List<VocabWord> add=new ArrayList<>();
+  for (  VocabWord word : sentence) {
+    if (word == null)     continue;
+    if (sample > 0) {
+      double numDocs=vectorizer.index().numDocuments();
+      double ran=(Math.sqrt(word.getWordFrequency() / (sample * numDocs)) + 1) * (sample * numDocs) / word.getWordFrequency();
+      if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
+        continue;
+      }
+      add.add(word);
+    }
+ else     add.add(word);
+  }
+  currMiniBatch.add(add);
+}

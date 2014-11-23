@@ -1,4 +1,5 @@
 {
+  if (!pretrain)   return;
   if (isUseGaussNewtonVectorProductBackProp()) {
     log.warn("WARNING; Gauss newton back vector back propagation is primarily used for hessian free which does not involve pretrain; just finetune. Use this at your own risk");
   }

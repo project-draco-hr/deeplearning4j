@@ -1,5 +1,6 @@
 {
   if (this.getInput() == null)   initializeLayers(input.dup());
+  if (!pretrain)   return;
   if (isUseGaussNewtonVectorProductBackProp())   log.warn("Warning; using gauss newton vector back prop with pretrain is known to cause issues with obscenely large activations.");
   this.input=input;
   INDArray layerInput=null;

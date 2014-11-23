@@ -5,6 +5,6 @@
   binary.put(indices,block);
   NDArrayIndex[] indices2=new NDArrayIndex[]{interval(0,block.rows()),interval(numHidden,numHidden + block.columns())};
   binary.put(indices2,randomTransformBlock());
-  if (binary.data().dataType().equals(DataBuffer.DOUBLE))   return Nd4j.getBlasWrapper().scal(scalingForInit,binary);
+  if (binary.data().dataType() == DataBuffer.DOUBLE)   return Nd4j.getBlasWrapper().scal(scalingForInit,binary);
   return Nd4j.getBlasWrapper().scal((float)scalingForInit,binary);
 }
