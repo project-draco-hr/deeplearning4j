@@ -1,4 +1,5 @@
 {
+  List<INDArray> deltaRet=new ArrayList<>();
   INDArray[] deltas=new INDArray[getnLayers() + 2];
   List<INDArray> activations=feedForward();
   INDArray ix=labels.sub(activations.get(activations.size() - 1)).subi(getOutputLayer().conf().getActivationFunction().applyDerivative(activations.get(activations.size() - 1)));
@@ -30,4 +31,5 @@
     if (defaultConfiguration.isConstrainGradientToUnitNorm())     deltaRet.add(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)));
  else     deltaRet.add(deltas[i]);
   }
+  return deltaRet;
 }
