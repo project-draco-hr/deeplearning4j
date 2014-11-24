@@ -3,7 +3,7 @@
   boolean train=true;
   NeuralNetwork revert=clone();
   while (train) {
-    if (iterations > iterations)     break;
+    if (iterations > conf().getNumIterations())     break;
     double newRecon=LossFunctions.score(input,LossFunctions.LossFunction.SQUARED_LOSS,this.transform(input),conf.getL2(),conf.isUseRegularization());
     if (newRecon > currRecon || currRecon < 0 && newRecon < currRecon) {
       update((BaseNeuralNetwork)revert);
