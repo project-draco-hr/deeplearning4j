@@ -3,10 +3,4 @@
   IndexWriter writer=getWriter();
   initReader(writer);
   numDocs=reader.numDocs();
-  try {
-    writer.close();
-  }
- catch (  IOException e) {
-    log.warn("Exception",e);
-  }
 }

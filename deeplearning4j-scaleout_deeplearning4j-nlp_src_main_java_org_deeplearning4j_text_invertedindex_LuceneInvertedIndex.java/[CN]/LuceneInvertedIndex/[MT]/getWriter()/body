@@ -1,48 +1,52 @@
 {
-  IndexWriterConfig iwc;
-  IndexWriter writer=null;
-  try {
-    if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
-    iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-    ensureDirExists();
-    if (!indexBeingCreated.get()) {
-      indexBeingCreated.set(true);
-      if (IndexWriter.isLocked(dir)) {
-        try {
-          IndexWriter.unlock(dir);
-        }
- catch (        IOException e1) {
-          e1.printStackTrace();
-        }
-      }
-      writer=new IndexWriter(dir,iwc);
-    }
- else     if (!indexBeingCreated.get() || writer == null) {
-      indexBeingCreated.set(true);
-      if (IndexWriter.isLocked(dir)) {
-        try {
-          IndexWriter.unlock(dir);
-        }
- catch (        IOException e1) {
-          e1.printStackTrace();
-        }
-      }
-      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-      writer=new IndexWriter(dir,iwc);
-    }
-  }
- catch (  LockObtainFailedException e) {
+  if (writer.containsKey(indexPath))   return writer.get(indexPath);
+ else {
+    IndexWriterConfig iwc;
+    IndexWriter writer=null;
     try {
-      IndexWriter.unlock(dir);
+      if (analyzer == null)       analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
       iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-      writer=new IndexWriter(dir,iwc);
+      ensureDirExists();
+      if (!indexBeingCreated.get()) {
+        indexBeingCreated.set(true);
+        if (IndexWriter.isLocked(dir)) {
+          try {
+            IndexWriter.unlock(dir);
+          }
+ catch (          IOException e1) {
+            e1.printStackTrace();
+          }
+        }
+        writer=new IndexWriter(dir,iwc);
+        LuceneInvertedIndex.writer.put(indexPath,writer);
+      }
+ else       if (!indexBeingCreated.get() || writer == null) {
+        indexBeingCreated.set(true);
+        if (IndexWriter.isLocked(dir)) {
+          try {
+            IndexWriter.unlock(dir);
+          }
+ catch (          IOException e1) {
+            e1.printStackTrace();
+          }
+        }
+        iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+        writer=new IndexWriter(dir,iwc);
+        LuceneInvertedIndex.writer.put(indexPath,writer);
+      }
     }
- catch (    IOException e1) {
-      e1.printStackTrace();
+ catch (    LockObtainFailedException e) {
+      try {
+        Thread.sleep(1);
+      }
+ catch (      InterruptedException e1) {
+        e1.printStackTrace();
+      }
+      return getWriter();
     }
+catch (    Exception e) {
+      throw new IllegalStateException("Failed to created writer",e);
+    }
+    return writer;
   }
-catch (  Exception e) {
-    throw new IllegalStateException("Failed to created writer",e);
-  }
-  return writer;
 }

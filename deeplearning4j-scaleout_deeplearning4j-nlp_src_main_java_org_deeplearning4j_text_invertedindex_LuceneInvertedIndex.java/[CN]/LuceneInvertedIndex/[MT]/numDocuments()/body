@@ -5,7 +5,6 @@
     IndexWriter writer=getWriter();
     initReader(writer);
     ret=reader.numDocs();
-    writer.close();
   }
  catch (  Exception e) {
     return 0;

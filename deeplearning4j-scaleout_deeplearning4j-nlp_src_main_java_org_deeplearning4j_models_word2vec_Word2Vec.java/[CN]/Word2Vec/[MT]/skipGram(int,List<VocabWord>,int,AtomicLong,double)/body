@@ -7,7 +7,7 @@
       int c=i - window + a;
       if (c >= 0 && c < sentence.size()) {
         VocabWord lastWord=sentence.get(c);
-        iterate(word,lastWord,nextRandom);
+        iterate(word,lastWord,nextRandom,alpha);
       }
     }
   }

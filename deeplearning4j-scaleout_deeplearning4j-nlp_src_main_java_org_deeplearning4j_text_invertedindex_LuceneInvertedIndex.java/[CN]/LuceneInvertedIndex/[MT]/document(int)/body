@@ -16,7 +16,6 @@
     for (    String s : values) {
       ret.add(vocabCache.wordFor(s));
     }
-    writer.close();
   }
  catch (  AlreadyClosedException e1) {
     reader=null;

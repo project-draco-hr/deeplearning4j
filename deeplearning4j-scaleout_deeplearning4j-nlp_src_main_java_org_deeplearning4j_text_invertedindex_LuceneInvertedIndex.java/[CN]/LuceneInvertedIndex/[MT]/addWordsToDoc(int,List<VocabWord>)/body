@@ -1,5 +1,4 @@
 {
-  updated=true;
   Document d=new Document();
   for (  VocabWord word : words) {
     d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
@@ -8,10 +7,4 @@
   initReader(writer);
   totalWords.set(totalWords.get() + words.size());
   addWords(words);
-  try {
-    writer.close();
-  }
- catch (  IOException e) {
-    e.printStackTrace();
-  }
 }
