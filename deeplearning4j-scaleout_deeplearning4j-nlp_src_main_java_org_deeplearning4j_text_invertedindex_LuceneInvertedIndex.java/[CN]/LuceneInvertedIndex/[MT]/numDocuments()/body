@@ -2,8 +2,10 @@
   if (numDocs > 0)   return numDocs;
   int ret;
   try {
-    initReader();
+    IndexWriter writer=getWriter();
+    initReader(writer);
     ret=reader.numDocs();
+    writer.close();
   }
  catch (  Exception e) {
     return 0;

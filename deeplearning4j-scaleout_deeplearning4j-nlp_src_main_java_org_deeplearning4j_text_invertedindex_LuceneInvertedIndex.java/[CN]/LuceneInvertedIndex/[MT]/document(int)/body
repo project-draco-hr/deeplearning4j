@@ -9,12 +9,14 @@
   }
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
-    initReader();
+    IndexWriter writer=getWriter();
+    initReader(writer);
     Document doc=reader.document(index);
     String[] values=doc.getValues(WORD_FIELD);
     for (    String s : values) {
       ret.add(vocabCache.wordFor(s));
     }
+    writer.close();
   }
  catch (  AlreadyClosedException e1) {
     reader=null;

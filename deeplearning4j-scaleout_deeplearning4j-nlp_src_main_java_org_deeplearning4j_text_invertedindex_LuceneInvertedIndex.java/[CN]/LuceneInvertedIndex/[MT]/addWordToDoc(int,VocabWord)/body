@@ -1,7 +1,8 @@
 {
   Field f=new TextField(WORD_FIELD,word.getWord(),Field.Store.YES);
+  IndexWriter writer=getWriter();
   try {
-    initReader();
+    initReader(writer);
     Document doc2=searcher.doc(doc);
     if (doc2 != null)     doc2.add(f);
  else {
@@ -12,5 +13,5 @@
  catch (  IOException e) {
     e.printStackTrace();
   }
-  initReader();
+  initReader(writer);
 }

@@ -1,43 +1,12 @@
 {
-  if (cache) {
-    indexManager.execute(new Runnable(){
-      public void run(){
-        try {
-          IndexWriterConfig iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-          if (dir == null)           dir=FSDirectory.open(new File(INDEX_PATH));
-          if (writer == null)           if (!indexBeingCreated.get())           writer=new IndexWriter(dir,iwc);
- else           waitOnWriter();
-          if (IndexWriter.isLocked(dir))           IndexWriter.unlock(dir);
-          writer.commit();
-          initReader();
-          numDocs=reader.numDocs();
-        }
- catch (        IOException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-);
-  }
- else {
-    try {
-      log.info("Committing index...");
-      writer.forceMerge(1);
-      writer.commit();
-      log.info("Finished committing changes");
-    }
- catch (    IOException e) {
-      e.printStackTrace();
-    }
-    reader=null;
-    initReader();
-    numDocs=reader.numDocs();
-  }
-  indexManager.shutdown();
+  reader=null;
+  IndexWriter writer=getWriter();
+  initReader(writer);
+  numDocs=reader.numDocs();
   try {
-    indexManager.awaitTermination(1,TimeUnit.DAYS);
+    writer.close();
   }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
+ catch (  IOException e) {
+    log.warn("Exception",e);
   }
 }

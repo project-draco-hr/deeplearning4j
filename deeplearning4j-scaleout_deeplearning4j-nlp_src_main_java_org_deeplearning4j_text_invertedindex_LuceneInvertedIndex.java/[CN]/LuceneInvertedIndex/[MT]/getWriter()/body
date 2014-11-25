@@ -1,0 +1,48 @@
+{
+  IndexWriterConfig iwc;
+  IndexWriter writer=null;
+  try {
+    if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
+    iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+    ensureDirExists();
+    if (!indexBeingCreated.get()) {
+      indexBeingCreated.set(true);
+      if (IndexWriter.isLocked(dir)) {
+        try {
+          IndexWriter.unlock(dir);
+        }
+ catch (        IOException e1) {
+          e1.printStackTrace();
+        }
+      }
+      writer=new IndexWriter(dir,iwc);
+    }
+ else     if (!indexBeingCreated.get() || writer == null) {
+      indexBeingCreated.set(true);
+      if (IndexWriter.isLocked(dir)) {
+        try {
+          IndexWriter.unlock(dir);
+        }
+ catch (        IOException e1) {
+          e1.printStackTrace();
+        }
+      }
+      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+      writer=new IndexWriter(dir,iwc);
+    }
+  }
+ catch (  LockObtainFailedException e) {
+    try {
+      IndexWriter.unlock(dir);
+      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+      writer=new IndexWriter(dir,iwc);
+    }
+ catch (    IOException e1) {
+      e1.printStackTrace();
+    }
+  }
+catch (  Exception e) {
+    throw new IllegalStateException("Failed to created writer",e);
+  }
+  return writer;
+}

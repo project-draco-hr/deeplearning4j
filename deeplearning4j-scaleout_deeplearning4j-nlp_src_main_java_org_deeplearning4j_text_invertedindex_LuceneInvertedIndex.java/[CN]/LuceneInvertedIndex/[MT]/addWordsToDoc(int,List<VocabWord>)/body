@@ -1,49 +1,17 @@
 {
   updated=true;
-  if (cache) {
-    this.words.add(words);
-    indexManager.execute(new Runnable(){
-      @Override public void run(){
-        try {
-          if (writer == null) {
-            if (!indexBeingCreated.get())             createWriter();
- else {
-              waitOnWriter();
-            }
-          }
-          Document d=new Document();
-          for (          VocabWord word : words) {
-            d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
-          }
-          writer.addDocument(d,analyzer);
-        }
- catch (        IOException e) {
-          throw new RuntimeException(e);
-        }
-        initReader();
-      }
-    }
-);
+  Document d=new Document();
+  for (  VocabWord word : words) {
+    d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
   }
- else {
-    Document d=new Document();
-    for (    VocabWord word : words) {
-      d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
-    }
-    try {
-      while (writer == null) {
-        if (!indexBeingCreated.get() || writer == null)         createWriter();
- else {
-          waitOnWriter();
-        }
-      }
-      writer.addDocument(d,analyzer);
-    }
- catch (    IOException e) {
-      throw new RuntimeException(e);
-    }
-    initReader();
-  }
+  IndexWriter writer=getWriter();
+  initReader(writer);
   totalWords.set(totalWords.get() + words.size());
   addWords(words);
+  try {
+    writer.close();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
 }

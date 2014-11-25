@@ -9,7 +9,6 @@
     return ret;
   }
  catch (  AlreadyClosedException e) {
-    initReader();
     return documents(vocabWord);
   }
 catch (  IOException e) {
