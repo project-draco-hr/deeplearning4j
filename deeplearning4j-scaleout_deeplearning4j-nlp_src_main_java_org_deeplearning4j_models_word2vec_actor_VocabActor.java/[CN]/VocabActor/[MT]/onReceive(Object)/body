@@ -6,7 +6,7 @@
     if (work.getWork() == null || work.getWork().isEmpty())     return;
     String sentence=work.getWork();
     if (sentence.isEmpty() || sentence.length() <= 2) {
-      work.countDown();
+      work.increment();
       return;
     }
     Tokenizer t=tokenizer.create(sentence);
@@ -19,8 +19,6 @@
       @Override public Object call() throws Exception {
         index.addWordsToDoc(index.numDocuments(),document);
         numWordsEncountered.set(numWordsEncountered.get() + document.size());
-        work.countDown();
-        lastUpdate.getAndSet(System.currentTimeMillis());
         return null;
       }
     }
@@ -28,6 +26,13 @@
     f.onFailure(new OnFailure(){
       @Override public void onFailure(      Throwable failure) throws Throwable {
         log.error("Failure on vocab actor ",failure);
+      }
+    }
+,context().dispatcher());
+    f.onSuccess(new OnSuccess<Object>(){
+      @Override public void onSuccess(      Object result) throws Throwable {
+        work.increment();
+        lastUpdate.getAndSet(System.currentTimeMillis());
       }
     }
 ,context().dispatcher());

@@ -1,6 +1,4 @@
 {
-  if (!updated && docIds != null)   return docIds;
-  updated=false;
   if (cache) {
     int[] ret=new int[words.size()];
     for (int i=0; i < words.size(); i++)     ret[i]=i;
@@ -9,7 +7,7 @@
   int[] docIds=new int[reader.maxDoc() + 1];
   int count=0;
   Bits liveDocs=MultiFields.getLiveDocs(reader);
-  for (int i=0; i < reader.maxDoc() + 1; i++) {
+  for (int i=0; i < reader.maxDoc(); i++) {
     if (liveDocs != null && !liveDocs.get(i))     continue;
     if (count > docIds.length) {
       int[] newCopy=new int[docIds.length * 2];

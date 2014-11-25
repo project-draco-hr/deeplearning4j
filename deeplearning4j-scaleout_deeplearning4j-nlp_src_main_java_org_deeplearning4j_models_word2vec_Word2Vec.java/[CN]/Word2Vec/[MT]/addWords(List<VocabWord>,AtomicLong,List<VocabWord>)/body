@@ -1,5 +1,4 @@
 {
-  List<VocabWord> add=new ArrayList<>();
   for (  VocabWord word : sentence) {
     if (word == null)     continue;
     if (sample > 0) {
@@ -8,8 +7,8 @@
       if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
         continue;
       }
-      add.add(word);
+      currMiniBatch.add(word);
     }
- else     add.add(word);
+ else     currMiniBatch.add(word);
   }
 }
