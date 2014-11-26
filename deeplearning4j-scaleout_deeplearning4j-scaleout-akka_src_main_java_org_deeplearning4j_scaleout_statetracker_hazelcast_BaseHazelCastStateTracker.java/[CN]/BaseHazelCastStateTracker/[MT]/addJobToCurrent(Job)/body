@@ -1,0 +1,20 @@
+{
+  IAtomicReference<Job> r=h.getAtomicReference("job-" + j.workerId());
+  if (r.get() != null || !r.isNull()) {
+    boolean sent=false;
+    while (!sent) {
+      for (      String s : workers()) {
+        if (jobFor(s) == null) {
+          log.info("Redirecting worker " + j.workerId() + " to "+ s+ " due to work already being allocated");
+          r=h.getAtomicReference("job-" + s);
+          j.setWorkerId(s);
+          sent=true;
+        }
+      }
+    }
+  }
+  r.set(j);
+  j.setWork(null);
+  jobs.add(j);
+  return true;
+}

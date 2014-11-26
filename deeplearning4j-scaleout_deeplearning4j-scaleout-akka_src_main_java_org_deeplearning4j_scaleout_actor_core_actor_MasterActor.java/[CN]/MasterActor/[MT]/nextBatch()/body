@@ -1,0 +1,33 @@
+{
+  Collection<String> updates=stateTracker.workerUpdates();
+  if (!updates.isEmpty() && stateTracker.currentJobs().isEmpty()) {
+    Job masterResults=compute();
+    log.info("Updating next batch");
+    stateTracker.setCurrent(masterResults);
+    for (    String s : stateTracker.workers()) {
+      log.info("Replicating new network to " + s);
+      stateTracker.addReplicate(s);
+      stateTracker.enableWorker(s);
+    }
+    epochsComplete++;
+    stateTracker.workerUpdates().clear();
+    while (masterResults == null) {
+      log.info("On next batch master results was null, attempting to grab results again");
+      masterResults=getResults();
+    }
+    Future<Void> f=Futures.future(new Callable<Void>(){
+      /** 
+ * Computes a result, or throws an exception if unable to do so.
+ * @return computed result
+ * @throws Exception if unable to compute a result
+ */
+      @Override public Void call() throws Exception {
+        mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,MoreWorkMessage.getInstance()),getSelf());
+        log.info("Requesting more work...");
+        return null;
+      }
+    }
+,context().dispatcher());
+    ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
+  }
+}

@@ -1,0 +1,24 @@
+{
+  ActorRefUtils.addShutDownForSystem(system);
+  system.actorOf(Props.create(ClusterListener.class));
+  ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter,stateTracker,c),"batch");
+  log.info("Started batch actor");
+  Props masterProps=Props.create(MasterActor.class,c,batchActor,stateTracker);
+  final Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
+  c.set(MASTER_URL,realJoinAddress.toString());
+  if (exec == null)   exec=Executors.newScheduledThreadPool(2);
+  Cluster cluster=Cluster.get(system);
+  cluster.join(realJoinAddress);
+  exec.schedule(new Runnable(){
+    @Override public void run(){
+      Cluster cluster=Cluster.get(system);
+      cluster.publishCurrentClusterState();
+    }
+  }
+,10,TimeUnit.SECONDS);
+  masterActor=system.actorOf(ClusterSingletonManager.defaultProps(masterProps,"master",PoisonPill.getInstance(),"master"));
+  log.info("Started master with address " + realJoinAddress.toString());
+  c.set(MASTER_PATH,ActorRefUtils.absPath(masterActor,system));
+  log.info("Set master abs path " + c.get(MASTER_PATH));
+  return realJoinAddress;
+}

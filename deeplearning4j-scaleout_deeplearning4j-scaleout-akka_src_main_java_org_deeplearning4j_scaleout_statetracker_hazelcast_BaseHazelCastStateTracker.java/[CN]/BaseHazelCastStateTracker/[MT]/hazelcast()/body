@@ -1,0 +1,48 @@
+{
+  Config conf=new Config();
+  conf.getNetworkConfig().setPort(hazelCastPort);
+  conf.getNetworkConfig().setPortAutoIncrement(false);
+  conf.setProperty("hazelcast.initial.min.cluster.size","1");
+  conf.setProperty("hazelcast.shutdownhook.enabled","false");
+  JoinConfig join=conf.getNetworkConfig().getJoin();
+  boolean isAws=System.getProperty("hazelcast.aws","false").equals("true");
+  log.info("Setting up Joiner with this being " + (isAws ? "AWS" : "Multicast"));
+  join.getAwsConfig().setEnabled(isAws);
+  if (isAws) {
+    join.getAwsConfig().setAccessKey(System.getProperty("hazelcast.access-key"));
+    join.getAwsConfig().setSecretKey(System.getProperty("hazelcast.access-secret"));
+  }
+  join.getMulticastConfig().setEnabled(!isAws);
+  String interf=System.getProperty("hazelcast.interface");
+  if (interf != null) {
+    conf.getNetworkConfig().getInterfaces().setEnabled(true).addInterface(interf);
+  }
+  ListConfig jobConfig=new ListConfig();
+  jobConfig.setName(JOBS);
+  conf.addListConfig(jobConfig);
+  ListConfig replicateConfig=new ListConfig();
+  replicateConfig.setName(REPLICATE_WEIGHTS);
+  conf.addListConfig(replicateConfig);
+  ListConfig topicsConfig=new ListConfig();
+  topicsConfig.setName(TOPICS);
+  conf.addListConfig(topicsConfig);
+  ListConfig updatesConfig=new ListConfig();
+  updatesConfig.setName(UPDATES);
+  conf.addListConfig(updatesConfig);
+  ListConfig availableWorkersConfig=new ListConfig();
+  availableWorkersConfig.setName(AVAILABLE_WORKERS);
+  conf.addListConfig(availableWorkersConfig);
+  MapConfig heartbeatConfig=new MapConfig();
+  heartbeatConfig.setName(HEART_BEAT);
+  conf.addMapConfig(heartbeatConfig);
+  MapConfig workerEnabledConfig=new MapConfig();
+  workerEnabledConfig.setName(WORKER_ENABLED);
+  conf.addMapConfig(workerEnabledConfig);
+  MapConfig fileUpdateSaver=new MapConfig();
+  fileUpdateSaver.setName(LocalFileUpdateSaver.UPDATE_SAVER);
+  conf.addMapConfig(fileUpdateSaver);
+  MapConfig workRetriever=new MapConfig();
+  workRetriever.setName(LocalWorkRetriever.WORK_RETRIEVER);
+  conf.addMapConfig(workRetriever);
+  return conf;
+}

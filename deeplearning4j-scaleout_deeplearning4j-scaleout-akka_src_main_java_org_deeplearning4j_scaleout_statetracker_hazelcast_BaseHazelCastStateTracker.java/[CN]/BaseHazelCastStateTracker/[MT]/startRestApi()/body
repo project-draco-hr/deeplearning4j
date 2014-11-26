@@ -1,0 +1,15 @@
+{
+  resource=new StateTrackerDropWizardResource(this);
+  try {
+    InputStream is=getClass().getResourceAsStream("dropwizard.yml");
+    File tmpConfig=new File("dropwizard.yml");
+    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(tmpConfig));
+    IOUtils.copy(is,bos);
+    bos.flush();
+    resource.run(new String[]{"server",tmpConfig.getAbsolutePath()});
+    tmpConfig.deleteOnExit();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

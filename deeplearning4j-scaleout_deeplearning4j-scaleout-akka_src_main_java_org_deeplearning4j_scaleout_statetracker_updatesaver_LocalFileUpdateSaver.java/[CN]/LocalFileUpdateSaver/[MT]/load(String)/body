@@ -1,0 +1,7 @@
+{
+  String path=paths.remove(id);
+  File load=new File(path);
+  Job u=SerializationUtils.readObject(load);
+  load.delete();
+  return u;
+}

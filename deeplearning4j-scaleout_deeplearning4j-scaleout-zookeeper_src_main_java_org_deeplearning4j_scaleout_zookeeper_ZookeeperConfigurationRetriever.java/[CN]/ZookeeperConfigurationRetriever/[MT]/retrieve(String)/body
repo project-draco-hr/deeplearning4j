@@ -1,5 +1,5 @@
 {
-  Conf conf;
+  Configuration conf;
   String path=new ZookeeperPathBuilder().addPaths(Arrays.asList("tmp",id)).setHost(host).setPort(port).build();
   Stat stat=keeper.exists(path,false);
   if (stat == null) {
@@ -7,6 +7,6 @@
     throw new IllegalStateException("Nothing found for " + path + " possible children include "+ list);
   }
   byte[] data=keeper.getData(path,false,stat);
-  conf=(Conf)ZooKeeperConfigurationRegister.deserialize(data);
+  conf=(Configuration)ZooKeeperConfigurationRegister.deserialize(data);
   return conf;
 }

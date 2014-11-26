@@ -1,0 +1,57 @@
+{
+  if (message instanceof DistributedPubSubMediator.SubscribeAck || message instanceof DistributedPubSubMediator.UnsubscribeAck) {
+    log.info("Susbcribed batch actor");
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
+  }
+ else   if (message instanceof ResetMessage) {
+    iter.reset();
+    if (iter.hasNext()) {
+      log.info("Propagating new work to master");
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,iter.next()),mediator);
+    }
+ else     if (!iter.hasNext()) {
+      int iterations=stateTracker.runPreTrainIterations();
+      if (iterations < conf.getInt(NUM_PASSES,1)) {
+        stateTracker.incrementNumTimesPreTrainRan();
+        iter.reset();
+        log.info("Next pretrain iteration " + stateTracker.numTimesPreTrainRun() + " out of "+ stateTracker.runPreTrainIterations());
+      }
+ else       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,DoneMessage.getInstance()),mediator);
+    }
+  }
+ else   if (message instanceof MoreWorkMessage) {
+    log.info("Saving model");
+    mediator.tell(new DistributedPubSubMediator.Publish(ModelSavingActor.SAVE,MoreWorkMessage.getInstance()),mediator);
+    if (iter.hasNext()) {
+      log.info("Propagating new work to master");
+      numDataSets++;
+      log.info("Iterating over next dataset " + numDataSets);
+      List<String> workers2=stateTracker.workers();
+      for (      String s : workers2)       log.info("Worker " + s);
+      for (      String s : stateTracker.workerData()) {
+        stateTracker.removeWorkerData(s);
+      }
+      int numWorkers=workers2.size();
+      int miniBatchSize=stateTracker.inputSplit();
+      if (numWorkers == 0)       numWorkers=Runtime.getRuntime().availableProcessors();
+      log.info("Number of workers " + numWorkers + " and batch size is "+ miniBatchSize);
+      for (      String worker : stateTracker.workers())       stateTracker.enableWorker(worker);
+      int batch=numWorkers * miniBatchSize;
+      log.info("Batch size for worker is " + batch);
+      for (int i=0; i < numWorkers; i++) {
+        if (!iter.hasNext())         break;
+        Job next=iter.next();
+        if (next == null)         break;
+        String worker=nextWorker();
+        log.info("Saving data for worker " + worker);
+        stateTracker.saveWorker(worker,next);
+      }
+      stateTracker.incrementBatchesRan(workers2.size());
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,stateTracker.workerData()),mediator);
+    }
+ else     if (!iter.hasNext()) {
+      mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,DoneMessage.getInstance()),mediator);
+    }
+ else     unhandled(message);
+  }
+}

@@ -1,0 +1,13 @@
+{
+  if (message instanceof MoreWorkMessage) {
+    if (stateTracker.getCurrent() != null) {
+      Job j=(Job)stateTracker.getCurrent();
+      modelSaver.save(j.getResult());
+    }
+  }
+ else   if (message instanceof DistributedPubSubMediator.UnsubscribeAck || message instanceof DistributedPubSubMediator.SubscribeAck) {
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
+    log.info("Sending sub/unsub over");
+  }
+ else   unhandled(message);
+}

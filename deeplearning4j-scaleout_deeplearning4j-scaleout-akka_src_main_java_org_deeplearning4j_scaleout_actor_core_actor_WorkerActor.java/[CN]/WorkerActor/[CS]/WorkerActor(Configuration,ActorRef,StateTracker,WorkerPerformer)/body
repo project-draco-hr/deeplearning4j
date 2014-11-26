@@ -1,0 +1,21 @@
+{
+  this.tracker=tracker;
+  this.workerPerformer=workerPerformer;
+  mediator.tell(new Put(getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.SHUTDOWN,getSelf()),getSelf());
+  id=generateId();
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,register()),getSelf());
+  this.clusterClient=client;
+  tracker.availableForWork(id);
+  masterPath=conf.get(MASTER_PATH,"");
+  log.info("Registered with master " + id + " at master "+ conf.get(MASTER_PATH));
+  heartbeat();
+  tracker.addWorker(id);
+  setup(conf);
+  mediator.tell(new Put(getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.BROADCAST,getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(id,getSelf()),getSelf());
+  heartbeat();
+  tracker.addWorker(id);
+}

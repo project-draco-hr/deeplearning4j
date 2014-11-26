@@ -1,0 +1,7 @@
+{
+  if (e == null) {
+    log.warn("Not setting a null update");
+    return;
+  }
+  this.master.set(e);
+}

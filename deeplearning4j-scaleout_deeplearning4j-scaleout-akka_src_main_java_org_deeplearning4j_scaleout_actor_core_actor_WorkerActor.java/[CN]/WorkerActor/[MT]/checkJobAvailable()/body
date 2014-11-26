@@ -1,0 +1,25 @@
+{
+  Job j;
+  if ((j=tracker.jobFor(id)) == null || !tracker.workerEnabled(id)) {
+    if (!isWorking.get() && j != null) {
+      tracker.clearJob(id);
+      log.info("Clearing stale job " + id);
+    }
+    return;
+  }
+  if (tracker.needsReplicate(id)) {
+    try {
+      log.info("Updating worker " + id);
+      currentJob=(Job)tracker.getCurrent();
+      tracker.doneReplicating(id);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  if (j != null && currentJob == null) {
+    log.info("Assigning job for worker " + id);
+    currentJob=j;
+    tracker.updateJob(new Job(id,null));
+  }
+}

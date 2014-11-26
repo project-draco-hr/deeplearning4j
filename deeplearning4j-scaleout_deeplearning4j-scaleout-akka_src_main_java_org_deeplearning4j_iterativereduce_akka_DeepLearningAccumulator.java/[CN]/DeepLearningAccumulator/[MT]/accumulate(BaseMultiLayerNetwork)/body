@@ -1,4 +1,0 @@
-{
-  if (averaged == null)   this.averaged=toAccumulate;
- else   averaged.merge(toAccumulate,numWorkers);
-}

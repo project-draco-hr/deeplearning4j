@@ -1,0 +1,5 @@
+{
+  List<String> ret=new ArrayList<>();
+  for (  Job j : this.jobs)   ret.add(j.workerId());
+  return ret;
+}

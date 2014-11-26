@@ -1,0 +1,17 @@
+{
+  if (loadDefaults) {
+    ArrayList<String> toLoad;
+synchronized (Configuration.class) {
+      toLoad=new ArrayList<String>(defaultResources);
+    }
+    for (    String resource : toLoad) {
+      loadResource(properties,resource,quiet);
+    }
+    if (getResource("hadoop-site.xml") != null) {
+      loadResource(properties,"hadoop-site.xml",quiet);
+    }
+  }
+  for (  Object resource : resources) {
+    loadResource(properties,resource,quiet);
+  }
+}

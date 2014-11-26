@@ -1,0 +1,6 @@
+{
+  MultiLayerConfiguration conf=new MultiLayerConfiguration();
+  conf.confs=this.confs;
+  conf.hiddenLayerSizes=this.hiddenLayerSizes;
+  return conf;
+}

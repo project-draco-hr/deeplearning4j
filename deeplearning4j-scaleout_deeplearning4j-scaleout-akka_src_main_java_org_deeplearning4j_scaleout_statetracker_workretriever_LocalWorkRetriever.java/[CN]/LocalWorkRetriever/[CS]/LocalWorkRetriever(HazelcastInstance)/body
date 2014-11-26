@@ -1,0 +1,19 @@
+{
+  distributedData=instance.getMap(WORK_RETRIEVER);
+  distributedData.addEntryListener(new EntryListener<String,Job>(){
+    @Override public void entryAdded(    EntryEvent<String,Job> event){
+      String worker=event.getKey();
+      File f=new File(worker + "-work");
+      SerializationUtils.saveObject(event.getValue(),f);
+      workerData.put(worker,f.getAbsolutePath());
+      distributedData.remove(worker);
+    }
+    @Override public void entryRemoved(    EntryEvent<String,Job> event){
+    }
+    @Override public void entryUpdated(    EntryEvent<String,Job> event){
+    }
+    @Override public void entryEvicted(    EntryEvent<String,Job> event){
+    }
+  }
+,true);
+}

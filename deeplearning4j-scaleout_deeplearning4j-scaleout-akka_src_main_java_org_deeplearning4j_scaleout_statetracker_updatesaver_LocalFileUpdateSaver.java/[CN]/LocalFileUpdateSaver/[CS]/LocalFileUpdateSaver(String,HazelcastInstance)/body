@@ -1,0 +1,37 @@
+{
+  this.baseDir=baseDir;
+  File dir=new File(baseDir);
+  if (!dir.exists())   dir.mkdirs();
+  paths=new ConcurrentHashMap<>();
+  if (instance != null) {
+    updateableIMap=instance.getMap(UPDATE_SAVER);
+    updateableIMap.addEntryListener(new EntryListener<String,Job>(){
+      @Override public void entryAdded(      EntryEvent<String,Job> event){
+        File saveFile=new File(LocalFileUpdateSaver.this.baseDir,event.getKey());
+        SerializationUtils.saveObject(event.getValue(),saveFile);
+        boolean loadedProperly=false;
+        while (!loadedProperly) {
+          try {
+            SerializationUtils.readObject(saveFile);
+          }
+ catch (          Exception e) {
+          }
+          loadedProperly=true;
+        }
+        paths.put(event.getKey(),saveFile.getAbsolutePath());
+        updateableIMap.remove(event.getKey());
+      }
+      @Override public void entryRemoved(      EntryEvent<String,Job> event){
+        File saveFile=new File(LocalFileUpdateSaver.this.baseDir,event.getKey());
+        if (saveFile.exists())         saveFile.delete();
+      }
+      @Override public void entryUpdated(      EntryEvent<String,Job> event){
+      }
+      @Override public void entryEvicted(      EntryEvent<String,Job> event){
+        File saveFile=new File(LocalFileUpdateSaver.this.baseDir,event.getKey());
+        if (saveFile.exists())         saveFile.delete();
+      }
+    }
+,true);
+  }
+}
