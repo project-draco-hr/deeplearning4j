@@ -3,6 +3,7 @@
   INDArray l1=this.syn0.slice(w2.getIndex());
   INDArray neu1e=Nd4j.create(vectorLength);
   double avgChange=0.0f;
+  double alpha=this.lr.get();
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);
@@ -13,7 +14,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,this.lr.get()) : this.lr.get());
+    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,alpha) : alpha);
     avgChange+=g;
     if (syn0.data().dataType() == DataBuffer.DOUBLE) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);

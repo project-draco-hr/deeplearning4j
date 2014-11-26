@@ -15,6 +15,7 @@
     ret.useAdaGrad=useAdaGrad;
     ret.minLearningRate=minLearningRate;
     ret.sample=sampling;
+    ret.workers=workers;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -49,6 +50,7 @@
     ret.saveVocab=saveVocab;
     ret.batchSize=batchSize;
     ret.sample=sampling;
+    ret.workers=workers;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }

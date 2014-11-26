@@ -14,7 +14,7 @@
   final int allDocs=docs.length * numIterations;
   final AtomicLong numWordsSoFar=new AtomicLong(0);
   final AtomicLong lastReport=new AtomicLong(0);
-  for (int i=0; i < Runtime.getRuntime().availableProcessors(); i++) {
+  for (int i=0; i < workers; i++) {
     final Set<List<VocabWord>> set=new ConcurrentHashSet<>();
     Thread t=new Thread(new Runnable(){
       @Override public void run(){
@@ -25,6 +25,7 @@
           checked++;
           List<List<VocabWord>> job=jobQueue.poll();
           if (job == null || job.isEmpty() || set.contains(job))           continue;
+          log.info("Job of " + job.size());
           double alpha=Math.max(minLearningRate,Word2Vec.this.alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords)));
           long diff=Math.abs(lastReport.get() - numWordsSoFar.get());
           if (numWordsSoFar.get() > 0 && diff >= 10000) {
@@ -32,10 +33,12 @@
             lastReport.set(numWordsSoFar.get());
           }
           long increment=0;
+          double diff2=0.0;
           for (          List<VocabWord> sentence : job) {
             trainSentence(sentence,nextRandom,alpha);
             increment+=sentence.size();
           }
+          log.info("Train sentence avg took " + diff2 / (double)job.size());
           numWordsSoFar.set(numWordsSoFar.get() + increment);
           processed.incrementAndGet();
         }
@@ -67,9 +70,18 @@
       List<VocabWord> batch=new ArrayList<>();
       addWords(input,nextRandom,batch);
       if (batch.isEmpty())       return null;
-      if (batch.size() >= 100) {
-        jobQueue.add(new LinkedList<>(batch2));
-        batch2.clear();
+      if (batch2.size() >= 100) {
+        boolean added=false;
+        while (!added) {
+          try {
+            jobQueue.add(new LinkedList<>(batch2));
+            batch2.clear();
+            added=true;
+          }
+ catch (          Exception e) {
+            continue;
+          }
+        }
       }
       for (int i=0; i < numIterations; i++) {
         batch2.add(batch);

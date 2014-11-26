@@ -13,7 +13,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,this.lr.get()) : this.lr.get());
+    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,alpha) : alpha);
     avgChange+=g;
     if (syn0.data().dataType() == DataBuffer.DOUBLE) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
@@ -39,9 +39,9 @@
     }
     double f=Nd4j.getBlasWrapper().dot(l1,syn1Neg.slice(target));
     double g;
-    if (f > MAX_EXP)     g=(label - 1) * (useAdaGrad ? w1.getLearningRate(target,this.lr.get()) : this.lr.get());
- else     if (f < -MAX_EXP)     g=(label - 0) * (useAdaGrad ? w1.getLearningRate(target,this.lr.get()) : this.lr.get());
- else     g=(label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) * (useAdaGrad ? w1.getLearningRate(target,this.lr.get()) : this.lr.get());
+    if (f > MAX_EXP)     g=(label - 1) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
+ else     if (f < -MAX_EXP)     g=(label - 0) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
+ else     g=(label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
     if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(g,neu1e,l1);
  else     Nd4j.getBlasWrapper().axpy((float)g,neu1e,l1);
     if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(g,syn1Neg,l1);
