@@ -6,7 +6,6 @@
     ret=(E)c.newInstance();
     ret.setDefaultConfiguration(conf);
     ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
-    ret.setUseDropConnect(useDropConnect);
     ret.setInput(this.input);
     ret.setLabels(this.labels);
     ret.setHiddenLayerSizes(this.multiLayerConfiguration.getHiddenLayerSizes());

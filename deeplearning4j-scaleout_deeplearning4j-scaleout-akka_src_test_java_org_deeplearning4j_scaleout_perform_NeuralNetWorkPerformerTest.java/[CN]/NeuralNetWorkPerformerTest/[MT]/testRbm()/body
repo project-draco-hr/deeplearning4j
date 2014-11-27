@@ -6,4 +6,9 @@
   conf2.set(DeepLearningConfigurable.CLASS,RBM.class.getName());
   WorkerPerformer performer=new NeuralNetWorkPerformer();
   performer.setup(conf2);
+  IrisDataFetcher fetcher=new IrisDataFetcher();
+  fetcher.fetch(10);
+  DataSet d=fetcher.next();
+  Job j=new Job(d,"1");
+  assumeJobResultNotNull(performer,j);
 }
