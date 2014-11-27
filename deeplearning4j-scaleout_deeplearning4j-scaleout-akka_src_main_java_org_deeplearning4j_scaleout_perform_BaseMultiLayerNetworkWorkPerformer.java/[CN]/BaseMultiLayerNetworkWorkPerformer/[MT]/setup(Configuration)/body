@@ -1,0 +1,10 @@
+{
+  this.conf=conf;
+  MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(conf.get(MULTI_LAYER_CONF));
+  try {
+    multiLayerNetwork=new BaseMultiLayerNetwork.Builder<>().layerWiseConfiguration(conf2).withClazz((Class<? extends BaseMultiLayerNetwork>)Class.forName(conf.get(CLASS))).build();
+  }
+ catch (  ClassNotFoundException e) {
+    e.printStackTrace();
+  }
+}

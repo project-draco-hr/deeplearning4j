@@ -1,9 +1,0 @@
-{
-  try {
-    if (currentJob == null)     currentJob=(Job)tracker.getCurrent();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-  return currentJob;
-}

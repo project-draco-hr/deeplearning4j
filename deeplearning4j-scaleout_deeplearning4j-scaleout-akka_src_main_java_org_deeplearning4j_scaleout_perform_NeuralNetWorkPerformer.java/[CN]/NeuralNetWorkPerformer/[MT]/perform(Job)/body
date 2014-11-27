@@ -1,0 +1,11 @@
+{
+  Serializable work=job.getWork();
+  if (work instanceof DataSet) {
+    DataSet data=(DataSet)work;
+    neuralNetwork.fit(data.getFeatureMatrix());
+  }
+ else   if (work instanceof INDArray) {
+    neuralNetwork.fit((INDArray)work);
+  }
+  job.setResult(neuralNetwork.params());
+}

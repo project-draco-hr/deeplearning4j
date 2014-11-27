@@ -4,10 +4,6 @@
     mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
     log.info("Subscribed to " + ack.toString());
   }
- else   if (message instanceof Job) {
-    Job job=(Job)message;
-    workerPerformer.perform(job);
-  }
  else   if (message instanceof Ack) {
     log.info("Ack from master on worker " + id);
   }

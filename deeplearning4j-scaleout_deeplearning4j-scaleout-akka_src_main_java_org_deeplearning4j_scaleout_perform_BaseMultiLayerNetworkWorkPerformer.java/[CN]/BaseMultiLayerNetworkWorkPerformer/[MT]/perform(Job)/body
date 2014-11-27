@@ -1,0 +1,8 @@
+{
+  Serializable work=job.getWork();
+  if (work instanceof DataSet) {
+    DataSet data=(DataSet)work;
+    multiLayerNetwork.fit(data);
+    job.setResult(multiLayerNetwork.pack());
+  }
+}
