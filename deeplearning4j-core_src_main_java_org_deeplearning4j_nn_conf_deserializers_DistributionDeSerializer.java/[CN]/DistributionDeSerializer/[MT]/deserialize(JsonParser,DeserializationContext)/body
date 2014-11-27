@@ -1,0 +1,18 @@
+{
+  ObjectMapper mapper=new ObjectMapper();
+  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  JsonNode node=jp.getCodec().readTree(jp);
+  String val=node.textValue();
+  JSONObject obj=new JSONObject(val);
+  String clazz=obj.getString("distclass");
+  obj.remove("distclass");
+  try {
+    Class<? extends RealDistribution> clazz2=(Class<? extends RealDistribution>)Class.forName(clazz);
+    RealDistribution ret=mapper.readValue(obj.toString(),clazz2);
+    return ret;
+  }
+ catch (  ClassNotFoundException e) {
+    e.printStackTrace();
+  }
+  return null;
+}

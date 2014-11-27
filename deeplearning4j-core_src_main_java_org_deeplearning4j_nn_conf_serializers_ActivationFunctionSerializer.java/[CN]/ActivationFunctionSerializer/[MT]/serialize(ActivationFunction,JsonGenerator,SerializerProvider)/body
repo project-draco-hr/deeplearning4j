@@ -1,0 +1,17 @@
+{
+  if (value instanceof SoftMax) {
+    SoftMax max=(SoftMax)value;
+    try {
+      Field f=SoftMax.class.getDeclaredField("rows");
+      f.setAccessible(true);
+      boolean val=f.getBoolean(max);
+      jgen.writeStringField("activationFunction",value.getClass().getName() + ":" + val);
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+  }
+ else {
+    jgen.writeStringField("activationFunction",value.getClass().getName());
+  }
+}

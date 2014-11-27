@@ -1,0 +1,10 @@
+{
+  ActivationFunction softmax=Activations.softmax();
+  ObjectMapper mapper=new ObjectMapper();
+  SimpleModule module=new SimpleModule();
+  module.addDeserializer(ActivationFunction.class,new ActivationFunctionDeSerializer());
+  module.addSerializer(ActivationFunction.class,new ActivationFunctionSerializer());
+  mapper.registerModule(module);
+  String val=mapper.writeValueAsString(softmax);
+  assertTrue(val.contains(softmax.getClass().getName() + ":" + false));
+}

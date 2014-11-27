@@ -1,6 +1,7 @@
 {
   try {
-    return mapper.writeValueAsString(this);
+    String ret=mapper.writeValueAsString(this);
+    return ret.replaceAll("\"activationFunction\",","").replaceAll("\"rng\",","").replaceAll("\"dist\",","");
   }
  catch (  com.fasterxml.jackson.core.JsonProcessingException e) {
     throw new RuntimeException(e);

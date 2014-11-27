@@ -1,7 +1,9 @@
 {
-  ObjectMapper mapper=new ObjectMapper();
+  ObjectMapper mapper=mapper();
   try {
-    return mapper.readValue(json,NeuralNetConfiguration.class);
+    NeuralNetConfiguration ret=mapper.readValue(json,NeuralNetConfiguration.class);
+    ret.rng.setSeed(ret.seed);
+    return ret;
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

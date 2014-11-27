@@ -1,0 +1,9 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).build();
+  String json=conf.toJson();
+  Configuration conf2=new Configuration();
+  conf2.set(DeepLearningConfigurable.NEURAL_NET_CONF,json);
+  conf2.set(DeepLearningConfigurable.CLASS,RBM.class.getName());
+  WorkerPerformer performer=new NeuralNetWorkPerformer();
+  performer.setup(conf2);
+}

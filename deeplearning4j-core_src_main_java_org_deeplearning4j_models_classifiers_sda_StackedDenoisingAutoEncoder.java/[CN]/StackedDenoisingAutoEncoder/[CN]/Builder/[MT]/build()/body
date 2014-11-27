@@ -1,6 +1,6 @@
 {
   StackedDenoisingAutoEncoder ret=super.build();
-  if (ret.defaultConfiguration == null)   ret.defaultConfiguration=layerWiseConfiguration.get(0);
+  if (ret.defaultConfiguration == null)   ret.defaultConfiguration=this.multiLayerConfiguration.getConf(0);
   ret.initializeLayers(Nd4j.zeros(1,ret.defaultConfiguration.getnIn()));
   return ret;
 }

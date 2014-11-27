@@ -1,13 +1,13 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().nIn(784).nOut(10).momentum(0.5f).build();
-  DBN dbn=new DBN.Builder().configure(conf).hiddenLayerSizes(new int[]{500,250,100}).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(784).nOut(10).momentum(0.5f).list(3).hiddenLayerSizes(new int[]{500,250,100}).build();
+  DBN dbn=new DBN.Builder().layerWiseConfiguration(conf).build();
   dbn.getOutputLayer().conf().setActivationFunction(Activations.sigmoid());
   dbn.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.RMSE_XENT);
   MnistDataFetcher fetch=new MnistDataFetcher(true);
   fetch.fetch(20);
   DataSet next=fetch.next();
   dbn.fit(next);
-  SemanticHashing hashing=new SemanticHashing.Builder().withEncoder(dbn).configure(conf).build();
+  SemanticHashing hashing=new SemanticHashing.Builder().withEncoder(dbn).layerWiseConfiguration(conf).build();
   next.setLabels(next.getFeatureMatrix());
   hashing.fit(next);
 }

@@ -1,6 +1,6 @@
 {
-  float corruptionLevel=conf.getCorruptionLevel();
-  float lr=conf.getLr();
+  double corruptionLevel=conf.getCorruptionLevel();
+  double lr=conf.getLr();
   int iteration=conf.getNumIterations();
   if (wAdaGrad != null)   this.wAdaGrad.setMasterStepSize(lr);
   if (hBiasAdaGrad != null)   this.hBiasAdaGrad.setMasterStepSize(lr);
