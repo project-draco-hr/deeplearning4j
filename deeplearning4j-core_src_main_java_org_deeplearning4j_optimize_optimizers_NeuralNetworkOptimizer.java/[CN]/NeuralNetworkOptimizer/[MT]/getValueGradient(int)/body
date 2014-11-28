@@ -1,4 +1,4 @@
 {
-  NeuralNetworkGradient g=network.getGradient(null);
+  NeuralNetworkGradient g=network.getGradient();
   return Nd4j.toFlattened(Arrays.asList(g.getwGradient(),g.getvBiasGradient(),g.gethBiasGradient()));
 }

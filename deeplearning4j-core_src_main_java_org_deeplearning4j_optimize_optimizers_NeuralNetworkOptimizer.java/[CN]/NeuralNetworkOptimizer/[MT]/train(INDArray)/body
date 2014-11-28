@@ -6,5 +6,5 @@
   int iterations=network.conf().getNumIterations();
   opt.setMaxIterations(iterations);
   opt.optimize(iterations);
-  network.backProp(lr,iterations,extraParams);
+  network.backProp();
 }

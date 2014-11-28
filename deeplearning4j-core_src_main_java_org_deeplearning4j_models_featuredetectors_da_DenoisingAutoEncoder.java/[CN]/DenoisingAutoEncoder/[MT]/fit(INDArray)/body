@@ -1,3 +1,6 @@
 {
-  fit(data,null);
+  if (input != null)   this.input=input;
+  this.lastMiniBatchSize=input.rows();
+  optimizer=new DenoisingAutoEncoderOptimizer(this);
+  optimizer.train(input);
 }

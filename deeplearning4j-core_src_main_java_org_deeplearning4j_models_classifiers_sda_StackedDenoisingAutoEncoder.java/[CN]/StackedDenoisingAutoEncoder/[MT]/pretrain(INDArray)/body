@@ -1,0 +1,19 @@
+{
+  if (this.getInput() == null)   initializeLayers(input.dup());
+  if (!pretrain)   return;
+  if (isUseGaussNewtonVectorProductBackProp())   log.warn("Warning; using gauss newton vector back prop with pretrain is known to cause issues with obscenely large activations.");
+  this.input=input;
+  INDArray layerInput=null;
+  for (int i=0; i < this.getnLayers(); i++) {
+    if (i == 0)     layerInput=input;
+ else     layerInput=this.getNeuralNets()[i - 1].sampleHiddenGivenVisible(layerInput).getSecond();
+    if (forceNumIterations()) {
+      for (int iteration=0; iteration < layerWiseConfigurations.getConf(i).getNumIterations(); iteration++) {
+        getNeuralNets()[i].iterate(layerInput);
+        log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
+        getNeuralNets()[i].iterationDone(iteration);
+      }
+    }
+ else     getNeuralNets()[i].fit(layerInput);
+  }
+}

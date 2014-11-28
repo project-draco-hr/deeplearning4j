@@ -3,6 +3,6 @@
   if (plotEpochs <= 0)   return;
   if (iteration % plotEpochs == 0 || iteration == 0) {
     NeuralNetPlotter plotter=new NeuralNetPlotter();
-    plotter.plotNetworkGradient(this,this.getGradient(new Object[]{0.3,0.001,1000}),getInput().rows());
+    plotter.plotNetworkGradient(this,this.getGradient(),getInput().rows());
   }
 }
