@@ -17,7 +17,6 @@
       }
       log.info("Started state tracker with connection string " + stateTracker.connectionString());
       masterAddress=startBackend(null,conf,iter,stateTracker);
-      Thread.sleep(60000);
     }
  catch (    Exception e1) {
       Thread.currentThread().interrupt();

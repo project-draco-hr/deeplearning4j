@@ -1,5 +1,14 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(784).nOut(10).momentum(0.5f).list(3).hiddenLayerSizes(new int[]{500,250,100}).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(784).nOut(10).momentum(0.5f).list(4).hiddenLayerSizes(new int[]{500,250,100}).override(new NeuralNetConfiguration.ConfOverride(){
+    @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
+      if (i == 3) {
+        builder.activationFunction(Activations.softmax());
+        builder.weightInit(WeightInit.ZERO);
+        builder.lossFunction(LossFunctions.LossFunction.RMSE_XENT);
+      }
+    }
+  }
+).build();
   DBN dbn=new DBN.Builder().layerWiseConfiguration(conf).build();
   dbn.getOutputLayer().conf().setActivationFunction(Activations.sigmoid());
   dbn.getOutputLayer().conf().setLossFunction(LossFunctions.LossFunction.RMSE_XENT);

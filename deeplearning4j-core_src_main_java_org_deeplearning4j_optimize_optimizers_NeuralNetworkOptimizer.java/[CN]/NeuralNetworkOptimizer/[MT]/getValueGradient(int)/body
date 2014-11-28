@@ -1,5 +1,4 @@
 {
-  if (iteration >= 1)   extraParams[extraParams.length - 1]=iteration;
-  NeuralNetworkGradient g=network.getGradient(extraParams);
+  NeuralNetworkGradient g=network.getGradient(null);
   return Nd4j.toFlattened(Arrays.asList(g.getwGradient(),g.getvBiasGradient(),g.gethBiasGradient()));
 }

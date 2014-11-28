@@ -4,7 +4,7 @@
   d.normalizeZeroMeanZeroUnitVariance();
   int nOut=600;
   RandomGenerator rng=new MersenneTwister(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.VI).dropOut(0.3f).hiddenUnit(RBM.HiddenUnit.RECTIFIED).visibleUnit(RBM.VisibleUnit.GAUSSIAN).render(10).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(rng).learningRate(1e-1f).nIn(d.numInputs()).nOut(nOut).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.VI).dropOut(0.3f).hiddenUnit(RBM.HiddenUnit.RECTIFIED).visibleUnit(RBM.VisibleUnit.GAUSSIAN).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(rng).learningRate(1e-1f).nIn(d.numInputs()).nOut(nOut).build();
   Model rbm=new RBM.Builder().configure(conf).withInput(d.getFeatureMatrix()).build();
   rbm.fit(d.getFeatureMatrix());
 }

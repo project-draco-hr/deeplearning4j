@@ -3,8 +3,8 @@
     createOptimizationAlgorithm();
   }
   network.setInput(x);
-  int epochs=extraParams.length < 3 ? 1000 : (int)extraParams[2];
-  opt.setMaxIterations(epochs);
-  opt.optimize(epochs);
-  network.backProp(lr,epochs,extraParams);
+  int iterations=network.conf().getNumIterations();
+  opt.setMaxIterations(iterations);
+  opt.optimize(iterations);
+  network.backProp(lr,iterations,extraParams);
 }

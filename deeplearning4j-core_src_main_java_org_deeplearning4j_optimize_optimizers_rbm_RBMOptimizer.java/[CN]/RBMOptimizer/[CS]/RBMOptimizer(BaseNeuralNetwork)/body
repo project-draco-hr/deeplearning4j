@@ -1,4 +1,4 @@
 {
-  super(network,lr,trainingParams,optimizationAlgorithm,lossFunction);
+  super(network);
   if (extraParams.length == 1 && extraParams[0] == null)   extraParams[0]=1;
 }

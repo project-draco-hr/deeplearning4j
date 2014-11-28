@@ -1,5 +1,5 @@
 {
-  int k=extraParams != null && extraParams.length < 1 ? 1 : (int)extraParams[0];
+  int k=network.conf().getK();
   numTimesIterated++;
   if (this.k <= 0)   this.k=k;
   if (numTimesIterated % 10 == 0) {
