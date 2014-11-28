@@ -13,7 +13,10 @@
     int workers=stateTracker.numWorkers();
     if (workers <= 1)     throw new IllegalStateException("Did not properly connect to cluster");
     log.info("Joining cluster of size " + workers);
-    Props p=pool.props(WorkerActor.propsFor(clusterClient,conf,stateTracker));
+    Class<? extends WorkerPerformerFactory> factoryClazz=(Class<? extends WorkerPerformerFactory>)Class.forName(conf.get(WorkerPerformerFactory.WORKER_PERFORMER));
+    WorkerPerformerFactory factory=factoryClazz.newInstance();
+    WorkerPerformer performer=factory.create();
+    Props p=pool.props(WorkerActor.propsFor(conf,stateTracker,performer));
     system.actorOf(p,"worker");
     Cluster cluster=Cluster.get(system);
     cluster.join(contactAddress);

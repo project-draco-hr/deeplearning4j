@@ -1,8 +1,10 @@
 {
   this.conf=conf;
   String url=conf.get(MASTER_URL);
-  this.masterPath=conf.get(MASTER_PATH);
-  Address a=AddressFromURIString.apply(url);
-  Cluster.get(context().system()).join(a);
-  mediator=DistributedPubSubExtension.get(getContext().system()).mediator();
+  if (url != null) {
+    this.masterPath=conf.get(MASTER_PATH);
+    Address a=AddressFromURIString.apply(url);
+    Cluster.get(context().system()).join(a);
+    mediator=DistributedPubSubExtension.get(getContext().system()).mediator();
+  }
 }

@@ -1,0 +1,11 @@
+{
+  testSystem.actorOf(test);
+  Thread.sleep(10000);
+  assertTrue(!stateTracker.workers().isEmpty());
+  String id=stateTracker.workers().get(0);
+  Job testJob=new Job("hello",id);
+  stateTracker.addJobToCurrent(testJob);
+  while (!testPerformer.isPerformCalled()) {
+    Thread.sleep(10000);
+  }
+}

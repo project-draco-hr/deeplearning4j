@@ -38,7 +38,6 @@
       }
     }
 ,system.dispatcher());
-    log.info("Setup master with epochs " + epochs);
   }
  else {
     log.info("Starting worker node");
