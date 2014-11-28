@@ -1,0 +1,25 @@
+{
+  DeepLearning4jDistributed distributed=new DeepLearning4jDistributed(testIterator,stateTracker);
+  distributed.setup(conf);
+  distributed.train();
+  boolean done=false;
+  int countDone=0;
+  Set<Job> remove=new HashSet<>();
+  while (!done) {
+    try {
+      Thread.sleep(10000);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+    for (    Job j : testJobs) {
+      if (j.getResult() != null && j.getResult().equals("done")) {
+        countDone++;
+        remove.add(j);
+      }
+    }
+    testJobs.removeAll(remove);
+    remove.clear();
+    if (countDone >= 10)     done=true;
+  }
+}

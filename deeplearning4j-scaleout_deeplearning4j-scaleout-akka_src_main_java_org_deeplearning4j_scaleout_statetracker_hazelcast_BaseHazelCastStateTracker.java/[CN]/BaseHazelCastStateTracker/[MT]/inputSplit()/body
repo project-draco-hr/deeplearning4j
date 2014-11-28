@@ -1,3 +1,5 @@
 {
+  Integer get=miniBatchSize.get();
+  if (get == null)   miniBatchSize.set(10);
   return (miniBatchSize.get() * numWorkers()) / numWorkers();
 }

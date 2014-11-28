@@ -7,6 +7,7 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
+  setup(conf);
   stateTracker.runPreTrainIterations(conf.getInt(NUM_PASSES,1));
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());

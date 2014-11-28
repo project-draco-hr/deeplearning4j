@@ -1,5 +1,5 @@
 {
-  DeepLearningAccumulatorIterateAndUpdate update=(DeepLearningAccumulatorIterateAndUpdate)stateTracker.updates();
+  IterateAndUpdateImpl update=(IterateAndUpdateImpl)stateTracker.updates();
   if (stateTracker.workerUpdates().isEmpty())   return null;
   try {
     update.accumulate();

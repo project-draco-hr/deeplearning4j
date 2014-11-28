@@ -57,12 +57,10 @@
   numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
   numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
   done=h.getAtomicReference(DONE);
-  validationEpochs=h.getAtomicReference(VALIDATION_EPOCHS);
   improvementThreshold=h.getAtomicReference(IMPROVEMENT_THRESHOLD);
   bestLoss=h.getAtomicReference(BEST_LOSS);
   earlyStop=h.getAtomicReference(EARLY_STOP);
   patience=h.getAtomicReference(PATIENCE);
-  patienceIncrease=h.getAtomicReference(PATIENCE_INCREASE);
   numBatches=h.getAtomicReference(NUM_BATCHES_SO_FAR_RAN);
   if (type.equals("master")) {
     begunTraining.set(false);

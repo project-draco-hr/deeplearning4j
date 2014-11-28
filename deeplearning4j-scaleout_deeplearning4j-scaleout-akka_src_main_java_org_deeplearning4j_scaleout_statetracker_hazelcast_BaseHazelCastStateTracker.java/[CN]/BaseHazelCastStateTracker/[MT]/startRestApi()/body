@@ -1,7 +1,7 @@
 {
   resource=new StateTrackerDropWizardResource(this);
   try {
-    InputStream is=getClass().getResourceAsStream("dropwizard.yml");
+    InputStream is=new ClassPathResource("/dropwizard.yml").getInputStream();
     File tmpConfig=new File("dropwizard.yml");
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(tmpConfig));
     IOUtils.copy(is,bos);

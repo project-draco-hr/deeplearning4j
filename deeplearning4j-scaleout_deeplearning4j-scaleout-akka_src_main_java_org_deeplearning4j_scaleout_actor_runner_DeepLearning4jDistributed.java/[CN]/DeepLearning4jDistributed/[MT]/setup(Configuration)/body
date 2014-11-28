@@ -10,6 +10,11 @@
         if (stateTrackerPort > 0)         stateTracker=new HazelCastStateTracker(stateTrackerPort);
  else         stateTracker=new HazelCastStateTracker();
       }
+      if (stateTracker.jobAggregator() == null) {
+        Class<? extends JobAggregator> clazz=(Class<? extends JobAggregator>)Class.forName(conf.get(JobAggregator.AGGREGATOR,INDArrayAggregator.class.getName()));
+        JobAggregator agg=clazz.newInstance();
+        stateTracker.setJobAggregator(agg);
+      }
       log.info("Started state tracker with connection string " + stateTracker.connectionString());
       masterAddress=startBackend(null,conf,iter,stateTracker);
       Thread.sleep(60000);

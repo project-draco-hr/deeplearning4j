@@ -1,0 +1,5 @@
+{
+  for (  String s : ids) {
+    accumulator.accumulate(updateSaver.load(s));
+  }
+}

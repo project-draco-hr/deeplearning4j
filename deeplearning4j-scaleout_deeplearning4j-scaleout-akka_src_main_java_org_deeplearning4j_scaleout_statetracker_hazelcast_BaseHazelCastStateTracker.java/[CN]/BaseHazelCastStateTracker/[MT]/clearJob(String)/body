@@ -14,5 +14,5 @@
       break;
     }
   }
-  jobs.remove(remove);
+  if (remove != null)   jobs.remove(remove);
 }

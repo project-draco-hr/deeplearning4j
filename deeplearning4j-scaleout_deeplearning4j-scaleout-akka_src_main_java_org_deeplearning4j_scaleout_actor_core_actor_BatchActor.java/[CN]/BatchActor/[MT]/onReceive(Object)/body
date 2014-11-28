@@ -32,7 +32,7 @@
         log.info("Saving data for worker " + worker);
         Job next=iter.next(worker);
         if (next == null)         break;
-        stateTracker.saveWorker(worker,next);
+        stateTracker.addJobToCurrent(next);
       }
       stateTracker.incrementBatchesRan(workers2.size());
       mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,stateTracker.workerData()),mediator);
