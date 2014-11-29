@@ -1,0 +1,13 @@
+{
+  if (reader != null)   try {
+    readerManager.maybeRefreshBlocking();
+    return readerManager.acquire();
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+ else {
+    initReader();
+    return reader;
+  }
+}

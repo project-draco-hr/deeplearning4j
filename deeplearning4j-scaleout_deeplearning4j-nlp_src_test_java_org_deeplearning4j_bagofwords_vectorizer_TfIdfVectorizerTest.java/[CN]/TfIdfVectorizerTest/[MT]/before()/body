@@ -1,3 +1,5 @@
 {
-  FileUtils.deleteDirectory(new File("word2vec-index"));
+  FileUtils.deleteDirectory(new File("tfidf"));
+  cache=new InMemoryLookupCache.Builder().vectorLength(100).build();
+  index=new LuceneInvertedIndex.Builder().cache(cache).indexDir(new File("tfidf")).batchSize(5).cacheInRam(false).build();
 }

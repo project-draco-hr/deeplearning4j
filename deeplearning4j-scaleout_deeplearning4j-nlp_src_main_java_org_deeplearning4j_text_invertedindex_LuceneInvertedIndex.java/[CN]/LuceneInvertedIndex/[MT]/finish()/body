@@ -1,6 +1,12 @@
 {
-  reader=null;
-  IndexWriter writer=getWriter();
-  initReader(writer);
-  numDocs=reader.numDocs();
+  try {
+    initReader();
+    IndexReader reader=readerManager.acquire();
+    indexWriter.getIndexWriter().commit();
+    numDocs=reader.numDocs();
+    reader.close();
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
 }

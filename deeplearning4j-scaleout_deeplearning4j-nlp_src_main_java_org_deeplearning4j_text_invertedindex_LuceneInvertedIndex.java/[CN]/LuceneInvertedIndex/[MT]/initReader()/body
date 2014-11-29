@@ -1,0 +1,16 @@
+{
+  if (reader == null) {
+    try {
+      ensureDirExists();
+      searcherManager=new SearcherManager(getWriter().getIndexWriter(),true,new SearcherFactory());
+      indexWriter.getIndexWriter().commit();
+      readerManager=new ReaderManager(dir);
+      DirectoryReader reader=readerManager.acquire();
+      numDocs=readerManager.acquire().numDocs();
+      readerManager.release(reader);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

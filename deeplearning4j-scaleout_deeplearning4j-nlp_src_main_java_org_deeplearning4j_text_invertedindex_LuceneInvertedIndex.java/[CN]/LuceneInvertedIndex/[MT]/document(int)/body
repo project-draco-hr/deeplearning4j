@@ -9,9 +9,9 @@
   }
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
-    IndexWriter writer=getWriter();
-    initReader(writer);
+    IndexReader reader=getReader();
     Document doc=reader.document(index);
+    reader.close();
     String[] values=doc.getValues(WORD_FIELD);
     for (    String s : values) {
       ret.add(vocabCache.wordFor(s));

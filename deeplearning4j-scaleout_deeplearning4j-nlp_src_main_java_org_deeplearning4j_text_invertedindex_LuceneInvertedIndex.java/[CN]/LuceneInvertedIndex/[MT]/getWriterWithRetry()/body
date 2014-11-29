@@ -1,0 +1,28 @@
+{
+  if (this.indexWriter != null)   return this.indexWriter;
+  IndexWriterConfig iwc;
+  IndexWriter writer=null;
+  try {
+    if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
+    ensureDirExists();
+    if (IndexWriter.isLocked(dir)) {
+      IndexWriter.unlock(dir);
+    }
+    if (this.indexWriter == null) {
+      indexBeingCreated.set(true);
+      if (IndexWriter.isLocked(dir)) {
+        IndexWriter.unlock(dir);
+      }
+      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+      File indexPath2=new File(indexPath);
+      File delete=new File(indexPath2,"write.lock");
+      delete.delete();
+      writer=new IndexWriter(dir,iwc);
+      this.indexWriter=new TrackingIndexWriter(writer);
+    }
+  }
+ catch (  Exception e) {
+    return null;
+  }
+  return this.indexWriter;
+}

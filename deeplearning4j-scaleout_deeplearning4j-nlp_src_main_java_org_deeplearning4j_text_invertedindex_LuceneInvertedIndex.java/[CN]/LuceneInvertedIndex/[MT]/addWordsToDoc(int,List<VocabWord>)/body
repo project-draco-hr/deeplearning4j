@@ -1,10 +1,13 @@
 {
   Document d=new Document();
-  for (  VocabWord word : words) {
-    d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
-  }
-  IndexWriter writer=getWriter();
-  initReader(writer);
+  for (  VocabWord word : words)   d.add(new TextField(WORD_FIELD,word.getWord(),Field.Store.YES));
   totalWords.set(totalWords.get() + words.size());
   addWords(words);
+  log.info("Adding words for doc " + doc);
+  try {
+    getWriter().addDocument(d);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
 }

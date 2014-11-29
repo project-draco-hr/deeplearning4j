@@ -1,0 +1,9 @@
+{
+  File index=new File(indexPath);
+  if (index.exists())   try {
+    FileUtils.deleteDirectory(index);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

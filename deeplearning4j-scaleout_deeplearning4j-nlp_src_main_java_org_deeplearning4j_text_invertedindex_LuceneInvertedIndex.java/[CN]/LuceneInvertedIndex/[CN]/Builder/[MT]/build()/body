@@ -1,24 +1,15 @@
 {
-  LuceneInvertedIndex ret=new LuceneInvertedIndex();
+  LuceneInvertedIndex ret;
+  if (indexDir != null) {
+    ret=new LuceneInvertedIndex(vocabCache,cache,indexDir.getAbsolutePath());
+  }
+ else   ret=new LuceneInvertedIndex();
   try {
-    if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream(StringUtils.join(stopWords,"\n").getBytes())));
-    if (indexDir != null && dir != null)     throw new IllegalStateException("Please define only a directory or a file directory");
-    if (iwc == null)     iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-    if (indexDir != null && !cache) {
-      if (!indexDir.exists())       indexDir.mkdirs();
-      dir=FSDirectory.open(indexDir);
-      if (writer == null)       writer=new IndexWriter(dir,iwc);
-    }
-    if (vocabCache == null)     throw new IllegalStateException("Vocab cache must not be null");
     ret.batchSize=batchSize;
-    ret.vocabCache=vocabCache;
-    ret.dir=dir;
-    ret.cache=cache;
+    if (dir != null)     ret.dir=dir;
     ret.miniBatch=miniBatch;
-    ret.reader=reader;
-    ret.searcher=searcher;
-    ret.analyzer=analyzer;
-    ret.vocabCache=vocabCache;
+    if (reader != null)     ret.reader=reader;
+    if (analyzer != null)     ret.analyzer=analyzer;
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

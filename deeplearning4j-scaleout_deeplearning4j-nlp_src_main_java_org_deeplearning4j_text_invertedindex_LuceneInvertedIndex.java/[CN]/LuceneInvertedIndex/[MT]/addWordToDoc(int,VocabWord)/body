@@ -1,17 +1,17 @@
 {
   Field f=new TextField(WORD_FIELD,word.getWord(),Field.Store.YES);
-  IndexWriter writer=getWriter();
   try {
-    initReader(writer);
+    initReader();
+    IndexSearcher searcher=searcherManager.acquire();
     Document doc2=searcher.doc(doc);
     if (doc2 != null)     doc2.add(f);
  else {
       Document d=new Document();
       d.add(f);
     }
+    searcherManager.release(searcher);
   }
  catch (  IOException e) {
     e.printStackTrace();
   }
-  initReader(writer);
 }
