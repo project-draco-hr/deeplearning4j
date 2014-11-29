@@ -1,5 +1,7 @@
 {
   for (  String s : ids) {
-    accumulator.accumulate(updateSaver.load(s));
+    Job j=updateSaver.load(s);
+    if (j == null)     continue;
+    accumulator.accumulate(j);
   }
 }

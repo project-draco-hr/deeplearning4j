@@ -1,0 +1,8 @@
+{
+  stateTracker=createStateTracker();
+  iterator=createIterator();
+  workPerformFactoryClassName=workPerformFactoryClassName();
+  Configuration conf=createConfiguration();
+  distributed=new DeepLearning4jDistributed(iterator,stateTracker);
+  distributed.setup(conf);
+}

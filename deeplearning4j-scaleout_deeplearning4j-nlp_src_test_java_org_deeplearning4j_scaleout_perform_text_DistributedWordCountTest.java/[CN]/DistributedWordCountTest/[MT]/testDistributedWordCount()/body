@@ -1,0 +1,5 @@
+{
+  distributed.train();
+  VocabCache cache=SerializationUtils.readObject(new File("model-saver"));
+  assertEquals(2,cache.wordFrequency("file."));
+}

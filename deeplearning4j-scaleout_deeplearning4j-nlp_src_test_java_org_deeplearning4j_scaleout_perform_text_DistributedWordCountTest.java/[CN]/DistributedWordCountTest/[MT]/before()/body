@@ -1,0 +1,5 @@
+{
+  File rootDir=new ClassPathResource("/rootdir").getFile();
+  iter=new FileSentenceIterator(rootDir);
+  init();
+}

@@ -1,5 +1,8 @@
 {
   try {
+    if (getCurrent() != null) {
+      cachedCurrent=getCurrent();
+    }
     done.set(true);
     updateSaver().cleanup();
     h.shutdown();
