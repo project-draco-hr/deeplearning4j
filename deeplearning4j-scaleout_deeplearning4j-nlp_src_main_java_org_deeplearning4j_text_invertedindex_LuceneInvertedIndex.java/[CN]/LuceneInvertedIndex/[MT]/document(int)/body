@@ -17,12 +17,7 @@
       ret.add(vocabCache.wordFor(s));
     }
   }
- catch (  AlreadyClosedException e1) {
-    reader=null;
-    readerClosed.set(false);
-    return document(index);
-  }
-catch (  Exception e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
   return ret;

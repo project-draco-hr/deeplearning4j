@@ -6,7 +6,10 @@
     cache.resetWeights();
     return true;
   }
-  if (vectorizer == null)   vectorizer=new TfidfVectorizer.Builder().cache(cache).iterate(docIter).iterate(sentenceIter).batchSize(batchSize).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
+  if (vectorizer == null) {
+    if (invertedIndex == null)     invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).stopWords(stopWords).build();
+    vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(docIter).iterate(sentenceIter).batchSize(batchSize).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
+  }
   vectorizer.fit();
   setup();
   return false;

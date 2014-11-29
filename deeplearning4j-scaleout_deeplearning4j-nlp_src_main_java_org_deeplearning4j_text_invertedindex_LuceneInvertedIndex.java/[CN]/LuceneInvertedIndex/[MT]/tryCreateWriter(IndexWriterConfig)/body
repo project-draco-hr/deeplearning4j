@@ -1,0 +1,12 @@
+{
+  try {
+    dir.clearLock(IndexWriter.WRITE_LOCK_NAME);
+    if (lockFactory == null)     lockFactory=new NativeFSLockFactory(new File(indexPath));
+    lockFactory.clearLock(IndexWriter.WRITE_LOCK_NAME);
+    return new IndexWriter(dir,iwc);
+  }
+ catch (  IOException e) {
+    log.warn("Couldn't create index ",e);
+    return null;
+  }
+}

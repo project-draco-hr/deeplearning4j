@@ -1,7 +1,7 @@
 {
-  File index=new File(indexPath);
-  if (index.exists())   try {
-    FileUtils.deleteDirectory(index);
+  try {
+    indexWriter.deleteAll();
+    indexWriter.getIndexWriter().commit();
   }
  catch (  IOException e) {
     e.printStackTrace();

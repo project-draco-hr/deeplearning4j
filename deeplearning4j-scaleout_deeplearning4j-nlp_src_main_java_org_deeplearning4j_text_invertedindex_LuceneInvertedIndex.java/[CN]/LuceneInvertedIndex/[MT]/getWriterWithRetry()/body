@@ -13,16 +13,33 @@
       if (IndexWriter.isLocked(dir)) {
         IndexWriter.unlock(dir);
       }
+      if (new File(indexPath).exists()) {
+        FileUtils.deleteDirectory(new File(indexPath));
+      }
       iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-      File indexPath2=new File(indexPath);
-      File delete=new File(indexPath2,"write.lock");
-      delete.delete();
-      writer=new IndexWriter(dir,iwc);
+      iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+      iwc.setWriteLockTimeout(1000);
+      dir=FSDirectory.open(new File(indexPath));
+      log.info("Creating new index writer");
+      while ((writer=tryCreateWriter(iwc)) == null) {
+        log.warn("Failed to create writer...trying again");
+        iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+        iwc.setWriteLockTimeout(1000);
+        if (dir != null) {
+          dir.clearLock(IndexWriter.WRITE_LOCK_NAME);
+          dir.close();
+        }
+        dir=FSDirectory.open(new File(indexPath),lockFactory);
+        lockFactory.clearLock(IndexWriter.WRITE_LOCK_NAME);
+        dir.clearLock(IndexWriter.WRITE_LOCK_NAME);
+        Thread.sleep(10000);
+      }
       this.indexWriter=new TrackingIndexWriter(writer);
     }
   }
  catch (  Exception e) {
-    return null;
+    throw new IllegalStateException(e);
   }
   return this.indexWriter;
 }

@@ -1,11 +1,14 @@
 {
-  while (getWriterWithRetry() == null) {
+  int attempts=0;
+  while (getWriterWithRetry() == null && attempts < 3) {
     try {
-      Thread.sleep(10000);
+      Thread.sleep(1000 * attempts);
     }
  catch (    InterruptedException e) {
       Thread.currentThread().interrupt();
     }
+    if (attempts >= 3)     throw new IllegalStateException("Can't obtain write lock");
+    attempts++;
   }
   return this.indexWriter;
 }

@@ -16,6 +16,7 @@
     ret.minLearningRate=minLearningRate;
     ret.sample=sampling;
     ret.workers=workers;
+    ret.invertedIndex=index;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -51,6 +52,7 @@
     ret.batchSize=batchSize;
     ret.sample=sampling;
     ret.workers=workers;
+    ret.invertedIndex=index;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
