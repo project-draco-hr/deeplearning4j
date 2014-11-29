@@ -1,0 +1,21 @@
+{
+  int vocabSize=syn0.rows();
+  table=Nd4j.create(new FloatBuffer(tableSize));
+  double trainWordsPow=0.0;
+  for (  String word : vocab.words()) {
+    trainWordsPow+=Math.pow(vocab.wordFrequency(word),power);
+  }
+  int wordIdx=0;
+  double d1=Math.pow(vocab.wordFrequency(vocab.wordAtIndex(wordIdx)),power) / trainWordsPow;
+  for (int i=0; i < tableSize; i++) {
+    table.putScalar(i,wordIdx);
+    double mul=i * 1.0 / (double)tableSize;
+    if (mul > d1) {
+      wordIdx++;
+      String wordAtIndex=vocab.wordAtIndex(wordIdx);
+      if (wordAtIndex == null)       continue;
+      d1+=Math.pow(vocab.wordFrequency(wordAtIndex),power) / trainWordsPow;
+    }
+    if (wordIdx >= vocabSize)     wordIdx=vocabSize - 1;
+  }
+}

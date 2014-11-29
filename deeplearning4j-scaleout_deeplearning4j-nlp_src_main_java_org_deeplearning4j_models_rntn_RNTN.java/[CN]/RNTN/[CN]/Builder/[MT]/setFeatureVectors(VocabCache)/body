@@ -1,5 +1,0 @@
-{
-  this.featureVectors=featureVectors;
-  this.numHidden=featureVectors.vector(featureVectors.words().iterator().next()).columns();
-  return this;
-}

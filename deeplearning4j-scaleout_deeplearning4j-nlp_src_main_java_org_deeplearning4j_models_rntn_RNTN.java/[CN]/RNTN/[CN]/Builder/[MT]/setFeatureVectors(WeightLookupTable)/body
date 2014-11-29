@@ -1,0 +1,5 @@
+{
+  this.featureVectors=featureVectors;
+  this.numHidden=featureVectors.vectors().next().columns();
+  return this;
+}

@@ -40,7 +40,7 @@
           }
           log.info("Train sentence avg took " + diff2 / (double)job.size());
           numWordsSoFar.set(numWordsSoFar.get() + increment);
-          processed.incrementAndGet();
+          processed.set(processed.get() + job.size());
         }
       }
     }
@@ -70,7 +70,10 @@
       List<VocabWord> batch=new ArrayList<>();
       addWords(input,nextRandom,batch);
       if (batch.isEmpty())       return null;
-      if (batch2.size() >= 100) {
+      for (int i=0; i < numIterations; i++) {
+        batch2.add(batch);
+      }
+      if (batch2.size() >= 100 || batch2.size() >= numDocs) {
         boolean added=false;
         while (!added) {
           try {
@@ -82,9 +85,6 @@
             continue;
           }
         }
-      }
-      for (int i=0; i < numIterations; i++) {
-        batch2.add(batch);
       }
       doc.incrementAndGet();
       if (doc.get() > 0 && doc.get() % 10000 == 0)       log.info("Doc " + doc.get() + " done so far");

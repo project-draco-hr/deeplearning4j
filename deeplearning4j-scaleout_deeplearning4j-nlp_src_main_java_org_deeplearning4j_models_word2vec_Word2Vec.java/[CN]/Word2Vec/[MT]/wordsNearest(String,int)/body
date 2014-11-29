@@ -1,7 +1,7 @@
 {
   INDArray vec=Transforms.unitVec(this.getWordVectorMatrix(word));
-  if (cache instanceof InMemoryLookupCache) {
-    InMemoryLookupCache l=(InMemoryLookupCache)cache;
+  if (lookupTable instanceof InMemoryLookupTable) {
+    InMemoryLookupTable l=(InMemoryLookupTable)cache;
     INDArray syn0=l.getSyn0();
     INDArray weights=syn0.norm2(0).rdivi(1).muli(vec);
     INDArray distances=syn0.mulRowVector(weights).sum(1);

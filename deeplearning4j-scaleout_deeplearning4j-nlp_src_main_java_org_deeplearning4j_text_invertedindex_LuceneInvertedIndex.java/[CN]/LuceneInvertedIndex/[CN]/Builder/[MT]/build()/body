@@ -3,7 +3,7 @@
   if (indexDir != null) {
     ret=new LuceneInvertedIndex(vocabCache,cache,indexDir.getAbsolutePath());
   }
- else   ret=new LuceneInvertedIndex();
+ else   ret=new LuceneInvertedIndex(vocabCache);
   try {
     ret.batchSize=batchSize;
     if (dir != null)     ret.dir=dir;

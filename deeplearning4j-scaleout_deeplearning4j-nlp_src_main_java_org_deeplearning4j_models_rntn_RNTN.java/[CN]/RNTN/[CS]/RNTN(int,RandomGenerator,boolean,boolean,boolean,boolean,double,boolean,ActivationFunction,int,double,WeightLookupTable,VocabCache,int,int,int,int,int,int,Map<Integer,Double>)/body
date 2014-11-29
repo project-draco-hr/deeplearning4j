@@ -1,0 +1,23 @@
+{
+  this.vocabCache=vocabCache;
+  this.numHidden=numHidden;
+  this.rng=rng;
+  this.useDoubleTensors=useDoubleTensors;
+  this.combineClassification=combineClassification;
+  this.simplifiedModel=simplifiedModel;
+  this.randomFeatureVectors=randomFeatureVectors;
+  this.scalingForInit=scalingForInit;
+  this.lowerCasefeatureNames=lowerCasefeatureNames;
+  this.activationFunction=activationFunction;
+  this.adagradResetFrequency=adagradResetFrequency;
+  this.regTransformINDArray=regTransformINDArray;
+  this.featureVectors=featureVectors;
+  this.numBinaryMatrices=numBinaryMatrices;
+  this.binaryTransformSize=binaryTransformSize;
+  this.binaryINd4jize=binaryINd4jize;
+  this.binaryClassificationSize=binaryClassificationSize;
+  this.numUnaryMatrices=numUnaryMatrices;
+  this.unaryClassificationSize=unaryClassificationSize;
+  this.classWeights=classWeights;
+  init();
+}

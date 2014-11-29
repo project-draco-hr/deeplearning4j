@@ -29,7 +29,7 @@
     int numCols=entry.getValue().columns();
     unaryCD.put(entry.getKey(),Nd4j.create(numRows,numCols));
   }
-  for (  String s : featureVectors.words()) {
+  for (  String s : vocabCache.words()) {
     INDArray vector=featureVectors.vector(s);
     int numRows=vector.rows();
     int numCols=vector.columns();

@@ -3,14 +3,14 @@
   int row=0;
   Set<String> union=SetUtils.union(new HashSet<>(positive),new HashSet<>(negative));
   for (  String s : positive) {
-    words.putRow(row++,cache.vector(s));
+    words.putRow(row++,lookupTable.vector(s));
   }
   for (  String s : negative) {
-    words.putRow(row++,cache.vector(s).mul(-1));
+    words.putRow(row++,lookupTable.vector(s).mul(-1));
   }
   INDArray mean=words.mean(0);
-  if (cache instanceof InMemoryLookupCache) {
-    InMemoryLookupCache l=(InMemoryLookupCache)cache;
+  if (lookupTable instanceof InMemoryLookupTable) {
+    InMemoryLookupTable l=(InMemoryLookupTable)cache;
     INDArray syn0=l.getSyn0();
     INDArray weights=syn0.norm2(0).rdivi(1).muli(mean);
     INDArray distances=syn0.mulRowVector(weights).sum(1);

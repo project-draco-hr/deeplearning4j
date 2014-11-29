@@ -17,6 +17,7 @@
     ret.sample=sampling;
     ret.workers=workers;
     ret.invertedIndex=index;
+    ret.lookupTable=lookupTable;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -24,8 +25,11 @@
       throw new RuntimeException(e);
     }
     if (vocabCache == null) {
-      vocabCache=new InMemoryLookupCache.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      vocabCache=new InMemoryLookupCache();
       ret.cache=vocabCache;
+    }
+    if (lookupTable == null) {
+      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
     }
     ret.docIter=docIter;
     ret.tokenizerFactory=tokenizerFactory;
@@ -53,6 +57,7 @@
     ret.sample=sampling;
     ret.workers=workers;
     ret.invertedIndex=index;
+    ret.lookupTable=lookupTable;
     try {
       if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
     }
@@ -60,8 +65,11 @@
       throw new RuntimeException(e);
     }
     if (vocabCache == null) {
-      vocabCache=new InMemoryLookupCache.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      vocabCache=new InMemoryLookupCache();
       ret.cache=vocabCache;
+    }
+    if (lookupTable == null) {
+      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
     }
     ret.tokenizerFactory=tokenizerFactory;
     return ret;

@@ -3,7 +3,7 @@
   if (cache.vocabExists()) {
     log.info("Loading vocab...");
     cache.loadVocab();
-    cache.resetWeights();
+    lookupTable.resetWeights();
     return true;
   }
   if (vectorizer == null) {
