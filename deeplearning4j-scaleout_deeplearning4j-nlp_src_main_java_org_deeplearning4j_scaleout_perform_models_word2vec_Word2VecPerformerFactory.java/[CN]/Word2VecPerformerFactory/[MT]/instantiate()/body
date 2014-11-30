@@ -1,3 +1,4 @@
 {
+  if (stateTracker != null)   return new Word2VecPerformer(stateTracker);
   return new Word2VecPerformer();
 }
