@@ -10,12 +10,7 @@
   forceNextPhase=context().system().scheduler().schedule(Duration.create(secondsPoll,TimeUnit.SECONDS),Duration.create(secondsPoll,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
       if (stateTracker.isDone())       return;
-      try {
-        if (workRouter.sendWork())         nextBatch();
-      }
- catch (      Exception e) {
-        throw new RuntimeException(e);
-      }
+      if (workRouter.sendWork())       nextBatch();
     }
   }
 ,context().dispatcher());

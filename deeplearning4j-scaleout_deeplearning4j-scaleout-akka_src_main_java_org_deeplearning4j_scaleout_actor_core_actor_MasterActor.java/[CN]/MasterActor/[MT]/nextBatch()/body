@@ -1,19 +1,14 @@
 {
   Collection<String> updates=stateTracker.workerUpdates();
-  if (!updates.isEmpty() && stateTracker.currentJobs().isEmpty()) {
-    Job masterResults=compute();
-    log.info("Updating next batch");
-    stateTracker.setCurrent(masterResults);
-    for (    String s : stateTracker.workers()) {
-      log.info("Replicating new network to " + s);
-      stateTracker.addReplicate(s);
-      stateTracker.enableWorker(s);
-    }
-    stateTracker.workerUpdates().clear();
-    while (masterResults == null) {
-      log.info("On next batch master results was null, attempting to grab results again");
-      masterResults=getResults();
-    }
+  Collection<Job> currentJobs;
+  try {
+    currentJobs=stateTracker.currentJobs();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  if (!updates.isEmpty() && currentJobs.isEmpty()) {
+    workRouter.update();
     Future<Void> f=Futures.future(new Callable<Void>(){
       /** 
  * Computes a result, or throws an exception if unable to do so.

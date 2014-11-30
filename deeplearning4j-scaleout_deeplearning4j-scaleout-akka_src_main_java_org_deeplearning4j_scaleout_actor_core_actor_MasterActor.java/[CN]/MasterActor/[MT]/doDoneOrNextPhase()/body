@@ -1,17 +1,6 @@
 {
-  Job masterResults=null;
-  Collection<String> updates=stateTracker.workerUpdates();
-  if (!updates.isEmpty()) {
-    masterResults=compute();
-    stateTracker.setCurrent(masterResults);
-    stateTracker.workerUpdates().clear();
-  }
-  while (!stateTracker.currentJobs().isEmpty() && waitForWorkers) {
-    log.info("Waiting for jobs to finish up before next phase...");
-    Thread.sleep(30000);
-  }
+  if (!stateTracker.workerUpdates().isEmpty())   workRouter.update();
   if (stateTracker.currentJobs().isEmpty()) {
-    isDone=true;
     nextBatch();
     stateTracker.finish();
     log.info("Done training!");

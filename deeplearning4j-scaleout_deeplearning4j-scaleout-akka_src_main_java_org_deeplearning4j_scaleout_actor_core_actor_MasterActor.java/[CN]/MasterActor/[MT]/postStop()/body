@@ -1,7 +1,6 @@
 {
   super.postStop();
   log.info("Post stop on master");
-  cluster.unsubscribe(getSelf());
   if (clearStateWorkers != null)   clearStateWorkers.cancel();
   if (forceNextPhase != null)   forceNextPhase.cancel();
 }

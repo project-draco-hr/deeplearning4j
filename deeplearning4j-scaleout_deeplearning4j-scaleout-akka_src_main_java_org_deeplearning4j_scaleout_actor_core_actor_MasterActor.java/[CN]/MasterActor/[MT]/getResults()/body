@@ -1,8 +1,0 @@
-{
-  try {
-    return (Job)stateTracker.getCurrent();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}
