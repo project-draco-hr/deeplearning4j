@@ -1,0 +1,11 @@
+{
+  this.sentence=sentence;
+  for (  VocabWord word : sentence) {
+    indexes.put(word.getIndex(),word);
+    vectors.put(word.getWord(),new Pair<>(word,vec.getWordVectorMatrix(word.getWord())));
+    if (vec.getLookupTable() instanceof InMemoryLookupTable) {
+      InMemoryLookupTable l=(InMemoryLookupTable)vec.getLookupTable();
+      negativeVectors.put(word.getWord(),new Pair<>(word,l.getSyn1Neg().slice(word.getIndex())));
+    }
+  }
+}

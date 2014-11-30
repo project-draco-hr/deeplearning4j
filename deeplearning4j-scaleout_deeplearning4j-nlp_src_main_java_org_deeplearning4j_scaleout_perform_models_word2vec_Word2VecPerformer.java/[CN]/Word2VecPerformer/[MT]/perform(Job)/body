@@ -1,2 +1,5 @@
 {
+  Word2VecWork work=(Word2VecWork)job.getWork();
+  List<VocabWord> sentence=work.getSentence();
+  trainSentence(sentence,work);
 }

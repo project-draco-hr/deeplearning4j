@@ -1,0 +1,13 @@
+{
+  this.sentenceIterator=sentenceIterator;
+  this.vec=vec;
+  this.stateTracker=stateTracker;
+  stateTracker.addUpdateListener(new NewUpdateListener(){
+    @Override public void onUpdate(    Serializable update){
+      Collection<Word2VecWork> work=(Collection<Word2VecWork>)update;
+      for (      Word2VecWork work1 : work) {
+      }
+    }
+  }
+);
+}
