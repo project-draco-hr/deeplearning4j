@@ -7,6 +7,8 @@
     Class<? extends WorkerPerformerFactory> clazz=(Class<? extends WorkerPerformerFactory>)Class.forName(performerFactoryClazz);
     WorkerPerformerFactory factory=clazz.newInstance();
     WorkerPerformer performer=factory.create(conf);
+    waitForWorkers=conf.getBoolean(WAIT_FOR_WORKERS,true);
+    secondsPoll=conf.getInt(POLL_FOR_WORK,10);
     Props p=pool.props(WorkerActor.propsFor(conf,stateTracker,performer));
     p=ClusterSingletonManager.defaultProps(p,"master",PoisonPill.getInstance(),"master");
     system.actorOf(p,"worker");

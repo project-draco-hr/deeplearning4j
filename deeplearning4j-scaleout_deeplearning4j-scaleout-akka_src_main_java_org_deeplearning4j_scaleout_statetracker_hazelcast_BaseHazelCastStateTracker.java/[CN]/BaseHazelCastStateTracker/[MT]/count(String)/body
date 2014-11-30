@@ -1,0 +1,4 @@
+{
+  IAtomicLong long2=h.getAtomicLong(key);
+  return long2.get();
+}

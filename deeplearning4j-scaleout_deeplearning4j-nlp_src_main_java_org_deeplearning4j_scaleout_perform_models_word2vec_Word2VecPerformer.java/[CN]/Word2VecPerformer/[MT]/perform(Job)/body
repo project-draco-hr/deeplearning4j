@@ -1,5 +1,19 @@
 {
-  Word2VecWork work=(Word2VecWork)job.getWork();
-  List<VocabWord> sentence=work.getSentence();
-  trainSentence(sentence,work);
+  if (job.getWork() instanceof Word2VecWork) {
+    Word2VecWork work=(Word2VecWork)job.getWork();
+    List<VocabWord> sentence=work.getSentence();
+    trainSentence(sentence,work,this.alpha);
+  }
+ else   if (job.getWork() instanceof Collection) {
+    double numWordsSoFar=stateTracker.count(NUM_WORDS_SO_FAR);
+    Collection<Word2VecWork> coll=(Collection<Word2VecWork>)job.getWork();
+    double alpha2=Math.max(minAlpha,alpha * (1 - (1.0 * (double)numWordsSoFar / (double)totalWords)));
+    int totalNewWords=0;
+    for (    Word2VecWork work : coll) {
+      List<VocabWord> sentence=work.getSentence();
+      trainSentence(sentence,work,alpha2);
+      totalNewWords+=sentence.size();
+    }
+    stateTracker.increment(NUM_WORDS_SO_FAR,totalNewWords);
+  }
 }

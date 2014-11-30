@@ -62,6 +62,7 @@
   earlyStop=h.getAtomicReference(EARLY_STOP);
   patience=h.getAtomicReference(PATIENCE);
   numBatches=h.getAtomicReference(NUM_BATCHES_SO_FAR_RAN);
+  references=h.getMap(GLOBAL_REFERENCE);
   if (type.equals("master")) {
     begunTraining.set(false);
     saver=createUpdateSaver();

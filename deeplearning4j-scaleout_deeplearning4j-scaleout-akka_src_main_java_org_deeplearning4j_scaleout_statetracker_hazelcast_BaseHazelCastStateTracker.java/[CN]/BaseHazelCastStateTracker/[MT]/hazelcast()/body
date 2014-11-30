@@ -23,6 +23,9 @@
   ListConfig replicateConfig=new ListConfig();
   replicateConfig.setName(REPLICATE_WEIGHTS);
   conf.addListConfig(replicateConfig);
+  MapConfig referenceConfig=new MapConfig();
+  referenceConfig.setName(GLOBAL_REFERENCE);
+  conf.addMapConfig(referenceConfig);
   ListConfig topicsConfig=new ListConfig();
   topicsConfig.setName(TOPICS);
   conf.addListConfig(topicsConfig);

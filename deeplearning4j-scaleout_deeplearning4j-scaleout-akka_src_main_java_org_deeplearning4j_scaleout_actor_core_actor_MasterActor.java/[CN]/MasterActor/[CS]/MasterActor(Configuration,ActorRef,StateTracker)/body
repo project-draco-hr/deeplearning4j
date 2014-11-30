@@ -11,7 +11,7 @@
   stateTracker.runPreTrainIterations(conf.getInt(NUM_PASSES,1));
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
-  forceNextPhase=context().system().scheduler().schedule(Duration.create(10,TimeUnit.SECONDS),Duration.create(10,TimeUnit.SECONDS),new Runnable(){
+  forceNextPhase=context().system().scheduler().schedule(Duration.create(secondsPoll,TimeUnit.SECONDS),Duration.create(secondsPoll,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
       if (stateTracker.isDone())       return;
       try {
@@ -30,7 +30,7 @@
           log.info("Marking start of stale jobs");
           oneDown=new AtomicLong(System.currentTimeMillis());
         }
-        if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty())         nextBatch();
+        if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty() || !waitForWorkers)         nextBatch();
  else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
         log.info("Current jobs left " + currentJobs);
       }

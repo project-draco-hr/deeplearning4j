@@ -9,7 +9,6 @@
       stateTracker.addReplicate(s);
       stateTracker.enableWorker(s);
     }
-    epochsComplete++;
     stateTracker.workerUpdates().clear();
     while (masterResults == null) {
       log.info("On next batch master results was null, attempting to grab results again");

@@ -4,12 +4,10 @@
   if (!updates.isEmpty()) {
     masterResults=compute();
     stateTracker.setCurrent(masterResults);
-    epochsComplete++;
     stateTracker.workerUpdates().clear();
   }
- else   masterResults=getResults();
-  while (!stateTracker.currentJobs().isEmpty()) {
-    log.info("Waiting fo jobs to finish up before next phase...");
+  while (!stateTracker.currentJobs().isEmpty() && waitForWorkers) {
+    log.info("Waiting for jobs to finish up before next phase...");
     Thread.sleep(30000);
   }
   if (stateTracker.currentJobs().isEmpty()) {
