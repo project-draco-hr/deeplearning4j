@@ -1,12 +1,8 @@
 {
   this.conf=conf;
   this.batchActor=batchActor;
-  try {
-    this.stateTracker=stateTracker;
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  this.workRouter=router;
+  this.stateTracker=stateTracker;
   setup(conf);
   stateTracker.runPreTrainIterations(conf.getInt(NUM_PASSES,1));
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
@@ -15,24 +11,7 @@
     @Override public void run(){
       if (stateTracker.isDone())       return;
       try {
-        List<Job> currentJobs=stateTracker.currentJobs();
-        log.info("Status check on next iteration");
-        Collection<String> updates=stateTracker.workerUpdates();
-        if (currentJobs.size() == 1 && oneDown != null) {
-          long curr=TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - oneDown.get());
-          if (curr >= 5) {
-            stateTracker.currentJobs().clear();
-            oneDown=null;
-            log.info("Clearing out stale jobs");
-          }
-        }
- else         if (currentJobs.size() == 1) {
-          log.info("Marking start of stale jobs");
-          oneDown=new AtomicLong(System.currentTimeMillis());
-        }
-        if (updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty() || !waitForWorkers)         nextBatch();
- else         log.info("Still waiting on next batch, so far we have updates of size: " + updates.size() + " out of "+ stateTracker.workers().size());
-        log.info("Current jobs left " + currentJobs);
+        if (workRouter.sendWork())         nextBatch();
       }
  catch (      Exception e) {
         throw new RuntimeException(e);
