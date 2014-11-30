@@ -1,0 +1,6 @@
+{
+  this.sentenceIterator=textVectorizer.index().docs();
+  this.cache=cache;
+  this.table=table;
+  addListener(stateTracker);
+}

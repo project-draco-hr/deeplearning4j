@@ -1,8 +1,13 @@
 {
   if (job.getWork() instanceof Word2VecWork) {
+    double numWordsSoFar=stateTracker.count(NUM_WORDS_SO_FAR);
     Word2VecWork work=(Word2VecWork)job.getWork();
     List<VocabWord> sentence=work.getSentence();
-    trainSentence(sentence,work,this.alpha);
+    double alpha2=Math.max(minAlpha,alpha * (1 - (1.0 * numWordsSoFar / (double)totalWords)));
+    trainSentence(sentence,work,alpha2);
+    int totalNewWords=work.getSentence().size();
+    job.setResult((Serializable)Arrays.asList(work.addDeltas()));
+    stateTracker.increment(NUM_WORDS_SO_FAR,totalNewWords);
   }
  else   if (job.getWork() instanceof Collection) {
     double numWordsSoFar=stateTracker.count(NUM_WORDS_SO_FAR);

@@ -1,0 +1,6 @@
+{
+  this.sentenceIterator=invertedIndex.docs();
+  this.cache=cache;
+  this.table=table;
+  addListener(stateTracker);
+}

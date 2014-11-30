@@ -12,6 +12,7 @@
   }
   if (stateTracker.currentJobs().isEmpty()) {
     isDone=true;
+    nextBatch();
     stateTracker.finish();
     log.info("Done training!");
   }

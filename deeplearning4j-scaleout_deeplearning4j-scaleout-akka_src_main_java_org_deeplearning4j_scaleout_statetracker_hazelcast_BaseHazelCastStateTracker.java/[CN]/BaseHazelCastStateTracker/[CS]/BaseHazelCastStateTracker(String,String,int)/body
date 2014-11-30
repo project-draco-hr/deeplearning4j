@@ -38,13 +38,6 @@
   this.type=type;
   jobs=h.getList(JOBS);
   workers=h.getList(WORKERS);
-  if (!this.type.equals("master")) {
-    while (workers.isEmpty()) {
-      log.warn("Waiting for data sync...");
-      Thread.sleep(1000);
-    }
-    log.info("Workers is " + workers.size());
-  }
   begunTraining=h.getAtomicReference(BEGUN);
   miniBatchSize=h.getAtomicReference(INPUT_SPLIT);
   workerEnabled=h.getMap(WORKER_ENABLED);

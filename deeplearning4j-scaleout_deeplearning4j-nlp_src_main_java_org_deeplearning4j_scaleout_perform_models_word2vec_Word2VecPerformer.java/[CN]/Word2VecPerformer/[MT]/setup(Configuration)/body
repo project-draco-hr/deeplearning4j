@@ -17,7 +17,13 @@
     e.printStackTrace();
   }
   if (negative > 0) {
-    ByteArrayInputStream bis=new ByteArrayInputStream(conf.get(TABLE).getBytes());
-    table=SerializationUtils.readObject(bis);
+    try {
+      ByteArrayInputStream bis=new ByteArrayInputStream(conf.get(TABLE).getBytes());
+      DataInputStream dis=new DataInputStream(bis);
+      table=Nd4j.read(dis);
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
   }
 }

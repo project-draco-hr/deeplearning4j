@@ -1,3 +1,5 @@
 {
-  return vocabs.get(word);
+  VocabWord ret=vocabs.get(word);
+  if (ret == null)   return vocabs.get(Word2Vec.UNK);
+  return ret;
 }

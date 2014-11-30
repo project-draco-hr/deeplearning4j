@@ -1,4 +1,4 @@
 {
-  Word2VecWork work=new Word2VecWork(vec,sentence);
+  Word2VecWork work=new Word2VecWork((InMemoryLookupTable)table,sentence);
   return work;
 }

@@ -2,10 +2,10 @@
   try {
     if (getCurrent() != null) {
       cachedCurrent=getCurrent();
+      for (      NewUpdateListener listener : listeners)       listener.onUpdate(cachedCurrent);
     }
     done.set(true);
     updateSaver().cleanup();
-    h.shutdown();
   }
  catch (  Exception e) {
     log.warn("Hazelcast already shutdown...done() being called is pointless");

@@ -1,11 +1,10 @@
 {
-  this.sentenceIterator=sentenceIterator;
-  this.vec=vec2;
   stateTracker.addUpdateListener(new NewUpdateListener(){
     @Override public void onUpdate(    Serializable update){
-      Collection<Word2VecResult> work=(Collection<Word2VecResult>)update;
-      InMemoryLookupTable l=(InMemoryLookupTable)vec.getLookupTable();
-      VocabCache cache=vec.getCache();
+      Job j=(Job)update;
+      Collection<Word2VecResult> work=(Collection<Word2VecResult>)j.getResult();
+      if (work == null || work.isEmpty())       return;
+      InMemoryLookupTable l=(InMemoryLookupTable)table;
       for (      Word2VecResult work1 : work) {
         for (        String s : work1.getSyn0Change().keySet()) {
           l.getSyn0().getRow(cache.indexOf(s)).addi(work1.getSyn0Change().get(s));
