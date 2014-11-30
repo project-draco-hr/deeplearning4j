@@ -27,6 +27,10 @@
       }
       @Override public void entryEvicted(      EntryEvent<String,Job> event){
       }
+      @Override public void mapEvicted(      MapEvent mapEvent){
+      }
+      @Override public void mapCleared(      MapEvent mapEvent){
+      }
     }
 ,true);
   }

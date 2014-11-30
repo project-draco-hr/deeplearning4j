@@ -1,6 +1,6 @@
 {
-  this.sentence=sentence;
-  for (  VocabWord word : sentence) {
+  this.sentences=sentences;
+  for (  List<VocabWord> sentence : sentences)   for (  VocabWord word : sentence) {
     indexes.put(word.getIndex(),word);
     vectors.put(word.getWord(),new Pair<>(word,table.getSyn0().getRow(word.getIndex()).dup()));
     originalVectors.put(word.getWord(),table.getSyn0().getRow(word.getIndex()).dup());

@@ -2,7 +2,7 @@
   Map<String,INDArray> syn0Change=new HashMap<>();
   Map<String,INDArray> syn1Change=new HashMap<>();
   Map<String,INDArray> negativeChange=new HashMap<>();
-  for (  VocabWord word : sentence) {
+  for (  List<VocabWord> sentence : sentences)   for (  VocabWord word : sentence) {
     syn0Change.put(word.getWord(),vectors.get(word.getWord()).getSecond().subi(originalVectors.get(word.getWord())));
     syn1Change.put(word.getWord(),syn1Vectors.get(word.getWord()).subi(originalSyn1Vectors.get(word.getWord())));
     if (!negativeVectors.isEmpty())     negativeChange.put(word.getWord(),negativeVectors.get(word.getWord()).getSecond().subi(originalNegative.get(word.getWord())));

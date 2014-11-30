@@ -1,4 +1,4 @@
 {
-  List<VocabWord> next=sentenceIterator.next();
+  List<List<VocabWord>> next=sentenceIterator.next();
   return new Job(create(next),"");
 }
