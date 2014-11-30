@@ -6,7 +6,7 @@
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);
-    INDArray syn1=work.getVectors().get(work.getIndexes().get(point).getWord()).getSecond();
+    INDArray syn1=work.getSyn1Vectors().get(work.getIndexes().get(point).getWord());
     double dot=Nd4j.getBlasWrapper().dot(l1,syn1);
     if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
