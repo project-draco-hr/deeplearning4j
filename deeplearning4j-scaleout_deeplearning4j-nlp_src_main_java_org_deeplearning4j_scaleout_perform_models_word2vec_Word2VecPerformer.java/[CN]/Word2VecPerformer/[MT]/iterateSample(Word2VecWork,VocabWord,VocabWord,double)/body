@@ -1,5 +1,13 @@
 {
   if (w2 == null || w2.getIndex() < 0)   return;
+  if (work.getVectors().get(w2.getWord()) == null) {
+    log.warn("No vector found for word " + w2.getWord());
+    return;
+  }
+  if (work.getVectors().get(w1.getWord()) == null) {
+    log.warn("No vector found for word " + w1.getWord());
+    return;
+  }
   INDArray l1=work.getVectors().get(w2.getWord()).getSecond();
   INDArray neu1e=Nd4j.create(vectorLength);
   double avgChange=0.0f;

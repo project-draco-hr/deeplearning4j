@@ -9,5 +9,7 @@
   if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).build();
   vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).tokenize(t).build();
   vectorizer.fit();
+  Huffman huffman=new Huffman(cache.vocabWords());
+  huffman.build();
   init();
 }

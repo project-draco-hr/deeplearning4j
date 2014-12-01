@@ -9,6 +9,12 @@
       trainSentence(sentence,work,alpha2);
       totalNewWords+=sentence.size();
     }
+    double newWords=totalNewWords + numWordsSoFar;
+    double diff=Math.abs(newWords - lastChecked);
+    if (diff >= 10000) {
+      lastChecked=(int)newWords;
+      log.info("Words so far " + newWords + " out of "+ totalWords);
+    }
     job.setResult((Serializable)Arrays.asList(work.addDeltas()));
     stateTracker.increment(NUM_WORDS_SO_FAR,totalNewWords);
   }
@@ -25,6 +31,12 @@
         totalNewWords+=sentence.size();
         deltas.add(work.addDeltas());
       }
+    }
+    double newWords=totalNewWords + numWordsSoFar;
+    double diff=Math.abs(newWords - lastChecked);
+    if (diff >= 10000) {
+      lastChecked=(int)newWords;
+      log.info("Words so far " + newWords + " out of "+ totalWords);
     }
     job.setResult((Serializable)deltas);
     stateTracker.increment(NUM_WORDS_SO_FAR,totalNewWords);

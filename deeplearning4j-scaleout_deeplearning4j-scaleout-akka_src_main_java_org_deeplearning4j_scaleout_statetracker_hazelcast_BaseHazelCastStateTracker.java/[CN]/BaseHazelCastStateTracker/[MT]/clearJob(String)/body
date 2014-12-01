@@ -3,6 +3,7 @@
     log.warn("No job to clear; was null, returning");
     return;
   }
+  recentlyClearedJobs.add(id);
   IAtomicReference<Job> jRef=h.getAtomicReference("job-" + id);
   if (jRef.isNull())   return;
   jRef.clear();

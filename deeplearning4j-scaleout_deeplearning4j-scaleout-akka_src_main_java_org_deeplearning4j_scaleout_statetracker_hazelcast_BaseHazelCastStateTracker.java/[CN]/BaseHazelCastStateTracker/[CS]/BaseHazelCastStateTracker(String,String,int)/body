@@ -38,6 +38,7 @@
   this.type=type;
   jobs=h.getList(JOBS);
   workers=h.getList(WORKERS);
+  recentlyClearedJobs=h.getSet(RECENTLY_CLEARED);
   begunTraining=h.getAtomicReference(BEGUN);
   miniBatchSize=h.getAtomicReference(INPUT_SPLIT);
   workerEnabled=h.getMap(WORKER_ENABLED);
@@ -50,7 +51,6 @@
   numTimesPretrain=h.getAtomicReference(NUM_TIMES_RUN_PRETRAIN);
   numTimesPretrainRan=h.getAtomicReference(NUM_TIMES_PRETRAIN_RAN);
   done=h.getAtomicReference(DONE);
-  improvementThreshold=h.getAtomicReference(IMPROVEMENT_THRESHOLD);
   bestLoss=h.getAtomicReference(BEST_LOSS);
   earlyStop=h.getAtomicReference(EARLY_STOP);
   patience=h.getAtomicReference(PATIENCE);

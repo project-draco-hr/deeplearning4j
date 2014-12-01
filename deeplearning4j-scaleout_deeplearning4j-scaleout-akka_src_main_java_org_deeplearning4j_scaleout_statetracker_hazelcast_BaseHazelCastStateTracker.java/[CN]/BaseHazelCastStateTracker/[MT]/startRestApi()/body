@@ -1,8 +1,9 @@
 {
   resource=new StateTrackerDropWizardResource(this);
   try {
-    InputStream is=new ClassPathResource("/dropwizard.yml").getInputStream();
-    File tmpConfig=new File("dropwizard.yml");
+    InputStream is=new ClassPathResource("/hazelcast/dropwizard.yml").getInputStream();
+    File tmpConfig=new File("hazelcast/dropwizard.yml");
+    if (!tmpConfig.getParentFile().exists())     tmpConfig.getParentFile().mkdirs();
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(tmpConfig));
     IOUtils.copy(is,bos);
     bos.flush();

@@ -5,6 +5,7 @@
   conf.setFloat(ALPHA,(float)table.getLr().get());
   conf.setInt(NUM_WORDS,index.totalWords());
   conf.set(JobAggregator.AGGREGATOR,Word2VecJobAggregator.class.getName());
+  conf.set(WorkerPerformerFactory.WORKER_PERFORMER,Word2VecPerformerFactory.class.getName());
   table.resetWeights();
   if (table.getNegative() > 0) {
     ByteArrayOutputStream bis=new ByteArrayOutputStream();

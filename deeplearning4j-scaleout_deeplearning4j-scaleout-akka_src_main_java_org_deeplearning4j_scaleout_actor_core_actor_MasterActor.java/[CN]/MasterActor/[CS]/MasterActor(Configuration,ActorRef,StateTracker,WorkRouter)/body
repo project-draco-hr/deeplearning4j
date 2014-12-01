@@ -11,6 +11,21 @@
     @Override public void run(){
       if (stateTracker.isDone())       return;
       if (workRouter.sendWork())       nextBatch();
+      try {
+        Set<Job> clear=new HashSet<>();
+        for (        Job j : stateTracker.currentJobs()) {
+          if (stateTracker.recentlyCleared().contains(j.workerId())) {
+            stateTracker.clearJob(j.workerId());
+            clear.add(j);
+            log.info("Found job that wasn't clear " + j.workerId());
+          }
+        }
+        stateTracker.currentJobs().removeAll(clear);
+        if (stateTracker.currentJobs().isEmpty())         stateTracker.recentlyCleared().clear();
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 ,context().dispatcher());
