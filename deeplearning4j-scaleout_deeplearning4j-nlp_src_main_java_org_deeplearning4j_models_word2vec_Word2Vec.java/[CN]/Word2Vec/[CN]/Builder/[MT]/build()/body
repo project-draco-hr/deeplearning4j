@@ -29,9 +29,10 @@
       ret.cache=vocabCache;
     }
     if (lookupTable == null) {
-      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
     }
     ret.docIter=docIter;
+    ret.lookupTable=lookupTable;
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }
@@ -69,8 +70,9 @@
       ret.cache=vocabCache;
     }
     if (lookupTable == null) {
-      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).vectorLength(layerSize).build();
+      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
     }
+    ret.lookupTable=lookupTable;
     ret.tokenizerFactory=tokenizerFactory;
     return ret;
   }
