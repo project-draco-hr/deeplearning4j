@@ -9,6 +9,7 @@
   mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
   forceNextPhase=context().system().scheduler().schedule(Duration.create(secondsPoll,TimeUnit.SECONDS),Duration.create(secondsPoll,TimeUnit.SECONDS),new Runnable(){
     @Override public void run(){
+      log.info("Heart beat on " + stateTracker.workers().size() + " workers");
       if (stateTracker.isDone())       return;
       if (workRouter.sendWork())       nextBatch();
       try {

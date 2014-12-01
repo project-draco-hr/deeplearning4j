@@ -14,6 +14,14 @@
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);
+    if (work.getIndexes().get(point) == null) {
+      log.warn("Work index for point " + point + " was null");
+      continue;
+    }
+    if (work.getSyn1Vectors().get(work.getIndexes().get(point).getWord()) == null) {
+      log.warn("Syn1 vectors for " + work.getIndexes().get(point).getWord() + " was null");
+      continue;
+    }
     INDArray syn1=work.getSyn1Vectors().get(work.getIndexes().get(point).getWord());
     double dot=Nd4j.getBlasWrapper().dot(l1,syn1);
     if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;

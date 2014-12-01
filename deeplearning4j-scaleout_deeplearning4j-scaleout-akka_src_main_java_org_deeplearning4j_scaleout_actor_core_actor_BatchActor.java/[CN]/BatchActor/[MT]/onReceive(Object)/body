@@ -30,6 +30,10 @@
         if (!iter.hasNext())         break;
         String worker=nextWorker();
         log.info("Saving data for worker " + worker);
+        if (worker == null) {
+          i--;
+          continue;
+        }
         Job next=iter.next(worker);
         if (next == null)         break;
         workRouter.routeJob(next);

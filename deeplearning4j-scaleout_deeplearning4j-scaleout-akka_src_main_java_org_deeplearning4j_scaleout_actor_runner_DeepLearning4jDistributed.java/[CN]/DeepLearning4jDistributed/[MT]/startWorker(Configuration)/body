@@ -20,7 +20,7 @@
     system.actorOf(p,"worker");
     Cluster cluster=Cluster.get(system);
     cluster.join(contactAddress);
-    log.info("Worker joining cluster");
+    log.info("Worker joining cluster of " + stateTracker.workers().size());
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
