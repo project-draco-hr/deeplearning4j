@@ -4,7 +4,7 @@
   for (  String s : positive)   words.addi(lookupTable.vector(s));
   for (  String s : negative)   words.addi(lookupTable.vector(s).mul(-1));
   if (lookupTable instanceof InMemoryLookupTable) {
-    InMemoryLookupTable l=(InMemoryLookupTable)cache;
+    InMemoryLookupTable l=(InMemoryLookupTable)lookupTable;
     INDArray syn0=l.getSyn0();
     INDArray weights=syn0.norm2(0).rdivi(1).muli(words);
     INDArray distances=syn0.mulRowVector(weights).sum(1);
