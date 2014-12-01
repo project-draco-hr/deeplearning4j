@@ -1,0 +1,10 @@
+{
+  env.getAdminContext().shutdown();
+  try {
+    env.getAdminContext().shutdown();
+    env.getAdminContext().getServer().stop();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}
