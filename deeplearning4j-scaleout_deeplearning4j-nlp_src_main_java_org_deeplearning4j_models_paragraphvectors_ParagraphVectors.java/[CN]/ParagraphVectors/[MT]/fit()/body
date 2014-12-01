@@ -1,0 +1,109 @@
+{
+  boolean loaded=buildVocab();
+  if (!loaded && saveVocab)   cache.saveVocab();
+  if (stopWords == null)   readStopWords();
+  log.info("Training word2vec multithreaded");
+  if (sentenceIter != null)   sentenceIter.reset();
+  if (docIter != null)   docIter.reset();
+  final int[] docs=vectorizer.index().allDocs();
+  totalWords=vectorizer.numWordsEncountered();
+  totalWords*=numIterations;
+  log.info("Processing sentences...");
+  List<Thread> work=new ArrayList<>();
+  final AtomicInteger processed=new AtomicInteger(0);
+  final int allDocs=docs.length * numIterations;
+  final AtomicLong numWordsSoFar=new AtomicLong(0);
+  final AtomicLong lastReport=new AtomicLong(0);
+  for (int i=0; i < workers; i++) {
+    final Set<List<VocabWord>> set=new ConcurrentHashSet<>();
+    Thread t=new Thread(new Runnable(){
+      @Override public void run(){
+        final AtomicLong nextRandom=new AtomicLong(5);
+        long checked=0;
+        while (true) {
+          if (checked > 0 && checked % 1000 == 0 && processed.get() >= allDocs)           return;
+          checked++;
+          List<Pair<List<VocabWord>,List<VocabWord>>> job=jobQueue.poll();
+          if (job == null || job.isEmpty() || set.contains(job))           continue;
+          log.info("Job of " + job.size());
+          double alpha=Math.max(minLearningRate,ParagraphVectors.this.alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords)));
+          long diff=Math.abs(lastReport.get() - numWordsSoFar.get());
+          if (numWordsSoFar.get() > 0 && diff >= 10000) {
+            log.info("Words so far " + numWordsSoFar.get() + " with alpha at "+ alpha);
+            lastReport.set(numWordsSoFar.get());
+          }
+          long increment=0;
+          double diff2=0.0;
+          for (          Pair<List<VocabWord>,List<VocabWord>> sentenceWithLabel : job) {
+            trainSentence(sentenceWithLabel,nextRandom,alpha);
+            increment+=sentenceWithLabel.getFirst().size();
+          }
+          log.info("Train sentence avg took " + diff2 / (double)job.size());
+          numWordsSoFar.set(numWordsSoFar.get() + increment);
+          processed.set(processed.get() + job.size());
+        }
+      }
+    }
+);
+    t.setName("worker" + i);
+    t.start();
+    work.add(t);
+  }
+  final AtomicLong nextRandom=new AtomicLong(5);
+  final AtomicInteger doc=new AtomicInteger(0);
+  final int numDocs=vectorizer.index().numDocuments() * numIterations;
+  ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
+    @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
+      try {
+        Thread.sleep(1000);
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      executor.submit(r);
+    }
+  }
+);
+  final Queue<List<VocabWord>> batch2=new ConcurrentLinkedDeque<>();
+  vectorizer.index().eachDoc(new Function<List<VocabWord>,Void>(){
+    @Override public Void apply(    List<VocabWord> input){
+      List<VocabWord> batch=new ArrayList<>();
+      addWords(input,nextRandom,batch);
+      if (batch.isEmpty())       return null;
+      for (int i=0; i < numIterations; i++) {
+        batch2.add(batch);
+      }
+      if (batch2.size() >= 100 || batch2.size() >= numDocs) {
+        boolean added=false;
+        while (!added) {
+          try {
+            batch2.clear();
+            added=true;
+          }
+ catch (          Exception e) {
+            continue;
+          }
+        }
+      }
+      doc.incrementAndGet();
+      if (doc.get() > 0 && doc.get() % 10000 == 0)       log.info("Doc " + doc.get() + " done so far");
+      return null;
+    }
+  }
+,exec);
+  if (!batch2.isEmpty()) {
+  }
+  exec.shutdown();
+  try {
+    exec.awaitTermination(1,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+  for (  Thread t : work)   try {
+    t.join();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
+  }
+}

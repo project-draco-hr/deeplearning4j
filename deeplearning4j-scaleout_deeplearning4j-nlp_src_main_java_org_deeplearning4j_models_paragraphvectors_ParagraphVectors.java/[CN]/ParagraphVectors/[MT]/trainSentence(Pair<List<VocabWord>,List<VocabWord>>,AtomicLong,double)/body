@@ -1,0 +1,7 @@
+{
+  if (sentenceWithLabel == null || sentenceWithLabel.getFirst().isEmpty())   return;
+  for (int i=0; i < sentenceWithLabel.getFirst().size(); i++) {
+    nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    dm(i,sentenceWithLabel,(int)nextRandom.get() % window,nextRandom,alpha);
+  }
+}
