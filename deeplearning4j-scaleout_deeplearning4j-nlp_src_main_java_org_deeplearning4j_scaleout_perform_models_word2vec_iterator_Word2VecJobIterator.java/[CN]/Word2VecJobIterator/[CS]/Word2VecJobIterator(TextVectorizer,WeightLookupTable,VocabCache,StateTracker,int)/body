@@ -3,4 +3,5 @@
   this.cache=cache;
   this.table=table;
   addListener(stateTracker);
+  this.batchSize=batchSize;
 }
