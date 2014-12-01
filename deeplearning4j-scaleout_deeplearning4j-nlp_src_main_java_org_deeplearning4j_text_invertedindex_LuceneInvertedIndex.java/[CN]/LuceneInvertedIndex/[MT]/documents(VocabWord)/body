@@ -1,7 +1,7 @@
 {
   try {
     TermQuery query=new TermQuery(new Term(WORD_FIELD,vocabWord.getWord().toLowerCase()));
-    searcherManager.maybeRefreshBlocking();
+    searcherManager.maybeRefresh();
     IndexSearcher searcher=searcherManager.acquire();
     TopDocs topdocs=searcher.search(query,Integer.MAX_VALUE);
     int[] ret=new int[topdocs.totalHits];

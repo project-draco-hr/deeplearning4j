@@ -1,6 +1,6 @@
 {
   if (reader != null)   try {
-    readerManager.maybeRefreshBlocking();
+    readerManager.maybeRefresh();
     return readerManager.acquire();
   }
  catch (  IOException e) {
