@@ -1,0 +1,11 @@
+{
+  this.rng=new MersenneTwister(seed);
+  syn0=Nd4j.rand(new int[]{vocab.numWords() + 2,vectorLength},rng).subi(0.5).divi(vectorLength);
+  gradSq=Nd4j.ones(new int[]{vocab.numWords() + 2,vectorLength});
+  INDArray randUnk=Nd4j.rand(1,vectorLength,rng).subi(0.5).divi(vectorLength);
+  putVector(Word2Vec.UNK,randUnk);
+  bias=syn0.slice(syn0.rows() - 1);
+  gradSqBias=gradSq.slice(gradSq.rows() - 1);
+  syn1=Nd4j.create(syn0.shape());
+  initNegative();
+}
