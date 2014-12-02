@@ -18,19 +18,41 @@
       }
     }
   }
-  while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
-    String sentence=getSentenceIterator().nextSentence();
-    if (sentence == null)     break;
-    vocabActor.tell(new VocabWork(latch,sentence,stem),vocabActor);
-    queued.incrementAndGet();
-    if (queued.get() % 10000 == 0) {
-      log.info("Sent " + queued);
-      try {
-        Thread.sleep(1);
+  if (getSentenceIterator() instanceof LabelAwareSentenceIterator) {
+    this.labelSentenceIter=(LabelAwareSentenceIterator)getSentenceIterator();
+    while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
+      String sentence=getSentenceIterator().nextSentence();
+      String label=labelSentenceIter.currentLabel();
+      if (sentence == null)       break;
+      vocabActor.tell(new VocabWork(latch,sentence,stem,label),vocabActor);
+      queued.incrementAndGet();
+      if (queued.get() % 10000 == 0) {
+        log.info("Sent " + queued);
+        try {
+          Thread.sleep(1);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+          ;
+        }
       }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-        ;
+    }
+  }
+ else {
+    while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
+      String sentence=getSentenceIterator().nextSentence();
+      if (sentence == null)       break;
+      vocabActor.tell(new VocabWork(latch,sentence,stem),vocabActor);
+      queued.incrementAndGet();
+      if (queued.get() % 10000 == 0) {
+        log.info("Sent " + queued);
+        try {
+          Thread.sleep(1);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+          ;
+        }
       }
     }
   }

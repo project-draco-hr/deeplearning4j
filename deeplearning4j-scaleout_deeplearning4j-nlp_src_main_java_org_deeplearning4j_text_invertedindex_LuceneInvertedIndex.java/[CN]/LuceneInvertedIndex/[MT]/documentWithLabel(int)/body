@@ -1,0 +1,19 @@
+{
+  List<VocabWord> ret=new CopyOnWriteArrayList<>();
+  String label="NONE";
+  try {
+    IndexReader reader=getReader();
+    Document doc=reader.document(index);
+    reader.close();
+    String[] values=doc.getValues(WORD_FIELD);
+    label=doc.get(LABEL);
+    if (label == null)     label="NONE";
+    for (    String s : values) {
+      ret.add(vocabCache.wordFor(s));
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return new Pair<>(ret,label);
+}

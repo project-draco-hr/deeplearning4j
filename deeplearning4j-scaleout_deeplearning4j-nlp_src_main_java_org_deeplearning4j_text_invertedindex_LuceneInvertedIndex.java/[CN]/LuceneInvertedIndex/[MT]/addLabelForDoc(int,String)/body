@@ -1,0 +1,14 @@
+{
+  IndexReader reader=getReader();
+  try {
+    Document doc2=reader.document(doc);
+    doc2.add(new TextField(LABEL,label,Field.Store.YES));
+    reader.close();
+    TrackingIndexWriter writer=getWriter();
+    Term term=new Term(LABEL,label);
+    writer.updateDocument(term,doc2);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}
