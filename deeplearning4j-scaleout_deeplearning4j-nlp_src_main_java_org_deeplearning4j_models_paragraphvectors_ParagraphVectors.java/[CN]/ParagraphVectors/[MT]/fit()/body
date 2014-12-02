@@ -79,6 +79,7 @@
         boolean added=false;
         while (!added) {
           try {
+            jobQueue.add(new LinkedList<>(batch2));
             batch2.clear();
             added=true;
           }
