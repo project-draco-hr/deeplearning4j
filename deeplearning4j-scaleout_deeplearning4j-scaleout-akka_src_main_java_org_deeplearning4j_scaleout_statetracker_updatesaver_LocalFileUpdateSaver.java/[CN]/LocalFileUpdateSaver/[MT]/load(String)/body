@@ -6,6 +6,6 @@
   }
   File load=new File(path);
   Job u=SerializationUtils.readObject(load);
-  load.delete();
+  load.deleteOnExit();
   return u;
 }

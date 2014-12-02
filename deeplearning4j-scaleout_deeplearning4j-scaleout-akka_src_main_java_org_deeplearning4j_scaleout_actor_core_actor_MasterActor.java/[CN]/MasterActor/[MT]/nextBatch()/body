@@ -24,4 +24,6 @@
 ,context().dispatcher());
     ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
   }
+ else   if (currentJobs.isEmpty()) {
+  }
 }

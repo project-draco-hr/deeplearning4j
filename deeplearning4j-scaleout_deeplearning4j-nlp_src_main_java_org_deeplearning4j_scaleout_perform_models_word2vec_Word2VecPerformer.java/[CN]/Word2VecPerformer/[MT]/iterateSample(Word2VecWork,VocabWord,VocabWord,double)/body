@@ -10,12 +10,10 @@
   }
   INDArray l1=work.getVectors().get(w2.getWord()).getSecond();
   INDArray neu1e=Nd4j.create(vectorLength);
-  double avgChange=0.0f;
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);
     if (work.getIndexes().get(point) == null) {
-      log.warn("Work index for point " + point + " was null");
       continue;
     }
     if (work.getSyn1Vectors().get(work.getIndexes().get(point).getWord()) == null) {
@@ -29,7 +27,6 @@
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
     double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,alpha) : alpha);
-    avgChange+=g;
     if (neu1e.data().dataType() == DataBuffer.DOUBLE) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
       Nd4j.getBlasWrapper().axpy(g,l1,syn1);
@@ -65,13 +62,6 @@
  else       Nd4j.getBlasWrapper().axpy((float)g,syn1Neg,l1);
     }
   }
-  avgChange/=w1.getCodes().size();
-  if (useAdaGrad) {
-    if (neu1e.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(avgChange,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy((float)avgChange,neu1e,l1);
-  }
- else {
-    if (neu1e.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
-  }
+  if (neu1e.data().dataType() == DataBuffer.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+ else   Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
 }

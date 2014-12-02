@@ -1,4 +1,5 @@
 {
+  if (word == null)   throw new IllegalArgumentException("Word must not be null!");
   indexes.put(word.getIndex(),word);
   vectors.put(word.getWord(),new Pair<>(word,table.getSyn0().getRow(word.getIndex()).dup()));
   originalVectors.put(word.getWord(),table.getSyn0().getRow(word.getIndex()).dup());

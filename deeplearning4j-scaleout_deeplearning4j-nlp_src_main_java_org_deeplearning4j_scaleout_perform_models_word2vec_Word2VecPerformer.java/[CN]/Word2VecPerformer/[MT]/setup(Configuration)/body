@@ -7,6 +7,7 @@
   alpha=conf.getFloat(ALPHA,0.025f);
   minAlpha=conf.getFloat(MIN_ALPHA,1e-2f);
   totalWords=conf.getInt(NUM_WORDS,1);
+  iterations=conf.getInt(ITERATIONS,5);
   initExpTable();
   String connectionString=conf.get(STATE_TRACKER_CONNECTION_STRING);
   log.info("Creating state tracker with connection string " + connectionString);

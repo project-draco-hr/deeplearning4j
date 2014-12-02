@@ -7,9 +7,9 @@
       InMemoryLookupTable l=(InMemoryLookupTable)table;
       for (      Word2VecResult work1 : work) {
         for (        String s : work1.getSyn0Change().keySet()) {
-          l.getSyn0().getRow(cache.indexOf(s)).addi(work1.getSyn0Change().get(s));
-          l.getSyn1().getRow(cache.indexOf(s)).addi(work1.getSyn1Change().get(s));
-          if (l.getSyn1Neg() != null)           l.getSyn1Neg().getRow(cache.indexOf(s)).addi(work1.getNegativeChange().get(s));
+          l.getSyn0().putRow(cache.indexOf(s),work1.getSyn0Change().get(s));
+          l.getSyn1().putRow(cache.indexOf(s),work1.getSyn1Change().get(s));
+          if (l.getSyn1Neg() != null)           l.getSyn1Neg().putRow(cache.indexOf(s),work1.getNegativeChange().get(s));
         }
       }
     }
