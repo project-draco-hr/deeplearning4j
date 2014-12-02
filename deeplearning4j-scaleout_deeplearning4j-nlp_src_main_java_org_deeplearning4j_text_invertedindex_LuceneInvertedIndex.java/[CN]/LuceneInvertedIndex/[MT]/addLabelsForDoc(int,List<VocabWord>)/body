@@ -1,0 +1,18 @@
+{
+  IndexReader reader=getReader();
+  try {
+    Document doc2=reader.document(doc);
+    for (    VocabWord s : label)     doc2.add(new TextField(LABEL,s.getWord(),Field.Store.YES));
+    reader.close();
+    TrackingIndexWriter writer=getWriter();
+    List<Term> terms=new ArrayList<>();
+    for (    VocabWord s : label) {
+      Term term=new Term(LABEL,s.getWord());
+      terms.add(term);
+    }
+    writer.addDocument(doc2);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

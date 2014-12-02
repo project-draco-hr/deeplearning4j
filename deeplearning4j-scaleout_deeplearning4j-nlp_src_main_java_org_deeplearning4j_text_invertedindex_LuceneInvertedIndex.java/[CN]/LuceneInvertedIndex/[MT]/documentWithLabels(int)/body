@@ -1,0 +1,21 @@
+{
+  List<VocabWord> ret=new CopyOnWriteArrayList<>();
+  Collection<String> labels=new ArrayList<>();
+  try {
+    IndexReader reader=getReader();
+    Document doc=reader.document(index);
+    reader.close();
+    String[] values=doc.getValues(WORD_FIELD);
+    String[] labels2=doc.getValues(LABEL);
+    for (    String s : values) {
+      ret.add(vocabCache.wordFor(s));
+    }
+    for (    String s : labels2) {
+      labels.add(s);
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return new Pair<>(ret,labels);
+}
