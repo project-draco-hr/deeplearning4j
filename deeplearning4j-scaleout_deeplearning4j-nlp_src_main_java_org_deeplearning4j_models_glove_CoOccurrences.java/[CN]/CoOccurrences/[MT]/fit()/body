@@ -1,0 +1,19 @@
+{
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  final AtomicInteger processed=new AtomicInteger(0);
+  final ActorRef actor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(CoOccurrenceActor.class,processed,tokenizerFactory,windowSize,cache,coOCurreneCounts)));
+  final AtomicInteger queued=new AtomicInteger(0);
+  while (sentenceIterator.hasNext()) {
+    String sentence=sentenceIterator.nextSentence();
+    actor.tell(sentence,actor);
+    queued.incrementAndGet();
+  }
+  while (processed.get() < queued.get()) {
+    try {
+      Thread.sleep(10000);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+}

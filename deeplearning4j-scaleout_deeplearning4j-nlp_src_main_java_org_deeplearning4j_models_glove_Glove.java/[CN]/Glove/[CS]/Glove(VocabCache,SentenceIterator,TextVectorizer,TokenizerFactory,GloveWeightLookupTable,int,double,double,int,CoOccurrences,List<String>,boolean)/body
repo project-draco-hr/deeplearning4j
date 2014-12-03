@@ -1,0 +1,14 @@
+{
+  this.vocabCache=vocabCache;
+  this.sentenceIterator=sentenceIterator;
+  this.textVectorizer=textVectorizer;
+  this.tokenizerFactory=tokenizerFactory;
+  this.weightLookupTable=weightLookupTable;
+  this.layerSize=layerSize;
+  this.learningRate=learningRate;
+  this.xMax=xMax;
+  this.windowSize=windowSize;
+  this.coOccurrences=coOccurrences;
+  this.stopWords=stopWords;
+  this.stem=stem;
+}
