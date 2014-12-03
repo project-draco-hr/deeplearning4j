@@ -1,5 +1,5 @@
 {
-  if (optimizationAlgorithm == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+  if (network.conf().getOptimizationAlgo() == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
     opt.setTolerance(tolerance);
   }
