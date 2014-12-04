@@ -22,7 +22,7 @@
     this.labelSentenceIter=(LabelAwareSentenceIterator)getSentenceIterator();
     while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
       String sentence=getSentenceIterator().nextSentence();
-      String label=labelSentenceIter.currentLabel();
+      List<String> label=labelSentenceIter.currentLabels();
       if (sentence == null)       break;
       vocabActor.tell(new VocabWork(latch,sentence,stem,label),vocabActor);
       queued.incrementAndGet();
