@@ -1,21 +1,21 @@
 {
-  if (vocabCache == null)   vocabCache=new InMemoryLookupCache();
+  if (cache == null)   cache=new InMemoryLookupCache();
   if (textVectorizer == null) {
-    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
+    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(cache).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
     textVectorizer.fit();
   }
   sentenceIterator.reset();
   if (coOccurrences == null) {
-    coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(sentenceIterator).tokenizer(tokenizerFactory).windowSize(windowSize).build();
+    coOccurrences=new CoOccurrences.Builder().cache(cache).iterate(sentenceIterator).tokenizer(tokenizerFactory).windowSize(windowSize).build();
     coOccurrences.fit();
   }
-  if (weightLookupTable == null)   weightLookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).cache(vocabCache).lr(learningRate).vectorLength(layerSize).build();
-  if (weightLookupTable.getSyn0() == null)   weightLookupTable.resetWeights();
+  if (lookupTable == null)   lookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).cache(cache).lr(learningRate).vectorLength(layerSize).build();
+  if (lookupTable.getSyn0() == null)   lookupTable.resetWeights();
   final List<List<VocabWord>> miniBatches=new CopyOnWriteArrayList<>();
   for (  String s : coOccurrences.getCoOCurreneCounts().keySet()) {
     for (    String s1 : coOccurrences.getCoOCurreneCounts().getCounter(s).keySet()) {
-      VocabWord vocabWord=vocabCache.wordFor(s);
-      VocabWord vocabWord1=vocabCache.wordFor(s1);
+      VocabWord vocabWord=cache.wordFor(s);
+      VocabWord vocabWord1=cache.wordFor(s1);
       miniBatches.add(Arrays.asList(vocabWord,vocabWord1));
       if (miniBatches.size() >= batchSize) {
         jobQueue.add(new ArrayList<>(miniBatches));
@@ -40,7 +40,7 @@
           VocabWord w1=list.get(0);
           VocabWord w2=list.get(1);
           double weight=coOccurrences.getCoOCurreneCounts().getCount(w1.getWord(),w2.getWord());
-          weightLookupTable.iterateSample(w1,w2,learningRate,weight);
+          lookupTable.iterateSample(w1,w2,learningRate,weight);
           processed.decrementAndGet();
         }
       }

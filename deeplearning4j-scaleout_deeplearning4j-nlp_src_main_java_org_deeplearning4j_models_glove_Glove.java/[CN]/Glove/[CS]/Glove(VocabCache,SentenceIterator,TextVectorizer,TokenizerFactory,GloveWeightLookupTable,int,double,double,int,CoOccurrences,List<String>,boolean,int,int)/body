@@ -1,9 +1,9 @@
 {
-  this.vocabCache=vocabCache;
+  this.cache=cache;
   this.sentenceIterator=sentenceIterator;
   this.textVectorizer=textVectorizer;
   this.tokenizerFactory=tokenizerFactory;
-  this.weightLookupTable=weightLookupTable;
+  this.lookupTable=lookupTable;
   this.layerSize=layerSize;
   this.learningRate=learningRate;
   this.xMax=xMax;
