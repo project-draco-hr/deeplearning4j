@@ -1,0 +1,3 @@
+{
+  return new Glove(vocabCache,sentenceIterator,textVectorizer,tokenizerFactory,weightLookupTable,layerSize,learningRate,xMax,windowSize,coOccurrences,stopWords,stem,batchSize);
+}

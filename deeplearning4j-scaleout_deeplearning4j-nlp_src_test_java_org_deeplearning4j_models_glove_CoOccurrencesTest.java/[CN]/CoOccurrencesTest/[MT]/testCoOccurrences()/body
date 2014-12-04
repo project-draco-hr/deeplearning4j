@@ -1,0 +1,12 @@
+{
+  if (vocabCache == null)   vocabCache=new InMemoryLookupCache();
+  if (textVectorizer == null) {
+    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).build();
+    textVectorizer.fit();
+  }
+  if (coOccurrences == null) {
+    coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(iter).tokenizer(tokenizerFactory).windowSize(15).build();
+    coOccurrences.fit();
+    log.info(coOccurrences.getCoOCurreneCounts().toString());
+  }
+}

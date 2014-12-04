@@ -1,9 +1,15 @@
 {
-  textVectorizer=new TfidfVectorizer.Builder().cache(vocabCache).iterate(sentenceIterator).stopWords(stopWords).stem(stem).build();
-  textVectorizer.fit();
-  coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(sentenceIterator).tokenizer(tokenizerFactory).windowSize(windowSize).build();
-  coOccurrences.fit();
-  weightLookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).cache(vocabCache).lr(learningRate).vectorLength(layerSize).build();
+  if (vocabCache == null)   vocabCache=new InMemoryLookupCache();
+  if (textVectorizer == null) {
+    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(sentenceIterator).stopWords(stopWords).stem(stem).build();
+    textVectorizer.fit();
+  }
+  sentenceIterator.reset();
+  if (coOccurrences == null) {
+    coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(sentenceIterator).tokenizer(tokenizerFactory).windowSize(windowSize).build();
+    coOccurrences.fit();
+  }
+  if (weightLookupTable == null)   weightLookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).cache(vocabCache).lr(learningRate).vectorLength(layerSize).build();
   final List<List<VocabWord>> miniBatches=new ArrayList<>();
   new Thread(new Runnable(){
     @Override public void run(){
@@ -23,6 +29,12 @@
 ).start();
   if (!miniBatches.isEmpty())   jobQueue.add(miniBatches);
   final AtomicInteger processed=new AtomicInteger(coOccurrences.getCoOCurreneCounts().size());
+  try {
+    Thread.sleep(10000);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
   Parallelization.runInParallel(Runtime.getRuntime().availableProcessors(),new Runnable(){
     @Override public void run(){
       while (processed.get() > 0) {
