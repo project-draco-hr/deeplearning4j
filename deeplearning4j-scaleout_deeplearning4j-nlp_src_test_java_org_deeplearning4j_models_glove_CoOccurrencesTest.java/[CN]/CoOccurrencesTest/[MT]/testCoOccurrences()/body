@@ -1,7 +1,7 @@
 {
   if (vocabCache == null)   vocabCache=new InMemoryLookupCache();
   if (textVectorizer == null) {
-    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).build();
+    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).stopWords(new ArrayList<String>()).build();
     textVectorizer.fit();
   }
   if (coOccurrences == null) {

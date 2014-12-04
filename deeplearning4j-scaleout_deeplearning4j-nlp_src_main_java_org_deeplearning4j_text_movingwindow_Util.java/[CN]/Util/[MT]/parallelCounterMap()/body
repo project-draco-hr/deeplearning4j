@@ -6,6 +6,6 @@
     }
   }
 ;
-  Counter<String> totalWords=new Counter<String>(factory);
+  CounterMap<String,String> totalWords=new CounterMap(factory,factory);
   return totalWords;
 }

@@ -1,0 +1,34 @@
+{
+  INDArray w1Vector=syn0.slice(w1.getIndex());
+  INDArray w2Vector=syn0.slice(w2.getIndex());
+  if (w1.getIndex() < 0 || w1.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + w1.getWord());
+  if (w2.getIndex() < 0 || w2.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + w2.getWord());
+  double bias2=this.bias.getDouble(w1.getIndex()) + this.bias.getDouble(w2.getIndex());
+  double prediction=Nd4j.getBlasWrapper().dot(w1Vector,w2Vector) + bias2;
+  double weight=Math.pow(Math.min(1.0,(score / maxCount)),xMax);
+  double loss=weight * (prediction - Math.log(score));
+  INDArray gradSq1=gradSq.slice(w1.getIndex());
+  INDArray gradSq2=gradSq.slice(w2.getIndex());
+  INDArray grad1LearningRates=Transforms.sqrt(gradSq1).rdivi(lr);
+  INDArray grad2LearningRates=Transforms.sqrt(gradSq2).rdivi(lr);
+  INDArray grad1=w1Vector.mul(loss);
+  INDArray grad2=w2Vector.mul(loss);
+  w1Vector.subi(grad1.mul(grad1LearningRates));
+  w2Vector.subi(grad2.mul(grad2LearningRates));
+  gradSq1.addi(Transforms.pow(grad1,2));
+  gradSq2.addi(Transforms.pow(grad2,2));
+  double w1SqBias=gradSqBias.getDouble(w1.getIndex());
+  double w2SqBias=gradSqBias.getDouble(w2.getIndex());
+  double w1Lr=lr.get() / Math.sqrt(w1SqBias);
+  double w2Lr=lr.get() / Math.sqrt(w2SqBias);
+  double w1Bias=bias.getDouble(w1.getIndex());
+  double w2Bias=bias.getDouble(w2.getIndex());
+  double update=w1Bias - (loss * w1Lr);
+  double update2=w2Bias - (loss * w2Lr);
+  w1SqBias+=Math.pow(loss,2);
+  w2SqBias+=Math.pow(loss,2);
+  bias.putScalar(w1.getIndex(),update);
+  bias.putScalar(w2.getIndex(),update2);
+  gradSqBias.putScalar(w1.getIndex(),w1SqBias);
+  gradSqBias.putScalar(w2.getIndex(),w2SqBias);
+}
