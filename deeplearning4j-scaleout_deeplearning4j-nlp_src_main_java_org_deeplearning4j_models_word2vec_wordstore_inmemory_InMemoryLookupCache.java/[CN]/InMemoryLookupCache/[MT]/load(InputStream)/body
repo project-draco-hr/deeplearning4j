@@ -1,0 +1,19 @@
+{
+  Reader inputStream=new InputStreamReader(from);
+  LineIterator iter=IOUtils.lineIterator(inputStream);
+  String line;
+  InMemoryLookupCache ret=new InMemoryLookupCache();
+  int count=0;
+  while ((iter.hasNext())) {
+    line=iter.nextLine();
+    if (line.isEmpty())     continue;
+    ret.incrementWordCount(line);
+    VocabWord word=new VocabWord(1.0,line);
+    word.setIndex(count);
+    ret.addToken(word);
+    ret.addWordToIndex(count,line);
+    ret.putVocabWord(line);
+    count++;
+  }
+  return ret;
+}

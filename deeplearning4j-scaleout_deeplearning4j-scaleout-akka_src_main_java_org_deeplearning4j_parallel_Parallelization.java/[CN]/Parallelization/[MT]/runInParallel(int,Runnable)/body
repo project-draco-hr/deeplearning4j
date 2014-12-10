@@ -1,15 +1,3 @@
 {
-  ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
-    @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
-      try {
-        Thread.sleep(1000);
-      }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-      executor.submit(r);
-    }
-  }
-);
-  runInParallel(exec,numWorkers,runnable);
+  runInParallel(numWorkers,runnable,true);
 }

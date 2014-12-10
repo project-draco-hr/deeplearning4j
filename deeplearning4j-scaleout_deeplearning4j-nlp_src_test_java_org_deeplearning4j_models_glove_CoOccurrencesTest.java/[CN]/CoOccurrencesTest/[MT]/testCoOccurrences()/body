@@ -5,8 +5,9 @@
     textVectorizer.fit();
   }
   if (coOccurrences == null) {
-    coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(iter).tokenizer(tokenizerFactory).windowSize(15).build();
+    coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(iter).symmetric(false).tokenizer(tokenizerFactory).windowSize(15).build();
     coOccurrences.fit();
+    assertEquals(16,coOccurrences.getCoOCurreneCounts().totalSize());
     log.info(coOccurrences.getCoOCurreneCounts().toString());
   }
 }

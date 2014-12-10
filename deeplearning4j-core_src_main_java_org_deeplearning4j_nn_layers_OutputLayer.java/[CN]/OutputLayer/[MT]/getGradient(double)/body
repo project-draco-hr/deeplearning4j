@@ -4,11 +4,10 @@
   biasAdaGrad.setMasterStepSize(lr);
   INDArray netOut=output(input);
   INDArray dy=labels.sub(netOut);
-  dy.divi(input.rows());
   INDArray wGradient=getWeightGradient();
-  if (conf.isUseAdaGrad())   wGradient.muli(adaGrad.getLearningRates(wGradient));
+  if (conf.isUseAdaGrad())   wGradient=adaGrad.getGradient(wGradient);
  else   wGradient.muli(lr);
-  if (conf.isUseAdaGrad())   dy.muliRowVector(biasAdaGrad.getLearningRates(dy.mean(0)));
+  if (conf.isUseAdaGrad())   dy=biasAdaGrad.getGradient(dy.mean(0).broadcast(dy.shape()));
  else   dy.muli(lr);
   dy.divi(input.rows());
   INDArray bGradient=dy.mean(0);

@@ -1,0 +1,10 @@
+{
+  INDArray ret=Nd4j.create(data.size(),glove.getLookupTable().getVectorLength());
+  for (  String key : data.keySet()) {
+    INDArray row=Nd4j.create(Nd4j.createBuffer(data.get(key)));
+    if (row.length() != glove.getLookupTable().getVectorLength())     continue;
+    if (glove.getCache().indexOf(key) >= data.size())     continue;
+    ret.putRow(glove.getCache().indexOf(key),row);
+  }
+  return ret;
+}

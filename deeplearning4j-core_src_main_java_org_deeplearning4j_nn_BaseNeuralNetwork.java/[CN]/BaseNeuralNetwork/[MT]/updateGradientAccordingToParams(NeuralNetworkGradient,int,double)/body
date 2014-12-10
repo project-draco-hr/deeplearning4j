@@ -11,7 +11,6 @@
     if (this.hBias != null && this.hBiasAdaGrad == null)     this.hBiasAdaGrad=new AdaGrad(this.hBias.rows(),this.hBias.columns());
     log.info("Resetting adagrad");
   }
-  INDArray wLearningRates=wAdaGrad.getLearningRates(wGradient);
   double momentum=conf.getMomentum();
   if (conf.getMomentumAfter() != null && !conf.getMomentumAfter().isEmpty()) {
     int key=conf.getMomentumAfter().keySet().iterator().next();
@@ -19,11 +18,11 @@
       momentum=conf.getMomentumAfter().get(key);
     }
   }
-  if (conf.isUseAdaGrad())   wGradient.muli(wLearningRates);
+  if (conf.isUseAdaGrad())   wGradient=wAdaGrad.getGradient(wGradient);
  else   wGradient.muli(learningRate);
-  if (conf.isUseAdaGrad())   hBiasGradient.muli(hBiasAdaGrad.getLearningRates(hBiasGradient));
+  if (conf.isUseAdaGrad())   hBiasGradient=hBiasAdaGrad.getGradient(hBiasGradient);
  else   hBiasGradient.muli(learningRate);
-  if (conf.isUseAdaGrad())   vBiasGradient.muli(vBiasAdaGrad.getLearningRates(vBiasGradient));
+  if (conf.isUseAdaGrad())   vBiasGradient=vBiasAdaGrad.getGradient(vBiasGradient);
  else   vBiasGradient.muli(learningRate);
   if (this.hBiasGradient != null && conf.getSparsity() != 0)   applySparsity(hBiasGradient);
   if (momentum != 0 && this.wGradient != null)   wGradient.addi(this.wGradient.mul(momentum).addi(wGradient.mul(1 - momentum)));
@@ -33,7 +32,7 @@
   vBiasGradient.divi(lastMiniBatchSize);
   hBiasGradient.divi(lastMiniBatchSize);
   if (conf.isUseRegularization() && conf.getL2() > 0) {
-    if (conf.isUseAdaGrad())     wGradient.subi(W.mul(conf.getL2()).muli(wLearningRates));
+    if (conf.isUseAdaGrad())     wGradient.subi(W.mul(conf.getL2()));
  else     wGradient.subi(W.mul(conf.getL2() * learningRate));
   }
   if (conf.isConstrainGradientToUnitNorm()) {

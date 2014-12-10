@@ -1,10 +1,11 @@
 {
-  this.rng=new MersenneTwister(seed);
-  syn0=Nd4j.rand(new int[]{vocab.numWords() + 1,vectorLength},rng).subi(0.5).divi(vectorLength);
-  gradSq=Nd4j.ones(new int[]{vocab.numWords() + 1,vectorLength});
+  if (rng == null)   this.rng=new MersenneTwister(seed);
+  syn0=Nd4j.rand(new int[]{vocab.numWords() + 1,vectorLength},rng).subi(0.5).divi((double)vectorLength);
+  weightAdaGrad=new AdaGrad(new int[]{vocab.numWords() + 1,vectorLength});
+  weightAdaGrad.setMasterStepSize(lr.get());
   INDArray randUnk=Nd4j.rand(1,vectorLength,rng).subi(0.5).divi(vectorLength);
   putVector(Word2Vec.UNK,randUnk);
   bias=Nd4j.create(syn0.rows());
-  gradSqBias=Nd4j.create(bias.shape());
-  initNegative();
+  biasAdaGrad=new AdaGrad(bias.shape());
+  biasAdaGrad.setMasterStepSize(lr.get());
 }

@@ -1,53 +1,28 @@
 {
-  if (cache == null)   cache=new InMemoryLookupCache();
-  if (textVectorizer == null) {
+  boolean cacheFresh=false;
+  if (cache == null) {
+    cacheFresh=true;
+    cache=new InMemoryLookupCache();
+  }
+  if (textVectorizer == null && cacheFresh) {
     textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(cache).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
     textVectorizer.fit();
   }
-  sentenceIterator.reset();
+  if (sentenceIterator != null)   sentenceIterator.reset();
   if (coOccurrences == null) {
-    coOccurrences=new CoOccurrences.Builder().cache(cache).iterate(sentenceIterator).tokenizer(tokenizerFactory).windowSize(windowSize).build();
+    coOccurrences=new CoOccurrences.Builder().cache(cache).iterate(sentenceIterator).symmetric(symmetric).tokenizer(tokenizerFactory).windowSize(windowSize).build();
     coOccurrences.fit();
   }
-  if (lookupTable == null)   lookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).maxCount(maxCount).cache(cache).lr(learningRate).vectorLength(layerSize).build();
+  if (lookupTable == null)   lookupTable=new GloveWeightLookupTable.Builder().xMax(xMax).maxCount(maxCount).cache(cache).lr(learningRate).vectorLength(layerSize).gen(gen).build();
   if (lookupTable.getSyn0() == null)   lookupTable.resetWeights();
-  final List<List<VocabWord>> miniBatches=new CopyOnWriteArrayList<>();
-  Iterator<Pair<String,String>> pairIter;
+  final List<Pair<String,String>> pairList=coOccurrences.coOccurrenceList();
+  if (shuffle)   Collections.shuffle(pairList,shuffleRandom);
+  final AtomicInteger countUp=new AtomicInteger(0);
+  final Counter<Integer> erroriPerIteration=Util.parallelCounter();
+  log.info("Processing # of co occurrences " + coOccurrences.numCoOccurrences());
   for (int i=0; i < iterations; i++) {
-    pairIter=coOccurrences.getCoOCurreneCounts().getPairIterator();
-    while (pairIter.hasNext()) {
-      Pair<String,String> next=pairIter.next();
-      VocabWord vocabWord=cache.wordFor(next.getFirst());
-      VocabWord vocabWord1=cache.wordFor(next.getSecond());
-      miniBatches.add(Arrays.asList(vocabWord,vocabWord1));
-      if (miniBatches.size() >= batchSize) {
-        jobQueue.add(new ArrayList<>(miniBatches));
-        miniBatches.clear();
-      }
-    }
-    if (!miniBatches.isEmpty())     jobQueue.add(miniBatches);
-    final AtomicInteger processed=new AtomicInteger(coOccurrences.getCoOCurreneCounts().size());
-    try {
-      Thread.sleep(10000);
-    }
- catch (    InterruptedException e) {
-      e.printStackTrace();
-    }
-    Parallelization.runInParallel(Runtime.getRuntime().availableProcessors(),new Runnable(){
-      @Override public void run(){
-        while (processed.get() > 0) {
-          List<List<VocabWord>> batch=jobQueue.poll();
-          if (batch == null)           continue;
-          for (          List<VocabWord> list : batch) {
-            VocabWord w1=list.get(0);
-            VocabWord w2=list.get(1);
-            double weight=coOccurrences.getCoOCurreneCounts().getCount(w1.getWord(),w2.getWord());
-            lookupTable.iterateSample(w1,w2,weight);
-            processed.decrementAndGet();
-          }
-        }
-      }
-    }
-);
+    final AtomicInteger processed=new AtomicInteger(coOccurrences.numCoOccurrences());
+    doIteration(i,pairList,erroriPerIteration,processed,countUp);
+    log.info("Processed " + countUp.doubleValue() + " out of "+ (pairList.size() * iterations)+ " error was "+ erroriPerIteration.getCount(i));
   }
 }

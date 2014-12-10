@@ -1,0 +1,39 @@
+{
+  log.info("Iteration " + i);
+  if (shuffle)   Collections.shuffle(pairList,shuffleRandom);
+  List<List<Pair<String,String>>> miniBatches=Lists.partition(pairList,batchSize);
+  for (  List<Pair<String,String>> batch : miniBatches) {
+    List<Pair<VocabWord,VocabWord>> send=new ArrayList<>();
+    for (    Pair<String,String> next : batch) {
+      String w1=next.getFirst();
+      String w2=next.getSecond();
+      VocabWord vocabWord=cache.wordFor(w1);
+      VocabWord vocabWord1=cache.wordFor(w2);
+      send.add(new Pair<>(vocabWord,vocabWord1));
+    }
+    jobQueue.add(new Pair<>(i,send));
+  }
+  Parallelization.runInParallel(numWorkers,new Runnable(){
+    @Override public void run(){
+      while (processed.get() > 0 || !jobQueue.isEmpty()) {
+        Pair<Integer,List<Pair<VocabWord,VocabWord>>> work=jobQueue.poll();
+        if (work == null)         continue;
+        List<Pair<VocabWord,VocabWord>> batch=work.getSecond();
+        for (        Pair<VocabWord,VocabWord> pair : batch) {
+          VocabWord w1=pair.getFirst();
+          VocabWord w2=pair.getSecond();
+          double weight=getCount(w1.getWord(),w2.getWord());
+          if (weight <= 0) {
+            countUp.incrementAndGet();
+            processed.decrementAndGet();
+            continue;
+          }
+          errorPerIteration.incrementCount(work.getFirst(),lookupTable.iterateSample(w1,w2,weight));
+          countUp.incrementAndGet();
+          processed.decrementAndGet();
+        }
+      }
+    }
+  }
+,true);
+}

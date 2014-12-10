@@ -1,0 +1,24 @@
+{
+  ClassPathResource resource=new ClassPathResource("big/raw_sentences.txt");
+  File file=resource.getFile();
+  iter=new LineSentenceIterator(file);
+  iter.setPreProcessor(new SentencePreProcessor(){
+    @Override public String preProcess(    String sentence){
+      return sentence.toLowerCase();
+    }
+  }
+);
+  vocabCache=new InMemoryLookupCache();
+  textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).stopWords(new ArrayList<String>()).build();
+  textVectorizer.fit();
+  coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(iter).symmetric(false).tokenizer(tokenizerFactory).windowSize(15).build();
+  coOccurrences.fit();
+  List<String> occurrences=IOUtils.readLines(new ClassPathResource("big/coc.txt").getInputStream());
+  for (int i=0; i < occurrences.size(); i++) {
+    String[] split=occurrences.get(i).split(" ");
+    if (split.length < 3 || StringCleaning.stripPunct(split[0]).isEmpty() || StringCleaning.stripPunct(split[1]).isEmpty())     continue;
+    double count=coOccurrences.count(split[0],split[1]);
+    if (count == 0)     count=coOccurrences.count(split[1],split[0]);
+    assertEquals("Failed on " + split[0] + " "+ split[1],count,Double.parseDouble(split[2]),5);
+  }
+}

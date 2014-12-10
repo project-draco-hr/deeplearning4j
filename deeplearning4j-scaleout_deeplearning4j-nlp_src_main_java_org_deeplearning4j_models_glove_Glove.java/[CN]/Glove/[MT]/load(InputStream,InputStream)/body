@@ -1,0 +1,31 @@
+{
+  LineIterator iter=IOUtils.lineIterator(is,"UTF-8");
+  Glove glove=new Glove();
+  Map<String,float[]> wordVectors=new HashMap<>();
+  int count=0;
+  while (iter.hasNext()) {
+    String line=iter.nextLine().trim();
+    if (line.isEmpty())     continue;
+    String[] split=line.split(" ");
+    String word=split[0];
+    if (glove.cache == null)     glove.cache=new InMemoryLookupCache();
+    if (glove.getLookupTable() == null) {
+      glove.lookupTable=new GloveWeightLookupTable.Builder().cache(glove.cache).vectorLength(split.length - 1).build();
+    }
+    if (word.isEmpty())     continue;
+    float[] read=read(split,glove.lookupTable.getVectorLength());
+    if (read.length < 1)     continue;
+    VocabWord w1=new VocabWord(1,word);
+    glove.layerSize=glove.lookupTable.getVectorLength();
+    w1.setIndex(count);
+    glove.cache.addToken(w1);
+    glove.cache.addWordToIndex(count,word);
+    glove.cache.putVocabWord(word);
+    wordVectors.put(word,read);
+    count++;
+  }
+  glove.lookupTable.setSyn0(weights(glove,wordVectors));
+  iter.close();
+  glove.lookupTable.setBias(Nd4j.readTxt(biases," "));
+  return glove;
+}
