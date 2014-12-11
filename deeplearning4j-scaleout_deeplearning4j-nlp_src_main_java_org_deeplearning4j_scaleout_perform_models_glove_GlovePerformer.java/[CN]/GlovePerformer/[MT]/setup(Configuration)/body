@@ -1,0 +1,14 @@
+{
+  xMax=conf.getFloat(X_MAX,0.75f);
+  maxCount=conf.getFloat(MAX_COUNT,100);
+  lookupTableSize=getInts(conf,LOOKUPTABLE_SIZE);
+  biasShape=new int[]{lookupTableSize[1]};
+  String connectionString=conf.get(STATE_TRACKER_CONNECTION_STRING);
+  log.info("Creating state tracker with connection string " + connectionString);
+  if (stateTracker == null)   try {
+    stateTracker=new HazelCastStateTracker(connectionString);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

@@ -13,16 +13,9 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,alpha) : alpha);
-    avgChange+=g;
-    if (syn0.data().dataType() == DataBuffer.DOUBLE) {
-      Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
-      Nd4j.getBlasWrapper().axpy(g,l1,syn1);
-    }
- else {
-      Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
-      Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
-    }
+    double g=useAdaGrad ? w1.getGradient(i,(1 - code - f)) : (1 - code - f) * alpha;
+    Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
+    Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
   }
   int target=w1.getIndex();
   int label;
@@ -39,21 +32,14 @@
     }
     double f=Nd4j.getBlasWrapper().dot(l1,syn1Neg.slice(target));
     double g;
-    if (f > MAX_EXP)     g=(label - 1) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
- else     if (f < -MAX_EXP)     g=(label - 0) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
- else     g=(label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) * (useAdaGrad ? w1.getLearningRate(target,alpha) : alpha);
+    if (f > MAX_EXP)     g=useAdaGrad ? w1.getGradient(target,(label - 1)) : (label - 1) * alpha;
+ else     if (f < -MAX_EXP)     g=(label - 0) * (useAdaGrad ? w1.getGradient(target,alpha) : alpha);
+ else     g=useAdaGrad ? w1.getGradient(target,label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) : (label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) * alpha;
     if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(g,neu1e,l1);
  else     Nd4j.getBlasWrapper().axpy((float)g,neu1e,l1);
     if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(g,syn1Neg,l1);
  else     Nd4j.getBlasWrapper().axpy((float)g,syn1Neg,l1);
   }
-  avgChange/=w1.getCodes().size();
-  if (useAdaGrad) {
-    if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(avgChange,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy((float)avgChange,neu1e,l1);
-  }
- else {
-    if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
-  }
+  if (syn0.data().dataType() == DataBuffer.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+ else   Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
 }

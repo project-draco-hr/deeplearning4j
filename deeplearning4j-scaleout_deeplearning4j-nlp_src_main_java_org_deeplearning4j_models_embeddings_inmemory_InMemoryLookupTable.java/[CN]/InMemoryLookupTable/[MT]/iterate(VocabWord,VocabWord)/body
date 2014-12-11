@@ -2,7 +2,6 @@
   if (w2.getIndex() < 0)   return;
   INDArray l1=this.syn0.slice(w2.getIndex());
   INDArray neu1e=Nd4j.create(vectorLength);
-  double avgChange=0.0f;
   double alpha=this.lr.get();
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
@@ -14,8 +13,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=(1 - code - f) * (useAdaGrad ? w1.getLearningRate(i,alpha) : alpha);
-    avgChange+=g;
+    double g=(1 - code - f) * (useAdaGrad ? w1.getGradient(i,alpha) : alpha);
     if (syn0.data().dataType() == DataBuffer.DOUBLE) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
       Nd4j.getBlasWrapper().axpy(g,l1,syn1);
@@ -25,13 +23,6 @@
       Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
     }
   }
-  avgChange/=w1.getCodes().size();
-  if (useAdaGrad) {
-    if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(avgChange,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy((float)avgChange,neu1e,l1);
-  }
- else {
-    if (syn0.data().dataType() == DataBuffer.DOUBLE)     Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
- else     Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
-  }
+  if (syn0.data().dataType() == DataBuffer.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+ else   Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
 }
