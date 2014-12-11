@@ -6,7 +6,7 @@
   double weight=Math.pow(Math.min(1.0,(score / maxCount)),xMax);
   double fDiff=score > xMax ? prediction : weight * (prediction - Math.log(score));
   double gradient=fDiff;
-  update(w1,w1Vector,w2Vector,gradient);
-  update(w2,w2Vector,w1Vector,gradient);
+  update(work,w1,w1Vector,w2Vector,gradient);
+  update(work,w2,w2Vector,w1Vector,gradient);
   return fDiff;
 }
