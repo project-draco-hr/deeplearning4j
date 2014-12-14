@@ -17,6 +17,7 @@
     }
   }
 ,actor);
+  actor.shutdown();
   Parallelization.runInParallel(numWorkers,new Runnable(){
     @Override public void run(){
       while (processed.get() > 0 || !jobQueue.isEmpty()) {
