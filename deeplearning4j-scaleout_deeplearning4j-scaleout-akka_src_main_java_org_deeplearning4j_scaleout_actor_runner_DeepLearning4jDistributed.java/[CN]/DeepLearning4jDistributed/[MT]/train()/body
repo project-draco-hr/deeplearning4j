@@ -1,13 +1,5 @@
 {
   log.info("Publishing to results for training");
-  try {
-    log.info("Waiting for cluster to go up...");
-    Thread.sleep(30000);
-    log.info("Done waiting");
-  }
- catch (  InterruptedException e1) {
-    Thread.currentThread().interrupt();
-  }
   log.info("Started pipeline");
   mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,MoreWorkMessage.getInstance()),mediator);
   log.info("Published results");

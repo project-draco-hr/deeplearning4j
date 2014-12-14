@@ -11,4 +11,6 @@
  catch (  Exception e) {
     e.printStackTrace();
   }
+  coOccurrences=stateTracker.get(GloveJobIterator.CO_OCCURRENCES);
+  if (coOccurrences == null)   throw new IllegalStateException("Please specify co occurrences");
 }

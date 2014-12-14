@@ -10,6 +10,12 @@
     id++;
     queued.incrementAndGet();
   }
+  try {
+    Thread.sleep(5000);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
   while (processed.get() < queued.get()) {
     try {
       Thread.sleep(10000);

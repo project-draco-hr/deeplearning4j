@@ -2,6 +2,7 @@
   log.info("Iteration " + i);
   if (shuffle)   Collections.shuffle(pairList,shuffleRandom);
   List<List<Pair<String,String>>> miniBatches=Lists.partition(pairList,batchSize);
+  int count=0;
   for (  List<Pair<String,String>> batch : miniBatches) {
     List<Pair<VocabWord,VocabWord>> send=new ArrayList<>();
     for (    Pair<String,String> next : batch) {
@@ -12,6 +13,8 @@
       send.add(new Pair<>(vocabWord,vocabWord1));
     }
     jobQueue.add(new Pair<>(i,send));
+    log.info("Queued batch " + count + " of "+ miniBatches.size());
+    count++;
   }
   Parallelization.runInParallel(numWorkers,new Runnable(){
     @Override public void run(){
@@ -30,6 +33,7 @@
           }
           errorPerIteration.incrementCount(work.getFirst(),lookupTable.iterateSample(w1,w2,weight));
           countUp.incrementAndGet();
+          if (countUp.get() % 10000 == 0)           log.info("Processed " + countUp.get() + " co occurrences");
           processed.decrementAndGet();
         }
       }

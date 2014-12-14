@@ -1,12 +1,12 @@
 {
   CAS cas=retrieve();
+  if (cas == null)   return null;
   cas.setDocumentText(text);
   try {
     analysisEngine.process(cas);
   }
  catch (  AnalysisEngineProcessException e) {
-    if (text != null && !text.isEmpty())     return process(text);
-    throw new RuntimeException(e);
+    log.warn("Unable to process text " + text,e);
   }
   return cas;
 }
