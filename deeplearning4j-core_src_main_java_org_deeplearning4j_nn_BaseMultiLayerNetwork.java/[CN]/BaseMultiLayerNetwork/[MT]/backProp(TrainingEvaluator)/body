@@ -1,5 +1,5 @@
 {
-  if (useGaussNewtonVectorProductBackProp) {
+  if (layerWiseConfigurations.isUseGaussNewtonVectorProductBackProp()) {
     BackPropROptimizer opt=new BackPropROptimizer(this,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
     opt.optimize(eval);
   }

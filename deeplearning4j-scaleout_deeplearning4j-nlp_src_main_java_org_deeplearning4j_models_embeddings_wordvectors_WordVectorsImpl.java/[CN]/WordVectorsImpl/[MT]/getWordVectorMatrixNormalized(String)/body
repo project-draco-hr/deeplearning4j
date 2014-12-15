@@ -1,0 +1,6 @@
+{
+  int i=vocab().indexOf(word);
+  if (i < 0)   return lookupTable.vector(UNK);
+  INDArray r=lookupTable.vector(word);
+  return r.div(Nd4j.getBlasWrapper().nrm2(r));
+}

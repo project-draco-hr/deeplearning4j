@@ -1,6 +1,6 @@
 {
   boolean loaded=buildVocab();
-  if (!loaded && saveVocab)   cache.saveVocab();
+  if (!loaded && saveVocab)   vocab().saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
@@ -90,9 +90,7 @@
     }
   }
 ,exec);
-  if (!batch2.isEmpty()) {
-    jobQueue.add(new LinkedList<>(batch2));
-  }
+  if (!batch2.isEmpty())   jobQueue.add(new LinkedList<>(batch2));
   exec.shutdown();
   try {
     exec.awaitTermination(1,TimeUnit.DAYS);

@@ -5,21 +5,17 @@
     c.setAccessible(true);
     ret=(E)c.newInstance();
     ret.setDefaultConfiguration(conf);
-    ret.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
     ret.setInput(this.input);
     ret.setLabels(this.labels);
-    ret.setHiddenLayerSizes(this.multiLayerConfiguration.getHiddenLayerSizes());
     ret.setnLayers(this.multiLayerConfiguration.getHiddenLayerSizes().length);
     ret.setLayerWiseConfigurations(multiLayerConfiguration);
     ret.neuralNets=new NeuralNetwork[this.multiLayerConfiguration.getHiddenLayerSizes().length];
     ret.setInput(this.input);
     ret.setLabels(labels);
-    ret.setForceNumEpochs(shouldForceEpochs);
     ret.getWeightTransforms().putAll(weightTransforms);
     ret.getVisibleBiasTransforms().putAll(visibleBiasTransforms);
     ret.getHiddenBiasTransforms().putAll(hiddenBiasTransforms);
     ret.layerWiseConfigurations=multiLayerConfiguration;
-    ret.pretrain=pretrain;
     if (ret.defaultConfiguration == null)     ret.defaultConfiguration=multiLayerConfiguration.getConf(0);
     return ret;
   }

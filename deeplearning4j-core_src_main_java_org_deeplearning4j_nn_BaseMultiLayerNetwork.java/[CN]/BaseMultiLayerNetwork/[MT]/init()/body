@@ -5,20 +5,21 @@
   INDArray layerInput=input;
   int inputSize;
   if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
+  int[] hiddenLayerSizes=layerWiseConfigurations.getHiddenLayerSizes();
   if (this.neuralNets == null || neuralNets == null || this.neuralNets[0] == null || this.neuralNets[0] == null) {
     this.neuralNets=new NeuralNetwork[getnLayers()];
     for (int i=0; i < this.getnLayers(); i++) {
       if (i == 0)       inputSize=defaultConfiguration.getnIn();
- else       inputSize=this.hiddenLayerSizes[i - 1];
+ else       inputSize=hiddenLayerSizes[i - 1];
       if (i == 0) {
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
-        layerWiseConfigurations.getConf(i).setnOut(this.hiddenLayerSizes[i]);
+        layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
         layers[i]=createHiddenLayer(i,layerInput);
       }
  else {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
-        layerWiseConfigurations.getConf(i).setnOut(this.hiddenLayerSizes[i]);
+        layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
         layers[i]=createHiddenLayer(i,layerInput);
       }
       this.neuralNets[i]=createLayer(layerInput,this.layers[i].getW(),this.layers[i].getB(),null,i);

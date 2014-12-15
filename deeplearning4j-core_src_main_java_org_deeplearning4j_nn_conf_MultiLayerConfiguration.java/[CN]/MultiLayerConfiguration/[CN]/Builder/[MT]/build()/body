@@ -1,6 +1,12 @@
 {
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
   conf.confs=this.confs;
+  conf.forceNumIterations=forceNumIterations;
   conf.hiddenLayerSizes=this.hiddenLayerSizes;
+  conf.useDropConnect=useDropConnect;
+  conf.pretrain=pretrain;
+  conf.sampleFromHiddenActivations=sampleFromHiddenActivations;
+  conf.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
+  conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   return conf;
 }

@@ -1,5 +1,5 @@
 {
-  if (useDropConnect) {
+  if (layerWiseConfigurations.isUseDropConnect()) {
     INDArray mask=Sampling.binomial(Nd4j.valueArrayOf(input.rows(),input.columns(),0.5),1,defaultConfiguration.getRng());
     input.muli(mask);
     if (defaultConfiguration.getL2() > 0)     input.muli(defaultConfiguration.getL2());

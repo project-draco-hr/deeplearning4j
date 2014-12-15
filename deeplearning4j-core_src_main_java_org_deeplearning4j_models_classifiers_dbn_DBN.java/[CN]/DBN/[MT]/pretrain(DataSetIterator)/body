@@ -1,5 +1,5 @@
 {
-  if (!pretrain)   return;
+  if (!layerWiseConfigurations.isPretrain())   return;
   INDArray layerInput;
   for (int i=0; i < getnLayers(); i++) {
     if (i == 0) {
@@ -11,7 +11,7 @@
           initializeLayers(input);
         }
  else         setInput(input);
-        if (forceNumIterations()) {
+        if (layerWiseConfigurations.isForceNumIterations()) {
           for (int iteration=0; iteration < getNeuralNets()[i].conf().getNumIterations(); iteration++) {
             log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(next.getFeatureMatrix());
@@ -26,9 +26,9 @@
       while (iter.hasNext()) {
         DataSet next=iter.next();
         layerInput=next.getFeatureMatrix();
-        for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j,layerInput);
+        for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j - 1,layerInput);
         log.info("Training on layer " + (i + 1));
-        if (forceNumIterations()) {
+        if (layerWiseConfigurations.isForceNumIterations()) {
           for (int iteration=0; iteration < getNeuralNets()[i].conf().getNumIterations(); iteration++) {
             log.info("Error on epoch " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(layerInput);

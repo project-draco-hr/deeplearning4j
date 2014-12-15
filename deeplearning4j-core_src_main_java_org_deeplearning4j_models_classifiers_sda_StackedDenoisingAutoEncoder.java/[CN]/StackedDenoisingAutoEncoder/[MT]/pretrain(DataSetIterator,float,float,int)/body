@@ -10,8 +10,7 @@
           initializeLayers(input);
         }
  else         setInput(input);
-        double realLearningRate=layerWiseConfigurations.getConf(i).getLr();
-        if (forceNumIterations()) {
+        if (layerWiseConfigurations.isForceNumIterations()) {
           for (int iteration=0; iteration < iterations; iteration++) {
             log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(next.getFeatureMatrix());
@@ -28,8 +27,7 @@
         layerInput=next.getFeatureMatrix();
         for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j,layerInput);
         log.info("Training on layer " + (i + 1));
-        double realLearningRate=layerWiseConfigurations.getConf(i).getLr();
-        if (forceNumIterations()) {
+        if (layerWiseConfigurations.isForceNumIterations()) {
           for (int iteration=0; iteration < iterations; iteration++) {
             log.info("Error on iteration " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
             getNeuralNets()[i].iterate(layerInput);

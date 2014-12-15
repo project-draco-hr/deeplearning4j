@@ -1,7 +1,7 @@
 {
   this.lookupTable=lookupTable;
-  if (cache instanceof InMemoryLookupTable) {
-    InMemoryLookupTable l=(InMemoryLookupTable)cache;
+  if (vocab() instanceof InMemoryLookupTable) {
+    InMemoryLookupTable l=(InMemoryLookupTable)vocab();
     if (l.getSyn0() != null && l.getSyn0().columns() != layerSize)     layerSize=l.getSyn0().columns();
   }
 }

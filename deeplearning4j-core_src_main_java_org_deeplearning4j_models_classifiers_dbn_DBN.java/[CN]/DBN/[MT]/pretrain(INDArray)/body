@@ -1,8 +1,5 @@
 {
-  if (!pretrain)   return;
-  if (isUseGaussNewtonVectorProductBackProp()) {
-    log.warn("WARNING; Gauss newton back vector back propagation is primarily used for hessian free which does not involve pretrain; just finetune. Use this at your own risk");
-  }
+  if (!layerWiseConfigurations.isPretrain())   return;
   if (this.getInput() == null || this.getNeuralNets() == null || this.getNeuralNets()[0] == null || this.getNeuralNets() == null || this.getNeuralNets()[0] == null) {
     setInput(input);
     initializeLayers(input);
@@ -13,8 +10,7 @@
     if (i == 0)     layerInput=getInput();
  else     layerInput=activationFromPrevLayer(i - 1,layerInput);
     log.info("Training on layer " + (i + 1));
-    double realLearningRate=layers[i].conf().getLr();
-    if (forceNumIterations()) {
+    if (layerWiseConfigurations.isForceNumIterations()) {
       for (int iteration=0; iteration < layers[i].conf().getNumIterations(); iteration++) {
         log.info("Error on epoch " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
         getNeuralNets()[i].iterate(layerInput);

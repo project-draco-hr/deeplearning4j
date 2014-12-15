@@ -1,14 +1,14 @@
 {
   readStopWords();
-  if (cache.vocabExists()) {
+  if (vocab().vocabExists()) {
     log.info("Loading vocab...");
-    cache.loadVocab();
+    vocab().loadVocab();
     lookupTable.resetWeights();
     return true;
   }
   if (vectorizer == null) {
-    if (invertedIndex == null)     invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).stopWords(stopWords).build();
-    vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(docIter).iterate(sentenceIter).batchSize(batchSize).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
+    if (invertedIndex == null)     invertedIndex=new LuceneInvertedIndex.Builder().cache(vocab()).stopWords(stopWords).build();
+    vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(vocab()).iterate(docIter).iterate(sentenceIter).batchSize(batchSize).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
   }
   vectorizer.fit();
   setup();

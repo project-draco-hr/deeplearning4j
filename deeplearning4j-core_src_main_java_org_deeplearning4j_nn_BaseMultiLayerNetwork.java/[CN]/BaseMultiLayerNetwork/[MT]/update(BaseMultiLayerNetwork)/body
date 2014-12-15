@@ -9,18 +9,14 @@
       this.getNeuralNets()[i]=network.getNeuralNets()[i].clone();
     }
   }
-  this.hiddenLayerSizes=network.hiddenLayerSizes;
   this.defaultConfiguration=network.defaultConfiguration;
   this.errorTolerance=network.errorTolerance;
-  this.forceNumEpochs=network.forceNumEpochs;
   this.input=network.input;
   this.labels=network.labels;
   this.learningRateUpdate=network.learningRateUpdate;
   this.weightTransforms=network.weightTransforms;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
-  this.useDropConnect=network.useDropConnect;
-  this.useGaussNewtonVectorProductBackProp=network.useGaussNewtonVectorProductBackProp;
   if (network.neuralNets != null && network.neuralNets.length > 0) {
     this.neuralNets=new NeuralNetwork[network.neuralNets.length];
     for (int i=0; i < neuralNets.length; i++)     this.getNeuralNets()[i]=network.getNeuralNets()[i].clone();
