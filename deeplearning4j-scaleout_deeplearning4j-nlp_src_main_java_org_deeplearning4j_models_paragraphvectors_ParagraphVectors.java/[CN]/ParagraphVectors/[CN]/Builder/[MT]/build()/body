@@ -6,7 +6,7 @@
     ret.alpha.set(lr);
     ret.vectorizer=textVectorizer;
     ret.stopWords=stopWords;
-    ret.setCache(vocabCache);
+    ret.setVocab(vocabCache);
     ret.numIterations=iterations;
     ret.minWordFrequency=minWordFrequency;
     ret.seed=seed;
@@ -26,7 +26,7 @@
     }
     if (vocabCache == null) {
       vocabCache=new InMemoryLookupCache();
-      ret.cache=vocabCache;
+      ret.setVocab(vocabCache);
     }
     if (lookupTable == null) {
       lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
@@ -47,7 +47,7 @@
     ret.vectorizer=textVectorizer;
     ret.stopWords=stopWords;
     ret.minWordFrequency=minWordFrequency;
-    ret.setCache(vocabCache);
+    ret.setVocab(vocabCache);
     ret.docIter=docIter;
     ret.minWordFrequency=minWordFrequency;
     ret.numIterations=iterations;
@@ -67,7 +67,7 @@
     }
     if (vocabCache == null) {
       vocabCache=new InMemoryLookupCache();
-      ret.cache=vocabCache;
+      ret.setVocab(vocabCache);
     }
     if (lookupTable == null) {
       lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();

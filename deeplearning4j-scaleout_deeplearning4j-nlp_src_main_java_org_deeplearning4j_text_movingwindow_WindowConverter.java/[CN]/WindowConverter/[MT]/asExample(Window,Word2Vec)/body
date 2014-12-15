@@ -1,5 +1,5 @@
 {
-  int length=vec.getLayerSize();
+  int length=vec.lookupTable().layerSize();
   List<String> words=window.getWords();
   int windowSize=window.getWindowSize();
   double[] example=new double[length * windowSize];

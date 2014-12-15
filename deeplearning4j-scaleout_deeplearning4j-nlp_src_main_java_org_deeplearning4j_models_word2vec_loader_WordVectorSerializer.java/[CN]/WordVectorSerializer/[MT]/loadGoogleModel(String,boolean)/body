@@ -51,7 +51,7 @@
       lookupTable.putVector(cache.wordAtIndex(i),Nd4j.create(read));
       vectorPaths.get(i).delete();
     }
-    ret.setCache(cache);
+    ret.setVocab(cache);
     ret.setLookupTable(lookupTable);
     ret.setLayerSize(size);
     rootDir.delete();
@@ -87,7 +87,7 @@
       vectorPaths.get(i).delete();
     }
     Word2Vec ret=new Word2Vec();
-    ret.setCache(cache);
+    ret.setVocab(cache);
     ret.setLookupTable(lookupTable);
     ret.setLayerSize(layerSize);
     reader.close();

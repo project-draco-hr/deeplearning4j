@@ -1,8 +1,8 @@
 {
   BufferedWriter write=new BufferedWriter(new FileWriter(csv));
   int words=0;
-  InMemoryLookupCache l=(InMemoryLookupCache)vec.getCache();
-  for (  String word : vec.getCache().words()) {
+  InMemoryLookupCache l=(InMemoryLookupCache)vec.vocab();
+  for (  String word : vec.vocab().words()) {
     if (word == null)     continue;
     StringBuffer sb=new StringBuffer();
     INDArray wordVector=tsne.getRow(l.wordFor(word).getIndex());
@@ -16,7 +16,7 @@
     sb.append("\n");
     write.write(sb.toString());
   }
-  log.info("Wrote " + words + " with size of "+ vec.getLayerSize());
+  log.info("Wrote " + words + " with size of "+ vec.lookupTable().layerSize());
   write.flush();
   write.close();
 }

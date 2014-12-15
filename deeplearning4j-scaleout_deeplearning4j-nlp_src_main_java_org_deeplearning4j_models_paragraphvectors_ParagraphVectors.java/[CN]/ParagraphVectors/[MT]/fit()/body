@@ -1,6 +1,6 @@
 {
   boolean loaded=buildVocab();
-  if (!loaded && saveVocab)   cache.saveVocab();
+  if (!loaded && saveVocab)   vocab().saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
@@ -71,7 +71,7 @@
       addWords(input.getFirst(),nextRandom,batch);
       if (batch.isEmpty())       return null;
       Collection<VocabWord> docLabels=new ArrayList<>();
-      for (      String s : input.getSecond())       docLabels.add(cache.wordFor(s));
+      for (      String s : input.getSecond())       docLabels.add(vocab().wordFor(s));
       for (int i=0; i < numIterations; i++) {
         batch2.add(new Pair<>(batch,docLabels));
       }
