@@ -13,8 +13,14 @@
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
     double g=useAdaGrad ? w1.getGradient(i,(1 - code - f)) : (1 - code - f) * alpha;
-    Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
-    Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
+    if (neu1e.data().dataType() == DataBuffer.FLOAT) {
+      Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
+      Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
+    }
+ else {
+      Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
+      Nd4j.getBlasWrapper().axpy(g,l1,syn1);
+    }
   }
   int target=w1.getIndex();
   int label;
