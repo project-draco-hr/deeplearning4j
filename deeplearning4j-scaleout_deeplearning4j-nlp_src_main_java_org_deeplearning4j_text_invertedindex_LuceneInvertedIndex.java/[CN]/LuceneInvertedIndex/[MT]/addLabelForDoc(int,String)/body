@@ -1,9 +1,9 @@
 {
-  IndexReader reader=getReader();
   try {
+    DirectoryReader reader=readerManager.acquire();
     Document doc2=reader.document(doc);
     doc2.add(new TextField(LABEL,label,Field.Store.YES));
-    reader.close();
+    readerManager.release(reader);
     TrackingIndexWriter writer=getWriter();
     Term term=new Term(LABEL,label);
     writer.updateDocument(term,doc2);

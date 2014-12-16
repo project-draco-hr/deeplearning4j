@@ -1,9 +1,9 @@
 {
-  IndexReader reader=getReader();
   try {
+    DirectoryReader reader=readerManager.acquire();
     Document doc2=reader.document(doc);
     for (    String s : label)     doc2.add(new TextField(LABEL,s,Field.Store.YES));
-    reader.close();
+    readerManager.release(reader);
     TrackingIndexWriter writer=getWriter();
     List<Term> terms=new ArrayList<>();
     for (    String s : label) {

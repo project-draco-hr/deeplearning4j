@@ -5,7 +5,14 @@
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
-  final int[] docs=vectorizer.index().allDocs();
+  int[] docs=vectorizer.index().allDocs();
+  if (docs.length < 1) {
+    vectorizer.fit();
+  }
+  docs=vectorizer.index().allDocs();
+  if (docs.length < 1) {
+    throw new IllegalStateException("No documents found");
+  }
   totalWords=vectorizer.numWordsEncountered();
   if (totalWords < 1)   throw new IllegalStateException("Unable to train, total words less than 1");
   totalWords*=numIterations;

@@ -2,9 +2,9 @@
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   Collection<String> labels=new ArrayList<>();
   try {
-    IndexReader reader=getReader();
+    DirectoryReader reader=readerManager.acquire();
     Document doc=reader.document(index);
-    reader.close();
+    readerManager.release(reader);
     String[] values=doc.getValues(WORD_FIELD);
     String[] labels2=doc.getValues(LABEL);
     for (    String s : values) {

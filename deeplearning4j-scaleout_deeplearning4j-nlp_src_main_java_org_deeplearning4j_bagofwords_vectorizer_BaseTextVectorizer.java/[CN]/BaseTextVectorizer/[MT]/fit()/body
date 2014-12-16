@@ -1,5 +1,5 @@
 {
-  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  if (trainingSystem == null || trainingSystem.isTerminated())   trainingSystem=ActorSystem.create();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger queued=new AtomicInteger(0);
   final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,stopWords,semaphore,minWordFrequency,numWordsEncountered,index)));

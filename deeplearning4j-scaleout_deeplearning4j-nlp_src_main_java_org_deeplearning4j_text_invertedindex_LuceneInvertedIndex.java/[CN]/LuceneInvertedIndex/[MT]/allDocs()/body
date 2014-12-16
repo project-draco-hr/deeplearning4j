@@ -4,7 +4,14 @@
     for (int i=0; i < words.size(); i++)     ret[i]=i;
     return ret;
   }
-  IndexReader reader=getReader();
+  DirectoryReader reader=null;
+  try {
+    readerManager.maybeRefreshBlocking();
+    reader=readerManager.acquire();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
   int[] docIds=new int[reader.maxDoc()];
   int count=0;
   Bits liveDocs=MultiFields.getLiveDocs(reader);

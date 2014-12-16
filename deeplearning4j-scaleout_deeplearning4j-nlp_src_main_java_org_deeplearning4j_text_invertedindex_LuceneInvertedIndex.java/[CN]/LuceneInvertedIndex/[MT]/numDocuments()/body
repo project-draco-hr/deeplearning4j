@@ -1,10 +1,9 @@
 {
   try {
-    initReader();
     readerManager.maybeRefresh();
-    reader=readerManager.acquire();
+    DirectoryReader reader=readerManager.acquire();
     int ret=reader.numDocs();
-    reader.close();
+    readerManager.release(reader);
     return ret;
   }
  catch (  IOException e) {

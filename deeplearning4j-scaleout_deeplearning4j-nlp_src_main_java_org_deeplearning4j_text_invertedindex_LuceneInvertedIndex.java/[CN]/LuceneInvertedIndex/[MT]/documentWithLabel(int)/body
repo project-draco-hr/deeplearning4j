@@ -2,7 +2,7 @@
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   String label="NONE";
   try {
-    IndexReader reader=getReader();
+    DirectoryReader reader=readerManager.acquire();
     Document doc=reader.document(index);
     reader.close();
     String[] values=doc.getValues(WORD_FIELD);
