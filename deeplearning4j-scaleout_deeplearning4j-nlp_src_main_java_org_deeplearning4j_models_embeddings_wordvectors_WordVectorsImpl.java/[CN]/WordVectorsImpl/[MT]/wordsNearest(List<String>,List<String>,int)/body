@@ -1,6 +1,6 @@
 {
   for (  String p : SetUtils.union(new HashSet<>(positive),new HashSet<>(negative))) {
-    if (!vocab.containsWord(p)) {
+    if (!vocab().containsWord(p)) {
       return new ArrayList<>();
     }
   }
@@ -8,13 +8,13 @@
   int row=0;
   Set<String> union=SetUtils.union(new HashSet<>(positive),new HashSet<>(negative));
   for (  String s : positive) {
-    words.putRow(row++,lookupTable.vector(s));
+    words.putRow(row++,lookupTable().vector(s));
   }
   for (  String s : negative) {
-    words.putRow(row++,lookupTable.vector(s).mul(-1));
+    words.putRow(row++,lookupTable().vector(s).mul(-1));
   }
   INDArray mean=words.isMatrix() ? words.mean(0) : words;
-  if (lookupTable instanceof InMemoryLookupTable) {
+  if (lookupTable() instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable();
     INDArray syn0=l.getSyn0();
     INDArray weights=mean;
@@ -37,7 +37,7 @@
     return ret;
   }
   Counter<String> distances=new Counter<>();
-  for (  String s : vocab.words()) {
+  for (  String s : vocab().words()) {
     INDArray otherVec=getWordVectorMatrix(s);
     double sim=Transforms.cosineSim(mean,otherVec);
     distances.incrementCount(s,sim);

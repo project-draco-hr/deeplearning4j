@@ -16,7 +16,7 @@
     sb.append("\n");
     write.write(sb.toString());
   }
-  log.info("Wrote " + words + " with size of "+ vec.getLookupTable().getVectorLength());
+  log.info("Wrote " + words + " with size of "+ vec.lookupTable().getVectorLength());
   write.flush();
   write.close();
 }

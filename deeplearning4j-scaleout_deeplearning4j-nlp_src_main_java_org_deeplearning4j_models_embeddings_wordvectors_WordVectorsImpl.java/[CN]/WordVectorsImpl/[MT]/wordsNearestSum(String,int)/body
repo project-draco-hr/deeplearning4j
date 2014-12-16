@@ -1,6 +1,6 @@
 {
   INDArray vec=Transforms.unitVec(this.getWordVectorMatrix(word));
-  if (lookupTable instanceof InMemoryLookupTable) {
+  if (lookupTable() instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable();
     INDArray syn0=l.getSyn0();
     INDArray weights=syn0.norm2(0).rdivi(1).muli(vec);

@@ -9,8 +9,8 @@
       for (      Pair<String,String> next : currentItem) {
         String w1=next.getFirst();
         String w2=next.getSecond();
-        VocabWord vocabWord=cache.wordFor(w1);
-        VocabWord vocabWord1=cache.wordFor(w2);
+        VocabWord vocabWord=vocab().wordFor(w1);
+        VocabWord vocabWord1=vocab().wordFor(w2);
         send.add(new Pair<>(vocabWord,vocabWord1));
       }
       jobQueue.add(new Pair<>(i,send));
@@ -33,7 +33,7 @@
             processed.decrementAndGet();
             continue;
           }
-          errorPerIteration.incrementCount(work.getFirst(),lookupTable.iterateSample(w1,w2,weight));
+          errorPerIteration.incrementCount(work.getFirst(),lookupTable().iterateSample(w1,w2,weight));
           countUp.incrementAndGet();
           if (countUp.get() % 10000 == 0)           log.info("Processed " + countUp.get() + " co occurrences");
           processed.decrementAndGet();

@@ -7,6 +7,7 @@
   prediction+=bias.getDouble(w1.getIndex()) + bias.getDouble(w2.getIndex());
   double weight=Math.pow(Math.min(1.0,(score / maxCount)),xMax);
   double fDiff=score > xMax ? prediction : weight * (prediction - Math.log(score));
+  if (Double.isNaN(fDiff))   fDiff=Nd4j.EPS_THRESHOLD;
   double gradient=fDiff;
   update(w1,w1Vector,w2Vector,gradient);
   update(w2,w2Vector,w1Vector,gradient);

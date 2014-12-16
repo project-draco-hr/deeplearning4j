@@ -8,24 +8,24 @@
     if (line.isEmpty())     continue;
     String[] split=line.split(" ");
     String word=split[0];
-    if (glove.cache == null)     glove.cache=new InMemoryLookupCache();
-    if (glove.getLookupTable() == null) {
-      glove.lookupTable=new GloveWeightLookupTable.Builder().cache(glove.cache).vectorLength(split.length - 1).build();
+    if (glove.vocab() == null)     glove.setVocab(new InMemoryLookupCache());
+    if (glove.lookupTable() == null) {
+      glove.lookupTable=new GloveWeightLookupTable.Builder().cache(glove.vocab()).vectorLength(split.length - 1).build();
     }
     if (word.isEmpty())     continue;
-    float[] read=read(split,glove.lookupTable.getVectorLength());
+    float[] read=read(split,glove.lookupTable().getVectorLength());
     if (read.length < 1)     continue;
     VocabWord w1=new VocabWord(1,word);
-    glove.layerSize=glove.lookupTable.getVectorLength();
+    glove.layerSize=glove.lookupTable().getVectorLength();
     w1.setIndex(count);
-    glove.cache.addToken(w1);
-    glove.cache.addWordToIndex(count,word);
-    glove.cache.putVocabWord(word);
+    glove.vocab().addToken(w1);
+    glove.vocab().addWordToIndex(count,word);
+    glove.vocab().putVocabWord(word);
     wordVectors.put(word,read);
     count++;
   }
-  glove.lookupTable.setSyn0(weights(glove,wordVectors));
+  glove.lookupTable().setSyn0(weights(glove,wordVectors));
   iter.close();
-  glove.lookupTable.setBias(Nd4j.readTxt(biases," "));
+  glove.lookupTable().setBias(Nd4j.readTxt(biases," "));
   return glove;
 }
