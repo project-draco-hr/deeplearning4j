@@ -1,0 +1,38 @@
+{
+  this.listeners=listeners;
+  this.sparsity=sparsity;
+  this.useAdaGrad=useAdaGrad;
+  this.lr=lr;
+  this.k=k;
+  this.corruptionLevel=corruptionLevel;
+  this.numIterations=numIterations;
+  this.momentum=momentum;
+  this.l2=l2;
+  this.useRegularization=useRegularization;
+  this.momentumAfter=momentumAfter;
+  this.resetAdaGradIterations=resetAdaGradIterations;
+  this.dropOut=dropOut;
+  this.applySparsity=applySparsity;
+  this.weightInit=weightInit;
+  this.optimizationAlgo=optimizationAlgo;
+  this.lossFunction=lossFunction;
+  this.renderWeightsEveryNumEpochs=renderWeightsEveryNumEpochs;
+  this.concatBiases=concatBiases;
+  this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
+  this.rng=rng;
+  this.dist=dist;
+  this.seed=seed;
+  this.nIn=nIn;
+  this.nOut=nOut;
+  this.activationFunction=activationFunction;
+  this.visibleUnit=visibleUnit;
+  this.hiddenUnit=hiddenUnit;
+  this.activationType=activationType;
+  if (weightShape != null)   this.weightShape=weightShape;
+ else   this.weightShape=new int[]{nIn,nOut};
+  this.filterSize=filterSize;
+  this.numFeatureMaps=numFeatureMaps;
+  this.stride=stride;
+  this.featureMapSize=featureMapSize;
+  this.numInFeatureMaps=numInFeatureMaps;
+}

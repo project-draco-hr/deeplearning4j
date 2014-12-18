@@ -6,8 +6,8 @@
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
     g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
-    g.setMaxIterations(numEpochs);
-    g.optimize(numEpochs);
+    g.setMaxIterations(numIterations);
+    g.optimize(numIterations);
   }
  else   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
     IterationGradientDescent g=new IterationGradientDescent(opt,conf.getNumIterations());
@@ -17,6 +17,6 @@
     VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
     g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
-    g.optimize(numEpochs);
+    g.optimize(numIterations);
   }
 }

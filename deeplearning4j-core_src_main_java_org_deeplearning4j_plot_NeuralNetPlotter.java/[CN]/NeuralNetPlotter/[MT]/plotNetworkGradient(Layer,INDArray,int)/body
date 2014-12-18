@@ -1,7 +1,6 @@
 {
   histogram(new String[]{"W","w-gradient"},new INDArray[]{network.getW(),gradient});
   plotActivations(network);
-  FilterRenderer render=new FilterRenderer();
   try {
     if (network.getW().shape().length > 2) {
       INDArray w=network.getW().dup();

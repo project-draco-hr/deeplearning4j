@@ -1,7 +1,7 @@
 {
   Map<Integer,Integer> mapHistory=this.generateHistogramBuckets(data,numberBins);
-  double min=(double)data.min(Integer.MAX_VALUE).getDouble(0);
-  double max=(double)data.max(Integer.MAX_VALUE).getDouble(0);
+  double min=data.min(Integer.MAX_VALUE).getDouble(0);
+  double max=data.max(Integer.MAX_VALUE).getDouble(0);
   double range=max - min;
   double stepSize=range / numberBins;
   int xOffset=50;
@@ -27,7 +27,7 @@
   double yLabelStepSize=(double)maxValue / 4.0f;
   for (int yStep=0; yStep < 5; yStep++) {
     double curLabel=yStep * yLabelStepSize;
-    long curY=(int)(graphHeight + yOffset) - Math.round(((int)(curLabel) / (double)maxValue) * (graphHeight + yOffset - 20));
+    long curY=(graphHeight + yOffset) - Math.round(((int)(curLabel) / (double)maxValue) * (graphHeight + yOffset - 20));
     g2d.setColor(Color.BLACK);
     g2d.drawString("" + curLabel,10,curY);
   }
@@ -38,9 +38,9 @@
     long barHeight=Math.round(((double)value / (double)maxValue) * (graphHeight + yOffset - 20));
     g2d.setColor(Color.BLUE);
     long yPos=graphHeight + yOffset - barHeight;
-    g2d.fillRect((int)xPos,(int)yPos,(int)barWidth,(int)barHeight);
+    g2d.fillRect(xPos,(int)yPos,barWidth,(int)barHeight);
     g2d.setColor(Color.DARK_GRAY);
-    g2d.drawRect((int)xPos,(int)yPos,(int)barWidth,(int)barHeight);
+    g2d.drawRect(xPos,(int)yPos,barWidth,(int)barHeight);
     g2d.setColor(Color.BLACK);
     g2d.drawString(bucket_label,xPos + ((barWidth / 2) - 10),barHeight + 20 + yPos);
     xPos+=barWidth + 10;
