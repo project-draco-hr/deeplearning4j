@@ -11,6 +11,7 @@
         break;
       }
     }
+    if (listener != null)     listener.iterationDone(i);
   }
   return true;
 }
