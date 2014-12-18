@@ -1,0 +1,16 @@
+{
+  for (int i=0; i < iterations; i++) {
+    INDArray params=optimizable.getParameters();
+    optimizable.setParameters(params.addi(optimizable.getValueGradient(0)));
+    double score=optimizable.getValue();
+    log.info("Score at iteration " + i + " is "+ score);
+    if (this.score != 0) {
+      double diff=Math.abs(score - this.score);
+      if (diff < Nd4j.EPS_THRESHOLD) {
+        log.info("Breaking early...no change");
+        break;
+      }
+    }
+  }
+  return true;
+}

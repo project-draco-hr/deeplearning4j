@@ -9,6 +9,10 @@
     g.setMaxIterations(numEpochs);
     g.optimize(numEpochs);
   }
+ else   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
+    IterationGradientDescent g=new IterationGradientDescent(opt,conf.getNumIterations());
+    g.optimize();
+  }
  else {
     VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(opt);
     g.setTolerance(1e-3f);

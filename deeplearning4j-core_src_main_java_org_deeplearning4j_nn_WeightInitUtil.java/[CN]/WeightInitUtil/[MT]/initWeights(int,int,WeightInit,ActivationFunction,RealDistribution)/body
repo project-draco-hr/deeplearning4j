@@ -1,9 +1,11 @@
 {
-  INDArray ret=Nd4j.randn(nIn,nOut);
+  INDArray ret=Nd4j.rand(nIn,nOut);
 switch (initScheme) {
+case NORMALIZED:
+    return ret.subi(0.5).divi(nIn);
 case VI:
-    double r=Math.sqrt(6) / Math.sqrt(nIn + nOut + 1);
-  ret.muli(2).muli(r).subi(r);
+  double r=Math.sqrt(6) / Math.sqrt(nIn + nOut + 1);
+ret.muli(2).muli(r).subi(r);
 return ret;
 case DISTRIBUTION:
 for (int i=0; i < ret.rows(); i++) {

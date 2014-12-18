@@ -1,7 +1,6 @@
 {
   if (iter == null) {
     Word2Vec ret=new Word2Vec();
-    ret.layerSize=layerSize;
     ret.window=window;
     ret.alpha.set(lr);
     ret.vectorizer=textVectorizer;
@@ -39,7 +38,6 @@
  else {
     Word2Vec ret=new Word2Vec();
     ret.alpha.set(lr);
-    ret.layerSize=layerSize;
     ret.sentenceIter=iter;
     ret.window=window;
     ret.useAdaGrad=useAdaGrad;

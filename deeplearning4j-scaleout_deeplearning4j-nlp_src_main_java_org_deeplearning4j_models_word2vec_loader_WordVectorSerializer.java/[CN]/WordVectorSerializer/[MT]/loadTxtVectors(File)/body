@@ -3,6 +3,5 @@
   WordVectorsImpl vectors=new WordVectorsImpl();
   vectors.setLookupTable(pair.getFirst());
   vectors.setVocab(pair.getSecond());
-  vectors.setLayerSize(pair.getFirst().layerSize());
   return vectors;
 }

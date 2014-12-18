@@ -16,7 +16,6 @@
     float[] read=read(split,glove.lookupTable().getVectorLength());
     if (read.length < 1)     continue;
     VocabWord w1=new VocabWord(1,word);
-    glove.layerSize=glove.lookupTable().getVectorLength();
     w1.setIndex(count);
     glove.vocab().addToken(w1);
     glove.vocab().addWordToIndex(count,word);

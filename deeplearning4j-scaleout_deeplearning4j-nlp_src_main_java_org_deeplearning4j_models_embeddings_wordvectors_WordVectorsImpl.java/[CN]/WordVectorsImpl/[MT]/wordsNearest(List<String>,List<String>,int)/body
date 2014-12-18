@@ -4,7 +4,7 @@
       return new ArrayList<>();
     }
   }
-  INDArray words=Nd4j.create(positive.size() + negative.size(),layerSize);
+  INDArray words=Nd4j.create(positive.size() + negative.size(),lookupTable().layerSize());
   int row=0;
   Set<String> union=SetUtils.union(new HashSet<>(positive),new HashSet<>(negative));
   for (  String s : positive) {

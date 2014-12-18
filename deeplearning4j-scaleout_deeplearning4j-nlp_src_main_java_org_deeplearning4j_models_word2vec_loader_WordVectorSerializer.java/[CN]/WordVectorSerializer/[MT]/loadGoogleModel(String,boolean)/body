@@ -53,7 +53,6 @@
     }
     ret.setVocab(cache);
     ret.setLookupTable(lookupTable);
-    ret.setLayerSize(size);
     rootDir.delete();
     return ret;
   }
@@ -89,7 +88,6 @@
     Word2Vec ret=new Word2Vec();
     ret.setVocab(cache);
     ret.setLookupTable(lookupTable);
-    ret.setLayerSize(layerSize);
     reader.close();
     rootDir.delete();
     return ret;

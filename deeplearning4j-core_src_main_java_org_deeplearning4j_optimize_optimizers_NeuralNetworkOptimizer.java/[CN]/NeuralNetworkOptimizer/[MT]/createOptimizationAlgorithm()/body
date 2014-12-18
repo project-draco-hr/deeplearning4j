@@ -3,6 +3,9 @@
     opt=new VectorizedNonZeroStoppingConjugateGradient(this,this);
     opt.setTolerance(tolerance);
   }
+ else   if (network.conf().getOptimizationAlgo() == OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
+    opt=new IterationGradientDescent(this,network.conf().getNumIterations());
+  }
  else {
     opt=new VectorizedDeepLearningGradientAscent(this,this);
     opt.setTolerance(tolerance);

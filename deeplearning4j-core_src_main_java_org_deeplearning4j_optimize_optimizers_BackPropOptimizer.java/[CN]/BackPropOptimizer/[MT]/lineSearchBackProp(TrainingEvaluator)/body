@@ -9,6 +9,10 @@
     g.setMaxIterations(network.getOutputLayer().conf().getNumIterations());
     g.optimize(network.getOutputLayer().conf().getNumIterations());
   }
+ else   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
+    IterationGradientDescent g=new IterationGradientDescent(this,network.getOutputLayer().conf().getNumIterations());
+    g.optimize();
+  }
  else   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE) {
     StochasticHessianFree s=new StochasticHessianFree(this,network);
     s.setTrainingEvaluator(eval);
