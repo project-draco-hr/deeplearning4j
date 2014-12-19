@@ -1,4 +1,4 @@
 {
-  INDArray activation=conf.getActivationFunction().apply(getInput().mmul(getW()).addRowVector(getB()));
+  INDArray activation=conf.getActivationFunction().apply(getInput().mmul(getW()).addiRowVector(getB()));
   return activation;
 }

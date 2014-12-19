@@ -1,10 +1,11 @@
 {
+  double lr=conf.getLr();
   adaGrad.setMasterStepSize(lr);
   biasAdaGrad.setMasterStepSize(lr);
   LinAlgExceptions.assertRows(input,labels);
   this.input=x;
   this.labels=y;
-  OutputLayerGradient gradient=getGradient(lr);
+  OutputLayerGradient gradient=getGradient();
   W.addi(gradient.getwGradient());
   b.addi(gradient.getbGradient());
 }

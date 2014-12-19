@@ -1,5 +1,6 @@
 {
   LinAlgExceptions.assertRows(input,labels);
+  double lr=conf.getLr();
   adaGrad.setMasterStepSize(lr);
   biasAdaGrad.setMasterStepSize(lr);
   INDArray netOut=output(input);

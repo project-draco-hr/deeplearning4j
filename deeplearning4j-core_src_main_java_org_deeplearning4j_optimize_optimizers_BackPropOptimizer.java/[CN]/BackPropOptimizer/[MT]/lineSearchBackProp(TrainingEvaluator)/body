@@ -1,6 +1,5 @@
 {
-  NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getDefaultConfiguration().getOptimizationAlgo();
-  network.feedForward();
+  NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getOutputLayer().conf().getOptimizationAlgo();
   Collection<IterationListener> listeners=new ArrayList<>();
   listeners.add(this);
   listeners.addAll(network.getOutputLayer().conf().getListeners());
@@ -8,8 +7,6 @@
   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this,new BackPropStepFunction(network),listener);
     g.setTrainingEvaluator(eval);
-    if (network.getOutputLayer().conf().getRenderWeightIterations() > 0) {
-    }
     g.setMaxIterations(network.getOutputLayer().conf().getNumIterations());
     g.optimize(network.getOutputLayer().conf().getNumIterations());
   }

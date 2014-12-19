@@ -1,6 +1,6 @@
 {
   this.currIteration=currIteration;
-  OutputLayerGradient grad=logReg.getGradient(lr);
+  OutputLayerGradient grad=logReg.getGradient();
   if (logReg.getW().length() != grad.getwGradient().length())   throw new IllegalStateException("Illegal length for gradient");
   if (logReg.getB().length() != grad.getbGradient().length())   throw new IllegalStateException("Illegal length for gradient");
   return Nd4j.toFlattened(grad.getwGradient(),grad.getbGradient());

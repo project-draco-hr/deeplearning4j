@@ -10,13 +10,6 @@
     if (i == 0)     layerInput=getInput();
  else     layerInput=activationFromPrevLayer(i - 1,layerInput);
     log.info("Training on layer " + (i + 1));
-    if (layerWiseConfigurations.isForceNumIterations()) {
-      for (int iteration=0; iteration < layers[i].conf().getNumIterations(); iteration++) {
-        log.info("Error on epoch " + iteration + " for layer "+ (i + 1)+ " is "+ getNeuralNets()[i].score());
-        getNeuralNets()[i].iterate(layerInput);
-        getNeuralNets()[i].iterationDone(iteration);
-      }
-    }
- else     getNeuralNets()[i].fit(layerInput);
+    getNeuralNets()[i].fit(layerInput);
   }
 }

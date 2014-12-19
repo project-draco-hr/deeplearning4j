@@ -15,8 +15,8 @@
   }
   for (int i=weights.size() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(ix);
-    log.info("Delta sum at " + i + " is "+ deltas[i].sum(Integer.MAX_VALUE));
-    preCons[i]=Transforms.pow(activations.get(i).transpose(),2).mmul(Transforms.pow(ix,2)).mul(labels.rows());
+    log.info("Delta sum at " + i + " is "+ deltas[i].mean(Integer.MAX_VALUE));
+    preCons[i]=Transforms.pow(activations.get(i).transpose(),2).mmul(Transforms.pow(ix,2)).muli(labels.rows());
     applyDropConnectIfNecessary(deltas[i]);
     if (i > 0) {
       ix=ix.mmul(weights.get(i).transpose()).muli(activationFunctions.get(i - 1).applyDerivative(activations.get(i)));

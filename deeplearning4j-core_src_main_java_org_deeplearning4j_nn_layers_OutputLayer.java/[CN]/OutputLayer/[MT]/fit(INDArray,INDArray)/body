@@ -1,3 +1,4 @@
 {
-  trainTillConvergence(examples,labels,conf.getLr(),conf.getNumIterations());
+  this.input=examples;
+  trainTillConvergence(labels,null);
 }

@@ -1,14 +1,21 @@
 {
+  double learningRate=conf.getLr();
+  int numIterations=conf.getNumIterations();
   this.labels=labels;
   OutputLayerOptimizer opt=new OutputLayerOptimizer(this,learningRate);
   adaGrad.setMasterStepSize(learningRate);
   biasAdaGrad.setMasterStepSize(learningRate);
+  IterationListener listener=conf.getListeners() != null ? new ComposableIterationListener(conf.getListeners()) : null;
   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.CONJUGATE_GRADIENT) {
     VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(opt);
     g.setTolerance(1e-3f);
     g.setTrainingEvaluator(eval);
     g.setMaxIterations(numIterations);
     g.optimize(numIterations);
+  }
+ else   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
+    IterationGradientDescent g=new IterationGradientDescent(opt,listener,conf.getNumIterations());
+    g.optimize();
   }
  else   if (conf.getOptimizationAlgo() == OptimizationAlgorithm.HESSIAN_FREE) {
     StochasticHessianFree o=new StochasticHessianFree(opt,null);

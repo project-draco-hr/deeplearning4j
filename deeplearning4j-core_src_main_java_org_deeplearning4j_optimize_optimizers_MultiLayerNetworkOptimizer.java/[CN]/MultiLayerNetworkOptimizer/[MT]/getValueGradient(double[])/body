@@ -1,5 +1,5 @@
 {
-  OutputLayerGradient gradient=network.getOutputLayer().getGradient(lr);
+  OutputLayerGradient gradient=network.getOutputLayer().getGradient();
   INDArray weightGradient=gradient.getwGradient();
   INDArray biasGradient=gradient.getbGradient();
   int idx=0;
