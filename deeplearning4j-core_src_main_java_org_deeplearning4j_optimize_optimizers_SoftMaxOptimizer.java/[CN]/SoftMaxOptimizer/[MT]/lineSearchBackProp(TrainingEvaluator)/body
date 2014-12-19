@@ -1,0 +1,28 @@
+{
+  NeuralNetwork.OptimizationAlgorithm optimizationAlgorithm=network.getOutputLayer().conf().getOptimizationAlgo();
+  Collection<IterationListener> listeners=new ArrayList<>();
+  listeners.add(this);
+  listeners.addAll(network.getOutputLayer().conf().getListeners());
+  IterationListener listener=new ComposableIterationListener(listeners);
+  if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.CONJUGATE_GRADIENT) {
+    VectorizedNonZeroStoppingConjugateGradient g=new VectorizedNonZeroStoppingConjugateGradient(this,new BackPropStepFunction(network),listener);
+    g.setTrainingEvaluator(eval);
+    g.setMaxIterations(network.getOutputLayer().conf().getNumIterations());
+    g.optimize(network.getOutputLayer().conf().getNumIterations());
+  }
+ else   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT) {
+    IterationGradientDescent g=new IterationGradientDescent(this,listener,network.getOutputLayer().conf().getNumIterations());
+    g.optimize();
+  }
+ else   if (optimizationAlgorithm == NeuralNetwork.OptimizationAlgorithm.HESSIAN_FREE) {
+    StochasticHessianFree s=new StochasticHessianFree(this,listener,network);
+    s.setTrainingEvaluator(eval);
+    s.setMaxIterations(network.getOutputLayer().conf().getNumIterations());
+    s.optimize(network.getOutputLayer().conf().getNumIterations());
+  }
+ else {
+    VectorizedDeepLearningGradientAscent g=new VectorizedDeepLearningGradientAscent(this,1e-1,listener,new BackPropStepFunction(network));
+    g.setTrainingEvaluator(eval);
+    g.optimize(network.getOutputLayer().conf().getNumIterations());
+  }
+}

@@ -4,7 +4,7 @@
     opt.optimize(eval);
   }
  else {
-    BackPropOptimizer opt=new BackPropOptimizer(this,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
+    SoftMaxOptimizer opt=new SoftMaxOptimizer(this,defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
     opt.optimize(eval);
   }
 }
