@@ -1,0 +1,7 @@
+{
+  if (clientResourceManager == null)   throw new IllegalStateException("Cannot get an application ID befire connecting to resource manager!");
+  GetNewApplicationRequest appReq=Records.newRecord(GetNewApplicationRequest.class);
+  GetNewApplicationResponse appRes=clientResourceManager.getNewApplication(appReq);
+  LOG.info("Got a new application with id=" + appRes.getApplicationId());
+  return appRes.getApplicationId();
+}

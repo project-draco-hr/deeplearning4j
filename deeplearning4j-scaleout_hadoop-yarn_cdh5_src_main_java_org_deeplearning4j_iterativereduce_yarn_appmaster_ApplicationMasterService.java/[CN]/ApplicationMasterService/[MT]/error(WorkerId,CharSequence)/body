@@ -1,0 +1,5 @@
+{
+  LOG.warn("A worker encountered an error" + ", worker=" + Utils.getWorkerId(workerId) + ", message="+ message);
+  workersState.put(workerId,WorkerState.ERROR);
+  workersCompleted.countDown();
+}

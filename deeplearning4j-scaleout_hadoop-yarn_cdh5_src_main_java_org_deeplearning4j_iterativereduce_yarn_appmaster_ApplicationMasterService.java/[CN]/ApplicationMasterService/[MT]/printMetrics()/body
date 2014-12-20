@@ -1,0 +1,20 @@
+{
+  StringBuffer metrics=new StringBuffer("Master metrics:\n");
+  metrics.append("  MasterTime: ").append(mMasterTime).append("\n");
+  metrics.append("  MasterExecutions: ").append(mMasterExecutions).append("\n");
+  metrics.append("  UpdatesReceived: ").append(mUpdates).append("\n");
+  metrics.append("\n");
+  if (workerMetrics == null) {
+    metrics.append("  Worker metrics: no workers supplied metrics!\n");
+  }
+ else {
+    for (    WorkerId wid : workerMetrics.keySet()) {
+      metrics.append("  Worker Metrics - ").append(Utils.getWorkerId(wid)).append(":").append("\n");
+      for (      Map.Entry<CharSequence,Long> entry : workerMetrics.get(wid).entrySet()) {
+        metrics.append("    ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+      }
+      metrics.append("\n");
+    }
+  }
+  LOG.info(metrics.toString());
+}

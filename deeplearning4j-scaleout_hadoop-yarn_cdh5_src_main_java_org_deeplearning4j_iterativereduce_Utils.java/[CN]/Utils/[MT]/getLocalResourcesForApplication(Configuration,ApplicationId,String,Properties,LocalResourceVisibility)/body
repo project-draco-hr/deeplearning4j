@@ -1,0 +1,35 @@
+{
+  List<String> resources=new ArrayList<String>();
+  Map<String,LocalResource> localResources=new HashMap<String,LocalResource>();
+  resources.add(getPathForResource(props.getProperty(ConfigFields.JAR_PATH),appId,appName));
+  resources.add(getPathForResource(props.getProperty(ConfigFields.APP_JAR_PATH),appId,appName));
+  resources.add(getPathForResource(ConfigFields.APP_CONFIG_FILE,appId,appName));
+  resources.add(getPathForResource("log4j.properties",appId,appName));
+  String libs=props.getProperty(ConfigFields.APP_LIB_PATH);
+  if (libs != null && !libs.isEmpty()) {
+    for (    String s : libs.split(",")) {
+      resources.add(getPathForResource(s,appId,appName));
+    }
+  }
+  FileSystem fs=FileSystem.get(conf);
+  Path fsPath;
+  FileStatus fstat;
+  for (  String resource : resources) {
+    try {
+      fsPath=new Path(resource);
+      fstat=fs.getFileStatus(fsPath);
+      LOG.debug("Processing local resource=" + fstat.getPath());
+      LocalResource localResource=Records.newRecord(LocalResource.class);
+      localResource.setResource(ConverterUtils.getYarnUrlFromPath(fstat.getPath()));
+      localResource.setSize(fstat.getLen());
+      localResource.setTimestamp(fstat.getModificationTime());
+      localResource.setVisibility(visibility);
+      localResource.setType(LocalResourceType.FILE);
+      localResources.put(fsPath.getName(),localResource);
+    }
+ catch (    FileNotFoundException ex) {
+      LOG.warn("Unable to copy file " + resource + ": File not found.");
+    }
+  }
+  return localResources;
+}

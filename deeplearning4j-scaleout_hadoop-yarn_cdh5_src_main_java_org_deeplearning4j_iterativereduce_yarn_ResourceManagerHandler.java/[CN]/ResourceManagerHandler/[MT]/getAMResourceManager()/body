@@ -1,0 +1,10 @@
+{
+  if (amResourceManager != null)   return amResourceManager;
+  LOG.debug("Using configuration: " + conf);
+  YarnConfiguration yarnConf=new YarnConfiguration(conf);
+  YarnRPC rpc=YarnRPC.create(yarnConf);
+  InetSocketAddress rmAddress=NetUtils.createSocketAddr(yarnConf.get(YarnConfiguration.RM_SCHEDULER_ADDRESS,YarnConfiguration.DEFAULT_RM_SCHEDULER_ADDRESS));
+  LOG.info("Connecting to the resource manager (scheduling) at " + rmAddress);
+  amResourceManager=(AMRMProtocol)rpc.getProxy(AMRMProtocol.class,rmAddress,conf);
+  return amResourceManager;
+}

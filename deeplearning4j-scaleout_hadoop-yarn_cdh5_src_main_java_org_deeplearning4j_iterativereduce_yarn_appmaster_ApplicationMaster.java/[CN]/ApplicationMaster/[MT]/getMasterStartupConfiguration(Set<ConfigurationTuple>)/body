@@ -1,0 +1,8 @@
+{
+  Map<WorkerId,StartupConfiguration> startupConfig=new HashMap<WorkerId,StartupConfiguration>();
+  for (  ConfigurationTuple tuple : configTuples) {
+    WorkerId wid=Utils.createWorkerId(tuple.getWorkerId());
+    startupConfig.put(wid,tuple.getConfig());
+  }
+  return startupConfig;
+}

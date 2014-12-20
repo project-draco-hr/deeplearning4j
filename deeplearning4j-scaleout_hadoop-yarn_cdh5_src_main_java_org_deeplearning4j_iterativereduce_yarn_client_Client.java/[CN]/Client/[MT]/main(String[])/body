@@ -1,0 +1,5 @@
+{
+  int rc=ToolRunner.run(new Configuration(),new Client(),args);
+  LOG.debug("Calling System.exit(" + rc + ")");
+  System.exit(rc);
+}

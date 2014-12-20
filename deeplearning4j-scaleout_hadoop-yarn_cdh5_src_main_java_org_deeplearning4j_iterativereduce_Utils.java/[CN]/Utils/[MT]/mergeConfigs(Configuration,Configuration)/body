@@ -1,0 +1,8 @@
+{
+  if (sourceConf == null || destConf == null)   return;
+  for (  Map.Entry<String,String> entry : sourceConf) {
+    if (destConf.get(entry.getKey()) == null) {
+      destConf.set(entry.getKey(),entry.getValue());
+    }
+  }
+}

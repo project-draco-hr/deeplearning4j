@@ -1,0 +1,159 @@
+{
+  conf=getConf();
+  ResourceManagerHandler rmHandler=new ResourceManagerHandler(conf,appAttemptId);
+  rmHandler.getAMResourceManager();
+  try {
+    rmHandler.registerApplicationMaster(masterHost,masterPort);
+  }
+ catch (  YarnRemoteException ex) {
+    LOG.error("Error encountered while trying to register application master",ex);
+    return ReturnCode.MASTER_ERROR.getCode();
+  }
+  Set<ConfigurationTuple> configTuples;
+  try {
+    configTuples=getConfigurationTuples();
+  }
+ catch (  IOException ex) {
+    LOG.error("Error encountered while trying to generate configurations",ex);
+    return ReturnCode.MASTER_ERROR.getCode();
+  }
+  Map<WorkerId,StartupConfiguration> startupConf=getMasterStartupConfiguration(configTuples);
+  List<ResourceRequest> requestedContainers=getRequestedContainersList(configTuples,rmHandler);
+  List<ContainerId> releasedContainers=new ArrayList<ContainerId>();
+  List<Container> allocatedContainers=new ArrayList<Container>();
+  try {
+    int needed=configTuples.size();
+    int got=0;
+    int maxAttempts=Integer.parseInt(props.getProperty(ConfigFields.APP_ALLOCATION_MAX_ATTEMPTS,"10"));
+    ;
+    int attempts=0;
+    List<Container> acquiredContainers=null;
+    while (got < needed && attempts < maxAttempts) {
+      LOG.info("Requesting containers" + ", got=" + got + ", needed="+ needed+ ", attempts="+ attempts+ ", maxAttempts="+ maxAttempts);
+      acquiredContainers=rmHandler.allocateRequest(requestedContainers,releasedContainers).getAllocatedContainers();
+      got+=acquiredContainers.size();
+      attempts++;
+      allocatedContainers.addAll(acquiredContainers);
+      acquiredContainers.clear();
+      LOG.info("Got allocation response, allocatedContainers=" + acquiredContainers.size());
+      Thread.sleep(2500);
+    }
+  }
+ catch (  YarnRemoteException ex) {
+    LOG.error("Encountered an error while trying to allocate containers",ex);
+    return ReturnCode.MASTER_ERROR.getCode();
+  }
+  final int numContainers=configTuples.size();
+  if (allocatedContainers.size() < numContainers) {
+    LOG.info("Unable to get requried number of containers, will not continue" + ", needed=" + numContainers + ", allocated="+ allocatedContainers.size());
+    requestedContainers.clear();
+    for (    Container c : allocatedContainers) {
+      releasedContainers.add(c.getId());
+    }
+    try {
+      rmHandler.allocateRequest(requestedContainers,releasedContainers);
+    }
+ catch (    YarnRemoteException ex) {
+      LOG.warn("Encountered an error while trying to release unwanted containers",ex);
+    }
+    rmHandler.finishApplication("Unable to allocate containers, needed " + numContainers + ", but got "+ allocatedContainers.size(),FinalApplicationStatus.FAILED);
+    return ReturnCode.MASTER_ERROR.getCode();
+  }
+  LOG.info("Starting master service");
+  ApplicationMasterService<T> masterService=new ApplicationMasterService<T>(masterAddr,startupConf,masterComputable,masterUpdateable,appConfig,conf);
+  ExecutorService executor=Executors.newSingleThreadExecutor();
+  Future<Integer> masterThread=executor.submit(masterService);
+  LOG.info("Launching child containers");
+  List<Thread> launchThreads=launchContainers(configTuples,allocatedContainers);
+  requestedContainers.clear();
+  AtomicInteger numCompletedContainers=new AtomicInteger();
+  AtomicInteger numFailedContainers=new AtomicInteger();
+  LOG.info("Waiting for containers to complete...");
+  while (numCompletedContainers.get() < numContainers) {
+    try {
+      Thread.sleep(2000);
+    }
+ catch (    InterruptedException ex) {
+      LOG.warn("Interrupted while waiting on completed containers",ex);
+      return ReturnCode.MASTER_ERROR.getCode();
+    }
+    List<ContainerStatus> completedContainers;
+    try {
+      completedContainers=rmHandler.allocateRequest(requestedContainers,releasedContainers).getCompletedContainersStatuses();
+    }
+ catch (    YarnRemoteException ex) {
+      LOG.warn("Encountered an error while trying to heartbeat to resource manager",ex);
+      continue;
+    }
+    for (    ContainerStatus cs : completedContainers) {
+      int exitCode=cs.getExitStatus();
+      if (exitCode != 0) {
+        numCompletedContainers.incrementAndGet();
+        numFailedContainers.incrementAndGet();
+        masterService.fail();
+        executor.shutdown();
+        LOG.info("At least one container failed with a non-zero exit code (" + exitCode + "); killing application");
+        rmHandler.finishApplication("Failing, due to at least container coming back with an non-zero exit code.",FinalApplicationStatus.KILLED);
+        return -10;
+      }
+ else {
+        numCompletedContainers.incrementAndGet();
+      }
+    }
+  }
+  LOG.info("Containers completed");
+  for (  Thread launchThread : launchThreads) {
+    try {
+      launchThread.join(1000);
+    }
+ catch (    InterruptedException ex) {
+      LOG.warn("Interrupted while waiting for Launcher threads to complete",ex);
+    }
+  }
+  if (!masterThread.isDone()) {
+    masterService.fail();
+  }
+  int masterExit=masterThread.get();
+  LOG.info("Master service completed with exitCode=" + masterExit);
+  executor.shutdown();
+  if (masterExit == 0) {
+    String impersonatedUser=System.getenv("USER");
+    UserGroupInformation ugi=UserGroupInformation.createRemoteUser(impersonatedUser);
+    ugi.doAs(new PrivilegedExceptionAction<Void>(){
+      public Void run(){
+        Path out=new Path(props.getProperty(ConfigFields.APP_OUTPUT_PATH));
+        FileSystem fs;
+        try {
+          fs=out.getFileSystem(conf);
+          FSDataOutputStream fos=fs.create(out);
+          LOG.info("Writing master results to " + out.toString());
+          masterComputable.complete(fos);
+          fos.flush();
+          fos.close();
+        }
+ catch (        IOException e) {
+          e.printStackTrace();
+        }
+        return null;
+      }
+    }
+);
+  }
+ else {
+    LOG.warn("Not writing master results, as the master came back with errors!");
+  }
+  ReturnCode rc=(numFailedContainers.get() == 0) ? ReturnCode.OK : ReturnCode.CONTAINER_ERROR;
+  try {
+    if (numFailedContainers.get() == 0) {
+      rmHandler.finishApplication("Completed succesfully",FinalApplicationStatus.SUCCEEDED);
+    }
+ else {
+      String diag="Completed with " + numFailedContainers.get() + " failed cotainers";
+      rmHandler.finishApplication(diag,FinalApplicationStatus.FAILED);
+    }
+  }
+ catch (  YarnRemoteException ex) {
+    LOG.warn("Encounterd an error while trying to send final status to resource manager",ex);
+  }
+  return rc.getCode();
+}
