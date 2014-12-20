@@ -75,7 +75,6 @@ catch (    Exception ex) {
       return -1;
     }
     countCurrent=0;
-    computable.IncrementIteration();
   }
   reportMetrics();
   T finalUpdate=computable.getResults();

@@ -1,3 +1,4 @@
 {
   System.out.println("IR DBN Master Node: Complete!");
+  Nd4j.write(paramVector,osStream);
 }

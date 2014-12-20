@@ -1,4 +1,10 @@
 {
   System.out.println("--------------- Master::Compute() -------------- ");
-  return null;
+  ParameterVectorUpdateable first=null;
+  for (  ParameterVectorUpdateable update : workerUpdates) {
+    if (first == null)     first=update;
+ else     first.get().addi(update.get());
+  }
+  first.get().divi(workerUpdates.size());
+  return first;
 }
