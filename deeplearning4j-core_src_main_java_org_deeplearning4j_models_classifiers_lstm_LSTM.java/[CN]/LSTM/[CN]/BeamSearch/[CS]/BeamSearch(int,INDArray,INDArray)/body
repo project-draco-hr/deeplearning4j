@@ -1,0 +1,6 @@
+{
+  this.nSteps=nSteps;
+  this.h=h;
+  this.c=c;
+  beams.add(new Beam(0.0,new ArrayList<Integer>(),h,c));
+}

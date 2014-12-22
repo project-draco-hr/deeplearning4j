@@ -1,0 +1,48 @@
+{
+  if (beamSize > 1) {
+    while (true) {
+      List<Beam> candidates=new ArrayList<>();
+      for (      Beam beam : beams) {
+        int ixPrev=beam.getIndices().get(beam.getIndices().size() - 1);
+        if (ixPrev == 0 && !beam.getIndices().isEmpty()) {
+          candidates.add(beam);
+          continue;
+        }
+        Triple<INDArray,INDArray,INDArray> yhc=lstmTick(ws.slice(ixPrev),beam.getHidden(),beam.getC());
+        INDArray y1=yhc.getFirst().ravel();
+        double maxy1=y1.max(Integer.MAX_VALUE).getDouble(0);
+        INDArray e1=exp(y1.subi(maxy1));
+        INDArray p1=e1.divi(Nd4j.sum(e1,Integer.MAX_VALUE));
+        y1=log(p1.addi(Nd4j.EPS_THRESHOLD));
+        INDArray[] topIndices=Nd4j.sortWithIndices(y1,0,false);
+        for (int i=0; i < beamSize; i++) {
+          int idx=topIndices[0].getInt(i);
+          List<Integer> beamCopy=new ArrayList<>(beam.getIndices());
+          beamCopy.add(idx);
+          candidates.add(new Beam(beam.getLogProba() + y1.getDouble(idx),beamCopy,yhc.getSecond(),yhc.getThird()));
+        }
+      }
+      nSteps++;
+      if (nSteps >= 20)       break;
+    }
+    List<Pair<List<Integer>,Double>> ret=new ArrayList<>();
+    for (    Beam b : beams) {
+      ret.add(new Pair<>(b.getIndices(),b.getLogProba()));
+    }
+    return ret;
+  }
+ else {
+    int ixPrev=0;
+    double predictedLogProba=0.0;
+    List<Integer> predix=new ArrayList<>();
+    while (true) {
+      Triple<INDArray,INDArray,INDArray> yhc=lstmTick(ws.slice(ixPrev),h,c);
+      Pair<Integer,Double> yMax=yMax(yhc.getFirst());
+      predix.add(yMax.getFirst());
+      predictedLogProba+=yMax.getSecond();
+      nSteps++;
+      if (ixPrev == 0 || nSteps >= 20)       break;
+    }
+    return Collections.singletonList(new Pair<List<Integer>,Double>(predix,predictedLogProba));
+  }
+}

@@ -1,0 +1,5 @@
+{
+  recurrentWeights=WeightInitUtil.initWeights(conf.getnIn() + conf.getnOut() + 1,conf.getnOut() * 4,conf.getWeightInit(),conf.getActivationFunction(),conf.getDist());
+  decoderWeights=WeightInitUtil.initWeights(conf.getnOut(),conf.getRecurrentOutput(),conf.getWeightInit(),conf.getActivationFunction(),conf.getDist());
+  decoderBias=Nd4j.zeros(conf.getRecurrentOutput());
+}
