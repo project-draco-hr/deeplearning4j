@@ -5,7 +5,10 @@
     File file=(File)f.get(reader);
     return file.getParentFile().getName();
   }
- catch (  Exception e) {
+ catch (  NullPointerException e1) {
+    return "NONE";
+  }
+catch (  Exception e) {
     throw new RuntimeException(e);
   }
 }
