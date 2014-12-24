@@ -44,4 +44,5 @@
     }
   }
   clear();
+  return new LSTMGradient(dY,dWd,dBd,dHout,dIFog,dIFogF,dRecurrentWeights,dHin,dC,dx);
 }

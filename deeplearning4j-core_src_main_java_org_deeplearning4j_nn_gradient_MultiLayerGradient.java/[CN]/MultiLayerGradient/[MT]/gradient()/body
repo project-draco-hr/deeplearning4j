@@ -1,0 +1,6 @@
+{
+  INDArray[] gradients=new INDArray[this.gradients.size() + 1];
+  for (int i=0; i < gradients.length; i++)   gradients[i]=this.getGradients().get(i).gradient();
+  gradients[gradients.length - 1]=logRegGradient.gradient();
+  return Nd4j.concat(0,gradients);
+}
