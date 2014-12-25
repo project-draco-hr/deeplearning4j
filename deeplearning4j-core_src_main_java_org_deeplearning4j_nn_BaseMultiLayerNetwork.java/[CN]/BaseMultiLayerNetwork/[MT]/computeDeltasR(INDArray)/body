@@ -22,6 +22,7 @@
     if (defaultConfiguration.isConstrainGradientToUnitNorm()) {
       double sum=deltas[i].sum(Integer.MAX_VALUE).getDouble(0);
       if (sum > 0)       deltaRet.add(deltas[i].div(deltas[i].norm2(Integer.MAX_VALUE)));
+ else       deltaRet.add(deltas[i]);
     }
  else     deltaRet.add(deltas[i]);
     LinAlgExceptions.assertValidNum(deltaRet.get(i));

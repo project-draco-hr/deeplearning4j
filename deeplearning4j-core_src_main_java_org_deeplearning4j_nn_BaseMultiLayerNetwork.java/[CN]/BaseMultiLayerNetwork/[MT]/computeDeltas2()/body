@@ -4,7 +4,6 @@
   INDArray[] deltas=new INDArray[activations.size() - 1];
   INDArray[] preCons=new INDArray[activations.size() - 1];
   INDArray ix=activations.get(activations.size() - 1).sub(labels).div(labels.rows());
-  log.info("Ix mean " + ix.sum(Integer.MAX_VALUE));
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
   List<ActivationFunction> activationFunctions=new ArrayList<>();
@@ -15,7 +14,6 @@
   }
   for (int i=weights.size() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(ix);
-    log.info("Delta sum at " + i + " is "+ deltas[i].mean(Integer.MAX_VALUE));
     preCons[i]=Transforms.pow(activations.get(i).transpose(),2).mmul(Transforms.pow(ix,2)).muli(labels.rows());
     applyDropConnectIfNecessary(deltas[i]);
     if (i > 0) {
