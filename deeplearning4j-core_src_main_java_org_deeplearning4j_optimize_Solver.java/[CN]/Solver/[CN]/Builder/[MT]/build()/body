@@ -2,7 +2,6 @@
   Solver solver=new Solver();
   solver.conf=conf;
   solver.listeners=listeners;
-  solver.stepFunction=stepFunction;
   solver.model=model;
   return solver;
 }
