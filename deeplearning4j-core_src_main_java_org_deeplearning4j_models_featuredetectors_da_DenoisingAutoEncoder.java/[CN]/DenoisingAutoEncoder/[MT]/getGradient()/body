@@ -14,6 +14,5 @@
   INDArray hBiasGradient=hiddenLoss.mean(0);
   INDArray vBiasGradient=visibleLoss.mean(0);
   NeuralNetworkGradient gradient=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  updateGradientAccordingToParams(gradient,iteration,lr);
   return gradient;
 }

@@ -6,7 +6,6 @@
     setInput(data.getFeatureMatrix());
     setLabels(data.getLabels());
     feedForward();
-    optimizer=new MultiLayerNetworkOptimizer(this,getOutputLayer().conf().getLr());
-    optimizer.optimize(data.getLabels());
+    getOutputLayer().fit(iter);
   }
 }

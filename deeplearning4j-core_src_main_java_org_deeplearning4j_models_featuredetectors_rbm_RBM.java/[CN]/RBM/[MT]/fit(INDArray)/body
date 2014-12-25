@@ -5,6 +5,5 @@
     this.sigma=input.var(0);
     this.sigma.divi(input.rows());
   }
-  optimizer=new RBMOptimizer(this);
-  optimizer.train(input);
+  super.fit(input);
 }

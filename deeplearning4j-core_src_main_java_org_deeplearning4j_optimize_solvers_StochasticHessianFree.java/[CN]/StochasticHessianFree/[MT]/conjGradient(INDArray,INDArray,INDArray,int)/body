@@ -21,7 +21,7 @@
     double deltaOld=deltaNew;
     deltaNew=rNew.mul(yNew).sum(Integer.MAX_VALUE).getDouble(0);
     double beta=deltaNew / deltaOld;
-    p=yNew.neg().add(p.mul(beta));
+    p=yNew.neg().addi(p.mul(beta));
     r=rNew;
     is.add(iterationCount);
     xs.add(x.dup());

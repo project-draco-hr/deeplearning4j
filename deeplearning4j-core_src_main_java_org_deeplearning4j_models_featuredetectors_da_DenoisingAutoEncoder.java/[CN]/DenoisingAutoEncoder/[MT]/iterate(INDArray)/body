@@ -1,5 +1,4 @@
 {
-  double corruptionLevel=conf.getCorruptionLevel();
   if (input != null)   this.input=preProcessInput(input);
   this.lastMiniBatchSize=input.rows();
   NeuralNetworkGradient gradient=getGradient();

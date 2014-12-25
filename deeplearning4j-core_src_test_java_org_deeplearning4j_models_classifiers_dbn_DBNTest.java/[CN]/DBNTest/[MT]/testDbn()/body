@@ -1,6 +1,6 @@
 {
   RandomGenerator gen=new MersenneTwister(123);
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).momentum(9e-1f).weightInit(WeightInit.UNIFORM).optimizationAlgo(NeuralNetwork.OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).iterations(1000).learningRate(1e-1f).nIn(784).nOut(10).list(4).hiddenLayerSizes(new int[]{500,400,300}).override(new NeuralNetConfiguration.ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().withActivationType(NeuralNetConfiguration.ActivationType.SAMPLE).momentum(9e-1f).weightInit(WeightInit.UNIFORM).optimizationAlgo(NeuralNetwork.OptimizationAlgorithm.GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(gen).iterations(1000).learningRate(1e-1f).nIn(784).nOut(10).list(4).hiddenLayerSizes(new int[]{500,400,300}).override(new NeuralNetConfiguration.ConfOverride(){
     @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 3) {
         builder.weightInit(WeightInit.ZERO);

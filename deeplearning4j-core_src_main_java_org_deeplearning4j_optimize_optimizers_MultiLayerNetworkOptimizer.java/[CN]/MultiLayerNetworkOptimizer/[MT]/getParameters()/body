@@ -1,5 +1,0 @@
-{
-  double[] d=new double[getNumParameters()];
-  this.getParameters(d);
-  return Nd4j.create(d);
-}

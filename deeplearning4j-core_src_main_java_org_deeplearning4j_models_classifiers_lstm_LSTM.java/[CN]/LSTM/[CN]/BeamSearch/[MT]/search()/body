@@ -43,6 +43,6 @@
       nSteps++;
       if (ixPrev == 0 || nSteps >= 20)       break;
     }
-    return Collections.singletonList(new Pair<List<Integer>,Double>(predix,predictedLogProba));
+    return Collections.singletonList(new Pair<>(predix,predictedLogProba));
   }
 }

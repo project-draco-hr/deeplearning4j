@@ -1,0 +1,45 @@
+{
+  Pair<Gradient,Double> pair=gradientAndScore();
+  setupSearchState(pair);
+  score=pair.getSecond();
+  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
+  for (  TerminationCondition condition : terminationConditions)   if (condition.terminate(0.0,0.0,new Object[]{gradient}))   return true;
+  boolean testLineSearch=preFirstStepProcess(gradient);
+  if (testLineSearch) {
+    try {
+      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
+      step=lineMaximizer.optimize(gradient,conf.getNumIterations(),step,params,gradient);
+    }
+ catch (    InvalidStepException e) {
+      e.printStackTrace();
+    }
+    gradient=(INDArray)searchState.get(GRADIENT_KEY);
+    postFirstStep(gradient);
+    if (step == 0.0) {
+      log.warn("Unable to step in direction");
+      return false;
+    }
+  }
+  for (int i=0; i < conf.getNumIterations(); i++) {
+    preProcessLine(gradient);
+    try {
+      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
+      step=lineMaximizer.optimize(gradient,conf.getNumIterations(),step,params,gradient);
+    }
+ catch (    InvalidStepException e) {
+      e.printStackTrace();
+    }
+    for (    IterationListener listener : iterationListeners)     listener.iterationDone(i);
+    oldScore=score;
+    pair=gradientAndScore();
+    score=pair.getSecond();
+    gradient=pair.getFirst().gradient();
+    searchState.put(GRADIENT_KEY,gradient);
+    searchState.put(SCORE_KEY,score);
+    for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
+    postStep();
+    log.info("Score at iteration " + i + " is "+ score);
+    for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
+  }
+  return true;
+}

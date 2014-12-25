@@ -1,2 +1,18 @@
 {
+  int count=0;
+  INDArray recurrentWeightsLinear=recurrentWeights.linearView();
+  INDArray decoderWeightsLinear=decoderWeights.linearView();
+  INDArray decoderBiasLinear=decoderBias.linearView();
+  int recurrentPlusDecoder=recurrentWeightsLinear.length() + decoderWeightsLinear.length();
+  boolean pastRecurrentWeights=false;
+  for (int i=0; i < params.length(); i++) {
+    if (count == recurrentWeightsLinear.length()) {
+      count=0;
+      pastRecurrentWeights=true;
+    }
+ else     if (count == decoderWeightsLinear.length() && pastRecurrentWeights)     count=0;
+    if (i < recurrentWeights.length())     recurrentWeights.linearView().putScalar(count++,params.getDouble(i));
+ else     if (i < recurrentPlusDecoder)     decoderWeightsLinear.putScalar(count++,params.getDouble(i));
+ else     decoderBiasLinear.putScalar(count++,params.getDouble(i));
+  }
 }

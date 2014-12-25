@@ -7,6 +7,5 @@
   INDArray hBiasGradient=wGradient.sum(1);
   INDArray vBiasGradient=Nd4j.zeros(vBias.rows(),vBias.columns());
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  updateGradientAccordingToParams(ret,iterations,lr);
   return ret;
 }

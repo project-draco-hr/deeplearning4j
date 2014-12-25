@@ -1,5 +1,7 @@
 {
   x=Nd4j.vstack(xi,xs);
+  this.xs=xs;
+  this.xi=xi;
   if (conf.getDropOut() > 0) {
     double scale=1 / (1 - conf.getDropOut());
     u=Nd4j.rand(x.shape()).lti(1 - conf.getDropOut()).muli(scale);

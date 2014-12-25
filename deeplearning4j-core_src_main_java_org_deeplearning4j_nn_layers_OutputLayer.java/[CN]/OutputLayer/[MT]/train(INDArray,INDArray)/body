@@ -5,7 +5,7 @@
   LinAlgExceptions.assertRows(input,labels);
   this.input=x;
   this.labels=y;
-  OutputLayerGradient gradient=getGradient();
+  OutputLayerGradient gradient=(OutputLayerGradient)getGradient();
   W.addi(gradient.getwGradient());
   b.addi(gradient.getbGradient());
 }

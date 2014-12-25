@@ -1,5 +1,5 @@
 {
   double alam=(double)params[0];
   double oldAlam=(double)params[1];
-  x.addi(line.muli(alam - oldAlam));
+  x.addi(line.mul(alam - oldAlam));
 }

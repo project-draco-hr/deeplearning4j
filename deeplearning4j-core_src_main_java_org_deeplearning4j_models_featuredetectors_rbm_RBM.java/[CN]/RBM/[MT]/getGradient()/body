@@ -25,6 +25,5 @@
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);
   INDArray vBiasGradient=input.sub(nvSamples).mean(0);
   NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
-  updateGradientAccordingToParams(ret,0,learningRate);
   return ret;
 }

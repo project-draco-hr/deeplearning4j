@@ -1,0 +1,16 @@
+{
+  NeuralNetwork.OptimizationAlgorithm algo=conf.getOptimizationAlgo();
+switch (algo) {
+case LBFGS:
+    return new LBFGS(conf,stepFunction,listeners,model);
+case GRADIENT_DESCENT:
+  return new GradientAscent(conf,stepFunction,listeners,model);
+case HESSIAN_FREE:
+return new StochasticHessianFree(conf,stepFunction,listeners,model);
+case CONJUGATE_GRADIENT:
+return new ConjugateGradient(conf,stepFunction,listeners,model);
+case ITERATION_GRADIENT_DESCENT:
+return new IterationGradientDescent(conf,stepFunction,listeners,model);
+}
+throw new IllegalStateException("No optimizer found");
+}

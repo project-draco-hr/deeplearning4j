@@ -1,4 +1,5 @@
 {
-  ch=Nd4j.zeros(1,optimizable.getNumParameters());
+  network=(BaseMultiLayerNetwork)model;
   xi=network.pack();
+  ch=Nd4j.zeros(1,xi.length());
 }

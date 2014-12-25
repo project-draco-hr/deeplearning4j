@@ -1,7 +1,0 @@
-{
-  int plotIterations=network.getOutputLayer().conf().getRenderWeightIterations();
-  if (plotIterations <= 0)   return;
-  if (iteration % plotIterations == 0) {
-    plotter.plotNetworkGradient(network.getOutputLayer(),getValueGradient(0),100);
-  }
-}

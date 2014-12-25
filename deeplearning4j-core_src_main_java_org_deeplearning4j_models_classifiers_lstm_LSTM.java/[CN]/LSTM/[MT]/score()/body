@@ -1,3 +1,4 @@
 {
-  return 0;
+  INDArray forward=Activations.softMaxRows().apply(forward(xi,xs));
+  return -log(forward.sum(Integer.MAX_VALUE)).getDouble(0);
 }
