@@ -1,9 +1,0 @@
-{
-  gradient.divi(xs.rows());
-  if (conf.isUseAdaGrad()) {
-    if (adaGrad == null)     adaGrad=new AdaGrad(1,gradient.columns());
-    gradient=adaGrad.getGradient(gradient);
-  }
- else   gradient.muli(conf.getLr());
-  if (conf.getMomentum() > 0)   gradient.muli(conf.getMomentum());
-}

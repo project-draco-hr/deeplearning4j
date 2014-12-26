@@ -3,7 +3,6 @@
     Constructor<?> c=Dl4jReflection.getEmptyConstructor(getClass());
     c.setAccessible(true);
     NeuralNetwork ret=(NeuralNetwork)c.newInstance();
-    ret.setVBiasAdaGrad(hBiasAdaGrad);
     ret.sethBias(vBias.dup());
     ret.setConf(conf);
     ret.setvBias(Nd4j.zeros(hBias.rows(),hBias.columns()));

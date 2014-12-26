@@ -7,14 +7,14 @@
     if (10 % numSearches == 0) {
       log.info("Iteration " + j + " on line search with current rate of "+ rate);
     }
-    if (newScore <= gradient.mul(p).mul(score + c * rate).sum(Integer.MAX_VALUE).getDouble(0)) {
+    if (newScore <= gradient.mul(p).muli(score + c * rate).sum(Integer.MAX_VALUE).getDouble(0)) {
       break;
     }
  else {
       rate*=0.8f;
       j++;
     }
-    newScore=network.score(params.add(p.mul(rate)));
+    newScore=-network.score(params.add(p.mul(rate)));
   }
   if (j == numSearches) {
     rate=0.0f;

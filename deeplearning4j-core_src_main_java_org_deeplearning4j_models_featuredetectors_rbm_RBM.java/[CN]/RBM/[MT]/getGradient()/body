@@ -1,9 +1,6 @@
 {
   int k=conf.getK();
   double learningRate=conf.getLr();
-  if (wAdaGrad != null)   wAdaGrad.setMasterStepSize(learningRate);
-  if (hBiasAdaGrad != null)   hBiasAdaGrad.setMasterStepSize(learningRate);
-  if (vBiasAdaGrad != null)   vBiasAdaGrad.setMasterStepSize(learningRate);
   Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(input);
   INDArray chainStart=probHidden.getSecond();
   Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>> matrices;

@@ -4,12 +4,9 @@
     c.setAccessible(true);
     NeuralNetwork ret=(NeuralNetwork)c.newInstance();
     ret.setConf(conf);
-    ret.setHbiasAdaGrad(hBiasAdaGrad);
-    ret.setVBiasAdaGrad(vBiasAdaGrad);
     ret.sethBias(hBias.dup());
     ret.setvBias(vBias.dup());
     ret.setW(W.dup());
-    ret.setAdaGrad(wAdaGrad);
     return ret;
   }
  catch (  Exception e) {
