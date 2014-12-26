@@ -12,6 +12,6 @@
   INDArray logLayerGradient=deltas.get(getnLayers());
   INDArray biasGradient=deltas.get(getnLayers()).mean(0);
   list.add(new Pair<>(logLayerGradient,biasGradient));
-  INDArray pack=pack(list).addi(mask.mul(defaultConfiguration.getL2()).mul(v)).addi(v.mul(dampingFactor));
+  INDArray pack=pack(list).addi(mask.mul(defaultConfiguration.getL2()).mul(v)).addi(v.mul(layerWiseConfigurations.getDampingFactor()));
   return unPack(pack);
 }

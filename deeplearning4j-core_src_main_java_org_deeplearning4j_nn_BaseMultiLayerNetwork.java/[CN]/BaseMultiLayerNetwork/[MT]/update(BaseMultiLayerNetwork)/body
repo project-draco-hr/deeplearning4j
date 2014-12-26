@@ -10,10 +10,8 @@
     }
   }
   this.defaultConfiguration=network.defaultConfiguration;
-  this.errorTolerance=network.errorTolerance;
   this.input=network.input;
   this.labels=network.labels;
-  this.learningRateUpdate=network.learningRateUpdate;
   this.weightTransforms=network.weightTransforms;
   this.visibleBiasTransforms=network.visibleBiasTransforms;
   this.hiddenBiasTransforms=network.hiddenBiasTransforms;
