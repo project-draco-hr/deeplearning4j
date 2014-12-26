@@ -4,4 +4,5 @@
     stateTracker.shutdown();
   }
   if (testSystem != null)   testSystem.shutdown();
+  Hazelcast.shutdownAll();
 }
