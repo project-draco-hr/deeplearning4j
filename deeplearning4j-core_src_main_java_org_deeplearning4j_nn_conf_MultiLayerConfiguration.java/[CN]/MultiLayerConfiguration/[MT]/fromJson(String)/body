@@ -1,5 +1,5 @@
 {
-  ObjectMapper mapper=mapper();
+  ObjectMapper mapper=NeuralNetConfiguration.mapper();
   try {
     return mapper.readValue(json,MultiLayerConfiguration.class);
   }
