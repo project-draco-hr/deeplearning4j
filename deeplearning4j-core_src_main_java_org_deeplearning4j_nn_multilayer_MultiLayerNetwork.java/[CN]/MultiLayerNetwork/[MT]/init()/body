@@ -16,10 +16,11 @@
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
         layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
       }
- else {
+ else       if (i < getLayers().length - 1) {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
+        layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
       }
     }
   }
