@@ -1,0 +1,9 @@
+{
+  INDArray render2=w.transpose();
+  try {
+    render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

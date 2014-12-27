@@ -1,6 +1,5 @@
 {
   int k=conf.getK();
-  double learningRate=conf.getLr();
   Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(input);
   INDArray chainStart=probHidden.getSecond();
   Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>> matrices;
