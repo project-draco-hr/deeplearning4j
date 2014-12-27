@@ -1,7 +1,0 @@
-{
-  ret=new OutputLayer(conf,input,labels);
-  if (W != null)   ret.W=W;
-  if (b != null)   ret.b=b;
-  ret.conf=conf;
-  return ret;
-}

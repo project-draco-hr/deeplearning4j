@@ -1,4 +1,5 @@
 {
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   double corruptionLevel=conf.getCorruptionLevel();
   INDArray corruptedX=getCorruptedInput(input,corruptionLevel);
   INDArray y=getHiddenValues(corruptedX);
@@ -8,6 +9,6 @@
   INDArray wGradient=corruptedX.transpose().mmul(hiddenLoss).add(visibleLoss.transpose().mmul(y));
   INDArray hBiasGradient=hiddenLoss.mean(0);
   INDArray vBiasGradient=visibleLoss.mean(0);
-  NeuralNetworkGradient gradient=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
+  Gradient gradient=createGradient(wGradient,vBiasGradient,hBiasGradient);
   return gradient;
 }

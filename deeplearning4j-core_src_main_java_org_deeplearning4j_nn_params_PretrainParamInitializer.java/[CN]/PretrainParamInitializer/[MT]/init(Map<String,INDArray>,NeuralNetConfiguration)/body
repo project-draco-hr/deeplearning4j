@@ -1,0 +1,4 @@
+{
+  super.init(params,conf);
+  params.put(VISIBLE_BIAS_KEY,Nd4j.zeros(conf.getnIn()));
+}

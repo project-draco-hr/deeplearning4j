@@ -1,3 +1,0 @@
-{
-  return Nd4j.concat(0,dY.linearView(),dWd.linearView(),dBd.linearView(),dHout.linearView(),dIFog.linearView(),dIFogF.linearView(),dHin.linearView(),dRecurrentWeights.linearView(),dHin.linearView(),dC.linearView(),dx.linearView());
-}

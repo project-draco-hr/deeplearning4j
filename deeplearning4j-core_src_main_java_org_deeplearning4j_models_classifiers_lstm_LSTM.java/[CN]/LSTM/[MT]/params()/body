@@ -1,3 +1,0 @@
-{
-  return Nd4j.concat(0,recurrentWeights.linearView(),decoderWeights.linearView(),decoderBias.linearView());
-}

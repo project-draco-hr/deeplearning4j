@@ -1,6 +1,0 @@
-{
-  if (input != null)   this.input=input;
-  this.lastMiniBatchSize=input.rows();
-  Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(conf.getListeners()).build();
-  solver.optimize();
-}

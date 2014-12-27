@@ -1,0 +1,10 @@
+{
+  List<INDArray> list=new ArrayList<>();
+  for (int i=0; i < layers.size(); i++) {
+    list.add(layers.get(i).getFirst());
+    list.add(layers.get(i).getSecond());
+  }
+  INDArray ret=Nd4j.toFlattened(list);
+  if (ret.length() != numParams())   throw new IllegalStateException("Illegal number of parameters found in the layers with a difference of " + Math.abs(ret.length() - numParams()));
+  return ret;
+}

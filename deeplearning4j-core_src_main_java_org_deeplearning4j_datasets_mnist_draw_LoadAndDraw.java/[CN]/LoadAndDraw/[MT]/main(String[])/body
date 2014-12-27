@@ -1,7 +1,7 @@
 {
   MnistDataSetIterator iter=new MnistDataSetIterator(60,60000);
   @SuppressWarnings("unchecked") ObjectInputStream ois=new ObjectInputStream(new FileInputStream(args[0]));
-  BaseNeuralNetwork network=(BaseNeuralNetwork)ois.readObject();
+  BasePretrainNetwork network=(BasePretrainNetwork)ois.readObject();
   DataSet test=null;
   while (iter.hasNext()) {
     INDArray reconstructed=network.transform(test.getFeatureMatrix());

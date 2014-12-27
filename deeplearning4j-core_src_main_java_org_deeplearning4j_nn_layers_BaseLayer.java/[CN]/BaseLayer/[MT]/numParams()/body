@@ -1,0 +1,5 @@
+{
+  int ret=0;
+  for (  INDArray val : params.values())   ret+=val.length();
+  return ret;
+}

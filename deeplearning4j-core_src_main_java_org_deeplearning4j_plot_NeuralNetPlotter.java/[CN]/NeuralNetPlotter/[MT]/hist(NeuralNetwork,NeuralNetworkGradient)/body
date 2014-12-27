@@ -1,3 +1,0 @@
-{
-  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getW(),network.gethBias(),network.getvBias(),gradient.getwGradient(),gradient.gethBiasGradient(),gradient.getvBiasGradient()});
-}

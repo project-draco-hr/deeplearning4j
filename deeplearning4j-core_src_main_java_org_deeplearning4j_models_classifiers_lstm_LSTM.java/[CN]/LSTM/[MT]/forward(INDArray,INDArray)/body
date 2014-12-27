@@ -1,5 +1,8 @@
 {
   x=Nd4j.vstack(xi,xs);
+  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
+  INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
   this.xs=xs;
   this.xi=xi;
   if (conf.getDropOut() > 0) {

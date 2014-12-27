@@ -1,5 +1,0 @@
-{
-  List<NeuralNetworkGradient> gradients=new ArrayList<>();
-  for (  NeuralNetwork n : neuralNets)   gradients.add(n.getGradient());
-  return new MultiLayerGradient(gradients,(OutputLayerGradient)getOutputLayer().getGradient());
-}

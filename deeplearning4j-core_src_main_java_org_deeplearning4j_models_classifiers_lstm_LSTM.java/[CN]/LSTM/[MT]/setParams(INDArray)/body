@@ -1,5 +1,8 @@
 {
   int count=0;
+  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
+  INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
   INDArray recurrentWeightsLinear=recurrentWeights.linearView();
   INDArray decoderWeightsLinear=decoderWeights.linearView();
   INDArray decoderBiasLinear=decoderBias.linearView();

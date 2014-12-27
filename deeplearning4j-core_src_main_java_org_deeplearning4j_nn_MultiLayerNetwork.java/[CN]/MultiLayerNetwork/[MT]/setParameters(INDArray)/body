@@ -1,0 +1,10 @@
+{
+  for (int i=0; i < getLayers().length; i++) {
+    ParamRange range=startIndexForLayer(i);
+    INDArray w=params.get(NDArrayIndex.interval(range.getwStart(),range.getwEnd()));
+    INDArray bias=params.get(NDArrayIndex.interval(range.getBiasStart(),range.getBiasEnd()));
+    int rows=getLayers()[i].getParam(DefaultParamInitializer.WEIGHT_KEY).rows(), columns=getLayers()[i].getParam(DefaultParamInitializer.WEIGHT_KEY).columns();
+    getLayers()[i].setParam(DefaultParamInitializer.WEIGHT_KEY,w.reshape(rows,columns));
+    getLayers()[i].setParam(DefaultParamInitializer.BIAS_KEY,bias.reshape(getLayers()[i].getParam(DefaultParamInitializer.BIAS_KEY).shape()));
+  }
+}

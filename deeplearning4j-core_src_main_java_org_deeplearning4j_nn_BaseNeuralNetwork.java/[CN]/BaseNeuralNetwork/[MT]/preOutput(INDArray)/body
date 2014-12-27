@@ -1,4 +1,0 @@
-{
-  INDArray hbiasMean=x.mmul(getW()).addiRowVector(getB());
-  return hbiasMean;
-}

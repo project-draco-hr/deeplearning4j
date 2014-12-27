@@ -1,5 +1,0 @@
-{
-  DBN ret=super.build();
-  ret.initializeLayers(Nd4j.zeros(1,ret.defaultConfiguration.getnIn()));
-  return ret;
-}

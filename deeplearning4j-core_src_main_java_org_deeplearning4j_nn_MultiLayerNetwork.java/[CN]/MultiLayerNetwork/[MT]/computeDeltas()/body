@@ -1,0 +1,35 @@
+{
+  List<INDArray> deltaRet=new ArrayList<>();
+  INDArray[] deltas=new INDArray[getnLayers() + 2];
+  List<INDArray> activations=feedForward();
+  INDArray ix=labels.sub(activations.get(activations.size() - 1)).subi(getOutputLayer().conf().getActivationFunction().applyDerivative(activations.get(activations.size() - 1)));
+  List<INDArray> weights=new ArrayList<>();
+  List<INDArray> biases=new ArrayList<>();
+  List<ActivationFunction> activationFunctions=new ArrayList<>();
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getParam(DefaultParamInitializer.WEIGHT_KEY));
+    biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
+    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
+  }
+  weights.add(getOutputLayer().getParam(DefaultParamInitializer.WEIGHT_KEY));
+  biases.add(getOutputLayer().getParam(DefaultParamInitializer.BIAS_KEY));
+  activationFunctions.add(getOutputLayer().conf().getActivationFunction());
+  for (int i=getnLayers() + 1; i >= 0; i--) {
+    if (i >= getnLayers() + 1) {
+      deltas[i]=ix;
+    }
+ else {
+      INDArray delta=activations.get(i).transpose().mmul(ix);
+      deltas[i]=delta;
+      applyDropConnectIfNecessary(deltas[i]);
+      INDArray weightsPlusBias=weights.get(i).transpose();
+      INDArray activation=activations.get(i);
+      if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(activationFunctions.get(i - 1).applyDerivative(activation));
+    }
+  }
+  for (int i=0; i < deltas.length; i++) {
+    if (defaultConfiguration.isConstrainGradientToUnitNorm())     deltaRet.add(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)));
+ else     deltaRet.add(deltas[i]);
+  }
+  return deltaRet;
+}

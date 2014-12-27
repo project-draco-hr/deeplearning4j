@@ -1,5 +1,5 @@
 {
-  if (!(model instanceof BaseMultiLayerNetwork))   return true;
+  if (!(model instanceof MultiLayerNetwork))   return true;
   myName=Thread.currentThread().getName();
   if (converged)   return true;
   score=-network.score();

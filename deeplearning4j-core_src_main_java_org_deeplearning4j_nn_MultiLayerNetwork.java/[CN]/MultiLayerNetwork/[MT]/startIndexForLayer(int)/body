@@ -1,0 +1,15 @@
+{
+  int start=0;
+  for (int i=0; i < layer; i++) {
+    start+=getLayers()[i].getParam(DefaultParamInitializer.WEIGHT_KEY).length();
+    start+=getLayers()[i].getParam(DefaultParamInitializer.BIAS_KEY).length();
+  }
+  if (layer < getLayers().length) {
+    int wEnd=start + getLayers()[layer].getParam(DefaultParamInitializer.WEIGHT_KEY).length();
+    return new ParamRange(start,wEnd,wEnd,wEnd + getLayers()[layer].getParam(DefaultParamInitializer.BIAS_KEY).length());
+  }
+ else {
+    int wEnd=start + getOutputLayer().getParam(DefaultParamInitializer.WEIGHT_KEY).length();
+    return new ParamRange(start,wEnd,wEnd,wEnd + getOutputLayer().getParam(DefaultParamInitializer.BIAS_KEY).length());
+  }
+}

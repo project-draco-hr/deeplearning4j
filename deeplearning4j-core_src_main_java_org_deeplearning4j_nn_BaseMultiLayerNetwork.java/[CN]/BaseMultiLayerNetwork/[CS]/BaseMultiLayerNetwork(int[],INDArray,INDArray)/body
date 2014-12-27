@@ -1,8 +1,0 @@
-{
-  this.input=input.dup();
-  this.labels=labels.dup();
-  this.setnLayers(hiddenLayerSizes.length);
-  this.layers=new org.deeplearning4j.nn.layers.Layer[hiddenLayerSizes.length + 1];
-  intializeConfigurations();
-  if (input != null)   initializeLayers(input);
-}

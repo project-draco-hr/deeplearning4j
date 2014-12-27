@@ -1,20 +1,11 @@
 {
   LinAlgExceptions.assertRows(input,labels);
-  double lr=conf.getLr();
-  adaGrad.setMasterStepSize(lr);
-  biasAdaGrad.setMasterStepSize(lr);
   INDArray netOut=output(input);
   INDArray dy=labels.sub(netOut);
   INDArray wGradient=getWeightGradient();
-  if (conf.isUseAdaGrad())   wGradient=adaGrad.getGradient(wGradient);
- else   wGradient.muli(lr);
-  if (conf.isUseAdaGrad())   dy=biasAdaGrad.getGradient(dy.sum(0).broadcast(dy.shape()));
- else   dy.muli(lr);
-  dy.divi(input.rows());
   INDArray bGradient=dy.sum(0);
-  if (conf.isConstrainGradientToUnitNorm()) {
-    wGradient.divi(wGradient.norm2(Integer.MAX_VALUE));
-    bGradient.divi(bGradient.norm2(Integer.MAX_VALUE));
-  }
-  return new OutputLayerGradient(wGradient,bGradient);
+  Gradient g=new DefaultGradient();
+  g.gradientLookupTable().put(DefaultParamInitializer.WEIGHT_KEY,wGradient);
+  g.gradientLookupTable().put(DefaultParamInitializer.BIAS_KEY,bGradient);
+  return g;
 }

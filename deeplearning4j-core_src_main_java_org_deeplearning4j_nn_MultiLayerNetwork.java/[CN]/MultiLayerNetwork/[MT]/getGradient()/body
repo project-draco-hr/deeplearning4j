@@ -1,0 +1,7 @@
+{
+  Gradient ret=new DefaultGradient();
+  for (int i=0; i < layers.length; i+=2) {
+    ret.gradientLookupTable().put(String.valueOf(i),layers[i].getGradient().gradient());
+  }
+  return ret;
+}

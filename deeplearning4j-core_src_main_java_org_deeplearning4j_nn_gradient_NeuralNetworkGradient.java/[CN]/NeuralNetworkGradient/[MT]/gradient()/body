@@ -1,3 +1,0 @@
-{
-  return Nd4j.concat(0,wGradient.linearView(),vBiasGradient.linearView(),hBiasGradient.linearView());
-}

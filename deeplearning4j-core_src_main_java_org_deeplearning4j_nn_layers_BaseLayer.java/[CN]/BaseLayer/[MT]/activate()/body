@@ -1,4 +1,6 @@
 {
-  INDArray activation=conf.getActivationFunction().apply(getInput().mmul(getW()).addiRowVector(getB()));
+  INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
+  INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray activation=conf.getActivationFunction().apply(getInput().mmul(W).addiRowVector(b));
   return activation;
 }

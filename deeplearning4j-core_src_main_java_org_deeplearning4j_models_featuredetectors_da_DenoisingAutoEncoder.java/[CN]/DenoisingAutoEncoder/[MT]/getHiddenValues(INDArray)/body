@@ -1,4 +1,6 @@
 {
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
+  INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   INDArray preAct;
   if (conf.isConcatBiases()) {
     INDArray concat=Nd4j.hstack(W,hBias.transpose());

@@ -1,8 +1,0 @@
-{
-  if (input != null)   this.input=preProcessInput(input);
-  this.lastMiniBatchSize=input.rows();
-  NeuralNetworkGradient gradient=getGradient();
-  vBias.addi(gradient.getvBiasGradient());
-  W.addi(gradient.getwGradient());
-  hBias.addi(gradient.gethBiasGradient());
-}

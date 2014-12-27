@@ -1,0 +1,4 @@
+{
+  params.put(WEIGHT_KEY,createWeightMatrix(conf));
+  params.put(BIAS_KEY,createBias(conf));
+}

@@ -1,3 +1,0 @@
-{
-  return new org.deeplearning4j.nn.layers.Layer.Builder().withInput(layerInput).conf(layerWiseConfigurations.getConf(index)).build();
-}

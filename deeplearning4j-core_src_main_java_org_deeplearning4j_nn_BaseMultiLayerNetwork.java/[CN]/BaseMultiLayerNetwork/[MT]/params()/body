@@ -1,9 +1,0 @@
-{
-  List<INDArray> params=new ArrayList<>();
-  for (int i=0; i < getnLayers(); i++) {
-    params.add(getNeuralNets()[i].getW());
-    params.add(getNeuralNets()[i].gethBias());
-  }
-  params.add(getOutputLayer().params());
-  return Nd4j.toFlattened(params);
-}

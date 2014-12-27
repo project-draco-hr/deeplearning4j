@@ -21,6 +21,9 @@
   if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsubi(conf.getSparsity()).mean(0);
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);
   INDArray vBiasGradient=input.sub(nvSamples).mean(0);
-  NeuralNetworkGradient ret=new NeuralNetworkGradient(wGradient,vBiasGradient,hBiasGradient);
+  Gradient ret=new DefaultGradient();
+  ret.gradientLookupTable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
+  ret.gradientLookupTable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
+  ret.gradientLookupTable().put(PretrainParamInitializer.WEIGHT_KEY,wGradient);
   return ret;
 }

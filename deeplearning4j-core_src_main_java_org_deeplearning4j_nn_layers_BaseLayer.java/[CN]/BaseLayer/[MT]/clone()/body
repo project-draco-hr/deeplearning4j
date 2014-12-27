@@ -1,4 +1,6 @@
 {
+  INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   Layer layer=null;
   try {
     Constructor c=getClass().getConstructor(NeuralNetConfiguration.class,INDArray.class,INDArray.class,INDArray.class);
