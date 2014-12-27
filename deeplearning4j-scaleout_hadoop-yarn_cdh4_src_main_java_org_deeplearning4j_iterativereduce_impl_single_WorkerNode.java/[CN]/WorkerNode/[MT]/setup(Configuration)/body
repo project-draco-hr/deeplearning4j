@@ -1,9 +1,4 @@
 {
   NeuralNetConfiguration conf2=NeuralNetConfiguration.fromJson(conf.get(NEURAL_NET_CONF));
-  try {
-    neuralNetwork=new BasePretrainNetwork.Builder<>().configure(conf2).withClazz((Class<? extends BasePretrainNetwork>)Class.forName(conf.get(CLASS))).build();
-  }
- catch (  ClassNotFoundException e) {
-    e.printStackTrace();
-  }
+  neuralNetwork=conf2.getLayerFactory().create(conf2);
 }

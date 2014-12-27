@@ -14,7 +14,7 @@
       if (i == 0) {
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
-        layers[i]=layerFactories[i].create(layerWiseConfigurations.getConf(i));
+        layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
       }
  else {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
@@ -26,7 +26,7 @@
   NeuralNetConfiguration last=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 1);
   NeuralNetConfiguration secondToLast=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 2);
   last.setnIn(secondToLast.getnOut());
-  this.layers[layers.length - 1]=layerFactories[layers.length - 1].create(last);
+  this.layers[layers.length - 1]=last.getLayerFactory().create(last);
   initCalled=true;
   initMask();
 }

@@ -3,6 +3,6 @@
   if (work instanceof DataSet) {
     DataSet data=(DataSet)work;
     multiLayerNetwork.fit(data);
-    job.setResult(multiLayerNetwork.paramsWithVisible());
+    job.setResult(multiLayerNetwork.params());
   }
 }

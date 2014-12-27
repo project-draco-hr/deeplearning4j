@@ -4,6 +4,7 @@
   fetcher.fetch(10);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  RBM rbm=new RBM.Builder().configure(conf).withInput(input).build();
+  LayerFactory layerFactory=new DefaultLayerFactory(RBM.class);
+  RBM rbm=layerFactory.create(conf);
   rbm.fit(input);
 }

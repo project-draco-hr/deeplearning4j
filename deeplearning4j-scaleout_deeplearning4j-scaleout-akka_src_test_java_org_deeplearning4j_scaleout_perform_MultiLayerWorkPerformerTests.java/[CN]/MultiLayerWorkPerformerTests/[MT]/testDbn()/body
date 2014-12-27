@@ -13,7 +13,6 @@
   String json=conf.toJson();
   Configuration conf2=new Configuration();
   conf2.set(DeepLearningConfigurable.MULTI_LAYER_CONF,json);
-  conf2.set(DeepLearningConfigurable.CLASS,DBN.class.getName());
   WorkerPerformer performer=new BaseMultiLayerNetworkWorkPerformer();
   performer.setup(conf2);
   IrisDataFetcher fetcher=new IrisDataFetcher();

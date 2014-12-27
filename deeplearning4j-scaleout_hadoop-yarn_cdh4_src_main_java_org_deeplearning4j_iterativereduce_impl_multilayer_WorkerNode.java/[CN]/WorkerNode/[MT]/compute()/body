@@ -3,5 +3,5 @@
     DataSet params=(DataSet)recordParser.nextRecord();
     multiLayerNetwork.fit(params);
   }
-  return new ParameterVectorUpdateable(multiLayerNetwork.paramsWithVisible());
+  return new ParameterVectorUpdateable(multiLayerNetwork.params());
 }
