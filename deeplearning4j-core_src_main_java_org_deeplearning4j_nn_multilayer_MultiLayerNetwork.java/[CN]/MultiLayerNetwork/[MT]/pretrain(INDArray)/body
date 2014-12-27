@@ -6,7 +6,7 @@
   }
  else   setInput(input);
   INDArray layerInput=null;
-  for (int i=0; i < getnLayers(); i++) {
+  for (int i=0; i < getnLayers() - 1; i++) {
     if (i == 0)     layerInput=getInput();
  else     layerInput=activationFromPrevLayer(i - 1,layerInput);
     log.info("Training on layer " + (i + 1));

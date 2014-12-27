@@ -1,6 +1,5 @@
 {
   int numParams=numParams();
-  if (param.length() != numParams)   throw new IllegalArgumentException("Parameter vector not equal of length to " + numParams);
   if (param.rows() != 1)   param=param.reshape(1,param.length());
   List<Pair<INDArray,INDArray>> ret=new ArrayList<>();
   int curr=0;

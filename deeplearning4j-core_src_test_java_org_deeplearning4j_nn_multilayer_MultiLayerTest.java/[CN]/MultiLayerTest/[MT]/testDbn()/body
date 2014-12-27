@@ -1,6 +1,6 @@
 {
-  LayerFactory layerFactory=new DefaultLayerFactory(RBM.class);
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(3).hiddenLayerSizes(new int[]{3,2}).override(new NeuralNetConfiguration.ConfOverride(){
+  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LBFGS).nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(3).hiddenLayerSizes(new int[]{3,2}).override(new NeuralNetConfiguration.ConfOverride(){
     @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 2) {
         builder.layerFactory(new DefaultLayerFactory(OutputLayer.class));
