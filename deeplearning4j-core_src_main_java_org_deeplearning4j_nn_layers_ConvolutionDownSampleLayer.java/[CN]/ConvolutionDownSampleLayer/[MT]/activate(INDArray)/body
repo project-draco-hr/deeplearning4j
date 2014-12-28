@@ -5,6 +5,7 @@
   INDArray convolution=Convolution.conv2d(input,W,Convolution.Type.VALID);
   INDArray pooled=Transforms.maxPool(convolution,conf.getFilterSize(),true);
   INDArray bias=b.dimShuffle(new Object[]{'x',0,'x','x'},new int[]{0},new boolean[]{false});
-  pooled.addi(bias.broadcast(pooled.shape()));
+  INDArray broadCastedBias=bias.broadcast(pooled.shape());
+  pooled.addi(broadCastedBias);
   return f.apply(pooled);
 }

@@ -4,6 +4,7 @@
   DataSet d=data.next();
   d.setFeatures(d.getFeatureMatrix().reshape(2,1,28,28));
   NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(new int[]{2,2}).numFeatureMaps(2).weightShape(new int[]{2,3,9,9}).build();
-  ConvolutionDownSampleLayer c=new ConvolutionDownSampleLayer(n,d.getFeatureMatrix());
+  LayerFactory l=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
+  ConvolutionDownSampleLayer c=l.create(n);
   INDArray convolved=c.activate(d.getFeatureMatrix());
 }
