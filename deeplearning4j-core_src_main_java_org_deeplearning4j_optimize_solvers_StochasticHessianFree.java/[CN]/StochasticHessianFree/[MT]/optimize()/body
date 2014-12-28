@@ -2,7 +2,7 @@
   if (!(model instanceof MultiLayerNetwork))   return true;
   myName=Thread.currentThread().getName();
   if (converged)   return true;
-  score=-network.score();
+  score=network.score();
   xi=network.params();
   for (int i=0; i < conf.getNumIterations(); i++) {
     Pair<INDArray,INDArray> backPropGradient=network.getBackPropGradient2();
@@ -14,8 +14,8 @@
     INDArray p=cg.getFirst();
     Pair<INDArray,Double> cgBackTrack=cgBackTrack(cg.getSecond(),p);
     p=cgBackTrack.getFirst();
-    double rho=network.reductionRatio(cgBackTrack.getFirst(),-network.score(),cgBackTrack.getSecond(),gradient);
-    double newScore=-network.score(cgBackTrack.getFirst());
+    double rho=network.reductionRatio(cgBackTrack.getFirst(),network.score(),cgBackTrack.getSecond(),gradient);
+    double newScore=network.score(cgBackTrack.getFirst());
     step=lineSearch(newScore,gradient,p);
     network.dampingUpdate(rho,boost,decrease);
     INDArray proposedUpdate=xi.add(p.mul(f * step));

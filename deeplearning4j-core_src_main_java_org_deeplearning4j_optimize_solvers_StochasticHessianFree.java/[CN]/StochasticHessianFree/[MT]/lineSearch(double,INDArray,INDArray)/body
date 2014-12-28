@@ -14,7 +14,7 @@
       rate*=0.8f;
       j++;
     }
-    newScore=-network.score(params.add(p.mul(rate)));
+    newScore=network.score(params.add(p.mul(rate)));
   }
   if (j == numSearches) {
     rate=0.0f;

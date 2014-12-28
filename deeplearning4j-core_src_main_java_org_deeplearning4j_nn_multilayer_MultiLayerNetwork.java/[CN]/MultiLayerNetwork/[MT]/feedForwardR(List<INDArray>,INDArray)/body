@@ -7,6 +7,5 @@
     ActivationFunction derivative=getLayers()[i].conf().getActivationFunction();
     R.add(R.get(i).mmul(W.get(i)).addi(acts.get(i).mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond()))).muli((derivative.applyDerivative(acts.get(i + 1)))));
   }
-  R.add(R.get(R.size() - 1).mmul(W.get(W.size() - 1)).addi(acts.get(acts.size() - 2).mmul(vWvB.get(vWvB.size() - 1).getFirst().addRowVector(vWvB.get(vWvB.size() - 1).getSecond()))).muli((getOutputLayer().conf().getActivationFunction().applyDerivative(acts.get(acts.size() - 1)))));
   return R;
 }
