@@ -1,5 +1,5 @@
 {
-  INDArray gradient=pair.getFirst().gradient();
+  INDArray gradient=pair.getFirst().gradient(conf.getGradientList());
   INDArray params=model.params();
   updateGradientAccordingToParams(gradient,params,batchSize());
   searchState.put(GRADIENT_KEY,gradient);

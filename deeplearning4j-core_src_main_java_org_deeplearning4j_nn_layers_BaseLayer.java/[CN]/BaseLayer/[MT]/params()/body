@@ -1,3 +1,5 @@
 {
-  return Nd4j.toFlattened(params.values());
+  List<INDArray> ret=new ArrayList<>();
+  for (  String s : conf.getGradientList())   ret.add(params.get(s));
+  return Nd4j.toFlattened(ret);
 }

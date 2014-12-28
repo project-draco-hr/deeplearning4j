@@ -33,7 +33,7 @@
     oldScore=score;
     pair=gradientAndScore();
     score=pair.getSecond();
-    gradient=pair.getFirst().gradient();
+    gradient=pair.getFirst().gradient(conf.getGradientList());
     searchState.put(GRADIENT_KEY,gradient);
     searchState.put(SCORE_KEY,score);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;

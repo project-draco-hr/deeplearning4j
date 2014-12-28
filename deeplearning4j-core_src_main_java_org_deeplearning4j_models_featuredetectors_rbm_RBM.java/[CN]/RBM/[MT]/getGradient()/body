@@ -15,9 +15,9 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  INDArray wGradient=input.transpose().mmul(probHidden.getSecond()).sub(nvSamples.transpose().mmul(nhMeans));
+  INDArray wGradient=input.transpose().mmul(probHidden.getSecond()).subi(nvSamples.transpose().mmul(nhMeans));
   INDArray hBiasGradient;
-  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsubi(conf.getSparsity()).mean(0);
+  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).mean(0);
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);
   INDArray vBiasGradient=input.sub(nvSamples).mean(0);
   Gradient ret=new DefaultGradient();
