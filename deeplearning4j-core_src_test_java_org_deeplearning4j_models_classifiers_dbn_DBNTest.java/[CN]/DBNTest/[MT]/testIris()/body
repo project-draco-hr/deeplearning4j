@@ -18,5 +18,5 @@
   Evaluation eval=new Evaluation();
   INDArray output=d.output(next.getFeatureMatrix());
   eval.eval(next.getLabels(),output);
-  log.info("Score " + eval.stats());
+  LOG.info("Score " + eval.stats());
 }
