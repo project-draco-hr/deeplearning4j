@@ -1,6 +1,6 @@
 {
   DataSetIterator iter=new CSVDataSetIterator(10,10,new ClassPathResource("csv-example.csv").getFile(),1,1);
   DataSet next=iter.next();
-  assertEquals("",10,next.numExamples());
-  assertEquals("",479,next.numInputs());
+  assertEquals("Unexpected number of samples",10,next.numExamples());
+  assertEquals("Unexpected dimension of the samples",479,next.numInputs());
 }
