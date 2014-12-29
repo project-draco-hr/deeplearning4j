@@ -1,0 +1,23 @@
+{
+  KDNode node=root;
+  int _disc=0;
+  while (node != null) {
+    if (node.point == point)     break;
+    int successor=successor(node,point,_disc);
+    if (successor < 1)     node=node.getLeft();
+ else     node=node.getRight();
+    _disc=(_disc + 1) % dims;
+  }
+  if (node != null) {
+    if (node == root) {
+      root=delete(root,_disc);
+    }
+ else     node=delete(node,_disc);
+    size--;
+    if (size == 1) {
+      rect=new HyperRect(HyperRect.point(point));
+    }
+ else     rect=null;
+  }
+  return node;
+}

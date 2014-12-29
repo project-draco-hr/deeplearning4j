@@ -1,0 +1,12 @@
+{
+  if (node == null || rect.minDistance(point) > dist)   return;
+  int _discNext=(_disc + 1) % dims;
+  double distance=new EuclideanDistance(point).apply(node.getPoint());
+  if (distance <= dist) {
+    best.add(new Pair<>(distance,node.getPoint()));
+  }
+  HyperRect lower=rect.getLower(point,_disc);
+  HyperRect upper=rect.getUpper(point,_disc);
+  knn(node.getLeft(),point,lower,dist,best,_discNext);
+  knn(node.getRight(),point,upper,dist,best,_discNext);
+}

@@ -1,0 +1,32 @@
+{
+  if (!point.isVector() || point.length() != dims)   throw new IllegalArgumentException("Point must be a vector of length " + dims);
+  if (root == null) {
+    root=new KDNode(point);
+    rect=new HyperRect(HyperRect.point(point));
+  }
+ else {
+    int disc=0;
+    KDNode node=root;
+    KDNode insert=new KDNode(point);
+    int successor=0;
+    while (true) {
+      if (node.getPoint().eq(point).sum(Integer.MAX_VALUE).getDouble(0) == 0) {
+        return;
+      }
+ else {
+        successor=successor(root,point,disc);
+        KDNode child;
+        if (successor < 1)         child=root.getLeft();
+ else         child=root.getRight();
+        if (child == null)         break;
+        disc=(disc + 1) % dims;
+        node=child;
+      }
+    }
+    if (successor < 1)     node.setLeft(insert);
+ else     node.setRight(insert);
+    rect.enlargeTo(point);
+    insert.setParent(node);
+    size++;
+  }
+}

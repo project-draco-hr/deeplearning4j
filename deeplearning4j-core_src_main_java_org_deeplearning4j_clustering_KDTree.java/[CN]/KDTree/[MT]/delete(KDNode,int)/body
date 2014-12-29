@@ -1,0 +1,25 @@
+{
+  if (delete.getLeft() != null && delete.getRight() != null) {
+    if (delete.getParent() != null) {
+      if (delete.getParent().getLeft() == delete)       delete.getParent().setLeft(null);
+ else       delete.getParent().setRight(null);
+    }
+    return null;
+  }
+  int disc=_disc;
+  _disc=(_disc + 1) % dims;
+  Pair<KDNode,Integer> qd=null;
+  if (delete.getRight() != null) {
+    qd=min(delete.getRight(),disc,_disc);
+  }
+ else   if (delete.getLeft() != null)   qd=max(delete.getLeft(),disc,_disc);
+  delete.point=qd.getFirst().point;
+  KDNode qFather=qd.getFirst().getParent();
+  if (qFather.getLeft() == qd.getFirst()) {
+    qFather.setLeft(delete(qd.getFirst(),disc));
+  }
+ else   if (qFather.getRight() == qd.getFirst()) {
+    qFather.setRight(delete(qd.getFirst(),disc));
+  }
+  return delete;
+}
