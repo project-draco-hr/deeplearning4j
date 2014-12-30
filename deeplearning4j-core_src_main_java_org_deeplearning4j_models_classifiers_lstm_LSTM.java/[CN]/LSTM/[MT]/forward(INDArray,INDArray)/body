@@ -21,7 +21,7 @@
   for (int t=0; t < n; t++) {
     prev=t == 0 ? Nd4j.zeros(d) : hOut.getRow(t - 1);
     hIn.put(t,0,1.0);
-    hIn.slice(t).put(new NDArrayIndex[]{interval(1,1 + d)},hOut.getRow(t - 1));
+    hIn.slice(t).put(new NDArrayIndex[]{interval(1,1 + d)},x.slice(t));
     hIn.slice(t).put(new NDArrayIndex[]{interval(1 + d,hIn.columns())},prev);
     iFog.putRow(t,hIn.slice(t).mmul(recurrentWeights));
     iFogF.slice(t).put(new NDArrayIndex[]{interval(0,3 * d)},sigmoid(iFog.slice(t).get(interval(0,3 * d))));
@@ -36,6 +36,6 @@
     u2=Nd4j.rand(hOut.shape()).lti(1 - conf.getDropOut()).muli(scale);
     hOut.muli(u2);
   }
-  INDArray y=hOut.getRows(interval(1,hOut.rows()).indices()).mmul(decoderWeights).addiRowVector(decoderBias);
+  INDArray y=hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias);
   return y;
 }
