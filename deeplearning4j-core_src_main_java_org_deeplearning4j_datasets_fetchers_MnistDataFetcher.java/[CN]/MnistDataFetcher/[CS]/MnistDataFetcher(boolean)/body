@@ -1,14 +1,16 @@
 {
-  if (!new File(rootMnist).exists())   new MnistFetcher().downloadAndUntar();
-  man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  if (!new File(rootMnist).exists()) {
+    new MnistFetcher().downloadAndUntar();
+  }
+  mnistManager=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
   numOutcomes=10;
   this.binarize=binarize;
   totalExamples=NUM_EXAMPLES;
   cursor=1;
-  man.setCurrent(cursor);
+  mnistManager.setCurrent(cursor);
   int[][] image;
   try {
-    image=man.readImage();
+    image=mnistManager.readImage();
   }
  catch (  IOException e) {
     throw new IllegalStateException("Unable to read image");
