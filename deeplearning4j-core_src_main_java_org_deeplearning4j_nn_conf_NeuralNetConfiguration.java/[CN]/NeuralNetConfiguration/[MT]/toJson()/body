@@ -1,7 +1,8 @@
 {
+  ObjectMapper mapper=mapper();
   try {
     String ret=mapper.writeValueAsString(this);
-    return ret.replaceAll("\"activationFunction\",","").replaceAll("\"rng\",","").replaceAll("\"dist\",","").replaceAll("\"stepFunction\",","");
+    return ret.replaceAll("\"activationFunction\",","").replaceAll("\"rng\",","").replaceAll("\"dist\",","").replaceAll("\"layerFactory\",","").replaceAll("\"stepFunction\",","");
   }
  catch (  com.fasterxml.jackson.core.JsonProcessingException e) {
     throw new RuntimeException(e);

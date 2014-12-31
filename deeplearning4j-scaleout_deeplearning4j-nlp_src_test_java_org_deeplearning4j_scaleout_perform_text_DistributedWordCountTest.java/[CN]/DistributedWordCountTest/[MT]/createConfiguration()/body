@@ -1,6 +1,0 @@
-{
-  Configuration ret=super.createConfiguration();
-  ret.set(JobAggregator.AGGREGATOR,WordCountJobAggregator.class.getName());
-  ret.set(WordCountJobAggregator.MIN_WORD_FREQUENCY,"1");
-  return ret;
-}

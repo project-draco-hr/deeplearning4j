@@ -1,6 +1,5 @@
 {
-  ObjectMapper mapper=new ObjectMapper();
-  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  ObjectMapper mapper=NeuralNetConfiguration.mapper();
   JsonNode node=jp.getCodec().readTree(jp);
   String val=node.textValue();
   JSONObject obj=new JSONObject(val);

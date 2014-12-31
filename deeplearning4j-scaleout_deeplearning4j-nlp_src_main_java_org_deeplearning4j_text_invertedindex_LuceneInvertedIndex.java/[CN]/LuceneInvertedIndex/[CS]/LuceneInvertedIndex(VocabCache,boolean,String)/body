@@ -2,5 +2,10 @@
   this.vocabCache=vocabCache;
   this.cache=cache;
   this.indexPath=indexPath;
+  if (new File(indexPath).exists()) {
+    String id=UUID.randomUUID().toString();
+    log.warn("Changing index path to" + id);
+    indexPath=id;
+  }
   initReader();
 }

@@ -6,8 +6,8 @@
   if (sentenceIter == null)   sentenceIter=new CollectionSentenceIterator(Arrays.asList(sentence));
   File vectors=new File("wordvectors.ser");
   vectors.delete();
-  if (lookupTable == null)   lookupTable=new InMemoryLookupTable.Builder().vectorLength(100).build();
   if (cache == null)   cache=new InMemoryLookupCache();
+  if (lookupTable == null)   lookupTable=new InMemoryLookupTable.Builder().cache(cache).vectorLength(100).build();
   if (index == null)   index=new LuceneInvertedIndex.Builder().indexDir(new File("rntn-index")).cache(cache).build();
   if (vec == null) {
     vec=new Word2Vec.Builder().vocabCache(cache).index(index).iterate(sentenceIter).build();

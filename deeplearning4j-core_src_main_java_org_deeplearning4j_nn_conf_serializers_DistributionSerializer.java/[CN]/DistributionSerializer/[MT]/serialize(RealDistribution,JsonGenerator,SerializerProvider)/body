@@ -1,6 +1,3 @@
 {
-  ObjectMapper mapper=new ObjectMapper();
-  String write=mapper.writeValueAsString(value).substring(1);
-  String all="{\"distclass\":\"" + value.getClass().getName() + "\","+ write;
-  jgen.writeString(all);
+  jgen.writeStringField("distclass",value.getClass().getName());
 }

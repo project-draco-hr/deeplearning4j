@@ -1,5 +1,7 @@
 {
   if (dir == null) {
+    log.info("Creating directory " + indexPath);
+    FileUtils.deleteDirectory(new File(indexPath));
     dir=FSDirectory.open(new File(indexPath));
     File dir2=new File(indexPath);
     if (!dir2.exists())     dir2.mkdir();

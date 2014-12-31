@@ -1,4 +1,6 @@
 {
+  FileUtils.deleteDirectory(new File("word2vec-index"));
+  log.info("Deleted directory " + new File("word2vec-index").getAbsolutePath());
   glove=new Glove.Builder().iterate(iter).minWordFrequency(1).build();
   glove.fit();
 }

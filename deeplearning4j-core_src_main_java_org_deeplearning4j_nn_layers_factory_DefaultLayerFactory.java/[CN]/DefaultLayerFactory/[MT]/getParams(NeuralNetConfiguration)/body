@@ -1,5 +1,5 @@
 {
-  ParamInitializer init=getInitializer();
+  ParamInitializer init=initializer();
   Map<String,INDArray> params=new LinkedHashMap<>();
   init.init(params,conf);
   return params;

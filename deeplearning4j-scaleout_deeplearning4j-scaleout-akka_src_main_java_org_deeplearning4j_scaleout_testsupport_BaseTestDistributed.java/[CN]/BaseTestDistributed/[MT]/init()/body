@@ -1,4 +1,8 @@
 {
+  if (stateTracker != null) {
+    stateTracker.finish();
+    stateTracker.shutdown();
+  }
   stateTracker=createStateTracker();
   iterator=createIterator();
   workPerformFactoryClassName=workPerformFactoryClassName();

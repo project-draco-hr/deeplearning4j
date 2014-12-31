@@ -2,6 +2,7 @@
   this.numWorkers=numWorkers;
   this.gen=gen;
   this.vocab=cache;
+  this.layerSize=layerSize;
   this.shuffle=shuffle;
   this.sentenceIterator=sentenceIterator;
   this.textVectorizer=textVectorizer;
