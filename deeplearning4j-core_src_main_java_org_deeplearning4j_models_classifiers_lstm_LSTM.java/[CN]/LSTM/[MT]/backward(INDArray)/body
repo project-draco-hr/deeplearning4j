@@ -19,32 +19,28 @@
   for (int t=n - 1; t > 0; t--) {
     if (conf.getActivationFunction().type().equals("tanh")) {
       INDArray tanhCt=tanh(c.slice(t));
-      dIFogF.slice(t).get(interval(2 * d,3 * d)).assign(tanhCt.mul(dHout.slice(t)));
+      dIFogF.slice(t).put(new NDArrayIndex[]{interval(2 * d,3 * d)},tanhCt.mul(dHout.slice(t)));
       dC.slice(t).addi(pow(tanhCt,2).rsubi(1).muli(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(dHout.slice(t))));
     }
  else {
-      dIFogF.slice(t).get(interval(2 * d,3 * d)).assign(c.slice(t).mul(dHout.slice(t)));
+      dIFogF.slice(t).put(new NDArrayIndex[]{interval(2 * d,3 * d)},c.slice(t).mul(dHout.slice(t)));
       dC.slice(t).addi(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(dHout.slice(t)));
     }
     if (t > 0) {
-      dIFogF.slice(t).get(interval(d,2 * d)).assign(c.slice(t - 1).mul(dC.slice(t)));
+      dIFogF.slice(t).put(new NDArrayIndex[]{interval(d,2 * d)},c.slice(t - 1).mul(dC.slice(t)));
       dC.slice(t - 1).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(dC.slice(t)));
     }
-    dIFogF.slice(t).get(interval(0,d)).assign(iFogF.slice(t).get(interval(3 * d,iFogF.columns())).mul(dC.slice(t)));
-    dIFogF.slice(t).get(interval(3 * d,dIFogF.columns())).assign(iFogF.slice(t).get(interval(0,d)).mul(dC.slice(t)));
-    dIFog.slice(t).get(interval(3 * d,dIFog.columns())).assign(pow(iFogF.slice(t).get(interval(3 * d,iFogF.columns())),2).rsubi(1).mul(dIFogF.slice(t).get(interval(3 * d,dIFogF.columns()))));
+    dIFogF.slice(t).put(new NDArrayIndex[]{interval(0,d)},iFogF.slice(t).get(interval(3 * d,iFogF.columns())).mul(dC.slice(t)));
+    dIFogF.slice(t).put(new NDArrayIndex[]{interval(3 * d,dIFogF.columns())},iFogF.slice(t).get(interval(0,d)).mul(dC.slice(t)));
+    dIFog.slice(t).put(new NDArrayIndex[]{interval(3 * d,dIFog.columns())},pow(iFogF.slice(t).get(interval(3 * d,iFogF.columns())),2).rsubi(1).mul(dIFogF.slice(t).get(interval(3 * d,dIFogF.columns()))));
     y=iFogF.slice(t).get(interval(0,3 * d));
-    dIFogF.slice(t).get(interval(0,3 * d)).assign(y.mul(y.rsub(1)).mul(dIFogF.slice(t).get(interval(0,3 * d))));
+    dIFogF.slice(t).put(new NDArrayIndex[]{interval(0,3 * d)},y.mul(y.rsub(1)).mul(dIFogF.slice(t).get(interval(0,3 * d))));
     dRecurrentWeights.addi(hIn.slice(t).transpose().mmul(dIFog.slice(t)));
     dHin.slice(t).assign(dIFog.slice(t).mmul(recurrentWeights.transpose()));
     INDArray get=dHin.slice(t).get(interval(1,1 + d));
     dx.slice(t).assign(get);
-    if (t > 0) {
-      dHout.slice(t - 1).addi(dHin.slice(t).get(interval(1 + d,dHin.columns())));
-    }
-    if (conf.getDropOut() > 0) {
-      dx.muli(u);
-    }
+    if (t > 0)     dHout.slice(t - 1).addi(dHin.slice(t).get(interval(1 + d,dHin.columns())));
+    if (conf.getDropOut() > 0)     dx.muli(u);
   }
   clear();
   Gradient gradient=new DefaultGradient();
