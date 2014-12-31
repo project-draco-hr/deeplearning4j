@@ -1,5 +1,5 @@
 {
   INDArray forward=forward(xi,xs);
-  INDArray probas=Activations.softmax().applyDerivative(forward);
+  INDArray probas=Activations.softMaxRows().applyDerivative(forward);
   return backward(probas);
 }

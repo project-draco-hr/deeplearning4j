@@ -3,7 +3,7 @@
   INDArray netOut=output(input);
   INDArray dy=labels.sub(netOut);
   INDArray wGradient=getWeightGradient();
-  INDArray bGradient=dy.sum(0);
+  INDArray bGradient=dy.mean(0);
   Gradient g=new DefaultGradient();
   g.gradientLookupTable().put(DefaultParamInitializer.WEIGHT_KEY,wGradient);
   g.gradientLookupTable().put(DefaultParamInitializer.BIAS_KEY,bGradient);

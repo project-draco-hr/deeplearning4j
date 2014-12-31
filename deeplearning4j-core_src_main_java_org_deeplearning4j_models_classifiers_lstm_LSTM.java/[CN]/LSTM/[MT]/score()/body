@@ -1,4 +1,4 @@
 {
   INDArray forward=Activations.softMaxRows().apply(forward(xi,xs));
-  return -log(forward.sum(Integer.MAX_VALUE)).getDouble(0);
+  return LossFunctions.score(xs,conf.getLossFunction(),forward,conf.getL2(),conf.isUseRegularization());
 }

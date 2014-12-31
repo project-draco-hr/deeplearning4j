@@ -1,0 +1,9 @@
+{
+  for (int i=disc; i < dims; i++) {
+    double pointI=point.getDouble(i);
+    double nodePointI=node.getPoint().getDouble(i);
+    if (pointI < nodePointI)     return LESS;
+ else     if (pointI > nodePointI)     return GREATER;
+  }
+  throw new IllegalStateException("Point is equal!");
+}

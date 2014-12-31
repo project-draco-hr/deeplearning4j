@@ -1,41 +1,6 @@
 {
-  x=Nd4j.vstack(xi,xs);
-  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
-  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
-  INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
   this.xs=xs;
   this.xi=xi;
-  if (conf.getDropOut() > 0) {
-    double scale=1 / (1 - conf.getDropOut());
-    u=Nd4j.rand(x.shape()).lti(1 - conf.getDropOut()).muli(scale);
-    x.muli(u);
-  }
-  int n=x.rows();
-  int d=decoderWeights.rows();
-  hIn=Nd4j.zeros(n,recurrentWeights.rows());
-  hOut=Nd4j.zeros(n,d);
-  iFog=Nd4j.zeros(n,d * 4);
-  iFogF=Nd4j.zeros(iFog.shape());
-  c=Nd4j.zeros(n,d);
-  INDArray prev;
-  for (int t=0; t < n; t++) {
-    prev=t == 0 ? Nd4j.zeros(d) : hOut.getRow(t - 1);
-    hIn.put(t,0,1.0);
-    hIn.slice(t).put(new NDArrayIndex[]{interval(1,1 + d)},hOut.getRow(t - 1));
-    hIn.slice(t).put(new NDArrayIndex[]{interval(1 + d,hIn.columns())},prev);
-    iFog.putRow(t,hIn.slice(t).mmul(recurrentWeights));
-    iFogF.slice(t).put(new NDArrayIndex[]{interval(0,3 * d)},sigmoid(iFog.slice(t).get(interval(0,3 * d))));
-    iFogF.slice(t).put(new NDArrayIndex[]{interval(3 * d,iFogF.columns())},tanh(iFog.slice(t).get(interval(3 * d,iFog.columns()))));
-    c.slice(t).put(new NDArrayIndex[]{interval(3 * d,iFogF.columns())},iFogF.slice(t).get(interval(0,d)).mul(iFogF.slice(t).get(interval(3 * d,iFogF.columns()))));
-    if (t > 0)     c.slice(t).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(c.getRow(t - 1)));
-    if (conf.getActivationFunction().type().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).muli(tanh(c.getRow(t))));
- else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).muli(c.getRow(t)));
-  }
-  if (conf.getDropOut() > 0) {
-    double scale=1 / (1 - conf.getDropOut());
-    u2=Nd4j.rand(hOut.shape()).lti(1 - conf.getDropOut()).muli(scale);
-    hOut.muli(u2);
-  }
-  INDArray y=hOut.getRows(interval(1,hOut.rows()).indices()).mmul(decoderWeights).addiRowVector(decoderBias);
-  return y;
+  x=Nd4j.vstack(xi,xs);
+  return activate(x);
 }

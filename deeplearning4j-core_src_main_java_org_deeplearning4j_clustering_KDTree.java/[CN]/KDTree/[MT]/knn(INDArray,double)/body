@@ -1,0 +1,11 @@
+{
+  List<Pair<Double,INDArray>> best=new ArrayList<>();
+  knn(root,point,rect,distance,best,0);
+  Collections.sort(best,new Comparator<Pair<Double,INDArray>>(){
+    @Override public int compare(    Pair<Double,INDArray> o1,    Pair<Double,INDArray> o2){
+      return Double.compare(o1.getFirst(),o2.getFirst());
+    }
+  }
+);
+  return best;
+}
