@@ -25,14 +25,14 @@
     iFogF.slice(t).put(new NDArrayIndex[]{interval(3 * d,iFogF.columns())},tanh(iFog.slice(t).get(interval(3 * d,iFog.columns()))));
     c.slice(t).put(new NDArrayIndex[]{interval(3 * d,iFogF.columns())},iFogF.slice(t).get(interval(0,d)).mul(iFogF.slice(t).get(interval(3 * d,iFogF.columns()))));
     if (t > 0)     c.slice(t).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(c.getRow(t - 1)));
-    if (conf.getActivationFunction().type().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).muli(tanh(c.getRow(t))));
- else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).muli(c.getRow(t)));
+    if (conf.getActivationFunction().type().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(tanh(c.getRow(t))));
+ else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(c.getRow(t)));
   }
   if (conf.getDropOut() > 0) {
     double scale=1 / (1 - conf.getDropOut());
     u2=Nd4j.rand(hOut.shape()).lti(1 - conf.getDropOut()).muli(scale);
     hOut.muli(u2);
   }
-  INDArray y=hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias);
+  INDArray y=conf.getActivationFunction().apply(hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias));
   return y;
 }
