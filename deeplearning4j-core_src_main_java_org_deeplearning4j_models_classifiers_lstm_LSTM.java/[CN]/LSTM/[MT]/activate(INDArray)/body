@@ -33,6 +33,6 @@
     u2=Nd4j.rand(hOut.shape()).lti(1 - conf.getDropOut()).muli(scale);
     hOut.muli(u2);
   }
-  INDArray y=conf.getActivationFunction().apply(hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias));
+  INDArray y=hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias);
   return y;
 }
