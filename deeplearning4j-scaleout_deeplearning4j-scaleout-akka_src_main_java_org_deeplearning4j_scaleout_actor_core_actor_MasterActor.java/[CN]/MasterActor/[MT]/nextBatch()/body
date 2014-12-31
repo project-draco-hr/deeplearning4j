@@ -25,5 +25,9 @@
     ActorRefUtils.throwExceptionIfExists(f,context().dispatcher());
   }
  else   if (currentJobs.isEmpty()) {
+    stateTracker.finish();
+    stateTracker.shutdown();
+    context().system().shutdown();
+    log.info("Current jobs is empty and no more updates; terminating");
   }
 }

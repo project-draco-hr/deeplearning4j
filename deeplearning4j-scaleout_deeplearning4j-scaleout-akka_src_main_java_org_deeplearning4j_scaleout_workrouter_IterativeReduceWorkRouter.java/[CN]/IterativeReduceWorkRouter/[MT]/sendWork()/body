@@ -2,7 +2,8 @@
   try {
     List<Job> currentJobs=stateTracker.currentJobs();
     Collection<String> updates=stateTracker.workerUpdates();
-    return updates.size() >= stateTracker.workers().size() || currentJobs.isEmpty() || !isWaitForWorkers();
+    Collection<String> workers=stateTracker.workers();
+    return updates.size() >= workers.size() || currentJobs.isEmpty() || !isWaitForWorkers();
   }
  catch (  Exception e) {
   }
