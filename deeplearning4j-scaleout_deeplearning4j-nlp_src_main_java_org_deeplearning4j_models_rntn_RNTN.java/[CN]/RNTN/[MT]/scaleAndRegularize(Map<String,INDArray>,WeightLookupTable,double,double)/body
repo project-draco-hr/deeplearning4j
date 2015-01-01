@@ -3,7 +3,8 @@
   for (  String s : vocabCache.words()) {
     INDArray D=derivatives.get(s);
     INDArray vector=currentMatrices.vector(s);
-    D=Nd4j.getBlasWrapper().scal(scale,D).addi(Nd4j.getBlasWrapper().scal(regCost,vector));
+    if (D.data().dataType() == DataBuffer.DOUBLE)     D=Nd4j.getBlasWrapper().scal(scale,D).addi(Nd4j.getBlasWrapper().scal(regCost,vector));
+ else     D=Nd4j.getBlasWrapper().scal((float)scale,D).addi(Nd4j.getBlasWrapper().scal((float)regCost,vector));
     derivatives.put(s,D);
     cost+=vector.mul(vector).sum(Integer.MAX_VALUE).getDouble(0) * regCost / 2.0f;
   }
