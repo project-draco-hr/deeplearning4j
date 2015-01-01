@@ -1,4 +1,9 @@
 {
+  boolean switched=false;
+  if (Nd4j.dtype == DataBuffer.FLOAT) {
+    Nd4j.dtype=DataBuffer.DOUBLE;
+    switched=true;
+  }
   MnistDataFetcher data=new MnistDataFetcher(true);
   data.fetch(2);
   DataSet d=data.next();
@@ -7,4 +12,7 @@
   LayerFactory l=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
   ConvolutionDownSampleLayer c=l.create(n);
   INDArray convolved=c.activate(d.getFeatureMatrix());
+  if (switched) {
+    Nd4j.dtype=DataBuffer.FLOAT;
+  }
 }
