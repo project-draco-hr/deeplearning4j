@@ -1,7 +1,5 @@
 {
-  if (layerWiseConfigurations == null || layers == null) {
-    intializeConfigurations();
-  }
+  if (layerWiseConfigurations == null || layers == null)   intializeConfigurations();
   INDArray layerInput=input;
   int inputSize;
   if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");

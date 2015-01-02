@@ -1,0 +1,13 @@
+{
+  INDArray dY=Nd4j.create(n,d);
+  INDArray uY=Nd4j.create(n,d);
+  INDArray gains=Nd4j.ones(n,d);
+  INDArray p;
+  x=Transforms.normalizeZeroMeanAndUnitVariance(x);
+  boolean exact=theta == 0.0;
+  if (exact) {
+    p=Nd4j.create(n,n);
+  }
+ else {
+  }
+}

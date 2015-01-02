@@ -1,0 +1,4 @@
+{
+  if (isLeaf())   return 1;
+  return 1 + max(max(northWest.depth(),northEast.depth()),max(southWest.depth(),southEast.depth()));
+}

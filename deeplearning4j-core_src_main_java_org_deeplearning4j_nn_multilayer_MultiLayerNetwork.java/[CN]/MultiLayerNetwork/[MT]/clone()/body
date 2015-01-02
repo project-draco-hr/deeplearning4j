@@ -2,13 +2,10 @@
   MultiLayerNetwork ret=null;
   try {
     ret=getClass().newInstance();
+    ret.update(this);
   }
- catch (  InstantiationException e) {
-    e.printStackTrace();
+ catch (  Exception e) {
+    throw new IllegalStateException("Unable to cloe network");
   }
-catch (  IllegalAccessException e) {
-    e.printStackTrace();
-  }
-  ret.update(this);
   return ret;
 }

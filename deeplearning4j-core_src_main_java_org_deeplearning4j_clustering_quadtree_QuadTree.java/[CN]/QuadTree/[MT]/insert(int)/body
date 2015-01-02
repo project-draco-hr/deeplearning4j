@@ -1,0 +1,26 @@
+{
+  INDArray point=data.slice(newIndex);
+  if (!boundary.containsPoint(point))   return false;
+ else   if (size > 0) {
+    for (int i=0; i < size; i++) {
+      INDArray compPoint=data.slice(index[i]);
+      if (point.getDouble(0) == compPoint.getDouble(0) && point.getDouble(1) == compPoint.getDouble(1))       return false;
+    }
+  }
+  cumSize++;
+  double mult1=(double)(cumSize - 1) / (double)cumSize;
+  double mult2=1.0 / (double)cumSize;
+  centerOfMass.muli(mult1);
+  centerOfMass.addi(point.mul(mult2));
+  if (isLeaf() && size < QT_NODE_CAPACITY) {
+    index[size]=newIndex;
+    size++;
+    return true;
+  }
+  subDivide();
+  if (northWest.insert(newIndex))   return true;
+  if (northEast.insert(newIndex))   return true;
+  if (southWest.insert(newIndex))   return true;
+  if (southEast.insert(newIndex))   return true;
+  return false;
+}

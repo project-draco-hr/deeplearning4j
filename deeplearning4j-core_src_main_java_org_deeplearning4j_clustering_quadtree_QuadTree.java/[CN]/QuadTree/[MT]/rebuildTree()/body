@@ -1,0 +1,24 @@
+{
+  for (int n=0; n < size; n++) {
+    INDArray point=data.slice(index[n]);
+    if (!boundary.containsPoint(point)) {
+      int rem_index=index[n];
+      for (int m=n + 1; m < size; m++)       index[m - 1]=index[m];
+      index[size - 1]=-1;
+      size--;
+      boolean done=false;
+      QuadTree node=this;
+      while (!done) {
+        node.getCenterOfMass().assign(node.centerOfMass.mul(cumSize).sub(point).divi(node.cumSize - 1));
+        node.cumSize--;
+        if (node.getParent() == null)         done=true;
+ else         node=node.getParent();
+      }
+      node.insert(rem_index);
+    }
+  }
+  northWest.rebuildTree();
+  northEast.rebuildTree();
+  southWest.rebuildTree();
+  southEast.rebuildTree();
+}
