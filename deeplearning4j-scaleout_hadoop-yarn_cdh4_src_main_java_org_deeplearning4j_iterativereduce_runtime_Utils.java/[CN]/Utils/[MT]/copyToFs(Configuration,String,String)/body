@@ -1,0 +1,7 @@
+{
+  FileSystem fs=FileSystem.get(conf);
+  Path src=new Path(local);
+  Path dst=fs.makeQualified(new Path(remote));
+  LOG.debug("Copying to filesystem, src=" + src.toString() + ", dst="+ dst);
+  fs.copyFromLocalFile(false,true,src,dst);
+}

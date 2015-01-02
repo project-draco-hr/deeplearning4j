@@ -1,3 +1,3 @@
 {
-  return new TfidfVectorizer(cache,tokenizerFactory,stopWords,layerSize,minWordFrequency,docIter,sentenceIterator,labels,index,batchSize,sample,stem);
+  return new TfidfVectorizer(cache,tokenizerFactory,stopWords,minWordFrequency,docIter,sentenceIterator,labels,index,batchSize,sample,stem,cleanup);
 }

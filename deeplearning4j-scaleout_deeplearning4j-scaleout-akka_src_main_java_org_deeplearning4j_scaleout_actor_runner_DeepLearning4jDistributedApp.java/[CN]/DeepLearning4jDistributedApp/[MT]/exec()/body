@@ -1,0 +1,24 @@
+{
+  if (type != null && type.equals("worker")) {
+    log.info("Initializing conf from zookeeper at " + host);
+    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
+    Configuration conf=retriever.retrieve();
+    String address=conf.get(MASTER_URL);
+    log.info("Creating hazel cast state tracker... " + conf.get(STATE_TRACKER_CONNECTION_STRING));
+    HazelCastStateTracker stateTracker=new HazelCastStateTracker(conf.get(STATE_TRACKER_CONNECTION_STRING));
+    log.info("Creating hazel cast via worker " + stateTracker.connectionString());
+    runner=new DeepLearning4jDistributed(type,address);
+    runner.setMasterHost(host);
+    runner.setStateTracker(stateTracker);
+    runner.setup(conf);
+    retriever.close();
+  }
+ else {
+    Configuration conf=new Configuration();
+    JobIteratorFactory factory=(JobIteratorFactory)Class.forName(jobFactoryClazz).newInstance();
+    iter=factory.create();
+    runner=new DeepLearning4jDistributed("master",iter);
+    runner.setStateTrackerPort(stateTrackerPort);
+    runner.setup(conf);
+  }
+}

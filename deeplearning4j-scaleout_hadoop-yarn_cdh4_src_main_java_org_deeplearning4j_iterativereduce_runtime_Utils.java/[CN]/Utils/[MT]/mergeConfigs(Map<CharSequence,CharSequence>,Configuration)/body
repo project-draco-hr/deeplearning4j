@@ -1,0 +1,8 @@
+{
+  if (sourceConf == null || destConf == null)   return;
+  for (  Map.Entry<CharSequence,CharSequence> entry : sourceConf.entrySet()) {
+    if (destConf.get(entry.getKey().toString()) == null) {
+      destConf.set(entry.getKey().toString(),entry.getValue().toString());
+    }
+  }
+}

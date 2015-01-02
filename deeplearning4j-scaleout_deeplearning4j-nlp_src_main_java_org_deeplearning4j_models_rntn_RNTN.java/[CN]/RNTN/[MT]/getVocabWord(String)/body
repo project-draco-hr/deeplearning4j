@@ -2,7 +2,7 @@
   if (lowerCasefeatureNames) {
     word=word.toLowerCase();
   }
-  if (featureVectors.containsWord(word)) {
+  if (vocabCache.containsWord(word)) {
     return word;
   }
   return Word2Vec.UNK;

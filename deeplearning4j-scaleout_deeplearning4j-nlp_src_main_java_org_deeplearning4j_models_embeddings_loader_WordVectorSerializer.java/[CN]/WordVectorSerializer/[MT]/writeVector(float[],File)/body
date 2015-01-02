@@ -1,0 +1,9 @@
+{
+  BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(to));
+  DataOutputStream dos=new DataOutputStream(bos);
+  for (int i=0; i < vec.length; i++) {
+    dos.writeFloat(vec[i]);
+  }
+  bos.flush();
+  bos.close();
+}

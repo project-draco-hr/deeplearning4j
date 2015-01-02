@@ -1,0 +1,9 @@
+{
+  if (sourceConf == null || destConf == null)   return;
+  Map<CharSequence,CharSequence> confMap=destConf.getOther();
+  if (confMap == null)   confMap=new HashMap<CharSequence,CharSequence>();
+  for (  Map.Entry<CharSequence,CharSequence> entry : sourceConf.entrySet()) {
+    if (!confMap.containsKey(entry.getKey()))     confMap.put(entry.getKey(),entry.getValue());
+  }
+  destConf.setOther(confMap);
+}

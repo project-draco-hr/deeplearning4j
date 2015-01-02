@@ -1,0 +1,4 @@
+{
+  if (rho < 0.25 || Double.isNaN(rho))   layerWiseConfigurations.setDampingFactor(getLayerWiseConfigurations().getDampingFactor() * boost);
+ else   if (rho > 0.75)   layerWiseConfigurations.setDampingFactor(getLayerWiseConfigurations().getDampingFactor() * decrease);
+}

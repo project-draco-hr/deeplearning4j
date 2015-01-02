@@ -1,0 +1,16 @@
+{
+  int nextUpdate=0;
+  long waitStarted=System.currentTimeMillis();
+  long waitingFor=0;
+  while ((nextUpdate=masterService.waiting(workerId,lastUpdate,waitingFor)) < 0) {
+synchronized (currentState) {
+      currentState=WorkerState.WAITING;
+    }
+    Thread.sleep(updateSleepTime);
+    waitingFor=System.currentTimeMillis() - waitStarted;
+    LOG.info("Waiting on update from master with lastID " + lastUpdate + " for "+ waitingFor+ "ms");
+    mWaits++;
+  }
+  mWaitTime+=waitingFor;
+  return nextUpdate;
+}

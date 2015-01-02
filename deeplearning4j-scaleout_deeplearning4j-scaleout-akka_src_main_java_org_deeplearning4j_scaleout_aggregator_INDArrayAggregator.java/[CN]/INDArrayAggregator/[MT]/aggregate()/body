@@ -1,0 +1,6 @@
+{
+  if (averaged == null)   return empty();
+  Job ret=new Job(averaged.div(seenSoFar),"");
+  seenSoFar=0.0;
+  return ret;
+}

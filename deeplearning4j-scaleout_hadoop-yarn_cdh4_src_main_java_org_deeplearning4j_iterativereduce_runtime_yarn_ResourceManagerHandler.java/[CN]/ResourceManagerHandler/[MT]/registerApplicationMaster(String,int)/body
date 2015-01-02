@@ -1,0 +1,12 @@
+{
+  if (amResourceManager == null)   throw new IllegalStateException("Cannot register application master before connecting to the resource manager!");
+  RegisterApplicationMasterRequest request=Records.newRecord(RegisterApplicationMasterRequest.class);
+  request.setApplicationAttemptId(appAttemptId);
+  request.setHost(host);
+  request.setRpcPort(port);
+  request.setTrackingUrl("http://some-place.com/some/endpoint");
+  LOG.info("Sending application registration request" + ", masterHost=" + request.getHost() + ", masterRpcPort="+ request.getRpcPort()+ ", trackingUrl="+ request.getTrackingUrl()+ ", applicationAttempt="+ request.getApplicationAttemptId()+ ", applicationId="+ request.getApplicationAttemptId().getApplicationId());
+  RegisterApplicationMasterResponse response=amResourceManager.registerApplicationMaster(request);
+  LOG.debug("Received a registration response" + ", min=" + response.getMinimumResourceCapability().getMemory() + ", max="+ response.getMaximumResourceCapability().getMemory());
+  return response;
+}

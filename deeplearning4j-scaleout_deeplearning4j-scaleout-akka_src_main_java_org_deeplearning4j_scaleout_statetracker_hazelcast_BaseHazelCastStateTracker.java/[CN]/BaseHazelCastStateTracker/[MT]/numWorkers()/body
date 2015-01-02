@@ -1,0 +1,5 @@
+{
+  int num=workers.size();
+  if (num < 1)   throw new IllegalStateException("There appears to have been an issue during initialization. No workers found.");
+  return num;
+}

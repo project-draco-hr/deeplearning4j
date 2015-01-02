@@ -1,0 +1,4 @@
+{
+  IAtomicReference<Job> jRef=h.getAtomicReference("job-" + j.workerId());
+  jRef.set(j);
+}

@@ -1,0 +1,20 @@
+{
+  if (masterAddr == null || computable == null || updatable == null)   throw new IllegalStateException("masterAddress or computeUpdate cannot be null");
+  this.workers=workers;
+  this.workersCompleted=new CountDownLatch(workers.size());
+  this.expectedUpdates=new AtomicLong(workers.size());
+  this.workersState=new HashMap<WorkerId,WorkerState>();
+  this.workersProgress=new HashMap<WorkerId,LinkedHashMap<Long,ProgressReport>>();
+  this.masterState=MasterState.WAITING;
+  this.masterUpdates=new HashMap<Integer,T>();
+  this.masterAddr=masterAddr;
+  this.computable=computable;
+  this.updateable=updatable;
+  this.appConf=appConf;
+  this.conf=conf;
+  Utils.mergeConfigs(this.appConf,this.conf);
+  this.computable.setup(this.conf);
+  for (  WorkerId workerId : workers.keySet()) {
+    workersState.put(workerId,WorkerState.NONE);
+  }
+}

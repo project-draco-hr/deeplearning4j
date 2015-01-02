@@ -1,0 +1,11 @@
+{
+  b.rewind();
+  DataInputStream dis=new DataInputStream(new ByteArrayInputStream(b.array()));
+  try {
+    paramMessage=Nd4j.read(dis);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  IOUtils.closeQuietly(dis);
+}

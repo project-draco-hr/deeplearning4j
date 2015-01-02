@@ -1,13 +1,12 @@
 {
-  if (numDocs > 0)   return numDocs;
-  int ret;
   try {
-    IndexWriter writer=getWriter();
-    initReader(writer);
-    ret=reader.numDocs();
+    readerManager.maybeRefresh();
+    DirectoryReader reader=readerManager.acquire();
+    int ret=reader.numDocs();
+    readerManager.release(reader);
+    return ret;
   }
- catch (  Exception e) {
-    return 0;
+ catch (  IOException e) {
+    throw new RuntimeException(e);
   }
-  return ret;
 }

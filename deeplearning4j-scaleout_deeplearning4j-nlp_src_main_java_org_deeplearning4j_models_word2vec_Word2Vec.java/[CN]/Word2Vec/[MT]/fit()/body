@@ -1,57 +1,24 @@
 {
   boolean loaded=buildVocab();
-  if (!loaded && saveVocab)   cache.saveVocab();
+  if (!loaded && saveVocab)   vocab().saveVocab();
   if (stopWords == null)   readStopWords();
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
-  final int[] docs=vectorizer.index().allDocs();
+  int[] docs=vectorizer.index().allDocs();
+  if (docs.length < 1) {
+    vectorizer.fit();
+  }
+  docs=vectorizer.index().allDocs();
+  if (docs.length < 1) {
+    throw new IllegalStateException("No documents found");
+  }
   totalWords=vectorizer.numWordsEncountered();
+  if (totalWords < 1)   throw new IllegalStateException("Unable to train, total words less than 1");
   totalWords*=numIterations;
   log.info("Processing sentences...");
-  List<Thread> work=new ArrayList<>();
-  final AtomicInteger processed=new AtomicInteger(0);
-  final int allDocs=docs.length * numIterations;
-  final AtomicLong numWordsSoFar=new AtomicLong(0);
-  final AtomicLong lastReport=new AtomicLong(0);
-  for (int i=0; i < workers; i++) {
-    final Set<List<VocabWord>> set=new ConcurrentHashSet<>();
-    Thread t=new Thread(new Runnable(){
-      @Override public void run(){
-        final AtomicLong nextRandom=new AtomicLong(5);
-        long checked=0;
-        while (true) {
-          if (checked > 0 && checked % 1000 == 0 && processed.get() >= allDocs)           return;
-          checked++;
-          List<List<VocabWord>> job=jobQueue.poll();
-          if (job == null || job.isEmpty() || set.contains(job))           continue;
-          log.info("Job of " + job.size());
-          double alpha=Math.max(minLearningRate,Word2Vec.this.alpha.get() * (1 - (1.0 * (double)numWordsSoFar.get() / (double)totalWords)));
-          long diff=Math.abs(lastReport.get() - numWordsSoFar.get());
-          if (numWordsSoFar.get() > 0 && diff >= 10000) {
-            log.info("Words so far " + numWordsSoFar.get() + " with alpha at "+ alpha);
-            lastReport.set(numWordsSoFar.get());
-          }
-          long increment=0;
-          double diff2=0.0;
-          for (          List<VocabWord> sentence : job) {
-            trainSentence(sentence,nextRandom,alpha);
-            increment+=sentence.size();
-          }
-          log.info("Train sentence avg took " + diff2 / (double)job.size());
-          numWordsSoFar.set(numWordsSoFar.get() + increment);
-          processed.incrementAndGet();
-        }
-      }
-    }
-);
-    t.setName("worker" + i);
-    t.start();
-    work.add(t);
-  }
+  AtomicLong numWordsSoFar=new AtomicLong(0);
   final AtomicLong nextRandom=new AtomicLong(5);
-  final AtomicInteger doc=new AtomicInteger(0);
-  final int numDocs=vectorizer.index().numDocuments() * numIterations;
   ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
     @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
       try {
@@ -70,42 +37,17 @@
       List<VocabWord> batch=new ArrayList<>();
       addWords(input,nextRandom,batch);
       if (batch.isEmpty())       return null;
-      if (batch2.size() >= 100) {
-        boolean added=false;
-        while (!added) {
-          try {
-            jobQueue.add(new LinkedList<>(batch2));
-            batch2.clear();
-            added=true;
-          }
- catch (          Exception e) {
-            continue;
-          }
-        }
-      }
-      for (int i=0; i < numIterations; i++) {
-        batch2.add(batch);
-      }
-      doc.incrementAndGet();
-      if (doc.get() > 0 && doc.get() % 10000 == 0)       log.info("Doc " + doc.get() + " done so far");
+      batch2.add(batch);
       return null;
     }
   }
 ,exec);
-  if (!batch2.isEmpty()) {
-    jobQueue.add(new LinkedList<>(batch2));
-  }
   exec.shutdown();
   try {
     exec.awaitTermination(1,TimeUnit.DAYS);
   }
  catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
+    e.printStackTrace();
   }
-  for (  Thread t : work)   try {
-    t.join();
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
-  }
+  for (int i=0; i < numIterations; i++)   doIteration(batch2,numWordsSoFar,nextRandom);
 }

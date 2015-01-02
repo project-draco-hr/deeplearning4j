@@ -1,0 +1,18 @@
+{
+  try {
+    List<String> plot=new ArrayList<>();
+    for (    String s : vocab.words()) {
+      plot.add(s);
+    }
+    tsne.plot(syn0,2,plot);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  try {
+    RenderApplication.main(null);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

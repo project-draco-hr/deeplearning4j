@@ -1,6 +1,6 @@
 {
   if (windows != null)   return windows;
-  windows=new ArrayList<Window>();
+  windows=new ArrayList<>();
   for (  String s : sentences)   if (!s.isEmpty())   windows.addAll(Windows.windows(s));
   return windows;
 }

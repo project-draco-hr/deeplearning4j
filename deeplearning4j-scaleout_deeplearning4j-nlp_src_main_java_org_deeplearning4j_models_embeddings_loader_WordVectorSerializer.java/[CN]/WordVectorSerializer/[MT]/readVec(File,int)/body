@@ -1,0 +1,10 @@
+{
+  BufferedInputStream bis=new BufferedInputStream(new FileInputStream(from));
+  DataInputStream dis=new DataInputStream(bis);
+  float[] ret=new float[length];
+  for (int i=0; i < length; i++) {
+    ret[i]=dis.readFloat();
+  }
+  dis.close();
+  return ret;
+}

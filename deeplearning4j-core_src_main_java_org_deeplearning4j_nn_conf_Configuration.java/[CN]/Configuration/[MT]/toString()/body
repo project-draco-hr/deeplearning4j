@@ -1,0 +1,14 @@
+{
+  StringBuffer sb=new StringBuffer();
+  sb.append("Configuration: ");
+  if (loadDefaults) {
+synchronized (Configuration.class) {
+      toString(defaultResources,sb);
+    }
+    if (resources.size() > 0) {
+      sb.append(", ");
+    }
+  }
+  toString(resources,sb);
+  return sb.toString();
+}

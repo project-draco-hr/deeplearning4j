@@ -8,10 +8,8 @@
     if (score2 < score || score2 < currMin) {
       i++;
       score=score2;
-      log.info("Breaking on new score " + score2 + " with iteration "+ i+ " with current minimum of "+ currMin);
       break;
     }
-    log.info("Trial " + i + " with trial score of "+ score2);
   }
   if (i < 0)   i=0;
   return new Pair<>(chs.get(i),score);

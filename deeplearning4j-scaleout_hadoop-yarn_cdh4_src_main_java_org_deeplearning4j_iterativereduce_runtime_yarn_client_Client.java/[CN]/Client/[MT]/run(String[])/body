@@ -1,0 +1,67 @@
+{
+  if (args.length < 1)   LOG.info("No configuration file specified, using default (" + ConfigFields.DEFAULT_CONFIG_FILE + ")");
+  long startTime=System.currentTimeMillis();
+  String configFile=(args.length < 1) ? ConfigFields.DEFAULT_CONFIG_FILE : args[0];
+  Properties props=new Properties();
+  Configuration conf=getConf();
+  try {
+    FileInputStream fis=new FileInputStream(configFile);
+    props.load(fis);
+  }
+ catch (  FileNotFoundException ex) {
+    throw ex;
+  }
+catch (  IOException ex) {
+    throw ex;
+  }
+  ConfigFields.validateConfig(props);
+  if (LOG.isDebugEnabled()) {
+    LOG.debug("Loaded configuration: ");
+    for (    Map.Entry<Object,Object> entry : props.entrySet()) {
+      LOG.debug(entry.getKey() + "=" + entry.getValue());
+    }
+  }
+  Path p=new Path(props.getProperty(ConfigFields.APP_INPUT_PATH));
+  FileSystem fs=FileSystem.get(conf);
+  if (!fs.exists(p))   throw new FileNotFoundException("Input path not found: " + p.toString() + " (in "+ fs.getUri()+ ")");
+  LOG.info("Using input path: " + p.toString());
+  ResourceManagerHandler rmHandler=new ResourceManagerHandler(conf,null);
+  rmHandler.getClientResourceManager();
+  ApplicationId appId=rmHandler.getApplicationId();
+  String appName=props.getProperty(ConfigFields.APP_NAME,ConfigFields.DEFAULT_APP_NAME).replace(' ','_');
+  LOG.info("Got an application, id=" + appId + ", appName="+ appName);
+  LOG.debug("Copying resources to filesystem");
+  Utils.copyLocalResourcesToFs(props,conf,appId,appName);
+  Utils.copyLocalResourceToFs(configFile,ConfigFields.APP_CONFIG_FILE,conf,appId,appName);
+  try {
+    Utils.copyLocalResourceToFs("log4j.properties","log4j.properties",conf,appId,appName);
+  }
+ catch (  FileNotFoundException ex) {
+    LOG.warn("log4j.properties file not found");
+  }
+  List<String> commands=Utils.getMasterCommand(conf,props);
+  Map<String,LocalResource> localResources=Utils.getLocalResourcesForApplication(conf,appId,appName,props,LocalResourceVisibility.APPLICATION);
+  rmHandler.submitApplication(appId,appName,Utils.getEnvironment(conf,props),localResources,commands,Integer.parseInt(props.getProperty(ConfigFields.YARN_MEMORY,"512")));
+  StopWatch watch=new StopWatch();
+  watch.start();
+  while (true) {
+    Thread.sleep(2000);
+    ApplicationReport report=rmHandler.getApplicationReport(appId);
+    LOG.info("IterativeReduce report: " + " appId=" + appId.getId() + ", state: "+ report.getYarnApplicationState().toString()+ ", Running Time: "+ watch.toString());
+    if (YarnApplicationState.FINISHED == report.getYarnApplicationState()) {
+      LOG.info("Application finished in " + (System.currentTimeMillis() - startTime) + "ms");
+      if (FinalApplicationStatus.SUCCEEDED == report.getFinalApplicationStatus()) {
+        LOG.info("Application completed succesfully.");
+        return 0;
+      }
+ else {
+        LOG.info("Application completed with en error: " + report.getDiagnostics());
+        return -1;
+      }
+    }
+ else     if (YarnApplicationState.FAILED == report.getYarnApplicationState() || YarnApplicationState.KILLED == report.getYarnApplicationState()) {
+      LOG.info("Application completed with a failed or killed state: " + report.getDiagnostics());
+      return -1;
+    }
+  }
+}

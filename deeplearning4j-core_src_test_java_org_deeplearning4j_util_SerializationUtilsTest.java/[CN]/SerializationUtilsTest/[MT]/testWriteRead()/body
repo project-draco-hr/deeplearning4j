@@ -1,6 +1,6 @@
 {
   DataSetIterator iter=new IrisDataSetIterator(150,150);
-  String irisData="irisData.dat";
+  String irisData=new String("irisData.dat");
   DataSet freshDataSet=iter.next(150);
   SerializationUtils.saveObject(freshDataSet,new File(irisData));
   DataSet readDataSet=SerializationUtils.readObject(new File(irisData));
@@ -11,6 +11,5 @@
   }
  catch (  IOException e) {
     e.printStackTrace();
-    assertTrue("File deletion failed",false);
   }
 }

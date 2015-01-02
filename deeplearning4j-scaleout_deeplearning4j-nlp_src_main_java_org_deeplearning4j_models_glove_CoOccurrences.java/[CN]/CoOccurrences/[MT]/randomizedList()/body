@@ -1,0 +1,5 @@
+{
+  List<Pair<String,String>> coOccurrences=coOccurrenceList();
+  Collections.shuffle(coOccurrences);
+  return coOccurrences;
+}

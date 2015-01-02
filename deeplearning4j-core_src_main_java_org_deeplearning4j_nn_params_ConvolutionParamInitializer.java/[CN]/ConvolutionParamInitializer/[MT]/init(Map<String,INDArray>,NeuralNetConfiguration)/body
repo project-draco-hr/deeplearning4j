@@ -1,0 +1,4 @@
+{
+  params.put(CONVOLUTION_BIAS,createBias(conf));
+  params.put(CONVOLUTION_WEIGHTS,createWeightMatrix(conf));
+}

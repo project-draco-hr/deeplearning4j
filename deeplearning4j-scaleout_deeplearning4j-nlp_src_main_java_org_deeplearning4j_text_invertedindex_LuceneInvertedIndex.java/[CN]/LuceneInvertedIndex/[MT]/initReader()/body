@@ -1,0 +1,25 @@
+{
+  if (reader == null) {
+    try {
+      ensureDirExists();
+      if (getWriter() == null) {
+        this.indexWriter=null;
+        while (getWriter() == null) {
+          log.warn("Writer was null...reinitializing");
+          Thread.sleep(1000);
+        }
+      }
+      IndexWriter writer=getWriter().getIndexWriter();
+      if (writer == null)       throw new IllegalStateException("index writer was null");
+      searcherManager=new SearcherManager(writer,true,new SearcherFactory());
+      writer.commit();
+      readerManager=new ReaderManager(dir);
+      DirectoryReader reader=readerManager.acquire();
+      numDocs=readerManager.acquire().numDocs();
+      readerManager.release(reader);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

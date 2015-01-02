@@ -1,5 +1,0 @@
-{
-  if (!pretrain)   return;
-  int passes=otherParams.length > 3 ? (Integer)otherParams[3] : 1;
-  for (int i=0; i < passes; i++)   pretrain(input,defaultConfiguration.getK(),defaultConfiguration.getLr(),defaultConfiguration.getNumIterations());
-}

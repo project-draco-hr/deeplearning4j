@@ -1,0 +1,5 @@
+{
+  if (cache == null)   throw new IllegalArgumentException("Vocab cache must not be null!");
+  if (sentenceIterator == null)   throw new IllegalArgumentException("Sentence iterator must not be null");
+  return new CoOccurrences(tokenizerFactory,sentenceIterator,windowSize,cache,coOCurreneCounts,symmetric);
+}

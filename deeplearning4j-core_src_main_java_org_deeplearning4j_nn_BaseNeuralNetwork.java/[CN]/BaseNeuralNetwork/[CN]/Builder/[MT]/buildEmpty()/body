@@ -1,8 +1,0 @@
-{
-  try {
-    return (E)clazz.newInstance();
-  }
- catch (  InstantiationException|IllegalAccessException e) {
-    throw new RuntimeException(e);
-  }
-}

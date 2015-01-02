@@ -1,0 +1,16 @@
+{
+  log.info("Publishing to results for training");
+  log.info("Started pipeline");
+  mediator.tell(new DistributedPubSubMediator.Publish(MasterActor.MASTER,MoreWorkMessage.getInstance()),mediator);
+  log.info("Published results");
+  while (!stateTracker.isDone()) {
+    log.info("State tracker not done...blocking");
+    try {
+      Thread.sleep(15000);
+    }
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+  }
+  shutdown();
+}

@@ -1,7 +1,0 @@
-{
-  if (index >= network.getOutputLayer().getW().length()) {
-    int i=index - network.getOutputLayer().getB().length();
-    return (double)network.getOutputLayer().getB().getScalar(i).element();
-  }
- else   return (double)network.getOutputLayer().getW().getScalar(index).element();
-}

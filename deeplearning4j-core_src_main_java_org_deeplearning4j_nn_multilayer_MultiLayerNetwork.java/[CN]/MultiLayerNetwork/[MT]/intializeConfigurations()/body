@@ -1,0 +1,8 @@
+{
+  if (layerWiseConfigurations == null)   layerWiseConfigurations=new MultiLayerConfiguration.Builder().build();
+  if (layers == null)   layers=new Layer[getnLayers() + 1];
+  if (defaultConfiguration == null)   defaultConfiguration=new NeuralNetConfiguration.Builder().build();
+  if (layerWiseConfigurations == null || layerWiseConfigurations.getConfs().isEmpty())   for (int i=0; i < layerWiseConfigurations.getHiddenLayerSizes().length + 1; i++) {
+    layerWiseConfigurations.getConfs().add(defaultConfiguration.clone());
+  }
+}

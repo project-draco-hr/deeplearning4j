@@ -1,5 +1,5 @@
 {
-  conf=new Conf();
+  conf=new Configuration();
   try {
     server=new TestingServer(2181);
   }

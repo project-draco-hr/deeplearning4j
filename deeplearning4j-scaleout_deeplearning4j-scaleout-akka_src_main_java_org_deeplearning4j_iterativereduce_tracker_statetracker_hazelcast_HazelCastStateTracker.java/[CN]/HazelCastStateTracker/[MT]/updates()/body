@@ -1,5 +1,0 @@
-{
-  DeepLearningAccumulator d=new DeepLearningAccumulator(workerUpdates().size());
-  DeepLearningAccumulatorIterateAndUpdate d2=new DeepLearningAccumulatorIterateAndUpdate(d,updateSaver(),workers());
-  return d2;
-}

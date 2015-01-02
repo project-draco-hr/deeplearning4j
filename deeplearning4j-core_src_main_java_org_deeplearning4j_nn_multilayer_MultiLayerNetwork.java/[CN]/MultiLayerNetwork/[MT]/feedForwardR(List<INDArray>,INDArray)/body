@@ -1,0 +1,11 @@
+{
+  List<INDArray> R=new ArrayList<>();
+  R.add(Nd4j.zeros(input.rows(),input.columns()));
+  List<Pair<INDArray,INDArray>> vWvB=unPack(v);
+  List<INDArray> W=MultiLayerUtil.weightMatrices(this);
+  for (int i=0; i < layers.length; i++) {
+    ActivationFunction derivative=getLayers()[i].conf().getActivationFunction();
+    R.add(R.get(i).mmul(W.get(i)).addi(acts.get(i).mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond()))).muli((derivative.applyDerivative(acts.get(i + 1)))));
+  }
+  return R;
+}

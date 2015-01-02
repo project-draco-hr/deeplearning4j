@@ -1,5 +1,0 @@
-{
-  if (conf != null)   return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).configure(conf).build();
- else   if (layerConfigs != null)   return new BaseMultiLayerNetwork.Builder<>().withClazz(getMultiLayerClazz()).hiddenLayerSizes(getLayerSizes()).layerWiseConfiguration(layerConfigs).build();
-  throw new IllegalStateException("Conf or layer wise configurations must be specified");
-}

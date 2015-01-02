@@ -1,0 +1,4 @@
+{
+  IAtomicLong long2=h.getAtomicLong(key);
+  long2.addAndGet((long)by);
+}

@@ -1,6 +1,0 @@
-{
-  if (conf.getRng() != null && !(conf.getRng() instanceof SynchronizedRandomGenerator)) {
-    conf.setRng(new SynchronizedRandomGenerator(conf.getRng()));
-  }
-  this.conf=conf;
-}

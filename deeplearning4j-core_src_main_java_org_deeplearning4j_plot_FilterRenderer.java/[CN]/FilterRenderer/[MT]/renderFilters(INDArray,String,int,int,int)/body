@@ -7,9 +7,6 @@
   int patchBorder=2;
   int filterImgWidth=(patchWidth + patchBorder) * patchesPerRow;
   int filterImgHeight=numPatchRows * (patchHeight + patchBorder);
-  log.debug("Filter Width: " + filterImgWidth);
-  log.debug("Filter Height: " + filterImgHeight);
-  log.debug("Patch array size: " + equiv.length);
   img=new BufferedImage(filterImgWidth,filterImgHeight,BufferedImage.TYPE_BYTE_GRAY);
   WritableRaster r=img.getRaster();
   outer:   for (int col=0; col < data.columns(); col++) {

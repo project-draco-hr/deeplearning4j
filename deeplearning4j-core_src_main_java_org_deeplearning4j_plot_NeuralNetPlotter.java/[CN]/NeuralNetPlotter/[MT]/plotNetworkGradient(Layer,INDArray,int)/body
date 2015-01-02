@@ -1,14 +1,13 @@
 {
-  histogram(new String[]{"W","w-gradient"},new INDArray[]{network.getW(),gradient});
+  histogram(new String[]{"W","w-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
   plotActivations(network);
-  FilterRenderer render=new FilterRenderer();
   try {
-    if (network.getW().shape().length > 2) {
-      INDArray w=network.getW().dup();
+    if (network.getParam(DefaultParamInitializer.WEIGHT_KEY).shape().length > 2) {
+      INDArray w=network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
       INDArray render2=w.transpose();
       render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
     }
- else     render.renderFilters(network.getW().dup(),"currimg.png",(int)Math.sqrt(network.getW().rows()),(int)Math.sqrt(network.getW().rows()),patchesPerRow);
+ else     render.renderFilters(network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup(),"currimg.png",(int)Math.sqrt(network.getParam(DefaultParamInitializer.WEIGHT_KEY).rows()),(int)Math.sqrt(network.getParam(DefaultParamInitializer.WEIGHT_KEY).rows()),patchesPerRow);
   }
  catch (  Exception e) {
     log.error("Unable to plot filter, continuing...",e);

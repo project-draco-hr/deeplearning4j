@@ -1,6 +1,0 @@
-{
-  NeuralNetworkGradient gradient=getGradient(new Object[]{conf.getLr()});
-  vBias.addi(gradient.getvBiasGradient());
-  W.addi(gradient.getwGradient());
-  hBias.addi(gradient.gethBiasGradient());
-}

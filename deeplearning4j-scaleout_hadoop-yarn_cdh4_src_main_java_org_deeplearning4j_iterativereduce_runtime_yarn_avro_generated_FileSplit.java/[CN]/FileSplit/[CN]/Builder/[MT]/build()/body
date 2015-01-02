@@ -1,0 +1,12 @@
+{
+  try {
+    FileSplit record=new FileSplit();
+    record.path=fieldSetFlags()[0] ? this.path : (CharSequence)defaultValue(fields()[0]);
+    record.offset=fieldSetFlags()[1] ? this.offset : (Long)defaultValue(fields()[1]);
+    record.length=fieldSetFlags()[2] ? this.length : (Long)defaultValue(fields()[2]);
+    return record;
+  }
+ catch (  Exception e) {
+    throw new org.apache.avro.AvroRuntimeException(e);
+  }
+}

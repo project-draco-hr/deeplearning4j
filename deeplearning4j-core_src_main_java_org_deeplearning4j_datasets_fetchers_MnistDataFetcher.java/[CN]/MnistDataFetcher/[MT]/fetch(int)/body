@@ -1,32 +1,29 @@
 {
   if (!hasMore())   throw new IllegalStateException("Unable to getFromOrigin more; there are no more images");
-  List<DataSet> toConvert=Lists.newArrayList();
-  for (int i=0; i < numExamples && hasMore(); i++, cursor++) {
-    if (mnistManager == null) {
+  List<DataSet> toConvert=new ArrayList<>();
+  for (int i=0; i < numExamples; i++, cursor++) {
+    if (!hasMore())     break;
+    if (man == null) {
       try {
-        mnistManager=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+        man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
       }
  catch (      IOException e) {
         throw new RuntimeException(e);
       }
     }
-    mnistManager.setCurrent(cursor);
+    man.setCurrent(cursor);
     try {
-      INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(mnistManager.readImage()));
+      INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(man.readImage()));
       if (binarize)       for (int d=0; d < in.length(); d++) {
         if (binarize) {
           if (in.getDouble(d) > 30) {
             in.putScalar(d,1);
           }
- else {
-            in.putScalar(d,0);
-          }
+ else           in.putScalar(d,0);
         }
       }
- else {
-        in.divi(255);
-      }
-      INDArray out=createOutputVector(mnistManager.readLabel());
+ else       in.divi(255);
+      INDArray out=createOutputVector(man.readLabel());
       boolean found=false;
       for (int col=0; col < out.length(); col++) {
         if (out.getDouble(col) > 0) {
@@ -34,9 +31,7 @@
           break;
         }
       }
-      if (!found) {
-        throw new IllegalStateException("Found a matrix without an outcome");
-      }
+      if (!found)       throw new IllegalStateException("Found a matrix without an outcome");
       toConvert.add(new DataSet(in,out));
     }
  catch (    IOException e) {

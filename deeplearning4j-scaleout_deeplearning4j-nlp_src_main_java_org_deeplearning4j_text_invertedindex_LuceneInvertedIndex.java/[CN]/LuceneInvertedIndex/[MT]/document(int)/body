@@ -1,28 +1,16 @@
 {
-  if (cache) {
-    List<VocabWord> ret=words.get(index);
-    List<VocabWord> ret2=new ArrayList<>();
-    for (    VocabWord word : ret) {
-      if (vocabCache.containsWord(word.getWord()))       ret2.add(word);
-    }
-    return ret2;
-  }
   List<VocabWord> ret=new CopyOnWriteArrayList<>();
   try {
-    IndexWriter writer=getWriter();
-    initReader(writer);
+    DirectoryReader reader=readerManager.acquire();
     Document doc=reader.document(index);
+    reader.close();
     String[] values=doc.getValues(WORD_FIELD);
     for (    String s : values) {
-      ret.add(vocabCache.wordFor(s));
+      VocabWord word=vocabCache.wordFor(s);
+      if (word != null)       ret.add(vocabCache.wordFor(s));
     }
   }
- catch (  AlreadyClosedException e1) {
-    reader=null;
-    readerClosed.set(false);
-    return document(index);
-  }
-catch (  Exception e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
   return ret;

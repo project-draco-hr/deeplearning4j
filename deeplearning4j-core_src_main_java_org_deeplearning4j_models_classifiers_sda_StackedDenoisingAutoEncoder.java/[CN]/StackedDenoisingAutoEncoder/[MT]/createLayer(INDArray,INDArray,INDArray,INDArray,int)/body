@@ -1,4 +1,0 @@
-{
-  DenoisingAutoEncoder ret=new DenoisingAutoEncoder.Builder().configure(layerWiseConfigurations.get(index)).withInput(input).withWeights(W).withHBias(hbias).withVisibleBias(vBias).build();
-  return ret;
-}

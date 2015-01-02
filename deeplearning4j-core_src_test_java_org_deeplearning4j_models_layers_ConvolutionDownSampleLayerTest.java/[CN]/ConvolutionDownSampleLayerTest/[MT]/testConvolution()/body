@@ -1,9 +1,18 @@
 {
+  boolean switched=false;
+  if (Nd4j.dtype == DataBuffer.FLOAT) {
+    Nd4j.dtype=DataBuffer.DOUBLE;
+    switched=true;
+  }
   MnistDataFetcher data=new MnistDataFetcher(true);
   data.fetch(2);
   DataSet d=data.next();
   d.setFeatures(d.getFeatureMatrix().reshape(2,1,28,28));
   NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(new int[]{2,2}).numFeatureMaps(2).weightShape(new int[]{2,3,9,9}).build();
-  ConvolutionDownSampleLayer c=new ConvolutionDownSampleLayer(n);
+  LayerFactory l=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
+  ConvolutionDownSampleLayer c=l.create(n);
   INDArray convolved=c.activate(d.getFeatureMatrix());
+  if (switched) {
+    Nd4j.dtype=DataBuffer.FLOAT;
+  }
 }

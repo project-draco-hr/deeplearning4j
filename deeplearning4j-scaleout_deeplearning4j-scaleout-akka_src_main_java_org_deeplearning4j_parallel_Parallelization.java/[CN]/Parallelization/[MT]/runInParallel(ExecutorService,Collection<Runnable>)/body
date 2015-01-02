@@ -1,0 +1,10 @@
+{
+  for (  Runnable runnable : runnables)   exec.submit(runnable);
+  exec.shutdown();
+  try {
+    exec.awaitTermination(1,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+}

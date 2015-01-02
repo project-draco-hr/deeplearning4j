@@ -1,0 +1,5 @@
+{
+  Configuration conf=super.createConfiguration();
+  GlovePerformer.configure(table,invertedIndex,conf);
+  return conf;
+}

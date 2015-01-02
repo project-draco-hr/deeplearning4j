@@ -1,0 +1,10 @@
+{
+  if (e == null) {
+    log.warn("Not setting a null update");
+    return;
+  }
+  for (  NewUpdateListener listener : listeners) {
+    listener.onUpdate(e);
+  }
+  this.master.set(e);
+}

@@ -1,0 +1,4 @@
+{
+  searchState.put(GRADIENT_KEY,gradient.mul(Nd4j.norm2(gradient).rdivi(1.0).getDouble(0)));
+  return true;
+}

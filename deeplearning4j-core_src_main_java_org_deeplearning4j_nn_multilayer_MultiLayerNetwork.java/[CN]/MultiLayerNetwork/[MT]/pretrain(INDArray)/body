@@ -1,0 +1,15 @@
+{
+  if (!layerWiseConfigurations.isPretrain())   return;
+  if (this.getInput() == null || this.getLayers() == null || this.getLayers()[0] == null || this.getLayers() == null || this.getLayers()[0] == null) {
+    setInput(input);
+    initializeLayers(input);
+  }
+ else   setInput(input);
+  INDArray layerInput=null;
+  for (int i=0; i < getnLayers() - 1; i++) {
+    if (i == 0)     layerInput=getInput();
+ else     layerInput=activationFromPrevLayer(i - 1,layerInput);
+    log.info("Training on layer " + (i + 1));
+    getLayers()[i].fit(layerInput);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    Constructor<?> constructor=layerClazz.getConstructor(NeuralNetConfiguration.class);
+    Layer ret=(Layer)constructor.newInstance(conf);
+    return ret;
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException(e);
+  }
+}

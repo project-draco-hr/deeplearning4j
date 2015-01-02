@@ -1,0 +1,30 @@
+{
+  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  final AtomicInteger processed=new AtomicInteger(0);
+  final ActorRef actor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(CoOccurrenceActor.class,processed,tokenizerFactory,windowSize,cache,coOCurreneCounts,symmetric,sentenceOccurrences)));
+  sentenceIterator.reset();
+  final AtomicInteger queued=new AtomicInteger(0);
+  int id=0;
+  while (sentenceIterator.hasNext()) {
+    actor.tell(new SentenceWork(id,sentenceIterator.nextSentence()),actor);
+    id++;
+    queued.incrementAndGet();
+  }
+  try {
+    Thread.sleep(5000);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+  while (processed.get() < queued.get()) {
+    try {
+      Thread.sleep(10000);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+  trainingSystem.shutdown();
+  trainingSystem=null;
+  log.info("Done processing co occurrences: ended with " + numCoOccurrences());
+}

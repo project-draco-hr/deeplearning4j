@@ -1,8 +1,0 @@
-{
-  this.input=input;
-  this.conf=conf;
-  if (W == null)   this.W=createWeightMatrix();
- else   this.W=W;
-  if (b == null)   this.b=createBias();
- else   this.b=b;
-}

@@ -1,4 +1,0 @@
-{
-  stateTracker.setMiniBatchSize(num);
-  return Response.ok(Collections.singletonMap("status","applyTransformToDestination mini batch to " + num)).build();
-}

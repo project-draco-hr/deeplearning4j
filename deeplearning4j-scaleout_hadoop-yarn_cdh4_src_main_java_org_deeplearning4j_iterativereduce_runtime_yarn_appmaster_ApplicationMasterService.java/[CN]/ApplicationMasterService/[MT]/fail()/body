@@ -1,0 +1,3 @@
+{
+  while (workersCompleted.getCount() > 0)   workersCompleted.countDown();
+}

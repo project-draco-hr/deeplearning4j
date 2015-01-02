@@ -1,5 +1,0 @@
-{
-  int result=workerId != null ? workerId.hashCode() : 0;
-  result=31 * result + (work != null ? work.hashCode() : 0);
-  return result;
-}

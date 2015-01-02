@@ -1,4 +1,0 @@
-{
-  lineSearchBackProp(eval);
-  network.getOutputLayer().fit(new DataSet(network.getOutputLayer().getInput(),network.getOutputLayer().getLabels()));
-}

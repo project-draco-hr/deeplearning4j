@@ -1,0 +1,7 @@
+{
+  stateTracker=new HazelCastStateTracker();
+  if (testSystem == null)   testSystem=ActorSystem.create();
+  conf=new Configuration();
+  testPerformer=new TestPerformer();
+  test=WorkerActor.propsFor(conf,stateTracker,testPerformer);
+}

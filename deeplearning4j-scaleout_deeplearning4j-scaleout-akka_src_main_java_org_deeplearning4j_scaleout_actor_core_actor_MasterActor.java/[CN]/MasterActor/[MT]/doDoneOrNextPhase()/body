@@ -1,0 +1,10 @@
+{
+  if (!stateTracker.workerUpdates().isEmpty())   workRouter.update();
+  if (stateTracker.currentJobs().isEmpty()) {
+    if (doneCalled.get())     return;
+ else     doneCalled.set(true);
+    nextBatch();
+    stateTracker.finish();
+    log.info("Done training!");
+  }
+}

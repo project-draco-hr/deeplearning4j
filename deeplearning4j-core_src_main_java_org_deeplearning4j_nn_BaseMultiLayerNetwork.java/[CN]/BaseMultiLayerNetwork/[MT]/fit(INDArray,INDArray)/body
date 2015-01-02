@@ -1,5 +1,0 @@
-{
-  pretrain(examples,new Object[]{defaultConfiguration.getK(),defaultConfiguration.getLr()});
-  if (!pretrain)   this.input=examples;
-  finetune(labels);
-}

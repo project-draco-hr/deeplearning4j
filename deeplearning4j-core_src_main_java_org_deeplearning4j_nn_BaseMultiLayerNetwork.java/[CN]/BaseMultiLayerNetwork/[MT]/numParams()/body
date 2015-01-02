@@ -1,8 +1,0 @@
-{
-  int length=0;
-  for (int i=0; i < neuralNets.length; i++) {
-    length+=neuralNets[i].numParams() - neuralNets[i].getvBias().length();
-  }
-  length+=getOutputLayer().numParams();
-  return length;
-}

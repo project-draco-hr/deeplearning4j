@@ -1,5 +1,5 @@
 {
-  if (trainingSystem == null)   trainingSystem=ActorSystem.create();
+  if (trainingSystem == null || trainingSystem.isTerminated())   trainingSystem=ActorSystem.create();
   final AtomicLong semaphore=new AtomicLong(System.currentTimeMillis());
   final AtomicInteger queued=new AtomicInteger(0);
   final ActorRef vocabActor=trainingSystem.actorOf(new RoundRobinPool(Runtime.getRuntime().availableProcessors()).props(Props.create(VocabActor.class,tokenizerFactory,cache,stopWords,semaphore,minWordFrequency,numWordsEncountered,index)));
@@ -18,23 +18,47 @@
       }
     }
   }
-  while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
-    String sentence=getSentenceIterator().nextSentence();
-    if (sentence == null)     break;
-    vocabActor.tell(new VocabWork(latch,sentence,stem),vocabActor);
-    queued.incrementAndGet();
-    if (queued.get() % 10000 == 0) {
-      log.info("Sent " + queued);
-      try {
-        Thread.sleep(1);
-      }
- catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
-        ;
+  if (getSentenceIterator() instanceof LabelAwareSentenceIterator) {
+    this.labelSentenceIter=(LabelAwareSentenceIterator)getSentenceIterator();
+    while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
+      String sentence=getSentenceIterator().nextSentence();
+      List<String> label=labelSentenceIter.currentLabels();
+      if (sentence == null)       break;
+      vocabActor.tell(new VocabWork(latch,sentence,stem,label),vocabActor);
+      queued.incrementAndGet();
+      if (queued.get() % 10000 == 0) {
+        log.info("Sent " + queued);
+        try {
+          Thread.sleep(1);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+          ;
+        }
       }
     }
   }
-  while (latch.get() < queued.get()) {
+ else {
+    while (getSentenceIterator() != null && getSentenceIterator().hasNext()) {
+      String sentence=getSentenceIterator().nextSentence();
+      if (sentence == null)       break;
+      vocabActor.tell(new VocabWork(latch,sentence,stem),vocabActor);
+      queued.incrementAndGet();
+      if (queued.get() % 10000 == 0) {
+        log.info("Sent " + queued);
+        try {
+          Thread.sleep(1);
+        }
+ catch (        InterruptedException e) {
+          Thread.currentThread().interrupt();
+          ;
+        }
+      }
+    }
+  }
+  long diff=Long.MAX_VALUE;
+  while (latch.get() < queued.get() && diff > 5) {
+    diff=Math.abs(latch.get() - queued.get());
     try {
       Thread.sleep(10000);
       log.info("latch count " + latch.get() + " with queued "+ queued.get());

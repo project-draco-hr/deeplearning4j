@@ -1,0 +1,18 @@
+{
+  CoOccurrences ret=new CoOccurrences();
+  ret.coOccurrences=new ArrayList<>();
+  CounterMap<String,String> counter=new CounterMap<>();
+  Reader inputStream=new InputStreamReader(from);
+  LineIterator iter=IOUtils.lineIterator(inputStream);
+  String line;
+  while ((iter.hasNext())) {
+    line=iter.nextLine();
+    String[] split=line.split(" ");
+    if (split.length < 3)     continue;
+    if (split[0].isEmpty() || split[1].isEmpty())     continue;
+    ret.coOccurrences.add(new Pair<>(split[0],split[1]));
+    counter.incrementCount(split[0],split[1],Double.parseDouble(split[2]));
+  }
+  ret.coOCurreneCounts=counter;
+  return ret;
+}

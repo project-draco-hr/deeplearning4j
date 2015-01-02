@@ -1,5 +1,5 @@
 {
-  double[] vector=new double[NUM_FEATURES];
-  for (int i=0; i < NUM_FEATURES; i++)   vector[i]=Double.parseDouble(line[i]);
+  double[] vector=new double[4];
+  for (int i=0; i < 4; i++)   vector[i]=Double.parseDouble(line[i]);
   ret.putRow(row,Nd4j.create(vector));
 }

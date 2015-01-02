@@ -1,0 +1,5 @@
+{
+  ClassPathResource resource=new ClassPathResource("other/oneline.txt");
+  File file=resource.getFile().getParentFile();
+  iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
+}

@@ -1,0 +1,11 @@
+{
+  try {
+    List<Job> currentJobs=stateTracker.currentJobs();
+    Collection<String> updates=stateTracker.workerUpdates();
+    Collection<String> workers=stateTracker.workers();
+    return updates.size() >= workers.size() || currentJobs.isEmpty() || !isWaitForWorkers();
+  }
+ catch (  Exception e) {
+  }
+  return false;
+}

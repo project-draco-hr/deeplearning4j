@@ -1,0 +1,13 @@
+{
+  JsonNode node=jp.getCodec().readTree(jp);
+  String rngClazz=node.textValue();
+  try {
+    Class<? extends StepFunction> clazz=(Class<? extends StepFunction>)Class.forName(rngClazz);
+    StepFunction gen=clazz.newInstance();
+    return gen;
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return null;
+}

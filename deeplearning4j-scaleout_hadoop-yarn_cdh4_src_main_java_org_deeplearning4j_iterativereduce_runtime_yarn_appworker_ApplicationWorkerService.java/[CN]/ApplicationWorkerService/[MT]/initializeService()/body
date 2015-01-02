@@ -1,0 +1,13 @@
+{
+  try {
+    nettyTransceiver=new NettyTransceiver(masterAddr);
+    masterService=SpecificRequestor.getClient(IterativeReduceService.class,nettyTransceiver);
+    LOG.info("Connected to master via NettyTranseiver at " + masterAddr);
+  }
+ catch (  IOException ex) {
+    LOG.error("Unable to connect to master at " + masterAddr);
+    return false;
+  }
+  if (!getConfiguration())   return false;
+  return true;
+}

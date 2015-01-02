@@ -7,7 +7,7 @@
   if (!(baseDir.isDirectory() || baseDir.mkdir())) {
     throw new IOException("Could not mkdir " + baseDir);
   }
-  LOG.info("Downloading mnist...");
+  log.info("Downloading mnist...");
   File tarFile=new File(baseDir,trainingFilesFilename);
   if (!tarFile.isFile()) {
     FileUtils.copyURLToFile(new URL(trainingFilesURL),tarFile);

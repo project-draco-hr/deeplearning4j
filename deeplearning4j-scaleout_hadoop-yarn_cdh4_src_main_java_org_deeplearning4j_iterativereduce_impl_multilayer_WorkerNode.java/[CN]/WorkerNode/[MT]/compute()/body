@@ -1,0 +1,7 @@
+{
+  while (recordParser.hasMoreRecords()) {
+    DataSet params=(DataSet)recordParser.nextRecord();
+    multiLayerNetwork.fit(params);
+  }
+  return new ParameterVectorUpdateable(multiLayerNetwork.params());
+}

@@ -1,0 +1,11 @@
+{
+  while (workers.isEmpty()) {
+    for (    String s : stateTracker.workers()) {
+      if (stateTracker.jobFor(s) == null) {
+        if (!workers.contains(s))         workers.add(s);
+      }
+    }
+    log.info("Refilling queue with size of " + workers.size() + " out of "+ stateTracker.numWorkers());
+  }
+  return workers.poll();
+}

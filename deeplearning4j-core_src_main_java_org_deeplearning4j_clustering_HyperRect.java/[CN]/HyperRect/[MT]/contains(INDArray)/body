@@ -1,0 +1,5 @@
+{
+  List<Boolean> ret=new ArrayList<>();
+  for (int i=0; i < hPoint.length(); i++)   ret.add(points.get(i).contains(hPoint.getDouble(i)));
+  return ret;
+}

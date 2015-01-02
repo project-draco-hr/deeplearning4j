@@ -1,0 +1,7 @@
+{
+  if (finalFile.exists()) {
+    Serializable s=SerializationUtils.readObject(finalFile);
+    assumeNotNull(s);
+    finalFile.delete();
+  }
+}

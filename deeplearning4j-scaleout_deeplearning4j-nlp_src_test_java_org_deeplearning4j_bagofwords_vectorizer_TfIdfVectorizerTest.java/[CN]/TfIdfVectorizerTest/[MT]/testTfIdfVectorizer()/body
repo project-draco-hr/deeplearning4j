@@ -6,8 +6,6 @@
   iter.reset();
   List<String> labels=Arrays.asList("label1","label2");
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
-  VocabCache cache=new InMemoryLookupCache.Builder().vectorLength(100).build();
-  InvertedIndex index=new LuceneInvertedIndex.Builder().cache(cache).batchSize(5).cacheInRam(false).build();
   TextVectorizer vectorizer=new TfidfVectorizer.Builder().minWords(1).index(index).cache(cache).stopWords(new ArrayList<String>()).tokenize(tokenizerFactory).labels(labels).iterate(iter).build();
   vectorizer.fit();
   VocabWord word=vectorizer.vocab().wordFor("file");
@@ -22,12 +20,4 @@
   }
   assertEquals(docStrings.size(),docs.length);
   assertEquals(docStrings.size(),vectorizer.index().documents(word).length);
-  Iterator<List<VocabWord>> miniBatches=vectorizer.index().miniBatches();
-  int count=0;
-  while (miniBatches.hasNext()) {
-    miniBatches.next();
-    count++;
-  }
-  assertEquals(2,count);
-  log.info("Count " + count);
 }

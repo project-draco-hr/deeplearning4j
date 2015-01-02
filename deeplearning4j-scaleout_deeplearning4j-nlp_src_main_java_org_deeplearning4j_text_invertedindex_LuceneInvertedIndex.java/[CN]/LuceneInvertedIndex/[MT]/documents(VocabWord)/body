@@ -1,11 +1,14 @@
 {
   try {
-    TermQuery query=new TermQuery(new Term(WORD_FIELD,vocabWord.getWord()));
+    TermQuery query=new TermQuery(new Term(WORD_FIELD,vocabWord.getWord().toLowerCase()));
+    searcherManager.maybeRefresh();
+    IndexSearcher searcher=searcherManager.acquire();
     TopDocs topdocs=searcher.search(query,Integer.MAX_VALUE);
     int[] ret=new int[topdocs.totalHits];
     for (int i=0; i < topdocs.totalHits; i++) {
       ret[i]=topdocs.scoreDocs[i].doc;
     }
+    searcherManager.release(searcher);
     return ret;
   }
  catch (  AlreadyClosedException e) {

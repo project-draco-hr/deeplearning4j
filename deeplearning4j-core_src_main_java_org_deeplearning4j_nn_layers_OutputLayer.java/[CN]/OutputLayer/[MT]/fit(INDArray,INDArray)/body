@@ -1,3 +1,6 @@
 {
-  trainTillConvergence(examples,labels,conf.getLr(),conf.getNumIterations());
+  this.input=examples;
+  this.labels=labels;
+  Solver solver=new Solver.Builder().configure(conf()).listeners(conf.getListeners()).model(this).build();
+  solver.optimize();
 }

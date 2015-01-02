@@ -1,7 +1,0 @@
-{
-  OutputLayerGradient grad=logReg.getGradient(lr);
-  for (int i=0; i < buffer.length; i++) {
-    if (i < logReg.getW().length())     buffer[i]=(double)grad.getwGradient().getScalar(i).element();
- else     buffer[i]=(double)grad.getbGradient().getScalar(i - logReg.getW().length()).element();
-  }
-}

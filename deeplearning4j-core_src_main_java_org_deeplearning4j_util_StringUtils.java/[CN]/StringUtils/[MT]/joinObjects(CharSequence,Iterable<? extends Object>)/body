@@ -1,0 +1,14 @@
+{
+  StringBuffer sb=new StringBuffer();
+  boolean first=true;
+  for (  Object o : objects) {
+    if (first) {
+      first=false;
+    }
+ else {
+      sb.append(separator);
+    }
+    sb.append(String.valueOf(o));
+  }
+  return sb.toString();
+}

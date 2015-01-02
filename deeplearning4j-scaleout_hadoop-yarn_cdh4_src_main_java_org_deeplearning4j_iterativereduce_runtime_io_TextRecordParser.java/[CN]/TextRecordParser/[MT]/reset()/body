@@ -1,0 +1,9 @@
+{
+  try {
+    this.hasMore=true;
+    this.reader=input_format.getRecordReader(this.split,this.jobConf,voidReporter);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

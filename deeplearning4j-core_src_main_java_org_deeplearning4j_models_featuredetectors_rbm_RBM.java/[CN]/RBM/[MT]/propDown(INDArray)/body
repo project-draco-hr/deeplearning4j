@@ -1,4 +1,6 @@
 {
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
+  INDArray vBias=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
   INDArray vMean=h.mmul(W.transpose());
   if (conf.isConcatBiases())   vMean=Nd4j.hstack(vMean,vBias);
  else   vMean.addiRowVector(vBias);

@@ -1,0 +1,55 @@
+{
+  this.conf=conf;
+  this.batchActor=batchActor;
+  this.workRouter=router;
+  this.stateTracker=stateTracker;
+  setup(conf);
+  stateTracker.runPreTrainIterations(conf.getInt(NUM_PASSES,1));
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.MASTER,getSelf()),getSelf());
+  mediator.tell(new DistributedPubSubMediator.Subscribe(MasterActor.FINISH,getSelf()),getSelf());
+  forceNextPhase=context().system().scheduler().schedule(Duration.create(secondsPoll,TimeUnit.SECONDS),Duration.create(secondsPoll,TimeUnit.SECONDS),new Runnable(){
+    @Override public void run(){
+      log.info("Heart beat on " + stateTracker.workers().size() + " workers");
+      if (stateTracker.isDone())       return;
+      if (workRouter.sendWork())       nextBatch();
+      try {
+        Set<Job> clear=new HashSet<>();
+        for (        Job j : stateTracker.currentJobs()) {
+          if (stateTracker.recentlyCleared().contains(j.workerId())) {
+            stateTracker.clearJob(j.workerId());
+            clear.add(j);
+            log.info("Found job that wasn't clear " + j.workerId());
+          }
+        }
+        stateTracker.currentJobs().removeAll(clear);
+        if (stateTracker.currentJobs().isEmpty())         stateTracker.recentlyCleared().clear();
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+,context().dispatcher());
+  this.clearStateWorkers=context().system().scheduler().schedule(Duration.create(1,TimeUnit.MINUTES),Duration.create(1,TimeUnit.MINUTES),new Runnable(){
+    @Override public void run(){
+      if (stateTracker.isDone())       return;
+      try {
+        long now=System.currentTimeMillis();
+        Map<String,Long> heartbeats=MasterActor.this.stateTracker.getHeartBeats();
+        for (        String key : heartbeats.keySet()) {
+          long lastChecked=heartbeats.get(key);
+          long diff=now - lastChecked;
+          long seconds=TimeUnit.MILLISECONDS.toSeconds(diff);
+          if (seconds >= 120) {
+            log.info("Removing stale worker " + key);
+            MasterActor.this.stateTracker.removeWorker(key);
+          }
+        }
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+,context().dispatcher());
+}

@@ -1,0 +1,24 @@
+{
+  KDNode internalNode=node;
+  int discNext=(_disc + 1) % dims;
+  if (_disc == disc) {
+    KDNode child=node.getLeft();
+    if (child != null) {
+      return min(child,disc,discNext);
+    }
+  }
+ else   if (internalNode.getLeft() != null || internalNode.getRight() != null) {
+    Pair<KDNode,Integer> left=null, right=null;
+    if (internalNode.getLeft() != null)     left=min(internalNode.getLeft(),disc,discNext);
+    if (internalNode.getRight() != null)     right=min(internalNode.getRight(),disc,discNext);
+    if (left != null && right != null) {
+      double pointLeft=left.getFirst().getPoint().getDouble(disc);
+      double pointRight=right.getFirst().getPoint().getDouble(disc);
+      if (pointLeft < pointRight)       return left;
+ else       return right;
+    }
+ else     if (left != null)     return left;
+ else     return right;
+  }
+  return new Pair<>(internalNode,_disc);
+}

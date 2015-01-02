@@ -1,0 +1,5 @@
+{
+  byte[] buff=new byte[32];
+  System.arraycopy(name.getBytes(),0,buff,0,name.length());
+  return new WorkerId(buff);
+}

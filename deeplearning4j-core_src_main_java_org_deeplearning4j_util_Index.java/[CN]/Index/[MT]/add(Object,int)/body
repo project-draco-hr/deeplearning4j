@@ -1,4 +1,7 @@
 {
+  if (o instanceof String) {
+    if (o.toString().isEmpty())     throw new IllegalArgumentException("Unable to add the empty string");
+  }
   Integer index=indexes.get(o);
   if (index == null) {
     index=idx;

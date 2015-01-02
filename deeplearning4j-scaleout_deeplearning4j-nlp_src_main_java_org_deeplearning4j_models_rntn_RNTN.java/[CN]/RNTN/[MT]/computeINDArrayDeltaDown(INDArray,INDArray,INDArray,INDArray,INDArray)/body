@@ -5,8 +5,14 @@
   INDArray deltaINDArray=Nd4j.create(size * 2,1);
   INDArray fullVector=Nd4j.concat(0,leftVector,rightVector);
   for (int slice=0; slice < size; ++slice) {
-    INDArray scaledFullVector=Nd4j.getBlasWrapper().scal(deltaFull.getScalar(slice).getDouble(0),fullVector);
-    deltaINDArray=deltaINDArray.add(Wt.slice(slice).add(Wt.slice(slice).transpose()).mmul(scaledFullVector));
+    if (deltaFull.data().dataType() == DataBuffer.DOUBLE) {
+      INDArray scaledFullVector=Nd4j.getBlasWrapper().scal(deltaFull.getScalar(slice).getDouble(0),fullVector);
+      deltaINDArray=deltaINDArray.add(Wt.slice(slice).add(Wt.slice(slice).transpose()).mmul(scaledFullVector));
+    }
+ else {
+      INDArray scaledFullVector=Nd4j.getBlasWrapper().scal((float)deltaFull.getScalar(slice).getDouble(0),fullVector);
+      deltaINDArray.addi(Wt.slice(slice).add(Wt.slice(slice).transpose()).mmul(scaledFullVector));
+    }
   }
   return deltaINDArray.add(WTDeltaNoBias);
 }
