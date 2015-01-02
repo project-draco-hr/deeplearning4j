@@ -4,8 +4,6 @@
   conf.hiddenLayerSizes=this.hiddenLayerSizes;
   conf.useDropConnect=useDropConnect;
   conf.pretrain=pretrain;
-  conf.sampleFromHiddenActivations=sampleFromHiddenActivations;
-  conf.useGaussNewtonVectorProductBackProp=useGaussNewtonVectorProductBackProp;
   conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
   return conf;

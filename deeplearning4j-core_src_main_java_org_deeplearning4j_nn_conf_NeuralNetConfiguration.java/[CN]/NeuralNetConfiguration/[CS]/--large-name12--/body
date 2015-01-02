@@ -28,7 +28,6 @@
   this.activationFunction=activationFunction;
   this.visibleUnit=visibleUnit;
   this.hiddenUnit=hiddenUnit;
-  this.activationType=activationType;
   if (weightShape != null)   this.weightShape=weightShape;
  else   this.weightShape=new int[]{nIn,nOut};
   this.filterSize=filterSize;

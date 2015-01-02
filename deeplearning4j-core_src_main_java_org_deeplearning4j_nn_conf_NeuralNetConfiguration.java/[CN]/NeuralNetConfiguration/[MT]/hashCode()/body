@@ -14,11 +14,7 @@
   result=31 * result + (int)(temp ^ (temp >>> 32));
   temp=Double.doubleToLongBits(l2);
   result=31 * result + (int)(temp ^ (temp >>> 32));
-  result=31 * result + pretrainEpochs;
-  result=31 * result + finetuneEpochs;
-  temp=Double.doubleToLongBits(pretrainLearningRate);
   result=31 * result + (int)(temp ^ (temp >>> 32));
-  temp=Double.doubleToLongBits(finetuneLearningRate);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (useRegularization ? 1 : 0);
   result=31 * result + (momentumAfter != null ? momentumAfter.hashCode() : 0);
@@ -38,7 +34,6 @@
   result=31 * result + (activationFunction != null ? activationFunction.hashCode() : 0);
   result=31 * result + (visibleUnit != null ? visibleUnit.hashCode() : 0);
   result=31 * result + (hiddenUnit != null ? hiddenUnit.hashCode() : 0);
-  result=31 * result + (activationType != null ? activationType.hashCode() : 0);
   result=31 * result + (weightShape != null ? Arrays.hashCode(weightShape) : 0);
   result=31 * result + (filterSize != null ? Arrays.hashCode(filterSize) : 0);
   result=31 * result + numFeatureMaps;

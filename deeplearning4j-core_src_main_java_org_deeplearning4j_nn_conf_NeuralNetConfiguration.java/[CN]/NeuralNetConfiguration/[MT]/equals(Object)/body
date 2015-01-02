@@ -7,8 +7,6 @@
   if (constrainGradientToUnitNorm != that.constrainGradientToUnitNorm)   return false;
   if (Double.compare(that.corruptionLevel,corruptionLevel) != 0)   return false;
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
-  if (finetuneEpochs != that.finetuneEpochs)   return false;
-  if (Double.compare(that.finetuneLearningRate,finetuneLearningRate) != 0)   return false;
   if (k != that.k)   return false;
   if (Double.compare(that.l2,l2) != 0)   return false;
   if (Double.compare(that.lr,lr) != 0)   return false;
@@ -18,8 +16,6 @@
   if (numFeatureMaps != that.numFeatureMaps)   return false;
   if (numInFeatureMaps != that.numInFeatureMaps)   return false;
   if (numIterations != that.numIterations)   return false;
-  if (pretrainEpochs != that.pretrainEpochs)   return false;
-  if (Double.compare(that.pretrainLearningRate,pretrainLearningRate) != 0)   return false;
   if (renderWeightsEveryNumEpochs != that.renderWeightsEveryNumEpochs)   return false;
   if (resetAdaGradIterations != that.resetAdaGradIterations)   return false;
   if (seed != that.seed)   return false;
@@ -27,7 +23,6 @@
   if (useAdaGrad != that.useAdaGrad)   return false;
   if (useRegularization != that.useRegularization)   return false;
   if (activationFunction != null ? !activationFunction.equals(that.activationFunction) : that.activationFunction != null)   return false;
-  if (activationType != that.activationType)   return false;
   if (!Arrays.equals(featureMapSize,that.featureMapSize))   return false;
   if (!Arrays.equals(filterSize,that.filterSize))   return false;
   if (hiddenUnit != that.hiddenUnit)   return false;
