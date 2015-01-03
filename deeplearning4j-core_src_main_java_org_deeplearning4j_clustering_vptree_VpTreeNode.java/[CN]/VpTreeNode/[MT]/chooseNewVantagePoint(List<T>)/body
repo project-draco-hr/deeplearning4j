@@ -1,6 +1,6 @@
 {
-  ArrayList<T> candidates=new ArrayList<T>(VANTAGE_POINT_CANDIDATES);
-  ArrayList<T> testPoints=new ArrayList<T>(TEST_POINT_COUNT);
+  List<T> candidates=new ArrayList<T>(VANTAGE_POINT_CANDIDATES);
+  List<T> testPoints=new ArrayList<T>(TEST_POINT_COUNT);
   for (int i=0; i < VANTAGE_POINT_CANDIDATES; ++i) {
     int basePointIndex=i + (int)(Math.random() * (points.size() - i));
     T candidate=points.get(basePointIndex);

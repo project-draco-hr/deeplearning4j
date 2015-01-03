@@ -1,8 +1,6 @@
 {
-  VpTreeNode<T> node=new VpTreeNode<T>(points);
-  if (points.size() < MAX_LEAF_SIZE) {
-    return node;
-  }
+  VpTreeNode<T> node=new VpTreeNode<>(points);
+  if (points.size() < MAX_LEAF_SIZE)   return node;
   T basePoint=chooseNewVantagePoint(points);
   double distances[]=new double[points.size()];
   double sortedDistances[]=new double[points.size()];
@@ -12,8 +10,8 @@
   }
   Arrays.sort(sortedDistances);
   final double medianDistance=sortedDistances[sortedDistances.length / 2];
-  ArrayList<T> leftPoints=new ArrayList<T>(sortedDistances.length);
-  ArrayList<T> rightPoints=new ArrayList<T>(sortedDistances.length);
+  List<T> leftPoints=new ArrayList<>(sortedDistances.length);
+  List<T> rightPoints=new ArrayList<>(sortedDistances.length);
   for (int i=0; i < distances.length; ++i) {
     if (distances[i] < medianDistance) {
       leftPoints.add(points.get(i));

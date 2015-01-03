@@ -1,0 +1,20 @@
+{
+  if (solution.size() >= k)   return solution;
+  if (left == null || vantagePoint == null) {
+    for (    T p : points)     solution.incrementCount(p,p.distance(point));
+    return solution;
+  }
+  double distanceToLeftCenter=vantagePoint.distance(point);
+  if (distanceToLeftCenter < leftRadius) {
+    left.findNearbyPoints(solution,point,k);
+  }
+ else   if (distanceToLeftCenter >= leftRadius) {
+    right.findNearbyPoints(solution,point,k);
+  }
+ else {
+    right.findNearbyPoints(solution,point,k);
+    left.findNearbyPoints(solution,point,k);
+  }
+  solution.keepBottomNKeys(k - 1);
+  return solution;
+}

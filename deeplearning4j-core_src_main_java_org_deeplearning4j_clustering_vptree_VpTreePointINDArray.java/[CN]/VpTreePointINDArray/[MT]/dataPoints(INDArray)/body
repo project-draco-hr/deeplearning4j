@@ -1,0 +1,12 @@
+{
+  final List<VpTreePointINDArray> ret=new ArrayList<>();
+  matrix.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+    }
+    @Override public void operate(    INDArray nd){
+      ret.add(new VpTreePointINDArray(nd));
+    }
+  }
+);
+  return ret;
+}

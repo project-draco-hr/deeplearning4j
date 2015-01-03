@@ -1,0 +1,25 @@
+{
+  Counter<T> counter=new Counter<>();
+  if (left == null) {
+    List<T> result=new ArrayList<>();
+    for (    T p : points) {
+      result.add(p);
+      counter.incrementCount(p,p.distance(point));
+    }
+    counter.keepBottomNKeys(k);
+    result.addAll(counter.getSortedKeys());
+    return result;
+  }
+  double distanceToLeftCenter=vantagePoint.distance(point);
+  if (distanceToLeftCenter < leftRadius) {
+    return left.findNearbyPoints(point,k);
+  }
+ else   if (distanceToLeftCenter >= leftRadius) {
+    return right.findNearbyPoints(point,k);
+  }
+ else {
+    List<T> result=right.findNearbyPoints(point,k);
+    result.addAll(left.findNearbyPoints(point,k));
+    return result;
+  }
+}
