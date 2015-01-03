@@ -1,0 +1,11 @@
+{
+  INDArray vec_in=Nd4j.create(this.inputColumns);
+  INDArray vec_out=Nd4j.create(1);
+  try {
+    this.vector_factory.parseFromLine(line,vec_in,vec_out);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return new Pair<INDArray,INDArray>(vec_in,vec_out);
+}
