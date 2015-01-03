@@ -1,0 +1,14 @@
+{
+  if (toAccumulate.getResult() == null || !(toAccumulate.getResult() instanceof INDArray)) {
+    log.warn("Not accumulating result: must be of type INDArray and not null");
+    return;
+  }
+  INDArray arr=(INDArray)toAccumulate.getResult();
+  seenSoFar++;
+  if (averaged == null) {
+    this.averaged=arr;
+  }
+ else {
+    averaged.addi(arr);
+  }
+}

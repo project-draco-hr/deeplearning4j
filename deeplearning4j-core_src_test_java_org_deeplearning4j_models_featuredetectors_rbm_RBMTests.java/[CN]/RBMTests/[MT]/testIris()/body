@@ -5,6 +5,7 @@
   d.normalizeZeroMeanZeroUnitVariance();
   RandomGenerator g=new MersenneTwister(123);
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).learningRate(1e-1f).nIn(d.numInputs()).rng(g).nOut(3).build();
-  RBM r=new RBM.Builder().configure(conf).build();
+  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
+  RBM r=layerFactory.create(conf);
   r.fit(d.getFeatureMatrix());
 }

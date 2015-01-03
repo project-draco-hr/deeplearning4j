@@ -1,11 +1,11 @@
 {
-  MapFactory<String,Double> factory=new MapFactory<String,Double>(){
+  MapFactory<K,Double> factory=new MapFactory<K,Double>(){
     private static final long serialVersionUID=5447027920163740307L;
-    @Override public Map<String,Double> buildMap(){
-      return new java.util.concurrent.ConcurrentHashMap<String,Double>();
+    @Override public Map<K,Double> buildMap(){
+      return new java.util.concurrent.ConcurrentHashMap<>();
     }
   }
 ;
-  Counter<String> totalWords=new Counter<String>(factory);
+  Counter<K> totalWords=new Counter<>(factory);
   return totalWords;
 }

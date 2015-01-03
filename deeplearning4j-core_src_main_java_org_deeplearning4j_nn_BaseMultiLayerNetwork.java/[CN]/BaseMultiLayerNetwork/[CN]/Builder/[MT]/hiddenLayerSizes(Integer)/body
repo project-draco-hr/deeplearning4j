@@ -1,6 +1,0 @@
-{
-  this.hiddenLayerSizes=new int[hiddenLayerSizes.length];
-  this.nLayers=hiddenLayerSizes.length;
-  for (int i=0; i < hiddenLayerSizes.length; i++)   this.hiddenLayerSizes[i]=hiddenLayerSizes[i];
-  return this;
-}

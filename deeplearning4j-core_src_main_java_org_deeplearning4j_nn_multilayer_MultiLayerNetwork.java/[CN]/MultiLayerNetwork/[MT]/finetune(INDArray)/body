@@ -1,0 +1,14 @@
+{
+  this.labels=labels;
+  if (labels != null)   this.labels=labels;
+  if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
+    feedForward();
+    getOutputLayer().fit(getOutputLayer().getInput(),labels);
+  }
+ else {
+    feedForward();
+    getOutputLayer().setLabels(labels);
+    StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().conf().getListeners(),this);
+    hessianFree.optimize();
+  }
+}

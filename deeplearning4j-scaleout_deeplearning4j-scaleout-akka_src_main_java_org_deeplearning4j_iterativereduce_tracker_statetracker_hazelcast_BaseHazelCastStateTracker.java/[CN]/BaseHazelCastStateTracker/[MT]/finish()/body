@@ -1,9 +1,0 @@
-{
-  try {
-    done.set(true);
-    updateSaver().cleanup();
-  }
- catch (  Exception e) {
-    log.warn("Hazelcast already shutdown...done() being called is pointless");
-  }
-}

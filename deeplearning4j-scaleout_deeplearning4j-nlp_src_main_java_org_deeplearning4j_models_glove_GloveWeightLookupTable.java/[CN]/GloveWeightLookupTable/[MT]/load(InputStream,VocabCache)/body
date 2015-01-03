@@ -1,0 +1,20 @@
+{
+  LineIterator iter=IOUtils.lineIterator(is,"UTF-8");
+  GloveWeightLookupTable glove=null;
+  Map<String,float[]> wordVectors=new HashMap<>();
+  while (iter.hasNext()) {
+    String line=iter.nextLine().trim();
+    if (line.isEmpty())     continue;
+    String[] split=line.split(" ");
+    String word=split[0];
+    if (glove == null)     glove=new GloveWeightLookupTable.Builder().cache(vocab).vectorLength(split.length - 1).build();
+    if (word.isEmpty())     continue;
+    float[] read=read(split,glove.getVectorLength());
+    if (read.length < 1)     continue;
+    wordVectors.put(word,read);
+  }
+  glove.setSyn0(weights(glove,wordVectors,vocab));
+  glove.resetWeights(false);
+  iter.close();
+  return glove;
+}

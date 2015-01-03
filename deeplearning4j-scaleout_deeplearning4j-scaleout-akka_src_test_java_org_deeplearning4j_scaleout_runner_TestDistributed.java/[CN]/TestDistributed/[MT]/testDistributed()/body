@@ -1,0 +1,6 @@
+{
+  DeepLearning4jDistributed distributed=new DeepLearning4jDistributed(testIterator,stateTracker);
+  distributed.setup(conf);
+  distributed.train();
+  distributed.shutdown();
+}

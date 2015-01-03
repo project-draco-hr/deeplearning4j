@@ -1,0 +1,10 @@
+{
+  this.workerId=Utils.createWorkerId(wid);
+  this.currentState=WorkerState.NONE;
+  this.masterAddr=masterAddr;
+  this.recordParser=parser;
+  this.computable=computable;
+  this.updateable=updateable;
+  this.progressCounters=new HashMap<>();
+  this.conf=conf;
+}

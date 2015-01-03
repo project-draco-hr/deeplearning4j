@@ -1,0 +1,14 @@
+{
+  int feature_size=9285;
+  boolean caughtParseException=false;
+  INDArray in_vector=Nd4j.create(feature_size);
+  INDArray out_vector=Nd4j.create(1);
+  SVMLightRecordFactory recFactory=new SVMLightRecordFactory(feature_size);
+  try {
+    recFactory.parseFromLine(test_svm_light_no_label,in_vector,out_vector);
+  }
+ catch (  NumberFormatException e) {
+    caughtParseException=true;
+  }
+  assertEquals(true,caughtParseException);
+}

@@ -1,0 +1,5 @@
+{
+  int result=id;
+  result=31 * result + (sentence != null ? sentence.hashCode() : 0);
+  return result;
+}

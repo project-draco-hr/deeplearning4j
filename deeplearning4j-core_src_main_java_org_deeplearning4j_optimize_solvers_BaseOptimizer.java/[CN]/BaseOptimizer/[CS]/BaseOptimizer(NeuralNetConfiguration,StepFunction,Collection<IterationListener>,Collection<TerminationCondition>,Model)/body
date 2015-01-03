@@ -1,0 +1,9 @@
+{
+  this.conf=conf;
+  this.stepFunction=stepFunction;
+  this.iterationListeners=iterationListeners;
+  this.terminationConditions=terminationConditions;
+  this.model=model;
+  lineMaximizer=new BackTrackLineSearch(model,stepFunction,this);
+  lineMaximizer.setStpmax(stpMax);
+}

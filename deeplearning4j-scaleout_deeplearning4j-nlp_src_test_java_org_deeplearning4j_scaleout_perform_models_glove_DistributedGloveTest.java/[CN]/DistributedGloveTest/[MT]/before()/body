@@ -1,0 +1,18 @@
+{
+  ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
+  File file=resource.getFile().getParentFile();
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
+  new File("cache.ser").delete();
+  cache=new InMemoryLookupCache();
+  TokenizerFactory t=new UimaTokenizerFactory();
+  table=new GloveWeightLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
+  if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).build();
+  vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).minWords(1).tokenize(t).build();
+  vectorizer.fit();
+  iter.reset();
+  coOccurrences=new CoOccurrences.Builder().cache(cache).iterate(iter).tokenizer(t).build();
+  coOccurrences.fit();
+  assertTrue(coOccurrences.getCoOCurreneCounts().size() > 0);
+  table.resetWeights();
+  init();
+}

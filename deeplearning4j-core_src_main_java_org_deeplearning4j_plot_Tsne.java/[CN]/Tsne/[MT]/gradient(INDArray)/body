@@ -16,7 +16,7 @@
   gains=gains.add(.2).muli(yGrads.cond(Conditions.greaterThan(0)).neqi(yIncs.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8).muli(yGrads.cond(Conditions.greaterThan(0)).eqi(yIncs.cond(Conditions.greaterThan(0)))));
   BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
   INDArray gradChange=gains.mul(yGrads);
-  if (useAdaGrad)   gradChange.muli(adaGrad.getLearningRates(gradChange));
+  if (useAdaGrad)   gradChange=adaGrad.getGradient(gradChange);
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);
   double cost=p.mul(log(p.div(q),false)).sum(Integer.MAX_VALUE).getDouble(0);

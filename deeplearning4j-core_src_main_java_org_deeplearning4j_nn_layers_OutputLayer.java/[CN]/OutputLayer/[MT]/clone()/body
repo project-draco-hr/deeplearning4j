@@ -1,8 +1,0 @@
-{
-  OutputLayer reg=new OutputLayer(conf,W,b);
-  if (this.labels != null)   reg.labels=this.labels.dup();
-  reg.biasAdaGrad=this.biasAdaGrad;
-  reg.adaGrad=this.adaGrad;
-  if (this.input != null)   reg.input=this.input.dup();
-  return reg;
-}

@@ -1,21 +1,3 @@
 {
-  calculate(matrix,nDims,perplexity);
-  BufferedWriter write=new BufferedWriter(new FileWriter(new File("coords.csv"),true));
-  for (int i=0; i < y.rows(); i++) {
-    String word=labels.get(i);
-    if (word == null)     continue;
-    StringBuffer sb=new StringBuffer();
-    INDArray wordVector=y.getRow(i);
-    for (int j=0; j < wordVector.length(); j++) {
-      sb.append(wordVector.getDouble(j));
-      if (j < wordVector.length() - 1)       sb.append(",");
-    }
-    sb.append(",");
-    sb.append(word);
-    sb.append(" ");
-    sb.append("\n");
-    write.write(sb.toString());
-  }
-  write.flush();
-  write.close();
+  plot(matrix,nDims,labels,"coords.csv");
 }

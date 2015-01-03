@@ -1,0 +1,18 @@
+{
+  Map<String,Class<?>> map=CACHE_CLASSES.get(classLoader);
+  if (map == null) {
+    Map<String,Class<?>> newMap=new ConcurrentHashMap<String,Class<?>>();
+    map=CACHE_CLASSES.putIfAbsent(classLoader,newMap);
+    if (map == null) {
+      map=newMap;
+    }
+  }
+  Class clazz=map.get(name);
+  if (clazz == null) {
+    clazz=Class.forName(name,true,classLoader);
+    if (clazz != null) {
+      map.put(name,clazz);
+    }
+  }
+  return clazz;
+}

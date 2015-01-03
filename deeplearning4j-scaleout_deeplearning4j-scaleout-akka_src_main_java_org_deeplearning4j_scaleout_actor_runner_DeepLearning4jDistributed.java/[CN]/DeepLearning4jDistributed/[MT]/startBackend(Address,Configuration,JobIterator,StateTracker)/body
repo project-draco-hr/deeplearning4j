@@ -1,0 +1,33 @@
+{
+  ActorRefUtils.addShutDownForSystem(system);
+  system.actorOf(Props.create(ClusterListener.class));
+  try {
+    Class<? extends WorkRouter> routerClazz=(Class<? extends WorkRouter>)Class.forName(c.get(WorkRouter.WORK_ROUTER,IterativeReduceWorkRouter.class.getName()));
+    Constructor<?> constructor=routerClazz.getConstructor(StateTracker.class);
+    workRouter=(WorkRouter)constructor.newInstance(stateTracker);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  workRouter.setup(c);
+  ActorRef batchActor=system.actorOf(Props.create(BatchActor.class,iter,stateTracker,c,workRouter),"batch");
+  log.info("Started batch actor");
+  Props masterProps=Props.create(MasterActor.class,c,batchActor,stateTracker,workRouter);
+  final Address realJoinAddress=(joinAddress == null) ? Cluster.get(system).selfAddress() : joinAddress;
+  c.set(MASTER_URL,realJoinAddress.toString());
+  if (exec == null)   exec=Executors.newScheduledThreadPool(2);
+  Cluster cluster=Cluster.get(system);
+  cluster.join(realJoinAddress);
+  exec.schedule(new Runnable(){
+    @Override public void run(){
+      Cluster cluster=Cluster.get(system);
+      cluster.publishCurrentClusterState();
+    }
+  }
+,10,TimeUnit.SECONDS);
+  masterActor=system.actorOf(ClusterSingletonManager.defaultProps(masterProps,"master",PoisonPill.getInstance(),"master"));
+  log.info("Started master with address " + realJoinAddress.toString());
+  c.set(MASTER_PATH,ActorRefUtils.absPath(masterActor,system));
+  log.info("Set master abs path " + c.get(MASTER_PATH));
+  return realJoinAddress;
+}

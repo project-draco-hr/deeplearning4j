@@ -1,0 +1,19 @@
+{
+  if (message instanceof DistributedPubSubMediator.SubscribeAck || message instanceof DistributedPubSubMediator.UnsubscribeAck) {
+    DistributedPubSubMediator.SubscribeAck ack=(DistributedPubSubMediator.SubscribeAck)message;
+    mediator.tell(new DistributedPubSubMediator.Publish(ClusterListener.TOPICS,message),getSelf());
+    log.info("Subscribed " + ack.toString());
+  }
+ else   if (message instanceof DoneMessage) {
+    log.info("Received done message");
+    doDoneOrNextPhase();
+  }
+ else   if (message instanceof String) {
+    getSender().tell(Ack.getInstance(),getSelf());
+  }
+ else   if (message instanceof MoreWorkMessage) {
+    log.info("Prompted for more work, starting pipeline");
+    mediator.tell(new DistributedPubSubMediator.Publish(BatchActor.BATCH,MoreWorkMessage.getInstance()),getSelf());
+  }
+ else   unhandled(message);
+}

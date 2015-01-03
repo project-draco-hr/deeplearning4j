@@ -1,0 +1,8 @@
+{
+  if (this == o)   return true;
+  if (!(o instanceof Job))   return false;
+  Job job=(Job)o;
+  if (result != null ? !result.equals(job.result) : job.result != null)   return false;
+  if (!work.equals(job.work))   return false;
+  return true;
+}

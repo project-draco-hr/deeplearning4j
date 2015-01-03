@@ -1,0 +1,11 @@
+{
+  MultiLayerNetwork ret=null;
+  try {
+    ret=getClass().newInstance();
+    ret.update(this);
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException("Unable to cloe network");
+  }
+  return ret;
+}

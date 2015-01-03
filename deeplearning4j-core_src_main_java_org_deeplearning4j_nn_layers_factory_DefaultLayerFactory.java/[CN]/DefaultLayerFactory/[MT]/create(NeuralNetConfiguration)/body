@@ -1,0 +1,7 @@
+{
+  Layer ret=getInstance(conf);
+  Map<String,INDArray> params=getParams(conf);
+  ret.setParamTable(params);
+  ret.setConfiguration(conf);
+  return ret;
+}

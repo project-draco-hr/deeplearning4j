@@ -1,0 +1,8 @@
+{
+  if (stateTracker != null) {
+    stateTracker.finish();
+    stateTracker.shutdown();
+  }
+  if (testSystem != null)   testSystem.shutdown();
+  Hazelcast.shutdownAll();
+}

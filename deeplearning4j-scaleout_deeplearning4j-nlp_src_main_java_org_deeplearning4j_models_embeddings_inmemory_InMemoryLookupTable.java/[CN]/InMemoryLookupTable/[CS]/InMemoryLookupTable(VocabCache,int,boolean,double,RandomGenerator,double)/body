@@ -1,0 +1,9 @@
+{
+  this.vocab=vocab;
+  this.vectorLength=vectorLength;
+  this.useAdaGrad=useAdaGrad;
+  this.lr.set(lr);
+  this.rng=gen;
+  this.negative=negative;
+  initExpTable();
+}

@@ -1,0 +1,7 @@
+{
+  if (h != null) {
+    h.shutdown();
+    h.getLifecycleService().shutdown();
+  }
+  if (resource != null)   resource.shutdown();
+}

@@ -1,0 +1,74 @@
+{
+  JobConf job=new JobConf(defaultConf);
+  Path splitPath=new Path(props.getProperty("app.input.path"));
+  System.out.println("app.input.path = " + splitPath);
+  InputSplit[] splits=generateDebugSplits(splitPath,job);
+  System.out.println("split count: " + splits.length);
+  try {
+    Class<?> master_clazz=Class.forName(props.getProperty("yarn.master.main"));
+    Constructor<?> master_ctor=master_clazz.getConstructor();
+    this.master=(ComputableMaster)master_ctor.newInstance();
+    System.out.println("Using master class: " + props.getProperty("yarn.master.main"));
+  }
+ catch (  InstantiationException e) {
+    e.printStackTrace();
+  }
+catch (  IllegalAccessException e) {
+    e.printStackTrace();
+  }
+catch (  ClassNotFoundException e) {
+    e.printStackTrace();
+  }
+catch (  SecurityException e) {
+    e.printStackTrace();
+  }
+catch (  NoSuchMethodException e) {
+    e.printStackTrace();
+  }
+catch (  IllegalArgumentException e) {
+    e.printStackTrace();
+  }
+catch (  InvocationTargetException e) {
+    e.printStackTrace();
+  }
+  this.master.setup(this.generateDebugConfigurationObject());
+  this.workers=new ArrayList<ComputableWorker>();
+  System.out.println("Using worker class: " + props.getProperty("yarn.worker.main"));
+  for (int x=0; x < splits.length; x++) {
+    ComputableWorker worker=null;
+    Class<?> worker_clazz;
+    try {
+      worker_clazz=Class.forName(props.getProperty("yarn.worker.main"));
+      Constructor<?> worker_ctor=worker_clazz.getConstructor();
+      worker=(ComputableWorker)worker_ctor.newInstance();
+    }
+ catch (    ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+catch (    SecurityException e) {
+      e.printStackTrace();
+    }
+catch (    NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+catch (    IllegalArgumentException e) {
+      e.printStackTrace();
+    }
+catch (    InstantiationException e) {
+      e.printStackTrace();
+    }
+catch (    IllegalAccessException e) {
+      e.printStackTrace();
+    }
+catch (    InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    worker.setup(this.generateDebugConfigurationObject());
+    TextRecordParser txt_reader=new TextRecordParser();
+    long len=Integer.parseInt(splits[x].toString().split(":")[2].split("\\+")[1]);
+    txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
+    worker.setRecordParser(txt_reader);
+    workers.add(worker);
+    System.out.println("> Setup Worker " + x);
+  }
+}

@@ -1,0 +1,31 @@
+{
+  List<INDArray> deltaRet=new ArrayList<>();
+  INDArray[] deltas=new INDArray[getnLayers() + 1];
+  List<INDArray> activations=feedForward();
+  List<INDArray> rActivations=feedForwardR(activations,v);
+  List<INDArray> weights=new ArrayList<>();
+  List<INDArray> biases=new ArrayList<>();
+  List<ActivationFunction> activationFunctions=new ArrayList<>();
+  for (int j=0; j < getLayers().length; j++) {
+    weights.add(getLayers()[j].getParam(DefaultParamInitializer.WEIGHT_KEY));
+    biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
+    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
+  }
+  INDArray rix=rActivations.get(rActivations.size() - 1).divi((double)input.rows());
+  LinAlgExceptions.assertValidNum(rix);
+  for (int i=getnLayers() - 1; i >= 0; i--) {
+    deltas[i]=activations.get(i).transpose().mmul(rix);
+    applyDropConnectIfNecessary(deltas[i]);
+    if (i > 0)     rix=rix.mmul(weights.get(i).addRowVector(biases.get(i)).transpose()).muli(activationFunctions.get(i - 1).applyDerivative(activations.get(i)));
+  }
+  for (int i=0; i < deltas.length - 1; i++) {
+    if (defaultConfiguration.isConstrainGradientToUnitNorm()) {
+      double sum=deltas[i].sum(Integer.MAX_VALUE).getDouble(0);
+      if (sum > 0)       deltaRet.add(deltas[i].div(deltas[i].norm2(Integer.MAX_VALUE)));
+ else       deltaRet.add(deltas[i]);
+    }
+ else     deltaRet.add(deltas[i]);
+    LinAlgExceptions.assertValidNum(deltaRet.get(i));
+  }
+  return deltaRet;
+}

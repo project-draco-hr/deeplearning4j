@@ -1,0 +1,5 @@
+{
+  int result=hiddenLayerSizes != null ? Arrays.hashCode(hiddenLayerSizes) : 0;
+  result=31 * result + (confs != null ? confs.hashCode() : 0);
+  return result;
+}

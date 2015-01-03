@@ -1,0 +1,23 @@
+{
+  this.numWorkers=numWorkers;
+  this.gen=gen;
+  this.vocab=cache;
+  this.layerSize=layerSize;
+  this.shuffle=shuffle;
+  this.sentenceIterator=sentenceIterator;
+  this.textVectorizer=textVectorizer;
+  this.tokenizerFactory=tokenizerFactory;
+  this.lookupTable=lookupTable;
+  this.learningRate=learningRate;
+  this.xMax=xMax;
+  this.windowSize=windowSize;
+  this.coOccurrences=coOccurrences;
+  this.stopWords=stopWords;
+  this.stem=stem;
+  this.batchSize=batchSize;
+  this.minWordFrequency=minWordFrequency;
+  this.maxCount=maxCount;
+  this.iterations=iterations;
+  this.symmetric=symmetric;
+  shuffleRandom=new Random(seed);
+}

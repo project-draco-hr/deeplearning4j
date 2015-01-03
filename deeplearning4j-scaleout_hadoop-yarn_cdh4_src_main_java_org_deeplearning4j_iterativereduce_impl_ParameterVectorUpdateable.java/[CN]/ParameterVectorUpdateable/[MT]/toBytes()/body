@@ -1,0 +1,5 @@
+{
+  byte[] bytes=paramMessage.data().asBytes();
+  ByteBuffer buf=ByteBuffer.wrap(bytes);
+  return buf;
+}

@@ -12,16 +12,14 @@
     if (pAp < 0) {
       log.info("Negative slope: " + pAp + " breaking");
     }
-    double val=0.5 * Nd4j.getBlasWrapper().dot(b.neg().add(r).transpose(),x);
-    log.info("Iteration on conjugate gradient " + iterationCount + " with value "+ val);
     double alpha=deltaNew / pAp;
     x.addi(p.mul(alpha));
-    INDArray rNew=r.add(Ap.mul(alpha));
+    INDArray rNew=r.addi(Ap.mul(alpha));
     INDArray yNew=rNew.div(preCon);
     double deltaOld=deltaNew;
     deltaNew=rNew.mul(yNew).sum(Integer.MAX_VALUE).getDouble(0);
     double beta=deltaNew / deltaOld;
-    p=yNew.neg().add(p.mul(beta));
+    p=yNew.neg().addi(p.mul(beta));
     r=rNew;
     is.add(iterationCount);
     xs.add(x.dup());

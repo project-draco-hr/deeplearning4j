@@ -1,0 +1,7 @@
+{
+  INDArray meanY=data.mean(0);
+  INDArray minY=data.min(0);
+  INDArray maxY=data.max(0);
+  init(data,meanY.getDouble(0),meanY.getDouble(1),max(maxY.getDouble(0) - meanY.getDouble(0),meanY.getDouble(0) - minY.getDouble(0)) + Nd4j.EPS_THRESHOLD,max(maxY.getDouble(1) - meanY.getDouble(1),meanY.getDouble(1) - minY.getDouble(1)) + Nd4j.EPS_THRESHOLD);
+  fill();
+}

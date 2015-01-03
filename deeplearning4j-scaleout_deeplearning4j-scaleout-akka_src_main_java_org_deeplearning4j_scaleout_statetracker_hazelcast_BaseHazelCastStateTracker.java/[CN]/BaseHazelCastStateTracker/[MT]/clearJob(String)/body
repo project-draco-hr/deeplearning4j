@@ -1,0 +1,19 @@
+{
+  if (id == null) {
+    log.warn("No job to clear; was null, returning");
+    return;
+  }
+  recentlyClearedJobs.add(id);
+  IAtomicReference<Job> jRef=h.getAtomicReference("job-" + id);
+  if (jRef.isNull())   return;
+  jRef.clear();
+  log.info("Destroyed job ref " + id);
+  Job remove=null;
+  for (  Job j : jobs) {
+    if (j.workerId().equals(id)) {
+      remove=j;
+      break;
+    }
+  }
+  if (remove != null)   jobs.remove(remove);
+}

@@ -1,8 +1,0 @@
-{
-  final int prime=31;
-  int result=1;
-  result=prime * result + ((hBiasGradient == null) ? 0 : hBiasGradient.hashCode());
-  result=prime * result + ((vBiasGradient == null) ? 0 : vBiasGradient.hashCode());
-  result=prime * result + ((wGradient == null) ? 0 : wGradient.hashCode());
-  return result;
-}

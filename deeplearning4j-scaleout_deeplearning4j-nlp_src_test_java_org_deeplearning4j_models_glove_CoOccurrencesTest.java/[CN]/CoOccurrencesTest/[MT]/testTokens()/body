@@ -1,0 +1,21 @@
+{
+  ClassPathResource resource=new ClassPathResource("big/raw_sentences.txt");
+  File file=resource.getFile();
+  iter=new LineSentenceIterator(file);
+  iter.setPreProcessor(new SentencePreProcessor(){
+    @Override public String preProcess(    String sentence){
+      return sentence.toLowerCase();
+    }
+  }
+);
+  List<String> lines=IOUtils.readLines(new ClassPathResource(("big/tokens.txt")).getInputStream());
+  int count=0;
+  while (iter.hasNext()) {
+    List<String> tokens=tokenizerFactory.create(iter.nextSentence()).getTokens();
+    String[] split=lines.get(count).split(" ");
+    int count2=Integer.parseInt(split[0]);
+    assertEquals(count,count2);
+    assertEquals("Sentence " + count,Integer.parseInt(split[1]),tokens.size());
+    count++;
+  }
+}

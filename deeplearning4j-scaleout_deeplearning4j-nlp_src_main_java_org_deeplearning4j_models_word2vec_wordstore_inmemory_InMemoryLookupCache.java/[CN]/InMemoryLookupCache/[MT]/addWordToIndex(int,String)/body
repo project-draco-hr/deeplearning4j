@@ -1,4 +1,5 @@
 {
+  if (word == null || word.isEmpty())   throw new IllegalArgumentException("Word can't be empty or null");
   if (!wordFrequencies.containsKey(word))   wordFrequencies.incrementCount(word,1);
   wordIndex.add(word,index);
 }

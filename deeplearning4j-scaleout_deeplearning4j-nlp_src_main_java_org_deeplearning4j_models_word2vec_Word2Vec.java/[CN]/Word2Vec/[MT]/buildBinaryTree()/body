@@ -1,6 +1,6 @@
 {
   log.info("Constructing priority queue");
-  Huffman huffman=new Huffman(cache.vocabWords());
+  Huffman huffman=new Huffman(vocab().vocabWords());
   huffman.build();
   log.info("Built tree");
 }

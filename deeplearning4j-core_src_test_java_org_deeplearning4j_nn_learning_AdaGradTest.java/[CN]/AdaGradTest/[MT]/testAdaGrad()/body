@@ -6,7 +6,7 @@
   RealDistribution dist=Distributions.normal(new MersenneTwister(123),1);
   for (int i=0; i < W.rows(); i++)   W.putRow(i,Nd4j.create(dist.sample(W.columns())));
   for (int i=0; i < 5; i++) {
-    String learningRates=String.valueOf("\nAdagrad\n " + grad.getLearningRates(W)).replaceAll(";","\n");
+    String learningRates=String.valueOf("\nAdagrad\n " + grad.getGradient(W)).replaceAll(";","\n");
     log.info(learningRates);
     W.addi(Nd4j.randn(rows,cols));
   }

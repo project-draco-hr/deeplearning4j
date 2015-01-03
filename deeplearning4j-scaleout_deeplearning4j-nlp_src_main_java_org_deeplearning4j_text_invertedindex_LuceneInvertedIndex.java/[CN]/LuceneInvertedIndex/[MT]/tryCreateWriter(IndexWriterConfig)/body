@@ -1,0 +1,18 @@
+{
+  try {
+    dir.close();
+    dir=null;
+    FileUtils.deleteDirectory(new File(indexPath));
+    ensureDirExists();
+    if (lockFactory == null)     lockFactory=new NativeFSLockFactory(new File(indexPath));
+    lockFactory.clearLock(IndexWriter.WRITE_LOCK_NAME);
+    return new IndexWriter(dir,iwc);
+  }
+ catch (  Exception e) {
+    String id=UUID.randomUUID().toString();
+    indexPath=id;
+    log.warn("Setting index path to " + id);
+    log.warn("Couldn't create index ",e);
+    return null;
+  }
+}

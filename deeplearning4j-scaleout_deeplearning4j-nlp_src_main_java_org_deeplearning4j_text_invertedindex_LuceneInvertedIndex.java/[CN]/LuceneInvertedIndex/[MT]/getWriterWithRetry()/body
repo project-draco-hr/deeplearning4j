@@ -1,0 +1,28 @@
+{
+  if (this.indexWriter != null)   return this.indexWriter;
+  IndexWriterConfig iwc;
+  IndexWriter writer=null;
+  try {
+    if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
+    ensureDirExists();
+    if (this.indexWriter == null) {
+      indexBeingCreated.set(true);
+      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+      iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+      iwc.setWriteLockTimeout(1000);
+      log.info("Creating new index writer");
+      while ((writer=tryCreateWriter(iwc)) == null) {
+        log.warn("Failed to create writer...trying again");
+        iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+        iwc.setWriteLockTimeout(1000);
+        Thread.sleep(10000);
+      }
+      this.indexWriter=new TrackingIndexWriter(writer);
+    }
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException(e);
+  }
+  return this.indexWriter;
+}

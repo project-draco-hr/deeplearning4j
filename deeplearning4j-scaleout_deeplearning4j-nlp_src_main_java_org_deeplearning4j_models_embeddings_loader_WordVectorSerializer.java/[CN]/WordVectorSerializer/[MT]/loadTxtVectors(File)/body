@@ -1,0 +1,7 @@
+{
+  Pair<WeightLookupTable,VocabCache> pair=loadTxt(path);
+  WordVectorsImpl vectors=new WordVectorsImpl();
+  vectors.setLookupTable(pair.getFirst());
+  vectors.setVocab(pair.getSecond());
+  return vectors;
+}

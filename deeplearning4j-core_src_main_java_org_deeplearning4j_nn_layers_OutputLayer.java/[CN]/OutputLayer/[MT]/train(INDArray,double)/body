@@ -1,6 +1,0 @@
-{
-  adaGrad.setMasterStepSize(lr);
-  biasAdaGrad.setMasterStepSize(lr);
-  LinAlgExceptions.assertRows(x,labels);
-  train(x,labels,lr);
-}

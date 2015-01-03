@@ -1,0 +1,9 @@
+{
+  try {
+    indexWriter.deleteAll();
+    indexWriter.getIndexWriter().commit();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

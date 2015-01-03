@@ -1,0 +1,7 @@
+{
+  Gradient ret=new DefaultGradient();
+  ret.gradientLookupTable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
+  ret.gradientLookupTable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
+  ret.gradientLookupTable().put(PretrainParamInitializer.WEIGHT_KEY,wGradient);
+  return ret;
+}

@@ -1,0 +1,9 @@
+{
+  if (stateTracker == null)   try {
+    stateTracker=createStateTracker(conf);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  waitForWorkers=conf.getBoolean(WAIT_FOR_WORKERS,true);
+}

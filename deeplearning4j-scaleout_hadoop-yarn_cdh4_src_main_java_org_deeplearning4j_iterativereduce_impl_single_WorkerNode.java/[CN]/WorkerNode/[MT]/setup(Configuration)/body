@@ -1,0 +1,4 @@
+{
+  NeuralNetConfiguration conf2=NeuralNetConfiguration.fromJson(conf.get(NEURAL_NET_CONF));
+  neuralNetwork=conf2.getLayerFactory().create(conf2);
+}

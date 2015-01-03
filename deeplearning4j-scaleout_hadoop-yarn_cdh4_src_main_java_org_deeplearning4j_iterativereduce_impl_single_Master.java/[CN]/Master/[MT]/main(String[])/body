@@ -1,0 +1,5 @@
+{
+  Master pmn=new Master();
+  ApplicationMaster<ParameterVectorUpdateable> am=new ApplicationMaster<>(pmn,ParameterVectorUpdateable.class);
+  ToolRunner.run(am,args);
+}

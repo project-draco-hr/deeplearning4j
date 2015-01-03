@@ -1,0 +1,26 @@
+{
+  IterateAndUpdate update=stateTracker.updates();
+  if (stateTracker.workerUpdates().isEmpty())   return null;
+  try {
+    update.accumulate();
+  }
+ catch (  Exception e) {
+    log.debug("Unable to accumulate results",e);
+    return null;
+  }
+  Job masterResults=null;
+  try {
+    masterResults=(Job)stateTracker.getCurrent();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  if (masterResults == null)   masterResults=update.accumulated();
+  try {
+    stateTracker.setCurrent(masterResults);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return masterResults;
+}

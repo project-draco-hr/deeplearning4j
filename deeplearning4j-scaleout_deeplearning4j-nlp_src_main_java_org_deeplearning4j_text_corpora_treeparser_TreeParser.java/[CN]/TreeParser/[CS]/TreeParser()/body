@@ -3,6 +3,6 @@
     parser=getParser();
   }
   if (tokenizer == null)   tokenizer=getTokenizer();
-  if (pool == null)   pool=new CasPool(Runtime.getRuntime().availableProcessors() * 10,parser);
+  if (pool == null)   pool=new CasPool(Runtime.getRuntime().availableProcessors(),parser);
   tf=new UimaTokenizerFactory(tokenizer,true);
 }

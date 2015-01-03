@@ -1,0 +1,31 @@
+{
+  boolean cacheFresh=false;
+  if (vocab() == null) {
+    cacheFresh=true;
+    setVocab(new InMemoryLookupCache());
+  }
+  if (textVectorizer == null && cacheFresh) {
+    InvertedIndex index=new LuceneInvertedIndex(vocab(),false,"glove-index");
+    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).index(index).cache(vocab()).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
+    textVectorizer.fit();
+  }
+  if (sentenceIterator != null)   sentenceIterator.reset();
+  if (coOccurrences == null) {
+    coOccurrences=new CoOccurrences.Builder().cache(vocab()).iterate(sentenceIterator).symmetric(symmetric).tokenizer(tokenizerFactory).windowSize(windowSize).build();
+    coOccurrences.fit();
+  }
+  if (lookupTable == null) {
+    lookupTable=new GloveWeightLookupTable.Builder().cache(textVectorizer.vocab()).lr(learningRate).vectorLength(layerSize).maxCount(maxCount).gen(gen).build();
+  }
+  if (lookupTable().getSyn0() == null)   lookupTable().resetWeights();
+  final List<Pair<String,String>> pairList=coOccurrences.coOccurrenceList();
+  if (shuffle)   Collections.shuffle(pairList,shuffleRandom);
+  final AtomicInteger countUp=new AtomicInteger(0);
+  final Counter<Integer> erroriPerIteration=Util.parallelCounter();
+  log.info("Processing # of co occurrences " + coOccurrences.numCoOccurrences());
+  for (int i=0; i < iterations; i++) {
+    final AtomicInteger processed=new AtomicInteger(coOccurrences.numCoOccurrences());
+    doIteration(i,pairList,erroriPerIteration,processed,countUp);
+    log.info("Processed " + countUp.doubleValue() + " out of "+ (pairList.size() * iterations)+ " error was "+ erroriPerIteration.getCount(i));
+  }
+}

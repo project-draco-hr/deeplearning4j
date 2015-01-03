@@ -1,0 +1,16 @@
+{
+  super();
+  this.x=x;
+  this.n=n;
+  this.d=d;
+  this.y=y;
+  this.numDimensions=numDimensions;
+  this.perplexity=perplexity;
+  this.theta=theta;
+  this.maxIter=maxIter;
+  this.stopLyingIteration=stopLyingIteration;
+  this.momentumSwitchIteration=momentumSwitchIteration;
+  this.momentum=momentum;
+  this.finalMomentum=finalMomentum;
+  this.learningRate=learningRate;
+}

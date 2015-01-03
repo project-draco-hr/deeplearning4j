@@ -4,4 +4,6 @@
   INDArray gradient=rntn.getValueGradient();
   rntn.setParameters(params);
   assertEquals(params.length(),gradient.length());
+  List<Tree> trees=vectorizer.getTreesWithLabels(sentence,Arrays.asList("LABEL"));
+  rntn.fit(trees);
 }

@@ -1,52 +1,14 @@
 {
-  if (writer.containsKey(indexPath))   return writer.get(indexPath);
- else {
-    IndexWriterConfig iwc;
-    IndexWriter writer=null;
+  int attempts=0;
+  while (getWriterWithRetry() == null && attempts < 3) {
     try {
-      if (analyzer == null)       analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
-      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-      ensureDirExists();
-      if (!indexBeingCreated.get()) {
-        indexBeingCreated.set(true);
-        if (IndexWriter.isLocked(dir)) {
-          try {
-            IndexWriter.unlock(dir);
-          }
- catch (          IOException e1) {
-            e1.printStackTrace();
-          }
-        }
-        writer=new IndexWriter(dir,iwc);
-        LuceneInvertedIndex.writer.put(indexPath,writer);
-      }
- else       if (!indexBeingCreated.get() || writer == null) {
-        indexBeingCreated.set(true);
-        if (IndexWriter.isLocked(dir)) {
-          try {
-            IndexWriter.unlock(dir);
-          }
- catch (          IOException e1) {
-            e1.printStackTrace();
-          }
-        }
-        iwc=new IndexWriterConfig(Version.LATEST,analyzer);
-        writer=new IndexWriter(dir,iwc);
-        LuceneInvertedIndex.writer.put(indexPath,writer);
-      }
+      Thread.sleep(1000 * attempts);
     }
- catch (    LockObtainFailedException e) {
-      try {
-        Thread.sleep(1);
-      }
- catch (      InterruptedException e1) {
-        e1.printStackTrace();
-      }
-      return getWriter();
+ catch (    InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
-catch (    Exception e) {
-      throw new IllegalStateException("Failed to created writer",e);
-    }
-    return writer;
+    if (attempts >= 3)     throw new IllegalStateException("Can't obtain write lock");
+    attempts++;
   }
+  return this.indexWriter;
 }

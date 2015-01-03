@@ -1,5 +1,0 @@
-{
-  DeepAutoEncoderAccumulator d=new DeepAutoEncoderAccumulator(workerUpdates().size());
-  DeepAutoEncoderAccumulatorIterateAndUpdate d2=new DeepAutoEncoderAccumulatorIterateAndUpdate(d,updateSaver(),workers());
-  return d2;
-}

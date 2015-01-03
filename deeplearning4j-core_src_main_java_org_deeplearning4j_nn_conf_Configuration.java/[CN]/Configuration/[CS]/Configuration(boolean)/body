@@ -1,0 +1,7 @@
+{
+  this.loadDefaults=loadDefaults;
+synchronized (Configuration.class) {
+    REGISTRY.put(this,null);
+  }
+  this.storeResource=false;
+}

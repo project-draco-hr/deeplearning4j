@@ -1,0 +1,18 @@
+{
+switch (field$) {
+case 0:
+    split=(FileSplit)value$;
+  break;
+case 1:
+iterations=(Integer)value$;
+break;
+case 2:
+batchSize=(Integer)value$;
+break;
+case 3:
+other=(java.util.Map<CharSequence,CharSequence>)value$;
+break;
+default :
+throw new org.apache.avro.AvroRuntimeException("Bad index");
+}
+}

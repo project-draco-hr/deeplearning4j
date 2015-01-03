@@ -1,4 +1,0 @@
-{
-  if (network.conf().isConstrainGradientToUnitNorm())   params.divi(params.normmax(Integer.MAX_VALUE));
-  network.setParams(params);
-}

@@ -1,0 +1,12 @@
+{
+  ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
+  File file=resource.getFile().getParentFile();
+  LabelAwareSentenceIterator iter=LabelAwareUimaSentenceIterator.createWithPath(file.getAbsolutePath());
+  new File("cache.ser").delete();
+  TokenizerFactory t=new UimaTokenizerFactory();
+  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(5).layerSize(100).stopWords(new ArrayList<String>()).windowSize(5).iterate(iter).tokenizerFactory(t).build();
+  assertEquals(new ArrayList<String>(),vec.getStopWords());
+  vec.fit();
+  double sim=vec.similarity("Adam","deeplearning4j");
+  new File("cache.ser").delete();
+}

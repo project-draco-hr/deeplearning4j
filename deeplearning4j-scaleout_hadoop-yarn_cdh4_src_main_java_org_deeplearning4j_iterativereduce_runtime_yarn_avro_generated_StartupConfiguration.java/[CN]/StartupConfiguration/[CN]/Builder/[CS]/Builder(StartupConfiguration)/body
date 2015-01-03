@@ -1,0 +1,19 @@
+{
+  super(StartupConfiguration.SCHEMA$);
+  if (isValidValue(fields()[0],other.split)) {
+    this.split=(FileSplit)data().deepCopy(fields()[0].schema(),other.split);
+    fieldSetFlags()[0]=true;
+  }
+  if (isValidValue(fields()[1],other.iterations)) {
+    this.iterations=(Integer)data().deepCopy(fields()[1].schema(),other.iterations);
+    fieldSetFlags()[1]=true;
+  }
+  if (isValidValue(fields()[2],other.batchSize)) {
+    this.batchSize=(Integer)data().deepCopy(fields()[2].schema(),other.batchSize);
+    fieldSetFlags()[2]=true;
+  }
+  if (isValidValue(fields()[3],other.other)) {
+    this.other=(java.util.Map<CharSequence,CharSequence>)data().deepCopy(fields()[3].schema(),other.other);
+    fieldSetFlags()[3]=true;
+  }
+}

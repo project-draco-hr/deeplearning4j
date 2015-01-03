@@ -1,0 +1,5 @@
+{
+  pretrain(iter);
+  iter.reset();
+  finetune(iter);
+}

@@ -1,0 +1,16 @@
+{
+  Job masterResults=compute();
+  log.info("Updating next batch");
+  try {
+    stateTracker.setCurrent(masterResults);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  for (  String s : stateTracker.workers()) {
+    log.info("Replicating new work to " + s);
+    stateTracker.addReplicate(s);
+    stateTracker.enableWorker(s);
+  }
+  stateTracker.workerUpdates().clear();
+}

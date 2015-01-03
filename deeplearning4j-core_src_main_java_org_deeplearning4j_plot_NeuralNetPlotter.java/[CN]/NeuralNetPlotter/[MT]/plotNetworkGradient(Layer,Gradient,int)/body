@@ -1,0 +1,13 @@
+{
+  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientLookupTable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientLookupTable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientLookupTable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
+  plotActivations(network);
+  FilterRenderer render=new FilterRenderer();
+  try {
+    INDArray w=network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
+    INDArray render2=w;
+    render.renderFilters(render2,"currimg.png",(int)Math.sqrt(render2.rows()),(int)Math.sqrt(render2.rows()),patchesPerRow);
+  }
+ catch (  Exception e) {
+    log.error("Unable to plot filter, continuing...",e);
+  }
+}

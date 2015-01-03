@@ -1,5 +1,5 @@
 {
-  int columns=vec.getLayerSize() * vec.getWindow();
+  int columns=vec.lookupTable().layerSize() * vec.getWindow();
   int rows=windows.size();
   INDArray ret=Nd4j.create(rows,columns);
   for (int i=0; i < rows; i++) {

@@ -1,0 +1,4 @@
+{
+  INDArray forward=Activations.softMaxRows().apply(forward(xi,xs));
+  return LossFunctions.score(xs,conf.getLossFunction(),forward,conf.getL2(),conf.isUseRegularization());
+}

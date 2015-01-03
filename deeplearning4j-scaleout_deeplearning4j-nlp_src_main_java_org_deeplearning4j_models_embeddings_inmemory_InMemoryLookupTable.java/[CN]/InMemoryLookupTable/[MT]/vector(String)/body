@@ -1,0 +1,6 @@
+{
+  if (word == null)   return null;
+  int idx=vocab.indexOf(word);
+  if (idx < 0)   idx=vocab.indexOf(Word2Vec.UNK);
+  return syn0.getRow(idx);
+}

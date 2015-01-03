@@ -1,0 +1,7 @@
+{
+  if (stateTracker != null) {
+    stateTracker.finish();
+    stateTracker.shutdown();
+  }
+  return new HazelCastStateTracker();
+}

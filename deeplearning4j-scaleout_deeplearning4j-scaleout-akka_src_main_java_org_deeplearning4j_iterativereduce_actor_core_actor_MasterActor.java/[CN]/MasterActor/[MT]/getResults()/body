@@ -1,8 +1,0 @@
-{
-  try {
-    return (E)stateTracker.getCurrent();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

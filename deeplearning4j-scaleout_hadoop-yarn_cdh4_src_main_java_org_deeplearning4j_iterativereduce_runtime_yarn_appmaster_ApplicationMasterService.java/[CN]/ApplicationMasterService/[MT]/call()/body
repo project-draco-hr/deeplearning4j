@@ -1,0 +1,35 @@
+{
+  Thread.currentThread().setName("ApplicationMasterService Thread");
+  LOG.info("Starting MasterService [NettyServer] on " + masterAddr);
+  masterServer=new NettyServer(new SpecificResponder(IterativeReduceService.class,this),masterAddr);
+  try {
+    workersCompleted.await();
+    int complete=0;
+    int error=0;
+    int unknown=0;
+    for (    WorkerState state : workersState.values()) {
+switch (state) {
+case COMPLETE:
+        complete++;
+      break;
+case ERROR:
+    error++;
+  break;
+default :
+unknown++;
+break;
+}
+}
+LOG.info("All workers have completed. Shutting down master service" + ", workersComplete=" + complete + ", workersError="+ error+ ", workersUnknown="+ unknown);
+return (error == 0 && unknown == 0) ? 0 : 1;
+}
+ catch (InterruptedException ex) {
+LOG.warn("Interrupted while waiting for workers to complete",ex);
+return -1;
+}
+ finally {
+LOG.debug("Shutting down Netty server");
+masterServer.close();
+printMetrics();
+}
+}

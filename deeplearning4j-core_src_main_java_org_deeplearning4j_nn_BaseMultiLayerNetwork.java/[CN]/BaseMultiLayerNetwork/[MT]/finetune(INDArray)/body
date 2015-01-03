@@ -1,6 +1,0 @@
-{
-  this.labels=labels;
-  if (labels != null)   this.labels=labels;
-  optimizer=new MultiLayerNetworkOptimizer(this,defaultConfiguration.getLr());
-  optimizer.optimize(this.labels);
-}

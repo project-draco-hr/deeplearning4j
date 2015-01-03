@@ -1,0 +1,12 @@
+{
+  if (update == null)   return;
+  try {
+    updateSaver().save(id,update);
+    update.setWork(null);
+    update.setResult(null);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  updates.add(id);
+}

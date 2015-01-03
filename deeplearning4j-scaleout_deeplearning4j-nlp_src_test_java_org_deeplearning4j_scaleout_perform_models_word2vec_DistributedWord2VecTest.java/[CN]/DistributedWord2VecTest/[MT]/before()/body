@@ -1,0 +1,15 @@
+{
+  ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
+  File file=resource.getFile().getParentFile();
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
+  new File("cache.ser").delete();
+  cache=new InMemoryLookupCache();
+  TokenizerFactory t=new UimaTokenizerFactory();
+  table=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
+  if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).build();
+  vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).tokenize(t).build();
+  vectorizer.fit();
+  Huffman huffman=new Huffman(cache.vocabWords());
+  huffman.build();
+  init();
+}

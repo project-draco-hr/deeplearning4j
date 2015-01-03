@@ -1,8 +1,6 @@
 {
   InMemoryLookupCache cache=SerializationUtils.readObject(new File("ser"));
-  this.codes=cache.codes;
   this.vocabs=cache.vocabs;
-  this.vectorLength=cache.vectorLength;
   this.wordFrequencies=cache.wordFrequencies;
   this.wordIndex=cache.wordIndex;
   this.tokens=cache.tokens;

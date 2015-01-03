@@ -1,0 +1,8 @@
+{
+  double first=point.getDouble(0), second=point.getDouble(1);
+  if (x - hw > first)   return false;
+  if (x + hw < first)   return false;
+  if (y - hh > second)   return false;
+  if (y + hh < second)   return false;
+  return true;
+}

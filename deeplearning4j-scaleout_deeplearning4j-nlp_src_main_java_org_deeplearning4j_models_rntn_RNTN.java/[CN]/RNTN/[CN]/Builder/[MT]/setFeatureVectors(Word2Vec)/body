@@ -1,3 +1,4 @@
 {
-  return setFeatureVectors(vec.getCache());
+  vocabCache=vec.vocab();
+  return setFeatureVectors(vec.lookupTable());
 }

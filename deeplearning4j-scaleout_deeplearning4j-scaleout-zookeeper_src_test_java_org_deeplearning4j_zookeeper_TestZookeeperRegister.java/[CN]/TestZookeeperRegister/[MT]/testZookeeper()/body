@@ -8,7 +8,7 @@
     }
   }
 ,new Stat()));
-  Conf retrieve=retriever.retrieve();
+  Configuration retrieve=retriever.retrieve();
   assumeNotNull(retrieve);
   keeper.delete(path,-1);
 }

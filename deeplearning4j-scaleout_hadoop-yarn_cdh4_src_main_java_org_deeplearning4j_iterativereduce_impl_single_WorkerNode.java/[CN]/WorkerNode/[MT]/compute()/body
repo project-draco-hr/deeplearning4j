@@ -1,0 +1,7 @@
+{
+  while (recordParser.hasMoreRecords()) {
+    DataSet params=(DataSet)recordParser.nextRecord();
+    neuralNetwork.fit(params.getFeatureMatrix());
+  }
+  return new ParameterVectorUpdateable(neuralNetwork.params());
+}

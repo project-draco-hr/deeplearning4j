@@ -1,0 +1,40 @@
+{
+  List<Thread> launchThreads=new ArrayList<Thread>();
+  Iterator<Container> ic=allocatedContainers.iterator();
+  while (ic.hasNext()) {
+    Container container=ic.next();
+    Iterator<ConfigurationTuple> ict=configTuples.iterator();
+    LOG.debug("Looking to match up split for container on host " + container.getNodeId().getHost());
+    while (ict.hasNext()) {
+      ConfigurationTuple tuple=ict.next();
+      LOG.debug("Looking to match container host " + container.getNodeId().getHost() + ", with split host "+ tuple.getHost());
+      if (tuple.getHost().equals(container.getNodeId().getHost())) {
+        LOG.debug("Found matching container for split");
+        LaunchContainerRunnabble runnable=new LaunchContainerRunnabble(tuple.getWorkerId(),container);
+        Thread launchThread=new Thread(runnable);
+        launchThreads.add(launchThread);
+        launchThread.start();
+        ict.remove();
+        ic.remove();
+        break;
+      }
+    }
+  }
+  if (allocatedContainers.size() > 0) {
+    LOG.debug("Unable to find specific matches for some app splits, launching remainder");
+    ic=allocatedContainers.iterator();
+    Iterator<ConfigurationTuple> ict=configTuples.iterator();
+    while (ic.hasNext() && ict.hasNext()) {
+      Container container=ic.next();
+      ConfigurationTuple tuple=ict.next();
+      LOG.debug("Launching split for host " + tuple.getHost() + " on container host "+ container.getNodeId().getHost());
+      LaunchContainerRunnabble runnable=new LaunchContainerRunnabble(tuple.getWorkerId(),container);
+      Thread launchThread=new Thread(runnable);
+      launchThreads.add(launchThread);
+      launchThread.start();
+      ic.remove();
+      ict.remove();
+    }
+  }
+  return launchThreads;
+}

@@ -1,10 +1,14 @@
 {
-  if (cache) {
-    int[] ret=new int[words.size()];
-    for (int i=0; i < words.size(); i++)     ret[i]=i;
-    return ret;
+  DirectoryReader reader=null;
+  try {
+    readerManager.maybeRefreshBlocking();
+    reader=readerManager.acquire();
   }
-  int[] docIds=new int[reader.maxDoc() + 1];
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  int[] docIds=new int[reader.maxDoc()];
+  if (docIds.length < 1)   throw new IllegalStateException("No documents found");
   int count=0;
   Bits liveDocs=MultiFields.getLiveDocs(reader);
   for (int i=0; i < reader.maxDoc(); i++) {
@@ -16,6 +20,12 @@
       log.info("Reallocating doc ids");
     }
     docIds[count++]=i;
+  }
+  try {
+    reader.close();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
   }
   return docIds;
 }

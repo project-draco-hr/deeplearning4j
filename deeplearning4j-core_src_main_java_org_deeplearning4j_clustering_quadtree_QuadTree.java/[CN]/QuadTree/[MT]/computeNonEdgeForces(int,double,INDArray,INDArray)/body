@@ -1,0 +1,18 @@
+{
+  if (cumSize == 0 || (isLeaf() && size == 1 && index[0] == pointIndex))   return;
+  int ind=pointIndex;
+  buf.assign(data.slice(ind)).subi(centerOfMass);
+  double D=Nd4j.getBlasWrapper().dot(buf,buf);
+  if (isLeaf || max(boundary.getHh(),boundary.getHw()) / Math.sqrt(D) < theta) {
+    double Q=1.0 / (1.0 + D);
+    sumQ.addi(cumSize * Q);
+    double mult=cumSize * Q * Q;
+    negativeForce.addi(buf.mul(mult));
+  }
+ else {
+    northWest.computeNonEdgeForces(pointIndex,theta,negativeForce,sumQ);
+    northEast.computeNonEdgeForces(pointIndex,theta,negativeForce,sumQ);
+    southWest.computeNonEdgeForces(pointIndex,theta,negativeForce,sumQ);
+    southEast.computeNonEdgeForces(pointIndex,theta,negativeForce,sumQ);
+  }
+}

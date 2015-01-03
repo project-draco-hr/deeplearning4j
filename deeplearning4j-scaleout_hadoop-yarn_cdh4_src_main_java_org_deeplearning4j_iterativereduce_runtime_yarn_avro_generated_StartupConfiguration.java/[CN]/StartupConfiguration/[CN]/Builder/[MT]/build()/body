@@ -1,0 +1,13 @@
+{
+  try {
+    StartupConfiguration record=new StartupConfiguration();
+    record.split=fieldSetFlags()[0] ? this.split : (FileSplit)defaultValue(fields()[0]);
+    record.iterations=fieldSetFlags()[1] ? this.iterations : (Integer)defaultValue(fields()[1]);
+    record.batchSize=fieldSetFlags()[2] ? this.batchSize : (Integer)defaultValue(fields()[2]);
+    record.other=fieldSetFlags()[3] ? this.other : (java.util.Map<CharSequence,CharSequence>)defaultValue(fields()[3]);
+    return record;
+  }
+ catch (  Exception e) {
+    throw new org.apache.avro.AvroRuntimeException(e);
+  }
+}

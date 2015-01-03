@@ -1,0 +1,8 @@
+{
+  int feature_size=9285;
+  INDArray in_vector=Nd4j.create(feature_size);
+  INDArray out_vector=Nd4j.create(1);
+  SVMLightRecordFactory recFactory=new SVMLightRecordFactory(feature_size);
+  recFactory.parseFromLine(test_svm_light_positive_label,in_vector,out_vector);
+  assertEquals(1.0,out_vector.getDouble(0),0.0);
+}

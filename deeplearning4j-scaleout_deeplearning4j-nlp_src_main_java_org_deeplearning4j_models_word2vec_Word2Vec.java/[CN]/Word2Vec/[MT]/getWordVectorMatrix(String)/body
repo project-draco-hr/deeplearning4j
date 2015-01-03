@@ -1,5 +1,0 @@
-{
-  int i=this.cache.indexOf(word);
-  if (i < 0)   return cache.vector(UNK);
-  return cache.vector(word);
-}

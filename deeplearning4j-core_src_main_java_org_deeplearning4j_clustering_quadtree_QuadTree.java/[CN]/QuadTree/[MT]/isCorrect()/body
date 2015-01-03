@@ -1,0 +1,8 @@
+{
+  for (int n=0; n < size; n++) {
+    INDArray point=data.slice(index[n]);
+    if (!boundary.containsPoint(point))     return false;
+  }
+  if (!isLeaf())   return northWest.isCorrect() && northEast.isCorrect() && southWest.isCorrect()&& southEast.isCorrect();
+  return true;
+}

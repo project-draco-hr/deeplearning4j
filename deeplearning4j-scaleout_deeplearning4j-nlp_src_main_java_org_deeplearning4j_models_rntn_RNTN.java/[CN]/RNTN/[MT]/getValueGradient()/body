@@ -29,7 +29,7 @@
     int numCols=entry.getValue().columns();
     unaryCD.put(entry.getKey(),Nd4j.create(numRows,numCols));
   }
-  for (  String s : featureVectors.words()) {
+  for (  String s : vocabCache.words()) {
     INDArray vector=featureVectors.vector(s);
     int numRows=vector.rows();
     int numCols=vector.columns();
@@ -67,6 +67,6 @@
   INDArray derivative=Nd4j.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());
   if (derivative.length() != numParameters)   throw new IllegalStateException("Gradient has wrong number of parameters " + derivative.length() + " should have been "+ numParameters);
   if (paramAdaGrad == null)   paramAdaGrad=new AdaGrad(1,derivative.columns());
-  derivative.muli(paramAdaGrad.getLearningRates(derivative));
+  derivative=paramAdaGrad.getGradient(derivative);
   return derivative;
 }

@@ -1,0 +1,9 @@
+{
+  Interval interval=points.get(desc);
+  double d=hPoint.getDouble(desc);
+  if (interval.higher > d)   return null;
+  HyperRect ret=new HyperRect(new ArrayList<>(points));
+  Interval i2=ret.points.get(desc);
+  if (i2.lower > d)   i2.lower=d;
+  return ret;
+}

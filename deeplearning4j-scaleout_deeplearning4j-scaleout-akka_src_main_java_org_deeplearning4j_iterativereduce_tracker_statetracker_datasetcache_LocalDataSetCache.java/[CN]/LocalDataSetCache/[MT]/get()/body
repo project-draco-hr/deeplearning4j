@@ -1,5 +1,0 @@
-{
-  File f=new File(dataSetPath);
-  if (f.exists())   return SerializationUtils.readObject(f);
-  return null;
-}

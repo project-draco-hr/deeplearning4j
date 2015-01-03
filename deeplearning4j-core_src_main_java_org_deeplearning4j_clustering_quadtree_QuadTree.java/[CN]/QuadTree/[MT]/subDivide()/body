@@ -1,0 +1,6 @@
+{
+  northWest=new QuadTree(this,data,new Cell(boundary.getX() - .5 * boundary.getHw(),boundary.getY() - .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
+  northEast=new QuadTree(this,data,new Cell(boundary.getX() + .5 * boundary.getHw(),boundary.getY() - .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
+  southWest=new QuadTree(this,data,new Cell(boundary.getX() - .5 * boundary.getHw(),boundary.getY() + .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
+  southEast=new QuadTree(this,data,new Cell(boundary.getX() + .5 * boundary.getHw(),boundary.getY() + .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
+}

@@ -1,0 +1,11 @@
+{
+  if (args.length < 1)   throw new IllegalArgumentException("Need at least one argument - appId to kill");
+  ApplicationId appId=ConverterUtils.toApplicationId(args[0]);
+  LOG.info("Using Application ID: " + appId.toString());
+  ResourceManagerHandler rmh=new ResourceManagerHandler(new Configuration(),null);
+  ClientRMProtocol crm=rmh.getClientResourceManager();
+  KillApplicationRequest kar=Records.newRecord(KillApplicationRequest.class);
+  kar.setApplicationId(appId);
+  LOG.info("Sending kill request");
+  crm.forceKillApplication(kar);
+}

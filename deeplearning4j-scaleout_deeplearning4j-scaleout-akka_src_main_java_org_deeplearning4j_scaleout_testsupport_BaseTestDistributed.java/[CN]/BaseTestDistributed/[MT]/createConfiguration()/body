@@ -1,0 +1,5 @@
+{
+  Configuration conf=new Configuration();
+  conf.set(WorkerPerformerFactory.WORKER_PERFORMER,workPerformFactoryClassName);
+  return conf;
+}
