@@ -3,14 +3,4 @@
   northEast=new QuadTree(this,data,new Cell(boundary.getX() + .5 * boundary.getHw(),boundary.getY() - .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
   southWest=new QuadTree(this,data,new Cell(boundary.getX() - .5 * boundary.getHw(),boundary.getY() + .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
   southEast=new QuadTree(this,data,new Cell(boundary.getX() + .5 * boundary.getHw(),boundary.getY() + .5 * boundary.getHh(),.5 * boundary.getHw(),.5 * boundary.getHh()));
-  for (int i=0; i < size; i++) {
-    boolean success=false;
-    if (!success)     success=northWest.insert(index[i]);
-    if (!success)     success=northEast.insert(index[i]);
-    if (!success)     success=southWest.insert(index[i]);
-    if (!success)     success=southEast.insert(index[i]);
-    index[i]=-1;
-  }
-  size=0;
-  isLeaf=false;
 }

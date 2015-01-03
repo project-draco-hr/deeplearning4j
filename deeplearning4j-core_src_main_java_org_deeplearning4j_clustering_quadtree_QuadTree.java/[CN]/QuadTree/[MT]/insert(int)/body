@@ -7,6 +7,14 @@
       if (point.getDouble(0) == compPoint.getDouble(0) && point.getDouble(1) == compPoint.getDouble(1))       return false;
     }
   }
+  if (!isLeaf()) {
+    QuadTree index=findIndex(point);
+    index.insert(newIndex);
+    return true;
+  }
+ else   if (index[0] > 0) {
+    return false;
+  }
   cumSize++;
   double mult1=(double)(cumSize - 1) / (double)cumSize;
   double mult2=1.0 / (double)cumSize;
@@ -18,9 +26,10 @@
     return true;
   }
   subDivide();
-  if (northWest.insert(newIndex))   return true;
-  if (northEast.insert(newIndex))   return true;
-  if (southWest.insert(newIndex))   return true;
-  if (southEast.insert(newIndex))   return true;
+  insertIntoOneOf(index[0]);
+  index[0]=-1;
+  insertIntoOneOf(newIndex);
+  size=0;
+  isLeaf=false;
   return false;
 }
