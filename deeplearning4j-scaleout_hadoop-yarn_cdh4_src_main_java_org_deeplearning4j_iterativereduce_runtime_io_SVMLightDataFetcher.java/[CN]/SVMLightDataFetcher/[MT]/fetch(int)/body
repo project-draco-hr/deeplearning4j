@@ -1,0 +1,32 @@
+{
+  boolean result=true;
+  if (false == this.record_reader.hasMoreRecords()) {
+    throw new IllegalStateException("Unable to get more; there are no more images");
+  }
+  List<DataSet> vectorBatch=new ArrayList<>();
+  for (int i=0; i < numExamples; i++, cursor++) {
+    if (false == this.record_reader.hasMoreRecords()) {
+      System.out.println("early kickout of svmLight hdfs data fetcher");
+      break;
+    }
+    try {
+      result=this.record_reader.next(this.tmpTextRecord);
+      if (false == result) {
+        System.err.println("SVMLightDataFetcher > hit no recs ");
+        break;
+      }
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+    String valString=this.tmpTextRecord.toString().trim();
+    if (valString.equals("")) {
+      System.err.println("SVMLightDataFetcher > hit blank line ");
+    }
+ else {
+      Pair<INDArray,INDArray> tmpPair=this.convertMetronomeTextLineToInputPair(valString);
+      vectorBatch.add(new DataSet(tmpPair.getFirst(),tmpPair.getSecond()));
+    }
+  }
+  initializeCurrFromList(vectorBatch);
+}
