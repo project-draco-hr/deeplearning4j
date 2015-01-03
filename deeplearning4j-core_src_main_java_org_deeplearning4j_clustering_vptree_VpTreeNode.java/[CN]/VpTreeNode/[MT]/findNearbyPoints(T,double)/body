@@ -1,0 +1,23 @@
+{
+  if (left == null) {
+    List<T> result=new ArrayList<>();
+    for (    T p : points) {
+      if (point.distance(p) <= maxDistance) {
+        result.add(p);
+      }
+    }
+    return result;
+  }
+  double distanceToLeftCenter=vantagePoint.distance(point);
+  if (distanceToLeftCenter + maxDistance < leftRadius) {
+    return left.findNearbyPoints(point,maxDistance);
+  }
+ else   if (distanceToLeftCenter - maxDistance >= leftRadius) {
+    return right.findNearbyPoints(point,maxDistance);
+  }
+ else {
+    List<T> result=right.findNearbyPoints(point,maxDistance);
+    result.addAll(left.findNearbyPoints(point,maxDistance));
+    return result;
+  }
+}

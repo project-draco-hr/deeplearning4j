@@ -1,0 +1,13 @@
+{
+  double sum=0;
+  for (  double value : values) {
+    sum+=value;
+  }
+  double avg=sum / values.length;
+  double sigmaSq=0;
+  for (  double value : values) {
+    double dev=value - avg;
+    sigmaSq+=dev * dev;
+  }
+  return sigmaSq;
+}
