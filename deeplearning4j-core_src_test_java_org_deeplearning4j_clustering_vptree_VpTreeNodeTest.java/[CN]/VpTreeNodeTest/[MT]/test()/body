@@ -1,9 +1,9 @@
 {
   List<VpTreePoint2D> points=new ArrayList<>();
-  for (int i=0; i < 5000000; ++i) {
+  for (int i=0; i < 5000; ++i) {
     points.add(new VpTreePoint2D(Math.random() * 10,Math.random()));
   }
-  for (int i=0; i < 5000000; ++i) {
+  for (int i=0; i < 5000; ++i) {
     points.add(new VpTreePoint2D(5 + Math.random() * 5,Math.random()));
   }
   long start=System.currentTimeMillis();
