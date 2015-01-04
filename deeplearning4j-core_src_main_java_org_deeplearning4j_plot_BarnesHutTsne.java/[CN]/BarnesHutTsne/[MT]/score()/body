@@ -1,3 +1,22 @@
 {
-  return 0;
+  int QT_NO_DIMS=2;
+  QuadTree tree=new QuadTree(y);
+  INDArray buff=Nd4j.create(QT_NO_DIMS);
+  AtomicDouble sum_Q=new AtomicDouble(0.0);
+  for (int n=0; n < y.rows(); n++)   tree.computeNonEdgeForces(n,theta,buff,sum_Q);
+  double C=.0, Q;
+  for (int n=0; n < y.rows(); n++) {
+    INDArray row1=rows.slice(n);
+    int begin=row1.getInt(0);
+    int end=row1.getInt(1);
+    for (int i=begin; i < end; i++) {
+      buff.assign(y.slice(n));
+      buff.subi(cols.getRow(i));
+      Q=Nd4j.getBlasWrapper().dot(buff,buff);
+      Q=(1.0 / (1.0 + Q)) / sum_Q.doubleValue();
+      double val=vals.getDouble(i,0);
+      C+=val * Math.log((val + Float.MIN_VALUE) / (Q + Float.MAX_VALUE));
+    }
+  }
+  return C;
 }

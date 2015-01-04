@@ -1,13 +1,13 @@
 {
-  INDArray dY=Nd4j.create(n,d);
-  INDArray uY=Nd4j.create(n,d);
-  INDArray gains=Nd4j.ones(n,d);
-  INDArray p;
-  x=Transforms.normalizeZeroMeanAndUnitVariance(x);
   boolean exact=theta == 0.0;
-  if (exact) {
-    p=Nd4j.create(n,n);
-  }
+  if (exact)   y=super.calculate(x,numDimensions,perplexity);
  else {
+    INDArray p=computeGaussianPerplexity(x,perplexity);
+    for (int i=0; i < maxIter; i++) {
+      step(p,i);
+      if (i == switchMomentumIteration)       momentum=finalMomentum;
+      if (i == stopLyingIteration)       p.divi(4);
+      if (iterationListener != null)       iterationListener.iterationDone(i);
+    }
   }
 }
