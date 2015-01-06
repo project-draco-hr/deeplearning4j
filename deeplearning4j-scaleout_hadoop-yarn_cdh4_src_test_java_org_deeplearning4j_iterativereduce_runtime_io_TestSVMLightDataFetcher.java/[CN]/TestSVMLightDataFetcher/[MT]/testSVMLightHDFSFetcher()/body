@@ -6,4 +6,12 @@
   TextRecordParser txt_reader=new TextRecordParser();
   long len=Integer.parseInt(splits[0].toString().split(":")[2].split("\\+")[1]);
   txt_reader.setFile(splits[0].toString().split(":")[1],0,len);
+  SVMLightDataFetcher fetcher=null;
+  try {
+    fetcher=new SVMLightDataFetcher(txt_reader,9300,2);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  fetcher.fetch(20);
 }

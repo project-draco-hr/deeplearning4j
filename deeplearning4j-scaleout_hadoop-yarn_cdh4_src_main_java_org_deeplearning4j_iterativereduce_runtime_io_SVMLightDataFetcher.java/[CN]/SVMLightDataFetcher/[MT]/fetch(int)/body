@@ -24,9 +24,13 @@
       System.err.println("SVMLightDataFetcher > hit blank line ");
     }
  else {
-      Pair<INDArray,INDArray> tmpPair=this.convertMetronomeTextLineToInputPair(valString);
+      Pair<INDArray,INDArray> tmpPair=this.convertTextLineToInputPair(valString);
+      DataSet tmpDS=new DataSet(tmpPair.getFirst(),tmpPair.getSecond());
+      System.out.println("feature columns: " + tmpDS.getFeatures().columns());
+      System.out.println("labels columns: " + tmpDS.getLabels().columns());
       vectorBatch.add(new DataSet(tmpPair.getFirst(),tmpPair.getSecond()));
     }
   }
+  System.out.println("number vectors: " + vectorBatch.size());
   initializeCurrFromList(vectorBatch);
 }

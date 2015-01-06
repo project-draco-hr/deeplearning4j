@@ -1,4 +1,5 @@
 {
+  System.out.println("line: " + line);
   INDArray vec_in=Nd4j.create(this.inputColumns);
   INDArray vec_out=Nd4j.create(1);
   try {

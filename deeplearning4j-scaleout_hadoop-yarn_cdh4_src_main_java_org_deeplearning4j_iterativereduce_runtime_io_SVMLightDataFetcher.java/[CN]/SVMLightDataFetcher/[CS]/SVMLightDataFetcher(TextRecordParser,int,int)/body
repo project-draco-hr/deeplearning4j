@@ -1,6 +1,7 @@
 {
   this.record_reader=hdfsLineParser;
   this.cursor=1;
+  this.numOutcomes=numOutcomes;
   this.inputColumns=featureCount;
   this.vector_factory=new SVMLightRecordFactory(this.inputColumns);
 }
