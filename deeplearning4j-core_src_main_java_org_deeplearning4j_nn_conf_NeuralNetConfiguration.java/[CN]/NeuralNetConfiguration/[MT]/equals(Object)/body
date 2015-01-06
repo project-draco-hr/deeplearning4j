@@ -14,7 +14,6 @@
   if (nIn != that.nIn)   return false;
   if (nOut != that.nOut)   return false;
   if (numFeatureMaps != that.numFeatureMaps)   return false;
-  if (numInFeatureMaps != that.numInFeatureMaps)   return false;
   if (numIterations != that.numIterations)   return false;
   if (renderWeightsEveryNumEpochs != that.renderWeightsEveryNumEpochs)   return false;
   if (resetAdaGradIterations != that.resetAdaGradIterations)   return false;

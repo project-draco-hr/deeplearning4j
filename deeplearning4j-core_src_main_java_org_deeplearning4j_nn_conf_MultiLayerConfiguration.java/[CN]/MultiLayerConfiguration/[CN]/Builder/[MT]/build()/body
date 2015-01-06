@@ -7,5 +7,6 @@
   conf.pretrain=pretrain;
   conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
+  conf.processors=preProcessors;
   return conf;
 }

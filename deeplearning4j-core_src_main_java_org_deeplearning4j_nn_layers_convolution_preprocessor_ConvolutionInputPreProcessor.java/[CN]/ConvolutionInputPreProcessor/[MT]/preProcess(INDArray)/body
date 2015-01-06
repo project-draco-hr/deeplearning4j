@@ -1,0 +1,4 @@
+{
+  if (output.columns() != rows * cols)   throw new IllegalArgumentException("Output columns must be equal to rows " + rows + " x columns "+ cols);
+  return output.reshape(output.rows(),1,rows,cols);
+}

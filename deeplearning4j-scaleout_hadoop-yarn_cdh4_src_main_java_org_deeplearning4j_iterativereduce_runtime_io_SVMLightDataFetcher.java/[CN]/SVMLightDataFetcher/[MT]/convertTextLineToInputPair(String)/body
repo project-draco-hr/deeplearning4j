@@ -8,5 +8,5 @@
  catch (  Exception e) {
     e.printStackTrace();
   }
-  return new Pair<INDArray,INDArray>(vec_in,vec_out);
+  return new Pair<>(vec_in,vec_out);
 }

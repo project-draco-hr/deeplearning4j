@@ -1,5 +1,4 @@
 {
-  this.labels=labels;
   if (labels != null)   this.labels=labels;
   if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
     feedForward();

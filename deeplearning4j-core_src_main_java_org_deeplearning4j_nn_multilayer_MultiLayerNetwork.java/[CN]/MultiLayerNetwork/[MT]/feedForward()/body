@@ -1,10 +1,12 @@
 {
   INDArray currInput=this.input;
-  if (this.input.columns() != defaultConfiguration.getnIn())   throw new IllegalStateException("Illegal input length");
+  if (this.input.isMatrix() && this.input.columns() != defaultConfiguration.getnIn())   throw new IllegalStateException("Illegal input length");
   List<INDArray> activations=new ArrayList<>();
   activations.add(currInput);
   for (int i=0; i < layers.length; i++) {
     currInput=activationFromPrevLayer(i,currInput);
+    OutputPreProcessor preProcessor=getLayerWiseConfigurations().getPreProcessor(i);
+    if (preProcessor != null)     currInput=preProcessor.preProcess(currInput);
     applyDropConnectIfNecessary(currInput);
     activations.add(currInput);
   }

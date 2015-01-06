@@ -1,4 +1,5 @@
 {
+  model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
   setupSearchState(pair);
   score=pair.getSecond();

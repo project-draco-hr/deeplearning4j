@@ -1,6 +1,0 @@
-{
-  if (filterSize == null)   return this;
-  if (filterSize == null || filterSize.length != 2)   throw new IllegalArgumentException("Invalid filter size must be length 2");
-  this.filterSize=filterSize;
-  return this;
-}

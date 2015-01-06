@@ -1,4 +1,7 @@
 {
+  if (conf.getFilterSize().length < 4)   throw new IllegalArgumentException("Filter size must be == 4");
   params.put(CONVOLUTION_BIAS,createBias(conf));
   params.put(CONVOLUTION_WEIGHTS,createWeightMatrix(conf));
+  conf.getGradientList().add(CONVOLUTION_WEIGHTS);
+  conf.getGradientList().add(CONVOLUTION_BIAS);
 }

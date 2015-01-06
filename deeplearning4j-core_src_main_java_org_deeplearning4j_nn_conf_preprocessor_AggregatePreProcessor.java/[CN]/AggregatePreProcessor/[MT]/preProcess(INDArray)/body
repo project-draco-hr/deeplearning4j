@@ -1,0 +1,4 @@
+{
+  for (  OutputPreProcessor outputPreProcessor : preProcessor)   output=outputPreProcessor.preProcess(output);
+  return output;
+}

@@ -1,6 +1,3 @@
 {
   setMask(Nd4j.ones(1,pack().length()));
-  List<Pair<INDArray,INDArray>> mask=unPack(getMask());
-  for (int i=0; i < mask.size(); i++)   mask.get(i).setSecond(Nd4j.zeros(mask.get(i).getSecond().rows(),mask.get(i).getSecond().columns()));
-  setMask(pack(mask));
 }

@@ -1,5 +1,6 @@
 {
   this.layerFactory=neuralNetConfiguration.layerFactory;
+  this.batchSize=neuralNetConfiguration.batchSize;
   this.sparsity=neuralNetConfiguration.sparsity;
   this.useAdaGrad=neuralNetConfiguration.useAdaGrad;
   this.lr=neuralNetConfiguration.lr;

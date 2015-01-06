@@ -39,6 +39,5 @@
   result=31 * result + numFeatureMaps;
   result=31 * result + (featureMapSize != null ? Arrays.hashCode(featureMapSize) : 0);
   result=31 * result + (stride != null ? Arrays.hashCode(stride) : 0);
-  result=31 * result + numInFeatureMaps;
   return result;
 }

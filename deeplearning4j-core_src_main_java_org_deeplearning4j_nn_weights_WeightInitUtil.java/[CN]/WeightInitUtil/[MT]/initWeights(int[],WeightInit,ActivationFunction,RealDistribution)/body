@@ -1,0 +1,29 @@
+{
+  INDArray ret=null;
+switch (initScheme) {
+case NORMALIZED:
+    ret=Nd4j.rand(shape);
+  return ret.subi(0.5).divi(shape[0]);
+case UNIFORM:
+double a=1 / shape[0];
+return Nd4j.rand(shape,-a,a,new MersenneTwister(123));
+case VI:
+ret=Nd4j.rand(shape);
+int len=0;
+for (int i=0; i < shape.length; i++) len+=shape[i];
+double r=Math.sqrt(6) / Math.sqrt(len + 1);
+ret.muli(2).muli(r).subi(r);
+return ret;
+case DISTRIBUTION:
+ret=Nd4j.rand(shape);
+for (int i=0; i < ret.slices(); i++) {
+ret.putSlice(i,Nd4j.create(dist.sample(ret.columns())));
+}
+return ret;
+case SIZE:
+return uniformBasedOnInAndOut(shape,shape[0],shape[1]);
+case ZERO:
+return Nd4j.create(shape);
+}
+throw new IllegalStateException("Illegal weight init value");
+}
