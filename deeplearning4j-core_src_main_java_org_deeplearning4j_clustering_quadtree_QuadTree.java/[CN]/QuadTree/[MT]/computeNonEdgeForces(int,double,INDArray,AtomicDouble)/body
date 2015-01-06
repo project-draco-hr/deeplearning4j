@@ -5,7 +5,7 @@
   double D=Nd4j.getBlasWrapper().dot(buf,buf);
   if (isLeaf || max(boundary.getHh(),boundary.getHw()) / Math.sqrt(D) < theta) {
     double Q=1.0 / (1.0 + D);
-    sumQ.addi(cumSize * Q);
+    sumQ.addAndGet(cumSize * Q);
     double mult=cumSize * Q * Q;
     negativeForce.addi(buf.mul(mult));
   }

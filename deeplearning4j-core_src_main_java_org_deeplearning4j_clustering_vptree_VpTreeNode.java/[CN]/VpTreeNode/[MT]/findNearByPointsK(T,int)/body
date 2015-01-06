@@ -1,0 +1,4 @@
+{
+  if (k <= 0)   throw new IllegalArgumentException("Illegal k, must be >= 0");
+  return findNearbyPoints(new ArrayList<T>(),point,k);
+}

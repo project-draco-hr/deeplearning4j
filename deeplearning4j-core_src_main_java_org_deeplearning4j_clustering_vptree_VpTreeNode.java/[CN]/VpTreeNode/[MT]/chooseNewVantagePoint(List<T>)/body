@@ -1,0 +1,32 @@
+{
+  List<T> candidates=new ArrayList<T>(VANTAGE_POINT_CANDIDATES);
+  List<T> testPoints=new ArrayList<T>(TEST_POINT_COUNT);
+  for (int i=0; i < VANTAGE_POINT_CANDIDATES; ++i) {
+    int basePointIndex=i + (int)(Math.random() * (points.size() - i));
+    T candidate=points.get(basePointIndex);
+    points.set(basePointIndex,points.get(i));
+    points.set(i,candidate);
+    candidates.add(candidate);
+  }
+  for (int i=VANTAGE_POINT_CANDIDATES; i < VANTAGE_POINT_CANDIDATES + TEST_POINT_COUNT; ++i) {
+    int testPointIndex=i + (int)(Math.random() * (points.size() - i));
+    T testPoint=points.get(testPointIndex);
+    points.set(testPointIndex,points.get(i));
+    points.set(i,testPoint);
+    testPoints.add(testPoint);
+  }
+  T bestBasePoint=points.get(0);
+  double bestBasePointSigma=0;
+  for (  T basePoint : candidates) {
+    double distances[]=new double[TEST_POINT_COUNT];
+    for (int i=0; i < TEST_POINT_COUNT; ++i) {
+      distances[i]=basePoint.distance(testPoints.get(i));
+    }
+    double sigma=sigmaSquare(distances);
+    if (sigma > bestBasePointSigma) {
+      bestBasePointSigma=sigma;
+      bestBasePoint=basePoint;
+    }
+  }
+  return bestBasePoint;
+}

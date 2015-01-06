@@ -1,0 +1,19 @@
+{
+  List<VpTreePoint2D> points=new ArrayList<>();
+  for (int i=0; i < 5000; ++i) {
+    points.add(new VpTreePoint2D(Math.random() * 10,Math.random()));
+  }
+  for (int i=0; i < 5000; ++i) {
+    points.add(new VpTreePoint2D(5 + Math.random() * 5,Math.random()));
+  }
+  long start=System.currentTimeMillis();
+  System.out.println("Building VP-tree...");
+  VpTreeNode<VpTreePoint2D> node=VpTreeNode.buildVpTree(points);
+  System.out.println("VP-tree completed, took " + (System.currentTimeMillis() - start) / 1000. + " s");
+  start=System.nanoTime();
+  List<VpTreePoint2D> nearbyPoints=node.findNearbyPoints(new VpTreePoint2D(0.1,0.1),0.001);
+  System.out.println("VP-tree search completed, took " + (System.nanoTime() - start) + " ns");
+  for (  VpTreePoint2D p : nearbyPoints) {
+    System.out.println(p);
+  }
+}

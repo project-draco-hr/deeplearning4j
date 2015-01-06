@@ -1,0 +1,14 @@
+{
+  final List<VpTreePointINDArray> ret=new ArrayList<>();
+  final AtomicInteger count=new AtomicInteger(0);
+  matrix.iterateOverAllRows(new SliceOp(){
+    @Override public void operate(    DimensionSlice nd){
+    }
+    @Override public void operate(    INDArray nd){
+      ret.add(new VpTreePointINDArray(nd,count.get()));
+      count.incrementAndGet();
+    }
+  }
+);
+  return ret;
+}

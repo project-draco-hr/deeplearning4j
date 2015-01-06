@@ -1,20 +1,27 @@
 {
-  int n=d.rows();
-  final INDArray p=zeros(n,n);
-  final INDArray beta=ones(n,1);
+  int N=d.rows();
+  final int k=(int)(3 * u);
+  rows=zeros(N + 1);
+  cols=zeros(N,k);
+  vals=zeros(N,k);
+  for (int n=1; n < N; n++)   rows.putScalar(n,rows.getDouble(n - 1) + k);
+  final INDArray beta=ones(N,1);
   final double logU=Math.log(u);
-  log.info("Calculating probabilities of data similarities..");
+  final List<VpTreePointINDArray> list=VpTreePointINDArray.dataPoints(d);
+  final VpTreeNode<VpTreePointINDArray> tree=VpTreeNode.buildVpTree(list);
+  log.info("Calculating probabilities of data similarities...");
   ExecutorService service=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-  for (int i=0; i < n; i++) {
+  for (int i=0; i < N; i++) {
     if (i % 500 == 0)     log.info("Handled " + i + " records");
     final int j=i;
     service.submit(new Runnable(){
       @Override public void run(){
         double betaMin=Float.NEGATIVE_INFINITY;
         double betaMax=Float.POSITIVE_INFINITY;
-        NDArrayIndex[] range=new NDArrayIndex[]{NDArrayIndex.concat(NDArrayIndex.interval(0,j),NDArrayIndex.interval(j + 1,d.columns()))};
-        INDArray row=d.slice(j).get(range);
-        Pair<INDArray,INDArray> pair=hBeta(row,beta.getDouble(j));
+        Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(j),k + 1);
+        INDArray row=d.slice(j);
+        Pair<INDArray,INDArray> pair=hBeta(row,toNDArray(c),beta.getDouble(j));
+        INDArray currP=pair.getSecond();
         INDArray hDiff=pair.getFirst().sub(logU);
         int tries=0;
         while (BooleanIndexing.and(abs(hDiff),Conditions.greaterThan(tolerance)) && tries < 50) {
@@ -28,11 +35,17 @@
  else             beta.putScalar(j,(beta.getDouble(j) + betaMin) / 2.0);
             betaMax=beta.getDouble(j);
           }
-          pair=hBeta(row,beta.getDouble(j));
+          pair=hBeta(row,toNDArray(c),beta.getDouble(j));
           hDiff=pair.getFirst().subi(logU);
           tries++;
         }
-        p.slice(j).put(range,pair.getSecond());
+        INDArray currPAssign=currP.div(currP.sum(Integer.MAX_VALUE));
+        INDArray indices=toIndex(c);
+        for (int i=0; i < k; i++) {
+          cols.putScalar(new int[]{rows.getInt(n),i},indices.getDouble(i + 1));
+          vals.putScalar(new int[]{rows.getInt(n),i},currPAssign.getDouble(i));
+        }
+        cols.slice(j).assign(toIndex(c));
       }
     }
 );
@@ -44,13 +57,5 @@
  catch (  InterruptedException e) {
     Thread.currentThread().interrupt();
   }
-  d.data().flush();
-  log.info("Mean value of sigma " + sqrt(beta.rdiv(1)).mean(Integer.MAX_VALUE));
-  BooleanIndexing.applyWhere(p,Conditions.isNan(),new Value(realMin));
-  INDArray permute=p.transpose();
-  INDArray pOut=p.add(permute);
-  BooleanIndexing.applyWhere(pOut,Conditions.isNan(),new Value(realMin));
-  pOut.divi(pOut.sum(Integer.MAX_VALUE));
-  BooleanIndexing.applyWhere(pOut,Conditions.lessThan(1e-12),new Value(1e-12));
-  return pOut;
+  return vals;
 }
