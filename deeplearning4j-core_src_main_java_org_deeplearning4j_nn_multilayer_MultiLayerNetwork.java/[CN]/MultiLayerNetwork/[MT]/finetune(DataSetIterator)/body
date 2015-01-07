@@ -7,7 +7,10 @@
     setLabels(data.getLabels());
     if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
       feedForward();
-      getOutputLayer().fit(iter);
+      if (getOutputLayer() instanceof OutputLayer) {
+        OutputLayer o=(OutputLayer)getOutputLayer();
+        o.fit(iter);
+      }
     }
  else {
       StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().conf().getListeners(),this);
