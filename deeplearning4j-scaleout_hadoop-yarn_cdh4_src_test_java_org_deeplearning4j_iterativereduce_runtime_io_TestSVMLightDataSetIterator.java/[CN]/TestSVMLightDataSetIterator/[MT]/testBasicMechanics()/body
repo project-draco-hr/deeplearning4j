@@ -1,0 +1,17 @@
+{
+  JobConf job=new JobConf(defaultConf);
+  Path workDir=new Path(svmLight_test_filename);
+  InputSplit[] splits=generateDebugSplits(workDir,job);
+  System.out.println("> splits: " + splits[0].toString());
+  TextRecordParser txt_reader=new TextRecordParser();
+  long len=Integer.parseInt(splits[0].toString().split(":")[2].split("\\+")[1]);
+  txt_reader.setFile(splits[0].toString().split(":")[1],0,len);
+  BaseDatasetIterator iterator=new SVMLightHDFSDataSetIterator(20,1,txt_reader,9300,2);
+  assertEquals(true,iterator.hasNext());
+  DataSet ds=iterator.next();
+  assertEquals(1.0,ds.getLabels().getRow(0).getDouble(0),0.0);
+  assertEquals(0.0,ds.getLabels().getRow(0).getDouble(1),0.0);
+  assertEquals(0.0,ds.getLabels().getRow(1).getDouble(0),0.0);
+  assertEquals(1.0,ds.getLabels().getRow(1).getDouble(1),0.0);
+  assertEquals(false,iterator.hasNext());
+}

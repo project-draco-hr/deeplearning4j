@@ -25,12 +25,8 @@
     }
  else {
       Pair<INDArray,INDArray> tmpPair=this.convertTextLineToInputPair(valString);
-      DataSet tmpDS=new DataSet(tmpPair.getFirst(),tmpPair.getSecond());
-      System.out.println("feature columns: " + tmpDS.getFeatures().columns());
-      System.out.println("labels columns: " + tmpDS.getLabels().columns());
       vectorBatch.add(new DataSet(tmpPair.getFirst(),FeatureUtil.toOutcomeVector(tmpPair.getSecond().getInt(0),numOutcomes)));
     }
   }
-  System.out.println("number vectors: " + vectorBatch.size());
   initializeCurrFromList(vectorBatch);
 }

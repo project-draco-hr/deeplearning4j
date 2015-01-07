@@ -14,4 +14,9 @@
     e.printStackTrace();
   }
   fetcher.fetch(20);
+  DataSet ds=fetcher.next();
+  INDArray features=ds.getFeatures();
+  INDArray labels=ds.getLabels();
+  assertEquals(9300,features.columns());
+  assertEquals(2,labels.columns());
 }
