@@ -1,4 +1,4 @@
 {
-  INDArray out=transform(h);
-  return new Pair<>(out,out);
+  INDArray ret=decode(h);
+  return new Pair<>(ret,ret);
 }

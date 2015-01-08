@@ -1,3 +1,4 @@
 {
-  return getReconstructedInput(x);
+  INDArray y=encode(x);
+  return decode(y);
 }

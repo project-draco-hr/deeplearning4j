@@ -1,0 +1,14 @@
+{
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
+  INDArray vBias=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
+  if (conf.isConcatBiases()) {
+    INDArray preAct=y.mmul(W.transpose());
+    preAct=Nd4j.hstack(preAct,Nd4j.ones(preAct.rows(),1));
+    return conf.getActivationFunction().apply(preAct);
+  }
+ else {
+    INDArray preAct=y.mmul(W.transpose());
+    preAct.addiRowVector(vBias);
+    return conf.getActivationFunction().apply(preAct);
+  }
+}

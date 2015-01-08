@@ -1,0 +1,3 @@
+{
+  return conf.getActivationFunction().apply(data.mmul(params.get(RecursiveParamInitializer.W)).addiRowVector(params.get(RecursiveParamInitializer.BIAS)));
+}

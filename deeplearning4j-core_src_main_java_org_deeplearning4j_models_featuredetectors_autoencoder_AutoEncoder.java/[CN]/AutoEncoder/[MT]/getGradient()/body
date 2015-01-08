@@ -1,11 +1,14 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
-  INDArray vBias=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
-  INDArray out=transform(input);
-  INDArray diff=input.sub(out);
-  INDArray wGradient=diff.transpose().mmul(W);
-  INDArray hBiasGradient=wGradient.sum(1);
-  INDArray vBiasGradient=Nd4j.zeros(vBias.rows(),vBias.columns());
-  Gradient ret=createGradient(wGradient,vBiasGradient,hBiasGradient);
-  return ret;
+  double corruptionLevel=conf.getCorruptionLevel();
+  INDArray corruptedX=corruptionLevel > 0 ? getCorruptedInput(input,corruptionLevel) : input;
+  INDArray y=encode(corruptedX);
+  INDArray z=decode(y);
+  INDArray visibleLoss=input.sub(z);
+  INDArray hiddenLoss=conf.getSparsity() == 0 ? visibleLoss.mmul(W).muli(y).muli(y.rsub(1)) : visibleLoss.mmul(W).muli(y).muli(y.addi(-conf.getSparsity()));
+  INDArray wGradient=corruptedX.transpose().mmul(hiddenLoss).addi(visibleLoss.transpose().mmul(y));
+  INDArray hBiasGradient=hiddenLoss.mean(0);
+  INDArray vBiasGradient=visibleLoss.mean(0);
+  Gradient gradient=createGradient(wGradient,vBiasGradient,hBiasGradient);
+  return gradient;
 }
