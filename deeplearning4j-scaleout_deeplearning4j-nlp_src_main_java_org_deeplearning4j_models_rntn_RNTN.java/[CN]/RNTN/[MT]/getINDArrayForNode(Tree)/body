@@ -10,7 +10,7 @@
     return binaryINd4j.get(leftBasic,rightBasic);
   }
  else   if (node.children().size() == 1) {
-    throw new AssertionError("No unary applyTransformToOrigin matrices, only unary classification");
+    throw new AssertionError("No unary transform matrices, only unary classification");
   }
  else {
     throw new AssertionError("Unexpected tree children size of " + node.children().size());

@@ -1,0 +1,3 @@
+{
+  return input.mmul(params.get(RecursiveParamInitializer.U).addiRowVector(params.get(RecursiveParamInitializer.C)));
+}
