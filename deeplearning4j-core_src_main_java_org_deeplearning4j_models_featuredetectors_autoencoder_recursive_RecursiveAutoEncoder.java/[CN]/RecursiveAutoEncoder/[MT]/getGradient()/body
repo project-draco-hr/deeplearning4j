@@ -1,24 +1,31 @@
 {
-  Gradient gradient=new DefaultGradient();
-  INDArray currInput=null;
-  INDArray visibleLoss=null, hiddenLoss=null, cLoss=null, bLoss=null;
+  currScore=0.0;
   for (int i=0; i < input.rows(); i++) {
     INDArray combined=currInput == null ? Nd4j.concat(0,input.slice(i),input.slice(i + 1)) : Nd4j.concat(0,input.slice(i),currInput);
-    if (i == 0)     i++;
+    if (i == 0) {
+      i++;
+    }
+    currInput=combined;
+    allInput=combined;
     INDArray encoded=transform(combined);
-    currInput=decode(encoded);
-    INDArray currVisibleLoss=currInput.sub(combined);
-    if (visibleLoss == null)     visibleLoss=currVisibleLoss;
- else     visibleLoss.addi(currVisibleLoss);
-    INDArray currHiddenLoss=visibleLoss.mmul(getParam(RecursiveParamInitializer.W)).muli(encoded).muli(encoded.rsub(1));
-    if (hiddenLoss == null)     hiddenLoss=currHiddenLoss;
- else     hiddenLoss.addi(currHiddenLoss);
-    INDArray currCLoss=currVisibleLoss.mean(0);
-    INDArray currBLoss=currHiddenLoss.mean(0);
+    y=decode(encoded);
+    INDArray currVisibleLoss=currInput.sub(y);
+    INDArray currHiddenLoss=currVisibleLoss.mmul(getParam(RecursiveParamInitializer.W)).muli(encoded).muli(encoded.rsub(1));
+    INDArray hiddenGradient=y.transpose().mmul(currHiddenLoss);
+    INDArray visibleGradient=encoded.transpose().mmul(currVisibleLoss);
+    if (visibleLoss == null)     visibleLoss=visibleGradient;
+ else     visibleLoss.addi(visibleGradient);
+    if (hiddenLoss == null)     hiddenLoss=hiddenGradient;
+ else     hiddenLoss.addi(hiddenGradient);
+    INDArray currCLoss=currVisibleLoss.isMatrix() ? currVisibleLoss.mean(0) : currVisibleLoss;
+    INDArray currBLoss=currHiddenLoss.isMatrix() ? currHiddenLoss.mean(0) : currHiddenLoss;
     if (cLoss == null)     cLoss=currCLoss;
  else     cLoss.addi(currCLoss);
     if (bLoss == null)     bLoss=currBLoss;
  else     bLoss.addi(currBLoss);
+    currInput=encoded;
+    currScore+=scoreSnapShot();
   }
+  Gradient gradient=createGradient(hiddenLoss,visibleLoss,cLoss,bLoss);
   return gradient;
 }
