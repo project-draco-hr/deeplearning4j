@@ -1,6 +1,13 @@
 {
   if (!new File(rootMnist).exists())   new MnistFetcher().downloadAndUntar();
-  man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  try {
+    man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  }
+ catch (  Exception e) {
+    FileUtils.deleteDirectory(new File(rootMnist));
+    new MnistFetcher().downloadAndUntar();
+    man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+  }
   numOutcomes=10;
   this.binarize=binarize;
   totalExamples=NUM_EXAMPLES;
