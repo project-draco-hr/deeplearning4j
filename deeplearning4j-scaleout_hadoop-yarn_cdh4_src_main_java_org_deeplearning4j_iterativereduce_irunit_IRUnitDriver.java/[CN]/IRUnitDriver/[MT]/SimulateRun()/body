@@ -1,0 +1,39 @@
+{
+  ArrayList<Updateable> master_results=new ArrayList<Updateable>();
+  ArrayList<Updateable> worker_results=new ArrayList<Updateable>();
+  long ts_start=System.currentTimeMillis();
+  int iterations=Integer.parseInt(props.getProperty("app.iteration.count"));
+  System.out.println("Starting Epochs (" + iterations + ")...");
+  for (int x=0; x < iterations; x++) {
+    for (int worker_id=0; worker_id < workers.size(); worker_id++) {
+      Updateable result=workers.get(worker_id).compute();
+      java.nio.ByteBuffer bb=result.toBytes();
+      result.fromBytes(bb);
+      worker_results.add(result);
+    }
+    Updateable master_result=this.master.compute(worker_results,master_results);
+    for (int worker_id=0; worker_id < workers.size(); worker_id++) {
+      workers.get(worker_id).update(master_result);
+    }
+  }
+  System.out.println("Complete " + iterations + " Iterations Per Worker.");
+  if (null != this.props.getProperty("app.output.path")) {
+    String output_path=this.props.getProperty("app.output.path");
+    System.out.println("Writing the output to: " + output_path);
+    try {
+      Path out=new Path(output_path);
+      FileSystem fs=out.getFileSystem(defaultConf);
+      FSDataOutputStream fos;
+      fos=fs.create(out);
+      master.complete(fos);
+      fos.flush();
+      fos.close();
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
+ else {
+    System.out.println("Not Firing Master::Complete() function due to no output path in conf");
+  }
+}
