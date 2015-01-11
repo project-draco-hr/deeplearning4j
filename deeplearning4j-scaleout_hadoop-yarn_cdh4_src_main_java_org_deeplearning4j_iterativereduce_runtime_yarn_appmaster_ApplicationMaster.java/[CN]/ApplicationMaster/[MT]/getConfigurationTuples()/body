@@ -20,12 +20,12 @@
       ConfigurationTuple tuple=new ConfigurationTuple(split.getLocations()[0],wid,config);
       configTuples.add(tuple);
       workerId++;
-      System.out.println("IR_AM_worker: " + wid + " added split: "+ convertedToMetronomeSplit.toString());
+      LOG.info("IR_AM_worker: " + wid + " added split: "+ convertedToMetronomeSplit.toString());
     }
  else {
-      System.out.println("IR_AM: Culled out 0 length Split: " + convertedToMetronomeSplit.toString());
+      LOG.info("IR_AM: Culled out 0 length Split: " + convertedToMetronomeSplit.toString());
     }
   }
-  System.out.println("Total Splits/Workers: " + configTuples.size());
+  LOG.info("Total Splits/Workers: " + configTuples.size());
   return configTuples;
 }

@@ -13,7 +13,7 @@
   iterationCount=Integer.parseInt(props.getProperty(ConfigFields.APP_ITERATION_COUNT,"1"));
   String inputFormatClassString=props.getProperty(ConfigFields.INPUT_FORMAT_CLASS,ConfigFields.INPUT_FORMAT_CLASS_DEFAULT);
   LOG.debug("Using Input Format: " + inputFormatClassString);
-  System.out.println("IR:AppMaster > Using Input Format: " + inputFormatClassString);
+  LOG.info("IR:AppMaster > Using Input Format: " + inputFormatClassString);
   Class<?> if_class=null;
   try {
     if_class=Class.forName(inputFormatClassString);

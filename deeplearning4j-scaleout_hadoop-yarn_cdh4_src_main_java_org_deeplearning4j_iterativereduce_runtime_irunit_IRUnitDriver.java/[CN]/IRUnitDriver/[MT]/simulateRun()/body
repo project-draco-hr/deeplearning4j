@@ -1,10 +1,10 @@
 {
-  ArrayList<Updateable> master_results=new ArrayList<Updateable>();
-  ArrayList<Updateable> worker_results=new ArrayList<Updateable>();
+  List<Updateable> master_results=new ArrayList<>();
+  List<Updateable> worker_results=new ArrayList<>();
   long ts_start=System.currentTimeMillis();
-  System.out.println("start-ms:" + ts_start);
+  log.info("start-ms:" + ts_start);
   int iterations=Integer.parseInt(props.getProperty("app.iteration.count"));
-  System.out.println("Starting Iterations...");
+  log.info("Starting Iterations...");
   for (int x=0; x < iterations; x++) {
     for (int worker_id=0; worker_id < workers.size(); worker_id++) {
       Updateable result=workers.get(worker_id).compute();

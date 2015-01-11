@@ -19,8 +19,8 @@
   }
   Map<WorkerId,StartupConfiguration> startupConf=getMasterStartupConfiguration(configTuples);
   List<ResourceRequest> requestedContainers=getRequestedContainersList(configTuples,rmHandler);
-  List<ContainerId> releasedContainers=new ArrayList<ContainerId>();
-  List<Container> allocatedContainers=new ArrayList<Container>();
+  List<ContainerId> releasedContainers=new ArrayList<>();
+  List<Container> allocatedContainers=new ArrayList<>();
   try {
     int needed=configTuples.size();
     int got=0;
@@ -45,7 +45,7 @@
   }
   final int numContainers=configTuples.size();
   if (allocatedContainers.size() < numContainers) {
-    LOG.info("Unable to get requried number of containers, will not continue" + ", needed=" + numContainers + ", allocated="+ allocatedContainers.size());
+    LOG.info("Unable to get required number of containers, will not continue" + ", needed=" + numContainers + ", allocated="+ allocatedContainers.size());
     requestedContainers.clear();
     for (    Container c : allocatedContainers) {
       releasedContainers.add(c.getId());
@@ -145,15 +145,15 @@
   ReturnCode rc=(numFailedContainers.get() == 0) ? ReturnCode.OK : ReturnCode.CONTAINER_ERROR;
   try {
     if (numFailedContainers.get() == 0) {
-      rmHandler.finishApplication("Completed succesfully",FinalApplicationStatus.SUCCEEDED);
+      rmHandler.finishApplication("Completed successfully",FinalApplicationStatus.SUCCEEDED);
     }
  else {
-      String diag="Completed with " + numFailedContainers.get() + " failed cotainers";
+      String diag="Completed with " + numFailedContainers.get() + " failed containers";
       rmHandler.finishApplication(diag,FinalApplicationStatus.FAILED);
     }
   }
  catch (  YarnRemoteException ex) {
-    LOG.warn("Encounterd an error while trying to send final status to resource manager",ex);
+    LOG.warn("Encountered an error while trying to send final status to resource manager",ex);
   }
   return rc.getCode();
 }

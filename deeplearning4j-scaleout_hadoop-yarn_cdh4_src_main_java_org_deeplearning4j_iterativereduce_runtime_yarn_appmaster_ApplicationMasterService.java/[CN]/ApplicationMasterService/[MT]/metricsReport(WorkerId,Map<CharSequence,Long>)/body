@@ -1,4 +1,4 @@
 {
-  if (workerMetrics == null)   workerMetrics=new HashMap<WorkerId,Map<CharSequence,Long>>();
+  if (workerMetrics == null)   workerMetrics=new HashMap<>();
   workerMetrics.put(workerId,metrics);
 }

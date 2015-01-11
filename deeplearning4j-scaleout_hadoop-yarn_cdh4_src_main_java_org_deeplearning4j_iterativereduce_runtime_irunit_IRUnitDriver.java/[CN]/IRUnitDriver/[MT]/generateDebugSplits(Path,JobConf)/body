@@ -1,6 +1,6 @@
 {
   long block_size=localFs.getDefaultBlockSize();
-  System.out.println("default block size: " + (block_size / 1024 / 1024) + "MB");
+  log.info("default block size: " + (block_size / 1024 / 1024) + "MB");
   FileInputFormat.setInputPaths(job,input_path);
   TextInputFormat format=new TextInputFormat();
   format.configure(job);
@@ -10,7 +10,7 @@
     splits=format.getSplits(job,numSplits);
   }
  catch (  IOException e) {
-    e.printStackTrace();
+    log.error("Error with splits",e);
   }
   return splits;
 }

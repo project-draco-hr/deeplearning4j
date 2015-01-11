@@ -6,9 +6,9 @@
     fis.close();
   }
  catch (  FileNotFoundException ex) {
-    System.out.println(ex);
+    log.error("Error with file",ex);
   }
 catch (  IOException ex) {
-    System.out.println(ex);
+    log.error("Error with file",ex);
   }
 }
