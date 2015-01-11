@@ -1,5 +1,7 @@
 {
   log.info("Worker-Conf: " + conf.get(MULTI_LAYER_CONF));
-  MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(conf.get(MULTI_LAYER_CONF));
+  MultiLayerConfiguration confMLN=new NeuralNetConfiguration.Builder().list(4).hiddenLayerSizes(new int[]{3,2,2}).build();
+  String json=confMLN.toJson();
+  MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(json);
   multiLayerNetwork=new MultiLayerNetwork(conf2);
 }
