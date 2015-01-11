@@ -1,4 +1,4 @@
 {
   log.info("IR DBN Master Node: Complete!");
-  Nd4j.write(paramVector,osStream);
+  Nd4j.write(lastMasterUpdate.get(),osStream);
 }

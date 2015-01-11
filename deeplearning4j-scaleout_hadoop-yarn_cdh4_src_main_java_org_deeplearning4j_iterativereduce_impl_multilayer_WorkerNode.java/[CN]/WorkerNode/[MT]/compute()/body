@@ -5,7 +5,7 @@
   if (this.hdfsDataSetIterator.hasNext()) {
     hdfs_recordBatch=this.hdfsDataSetIterator.next();
     if (hdfs_recordBatch.getFeatures().rows() > 0) {
-      System.out.println("Rows: " + hdfs_recordBatch.numExamples() + ", inputs: "+ hdfs_recordBatch.numInputs()+ ", "+ hdfs_recordBatch);
+      log.info("Rows: " + hdfs_recordBatch.numExamples() + ", inputs: "+ hdfs_recordBatch.numInputs()+ ", "+ hdfs_recordBatch);
       this.totalRecordsProcessed+=hdfs_recordBatch.getFeatures().rows();
       batchWatch.reset();
       batchWatch.start();

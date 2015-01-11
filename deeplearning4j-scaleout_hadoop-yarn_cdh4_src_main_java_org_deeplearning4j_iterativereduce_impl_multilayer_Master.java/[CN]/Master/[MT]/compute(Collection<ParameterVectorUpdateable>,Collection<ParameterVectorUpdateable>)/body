@@ -6,5 +6,6 @@
  else     first.get().addi(update.get());
   }
   first.get().divi(workerUpdates.size());
+  lastMasterUpdate=first;
   return first;
 }

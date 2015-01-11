@@ -5,31 +5,28 @@
     props.load(fis);
     fis.close();
   }
- catch (  FileNotFoundException ex) {
-    System.out.println(ex);
-  }
-catch (  IOException ex) {
-    System.out.println(ex);
+ catch (  Exception ex) {
+    log.error("Error loading properties ",ex);
   }
   JobConf job=new JobConf(defaultConf);
   Path splitPath=new Path(props.getProperty("app.input.path"));
-  System.out.println("app.input.path = " + splitPath);
+  log.info("app.input.path = " + splitPath);
   InputSplit[] splits=generateDebugSplits(splitPath,job);
-  System.out.println("split count: " + splits.length);
+  log.info("split count: " + splits.length);
   try {
     Class<?> master_clazz=Class.forName(props.getProperty("yarn.master.main"));
     Constructor<?> master_ctor=master_clazz.getConstructor();
     this.master=(ComputableMaster)master_ctor.newInstance();
-    System.out.println("Using master class: " + props.getProperty("yarn.master.main"));
+    log.info("Using master class: " + props.getProperty("yarn.master.main"));
   }
  catch (  Exception e) {
     e.printStackTrace();
   }
   this.master.setup(this.generateDebugConfigurationObject());
   this.workers=new ArrayList<>();
-  System.out.println("Using worker class: " + props.getProperty("yarn.worker.main"));
+  log.info("Using worker class: " + props.getProperty("yarn.worker.main"));
   for (int x=0; x < splits.length; x++) {
-    System.out.println("IRUnit > Split > " + splits[x].toString());
+    log.info("IRUnit > Split > " + splits[x].toString());
     ComputableWorker worker=null;
     Class<?> worker_clazz;
     try {
@@ -46,6 +43,6 @@ catch (  IOException ex) {
     txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
     worker.setRecordParser(txt_reader);
     workers.add(worker);
-    System.out.println("> Setup Worker " + x);
+    log.info("> Setup Worker " + x);
   }
 }

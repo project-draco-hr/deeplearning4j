@@ -1,5 +1,5 @@
 {
   List<INDArray> params=new ArrayList<>();
-  for (int i=0; i < layers.length; i++)   layers[i].params();
+  for (int i=0; i < layers.length; i++)   params.add(layers[i].params());
   return Nd4j.toFlattened(params);
 }
