@@ -1,7 +1,23 @@
 {
-  while (recordParser.hasMoreRecords()) {
-    DataSet params=(DataSet)recordParser.nextRecord();
-    multiLayerNetwork.fit(params);
+  System.out.println("Worker > Compute() -------------------------- ");
+  int recordsProcessed=0;
+  DataSet hdfs_recordBatch=null;
+  if (this.hdfsDataSetIterator.hasNext()) {
+    hdfs_recordBatch=this.hdfsDataSetIterator.next();
+    if (hdfs_recordBatch.getFeatures().rows() > 0) {
+      this.totalRecordsProcessed+=hdfs_recordBatch.getFeatures().rows();
+      batchWatch.reset();
+      batchWatch.start();
+      this.multiLayerNetwork.fit(hdfs_recordBatch);
+      batchWatch.stop();
+      System.out.println("Worker > Processed Total " + recordsProcessed + ", Batch Time "+ batchWatch.toString()+ " Total Time "+ totalRunTimeWatch.toString());
+    }
+ else {
+      System.out.println("Worker > Idle pass, no records left to process");
+    }
+  }
+ else {
+    System.out.println("Worker > Idle pass, no records left to process");
   }
   return new ParameterVectorUpdateable(multiLayerNetwork.params());
 }

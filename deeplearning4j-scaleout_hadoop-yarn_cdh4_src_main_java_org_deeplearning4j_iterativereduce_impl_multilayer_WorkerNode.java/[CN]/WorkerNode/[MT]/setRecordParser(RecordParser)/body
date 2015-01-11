@@ -1,3 +1,9 @@
 {
-  this.recordParser=lineParser;
+  this.recordParser=(TextRecordParser)lineParser;
+  try {
+    this.hdfsDataSetIterator=new SVMLightHDFSDataSetIterator(this.batchSize,1,this.recordParser,this.numberFeatures,this.numberClasses);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
 }
