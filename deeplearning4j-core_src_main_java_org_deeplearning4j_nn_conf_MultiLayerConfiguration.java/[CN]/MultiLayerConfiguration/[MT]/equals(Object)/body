@@ -1,8 +1,0 @@
-{
-  if (this == o)   return true;
-  if (!(o instanceof MultiLayerConfiguration))   return false;
-  MultiLayerConfiguration that=(MultiLayerConfiguration)o;
-  if (confs != null ? !confs.equals(that.confs) : that.confs != null)   return false;
-  if (!Arrays.equals(hiddenLayerSizes,that.hiddenLayerSizes))   return false;
-  return true;
-}

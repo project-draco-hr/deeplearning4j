@@ -3,11 +3,13 @@
   if (!(o instanceof NeuralNetConfiguration))   return false;
   NeuralNetConfiguration that=(NeuralNetConfiguration)o;
   if (applySparsity != that.applySparsity)   return false;
+  if (batchSize != that.batchSize)   return false;
   if (concatBiases != that.concatBiases)   return false;
   if (constrainGradientToUnitNorm != that.constrainGradientToUnitNorm)   return false;
   if (Double.compare(that.corruptionLevel,corruptionLevel) != 0)   return false;
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
   if (k != that.k)   return false;
+  if (kernel != that.kernel)   return false;
   if (Double.compare(that.l2,l2) != 0)   return false;
   if (Double.compare(that.lr,lr) != 0)   return false;
   if (Double.compare(that.momentum,momentum) != 0)   return false;
@@ -24,7 +26,9 @@
   if (activationFunction != null ? !activationFunction.equals(that.activationFunction) : that.activationFunction != null)   return false;
   if (!Arrays.equals(featureMapSize,that.featureMapSize))   return false;
   if (!Arrays.equals(filterSize,that.filterSize))   return false;
+  if (gradientList != null ? !gradientList.equals(that.gradientList) : that.gradientList != null)   return false;
   if (hiddenUnit != that.hiddenUnit)   return false;
+  if (layerFactory != null ? !layerFactory.equals(that.layerFactory) : that.layerFactory != null)   return false;
   if (lossFunction != that.lossFunction)   return false;
   if (momentumAfter != null ? !momentumAfter.equals(that.momentumAfter) : that.momentumAfter != null)   return false;
   if (optimizationAlgo != that.optimizationAlgo)   return false;

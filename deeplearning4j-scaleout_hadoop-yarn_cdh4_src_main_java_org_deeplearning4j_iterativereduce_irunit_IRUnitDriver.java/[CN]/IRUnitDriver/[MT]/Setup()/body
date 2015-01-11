@@ -22,29 +22,11 @@ catch (  IOException ex) {
     this.master=(ComputableMaster)master_ctor.newInstance();
     System.out.println("Using master class: " + props.getProperty("yarn.master.main"));
   }
- catch (  InstantiationException e) {
-    e.printStackTrace();
-  }
-catch (  IllegalAccessException e) {
-    e.printStackTrace();
-  }
-catch (  ClassNotFoundException e) {
-    e.printStackTrace();
-  }
-catch (  SecurityException e) {
-    e.printStackTrace();
-  }
-catch (  NoSuchMethodException e) {
-    e.printStackTrace();
-  }
-catch (  IllegalArgumentException e) {
-    e.printStackTrace();
-  }
-catch (  InvocationTargetException e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
   this.master.setup(this.generateDebugConfigurationObject());
-  this.workers=new ArrayList<ComputableWorker>();
+  this.workers=new ArrayList<>();
   System.out.println("Using worker class: " + props.getProperty("yarn.worker.main"));
   for (int x=0; x < splits.length; x++) {
     System.out.println("IRUnit > Split > " + splits[x].toString());
@@ -55,25 +37,7 @@ catch (  InvocationTargetException e) {
       Constructor<?> worker_ctor=worker_clazz.getConstructor();
       worker=(ComputableWorker)worker_ctor.newInstance();
     }
- catch (    ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-catch (    SecurityException e) {
-      e.printStackTrace();
-    }
-catch (    NoSuchMethodException e) {
-      e.printStackTrace();
-    }
-catch (    IllegalArgumentException e) {
-      e.printStackTrace();
-    }
-catch (    InstantiationException e) {
-      e.printStackTrace();
-    }
-catch (    IllegalAccessException e) {
-      e.printStackTrace();
-    }
-catch (    InvocationTargetException e) {
+ catch (    Exception e) {
       e.printStackTrace();
     }
     worker.setup(this.generateDebugConfigurationObject());

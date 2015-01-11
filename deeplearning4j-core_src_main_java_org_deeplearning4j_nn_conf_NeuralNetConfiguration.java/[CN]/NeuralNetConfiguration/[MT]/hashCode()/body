@@ -6,15 +6,12 @@
   result=31 * result + (useAdaGrad ? 1 : 0);
   temp=Double.doubleToLongBits(lr);
   result=31 * result + (int)(temp ^ (temp >>> 32));
-  result=31 * result + k;
   temp=Double.doubleToLongBits(corruptionLevel);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + numIterations;
   temp=Double.doubleToLongBits(momentum);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   temp=Double.doubleToLongBits(l2);
-  result=31 * result + (int)(temp ^ (temp >>> 32));
-  result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (useRegularization ? 1 : 0);
   result=31 * result + (momentumAfter != null ? momentumAfter.hashCode() : 0);
@@ -29,15 +26,20 @@
   result=31 * result + (concatBiases ? 1 : 0);
   result=31 * result + (constrainGradientToUnitNorm ? 1 : 0);
   result=31 * result + (int)(seed ^ (seed >>> 32));
+  result=31 * result + (layerFactory != null ? layerFactory.hashCode() : 0);
+  result=31 * result + (gradientList != null ? gradientList.hashCode() : 0);
   result=31 * result + nIn;
   result=31 * result + nOut;
   result=31 * result + (activationFunction != null ? activationFunction.hashCode() : 0);
   result=31 * result + (visibleUnit != null ? visibleUnit.hashCode() : 0);
   result=31 * result + (hiddenUnit != null ? hiddenUnit.hashCode() : 0);
+  result=31 * result + k;
   result=31 * result + (weightShape != null ? Arrays.hashCode(weightShape) : 0);
   result=31 * result + (filterSize != null ? Arrays.hashCode(filterSize) : 0);
   result=31 * result + numFeatureMaps;
   result=31 * result + (featureMapSize != null ? Arrays.hashCode(featureMapSize) : 0);
   result=31 * result + (stride != null ? Arrays.hashCode(stride) : 0);
+  result=31 * result + kernel;
+  result=31 * result + batchSize;
   return result;
 }

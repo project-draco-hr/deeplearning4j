@@ -1,3 +1,4 @@
 {
-  jgen.writeStringField("layerFactory",value.getClass().getName() + "," + value.layerClazzName());
+  String write=value.getClass().getName() + "," + value.layerClazzName();
+  jgen.writeStringField("layerFactory",write);
 }
