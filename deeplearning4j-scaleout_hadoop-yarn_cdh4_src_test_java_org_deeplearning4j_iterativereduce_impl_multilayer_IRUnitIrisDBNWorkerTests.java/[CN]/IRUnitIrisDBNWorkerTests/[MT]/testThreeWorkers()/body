@@ -1,2 +1,5 @@
 {
+  IRUnitDriver polr_ir=new IRUnitDriver("src/test/resources/yarn/configurations/svmLightIris_ThreeWorkers_IRUnitTest.properties");
+  polr_ir.Setup();
+  polr_ir.simulateRun();
 }
