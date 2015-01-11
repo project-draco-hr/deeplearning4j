@@ -1,0 +1,10 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(4).hiddenLayerSizes(new int[]{3,2,2}).build();
+  String json=conf.toJson();
+  Configuration c=new Configuration();
+  c.set("test_json",json);
+  String key=c.get("test_json");
+  assertEquals(json,key);
+  MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(key);
+  MultiLayerNetwork multiLayerNetwork=new MultiLayerNetwork(conf2);
+}
