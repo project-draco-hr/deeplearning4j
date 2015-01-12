@@ -13,7 +13,7 @@
  catch (  Exception e) {
     log.error("Error initializing master",e);
   }
-  this.master.setup(this.generateDebugConfigurationObject());
+  this.master.setup(this.getConfigFromProperties());
   this.workers=new ArrayList<>();
   log.info("Using worker class: " + props.getProperty("yarn.worker.main"));
   for (int x=0; x < splits.length; x++) {
@@ -27,7 +27,7 @@
  catch (    Exception e) {
       log.error("Error initializing worker",e);
     }
-    worker.setup(this.generateDebugConfigurationObject());
+    worker.setup(this.getConfigFromProperties());
     TextRecordParser txt_reader=new TextRecordParser();
     long len=Integer.parseInt(splits[x].toString().split(":")[2].split("\\+")[1]);
     txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
