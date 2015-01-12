@@ -1,17 +1,15 @@
 {
   log.info("Worker > Compute() -------------------------- ");
-  int recordsProcessed=0;
   DataSet hdfs_recordBatch=null;
   if (this.hdfsDataSetIterator.hasNext()) {
     hdfs_recordBatch=this.hdfsDataSetIterator.next();
     if (hdfs_recordBatch.getFeatures().rows() > 0) {
-      log.info("Rows: " + hdfs_recordBatch.numExamples() + ", inputs: "+ hdfs_recordBatch.numInputs()+ ", "+ hdfs_recordBatch);
       this.totalRecordsProcessed+=hdfs_recordBatch.getFeatures().rows();
       batchWatch.reset();
       batchWatch.start();
       this.multiLayerNetwork.fit(hdfs_recordBatch);
       batchWatch.stop();
-      log.info("Worker > Processed Total " + recordsProcessed + ", Batch Time "+ batchWatch.toString()+ " Total Time "+ totalRunTimeWatch.toString());
+      log.info("Worker > Processed Total " + this.totalRecordsProcessed + ", Batch Time "+ batchWatch.toString()+ " Total Time "+ totalRunTimeWatch.toString());
     }
  else {
       log.info("Worker > Idle pass, no records left to process");
