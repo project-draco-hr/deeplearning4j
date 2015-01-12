@@ -13,25 +13,25 @@
     for (int worker_id=0; worker_id < workers.size(); worker_id++) {
       workers.get(worker_id).update(master_result);
     }
-  }
-  log.info("Complete " + iterations + " Iterations Per Worker.");
-  if (null != this.props.getProperty("app.output.path")) {
-    String output_path=this.props.getProperty("app.output.path");
-    log.info("Writing the output to: " + output_path);
-    try {
-      Path out=new Path(output_path);
-      FileSystem fs=out.getFileSystem(defaultConf);
-      FSDataOutputStream fos;
-      fos=fs.create(out);
-      master.complete(fos);
-      fos.flush();
-      fos.close();
+    log.info("Complete " + iterations + " Iterations Per Worker.");
+    if (null != this.props.getProperty("app.output.path")) {
+      String output_path=this.props.getProperty("app.output.path");
+      log.info("Writing the output to: " + output_path);
+      try {
+        Path out=new Path(output_path);
+        FileSystem fs=out.getFileSystem(defaultConf);
+        FSDataOutputStream fos;
+        fos=fs.create(out);
+        master.complete(fos);
+        fos.flush();
+        fos.close();
+      }
+ catch (      IOException e) {
+        e.printStackTrace();
+      }
     }
- catch (    IOException e) {
-      e.printStackTrace();
-    }
-  }
  else {
-    log.info("Not Firing Master::Complete() function due to no output path in conf");
+      log.info("Not Firing Master::Complete() function due to no output path in conf");
+    }
   }
 }

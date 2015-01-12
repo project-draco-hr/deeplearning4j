@@ -1,7 +1,7 @@
 {
-  long block_size=localFs.getDefaultBlockSize();
+  long block_size=localFs.getDefaultBlockSize(inputPath);
   log.info("default block size: " + (block_size / 1024 / 1024) + "MB");
-  FileInputFormat.setInputPaths(job,input_path);
+  FileInputFormat.setInputPaths(job,inputPath);
   TextInputFormat format=new TextInputFormat();
   format.configure(job);
   int numSplits=1;
