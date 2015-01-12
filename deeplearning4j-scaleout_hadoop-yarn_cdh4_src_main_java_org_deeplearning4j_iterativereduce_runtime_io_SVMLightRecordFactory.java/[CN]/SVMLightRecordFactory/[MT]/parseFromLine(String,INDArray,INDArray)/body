@@ -4,18 +4,17 @@
   String label=inputs_outputs[0].trim();
   input_vec.muli(0.0);
   int startFeatureIndex=0;
-  if (this.useBiasTerm) {
-    input_vec.putScalar(0,1.0);
-    startFeatureIndex=1;
-  }
   for (int x=1; x < inputs_outputs.length; x++) {
     String[] feature=inputs_outputs[x].split(":");
     if ("#".equals(feature[0].trim())) {
     }
  else {
-      int index=(Integer.parseInt(feature[0]) + startFeatureIndex);
+      int index=(Integer.parseInt(feature[0]) + startFeatureIndex) - 1;
       double val=Double.parseDouble(feature[1]);
-      if (index < this.featureVectorSize) {
+      if (index < 0) {
+        throw new Exception("SVMLight does not support 0-based indexing in its text vector formats");
+      }
+ else       if (index < this.featureVectorSize) {
         input_vec.putScalar(index,val);
       }
  else {

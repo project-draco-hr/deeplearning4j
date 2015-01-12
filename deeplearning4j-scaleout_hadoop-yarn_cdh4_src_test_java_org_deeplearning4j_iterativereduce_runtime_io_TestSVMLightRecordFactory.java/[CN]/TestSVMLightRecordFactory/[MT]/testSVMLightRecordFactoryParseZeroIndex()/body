@@ -1,4 +1,5 @@
 {
+  boolean caughtException=false;
   int feature_size=9285;
   INDArray in_vector=Nd4j.create(feature_size);
   INDArray out_vector=Nd4j.create(1);
@@ -6,7 +7,8 @@
   try {
     recFactory.parseFromLine(test_svm_light_zero_index,in_vector,out_vector);
   }
- catch (  NumberFormatException e) {
+ catch (  Exception e) {
+    caughtException=true;
   }
-  assertEquals(0.43,in_vector.getDouble(0),1e-1);
+  assertEquals(true,caughtException);
 }
