@@ -7,7 +7,7 @@
     fis=fs.open(file);
     br=new BufferedReader(new InputStreamReader(fis));
     fis.seek(readOffset);
-    records=new LinkedList<T>();
+    records=new LinkedList<>();
     LineReader ln=new LineReader(fis);
     Text line=new Text();
     long read=readOffset;
