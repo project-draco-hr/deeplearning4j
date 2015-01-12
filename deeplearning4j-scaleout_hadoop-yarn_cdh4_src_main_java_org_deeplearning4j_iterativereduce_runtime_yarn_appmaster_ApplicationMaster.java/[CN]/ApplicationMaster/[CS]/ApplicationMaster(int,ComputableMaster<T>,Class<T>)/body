@@ -32,12 +32,12 @@
     LOG.debug("bad input format: " + inputFormatClassString + ", defaulting to TextInputFormat");
     this.inputFormatClass=TextInputFormat.class;
   }
-  appConfig=new HashMap<CharSequence,CharSequence>();
+  appConfig=new HashMap<>();
   for (  Map.Entry<Object,Object> prop : props.entrySet()) {
     appConfig.put((String)prop.getKey(),(String)prop.getValue());
   }
   if (LOG.isDebugEnabled()) {
-    LOG.debug("Configurartion entries: ");
+    LOG.debug("Configuration entries: ");
     for (    Map.Entry<CharSequence,CharSequence> entry : appConfig.entrySet()) {
       LOG.debug(entry.getKey() + "=" + entry.getValue());
     }
