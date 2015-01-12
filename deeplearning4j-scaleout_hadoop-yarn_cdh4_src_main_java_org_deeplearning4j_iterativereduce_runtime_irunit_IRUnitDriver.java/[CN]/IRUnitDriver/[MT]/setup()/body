@@ -33,6 +33,6 @@
     txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
     worker.setRecordParser(txt_reader);
     workers.add(worker);
-    log.info("> Setup Worker " + x);
+    log.info("> setup Worker " + x);
   }
 }
