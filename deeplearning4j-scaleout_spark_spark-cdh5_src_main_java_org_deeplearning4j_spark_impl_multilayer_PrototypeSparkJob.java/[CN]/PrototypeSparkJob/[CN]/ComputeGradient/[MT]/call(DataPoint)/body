@@ -1,0 +1,8 @@
+{
+  double[] gradient=new double[D];
+  for (int i=0; i < D; i++) {
+    double dot=dot(weights,p.x);
+    gradient[i]=(1 / (1 + Math.exp(-p.y * dot)) - 1) * p.y * p.x[i];
+  }
+  return gradient;
+}

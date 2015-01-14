@@ -1,0 +1,9 @@
+{
+  String[] tok=SPACE.split(line);
+  double y=Double.parseDouble(tok[0]);
+  double[] x=new double[D];
+  for (int i=0; i < D; i++) {
+    x[i]=Double.parseDouble(tok[i + 1]);
+  }
+  return new DataPoint(x,y);
+}
