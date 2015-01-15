@@ -1,0 +1,7 @@
+{
+  double[] result=new double[D];
+  for (int j=0; j < D; j++) {
+    result[j]=a[j] + b[j];
+  }
+  return result;
+}
