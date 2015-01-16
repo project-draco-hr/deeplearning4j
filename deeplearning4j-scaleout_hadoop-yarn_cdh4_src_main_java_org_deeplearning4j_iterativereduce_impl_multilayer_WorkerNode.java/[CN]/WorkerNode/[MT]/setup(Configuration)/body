@@ -1,9 +1,9 @@
 {
   log.info("Worker-Conf: " + conf.get(MULTI_LAYER_CONF));
-  this.batchSize=conf.getInt("org.deeplearning4j.batchSize",10);
-  this.numberClasses=conf.getInt("org.deeplearning4j.numberClasses",2);
-  this.numberFeatures=conf.getInt("org.deeplearning4j.features",5);
-  log.info("Classes: " + this.numberClasses + ", Features: "+ this.numberFeatures);
   MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(conf.get(MULTI_LAYER_CONF));
+  this.batchSize=conf2.getConf(0).getBatchSize();
+  this.numberClasses=conf2.getConf(conf2.getConfs().size() - 1).getnOut();
+  labelIndex=conf.getInt(LABEL_INDEX,-1);
+  if (labelIndex < 0)   throw new IllegalStateException("Illegal label index");
   multiLayerNetwork=new MultiLayerNetwork(conf2);
 }

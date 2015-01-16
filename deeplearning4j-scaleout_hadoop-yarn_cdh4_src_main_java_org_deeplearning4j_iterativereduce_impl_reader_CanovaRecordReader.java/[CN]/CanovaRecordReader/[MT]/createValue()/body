@@ -4,7 +4,6 @@
     Collection<Writable> wrapped=new ArrayList<>();
     for (    org.canova.api.writable.Writable writable : writables)     wrapped.add(new CanovaWritableDelegate(writable));
     currRecord=wrapped;
-    return recordReader.hasNext();
   }
-  return recordReader.hasNext();
+  return currRecord;
 }

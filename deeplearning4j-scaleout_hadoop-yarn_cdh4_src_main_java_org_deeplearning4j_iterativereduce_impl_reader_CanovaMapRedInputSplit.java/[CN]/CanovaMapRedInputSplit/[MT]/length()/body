@@ -1,6 +1,6 @@
 {
   try {
-    return recordReader.next(null,null);
+    return split.getLength();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

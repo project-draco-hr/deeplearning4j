@@ -3,7 +3,7 @@
   if (!initializeService())   return -1;
   LOG.info("Worker " + Utils.getWorkerId(workerId) + " initialized");
   try {
-    recordParser.initialize(Utils.getSplit(workerConf.getSplit()),null);
+    recordParser.initialize(Utils.getSplit(workerConf.getSplit()));
   }
  catch (  IOException e) {
     e.printStackTrace();
