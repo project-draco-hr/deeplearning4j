@@ -1,5 +1,5 @@
 {
-  Map<CharSequence,Long> report=new HashMap<CharSequence,Long>();
+  Map<CharSequence,Long> report=new HashMap<>();
   report.put("ComputableWorkerTime",mWorkerTime);
   report.put("ComputableWorkerExecutions",mWorkerExecutions);
   report.put("WaitCount",mWaits);

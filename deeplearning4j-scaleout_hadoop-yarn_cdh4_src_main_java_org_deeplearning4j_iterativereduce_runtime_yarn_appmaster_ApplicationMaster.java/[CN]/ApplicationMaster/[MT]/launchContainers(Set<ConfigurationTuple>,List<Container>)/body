@@ -1,5 +1,5 @@
 {
-  List<Thread> launchThreads=new ArrayList<Thread>();
+  List<Thread> launchThreads=new ArrayList<>();
   Iterator<Container> ic=allocatedContainers.iterator();
   while (ic.hasNext()) {
     Container container=ic.next();

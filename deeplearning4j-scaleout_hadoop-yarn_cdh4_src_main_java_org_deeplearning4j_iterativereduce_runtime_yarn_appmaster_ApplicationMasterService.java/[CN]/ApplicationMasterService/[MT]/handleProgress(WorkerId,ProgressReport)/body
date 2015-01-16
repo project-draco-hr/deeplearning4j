@@ -1,7 +1,7 @@
 {
 synchronized (workersState) {
     LinkedHashMap<Long,ProgressReport> progress=workersProgress.get(workerId);
-    if (progress == null)     progress=new LinkedHashMap<Long,ProgressReport>();
+    if (progress == null)     progress=new LinkedHashMap<>();
     progress.put(System.currentTimeMillis(),report);
     workersProgress.put(workerId,progress);
     workersState.put(workerId,WorkerState.RUNNING);

@@ -1,7 +1,7 @@
 {
   this.props=new Properties();
   try {
-    FileInputStream fis=new FileInputStream(this.app_properties_file);
+    FileInputStream fis=new FileInputStream(this.appPropertiesFile);
     props.load(fis);
     fis.close();
   }
@@ -9,39 +9,43 @@
     log.error("Error loading properties ",ex);
   }
   JobConf job=new JobConf(defaultConf);
-  Path splitPath=new Path(props.getProperty("app.input.path"));
-  log.info("app.input.path = " + splitPath);
+  try {
+    recordReader=(RecordReader)Class.forName(defaultConf.get(APP_RECORD_READER)).newInstance();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  Path splitPath=new Path(props.getProperty(APP_INPUT_PATH));
+  log.info(APP_INPUT_PATH + " = " + splitPath);
   InputSplit[] splits=generateDebugSplits(splitPath,job);
   log.info("split count: " + splits.length);
   try {
-    Class<?> master_clazz=Class.forName(props.getProperty("yarn.master.main"));
+    Class<?> master_clazz=Class.forName(props.getProperty(MASTER_MAIN));
     Constructor<?> master_ctor=master_clazz.getConstructor();
     this.master=(ComputableMaster)master_ctor.newInstance();
-    log.info("Using master class: " + props.getProperty("yarn.master.main"));
+    log.info("Using master class: " + props.getProperty(MASTER_MAIN));
   }
  catch (  Exception e) {
-    e.printStackTrace();
+    log.error("Error loading master",e);
   }
-  this.master.setup(this.getConfiguration());
+  this.master.setup(getConfiguration());
   this.workers=new ArrayList<>();
-  log.info("Using worker class: " + props.getProperty("yarn.worker.main"));
+  log.info("Using worker class: " + props.getProperty(APP_MAIN));
   for (int x=0; x < splits.length; x++) {
     log.info("IRUnit > Split > " + splits[x].toString());
     ComputableWorker worker=null;
     Class<?> worker_clazz;
     try {
-      worker_clazz=Class.forName(props.getProperty("yarn.worker.main"));
-      Constructor<?> worker_ctor=worker_clazz.getConstructor();
-      worker=(ComputableWorker)worker_ctor.newInstance();
+      worker_clazz=Class.forName(props.getProperty(APP_MAIN));
+      Constructor<?> workerConstructor=worker_clazz.getConstructor();
+      worker=(ComputableWorker)workerConstructor.newInstance();
     }
  catch (    Exception e) {
-      e.printStackTrace();
+      log.error("Error loading worker",e);
     }
-    worker.setup(this.getConfiguration());
-    TextRecordParser txt_reader=new TextRecordParser();
-    long len=Integer.parseInt(splits[x].toString().split(":")[2].split("\\+")[1]);
-    txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
-    worker.setRecordParser(txt_reader);
+    worker.setup(getConfiguration());
+    org.apache.hadoop.mapreduce.RecordReader reader=new CanovaRecordReader(this.recordReader);
+    worker.setRecordReader(reader);
     workers.add(worker);
     log.info("> setup Worker " + x);
   }

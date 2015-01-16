@@ -28,10 +28,6 @@
       log.error("Error initializing worker",e);
     }
     worker.setup(this.getConfigFromProperties());
-    TextRecordParser txt_reader=new TextRecordParser();
-    long len=Integer.parseInt(splits[x].toString().split(":")[2].split("\\+")[1]);
-    txt_reader.setFile(splits[x].toString().split(":")[1],0,len);
-    worker.setRecordParser(txt_reader);
     workers.add(worker);
     log.info("> setup Worker " + x);
   }

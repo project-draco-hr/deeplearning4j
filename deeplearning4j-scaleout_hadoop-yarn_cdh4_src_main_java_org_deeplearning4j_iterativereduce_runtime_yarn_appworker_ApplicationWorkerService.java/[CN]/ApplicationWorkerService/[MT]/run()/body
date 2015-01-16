@@ -2,23 +2,29 @@
   Thread.currentThread().setName("ApplicationWorkerService Thread - " + Utils.getWorkerId(workerId));
   if (!initializeService())   return -1;
   LOG.info("Worker " + Utils.getWorkerId(workerId) + " initialized");
-  recordParser.setFile(workerConf.getSplit().getPath().toString(),workerConf.getSplit().getOffset(),workerConf.getSplit().getLength());
-  recordParser.parse();
+  try {
+    recordParser.initialize(Utils.getSplit(workerConf.getSplit()),null);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
   LOG.debug("Launching periodic update thread");
   updateExecutor=Executors.newSingleThreadExecutor();
-  updateExecutor.execute(new PeridoicUpdateThread());
+  updateExecutor.execute(new PeriodicUpdateThread());
   currentState=WorkerState.STARTED;
   int countTotal=0;
   int countCurrent=0;
   int currentIteration=0;
   int lastUpdate=0;
-  computable.setRecordParser(recordParser);
+  computable.setRecordReader(recordParser);
   for (currentIteration=0; currentIteration < workerConf.getIterations(); currentIteration++) {
     LOG.debug("Beginning iteration " + (currentIteration + 1) + "/"+ workerConf.getIterations());
 synchronized (currentState) {
       currentState=WorkerState.RUNNING;
     }
-    recordParser.reset();
     countTotal++;
     countCurrent++;
 synchronized (progressCounters) {

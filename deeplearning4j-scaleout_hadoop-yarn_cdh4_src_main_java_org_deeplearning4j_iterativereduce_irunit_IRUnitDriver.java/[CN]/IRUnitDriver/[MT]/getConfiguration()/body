@@ -1,7 +1,5 @@
 {
   Configuration c=new Configuration();
-  for (  Entry<Object,Object> e : props.entrySet()) {
-    c.set(e.getKey().toString(),e.getValue().toString());
-  }
+  for (  Entry<Object,Object> e : props.entrySet())   c.set(e.getKey().toString(),e.getValue().toString());
   return c;
 }
