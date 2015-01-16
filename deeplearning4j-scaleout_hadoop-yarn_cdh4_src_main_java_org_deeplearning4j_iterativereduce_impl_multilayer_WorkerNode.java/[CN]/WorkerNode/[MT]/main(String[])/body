@@ -1,6 +1,0 @@
-{
-  TextRecordParser parser=new TextRecordParser();
-  WorkerNode wn=new WorkerNode();
-  ApplicationWorker<ParameterVectorUpdateable> aw=new ApplicationWorker<>(parser,wn,ParameterVectorUpdateable.class);
-  ToolRunner.run(aw,args);
-}

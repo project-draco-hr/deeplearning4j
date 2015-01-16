@@ -10,7 +10,7 @@
     splits=format.getSplits(job,numSplits);
   }
  catch (  IOException e) {
-    e.printStackTrace();
+    log.error("Error loading properties ",e);
   }
   return splits;
 }

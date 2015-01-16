@@ -2,7 +2,7 @@
   try {
     LOG.info("Checking in and downloading configuration from master");
     workerConf=masterService.startup(workerId);
-    LOG.info("Recevied startup configuration from master" + ", fileSplit=[" + workerConf.getSplit().getPath() + ", "+ workerConf.getSplit().getOffset()+ ", "+ workerConf.getSplit().getLength()+ "]"+ ", batchSize="+ workerConf.getBatchSize()+ ", iterations="+ workerConf.getIterations());
+    LOG.info("Received startup configuration from master" + ", fileSplit=[" + workerConf.getSplit().getPath() + ", "+ workerConf.getSplit().getOffset()+ ", "+ workerConf.getSplit().getLength()+ "]"+ ", batchSize="+ workerConf.getBatchSize()+ ", iterations="+ workerConf.getIterations());
   }
  catch (  AvroRemoteException ex) {
     if (ex instanceof ServiceError) {

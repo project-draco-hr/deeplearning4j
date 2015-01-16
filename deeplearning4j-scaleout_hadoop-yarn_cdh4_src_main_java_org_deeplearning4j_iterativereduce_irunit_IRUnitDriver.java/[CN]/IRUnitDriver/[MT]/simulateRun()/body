@@ -1,24 +1,21 @@
 {
   List<Updateable> master_results=new ArrayList<>();
-  List<Updateable> worker_results=new ArrayList<>();
-  long ts_start=System.currentTimeMillis();
-  int iterations=Integer.parseInt(props.getProperty("app.iteration.count"));
+  List<Updateable> workerResults=new ArrayList<>();
+  int iterations=Integer.parseInt(props.getProperty(APP_NUM_ITERATIONS));
   log.info("Starting Epochs (" + iterations + ")...");
   for (int x=0; x < iterations; x++) {
-    for (int worker_id=0; worker_id < workers.size(); worker_id++) {
-      Updateable result=workers.get(worker_id).compute();
-      worker_results.add(result);
+    for (int workerId=0; workerId < workers.size(); workerId++) {
+      Updateable result=workers.get(workerId).compute();
+      workerResults.add(result);
     }
-    Updateable master_result=this.master.compute(worker_results,master_results);
-    for (int worker_id=0; worker_id < workers.size(); worker_id++) {
-      workers.get(worker_id).update(master_result);
-    }
+    Updateable master_result=this.master.compute(workerResults,master_results);
+    for (int workerId=0; workerId < workers.size(); workerId++)     workers.get(workerId).update(master_result);
     log.info("Complete " + iterations + " Iterations Per Worker.");
-    if (null != this.props.getProperty("app.output.path")) {
-      String output_path=this.props.getProperty("app.output.path");
-      log.info("Writing the output to: " + output_path);
+    if (null != props.getProperty(APP_OUTPUT_PATH)) {
+      String outputPath=props.getProperty(APP_OUTPUT_PATH);
+      log.info("Writing the output to: " + outputPath);
       try {
-        Path out=new Path(output_path);
+        Path out=new Path(outputPath);
         FileSystem fs=out.getFileSystem(defaultConf);
         FSDataOutputStream fos;
         fos=fs.create(out);
@@ -27,11 +24,9 @@
         fos.close();
       }
  catch (      IOException e) {
-        e.printStackTrace();
+        log.error("IO Exception loading path",e);
       }
     }
- else {
-      log.info("Not Firing Master::Complete() function due to no output path in conf");
-    }
+ else     log.info("Not Firing Master::Complete() function due to no output path in conf");
   }
 }

@@ -13,7 +13,7 @@ synchronized (workersState) {
 synchronized (masterState) {
     if (MasterState.WAITING == masterState) {
       LOG.debug("Initial update for this round, initializing update map");
-      if (workersUpdate == null)       workersUpdate=new HashMap<WorkerId,T>();
+      if (workersUpdate == null)       workersUpdate=new HashMap<>();
       workersUpdate.clear();
       masterState=MasterState.UPDATING;
     }
@@ -35,7 +35,7 @@ synchronized (workersState) {
     workersUpdate.put(workerId,update);
     workersState.put(workerId,WorkerState.UPDATE);
     if (workersUpdate.size() == expectedUpdates.get()) {
-      LOG.info("Received updates from all workers, spawing local compute thread");
+      LOG.info("Received updates from all workers, spawning local compute thread");
       Thread updateThread=new Thread(new Runnable(){
         @Override public void run(){
           long startTime, endTime;
