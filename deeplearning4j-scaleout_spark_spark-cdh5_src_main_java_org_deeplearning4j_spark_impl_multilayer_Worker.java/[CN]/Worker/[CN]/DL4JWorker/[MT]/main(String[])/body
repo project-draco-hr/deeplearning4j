@@ -1,0 +1,15 @@
+{
+  if (args.length < 2) {
+    System.err.println("Usage: DL4J_Spark <file> <iters>");
+    System.exit(1);
+  }
+  SparkConf sparkConf=new SparkConf().setAppName("DL4J").setMaster("local");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  JavaRDD<String> lines=sc.textFile(args[0]);
+  JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(new SVMLightRecordReader(),Integer.parseInt(args[0]),Integer.parseInt(args[0]))).cache();
+  int ITERATIONS=Integer.parseInt(args[1]);
+  for (int i=1; i <= ITERATIONS; i++) {
+    System.out.println("On iteration " + i);
+  }
+  sc.stop();
+}
