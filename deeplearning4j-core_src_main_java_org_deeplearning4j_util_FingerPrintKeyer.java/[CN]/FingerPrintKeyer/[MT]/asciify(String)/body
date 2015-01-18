@@ -1,6 +1,6 @@
 {
   char[] c=s.toCharArray();
-  StringBuffer b=new StringBuffer();
+  StringBuilder b=new StringBuilder();
   for (  char element : c) {
     b.append(translate(element));
   }

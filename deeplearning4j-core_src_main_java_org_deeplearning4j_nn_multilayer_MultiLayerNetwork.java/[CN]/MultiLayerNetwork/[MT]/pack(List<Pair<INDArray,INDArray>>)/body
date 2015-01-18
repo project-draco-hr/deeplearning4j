@@ -4,6 +4,5 @@
     list.add(layers.get(i).getFirst());
     list.add(layers.get(i).getSecond());
   }
-  INDArray ret=Nd4j.toFlattened(list);
-  return ret;
+  return Nd4j.toFlattened(list);
 }

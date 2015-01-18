@@ -1,5 +1,5 @@
 {
-  INDArray ret=null;
+  INDArray ret;
 switch (initScheme) {
 case NORMALIZED:
     ret=Nd4j.rand(shape);

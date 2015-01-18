@@ -3,6 +3,5 @@
     INDArray point=data.slice(index[n]);
     if (!boundary.containsPoint(point))     return false;
   }
-  if (!isLeaf())   return northWest.isCorrect() && northEast.isCorrect() && southWest.isCorrect()&& southEast.isCorrect();
-  return true;
+  return isLeaf() || northWest.isCorrect() && northEast.isCorrect() && southWest.isCorrect()&& southEast.isCorrect();
 }

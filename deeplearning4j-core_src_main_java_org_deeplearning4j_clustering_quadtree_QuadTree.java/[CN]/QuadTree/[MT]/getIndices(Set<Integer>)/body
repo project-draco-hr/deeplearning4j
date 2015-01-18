@@ -1,5 +1,5 @@
 {
-  for (int i=0; i < this.index.length; i++)   if (this.index[i] >= 0)   indices.add(this.index[i]);
+  for (  int anIndex : this.index)   if (anIndex >= 0)   indices.add(anIndex);
   if (!isLeaf()) {
     northWest.getIndices(indices);
     northEast.getIndices(indices);

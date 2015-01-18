@@ -8,7 +8,7 @@
     int disc=0;
     KDNode node=root;
     KDNode insert=new KDNode(point);
-    int successor=0;
+    int successor;
     while (true) {
       if (node.getPoint().eq(point).sum(Integer.MAX_VALUE).getDouble(0) == 0) {
         return;

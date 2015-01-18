@@ -1,5 +1,5 @@
 {
-  StringBuffer sb=new StringBuffer();
+  StringBuilder sb=new StringBuilder();
   int count=0;
   for (  NeuralNetConfiguration conf : getLayerWiseConfigurations().getConfs()) {
     sb.append(" Layer " + count++ + " conf "+ conf);
