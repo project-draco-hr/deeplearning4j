@@ -2,6 +2,5 @@
   if (!this.isReady()) {
     throw new IllegalStateException("KMeans is not ready yet");
   }
-  Integer nearestCentroidIndex=this.nearestCentroid(features);
-  return nearestCentroidIndex;
+  return this.nearestCentroid(features);
 }

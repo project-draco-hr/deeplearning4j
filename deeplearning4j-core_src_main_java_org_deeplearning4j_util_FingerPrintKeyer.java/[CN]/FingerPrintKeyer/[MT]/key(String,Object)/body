@@ -6,11 +6,9 @@
   s=s.toLowerCase();
   s=punctctrl.matcher(s).replaceAll("");
   String[] frags=StringUtils.split(s);
-  TreeSet<String> set=new TreeSet<String>();
-  for (  String ss : frags) {
-    set.add(ss);
-  }
-  StringBuffer b=new StringBuffer();
+  TreeSet<String> set=new TreeSet<>();
+  Collections.addAll(set,frags);
+  StringBuilder b=new StringBuilder();
   Iterator<String> i=set.iterator();
   while (i.hasNext()) {
     b.append(i.next());

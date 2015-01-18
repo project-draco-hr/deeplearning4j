@@ -1,6 +1,6 @@
 {
-  boolean left=(coordinates.getDouble(0) > (boundary.getX() + boundary.getHw() / 2)) ? false : true;
-  boolean top=(coordinates.getDouble(1) > (boundary.getY() + boundary.getHh() / 2)) ? false : true;
+  boolean left=(coordinates.getDouble(0) <= (boundary.getX() + boundary.getHw() / 2));
+  boolean top=(coordinates.getDouble(1) <= (boundary.getY() + boundary.getHh() / 2));
   QuadTree index=getNorthWest();
   if (left) {
     if (!top) {

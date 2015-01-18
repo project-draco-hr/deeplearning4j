@@ -1,6 +1,5 @@
 {
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray hbiasMean=getInput().mmul(W).addRowVector(b);
-  return hbiasMean;
+  return getInput().mmul(W).addRowVector(b);
 }

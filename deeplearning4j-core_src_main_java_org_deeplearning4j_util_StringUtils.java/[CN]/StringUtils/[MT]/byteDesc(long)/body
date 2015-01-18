@@ -1,6 +1,6 @@
 {
-  double val=0.0;
-  String ending="";
+  double val;
+  String ending;
   if (len < 1024 * 1024) {
     val=(1.0 * len) / 1024;
     ending=" KB";
