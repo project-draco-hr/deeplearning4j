@@ -1,4 +1,4 @@
 {
-  network.fit(v1);
-  return network.params();
+  System.out.println("DL4JWorker > call " + v1.numExamples());
+  return null;
 }

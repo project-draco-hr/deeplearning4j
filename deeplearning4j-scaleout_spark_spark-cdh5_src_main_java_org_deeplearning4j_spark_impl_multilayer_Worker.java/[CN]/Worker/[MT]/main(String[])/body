@@ -11,8 +11,11 @@
   JavaRDD<String> lines=sc.textFile(args[0]);
   JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(new SVMLightRecordReader(),Integer.parseInt(args[2]),Integer.parseInt(args[3]))).cache();
   int ITERATIONS=Integer.parseInt(args[1]);
+  long c=lines.count();
+  System.out.println("svmLight records: " + c);
   for (int i=1; i <= ITERATIONS; i++) {
     System.out.println("On iteration " + i);
+    System.out.println("end iteration " + i);
   }
   sc.stop();
 }
