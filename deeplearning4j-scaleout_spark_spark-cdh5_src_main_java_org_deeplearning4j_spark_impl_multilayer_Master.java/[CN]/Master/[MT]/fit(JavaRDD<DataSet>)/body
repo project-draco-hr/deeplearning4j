@@ -1,0 +1,13 @@
+{
+  int batchSize=conf.getConf(0).getBatchSize();
+  JavaRDD<DataSet> miniBatches=new RDDMiniBatches(batchSize,rdd).miniBatchesJava();
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  INDArray newParams=miniBatches.map(new DL4jWorker(network)).reduce(new Function2<INDArray,INDArray,INDArray>(){
+    @Override public INDArray call(    INDArray v1,    INDArray v2) throws Exception {
+      return v1.add(v2);
+    }
+  }
+).divi(miniBatches.count());
+  network.setParameters(newParams);
+  return network;
+}

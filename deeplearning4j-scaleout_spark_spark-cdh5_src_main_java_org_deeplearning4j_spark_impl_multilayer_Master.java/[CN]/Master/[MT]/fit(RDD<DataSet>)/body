@@ -1,5 +1,0 @@
-{
-  long count=rdd.count();
-  int batchSize=conf.getConf(0).getBatchSize();
-  RDD<DataSet> miniBatches=new RDDMiniBatches(batchSize,rdd).miniBatches();
-}
