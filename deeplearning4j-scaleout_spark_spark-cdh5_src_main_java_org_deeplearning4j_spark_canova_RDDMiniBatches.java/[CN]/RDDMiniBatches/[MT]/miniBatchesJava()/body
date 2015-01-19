@@ -1,0 +1,7 @@
+{
+  long count=toSplit.count();
+  int batchSize=miniBatches;
+  int numBatches=(int)count / batchSize;
+  JavaRDD<DataSet> miniBatches=toSplitJava.coalesce(numBatches,true);
+  return miniBatches;
+}

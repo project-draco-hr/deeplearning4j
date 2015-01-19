@@ -1,0 +1,14 @@
+{
+  SparkConf sparkConf=new SparkConf().setMaster("local").setAppName("SparkDebugExample");
+  System.out.println("Setting up Spark Context...");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  JavaRDD<String> lines=sc.textFile(new ClassPathResource("data/svmLight/iris_svmLight_0.txt").getFile().toURI().toString()).cache();
+  long count=lines.count();
+  assertEquals(150,count);
+  JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(new SVMLightRecordReader(),0,3)).cache();
+  count=points.count();
+  assertEquals(150,count);
+  JavaRDD<DataSet> miniBatches=new RDDMiniBatches(10,points).miniBatchesJava();
+  count=miniBatches.count();
+  assertEquals(15,count);
+}
