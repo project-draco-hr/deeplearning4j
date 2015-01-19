@@ -16,8 +16,6 @@
       log.info("Worker > Idle pass, no records left to process");
     }
   }
- else {
-    log.info("Worker > Idle pass, no records left to process");
-  }
+ else   log.info("Worker > Idle pass, no records left to process");
   return new ParameterVectorUpdateable(multiLayerNetwork.params());
 }
