@@ -17,6 +17,6 @@
   int numParams=network.numParams();
   INDArray params=network.params();
   assertEquals(numParams,params.length());
-  Master master=new Master(sc,conf);
+  Master master=new Master(sc,conf,new SVMLightRecordReader());
   master.fit(new ClassPathResource("data/svmLight/iris_svmLight_0.txt").getFile().toURI().toString(),4,3);
 }
