@@ -1,7 +1,0 @@
-{
-  long count=toSplit.count();
-  int batchSize=miniBatches;
-  int numBatches=(int)count / batchSize;
-  RDD<DataSet> miniBatches=toSplit.coalesce(numBatches,true,new DataSetOrdering());
-  return miniBatches;
-}

@@ -21,11 +21,11 @@
         layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
       }
     }
+    NeuralNetConfiguration last=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 1);
+    NeuralNetConfiguration secondToLast=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 2);
+    last.setnIn(secondToLast.getnOut());
+    this.layers[layers.length - 1]=last.getLayerFactory().create(last);
+    initCalled=true;
+    initMask();
   }
-  NeuralNetConfiguration last=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 1);
-  NeuralNetConfiguration secondToLast=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 2);
-  last.setnIn(secondToLast.getnOut());
-  this.layers[layers.length - 1]=last.getLayerFactory().create(last);
-  initCalled=true;
-  initMask();
 }

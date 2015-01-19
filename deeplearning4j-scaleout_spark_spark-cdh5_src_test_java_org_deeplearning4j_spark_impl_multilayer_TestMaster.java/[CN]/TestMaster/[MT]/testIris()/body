@@ -1,0 +1,22 @@
+{
+  SparkConf sparkConf=new SparkConf().setMaster("local").setAppName("sparktest");
+  System.out.println("Setting up Spark Context...");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).batchSize(10).activationFunction(Activations.tanh()).list(2).hiddenLayerSizes(3).override(new NeuralNetConfiguration.ConfOverride(){
+    @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
+      if (i == 1) {
+        builder.activationFunction(Activations.softMaxRows());
+        builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+        builder.lossFunction(LossFunctions.LossFunction.MCXENT);
+      }
+    }
+  }
+).build();
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  int numParams=network.numParams();
+  INDArray params=network.params();
+  assertEquals(numParams,params.length());
+  Master master=new Master(sc,conf);
+  master.fit(new ClassPathResource("data/svmLight/iris_svmLight_0.txt").getFile().toURI().toString(),4,3);
+}
