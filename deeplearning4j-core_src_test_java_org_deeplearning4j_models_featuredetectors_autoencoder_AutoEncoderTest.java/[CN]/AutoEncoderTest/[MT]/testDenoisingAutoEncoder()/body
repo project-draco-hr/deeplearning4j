@@ -6,7 +6,6 @@
   INDArray input=d2.getFeatureMatrix();
   LayerFactory layerFactory=LayerFactories.getFactory(AutoEncoder.class);
   AutoEncoder da=layerFactory.create(conf);
-  network=da;
   assertEquals(da.params(),da.params());
   assertEquals(471784,da.params().length());
   da.setParams(da.params());

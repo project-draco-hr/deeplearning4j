@@ -8,7 +8,7 @@ synchronized (other) {
       this.overlay=(Properties)other.overlay.clone();
     }
   }
-  this.finalParameters=new HashSet<String>(other.finalParameters);
+  this.finalParameters=new HashSet<>(other.finalParameters);
 synchronized (Configuration.class) {
     REGISTRY.put(this,null);
   }

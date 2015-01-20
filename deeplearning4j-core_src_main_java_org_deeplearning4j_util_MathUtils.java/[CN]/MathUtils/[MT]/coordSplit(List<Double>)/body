@@ -1,6 +1,6 @@
 {
   if (vector == null)   return null;
-  List<double[]> ret=new ArrayList<double[]>();
+  List<double[]> ret=new ArrayList<>();
   double[] xVals=new double[vector.size() / 2];
   double[] yVals=new double[vector.size() / 2];
   int xTracker=0;

@@ -1,5 +1,5 @@
 {
-  List<U> ret=new ArrayList<U>();
+  List<U> ret=new ArrayList<>();
   Class<?>[] classes=getClasses(name);
   for (  Class<?> cl : classes) {
     if (!xface.isAssignableFrom(cl)) {

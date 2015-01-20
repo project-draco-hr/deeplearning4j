@@ -2,7 +2,7 @@
   if (str == null) {
     return null;
   }
-  ArrayList<String> strList=new ArrayList<String>();
+  ArrayList<String> strList=new ArrayList<>();
   StringBuilder split=new StringBuilder();
   int index=0;
   while ((index=findNext(str,separator,escapeChar,index,split)) >= 0) {

@@ -2,7 +2,7 @@
   if (loadDefaults) {
     ArrayList<String> toLoad;
 synchronized (Configuration.class) {
-      toLoad=new ArrayList<String>(defaultResources);
+      toLoad=new ArrayList<>(defaultResources);
     }
     for (    String resource : toLoad) {
       loadResource(properties,resource,quiet);

@@ -1,5 +1,5 @@
 {
-  MultiLayerNetwork ret=null;
+  MultiLayerNetwork ret;
   try {
     ret=getClass().newInstance();
     ret.update(this);

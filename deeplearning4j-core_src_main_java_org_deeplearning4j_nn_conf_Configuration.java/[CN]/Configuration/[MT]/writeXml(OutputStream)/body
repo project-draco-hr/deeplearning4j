@@ -8,7 +8,7 @@
     for (Enumeration e=properties.keys(); e.hasMoreElements(); ) {
       String name=(String)e.nextElement();
       Object object=properties.get(name);
-      String value=null;
+      String value;
       if (object instanceof String) {
         value=(String)object;
       }

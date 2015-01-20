@@ -10,6 +10,5 @@
       return -1;
     }
   }
-  int i=Integer.parseInt(binary,2);
-  return i;
+  return Integer.parseInt(binary,2);
 }

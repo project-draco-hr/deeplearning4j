@@ -1,6 +1,6 @@
 {
   int count=0;
-  List<List<Double>> ret=new ArrayList<List<Double>>();
+  List<List<Double>> ret=new ArrayList<>();
   while (count < arr.size()) {
     List<Double> sublist=arr.subList(count,count + chunk);
     count+=chunk;
