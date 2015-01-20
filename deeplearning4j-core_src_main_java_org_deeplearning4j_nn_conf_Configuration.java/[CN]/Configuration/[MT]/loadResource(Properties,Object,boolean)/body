@@ -85,19 +85,7 @@
       }
     }
   }
- catch (  IOException e) {
-    LOG.error("error parsing conf file: " + e);
-    throw new RuntimeException(e);
-  }
-catch (  DOMException e) {
-    LOG.error("error parsing conf file: " + e);
-    throw new RuntimeException(e);
-  }
-catch (  SAXException e) {
-    LOG.error("error parsing conf file: " + e);
-    throw new RuntimeException(e);
-  }
-catch (  ParserConfigurationException e) {
+ catch (  IOException|DOMException|SAXException|ParserConfigurationException e) {
     LOG.error("error parsing conf file: " + e);
     throw new RuntimeException(e);
   }

@@ -4,6 +4,7 @@
   }
   Matcher match=varPat.matcher("");
   String eval=expr;
+  int MAX_SUBST=20;
   for (int s=0; s < MAX_SUBST; s++) {
     match.reset(eval);
     if (!match.find()) {

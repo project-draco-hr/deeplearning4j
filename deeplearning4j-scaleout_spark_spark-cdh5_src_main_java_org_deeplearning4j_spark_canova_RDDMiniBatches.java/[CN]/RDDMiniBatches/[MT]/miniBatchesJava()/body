@@ -1,6 +1,6 @@
 {
   final int batchSize=miniBatches;
-  JavaRDD<DataSet> miniBatches=toSplitJava.mapPartitions(new FlatMapFunction<Iterator<DataSet>,DataSet>(){
+  return toSplitJava.mapPartitions(new FlatMapFunction<Iterator<DataSet>,DataSet>(){
     @Override public Iterable<DataSet> call(    Iterator<DataSet> dataSetIterator) throws Exception {
       List<DataSet> ret=new ArrayList<>();
       List<DataSet> temp=new ArrayList<>();
@@ -16,5 +16,4 @@
     }
   }
 );
-  return miniBatches;
 }
