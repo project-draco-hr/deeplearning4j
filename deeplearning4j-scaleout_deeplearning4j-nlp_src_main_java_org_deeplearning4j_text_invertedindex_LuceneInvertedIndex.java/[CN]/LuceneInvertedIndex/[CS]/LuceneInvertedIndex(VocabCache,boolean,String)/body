@@ -1,6 +1,6 @@
 {
   this.vocabCache=vocabCache;
-  this.cache=cache;
+  boolean cache1=cache;
   this.indexPath=indexPath;
   if (new File(indexPath).exists()) {
     String id=UUID.randomUUID().toString();

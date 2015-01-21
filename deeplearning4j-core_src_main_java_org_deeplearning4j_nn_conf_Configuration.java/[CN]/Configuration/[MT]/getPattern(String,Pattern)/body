@@ -7,7 +7,7 @@
     return Pattern.compile(valString);
   }
  catch (  PatternSyntaxException pse) {
-    LOG.warn("Regular expression '" + valString + "' for property '"+ name+ "' not valid. Using default",pse);
+    log.warn("Regular expression '" + valString + "' for property '"+ name+ "' not valid. Using default",pse);
     return defaultValue;
   }
 }
