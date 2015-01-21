@@ -1,4 +1,4 @@
 {
-  this.matrix=new HashMap<T,Multiset<T>>();
-  this.classes=new TreeSet<T>(Ordering.natural().nullsFirst());
+  this.matrix=new HashMap<>();
+  this.classes=new TreeSet<>(Ordering.natural().nullsFirst());
 }

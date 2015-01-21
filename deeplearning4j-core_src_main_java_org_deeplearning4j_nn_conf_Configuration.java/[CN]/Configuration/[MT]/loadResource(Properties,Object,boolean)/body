@@ -7,7 +7,7 @@
       docBuilderFactory.setXIncludeAware(true);
     }
  catch (    UnsupportedOperationException e) {
-      LOG.error("Failed to set setXIncludeAware(true) for parser " + docBuilderFactory + ":"+ e,e);
+      log.error("Failed to set setXIncludeAware(true) for parser " + docBuilderFactory + ":"+ e,e);
     }
     DocumentBuilder builder=docBuilderFactory.newDocumentBuilder();
     Document doc=null;
@@ -16,7 +16,7 @@
       URL url=(URL)name;
       if (url != null) {
         if (!quiet) {
-          LOG.info("parsing " + url);
+          log.info("parsing " + url);
         }
         doc=builder.parse(url.toString());
       }
@@ -25,7 +25,7 @@
       URL url=getResource((String)name);
       if (url != null) {
         if (!quiet) {
-          LOG.info("parsing " + url);
+          log.info("parsing " + url);
         }
         doc=builder.parse(url.toString());
       }
@@ -48,7 +48,7 @@
     if (root == null) {
       root=doc.getDocumentElement();
     }
-    if (!"configuration".equals(root.getTagName()))     LOG.error("bad conf file: top-level element not <configuration>");
+    if (!"configuration".equals(root.getTagName()))     log.error("bad conf file: top-level element not <configuration>");
     NodeList props=root.getChildNodes();
     for (int i=0; i < props.getLength(); i++) {
       Node propNode=props.item(i);
@@ -58,7 +58,7 @@
         loadResource(properties,prop,quiet);
         continue;
       }
-      if (!"property".equals(prop.getTagName()))       LOG.warn("bad conf file: element not <property>");
+      if (!"property".equals(prop.getTagName()))       log.warn("bad conf file: element not <property>");
       NodeList fields=prop.getChildNodes();
       String attr=null;
       String value=null;
@@ -80,13 +80,13 @@
           if (finalParameter)           finalParameters.add(attr);
         }
  else {
-          LOG.warn(name + ":a attempt to override final parameter: " + attr+ ";  Ignoring.");
+          log.warn(name + ":a attempt to override final parameter: " + attr+ ";  Ignoring.");
         }
       }
     }
   }
  catch (  IOException|DOMException|SAXException|ParserConfigurationException e) {
-    LOG.error("error parsing conf file: " + e);
+    log.error("error parsing conf file: " + e);
     throw new RuntimeException(e);
   }
 }

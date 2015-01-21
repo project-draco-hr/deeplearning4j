@@ -17,7 +17,7 @@
       val=System.getProperty(var);
     }
  catch (    SecurityException se) {
-      LOG.warn("Unexpected SecurityException in Configuration",se);
+      log.warn("Unexpected SecurityException in Configuration",se);
     }
     if (val == null) {
       val=getRaw(var);

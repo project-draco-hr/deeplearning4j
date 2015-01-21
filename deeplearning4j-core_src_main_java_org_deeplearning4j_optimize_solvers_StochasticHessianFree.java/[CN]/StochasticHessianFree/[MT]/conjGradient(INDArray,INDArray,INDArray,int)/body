@@ -5,7 +5,6 @@
   INDArray y=r.div(preCon);
   double deltaNew=r.mul(y).sum(Integer.MAX_VALUE).getDouble(0);
   INDArray p=y.neg();
-  INDArray x=x0;
   for (int iterationCount=0; iterationCount < numIterations; iterationCount++) {
     INDArray Ap=network.getBackPropRGradient(p);
     double pAp=Ap.mul(p).sum(Integer.MAX_VALUE).getDouble(0);
@@ -13,7 +12,7 @@
       log.info("Negative slope: " + pAp + " breaking");
     }
     double alpha=deltaNew / pAp;
-    x.addi(p.mul(alpha));
+    x0.addi(p.mul(alpha));
     INDArray rNew=r.addi(Ap.mul(alpha));
     INDArray yNew=rNew.div(preCon);
     double deltaOld=deltaNew;
@@ -22,7 +21,7 @@
     p=yNew.neg().addi(p.mul(beta));
     r=rNew;
     is.add(iterationCount);
-    xs.add(x.dup());
+    xs.add(x0.dup());
   }
   return new Pair<>(is,xs);
 }
