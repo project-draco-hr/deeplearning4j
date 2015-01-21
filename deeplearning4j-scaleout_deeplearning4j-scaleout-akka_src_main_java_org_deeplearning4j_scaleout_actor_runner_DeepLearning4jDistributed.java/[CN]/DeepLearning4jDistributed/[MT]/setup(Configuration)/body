@@ -54,7 +54,7 @@
       if (host == null)       throw new IllegalArgumentException("No host applyTransformToDestination for worker");
       String connectionString=conf.get(STATE_TRACKER_CONNECTION_STRING);
       if (connectionString.contains("0.0.0.0")) {
-        if (masterHost == null)         throw new IllegalStateException("No master host specified and host discovery was lost due to improper setup on the master (related to hostname resolution) Please run the following command on your host: sudo hostname YOUR_HOST_NAME . This will make your hostname resolution work correctly on master.");
+        if (masterHost == null)         throw new IllegalStateException("No master host specified and host discovery was lost due to" + " improper setup on the master (related to hostname resolution) Please run the following" + " command on your host: sudo hostname YOUR_HOST_NAME."+ " This will make your hostname resolution work correctly on master.");
         connectionString=connectionString.replace("0.0.0.0",masterHost);
       }
       log.info("Creating state tracker with connection string " + connectionString);
@@ -73,7 +73,6 @@
 ,system.dispatcher());
     log.info("Setup worker nodes");
   }
-  this.conf=conf;
   if (type.equals("master")) {
     stateTracker.startRestApi();
   }
