@@ -1,0 +1,7 @@
+{
+  this.sparkContext=sparkContext;
+  this.conf=conf.clone();
+  this.recordReader=recordReader;
+  sc=new JavaSparkContext(this.sparkContext);
+  this.network=network;
+}

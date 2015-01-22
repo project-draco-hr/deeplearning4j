@@ -13,5 +13,6 @@
   }
 ).divi(miniBatches.count());
   network.setParameters(newParams);
+  this.network=network;
   return network;
 }
