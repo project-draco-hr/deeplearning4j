@@ -1,0 +1,3 @@
+{
+  return fitDataSet(MLLibUtil.fromLabeledPoint(sc,rdd,conf.getConf(conf.getConfs().size() - 1).getnOut()));
+}

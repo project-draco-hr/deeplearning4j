@@ -1,0 +1,3 @@
+{
+  return MLLibUtil.toVector(network.output(MLLibUtil.toVector(point)));
+}

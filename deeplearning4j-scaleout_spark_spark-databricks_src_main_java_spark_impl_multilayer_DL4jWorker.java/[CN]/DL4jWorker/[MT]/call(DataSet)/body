@@ -1,0 +1,5 @@
+{
+  MultiLayerNetwork thisNetwork=(MultiLayerNetwork)this.network;
+  thisNetwork.fit(v1);
+  return network.params();
+}

@@ -1,0 +1,3 @@
+{
+  return MLLibUtil.toMatrix(network.output(MLLibUtil.toMatrix(features)));
+}
