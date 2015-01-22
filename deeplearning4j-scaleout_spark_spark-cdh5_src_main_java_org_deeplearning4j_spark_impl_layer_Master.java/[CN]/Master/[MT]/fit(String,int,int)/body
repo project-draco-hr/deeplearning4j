@@ -1,5 +1,0 @@
-{
-  JavaRDD<String> lines=sc.textFile(path);
-  JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(recordReader,labelIndex,numLabels));
-  return fit(points);
-}
