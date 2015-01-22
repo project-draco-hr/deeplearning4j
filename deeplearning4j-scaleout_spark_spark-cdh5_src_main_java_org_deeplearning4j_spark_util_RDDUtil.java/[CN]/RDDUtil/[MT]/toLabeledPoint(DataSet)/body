@@ -1,0 +1,5 @@
+{
+  Vector features=Vectors.dense(point.getFeatureMatrix().data().asDouble());
+  double label=Nd4j.getBlasWrapper().iamax(point.getLabels());
+  return new LabeledPoint(label,features);
+}

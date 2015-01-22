@@ -1,0 +1,5 @@
+{
+  Vector features=point.features();
+  double label=point.label();
+  return new DataSet(Nd4j.create(features.toArray()),FeatureUtil.toOutcomeVector((int)label,numPossibleLabels));
+}

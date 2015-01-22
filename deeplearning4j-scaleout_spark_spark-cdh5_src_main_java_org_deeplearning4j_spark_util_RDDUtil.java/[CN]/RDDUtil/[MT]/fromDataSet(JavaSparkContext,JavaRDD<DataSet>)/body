@@ -1,0 +1,4 @@
+{
+  List<LabeledPoint> list=toLabeledPoint(data.collect());
+  return sc.parallelize(list);
+}
