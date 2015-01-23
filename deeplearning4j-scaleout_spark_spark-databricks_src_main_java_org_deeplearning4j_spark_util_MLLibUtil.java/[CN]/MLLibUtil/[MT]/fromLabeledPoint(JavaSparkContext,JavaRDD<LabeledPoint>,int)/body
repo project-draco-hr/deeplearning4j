@@ -1,4 +1,0 @@
-{
-  List<DataSet> list=fromLabeledPoint(data.collect(),numPossibleLabels);
-  return sc.parallelize(list);
-}

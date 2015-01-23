@@ -1,5 +1,0 @@
-{
-  this.sparkContext=sparkContext;
-  this.conf=conf.clone();
-  sc=new JavaSparkContext(this.sparkContext);
-}

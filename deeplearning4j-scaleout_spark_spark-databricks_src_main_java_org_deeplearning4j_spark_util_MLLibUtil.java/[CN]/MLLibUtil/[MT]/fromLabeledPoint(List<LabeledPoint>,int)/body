@@ -1,5 +1,0 @@
-{
-  List<DataSet> ret=new ArrayList<>();
-  for (  LabeledPoint point : labeledPoints)   ret.add(fromLabeledPoint(point,numPossibleLabels));
-  return ret;
-}

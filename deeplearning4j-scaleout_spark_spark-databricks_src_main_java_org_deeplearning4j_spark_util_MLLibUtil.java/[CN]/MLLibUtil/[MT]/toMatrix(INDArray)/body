@@ -1,5 +1,0 @@
-{
-  if (!arr.isMatrix())   throw new IllegalArgumentException("passed in array must be a matrix");
-  Matrix features=Matrices.dense(arr.rows(),arr.columns(),arr.data().asDouble());
-  return features;
-}

@@ -1,8 +1,0 @@
-{
-  this.network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
-  MultiLayerNetwork thisNetwork=(MultiLayerNetwork)this.network;
-  thisNetwork.init();
-  int numParams=this.network.numParams();
-  if (numParams != params.length())   throw new IllegalStateException("Number of params for configured network was " + numParams + " while the specified parameter vector length was "+ params.length());
-  thisNetwork.setParameters(params);
-}

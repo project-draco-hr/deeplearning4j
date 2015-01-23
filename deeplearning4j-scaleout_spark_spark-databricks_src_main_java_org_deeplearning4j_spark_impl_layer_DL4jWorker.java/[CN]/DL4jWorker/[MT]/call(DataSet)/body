@@ -1,5 +1,0 @@
-{
-  Layer network=(Layer)this.network;
-  network.fit(v1.getFeatureMatrix());
-  return network.params();
-}
