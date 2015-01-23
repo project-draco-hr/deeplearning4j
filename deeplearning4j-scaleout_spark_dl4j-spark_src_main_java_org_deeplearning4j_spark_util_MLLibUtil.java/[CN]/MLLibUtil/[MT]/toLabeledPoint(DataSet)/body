@@ -1,5 +1,6 @@
 {
-  Vector features=toVector(point.getFeatureMatrix());
+  if (!point.getFeatureMatrix().isVector())   throw new IllegalArgumentException("Feature matrix must be a vector");
+  Vector features=toVector(point.getFeatureMatrix().dup());
   double label=Nd4j.getBlasWrapper().iamax(point.getLabels());
   return new LabeledPoint(label,features);
 }

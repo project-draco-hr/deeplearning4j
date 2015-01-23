@@ -9,12 +9,9 @@
     }
   }
 ).build();
-  MultiLayerNetwork network=new MultiLayerNetwork(conf);
-  network.init();
-  int numParams=network.numParams();
-  INDArray params=network.params();
-  assertEquals(numParams,params.length());
-  SparkDl4jMultiLayer sparkDl4jMultiLayer=new SparkDl4jMultiLayer(sc,conf);
-  String path=new ClassPathResource("data/svmLight/iris_svmLight_0.txt").getFile().toURI().toString();
-  sparkDl4jMultiLayer.fit(path,4,new SVMLightRecordReader());
+  DataSet dataSet=new IrisDataSetIterator(150,150).next();
+  List<DataSet> list=dataSet.asList();
+  JavaRDD<DataSet> data=sc.parallelize(list);
+  JavaRDD<LabeledPoint> mllLibData=MLLibUtil.fromDataSet(sc,data);
+  MultiLayerNetwork network=SparkDl4jMultiLayer.train(mllLibData,conf);
 }

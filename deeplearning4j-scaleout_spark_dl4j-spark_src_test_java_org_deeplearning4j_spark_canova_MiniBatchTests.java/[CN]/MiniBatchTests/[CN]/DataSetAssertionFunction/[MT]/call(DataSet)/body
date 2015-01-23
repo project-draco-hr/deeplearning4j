@@ -1,0 +1,5 @@
+{
+  assertTrue(dataSet.getFeatureMatrix().columns() == 150);
+  assertTrue(dataSet.numExamples() == 30);
+  return null;
+}
