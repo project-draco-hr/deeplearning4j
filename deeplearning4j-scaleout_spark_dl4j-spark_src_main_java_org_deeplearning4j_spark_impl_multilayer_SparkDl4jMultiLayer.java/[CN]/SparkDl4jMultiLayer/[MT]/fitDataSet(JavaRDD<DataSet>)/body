@@ -6,7 +6,8 @@
   INDArray params=network.params();
   int paramsLength=network.numParams();
   if (params.length() != paramsLength)   throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-  INDArray newParams=miniBatches.map(new DL4jWorker(conf.toJson(),params)).reduce(new Function2<INDArray,INDArray,INDArray>(){
+  DL4jWorker worker=new DL4jWorker(conf.toJson(),params);
+  INDArray newParams=miniBatches.map(worker).reduce(new Function2<INDArray,INDArray,INDArray>(){
     @Override public INDArray call(    INDArray v1,    INDArray v2) throws Exception {
       return v1.addi(v2);
     }

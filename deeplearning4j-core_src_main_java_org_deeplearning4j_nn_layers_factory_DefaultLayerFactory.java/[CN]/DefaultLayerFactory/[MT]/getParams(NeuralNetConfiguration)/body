@@ -1,6 +1,6 @@
 {
   ParamInitializer init=initializer();
-  Map<String,INDArray> params=new LinkedHashMap<>();
+  Map<String,INDArray> params=Collections.synchronizedMap(new LinkedHashMap<String,INDArray>());
   init.init(params,conf);
   return params;
 }

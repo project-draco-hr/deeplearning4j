@@ -8,6 +8,6 @@
       temp.clear();
     }
   }
-  if (!temp.isEmpty())   ret.add(DataSet.merge(temp));
+  if (temp.size() > 1)   ret.add(DataSet.merge(temp));
   return ret;
 }

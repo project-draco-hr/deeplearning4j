@@ -1,4 +1,3 @@
 {
-  final int batchSize=miniBatches;
-  return toSplitJava.mapPartitions(new MiniBatchFunction(batchSize));
+  return toSplitJava.mapPartitions(new MiniBatchFunction(miniBatches));
 }
