@@ -6,9 +6,8 @@
   for (int n=0; n < y.rows(); n++)   tree.computeNonEdgeForces(n,theta,buff,sum_Q);
   double C=.0, Q;
   for (int n=0; n < y.rows(); n++) {
-    INDArray row1=rows.slice(n);
-    int begin=row1.getInt(0);
-    int end=row1.getInt(1);
+    int begin=rows.getInt(n);
+    int end=rows.getInt(n + 1);
     for (int i=begin; i < end; i++) {
       buff.assign(y.slice(n));
       buff.subi(cols.getRow(i));
