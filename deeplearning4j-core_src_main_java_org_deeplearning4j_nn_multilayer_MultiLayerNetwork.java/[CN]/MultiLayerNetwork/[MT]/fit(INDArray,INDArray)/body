@@ -1,5 +1,5 @@
 {
-  pretrain(examples);
-  if (!layerWiseConfigurations.isPretrain())   this.input=examples;
+  if (layerWiseConfigurations.isPretrain())   pretrain(examples);
+ else   this.input=examples;
   finetune(labels);
 }

@@ -1,0 +1,10 @@
+{
+  MultiLayerConfiguration conf=MultiLayerConfiguration.fromJson(json);
+  if (dataSet.numExamples() != conf.getConf(0).getBatchSize())   return;
+  conf=MultiLayerConfiguration.fromJson(json);
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  network.setParameters(params.value());
+  network.fit(dataSet);
+  accum.add(network.params());
+}

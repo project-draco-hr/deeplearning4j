@@ -1,0 +1,12 @@
+{
+  if (this.input == null)   return;
+  if (conf.getLossFunction() != LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY) {
+    INDArray input=this.input;
+    INDArray output=transform(input);
+    while (!Shape.shapeEquals(input.shape(),output.shape()))     output=transform(input);
+    score=-LossFunctions.score(input,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
+  }
+ else {
+    score=-LossFunctions.reconEntropy(input,getParam(PretrainParamInitializer.BIAS_KEY),getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),getParam(PretrainParamInitializer.WEIGHT_KEY),conf.getActivationFunction());
+  }
+}

@@ -1,6 +1,6 @@
 {
   if (sc != null)   return sc;
-  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest");
+  SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest");
   sc=new JavaSparkContext(sparkConf);
   return sc;
 }

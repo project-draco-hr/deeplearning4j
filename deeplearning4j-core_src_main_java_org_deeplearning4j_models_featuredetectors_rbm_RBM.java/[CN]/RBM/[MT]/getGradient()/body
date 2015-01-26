@@ -1,6 +1,6 @@
 {
   int k=conf.getK();
-  Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(input);
+  Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(getInput());
   INDArray chainStart=probHidden.getSecond();
   Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>> matrices;
   INDArray nvMeans=null;
@@ -15,7 +15,7 @@
     nhMeans=matrices.getSecond().getFirst();
     nhSamples=matrices.getSecond().getSecond();
   }
-  INDArray wGradient=input.transpose().mmul(probHidden.getSecond()).subi(nvSamples.transpose().mmul(nhMeans));
+  INDArray wGradient=getInput().transpose().mmul(probHidden.getSecond()).subi(nvSamples.transpose().mmul(nhMeans));
   INDArray hBiasGradient;
   if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).mean(0);
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);

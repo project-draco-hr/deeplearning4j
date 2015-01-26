@@ -11,4 +11,5 @@
     param.assign(get.reshape(param.shape()));
     idx+=param.length();
   }
+  setScore();
 }
