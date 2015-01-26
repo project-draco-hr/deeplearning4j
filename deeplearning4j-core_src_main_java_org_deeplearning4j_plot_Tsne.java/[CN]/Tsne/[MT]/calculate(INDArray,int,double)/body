@@ -8,10 +8,8 @@
   if (nDims > X.columns())   nDims=X.columns();
   INDArray sumX=pow(X,2).sum(1);
   INDArray D=X.mmul(X.transpose()).muli(-2).addiRowVector(sumX).transpose().addiRowVector(sumX);
-  X.data().flush();
   if (y == null)   y=randn(X.rows(),nDims,new MersenneTwister(123)).muli(1e-3f);
   INDArray p=computeGaussianPerplexity(D,perplexity);
-  D.data().flush();
   p.muli(4);
   if (useAdaGrad) {
     if (adaGrad == null) {

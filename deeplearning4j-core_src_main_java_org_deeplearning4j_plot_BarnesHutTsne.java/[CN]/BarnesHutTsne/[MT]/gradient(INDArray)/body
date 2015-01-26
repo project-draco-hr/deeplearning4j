@@ -1,4 +1,4 @@
 {
   this.p=p;
-  return new Pair<>(score(),getGradient().gradientLookupTable().get(Y_GRAD));
+  return new Pair<>(score(),y);
 }

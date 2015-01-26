@@ -10,11 +10,11 @@
     int end=rows.getInt(n + 1);
     for (int i=begin; i < end; i++) {
       buff.assign(y.slice(n));
-      buff.subi(cols.getRow(i));
+      buff.subi(y.slice(cols.getInt(i)));
       Q=Nd4j.getBlasWrapper().dot(buff,buff);
       Q=(1.0 / (1.0 + Q)) / sum_Q.doubleValue();
       double val=vals.getDouble(i,0);
-      C+=val * Math.log((val + Float.MIN_VALUE) / (Q + Float.MAX_VALUE));
+      C+=val * Math.log((val + Double.MIN_VALUE) / (Q + Double.MAX_VALUE));
     }
   }
   return C;

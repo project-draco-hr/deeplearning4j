@@ -2,6 +2,7 @@
   boolean exact=theta == 0.0;
   if (exact)   y=super.calculate(x,numDimensions,perplexity);
  else {
+    if (y == null)     y=randn(x.rows(),numDimensions,new MersenneTwister(123)).muli(1e-3f);
     INDArray p=computeGaussianPerplexity(x,perplexity);
     for (int i=0; i < maxIter; i++) {
       step(p,i);
