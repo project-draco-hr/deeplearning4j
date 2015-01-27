@@ -1,5 +1,5 @@
 {
-  BarnesHutTsne b=new BarnesHutTsne.Builder().theta(0.3).build();
+  BarnesHutTsne b=new BarnesHutTsne.Builder().theta(0.3).learningRate(500).build();
   ClassPathResource resource=new ClassPathResource("/mnist2500_X.txt");
   File f=resource.getFile();
   INDArray data=Nd4j.readTxt(f.getAbsolutePath(),"   ");

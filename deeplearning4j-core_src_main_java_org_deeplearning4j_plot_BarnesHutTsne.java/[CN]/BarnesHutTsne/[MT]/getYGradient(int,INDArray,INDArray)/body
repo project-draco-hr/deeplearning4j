@@ -1,8 +1,0 @@
-{
-  INDArray yGrads=Nd4j.create(y.shape());
-  for (int i=0; i < n; i++) {
-    INDArray sum1=Nd4j.tile(PQ.getRow(i).mul(qu.getRow(i)),new int[]{y.columns(),1}).transpose().mul(y.getRow(i).broadcast(y.shape()).sub(y)).sum(0);
-    yGrads.putRow(i,sum1);
-  }
-  return yGrads;
-}

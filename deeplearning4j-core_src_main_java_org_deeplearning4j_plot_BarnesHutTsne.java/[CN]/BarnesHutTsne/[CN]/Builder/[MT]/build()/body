@@ -1,3 +1,3 @@
 {
-  return new BarnesHutTsne(null,0,0,null,2,perplexity,theta,maxIter,this.stopLyingIteration,this.switchMomentumIteration,this.momentum,this.finalMomentum,this.learningRate);
+  return new BarnesHutTsne(null,0,null,2,perplexity,theta,maxIter,this.stopLyingIteration,this.switchMomentumIteration,this.momentum,this.finalMomentum,this.learningRate);
 }

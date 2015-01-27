@@ -12,12 +12,11 @@
   log.info("Calculating probabilities of data similarities...");
   for (int i=0; i < N; i++) {
     if (i % 500 == 0)     log.info("Handled " + i + " records");
-    final int j=i;
     double betaMin=Double.NEGATIVE_INFINITY;
     double betaMax=Double.POSITIVE_INFINITY;
-    Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(j),k + 1);
+    Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(i),k + 1);
     INDArray cArr=toNDArray(c);
-    Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(j));
+    Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(i));
     INDArray currP=pair.getFirst();
     double hDiff=pair.getSecond() - logU;
     int tries=0;
@@ -26,16 +25,16 @@
       if (hDiff < tolerance && -hDiff < tolerance)       found=true;
  else {
         if (hDiff > 0) {
-          if (Double.isInfinite(betaMax))           beta.putScalar(j,beta.getDouble(j) * 2.0);
- else           beta.putScalar(j,(beta.getDouble(j) + betaMax) / 2.0);
-          betaMin=beta.getDouble(j);
+          if (Double.isInfinite(betaMax))           beta.putScalar(i,beta.getDouble(i) * 2.0);
+ else           beta.putScalar(i,(beta.getDouble(i) + betaMax) / 2.0);
+          betaMin=beta.getDouble(i);
         }
  else {
-          if (Double.isInfinite(betaMin))           beta.putScalar(j,beta.getDouble(j) / 2.0);
- else           beta.putScalar(j,(beta.getDouble(j) + betaMin) / 2.0);
-          betaMax=beta.getDouble(j);
+          if (Double.isInfinite(betaMin))           beta.putScalar(i,beta.getDouble(i) / 2.0);
+ else           beta.putScalar(i,(beta.getDouble(i) + betaMin) / 2.0);
+          betaMax=beta.getDouble(i);
         }
-        pair=computeGaussianKernel(toNDArray(c),beta.getDouble(j));
+        pair=computeGaussianKernel(toNDArray(c),beta.getDouble(i));
         hDiff=pair.getSecond() - logU;
         tries++;
       }
@@ -46,7 +45,7 @@
       cols.putScalar(new int[]{rows.getInt(n),l},indices.getDouble(l));
       vals.putScalar(new int[]{rows.getInt(n),l},currPAssign.getDouble(l));
     }
-    cols.slice(j).put(new NDArrayIndex[]{NDArrayIndex.interval(0,indices.length())},indices);
+    cols.slice(i).put(new NDArrayIndex[]{NDArrayIndex.interval(0,indices.length())},indices);
   }
   return vals;
 }

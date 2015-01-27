@@ -1,5 +1,5 @@
 {
   this.p=p;
-  Gradient g=getGradient();
-  y.subi(g.gradientLookupTable().get(Y_GRAD));
+  getGradient();
+  y.addi(yIncs);
 }
