@@ -2,22 +2,25 @@
   if (yIncs == null)   yIncs=zeros(y.shape());
   if (gains == null)   gains=ones(y.shape());
   AtomicDouble sum_Q=new AtomicDouble(0);
-  INDArray pos_f=Nd4j.create(p.rows(),p.columns());
-  INDArray neg_f=Nd4j.create(p.rows(),p.columns());
+  INDArray pos_f=Nd4j.create(y.shape());
+  INDArray neg_f=Nd4j.create(y.shape());
   QuadTree quad=new QuadTree(y);
   quad.computeEdgeForces(rows,cols,p,p.rows(),pos_f);
   for (int n=0; n < p.rows(); n++) {
-    quad.computeNonEdgeForces(n,theta,neg_f,sum_Q);
+    quad.computeNonEdgeForces(n,theta,neg_f.slice(n),sum_Q);
   }
   INDArray dC=pos_f.subi(neg_f.divi(sum_Q));
   INDArray yGrads=dC;
   gains=gains.add(.2).muli(yGrads.cond(Conditions.greaterThan(0)).neqi(yIncs.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8).muli(yGrads.cond(Conditions.greaterThan(0)).eqi(yIncs.cond(Conditions.greaterThan(0)))));
   BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
   INDArray gradChange=gains.mul(yGrads);
-  if (useAdaGrad)   gradChange=adaGrad.getGradient(gradChange);
+  if (useAdaGrad) {
+    if (adaGrad == null)     adaGrad=new AdaGrad(gradChange.shape());
+    gradChange=adaGrad.getGradient(gradChange);
+  }
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);
   Gradient ret=new DefaultGradient();
-  ret.gradientLookupTable().put("yIncs",yIncs);
+  ret.gradientLookupTable().put(Y_GRAD,yIncs);
   return ret;
 }

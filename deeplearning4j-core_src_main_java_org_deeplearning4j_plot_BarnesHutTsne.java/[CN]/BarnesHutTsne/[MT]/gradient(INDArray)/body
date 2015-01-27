@@ -1,4 +1,5 @@
 {
+  QuadTree quadTree=new QuadTree(y);
   this.p=p;
   return new Pair<>(score(),y);
 }

@@ -14,7 +14,9 @@
       Q=Nd4j.getBlasWrapper().dot(buff,buff);
       Q=(1.0 / (1.0 + Q)) / sum_Q.doubleValue();
       double val=vals.getDouble(i,0);
-      C+=val * Math.log((val + Double.MIN_VALUE) / (Q + Double.MAX_VALUE));
+      double add=Math.log((val + Double.MIN_VALUE) / (Q + Double.MAX_VALUE));
+      if (Double.isNaN(add) || Double.isInfinite(add))       add=Nd4j.EPS_THRESHOLD;
+      C+=val * add;
     }
   }
   return C;
