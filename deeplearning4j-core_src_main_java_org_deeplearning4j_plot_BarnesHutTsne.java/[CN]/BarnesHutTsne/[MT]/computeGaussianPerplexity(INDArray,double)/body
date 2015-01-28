@@ -1,10 +1,10 @@
 {
-  int N=d.rows();
+  N=d.rows();
   final int k=(int)(3 * u);
   rows=zeros(N + 1);
-  cols=zeros(N,k);
-  vals=zeros(N,k);
-  for (int n=1; n < N; n++)   rows.putScalar(n,rows.getDouble(n - 1) + k);
+  cols=zeros(N * k);
+  vals=zeros(N * k);
+  for (int n=0; n < N; n++)   rows.putScalar(n + 1,rows.getDouble(n) + k);
   final INDArray beta=ones(N,1);
   final double logU=Math.log(u);
   final List<VpTreePointINDArray> list=VpTreePointINDArray.dataPoints(d);
@@ -42,8 +42,8 @@
     INDArray currPAssign=currP.div(currP.sum(Integer.MAX_VALUE));
     INDArray indices=toIndex(c);
     for (int l=0; l < indices.length(); l++) {
-      cols.putScalar(new int[]{rows.getInt(n),l},indices.getDouble(l));
-      vals.putScalar(new int[]{rows.getInt(n),l},currPAssign.getDouble(l));
+      cols.putScalar(new int[]{rows.getInt(i),l},indices.getDouble(l));
+      vals.putScalar(new int[]{rows.getInt(i),l},currPAssign.getDouble(l));
     }
     cols.slice(i).put(new NDArrayIndex[]{NDArrayIndex.interval(0,indices.length())},indices);
   }

@@ -1,29 +1,27 @@
 {
-  INDArray rowCounts=Nd4j.create(valP.rows());
-  for (int n=0; n < valP.rows(); n++) {
+  INDArray rowCounts=Nd4j.create(N);
+  for (int n=0; n < N; n++) {
     for (int i=rowP.getInt(n); i < rowP.getInt(n + 1); i++) {
       boolean present=false;
-      for (int m=rowP.getInt(colP.getInt(i)); m < rowP.getInt(colP.getInt(i) + 1); m++) {
-        if (colP.getInt(m) == n)         present=true;
+      for (int m=rowP.getInt(colP.getInt(i)); m < rowP.getInt(colP.getInt(i) + 1); m++)       if (colP.getInt(m) == n) {
+        present=true;
+        break;
       }
-      if (present) {
-        rowCounts.putScalar(n,rowCounts.getDouble(n) + 1);
-      }
+      if (present)       rowCounts.putScalar(n,rowCounts.getDouble(n) + 1);
  else {
         rowCounts.putScalar(n,rowCounts.getDouble(n) + 1);
-        rowCounts.putScalar(rowCounts.getInt(colP.getInt(i)),rowCounts.getDouble(rowCounts.getInt(colP.getInt(i))) + 1);
+        double putIdx=rowCounts.getDouble(colP.getInt(i));
+        rowCounts.putScalar(colP.getInt(i),putIdx + 1);
       }
     }
   }
   int numElements=rowCounts.sum(Integer.MAX_VALUE).getInt(0);
-  INDArray offset=Nd4j.create(valP.rows());
-  INDArray symRowP=Nd4j.create(valP.rows() + 1);
+  INDArray offset=Nd4j.create(N);
+  INDArray symRowP=Nd4j.create(N + 1);
   INDArray symColP=Nd4j.create(numElements);
   INDArray symValP=Nd4j.create(numElements);
-  for (int n=0; n < valP.rows(); n++) {
-    symRowP.putScalar(n + 1,symRowP.getDouble(n) + rowCounts.getDouble(n));
-  }
-  for (int n=0; n < valP.rows(); n++) {
+  for (int n=0; n < N; n++)   symRowP.putScalar(n + 1,symRowP.getDouble(n) + rowCounts.getDouble(n));
+  for (int n=0; n < N; n++) {
     for (int i=rowP.getInt(n); i < rowP.getInt(n + 1); i++) {
       boolean present=false;
       for (int m=rowP.getInt(colP.getInt(i)); m < rowP.getInt(colP.getInt(i)) + 1; m++) {
@@ -45,7 +43,7 @@
       }
       if (!present || (present && n <= colP.getInt(i))) {
         offset.putScalar(n,offset.getInt(n) + 1);
-        if (colP.getInt(i) != n)         offset.putScalar(colP.getInt(i),offset.getDouble(colP.getInt(i)));
+        if (colP.getInt(i) != n)         offset.putScalar(colP.getInt(i),offset.getDouble(colP.getInt(i)) + 1);
       }
     }
   }

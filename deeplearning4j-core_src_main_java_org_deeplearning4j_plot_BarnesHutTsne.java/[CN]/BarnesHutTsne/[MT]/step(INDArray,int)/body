@@ -1,5 +1,5 @@
 {
-  this.p=p;
-  getGradient();
+  Gradient g=getGradient();
+  update(g);
   y.addi(yIncs);
 }

@@ -1,2 +1,13 @@
 {
+  INDArray yGrads=gradient.gradientLookupTable().get(Y_GRAD);
+  gains=gains.add(.2).muli(sign(yGrads)).neqi(sign(yIncs)).addi(gains.mul(0.8).muli(sign(yGrads)).neqi(sign(yIncs)));
+  BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
+  INDArray gradChange=gains.mul(yGrads);
+  if (useAdaGrad) {
+    if (adaGrad == null)     adaGrad=new AdaGrad(gradChange.shape());
+    gradChange=adaGrad.getGradient(gradChange);
+  }
+ else   gradChange.muli(learningRate);
+  yIncs.muli(momentum).subi(gradChange);
+  gradient.gradientLookupTable().put(Y_GRAD,yIncs);
 }
