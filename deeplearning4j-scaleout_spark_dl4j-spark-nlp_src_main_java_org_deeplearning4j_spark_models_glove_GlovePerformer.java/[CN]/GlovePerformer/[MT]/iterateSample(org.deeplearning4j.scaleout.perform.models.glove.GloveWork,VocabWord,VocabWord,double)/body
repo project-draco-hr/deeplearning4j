@@ -1,0 +1,12 @@
+{
+  INDArray w1Vector=work.getOriginalVectors().get(w1.getWord());
+  INDArray w2Vector=work.getOriginalVectors().get(w2.getWord());
+  double prediction=Nd4j.getBlasWrapper().dot(w1Vector,w2Vector);
+  prediction+=work.getBiases().get(w1.getWord()) + work.getBiases().get(w2.getWord());
+  double weight=Math.pow(Math.min(1.0,(score / maxCount)),xMax);
+  double fDiff=score > xMax ? prediction : weight * (prediction - Math.log(score));
+  double gradient=fDiff;
+  update(work,w1,w1Vector,w2Vector,gradient);
+  update(work,w2,w2Vector,w1Vector,gradient);
+  return fDiff;
+}

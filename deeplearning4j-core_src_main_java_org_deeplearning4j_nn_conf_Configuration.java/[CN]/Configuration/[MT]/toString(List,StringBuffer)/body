@@ -1,9 +1,0 @@
-{
-  ListIterator i=resources.listIterator();
-  while (i.hasNext()) {
-    if (i.nextIndex() != 0) {
-      sb.append(", ");
-    }
-    sb.append(i.next());
-  }
-}

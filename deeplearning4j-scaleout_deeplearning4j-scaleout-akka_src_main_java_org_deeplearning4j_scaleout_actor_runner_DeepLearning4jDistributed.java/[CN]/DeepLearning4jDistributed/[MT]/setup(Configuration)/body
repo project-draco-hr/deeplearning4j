@@ -46,7 +46,7 @@
  else {
     log.info("Starting worker node");
     Address a=AddressFromURIString.parse(conf.get(MASTER_URL));
-    Configuration c=conf.copy();
+    Configuration c=new Configuration(conf);
     Cluster cluster=Cluster.get(system);
     cluster.join(a);
     try {

@@ -1,0 +1,8 @@
+{
+  File local=new File(to.getName());
+  from.copyToLocalFile(false,to,new Path(local.getPath()),true);
+  AnalysisEngineDescription desc=createEngineDescriptionFromPath(local.getAbsolutePath(),extraArgs);
+  AnalysisEngine ret=createEngine(desc);
+  local.delete();
+  return ret;
+}

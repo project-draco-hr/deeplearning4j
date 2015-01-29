@@ -1,7 +1,0 @@
-{
-  String valueString=get(name);
-  if (null == valueString) {
-    return Collections.emptyList();
-  }
-  return StringUtils.getTrimmedStringCollection(valueString);
-}

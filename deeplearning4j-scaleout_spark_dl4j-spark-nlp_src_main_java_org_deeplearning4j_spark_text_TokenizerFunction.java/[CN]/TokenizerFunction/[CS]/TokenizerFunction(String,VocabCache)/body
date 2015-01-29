@@ -1,0 +1,9 @@
+{
+  try {
+    tokenizerFactoryClazz=(Class<? extends TokenizerFactory>)Class.forName(clazz);
+    this.cache=cache;
+  }
+ catch (  ClassNotFoundException e) {
+    e.printStackTrace();
+  }
+}

@@ -1,0 +1,12 @@
+{
+  Path next=paths.next();
+  try {
+    InputStream open=fs.open(next);
+    String read=new String(IOUtils.toByteArray(open));
+    open.close();
+    return read;
+  }
+ catch (  Exception e) {
+  }
+  return null;
+}

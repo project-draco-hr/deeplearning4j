@@ -1,0 +1,6 @@
+{
+  Tokenizer tokenizer=null;
+  if (tokenizerFactory == null)   tokenizerFactory=getTokenizerFactory();
+  Collection<String> tokens=tokenizerFactory.create(v1).getTokens();
+  return new Triple<>(tokens,cache,Long.valueOf(tokens.size()));
+}

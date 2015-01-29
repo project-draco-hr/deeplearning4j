@@ -1,0 +1,20 @@
+{
+  conf.set(VECTOR_LENGTH,String.valueOf(table.getVectorLength()));
+  conf.set(ADAGRAD,String.valueOf(table.isUseAdaGrad()));
+  conf.set(NEGATIVE,String.valueOf(table.getNegative()));
+  conf.set(ALPHA,String.valueOf(table.getLr().get()));
+  conf.set(NUM_WORDS,String.valueOf(index.totalWords()));
+  conf.set(JobAggregator.AGGREGATOR,Word2VecJobAggregator.class.getName());
+  table.resetWeights();
+  if (table.getNegative() > 0) {
+    ByteArrayOutputStream bis=new ByteArrayOutputStream();
+    try {
+      DataOutputStream ois=new DataOutputStream(bis);
+      Nd4j.write(table.getTable(),ois);
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+    conf.set(Word2VecPerformer.TABLE,new String(bis.toByteArray()));
+  }
+}

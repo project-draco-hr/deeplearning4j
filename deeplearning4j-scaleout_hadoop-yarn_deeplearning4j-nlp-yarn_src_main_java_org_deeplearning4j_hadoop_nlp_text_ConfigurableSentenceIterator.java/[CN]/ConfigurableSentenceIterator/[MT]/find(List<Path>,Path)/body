@@ -1,0 +1,7 @@
+{
+  if (fs.isDirectory(currentFile)) {
+    FileStatus[] statuses=fs.listStatus(currentFile);
+    for (    FileStatus status : statuses)     find(paths,status.getPath());
+  }
+ else   paths.add(currentFile);
+}

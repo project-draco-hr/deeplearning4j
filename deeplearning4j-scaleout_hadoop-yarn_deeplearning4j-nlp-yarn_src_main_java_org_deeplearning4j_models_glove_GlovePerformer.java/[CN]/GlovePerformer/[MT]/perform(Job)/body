@@ -1,0 +1,9 @@
+{
+  if (job.getWork() instanceof org.deeplearning4j.scaleout.perform.models.glove.GloveWork) {
+    org.deeplearning4j.scaleout.perform.models.glove.GloveWork work=(org.deeplearning4j.scaleout.perform.models.glove.GloveWork)job.getWork();
+    if (work == null)     return;
+    List<Pair<VocabWord,VocabWord>> sentences=work.getCoOccurrences();
+    for (    Pair<VocabWord,VocabWord> coc : sentences)     iterateSample(work,coc.getFirst(),coc.getSecond(),coOccurrences.count(coc.getFirst().getWord(),coc.getSecond().getWord()));
+    job.setResult((Serializable)Arrays.asList(work.addDeltas()));
+  }
+}

@@ -1,8 +1,0 @@
-{
-  this(other);
-  this.loadDefaults=other.loadDefaults;
-  this.storeResource=storeResource;
-  if (storeResource) {
-    updatingResource=new HashMap<>();
-  }
-}

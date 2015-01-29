@@ -1,0 +1,8 @@
+{
+  if (list == null || list.isEmpty())   throw new IllegalArgumentException("Can't average empty or null list");
+  if (list.get(0) == null)   return null;
+  INDArray ret=Nd4j.create(list.get(0).shape());
+  for (  INDArray arr : list)   ret.addi(arr);
+  if (list.size() > 1)   return ret.divi((double)list.size());
+  return ret;
+}

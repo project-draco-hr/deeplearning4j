@@ -1,0 +1,4 @@
+{
+  if (stateTracker != null)   return new GlovePerformer(stateTracker);
+  return new GlovePerformer();
+}

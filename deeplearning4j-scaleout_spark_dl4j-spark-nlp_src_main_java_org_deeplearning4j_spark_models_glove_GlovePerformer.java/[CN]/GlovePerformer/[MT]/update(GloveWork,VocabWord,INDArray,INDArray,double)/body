@@ -1,0 +1,9 @@
+{
+  INDArray grad1=contextVector.mul(gradient);
+  INDArray update=gloveWork.getAdaGrad(w1.getWord()).getGradient(grad1,0,lookupTableSize);
+  wordVector.subi(update);
+  double w1Bias=gloveWork.getBias(w1.getWord());
+  double biasGradient=gloveWork.getBiasAdaGrad(w1.getWord()).getGradient(gradient,0,biasShape);
+  double update2=w1Bias - biasGradient;
+  gloveWork.updateBias(w1.getWord(),update2);
+}
