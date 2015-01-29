@@ -1,6 +1,7 @@
 {
   N=d.rows();
   final int k=(int)(3 * u);
+  if (u > k)   throw new IllegalStateException("Illegal k value " + k + "greater than "+ u);
   rows=zeros(N + 1);
   cols=zeros(N * k);
   vals=zeros(N * k);
@@ -16,12 +17,12 @@
     double betaMax=Double.POSITIVE_INFINITY;
     Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(i),k + 1);
     INDArray cArr=toNDArray(c);
-    Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(i));
+    Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(i),k);
     INDArray currP=pair.getFirst();
     double hDiff=pair.getSecond() - logU;
     int tries=0;
     boolean found=false;
-    while (!found && tries < 50) {
+    while (!found && tries < 200) {
       if (hDiff < tolerance && -hDiff < tolerance)       found=true;
  else {
         if (hDiff > 0) {
@@ -34,18 +35,17 @@
  else           beta.putScalar(i,(beta.getDouble(i) + betaMin) / 2.0);
           betaMax=beta.getDouble(i);
         }
-        pair=computeGaussianKernel(toNDArray(c),beta.getDouble(i));
+        pair=computeGaussianKernel(toNDArray(c),beta.getDouble(i),k);
         hDiff=pair.getSecond() - logU;
         tries++;
       }
     }
-    INDArray currPAssign=currP.div(currP.sum(Integer.MAX_VALUE));
-    INDArray indices=toIndex(c);
+    currP.divi(currP.sum(Integer.MAX_VALUE));
+    INDArray indices=toIndex(c,k);
     for (int l=0; l < indices.length(); l++) {
-      cols.putScalar(new int[]{rows.getInt(i),l},indices.getDouble(l));
-      vals.putScalar(new int[]{rows.getInt(i),l},currPAssign.getDouble(l));
+      cols.putScalar(rows.getInt(i) + l,l < indices.length() - 1 ? indices.getDouble(l + 1) : 0.0);
+      vals.putScalar(rows.getInt(i) + l,currP.getDouble(l));
     }
-    cols.slice(i).put(new NDArrayIndex[]{NDArrayIndex.interval(0,indices.length())},indices);
   }
   return vals;
 }

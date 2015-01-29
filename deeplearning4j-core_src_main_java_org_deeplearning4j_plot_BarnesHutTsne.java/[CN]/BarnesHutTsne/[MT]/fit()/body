@@ -9,9 +9,7 @@
     for (int i=0; i < maxIter; i++) {
       step(vals,i);
       if (i == switchMomentumIteration)       momentum=finalMomentum;
-      if (i == stopLyingIteration) {
-        vals.divi(12);
-      }
+      if (i == stopLyingIteration)       vals.divi(12);
       if (iterationListener != null)       iterationListener.iterationDone(i);
       log.info("Error at iteration " + i + " is "+ score());
     }

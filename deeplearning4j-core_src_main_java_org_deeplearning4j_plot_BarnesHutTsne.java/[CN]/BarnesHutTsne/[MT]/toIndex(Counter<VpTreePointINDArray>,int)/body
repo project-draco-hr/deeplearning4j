@@ -1,5 +1,5 @@
 {
-  INDArray ret=Nd4j.create(counter.size());
+  INDArray ret=Nd4j.create(k);
   List<VpTreePointINDArray> list=counter.getSortedKeys();
   for (int i=0; i < list.size(); i++) {
     ret.putScalar(i,list.get(i).getIndex());

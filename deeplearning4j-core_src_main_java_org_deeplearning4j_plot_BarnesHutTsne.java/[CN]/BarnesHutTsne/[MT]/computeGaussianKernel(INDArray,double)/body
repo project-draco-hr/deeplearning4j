@@ -1,6 +1,0 @@
-{
-  INDArray distancesTimesBeta=exp(distances.mul(-beta));
-  double sum=distancesTimesBeta.sum(Integer.MAX_VALUE).getDouble(0);
-  double h=distancesTimesBeta.mul(distances).muli(beta).sum(Integer.MAX_VALUE).getDouble(0) / sum + Math.log(sum);
-  return new Pair<>(distancesTimesBeta,h);
-}

@@ -12,5 +12,5 @@
     currObject++;
     return ret;
   }
-  return null;
+  throw new IllegalStateException("Indeterminate state");
 }

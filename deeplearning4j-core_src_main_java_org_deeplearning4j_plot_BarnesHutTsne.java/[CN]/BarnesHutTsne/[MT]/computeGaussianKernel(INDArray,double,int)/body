@@ -1,0 +1,9 @@
+{
+  INDArray currP=Nd4j.create(k);
+  for (int m=0; m < k; m++)   currP.putScalar(m,FastMath.exp(-beta * distances.getDouble(m + 1)));
+  double sum=currP.sum(Integer.MAX_VALUE).getDouble(0);
+  double h=Double.MIN_VALUE;
+  for (int m=0; m < k; m++)   h+=beta * (distances.getDouble(m + 1) * currP.getDouble(m));
+  h=(h / sum) + FastMath.log(sum);
+  return new Pair<>(currP,h);
+}
