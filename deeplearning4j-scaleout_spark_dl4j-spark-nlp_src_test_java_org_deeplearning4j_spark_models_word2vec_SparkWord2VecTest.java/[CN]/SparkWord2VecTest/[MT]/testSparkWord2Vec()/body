@@ -1,0 +1,6 @@
+{
+  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("basic/word2vec.txt").getFile().getAbsolutePath());
+  SparkWord2Vec word2Vec=new SparkWord2Vec();
+  sc.getConf().set(Word2VecPerformer.NEGATIVE,String.valueOf(0));
+  word2Vec.train(corpus);
+}

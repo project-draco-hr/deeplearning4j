@@ -5,6 +5,7 @@
   JavaSparkContext sc=new JavaSparkContext(rdd.context());
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
   InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(Word2VecPerformer.ALPHA,0.025)).vectorLength(conf.getInt(Word2VecPerformer.VECTOR_LENGTH,100)).negative(conf.getDouble(Word2VecPerformer.NEGATIVE,5)).useAdaGrad(conf.getBoolean(Word2VecPerformer.ADAGRAD,false)).build();
+  lookupTable.resetWeights();
   Word2VecPerformer performer=new Word2VecPerformer(sc,sc.broadcast(new AtomicLong(vocabAndNumWords.getSecond())),lookupTable);
   rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new TokentoVocabWord(vocabCacheBroadcast)).foreach(performer);
 }
