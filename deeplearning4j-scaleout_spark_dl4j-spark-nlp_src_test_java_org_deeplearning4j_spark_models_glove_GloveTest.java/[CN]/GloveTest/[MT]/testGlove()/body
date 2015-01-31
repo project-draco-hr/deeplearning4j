@@ -1,0 +1,5 @@
+{
+  Glove glove=new Glove(true,5,300);
+  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("basic/word2vec.txt").getFile().getAbsolutePath());
+  glove.train(corpus);
+}
