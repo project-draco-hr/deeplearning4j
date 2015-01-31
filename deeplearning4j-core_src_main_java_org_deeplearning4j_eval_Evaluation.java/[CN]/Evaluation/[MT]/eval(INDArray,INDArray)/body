@@ -4,16 +4,36 @@
     INDArray currRow=realOutcomes.getRow(i);
     INDArray guessRow=guesses.getRow(i);
     int currMax=Nd4j.getBlasWrapper().iamax(currRow);
+{
+      double max=currRow.getDouble(0);
+      currMax=0;
+      for (int col=1; col < currRow.columns(); col++) {
+        if (currRow.getDouble(col) > max) {
+          max=currRow.getDouble(col);
+          currMax=col;
+        }
+      }
+    }
     int guessMax=Nd4j.getBlasWrapper().iamax(guessRow);
+{
+      double max=guessRow.getDouble(0);
+      guessMax=0;
+      for (int col=1; col < guessRow.columns(); col++) {
+        if (guessRow.getDouble(col) > max) {
+          max=guessRow.getDouble(col);
+          guessMax=col;
+        }
+      }
+    }
     addToConfusion(currMax,guessMax);
     if (currMax == guessMax) {
-      incrementTruePositives();
+      incrementTruePositives(guessMax);
       for (      Integer clazz : confusion.getClasses()) {
         if (clazz != guessMax)         trueNegative.incrementCount(clazz,1.0);
       }
     }
  else {
-      incrementFalseNegatives();
+      incrementFalseNegatives(currMax);
       incrementFalsePositives(guessMax);
     }
   }
