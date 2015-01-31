@@ -1,5 +1,5 @@
 {
-  IRUnitDriver polr_ir=new IRUnitDriver("src/test/resources/yarn/configurations/svmLightIris_TwoWorkers_IRUnitTest.properties");
+  IRUnitDriver polr_ir=new IRUnitDriver(new ClassPathResource("/yarn/configurations/svmLightIris_TwoWorkers_IRUnitTest.properties").getFile().getAbsolutePath());
   polr_ir.setup();
   polr_ir.simulateRun();
 }

@@ -1,5 +1,5 @@
 {
-  String props_file="src/test/resources/yarn/configurations/svmLightWorkerIRUnitTest.properties";
+  String props_file=new ClassPathResource("/yarn/configurations/svmLightWorkerIRUnitTest.properties").getFile().getAbsolutePath();
   Properties props=new Properties();
   try {
     FileInputStream fis=new FileInputStream(props_file);

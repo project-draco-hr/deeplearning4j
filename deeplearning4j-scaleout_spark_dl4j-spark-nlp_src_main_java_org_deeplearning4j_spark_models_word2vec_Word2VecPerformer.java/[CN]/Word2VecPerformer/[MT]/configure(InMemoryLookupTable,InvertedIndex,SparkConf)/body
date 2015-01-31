@@ -4,7 +4,6 @@
   conf.set(NEGATIVE,String.valueOf(table.getNegative()));
   conf.set(ALPHA,String.valueOf(table.getLr().get()));
   conf.set(NUM_WORDS,String.valueOf(index.totalWords()));
-  conf.set(JobAggregator.AGGREGATOR,Word2VecJobAggregator.class.getName());
   table.resetWeights();
   if (table.getNegative() > 0) {
     ByteArrayOutputStream bis=new ByteArrayOutputStream();

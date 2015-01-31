@@ -1,0 +1,8 @@
+{
+  if (sentence == null || sentence.isEmpty())   return;
+  for (int i=0; i < sentence.size(); i++) {
+    if (sentence.get(i).getWord().endsWith("STOP"))     continue;
+    nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    skipGram(i,sentence,(int)nextRandom.get() % window,alpha);
+  }
+}
