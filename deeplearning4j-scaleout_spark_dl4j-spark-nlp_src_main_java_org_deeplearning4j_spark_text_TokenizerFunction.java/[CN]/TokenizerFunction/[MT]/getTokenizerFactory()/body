@@ -2,10 +2,7 @@
   try {
     tokenizerFactory=tokenizerFactoryClazz.newInstance();
   }
- catch (  InstantiationException e) {
-    e.printStackTrace();
-  }
-catch (  IllegalAccessException e) {
+ catch (  InstantiationException|IllegalAccessException e) {
     e.printStackTrace();
   }
   return tokenizerFactory;

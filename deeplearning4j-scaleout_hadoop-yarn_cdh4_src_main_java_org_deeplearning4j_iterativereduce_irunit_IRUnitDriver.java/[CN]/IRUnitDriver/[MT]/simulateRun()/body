@@ -4,12 +4,14 @@
   int iterations=Integer.parseInt(props.getProperty(APP_NUM_ITERATIONS));
   log.info("Starting Epochs (" + iterations + ")...");
   for (int x=0; x < iterations; x++) {
-    for (int workerId=0; workerId < workers.size(); workerId++) {
-      Updateable result=workers.get(workerId).compute();
+    for (    ComputableWorker worker : workers) {
+      Updateable result=worker.compute();
       workerResults.add(result);
     }
     Updateable master_result=this.master.compute(workerResults,master_results);
-    for (int workerId=0; workerId < workers.size(); workerId++)     workers.get(workerId).update(master_result);
+    for (    ComputableWorker worker : workers) {
+      worker.update(master_result);
+    }
     log.info("Complete " + iterations + " Iterations Per Worker.");
     if (null != props.getProperty(APP_OUTPUT_PATH)) {
       String outputPath=props.getProperty(APP_OUTPUT_PATH);

@@ -1,0 +1,38 @@
+{
+  Set<String> encountered=new HashSet<>();
+  long wordsEncountered=v1.getSecond() + v1.getFirst().size();
+  for (  String token : v1.getFirst()) {
+    if (stopWords.getValue().contains(token)) {
+      token="STOP";
+    }
+    if (!token.isEmpty()) {
+      vocab.incrementWordCount(token);
+      if (!encountered.contains(token)) {
+        vocab.incrementDocCount(token,1);
+        encountered.add(token);
+      }
+      VocabWord token2;
+      if (vocab.hasToken(token))       token2=vocab.tokenFor(token);
+ else {
+        token2=new VocabWord(1.0,token);
+        vocab.addToken(token2);
+      }
+      if (!Util.matchesAnyStopWord(stopWords.getValue(),token) && !token.isEmpty()) {
+        if (!vocab.containsWord(token) && vocab.wordFrequency(token) >= minWordFrequency) {
+          int idx=vocab.numWords();
+          token2.setIndex(idx);
+          vocab.putVocabWord(token);
+        }
+ else         if (Util.matchesAnyStopWord(stopWords.getValue(),token) && !token.isEmpty()) {
+          token="STOP";
+          if (!vocab.containsWord(token) && vocab.wordFrequency(token) >= minWordFrequency) {
+            int idx=vocab.numWords();
+            token2.setIndex(idx);
+            vocab.putVocabWord(token);
+          }
+        }
+      }
+    }
+  }
+  return new Pair<>(vocab,wordsEncountered);
+}
