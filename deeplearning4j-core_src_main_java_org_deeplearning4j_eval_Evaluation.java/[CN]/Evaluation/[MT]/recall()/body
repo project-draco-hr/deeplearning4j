@@ -1,4 +1,7 @@
 {
-  if (truePositives == 0)   return 0;
-  return truePositives / (truePositives + falseNegatives);
+  double r=0.0;
+  for (  Integer i : confusion.getClasses()) {
+    r+=recall(i);
+  }
+  return r / (double)confusion.getClasses().size();
 }

@@ -1,4 +1,4 @@
 {
-  if (truePositives == 0)   return 0;
-  return truePositives / (truePositives + falsePositives.getCount(i));
+  if (truePositives.getCount(i) == 0)   return 0;
+  return truePositives.getCount(i) / (truePositives.getCount(i) + falsePositives.getCount(i));
 }
