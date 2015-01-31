@@ -6,13 +6,12 @@
     props.load(fis);
     fis.close();
   }
- catch (  FileNotFoundException ex) {
-    System.out.println(ex);
-  }
-catch (  IOException ex) {
+ catch (  IOException ex) {
     System.out.println(ex);
   }
   String json=props.getProperty("org.deeplearning4j.scaleout.multilayerconf");
   MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(json);
   MultiLayerNetwork multiLayerNetwork=new MultiLayerNetwork(conf2);
+  assertArrayEquals(new int[]{2,2},multiLayerNetwork.getLayerWiseConfigurations().getHiddenLayerSizes());
+  assertEquals(2,multiLayerNetwork.getLayerWiseConfigurations().getConf(0).getNumFeatureMaps());
 }
