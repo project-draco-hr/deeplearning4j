@@ -1,8 +1,0 @@
-{
-  List<INDArray> syn0List=workResults.get(key,otherKey);
-  if (syn0List == null) {
-    syn0List=new ArrayList<>();
-    workResults.put(key,otherKey,syn0List);
-  }
-  return syn0List;
-}

@@ -1,5 +1,4 @@
 {
-  vectorLength=conf.getInt(VECTOR_LENGTH,50);
   useAdaGrad=conf.getBoolean(ADAGRAD,false);
   negative=conf.getDouble(NEGATIVE,5);
   numWords=conf.getInt(NUM_WORDS,1);

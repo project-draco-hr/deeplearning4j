@@ -1,0 +1,23 @@
+{
+  TextPipeline pipeline=new TextPipeline(rdd);
+  Pair<VocabCache,Long> vocabAndNumWords=pipeline.process();
+  SparkConf conf=rdd.context().getConf();
+  JavaSparkContext sc=new JavaSparkContext(rdd.context());
+  vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
+  GloveWeightLookupTable gloveWeightLookupTable=new GloveWeightLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(GlovePerformer.ALPHA,0.025)).maxCount(conf.getDouble(GlovePerformer.MAX_COUNT,100)).vectorLength(conf.getInt(GlovePerformer.VECTOR_LENGTH,100)).xMax(conf.getDouble(GlovePerformer.X_MAX,0.75)).build();
+  gloveWeightLookupTable.resetWeights();
+  CounterMap<String,String> coOccurrenceCounts=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new CoOccurrenceCalculator(symmetric,vocabCacheBroadcast,windowSize)).fold(new CounterMap<String,String>(),new CoOccurrenceCounts());
+  List<Triple<String,String,Double>> counts=new ArrayList<>();
+  Iterator<Pair<String,String>> pairIter=coOccurrenceCounts.getPairIterator();
+  while (pairIter.hasNext()) {
+    Pair<String,String> pair=pairIter.next();
+    counts.add(new Triple<>(pair.getFirst(),pair.getSecond(),coOccurrenceCounts.getCount(pair.getFirst(),pair.getSecond())));
+  }
+  for (int i=0; i < iterations; i++) {
+    Collections.shuffle(counts);
+    JavaRDD<Triple<String,String,Double>> parallel=sc.parallelize(counts);
+    JavaRDD<Triple<VocabWord,VocabWord,Double>> vocab=parallel.map(new VocabWordPairs(vocabCacheBroadcast));
+    vocab.foreach(new GlovePerformer(gloveWeightLookupTable));
+  }
+  return new Pair<>(vocabAndNumWords.getFirst(),gloveWeightLookupTable);
+}

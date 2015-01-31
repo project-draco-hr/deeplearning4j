@@ -1,7 +1,0 @@
-{
-  if (cache == null)   throw new IllegalStateException("Unable to create work; no vocab found");
-  if (table == null)   throw new IllegalStateException("Unable to create work; no table found");
-  if (sentence == null)   throw new IllegalArgumentException("Unable to create work from null sentence");
-  GloveWork work=new GloveWork(table,sentence);
-  return work;
-}
