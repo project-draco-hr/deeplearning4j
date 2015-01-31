@@ -10,6 +10,7 @@
   }
   for (  Object s : props.keySet())   defaultConf.set(s.toString(),props.getProperty(s.toString()));
   JobConf job=new JobConf(defaultConf);
+  RecordReader recordReader;
   try {
     recordReader=(RecordReader)Class.forName(defaultConf.get(APP_RECORD_READER)).newInstance();
   }
@@ -45,14 +46,11 @@
       log.error("Error loading worker",e);
     }
     worker.setup(getConfiguration());
-    CanovaRecordReader reader=new CanovaRecordReader(this.recordReader);
+    CanovaRecordReader reader=new CanovaRecordReader(recordReader);
     try {
       reader.initialize(splits[x]);
     }
- catch (    IOException e) {
-      e.printStackTrace();
-    }
-catch (    InterruptedException e) {
+ catch (    IOException|InterruptedException e) {
       e.printStackTrace();
     }
     worker.setRecordReader(reader);
