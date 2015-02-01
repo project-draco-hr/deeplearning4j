@@ -1,0 +1,8 @@
+{
+  String url="https://docs.google.com/uc?export=download&confirm=LDs-&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM";
+  String path="GoogleNews-vectors-negative300.bin.gz";
+  File toDl=new File(path);
+  if (!toDl.exists())   FileUtils.copyURLToFile(new URL(url),toDl);
+  Word2Vec vec=WordVectorSerializer.loadGoogleModel(toDl.getAbsolutePath(),true);
+  assertEquals(3000000,vec.vocab().numWords());
+}

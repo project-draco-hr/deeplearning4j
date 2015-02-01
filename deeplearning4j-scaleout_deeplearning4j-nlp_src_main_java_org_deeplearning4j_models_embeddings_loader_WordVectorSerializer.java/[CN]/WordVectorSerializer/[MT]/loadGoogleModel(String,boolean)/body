@@ -11,7 +11,7 @@
     float vector;
     int words, size=0;
     try {
-      bis=new BufferedInputStream(new FileInputStream(path));
+      bis=new BufferedInputStream(path.endsWith(".gz") ? new GZIPInputStream(new FileInputStream(path)) : new FileInputStream(path));
       dis=new DataInputStream(bis);
       words=Integer.parseInt(readString(dis));
       size=Integer.parseInt(readString(dis));
