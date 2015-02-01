@@ -1,0 +1,9 @@
+{
+  if (addUnk) {
+    VocabWord word=new VocabWord(1.0,Word2Vec.UNK);
+    word.setIndex(0);
+    addToken(word);
+    addWordToIndex(0,Word2Vec.UNK);
+    putVocabWord(Word2Vec.UNK);
+  }
+}

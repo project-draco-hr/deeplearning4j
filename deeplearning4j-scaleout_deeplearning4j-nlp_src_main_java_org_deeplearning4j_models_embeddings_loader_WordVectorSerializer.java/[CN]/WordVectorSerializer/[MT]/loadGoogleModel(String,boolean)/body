@@ -15,7 +15,7 @@
       dis=new DataInputStream(bis);
       words=Integer.parseInt(readString(dis));
       size=Integer.parseInt(readString(dis));
-      cache=new InMemoryLookupCache();
+      cache=new InMemoryLookupCache(false);
       lookupTable=new InMemoryLookupTable.Builder().cache(cache).vectorLength(size).build();
       String word;
       float[] vectors;
