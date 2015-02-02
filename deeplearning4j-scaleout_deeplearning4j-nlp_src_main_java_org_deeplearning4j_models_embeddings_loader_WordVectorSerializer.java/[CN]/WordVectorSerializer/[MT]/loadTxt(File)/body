@@ -1,7 +1,7 @@
 {
   BufferedReader write=new BufferedReader(new FileReader(path));
   VocabCache cache=new InMemoryLookupCache();
-  InMemoryLookupTable l=null;
+  InMemoryLookupTable l;
   LineIterator iter=IOUtils.lineIterator(write);
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
