@@ -1,4 +1,3 @@
 {
-  this.sc=sc;
-  this.conf=conf.clone();
+  this(sc.sc(),conf);
 }

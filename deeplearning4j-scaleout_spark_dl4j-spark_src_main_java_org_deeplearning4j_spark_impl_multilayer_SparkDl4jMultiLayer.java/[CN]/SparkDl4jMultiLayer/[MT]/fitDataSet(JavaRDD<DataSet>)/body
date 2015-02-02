@@ -2,7 +2,8 @@
   int batchSize=conf.getConf(0).getBatchSize();
   int iterations=conf.getConf(0).getNumIterations();
   JavaRDD<DataSet> miniBatches=new RDDMiniBatches(batchSize,rdd).miniBatchesJava();
-  if (averageEachIteration) {
+  log.info("Running distributed training averaging each iteration " + averageEachIteration + " with a mini batch size of "+ batchSize+ " and number of iterations "+ iterations);
+  if (!averageEachIteration) {
     MultiLayerNetwork network=new MultiLayerNetwork(conf);
     network.init();
     final INDArray params=network.params();
