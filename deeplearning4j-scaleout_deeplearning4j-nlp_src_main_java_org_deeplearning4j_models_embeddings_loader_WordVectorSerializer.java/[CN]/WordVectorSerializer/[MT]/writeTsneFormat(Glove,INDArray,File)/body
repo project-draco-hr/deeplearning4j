@@ -4,7 +4,7 @@
   InMemoryLookupCache l=(InMemoryLookupCache)vec.vocab();
   for (  String word : vec.vocab().words()) {
     if (word == null)     continue;
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     INDArray wordVector=tsne.getRow(l.wordFor(word).getIndex());
     for (int j=0; j < wordVector.length(); j++) {
       sb.append(wordVector.getDouble(j));
