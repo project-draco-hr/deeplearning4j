@@ -1,10 +1,9 @@
 {
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
-  int words=0;
   for (int i=0; i < l.getSyn0().rows(); i++) {
     String word=cache.wordAtIndex(i);
     if (word == null)     continue;
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     sb.append(word);
     sb.append(" ");
     INDArray wordVector=l.vector(word);

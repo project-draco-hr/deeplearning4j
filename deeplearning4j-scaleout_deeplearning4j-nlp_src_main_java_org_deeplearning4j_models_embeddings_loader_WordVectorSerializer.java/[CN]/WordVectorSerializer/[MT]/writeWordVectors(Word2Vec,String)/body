@@ -3,7 +3,7 @@
   int words=0;
   for (  String word : vec.vocab().words()) {
     if (word == null)     continue;
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     sb.append(word);
     sb.append(" ");
     INDArray wordVector=vec.getWordVectorMatrix(word);

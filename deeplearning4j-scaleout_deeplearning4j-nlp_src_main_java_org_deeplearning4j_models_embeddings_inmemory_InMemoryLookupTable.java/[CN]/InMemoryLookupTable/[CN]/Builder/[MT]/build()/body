@@ -1,5 +1,4 @@
 {
   if (vocabCache == null)   throw new IllegalStateException("Vocab cache must be specified");
-  WeightLookupTable ret=new InMemoryLookupTable(vocabCache,vectorLength,useAdaGrad,lr,gen,negative);
-  return ret;
+  return new InMemoryLookupTable(vocabCache,vectorLength,useAdaGrad,lr,gen,negative);
 }
