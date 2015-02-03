@@ -30,7 +30,7 @@
  catch (    InvalidStepException e) {
       e.printStackTrace();
     }
-    for (    IterationListener listener : iterationListeners)     listener.iterationDone(i);
+    for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     oldScore=score;
     pair=gradientAndScore();
     score=pair.getSecond();

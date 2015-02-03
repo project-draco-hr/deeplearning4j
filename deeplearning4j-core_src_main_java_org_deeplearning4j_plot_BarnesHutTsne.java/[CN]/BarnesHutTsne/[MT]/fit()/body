@@ -10,7 +10,7 @@
       step(vals,i);
       if (i == switchMomentumIteration)       momentum=finalMomentum;
       if (i == stopLyingIteration)       vals.divi(12);
-      if (iterationListener != null)       iterationListener.iterationDone(i);
+      if (iterationListener != null)       iterationListener.iterationDone(this,i);
       log.info("Error at iteration " + i + " is "+ score());
     }
   }
