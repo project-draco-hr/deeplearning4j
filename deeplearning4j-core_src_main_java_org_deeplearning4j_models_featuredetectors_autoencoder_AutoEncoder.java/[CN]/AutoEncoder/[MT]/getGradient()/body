@@ -5,8 +5,8 @@
   INDArray y=encode(corruptedX);
   INDArray z=decode(y);
   INDArray visibleLoss=input.sub(z);
-  INDArray hiddenLoss=conf.getSparsity() == 0 ? visibleLoss.mmul(W).muli(y).muli(y.rsub(1)) : visibleLoss.mmul(W).muli(y).muli(y.addi(-conf.getSparsity()));
-  INDArray wGradient=corruptedX.transpose().mmul(hiddenLoss).addi(visibleLoss.transpose().mmul(y));
+  INDArray hiddenLoss=conf.getSparsity() == 0 ? visibleLoss.mmul(W).muli(y).muli(y.rsub(1)) : visibleLoss.mmul(W).muli(y).muli(y.add(-conf.getSparsity()));
+  INDArray wGradient=corruptedX.transposei().mmul(hiddenLoss).addi(visibleLoss.transposei().mmul(y));
   INDArray hBiasGradient=hiddenLoss.mean(0);
   INDArray vBiasGradient=visibleLoss.mean(0);
   return createGradient(wGradient,vBiasGradient,hBiasGradient);

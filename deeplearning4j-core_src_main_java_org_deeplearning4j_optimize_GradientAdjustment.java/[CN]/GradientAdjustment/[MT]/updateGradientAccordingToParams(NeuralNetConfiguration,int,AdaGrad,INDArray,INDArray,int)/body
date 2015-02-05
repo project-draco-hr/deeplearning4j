@@ -1,0 +1,21 @@
+{
+  if (adaGrad == null)   adaGrad=new AdaGrad(1,gradient.length());
+  if (iteration != 0 && conf.getResetAdaGradIterations() > 0 && iteration % conf.getResetAdaGradIterations() == 0) {
+    adaGrad.historicalGradient=null;
+    log.info("Resetting adagrad");
+  }
+  double momentum=conf.getMomentum();
+  if (conf.getMomentumAfter() != null && !conf.getMomentumAfter().isEmpty()) {
+    int key=conf.getMomentumAfter().keySet().iterator().next();
+    if (iteration >= key) {
+      momentum=conf.getMomentumAfter().get(key);
+    }
+  }
+  gradient=adaGrad.getGradient(gradient);
+  if (conf.isUseAdaGrad())   gradient.assign(adaGrad.getGradient(gradient));
+ else   gradient.muli(conf.getLr());
+  if (momentum > 0)   gradient.addi(gradient.mul(momentum).addi(gradient.mul(1 - momentum)));
+  if (conf.isUseRegularization() && conf.getL2() > 0)   if (conf.isUseAdaGrad())   gradient.subi(params.mul(conf.getL2()));
+  if (conf.isConstrainGradientToUnitNorm())   gradient.divi(gradient.norm2(Integer.MAX_VALUE));
+  gradient.divi(batchSize);
+}

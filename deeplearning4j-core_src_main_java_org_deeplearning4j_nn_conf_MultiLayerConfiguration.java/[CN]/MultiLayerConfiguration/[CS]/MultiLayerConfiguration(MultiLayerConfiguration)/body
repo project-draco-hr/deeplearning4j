@@ -7,4 +7,5 @@
   this.useRBMPropUpAsActivations=multiLayerConfiguration.useRBMPropUpAsActivations;
   this.dampingFactor=multiLayerConfiguration.dampingFactor;
   this.processors=new HashMap<>(multiLayerConfiguration.processors);
+  this.backward=multiLayerConfiguration.backward;
 }

@@ -5,7 +5,7 @@
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {
-    INDArray v1Sample=Sampling.normal(conf.getRng(),v1Mean,1);
+    INDArray v1Sample=normal(conf.getRng(),v1Mean,1);
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
@@ -13,7 +13,7 @@
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {
-    INDArray v1Sample=Sampling.binomial(v1Mean,1,conf.getRng());
+    INDArray v1Sample=binomial(v1Mean,1,conf.getRng());
     return new Pair<>(v1Mean,v1Sample);
   }
   throw new IllegalStateException("Visible type must either be binary,gaussian, softmax, or linear");

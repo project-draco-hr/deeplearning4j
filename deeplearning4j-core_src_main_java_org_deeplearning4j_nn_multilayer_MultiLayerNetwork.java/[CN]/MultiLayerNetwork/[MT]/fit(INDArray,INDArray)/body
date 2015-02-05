@@ -1,5 +1,16 @@
 {
-  if (layerWiseConfigurations.isPretrain())   pretrain(examples);
- else   this.input=examples;
-  finetune(labels);
+  if (!layerWiseConfigurations.isBackward()) {
+    pretrain(examples);
+    finetune(labels);
+  }
+ else {
+    setInput(examples);
+    feedForward();
+    INDArray output=labels;
+    INDArray propagate=layers[layers.length - 1].activate();
+    for (int i=layers.length - 2; i > 0; i--) {
+      layers[i].backWard(propagate);
+      propagate=layers[i].activate();
+    }
+  }
 }

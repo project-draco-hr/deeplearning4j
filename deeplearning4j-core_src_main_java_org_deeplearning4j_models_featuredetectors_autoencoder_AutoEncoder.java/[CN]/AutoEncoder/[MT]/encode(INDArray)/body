@@ -3,7 +3,7 @@
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   INDArray preAct;
   if (conf.isConcatBiases()) {
-    INDArray concat=Nd4j.hstack(W,hBias.transpose());
+    INDArray concat=Nd4j.hstack(W,hBias.transposei());
     preAct=x.mmul(concat);
   }
  else   preAct=x.mmul(W).addiRowVector(hBias);

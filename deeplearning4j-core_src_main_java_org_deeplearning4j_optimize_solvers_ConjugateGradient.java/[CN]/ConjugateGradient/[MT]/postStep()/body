@@ -12,7 +12,6 @@
   g.assign(xi);
   h.assign(h.mul(gam).addi(xi));
   BooleanIndexing.applyWhere(h,new Or(Conditions.isNan(),Conditions.isInfinite()),new Value(Nd4j.EPS_THRESHOLD));
-  LinAlgExceptions.assertValidNum(h);
   if (Nd4j.getBlasWrapper().dot(xi,h) > 0)   xi.assign(h);
  else {
     logger.warn("Reverting back to GA");

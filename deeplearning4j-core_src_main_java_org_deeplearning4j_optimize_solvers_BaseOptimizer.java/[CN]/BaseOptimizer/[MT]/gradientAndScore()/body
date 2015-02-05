@@ -1,4 +1,5 @@
 {
+  model.setScore();
   Pair<Gradient,Double> pair=model.gradientAndScore();
   return pair;
 }

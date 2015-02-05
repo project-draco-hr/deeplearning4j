@@ -11,7 +11,7 @@
     }
   }
 ).divi(miniBatches.count());
-  layer.setParameters(newParams);
+  layer.setParams(newParams);
   this.layer=layer;
   return layer;
 }

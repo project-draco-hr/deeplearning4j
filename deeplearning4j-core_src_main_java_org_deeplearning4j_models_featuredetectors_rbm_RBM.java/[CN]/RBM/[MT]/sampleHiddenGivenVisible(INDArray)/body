@@ -3,7 +3,7 @@
     INDArray h1Mean=propUp(v);
     INDArray sigH1Mean=sigmoid(h1Mean);
     INDArray sqrtSigH1Mean=sqrt(sigH1Mean);
-    INDArray sample=Sampling.normal(conf.getRng(),h1Mean,1);
+    INDArray sample=normal(conf.getRng(),h1Mean,1);
     sample.muli(sqrtSigH1Mean);
     INDArray h1Sample=h1Mean.add(sample);
     h1Sample=Transforms.max(h1Sample);
@@ -13,7 +13,7 @@
  else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
     INDArray h1Mean=propUp(v);
     this.hiddenSigma=h1Mean.var(1);
-    INDArray h1Sample=h1Mean.addi(Sampling.normal(conf.getRng(),h1Mean,this.hiddenSigma));
+    INDArray h1Sample=h1Mean.addi(normal(conf.getRng(),h1Mean,this.hiddenSigma));
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }
@@ -25,7 +25,7 @@
   }
  else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
     INDArray h1Mean=propUp(v);
-    INDArray h1Sample=Sampling.binomial(h1Mean,1,conf.getRng());
+    INDArray h1Sample=binomial(h1Mean,1,conf.getRng());
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }

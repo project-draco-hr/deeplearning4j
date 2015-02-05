@@ -1,5 +1,14 @@
 {
-  pretrain(iter);
-  iter.reset();
-  finetune(iter);
+  if (!layerWiseConfigurations.isBackward()) {
+    pretrain(iter);
+    iter.reset();
+    finetune(iter);
+  }
+ else {
+    INDArray propagate=layers[layers.length - 1].activate();
+    for (int i=layers.length - 2; i > 0; i--) {
+      layers[i].backWard(propagate);
+      propagate=layers[i].activate();
+    }
+  }
 }

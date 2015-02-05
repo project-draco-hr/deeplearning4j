@@ -1,4 +1,0 @@
-{
-  if (conf.isConcatBiases())   return Nd4j.hstack(input,Nd4j.ones(input.rows(),1));
-  return input;
-}

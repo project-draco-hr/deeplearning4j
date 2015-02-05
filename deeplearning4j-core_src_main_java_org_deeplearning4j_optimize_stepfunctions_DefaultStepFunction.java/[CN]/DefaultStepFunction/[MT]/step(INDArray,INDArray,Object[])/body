@@ -1,5 +1,11 @@
 {
   double alam=(double)params[0];
   double oldAlam=(double)params[1];
-  x.addi(line.mul(alam - oldAlam));
+  if (x.data().dataType() == DataBuffer.DOUBLE) {
+    Nd4j.getBlasWrapper().axpy(alam - oldAlam,x,line);
+  }
+ else {
+    float diff=(float)(alam - oldAlam);
+    Nd4j.getBlasWrapper().axpy(diff,x,line);
+  }
 }

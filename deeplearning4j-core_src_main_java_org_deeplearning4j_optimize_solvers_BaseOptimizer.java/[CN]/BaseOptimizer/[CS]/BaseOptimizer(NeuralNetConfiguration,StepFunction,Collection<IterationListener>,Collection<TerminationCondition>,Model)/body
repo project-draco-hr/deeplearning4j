@@ -6,4 +6,5 @@
   this.model=model;
   lineMaximizer=new BackTrackLineSearch(model,stepFunction,this);
   lineMaximizer.setStpmax(stpMax);
+  lineMaximizer.setMaxIterations(conf.getNumLineSearchIterations());
 }
