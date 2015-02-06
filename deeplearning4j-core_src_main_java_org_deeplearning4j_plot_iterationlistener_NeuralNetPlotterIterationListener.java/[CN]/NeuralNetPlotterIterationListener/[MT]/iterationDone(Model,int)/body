@@ -1,0 +1,6 @@
+{
+  if (iteration > 0 && iteration % this.iterations == 0) {
+    Layer layer=(Layer)model;
+    plotter.plotNetworkGradient(layer,layer.getGradient(),patchesPerRow);
+  }
+}

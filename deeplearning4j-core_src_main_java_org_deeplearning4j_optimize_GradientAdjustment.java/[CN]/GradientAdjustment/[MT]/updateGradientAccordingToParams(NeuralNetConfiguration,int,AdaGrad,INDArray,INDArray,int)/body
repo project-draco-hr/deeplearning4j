@@ -11,11 +11,10 @@
       momentum=conf.getMomentumAfter().get(key);
     }
   }
-  gradient=adaGrad.getGradient(gradient);
-  if (conf.isUseAdaGrad())   gradient.assign(adaGrad.getGradient(gradient));
+  if (conf.isUseAdaGrad())   gradient=adaGrad.getGradient(gradient);
  else   gradient.muli(conf.getLr());
   if (momentum > 0)   gradient.addi(gradient.mul(momentum).addi(gradient.mul(1 - momentum)));
-  if (conf.isUseRegularization() && conf.getL2() > 0)   if (conf.isUseAdaGrad())   gradient.subi(params.mul(conf.getL2()));
+  if (conf.isUseRegularization() && conf.getL2() > 0)   gradient.subi(params.mul(conf.getL2() * conf.getLr()));
   if (conf.isConstrainGradientToUnitNorm())   gradient.divi(gradient.norm2(Integer.MAX_VALUE));
   gradient.divi(batchSize);
 }
