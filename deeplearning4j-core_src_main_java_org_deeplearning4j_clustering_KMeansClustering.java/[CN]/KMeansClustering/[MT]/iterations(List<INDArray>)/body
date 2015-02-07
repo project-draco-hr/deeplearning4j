@@ -1,0 +1,6 @@
+{
+  for (int i=0; i < iterationCount; i++) {
+    clusterSet.addPoints(points,true);
+    clusterSet.removePoints();
+  }
+}
