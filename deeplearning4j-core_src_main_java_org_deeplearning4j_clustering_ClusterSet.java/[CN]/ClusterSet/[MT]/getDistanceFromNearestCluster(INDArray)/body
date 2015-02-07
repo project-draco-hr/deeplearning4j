@@ -1,0 +1,4 @@
+{
+  Cluster nearestCluster=nearestCluster(point);
+  return getDistance(nearestCluster.getCenter(),point);
+}
