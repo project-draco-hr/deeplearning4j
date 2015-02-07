@@ -4,15 +4,15 @@
   ret.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
   SimpleModule module=new SimpleModule();
   module.addSerializer(LayerFactory.class,new LayerFactorySerializer());
-  module.addSerializer(StepFunction.class,new StepFunctionSerializer());
+  module.addDeserializer(LayerFactory.class,new LayerFactoryDeSerializer());
   module.addDeserializer(ActivationFunction.class,new ActivationFunctionDeSerializer());
   module.addSerializer(ActivationFunction.class,new ActivationFunctionSerializer());
   module.addDeserializer(RandomGenerator.class,new RandomGeneratorDeSerializer());
   module.addSerializer(RandomGenerator.class,new RandomGeneratorSerializer());
   module.addSerializer(RealDistribution.class,new DistributionSerializer());
-  module.addDeserializer(StepFunction.class,new StepFunctionDeSerializer());
   module.addDeserializer(RealDistribution.class,new DistributionDeSerializer());
-  module.addDeserializer(LayerFactory.class,new LayerFactoryDeSerializer());
+  module.addSerializer(StepFunction.class,new StepFunctionSerializer());
+  module.addDeserializer(StepFunction.class,new StepFunctionDeSerializer());
   ret.registerModule(module);
   return ret;
 }

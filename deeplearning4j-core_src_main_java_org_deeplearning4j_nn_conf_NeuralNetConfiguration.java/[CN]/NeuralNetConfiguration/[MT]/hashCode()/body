@@ -16,6 +16,7 @@
   result=31 * result + (useRegularization ? 1 : 0);
   result=31 * result + (momentumAfter != null ? momentumAfter.hashCode() : 0);
   result=31 * result + resetAdaGradIterations;
+  result=31 * result + numLineSearchIterations;
   temp=Double.doubleToLongBits(dropOut);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (applySparsity ? 1 : 0);
@@ -26,6 +27,10 @@
   result=31 * result + (concatBiases ? 1 : 0);
   result=31 * result + (constrainGradientToUnitNorm ? 1 : 0);
   result=31 * result + (int)(seed ^ (seed >>> 32));
+  result=31 * result + (rng != null ? rng.hashCode() : 0);
+  result=31 * result + (dist != null ? dist.hashCode() : 0);
+  result=31 * result + (listeners != null ? listeners.hashCode() : 0);
+  result=31 * result + (stepFunction != null ? stepFunction.hashCode() : 0);
   result=31 * result + (layerFactory != null ? layerFactory.hashCode() : 0);
   result=31 * result + (gradientList != null ? gradientList.hashCode() : 0);
   result=31 * result + nIn;
@@ -41,5 +46,6 @@
   result=31 * result + (stride != null ? Arrays.hashCode(stride) : 0);
   result=31 * result + kernel;
   result=31 * result + batchSize;
+  result=31 * result + (minimize ? 1 : 0);
   return result;
 }

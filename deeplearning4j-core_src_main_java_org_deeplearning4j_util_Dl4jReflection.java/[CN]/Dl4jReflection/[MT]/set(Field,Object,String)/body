@@ -1,0 +1,19 @@
+{
+  Class<?> clazz=field.getType();
+  field.setAccessible(true);
+  if (clazz.equals(Double.class) || clazz.equals(double.class)) {
+    double val=Double.valueOf(value);
+    field.set(obj,val);
+  }
+ else   if (clazz.equals(String.class)) {
+    field.set(obj,value);
+  }
+ else   if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
+    int val=Integer.parseInt(value);
+    field.set(obj,val);
+  }
+ else   if (clazz.equals(Float.class) || clazz.equals(float.class)) {
+    float f=Float.parseFloat(value);
+    field.set(obj,f);
+  }
+}

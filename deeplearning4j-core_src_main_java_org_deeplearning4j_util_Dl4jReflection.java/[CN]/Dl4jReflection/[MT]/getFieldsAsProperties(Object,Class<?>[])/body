@@ -1,0 +1,9 @@
+{
+  Properties props=new Properties();
+  for (  Field field : obj.getClass().getDeclaredFields()) {
+    field.setAccessible(true);
+    Class<?> type=field.getType();
+    if (clazzes == null || contains(type,clazzes))     props.put(field.getName(),field.get(obj).toString());
+  }
+  return props;
+}
