@@ -1,6 +1,0 @@
-{
-  if (!this.isReady()) {
-    throw new IllegalStateException("KMeans is not ready yet");
-  }
-  return this.nearestCentroid(features);
-}
