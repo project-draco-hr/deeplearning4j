@@ -1,5 +1,6 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).batchSize(10).activationFunction(Activations.tanh()).list(2).hiddenLayerSizes(3).override(new NeuralNetConfiguration.ConfOverride(){
+  Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).activationFunction(Activations.tanh()).list(2).hiddenLayerSizes(3).override(new NeuralNetConfiguration.ConfOverride(){
     @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction(Activations.softMaxRows());

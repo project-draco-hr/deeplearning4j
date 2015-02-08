@@ -1,0 +1,24 @@
+{
+  Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(2e-4).momentum(0.9).activationFunction(Activations.tanh()).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).list(3).hiddenLayerSizes(3,2).override(new NeuralNetConfiguration.ConfOverride(){
+    @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
+      if (i == 2) {
+        builder.activationFunction(Activations.softMaxRows());
+        builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+        builder.lossFunction(LossFunctions.LossFunction.MCXENT);
+      }
+    }
+  }
+).build();
+  Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  System.out.println("Initializing network");
+  SparkDl4jMultiLayer master=new SparkDl4jMultiLayer(sc,conf);
+  DataSet d=new IrisDataSetIterator(150,150).next();
+  d.normalizeZeroMeanZeroUnitVariance();
+  d.shuffle();
+  List<DataSet> next=d.asList();
+  JavaRDD<DataSet> data=sc.parallelize(next);
+  MultiLayerNetwork network2=master.fitDataSet(data);
+}

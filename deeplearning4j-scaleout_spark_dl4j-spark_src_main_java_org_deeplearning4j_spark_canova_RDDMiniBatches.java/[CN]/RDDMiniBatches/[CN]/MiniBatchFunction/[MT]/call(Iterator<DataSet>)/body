@@ -2,7 +2,7 @@
   List<DataSet> ret=new ArrayList<>();
   List<DataSet> temp=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
-    temp.add(dataSetIterator.next());
+    temp.add(dataSetIterator.next().copy());
     if (temp.size() == batchSize) {
       ret.add(DataSet.merge(temp));
       temp.clear();

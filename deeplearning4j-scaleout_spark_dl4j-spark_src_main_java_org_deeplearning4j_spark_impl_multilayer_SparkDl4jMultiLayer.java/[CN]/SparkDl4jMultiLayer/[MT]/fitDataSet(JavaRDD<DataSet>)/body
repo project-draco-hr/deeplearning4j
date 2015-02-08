@@ -8,11 +8,9 @@
     network.init();
     final INDArray params=network.params();
     this.params=sc.broadcast(params);
-    accum=sc.accumulator(params,"params",new ParamAccumulator());
     int paramsLength=network.numParams();
     if (params.length() != paramsLength)     throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-    miniBatches.foreach(new DataSetTrain(accum,this.params,conf.toJson()));
-    INDArray newParams=accum.value().divi(miniBatches.count());
+    INDArray newParams=miniBatches.map(new IterativeReduce(this.params,conf.toJson())).reduce(new Reduce()).divi(miniBatches.count());
     network.setParameters(newParams);
     this.network=network;
   }
@@ -23,11 +21,11 @@
     final INDArray params=network.params();
     this.params=sc.broadcast(params);
     for (int i=0; i < iterations; i++) {
-      accum=sc.accumulator(params,"params",new ParamAccumulator());
+      accum=params;
       int paramsLength=network.numParams();
       if (params.length() != paramsLength)       throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-      miniBatches.foreach(new DataSetTrain(accum,this.params,conf.toJson()));
-      this.params=sc.broadcast(accum.value().divi(miniBatches.count()));
+      INDArray add=miniBatches.map(new IterativeReduce(this.params,conf.toJson())).reduce(new Reduce());
+      this.params=sc.broadcast(add.divi(miniBatches.count()));
     }
     network.setParameters(this.params.value());
     this.network=network;
