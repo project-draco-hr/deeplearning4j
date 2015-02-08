@@ -1,6 +1,6 @@
 {
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(2e-4).momentum(0.9).activationFunction(Activations.tanh()).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).list(3).hiddenLayerSizes(3,2).override(new NeuralNetConfiguration.ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9).constrainGradientToUnitNorm(true).activationFunction(Activations.tanh()).stepFunction(new GradientStepFunction()).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).dropOut(0.3).iterations(100).visibleUnit(RBM.VisibleUnit.GAUSSIAN).l2(2e-4).regularization(true).weightInit(WeightInit.VI).hiddenUnit(RBM.HiddenUnit.RECTIFIED).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).list(3).hiddenLayerSizes(3,2).override(new NeuralNetConfiguration.ConfOverride(){
     @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 2) {
         builder.activationFunction(Activations.softMaxRows());
@@ -21,4 +21,7 @@
   List<DataSet> next=d.asList();
   JavaRDD<DataSet> data=sc.parallelize(next);
   MultiLayerNetwork network2=master.fitDataSet(data);
+  Evaluation evaluation=new Evaluation();
+  evaluation.eval(d.getLabels(),network2.output(d.getFeatureMatrix()));
+  System.out.println("Averaged once " + evaluation.stats());
 }
