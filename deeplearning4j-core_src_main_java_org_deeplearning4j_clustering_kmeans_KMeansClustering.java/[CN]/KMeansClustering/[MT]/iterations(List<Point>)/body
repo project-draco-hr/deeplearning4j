@@ -1,6 +1,9 @@
 {
-  for (int i=0; i < iterationCount; i++) {
+  int iterationCount=0;
+  while (!endCondition.isSatisfied(iterationHistory)) {
     clusterSet.removePoints();
     clusterSet.addPoints(points,true);
+    ClusterSetInfo clusterSetInfo=ClusterUtils.computeClusterSetInfo(clusterSet);
+    iterationHistory.getIterationsInfos().put(iterationCount,new IterationInfo(iterationCount,clusterSetInfo));
   }
 }
