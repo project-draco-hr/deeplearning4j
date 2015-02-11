@@ -1,0 +1,6 @@
+{
+  if (clustersInfos.size() == 0)   return 0;
+  double average=0;
+  for (int i=0, j=clustersInfos.size(); i < j; i++)   average+=clustersInfos.get(i).getAveragePointDistanceFromCenter();
+  return average / clustersInfos.size();
+}

@@ -1,0 +1,7 @@
+{
+  for (int i=0, j=clusterSetInfo.getClustersInfos().size(); i < j; i++) {
+    ClusterInfo clusterInfo=clusterSetInfo.getClustersInfos().get(i);
+    if (!averagePointDistanceToClusterCenterCondition.apply(clusterInfo.getAveragePointDistanceFromCenter()))     return false;
+  }
+  return true;
+}

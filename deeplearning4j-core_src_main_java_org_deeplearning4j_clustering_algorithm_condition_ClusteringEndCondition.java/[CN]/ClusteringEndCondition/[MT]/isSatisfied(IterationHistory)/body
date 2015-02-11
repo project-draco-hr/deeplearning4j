@@ -1,0 +1,9 @@
+{
+  boolean satisfied=true;
+  if (isIterationCountConditionDefined())   satisfied&=isIterationCountConditionSatisfied(iterationHistory == null ? 0 : iterationHistory.getIterationCount());
+  ClusterSetInfo clusterSetInfo=iterationHistory.getMostRecentClusterSetInfo();
+  if (clusterSetInfo == null)   return false;
+  if (isAveragePointDistanceToClusterCenterConditionDefined())   satisfied&=isAveragePointDistanceToClusterCenterConditionSatisfied(clusterSetInfo);
+  if (isAveragePointDistanceToClusterCenterProgressionRateConditionDefined())   satisfied&=isAveragePointDistanceToClusterCenterProgressionRateConditionSatisfied(iterationHistory);
+  return satisfied;
+}

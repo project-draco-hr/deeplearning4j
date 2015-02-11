@@ -1,0 +1,5 @@
+{
+  ClusteringEndCondition condition=new ClusteringEndCondition();
+  condition.averagePointDistanceToClusterCenterCondition=new LessThan(averagePointDistanceToClusterCenter);
+  return condition;
+}
