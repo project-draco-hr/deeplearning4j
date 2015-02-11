@@ -1,0 +1,12 @@
+{
+  List<DataSet> collect=new ArrayList<>();
+  while (dataSetIterator.hasNext()) {
+    collect.add(dataSetIterator.next());
+  }
+  DataSet data=DataSet.merge(collect);
+  MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
+  network.init();
+  network.setParameters(params.value());
+  network.fit(data);
+  return Collections.singletonList(network.params());
+}

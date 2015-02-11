@@ -33,5 +33,5 @@ int kernel
 int batchSize
 int numLineSearchIterations
 boolean minimize
-Collection<IterationListener> listeners
+List<IterationListener> listeners
 LayerFactory layerFactory

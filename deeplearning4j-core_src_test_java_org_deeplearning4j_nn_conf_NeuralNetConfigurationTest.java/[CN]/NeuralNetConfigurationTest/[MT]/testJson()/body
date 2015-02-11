@@ -1,5 +1,5 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().dist(Distributions.normal(new MersenneTwister(123),1e-1)).layerFactory(LayerFactories.getFactory(RBM.class)).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterationListener(new ScoreIterationListener(10)).dist(Distributions.normal(new MersenneTwister(123),1e-1)).layerFactory(LayerFactories.getFactory(RBM.class)).build();
   String json=conf.toJson();
   NeuralNetConfiguration read=NeuralNetConfiguration.fromJson(json);
   assertEquals(conf,read);

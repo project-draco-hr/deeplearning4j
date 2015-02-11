@@ -5,6 +5,8 @@
   SimpleModule module=new SimpleModule();
   module.addSerializer(LayerFactory.class,new LayerFactorySerializer());
   module.addDeserializer(LayerFactory.class,new LayerFactoryDeSerializer());
+  module.addSerializer(IterationListener.class,new IterationSerializer());
+  module.addDeserializer(IterationListener.class,new IterationListenerDeSerializer());
   module.addDeserializer(ActivationFunction.class,new ActivationFunctionDeSerializer());
   module.addSerializer(ActivationFunction.class,new ActivationFunctionSerializer());
   module.addDeserializer(RandomGenerator.class,new RandomGeneratorDeSerializer());
