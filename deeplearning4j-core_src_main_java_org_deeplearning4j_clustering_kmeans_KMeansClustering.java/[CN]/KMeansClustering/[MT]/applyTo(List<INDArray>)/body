@@ -1,0 +1,7 @@
+{
+  exec=Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+  List<Point> points=Point.toPoints(vectors);
+  initClusters(points);
+  iterations(points);
+  return clusterSet;
+}
