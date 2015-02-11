@@ -10,6 +10,5 @@
   if (useRBMPropUpAsActivations != that.useRBMPropUpAsActivations)   return false;
   if (confs != null ? !confs.equals(that.confs) : that.confs != null)   return false;
   if (!Arrays.equals(hiddenLayerSizes,that.hiddenLayerSizes))   return false;
-  if (processors != null ? !processors.equals(that.processors) : that.processors != null)   return false;
   return true;
 }
