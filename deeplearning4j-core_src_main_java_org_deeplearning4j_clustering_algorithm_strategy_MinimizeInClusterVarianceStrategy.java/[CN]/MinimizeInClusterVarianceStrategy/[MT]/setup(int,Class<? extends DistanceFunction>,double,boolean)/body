@@ -1,0 +1,4 @@
+{
+  ClusteringEndCondition endCondition=new ClusteringEndCondition().averagePointDistanceToClusterCenterLessThan(targetAveragePointDistanceToClusterCenter);
+  return new MinimizeInClusterVarianceStrategy(initialClusterCount,distanceFunction,endCondition,allowEmptyClusters);
+}
