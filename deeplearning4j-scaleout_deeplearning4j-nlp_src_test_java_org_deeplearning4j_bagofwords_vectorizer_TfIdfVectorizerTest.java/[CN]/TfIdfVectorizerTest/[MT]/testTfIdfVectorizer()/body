@@ -13,7 +13,7 @@
   assertEquals(word,vectorizer.vocab().tokenFor("file"));
   int[] docs=vectorizer.index().allDocs();
   for (  int i : docs) {
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     List<VocabWord> doc=vectorizer.index().document(i);
     for (    VocabWord w : doc)     sb.append(" " + w.getWord());
     log.info("Doc " + sb.toString());
