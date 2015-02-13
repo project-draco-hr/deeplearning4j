@@ -25,9 +25,8 @@
     int needed=configTuples.size();
     int got=0;
     int maxAttempts=Integer.parseInt(props.getProperty(ConfigFields.APP_ALLOCATION_MAX_ATTEMPTS,"10"));
-    ;
     int attempts=0;
-    List<Container> acquiredContainers=null;
+    List<Container> acquiredContainers;
     while (got < needed && attempts < maxAttempts) {
       LOG.info("Requesting containers" + ", got=" + got + ", needed="+ needed+ ", attempts="+ attempts+ ", maxAttempts="+ maxAttempts);
       acquiredContainers=rmHandler.allocateRequest(requestedContainers,releasedContainers).getAllocatedContainers();
@@ -60,7 +59,7 @@
     return ReturnCode.MASTER_ERROR.getCode();
   }
   LOG.info("Starting master service");
-  ApplicationMasterService<T> masterService=new ApplicationMasterService<T>(masterAddr,startupConf,masterComputable,masterUpdateable,appConfig,conf);
+  ApplicationMasterService<T> masterService=new ApplicationMasterService<>(masterAddr,startupConf,masterComputable,masterUpdateable,appConfig,conf);
   ExecutorService executor=Executors.newSingleThreadExecutor();
   Future<Integer> masterThread=executor.submit(masterService);
   LOG.info("Launching child containers");
