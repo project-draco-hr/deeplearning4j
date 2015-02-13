@@ -29,7 +29,7 @@
   if (dist != null ? !dist.getClass().getName().equals(that.dist.getClass().getName()) : that.dist != null)   return false;
   if (!Arrays.equals(featureMapSize,that.featureMapSize))   return false;
   if (!Arrays.equals(filterSize,that.filterSize))   return false;
-  if (gradientList != null ? !gradientList.equals(that.gradientList) : that.gradientList != null)   return false;
+  if (variables != null ? !variables.equals(that.variables) : that.variables != null)   return false;
   if (hiddenUnit != that.hiddenUnit)   return false;
   if (layerFactory != null ? !layerFactory.equals(that.layerFactory) : that.layerFactory != null)   return false;
   if (lossFunction != that.lossFunction)   return false;

@@ -1,13 +1,9 @@
 {
   for (int i=0; i < conf.getNumIterations(); i++) {
     model.setScore();
-    model.iterate(model.input());
-    Pair<Gradient,Double> score=model.gradientAndScore();
-    INDArray gradient=score.getFirst().gradient(conf.getGradientList());
-    INDArray params=model.params();
-    updateGradientAccordingToParams(gradient,params,model.batchSize());
-    INDArray newParams=params.addi(gradient);
-    model.setParams(newParams);
+    Pair<Gradient,Double> score=gradientAndScore();
+    updateGradientAccordingToParams(score.getFirst(),model,batchSize());
+    model.update(score.getFirst());
     for (    IterationListener listener : conf.getListeners())     listener.iterationDone(model,i);
   }
   return true;

@@ -1,8 +1,8 @@
 {
   List<INDArray> ret=new ArrayList<>();
   for (  String s : order) {
-    if (!gradientLookupTable().containsKey(s))     throw new IllegalStateException("Illegal key " + s + " no gradient with key found");
-    ret.add(gradientLookupTable().get(s));
+    if (!gradientForVariable().containsKey(s))     throw new IllegalStateException("Illegal key " + s + " no gradient with key found");
+    ret.add(gradientForVariable().get(s));
   }
   return Nd4j.toFlattened(ret);
 }

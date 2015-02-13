@@ -1,5 +1,5 @@
 {
-  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientLookupTable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientLookupTable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientLookupTable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
+  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
   plotActivations(network);
   FilterRenderer render=new FilterRenderer();
   try {

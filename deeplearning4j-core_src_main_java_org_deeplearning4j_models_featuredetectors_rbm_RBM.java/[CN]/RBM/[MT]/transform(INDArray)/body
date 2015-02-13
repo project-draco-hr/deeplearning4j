@@ -1,6 +1,5 @@
 {
   INDArray propUp=propUp(v);
-  while (propUp.columns() != conf.getnOut())   propUp=propUp(v);
   INDArray ret=propDown(propUp);
   return ret;
 }
