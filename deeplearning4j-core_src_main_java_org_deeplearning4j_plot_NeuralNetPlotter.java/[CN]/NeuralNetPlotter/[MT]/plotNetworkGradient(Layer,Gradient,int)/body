@@ -4,8 +4,7 @@
   FilterRenderer render=new FilterRenderer();
   try {
     INDArray w=network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
-    INDArray render2=w;
-    render.renderFilters(render2,"currimg.png",(int)Math.sqrt(render2.rows()),(int)Math.sqrt(render2.rows()),patchesPerRow);
+    render.renderFilters(w,"currimg.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.rows()),patchesPerRow);
   }
  catch (  Exception e) {
     log.error("Unable to plot filter, continuing...",e);

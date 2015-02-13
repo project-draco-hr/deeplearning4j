@@ -6,7 +6,6 @@
  else {
     setInput(examples);
     feedForward();
-    INDArray output=labels;
     INDArray propagate=layers[layers.length - 1].activate();
     for (int i=layers.length - 2; i > 0; i--) {
       layers[i].backWard(propagate);

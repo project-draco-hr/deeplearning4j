@@ -1,8 +1,8 @@
 {
   List<INDArray> list=new ArrayList<>();
-  for (int i=0; i < layers.size(); i++) {
-    list.add(layers.get(i).getFirst());
-    list.add(layers.get(i).getSecond());
+  for (  Pair<INDArray,INDArray> layer : layers) {
+    list.add(layer.getFirst());
+    list.add(layer.getSecond());
   }
   return Nd4j.toFlattened(list);
 }
