@@ -8,7 +8,9 @@
         currLineIterator=IOUtils.lineIterator(new BufferedInputStream(new GZIPInputStream(new FileInputStream(next))),"UTF-8");
       }
  else {
-        if (currLineIterator != null)         currLineIterator.close();
+        if (currLineIterator != null) {
+          currLineIterator.close();
+        }
         currLineIterator=FileUtils.lineIterator(next);
       }
     }
