@@ -1,5 +1,6 @@
 {
-  if (!arr.isVector())   throw new IllegalArgumentException("passed in array must be a vector");
-  Vector features=Vectors.dense(arr.data().asDouble());
-  return features;
+  if (!arr.isVector()) {
+    throw new IllegalArgumentException("passed in array must be a vector");
+  }
+  return Vectors.dense(arr.data().asDouble());
 }

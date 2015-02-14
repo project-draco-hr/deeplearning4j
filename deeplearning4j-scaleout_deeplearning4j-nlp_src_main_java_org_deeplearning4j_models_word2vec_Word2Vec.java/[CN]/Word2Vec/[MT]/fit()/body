@@ -36,8 +36,9 @@
     @Override public Void apply(    List<VocabWord> input){
       List<VocabWord> batch=new ArrayList<>();
       addWords(input,nextRandom,batch);
-      if (batch.isEmpty())       return null;
-      batch2.add(batch);
+      if (!batch.isEmpty()) {
+        batch2.add(batch);
+      }
       return null;
     }
   }
