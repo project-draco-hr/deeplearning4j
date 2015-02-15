@@ -1,5 +1,4 @@
 {
   INDArray propUp=propUp(v);
-  INDArray ret=propDown(propUp);
-  return ret;
+  return propDown(propUp);
 }
