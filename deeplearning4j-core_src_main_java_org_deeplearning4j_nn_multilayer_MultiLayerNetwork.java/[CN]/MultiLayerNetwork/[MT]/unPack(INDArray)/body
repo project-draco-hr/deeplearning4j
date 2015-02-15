@@ -1,5 +1,5 @@
 {
-  if (param.rows() != 1)   param=param.reshape(1,param.length());
+  if (param.slices() != 1)   param=param.reshape(1,param.length());
   List<Pair<INDArray,INDArray>> ret=new ArrayList<>();
   int curr=0;
   for (int i=0; i < layers.length; i++) {
@@ -14,7 +14,7 @@
       if (hBiasPortion.length() != layers[i].getParam(DefaultParamInitializer.BIAS_KEY).length())       throw new IllegalStateException("Hidden bias on layer " + i + " was off");
       if (weightPortion.length() != layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).length())       throw new IllegalStateException("Weight portion on layer " + i + " was off");
     }
-    ret.add(new Pair<>(weightPortion.reshape(layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).rows(),layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).columns()),hBiasPortion.reshape(layers[i].getParam(DefaultParamInitializer.BIAS_KEY).rows(),layers[i].getParam(DefaultParamInitializer.BIAS_KEY).columns())));
+    ret.add(new Pair<>(weightPortion.reshape(layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).slices(),layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).columns()),hBiasPortion.reshape(layers[i].getParam(DefaultParamInitializer.BIAS_KEY).slices(),layers[i].getParam(DefaultParamInitializer.BIAS_KEY).columns())));
     curr+=layerLength;
   }
   return ret;
