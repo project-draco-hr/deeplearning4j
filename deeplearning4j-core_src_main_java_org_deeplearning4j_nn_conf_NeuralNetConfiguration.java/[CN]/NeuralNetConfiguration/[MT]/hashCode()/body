@@ -32,7 +32,7 @@
   result=31 * result + (listeners != null ? listeners.hashCode() : 0);
   result=31 * result + (stepFunction != null ? stepFunction.hashCode() : 0);
   result=31 * result + (layerFactory != null ? layerFactory.hashCode() : 0);
-  result=31 * result + (gradientList != null ? gradientList.hashCode() : 0);
+  result=31 * result + (variables != null ? variables.hashCode() : 0);
   result=31 * result + nIn;
   result=31 * result + nOut;
   result=31 * result + (activationFunction != null ? activationFunction.hashCode() : 0);

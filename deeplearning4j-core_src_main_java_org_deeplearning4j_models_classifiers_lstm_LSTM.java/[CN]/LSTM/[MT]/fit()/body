@@ -1,4 +1,4 @@
 {
-  Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(conf().getListeners()).build();
+  Solver solver=new Solver.Builder().model(this).configure(conf()).build();
   solver.optimize();
 }

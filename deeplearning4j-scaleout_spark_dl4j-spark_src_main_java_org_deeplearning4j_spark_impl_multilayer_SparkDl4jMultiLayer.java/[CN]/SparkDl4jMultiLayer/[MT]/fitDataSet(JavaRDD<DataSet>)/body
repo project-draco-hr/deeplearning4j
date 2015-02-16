@@ -1,8 +1,10 @@
 {
-  int batchSize=conf.getConf(0).getBatchSize();
   int iterations=conf.getConf(0).getNumIterations();
-  JavaRDD<DataSet> miniBatches=new RDDMiniBatches(batchSize,rdd).miniBatchesJava();
-  log.info("Running distributed training averaging each iteration " + averageEachIteration + " with a mini batch size of "+ batchSize+ " and number of iterations "+ iterations);
+  long count=rdd.count();
+  int batchSize=conf.getConf(0).getBatchSize();
+  int newBatchSize=(int)(count / batchSize);
+  rdd=rdd.repartition(newBatchSize);
+  log.info("Running distributed training averaging each iteration " + averageEachIteration + " and "+ rdd.partitions().size()+ " partitions");
   if (!averageEachIteration) {
     MultiLayerNetwork network=new MultiLayerNetwork(conf);
     network.init();
@@ -10,9 +12,9 @@
     this.params=sc.broadcast(params);
     int paramsLength=network.numParams();
     if (params.length() != paramsLength)     throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-    JavaRDD<INDArray> results=miniBatches.map(new IterativeReduce(this.params,conf.toJson()));
+    JavaRDD<INDArray> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params));
     INDArray newParams=results.fold(Nd4j.zeros(results.first().shape()),new Add());
-    newParams.divi(miniBatches.count());
+    newParams.divi(rdd.partitions().size());
     network.setParameters(newParams);
     this.network=network;
   }
@@ -23,12 +25,11 @@
     final INDArray params=network.params();
     this.params=sc.broadcast(params);
     for (int i=0; i < iterations; i++) {
-      accum=params;
       int paramsLength=network.numParams();
       if (params.length() != paramsLength)       throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-      JavaRDD<INDArray> miniBatchParams=miniBatches.map(new IterativeReduce(this.params,conf.toJson()));
+      JavaRDD<INDArray> miniBatchParams=rdd.map(new IterativeReduce(this.params,conf.toJson()));
       INDArray add=miniBatchParams.reduce(new Add());
-      this.params=sc.broadcast(add.divi(miniBatches.count()));
+      this.params=sc.broadcast(add.divi(rdd.partitions().size()));
     }
     network.setParameters(this.params.value());
     this.network=network;

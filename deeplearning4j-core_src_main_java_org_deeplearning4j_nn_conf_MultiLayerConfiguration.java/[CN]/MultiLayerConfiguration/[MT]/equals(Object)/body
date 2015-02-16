@@ -2,5 +2,13 @@
   if (this == o)   return true;
   if (!(o instanceof MultiLayerConfiguration))   return false;
   MultiLayerConfiguration that=(MultiLayerConfiguration)o;
-  return Double.compare(that.dampingFactor,dampingFactor) == 0 && pretrain == that.pretrain && useDropConnect == that.useDropConnect && useGaussNewtonVectorProductBackProp == that.useGaussNewtonVectorProductBackProp && useRBMPropUpAsActivations == that.useRBMPropUpAsActivations && !(confs != null ? !confs.equals(that.confs) : that.confs != null) && Arrays.equals(hiddenLayerSizes,that.hiddenLayerSizes);
+  if (backward != that.backward)   return false;
+  if (Double.compare(that.dampingFactor,dampingFactor) != 0)   return false;
+  if (pretrain != that.pretrain)   return false;
+  if (useDropConnect != that.useDropConnect)   return false;
+  if (useGaussNewtonVectorProductBackProp != that.useGaussNewtonVectorProductBackProp)   return false;
+  if (useRBMPropUpAsActivations != that.useRBMPropUpAsActivations)   return false;
+  if (confs != null ? !confs.equals(that.confs) : that.confs != null)   return false;
+  if (!Arrays.equals(hiddenLayerSizes,that.hiddenLayerSizes))   return false;
+  return true;
 }

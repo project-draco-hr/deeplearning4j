@@ -6,7 +6,8 @@
     INDArray concat=Nd4j.hstack(W,hBias.transposei());
     preAct=x.mmul(concat);
   }
- else   preAct=x.mmul(W).addiRowVector(hBias);
-  INDArray ret=conf.getActivationFunction().apply(preAct);
-  return ret;
+ else {
+    preAct=x.mmul(W).addiRowVector(hBias);
+  }
+  return conf.getActivationFunction().apply(preAct);
 }

@@ -21,9 +21,6 @@
       return ret;
     }
   }
-  if (ret == null) {
-    if (!cache.isEmpty())     ret=cache.poll();
- else     return null;
-  }
+  if (!cache.isEmpty())   ret=cache.poll();
   return ret;
 }

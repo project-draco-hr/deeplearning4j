@@ -4,7 +4,6 @@
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
   INDArray ret=getInput().mmul(W);
-  if (ret.columns() != b.columns())   throw new IllegalStateException("This is weird");
   if (conf.isConcatBiases())   ret=Nd4j.hstack(ret,b);
  else   ret.addiRowVector(b);
   return ret;

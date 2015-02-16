@@ -6,7 +6,7 @@
         NeuralNetPlotter plotter=new NeuralNetPlotter();
         Layer l=(Layer)model;
         plotter.renderFilter(l.getParam(PretrainParamInitializer.WEIGHT_KEY));
-        INDArray gradient=l.getGradient().gradient();
+        INDArray gradient=l.gradient().gradient();
         GradientAdjustment.updateGradientAccordingToParams(l.conf(),0,l.getOptimizer().getAdaGrad(),gradient,l.params(),l.batchSize());
       }
     }

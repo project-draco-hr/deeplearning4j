@@ -1,0 +1,8 @@
+{
+  try {
+    jgen.writeString(value.getClass().getName() + "\t" + Dl4jReflection.getFieldsAsProperties(value,null)+ ",");
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

@@ -1,7 +1,7 @@
 {
   List<INDArray> deltas=computeDeltas();
   List<Pair<INDArray,INDArray>> vWvB=new ArrayList<>();
-  for (int i=0; i < layers.length; i++)   vWvB.add(new Pair<>(layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY),layers[i].getParam(DefaultParamInitializer.BIAS_KEY)));
+  for (  Layer layer : layers)   vWvB.add(new Pair<>(layer.getParam(DefaultParamInitializer.WEIGHT_KEY),layer.getParam(DefaultParamInitializer.BIAS_KEY)));
   List<Pair<INDArray,INDArray>> list=new ArrayList<>();
   for (int l=0; l < getnLayers() + 1; l++) {
     INDArray gradientChange=deltas.get(l);

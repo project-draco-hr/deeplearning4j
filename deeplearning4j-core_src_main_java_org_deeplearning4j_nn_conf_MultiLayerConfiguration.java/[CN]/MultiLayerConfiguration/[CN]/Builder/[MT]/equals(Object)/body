@@ -2,5 +2,5 @@
   if (this == o)   return true;
   if (!(o instanceof Builder))   return false;
   Builder builder=(Builder)o;
-  return Double.compare(builder.dampingFactor,dampingFactor) == 0 && pretrain == builder.pretrain && useDropConnect == builder.useDropConnect && useRBMPropUpAsActivations == builder.useRBMPropUpAsActivations && !(confs != null ? !confs.equals(builder.confs) : builder.confs != null) && Arrays.equals(hiddenLayerSizes,builder.hiddenLayerSizes) && !(preProcessors != null ? !preProcessors.equals(builder.preProcessors) : builder.preProcessors != null);
+  return Double.compare(builder.dampingFactor,dampingFactor) == 0 && pretrain == builder.pretrain && useDropConnect == builder.useDropConnect && useRBMPropUpAsActivations == builder.useRBMPropUpAsActivations && !(confs != null ? !confs.equals(builder.confs) : builder.confs != null) && Arrays.equals(hiddenLayerSizes,builder.hiddenLayerSizes);
 }

@@ -44,8 +44,8 @@
   }
   clear();
   Gradient gradient=new DefaultGradient();
-  gradient.gradientLookupTable().put(LSTMParamInitializer.DECODER_BIAS,dBd);
-  gradient.gradientLookupTable().put(LSTMParamInitializer.DECODER_WEIGHTS,dWd);
-  gradient.gradientLookupTable().put(LSTMParamInitializer.RECURRENT_WEIGHTS,dRecurrentWeights);
+  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_BIAS,dBd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_WEIGHTS,dWd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHTS,dRecurrentWeights);
   return gradient;
 }

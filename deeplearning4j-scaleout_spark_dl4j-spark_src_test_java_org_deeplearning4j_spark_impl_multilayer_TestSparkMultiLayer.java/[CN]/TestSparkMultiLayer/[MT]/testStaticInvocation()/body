@@ -1,7 +1,7 @@
 {
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).activationFunction(Activations.tanh()).list(2).hiddenLayerSizes(3).override(new NeuralNetConfiguration.ConfOverride(){
-    @Override public void override(    int i,    NeuralNetConfiguration.Builder builder){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).activationFunction(Activations.tanh()).list(2).hiddenLayerSizes(3).override(new ConfOverride(){
+    @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction(Activations.softMaxRows());
         builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
@@ -15,4 +15,18 @@
   JavaRDD<DataSet> data=sc.parallelize(list);
   JavaRDD<LabeledPoint> mllLibData=MLLibUtil.fromDataSet(sc,data);
   MultiLayerNetwork network=SparkDl4jMultiLayer.train(mllLibData,conf);
+  INDArray params=network.params();
+  File writeTo=new File(UUID.randomUUID().toString());
+  Nd4j.writeTxt(params,writeTo.getAbsolutePath(),",");
+  INDArray load=Nd4j.readTxt(writeTo.getAbsolutePath(),",");
+  assertEquals(params,load);
+  writeTo.delete();
+  String json=network.getLayerWiseConfigurations().toJson();
+  MultiLayerConfiguration conf2=MultiLayerConfiguration.fromJson(json);
+  assertEquals(conf,conf2);
+  MultiLayerNetwork network3=new MultiLayerNetwork(conf2);
+  network3.init();
+  network3.setParameters(params);
+  INDArray params4=network3.params();
+  assertEquals(params,params4);
 }
