@@ -1,0 +1,5 @@
+{
+  String[] cmd={"--input","testValue"};
+  DummySubCommand dummySubCommand=new DummySubCommand(cmd);
+  assertEquals("testValue",dummySubCommand.getDummyValue());
+}
