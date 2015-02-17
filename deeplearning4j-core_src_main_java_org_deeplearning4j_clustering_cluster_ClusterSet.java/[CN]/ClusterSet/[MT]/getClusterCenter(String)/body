@@ -1,0 +1,4 @@
+{
+  Cluster cluster=getCluster(clusterId);
+  return cluster == null ? null : cluster.getCenter();
+}

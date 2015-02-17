@@ -1,0 +1,8 @@
+{
+  while (!clusteringStrategy.getTerminationCondition().isSatisfied(iterationHistory) || iterationHistory.getMostRecentIterationInfo().isStrategyApplied()) {
+    currentIteration++;
+    removePoints();
+    classifyPoints();
+    applyClusteringStrategy();
+  }
+}

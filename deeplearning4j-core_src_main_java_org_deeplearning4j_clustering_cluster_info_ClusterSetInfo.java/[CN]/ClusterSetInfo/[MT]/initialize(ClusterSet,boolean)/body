@@ -1,0 +1,5 @@
+{
+  ClusterSetInfo info=new ClusterSetInfo();
+  for (int i=0, j=clusterSet.getClusterCount(); i < j; i++)   info.addClusterInfo(clusterSet.getClusters().get(i).getId());
+  return info;
+}

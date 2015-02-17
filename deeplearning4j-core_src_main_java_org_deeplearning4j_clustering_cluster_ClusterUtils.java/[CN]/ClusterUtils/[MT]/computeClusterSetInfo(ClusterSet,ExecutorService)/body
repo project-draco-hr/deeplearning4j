@@ -1,0 +1,38 @@
+{
+  final ClusterSetInfo info=new ClusterSetInfo(true);
+  int clusterCount=clusterSet.getClusterCount();
+  List<Runnable> tasks=new ArrayList<Runnable>();
+  for (int i=0, j=clusterCount; i < j; i++) {
+    final Cluster cluster=clusterSet.getClusters().get(i);
+    tasks.add(new Runnable(){
+      public void run(){
+        info.getClustersInfos().put(cluster.getId(),computeClusterInfos(cluster,clusterSet.getDistanceFunction()));
+      }
+    }
+);
+  }
+  MultiThreadUtils.parallelTasks(tasks,executorService);
+  tasks=new ArrayList<Runnable>();
+  for (int i=0, j=clusterCount; i < j; i++) {
+    final int clusterIdx=i;
+    final Cluster fromCluster=clusterSet.getClusters().get(i);
+    tasks.add(new Runnable(){
+      public void run(){
+        try {
+          DistanceFunction fromClusterDistanceFunction=distanceFunction(clusterSet.getDistanceFunction(),(INDArray)fromCluster.getCenter());
+          for (int k=clusterIdx + 1, l=clusterSet.getClusterCount(); k < l; k++) {
+            Cluster toCluster=clusterSet.getClusters().get(k);
+            double distance=fromClusterDistanceFunction.apply((INDArray)toCluster.getCenter());
+            info.getDistancesBetweenClustersCenters().put(fromCluster.getId(),toCluster.getId(),distance);
+          }
+        }
+ catch (        Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+);
+  }
+  MultiThreadUtils.parallelTasks(tasks,executorService);
+  return info;
+}

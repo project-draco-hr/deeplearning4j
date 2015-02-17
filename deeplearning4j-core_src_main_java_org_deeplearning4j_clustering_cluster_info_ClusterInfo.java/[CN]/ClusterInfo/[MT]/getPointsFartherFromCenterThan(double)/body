@@ -1,0 +1,9 @@
+{
+  Set<Map.Entry<String,Double>> sorted=getReverseSortedPointDistancesFromCenter();
+  List<String> ids=new ArrayList<String>();
+  for (  Map.Entry<String,Double> entry : sorted) {
+    if (entry.getValue() < maxDistance)     break;
+    ids.add(entry.getKey());
+  }
+  return ids;
+}

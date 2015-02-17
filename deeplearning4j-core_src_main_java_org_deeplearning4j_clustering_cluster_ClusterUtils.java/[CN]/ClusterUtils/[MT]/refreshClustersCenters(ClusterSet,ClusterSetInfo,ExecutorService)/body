@@ -1,0 +1,20 @@
+{
+  List<Runnable> tasks=new ArrayList<Runnable>();
+  for (int i=0, j=clusterSet.getClusterCount(); i < j; i++) {
+    final Cluster cluster=clusterSet.getClusters().get(i);
+    tasks.add(new Runnable(){
+      public void run(){
+        try {
+          final ClusterInfo clusterInfo=clusterSetInfo.getClusterInfo(cluster.getId());
+          refreshClusterCenter(cluster,clusterInfo);
+          deriveClusterInfoDistanceStatistics(clusterInfo);
+        }
+ catch (        Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+);
+  }
+  MultiThreadUtils.parallelTasks(tasks,executorService);
+}

@@ -1,0 +1,5 @@
+{
+  ClusteringStrategy clusteringStrategy=FixedClusterCountStrategy.setup(clusterCount,distanceFunction);
+  clusteringStrategy.endWhenDistributionVariationRateLessThan(minDistributionVariationRate);
+  return new KMeansClustering(clusteringStrategy);
+}

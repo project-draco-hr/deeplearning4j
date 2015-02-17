@@ -1,0 +1,22 @@
+{
+  List<Point> points=new ArrayList<Point>(initialPoints);
+  Random random=new Random();
+  clusterSet=new ClusterSet(clusteringStrategy.getDistanceFunction());
+  clusterSet.addNewClusterWithCenter(points.remove(random.nextInt(points.size())));
+  int initialClusterCount=clusteringStrategy.getInitialClusterCount();
+  INDArray dxs=Nd4j.create(points.size());
+  dxs.addi(new Double(Double.MAX_VALUE));
+  while (clusterSet.getClusterCount() < initialClusterCount) {
+    dxs=ClusterUtils.computeSquareDistancesFromNearestCluster(clusterSet,points,dxs,exec);
+    double r=random.nextFloat() * Nd4j.max(dxs.getRow(0)).getDouble(0);
+    for (int i=0; i < dxs.length(); i++) {
+      if (dxs.getDouble(i) >= r) {
+        clusterSet.addNewClusterWithCenter(points.remove(i));
+        dxs=Nd4j.create(ArrayUtils.remove(dxs.data().asDouble(),i));
+        break;
+      }
+    }
+  }
+  ClusterSetInfo initialClusterSetInfo=ClusterUtils.computeClusterSetInfo(clusterSet);
+  iterationHistory.getIterationsInfos().put(currentIteration,new IterationInfo(currentIteration,initialClusterSetInfo));
+}

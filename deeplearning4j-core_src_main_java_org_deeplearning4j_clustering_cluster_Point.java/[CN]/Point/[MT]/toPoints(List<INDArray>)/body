@@ -1,0 +1,5 @@
+{
+  List<Point> points=new ArrayList<Point>();
+  for (  INDArray vector : vectors)   points.add(new Point(vector));
+  return points;
+}

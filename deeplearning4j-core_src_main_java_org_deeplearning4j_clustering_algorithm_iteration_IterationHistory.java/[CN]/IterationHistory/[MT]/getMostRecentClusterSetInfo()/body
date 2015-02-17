@@ -1,0 +1,4 @@
+{
+  IterationInfo iterationInfo=getMostRecentIterationInfo();
+  return iterationInfo == null ? null : iterationInfo.getClusterSetInfo();
+}

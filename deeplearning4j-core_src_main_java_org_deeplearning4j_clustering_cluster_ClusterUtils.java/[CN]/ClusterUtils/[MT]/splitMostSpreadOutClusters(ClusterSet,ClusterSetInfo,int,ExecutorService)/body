@@ -1,0 +1,5 @@
+{
+  List<Cluster> clustersToSplit=getMostSpreadOutClusters(clusterSet,clusterSetInfo,count);
+  splitClusters(clusterSet,clusterSetInfo,clustersToSplit,executorService);
+  return clustersToSplit.size();
+}
