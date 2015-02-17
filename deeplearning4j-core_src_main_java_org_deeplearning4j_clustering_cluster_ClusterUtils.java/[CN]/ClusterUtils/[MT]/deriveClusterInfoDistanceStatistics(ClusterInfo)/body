@@ -1,0 +1,11 @@
+{
+  int pointCount=info.getPointDistancesFromCenter().size();
+  if (pointCount == 0)   return;
+  double[] distances=ArrayUtils.toPrimitive(info.getPointDistancesFromCenter().values().toArray(new Double[]{}));
+  double max=MathUtils.max(distances);
+  double total=MathUtils.sum(distances);
+  info.setMaxPointDistanceFromCenter(max);
+  info.setTotalPointDistanceFromCenter(total);
+  info.setAveragePointDistanceFromCenter(total / pointCount);
+  info.setPointDistanceFromCenterVariance(MathUtils.variance(distances));
+}

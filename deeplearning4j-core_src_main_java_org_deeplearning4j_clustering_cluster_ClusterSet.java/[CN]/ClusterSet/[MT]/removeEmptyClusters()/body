@@ -1,0 +1,6 @@
+{
+  List<Cluster> emptyClusters=new ArrayList<Cluster>();
+  for (  Cluster cluster : clusters)   if (cluster.isEmpty())   emptyClusters.add(cluster);
+  clusters.removeAll(emptyClusters);
+  return emptyClusters;
+}

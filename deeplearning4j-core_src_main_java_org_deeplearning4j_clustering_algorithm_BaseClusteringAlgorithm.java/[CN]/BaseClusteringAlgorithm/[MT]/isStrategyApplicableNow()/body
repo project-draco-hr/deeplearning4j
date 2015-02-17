@@ -1,0 +1,3 @@
+{
+  return clusteringStrategy.isOptimizationDefined() && iterationHistory.getIterationCount() != 0 && clusteringStrategy.isOptimizationApplicableNow(iterationHistory);
+}

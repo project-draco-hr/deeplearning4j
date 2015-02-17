@@ -1,5 +1,0 @@
-{
-  ClusteringEndCondition condition=new ClusteringEndCondition();
-  condition.iterationCountCondition=new LessThan(iterationCount);
-  return condition;
-}

@@ -1,0 +1,6 @@
+{
+  ClusterSetInfo clusterSetInfo=iterationHistory.getMostRecentClusterSetInfo();
+  OptimisationStrategy optimization=(OptimisationStrategy)clusteringStrategy;
+  boolean applied=ClusterUtils.applyOptimization(optimization,clusterSet,clusterSetInfo,exec);
+  iterationHistory.getMostRecentIterationInfo().setStrategyApplied(applied);
+}

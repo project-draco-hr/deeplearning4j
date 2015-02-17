@@ -1,18 +1,6 @@
 {
-  ClusterSetInfo info=new ClusterSetInfo();
-  int clusterCount=clusterSet.getClusterCount();
-  for (int i=0, j=clusterCount; i < j; i++) {
-    Cluster cluster=clusterSet.getClusters().get(i);
-    info.getClustersInfos().put(cluster.getId(),computeClusterInfos(cluster,clusterSet.getDistanceFunction()));
-  }
-  for (int i=0, j=clusterCount; i < j; i++) {
-    Cluster fromCluster=clusterSet.getClusters().get(i);
-    DistanceFunction fromClusterDistanceFunction=distanceFunction(clusterSet.getDistanceFunction(),(INDArray)fromCluster.getCenter());
-    for (int k=i + 1, l=clusterSet.getClusterCount(); k < l; k++) {
-      Cluster toCluster=clusterSet.getClusters().get(k);
-      double distance=fromClusterDistanceFunction.apply((INDArray)toCluster.getCenter());
-      info.getDistancesBetweenClustersCenters().put(fromCluster.getId(),toCluster.getId(),distance);
-    }
-  }
+  ExecutorService executor=MultiThreadUtils.newExecutorService();
+  ClusterSetInfo info=computeClusterSetInfo(clusterSet,executor);
+  executor.shutdownNow();
   return info;
 }

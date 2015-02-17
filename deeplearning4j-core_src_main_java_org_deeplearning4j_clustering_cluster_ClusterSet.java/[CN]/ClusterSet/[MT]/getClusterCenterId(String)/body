@@ -1,0 +1,4 @@
+{
+  Point clusterCenter=getClusterCenter(clusterId);
+  return clusterCenter == null ? null : clusterCenter.getId();
+}

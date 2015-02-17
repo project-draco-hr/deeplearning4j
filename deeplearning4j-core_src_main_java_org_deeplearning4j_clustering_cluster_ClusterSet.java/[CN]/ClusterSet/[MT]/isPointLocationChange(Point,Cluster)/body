@@ -1,0 +1,4 @@
+{
+  if (!getPointDistribution().containsKey(point.getId()))   return true;
+  return !getPointDistribution().get(point.getId()).equals(newCluster.getId());
+}

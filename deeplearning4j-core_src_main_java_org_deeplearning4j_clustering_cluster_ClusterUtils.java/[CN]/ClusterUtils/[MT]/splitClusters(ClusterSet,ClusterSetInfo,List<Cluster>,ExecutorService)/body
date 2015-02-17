@@ -1,0 +1,15 @@
+{
+  final Random random=new Random();
+  List<Runnable> tasks=new ArrayList<Runnable>();
+  for (int i=0, j=clusters.size(); i < j; i++) {
+    final Cluster cluster=clusters.get(i);
+    tasks.add(new Runnable(){
+      public void run(){
+        Point point=cluster.getPoints().remove(random.nextInt(cluster.getPoints().size()));
+        clusterSet.addNewClusterWithCenter(point);
+      }
+    }
+);
+  }
+  MultiThreadUtils.parallelTasks(tasks,executorService);
+}

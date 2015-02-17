@@ -1,0 +1,8 @@
+{
+  List<Cluster> clusters=new ArrayList<Cluster>();
+  for (  Cluster cluster : clusterSet.getClusters()) {
+    ClusterInfo clusterInfo=info.getClusterInfo(cluster.getId());
+    if (clusterInfo != null && clusterInfo.getMaxPointDistanceFromCenter() > maximumDistance)     clusters.add(cluster);
+  }
+  return clusters;
+}

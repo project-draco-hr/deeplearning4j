@@ -1,0 +1,7 @@
+{
+  super();
+  this.type=type;
+  this.initialClusterCount=initialClusterCount;
+  this.distanceFunction=distanceFunction;
+  this.allowEmptyClusters=allowEmptyClusters;
+}

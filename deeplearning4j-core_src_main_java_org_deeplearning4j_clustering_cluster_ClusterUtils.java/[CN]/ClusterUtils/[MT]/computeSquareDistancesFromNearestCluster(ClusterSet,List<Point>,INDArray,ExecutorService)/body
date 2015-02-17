@@ -1,0 +1,22 @@
+{
+  final int pointsCount=points.size();
+  final INDArray dxs=Nd4j.create(pointsCount);
+  final Cluster newCluster=clusterSet.getClusters().get(clusterSet.getClusters().size() - 1);
+  List<Runnable> tasks=new ArrayList<Runnable>();
+  for (int i=0; i < pointsCount; i++) {
+    final int i2=i;
+    tasks.add(new Runnable(){
+      public void run(){
+        Point point=points.get(i2);
+        dxs.putScalar(i2,Math.pow(newCluster.getDistanceToCenter(point),2));
+      }
+    }
+);
+  }
+  MultiThreadUtils.parallelTasks(tasks,executorService);
+  for (int i=0; i < pointsCount; i++) {
+    double previousMinDistance=previousDxs.getDouble(i);
+    if (dxs.getDouble(i) > previousMinDistance)     dxs.putScalar(i,previousMinDistance);
+  }
+  return dxs;
+}

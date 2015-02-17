@@ -1,0 +1,3 @@
+{
+  return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+}

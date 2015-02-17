@@ -1,0 +1,4 @@
+{
+  Condition condition=new LessThan(pointsDistributionChangeRate);
+  return new ConvergenceCondition(condition,pointsDistributionChangeRate);
+}

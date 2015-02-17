@@ -1,7 +1,7 @@
 {
   DistanceFunction function;
   try {
-    function=distanceFunction.getConstructor(Point.class).newInstance(m1);
+    function=distanceFunction.getConstructor(INDArray.class).newInstance(m1.getArray());
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

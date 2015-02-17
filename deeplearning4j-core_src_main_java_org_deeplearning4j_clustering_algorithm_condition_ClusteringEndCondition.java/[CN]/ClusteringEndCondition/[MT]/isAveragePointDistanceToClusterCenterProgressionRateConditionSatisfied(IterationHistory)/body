@@ -1,8 +1,0 @@
-{
-  if (iterationHistory.getIterationCount() <= 1)   return false;
-  IterationInfo referenceIteration=iterationHistory.getIterationInfo(iterationHistory.getIterationCount() - 1);
-  IterationInfo iteration=iterationHistory.getIterationInfo(iterationHistory.getIterationCount());
-  double variation=iteration.getClusterSetInfo().getAverageClusterPointsDistanceFromOwnCenter() - referenceIteration.getClusterSetInfo().getAverageClusterPointsDistanceFromOwnCenter();
-  variation/=referenceIteration.getClusterSetInfo().getAverageClusterPointsDistanceFromOwnCenter();
-  return averagePointDistanceToClusterCenterProgressionRateCondition.apply(variation);
-}

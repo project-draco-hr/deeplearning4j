@@ -1,5 +1,0 @@
-{
-  ClusteringEndCondition endCondition=new ClusteringEndCondition().iterationCountGreaterThan(maxIterationCount);
-  FixedClusterCountStrategy strategy=new FixedClusterCountStrategy(clusterCount,distanceFunction,endCondition,allowEmptyClusters);
-  return strategy;
-}

@@ -1,0 +1,5 @@
+{
+  List<Cluster> clustersToSplit=getClustersWhereMaximumDistanceFromCenterGreaterThan(clusterSet,clusterSetInfo,maxWithinClusterDistance);
+  splitClusters(clusterSet,clusterSetInfo,clustersToSplit,maxWithinClusterDistance,executorService);
+  return clustersToSplit.size();
+}

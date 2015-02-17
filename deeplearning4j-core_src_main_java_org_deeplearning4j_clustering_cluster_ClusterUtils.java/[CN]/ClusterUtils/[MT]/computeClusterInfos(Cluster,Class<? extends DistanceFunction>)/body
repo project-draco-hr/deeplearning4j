@@ -1,13 +1,12 @@
 {
-  ClusterInfo info=new ClusterInfo();
+  ClusterInfo info=new ClusterInfo(true);
   DistanceFunction centerDistanceFunction=distanceFunction(distanceFunctionClass,(INDArray)cluster.getCenter());
   for (int i=0, j=cluster.getPoints().size(); i < j; i++) {
     Point point=cluster.getPoints().get(i);
     double distance=centerDistanceFunction.apply(point);
-    info.setAveragePointDistanceFromCenter(info.getAveragePointDistanceFromCenter() + distance);
     info.getPointDistancesFromCenter().put(point.getId(),distance);
+    info.setTotalPointDistanceFromCenter(info.getTotalPointDistanceFromCenter() + distance);
   }
-  info.setTotalPointDistanceFromCenter(info.getAveragePointDistanceFromCenter());
-  if (cluster.getPoints().size() > 0)   info.setAveragePointDistanceFromCenter(info.getAveragePointDistanceFromCenter() / cluster.getPoints().size());
+  if (cluster.getPoints().size() > 0)   info.setAveragePointDistanceFromCenter(info.getTotalPointDistanceFromCenter() / cluster.getPoints().size());
   return info;
 }
