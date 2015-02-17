@@ -1,0 +1,3 @@
+{
+  if (iteration % printIterations == 0)   log.info("Score at iteration " + iteration + " is "+ model.score());
+}

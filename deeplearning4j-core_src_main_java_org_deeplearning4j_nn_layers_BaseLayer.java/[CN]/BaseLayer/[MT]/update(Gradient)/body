@@ -1,3 +1,5 @@
 {
-  setParams(params().addi(gradient.gradient()));
+  for (  String s : conf.variables()) {
+    getParam(s).addi(gradient.gradientForVariable().get(s));
+  }
 }

@@ -11,7 +11,5 @@
       e.printStackTrace();
     }
   }
- else {
-    jgen.writeStringField("activationFunction",value.getClass().getName());
-  }
+ else   jgen.writeString(value.getClass().getName());
 }

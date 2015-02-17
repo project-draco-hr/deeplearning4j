@@ -15,7 +15,7 @@
       step=lineMaximizer.optimize(step,params,gradient);
     }
  catch (    InvalidStepException e) {
-      e.printStackTrace();
+      log.warn("Invalid step...continuing another iteration");
     }
     gradient=(INDArray)searchState.get(GRADIENT_KEY);
     postFirstStep(gradient);
@@ -31,7 +31,7 @@
       step=lineMaximizer.optimize(step,params,gradient);
     }
  catch (    InvalidStepException e) {
-      e.printStackTrace();
+      log.warn("Invalid step...continuing another iteration");
     }
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     oldScore=score;
@@ -39,7 +39,6 @@
     setupSearchState(pair);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
     postStep();
-    log.info("Score at iteration " + i + " is "+ score);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
   }
   return true;

@@ -1,4 +1,4 @@
 {
-  for (int i=0; i < layerwise.size(); i++)   override.override(i,layerwise.get(i));
+  for (int i=0; i < layerwise.size(); i++)   override.overrideLayer(i,layerwise.get(i));
   return this;
 }

@@ -1,0 +1,10 @@
+{
+  for (  String variable : conf.variables()) {
+    AdaGrad adaGradForVariable=adaGrad.get(variable);
+    if (adaGradForVariable == null) {
+      adaGradForVariable=new AdaGrad(model.getParam(variable).shape());
+      adaGrad.put(variable,adaGradForVariable);
+      updateGradientAccordingToParams(conf,iteration,adaGradForVariable,gradient.getGradientFor(variable),model.getParam(variable),batchSize);
+    }
+  }
+}

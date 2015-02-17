@@ -1,7 +1,0 @@
-{
-  MultiLayerNetwork network=v1.getFirst();
-  network.initialize(v1.getSecond());
-  network.fit(v1.getSecond());
-  INDArray params=network.params();
-  return params;
-}

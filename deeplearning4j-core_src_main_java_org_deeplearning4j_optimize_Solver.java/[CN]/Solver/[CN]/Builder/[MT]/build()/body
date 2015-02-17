@@ -1,7 +1,7 @@
 {
   Solver solver=new Solver();
   solver.conf=conf;
-  solver.listeners=listeners;
   solver.model=model;
+  solver.listeners=conf.getListeners();
   return solver;
 }

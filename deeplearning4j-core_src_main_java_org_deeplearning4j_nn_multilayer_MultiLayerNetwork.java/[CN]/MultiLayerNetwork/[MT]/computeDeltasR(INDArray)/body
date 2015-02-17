@@ -11,7 +11,7 @@
     biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
     activationFunctions.add(getLayers()[j].conf().getActivationFunction());
   }
-  INDArray rix=rActivations.get(rActivations.size() - 1).divi((double)input.rows());
+  INDArray rix=rActivations.get(rActivations.size() - 1).divi((double)input.slices());
   LinAlgExceptions.assertValidNum(rix);
   for (int i=getnLayers() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(rix);

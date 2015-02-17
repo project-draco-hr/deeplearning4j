@@ -3,7 +3,7 @@
   Path inputPath=new Path(props.getProperty(ConfigFields.APP_INPUT_PATH));
   FileSystem fs=FileSystem.get(conf);
   FileStatus f=fs.getFileStatus(inputPath);
-  Set<ConfigurationTuple> configTuples=new HashSet<ConfigurationTuple>();
+  Set<ConfigurationTuple> configTuples=new HashSet<>();
   int workerId=0;
   JobConf job=new JobConf(new Configuration());
   job.setInputFormat((Class<? extends InputFormat>)this.inputFormatClass);

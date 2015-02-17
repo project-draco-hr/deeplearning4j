@@ -1,5 +1,5 @@
 {
-  Map<String,Integer> containerHostMapping=new HashMap<String,Integer>();
+  Map<String,Integer> containerHostMapping=new HashMap<>();
   for (  ConfigurationTuple tuple : configTuples) {
     Integer count=containerHostMapping.get(tuple.getHost());
     if (count == null)     count=0;

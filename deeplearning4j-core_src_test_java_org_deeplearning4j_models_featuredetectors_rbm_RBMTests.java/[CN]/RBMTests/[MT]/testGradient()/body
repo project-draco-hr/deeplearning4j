@@ -6,6 +6,6 @@
   RBM rbm=layerFactory.create(conf);
   rbm.setInput(input);
   double value=rbm.score();
-  Gradient grad2=rbm.getGradient();
+  Gradient grad2=rbm.gradient();
   rbm.fit(input);
 }

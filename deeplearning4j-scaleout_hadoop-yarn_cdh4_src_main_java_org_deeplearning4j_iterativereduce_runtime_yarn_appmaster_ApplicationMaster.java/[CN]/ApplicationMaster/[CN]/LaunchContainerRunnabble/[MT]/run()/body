@@ -8,8 +8,6 @@
     cmHandler.startContainer(commands,localResources,Utils.getEnvironment(conf,props));
     cmHandler.getContainerStatus();
   }
- catch (  YarnRemoteException ex) {
-  }
-catch (  IOException ex) {
+ catch (  IOException ex) {
   }
 }

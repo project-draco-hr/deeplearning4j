@@ -1,10 +1,10 @@
 {
   Gradient ret=new DefaultGradient();
-  if (gradients.length != conf.getGradientList().size())   throw new IllegalArgumentException("Unable to create gradients...not equal to number of parameters");
+  if (gradients.length != conf.variables().size())   throw new IllegalArgumentException("Unable to create gradients...not equal to number of parameters");
   for (int i=0; i < gradients.length; i++) {
-    INDArray paramI=getParam(conf.getGradientList().get(i));
+    INDArray paramI=getParam(conf.variables().get(i));
     if (!Arrays.equals(paramI.shape(),gradients[i].shape()))     throw new IllegalArgumentException("Gradient at index " + i + " had wrong gradient size of "+ Arrays.toString(gradients[i].shape())+ " when should have been "+ Arrays.toString(paramI.shape()));
-    ret.gradientLookupTable().put(conf.getGradientList().get(i),gradients[i]);
+    ret.gradientForVariable().put(conf.variables().get(i),gradients[i]);
   }
   return ret;
 }
