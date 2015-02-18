@@ -1,0 +1,4 @@
+{
+  setTerminationCondition(FixedIterationCountCondition.iterationCountGreaterThan(maxIterationCount));
+  return this;
+}

@@ -1,0 +1,7 @@
+{
+  int iterationCount=iterationHistory.getIterationCount();
+  if (iterationCount <= 1)   return false;
+  double variation=iterationHistory.getMostRecentClusterSetInfo().getPointLocationChange().get();
+  variation/=iterationHistory.getMostRecentClusterSetInfo().getPointsCount();
+  return convergenceCondition.apply(variation);
+}

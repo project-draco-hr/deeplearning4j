@@ -1,0 +1,6 @@
+{
+  ExecutorService executor=MultiThreadUtils.newExecutorService();
+  ClusterSetInfo info=computeClusterSetInfo(clusterSet,executor);
+  executor.shutdownNow();
+  return info;
+}

@@ -1,0 +1,11 @@
+{
+  if (optimization.isClusteringOptimizationType(ClusteringOptimizationType.MINIMIZE_AVERAGE_POINT_TO_CENTER_DISTANCE)) {
+    int splitCount=ClusterUtils.splitClustersWhereAverageDistanceFromCenterGreaterThan(clusterSet,clusterSetInfo,optimization.getClusteringOptimizationValue(),executor);
+    return splitCount > 0;
+  }
+  if (optimization.isClusteringOptimizationType(ClusteringOptimizationType.MINIMIZE_MAXIMUM_POINT_TO_CENTER_DISTANCE)) {
+    int splitCount=ClusterUtils.splitClustersWhereMaximumDistanceFromCenterGreaterThan(clusterSet,clusterSetInfo,optimization.getClusteringOptimizationValue(),executor);
+    return splitCount > 0;
+  }
+  return false;
+}

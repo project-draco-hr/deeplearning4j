@@ -1,0 +1,5 @@
+{
+  ClusterInfo clusterInfo=new ClusterInfo(threadSafe);
+  clustersInfos.put(clusterId,clusterInfo);
+  return clusterInfo;
+}

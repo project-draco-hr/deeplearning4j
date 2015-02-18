@@ -1,0 +1,5 @@
+{
+  int count=0;
+  for (  ClusterInfo clusterInfo : clustersInfos.values())   count+=clusterInfo.getPointDistancesFromCenter().size();
+  return count;
+}
