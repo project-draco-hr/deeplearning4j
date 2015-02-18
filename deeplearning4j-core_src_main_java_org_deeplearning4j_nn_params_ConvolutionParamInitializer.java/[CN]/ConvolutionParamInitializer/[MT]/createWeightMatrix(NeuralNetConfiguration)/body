@@ -1,3 +1,3 @@
 {
-  return WeightInitUtil.initWeights(conf.getFilterSize(),conf.getWeightInit(),conf.getActivationFunction(),conf.getDist());
+  return WeightInitUtil.initWeights(conf.getFilterSize(),conf.getWeightInit(),conf.getDist());
 }
