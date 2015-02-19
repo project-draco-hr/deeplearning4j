@@ -1,0 +1,13 @@
+{
+  File out=new File(uri.toString());
+  try {
+    RecordWriter writer=new CSVRecordWriter(out);
+    List<Collection<Writable>> records=new ArrayList<>();
+    for (    Collection<Writable> record : records)     writer.write(record);
+    writer.close();
+    return writer;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
