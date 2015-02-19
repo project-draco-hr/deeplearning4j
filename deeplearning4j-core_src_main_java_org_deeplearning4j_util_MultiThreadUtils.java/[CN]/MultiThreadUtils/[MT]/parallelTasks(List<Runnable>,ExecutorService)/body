@@ -1,0 +1,20 @@
+{
+  int tasksCount=tasks.size();
+  final CountDownLatch latch=new CountDownLatch(tasksCount);
+  for (int i=0; i < tasksCount; i++) {
+    final int taskIdx=i;
+    executorService.execute(new Runnable(){
+      public void run(){
+        tasks.get(taskIdx).run();
+        latch.countDown();
+      }
+    }
+);
+  }
+  try {
+    latch.await();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

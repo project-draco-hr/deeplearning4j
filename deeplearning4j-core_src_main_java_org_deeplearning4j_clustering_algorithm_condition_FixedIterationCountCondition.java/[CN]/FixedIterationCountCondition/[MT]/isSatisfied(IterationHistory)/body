@@ -1,0 +1,3 @@
+{
+  return iterationCountCondition.apply(iterationHistory == null ? 0 : iterationHistory.getIterationCount());
+}

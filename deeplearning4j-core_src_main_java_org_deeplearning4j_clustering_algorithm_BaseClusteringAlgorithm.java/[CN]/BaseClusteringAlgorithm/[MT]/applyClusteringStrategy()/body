@@ -1,0 +1,15 @@
+{
+  if (!isStrategyApplicableNow())   return;
+  ClusterSetInfo clusterSetInfo=iterationHistory.getMostRecentClusterSetInfo();
+  if (!clusteringStrategy.isAllowEmptyClusters()) {
+    int removedCount=removeEmptyClusters(clusterSetInfo);
+    if (removedCount > 0) {
+      iterationHistory.getMostRecentIterationInfo().setStrategyApplied(true);
+      if (clusteringStrategy.isStrategyOfType(ClusteringStrategyType.FIXED_CLUSTER_COUNT) && clusterSet.getClusterCount() < clusteringStrategy.getInitialClusterCount()) {
+        int splitCount=ClusterUtils.splitMostSpreadOutClusters(clusterSet,clusterSetInfo,clusteringStrategy.getInitialClusterCount() - clusterSet.getClusterCount(),exec);
+        if (splitCount > 0)         iterationHistory.getMostRecentIterationInfo().setStrategyApplied(true);
+      }
+    }
+  }
+  if (clusteringStrategy.isStrategyOfType(ClusteringStrategyType.OPTIMIZATION))   optimize();
+}

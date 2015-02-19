@@ -1,0 +1,5 @@
+{
+  ClusterSetInfo clusterSetInfo=ClusterUtils.classifyPoints(clusterSet,initialPoints,exec);
+  ClusterUtils.refreshClustersCenters(clusterSet,clusterSetInfo,exec);
+  iterationHistory.getIterationsInfos().put(currentIteration,new IterationInfo(currentIteration,clusterSetInfo));
+}

@@ -1,0 +1,12 @@
+{
+  List<Cluster> clusters=new ArrayList<Cluster>(clusterSet.getClusters());
+  Collections.sort(clusters,new Comparator<Cluster>(){
+    public int compare(    Cluster o1,    Cluster o2){
+      Double o1TotalDistance=info.getClusterInfo(o1.getId()).getTotalPointDistanceFromCenter();
+      Double o2TotalDistance=info.getClusterInfo(o2.getId()).getTotalPointDistanceFromCenter();
+      return -o1TotalDistance.compareTo(o2TotalDistance);
+    }
+  }
+);
+  return clusters.subList(0,count);
+}

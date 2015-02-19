@@ -1,0 +1,6 @@
+{
+  Cluster newCluster=new Cluster(center,distanceFunction);
+  getClusters().add(newCluster);
+  setPointLocation(center,newCluster);
+  return newCluster;
+}

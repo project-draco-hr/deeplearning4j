@@ -1,0 +1,4 @@
+{
+  Condition condition=new LessThan(varianceVariation);
+  return new VarianceVariationCondition(condition,period);
+}

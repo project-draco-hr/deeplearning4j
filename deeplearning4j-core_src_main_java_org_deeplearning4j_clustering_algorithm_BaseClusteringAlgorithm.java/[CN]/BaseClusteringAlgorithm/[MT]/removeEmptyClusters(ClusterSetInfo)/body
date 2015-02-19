@@ -1,0 +1,5 @@
+{
+  List<Cluster> removedClusters=clusterSet.removeEmptyClusters();
+  clusterSetInfo.removeClusterInfos(removedClusters);
+  return removedClusters.size();
+}

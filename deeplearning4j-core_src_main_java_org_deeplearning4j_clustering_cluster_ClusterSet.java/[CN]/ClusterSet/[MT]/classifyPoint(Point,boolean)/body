@@ -1,0 +1,7 @@
+{
+  Pair<Cluster,Double> nearestCluster=nearestCluster(point);
+  Cluster newCluster=nearestCluster.getFirst();
+  boolean locationChange=isPointLocationChange(point,newCluster);
+  addPointToCluster(point,newCluster,moveClusterCenter);
+  return new PointClassification(nearestCluster.getFirst(),nearestCluster.getSecond(),locationChange);
+}

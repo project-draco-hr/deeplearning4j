@@ -1,0 +1,10 @@
+{
+  DistanceFunction function;
+  try {
+    function=distanceFunction.getConstructor(INDArray.class).newInstance(m1.getArray());
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return function.apply(m2);
+}

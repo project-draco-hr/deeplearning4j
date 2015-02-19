@@ -1,3 +1,4 @@
 {
+  Preconditions.checkArgument(p != null);
   return distanceFunction.apply(p.data);
 }
