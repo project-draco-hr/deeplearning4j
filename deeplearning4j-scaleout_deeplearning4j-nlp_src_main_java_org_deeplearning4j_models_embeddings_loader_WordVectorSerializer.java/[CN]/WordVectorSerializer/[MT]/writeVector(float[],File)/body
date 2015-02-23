@@ -1,9 +1,0 @@
-{
-  BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(to));
-  DataOutputStream dos=new DataOutputStream(bos);
-  for (  float v : vec) {
-    dos.writeFloat(v);
-  }
-  bos.flush();
-  bos.close();
-}
