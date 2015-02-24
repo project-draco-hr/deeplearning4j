@@ -17,7 +17,7 @@
     return sigmoid(vMean);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
-    return Activations.softMaxRows().apply(vMean);
+    return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean),0);
   }
   throw new IllegalStateException("Visible unit type should either be binary or gaussian");
 }

@@ -1,7 +1,7 @@
 {
   if (node == null || rect.minDistance(point) > dist)   return;
   int _discNext=(_disc + 1) % dims;
-  double distance=new EuclideanDistance(point).apply(node.getPoint());
+  double distance=Nd4j.getExecutioner().execAndReturn(new EuclideanDistance(point)).currentResult().doubleValue();
   if (distance <= dist) {
     best.add(new Pair<>(distance,node.getPoint()));
   }

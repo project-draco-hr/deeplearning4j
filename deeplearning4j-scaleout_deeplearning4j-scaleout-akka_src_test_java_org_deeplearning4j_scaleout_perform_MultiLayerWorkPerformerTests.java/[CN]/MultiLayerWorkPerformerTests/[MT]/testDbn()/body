@@ -4,7 +4,7 @@
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.weightInit(WeightInit.ZERO);
-        builder.activationFunction(Activations.softMaxRows());
+        builder.activationFunction("softmax");
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
     }

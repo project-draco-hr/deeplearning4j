@@ -1,5 +1,5 @@
 {
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
-  return conf.getActivationFunction().apply(getInput().mmul(W).addiRowVector(b));
+  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),getInput().mmul(W).addiRowVector(b)));
 }

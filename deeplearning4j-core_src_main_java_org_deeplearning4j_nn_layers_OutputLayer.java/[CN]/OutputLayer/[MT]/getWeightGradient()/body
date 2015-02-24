@@ -3,8 +3,8 @@
 switch (conf.getLossFunction()) {
 case MCXENT:
     INDArray preOut=preOutput(input);
-  INDArray p_y_given_x=Activations.softMaxRows().apply(preOut);
-INDArray dy=labels.sub(p_y_given_x);
+  INDArray pYGivenX=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preOut),0);
+INDArray dy=labels.sub(pYGivenX);
 return input.transpose().mmul(dy);
 case XENT:
 INDArray xEntDiff=z.sub(labels);

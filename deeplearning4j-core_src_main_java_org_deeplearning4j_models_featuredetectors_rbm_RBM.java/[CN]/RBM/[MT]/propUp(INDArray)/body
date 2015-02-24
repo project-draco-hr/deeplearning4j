@@ -17,6 +17,6 @@
  else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
     return sigmoid(preSig);
   }
- else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX)   return Activations.softMaxRows().apply(preSig);
+ else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX)   return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
   throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
 }

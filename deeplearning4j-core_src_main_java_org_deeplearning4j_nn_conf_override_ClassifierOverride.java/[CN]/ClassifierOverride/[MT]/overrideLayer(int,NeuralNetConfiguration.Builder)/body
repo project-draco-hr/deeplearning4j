@@ -1,6 +1,6 @@
 {
   if (i == finalLayer) {
-    builder.activationFunction(Activations.softMaxRows());
+    builder.activationFunction("softmax");
     builder.weightInit(WeightInit.ZERO);
     builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
     builder.lossFunction(LossFunctions.LossFunction.MCXENT);

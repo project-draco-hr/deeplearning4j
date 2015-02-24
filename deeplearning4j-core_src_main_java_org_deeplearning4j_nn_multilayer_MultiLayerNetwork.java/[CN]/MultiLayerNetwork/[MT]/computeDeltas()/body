@@ -2,10 +2,10 @@
   List<INDArray> deltaRet=new ArrayList<>();
   INDArray[] deltas=new INDArray[getnLayers() + 2];
   List<INDArray> activations=feedForward();
-  INDArray ix=labels.sub(activations.get(activations.size() - 1)).subi(getOutputLayer().conf().getActivationFunction().applyDerivative(activations.get(activations.size() - 1)));
+  INDArray ix=labels.sub(activations.get(activations.size() - 1)).subi(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(getOutputLayer().conf().getActivationFunction(),activations.get(activations.size() - 1)).derivative()));
   List<INDArray> weights=new ArrayList<>();
   List<INDArray> biases=new ArrayList<>();
-  List<ActivationFunction> activationFunctions=new ArrayList<>();
+  List<String> activationFunctions=new ArrayList<>();
   for (int j=0; j < getLayers().length; j++) {
     weights.add(getLayers()[j].getParam(DefaultParamInitializer.WEIGHT_KEY));
     biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
@@ -24,7 +24,7 @@
       applyDropConnectIfNecessary(deltas[i]);
       INDArray weightsPlusBias=weights.get(i).transpose();
       INDArray activation=activations.get(i);
-      if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(activationFunctions.get(i - 1).applyDerivative(activation));
+      if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(activationFunctions.get(i - 1),activation).derivative()));
     }
   }
   for (int i=0; i < deltas.length; i++) {

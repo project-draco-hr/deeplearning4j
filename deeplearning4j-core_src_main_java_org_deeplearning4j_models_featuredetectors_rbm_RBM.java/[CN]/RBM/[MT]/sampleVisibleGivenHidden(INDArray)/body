@@ -9,7 +9,7 @@
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
-    INDArray v1Sample=Activations.softMaxRows().apply(v1Mean);
+    INDArray v1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",v1Mean),0);
     return new Pair<>(v1Mean,v1Sample);
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {

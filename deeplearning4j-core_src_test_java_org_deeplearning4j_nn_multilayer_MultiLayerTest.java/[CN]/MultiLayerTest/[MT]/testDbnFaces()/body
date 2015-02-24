@@ -8,7 +8,7 @@
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 3) {
         builder.layerFactory(new DefaultLayerFactory(OutputLayer.class));
-        builder.activationFunction(Activations.softMaxRows());
+        builder.activationFunction("softmax");
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
     }

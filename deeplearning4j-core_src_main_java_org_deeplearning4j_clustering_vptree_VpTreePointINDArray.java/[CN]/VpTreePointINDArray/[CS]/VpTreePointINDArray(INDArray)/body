@@ -1,5 +1,4 @@
 {
   if (!data.isVector())   throw new IllegalArgumentException("Data should only be a vector");
   this.data=data;
-  distanceFunction=new EuclideanDistance(data);
 }
