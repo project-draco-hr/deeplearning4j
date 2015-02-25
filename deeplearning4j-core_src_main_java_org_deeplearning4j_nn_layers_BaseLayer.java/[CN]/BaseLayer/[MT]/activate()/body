@@ -1,5 +1,6 @@
 {
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),getInput().mmul(W).addiRowVector(b)));
+  if (conf.getActivationFunction().equals("softmax"))   return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),getInput().mmul(W).addiRowVector(b)));
+ else   return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),getInput().mmul(W).addiRowVector(b)));
 }
