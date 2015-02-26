@@ -1,0 +1,25 @@
+{
+  Scheme scheme=getScheme();
+  RecordReader recordReader=scheme.createReader(new ClassPathResource("iris.dat").getURI());
+  while (recordReader.hasNext()) {
+    Collection<Writable> record=recordReader.next();
+    Assert.assertEquals(5,record.size());
+  }
+  recordReader=scheme.createReader(new ClassPathResource("iris.dat").getURI());
+  List<Collection<Writable>> records=new ArrayList<>();
+  int count=0;
+  RecordWriter writer=scheme.createWriter(URI.create("test_out.txt"));
+  for (  Collection<Writable> record : records) {
+    writer.write(record);
+    Assert.assertEquals(5,record.size());
+  }
+  recordReader=scheme.createReader(URI.create("test_out.txt"));
+  while (recordReader.hasNext()) {
+    Collection<Writable> record=recordReader.next();
+    records.add(record);
+    Assert.assertEquals(5,record.size());
+    count++;
+  }
+  Assert.assertEquals(150,count);
+  writer.close();
+}

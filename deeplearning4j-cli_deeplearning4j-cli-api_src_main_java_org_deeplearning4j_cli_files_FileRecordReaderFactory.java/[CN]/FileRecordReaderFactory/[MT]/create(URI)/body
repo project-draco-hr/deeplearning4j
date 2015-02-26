@@ -1,0 +1,13 @@
+{
+  File file=new File(uri.toString());
+  InputSplit split=new FileSplit(file);
+  String fileNameExtension=FilenameUtils.getExtension(uri.toString());
+switch (fileNameExtension) {
+case "csv":
+    RecordReader recordReader=new CSVRecordReader();
+  return recordReader;
+case "txt":
+RecordReader recordReader1=new FileRecordReader();
+return recordReader1;
+}
+}
