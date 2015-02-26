@@ -2,8 +2,5 @@
   this.defaultConfiguration=network.defaultConfiguration;
   this.input=network.input;
   this.labels=network.labels;
-  this.weightTransforms=network.weightTransforms;
-  this.visibleBiasTransforms=network.visibleBiasTransforms;
-  this.hiddenBiasTransforms=network.hiddenBiasTransforms;
   this.layers=ArrayUtils.clone(network.layers);
 }

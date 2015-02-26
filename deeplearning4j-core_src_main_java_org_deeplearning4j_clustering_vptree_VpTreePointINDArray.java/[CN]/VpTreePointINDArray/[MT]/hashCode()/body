@@ -1,5 +1,4 @@
 {
   int result=data != null ? data.hashCode() : 0;
-  result=31 * result + (distanceFunction != null ? distanceFunction.hashCode() : 0);
   return result;
 }

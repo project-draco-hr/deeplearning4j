@@ -9,5 +9,5 @@
  else {
     preAct=x.mmul(W).addiRowVector(hBias);
   }
-  return conf.getActivationFunction().apply(preAct);
+  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),preAct));
 }

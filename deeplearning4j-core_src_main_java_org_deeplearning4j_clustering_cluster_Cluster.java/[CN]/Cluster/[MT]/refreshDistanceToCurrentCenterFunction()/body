@@ -1,8 +1,0 @@
-{
-  try {
-    distanceToCenterFunction=distanceFunctionClass.getConstructor(INDArray.class).newInstance(center.getArray());
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

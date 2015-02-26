@@ -1,4 +1,4 @@
 {
   Preconditions.checkArgument(p != null);
-  return distanceFunction.apply(p.data);
+  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createAccum("euclidean",data,p.data)).currentResult().doubleValue();
 }

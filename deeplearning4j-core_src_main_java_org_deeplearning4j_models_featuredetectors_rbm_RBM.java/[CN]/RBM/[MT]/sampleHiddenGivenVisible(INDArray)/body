@@ -19,7 +19,7 @@
   }
  else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX) {
     INDArray h1Mean=propUp(v);
-    INDArray h1Sample=Activations.softMaxRows().apply(h1Mean);
+    INDArray h1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",h1Mean),0);
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }

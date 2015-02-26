@@ -1,16 +1,7 @@
 {
   LayerFactory layerFactory=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
   int batchSize=110;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction(Activations.tanh()).filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(2).preProcessor(0,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{9}).override(new ConfOverride(){
-    @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
-      if (i == 1) {
-        builder.layerFactory(new DefaultLayerFactory(OutputLayer.class));
-        builder.activationFunction(Activations.softMaxRows());
-        builder.lossFunction(LossFunctions.LossFunction.MCXENT);
-      }
-    }
-  }
-).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(2).preProcessor(0,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{9}).override(new ClassifierOverride(1)).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   org.nd4j.linalg.dataset.DataSet next=iter.next();

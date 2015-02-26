@@ -1,0 +1,11 @@
+{
+  ClusterInfo info=new ClusterInfo(true);
+  for (int i=0, j=cluster.getPoints().size(); i < j; i++) {
+    Point point=cluster.getPoints().get(i);
+    double distance=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createAccum(distanceFunction,cluster.getCenter(),point.getArray())).currentResult().doubleValue();
+    info.getPointDistancesFromCenter().put(point.getId(),distance);
+    info.setTotalPointDistanceFromCenter(info.getTotalPointDistanceFromCenter() + distance);
+  }
+  if (cluster.getPoints().size() > 0)   info.setAveragePointDistanceFromCenter(info.getTotalPointDistanceFromCenter() / cluster.getPoints().size());
+  return info;
+}

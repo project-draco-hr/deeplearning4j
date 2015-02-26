@@ -17,7 +17,7 @@
   int n=hOut.rows();
   int d=hOut.columns();
   for (int t=n - 1; t > 0; t--) {
-    if (conf.getActivationFunction().type().equals("tanh")) {
+    if (conf.getActivationFunction().equals("tanh")) {
       INDArray tanhCt=tanh(c.slice(t));
       dIFogF.slice(t).put(new NDArrayIndex[]{interval(2 * d,3 * d)},tanhCt.mul(dHout.slice(t)));
       dC.slice(t).addi(pow(tanhCt,2).rsubi(1).muli(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(dHout.slice(t))));

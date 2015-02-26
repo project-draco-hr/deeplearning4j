@@ -1,5 +1,3 @@
 {
-  this.iterations=iterations;
-  this.plotter=plotter;
-  this.patchesPerRow=patchesPerRow;
+  this(iterations,plotter,patchesPerRow,false);
 }
