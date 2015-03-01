@@ -1,0 +1,22 @@
+{
+  File out=new File(uri.toString());
+  String fileNameExtension=FilenameUtils.getExtension(uri.toString()).toLowerCase();
+  RecordWriter recordWriter=null;
+switch (fileNameExtension) {
+case "csv":
+    recordWriter=new CSVRecordWriter(out);
+  break;
+case "txt":
+recordWriter=new FileRecordWriter(out,true);
+break;
+case "mat":
+recordWriter=new MatlabRecordWriter(out);
+break;
+case "svmlight":
+recordWriter=new SVMLightRecordWriter(out,true);
+break;
+default :
+throw new UnknownFormatException("Unknown file format");
+}
+return recordWriter;
+}

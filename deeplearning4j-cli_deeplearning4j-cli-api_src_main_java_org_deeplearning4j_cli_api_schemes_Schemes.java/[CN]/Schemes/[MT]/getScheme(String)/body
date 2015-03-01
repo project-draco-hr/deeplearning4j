@@ -1,0 +1,8 @@
+{
+switch (scheme) {
+case "file":
+    return new FileScheme();
+default :
+  throw new IllegalArgumentException("Unknown scheme " + scheme);
+}
+}
