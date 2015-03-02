@@ -1,3 +1,9 @@
 {
-  return null;
+  Boolean isMultiLayer=value.contains("_multi");
+  if (isMultiLayer) {
+    return (E)MultiLayerConfiguration.fromJson(value);
+  }
+ else {
+    return (E)NeuralNetConfiguration.fromJson(value);
+  }
 }
