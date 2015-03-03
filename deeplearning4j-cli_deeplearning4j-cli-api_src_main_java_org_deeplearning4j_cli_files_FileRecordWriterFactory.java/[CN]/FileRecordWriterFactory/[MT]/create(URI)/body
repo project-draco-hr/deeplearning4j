@@ -1,7 +1,8 @@
 {
+  Preconditions.checkArgument(uri != null,"URI needs to be specified");
   File out=new File(uri.toString());
   String fileNameExtension=FilenameUtils.getExtension(uri.toString()).toLowerCase();
-  RecordWriter recordWriter=null;
+  RecordWriter recordWriter;
 switch (fileNameExtension) {
 case "csv":
     recordWriter=new CSVRecordWriter(out);

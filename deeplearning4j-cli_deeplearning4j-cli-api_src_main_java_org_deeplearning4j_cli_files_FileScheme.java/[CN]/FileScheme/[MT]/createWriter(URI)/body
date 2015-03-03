@@ -1,7 +1,6 @@
 {
   try {
-    RecordWriter writer=recordWriterFactory.create(uri);
-    return writer;
+    return recordWriterFactory.create(uri);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
