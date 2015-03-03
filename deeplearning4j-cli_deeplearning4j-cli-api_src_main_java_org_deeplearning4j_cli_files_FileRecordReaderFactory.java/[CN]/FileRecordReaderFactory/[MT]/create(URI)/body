@@ -1,5 +1,5 @@
 {
-  Preconditions.checkArgument(URI != null,"URI cannot be null");
+  Preconditions.checkArgument(uri != null,"URI cannot be null");
   File file=new File(uri.toString());
   InputSplit split=new FileSplit(file);
   String fileNameExtension=FilenameUtils.getExtension(uri.toString()).toLowerCase();
