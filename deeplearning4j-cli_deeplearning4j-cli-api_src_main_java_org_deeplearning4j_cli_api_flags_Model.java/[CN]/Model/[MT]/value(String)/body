@@ -1,9 +1,10 @@
 {
   Boolean isMultiLayer=value.contains("_multi");
+  String json=FileUtils.readFileToString(new File(value));
   if (isMultiLayer) {
-    return (E)MultiLayerConfiguration.fromJson(value);
+    return (E)MultiLayerConfiguration.fromJson(json);
   }
  else {
-    return (E)NeuralNetConfiguration.fromJson(value);
+    return (E)NeuralNetConfiguration.fromJson(json);
   }
 }

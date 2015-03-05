@@ -1,7 +1,6 @@
 {
   try {
-    RecordReader reader=readerFactory.create(uri);
-    return reader;
+    return readerFactory.create(uri);
   }
  catch (  UnknownFormatException e) {
     throw new RuntimeException(e);
