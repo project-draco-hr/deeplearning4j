@@ -1,6 +1,6 @@
 {
   Nd4j.dtype=DataBuffer.FLOAT;
-  String url="https://docs.google.com/uc?export=download&confirm=LDs-&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM";
+  String url="https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz";
   String path="GoogleNews-vectors-negative300.bin.gz";
   File toDl=new File(path);
   if (!toDl.exists())   FileUtils.copyURLToFile(new URL(url),toDl);
