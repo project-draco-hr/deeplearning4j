@@ -1,0 +1,16 @@
+{
+  ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
+  File file=resource.getFile().getParentFile();
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(file.getAbsolutePath());
+  new File("cache.ser").delete();
+  InMemoryLookupCache cache=new InMemoryLookupCache();
+  TokenizerFactory t=new UimaTokenizerFactory();
+  WeightLookupTable table=new InMemoryLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
+  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(1).iterations(5).layerSize(100).lookupTable(table).stopWords(new ArrayList<String>()).vocabCache(cache).windowSize(5).iterate(iter).tokenizerFactory(t).build();
+  assertEquals(new ArrayList<String>(),vec.getStopWords());
+  vec.fit();
+  Tsne calculation=new Tsne.Builder().setMaxIter(1).usePca(false).setSwitchMomentumIteration(20).normalize(true).useAdaGrad(true).learningRate(500f).perplexity(20f).minGain(1e-1f).build();
+  vec.lookupTable().plotVocab(calculation);
+  double sim=vec.similarity("Adam","deeplearning4j");
+  new File("cache.ser").delete();
+}
