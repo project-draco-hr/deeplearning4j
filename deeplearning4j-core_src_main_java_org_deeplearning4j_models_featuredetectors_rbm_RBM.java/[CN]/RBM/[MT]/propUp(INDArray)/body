@@ -6,7 +6,7 @@
   if (conf.isConcatBiases())   preSig=Nd4j.hstack(preSig,hBias);
  else   preSig.addiRowVector(hBias);
   if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
-    preSig=max(preSig);
+    preSig=max(preSig,1.0);
     return preSig;
   }
  else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
