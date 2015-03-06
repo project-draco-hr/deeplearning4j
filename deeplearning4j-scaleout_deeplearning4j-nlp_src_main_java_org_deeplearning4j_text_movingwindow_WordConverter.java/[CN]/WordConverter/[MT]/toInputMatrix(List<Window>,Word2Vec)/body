@@ -3,7 +3,7 @@
   int rows=windows.size();
   INDArray ret=Nd4j.create(rows,columns);
   for (int i=0; i < rows; i++) {
-    ret.putRow(i,Nd4j.create(WindowConverter.asExample(windows.get(i),vec)));
+    ret.putRow(i,WindowConverter.asExampleMatrix(windows.get(i),vec));
   }
   return ret;
 }

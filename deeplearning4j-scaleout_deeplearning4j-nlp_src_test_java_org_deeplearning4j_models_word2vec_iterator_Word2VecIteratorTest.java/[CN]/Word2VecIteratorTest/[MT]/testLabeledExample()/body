@@ -1,3 +1,4 @@
 {
-  Word2VecDataSetIterator iter=new Word2VecDataSetIterator(vec,new LabelAwareFileSentenceIterator(null,new File("")),Arrays.asList(""));
+  Word2VecDataSetIterator iter=new Word2VecDataSetIterator(vec,new LabelAwareFileSentenceIterator(null,new ClassPathResource("labeled/").getFile()),Arrays.asList("negative","positive","neutral"));
+  DataSet next=iter.next();
 }

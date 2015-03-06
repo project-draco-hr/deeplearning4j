@@ -4,8 +4,6 @@
   this.labels=labels;
   this.batch=batch;
   cachedWindow=new CopyOnWriteArrayList<>();
-  this.addLabels=addLabels;
-  this.homogenization=homogenization;
   if (addLabels && homogenization)   iter.setPreProcessor(new SentencePreProcessor(){
     @Override public String preProcess(    String sentence){
       String label=Word2VecDataSetIterator.this.iter.currentLabel();
