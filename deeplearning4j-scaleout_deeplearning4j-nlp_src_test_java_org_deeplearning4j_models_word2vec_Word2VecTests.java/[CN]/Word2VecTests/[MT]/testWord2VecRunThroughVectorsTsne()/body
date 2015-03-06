@@ -11,6 +11,7 @@
   vec.fit();
   Tsne calculation=new Tsne.Builder().setMaxIter(1).usePca(false).setSwitchMomentumIteration(20).normalize(true).useAdaGrad(true).learningRate(500f).perplexity(20f).minGain(1e-1f).build();
   vec.lookupTable().plotVocab(calculation);
+  WordVectorSerializer.writeTsneFormat(vec,calculation.getY(),new File("test.csv"));
   double sim=vec.similarity("Adam","deeplearning4j");
   new File("cache.ser").delete();
 }
