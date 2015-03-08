@@ -3,8 +3,8 @@
   String val=node.textValue();
   String[] split=val.split("\t");
   try {
-    Class<? extends RealDistribution> clazz2=(Class<? extends RealDistribution>)Class.forName(split[0]);
-    RealDistribution ret=clazz2.newInstance();
+    Class<? extends Distribution> clazz2=(Class<? extends Distribution>)Class.forName(split[0]);
+    Distribution ret=clazz2.newInstance();
     Properties props=new Properties();
     props.load(new StringReader(split[1]));
     Dl4jReflection.setProperties(ret,props);

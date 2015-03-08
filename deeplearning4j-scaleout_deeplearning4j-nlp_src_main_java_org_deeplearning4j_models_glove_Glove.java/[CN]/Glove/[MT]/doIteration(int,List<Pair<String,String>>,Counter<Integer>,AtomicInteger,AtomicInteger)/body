@@ -1,6 +1,6 @@
 {
   log.info("Iteration " + i);
-  if (shuffle)   Collections.shuffle(pairList,shuffleRandom);
+  if (shuffle)   Collections.shuffle(pairList,new java.util.Random());
   List<List<Pair<String,String>>> miniBatches=Lists.partition(pairList,batchSize);
   ActorSystem actor=ActorSystem.create();
   Parallelization.iterateInParallel(miniBatches,new Parallelization.RunnableWithParams<List<Pair<String,String>>>(){

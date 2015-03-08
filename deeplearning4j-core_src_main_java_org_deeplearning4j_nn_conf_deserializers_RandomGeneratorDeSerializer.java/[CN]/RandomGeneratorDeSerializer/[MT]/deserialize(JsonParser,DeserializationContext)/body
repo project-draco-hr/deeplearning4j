@@ -3,8 +3,8 @@
   String rngClazz=node.textValue();
   int seed=node.asInt();
   try {
-    Class<? extends RandomGenerator> clazz=(Class<? extends RandomGenerator>)Class.forName(rngClazz);
-    RandomGenerator gen=clazz.newInstance();
+    Class<? extends Random> clazz=(Class<? extends Random>)Class.forName(rngClazz);
+    Random gen=clazz.newInstance();
     gen.setSeed(seed);
     return gen;
   }

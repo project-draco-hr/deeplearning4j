@@ -1,5 +1,5 @@
 {
-  if (rng == null)   this.rng=new MersenneTwister(seed);
+  if (rng == null)   this.rng=Nd4j.getRandom();
   if (syn0 == null || syn0 != null && reset) {
     syn0=Nd4j.rand(new int[]{vocab.numWords() + 1,vectorLength},rng).subi(0.5).divi((double)vectorLength);
     INDArray randUnk=Nd4j.rand(1,vectorLength,rng).subi(0.5).divi(vectorLength);

@@ -1,8 +1,0 @@
-{
-  RealDistribution dist=Distributions.uniform(rng,4);
-  int numSamples=10;
-  double avg=0.0;
-  for (int i=0; i < numSamples; i++)   avg+=dist.sample();
-  avg/=numSamples;
-  log.info("Avg " + avg);
-}

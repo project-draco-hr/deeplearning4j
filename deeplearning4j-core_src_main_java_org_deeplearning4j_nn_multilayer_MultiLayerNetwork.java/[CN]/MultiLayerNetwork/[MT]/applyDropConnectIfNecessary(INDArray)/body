@@ -1,6 +1,7 @@
 {
   if (layerWiseConfigurations.isUseDropConnect()) {
-    INDArray mask=Sampling.binomial(Nd4j.valueArrayOf(input.slices(),input.columns(),0.5),1,defaultConfiguration.getRng());
+    INDArray mean=Nd4j.valueArrayOf(input.slices(),input.columns(),0.5);
+    INDArray mask=Nd4j.getDistributions().createBinomial(1,mean).sample(mean.shape());
     input.muli(mask);
     if (defaultConfiguration.getL2() > 0)     input.muli(defaultConfiguration.getL2());
   }

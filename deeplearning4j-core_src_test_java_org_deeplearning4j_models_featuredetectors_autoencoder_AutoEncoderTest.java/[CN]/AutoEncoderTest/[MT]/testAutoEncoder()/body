@@ -11,7 +11,7 @@
       }
     }
   }
-).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).rng(new MersenneTwister(123)).learningRate(1e-1f).nIn(784).nOut(600).build();
+).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(784).nOut(600).build();
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();

@@ -3,7 +3,7 @@
     INDArray h1Mean=propUp(v);
     INDArray sigH1Mean=sigmoid(h1Mean);
     INDArray sqrtSigH1Mean=sqrt(sigH1Mean);
-    INDArray sample=normal(conf.getRng(),h1Mean,1);
+    INDArray sample=Nd4j.getDistributions().createNormal(h1Mean,1).sample(h1Mean.shape());
     sample.muli(sqrtSigH1Mean);
     INDArray h1Sample=h1Mean.add(sample);
     h1Sample=Transforms.max(h1Sample,1.0);
@@ -24,7 +24,7 @@
   }
  else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
     INDArray h1Mean=propUp(v);
-    INDArray h1Sample=binomial(h1Mean,1,conf.getRng());
+    INDArray h1Sample=Nd4j.getDistributions().createBinomial(1,h1Mean).sample(h1Mean.shape());
     applyDropOutIfNecessary(h1Sample);
     return new Pair<>(h1Mean,h1Sample);
   }

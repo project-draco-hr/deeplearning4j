@@ -4,7 +4,7 @@
   DataSetIterator iter=new LFWDataSetIterator(28,28);
   DataSet next=iter.next();
   next.normalizeZeroMeanZeroUnitVariance();
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(Distributions.normal(new MersenneTwister(123),1e-5)).iterations(100).learningRate(1e-3).iterationListener(new ScoreIterationListener(10)).nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(4).hiddenLayerSizes(600,250,100).override(new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(Nd4j.getDistributions().createNormal(1,1e-5)).iterations(100).learningRate(1e-3).iterationListener(new ScoreIterationListener(10)).nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(4).hiddenLayerSizes(600,250,100).override(new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 3) {
         builder.layerFactory(new DefaultLayerFactory(OutputLayer.class));

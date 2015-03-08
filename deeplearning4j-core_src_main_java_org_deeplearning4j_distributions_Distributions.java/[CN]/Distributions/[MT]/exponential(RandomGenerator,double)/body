@@ -1,7 +1,0 @@
-{
-  if (exponentialDist.get(rng,mean) == null) {
-    RealDistribution ret=new ExponentialDistribution(rng,1.0,ExponentialDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
-    exponentialDist.put(rng,mean,ret);
-  }
-  return exponentialDist.get(rng,mean);
-}

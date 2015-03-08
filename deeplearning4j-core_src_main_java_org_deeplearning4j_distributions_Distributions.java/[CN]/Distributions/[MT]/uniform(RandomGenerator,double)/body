@@ -1,9 +1,0 @@
-{
-  fanIn=Math.abs(fanIn);
-  if (uniformDist.get(rng,fanIn) == null) {
-    RealDistribution ret=new UniformRealDistribution(rng,-fanIn,fanIn);
-    uniformDist.put(rng,fanIn,ret);
-    return ret;
-  }
-  return uniformDist.get(rng,fanIn);
-}

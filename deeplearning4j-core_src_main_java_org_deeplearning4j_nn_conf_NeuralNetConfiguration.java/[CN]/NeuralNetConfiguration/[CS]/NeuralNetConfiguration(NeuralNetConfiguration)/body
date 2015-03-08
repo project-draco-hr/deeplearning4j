@@ -36,6 +36,6 @@
   this.numFeatureMaps=neuralNetConfiguration.numFeatureMaps;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.featureMapSize=neuralNetConfiguration.featureMapSize;
-  if (dist == null)   this.dist=new NormalDistribution(rng,0,.01,NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+  if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

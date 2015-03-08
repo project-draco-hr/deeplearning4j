@@ -5,12 +5,11 @@
   if (conf.isConcatBiases())   vMean=Nd4j.hstack(vMean,vBias);
  else   vMean.addiRowVector(vBias);
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
-    INDArray sample=normal(conf.getRng(),vMean,1.0);
+    INDArray sample=Nd4j.getDistributions().createNormal(vMean,1).sample(vMean.shape());
     vMean.addi(sample);
     return vMean;
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {
-    vMean=normal(conf.getRng(),vMean,1);
     return vMean;
   }
  else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {

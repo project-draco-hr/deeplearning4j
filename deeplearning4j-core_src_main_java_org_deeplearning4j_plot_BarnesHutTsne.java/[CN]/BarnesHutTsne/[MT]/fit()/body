@@ -2,7 +2,7 @@
   boolean exact=theta == 0.0;
   if (exact)   y=super.calculate(x,numDimensions,perplexity);
  else {
-    if (y == null)     y=randn(x.rows(),numDimensions,new MersenneTwister(123)).muli(1e-3f);
+    if (y == null)     y=randn(x.rows(),numDimensions,Nd4j.getRandom()).muli(1e-3f);
     computeGaussianPerplexity(x,perplexity);
     vals=symmetrized(rows,cols,vals).divi(vals.sum(Integer.MAX_VALUE));
     vals.muli(12);
