@@ -1,12 +1,14 @@
 {
-  if (!new File(rootMnist).exists())   new MnistFetcher().downloadAndUntar();
+  if (!new File(MNIST_ROOT).exists()) {
+    new MnistFetcher().downloadAndUntar();
+  }
   try {
-    man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+    man=new MnistManager(MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped,MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped);
   }
  catch (  Exception e) {
-    FileUtils.deleteDirectory(new File(rootMnist));
+    FileUtils.deleteDirectory(new File(MNIST_ROOT));
     new MnistFetcher().downloadAndUntar();
-    man=new MnistManager(rootMnist + MnistFetcher.trainingFilesFilename_unzipped,rootMnist + MnistFetcher.trainingFileLabelsFilename_unzipped);
+    man=new MnistManager(MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped,MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped);
   }
   numOutcomes=10;
   this.binarize=binarize;
