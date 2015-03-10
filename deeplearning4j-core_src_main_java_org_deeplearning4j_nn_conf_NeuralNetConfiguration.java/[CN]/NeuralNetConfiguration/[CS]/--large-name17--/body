@@ -2,7 +2,12 @@
   this.minimize=minimize;
   this.numLineSearchIterations=numLineSearchIterations;
   this.batchSize=batchSize;
-  this.layerFactory=layerFactory;
+  if (layerFactory == null) {
+    throw new IllegalStateException("No layer factory defined.");
+  }
+ else {
+    this.layerFactory=layerFactory;
+  }
   this.listeners=listeners;
   this.sparsity=sparsity;
   this.useAdaGrad=useAdaGrad;
