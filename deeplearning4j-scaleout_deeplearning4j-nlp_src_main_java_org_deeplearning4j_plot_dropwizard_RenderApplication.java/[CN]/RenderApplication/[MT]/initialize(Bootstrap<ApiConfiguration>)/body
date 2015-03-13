@@ -1,4 +1,9 @@
 {
-  apiConfigurationBootstrap.addBundle(new ViewBundle());
+  apiConfigurationBootstrap.addBundle(new ViewBundle<ApiConfiguration>(){
+    @Override public ImmutableMap<String,ImmutableMap<String,String>> getViewConfiguration(    ApiConfiguration arg0){
+      return ImmutableMap.of();
+    }
+  }
+);
   apiConfigurationBootstrap.addBundle(new AssetsBundle());
 }
