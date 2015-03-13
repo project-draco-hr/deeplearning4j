@@ -3,9 +3,8 @@
   fetcher.fetch(150);
   DataSet d=fetcher.next();
   d.normalizeZeroMeanZeroUnitVariance();
-  RandomGenerator g=new MersenneTwister(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.GAUSSIAN).learningRate(1e-1f).nIn(d.numInputs()).nOut(3).build();
   LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.GAUSSIAN).learningRate(1e-1f).nIn(d.numInputs()).nOut(3).layerFactory(layerFactory).build();
   RBM r=layerFactory.create(conf);
   r.fit(d.getFeatureMatrix());
 }

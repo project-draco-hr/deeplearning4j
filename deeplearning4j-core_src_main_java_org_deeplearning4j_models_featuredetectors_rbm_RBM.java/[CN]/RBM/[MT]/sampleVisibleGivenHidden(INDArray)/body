@@ -1,20 +1,31 @@
 {
   INDArray v1Mean=propDown(h);
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
-    INDArray v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
-    return new Pair<>(v1Mean,v1Sample);
+  INDArray v1Sample;
+switch (conf.getVisibleUnit()) {
+case GAUSSIAN:
+{
+      v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
+      break;
+    }
+case LINEAR:
+{
+    v1Sample=Nd4j.getDistributions().createNormal(v1Mean,1).sample(v1Mean.shape());
+    break;
   }
- else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {
-    INDArray v1Sample=Nd4j.getDistributions().createNormal(v1Mean,1).sample(v1Mean.shape());
-    return new Pair<>(v1Mean,v1Sample);
-  }
- else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
-    INDArray v1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",v1Mean),0);
-    return new Pair<>(v1Mean,v1Sample);
-  }
- else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {
-    INDArray v1Sample=Nd4j.getDistributions().createBinomial(1,v1Mean).sample(v1Mean.shape());
-    return new Pair<>(v1Mean,v1Sample);
-  }
-  throw new IllegalStateException("Visible type must either be binary,gaussian, softmax, or linear");
+case SOFTMAX:
+{
+  v1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",v1Mean),0);
+  break;
+}
+case BINARY:
+{
+v1Sample=Nd4j.getDistributions().createBinomial(1,v1Mean).sample(v1Mean.shape());
+break;
+}
+default :
+{
+throw new IllegalStateException("Visible type must be one of Binary, Gaussian, SoftMax or Linear");
+}
+}
+return new Pair<>(v1Mean,v1Sample);
 }

@@ -4,19 +4,18 @@
   INDArray vMean=h.mmul(W);
   if (conf.isConcatBiases())   vMean=Nd4j.hstack(vMean,vBias);
  else   vMean.addiRowVector(vBias);
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
+switch (conf.getVisibleUnit()) {
+case GAUSSIAN:
     INDArray sample=Nd4j.getDistributions().createNormal(vMean,1).sample(vMean.shape());
-    vMean.addi(sample);
-    return vMean;
-  }
- else   if (conf.getVisibleUnit() == VisibleUnit.LINEAR) {
-    return vMean;
-  }
- else   if (conf.getVisibleUnit() == VisibleUnit.BINARY) {
-    return sigmoid(vMean);
-  }
- else   if (conf.getVisibleUnit() == VisibleUnit.SOFTMAX) {
-    return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean),0);
-  }
-  throw new IllegalStateException("Visible unit type should either be binary or gaussian");
+  vMean.addi(sample);
+return vMean;
+case LINEAR:
+return vMean;
+case BINARY:
+return sigmoid(vMean);
+case SOFTMAX:
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean),0);
+default :
+throw new IllegalStateException("Visible unit type should either be binary or gaussian");
+}
 }
