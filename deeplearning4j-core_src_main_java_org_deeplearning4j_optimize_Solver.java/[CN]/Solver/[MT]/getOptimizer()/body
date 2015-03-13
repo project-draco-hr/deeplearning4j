@@ -1,6 +1,5 @@
 {
-  OptimizationAlgorithm algo=conf.getOptimizationAlgo();
-switch (algo) {
+switch (conf.getOptimizationAlgo()) {
 case LBFGS:
     return new LBFGS(conf,conf.getStepFunction(),listeners,model);
 case GRADIENT_DESCENT:
@@ -11,6 +10,7 @@ case CONJUGATE_GRADIENT:
 return new ConjugateGradient(conf,conf.getStepFunction(),listeners,model);
 case ITERATION_GRADIENT_DESCENT:
 return new IterationGradientDescent(conf,conf.getStepFunction(),listeners,model);
-}
+default :
 throw new IllegalStateException("No optimizer found");
+}
 }

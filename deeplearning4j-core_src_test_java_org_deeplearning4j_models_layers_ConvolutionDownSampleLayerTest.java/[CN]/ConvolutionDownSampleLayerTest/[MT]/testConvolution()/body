@@ -8,9 +8,9 @@
   data.fetch(2);
   DataSet d=data.next();
   d.setFeatures(d.getFeatureMatrix().reshape(2,1,28,28));
-  NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(new int[]{2,1,2,2}).build();
-  LayerFactory l=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
-  ConvolutionDownSampleLayer c=l.create(n);
+  LayerFactory layerFactory=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
+  NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(2,1,2,2).layerFactory(layerFactory).build();
+  ConvolutionDownSampleLayer c=layerFactory.create(n);
   if (switched) {
     Nd4j.dtype=DataBuffer.FLOAT;
   }
