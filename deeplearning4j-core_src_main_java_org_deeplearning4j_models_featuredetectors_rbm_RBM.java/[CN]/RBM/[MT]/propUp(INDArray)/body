@@ -5,18 +5,19 @@
   INDArray preSig=v.mmul(W);
   if (conf.isConcatBiases())   preSig=Nd4j.hstack(preSig,hBias);
  else   preSig.addiRowVector(hBias);
-  if (conf.getHiddenUnit() == HiddenUnit.RECTIFIED) {
+switch (conf.getHiddenUnit()) {
+case RECTIFIED:
     preSig=max(preSig,1.0);
-    return preSig;
-  }
- else   if (conf.getHiddenUnit() == HiddenUnit.GAUSSIAN) {
-    INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
-    preSig.addi(add);
-    return preSig;
-  }
- else   if (conf.getHiddenUnit() == HiddenUnit.BINARY) {
-    return sigmoid(preSig);
-  }
- else   if (conf.getHiddenUnit() == HiddenUnit.SOFTMAX)   return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
-  throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
+  return preSig;
+case GAUSSIAN:
+INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
+preSig.addi(add);
+return preSig;
+case BINARY:
+return sigmoid(preSig);
+case SOFTMAX:
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
+default :
+throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
+}
 }
