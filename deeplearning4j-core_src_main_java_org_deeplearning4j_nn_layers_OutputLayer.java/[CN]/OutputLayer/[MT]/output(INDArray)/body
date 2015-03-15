@@ -1,6 +1,5 @@
 {
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
-  this.input=x;
   INDArray preOutput=preOutput(x);
   INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preOutput),1);
   applyDropOutIfNecessary(ret);

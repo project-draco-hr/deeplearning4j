@@ -1,10 +1,7 @@
 {
   INDArray wParams=params.get(NDArrayIndex.interval(0,conf.getnIn() * conf.getnOut()));
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray wLinear=W.linearView();
-  for (int i=0; i < wParams.length(); i++) {
-    wLinear.putScalar(i,wParams.getDouble(i));
-  }
+  W.assign(wParams);
   INDArray bias=getParam(DefaultParamInitializer.BIAS_KEY);
   bias.assign(params.get(NDArrayIndex.interval(conf.getnIn() * conf.getnOut(),params.length())).dup());
 }
