@@ -1,7 +1,5 @@
 {
-  INDArray corrupted=Nd4j.zeros(x.shape());
-  INDArray linear=corrupted.linearView();
-  for (int i=0; i < x.length(); i++)   linear.putScalar(i,Nd4j.getDistributions().createBinomial(1,1 - corruptionLevel).sample());
+  INDArray corrupted=Nd4j.getDistributions().createBinomial(1,1 - corruptionLevel).sample(x.shape());
   corrupted.muli(x);
   return corrupted;
 }

@@ -1,4 +1,0 @@
-{
-  INDArray change=hBiasGradient.mul(conf.getSparsity()).mul(-conf.getLr() * conf.getSparsity());
-  hBiasGradient.addi(change);
-}
