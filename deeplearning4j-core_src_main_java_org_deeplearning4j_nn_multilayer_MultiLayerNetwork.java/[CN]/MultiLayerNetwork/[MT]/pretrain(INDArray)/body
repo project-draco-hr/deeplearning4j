@@ -1,10 +1,6 @@
 {
   if (!layerWiseConfigurations.isPretrain())   return;
-  if (this.getInput() == null || this.getLayers() == null) {
-    setInput(input);
-    initializeLayers(input);
-  }
- else   setInput(input);
+  setInput(input);
   INDArray layerInput=null;
   for (int i=0; i < getnLayers() - 1; i++) {
     if (i == 0)     layerInput=getInput();
