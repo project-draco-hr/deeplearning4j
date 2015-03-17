@@ -9,7 +9,7 @@ case RECTIFIED:
       INDArray sample=Nd4j.getDistributions().createNormal(h1Mean,1).sample(h1Mean.shape());
       sample.muli(sqrtSigH1Mean);
       h1Sample=h1Mean.add(sample);
-      h1Sample=Transforms.max(h1Sample,1.0);
+      h1Sample=max(h1Sample,0.0);
       applyDropOutIfNecessary(h1Sample);
       break;
     }

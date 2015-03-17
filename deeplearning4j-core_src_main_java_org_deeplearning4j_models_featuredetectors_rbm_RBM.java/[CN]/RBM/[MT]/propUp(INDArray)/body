@@ -7,7 +7,7 @@
  else   preSig.addiRowVector(hBias);
 switch (conf.getHiddenUnit()) {
 case RECTIFIED:
-    preSig=max(preSig,1.0);
+    preSig=max(preSig,0.0);
   return preSig;
 case GAUSSIAN:
 INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
