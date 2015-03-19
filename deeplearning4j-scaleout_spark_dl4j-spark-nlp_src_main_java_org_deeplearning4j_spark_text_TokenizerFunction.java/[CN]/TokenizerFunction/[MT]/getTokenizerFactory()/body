@@ -1,8 +1,9 @@
 {
   try {
-    tokenizerFactory=tokenizerFactoryClazz.newInstance();
+    Class<? extends TokenizerFactory> clazz=(Class<? extends TokenizerFactory>)Class.forName(tokenizerFactoryClazz);
+    tokenizerFactory=clazz.newInstance();
   }
- catch (  InstantiationException|IllegalAccessException e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
   return tokenizerFactory;
