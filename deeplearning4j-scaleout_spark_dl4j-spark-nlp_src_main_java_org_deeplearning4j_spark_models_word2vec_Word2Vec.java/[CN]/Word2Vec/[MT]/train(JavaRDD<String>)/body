@@ -8,7 +8,7 @@
   lookupTable.resetWeights();
   Huffman huffman=new Huffman(vocabAndNumWords.getFirst().vocabWords());
   huffman.build();
-  Word2VecPerformer performer=new Word2VecPerformer(sc,sc.broadcast(new AtomicLong(vocabAndNumWords.getSecond())),lookupTable);
+  Word2VecPerformer performer=new Word2VecPerformer(sc.getConf(),sc.broadcast(new AtomicLong(vocabAndNumWords.getSecond())),lookupTable);
   rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new TokentoVocabWord(vocabCacheBroadcast)).foreach(performer);
   return new Pair<VocabCache,WeightLookupTable>(vocabCacheBroadcast.getValue(),lookupTable);
 }
