@@ -1,4 +1,5 @@
 {
+  log.info("Finetune phase ");
   iter.reset();
   while (iter.hasNext()) {
     DataSet data=iter.next();

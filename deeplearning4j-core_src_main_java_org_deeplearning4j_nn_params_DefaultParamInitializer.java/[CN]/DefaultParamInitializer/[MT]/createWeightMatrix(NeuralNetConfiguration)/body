@@ -1,3 +1,5 @@
 {
-  return WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),conf.getDist());
+  INDArray ret=WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),conf.getDist());
+  ret.data().persist();
+  return ret;
 }

@@ -4,13 +4,16 @@
     log.warn("Output layer not instance of output layer returning.");
     return;
   }
+  log.info("Finetune phase");
   OutputLayer o=(OutputLayer)getOutputLayer();
   if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
-    feedForward();
-    o.fit(getOutputLayer().getInput(),labels);
+    List<INDArray> activations=feedForward();
+    o.fit(activations.get(activations.size() - 2),labels);
+    activations.clear();
   }
  else {
-    feedForward();
+    List<INDArray> activations=feedForward();
+    activations.clear();
     o.setLabels(labels);
     StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().conf().getListeners(),this);
     hessianFree.optimize();

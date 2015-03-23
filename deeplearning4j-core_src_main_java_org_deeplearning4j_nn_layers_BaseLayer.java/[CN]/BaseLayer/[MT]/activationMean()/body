@@ -1,5 +1,5 @@
 {
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
-  return getInput().mmul(W).addiRowVector(b);
+  return input().mmul(W).addiRowVector(b);
 }

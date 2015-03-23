@@ -4,8 +4,7 @@
   INDArray input=Nd4j.create(data);
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).nIn(6).nOut(4).layerFactory(layerFactory).build();
   RBM rbm=layerFactory.create(conf);
-  rbm.setInput(input);
   double value=rbm.score();
-  rbm.contrastiveDivergence();
+  rbm.fit(input);
   value=rbm.score();
 }

@@ -1,4 +1,7 @@
 {
   if (input != null && this.layers == null)   this.initializeLayers(input);
-  this.input=input;
+ else {
+    clear();
+    this.input=input;
+  }
 }

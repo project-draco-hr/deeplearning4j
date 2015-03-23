@@ -1,0 +1,7 @@
+{
+  super.clear();
+  if (labels != null) {
+    labels.data().destroy();
+    labels=null;
+  }
+}

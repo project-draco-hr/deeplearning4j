@@ -5,7 +5,7 @@
   List<INDArray> W=MultiLayerUtil.weightMatrices(this);
   for (int i=0; i < layers.length; i++) {
     String derivative=getLayers()[i].conf().getActivationFunction();
-    R.add(R.get(i).mmul(W.get(i)).addi(acts.get(i).mmul(vWvB.get(i).getFirst().addRowVector(vWvB.get(i).getSecond()))).muli((Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(derivative,acts.get(i + 1)).derivative()))));
+    R.add(R.get(i).mmul(W.get(i)).addi(acts.get(i).mmul(vWvB.get(i).getFirst().addiRowVector(vWvB.get(i).getSecond()))).muli((Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(derivative,acts.get(i + 1)).derivative()))));
   }
   return R;
 }
