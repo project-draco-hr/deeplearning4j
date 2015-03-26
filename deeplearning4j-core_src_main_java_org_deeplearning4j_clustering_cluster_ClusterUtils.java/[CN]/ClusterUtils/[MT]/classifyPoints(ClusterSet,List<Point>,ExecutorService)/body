@@ -1,8 +1,7 @@
 {
   final ClusterSetInfo clusterSetInfo=ClusterSetInfo.initialize(clusterSet,true);
   List<Runnable> tasks=new ArrayList<>();
-  for (int i=0, j=points.size(); i < j; i++) {
-    final Point point=points.get(i);
+  for (  final Point point : points) {
     tasks.add(new Runnable(){
       public void run(){
         try {
