@@ -2,7 +2,7 @@
   final int pointsCount=points.size();
   final INDArray dxs=Nd4j.create(pointsCount);
   final Cluster newCluster=clusterSet.getClusters().get(clusterSet.getClusters().size() - 1);
-  List<Runnable> tasks=new ArrayList<Runnable>();
+  List<Runnable> tasks=new ArrayList<>();
   for (int i=0; i < pointsCount; i++) {
     final int i2=i;
     tasks.add(new Runnable(){

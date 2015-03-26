@@ -1,5 +1,5 @@
 {
-  List<Cluster> clusters=new ArrayList<Cluster>(clusterSet.getClusters());
+  List<Cluster> clusters=new ArrayList<>(clusterSet.getClusters());
   Collections.sort(clusters,new Comparator<Cluster>(){
     public int compare(    Cluster o1,    Cluster o2){
       Double o1TotalDistance=info.getClusterInfo(o1.getId()).getTotalPointDistanceFromCenter();

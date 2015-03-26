@@ -1,5 +1,6 @@
 {
   super();
-  this.threadSafe=threadSafe;
-  if (threadSafe)   pointDistancesFromCenter=Collections.synchronizedMap(pointDistancesFromCenter);
+  if (threadSafe) {
+    pointDistancesFromCenter=Collections.synchronizedMap(pointDistancesFromCenter);
+  }
 }

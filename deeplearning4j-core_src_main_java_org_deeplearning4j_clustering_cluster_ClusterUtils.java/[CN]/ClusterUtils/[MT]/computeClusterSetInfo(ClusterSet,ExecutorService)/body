@@ -2,7 +2,7 @@
   final ClusterSetInfo info=new ClusterSetInfo(true);
   int clusterCount=clusterSet.getClusterCount();
   List<Runnable> tasks=new ArrayList<>();
-  for (int i=0, j=clusterCount; i < j; i++) {
+  for (int i=0; i < clusterCount; i++) {
     final Cluster cluster=clusterSet.getClusters().get(i);
     tasks.add(new Runnable(){
       public void run(){
@@ -13,7 +13,7 @@
   }
   MultiThreadUtils.parallelTasks(tasks,executorService);
   tasks=new ArrayList<>();
-  for (int i=0, j=clusterCount; i < j; i++) {
+  for (int i=0; i < clusterCount; i++) {
     final int clusterIdx=i;
     final Cluster fromCluster=clusterSet.getClusters().get(i);
     tasks.add(new Runnable(){
