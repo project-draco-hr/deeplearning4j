@@ -1,11 +1,11 @@
 {
   try {
-    while (recordParser.next(null,null)) {
-      DataSet params=(DataSet)recordParser.createValue();
+    while (recordParser.nextKeyValue()) {
+      DataSet params=(DataSet)recordParser.getCurrentValue();
       neuralNetwork.fit(params.getFeatureMatrix());
     }
   }
- catch (  IOException e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
   return new ParameterVectorUpdateable(neuralNetwork.params());

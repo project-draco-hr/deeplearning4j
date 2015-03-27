@@ -1,14 +1,14 @@
 {
   log.info("Worker > Compute() -------------------------- ");
-  DataSet hdfs_recordBatch=null;
+  DataSet hdfsBatch=null;
   if (this.hdfsDataSetIterator.hasNext()) {
-    hdfs_recordBatch=this.hdfsDataSetIterator.next();
-    if (hdfs_recordBatch.getFeatures().rows() > 0) {
-      log.info("Rows: " + hdfs_recordBatch.numExamples() + ", inputs: "+ hdfs_recordBatch.numInputs()+ ", "+ hdfs_recordBatch);
-      this.totalRecordsProcessed+=hdfs_recordBatch.getFeatures().rows();
+    hdfsBatch=this.hdfsDataSetIterator.next();
+    if (hdfsBatch.getFeatures().rows() > 0) {
+      log.info("Rows: " + hdfsBatch.numExamples() + ", inputs: "+ hdfsBatch.numInputs()+ ", "+ hdfsBatch);
+      this.totalRecordsProcessed+=hdfsBatch.getFeatures().rows();
       batchWatch.reset();
       batchWatch.start();
-      this.multiLayerNetwork.fit(hdfs_recordBatch);
+      this.multiLayerNetwork.fit(hdfsBatch);
       batchWatch.stop();
       log.info("Worker > Processed Total " + this.totalRecordsProcessed + ", Batch Time "+ batchWatch.toString()+ " Total Time "+ totalRunTimeWatch.toString());
     }

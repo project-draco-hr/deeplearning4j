@@ -1,4 +1,4 @@
 {
-  this.recordParser=lineParser;
-  this.hdfsDataSetIterator=new RecordReaderDataSetIterator(recordParser,null,batchSize,labelIndex,numberClasses);
+  this.recordParser=r;
+  this.hdfsDataSetIterator=new RecordReaderDataSetIterator(r,null,batchSize,labelIndex,numberClasses);
 }
