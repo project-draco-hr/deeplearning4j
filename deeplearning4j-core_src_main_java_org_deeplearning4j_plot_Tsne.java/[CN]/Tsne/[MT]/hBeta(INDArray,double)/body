@@ -1,8 +1,7 @@
 {
   INDArray P=exp(d.neg().muli(beta));
   INDArray sum=P.sum(Integer.MAX_VALUE);
-  INDArray otherSum=d.mul(P).sum(0);
-  INDArray H=log(sum).addi(otherSum.muli(beta).divi(sum));
+  INDArray H=log(sum).addi(d.mul(P).sum(0).muli(beta).divi(sum));
   P.divi(sum);
   return new Pair<>(H,P);
 }

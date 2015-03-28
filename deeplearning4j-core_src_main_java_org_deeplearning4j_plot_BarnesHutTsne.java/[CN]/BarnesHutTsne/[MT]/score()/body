@@ -17,8 +17,7 @@
       double Q=pow(buff,2).sum(Integer.MAX_VALUE).getDouble(0);
       Q=(1.0 / (1.0 + Q)) / sum_Q.doubleValue();
       double val=vals.getDouble(i);
-      double add=Math.log((val + Double.MIN_VALUE) / (Q + Double.MAX_VALUE));
-      if (Double.isNaN(add) || Double.isInfinite(add))       add=Nd4j.EPS_THRESHOLD;
+      double add=FastMath.log((val + Double.MIN_VALUE) / (Q + Double.MIN_VALUE));
       C+=val * add;
     }
   }

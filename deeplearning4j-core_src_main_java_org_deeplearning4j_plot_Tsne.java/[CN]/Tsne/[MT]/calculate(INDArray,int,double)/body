@@ -1,14 +1,13 @@
 {
   if (usePca)   X=PCA.pca(X,Math.min(50,X.columns()),normalize);
- else   if (normalize) {
+  if (normalize) {
     X.subi(X.min(Integer.MAX_VALUE));
     X=X.divi(X.max(Integer.MAX_VALUE));
     X=X.subiRowVector(X.mean(0));
   }
   if (nDims > X.columns())   nDims=X.columns();
   INDArray sumX=pow(X,2).sum(1);
-  INDArray D=X.mmul(X.transpose()).muli(-2).addiRowVector(sumX).transpose().addiRowVector(sumX);
-  X.data().flush();
+  INDArray D=X.mmul(X.transpose()).muli(-2).addRowVector(sumX).transpose().addRowVector(sumX);
   if (y == null)   y=randn(X.rows(),nDims,Nd4j.getRandom()).muli(1e-3f);
   INDArray p=computeGaussianPerplexity(D,perplexity);
   p.muli(4);

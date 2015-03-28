@@ -1,5 +1,5 @@
 {
   Gradient g=gradient();
   update(g);
-  y.addi(yIncs);
+  y.addi(g.getGradientFor(Y_GRAD));
 }
