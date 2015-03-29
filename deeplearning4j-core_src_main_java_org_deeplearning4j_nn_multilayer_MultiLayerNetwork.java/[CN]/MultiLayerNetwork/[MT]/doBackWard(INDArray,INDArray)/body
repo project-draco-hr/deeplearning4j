@@ -1,0 +1,27 @@
+{
+  setInput(input);
+  this.labels=labels;
+  feedForward();
+  if (!(getOutputLayer() instanceof OutputLayer)) {
+    log.warn("Warning: final layer isn't output layer. You can ignore this message if you just intend on using a a deep neural network with no output layer.");
+    return;
+  }
+  OutputLayer output=(OutputLayer)getOutputLayer();
+  if (labels == null)   throw new IllegalStateException("No labels found");
+  output.setLabels(labels);
+  INDArray outputActivate=output.activate();
+  INDArray ixInitial=labels.sub(outputActivate).subi(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(getOutputLayer().conf().getActivationFunction(),outputActivate).derivative()));
+  Gradient ix=new DefaultGradient();
+  ix.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,ixInitial);
+  for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
+    List<Pair<Gradient,Gradient>> backwards=new ArrayList<>();
+    Pair<Gradient,Gradient> ixDelta=getOutputLayer().backWard(ix,null,null);
+    backwards.add(ixDelta);
+    for (int layer=layers.length - 1; layer > 0; layer--) {
+      ixDelta=layers[layer].backWard(ixDelta.getFirst(),ixDelta.getSecond(),layerWiseConfigurations.getConf(layer - 1).getActivationFunction());
+      backwards.add(ixDelta);
+    }
+    Collections.reverse(backwards);
+    for (int j=0; j < layers.length; j++)     layers[j].update(backwards.get(j).getSecond());
+  }
+}

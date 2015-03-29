@@ -8,5 +8,6 @@
   conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
   conf.processors=preProcessors;
+  conf.backward=backward;
   return conf;
 }

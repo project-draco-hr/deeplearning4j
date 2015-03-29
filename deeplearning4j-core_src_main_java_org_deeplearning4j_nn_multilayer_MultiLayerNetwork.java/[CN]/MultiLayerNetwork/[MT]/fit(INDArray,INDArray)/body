@@ -4,15 +4,6 @@
     pretrain(examples);
     finetune(labels);
     clear();
-    examples.data().destroy();
-    labels.data().destroy();
   }
- else {
-    feedForward();
-    INDArray propagate=layers[layers.length - 1].activate();
-    for (int i=layers.length - 2; i > 0; i--) {
-      layers[i].backWard(propagate);
-      propagate=layers[i].activate();
-    }
-  }
+ else   doBackWard(examples,labels);
 }

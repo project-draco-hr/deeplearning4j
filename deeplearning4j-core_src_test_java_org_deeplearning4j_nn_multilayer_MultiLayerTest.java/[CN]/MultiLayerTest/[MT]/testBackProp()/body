@@ -1,0 +1,18 @@
+{
+  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(3).backward(true).hiddenLayerSizes(new int[]{3,2}).override(new ClassifierOverride(2)).build();
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  DataSetIterator iter=new IrisDataSetIterator(150,150);
+  DataSet next=iter.next();
+  next.normalizeZeroMeanZeroUnitVariance();
+  SplitTestAndTrain trainTest=next.splitTestAndTrain(110);
+  network.setInput(trainTest.getTrain().getFeatureMatrix());
+  network.setLabels(trainTest.getTrain().getLabels());
+  network.backPropStep();
+  network.fit(trainTest.getTrain());
+  DataSet test=trainTest.getTest();
+  Evaluation eval=new Evaluation();
+  INDArray output=network.output(test.getFeatureMatrix());
+  eval.eval(test.getLabels(),output);
+  log.info("Score " + eval.stats());
+}

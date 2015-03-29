@@ -11,21 +11,13 @@
     biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
     activationFunctions.add(getLayers()[j].conf().getActivationFunction());
   }
-  weights.add(getOutputLayer().getParam(DefaultParamInitializer.WEIGHT_KEY));
-  biases.add(getOutputLayer().getParam(DefaultParamInitializer.BIAS_KEY));
-  activationFunctions.add(getOutputLayer().conf().getActivationFunction());
-  for (int i=getnLayers() + 1; i >= 0; i--) {
-    if (i >= getnLayers() + 1) {
-      deltas[i]=ix;
-    }
- else {
-      INDArray delta=activations.get(i).transpose().mmul(ix);
-      deltas[i]=delta;
-      applyDropConnectIfNecessary(deltas[i]);
-      INDArray weightsPlusBias=weights.get(i).transpose();
-      INDArray activation=activations.get(i);
-      if (i > 0)       ix=ix.mmul(weightsPlusBias).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(activationFunctions.get(i - 1),activation).derivative()));
-    }
+  for (int i=getnLayers() - 1; i >= 0; i--) {
+    INDArray delta=activations.get(i).transpose().mmul(ix);
+    deltas[i]=delta;
+    applyDropConnectIfNecessary(deltas[i]);
+    INDArray weightsPlusBias=weights.get(i).transpose();
+    INDArray activation=activations.get(i);
+    if (i > 0)     ix=ix.mmul(weightsPlusBias).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(activationFunctions.get(i - 1),activation).derivative()));
   }
   for (int i=0; i < deltas.length; i++) {
     if (defaultConfiguration.isConstrainGradientToUnitNorm())     deltaRet.add(deltas[i].divi(deltas[i].norm2(Integer.MAX_VALUE)));

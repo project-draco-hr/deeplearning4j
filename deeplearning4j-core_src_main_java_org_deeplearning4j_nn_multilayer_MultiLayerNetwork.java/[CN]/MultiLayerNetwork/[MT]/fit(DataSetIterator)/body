@@ -5,10 +5,9 @@
     finetune(iter);
   }
  else {
-    INDArray propagate=layers[layers.length - 1].activate();
-    for (int i=layers.length - 2; i > 0; i--) {
-      layers[i].backWard(propagate);
-      propagate=layers[i].activate();
+    while (iter.hasNext()) {
+      DataSet next=iter.next();
+      doBackWard(next.getFeatureMatrix(),next.getLabels());
     }
   }
 }

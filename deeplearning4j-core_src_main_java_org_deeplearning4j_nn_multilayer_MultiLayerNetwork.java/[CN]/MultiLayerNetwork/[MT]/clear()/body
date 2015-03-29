@@ -1,6 +1,4 @@
 {
-  for (  Layer layer : layers) {
-    layer.clear();
-  }
+  for (  Layer layer : layers)   layer.clear();
   input=null;
 }

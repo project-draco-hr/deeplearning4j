@@ -3,7 +3,7 @@
   List<Pair<INDArray,INDArray>> vWvB=new ArrayList<>();
   for (  Layer layer : layers)   vWvB.add(new Pair<>(layer.getParam(DefaultParamInitializer.WEIGHT_KEY),layer.getParam(DefaultParamInitializer.BIAS_KEY)));
   List<Pair<INDArray,INDArray>> list=new ArrayList<>();
-  for (int l=0; l < getnLayers() + 1; l++) {
+  for (int l=0; l < getnLayers(); l++) {
     INDArray gradientChange=deltas.get(l);
     if (gradientChange.length() != getLayers()[l].getParam(DefaultParamInitializer.WEIGHT_KEY).length())     throw new IllegalStateException("Gradient change not equal to weight change");
     INDArray deltaColumnSums=deltas.get(l).isVector() ? deltas.get(l) : deltas.get(l).mean(0);
