@@ -1,7 +1,0 @@
-{
-  List<Pair<INDArray,INDArray>> deltas=backPropGradient();
-  for (int i=0; i < layers.length; i++) {
-    layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).addi(deltas.get(i).getFirst());
-    layers[i].getParam(DefaultParamInitializer.BIAS_KEY).addi(deltas.get(i).getSecond());
-  }
-}

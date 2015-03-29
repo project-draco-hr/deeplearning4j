@@ -3,7 +3,6 @@
   if (!layerWiseConfigurations.isBackward()) {
     pretrain(examples);
     finetune(labels);
-    clear();
   }
  else   doBackWard(examples,labels);
 }

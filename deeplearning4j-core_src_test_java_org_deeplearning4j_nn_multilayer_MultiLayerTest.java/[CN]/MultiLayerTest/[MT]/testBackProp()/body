@@ -8,7 +8,6 @@
   SplitTestAndTrain trainTest=next.splitTestAndTrain(110);
   network.setInput(trainTest.getTrain().getFeatureMatrix());
   network.setLabels(trainTest.getTrain().getLabels());
-  network.backPropStep();
   network.fit(trainTest.getTrain());
   DataSet test=trainTest.getTest();
   Evaluation eval=new Evaluation();

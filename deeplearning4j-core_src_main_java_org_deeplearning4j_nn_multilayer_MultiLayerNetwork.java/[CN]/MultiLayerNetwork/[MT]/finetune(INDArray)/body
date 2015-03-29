@@ -9,7 +9,6 @@
   if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
     List<INDArray> activations=feedForward();
     o.fit(activations.get(activations.size() - 2),labels);
-    activations.clear();
   }
  else {
     List<INDArray> activations=feedForward();

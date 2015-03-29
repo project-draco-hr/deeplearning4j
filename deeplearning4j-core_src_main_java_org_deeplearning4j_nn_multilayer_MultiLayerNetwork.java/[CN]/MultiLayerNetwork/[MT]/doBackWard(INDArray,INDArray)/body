@@ -15,10 +15,11 @@
   ix.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,ixInitial);
   for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
     List<Pair<Gradient,Gradient>> backwards=new ArrayList<>();
-    Pair<Gradient,Gradient> ixDelta=getOutputLayer().backWard(ix,null,null);
-    backwards.add(ixDelta);
-    for (int layer=layers.length - 1; layer > 0; layer--) {
-      ixDelta=layers[layer].backWard(ixDelta.getFirst(),ixDelta.getSecond(),layerWiseConfigurations.getConf(layer - 1).getActivationFunction());
+    List<INDArray> activations=feedForward();
+    Pair<Gradient,Gradient> ixDelta=new Pair<>(ix,null);
+    for (int layer=layers.length - 1; layer >= 0; layer--) {
+      String activationFunction=layer > 0 ? layerWiseConfigurations.getConf(layer - 1).getActivationFunction() : layerWiseConfigurations.getConf(0).getActivationFunction();
+      ixDelta=layers[layer].backWard(ixDelta.getFirst(),ixDelta.getSecond(),activations.get(layer),activationFunction);
       backwards.add(ixDelta);
     }
     Collections.reverse(backwards);

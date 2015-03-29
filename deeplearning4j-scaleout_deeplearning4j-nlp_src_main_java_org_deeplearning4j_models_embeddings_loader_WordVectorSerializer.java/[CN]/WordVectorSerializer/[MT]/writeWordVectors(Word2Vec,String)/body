@@ -4,7 +4,7 @@
   for (  String word : vec.vocab().words()) {
     if (word == null)     continue;
     StringBuilder sb=new StringBuilder();
-    sb.append(word);
+    sb.append(word.replaceAll(" ","_"));
     sb.append(" ");
     INDArray wordVector=vec.getWordVectorMatrix(word);
     for (int j=0; j < wordVector.length(); j++) {

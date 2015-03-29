@@ -4,7 +4,7 @@
     String word=cache.wordAtIndex(i);
     if (word == null)     continue;
     StringBuilder sb=new StringBuilder();
-    sb.append(word);
+    sb.append(word.replaceAll(" ","_"));
     sb.append(" ");
     INDArray wordVector=l.vector(word);
     for (int j=0; j < wordVector.length(); j++) {
