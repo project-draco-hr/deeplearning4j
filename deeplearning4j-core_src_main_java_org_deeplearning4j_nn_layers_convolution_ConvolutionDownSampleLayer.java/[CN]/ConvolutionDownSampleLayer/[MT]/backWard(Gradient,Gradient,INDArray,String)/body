@@ -1,3 +1,5 @@
 {
+  int[] stride=conf().getStride();
+  INDArray errors=Nd4j.zerosLike(getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS));
   return super.backWard(ixes,deltas,activation,previousActivation);
 }
