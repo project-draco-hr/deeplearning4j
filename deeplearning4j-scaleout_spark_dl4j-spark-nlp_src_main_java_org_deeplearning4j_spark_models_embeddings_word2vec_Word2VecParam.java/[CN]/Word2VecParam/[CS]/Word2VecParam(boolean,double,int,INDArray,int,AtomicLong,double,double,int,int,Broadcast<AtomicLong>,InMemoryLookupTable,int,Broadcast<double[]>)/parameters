@@ -1,0 +1,14 @@
+boolean useAdaGrad
+double negative
+int numWords
+INDArray table
+int window
+AtomicLong nextRandom
+double alpha
+double minAlpha
+int totalWords
+int lastChecked
+Broadcast<AtomicLong> wordCount
+InMemoryLookupTable weights
+int vectorLength
+Broadcast<double[]> expTable

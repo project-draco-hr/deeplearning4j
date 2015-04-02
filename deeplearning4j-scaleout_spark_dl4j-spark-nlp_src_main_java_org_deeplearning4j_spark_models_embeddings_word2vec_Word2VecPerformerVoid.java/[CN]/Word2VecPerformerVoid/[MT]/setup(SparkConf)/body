@@ -1,0 +1,22 @@
+{
+  useAdaGrad=conf.getBoolean(ADAGRAD,false);
+  negative=conf.getDouble(NEGATIVE,5);
+  numWords=conf.getInt(NUM_WORDS,1);
+  window=conf.getInt(WINDOW,5);
+  alpha=conf.getDouble(ALPHA,0.025f);
+  minAlpha=conf.getDouble(MIN_ALPHA,1e-2f);
+  totalWords=conf.getInt(NUM_WORDS,1);
+  iterations=conf.getInt(ITERATIONS,5);
+  vectorLength=conf.getInt(VECTOR_LENGTH,100);
+  initExpTable();
+  if (negative > 0 && conf.contains(TABLE)) {
+    try {
+      ByteArrayInputStream bis=new ByteArrayInputStream(conf.get(TABLE).getBytes());
+      DataInputStream dis=new DataInputStream(bis);
+      table=Nd4j.read(dis);
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
+}

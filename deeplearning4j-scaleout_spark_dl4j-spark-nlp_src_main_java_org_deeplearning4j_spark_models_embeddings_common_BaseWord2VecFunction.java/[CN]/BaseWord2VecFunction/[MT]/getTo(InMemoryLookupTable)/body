@@ -1,0 +1,12 @@
+{
+switch (to) {
+case SYN0:
+    return inMemoryLookupTable.getSyn0().slice(toIndex).ravel();
+case SYN1:
+  return inMemoryLookupTable.getSyn1().slice(toIndex).ravel();
+case SYN1_NEGATIVE:
+return inMemoryLookupTable.getSyn1Neg().slice(toIndex).ravel();
+default :
+throw new IllegalStateException("Illegal to type " + to);
+}
+}
