@@ -1,7 +1,0 @@
-{
-  Iterator<Pair<Integer,Integer>> iter=counterMap.getPairIterator();
-  while (iter.hasNext()) {
-    Pair<Integer,Integer> next=iter.next();
-  }
-  return null;
-}

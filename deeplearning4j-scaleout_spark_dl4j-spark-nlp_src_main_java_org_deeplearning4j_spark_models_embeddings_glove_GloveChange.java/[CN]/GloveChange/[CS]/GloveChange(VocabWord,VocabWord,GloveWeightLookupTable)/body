@@ -1,0 +1,12 @@
+{
+  this.w1=w1;
+  this.w2=w2;
+  changed.put(w1.getIndex(),table.getSyn0().slice(w1.getIndex()));
+  changed.put(w2.getIndex(),table.getSyn0().slice(w2.getIndex()));
+  biasChange.put(w1.getIndex(),table.getBias().getDouble(w1.getIndex()));
+  biasChange.put(w2.getIndex(),table.getBias().getDouble(w2.getIndex()));
+  biasAdaGradChange.put(w1.getIndex(),table.getBiasAdaGrad().getHistoricalGradient().getDouble(w1.getIndex()));
+  biasAdaGradChange.put(w2.getIndex(),table.getBiasAdaGrad().getHistoricalGradient().getDouble(w2.getIndex()));
+  weightAdaGrad.put(w1.getIndex(),table.getWeightAdaGrad().getHistoricalGradient().slice(w1.getIndex()));
+  weightAdaGrad.put(w2.getIndex(),table.getWeightAdaGrad().getHistoricalGradient().slice(w2.getIndex()));
+}

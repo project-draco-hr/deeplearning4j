@@ -1,3 +1,4 @@
 {
   table.iterateSample(pair.getFirst(),pair.getSecond(),pair.getThird());
+  return new GloveChange(pair.getFirst(),pair.getSecond(),table);
 }

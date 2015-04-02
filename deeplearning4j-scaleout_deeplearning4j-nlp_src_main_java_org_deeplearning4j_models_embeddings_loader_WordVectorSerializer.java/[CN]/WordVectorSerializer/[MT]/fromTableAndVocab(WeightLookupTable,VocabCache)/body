@@ -1,0 +1,6 @@
+{
+  WordVectorsImpl vectors=new WordVectorsImpl();
+  vectors.setLookupTable(table);
+  vectors.setVocab(vocab);
+  return vectors;
+}
