@@ -1,0 +1,16 @@
+{
+  JavaRDD<Collection<Writable>> records=binaryFiles.map(new Function<Tuple2<String,PortableDataStream>,Collection<Writable>>(){
+    @Override public Collection<Writable> call(    Tuple2<String,PortableDataStream> stringPortableDataStreamTuple2) throws Exception {
+      reader.initialize(new InputStreamInputSplit(stringPortableDataStreamTuple2._2().open(),stringPortableDataStreamTuple2._1()));
+      return reader.next();
+    }
+  }
+);
+  JavaRDD<LabeledPoint> ret=records.map(new Function<Collection<Writable>,LabeledPoint>(){
+    @Override public LabeledPoint call(    Collection<Writable> writables) throws Exception {
+      return pointOf(writables);
+    }
+  }
+);
+  return ret;
+}
