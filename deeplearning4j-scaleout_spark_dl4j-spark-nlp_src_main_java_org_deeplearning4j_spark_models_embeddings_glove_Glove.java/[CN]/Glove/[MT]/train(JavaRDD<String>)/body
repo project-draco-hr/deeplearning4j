@@ -4,10 +4,11 @@
   SparkConf conf=rdd.context().getConf();
   JavaSparkContext sc=new JavaSparkContext(rdd.context());
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
-  GloveWeightLookupTable gloveWeightLookupTable=new GloveWeightLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(GlovePerformer.ALPHA,0.025)).maxCount(conf.getDouble(GlovePerformer.MAX_COUNT,100)).vectorLength(conf.getInt(GlovePerformer.VECTOR_LENGTH,100)).xMax(conf.getDouble(GlovePerformer.X_MAX,0.75)).build();
+  final GloveWeightLookupTable gloveWeightLookupTable=new GloveWeightLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(GlovePerformer.ALPHA,0.025)).maxCount(conf.getDouble(GlovePerformer.MAX_COUNT,100)).vectorLength(conf.getInt(GlovePerformer.VECTOR_LENGTH,100)).xMax(conf.getDouble(GlovePerformer.X_MAX,0.75)).build();
   gloveWeightLookupTable.resetWeights();
   gloveWeightLookupTable.getBiasAdaGrad().historicalGradient=Nd4j.zeros(gloveWeightLookupTable.getSyn0().rows());
   gloveWeightLookupTable.getWeightAdaGrad().historicalGradient=Nd4j.create(gloveWeightLookupTable.getSyn0().shape());
+  log.info("Created lookup table of size " + Arrays.toString(gloveWeightLookupTable.getSyn0().shape()));
   CounterMap<String,String> coOccurrenceCounts=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new CoOccurrenceCalculator(symmetric,vocabCacheBroadcast,windowSize)).fold(new CounterMap<String,String>(),new CoOccurrenceCounts());
   List<Triple<String,String,Double>> counts=new ArrayList<>();
   Iterator<Pair<String,String>> pairIter=coOccurrenceCounts.getPairIterator();
@@ -15,12 +16,19 @@
     Pair<String,String> pair=pairIter.next();
     counts.add(new Triple<>(pair.getFirst(),pair.getSecond(),coOccurrenceCounts.getCount(pair.getFirst(),pair.getSecond())));
   }
+  log.info("Calculated co occurrences");
   for (int i=0; i < iterations; i++) {
+    log.info("Iteration " + i);
     Collections.shuffle(counts);
     JavaRDD<Triple<String,String,Double>> parallel=sc.parallelize(counts);
     JavaRDD<Triple<VocabWord,VocabWord,Double>> vocab=parallel.map(new VocabWordPairs(vocabCacheBroadcast));
     JavaRDD<GloveChange> deltas=vocab.map(new GlovePerformer(gloveWeightLookupTable));
-    for (    GloveChange change : deltas.collect())     change.apply(gloveWeightLookupTable);
+    deltas.foreach(new VoidFunction<GloveChange>(){
+      @Override public void call(      GloveChange gloveChange) throws Exception {
+        gloveChange.apply(gloveWeightLookupTable);
+      }
+    }
+);
   }
   return new Pair<>(vocabAndNumWords.getFirst(),gloveWeightLookupTable);
 }
