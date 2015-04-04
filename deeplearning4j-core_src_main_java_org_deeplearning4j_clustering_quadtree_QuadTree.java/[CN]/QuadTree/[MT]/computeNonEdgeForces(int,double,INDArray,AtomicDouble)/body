@@ -2,7 +2,7 @@
   if (cumSize == 0 || (isLeaf() && size == 1 && index[0] == pointIndex))   return;
   buf.assign(data.slice(pointIndex)).subi(centerOfMass);
   double D=Nd4j.getBlasWrapper().dot(buf,buf);
-  if (isLeaf || max(boundary.getHh(),boundary.getHw()) / Math.sqrt(D) < theta) {
+  if (isLeaf || FastMath.max(boundary.getHh(),boundary.getHw()) / FastMath.sqrt(D) < theta) {
     double Q=1.0 / (1.0 + D);
     sumQ.addAndGet(cumSize * Q);
     double mult=cumSize * Q * Q;

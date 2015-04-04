@@ -7,7 +7,9 @@
       counter.incrementCount(p,p.distance(point));
     }
     counter.keepBottomNKeys(k);
-    result.addAll(counter.getSortedKeys());
+    List<T> keys=counter.getSortedKeys();
+    Collections.reverse(keys);
+    result.addAll(keys);
     return result;
   }
   double distanceToLeftCenter=vantagePoint.distance(point);

@@ -7,15 +7,16 @@
   vals=zeros(N * k);
   for (int n=0; n < N; n++)   rows.putScalar(n + 1,rows.getDouble(n) + k);
   final INDArray beta=ones(N,1);
-  final double logU=Math.log(u);
+  final double logU=FastMath.log(u);
   final List<VpTreePointINDArray> list=VpTreePointINDArray.dataPoints(d);
   final VpTreeNode<VpTreePointINDArray> tree=VpTreeNode.buildVpTree(list);
   log.info("Calculating probabilities of data similarities...");
   for (int i=0; i < N; i++) {
     if (i % 500 == 0)     log.info("Handled " + i + " records");
-    double betaMin=Double.NEGATIVE_INFINITY;
-    double betaMax=Double.POSITIVE_INFINITY;
+    double betaMin=-Double.MAX_VALUE;
+    double betaMax=Double.MAX_VALUE;
     Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(i),k + 1);
+    double betas=beta.getDouble(i);
     INDArray cArr=toNDArray(c);
     Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(i),k);
     INDArray currP=pair.getFirst();
@@ -26,24 +27,24 @@
       if (hDiff < tolerance && -hDiff < tolerance)       found=true;
  else {
         if (hDiff > 0) {
-          if (Double.isInfinite(betaMax))           beta.putScalar(i,beta.getDouble(i) * 2.0);
- else           beta.putScalar(i,(beta.getDouble(i) + betaMax) / 2.0);
-          betaMin=beta.getDouble(i);
+          betaMin=betas;
+          if (betaMax == Double.MAX_VALUE || betaMax == -Double.MAX_VALUE)           betas*=2;
+ else           betas=(betas + betaMax) / 2.0;
         }
  else {
-          if (Double.isInfinite(betaMin))           beta.putScalar(i,beta.getDouble(i) / 2.0);
- else           beta.putScalar(i,(beta.getDouble(i) + betaMin) / 2.0);
-          betaMax=beta.getDouble(i);
+          betaMax=betas;
+          if (betaMin == -Double.MAX_VALUE || betaMin == Double.MAX_VALUE)           betas/=2.0;
+ else           betas=(betas + betaMin) / 2.0;
         }
-        pair=computeGaussianKernel(toNDArray(c),beta.getDouble(i),k);
+        pair=computeGaussianKernel(cArr,betas,k);
         hDiff=pair.getSecond() - logU;
         tries++;
       }
     }
     currP.divi(currP.sum(Integer.MAX_VALUE));
     INDArray indices=toIndex(c,k);
-    for (int l=0; l < indices.length(); l++) {
-      cols.putScalar(rows.getInt(i) + l,l < indices.length() - 1 ? indices.getDouble(l + 1) : 0.0);
+    for (int l=0; l < k; l++) {
+      cols.putScalar(rows.getInt(i) + l,indices.getDouble(l + 1));
       vals.putScalar(rows.getInt(i) + l,currP.getDouble(l));
     }
   }

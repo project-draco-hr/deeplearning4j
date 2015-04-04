@@ -9,5 +9,5 @@
   }
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);
-  gradient.gradientForVariable().put(Y_GRAD,yIncs);
+  y.addi(yIncs);
 }
