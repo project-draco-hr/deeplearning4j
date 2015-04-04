@@ -1,9 +1,0 @@
-{
-  this.coOccurrences=coOccurrences;
-  for (  Pair<VocabWord,VocabWord> coOccurrence : coOccurrences) {
-    indexes.put(coOccurrence.getFirst().getIndex(),coOccurrence.getFirst());
-    indexes.put(coOccurrence.getSecond().getIndex(),coOccurrence.getSecond());
-    addWord(coOccurrence.getFirst(),table);
-    addWord(coOccurrence.getSecond(),table);
-  }
-}

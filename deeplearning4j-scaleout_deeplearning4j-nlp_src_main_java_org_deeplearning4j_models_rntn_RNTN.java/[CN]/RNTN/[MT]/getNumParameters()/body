@@ -1,7 +1,7 @@
 {
   if (numParameters < 0) {
     int totalSize=0;
-    List<Iterator<INDArray>> list=Arrays.asList(binaryTransform.values().iterator(),binaryClassification.values().iterator(),binaryINd4j.values().iterator(),unaryClassification.values().iterator(),featureVectors.vectors());
+    List<Iterator<INDArray>> list=Arrays.asList(binaryTransform.values().iterator(),binaryClassification.values().iterator(),binaryTensors.values().iterator(),unaryClassification.values().iterator(),featureVectors.vectors());
     for (    Iterator<INDArray> iter : list) {
       while (iter.hasNext())       totalSize+=iter.next().length();
     }

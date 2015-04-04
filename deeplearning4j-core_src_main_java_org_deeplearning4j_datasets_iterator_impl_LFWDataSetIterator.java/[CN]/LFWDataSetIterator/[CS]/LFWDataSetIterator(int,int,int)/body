@@ -1,0 +1,3 @@
+{
+  super(batch,LFWDataFetcher.NUM_IMAGES,new LFWDataFetcher(imageWidth,imageHeight));
+}

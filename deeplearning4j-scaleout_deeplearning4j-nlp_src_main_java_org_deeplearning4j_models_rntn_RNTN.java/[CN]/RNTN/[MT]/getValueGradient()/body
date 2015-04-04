@@ -17,7 +17,7 @@
     }
   }
   if (useDoubleTensors) {
-    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryINd4j.entrySet()) {
+    for (    MultiDimensionalMap.Entry<String,String,INDArray> entry : binaryTensors.entrySet()) {
       int numRows=entry.getValue().size(1);
       int numCols=entry.getValue().size(2);
       int numSlices=entry.getValue().slices();
@@ -61,7 +61,7 @@
   value=error.doubleValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
-  value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryINd4j,scale,regTransformINDArray);
+  value+=scaleAndRegularizeINDArray(binaryINDArrayTD,binaryTensors,scale,regTransformINDArray);
   value+=scaleAndRegularize(unaryCD,unaryClassification,scale,regClassification);
   value+=scaleAndRegularize(wordVectorD,featureVectors,scale,regWordVector);
   INDArray derivative=Nd4j.toFlattened(getNumParameters(),binaryTD.values().iterator(),binaryCD.values().iterator(),binaryINDArrayTD.values().iterator(),unaryCD.values().iterator(),wordVectorD.values().iterator());

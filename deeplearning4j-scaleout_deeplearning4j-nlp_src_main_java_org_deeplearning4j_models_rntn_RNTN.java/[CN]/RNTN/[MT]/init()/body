@@ -16,7 +16,7 @@
   }
   identity=Nd4j.eye(numHidden);
   binaryTransform=MultiDimensionalMap.newTreeBackedMap();
-  binaryINd4j=MultiDimensionalMap.newTreeBackedMap();
+  binaryTensors=MultiDimensionalMap.newTreeBackedMap();
   binaryClassification=MultiDimensionalMap.newTreeBackedMap();
   for (  Pair<String,String> binary : binaryProductions) {
     String left=basicCategory(binary.getFirst());
@@ -26,7 +26,7 @@
     }
     binaryTransform.put(left,right,randomTransformMatrix());
     if (useDoubleTensors) {
-      binaryINd4j.put(left,right,randomBinaryINDArray());
+      binaryTensors.put(left,right,randomBinaryINDArray());
     }
     if (!combineClassification) {
       binaryClassification.put(left,right,randomClassificationMatrix());

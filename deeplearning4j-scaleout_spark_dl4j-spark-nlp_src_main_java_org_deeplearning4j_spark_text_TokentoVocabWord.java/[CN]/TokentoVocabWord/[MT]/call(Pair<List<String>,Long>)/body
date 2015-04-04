@@ -1,5 +1,5 @@
 {
   List<VocabWord> ret=new ArrayList<>();
   for (  String s : v1.getFirst())   ret.add(vocab.getValue().wordFor(s));
-  return new Pair<>(ret,new AtomicLong(0));
+  return new Pair<>(ret,new AtomicLong(v1.getSecond()));
 }

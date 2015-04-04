@@ -1,0 +1,53 @@
+{
+  if (w2 == null || w2.getIndex() < 0)   return;
+  INDArray l1=weights.vector(w2.getWord());
+  INDArray neu1e=Nd4j.create(vectorLength);
+  for (int i=0; i < w1.getCodeLength(); i++) {
+    int code=w1.getCodes().get(i);
+    int point=w1.getPoints().get(i);
+    INDArray syn1=weights.getSyn1().slice(point);
+    double dot=Nd4j.getBlasWrapper().dot(l1,syn1);
+    if (dot >= -MAX_EXP && dot < MAX_EXP) {
+      int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
+      if (idx >= expTable.length)       continue;
+      double f=expTable[idx];
+      double g=(1 - code - f) * (useAdaGrad ? w1.getGradient(i,alpha) : alpha);
+      if (neu1e.data().dataType() == DataBuffer.DOUBLE) {
+        Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
+        Nd4j.getBlasWrapper().axpy(g,l1,syn1);
+      }
+ else {
+        Nd4j.getBlasWrapper().axpy((float)g,syn1,neu1e);
+        Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
+      }
+    }
+  }
+  if (negative > 0) {
+    int target=w1.getIndex();
+    int label;
+    INDArray syn1Neg=weights.getSyn1Neg().slice(target);
+    for (int d=0; d < negative + 1; d++) {
+      if (d == 0) {
+        label=1;
+      }
+ else {
+        nextRandom.set(nextRandom.get() * 25214903917L + 11);
+        target=table.getInt((int)(nextRandom.get() >> 16) % table.length());
+        if (target == 0)         target=(int)nextRandom.get() % (numWords - 1) + 1;
+        if (target == w1.getIndex())         continue;
+        label=0;
+      }
+      double f=Nd4j.getBlasWrapper().dot(l1,syn1Neg);
+      double g;
+      if (f > MAX_EXP)       g=useAdaGrad ? w1.getGradient(target,(label - 1)) : (label - 1) * alpha;
+ else       if (f < -MAX_EXP)       g=label * (useAdaGrad ? w1.getGradient(target,alpha) : alpha);
+ else       g=useAdaGrad ? w1.getGradient(target,label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) : (label - expTable[(int)((f + MAX_EXP) * (expTable.length / MAX_EXP / 2))]) * alpha;
+      if (syn1Neg.data().dataType() == DataBuffer.DOUBLE)       Nd4j.getBlasWrapper().axpy(g,neu1e,l1);
+ else       Nd4j.getBlasWrapper().axpy((float)g,neu1e,l1);
+      if (syn1Neg.data().dataType() == DataBuffer.DOUBLE)       Nd4j.getBlasWrapper().axpy(g,syn1Neg,l1);
+ else       Nd4j.getBlasWrapper().axpy((float)g,syn1Neg,l1);
+    }
+  }
+  if (neu1e.data().dataType() == DataBuffer.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+ else   Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
+}

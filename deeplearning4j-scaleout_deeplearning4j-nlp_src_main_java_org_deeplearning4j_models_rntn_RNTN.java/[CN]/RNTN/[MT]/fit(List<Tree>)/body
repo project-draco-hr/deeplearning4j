@@ -10,7 +10,7 @@
           INDArray params=getParameters();
           INDArray gradient=getValueGradient();
           if (params.length() != gradient.length())           throw new IllegalStateException("Params not equal to gradient!");
-          setParameters(params.subi(gradient));
+          setParams(params.subi(gradient));
         }
  catch (        NegativeArraySizeException e) {
           log.warn("Couldnt compute parameters due to negative array size...for trees " + t);
