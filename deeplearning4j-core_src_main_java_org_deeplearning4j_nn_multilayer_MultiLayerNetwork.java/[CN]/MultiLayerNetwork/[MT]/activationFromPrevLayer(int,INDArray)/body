@@ -1,4 +1,5 @@
 {
+  if (getLayerWiseConfigurations().getInputPreProcess(curr) != null)   input=getLayerWiseConfigurations().getInputPreProcess(curr).preProcess(input);
   INDArray ret=layers[curr].activate(input);
   if (getLayerWiseConfigurations().getProcessors() != null && getLayerWiseConfigurations().getPreProcessor(curr) != null) {
     ret=getLayerWiseConfigurations().getPreProcessor(curr).preProcess(ret);

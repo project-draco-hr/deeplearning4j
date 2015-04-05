@@ -8,4 +8,5 @@
   this.dampingFactor=multiLayerConfiguration.dampingFactor;
   this.processors=new HashMap<>(multiLayerConfiguration.processors);
   this.backward=multiLayerConfiguration.backward;
+  this.inputPreProcessors=multiLayerConfiguration.inputPreProcessors;
 }

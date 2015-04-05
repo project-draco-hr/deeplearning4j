@@ -4,11 +4,15 @@
   int inputSize;
   if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
   int[] hiddenLayerSizes=layerWiseConfigurations.getHiddenLayerSizes();
+  int numHiddenLayersSizesUsed=0;
   if (this.layers == null || this.layers[0] == null) {
     this.layers=new Layer[hiddenLayerSizes.length + 1];
     for (int i=0; i < getnLayers(); i++) {
-      if (i == 0)       inputSize=layerWiseConfigurations.getConf(0).getnIn();
- else       inputSize=hiddenLayerSizes[i - 1];
+      if (i == 0) {
+        inputSize=layerWiseConfigurations.getConf(0).getnIn();
+        numHiddenLayersSizesUsed++;
+      }
+ else       inputSize=hiddenLayerSizes[numHiddenLayersSizesUsed - 1];
       if (i == 0) {
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
@@ -16,7 +20,8 @@
       }
  else       if (i < getLayers().length - 1) {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
-        layerWiseConfigurations.getConf(i).setnIn(inputSize);
+        if (layerInput.columns() == hiddenLayerSizes[i])         numHiddenLayersSizesUsed++;
+        layerWiseConfigurations.getConf(i).setnIn(layerInput.columns());
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
         layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
       }

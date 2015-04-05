@@ -1,10 +1,11 @@
 {
-  if (!layerWiseConfigurations.isBackward()) {
+  if (layerWiseConfigurations.isPretrain()) {
     pretrain(iter);
     iter.reset();
     finetune(iter);
   }
- else {
+  if (layerWiseConfigurations.isBackward()) {
+    iter.reset();
     while (iter.hasNext()) {
       DataSet next=iter.next();
       doBackWard(next.getFeatureMatrix(),next.getLabels());

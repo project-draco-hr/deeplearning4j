@@ -9,5 +9,6 @@
   conf.dampingFactor=dampingFactor;
   conf.processors=preProcessors;
   conf.backward=backward;
+  conf.inputPreProcessors=inputPreProcessor;
   return conf;
 }

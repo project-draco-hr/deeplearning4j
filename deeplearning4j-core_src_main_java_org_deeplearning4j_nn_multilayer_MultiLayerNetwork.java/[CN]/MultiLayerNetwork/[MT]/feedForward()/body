@@ -4,8 +4,6 @@
   activations.add(currInput);
   for (int i=0; i < layers.length; i++) {
     currInput=activationFromPrevLayer(i,currInput);
-    OutputPreProcessor preProcessor=getLayerWiseConfigurations().getPreProcessor(i);
-    if (preProcessor != null)     currInput=preProcessor.preProcess(currInput);
     applyDropConnectIfNecessary(currInput);
     activations.add(currInput);
   }
