@@ -1,8 +1,8 @@
 {
   setInput(examples);
   if (layerWiseConfigurations.isPretrain()) {
-    pretrain(examples);
+    pretrain(getInput());
     finetune(labels);
   }
-  if (layerWiseConfigurations.isBackward())   doBackWard(examples,labels);
+  if (layerWiseConfigurations.isBackward())   doBackWard(getInput(),labels);
 }

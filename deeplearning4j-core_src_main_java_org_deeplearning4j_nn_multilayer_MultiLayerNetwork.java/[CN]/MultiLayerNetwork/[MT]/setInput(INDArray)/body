@@ -1,4 +1,5 @@
 {
-  if (input != null && this.layers == null)   this.initializeLayers(input);
- else   this.input=input;
+  if (getLayerWiseConfigurations().getInputPreProcess(0) != null)   this.input=this.layerWiseConfigurations.getInputPreProcess(0).preProcess(input);
+  if (this.layers == null)   this.initializeLayers(getInput());
+ else   if (this.input == null)   this.input=input;
 }
