@@ -23,6 +23,6 @@
     return true;
   }
   if (isLeaf())   subDivide();
-  insertIntoOneOf(newIndex);
-  return false;
+  boolean ret=insertIntoOneOf(newIndex);
+  return ret;
 }

@@ -1,9 +1,0 @@
-{
-  for (  int anIndex : this.index)   if (anIndex >= 0)   indices.add(anIndex);
-  if (!isLeaf()) {
-    northWest.getIndices(indices);
-    northEast.getIndices(indices);
-    southWest.getIndices(indices);
-    southEast.getIndices(indices);
-  }
-}

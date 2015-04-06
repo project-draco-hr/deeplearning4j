@@ -1,0 +1,7 @@
+{
+  if (this == o)   return true;
+  if (o == null || getClass() != o.getClass())   return false;
+  DataPoint dataPoint=(DataPoint)o;
+  if (index != dataPoint.index)   return false;
+  return !(point != null ? !point.equals(dataPoint.point) : dataPoint.point != null);
+}

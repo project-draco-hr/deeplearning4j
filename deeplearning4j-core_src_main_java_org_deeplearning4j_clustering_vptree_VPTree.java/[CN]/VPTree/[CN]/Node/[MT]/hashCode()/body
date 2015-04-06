@@ -1,0 +1,10 @@
+{
+  int result;
+  long temp;
+  result=index;
+  temp=Double.doubleToLongBits(threshold);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
+  result=31 * result + (left != null ? left.hashCode() : 0);
+  result=31 * result + (right != null ? right.hashCode() : 0);
+  return result;
+}

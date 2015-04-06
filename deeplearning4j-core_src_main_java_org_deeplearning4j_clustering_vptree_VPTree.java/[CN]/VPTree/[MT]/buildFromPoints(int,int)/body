@@ -1,0 +1,9 @@
+{
+  if (upper == lower)   return null;
+  Node ret=new Node(lower,0);
+  if (upper - lower > 1) {
+    int i=MathUtils.randomNumberBetween(upper,lower);
+    int median=(upper + lower) / 2;
+  }
+  return ret;
+}
