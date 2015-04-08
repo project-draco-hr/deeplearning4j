@@ -21,8 +21,6 @@
   this.weightInit=neuralNetConfiguration.weightInit;
   this.optimizationAlgo=neuralNetConfiguration.optimizationAlgo;
   this.lossFunction=neuralNetConfiguration.lossFunction;
-  this.renderWeightsEveryNumEpochs=neuralNetConfiguration.renderWeightsEveryNumEpochs;
-  this.concatBiases=neuralNetConfiguration.concatBiases;
   this.constrainGradientToUnitNorm=neuralNetConfiguration.constrainGradientToUnitNorm;
   this.rng=neuralNetConfiguration.rng;
   this.dist=neuralNetConfiguration.dist;
@@ -36,6 +34,7 @@
   this.numFeatureMaps=neuralNetConfiguration.numFeatureMaps;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.featureMapSize=neuralNetConfiguration.featureMapSize;
+  this.convolutionType=neuralNetConfiguration.getConvolutionType();
   if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

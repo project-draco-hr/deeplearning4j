@@ -1,0 +1,15 @@
+{
+  INDArray pooled=null;
+switch (conf.getConvolutionType()) {
+case MAX:
+    pooled=Transforms.maxPool(convolution,conf.getStride(),true);
+  break;
+case SUM:
+pooled=Transforms.sumPooling(convolution,conf.getStride());
+break;
+case AVG:
+pooled=Transforms.avgPooling(convolution,conf.getStride());
+break;
+}
+return pooled;
+}

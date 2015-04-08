@@ -1,9 +1,7 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY).transpose();
   INDArray vBias=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
-  INDArray vMean=h.mmul(W);
-  if (conf.isConcatBiases())   vMean=Nd4j.hstack(vMean,vBias);
- else   vMean.addiRowVector(vBias);
+  INDArray vMean=h.mmul(W).addiRowVector(vBias);
 switch (conf.getVisibleUnit()) {
 case GAUSSIAN:
     INDArray sample=Nd4j.getDistributions().createNormal(vMean,1).sample(vMean.shape());

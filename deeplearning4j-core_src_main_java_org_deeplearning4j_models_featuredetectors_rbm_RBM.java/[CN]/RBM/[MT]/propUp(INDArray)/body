@@ -2,9 +2,7 @@
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
-  INDArray preSig=v.mmul(W);
-  if (conf.isConcatBiases())   preSig=Nd4j.hstack(preSig,hBias);
- else   preSig.addiRowVector(hBias);
+  INDArray preSig=v.mmul(W).addiRowVector(hBias);
 switch (conf.getHiddenUnit()) {
 case RECTIFIED:
     preSig=max(preSig,0.0);

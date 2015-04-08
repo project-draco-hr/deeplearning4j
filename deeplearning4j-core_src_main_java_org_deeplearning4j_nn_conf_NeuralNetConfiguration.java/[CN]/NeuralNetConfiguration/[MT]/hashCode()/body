@@ -23,8 +23,6 @@
   result=31 * result + (weightInit != null ? weightInit.hashCode() : 0);
   result=31 * result + (optimizationAlgo != null ? optimizationAlgo.hashCode() : 0);
   result=31 * result + (lossFunction != null ? lossFunction.hashCode() : 0);
-  result=31 * result + renderWeightsEveryNumEpochs;
-  result=31 * result + (concatBiases ? 1 : 0);
   result=31 * result + (constrainGradientToUnitNorm ? 1 : 0);
   result=31 * result + (int)(seed ^ (seed >>> 32));
   result=31 * result + (rng != null ? rng.hashCode() : 0);
@@ -47,5 +45,6 @@
   result=31 * result + kernel;
   result=31 * result + batchSize;
   result=31 * result + (minimize ? 1 : 0);
+  result=31 * result + (convolutionType != null ? convolutionType.hashCode() : 0);
   return result;
 }

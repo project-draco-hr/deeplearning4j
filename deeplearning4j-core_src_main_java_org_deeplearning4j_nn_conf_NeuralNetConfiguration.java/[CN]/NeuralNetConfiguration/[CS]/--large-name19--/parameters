@@ -15,7 +15,6 @@ WeightInit weightInit
 OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 int renderWeightsEveryNumEpochs
-boolean concatBiases
 boolean constrainGradientToUnitNorm
 org.nd4j.linalg.api.rng.Random rng
 Distribution dist
@@ -35,3 +34,4 @@ int numLineSearchIterations
 boolean minimize
 List<IterationListener> listeners
 LayerFactory layerFactory
+ConvolutionDownSampleLayer.ConvolutionType convolutionType
