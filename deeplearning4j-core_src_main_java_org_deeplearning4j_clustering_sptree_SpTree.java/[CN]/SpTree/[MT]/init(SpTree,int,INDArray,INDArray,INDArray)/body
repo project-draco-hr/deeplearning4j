@@ -1,0 +1,12 @@
+{
+  this.parent=parent;
+  this.D=D;
+  for (int d=1; d < this.D; d++)   numChildren*=2;
+  this.data=data;
+  isLeaf=true;
+  boundary=new Cell(D);
+  boundary.setCorner(corner);
+  boundary.setWidth(width);
+  centerOfMass=Nd4j.create(D);
+  buf=Nd4j.create(D);
+}

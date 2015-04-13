@@ -1,0 +1,7 @@
+{
+  if (this == o)   return true;
+  if (o == null || getClass() != o.getClass())   return false;
+  HeapItem heapItem=(HeapItem)o;
+  if (index != heapItem.index)   return false;
+  return Double.compare(heapItem.distance,distance) == 0;
+}

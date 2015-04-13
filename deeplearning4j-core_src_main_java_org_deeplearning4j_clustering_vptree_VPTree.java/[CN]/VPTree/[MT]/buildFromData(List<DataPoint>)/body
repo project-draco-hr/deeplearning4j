@@ -1,0 +1,5 @@
+{
+  INDArray ret=Nd4j.create(data.size(),data.get(0).getD());
+  for (int i=0; i < ret.slices(); i++)   ret.putSlice(i,data.get(i).getPoint());
+  return ret;
+}

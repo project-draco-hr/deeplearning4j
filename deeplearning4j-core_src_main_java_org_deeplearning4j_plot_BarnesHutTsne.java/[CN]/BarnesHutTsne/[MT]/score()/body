@@ -1,24 +1,24 @@
 {
   int QT_NO_DIMS=2;
-  QuadTree tree=new QuadTree(y);
+  SpTree tree=new SpTree(y.columns(),y,y.rows());
   INDArray buff=Nd4j.create(QT_NO_DIMS);
   AtomicDouble sum_Q=new AtomicDouble(0.0);
   for (int n=0; n < N; n++)   tree.computeNonEdgeForces(n,theta,buff,sum_Q);
   double C=.0;
-  INDArray linear=y.linearView();
+  INDArray linear=y;
   for (int n=0; n < N; n++) {
     int begin=rows.getInt(n);
     int end=rows.getInt(n + 1);
-    int ind1=n * QT_NO_DIMS;
+    int ind1=n;
     for (int i=begin; i < end; i++) {
-      int ind2=cols.getInt(i) * QT_NO_DIMS;
-      buff.assign(linear.get(NDArrayIndex.interval(ind1,ind1 + QT_NO_DIMS)));
-      buff.subi(linear.get(NDArrayIndex.interval(ind2,ind2 + QT_NO_DIMS)));
+      int ind2=cols.getInt(i);
+      buff.assign(linear.slice(ind1));
+      buff.subi(linear.slice(ind2));
       double Q=pow(buff,2).sum(Integer.MAX_VALUE).getDouble(0);
       Q=(1.0 / (1.0 + Q)) / sum_Q.doubleValue();
       double val=vals.getDouble(i);
       double add=FastMath.log((val + Double.MIN_VALUE) / (Q + Double.MIN_VALUE));
-      C+=val * add;
+      C+=vals.getDouble(i) * FastMath.log(vals.getDouble(i) + Nd4j.EPS_THRESHOLD) / (Q + Nd4j.EPS_THRESHOLD);
     }
   }
   return C;

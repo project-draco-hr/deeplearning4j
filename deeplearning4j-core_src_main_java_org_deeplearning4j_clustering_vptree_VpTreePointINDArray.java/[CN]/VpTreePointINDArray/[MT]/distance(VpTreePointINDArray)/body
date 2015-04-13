@@ -1,4 +1,0 @@
-{
-  Preconditions.checkArgument(p != null);
-  return Nd4j.getExecutioner().execAndReturn(new EuclideanDistance(data,p.data)).currentResult().doubleValue();
-}

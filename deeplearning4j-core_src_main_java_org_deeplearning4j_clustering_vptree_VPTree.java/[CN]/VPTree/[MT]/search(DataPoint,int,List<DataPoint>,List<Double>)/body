@@ -1,0 +1,14 @@
+{
+  PriorityQueue<HeapItem> pq=new PriorityQueue<>();
+  tau=Double.MAX_VALUE;
+  search(root,target,k,pq);
+  results.clear();
+  distances.clear();
+  while (!pq.isEmpty()) {
+    results.add(items.get(pq.peek().getIndex()));
+    distances.add(pq.peek().getDistance());
+    pq.next();
+  }
+  Collections.reverse(results);
+  Collections.reverse(distances);
+}

@@ -1,0 +1,12 @@
+{
+  if (!rowP.isVector())   throw new IllegalArgumentException("RowP must be a vector");
+  double D;
+  for (int n=0; n < N; n++) {
+    for (int i=rowP.getInt(n); i < rowP.getInt(n + 1); i++) {
+      buf.assign(data.slice(n)).subi(data.slice(colP.getInt(i)));
+      D=Nd4j.getBlasWrapper().dot(buf,buf);
+      D=valP.getDouble(i) / D;
+      posF.slice(n).addi(buf.mul(D));
+    }
+  }
+}

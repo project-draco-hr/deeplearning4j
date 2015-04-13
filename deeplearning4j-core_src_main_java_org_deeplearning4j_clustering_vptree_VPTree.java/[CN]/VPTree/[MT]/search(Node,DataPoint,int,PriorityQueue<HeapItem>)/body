@@ -1,0 +1,26 @@
+{
+  if (node == null)   return;
+  double distance=items.get(node.getIndex()).euclidean(target);
+  if (distance < tau) {
+    if (pq.size() == k)     pq.next();
+    pq.add(new HeapItem(node.index,distance),distance);
+    if (pq.size() == k)     tau=pq.peek().getDistance();
+  }
+  if (node.getLeft() == null && node.getRight() == null)   return;
+  if (distance < node.getThreshold()) {
+    if (distance - tau <= node.getThreshold()) {
+      search(node.getLeft(),target,k,pq);
+    }
+    if (distance + tau >= node.getThreshold()) {
+      search(node.getRight(),target,k,pq);
+    }
+  }
+ else {
+    if (distance + tau >= node.getThreshold()) {
+      search(node.getRight(),target,k,pq);
+    }
+    if (distance - tau <= node.getThreshold()) {
+      search(node.getLeft(),target,k,pq);
+    }
+  }
+}

@@ -8,16 +8,16 @@
   for (int n=0; n < N; n++)   rows.putScalar(n + 1,rows.getDouble(n) + k);
   final INDArray beta=ones(N,1);
   final double logU=FastMath.log(u);
-  final List<VpTreePointINDArray> list=VpTreePointINDArray.dataPoints(d);
-  final VpTreeNode<VpTreePointINDArray> tree=VpTreeNode.buildVpTree(list);
+  VPTree tree=new VPTree(d);
   log.info("Calculating probabilities of data similarities...");
   for (int i=0; i < N; i++) {
     if (i % 500 == 0)     log.info("Handled " + i + " records");
     double betaMin=-Double.MAX_VALUE;
     double betaMax=Double.MAX_VALUE;
-    Counter<VpTreePointINDArray> c=tree.findNearByPointsWithDistancesK(list.get(i),k + 1);
+    List<DataPoint> results=new ArrayList<>();
+    tree.search(new DataPoint(i,d.slice(i)),k + 1,results,new ArrayList<Double>());
     double betas=beta.getDouble(i);
-    INDArray cArr=toNDArray(c);
+    INDArray cArr=VPTree.buildFromData(results);
     Pair<INDArray,Double> pair=computeGaussianKernel(cArr,beta.getDouble(i),k);
     INDArray currP=pair.getFirst();
     double hDiff=pair.getSecond() - logU;
@@ -42,7 +42,11 @@
       }
     }
     currP.divi(currP.sum(Integer.MAX_VALUE));
-    INDArray indices=toIndex(c,k);
+    INDArray indices=Nd4j.create(k + 1);
+    for (int j=0; j < indices.length(); j++) {
+      if (j >= results.size())       break;
+      indices.putScalar(j,results.get(j).getIndex());
+    }
     for (int l=0; l < k; l++) {
       cols.putScalar(rows.getInt(i) + l,indices.getDouble(l + 1));
       vals.putScalar(rows.getInt(i) + l,currP.getDouble(l));

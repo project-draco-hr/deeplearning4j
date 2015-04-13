@@ -1,0 +1,6 @@
+{
+  List<DataPoint> thisItems=new ArrayList<>();
+  for (int i=0; i < items.slices(); i++)   thisItems.add(new DataPoint(i,items.slice(i)));
+  this.items=thisItems;
+  root=buildFromPoints(0,this.items.size());
+}

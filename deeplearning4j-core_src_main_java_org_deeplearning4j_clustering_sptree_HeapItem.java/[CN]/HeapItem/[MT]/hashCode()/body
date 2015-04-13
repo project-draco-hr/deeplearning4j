@@ -1,0 +1,8 @@
+{
+  int result;
+  long temp;
+  result=index;
+  temp=Double.doubleToLongBits(distance);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
+  return result;
+}

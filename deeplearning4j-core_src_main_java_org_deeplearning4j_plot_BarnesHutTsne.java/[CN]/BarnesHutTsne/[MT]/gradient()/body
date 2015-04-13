@@ -4,7 +4,7 @@
   AtomicDouble sumQ=new AtomicDouble(0);
   INDArray posF=Nd4j.create(y.shape());
   INDArray negF=Nd4j.create(y.shape());
-  QuadTree quad=new QuadTree(y);
+  SpTree quad=new SpTree(y.columns(),y,N);
   quad.computeEdgeForces(rows,cols,vals,N,posF);
   for (int n=0; n < N; n++)   quad.computeNonEdgeForces(n,theta,negF.slice(n),sumQ);
   INDArray dC=posF.subi(negF.divi(sumQ));
