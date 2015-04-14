@@ -1,5 +1,4 @@
 {
-  this.trainingTrees=trainingBatch;
   int count=0;
   List<Future<Object>> futureBatch=new ArrayList<>();
   for (  final Tree t : trainingBatch) {
@@ -9,7 +8,7 @@
         forwardPropagateTree(t);
         try {
           INDArray params=getParameters();
-          INDArray gradient=getValueGradient();
+          INDArray gradient=getValueGradient(trainingBatch);
           if (params.length() != gradient.length())           throw new IllegalStateException("Params not equal to gradient!");
           setParams(params.subi(gradient));
         }
