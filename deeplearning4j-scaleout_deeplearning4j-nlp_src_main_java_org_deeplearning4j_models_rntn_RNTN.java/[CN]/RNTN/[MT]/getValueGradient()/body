@@ -36,7 +36,7 @@
     wordVectorD.put(s,Nd4j.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
-  if (!forwardPropTrees.isEmpty())   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
+  Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
     public void run(    Tree currentItem,    Object[] args){
       Tree trainingTree=new Tree(currentItem);
       trainingTree.connect(new ArrayList<>(currentItem.children()));
