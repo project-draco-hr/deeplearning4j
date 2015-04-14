@@ -2,11 +2,14 @@
   this.parent=parent;
   this.D=D;
   for (int d=1; d < this.D; d++)   numChildren*=2;
-  this.data=data;
   isLeaf=true;
+  size=0;
+  cumSize=0;
+  children=new SpTree[numChildren];
+  this.data=data;
   boundary=new Cell(D);
-  boundary.setCorner(corner);
-  boundary.setWidth(width);
+  boundary.setCorner(corner.dup());
+  boundary.setWidth(width.dup());
   centerOfMass=Nd4j.create(D);
   buf=Nd4j.create(D);
 }
