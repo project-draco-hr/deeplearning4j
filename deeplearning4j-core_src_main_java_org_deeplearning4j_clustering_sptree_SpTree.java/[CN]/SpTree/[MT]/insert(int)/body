@@ -1,6 +1,7 @@
 {
   INDArray point=data.slice(index);
   if (!boundary.contains(point))   return false;
+ else   if (indices.contains(point))   return true;
   cumSize++;
   double mult1=(double)(cumSize - 1) / (double)cumSize;
   double mult2=1.0 / (double)cumSize;
@@ -14,7 +15,7 @@
   boolean anyDuplicate=false;
   for (int i=0; i < size; i++) {
     INDArray compPoint=data.slice(this.index[i]);
-    if (point.equals(compPoint))     return true;
+    if (indices.contains(compPoint))     return true;
   }
   if (anyDuplicate)   return true;
   if (isLeaf())   subDivide();

@@ -2,6 +2,7 @@
   this.parent=parent;
   this.D=D;
   for (int d=1; d < this.D; d++)   numChildren*=2;
+  this.indices=indices;
   isLeaf=true;
   size=0;
   cumSize=0;
