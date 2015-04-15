@@ -14,7 +14,7 @@
   boolean anyDuplicate=false;
   for (int i=0; i < size; i++) {
     INDArray compPoint=data.slice(this.index[i]);
-    if (point.equals(compPoint))     return true;
+    if (indices.contains(compPoint))     return true;
   }
   if (anyDuplicate)   return true;
   if (isLeaf())   subDivide();
