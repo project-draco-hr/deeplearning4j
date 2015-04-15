@@ -5,7 +5,7 @@
   }
   if (!isLeaf) {
     boolean correct=true;
-    for (int i=0; i < numChildren; i++)     correct=correct && children.get(i).isCorrect();
+    for (int i=0; i < numChildren; i++)     correct=correct && children[i].isCorrect();
     return correct;
   }
  else   return true;

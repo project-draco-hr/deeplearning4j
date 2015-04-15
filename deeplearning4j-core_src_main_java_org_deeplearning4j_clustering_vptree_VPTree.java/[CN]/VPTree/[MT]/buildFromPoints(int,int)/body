@@ -8,7 +8,7 @@
     double sortedDistances[]=new double[items.size()];
     DataPoint basePoint=items.get(randomPoint);
     for (int i=0; i < items.size(); ++i) {
-      distances[i]=basePoint.euclidean(items.get(i));
+      distances[i]=getDistance(basePoint,items.get(i));
       sortedDistances[i]=distances[i];
     }
     Arrays.sort(sortedDistances);
@@ -29,7 +29,7 @@
     for (int i=0; i < rightPoints.size(); ++i) {
       items.set(i + leftPoints.size(),rightPoints.get(i));
     }
-    ret.setThreshold(items.get(lower).euclidean(items.get(median)));
+    ret.setThreshold(getDistance(items.get(lower),items.get(median)));
     ret.setIndex(lower);
     ret.setRight(buildFromPoints(lower + 1,median));
     ret.setRight(buildFromPoints(median,upper));

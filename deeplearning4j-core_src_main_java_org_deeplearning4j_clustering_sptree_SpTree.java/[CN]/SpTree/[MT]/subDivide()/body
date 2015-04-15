@@ -9,13 +9,12 @@
  else       newCorner.putScalar(d,boundary.corner(d) + 0.5 * boundary.width(d));
       div*=2;
     }
-    if (children.isEmpty())     children.add(new SpTree(this,D,data,newCorner,newWidth));
- else     children.add(i,new SpTree(this,D,data,newCorner,newWidth));
+    children[i]=new SpTree(this,D,data,newCorner,newWidth);
   }
   for (int i=0; i < size; i++) {
     boolean success=false;
     for (int j=0; j < this.numChildren; j++) {
-      if (!success)       success=children.get(j).insert(index[i]);
+      if (!success)       success=children[j].insert(index[i]);
     }
     index[i]=-1;
   }

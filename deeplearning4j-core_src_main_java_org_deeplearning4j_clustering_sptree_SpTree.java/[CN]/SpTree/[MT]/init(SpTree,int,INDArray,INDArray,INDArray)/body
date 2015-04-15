@@ -9,4 +9,5 @@
   boundary.setWidth(width);
   centerOfMass=Nd4j.create(D);
   buf=Nd4j.create(D);
+  children=new SpTree[numChildren];
 }
