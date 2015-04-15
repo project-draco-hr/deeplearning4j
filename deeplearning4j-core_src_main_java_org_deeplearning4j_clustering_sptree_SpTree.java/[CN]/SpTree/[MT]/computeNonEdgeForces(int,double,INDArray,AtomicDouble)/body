@@ -2,13 +2,8 @@
   if (cumSize == 0 || (isLeaf() && size == 1 && index[0] == pointIndex))   return;
   buf.assign(data.slice(pointIndex)).subi(centerOfMass);
   double D=Nd4j.getBlasWrapper().dot(buf,buf);
-  double max_width=0.0;
-  double cur_width;
-  for (int d=0; d < this.D; d++) {
-    cur_width=boundary.width(d);
-    max_width=(max_width > cur_width) ? max_width : cur_width;
-  }
-  if (isLeaf() || max_width / FastMath.sqrt(D) < theta) {
+  double maxWidth=boundary.width().max(Integer.MAX_VALUE).getDouble(0);
+  if (isLeaf() || maxWidth / FastMath.sqrt(D) < theta) {
     double Q=1.0 / (1.0 + D);
     double mult=cumSize * Q;
     sumQ.addAndGet(mult);

@@ -8,5 +8,5 @@
     for (int i=0; i < numChildren; i++)     correct=correct && children[i].isCorrect();
     return correct;
   }
- else   return true;
+  return true;
 }

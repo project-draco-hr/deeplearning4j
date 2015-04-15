@@ -13,9 +13,7 @@
   }
   for (int i=0; i < size; i++) {
     boolean success=false;
-    for (int j=0; j < this.numChildren; j++) {
-      if (!success)       success=children[j].insert(index[i]);
-    }
+    for (int j=0; j < this.numChildren; j++)     if (!success)     success=children[j].insert(index[i]);
     index[i]=-1;
   }
   size=0;
