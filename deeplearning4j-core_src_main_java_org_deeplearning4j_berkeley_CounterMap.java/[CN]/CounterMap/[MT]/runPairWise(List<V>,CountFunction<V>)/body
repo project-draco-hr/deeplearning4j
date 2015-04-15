@@ -1,0 +1,56 @@
+{
+  ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
+    @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
+      try {
+        Thread.sleep(1000);
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      executor.submit(r);
+    }
+  }
+);
+  final AtomicInteger begin=new AtomicInteger(0);
+  final AtomicInteger end=new AtomicInteger(items.size() - 1);
+  List<Future<V>> futures=new ArrayList<>();
+  final CounterMap<V,V> count=parallelCounterMap();
+  for (int i=0; i < items.size() / 2; i++) {
+    futures.add(exec.submit(new Callable<V>(){
+      @Override public V call() throws Exception {
+        int begin2=begin.incrementAndGet();
+        int end2=end.decrementAndGet();
+        V v=items.get(begin2);
+        V v2=items.get(end2);
+        log.trace("Processing " + "(" + begin2 + ","+ end2+ ")");
+        if (count.getCount(v,v2) > 0)         return v;
+        double cost=countFunction.count(v,v2);
+        count.incrementCount(v,v2,cost);
+        count.incrementCount(v2,v,cost);
+        return v;
+      }
+    }
+));
+  }
+  int futureCount=0;
+  for (  Future<V> future : futures) {
+    try {
+      future.get();
+      log.trace("Done with " + futureCount++);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
+catch (    ExecutionException e) {
+      e.printStackTrace();
+    }
+  }
+  exec.shutdown();
+  try {
+    exec.awaitTermination(1,TimeUnit.MINUTES);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+  return count;
+}

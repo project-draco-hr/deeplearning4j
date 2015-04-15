@@ -1,6 +1,7 @@
 {
   if (node == null)   return;
-  double distance=items.get(node.getIndex()).euclidean(target);
+  DataPoint get=items.get(node.getIndex());
+  double distance=getDistance(get,target);
   if (distance < tau) {
     if (pq.size() == k)     pq.next();
     pq.add(new HeapItem(node.index,distance),distance);
