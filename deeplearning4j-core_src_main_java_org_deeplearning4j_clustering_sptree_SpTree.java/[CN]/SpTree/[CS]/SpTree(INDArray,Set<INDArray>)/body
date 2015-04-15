@@ -1,8 +1,7 @@
 {
-  this.D=d;
-  this.data=data;
-  N=n;
   this.indices=indices;
+  this.N=data.rows();
+  this.D=data.columns();
   INDArray meanY=data.mean(0);
   INDArray minY=data.min(0);
   INDArray maxY=data.max(0);
@@ -10,6 +9,6 @@
   for (int i=0; i < width.length(); i++) {
     width.putScalar(i,FastMath.max(maxY.getDouble(i) - meanY.getDouble(i),meanY.getDouble(i) - minY.getDouble(i) + Nd4j.EPS_THRESHOLD));
   }
-  init(null,D,data,meanY,width,indices);
+  init(null,data,meanY,width,indices);
   fill(N);
 }

@@ -1,6 +1,6 @@
 {
   int QT_NO_DIMS=2;
-  SpTree tree=new SpTree(y.columns(),y,y.rows());
+  SpTree tree=new SpTree(y);
   INDArray buff=Nd4j.create(QT_NO_DIMS);
   AtomicDouble sum_Q=new AtomicDouble(0.0);
   for (int n=0; n < N; n++)   tree.computeNonEdgeForces(n,theta,buff,sum_Q);

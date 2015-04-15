@@ -19,5 +19,5 @@
   for (int i=0; i < numChildren; i++) {
     if (children[i].insert(index))     return true;
   }
-  return false;
+  throw new IllegalStateException("Shouldn't reach this state");
 }
