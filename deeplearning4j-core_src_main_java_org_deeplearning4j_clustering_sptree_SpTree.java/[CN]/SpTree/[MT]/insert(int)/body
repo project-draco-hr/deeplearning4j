@@ -6,7 +6,7 @@
   double mult2=1.0 / (double)cumSize;
   centerOfMass.muli(mult1);
   centerOfMass.addi(point.mul(mult2));
-  if (isLeaf() && size < QT_NODE_CAPACITY) {
+  if (isLeaf() && size < nodeCapacity) {
     this.index[size]=index;
     size++;
     return true;
