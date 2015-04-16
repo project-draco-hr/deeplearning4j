@@ -8,6 +8,7 @@
   centerOfMass.addi(point.mul(mult2));
   if (isLeaf() && size < nodeCapacity) {
     this.index[size]=index;
+    indices.add(index);
     size++;
     return true;
   }
