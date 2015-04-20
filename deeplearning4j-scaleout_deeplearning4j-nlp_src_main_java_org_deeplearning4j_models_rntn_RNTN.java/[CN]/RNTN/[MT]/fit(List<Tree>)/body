@@ -1,23 +1,19 @@
 {
-  this.trainingTrees=trainingBatch;
-  int count=0;
-  for (  final Tree t : trainingBatch) {
-    log.info("Working mini batch " + count++);
-    Futures.future(new Callable<Object>(){
-      @Override public Object call() throws Exception {
-        forwardPropagateTree(t);
-        try {
-          INDArray params=getParameters();
-          INDArray gradient=getValueGradient();
-          if (params.length() != gradient.length())           throw new IllegalStateException("Params not equal to gradient!");
-          setParams(params.subi(gradient));
-        }
- catch (        NegativeArraySizeException e) {
-          log.warn("Couldnt compute parameters due to negative array size...for trees " + t);
-        }
-        return null;
+  final CountDownLatch c=new CountDownLatch(trainingBatch.size());
+  List<Future<Object>> futureBatch=fitAsync(trainingBatch);
+  for (  Future<Object> f : futureBatch) {
+    f.onComplete(new OnComplete<Object>(){
+      @Override public void onComplete(      Throwable throwable,      Object e) throws Throwable {
+        if (throwable != null)         log.warn("Error occurred training batch",throwable);
+        c.countDown();
       }
     }
 ,rnTnActorSystem.dispatcher());
+  }
+  try {
+    c.await();
+  }
+ catch (  InterruptedException e) {
+    Thread.currentThread().interrupt();
   }
 }
