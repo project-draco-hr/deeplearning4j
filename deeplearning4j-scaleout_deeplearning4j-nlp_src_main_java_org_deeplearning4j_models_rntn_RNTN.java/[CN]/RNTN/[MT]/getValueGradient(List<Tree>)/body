@@ -36,7 +36,7 @@
     wordVectorD.put(s,Nd4j.create(numRows,numCols));
   }
   final List<Tree> forwardPropTrees=new CopyOnWriteArrayList<>();
-  if (!forwardPropTrees.isEmpty())   Parallelization.iterateInParallel(trainingTrees,new Parallelization.RunnableWithParams<Tree>(){
+  Parallelization.iterateInParallel(trainingBatch,new Parallelization.RunnableWithParams<Tree>(){
     public void run(    Tree currentItem,    Object[] args){
       Tree trainingTree=new Tree(currentItem);
       trainingTree.connect(new ArrayList<>(currentItem.children()));
@@ -57,7 +57,7 @@
     }
   }
 ,rnTnActorSystem,new Object[]{binaryTD,binaryCD,binaryINDArrayTD,unaryCD,wordVectorD});
-  double scale=trainingTrees == null || trainingTrees.isEmpty() ? 1.0f : (1.0f / trainingTrees.size());
+  double scale=trainingBatch == null || trainingBatch.isEmpty() ? 1.0f : (1.0f / trainingBatch.size());
   value=error.doubleValue() * scale;
   value+=scaleAndRegularize(binaryTD,binaryTransform,scale,regTransformMatrix);
   value+=scaleAndRegularize(binaryCD,binaryClassification,scale,regClassification);
