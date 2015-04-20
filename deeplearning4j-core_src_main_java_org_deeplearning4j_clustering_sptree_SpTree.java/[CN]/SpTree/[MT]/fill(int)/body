@@ -1,3 +1,7 @@
 {
-  for (int i=0; i < n; i++)   insert(i);
+  if (indices.isEmpty() && parent == null)   for (int i=0; i < n; i++) {
+    log.trace("Inserted " + i);
+    insert(i);
+  }
+ else   log.warn("Called fill already");
 }

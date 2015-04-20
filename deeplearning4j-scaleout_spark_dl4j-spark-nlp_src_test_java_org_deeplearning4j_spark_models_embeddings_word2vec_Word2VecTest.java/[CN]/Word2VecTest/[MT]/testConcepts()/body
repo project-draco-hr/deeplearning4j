@@ -1,0 +1,9 @@
+{
+  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath());
+  Word2Vec word2Vec=new Word2Vec();
+  sc.getConf().set(Word2VecPerformer.NEGATIVE,String.valueOf(0));
+  Pair<VocabCache,WeightLookupTable> table=word2Vec.train(corpus);
+  WordVectors vectors=WordVectorSerializer.fromPair(new Pair<>(table.getSecond(),table.getFirst()));
+  Collection<String> words=vectors.wordsNearest("day",20);
+  assertTrue(words.contains("week"));
+}
