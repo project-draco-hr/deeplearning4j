@@ -4,12 +4,12 @@
   SparkConf conf=rdd.context().getConf();
   JavaSparkContext sc=new JavaSparkContext(rdd.context());
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
-  InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(Word2VecPerformerVoid.ALPHA,0.025)).vectorLength(conf.getInt(Word2VecPerformerVoid.VECTOR_LENGTH,100)).negative(conf.getDouble(Word2VecPerformerVoid.NEGATIVE,5)).useAdaGrad(conf.getBoolean(Word2VecPerformerVoid.ADAGRAD,false)).build();
-  lookupTable.resetWeights();
+  InMemoryLookupTable lookupTable=this.table != null ? table : (InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(Word2VecPerformerVoid.ALPHA,0.025)).vectorLength(conf.getInt(Word2VecPerformerVoid.VECTOR_LENGTH,100)).negative(conf.getDouble(Word2VecPerformerVoid.NEGATIVE,5)).useAdaGrad(conf.getBoolean(Word2VecPerformerVoid.ADAGRAD,false)).build();
+  if (this.table == null)   lookupTable.resetWeights();
   Huffman huffman=new Huffman(vocabAndNumWords.getFirst().vocabWords());
   huffman.build();
   JavaRDD<Pair<List<VocabWord>,AtomicLong>> r=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new TokentoVocabWord(vocabCacheBroadcast)).cache();
-  final Word2VecParam param=new Word2VecParam.Builder().negative(lookupTable.getNegative()).window(conf.getInt(Word2VecPerformer.WINDOW,5)).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(lookupTable.getLr().get()).setMinAlpha(1e-3).setVectorLength(lookupTable.getVectorLength()).useAdaGrad(lookupTable.isUseAdaGrad()).weights(lookupTable).createWord2VecParam();
+  final Word2VecParam param=new Word2VecParam.Builder().negative(lookupTable.getNegative()).window(conf.getInt(Word2VecPerformer.WINDOW,5)).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(lookupTable.getLr().get()).setMinAlpha(1e-3).setVectorLength(lookupTable.getVectorLength()).useAdaGrad(lookupTable.isUseAdaGrad()).weights(lookupTable).build();
   for (int i=0; i < conf.getInt(Word2VecPerformerVoid.ITERATIONS,5); i++) {
     JavaRDD<Word2VecChange> deltas=r.map(new SentenceBatch(param));
     List<Word2VecChange> deltasList=deltas.collect();

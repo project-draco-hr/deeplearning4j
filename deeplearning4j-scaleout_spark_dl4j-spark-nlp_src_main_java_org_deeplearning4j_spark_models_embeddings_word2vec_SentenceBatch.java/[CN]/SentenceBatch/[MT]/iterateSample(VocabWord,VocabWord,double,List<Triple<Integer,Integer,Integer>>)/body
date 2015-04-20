@@ -1,5 +1,5 @@
 {
-  if (w2 == null || w2.getIndex() < 0)   return;
+  if (w2 == null || w2.getIndex() < 0 || w1.getIndex() == w2.getIndex())   return;
   int vectorLength=param.getVectorLength();
   InMemoryLookupTable weights=param.getWeights();
   boolean useAdaGrad=param.isUseAdaGrad();
@@ -31,6 +31,7 @@
     }
     changed.add(new Triple<>(w1.getIndex(),point,-1));
   }
+  changed.add(new Triple<>(w1.getIndex(),w2.getIndex(),-1));
   if (negative > 0) {
     int target=w1.getIndex();
     int label;
