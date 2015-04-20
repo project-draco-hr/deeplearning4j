@@ -1,8 +1,6 @@
 {
-  for (  VocabWord word : new VocabWord[]{w1,w2}) {
-    table.getBias().putScalar(word.getIndex(),getDelta(table.getBias().getDouble(word.getIndex()),biasChange.get(word.getIndex())));
-    table.getBiasAdaGrad().getHistoricalGradient().putScalar(word.getIndex(),getDelta(table.getBiasAdaGrad().getHistoricalGradient().getDouble(word.getIndex()),biasAdaGradChange.get(word.getIndex())));
-    addDelta(table.getWeightAdaGrad().getHistoricalGradient().slice(word.getIndex()),changed.get(word.getIndex()));
-    addDelta(table.getSyn0().slice(word.getIndex()),changed.get(word.getIndex()));
-  }
+  table.getBias().putScalar(w1.getIndex(),table.getBias().getDouble(w1.getIndex()) - w1BiasUpdate);
+  table.getBias().putScalar(w2.getIndex(),table.getBias().getDouble(w2.getIndex()) - w2BiasUpdate);
+  table.getSyn0().slice(w1.getIndex()).subi(w1Update);
+  table.getSyn0().slice(w2.getIndex()).sub(w2Update);
 }

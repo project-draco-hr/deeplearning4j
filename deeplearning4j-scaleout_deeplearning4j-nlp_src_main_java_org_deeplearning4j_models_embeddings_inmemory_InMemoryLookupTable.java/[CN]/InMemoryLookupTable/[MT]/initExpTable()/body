@@ -1,4 +1,5 @@
 {
+  expTable=new double[1000];
   for (int i=0; i < expTable.length; i++) {
     double tmp=FastMath.exp((i / (double)expTable.length * 2 - 1) * MAX_EXP);
     expTable[i]=tmp / (tmp + 1.0);
