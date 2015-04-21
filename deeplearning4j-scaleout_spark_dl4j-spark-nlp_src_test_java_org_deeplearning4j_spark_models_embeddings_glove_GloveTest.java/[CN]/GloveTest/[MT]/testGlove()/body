@@ -1,5 +1,5 @@
 {
-  Glove glove=new Glove(true,15,200);
+  Glove glove=new Glove(true,5,100);
   JavaRDD<String> corpus=sc.textFile(new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath()).map(new Function<String,String>(){
     @Override public String call(    String s) throws Exception {
       return s.toLowerCase();

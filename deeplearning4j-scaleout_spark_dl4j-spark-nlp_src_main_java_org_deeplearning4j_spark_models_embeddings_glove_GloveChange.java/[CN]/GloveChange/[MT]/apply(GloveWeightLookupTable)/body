@@ -2,5 +2,5 @@
   table.getBias().putScalar(w1.getIndex(),table.getBias().getDouble(w1.getIndex()) - w1BiasUpdate);
   table.getBias().putScalar(w2.getIndex(),table.getBias().getDouble(w2.getIndex()) - w2BiasUpdate);
   table.getSyn0().slice(w1.getIndex()).subi(w1Update);
-  table.getSyn0().slice(w2.getIndex()).sub(w2Update);
+  table.getSyn0().slice(w2.getIndex()).subi(w2Update);
 }
