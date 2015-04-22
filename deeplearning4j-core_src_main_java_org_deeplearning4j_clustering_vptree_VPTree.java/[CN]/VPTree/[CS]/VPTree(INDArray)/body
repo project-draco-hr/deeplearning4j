@@ -1,12 +1,3 @@
 {
-  List<DataPoint> thisItems=new ArrayList<>();
-  for (int i=0; i < items.slices(); i++)   thisItems.add(new DataPoint(i,items.slice(i)));
-  this.items=thisItems;
-  distances=CounterMap.runPairWise(thisItems,new CounterMap.CountFunction<DataPoint>(){
-    @Override public double count(    DataPoint v1,    DataPoint v2){
-      return v1.euclidean(v2);
-    }
-  }
-);
-  root=buildFromPoints(0,this.items.size());
+  this(items,"euclidean");
 }

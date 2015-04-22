@@ -1,0 +1,12 @@
+{
+switch (functionName) {
+case "euclidean":
+    return Nd4j.getExecutioner().execAndReturn(new EuclideanDistance(this.point,point.point)).currentResult().doubleValue();
+case "cosinesimilarity":
+  return Nd4j.getExecutioner().execAndReturn(new CosineSimilarity(this.point,point.point)).currentResult().doubleValue();
+case "manhattan":
+return Nd4j.getExecutioner().execAndReturn(new ManhattanDistance(this.point,point.point)).currentResult().doubleValue();
+default :
+return Nd4j.getExecutioner().execAndReturn(new EuclideanDistance(this.point,point.point)).currentResult().doubleValue();
+}
+}

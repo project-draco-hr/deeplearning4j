@@ -1,14 +1,3 @@
 {
-  this.indices=indices;
-  this.N=data.rows();
-  this.D=data.columns();
-  INDArray meanY=data.mean(0);
-  INDArray minY=data.min(0);
-  INDArray maxY=data.max(0);
-  INDArray width=Nd4j.create(meanY.shape());
-  for (int i=0; i < width.length(); i++) {
-    width.putScalar(i,FastMath.max(maxY.getDouble(i) - meanY.getDouble(i),meanY.getDouble(i) - minY.getDouble(i) + Nd4j.EPS_THRESHOLD));
-  }
-  init(null,data,meanY,width,indices);
-  fill(N);
+  this(data,indices,"euclidean");
 }

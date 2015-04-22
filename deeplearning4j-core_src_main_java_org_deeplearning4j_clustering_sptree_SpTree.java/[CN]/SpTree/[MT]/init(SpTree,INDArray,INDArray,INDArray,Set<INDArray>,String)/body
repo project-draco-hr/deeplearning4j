@@ -2,6 +2,7 @@
   this.parent=parent;
   D=data.columns();
   N=data.rows();
+  this.similarityFunction=similarityFunction;
   nodeCapacity=N % NODE_RATIO;
   index=new int[nodeCapacity];
   for (int d=1; d < this.D; d++)   numChildren*=2;
