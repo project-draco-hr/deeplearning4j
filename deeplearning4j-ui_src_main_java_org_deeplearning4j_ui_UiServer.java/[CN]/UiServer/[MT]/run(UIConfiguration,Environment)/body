@@ -1,3 +1,9 @@
 {
-  environment.jersey().register(new RenderResource());
+  this.conf=uiConfiguration;
+  environment.jersey().register(MultiPartFeature.class);
+  environment.jersey().register(new TsneResource());
+  environment.jersey().register(new NearestNeighborsResource(conf.getUploadPath()));
+  environment.jersey().register(new WeightResource());
+  environment.jersey().register(new RendersResource());
+  configureCors(environment);
 }

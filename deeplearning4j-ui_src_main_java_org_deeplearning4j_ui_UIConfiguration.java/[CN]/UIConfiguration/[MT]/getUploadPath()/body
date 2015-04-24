@@ -1,0 +1,4 @@
+{
+  if (uploadPath == null || uploadPath.isEmpty())   uploadPath=System.getProperty("java.io.tmpdir");
+  return uploadPath;
+}
