@@ -1,0 +1,9 @@
+{
+  JavaPairRDD<String,PortableDataStream> pairRdd=sc.binaryFiles(new ClassPathResource("img.jpg").getFile().toString());
+  JavaRDD<LabeledPoint> rdd=MLLibUtil.fromBinary(pairRdd,new ImageRecordReader(28,28));
+  rdd.foreach(new VoidFunction<LabeledPoint>(){
+    @Override public void call(    LabeledPoint labeledPoint) throws Exception {
+    }
+  }
+);
+}
