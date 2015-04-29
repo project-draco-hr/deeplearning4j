@@ -1,5 +1,5 @@
 {
   if (output.shape().length == 4)   return output;
-  if (output.columns() != rows * cols)   throw new IllegalArgumentException("Output columns must be equal to rows " + rows + " x columns "+ cols);
+  if (output.columns() != rows * cols)   throw new IllegalArgumentException("Output columns must be equal to rows " + rows + " x columns "+ cols+ " but was instead "+ Arrays.toString(output.shape()));
   return output.reshape(output.rows(),1,rows,cols);
 }
