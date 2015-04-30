@@ -1,0 +1,11 @@
+{
+  File file=new File(value);
+  BufferedInputStream bis=new BufferedInputStream(new FileInputStream(file));
+  props.load(bis);
+  bis.close();
+  Configuration configuration=new Configuration();
+  for (  String key : props.stringPropertyNames()) {
+    configuration.set(key,props.getProperty(key));
+  }
+  return (E)configuration;
+}

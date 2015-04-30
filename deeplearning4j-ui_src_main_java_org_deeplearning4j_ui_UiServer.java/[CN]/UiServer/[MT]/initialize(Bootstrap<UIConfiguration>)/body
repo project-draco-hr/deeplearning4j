@@ -1,0 +1,9 @@
+{
+  bootstrap.addBundle(new ViewBundle<UIConfiguration>(){
+    @Override public ImmutableMap<String,ImmutableMap<String,String>> getViewConfiguration(    UIConfiguration arg0){
+      return ImmutableMap.of();
+    }
+  }
+);
+  bootstrap.addBundle(new AssetsBundle());
+}

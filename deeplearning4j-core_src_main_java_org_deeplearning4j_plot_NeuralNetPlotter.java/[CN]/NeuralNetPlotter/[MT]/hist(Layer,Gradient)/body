@@ -1,3 +1,9 @@
 {
-  histogram(new String[]{"W","hbias","vbias","w-gradient","hbias-gradient","vbias-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
+  Set<String> vars=new TreeSet<>(gradient.gradientForVariable().keySet());
+  Set<String> gradients=new LinkedHashSet<>();
+  for (  String s : vars) {
+    gradients.add(s + "-gradient");
+  }
+  vars.addAll(gradients);
+  histogram(vars.toArray(new String[vars.size()]),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
 }

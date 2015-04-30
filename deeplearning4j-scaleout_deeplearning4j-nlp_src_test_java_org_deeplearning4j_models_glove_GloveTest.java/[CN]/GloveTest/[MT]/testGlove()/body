@@ -1,6 +1,6 @@
 {
-  FileUtils.deleteDirectory(new File("word2vec-index"));
-  log.info("Deleted directory " + new File("word2vec-index").getAbsolutePath());
-  glove=new Glove.Builder().iterate(iter).minWordFrequency(1).build();
+  glove=new Glove.Builder().iterate(iter).symmetric(true).shuffle(true).minWordFrequency(1).iterations(100).learningRate(0.1).layerSize(300).build();
   glove.fit();
+  Collection<String> words=glove.wordsNearest("day",20);
+  assertTrue(words.contains("week"));
 }

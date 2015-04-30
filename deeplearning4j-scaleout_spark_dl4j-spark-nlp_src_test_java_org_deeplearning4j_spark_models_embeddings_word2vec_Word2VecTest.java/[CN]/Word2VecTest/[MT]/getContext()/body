@@ -1,6 +1,6 @@
 {
   if (sc != null)   return sc;
-  SparkConf sparkConf=new SparkConf().setMaster("local[8]").set(Word2VecPerformer.NEGATIVE,String.valueOf(0)).setAppName("sparktest");
+  SparkConf sparkConf=new SparkConf().set(org.deeplearning4j.spark.models.embeddings.word2vec.Word2VecPerformer.NUM_WORDS,"5").set(Word2VecPerformerVoid.ITERATIONS,"5").setMaster("local[8]").set(Word2VecPerformer.NEGATIVE,String.valueOf(0)).set(TextPipeline.MIN_WORDS,String.valueOf("1")).setAppName("sparktest");
   sc=new JavaSparkContext(sparkConf);
   return sc;
 }

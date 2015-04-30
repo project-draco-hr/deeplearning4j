@@ -2,10 +2,11 @@
   Iterator<Triple<Integer,Integer,Integer>> iter=counterMap.iterator();
   while (iter.hasNext()) {
     Triple<Integer,Integer,Integer> next=iter.next();
-    if (!syn0Vectors.containsKey(next.getFirst()))     syn0Vectors.put(next.getFirst(),param.getWeights().getSyn0().slice(next.getFirst()));
-    if (!syn1Vectors.containsKey(next.getSecond()))     syn1Vectors.put(next.getFirst(),param.getWeights().getSyn1().slice(next.getSecond()));
-    if (param.getNegative() > 0) {
-      if (!negSyn1Vectors.containsKey(next.getThird()))       negSyn1Vectors.put(next.getFirst(),param.getWeights().getSyn1Neg().slice(next.getThird()));
+    Set<INDArray> changes=this.changes.get(next.getFirst());
+    if (changes == null) {
+      changes=new HashSet<>();
+      this.changes.put(next.getFirst(),changes);
     }
+    changes.add(param.getWeights().getSyn1().slice(next.getSecond()));
   }
 }

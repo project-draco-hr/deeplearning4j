@@ -1,0 +1,7 @@
+{
+  String uploadedFileLocation=new File(filePath,fileDetail.getFileName()).getAbsolutePath();
+  LOGGER.info(uploadedFileLocation);
+  writeToFile(uploadedInputStream,uploadedFileLocation);
+  String output="File uploaded to : " + uploadedFileLocation;
+  return Response.ok(output).build();
+}

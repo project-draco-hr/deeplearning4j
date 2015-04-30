@@ -1,5 +1,5 @@
 {
-  if (w2 == null || w2.getIndex() < 0)   return;
+  if (w2 == null || w2.getIndex() < 0 || w1.getIndex() == w2.getIndex() || w1.getWord().equals("STOP") || w2.getWord().equals("STOP") || w1.getWord().equals("UNK") || w2.getWord().equals("UNK"))   return;
   INDArray l1=this.syn0.slice(w2.getIndex());
   INDArray neu1e=Nd4j.create(vectorLength);
   for (int i=0; i < w1.getCodeLength(); i++) {

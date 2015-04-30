@@ -1,0 +1,7 @@
+{
+  Word2VecParam param=sentence.getParam().getValue();
+  List<Triple<Integer,Integer,Integer>> changed=new ArrayList<>();
+  double alpha=Math.max(param.getMinAlpha(),param.getAlpha() * (1 - (1.0 * sentence.getWordsSeen() / (double)param.getTotalWords())));
+  trainSentence(param,sentence.getSentence(),alpha,changed);
+  return new Word2VecChange(changed,param);
+}
