@@ -1,0 +1,7 @@
+{
+  this.items=items;
+  this.distances=distances;
+  this.invert=invert;
+  this.similarityFunction=similarityFunction;
+  root=buildFromPoints(0,items.size());
+}

@@ -1,0 +1,14 @@
+{
+  List<DataPoint> thisItems=new ArrayList<>();
+  this.similarityFunction=similarityFunction;
+  this.invert=invert;
+  for (int i=0; i < items.slices(); i++)   thisItems.add(new DataPoint(i,items.slice(i),this.similarityFunction,invert));
+  this.items=thisItems;
+  distances=CounterMap.runPairWise(thisItems,new CounterMap.CountFunction<DataPoint>(){
+    @Override public double count(    DataPoint v1,    DataPoint v2){
+      return v1.distance(v2);
+    }
+  }
+);
+  root=buildFromPoints(0,this.items.size());
+}

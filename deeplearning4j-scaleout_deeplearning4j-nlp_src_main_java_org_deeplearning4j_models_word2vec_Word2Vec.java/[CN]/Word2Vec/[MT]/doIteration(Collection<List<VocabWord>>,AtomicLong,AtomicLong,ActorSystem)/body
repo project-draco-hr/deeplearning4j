@@ -1,5 +1,4 @@
 {
-  ActorSystem actorSystem=ActorSystem.create();
   final AtomicLong lastReported=new AtomicLong(System.currentTimeMillis());
   Parallelization.iterateInParallel(batch2,new Parallelization.RunnableWithParams<List<VocabWord>>(){
     @Override public void run(    List<VocabWord> sentence,    Object[] args){
@@ -15,5 +14,4 @@
     }
   }
 ,actorSystem);
-  actorSystem.shutdown();
 }

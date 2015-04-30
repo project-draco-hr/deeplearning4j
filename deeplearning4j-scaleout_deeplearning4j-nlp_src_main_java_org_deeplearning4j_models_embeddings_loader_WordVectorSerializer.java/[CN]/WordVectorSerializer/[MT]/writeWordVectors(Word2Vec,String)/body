@@ -13,6 +13,7 @@
     }
     sb.append("\n");
     write.write(sb.toString());
+    words++;
   }
   log.info("Wrote " + words + " with size of "+ vec.lookupTable().layerSize());
   write.flush();

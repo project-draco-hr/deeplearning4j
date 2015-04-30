@@ -4,7 +4,7 @@
   tree.search(tree.getItems().get(vocab.indexOf(query.getWord())),query.getNumWords(),results,distances);
   Map<String,Double> map=new HashMap<>();
   for (int i=0; i < results.size(); i++) {
-    map.put(words.get(results.get(i).getIndex()).getWord(),distances.get(i));
+    map.put(theVocab.get(results.get(i).getIndex()).getWord(),distances.get(i));
   }
   return Response.ok(map).build();
 }

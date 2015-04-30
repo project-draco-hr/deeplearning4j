@@ -1,0 +1,12 @@
+{
+  this.items=items;
+  this.invert=invert;
+  this.similarityFunction=similarityFunction;
+  distances=CounterMap.runPairWise(items,new CounterMap.CountFunction<DataPoint>(){
+    @Override public double count(    DataPoint v1,    DataPoint v2){
+      return v1.distance(v2);
+    }
+  }
+);
+  root=buildFromPoints(0,items.size());
+}
