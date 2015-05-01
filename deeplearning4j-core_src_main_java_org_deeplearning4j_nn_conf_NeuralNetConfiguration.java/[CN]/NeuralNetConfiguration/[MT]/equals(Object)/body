@@ -19,7 +19,6 @@
   if (nIn != that.nIn)   return false;
   if (nOut != that.nOut)   return false;
   if (k != that.k)   return false;
-  if (numFeatureMaps != that.numFeatureMaps)   return false;
   if (kernel != that.kernel)   return false;
   if (batchSize != that.batchSize)   return false;
   if (minimize != that.minimize)   return false;
@@ -38,7 +37,6 @@
   if (hiddenUnit != that.hiddenUnit)   return false;
   if (!Arrays.equals(weightShape,that.weightShape))   return false;
   if (!Arrays.equals(filterSize,that.filterSize))   return false;
-  if (!Arrays.equals(featureMapSize,that.featureMapSize))   return false;
   if (!Arrays.equals(stride,that.stride))   return false;
   return convolutionType == that.convolutionType;
 }

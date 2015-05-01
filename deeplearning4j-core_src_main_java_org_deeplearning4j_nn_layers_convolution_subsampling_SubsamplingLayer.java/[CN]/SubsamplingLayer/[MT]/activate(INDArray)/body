@@ -1,0 +1,7 @@
+{
+  INDArray ret=Nd4j.create(subSampledSize);
+  for (int i=0; i < input.slices(); i++) {
+    ret.putSlice(i,Transforms.downSample(input.slice(i),conf.getStride()));
+  }
+  return ret;
+}
