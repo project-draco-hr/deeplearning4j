@@ -1,0 +1,19 @@
+{
+  INDArray ret=Nd4j.create(subSampledSize);
+  int[] filterSize=conf.getFilterSize();
+  int currLayerFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
+  int forwardLayerFeatureMaps=ConvolutionUtils.numFeatureMap(convLayer.conf());
+  if (filterSize.length < 4)   throw new IllegalStateException("Illegal filter size found ");
+  for (int i=0; i < forwardLayerFeatureMaps; i++) {
+    for (int j=0; j < currLayerFeatureMaps; j++) {
+      INDArray featureMapError=Nd4j.create(filterSize[0],1,filterSize[filterSize.length - 2],filterSize[filterSize.length - 1]);
+      INDArray rotatedFilter=Nd4j.rot(convLayer.getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS).get(NDArrayIndex.all(),NDArrayIndex.all()).slice(i).slice(j));
+      INDArray forwardError=activation.slice(j);
+      featureMapError.addi(Nd4j.getConvolution().convn(forwardError,rotatedFilter,Convolution.Type.FULL));
+      ret.putSlice(i,featureMapError);
+    }
+  }
+  Gradient ret2=new DefaultGradient();
+  ret2.gradientForVariable().put(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,ret);
+  return new Pair<>(ret2,ret2);
+}

@@ -39,8 +39,6 @@
   result=31 * result + k;
   result=31 * result + (weightShape != null ? Arrays.hashCode(weightShape) : 0);
   result=31 * result + (filterSize != null ? Arrays.hashCode(filterSize) : 0);
-  result=31 * result + numFeatureMaps;
-  result=31 * result + (featureMapSize != null ? Arrays.hashCode(featureMapSize) : 0);
   result=31 * result + (stride != null ? Arrays.hashCode(stride) : 0);
   result=31 * result + kernel;
   result=31 * result + batchSize;

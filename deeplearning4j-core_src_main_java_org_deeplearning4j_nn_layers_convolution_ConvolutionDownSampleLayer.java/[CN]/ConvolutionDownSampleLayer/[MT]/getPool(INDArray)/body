@@ -2,7 +2,7 @@
   INDArray pooled=null;
 switch (conf.getConvolutionType()) {
 case MAX:
-    pooled=Transforms.maxPool(convolution,conf.getStride(),true);
+    pooled=Transforms.maxPool(convolution,conf.getStride(),false);
   break;
 case SUM:
 pooled=Transforms.sumPooling(convolution,conf.getStride());
@@ -10,6 +10,8 @@ break;
 case AVG:
 pooled=Transforms.avgPooling(convolution,conf.getStride());
 break;
+case NONE:
+return convolution;
 }
 return pooled;
 }
