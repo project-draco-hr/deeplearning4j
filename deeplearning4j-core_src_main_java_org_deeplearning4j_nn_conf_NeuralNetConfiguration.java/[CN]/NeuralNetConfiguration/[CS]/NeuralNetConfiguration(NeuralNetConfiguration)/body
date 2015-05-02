@@ -33,6 +33,6 @@
   this.stride=neuralNetConfiguration.stride;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.convolutionType=neuralNetConfiguration.getConvolutionType();
-  if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
+  if (dist == null)   this.dist=new NormalDistribution(0.01,1);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

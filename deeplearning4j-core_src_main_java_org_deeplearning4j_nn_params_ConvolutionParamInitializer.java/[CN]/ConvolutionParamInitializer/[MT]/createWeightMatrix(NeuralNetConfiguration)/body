@@ -1,3 +1,4 @@
 {
-  return WeightInitUtil.initWeights(conf.getFilterSize(),conf.getWeightInit(),conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getDist());
+  return WeightInitUtil.initWeights(conf.getFilterSize(),conf.getWeightInit(),dist);
 }

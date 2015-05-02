@@ -10,8 +10,6 @@
   module.addDeserializer(IterationListener.class,new IterationListenerDeSerializer());
   module.addDeserializer(org.nd4j.linalg.api.rng.Random.class,new RandomGeneratorDeSerializer());
   module.addSerializer(org.nd4j.linalg.api.rng.Random.class,new RandomGeneratorSerializer());
-  module.addSerializer(Distribution.class,new DistributionSerializer());
-  module.addDeserializer(Distribution.class,new DistributionDeSerializer());
   module.addSerializer(StepFunction.class,new StepFunctionSerializer());
   module.addDeserializer(StepFunction.class,new StepFunctionDeSerializer());
   module.addSerializer(OutputPreProcessor.class,new PreProcessorSerializer());

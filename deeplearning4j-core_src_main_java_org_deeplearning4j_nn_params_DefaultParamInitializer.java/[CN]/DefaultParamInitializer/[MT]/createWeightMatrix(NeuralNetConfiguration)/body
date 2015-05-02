@@ -1,5 +1,6 @@
 {
-  INDArray ret=WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getDist());
+  INDArray ret=WeightInitUtil.initWeights(conf.getnIn(),conf.getnOut(),conf.getWeightInit(),dist);
   ret.data().persist();
   return ret;
 }
