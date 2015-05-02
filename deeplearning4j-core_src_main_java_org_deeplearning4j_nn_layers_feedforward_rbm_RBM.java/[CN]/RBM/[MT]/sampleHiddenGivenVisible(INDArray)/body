@@ -15,7 +15,7 @@ case RECTIFIED:
     }
 case GAUSSIAN:
 {
-    h1Sample=h1Mean.add(Nd4j.randn(h1Mean.rows(),h1Mean.columns(),conf.getRng()));
+    h1Sample=h1Mean.add(Nd4j.randn(h1Mean.rows(),h1Mean.columns(),rng));
     applyDropOutIfNecessary(h1Sample);
     break;
   }

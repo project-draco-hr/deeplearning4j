@@ -15,7 +15,6 @@
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
   if (applySparsity != that.applySparsity)   return false;
   if (constrainGradientToUnitNorm != that.constrainGradientToUnitNorm)   return false;
-  if (seed != that.seed)   return false;
   if (nIn != that.nIn)   return false;
   if (nOut != that.nOut)   return false;
   if (k != that.k)   return false;
