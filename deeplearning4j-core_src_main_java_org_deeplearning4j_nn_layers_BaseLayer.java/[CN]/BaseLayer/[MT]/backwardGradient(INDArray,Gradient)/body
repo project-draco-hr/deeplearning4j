@@ -1,0 +1,7 @@
+{
+  Gradient propError=error(activation);
+  INDArray deriv=derivativeActivation(activation);
+  Gradient ret=new DefaultGradient();
+  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,propError.getGradientFor(DefaultParamInitializer.WEIGHT_KEY).mul(deriv));
+  return ret;
+}

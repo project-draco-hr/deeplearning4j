@@ -6,7 +6,7 @@
   double stepSize=range / numberBins;
   for (int row=0; row < data.rows(); row++) {
     for (int col=0; col < data.columns(); col++) {
-      double matrix_value=(double)data.getScalar(row,col).getDouble(0);
+      double matrix_value=data.getScalar(row,col).getDouble(0);
       int bucket_key=this.computeHistogramBucketIndex(min,stepSize,matrix_value,numberBins);
       int entry=0;
       if (mapHistory.containsKey(bucket_key)) {

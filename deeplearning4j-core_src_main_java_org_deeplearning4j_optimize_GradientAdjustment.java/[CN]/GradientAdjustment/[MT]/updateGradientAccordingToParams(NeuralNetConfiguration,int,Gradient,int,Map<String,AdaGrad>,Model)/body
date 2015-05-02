@@ -1,5 +1,5 @@
 {
-  for (  String variable : conf.variables()) {
+  for (  String variable : gradient.gradientForVariable().keySet()) {
     AdaGrad adaGradForVariable=adaGrad.get(variable);
     if (adaGradForVariable == null) {
       adaGradForVariable=new AdaGrad(model.getParam(variable).shape());

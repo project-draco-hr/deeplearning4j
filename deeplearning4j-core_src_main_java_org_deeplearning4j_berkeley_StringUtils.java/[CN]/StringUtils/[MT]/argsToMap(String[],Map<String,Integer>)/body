@@ -19,12 +19,12 @@
           newFlagArg[j + oldNumArgs]=flagArgs.get(j);
         }
       }
- else       result.put(key,(String[])flagArgs.toArray(new String[]{}));
+ else       result.put(key,flagArgs.toArray(new String[]{}));
     }
  else {
       remainingArgs.add(args[i]);
     }
   }
-  result.put(null,(String[])remainingArgs.toArray(new String[]{}));
+  result.put(null,remainingArgs.toArray(new String[]{}));
   return result;
 }
