@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(1,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction("softmax");
