@@ -20,7 +20,9 @@
       if (i == 0) {
         layerWiseConfigurations.getConf(i).setnIn(inputSize);
         layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
-        layers[i]=layerWiseConfigurations.getConf(i).getLayerFactory().create(layerWiseConfigurations.getConf(i));
+        LayerFactory conf2=layerWiseConfigurations.getConf(i).getLayerFactory();
+        NeuralNetConfiguration currConf=layerWiseConfigurations.getConf(i);
+        layers[i]=conf2.create(currConf);
       }
  else       if (i < getLayers().length - 1) {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);

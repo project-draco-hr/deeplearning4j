@@ -26,7 +26,6 @@ RBM.HiddenUnit hiddenUnit
 int[] weightShape
 int[] filterSize
 int[] stride
-int[] featureMapSize
 int kernel
 int batchSize
 int numLineSearchIterations
@@ -34,3 +33,4 @@ boolean minimize
 List<IterationListener> listeners
 LayerFactory layerFactory
 ConvolutionDownSampleLayer.ConvolutionType convolutionType
+double l1
