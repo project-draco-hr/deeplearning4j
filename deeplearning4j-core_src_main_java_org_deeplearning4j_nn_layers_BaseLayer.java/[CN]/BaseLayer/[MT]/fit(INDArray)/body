@@ -1,6 +1,6 @@
 {
   if (input != null)   this.input=input;
-  Solver solver=new Solver.Builder().model(this).configure(conf()).build();
+  Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(getIterationListeners()).build();
   this.optimizer=solver.getOptimizer();
   solver.optimize();
 }

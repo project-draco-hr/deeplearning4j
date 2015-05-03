@@ -14,7 +14,7 @@
       }
     }
  else {
-      StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().conf().getListeners(),this);
+      StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().getIterationListeners(),this);
       hessianFree.optimize();
     }
   }

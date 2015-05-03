@@ -14,7 +14,7 @@
     List<INDArray> activations=feedForward();
     activations.clear();
     o.setLabels(labels);
-    StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),getOutputLayer().conf().getListeners(),this);
+    StochasticHessianFree hessianFree=new StochasticHessianFree(getOutputLayer().conf(),getOutputLayer().conf().getStepFunction(),o.getIterationListeners(),this);
     hessianFree.optimize();
   }
 }
