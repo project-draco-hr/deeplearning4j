@@ -24,7 +24,6 @@
   this.constrainGradientToUnitNorm=neuralNetConfiguration.constrainGradientToUnitNorm;
   this.rng=neuralNetConfiguration.rng;
   this.dist=neuralNetConfiguration.dist;
-  this.seed=neuralNetConfiguration.seed;
   this.nIn=neuralNetConfiguration.nIn;
   this.nOut=neuralNetConfiguration.nOut;
   this.activationFunction=neuralNetConfiguration.activationFunction;
@@ -33,6 +32,6 @@
   this.stride=neuralNetConfiguration.stride;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.convolutionType=neuralNetConfiguration.getConvolutionType();
-  if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
+  if (dist == null)   this.dist=new NormalDistribution(0.01,1);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

@@ -8,7 +8,7 @@ case RECTIFIED:
     preSig=max(preSig,0.0);
   return preSig;
 case GAUSSIAN:
-INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),conf.getRng()));
+INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),rng));
 preSig.addi(add);
 return preSig;
 case BINARY:

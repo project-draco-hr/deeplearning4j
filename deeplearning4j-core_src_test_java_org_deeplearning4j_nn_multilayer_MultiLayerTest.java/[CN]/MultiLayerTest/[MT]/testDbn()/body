@@ -1,7 +1,7 @@
 {
   Nd4j.MAX_SLICES_TO_PRINT=-1;
   Nd4j.MAX_ELEMENTS_PER_SLICE=-1;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).layerFactory(new PretrainLayerFactory(RBM.class)).weightInit(WeightInit.DISTRIBUTION).dist(Nd4j.getDistributions().createUniform(0,1)).activationFunction("tanh").momentum(0.9).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).k(1).regularization(true).l2(2e-4).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).iterationListener(new ScoreIterationListener(2)).nIn(4).nOut(3).list(2).hiddenLayerSizes(new int[]{3}).override(1,new ClassifierOverride(1)).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).layerFactory(new PretrainLayerFactory(RBM.class)).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activationFunction("tanh").momentum(0.9).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).k(1).regularization(true).l2(2e-4).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).iterationListener(new ScoreIterationListener(2)).nIn(4).nOut(3).list(2).hiddenLayerSizes(new int[]{3}).override(1,new ClassifierOverride(1)).build();
   NeuralNetConfiguration conf2=new NeuralNetConfiguration.Builder().layerFactory(LayerFactories.getFactory(RBM.class)).nIn(784).nOut(600).applySparsity(true).sparsity(0.1).build();
   Layer l=LayerFactories.getFactory(RBM.class).create(conf2);
   MultiLayerNetwork d=new MultiLayerNetwork(conf);

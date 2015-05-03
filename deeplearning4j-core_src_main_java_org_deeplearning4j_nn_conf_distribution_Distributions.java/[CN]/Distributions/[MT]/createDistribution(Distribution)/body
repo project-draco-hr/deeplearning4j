@@ -1,0 +1,15 @@
+{
+  if (dist instanceof NormalDistribution) {
+    NormalDistribution nd=(NormalDistribution)dist;
+    return Nd4j.getDistributions().createNormal(nd.getMean(),nd.getStd());
+  }
+  if (dist instanceof UniformDistribution) {
+    UniformDistribution ud=(UniformDistribution)dist;
+    return Nd4j.getDistributions().createUniform(ud.getLower(),ud.getUpper());
+  }
+  if (dist instanceof BinomialDistribution) {
+    BinomialDistribution bd=(BinomialDistribution)dist;
+    return Nd4j.getDistributions().createBinomial(bd.getNumberOfTrials(),bd.getProbabilityOfSuccess());
+  }
+  throw new RuntimeException("unknown distribution type: " + dist.getClass());
+}
