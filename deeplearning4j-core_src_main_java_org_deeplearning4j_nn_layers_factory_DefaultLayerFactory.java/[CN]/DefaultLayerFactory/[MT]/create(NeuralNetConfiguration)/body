@@ -1,8 +1,3 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
-  Layer ret=getInstance(conf);
-  Map<String,INDArray> params=getParams(conf,dist);
-  ret.setParamTable(params);
-  ret.setConf(conf);
-  return ret;
+  return create(conf,Collections.<IterationListener>emptyList());
 }

@@ -3,7 +3,7 @@
   int batchSize=110;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).momentum(0.9).dist(new UniformDistribution(1e-5,1e-1)).constrainGradientToUnitNorm(true).iterations(1000).iterationListener(new ScoreIterationListener(1)).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("tanh").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layerFactory(layerFactory).list(3).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).inputPreProcessor(1,new ConvolutionInputPreProcessor(3,3)).hiddenLayerSizes(new int[]{4,16}).override(0,new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).momentum(0.9).dist(new UniformDistribution(1e-5,1e-1)).constrainGradientToUnitNorm(true).iterations(1000).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("tanh").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layerFactory(layerFactory).list(3).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).inputPreProcessor(1,new ConvolutionInputPreProcessor(3,3)).hiddenLayerSizes(new int[]{4,16}).override(0,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 0)       builder.filterSize(1,1,2,2);
     }
@@ -24,6 +24,7 @@
   }
 ).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.setIterationListeners(Arrays.<IterationListener>asList(new ScoreIterationListener(1)));
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   org.nd4j.linalg.dataset.DataSet next=iter.next();
   next.normalizeZeroMeanZeroUnitVariance();
