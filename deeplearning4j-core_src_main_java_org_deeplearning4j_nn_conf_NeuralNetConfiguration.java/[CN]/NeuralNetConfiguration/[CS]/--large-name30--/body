@@ -1,5 +1,6 @@
 {
   this.l1=l1;
+  this.featureMapSize=featureMapSize;
   this.sparsity=sparsity;
   this.useAdaGrad=useAdaGrad;
   this.lr=lr;
@@ -37,4 +38,5 @@
   this.batchSize=batchSize;
   this.minimize=minimize;
   this.convolutionType=convolutionType;
+  this.featureMapSize=featureMapSize;
 }

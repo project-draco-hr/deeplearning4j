@@ -1,7 +1,11 @@
 {
-  INDArray ret=Nd4j.create(subSampledSize);
+  INDArray ret=null;
   for (int i=0; i < input.slices(); i++) {
-    ret.putSlice(i,Transforms.downSample(input.slice(i),conf.getStride()));
+    INDArray downSampled=Transforms.downSample(input.slice(i),conf.getStride());
+    if (ret == null) {
+      ret=Nd4j.create(Ints.concat(new int[]{input.slices()},downSampled.shape()));
+    }
+    ret.putSlice(i,downSampled);
   }
   return ret;
 }

@@ -1,3 +1,5 @@
 {
-  return null;
+  List<INDArray> ret=new ArrayList<>();
+  for (  String s : params.keySet())   ret.add(params.get(s));
+  return Nd4j.toFlattened(ret);
 }

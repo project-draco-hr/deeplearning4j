@@ -34,5 +34,6 @@
   ret.numIterations=this.numIterations;
   ret.stepFunction=stepFunction;
   ret.lossFunction=this.lossFunction;
+  ret.featureMapSize=featureMapSize;
   return ret;
 }
