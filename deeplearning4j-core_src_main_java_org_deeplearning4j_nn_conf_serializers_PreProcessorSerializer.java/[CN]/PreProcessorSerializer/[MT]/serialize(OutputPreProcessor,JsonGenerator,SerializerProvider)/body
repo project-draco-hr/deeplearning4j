@@ -1,7 +1,10 @@
 {
   try {
-    jgen.writeString(value.getClass().getName() + "\t" + Dl4jReflection.getFieldsAsProperties(value,null)+ ",");
-  }
+    try (StringWriter sw=new StringWriter()){
+      Dl4jReflection.getFieldsAsProperties(value,null).store(sw,"");
+      jgen.writeString(value.getClass().getName() + "\t" + sw.toString()+ ",");
+    }
+   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }

@@ -1,6 +1,7 @@
 {
   Properties props=new Properties();
   for (  Field field : obj.getClass().getDeclaredFields()) {
+    if (Modifier.isStatic(field.getModifiers()))     continue;
     field.setAccessible(true);
     Class<?> type=field.getType();
     if (clazzes == null || contains(type,clazzes)) {

@@ -43,8 +43,6 @@
   result=31 * result + kernel;
   result=31 * result + batchSize;
   result=31 * result + (minimize ? 1 : 0);
-  temp=Double.doubleToLongBits(l1);
-  result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (convolutionType != null ? convolutionType.hashCode() : 0);
   return result;
 }

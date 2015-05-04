@@ -1,5 +1,4 @@
 {
-  this.l1=neuralNetConfiguration.l1;
   this.minimize=neuralNetConfiguration.minimize;
   this.layerFactory=neuralNetConfiguration.layerFactory;
   this.numLineSearchIterations=neuralNetConfiguration.numLineSearchIterations;
@@ -34,6 +33,7 @@
   this.stride=neuralNetConfiguration.stride;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.convolutionType=neuralNetConfiguration.getConvolutionType();
-  if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
+  this.featureMapSize=neuralNetConfiguration.featureMapSize;
+  this.l1=neuralNetConfiguration.l1;
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

@@ -22,7 +22,6 @@
   if (kernel != that.kernel)   return false;
   if (batchSize != that.batchSize)   return false;
   if (minimize != that.minimize)   return false;
-  if (Double.compare(that.l1,l1) != 0)   return false;
   if (momentumAfter != null ? !momentumAfter.equals(that.momentumAfter) : that.momentumAfter != null)   return false;
   if (weightInit != that.weightInit)   return false;
   if (optimizationAlgo != that.optimizationAlgo)   return false;

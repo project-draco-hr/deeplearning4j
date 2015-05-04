@@ -4,7 +4,7 @@
 switch (conf.getVisibleUnit()) {
 case GAUSSIAN:
 {
-      v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),conf.getRng()));
+      v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),rng));
       break;
     }
 case LINEAR:

@@ -3,7 +3,7 @@
   int batchSize=110;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).momentum(0.9).dist(Nd4j.getDistributions().createNormal(0,1)).iterations(1).iterationListener(new ScoreIterationListener(1)).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("relu").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layerFactory(layerFactory).list(2).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).hiddenLayerSizes(new int[]{9}).override(1,new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).momentum(0.9).dist(new NormalDistribution(0,1)).iterations(1).iterationListener(new ScoreIterationListener(1)).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("relu").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layerFactory(layerFactory).list(2).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).hiddenLayerSizes(new int[]{9}).override(1,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction("softmax");
