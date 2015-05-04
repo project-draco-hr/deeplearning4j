@@ -1,9 +1,8 @@
 {
-  LayerFactory layerFactory=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
   int batchSize=110;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).momentum(0.9).dist(new UniformDistribution(1e-5,1e-1)).constrainGradientToUnitNorm(true).iterations(1000).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("tanh").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layerFactory(layerFactory).list(3).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).inputPreProcessor(1,new ConvolutionInputPreProcessor(3,3)).hiddenLayerSizes(new int[]{4,16}).override(0,new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).momentum(0.9).dist(new UniformDistribution(1e-5,1e-1)).constrainGradientToUnitNorm(true).iterations(1000).convolutionType(ConvolutionDownSampleLayer.ConvolutionType.NONE).activationFunction("tanh").filterSize(1,1,2,2).nIn(4).nOut(3).batchSize(batchSize).layer(new org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer()).list(3).preProcessor(0,new ConvolutionPostProcessor()).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).inputPreProcessor(1,new ConvolutionInputPreProcessor(3,3)).hiddenLayerSizes(new int[]{4,16}).override(0,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 0)       builder.filterSize(1,1,2,2);
     }
@@ -17,7 +16,7 @@
       if (i == 2) {
         builder.activationFunction("softmax");
         builder.weightInit(WeightInit.ZERO);
-        builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+        builder.layer(new org.deeplearning4j.nn.conf.layers.OutputLayer());
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
     }

@@ -2,5 +2,5 @@
   if (this == o)   return true;
   if (!(o instanceof DefaultLayerFactory))   return false;
   DefaultLayerFactory that=(DefaultLayerFactory)o;
-  return !(layerClazz != null ? !layerClazz.equals(that.layerClazz) : that.layerClazz != null);
+  return !(layerConfig != null ? !layerConfig.equals(that.layerConfig) : that.layerConfig != null);
 }

@@ -2,13 +2,12 @@
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
   RandomGenerator gen=new MersenneTwister(123);
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(30).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(784).nOut(600).layerFactory(layerFactory).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(30).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(784).nOut(600).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
   fetcher.fetch(10);
   DataSet d2=fetcher.next();
   org.nd4j.linalg.api.rng.distribution.Distribution dist=Nd4j.getDistributions().createNormal(1,1e-5);
   System.out.println(dist.sample(new int[]{conf.getnIn(),conf.getnOut()}));
   INDArray input=d2.getFeatureMatrix();
-  RBM rbm=layerFactory.create(conf,Arrays.<IterationListener>asList(new ComposableIterationListener(new NeuralNetPlotterIterationListener(10),new ScoreIterationListener(5))));
+  RBM rbm=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ComposableIterationListener(new NeuralNetPlotterIterationListener(10),new ScoreIterationListener(5))));
   rbm.fit(input);
 }

@@ -1,0 +1,7 @@
+{
+  if (layerConfig instanceof org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer)   return new ConvolutionLayerFactory((org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer)layerConfig);
+ else   if (layerConfig instanceof org.deeplearning4j.nn.conf.layers.LSTM)   return new LSTMLayerFactory((org.deeplearning4j.nn.conf.layers.LSTM)layerConfig);
+ else   if (layerConfig instanceof org.deeplearning4j.nn.conf.layers.RecursiveAutoEncoder)   return new RecursiveAutoEncoderLayerFactory((org.deeplearning4j.nn.conf.layers.RecursiveAutoEncoder)layerConfig);
+ else   if (layerConfig instanceof org.deeplearning4j.nn.conf.layers.BasePretrainNetwork)   return new PretrainLayerFactory((org.deeplearning4j.nn.conf.layers.BasePretrainNetwork)layerConfig);
+  return new DefaultLayerFactory(layerConfig);
+}

@@ -1,6 +1,6 @@
 {
   this.minimize=neuralNetConfiguration.minimize;
-  this.layerFactory=neuralNetConfiguration.layerFactory;
+  this.layer=neuralNetConfiguration.layer;
   this.numLineSearchIterations=neuralNetConfiguration.numLineSearchIterations;
   this.batchSize=neuralNetConfiguration.batchSize;
   this.sparsity=neuralNetConfiguration.sparsity;

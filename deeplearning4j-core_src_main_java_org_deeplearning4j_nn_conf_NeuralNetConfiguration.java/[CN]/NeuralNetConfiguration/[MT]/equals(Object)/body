@@ -28,7 +28,7 @@
   if (rng != null ? !rng.equals(that.rng) : that.rng != null)   return false;
   if (dist != null ? !dist.equals(that.dist) : that.dist != null)   return false;
   if (stepFunction != null ? !stepFunction.equals(that.stepFunction) : that.stepFunction != null)   return false;
-  if (layerFactory != null ? !layerFactory.equals(that.layerFactory) : that.layerFactory != null)   return false;
+  if (layer != null ? !layer.equals(that.layer) : that.layer != null)   return false;
   if (variables != null ? !variables.equals(that.variables) : that.variables != null)   return false;
   if (activationFunction != null ? !activationFunction.equals(that.activationFunction) : that.activationFunction != null)   return false;
   if (visibleUnit != that.visibleUnit)   return false;

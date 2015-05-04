@@ -1,6 +1,6 @@
 {
   NeuralNetConfiguration conf=NeuralNetConfiguration.fromJson(json);
-  LayerFactory layerFactory=conf.getLayerFactory();
+  LayerFactory layerFactory=LayerFactories.getFactory(conf.getLayer());
   if (layerFactory == null)   throw new IllegalStateException("Please specify a layer factory");
   this.network=layerFactory.create(conf);
   int numParams=this.network.numParams();

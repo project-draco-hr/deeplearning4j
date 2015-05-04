@@ -2,7 +2,7 @@
   if (i == finalLayer) {
     builder.activationFunction("softmax");
     builder.weightInit(WeightInit.ZERO);
-    builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+    builder.layer(new OutputLayer());
     builder.lossFunction(LossFunctions.LossFunction.MCXENT);
   }
 }

@@ -27,7 +27,7 @@
   result=31 * result + (rng != null ? rng.hashCode() : 0);
   result=31 * result + (dist != null ? dist.hashCode() : 0);
   result=31 * result + (stepFunction != null ? stepFunction.hashCode() : 0);
-  result=31 * result + (layerFactory != null ? layerFactory.hashCode() : 0);
+  result=31 * result + (layer != null ? layer.hashCode() : 0);
   result=31 * result + (variables != null ? variables.hashCode() : 0);
   result=31 * result + nIn;
   result=31 * result + nOut;

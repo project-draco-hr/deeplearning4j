@@ -1,7 +1,6 @@
 {
-  LayerFactory layerFactory=new DefaultLayerFactory(RBM.class);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).nIn(6).nOut(4).layerFactory(layerFactory).build();
-  RBM rbm=layerFactory.create(conf);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).nIn(6).nOut(4).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
+  RBM rbm=LayerFactories.getFactory(conf.getLayer()).create(conf);
   INDArray rand2=Nd4j.rand(new int[]{1,rbm.numParams()});
   rbm.setParams(rand2);
   INDArray getParams=rbm.params();
