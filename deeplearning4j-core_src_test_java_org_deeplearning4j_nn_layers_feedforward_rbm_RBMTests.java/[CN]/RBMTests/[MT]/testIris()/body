@@ -3,8 +3,7 @@
   fetcher.fetch(150);
   DataSet d=fetcher.next();
   d.normalizeZeroMeanZeroUnitVariance();
-  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).learningRate(1e-1f).nIn(d.numInputs()).nOut(3).layerFactory(layerFactory).build();
-  RBM r=layerFactory.create(conf);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).learningRate(1e-1f).nIn(d.numInputs()).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
+  RBM r=LayerFactories.getFactory(conf).create(conf);
   r.fit(d.getFeatureMatrix());
 }

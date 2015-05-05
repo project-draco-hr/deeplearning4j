@@ -3,8 +3,7 @@
   DataSet d=iter.next();
   d.normalizeZeroMeanZeroUnitVariance();
   int nOut=600;
-  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().hiddenUnit(RBM.HiddenUnit.RECTIFIED).weightInit(WeightInit.VI).visibleUnit(RBM.VisibleUnit.GAUSSIAN).layerFactory(layerFactory).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-3f).nIn(d.numInputs()).nOut(nOut).layerFactory(layerFactory).build();
-  RBM rbm=layerFactory.create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1)));
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().hiddenUnit(RBM.HiddenUnit.RECTIFIED).weightInit(WeightInit.VI).visibleUnit(RBM.VisibleUnit.GAUSSIAN).layer(new org.deeplearning4j.nn.conf.layers.RBM()).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-3f).nIn(d.numInputs()).nOut(nOut).build();
+  RBM rbm=LayerFactories.getFactory(conf).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1)));
   rbm.fit(d.getFeatureMatrix());
 }

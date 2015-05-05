@@ -1,5 +1,5 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
   String json=conf.toJson();
   NeuralNetConfiguration conf3=NeuralNetConfiguration.fromJson(json);
   assumeNotNull(conf3);

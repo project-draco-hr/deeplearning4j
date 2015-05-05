@@ -1,3 +1,3 @@
 {
-  return create(conf,conf.getListeners());
+  return create(conf,new ArrayList<IterationListener>());
 }

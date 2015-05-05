@@ -1,6 +1,6 @@
 {
   this.minimize=neuralNetConfiguration.minimize;
-  this.layerFactory=neuralNetConfiguration.layerFactory;
+  this.layer=neuralNetConfiguration.layer;
   this.numLineSearchIterations=neuralNetConfiguration.numLineSearchIterations;
   this.batchSize=neuralNetConfiguration.batchSize;
   this.sparsity=neuralNetConfiguration.sparsity;
@@ -24,7 +24,6 @@
   this.constrainGradientToUnitNorm=neuralNetConfiguration.constrainGradientToUnitNorm;
   this.rng=neuralNetConfiguration.rng;
   this.dist=neuralNetConfiguration.dist;
-  this.seed=neuralNetConfiguration.seed;
   this.nIn=neuralNetConfiguration.nIn;
   this.nOut=neuralNetConfiguration.nOut;
   this.activationFunction=neuralNetConfiguration.activationFunction;
@@ -33,7 +32,6 @@
   this.stride=neuralNetConfiguration.stride;
   this.filterSize=neuralNetConfiguration.filterSize;
   this.convolutionType=neuralNetConfiguration.getConvolutionType();
-  this.featureMapSize=neuralNetConfiguration.featureMapSize;
-  this.l1=neuralNetConfiguration.l1;
+  if (dist == null)   this.dist=new NormalDistribution(0.01,1);
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

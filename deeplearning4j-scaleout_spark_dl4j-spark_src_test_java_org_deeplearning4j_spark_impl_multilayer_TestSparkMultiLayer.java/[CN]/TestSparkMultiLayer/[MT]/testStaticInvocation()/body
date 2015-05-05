@@ -1,10 +1,10 @@
 {
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(1,new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.RBM()).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(1,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction("softmax");
-        builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+        builder.layer(new org.deeplearning4j.nn.conf.layers.OutputLayer());
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
     }

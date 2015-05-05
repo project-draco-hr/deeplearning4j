@@ -26,6 +26,6 @@
       GradientAdjustment.updateGradientAccordingToParams(getLayers()[k].conf(),i,update,input.slices(),getLayers()[k].getOptimizer().adaGradForVariables(),getLayers()[k]);
       getLayers()[k].update(update);
     }
-    for (    IterationListener listener : getOutputLayer().conf().getListeners())     listener.iterationDone(getOutputLayer(),i);
+    for (    IterationListener listener : listeners)     listener.iterationDone(getOutputLayer(),i);
   }
 }

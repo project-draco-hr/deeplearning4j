@@ -1,13 +1,12 @@
 {
   Nd4j.dtype=DataBuffer.DOUBLE;
-  LayerFactory layerFactory=LayerFactories.getFactory(RBM.class);
   DataSetIterator iter=new LFWDataSetIterator(28,28);
   DataSet next=iter.next();
   next.normalizeZeroMeanZeroUnitVariance();
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).iterations(100).learningRate(1e-3).nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory).list(4).hiddenLayerSizes(600,250,100).override(new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).iterations(100).learningRate(1e-3).nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layer(new org.deeplearning4j.nn.conf.layers.RBM()).list(4).hiddenLayerSizes(600,250,100).override(3,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 3) {
-        builder.layerFactory(new DefaultLayerFactory(OutputLayer.class));
+        builder.layer(new org.deeplearning4j.nn.conf.layers.OutputLayer());
         builder.activationFunction("softmax");
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
@@ -15,5 +14,6 @@
   }
 ).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.setListeners(Arrays.<IterationListener>asList(new ScoreIterationListener(10)));
   network.fit(next);
 }
