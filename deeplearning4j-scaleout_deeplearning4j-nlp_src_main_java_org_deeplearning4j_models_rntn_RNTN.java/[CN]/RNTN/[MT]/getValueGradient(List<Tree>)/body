@@ -21,7 +21,7 @@
       int numRows=entry.getValue().size(1);
       int numCols=entry.getValue().size(2);
       int numSlices=entry.getValue().slices();
-      binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(new int[]{numRows,numCols,numSlices}));
+      binaryINDArrayTD.put(entry.getFirstKey(),entry.getSecondKey(),Nd4j.create(numRows,numCols,numSlices));
     }
   }
   for (  Map.Entry<String,INDArray> entry : unaryClassification.entrySet()) {

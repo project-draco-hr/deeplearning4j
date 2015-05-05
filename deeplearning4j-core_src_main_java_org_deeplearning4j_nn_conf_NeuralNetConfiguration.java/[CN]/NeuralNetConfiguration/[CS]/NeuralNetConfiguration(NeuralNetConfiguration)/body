@@ -31,10 +31,9 @@
   this.visibleUnit=neuralNetConfiguration.visibleUnit;
   this.weightShape=neuralNetConfiguration.weightShape;
   this.stride=neuralNetConfiguration.stride;
-  this.numFeatureMaps=neuralNetConfiguration.numFeatureMaps;
   this.filterSize=neuralNetConfiguration.filterSize;
-  this.featureMapSize=neuralNetConfiguration.featureMapSize;
   this.convolutionType=neuralNetConfiguration.getConvolutionType();
-  if (dist == null)   this.dist=Nd4j.getDistributions().createNormal(0.01,1);
+  this.featureMapSize=neuralNetConfiguration.featureMapSize;
+  this.l1=neuralNetConfiguration.l1;
   this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

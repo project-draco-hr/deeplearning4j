@@ -1,0 +1,18 @@
+{
+  int featureMaps=ConvolutionUtils.numFeatureMap(conf);
+  int inputFeatureMaps=ConvolutionUtils.numFeatureMap(input.shape());
+  INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),featureMaps},conf.getFeatureMapSize()));
+  INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
+  INDArray filters=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  for (int i=0; i < featureMaps; i++) {
+    INDArray featureMap=Nd4j.create(Ints.concat(new int[]{input.slices(),1},conf.getFeatureMapSize()));
+    for (int j=0; j < inputFeatureMaps; j++) {
+      INDArray convolved=Nd4j.getConvolution().convn(input,filters.slice(i).slice(j),Convolution.Type.VALID);
+      featureMap.addi(convolved.broadcast(featureMap.shape()));
+    }
+    featureMap.addi(bias.getDouble(i));
+    INDArray activationForSlice=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap));
+    ret.put(new NDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),new NDArrayIndex(new int[]{i}),NDArrayIndex.all()},activationForSlice);
+  }
+  return ret;
+}

@@ -2,5 +2,4 @@
   in.defaultReadObject();
   rng=Nd4j.getRandom();
   rng.setSeed(seed);
-  dist=Nd4j.getDistributions().createUniform(0,1);
 }

@@ -1,0 +1,4 @@
+{
+  INDArray deriv=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),activate(input)).derivative());
+  return deriv;
+}

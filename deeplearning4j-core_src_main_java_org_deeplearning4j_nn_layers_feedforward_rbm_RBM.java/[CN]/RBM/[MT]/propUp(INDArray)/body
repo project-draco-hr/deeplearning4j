@@ -1,0 +1,21 @@
+{
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
+  INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
+  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
+  INDArray preSig=v.mmul(W).addiRowVector(hBias);
+switch (conf.getHiddenUnit()) {
+case RECTIFIED:
+    preSig=max(preSig,0.0);
+  return preSig;
+case GAUSSIAN:
+INDArray add=preSig.add(Nd4j.randn(preSig.rows(),preSig.columns(),rng));
+preSig.addi(add);
+return preSig;
+case BINARY:
+return sigmoid(preSig);
+case SOFTMAX:
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
+default :
+throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
+}
+}

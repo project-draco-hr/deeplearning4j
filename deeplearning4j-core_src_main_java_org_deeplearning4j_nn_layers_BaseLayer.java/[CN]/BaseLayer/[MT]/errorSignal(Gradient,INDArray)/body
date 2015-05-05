@@ -1,0 +1,6 @@
+{
+  INDArray derivative=derivativeActivation(input);
+  Gradient ret=new DefaultGradient();
+  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,derivative.mul(error.getGradientFor(DefaultParamInitializer.WEIGHT_KEY)));
+  return ret;
+}

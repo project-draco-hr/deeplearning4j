@@ -1,0 +1,6 @@
+{
+  if (layerFactory instanceof ConvolutionLayerFactory || layerFactory instanceof SubsampleLayerFactory)   return Layer.Type.CONVOLUTIONAL;
+ else   if (layerFactory instanceof LSTMLayerFactory)   return Layer.Type.RECURRENT;
+ else   if (layerFactory instanceof RecursiveAutoEncoderLayerFactory)   return Layer.Type.RECURSIVE;
+  return Layer.Type.FEED_FORWARD;
+}

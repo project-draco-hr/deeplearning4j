@@ -1,6 +1,6 @@
 {
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9).constrainGradientToUnitNorm(true).iterationListener(new ScoreIterationListener(10)).activationFunction("tanh").stepFunction(new GradientStepFunction()).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).dropOut(0.3).iterations(100).visibleUnit(RBM.VisibleUnit.GAUSSIAN).batchSize(10).l2(2e-4).regularization(true).weightInit(WeightInit.VI).hiddenUnit(RBM.HiddenUnit.RECTIFIED).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).list(3).hiddenLayerSizes(3,2).override(new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9).constrainGradientToUnitNorm(true).activationFunction("tanh").stepFunction(new GradientStepFunction()).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).dropOut(0.3).iterations(100).visibleUnit(RBM.VisibleUnit.GAUSSIAN).batchSize(10).l2(2e-4).regularization(true).weightInit(WeightInit.VI).hiddenUnit(RBM.HiddenUnit.RECTIFIED).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).list(3).hiddenLayerSizes(3,2).override(2,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 2) {
         builder.activationFunction("softmax");
