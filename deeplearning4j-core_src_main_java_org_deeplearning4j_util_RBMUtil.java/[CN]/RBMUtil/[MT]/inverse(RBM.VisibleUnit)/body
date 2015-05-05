@@ -1,0 +1,11 @@
+{
+switch (hidden) {
+case BINARY:
+    return RBM.HiddenUnit.BINARY;
+case GAUSSIAN:
+  return RBM.HiddenUnit.GAUSSIAN;
+case SOFTMAX:
+return RBM.HiddenUnit.SOFTMAX;
+}
+return null;
+}

@@ -1,6 +1,6 @@
 {
   int batchSize=110;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layer(new org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer()).list(2).backward(true).preProcessor(0,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{9}).override(1,new ClassifierOverride(1)).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).visibleUnit(org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).hiddenUnit(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.RECTIFIED).layer(new org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer()).list(2).backward(true).preProcessor(0,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{9}).override(1,new ClassifierOverride(1)).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   org.nd4j.linalg.dataset.DataSet next=iter.next();

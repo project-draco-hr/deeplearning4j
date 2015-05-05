@@ -1,7 +1,7 @@
 {
   RBM r=(RBM)super.transpose();
-  HiddenUnit h=RBMUtil.inverse(conf.getVisibleUnit());
-  VisibleUnit v=RBMUtil.inverse(conf.getHiddenUnit());
+  org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit h=RBMUtil.inverse(conf.getVisibleUnit());
+  org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit v=RBMUtil.inverse(conf.getHiddenUnit());
   if (h == null)   h=conf.getHiddenUnit();
   if (v == null)   v=conf.getVisibleUnit();
   r.sigma=sigma;

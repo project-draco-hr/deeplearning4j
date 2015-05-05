@@ -1,5 +1,5 @@
 {
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
+  if (conf.getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN) {
     this.sigma=input.var(0);
     this.sigma.divi(input.rows());
   }

@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layer(new org.deeplearning4j.nn.conf.layers.RBM()).list(3).backward(true).hiddenLayerSizes(new int[]{3,2}).override(2,new ClassifierOverride(2)).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").nIn(4).nOut(3).visibleUnit(org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).hiddenUnit(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.RECTIFIED).layer(new org.deeplearning4j.nn.conf.layers.RBM()).list(3).backward(true).hiddenLayerSizes(new int[]{3,2}).override(2,new ClassifierOverride(2)).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next();

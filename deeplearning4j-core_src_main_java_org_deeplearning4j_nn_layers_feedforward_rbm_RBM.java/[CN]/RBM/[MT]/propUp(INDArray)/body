@@ -1,7 +1,7 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
+  if (conf.getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W).addiRowVector(hBias);
 switch (conf.getHiddenUnit()) {
 case RECTIFIED:
