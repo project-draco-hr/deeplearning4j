@@ -3,7 +3,7 @@
   INDArray Wt_df=Nd4j.create(size * 2,size * 2,size);
   INDArray fullVector=Nd4j.concat(0,leftVector,rightVector);
   for (int slice=0; slice < size; ++slice) {
-    if (Wt_df.data().dataType() == DataBuffer.DOUBLE)     Wt_df.putSlice(slice,Nd4j.getBlasWrapper().scal(deltaFull.getDouble(slice),fullVector).mmul(fullVector.transpose()));
+    if (Wt_df.data().dataType() == DataBuffer.Type.DOUBLE)     Wt_df.putSlice(slice,Nd4j.getBlasWrapper().scal(deltaFull.getDouble(slice),fullVector).mmul(fullVector.transpose()));
  else     Wt_df.putSlice(slice,Nd4j.getBlasWrapper().scal((float)deltaFull.getDouble(slice),fullVector).mmul(fullVector.transpose()));
   }
   return Wt_df;
