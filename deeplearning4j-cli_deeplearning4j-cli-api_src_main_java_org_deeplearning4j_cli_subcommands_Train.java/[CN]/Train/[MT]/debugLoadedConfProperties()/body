@@ -1,0 +1,10 @@
+{
+  Properties props=this.configProps;
+  Enumeration e=props.propertyNames();
+  System.out.println("\n--- DL4J Configuration ---");
+  while (e.hasMoreElements()) {
+    String key=(String)e.nextElement();
+    System.out.println(key + " -- " + props.getProperty(key));
+  }
+  System.out.println("--- DL4J Configuration ---\n");
+}

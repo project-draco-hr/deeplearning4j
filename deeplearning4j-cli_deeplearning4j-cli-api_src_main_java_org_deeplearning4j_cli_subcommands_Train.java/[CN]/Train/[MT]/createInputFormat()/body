@@ -1,0 +1,13 @@
+{
+  String clazz=(String)this.configProps.get(INPUT_FORMAT_KEY);
+  if (null == clazz) {
+    clazz=DEFAULT_INPUT_FORMAT_CLASSNAME;
+  }
+  try {
+    Class<? extends InputFormat> inputFormatClazz=(Class<? extends InputFormat>)Class.forName(clazz);
+    return inputFormatClazz.newInstance();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
