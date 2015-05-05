@@ -1,0 +1,13 @@
+{
+  try {
+    Pair<WeightLookupTable,VocabCache> vocab=WordVectorSerializer.loadTxt(path);
+    vectors=WordVectorSerializer.fromPair(vocab);
+    words=new ArrayList<>(vocab.getSecond().vocabWords());
+    theVocab=new HashMap<>();
+    for (    VocabWord word : words)     theVocab.put(word.getIndex(),word);
+    this.vocab=vocab.getSecond();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}
