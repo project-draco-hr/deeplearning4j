@@ -5,7 +5,7 @@
   INDArray deltaINDArray=Nd4j.create(size * 2,1);
   INDArray fullVector=Nd4j.concat(0,leftVector,rightVector);
   for (int slice=0; slice < size; ++slice) {
-    if (deltaFull.data().dataType() == DataBuffer.DOUBLE) {
+    if (deltaFull.data().dataType() == DataBuffer.Type.DOUBLE) {
       INDArray scaledFullVector=Nd4j.getBlasWrapper().scal(deltaFull.getScalar(slice).getDouble(0),fullVector);
       deltaINDArray=deltaINDArray.add(Wt.slice(slice).add(Wt.slice(slice).transpose()).mmul(scaledFullVector));
     }
