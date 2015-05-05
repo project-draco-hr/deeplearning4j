@@ -1,6 +1,6 @@
 {
   int size=deltaFull.length();
-  INDArray Wt_df=Nd4j.create(new int[]{size * 2,size * 2,size});
+  INDArray Wt_df=Nd4j.create(size * 2,size * 2,size);
   INDArray fullVector=Nd4j.concat(0,leftVector,rightVector);
   for (int slice=0; slice < size; ++slice) {
     if (Wt_df.data().dataType() == DataBuffer.DOUBLE)     Wt_df.putSlice(slice,Nd4j.getBlasWrapper().scal(deltaFull.getDouble(slice),fullVector).mmul(fullVector.transpose()));

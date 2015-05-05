@@ -1,6 +1,7 @@
 {
-  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,rng,dist,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,filterSize,stride,featureMapSize,kernel,batchSize,numLineSearchIterations,minimize,layerFactory,convolutionType);
+  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,rng,dist,seed,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,filterSize,stride,featureMapSize,kernel,batchSize,numLineSearchIterations,minimize,listeners,layerFactory,convolutionType,l1);
   ret.useAdaGrad=this.adagrad;
   ret.stepFunction=stepFunction;
+  ret.listeners=listeners;
   return ret;
 }

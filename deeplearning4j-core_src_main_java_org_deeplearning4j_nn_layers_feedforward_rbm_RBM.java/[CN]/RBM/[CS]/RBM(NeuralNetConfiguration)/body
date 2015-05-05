@@ -1,4 +1,4 @@
 {
   super(conf);
-  this.rng=Randoms.createRandom(conf.getRng());
+  this.rng=Nd4j.getRandom();
 }

@@ -1,3 +1,3 @@
 {
-  return layerWiseConfigurations.getHiddenLayerSizes().length + 1;
+  return layerWiseConfigurations.getConfs().size();
 }

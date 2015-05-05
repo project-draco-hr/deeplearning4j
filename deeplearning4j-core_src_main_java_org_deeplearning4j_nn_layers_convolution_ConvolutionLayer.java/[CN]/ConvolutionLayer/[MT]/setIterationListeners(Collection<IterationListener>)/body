@@ -1,3 +1,3 @@
 {
-  this.iterationListeners=listeners != null ? listeners : new ArrayList<IterationListener>();
+  this.listeners=new ArrayList<>(listeners);
 }

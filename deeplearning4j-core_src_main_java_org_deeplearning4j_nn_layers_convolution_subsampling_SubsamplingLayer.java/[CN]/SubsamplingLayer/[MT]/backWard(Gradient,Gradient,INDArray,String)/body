@@ -1,5 +1,5 @@
 {
-  INDArray ret=Nd4j.create(subSampledSize);
+  INDArray ret=Nd4j.create(conf.getFilterSize());
   int[] filterSize=conf.getFilterSize();
   int currLayerFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
   int forwardLayerFeatureMaps=ConvolutionUtils.numFeatureMap(convLayer.conf());

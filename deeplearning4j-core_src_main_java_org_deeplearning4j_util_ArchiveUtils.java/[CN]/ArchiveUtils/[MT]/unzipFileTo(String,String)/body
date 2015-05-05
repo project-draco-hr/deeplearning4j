@@ -42,7 +42,6 @@
           destStream.write(data,0,count);
         }
         destStream.flush();
-        ;
         IOUtils.closeQuietly(destStream);
       }
     }

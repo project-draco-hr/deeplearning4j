@@ -1,15 +1,18 @@
 {
   int featureMaps=ConvolutionUtils.numFeatureMap(conf);
-  INDArray ret=Nd4j.create(conf.getFilterSize());
+  int inputFeatureMaps=ConvolutionUtils.numFeatureMap(input.shape());
+  INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),featureMaps},conf.getFeatureMapSize()));
   INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
   INDArray filters=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
   for (int i=0; i < featureMaps; i++) {
-    INDArray featureMap=Nd4j.create(ArrayUtil.replace(conf.getFilterSize(),1,1));
-    for (int j=0; j < featureMap.slices(); j++) {
-      featureMap.addi(Nd4j.getConvolution().convn(input.slice(j),filters.slice(i).slice(j),Convolution.Type.VALID));
+    INDArray featureMap=Nd4j.create(Ints.concat(new int[]{input.slices(),1},conf.getFeatureMapSize()));
+    for (int j=0; j < inputFeatureMaps; j++) {
+      INDArray convolved=Nd4j.getConvolution().convn(input,filters.slice(i).slice(j),Convolution.Type.VALID);
+      featureMap.addi(convolved.broadcast(featureMap.shape()));
     }
-    featureMap.addi(bias.slice(i));
-    ret.putSlice(i,Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap)));
+    featureMap.addi(bias.getDouble(i));
+    INDArray activationForSlice=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap));
+    ret.put(new NDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),new NDArrayIndex(new int[]{i}),NDArrayIndex.all()},activationForSlice);
   }
   return ret;
 }
