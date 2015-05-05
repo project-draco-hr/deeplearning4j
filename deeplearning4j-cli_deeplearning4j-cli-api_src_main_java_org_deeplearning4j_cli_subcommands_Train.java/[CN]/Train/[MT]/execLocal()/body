@@ -1,6 +1,6 @@
 {
-  System.out.println("[dl4j] - executing local ... ");
-  System.out.println("using training input: " + this.input);
+  log.warn("[dl4j] - executing local ... ");
+  log.warn("using training input: " + this.input);
   File inputFile=new File(this.input);
   InputSplit split=new FileSplit(inputFile);
   InputFormat inputFormat=this.createInputFormat();
@@ -16,5 +16,5 @@ catch (  InterruptedException e) {
   }
   DataSetIterator iter=new RecordReaderDataSetIterator(reader,20);
   DataSet next=iter.next();
-  System.out.println("[dl4j:exec] examples in dataset: " + next.numExamples());
+  log.warn("[dl4j:exec] examples in dataset: " + next.numExamples());
 }
