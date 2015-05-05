@@ -1,7 +1,7 @@
 {
   LayerFactory layerFactory=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
   int batchSize=110;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).iterations(100).weightInit(WeightInit.VI).stepFunction(new GradientStepFunction()).activationFunction("tanh").filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).iterationListener(new ScoreIterationListener(10)).layerFactory(layerFactory).list(3).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{1}).override(0,new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LBFGS).iterations(100).weightInit(WeightInit.VI).activationFunction("tanh").filterSize(5,1,2,2).nIn(4).nOut(3).batchSize(batchSize).dropOut(0.5).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).iterationListener(new ScoreIterationListener(10)).layerFactory(layerFactory).list(3).inputPreProcessor(0,new ConvolutionInputPreProcessor(2,2)).preProcessor(1,new ConvolutionPostProcessor()).hiddenLayerSizes(new int[]{1}).override(0,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       builder.layerFactory(LayerFactories.getFactory(ConvolutionLayer.class));
       builder.convolutionType(ConvolutionDownSampleLayer.ConvolutionType.MAX);
