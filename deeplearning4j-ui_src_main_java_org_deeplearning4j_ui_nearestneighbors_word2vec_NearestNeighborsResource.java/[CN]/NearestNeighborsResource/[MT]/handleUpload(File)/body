@@ -1,0 +1,11 @@
+{
+  try {
+    if (path.getAbsolutePath().endsWith(".ser"))     vectors=SerializationUtils.readObject(path);
+ else {
+      vectors=WordVectorSerializer.fromPair(WordVectorSerializer.loadTxt(path));
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

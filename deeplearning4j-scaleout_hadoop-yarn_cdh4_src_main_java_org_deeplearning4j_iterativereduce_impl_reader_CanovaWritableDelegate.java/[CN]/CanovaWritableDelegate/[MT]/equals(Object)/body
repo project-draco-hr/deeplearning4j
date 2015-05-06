@@ -2,6 +2,5 @@
   if (this == o)   return true;
   if (!(o instanceof CanovaWritableDelegate))   return false;
   CanovaWritableDelegate that=(CanovaWritableDelegate)o;
-  if (writable != null ? !writable.equals(that.writable) : that.writable != null)   return false;
-  return true;
+  return !(writable != null ? !writable.equals(that.writable) : that.writable != null);
 }

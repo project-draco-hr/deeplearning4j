@@ -1,7 +1,8 @@
 {
   Solver solver=new Solver();
   solver.conf=conf;
+  solver.stepFunction=StepFunctions.createStepFunction(conf.getStepFunction());
   solver.model=model;
-  solver.listeners=conf.getListeners();
+  solver.listeners=listeners;
   return solver;
 }

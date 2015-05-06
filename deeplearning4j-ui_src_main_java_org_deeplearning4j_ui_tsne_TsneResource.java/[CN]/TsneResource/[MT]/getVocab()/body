@@ -1,0 +1,5 @@
+{
+  List<String> words=new ArrayList<>();
+  for (  VocabWord word : this.words)   words.add(word.getWord());
+  return Response.ok((new ArrayList<>(words))).build();
+}

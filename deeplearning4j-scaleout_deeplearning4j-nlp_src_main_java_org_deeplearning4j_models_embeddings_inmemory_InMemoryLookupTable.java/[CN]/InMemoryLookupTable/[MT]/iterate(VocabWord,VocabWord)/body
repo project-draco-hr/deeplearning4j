@@ -14,7 +14,7 @@
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
     double g=(1 - code - f) * (useAdaGrad ? w1.getGradient(i,alpha) : alpha);
-    if (syn0.data().dataType() == DataBuffer.DOUBLE) {
+    if (syn0.data().dataType() == DataBuffer.Type.DOUBLE) {
       Nd4j.getBlasWrapper().axpy(g,syn1,neu1e);
       Nd4j.getBlasWrapper().axpy(g,l1,syn1);
     }
@@ -23,6 +23,6 @@
       Nd4j.getBlasWrapper().axpy((float)g,l1,syn1);
     }
   }
-  if (syn0.data().dataType() == DataBuffer.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
+  if (syn0.data().dataType() == DataBuffer.Type.DOUBLE)   Nd4j.getBlasWrapper().axpy(1.0,neu1e,l1);
  else   Nd4j.getBlasWrapper().axpy(1.0f,neu1e,l1);
 }

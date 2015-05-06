@@ -1,9 +1,9 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class)).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(new ConfOverride(){
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.RBM()).visibleUnit(org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).hiddenUnit(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.RECTIFIED).activationFunction("tanh").list(2).hiddenLayerSizes(3).override(1,new ConfOverride(){
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
       if (i == 1) {
         builder.activationFunction("softmax");
-        builder.layerFactory(LayerFactories.getFactory(OutputLayer.class));
+        builder.layer(new org.deeplearning4j.nn.conf.layers.OutputLayer());
         builder.lossFunction(LossFunctions.LossFunction.MCXENT);
       }
     }

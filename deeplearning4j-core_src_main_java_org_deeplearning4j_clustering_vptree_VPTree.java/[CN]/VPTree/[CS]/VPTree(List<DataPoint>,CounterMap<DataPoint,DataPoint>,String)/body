@@ -1,6 +1,3 @@
 {
-  this.items=items;
-  this.distances=distances;
-  this.similarityFunction=similarityFunction;
-  root=buildFromPoints(0,items.size());
+  this(items,distances,similarityFunction,true);
 }

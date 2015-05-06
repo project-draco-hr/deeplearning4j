@@ -1,5 +1,0 @@
-{
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN)   this.sigma=input.var(0).divi(input.rows());
-  this.input=input;
-  contrastiveDivergence();
-}

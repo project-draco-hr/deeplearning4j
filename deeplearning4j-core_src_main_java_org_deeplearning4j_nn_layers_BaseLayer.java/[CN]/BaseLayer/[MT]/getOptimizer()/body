@@ -1,3 +1,7 @@
 {
+  if (optimizer == null) {
+    Solver solver=new Solver.Builder().model(this).configure(conf()).build();
+    this.optimizer=solver.getOptimizer();
+  }
   return optimizer;
 }

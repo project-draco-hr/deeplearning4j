@@ -1,7 +1,0 @@
-{
-  if (conf.getVisibleUnit() == VisibleUnit.GAUSSIAN) {
-    this.sigma=input.var(0);
-    this.sigma.divi(input.rows());
-  }
-  super.fit(input);
-}

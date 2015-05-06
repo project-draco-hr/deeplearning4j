@@ -1,0 +1,12 @@
+{
+  MnistDataFetcher fetcher=new MnistDataFetcher(true);
+  LayerFactory layerFactory=LayerFactories.getFactory(new org.deeplearning4j.nn.conf.layers.AutoEncoder());
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9f).optimizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).corruptionLevel(0.6).iterations(100).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(784).nOut(600).layer(new org.deeplearning4j.nn.conf.layers.AutoEncoder()).build();
+  fetcher.fetch(100);
+  DataSet d2=fetcher.next();
+  INDArray input=d2.getFeatureMatrix();
+  AutoEncoder da=layerFactory.create(conf);
+  Gradient g=new DefaultGradient();
+  g.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,da.decode(da.activate(input)).sub(input));
+  Gradient g2=da.backwardGradient(da.decode(da.activate(input)),g);
+}

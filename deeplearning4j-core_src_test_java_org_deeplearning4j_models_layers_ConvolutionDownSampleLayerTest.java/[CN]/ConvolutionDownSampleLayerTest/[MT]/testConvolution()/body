@@ -1,17 +1,16 @@
 {
   boolean switched=false;
-  if (Nd4j.dtype == DataBuffer.FLOAT) {
-    Nd4j.dtype=DataBuffer.DOUBLE;
+  if (Nd4j.dtype == DataBuffer.Type.FLOAT) {
+    Nd4j.dtype=DataBuffer.Type.DOUBLE;
     switched=true;
   }
   MnistDataFetcher data=new MnistDataFetcher(true);
   data.fetch(2);
   DataSet d=data.next();
   d.setFeatures(d.getFeatureMatrix().reshape(2,1,28,28));
-  LayerFactory layerFactory=LayerFactories.getFactory(ConvolutionDownSampleLayer.class);
-  NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(2,1,2,2).layerFactory(layerFactory).build();
-  ConvolutionDownSampleLayer c=layerFactory.create(n);
+  NeuralNetConfiguration n=new NeuralNetConfiguration.Builder().filterSize(2,1,2,2).layer(new org.deeplearning4j.nn.conf.layers.ConvolutionDownSampleLayer()).build();
+  ConvolutionDownSampleLayer c=LayerFactories.getFactory(n.getLayer()).create(n);
   if (switched) {
-    Nd4j.dtype=DataBuffer.FLOAT;
+    Nd4j.dtype=DataBuffer.Type.FLOAT;
   }
 }

@@ -1,0 +1,17 @@
+{
+  final AtomicLong lastReported=new AtomicLong(System.currentTimeMillis());
+  Parallelization.iterateInParallel(batch2,new Parallelization.RunnableWithParams<List<VocabWord>>(){
+    @Override public void run(    List<VocabWord> sentence,    Object[] args){
+      double alpha=Math.max(minLearningRate,Word2Vec.this.alpha.get() * (1 - (1.0 * numWordsSoFar.get() / (double)totalWords)));
+      long now=System.currentTimeMillis();
+      long diff=Math.abs(now - lastReported.get());
+      if (numWordsSoFar.get() > 0 && diff > 10000) {
+        lastReported.set(now);
+        log.info("Words so far " + numWordsSoFar.get() + " with alpha at "+ alpha);
+      }
+      trainSentence(sentence,nextRandom,alpha);
+      numWordsSoFar.set(numWordsSoFar.get() + sentence.size());
+    }
+  }
+,actorSystem);
+}

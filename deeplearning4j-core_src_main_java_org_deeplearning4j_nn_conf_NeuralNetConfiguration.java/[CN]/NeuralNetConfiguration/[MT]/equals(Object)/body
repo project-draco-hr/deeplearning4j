@@ -15,11 +15,9 @@
   if (Double.compare(that.dropOut,dropOut) != 0)   return false;
   if (applySparsity != that.applySparsity)   return false;
   if (constrainGradientToUnitNorm != that.constrainGradientToUnitNorm)   return false;
-  if (seed != that.seed)   return false;
   if (nIn != that.nIn)   return false;
   if (nOut != that.nOut)   return false;
   if (k != that.k)   return false;
-  if (numFeatureMaps != that.numFeatureMaps)   return false;
   if (kernel != that.kernel)   return false;
   if (batchSize != that.batchSize)   return false;
   if (minimize != that.minimize)   return false;
@@ -29,16 +27,14 @@
   if (lossFunction != that.lossFunction)   return false;
   if (rng != null ? !rng.equals(that.rng) : that.rng != null)   return false;
   if (dist != null ? !dist.equals(that.dist) : that.dist != null)   return false;
-  if (listeners != null ? !listeners.equals(that.listeners) : that.listeners != null)   return false;
   if (stepFunction != null ? !stepFunction.equals(that.stepFunction) : that.stepFunction != null)   return false;
-  if (layerFactory != null ? !layerFactory.equals(that.layerFactory) : that.layerFactory != null)   return false;
+  if (layer != null ? !layer.equals(that.layer) : that.layer != null)   return false;
   if (variables != null ? !variables.equals(that.variables) : that.variables != null)   return false;
   if (activationFunction != null ? !activationFunction.equals(that.activationFunction) : that.activationFunction != null)   return false;
   if (visibleUnit != that.visibleUnit)   return false;
   if (hiddenUnit != that.hiddenUnit)   return false;
   if (!Arrays.equals(weightShape,that.weightShape))   return false;
   if (!Arrays.equals(filterSize,that.filterSize))   return false;
-  if (!Arrays.equals(featureMapSize,that.featureMapSize))   return false;
   if (!Arrays.equals(stride,that.stride))   return false;
   return convolutionType == that.convolutionType;
 }
