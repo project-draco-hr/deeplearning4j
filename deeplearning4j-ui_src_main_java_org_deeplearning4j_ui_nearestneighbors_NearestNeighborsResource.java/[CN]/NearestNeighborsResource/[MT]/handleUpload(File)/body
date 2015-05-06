@@ -1,13 +1,24 @@
 {
   try {
-    Pair<WeightLookupTable,VocabCache> vocab=WordVectorSerializer.loadTxt(path);
-    InMemoryLookupTable table=(InMemoryLookupTable)vocab.getFirst();
-    table.getSyn0().divi(table.getSyn0().norm2(Integer.MAX_VALUE));
-    tree=new VPTree(table.getSyn0(),"dot",true);
-    words=new ArrayList<>(vocab.getSecond().vocabWords());
-    theVocab=new HashMap<>();
-    for (    VocabWord word : words)     theVocab.put(word.getIndex(),word);
-    this.vocab=vocab.getSecond();
+    if (path.getAbsolutePath().endsWith(".ser")) {
+      WordVectors vectors=SerializationUtils.readObject(path);
+      InMemoryLookupTable table=(InMemoryLookupTable)vectors.lookupTable();
+      tree=new VPTree(table.getSyn0(),"dot",true);
+      words=new ArrayList<>(vectors.vocab().vocabWords());
+      theVocab=new HashMap<>();
+      for (      VocabWord word : words)       theVocab.put(word.getIndex(),word);
+      this.vocab=vectors.vocab();
+    }
+ else {
+      Pair<WeightLookupTable,VocabCache> vocab=WordVectorSerializer.loadTxt(path);
+      InMemoryLookupTable table=(InMemoryLookupTable)vocab.getFirst();
+      table.getSyn0().divi(table.getSyn0().norm2(Integer.MAX_VALUE));
+      tree=new VPTree(table.getSyn0(),"dot",true);
+      words=new ArrayList<>(vocab.getSecond().vocabWords());
+      theVocab=new HashMap<>();
+      for (      VocabWord word : words)       theVocab.put(word.getIndex(),word);
+      this.vocab=vocab.getSecond();
+    }
   }
  catch (  Exception e) {
     e.printStackTrace();
