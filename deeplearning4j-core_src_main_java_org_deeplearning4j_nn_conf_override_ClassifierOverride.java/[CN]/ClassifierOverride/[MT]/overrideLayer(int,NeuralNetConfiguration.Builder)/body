@@ -1,8 +1,6 @@
 {
-  if (i == finalLayer) {
-    builder.activationFunction("softmax");
-    builder.weightInit(WeightInit.ZERO);
-    builder.layer(new OutputLayer());
-    builder.lossFunction(LossFunctions.LossFunction.MCXENT);
-  }
+  builder.activationFunction("softmax");
+  builder.weightInit(WeightInit.ZERO);
+  builder.layer(new OutputLayer());
+  builder.lossFunction(LossFunctions.LossFunction.MCXENT);
 }
