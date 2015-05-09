@@ -1,0 +1,10 @@
+{
+  double[] ret=new double[writables.size()];
+  int count=0;
+  double target=0;
+  for (  Writable w : writables) {
+    if (count < writables.size() - 1)     ret[count++]=Float.parseFloat(w.toString());
+ else     target=Float.parseFloat(w.toString());
+  }
+  return new LabeledPoint(target,Vectors.dense(ret));
+}

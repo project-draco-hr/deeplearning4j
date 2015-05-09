@@ -1,0 +1,7 @@
+{
+  List<LabeledPoint> ret=new ArrayList<>();
+  for (  DataSet point : labeledPoints) {
+    ret.add(toLabeledPoint(point));
+  }
+  return ret;
+}
