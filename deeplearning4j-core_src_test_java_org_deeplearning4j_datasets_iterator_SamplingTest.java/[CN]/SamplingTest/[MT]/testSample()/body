@@ -1,0 +1,5 @@
+{
+  DataSetIterator iter=new MnistDataSetIterator(10,10);
+  DataSetIterator sampling=new SamplingDataSetIterator(iter.next(),10,10);
+  assertEquals(sampling.next().numExamples(),10);
+}
