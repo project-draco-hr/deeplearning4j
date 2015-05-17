@@ -1,0 +1,32 @@
+{
+  List<Writable> currList;
+  if (record instanceof List)   currList=(List<Writable>)record;
+ else   currList=new ArrayList<>(record);
+  if (numPossibleLabels >= 1 && labelIndex < 0) {
+    labelIndex=record.size() - 1;
+  }
+  INDArray label=null;
+  INDArray featureVector=Nd4j.create(labelIndex >= 0 ? currList.size() - 1 : currList.size());
+  int count=0;
+  for (int j=0; j < currList.size(); j++) {
+    if (labelIndex >= 0 && j == labelIndex) {
+      if (numPossibleLabels < 1)       throw new IllegalStateException("Number of possible labels invalid, must be >= 1");
+      Writable current=currList.get(j);
+      if (current.toString().isEmpty())       continue;
+      if (converter != null)       try {
+        current=converter.convert(current);
+      }
+ catch (      WritableConverterException e) {
+        e.printStackTrace();
+      }
+      int curr=Double.valueOf(current.toString()).intValue();
+      label=FeatureUtil.toOutcomeVector(curr,numPossibleLabels);
+    }
+ else {
+      Writable current=currList.get(j);
+      if (current.toString().isEmpty())       continue;
+      featureVector.putScalar(count++,Double.valueOf(current.toString()));
+    }
+  }
+  return new DataSet(featureVector,labelIndex >= 0 ? label : featureVector);
+}
