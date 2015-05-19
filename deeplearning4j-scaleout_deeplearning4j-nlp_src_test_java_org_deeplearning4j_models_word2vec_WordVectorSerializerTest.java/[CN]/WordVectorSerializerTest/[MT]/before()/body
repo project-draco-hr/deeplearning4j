@@ -1,5 +1,9 @@
 {
-  if (textFile == null)   textFile=new ClassPathResource("vec.txt").getFile();
-  if (binaryFile == null)   binaryFile=new ClassPathResource("vec.bin").getFile();
+  if (textFile == null) {
+    textFile=new ClassPathResource("vec.txt").getFile();
+  }
+  if (binaryFile == null) {
+    binaryFile=new ClassPathResource("vec.bin").getFile();
+  }
   FileUtils.deleteDirectory(new File("word2vec-index"));
 }

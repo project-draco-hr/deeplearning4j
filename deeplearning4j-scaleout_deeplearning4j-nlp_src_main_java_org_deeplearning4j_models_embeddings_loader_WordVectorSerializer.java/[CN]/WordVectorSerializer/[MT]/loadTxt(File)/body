@@ -1,7 +1,7 @@
 {
-  BufferedReader write=new BufferedReader(new FileReader(path));
+  BufferedReader write=new BufferedReader(new FileReader(vectorsFile));
   VocabCache cache=new InMemoryLookupCache();
-  InMemoryLookupTable l;
+  InMemoryLookupTable lookupTable;
   LineIterator iter=IOUtils.lineIterator(write);
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
@@ -14,14 +14,18 @@
     word1.setIndex(cache.numWords());
     cache.putVocabWord(word);
     INDArray row=Nd4j.create(Nd4j.createBuffer(split.length - 1));
-    for (int i=1; i < split.length; i++)     row.putScalar(i - 1,Float.parseFloat(split[i]));
+    for (int i=1; i < split.length; i++) {
+      row.putScalar(i - 1,Float.parseFloat(split[i]));
+    }
     arrays.add(row);
   }
   INDArray syn=Nd4j.create(new int[]{arrays.size(),arrays.get(0).columns()});
-  for (int i=0; i < syn.rows(); i++)   syn.putRow(i,arrays.get(i));
-  l=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(arrays.get(0).columns()).useAdaGrad(false).cache(cache).build();
+  for (int i=0; i < syn.rows(); i++) {
+    syn.putRow(i,arrays.get(i));
+  }
+  lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(arrays.get(0).columns()).useAdaGrad(false).cache(cache).build();
   Nd4j.clearNans(syn);
-  l.setSyn0(syn);
+  lookupTable.setSyn0(syn);
   iter.close();
-  return new Pair<>((WeightLookupTable)l,cache);
+  return new Pair<>(lookupTable,cache);
 }

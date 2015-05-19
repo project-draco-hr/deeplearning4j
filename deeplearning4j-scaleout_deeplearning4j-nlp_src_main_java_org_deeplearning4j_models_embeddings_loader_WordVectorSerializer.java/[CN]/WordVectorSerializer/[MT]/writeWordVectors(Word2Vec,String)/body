@@ -2,14 +2,18 @@
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
   int words=0;
   for (  String word : vec.vocab().words()) {
-    if (word == null)     continue;
+    if (word == null) {
+      continue;
+    }
     StringBuilder sb=new StringBuilder();
     sb.append(word.replaceAll(" ","_"));
     sb.append(" ");
     INDArray wordVector=vec.getWordVectorMatrix(word);
     for (int j=0; j < wordVector.length(); j++) {
       sb.append(wordVector.getDouble(j));
-      if (j < wordVector.length() - 1)       sb.append(" ");
+      if (j < wordVector.length() - 1) {
+        sb.append(" ");
+      }
     }
     sb.append("\n");
     write.write(sb.toString());

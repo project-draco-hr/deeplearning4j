@@ -1,15 +1,19 @@
 {
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
-  for (int i=0; i < l.getSyn0().rows(); i++) {
+  for (int i=0; i < lookupTable.getSyn0().rows(); i++) {
     String word=cache.wordAtIndex(i);
-    if (word == null)     continue;
+    if (word == null) {
+      continue;
+    }
     StringBuilder sb=new StringBuilder();
     sb.append(word.replaceAll(" ","_"));
     sb.append(" ");
-    INDArray wordVector=l.vector(word);
+    INDArray wordVector=lookupTable.vector(word);
     for (int j=0; j < wordVector.length(); j++) {
       sb.append(wordVector.getDouble(j));
-      if (j < wordVector.length() - 1)       sb.append(" ");
+      if (j < wordVector.length() - 1) {
+        sb.append(" ");
+      }
     }
     sb.append("\n");
     write.write(sb.toString());
