@@ -1,5 +1,5 @@
 {
-  Word2Vec vec=WordVectorSerializer.loadGoogleModel(textFile.getAbsolutePath(),false);
+  Word2Vec vec=WordVectorSerializer.loadGoogleModel(textFile,false);
   assertEquals(5,vec.vocab().numWords());
   assertTrue(vec.vocab().numWords() > 0);
 }

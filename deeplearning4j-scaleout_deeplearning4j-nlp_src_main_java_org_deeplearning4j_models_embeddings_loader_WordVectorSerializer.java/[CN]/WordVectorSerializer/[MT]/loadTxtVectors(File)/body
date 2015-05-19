@@ -1,4 +1,4 @@
 {
-  Pair<WeightLookupTable,VocabCache> pair=loadTxt(path);
+  Pair<InMemoryLookupTable,VocabCache> pair=loadTxt(vectorsFile);
   return fromPair(pair);
 }
