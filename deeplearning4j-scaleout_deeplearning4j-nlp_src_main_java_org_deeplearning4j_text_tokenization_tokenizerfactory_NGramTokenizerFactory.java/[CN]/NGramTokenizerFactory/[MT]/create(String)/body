@@ -1,0 +1,7 @@
+{
+  if (toTokenize == null || toTokenize.isEmpty()) {
+    throw new IllegalArgumentException("Unable to proceed; no sentence to tokenize");
+  }
+  Tokenizer ret=new NGramTokenizer(toTokenize,minN,maxN);
+  return null;
+}
