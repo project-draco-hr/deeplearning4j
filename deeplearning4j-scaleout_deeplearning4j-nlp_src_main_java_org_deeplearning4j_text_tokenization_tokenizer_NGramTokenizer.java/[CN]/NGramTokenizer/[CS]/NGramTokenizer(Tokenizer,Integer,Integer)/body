@@ -1,7 +1,8 @@
 {
+  this.tokens=new ArrayList<>();
   while (tokenizer.hasMoreTokens()) {
-    System.out.println(tokenizer.nextToken());
-    this.tokens.add(tokenizer.nextToken());
+    String nextToken=tokenizer.nextToken();
+    this.tokens.add(nextToken);
   }
   if (maxN != 1) {
     this.originalTokens=this.tokens;
