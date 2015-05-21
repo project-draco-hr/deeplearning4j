@@ -1,4 +1,10 @@
 {
+  try {
+    loadConfigFile();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
   if ("hadoop".equals(this.runtime.trim().toLowerCase()))   this.execOnHadoop();
  else   if ("spark".equals(this.runtime.trim().toLowerCase()))   this.execOnSpark();
  else   this.execLocal();
