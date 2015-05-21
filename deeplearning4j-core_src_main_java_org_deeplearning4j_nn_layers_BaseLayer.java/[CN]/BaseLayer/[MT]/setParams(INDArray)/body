@@ -8,7 +8,7 @@
     INDArray param=getParam(gradientList.get(i));
     INDArray get=params.get(NDArrayIndex.interval(idx,idx + param.length()));
     if (param.length() != get.length())     throw new IllegalStateException("Parameter " + gradientList.get(i) + " should have been of length "+ param.length()+ " but was "+ get.length());
-    param.assign(get.reshape(param.shape()));
+    param.linearView().assign(get);
     idx+=param.length();
   }
   setScore();

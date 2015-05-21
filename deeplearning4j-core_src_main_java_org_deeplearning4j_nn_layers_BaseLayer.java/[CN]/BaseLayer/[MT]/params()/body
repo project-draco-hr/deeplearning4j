@@ -1,5 +1,15 @@
 {
-  List<INDArray> ret=new ArrayList<>();
-  for (  String s : params.keySet())   ret.add(params.get(s));
-  return Nd4j.toFlattened(ret);
+  int length=0;
+  for (  String s : params.keySet()) {
+    length+=params.get(s).length();
+  }
+  INDArray ret=Nd4j.create(1,length);
+  int count=0;
+  for (  String s : params.keySet()) {
+    INDArray get=params.get(s).linearView();
+    for (int i=0; i < get.length(); i++) {
+      ret.putScalar(count++,get.getDouble(i));
+    }
+  }
+  return ret;
 }
