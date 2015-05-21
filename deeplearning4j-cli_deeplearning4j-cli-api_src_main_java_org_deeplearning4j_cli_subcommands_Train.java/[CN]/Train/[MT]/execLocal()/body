@@ -8,13 +8,48 @@
   try {
     reader=inputFormat.createReader(split);
   }
- catch (  IOException e) {
+ catch (  Exception e) {
     e.printStackTrace();
   }
-catch (  InterruptedException e) {
-    e.printStackTrace();
+  if (type.equals("multi")) {
+    try {
+      MultiLayerConfiguration conf=MultiLayerConfiguration.fromJson(FileUtils.readFileToString(new File(modelPath)));
+      DataSetIterator iter=new RecordReaderDataSetIterator(reader,conf.getConf(0).getBatchSize());
+      MultiLayerNetwork network=new MultiLayerNetwork(conf);
+      network.fit(iter);
+      if (saveMode.equals("binary")) {
+        BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(this.outputDirectory));
+        DataOutputStream dos=new DataOutputStream(bos);
+        Nd4j.write(network.params(),dos);
+      }
+ else {
+        Nd4j.writeTxt(network.params(),outputDirectory,",");
+      }
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
   }
-  DataSetIterator iter=new RecordReaderDataSetIterator(reader,20);
-  DataSet next=iter.next();
-  log.warn("[dl4j:exec] examples in dataset: " + next.numExamples());
+ else {
+    try {
+      NeuralNetConfiguration conf=NeuralNetConfiguration.fromJson(FileUtils.readFileToString(new File(modelPath)));
+      LayerFactory factory=LayerFactories.getFactory(conf);
+      Layer l=factory.create(conf);
+      DataSetIterator iter=new RecordReaderDataSetIterator(reader,conf.getBatchSize());
+      while (iter.hasNext()) {
+        l.fit(iter.next().getFeatureMatrix());
+      }
+      if (saveMode.equals("binary")) {
+        BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(this.outputDirectory));
+        DataOutputStream dos=new DataOutputStream(bos);
+        Nd4j.write(l.params(),dos);
+      }
+ else {
+        Nd4j.writeTxt(l.params(),outputDirectory,",");
+      }
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
