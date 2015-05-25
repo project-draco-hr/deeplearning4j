@@ -21,7 +21,7 @@
         try {
           for (int k=clusterIdx + 1, l=clusterSet.getClusterCount(); k < l; k++) {
             Cluster toCluster=clusterSet.getClusters().get(k);
-            double distance=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createAccum(clusterSet.getAccumulation(),fromCluster.getCenter(),toCluster.getCenter())).currentResult().doubleValue();
+            double distance=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createAccum(clusterSet.getAccumulation(),fromCluster.getCenter().getArray(),toCluster.getCenter().getArray())).currentResult().doubleValue();
             info.getDistancesBetweenClustersCenters().put(fromCluster.getId(),toCluster.getId(),distance);
           }
         }
