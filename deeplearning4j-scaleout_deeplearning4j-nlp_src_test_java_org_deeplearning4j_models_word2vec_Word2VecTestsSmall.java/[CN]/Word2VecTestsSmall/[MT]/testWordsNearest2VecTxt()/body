@@ -1,0 +1,8 @@
+{
+  String word="Adam";
+  String expectedNeighbour="is";
+  int neighbours=1;
+  Collection<String> nearestWords=word2vec.wordsNearest(word,neighbours);
+  System.out.println(nearestWords);
+  assertEquals(nearestWords.iterator().next(),expectedNeighbour);
+}
