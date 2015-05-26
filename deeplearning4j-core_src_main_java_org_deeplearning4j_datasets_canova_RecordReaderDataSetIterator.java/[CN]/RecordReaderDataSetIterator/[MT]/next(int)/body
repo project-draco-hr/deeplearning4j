@@ -1,4 +1,8 @@
 {
+  if (useCurrent) {
+    useCurrent=false;
+    return last;
+  }
   List<DataSet> dataSets=new ArrayList<>();
   for (int i=0; i < num; i++) {
     if (!hasNext())     break;
