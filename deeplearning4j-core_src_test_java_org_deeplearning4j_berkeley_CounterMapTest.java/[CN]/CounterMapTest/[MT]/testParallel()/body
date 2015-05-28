@@ -1,5 +1,5 @@
 {
-  List<Integer> items=new CopyOnWriteArrayList<>();
+  List<Integer> items=Collections.synchronizedList(new ArrayList<Integer>());
   for (int i=0; i < 1e6; i++)   items.add(i);
   CounterMap<Integer,Integer> pairWise=CounterMap.runPairWise(items,new CounterMap.CountFunction<Integer>(){
     @Override public double count(    Integer v1,    Integer v2){
