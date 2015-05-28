@@ -2,6 +2,9 @@
   try {
     Class<? extends TokenizerFactory> clazz=(Class<? extends TokenizerFactory>)Class.forName(tokenizerFactoryClazz);
     tokenizerFactory=clazz.newInstance();
+    if (nGrams > 1) {
+      tokenizerFactory=new NGramTokenizerFactory(tokenizerFactory,nGrams,nGrams);
+    }
   }
  catch (  Exception e) {
     e.printStackTrace();
