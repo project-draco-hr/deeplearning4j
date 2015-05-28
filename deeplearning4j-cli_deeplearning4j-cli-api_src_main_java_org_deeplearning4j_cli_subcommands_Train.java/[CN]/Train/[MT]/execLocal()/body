@@ -16,6 +16,10 @@
       MultiLayerConfiguration conf=MultiLayerConfiguration.fromJson(FileUtils.readFileToString(new File(modelPath)));
       DataSetIterator iter=new RecordReaderDataSetIterator(reader,conf.getConf(0).getBatchSize(),-1,conf.getConf(conf.getConfs().size() - 1).getnOut());
       MultiLayerNetwork network=new MultiLayerNetwork(conf);
+      if (verbose) {
+        network.init();
+        network.setListeners(Collections.<IterationListener>singletonList(new ScoreIterationListener(1)));
+      }
       network.fit(iter);
       if (saveMode.equals("binary")) {
         BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(this.outputDirectory + File.separator + "outputmodel.bin"));

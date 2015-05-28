@@ -6,6 +6,6 @@
   MultiLayerConfiguration from=testModelFlag.value("model_multi.json");
   assertEquals(conf,from);
   CommandLineInterfaceDriver driver=new CommandLineInterfaceDriver();
-  String[] cmd={"train","-conf",new ClassPathResource("confs/cli_train_unit_test_conf.txt").getFile().getAbsolutePath(),"-input",new ClassPathResource("iris.txt").getFile().getAbsolutePath(),"-model","model_multi.json","-output","model_results.txt"};
+  String[] cmd={"train","-conf",new ClassPathResource("confs/cli_train_unit_test_conf.txt").getFile().getAbsolutePath(),"-input",new ClassPathResource("iris.txt").getFile().getAbsolutePath(),"-model","model_multi.json","-output","model_results.txt","-verbose"};
   driver.doMain(cmd);
 }
