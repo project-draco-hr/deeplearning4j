@@ -8,4 +8,7 @@
   }
   int stringCount=factory.create(toTokenize).countTokens();
   assertEquals(9,stringCount);
+  factory=new NGramTokenizerFactory(new DefaultTokenizerFactory(),2,2);
+  List<String> tokens=factory.create(toTokenize).getTokens();
+  assertEquals(4,tokens.size());
 }
