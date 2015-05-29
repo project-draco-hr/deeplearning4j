@@ -1,0 +1,33 @@
+{
+  InMemoryLookupTable lookupTable;
+  VocabCache cache;
+  INDArray syn0;
+  BufferedReader reader=new BufferedReader(new FileReader(modelFile));
+  String line=reader.readLine();
+  String[] initial=line.split(" ");
+  int words=Integer.parseInt(initial[0]);
+  int layerSize=Integer.parseInt(initial[1]);
+  syn0=Nd4j.create(words,layerSize);
+  cache=new InMemoryLookupCache();
+  int currLine=0;
+  while ((line=reader.readLine()) != null) {
+    String[] split=line.split(" ");
+    String word=split[0];
+    if (word.isEmpty()) {
+      continue;
+    }
+    for (int i=1; i < split.length; i++) {
+      syn0.put(currLine,i - 1,Float.parseFloat(split[i]));
+    }
+    cache.addWordToIndex(cache.numWords(),word);
+    cache.addToken(new VocabWord(1,word));
+    cache.putVocabWord(word);
+  }
+  lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(cache).vectorLength(layerSize).build();
+  lookupTable.setSyn0(syn0);
+  Word2Vec ret=new Word2Vec();
+  ret.setVocab(cache);
+  ret.setLookupTable(lookupTable);
+  reader.close();
+  return ret;
+}

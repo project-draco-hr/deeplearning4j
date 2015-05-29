@@ -1,0 +1,11 @@
+{
+  CmdLineParser parser=new CmdLineParser(this);
+  try {
+    parser.parseArgument(args);
+    subCommand.execute();
+  }
+ catch (  CmdLineException e) {
+    System.err.println(e.getMessage());
+    return;
+  }
+}

@@ -1,4 +1,4 @@
 {
-  Word2Vec vec=WordVectorSerializer.loadGoogleModel(binaryFile.getAbsolutePath(),true);
+  Word2Vec vec=WordVectorSerializer.loadGoogleModel(binaryFile,true);
   assertEquals(2,vec.vocab().numWords());
 }

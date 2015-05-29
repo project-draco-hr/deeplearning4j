@@ -1,4 +1,10 @@
 {
+  if (configProps == null)   try {
+    loadConfigFile();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
   String clazz=(String)this.configProps.get(INPUT_FORMAT_KEY);
   if (null == clazz) {
     clazz=DEFAULT_INPUT_FORMAT_CLASSNAME;

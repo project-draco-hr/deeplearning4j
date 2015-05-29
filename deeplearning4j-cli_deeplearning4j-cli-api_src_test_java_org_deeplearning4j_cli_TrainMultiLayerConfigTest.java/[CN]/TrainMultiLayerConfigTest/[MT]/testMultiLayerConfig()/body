@@ -1,10 +1,11 @@
 {
   Model testModelFlag=new Model();
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).dist(new NormalDistribution(1e-1,0)).list(4).preProcessor(0,new ConvolutionPostProcessor()).hiddenLayerSizes(3,2,2).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).iterations(100).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activationFunction("tanh").k(1).batchSize(10).lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).momentum(0.9).regularization(true).l2(2e-4).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).list(2).hiddenLayerSizes(3).override(1,new ClassifierOverride(1)).build();
   String json=conf.toJson();
   FileUtils.writeStringToFile(new File("model_multi.json"),json);
   MultiLayerConfiguration from=testModelFlag.value("model_multi.json");
   assertEquals(conf,from);
-  String[] cmd={"-input","iris.txt","-model","model_multi.json","-output","model_results.txt"};
-  Train train=new Train(cmd);
+  CommandLineInterfaceDriver driver=new CommandLineInterfaceDriver();
+  String[] cmd={"train","-conf",new ClassPathResource("confs/cli_train_unit_test_conf.txt").getFile().getAbsolutePath(),"-input",new ClassPathResource("iris.txt").getFile().getAbsolutePath(),"-model","model_multi.json","-output","model_results.txt","-verbose"};
+  driver.doMain(cmd);
 }

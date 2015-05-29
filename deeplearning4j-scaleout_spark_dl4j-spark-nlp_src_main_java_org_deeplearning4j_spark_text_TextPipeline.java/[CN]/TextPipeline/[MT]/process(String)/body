@@ -1,5 +1,6 @@
 {
   JavaSparkContext sc=new JavaSparkContext(corpus.context());
   Broadcast<List<String>> broadcast=sc.broadcast(stopWords);
-  return corpus.map(new TokenizerFunction(tokenizer)).map(new VocabCacheFunction(minWordFrequency,new InMemoryLookupCache(),broadcast)).cache().collect().get(0);
+  int nGrams=corpus.context().conf().getInt(Word2VecPerformer.N_GRAMS,1);
+  return corpus.map(new TokenizerFunction(tokenizer,nGrams)).map(new VocabCacheFunction(minWordFrequency,new InMemoryLookupCache(),broadcast)).cache().collect().get(0);
 }

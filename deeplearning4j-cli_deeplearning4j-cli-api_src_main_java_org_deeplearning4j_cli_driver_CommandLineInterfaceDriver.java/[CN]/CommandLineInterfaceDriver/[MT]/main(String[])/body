@@ -1,18 +1,3 @@
 {
-  if (args.length < 1) {
-    printUsage();
-  }
- else   if ("train".equals(args[0])) {
-    String[] vec_params=Arrays.copyOfRange(args,1,args.length);
-    String[] cmd={"--input","iris.txt","--model","model.json","--output","test_output.txt"};
-    Train train=new Train(cmd);
-    System.out.println("[DONE] - Test Mode");
-  }
- else   if ("test".equals(args[0])) {
-  }
- else   if ("predict".equals(args[0])) {
-  }
- else {
-    printUsage();
-  }
+  new CommandLineInterfaceDriver().doMain(args);
 }

@@ -1,3 +1,9 @@
 {
-  throw new UnsupportedOperationException();
+  if (last == null) {
+    DataSet next=next();
+    last=next;
+    useCurrent=true;
+    return next.numInputs();
+  }
+ else   return last.numInputs();
 }
