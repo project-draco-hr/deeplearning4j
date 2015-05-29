@@ -1,5 +1,6 @@
 {
   if (tokenizerFactory == null)   tokenizerFactory=getTokenizerFactory();
+  if (v1.isEmpty())   return new Pair<>(Arrays.asList(""),1L);
   List<String> tokens=tokenizerFactory.create(v1).getTokens();
   return new Pair<>(tokens,(long)tokens.size());
 }
