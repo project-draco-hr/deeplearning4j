@@ -1,37 +1,13 @@
 {
-  this.minimize=neuralNetConfiguration.minimize;
-  this.layer=neuralNetConfiguration.layer;
-  this.numLineSearchIterations=neuralNetConfiguration.numLineSearchIterations;
-  this.batchSize=neuralNetConfiguration.batchSize;
-  this.sparsity=neuralNetConfiguration.sparsity;
-  this.useAdaGrad=neuralNetConfiguration.useAdaGrad;
-  this.lr=neuralNetConfiguration.lr;
-  this.momentum=neuralNetConfiguration.momentum;
-  this.l2=neuralNetConfiguration.l2;
-  this.numIterations=neuralNetConfiguration.numIterations;
-  this.k=neuralNetConfiguration.k;
-  this.corruptionLevel=neuralNetConfiguration.corruptionLevel;
-  this.visibleUnit=neuralNetConfiguration.visibleUnit;
-  this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
-  this.useRegularization=neuralNetConfiguration.useRegularization;
-  this.momentumAfter=neuralNetConfiguration.momentumAfter;
-  this.resetAdaGradIterations=neuralNetConfiguration.resetAdaGradIterations;
-  this.dropOut=neuralNetConfiguration.dropOut;
-  this.applySparsity=neuralNetConfiguration.applySparsity;
-  this.weightInit=neuralNetConfiguration.weightInit;
-  this.optimizationAlgo=neuralNetConfiguration.optimizationAlgo;
-  this.lossFunction=neuralNetConfiguration.lossFunction;
-  this.constrainGradientToUnitNorm=neuralNetConfiguration.constrainGradientToUnitNorm;
-  this.rng=neuralNetConfiguration.rng;
-  this.dist=neuralNetConfiguration.dist;
-  this.nIn=neuralNetConfiguration.nIn;
-  this.nOut=neuralNetConfiguration.nOut;
-  this.activationFunction=neuralNetConfiguration.activationFunction;
-  this.visibleUnit=neuralNetConfiguration.visibleUnit;
-  this.weightShape=neuralNetConfiguration.weightShape;
-  this.stride=neuralNetConfiguration.stride;
-  this.filterSize=neuralNetConfiguration.filterSize;
-  this.convolutionType=neuralNetConfiguration.getConvolutionType();
+  Field[] fields=NeuralNetConfiguration.class.getDeclaredFields();
+  for (  Field f : fields) {
+    try {
+      f.setAccessible(true);
+      f.set(this,f.get(neuralNetConfiguration));
+    }
+ catch (    IllegalAccessException e) {
+      e.printStackTrace();
+    }
+  }
   if (dist == null)   this.dist=new NormalDistribution(0.01,1);
-  this.hiddenUnit=neuralNetConfiguration.hiddenUnit;
 }

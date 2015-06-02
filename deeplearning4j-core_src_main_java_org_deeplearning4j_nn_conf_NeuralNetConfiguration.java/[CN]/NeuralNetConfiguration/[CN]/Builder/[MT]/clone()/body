@@ -1,3 +1,14 @@
 {
-  return new Builder().activationFunction(activationFunction).layer(layer).convolutionType(convolutionType).adagradResetIterations(resetAdaGradIterations).applySparsity(applySparsity).minimize(minimize).constrainGradientToUnitNorm(constrainGradientToUnitNorm).dist(dist).dropOut(dropOut).featureMapSize(featureMapSize).filterSize(filterSize).numLineSearchIterations(numLineSearchIterations).hiddenUnit(hiddenUnit).iterations(numIterations).l2(l2).learningRate(lr).useAdaGrad(useAdaGrad).stepFunction(stepFunction).lossFunction(lossFunction).momentumAfter(momentumAfter).momentum(momentum).nIn(nIn).nOut(nOut).optimizationAlgo(optimizationAlgo).batchSize(batchSize).l1(l1).regularization(useRegularization).render(renderWeightsEveryNumEpochs).resetAdaGradIterations(resetAdaGradIterations).rng(rng).sparsity(sparsity).stride(stride).useAdaGrad(useAdaGrad).visibleUnit(visibleUnit).weightInit(weightInit).weightShape(weightShape);
+  Builder b=new Builder();
+  Field[] fields=Builder.class.getDeclaredFields();
+  for (  Field f : fields) {
+    try {
+      f.setAccessible(true);
+      f.set(b,f.get(this));
+    }
+ catch (    IllegalAccessException e) {
+      e.printStackTrace();
+    }
+  }
+  return b;
 }
