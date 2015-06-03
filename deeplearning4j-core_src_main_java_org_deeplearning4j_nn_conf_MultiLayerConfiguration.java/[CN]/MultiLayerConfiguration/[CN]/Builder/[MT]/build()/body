@@ -10,5 +10,7 @@
   conf.processors=preProcessors;
   conf.backward=backward;
   conf.inputPreProcessors=inputPreProcessor;
+  DefaultRandom r=(DefaultRandom)conf.getConf(0).getRng();
+  Nd4j.getRandom().setSeed(r.getSeed());
   return conf;
 }
