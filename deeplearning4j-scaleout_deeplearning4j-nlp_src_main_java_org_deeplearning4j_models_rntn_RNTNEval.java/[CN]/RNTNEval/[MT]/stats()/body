@@ -6,19 +6,20 @@
       int count=confusionMatrix.getCount(clazz,clazz2);
       if (count != 0)       builder.append("\nActual Class " + clazz + " was predicted with Predicted "+ clazz2+ " with count "+ count+ " times\n");
       if (clazz == clazz2) {
-        incrementTruePositives(count);
+        incrementTruePositives(clazz,count);
       }
  else {
-        incrementFalsePositives(count);
+        incrementFalsePositives(clazz2,count);
       }
     }
     int falseNegatives=confusionMatrix.getActualTotal(clazz) - confusionMatrix.getPredictedTotal(clazz);
-    if (falseNegatives > 0)     incrementFalseNegatives(falseNegatives);
+    if (falseNegatives > 0)     incrementFalseNegatives(clazz,falseNegatives);
   }
+  DecimalFormat df=new DecimalFormat("#.####");
   builder.append("\n==========================Scores========================================");
-  builder.append("\n Precision: " + precision());
-  builder.append("\n Recall: " + recall());
-  builder.append("\n F1 Score: " + f1());
+  builder.append("\n Precision: " + df.format(precision()));
+  builder.append("\n Recall: " + df.format(recall()));
+  builder.append("\n F1 Score: " + df.format(f1()));
   builder.append("\n===========================================================================");
   return builder.toString();
 }
