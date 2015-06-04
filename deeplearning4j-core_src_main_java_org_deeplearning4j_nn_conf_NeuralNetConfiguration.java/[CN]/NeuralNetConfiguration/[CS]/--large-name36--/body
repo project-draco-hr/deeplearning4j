@@ -1,7 +1,22 @@
 {
+  this.minimize=minimize;
+  this.customLossFunction=customLossFunction;
+  this.convolutionType=convolutionType;
+  this.numLineSearchIterations=numLineSearchIterations;
+  this.featureMapSize=featureMapSize;
+  this.l1=l1;
+  this.batchSize=batchSize;
+  if (layer == null) {
+    throw new IllegalStateException("No layer defined.");
+  }
+ else {
+    this.layer=layer;
+  }
   this.sparsity=sparsity;
   this.useAdaGrad=useAdaGrad;
   this.lr=lr;
+  this.kernel=kernel;
+  this.k=k;
   this.corruptionLevel=corruptionLevel;
   this.numIterations=numIterations;
   this.momentum=momentum;
@@ -9,7 +24,6 @@
   this.useRegularization=useRegularization;
   this.momentumAfter=momentumAfter;
   this.resetAdaGradIterations=resetAdaGradIterations;
-  this.numLineSearchIterations=numLineSearchIterations;
   this.dropOut=dropOut;
   this.applySparsity=applySparsity;
   this.weightInit=weightInit;
@@ -18,20 +32,13 @@
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
   this.rng=rng;
   this.dist=dist;
-  this.stepFunction=stepFunction;
-  this.layer=layer;
-  this.variables=variables;
   this.nIn=nIn;
   this.nOut=nOut;
   this.activationFunction=activationFunction;
   this.visibleUnit=visibleUnit;
   this.hiddenUnit=hiddenUnit;
-  this.k=k;
-  this.weightShape=weightShape;
+  if (weightShape != null)   this.weightShape=weightShape;
+ else   this.weightShape=new int[]{nIn,nOut};
   this.filterSize=filterSize;
   this.stride=stride;
-  this.kernel=kernel;
-  this.batchSize=batchSize;
-  this.minimize=minimize;
-  this.convolutionType=convolutionType;
 }

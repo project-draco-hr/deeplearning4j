@@ -10,6 +10,7 @@
   temp=Double.doubleToLongBits(dampingFactor);
   result=31 * result + (int)(temp ^ (temp >>> 32));
   result=31 * result + (processors != null ? processors.hashCode() : 0);
+  result=31 * result + (inputPreProcessors != null ? inputPreProcessors.hashCode() : 0);
   result=31 * result + (backward ? 1 : 0);
   return result;
 }

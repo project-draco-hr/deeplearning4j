@@ -1,7 +1,8 @@
 {
   MultiLayerNetwork ret;
   try {
-    ret=getClass().newInstance();
+    Constructor<MultiLayerNetwork> constructor=(Constructor<MultiLayerNetwork>)getClass().getDeclaredConstructor(MultiLayerConfiguration.class);
+    ret=constructor.newInstance(getLayerWiseConfigurations());
     ret.update(this);
   }
  catch (  Exception e) {
