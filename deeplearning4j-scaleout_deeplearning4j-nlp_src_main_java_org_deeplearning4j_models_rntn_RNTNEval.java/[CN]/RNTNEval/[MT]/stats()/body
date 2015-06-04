@@ -1,11 +1,24 @@
 {
   StringBuilder builder=new StringBuilder().append("\n");
-  Set<Integer> classes=cf.getClasses();
+  Set<Integer> classes=confusionMatrix.getClasses();
   for (  Integer clazz : classes) {
     for (    Integer clazz2 : classes) {
-      int count=cf.getCount(clazz,clazz2);
+      int count=confusionMatrix.getCount(clazz,clazz2);
       if (count != 0)       builder.append("\nActual Class " + clazz + " was predicted with Predicted "+ clazz2+ " with count "+ count+ " times\n");
+      if (clazz == clazz2) {
+        incrementTruePositives(count);
+      }
+ else {
+        incrementFalsePositives(count);
+      }
     }
+    int falseNegatives=confusionMatrix.getActualTotal(clazz) - confusionMatrix.getPredictedTotal(clazz);
+    if (falseNegatives > 0)     incrementFalseNegatives(falseNegatives);
   }
+  builder.append("\n==========================Scores========================================");
+  builder.append("\n Precision: " + precision());
+  builder.append("\n Recall: " + recall());
+  builder.append("\n F1 Score: " + f1());
+  builder.append("\n===========================================================================");
   return builder.toString();
 }
