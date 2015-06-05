@@ -13,4 +13,5 @@
     vec=new Word2Vec.Builder().vocabCache(cache).index(index).iterate(sentenceIter).build();
     vec.fit();
   }
+  List<Tree> trees=vectorizer.getTreesWithLabels(sentence,Arrays.asList("LABEL"));
 }
