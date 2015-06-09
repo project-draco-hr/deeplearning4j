@@ -1,14 +1,11 @@
-def plot_multiple_matrices(paths):
-    graph_count = 1
-    print paths
-    for i in xrange((len(paths) - 1)):
-        if ((i % 2) == 0):
-            path = paths[i]
-            title = paths[(i + 1)]
-            print (('Loading matrix ' + path) + '\n')
-            matrix = from_file(path)
-            subplot(2, (len(paths) / 3), graph_count)
-            plot.tight_layout()
-            hist_matrix(matrix, False, chart_title=title)
-            graph_count += 1
-    plot.show()
+def plot_multiple_matrices(orig_path, plot_type):
+    paths = orig_path.split(',')
+    for (idx, path) in enumerate(paths):
+        if ((idx % 2) == 0):
+            title = paths[(idx + 1)]
+            print (('Loading matrix ' + title) + '\n')
+            matrix = load_file(path)
+            subplot(2, (len(paths) / 4), ((idx / 2) + 1))
+            render_plot(matrix, plot_type, chart_title=title)
+    plt.tight_layout()
+    plt.show()

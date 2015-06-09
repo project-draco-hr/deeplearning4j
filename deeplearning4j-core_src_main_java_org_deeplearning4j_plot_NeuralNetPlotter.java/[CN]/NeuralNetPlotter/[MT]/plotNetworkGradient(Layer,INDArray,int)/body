@@ -1,5 +1,5 @@
 {
-  histogram(new String[]{"W","w-gradient"},new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
+  histogram(Arrays.asList("W","w-gradient"),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
   plotActivations(network);
   try {
     if (network.getParam(DefaultParamInitializer.WEIGHT_KEY).shape().length > 2) {

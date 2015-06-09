@@ -1,7 +1,7 @@
 {
-  INDArray render2=w.dup();
+  INDArray weightRender=w.dup();
   try {
-    render.renderFilters(render2,"currimg.png",(int)Math.sqrt(render2.rows()),(int)Math.sqrt(render2.columns()),10);
+    render.renderFilters(weightRender,"currimg.png",(int)Math.sqrt(weightRender.rows()),(int)Math.sqrt(weightRender.columns()),10);
   }
  catch (  Exception e) {
     e.printStackTrace();

@@ -1,9 +1,8 @@
 {
   Set<String> vars=new TreeSet<>(gradient.gradientForVariable().keySet());
-  Set<String> gradients=new LinkedHashSet<>();
+  List<String> titles=new ArrayList<>(vars);
   for (  String s : vars) {
-    gradients.add(s + "-gradient");
+    titles.add(s + "-gradient");
   }
-  vars.addAll(gradients);
-  histogram(vars.toArray(new String[vars.size()]),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
+  histogram(titles,new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
 }

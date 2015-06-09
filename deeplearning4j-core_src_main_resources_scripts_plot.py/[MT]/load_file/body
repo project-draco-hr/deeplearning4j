@@ -1,2 +1,2 @@
-def from_file(path):
+def load_file(path):
     return loadtxt(path, delimiter=',')

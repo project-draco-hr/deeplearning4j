@@ -1,0 +1,15 @@
+{
+  String fileName=new ClassPathResource("python/plot.py").getFile().getAbsolutePath();
+  try {
+    log.info("Rendering Matrix histograms... ");
+    Process is=Runtime.getRuntime().exec("python " + fileName + " "+ action+ " "+ data);
+    Thread.sleep(10000);
+    is.destroy();
+    log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
+    log.error("Std error " + IOUtils.readLines(is.getErrorStream()).toString());
+  }
+ catch (  IOException e) {
+    log.warn("Image closed");
+    throw new RuntimeException(e);
+  }
+}
