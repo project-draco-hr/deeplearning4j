@@ -1,5 +1,5 @@
 {
-  hist(network,gradient);
+  plotHistograms(network,gradient);
   plotActivations(network);
   FilterRenderer render=new FilterRenderer();
   try {

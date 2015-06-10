@@ -1,8 +1,8 @@
 {
   String fileName=new ClassPathResource("python/plot.py").getFile().getAbsolutePath();
   try {
-    log.info("Rendering Matrix histograms... ");
-    Process is=Runtime.getRuntime().exec("python " + fileName + " "+ action+ " "+ data);
+    log.info("Rendering graphs for data analysis... ");
+    Process is=Runtime.getRuntime().exec("python " + fileName + " "+ action+ " "+ dataPath);
     Thread.sleep(10000);
     is.destroy();
     log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());

@@ -5,6 +5,6 @@
     path[i]=writeMatrix(matrices[i / 2].ravel());
     path[i + 1]=titles.get(i / 2);
   }
-  String data=StringUtils.join(path,",");
-  renderGraph("multi",data);
+  String dataPath=StringUtils.join(path,",");
+  renderGraph(plotType,dataPath);
 }
