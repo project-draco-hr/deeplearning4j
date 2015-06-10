@@ -1,11 +1,11 @@
-def render_plot(values, plot_type='hist', chart_title=''):
-    if (product(values.shape) < 2):
-        values = zeros((3, 3))
+def render_plot(values, plot_type='histogram', chart_title=''):
+    if (np.product(values.shape) < 2):
+        values = np.zeros((3, 3))
         chart_title += '-fake'
-    if ((plot_type == 'hist') or 'multi'):
+    if (plot_type == 'histogram'):
         hist(values)
     else:
         scatter(values)
-    magnitude = (' mm %g ' % mean(fabs(values)))
+    magnitude = (' mm %g ' % np.mean(np.fabs(values)))
     chart_title += (' ' + magnitude)
     title(chart_title)

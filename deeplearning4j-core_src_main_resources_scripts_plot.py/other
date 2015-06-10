@@ -1,7 +1,7 @@
 import math
 from matplotlib.pyplot import hist, title, subplot, scatter
 import matplotlib.pyplot as plt
-from numpy import tanh, fabs, mean, ones, loadtxt, fromfile, zeros, product
+import numpy as np
 from PIL import Image
 import seaborn
 import sys
@@ -12,14 +12,14 @@ if (__name__ == '__main__'):
         sys.exit(1)
     plot_type = sys.argv[1]
     path = sys.argv[2]
-    if (plot_type == 'hbias'):
-        render_hbias(path)
-    elif (plot_type == 'hist'):
-        render_plot(path, plot_type)
-    elif (plot_type == 'multi'):
-        plot_multiple_matrices(path, plot_type)
+    if (plot_type == 'activations'):
+        render_activation_probability(path)
+    elif (plot_type == 'single_matrix'):
+        render_plot(path)
+    elif (plot_type == 'histogram'):
+        plot_matrices(path, plot_type)
     elif (plot_type == 'scatter'):
-        plot_multiple_matrices(path, plot_type)
+        plot_matrices(path, plot_type)
     elif (sys.argv[1] == 'filter'):
         n_rows = int(sys.argv[3])
         n_cols = int(sys.argv[4])

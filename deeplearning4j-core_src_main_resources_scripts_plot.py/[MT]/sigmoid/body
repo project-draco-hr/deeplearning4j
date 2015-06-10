@@ -1,2 +1,2 @@
-def sigmoid(xx):
-    return (0.5 * (1 + tanh((xx / 2.0))))
+def sigmoid(hidden_mean):
+    return (1 / (1 + np.exp((- hidden_mean))))

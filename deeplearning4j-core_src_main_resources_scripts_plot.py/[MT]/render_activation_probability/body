@@ -1,0 +1,3 @@
+def render_activation_probability(dataPath):
+    hidden_mean = load_file(dataPath)
+    Image.fromarray((sigmoid(hidden_mean) * 256)).show()

@@ -2,7 +2,7 @@ def render_filter(path, n_rows, n_cols, data_length):
     X = load_file(path)
     data = math.sqrt(n_rows)
     print ('data ' + str(data))
-    tiled = (ones(((data * n_rows), (data * n_cols)), dtype='unit8') * 51)
+    tiled = (np.ones(((data * n_rows), (data * n_cols)), dtype='unit8') * 51)
     for row in xrange(n_rows):
         for col in xrange(n_cols):
             curr_neuron = col

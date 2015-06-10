@@ -1,9 +1,0 @@
-{
-  INDArray weightRender=w.dup();
-  try {
-    render.renderFilters(weightRender,"currimg.png",(int)Math.sqrt(weightRender.rows()),(int)Math.sqrt(weightRender.columns()),10);
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-  }
-}

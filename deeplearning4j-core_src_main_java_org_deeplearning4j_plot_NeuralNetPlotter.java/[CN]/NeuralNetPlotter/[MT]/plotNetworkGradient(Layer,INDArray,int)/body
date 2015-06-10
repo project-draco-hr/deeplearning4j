@@ -1,15 +1,6 @@
 {
-  graphPlotType("multi",Arrays.asList("W","w-gradient"),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
+  graphPlotType("histogram",Arrays.asList("W","w-gradient"),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
   plotActivations(network);
-  INDArray w=network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
-  try {
-    if (network.getParam(DefaultParamInitializer.WEIGHT_KEY).shape().length > 2) {
-      INDArray render2=w.transpose();
-      render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
-    }
- else     render.renderFilters(w,"currimg.png",(int)Math.sqrt(network.getParam(DefaultParamInitializer.WEIGHT_KEY).rows()),(int)Math.sqrt(network.getParam(DefaultParamInitializer.WEIGHT_KEY).rows()),patchesPerRow);
-  }
- catch (  Exception e) {
-    log.error("Unable to plot filter, continuing...",e);
-  }
+  INDArray weight=network.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  renderFilter(weight,patchesPerRow);
 }

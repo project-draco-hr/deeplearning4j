@@ -1,4 +1,4 @@
-def plot_multiple_matrices(orig_path, plot_type):
+def plot_matrices(orig_path, plot_type=''):
     paths = orig_path.split(',')
     for (idx, path) in enumerate(paths):
         if ((idx % 2) == 0):

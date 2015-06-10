@@ -1,2 +1,2 @@
 def load_file(path):
-    return loadtxt(path, delimiter=',')
+    return np.loadtxt(path, delimiter=',')
