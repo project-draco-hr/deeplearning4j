@@ -7,7 +7,7 @@
       render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
     }
  else {
-      render.renderFilters(w,"currimg.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.columns()),patchesPerRow);
+      render.renderFilters(w,"currimg.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.columns()),10);
     }
   }
  catch (  Exception e) {

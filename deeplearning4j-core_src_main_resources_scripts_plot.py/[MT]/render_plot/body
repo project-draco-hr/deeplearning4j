@@ -4,8 +4,10 @@ def render_plot(values, plot_type='histogram', chart_title=''):
         chart_title += '-fake'
     if (plot_type == 'histogram'):
         hist(values)
-    else:
+    elif 'scatter':
         scatter(values)
+    else:
+        print (('The ' + plot_type) + ' format is not supported. Please choose histogram or scatter.')
     magnitude = (' mm %g ' % np.mean(np.fabs(values)))
     chart_title += (' ' + magnitude)
     title(chart_title)

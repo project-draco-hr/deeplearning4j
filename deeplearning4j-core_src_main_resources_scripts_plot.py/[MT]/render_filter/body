@@ -1,12 +1,11 @@
-def render_filter(path, n_rows, n_cols, data_length):
-    X = load_file(path)
-    data = math.sqrt(n_rows)
-    print ('data ' + str(data))
-    tiled = (np.ones(((data * n_rows), (data * n_cols)), dtype='unit8') * 51)
-    for row in xrange(n_rows):
+def render_filter(data_path, n_rows, n_cols):
+    weight_data = load_file(data_path).reshape((n_rows, n_cols))
+    patch_width = weight_data.shape[1]
+    patch_height = 1
+    filter_frame = np.ones(((n_rows * patch_width), (n_cols * patch_height)), dtype='uint8')
+    for row in xrange(int((n_rows / n_cols))):
         for col in xrange(n_cols):
-            curr_neuron = col
-            patch = X[:, curr_neuron].reshape((data, data))
-            normPatch = ((patch - patch.min()) / ((patch.max() - patch.min()) + 1e-06))
-            tiled[(row * data):((row * data) + data), (col * data):((col * data) + data)] = (normPatch * 255)
-    Image.fromarray(tiled).show()
+            patch = weight_data[((row * n_cols) + col)].reshape((patch_width, patch_height))
+            norm_patch = ((patch - patch.min()) / ((patch.max() - patch.min()) + 1e-06))
+            filter_frame[(row * patch_width):((row * patch_width) + patch_width), (col * patch_height):((col * patch_height) + patch_height)] = (norm_patch * 255)
+    Image.fromarray(filter_frame).show()
