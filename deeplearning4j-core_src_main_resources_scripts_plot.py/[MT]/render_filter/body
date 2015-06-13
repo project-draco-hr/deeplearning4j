@@ -1,4 +1,4 @@
-def render_filter(data_path, n_rows, n_cols):
+def render_filter(data_path, n_rows, n_cols, filename):
     weight_data = load_file(data_path).reshape((n_rows, n_cols))
     patch_width = weight_data.shape[1]
     patch_height = 1
@@ -8,4 +8,6 @@ def render_filter(data_path, n_rows, n_cols):
             patch = weight_data[((row * n_cols) + col)].reshape((patch_width, patch_height))
             norm_patch = ((patch - patch.min()) / ((patch.max() - patch.min()) + 1e-06))
             filter_frame[(row * patch_width):((row * patch_width) + patch_width), (col * patch_height):((col * patch_height) + patch_height)] = (norm_patch * 255)
-    Image.fromarray(filter_frame).show()
+    img = Image.fromarray(filter_frame)
+    img.savefig(filename)
+    img.show()

@@ -1,6 +1,0 @@
-{
-  graphPlotType("histogram",Arrays.asList("W","w-gradient"),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient});
-  plotActivations(network);
-  INDArray weight=network.getParam(DefaultParamInitializer.WEIGHT_KEY);
-  renderFilter(weight);
-}

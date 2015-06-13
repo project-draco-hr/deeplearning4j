@@ -1,0 +1,6 @@
+{
+  INDArray weight=network.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  graphPlotType("histogram",Arrays.asList("W","w-gradient"),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient},localPath + "weightHistograms.png");
+  plotActivations(network);
+  renderFilter(weight,patchesPerRow);
+}

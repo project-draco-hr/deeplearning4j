@@ -5,24 +5,26 @@ import numpy as np
 from PIL import Image
 import seaborn
 import sys
+import time
 '\nOptimization Methods Visualalization\n\nGraph tools to help visualize how optimization is performing\n'
 if (__name__ == '__main__'):
-    if (len(sys.argv) < 3):
+    if (len(sys.argv) < 4):
         print 'Please specify a command: One of hbias,weights,plot and a file path'
         sys.exit(1)
     plot_type = sys.argv[1]
     path = sys.argv[2]
+    filename = sys.argv[3]
     if (plot_type == 'activations'):
-        render_activation_probability(path)
+        render_activation_probability(path, filename)
     elif (plot_type == 'single_matrix'):
         render_plot(path)
     elif (plot_type == 'histogram'):
-        plot_matrices(path, plot_type)
+        plot_matrices(path, plot_type, filename)
     elif (plot_type == 'scatter'):
-        plot_matrices(path, plot_type)
+        plot_matrices(path, plot_type, filename)
     elif (sys.argv[1] == 'filter'):
-        n_rows = int(sys.argv[3])
-        n_cols = int(sys.argv[4])
-        length = int(sys.argv[5])
+        n_rows = int(sys.argv[4])
+        n_cols = int(sys.argv[5])
+        length = int(sys.argv[6])
         print (((('Rendering ' + sys.argv[3]) + ' x ') + sys.argv[4]) + ' matrix')
-        render_filter(path, n_rows, n_cols, length)
+        render_filter(path, n_rows, n_cols, length, filename)

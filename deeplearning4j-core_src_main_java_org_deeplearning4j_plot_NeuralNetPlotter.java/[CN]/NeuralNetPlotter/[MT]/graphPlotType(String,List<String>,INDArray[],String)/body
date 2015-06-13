@@ -6,5 +6,5 @@
     path[i + 1]=titles.get(i / 2);
   }
   String dataPath=StringUtils.join(path,",");
-  renderGraph(plotType,dataPath);
+  renderGraph(plotType,dataPath,saveFilePath);
 }

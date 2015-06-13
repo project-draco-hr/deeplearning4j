@@ -4,10 +4,10 @@
   try {
     if (w.shape().length > 2) {
       INDArray render2=w.transpose();
-      render.renderFilters(render2,"currimg.png",w.columns(),w.rows(),w.slices());
+      render.renderFilters(render2,localPath + "renderFilter.png",w.columns(),w.rows(),w.slices());
     }
  else {
-      render.renderFilters(w,"currimg.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.columns()),10);
+      render.renderFilters(w,localPath + "renderFilter.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.columns()),patchesPerRow);
     }
   }
  catch (  Exception e) {
