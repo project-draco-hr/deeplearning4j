@@ -1,18 +1,6 @@
 {
-  Set<String> vars=new TreeSet<>(gradient.gradientForVariable().keySet());
-  Set<String> gradients=new LinkedHashSet<>();
-  for (  String s : vars) {
-    gradients.add(s + "-gradient");
-  }
-  vars.addAll(gradients);
-  histogram(vars.toArray(new String[vars.size()]),new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)});
+  INDArray weight=network.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  plotWeightHistograms(network,gradient);
   plotActivations(network);
-  FilterRenderer render=new FilterRenderer();
-  try {
-    INDArray w=network.getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
-    render.renderFilters(w,"currimg.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.rows()),patchesPerRow);
-  }
- catch (  Exception e) {
-    log.error("Unable to plot filter, continuing...",e);
-  }
+  renderFilter(weight,patchesPerRow);
 }
