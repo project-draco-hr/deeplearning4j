@@ -1,0 +1,14 @@
+def plot_matrices(orig_path, plot_type, filename):
+    paths = orig_path.split(',')
+    for (idx, path) in enumerate(paths):
+        if ((idx % 2) == 0):
+            title = paths[(idx + 1)]
+            print (('Loading matrix ' + title) + '\n')
+            matrix = load_file(path)
+            subplot(2, (len(paths) / 4), ((idx / 2) + 1))
+            render_plot(matrix, plot_type, chart_title=title)
+    plt.tight_layout()
+    plt.savefig(filename, format='png')
+    plt.show(block=False)
+    time.sleep(15)
+    plt.close()

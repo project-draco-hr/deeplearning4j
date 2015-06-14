@@ -1,10 +1,11 @@
 {
-  File script=new File("/tmp/plot.py");
+  File plotPath=new File(localPath + "plot.py");
   try {
-    List<String> lines=IOUtils.readLines(r.getInputStream());
-    FileUtils.writeLines(script,lines);
+    List<String> lines=IOUtils.readLines(script.getInputStream());
+    FileUtils.writeLines(plotPath,lines);
   }
  catch (  IOException e) {
     throw new IllegalStateException("Unable to load python file");
   }
+  return plotPath.getAbsolutePath();
 }
