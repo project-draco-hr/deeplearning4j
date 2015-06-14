@@ -1,5 +1,7 @@
 {
-  if (rng == null)   rng=Nd4j.getRandom();
+  if (rng == null) {
+    rng=Nd4j.getRandom();
+  }
   MultiDimensionalSet<String,String> binaryProductions=MultiDimensionalSet.hashSet();
   if (simplifiedModel) {
     binaryProductions.add("","");
