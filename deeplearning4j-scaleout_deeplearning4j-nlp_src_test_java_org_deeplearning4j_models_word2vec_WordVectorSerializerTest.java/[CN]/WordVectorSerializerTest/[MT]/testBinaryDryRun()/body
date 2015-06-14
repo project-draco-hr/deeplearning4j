@@ -1,8 +1,12 @@
 {
-  float vector;
+  double vector;
   int words, size;
+  String url="https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz";
   String path="GoogleNews-vectors-negative300.bin.gz";
   File modelFile=new File(path);
+  if (!modelFile.exists()) {
+    FileUtils.copyURLToFile(new URL(url),modelFile);
+  }
   try (BufferedInputStream bis=new BufferedInputStream(GzipUtils.isCompressedFilename(modelFile.getName()) ? new GZIPInputStream(new FileInputStream(modelFile)) : new FileInputStream(modelFile));DataInputStream dis=new DataInputStream(bis)){
     words=Integer.parseInt(WordVectorSerializer.readString(dis));
     size=Integer.parseInt(WordVectorSerializer.readString(dis));
@@ -14,7 +18,8 @@
         continue;
       }
       for (int j=0; j < size; j++) {
-        dis.readFloat();
+        vector=readFloat(dis);
+        System.out.println(vector);
       }
       wordsLoaded++;
       System.out.println("Loaded " + word + " and num words "+ wordsLoaded+ " out of "+ words);
