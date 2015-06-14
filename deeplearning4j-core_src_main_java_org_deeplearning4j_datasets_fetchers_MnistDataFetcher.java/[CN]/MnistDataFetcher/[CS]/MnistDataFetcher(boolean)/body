@@ -13,8 +13,8 @@
   numOutcomes=10;
   this.binarize=binarize;
   totalExamples=NUM_EXAMPLES;
-  cursor=1;
-  man.setCurrent(cursor);
+  cursor=0;
+  man.setCurrent(cursor + 1);
   int[][] image;
   try {
     image=man.readImage();

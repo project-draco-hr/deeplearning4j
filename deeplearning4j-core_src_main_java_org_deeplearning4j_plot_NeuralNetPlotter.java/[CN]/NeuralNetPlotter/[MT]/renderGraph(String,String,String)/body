@@ -1,0 +1,12 @@
+{
+  try {
+    log.info("Rendering " + action + " graphs for data analysis... ");
+    Process is=Runtime.getRuntime().exec("python " + localPlotPath + " "+ action+ " "+ dataPath+ " "+ saveFilePath);
+    log.info("Std out " + IOUtils.readLines(is.getInputStream()).toString());
+    log.error("Std error " + IOUtils.readLines(is.getErrorStream()).toString());
+  }
+ catch (  IOException e) {
+    log.warn("Image closed");
+    throw new RuntimeException(e);
+  }
+}

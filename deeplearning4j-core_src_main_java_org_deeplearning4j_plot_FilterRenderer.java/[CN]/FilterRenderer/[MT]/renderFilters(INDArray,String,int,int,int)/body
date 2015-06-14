@@ -9,13 +9,13 @@
   int filterImgHeight=numPatchRows * (patchHeight + patchBorder);
   img=new BufferedImage(filterImgWidth,filterImgHeight,BufferedImage.TYPE_BYTE_GRAY);
   WritableRaster r=img.getRaster();
-  outer:   for (int col=0; col < data.columns(); col++) {
+  outer:   for (int col=0; col < numberCols; col++) {
     int curX=(col % patchesPerRow) * (patchWidth + patchBorder);
     int curY=col / patchesPerRow * (patchHeight + patchBorder);
     INDArray column=data.getColumn(col);
-    double col_max=column.min(Integer.MAX_VALUE).getDouble(0);
-    double col_min=column.max(Integer.MAX_VALUE).getDouble(0);
-    log.debug("rendering " + column.length() + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
+    double col_min=column.min(Integer.MAX_VALUE).getDouble(0);
+    double col_max=column.max(Integer.MAX_VALUE).getDouble(0);
+    log.debug("Rendering " + column.length() + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
     for (int i=0; i < column.length(); i++) {
       double patch_normal=(column.getScalar(i).getDouble(0) - col_min) / (col_max - col_min + 0.000001f);
       equiv[i]=(int)(255 * patch_normal);
@@ -38,7 +38,7 @@
     saveImageToDisk(img,filename);
     GraphicsEnvironment ge=GraphicsEnvironment.getLocalGraphicsEnvironment();
     if (!ge.isHeadlessInstance()) {
-      log.info("Rendering frame...");
+      log.info("Rendering filter images...");
       JFrame frame=new JFrame();
       frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       FilterPanel panel=new FilterPanel(img);

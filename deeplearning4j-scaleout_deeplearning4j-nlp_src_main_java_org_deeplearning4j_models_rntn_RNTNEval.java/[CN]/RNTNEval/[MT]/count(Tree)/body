@@ -6,5 +6,5 @@
   for (  Tree t : tree.children())   count(t);
   int treeGoldLabel=tree.goldLabel();
   int predictionLabel=Nd4j.getBlasWrapper().iamax(tree.prediction());
-  cf.add(treeGoldLabel,predictionLabel);
+  confusionMatrix.add(treeGoldLabel,predictionLabel);
 }

@@ -1,0 +1,10 @@
+{
+  String[] path=new String[matrices.length * 2];
+  if (titles.size() != matrices.length)   throw new IllegalArgumentException("Titles and matrix lengths must be equal");
+  for (int i=0; i < path.length - 1; i+=2) {
+    path[i]=writeMatrix(matrices[i / 2].ravel());
+    path[i + 1]=titles.get(i / 2);
+  }
+  String dataPath=StringUtils.join(path,",");
+  renderGraph(plotType,dataPath,saveFilePath);
+}

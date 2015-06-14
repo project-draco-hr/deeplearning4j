@@ -1,0 +1,13 @@
+def render_plot(values, plot_type='histogram', chart_title=''):
+    if (np.product(values.shape) < 2):
+        values = np.zeros((3, 3))
+        chart_title += '-fake'
+    if (plot_type == 'histogram'):
+        hist(values)
+    elif 'scatter':
+        scatter(values)
+    else:
+        print (('The ' + plot_type) + ' format is not supported. Please choose histogram or scatter.')
+    magnitude = (' mm %g ' % np.mean(np.fabs(values)))
+    chart_title += (' ' + magnitude)
+    title(chart_title)

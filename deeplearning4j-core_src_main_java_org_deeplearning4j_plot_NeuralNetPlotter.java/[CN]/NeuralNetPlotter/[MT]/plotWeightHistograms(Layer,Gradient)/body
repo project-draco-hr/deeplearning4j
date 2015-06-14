@@ -1,0 +1,8 @@
+{
+  Set<String> vars=new TreeSet<>(gradient.gradientForVariable().keySet());
+  List<String> titles=new ArrayList<>(vars);
+  for (  String s : vars) {
+    titles.add(s + "-gradient");
+  }
+  graphPlotType("histogram",titles,new INDArray[]{network.getParam(DefaultParamInitializer.WEIGHT_KEY),network.getParam(PretrainParamInitializer.BIAS_KEY),network.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.WEIGHT_KEY),gradient.gradientForVariable().get(DefaultParamInitializer.BIAS_KEY),gradient.gradientForVariable().get(PretrainParamInitializer.VISIBLE_BIAS_KEY)},localPath + "weightHistograms.png");
+}
