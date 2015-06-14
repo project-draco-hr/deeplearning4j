@@ -9,7 +9,7 @@
     if (this.layers == null)     this.layers=new Layer[getnLayers()];
     for (int i=0; i < getnLayers(); i++) {
       if (i == 0) {
-        inputSize=layerWiseConfigurations.getConf(0).getnIn();
+        inputSize=layerWiseConfigurations.getConf(0).getNOut();
         if (input == null) {
           input=Nd4j.ones(inputSize);
           layerInput=input;
@@ -19,11 +19,11 @@
       if (i == 0) {
         Layer.Type type=LayerFactories.typeForFactory(layerWiseConfigurations.getConf(i));
         if (type == Layer.Type.FEED_FORWARD) {
-          layerWiseConfigurations.getConf(i).setnIn(inputSize);
-          layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
+          layerWiseConfigurations.getConf(i).setNIn(inputSize);
+          layerWiseConfigurations.getConf(i).setNOut(hiddenLayerSizes[i]);
         }
-        layerWiseConfigurations.getConf(i).setnIn(inputSize);
-        layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
+        layerWiseConfigurations.getConf(i).setNIn(inputSize);
+        layerWiseConfigurations.getConf(i).setNOut(hiddenLayerSizes[i]);
         layers[i]=LayerFactories.getFactory(layerWiseConfigurations.getConf(i)).create(layerWiseConfigurations.getConf(i));
       }
  else       if (i < getLayers().length - 1) {
@@ -31,8 +31,8 @@
         Layer.Type type=LayerFactories.typeForFactory(layerWiseConfigurations.getConf(i));
         if (type == Layer.Type.FEED_FORWARD) {
           numHiddenLayersSizesUsed++;
-          layerWiseConfigurations.getConf(i).setnIn(layerInput.columns());
-          layerWiseConfigurations.getConf(i).setnOut(hiddenLayerSizes[i]);
+          layerWiseConfigurations.getConf(i).setNIn(layerInput.columns());
+          layerWiseConfigurations.getConf(i).setNOut(hiddenLayerSizes[i]);
         }
         layers[i]=LayerFactories.getFactory(layerWiseConfigurations.getConf(i)).create(layerWiseConfigurations.getConf(i),listeners);
       }
@@ -40,7 +40,7 @@
     NeuralNetConfiguration last=layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 1);
     Layer.Type type=LayerFactories.typeForFactory(layerWiseConfigurations.getConf(layerWiseConfigurations.getConfs().size() - 1));
     if (type == Layer.Type.FEED_FORWARD) {
-      last.setnIn(hiddenLayerSizes[hiddenLayerSizes.length - 1]);
+      last.setNIn(hiddenLayerSizes[hiddenLayerSizes.length - 1]);
     }
     this.layers[layers.length - 1]=LayerFactories.getFactory(last).create(last);
     initCalled=true;

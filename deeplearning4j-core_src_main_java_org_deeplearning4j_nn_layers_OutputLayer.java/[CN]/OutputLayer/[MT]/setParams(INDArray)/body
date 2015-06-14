@@ -1,5 +1,5 @@
 {
-  INDArray wParams=params.get(NDArrayIndex.interval(0,conf.getnIn() * conf.getnOut()));
+  INDArray wParams=params.get(NDArrayIndex.interval(0,conf.getNOut() * conf.getNOut()));
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
   W.assign(wParams);
   INDArray bias=getParam(DefaultParamInitializer.BIAS_KEY);

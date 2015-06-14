@@ -1,3 +1,3 @@
 {
-  return processors.get(layer);
+  return this.getProcessors().get(curr);
 }

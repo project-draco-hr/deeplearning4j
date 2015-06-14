@@ -2,6 +2,6 @@
   if (conf.getDropOut() > 0) {
     this.dropoutMask=Nd4j.rand(input.rows(),input.columns()).gt(conf.getDropOut());
   }
- else   if (this.dropoutMask != null)   this.dropoutMask=Nd4j.ones(input.rows(),conf.getnOut());
+ else   if (this.dropoutMask != null)   this.dropoutMask=Nd4j.ones(input.rows(),conf.getNOut());
   if (conf.getDropOut() > 0)   input.linearView().muli(dropoutMask);
 }
