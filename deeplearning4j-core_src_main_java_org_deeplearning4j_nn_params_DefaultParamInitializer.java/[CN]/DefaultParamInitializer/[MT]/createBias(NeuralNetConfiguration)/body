@@ -1,5 +1,5 @@
 {
-  INDArray ret=Nd4j.zeros(conf.getnOut());
+  INDArray ret=Nd4j.zeros(conf.getNOut());
   ret.data().persist();
   return ret;
 }
