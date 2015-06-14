@@ -11,6 +11,10 @@
       momentum=conf.getMomentumAfter().get(key);
     }
   }
+  if (conf.getRmsDecay() > 0) {
+    lastStep.assign(lastStep.mul(conf.getRmsDecay()).addi(Transforms.pow(gradient,2).muli((1 - conf.getRmsDecay()))));
+    gradient=gradient.muli(conf.getLr()).negi().divi(Transforms.sqrt(lastStep.add(Nd4j.EPS_THRESHOLD)));
+  }
   if (conf.isUseAdaGrad())   gradient=adaGrad.getGradient(gradient);
  else   gradient.muli(conf.getLr());
   if (momentum > 0) {
