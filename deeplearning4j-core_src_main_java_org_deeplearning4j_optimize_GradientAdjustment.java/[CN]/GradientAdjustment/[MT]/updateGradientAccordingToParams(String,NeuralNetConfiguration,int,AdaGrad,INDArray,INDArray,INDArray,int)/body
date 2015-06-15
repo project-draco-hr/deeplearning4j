@@ -21,8 +21,8 @@
     gradient=lastStep.mul(momentum).subi(gradient);
     lastStep.assign(gradient);
   }
-  if (conf.isUseRegularization() && conf.getL2() > 0)   gradient.subi(params.mul(conf.getL2() * conf.getLr()));
- else   if (conf.isUseRegularization() && conf.getL1() < 0)   gradient.subi(gradient.mul(Transforms.sign(params)).muli(conf.getL1() * conf.getLr()));
+  if (conf.isUseRegularization() && conf.getL2() > 0 && !variableName.toLowerCase().contains("bias"))   gradient.subi(params.mul(conf.getL2()));
+ else   if (conf.isUseRegularization() && conf.getL1() < 0 && !variableName.toLowerCase().contains("bias"))   gradient.subi(Transforms.sign(params).muli(conf.getL1()));
   if (conf.isConstrainGradientToUnitNorm())   gradient.divi(gradient.norm2(Integer.MAX_VALUE));
   gradient.divi(batchSize);
 }
