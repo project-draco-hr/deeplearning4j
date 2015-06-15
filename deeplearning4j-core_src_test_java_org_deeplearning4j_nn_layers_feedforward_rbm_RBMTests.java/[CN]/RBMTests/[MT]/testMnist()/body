@@ -6,7 +6,7 @@
   fetcher.fetch(10);
   DataSet d2=fetcher.next();
   org.nd4j.linalg.api.rng.distribution.Distribution dist=Nd4j.getDistributions().createNormal(1,1e-5);
-  System.out.println(dist.sample(new int[]{conf.getNOut(),conf.getNOut()}));
+  System.out.println(dist.sample(new int[]{conf.getNIn(),conf.getNOut()}));
   INDArray input=d2.getFeatureMatrix();
   RBM rbm=LayerFactories.getFactory(conf).create(conf,Arrays.<IterationListener>asList(new ComposableIterationListener(new NeuralNetPlotterIterationListener(10),new ScoreIterationListener(5))));
   rbm.fit(input);

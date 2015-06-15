@@ -1,6 +1,8 @@
+String variableName
 NeuralNetConfiguration conf
 int iteration
 AdaGrad adaGrad
 INDArray gradient
 INDArray params
+INDArray lastStep
 int batchSize

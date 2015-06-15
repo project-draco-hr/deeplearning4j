@@ -15,7 +15,10 @@ return input.transpose().mmul(mseDelta.neg());
 case EXPLL:
 return input.transpose().mmul(labels.rsub(1).divi(z));
 case RMSE_XENT:
-return input.transpose().mmul(pow(labels.sub(z),2));
+INDArray rmseXentDiff=labels.sub(z);
+INDArray squaredrmseXentDiff=pow(rmseXentDiff,2.0);
+INDArray sqrt=sqrt(squaredrmseXentDiff);
+return input.transpose().mmul(sqrt);
 case SQUARED_LOSS:
 return input.transpose().mmul(pow(labels.sub(z),2));
 case NEGATIVELOGLIKELIHOOD:

@@ -23,7 +23,7 @@
     }
     for (int k=0; k < getnLayers(); k++) {
       Gradient update=getLayers()[k].calcGradient(errors[k],activations.get(k));
-      GradientAdjustment.updateGradientAccordingToParams(getLayers()[k].conf(),i,update,input.slices(),getLayers()[k].getOptimizer().adaGradForVariables(),getLayers()[k]);
+      GradientAdjustment.updateGradientAccordingToParams(getLayers()[k].conf(),i,update,input.slices(),getLayers()[k].getOptimizer().adaGradForVariables(),getLayers()[k].getOptimizer().getLastStep(),getLayers()[k]);
       getLayers()[k].update(update);
     }
     for (    IterationListener listener : listeners)     listener.iterationDone(getOutputLayer(),i);
