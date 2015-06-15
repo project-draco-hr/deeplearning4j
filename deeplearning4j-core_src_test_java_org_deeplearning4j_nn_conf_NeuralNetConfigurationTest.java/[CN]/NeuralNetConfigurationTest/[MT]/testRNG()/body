@@ -1,0 +1,8 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(trainingSet.numInputs()).nOut(trainingSet.numOutcomes()).weightInit(WeightInit.SIZE).constrainGradientToUnitNorm(true).rng(new DefaultRandom(123)).iterations(3).activationFunction("tanh").visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).build();
+  Layer model=LayerFactories.getFactory(conf).create(conf);
+  INDArray modelWeights=model.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  float[][] weights=new float[][]{{1.5115644931793213f,-1.294399261474609f},{0.28141850233078003f,0.6243384480476379f},{0.9196174144744873f,-0.7969362735748291f}};
+  INDArray exceptedWeights=Nd4j.create(weights);
+  assertEquals(modelWeights,exceptedWeights);
+}
