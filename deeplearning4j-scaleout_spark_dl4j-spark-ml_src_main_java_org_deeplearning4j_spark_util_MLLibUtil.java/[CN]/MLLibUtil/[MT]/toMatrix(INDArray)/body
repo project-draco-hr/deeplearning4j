@@ -1,6 +1,0 @@
-{
-  if (!arr.isMatrix()) {
-    throw new IllegalArgumentException("passed in array must be a matrix");
-  }
-  return Matrices.dense(arr.rows(),arr.columns(),arr.data().asDouble());
-}
