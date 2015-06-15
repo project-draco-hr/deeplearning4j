@@ -1,6 +1,6 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().dist(new NormalDistribution(1,1)).layer(new RBM()).useAdaGrad(false).build();
-  assertFalse(conf.isUseAdaGrad());
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(trainingSet.numInputs()).nOut(trainingSet.numOutcomes()).weightInit(WeightInit.SIZE).iterations(3).useAdaGrad(false).regularization(false).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).build();
+  assertFalse(conf.useRegularization);
   String json=conf.toJson();
   NeuralNetConfiguration read=NeuralNetConfiguration.fromJson(json);
   assertEquals(conf,read);
