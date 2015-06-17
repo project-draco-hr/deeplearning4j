@@ -1,14 +1,15 @@
 {
   INDArray ret;
+  Nd4j.getRandom().setSeed(Nd4j.getRandom().getSeed());
 switch (initScheme) {
 case NORMALIZED:
-    ret=Nd4j.rand(shape);
+    ret=Nd4j.rand(shape,Nd4j.getRandom());
   return ret.subi(0.5).divi(shape[0]);
 case UNIFORM:
 double a=1 / (double)shape[0];
 return Nd4j.rand(shape,-a,a,Nd4j.getRandom());
 case VI:
-ret=Nd4j.rand(shape);
+ret=Nd4j.rand(shape,Nd4j.getRandom());
 int len=0;
 for (int aShape : shape) {
 len+=aShape;
