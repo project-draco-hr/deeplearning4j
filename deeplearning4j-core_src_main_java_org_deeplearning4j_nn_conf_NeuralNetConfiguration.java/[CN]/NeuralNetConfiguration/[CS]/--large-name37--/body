@@ -31,6 +31,7 @@
   this.lossFunction=lossFunction;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
   this.rng=rng;
+  this.seed=seed;
   this.dist=dist;
   this.nIn=nIn;
   this.nOut=nOut;
