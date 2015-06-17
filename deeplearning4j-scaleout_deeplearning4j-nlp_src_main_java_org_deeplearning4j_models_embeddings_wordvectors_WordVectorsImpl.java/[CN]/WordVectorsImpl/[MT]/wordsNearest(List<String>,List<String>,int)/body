@@ -32,6 +32,12 @@
         if (end >= sort.length())         break;
         continue;
       }
+      String add=vocab().wordAtIndex(sort.getInt(i));
+      if (add == null || add.equals("UNK") || add.equals("STOP")) {
+        end++;
+        if (end >= sort.length())         break;
+        continue;
+      }
       ret.add(vocab().wordAtIndex(sort.getInt(i)));
     }
     return ret;
