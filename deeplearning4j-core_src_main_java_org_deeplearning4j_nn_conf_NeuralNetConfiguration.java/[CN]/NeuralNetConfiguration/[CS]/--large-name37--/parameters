@@ -16,6 +16,7 @@ OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
 Random rng
+long seed
 Distribution dist
 int nIn
 int nOut
