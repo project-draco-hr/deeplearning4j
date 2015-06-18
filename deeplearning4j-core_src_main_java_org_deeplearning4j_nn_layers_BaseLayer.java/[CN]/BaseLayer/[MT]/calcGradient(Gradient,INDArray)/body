@@ -1,9 +1,9 @@
 {
   Gradient ret=new DefaultGradient();
   INDArray weightErrorSignal=layerError.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray weightError=weightErrorSignal.transpose().mmul(activation).divi(weightErrorSignal.rows()).transpose();
+  INDArray weightError=weightErrorSignal.transpose().mmul(activation).transpose();
   ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightError);
-  INDArray biasGradient=weightError.sum(0).divi(weightErrorSignal.rows());
+  INDArray biasGradient=weightError.mean(0);
   ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,biasGradient);
   return ret;
 }
