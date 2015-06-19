@@ -15,7 +15,7 @@ WeightInit weightInit
 OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
-Random rng
+DefaultRandom rng
 long seed
 Distribution dist
 int nIn
