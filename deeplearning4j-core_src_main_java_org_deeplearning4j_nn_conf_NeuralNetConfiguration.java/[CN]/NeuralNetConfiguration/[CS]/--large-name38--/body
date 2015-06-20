@@ -30,7 +30,7 @@
   this.optimizationAlgo=optimizationAlgo;
   this.lossFunction=lossFunction;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
-  this.rng=rng;
+  this.rng=null;
   this.seed=seed;
   this.dist=dist;
   this.nIn=nIn;

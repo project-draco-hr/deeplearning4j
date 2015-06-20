@@ -1,6 +1,6 @@
 {
   LinAlgExceptions.assertRows(input,labels);
-  INDArray netOut=output(input);
+  INDArray netOut=activate(input);
   INDArray dy=netOut.sub(labels);
   INDArray wGradient=getWeightGradient();
   INDArray bGradient=dy.mean(0);
