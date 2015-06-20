@@ -1,5 +1,6 @@
 {
   final CountDownLatch c=new CountDownLatch(iterate.size());
+  List<Future<E>> futures=new ArrayList<>();
   for (  final E e : iterate) {
     Future<E> f=Futures.future(new Callable<E>(){
       /** 
@@ -21,11 +22,15 @@
       }
     }
 ,actorSystem.dispatcher());
+    futures.add(f);
   }
-  try {
-    c.await();
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
+  Future<Iterable<E>> seq=Futures.sequence(futures,actorSystem.dispatcher());
+  while (!seq.isCompleted()) {
+    try {
+      Thread.sleep(1000);
+    }
+ catch (    InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 }
