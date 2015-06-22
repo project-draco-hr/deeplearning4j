@@ -8,22 +8,28 @@
   OutputLayer output=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   output.setLabels(labels);
-  Gradient[] errors=new Gradient[getnLayers()];
   for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
     Pair<List<INDArray>,List<INDArray>> zsAndAtivations=zsAndActivations();
     List<INDArray> activations=zsAndAtivations.getSecond();
     List<INDArray> zs=zsAndAtivations.getFirst();
     INDArray outputActivate=activations.get(activations.size() - 1);
-    INDArray ixInitial=outputActivate.sub(labels);
+    INDArray ixInitial=outputActivate.sub(labels).transpose();
     Gradient ix=new DefaultGradient();
-    ix.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,ixInitial);
-    errors[errors.length - 1]=ix;
-    for (int j=getnLayers() - 1; j >= 0; j--) {
-      ix=getLayers()[j].backwardGradient(zs.get(j),ix);
-      errors[j]=ix;
+    INDArray output2=activations.get(activations.size() - 2);
+    ix.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,ixInitial.mmul(output2).transpose());
+    ix.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,ixInitial.transpose());
+    List<Gradient> updates=new ArrayList<>();
+    updates.add(ix);
+    for (int j=getnLayers() - 2; j >= 0; j--) {
+      INDArray z=zs.get(j);
+      Layer nextLayer=getLayers()[j + 1];
+      INDArray currActivation=activations.get(j);
+      ix=getLayers()[j].backwardGradient(z,nextLayer,ix,currActivation);
+      updates.add(ix);
     }
+    Collections.reverse(updates);
     for (int k=0; k < getnLayers(); k++) {
-      Gradient update=getLayers()[k].calcGradient(errors[k],activations.get(k));
+      Gradient update=updates.get(k);
       GradientAdjustment.updateGradientAccordingToParams(getLayers()[k].conf(),i,update,input.slices(),getLayers()[k].getOptimizer().adaGradForVariables(),getLayers()[k].getOptimizer().getLastStep(),getLayers()[k]);
       getLayers()[k].update(update);
     }

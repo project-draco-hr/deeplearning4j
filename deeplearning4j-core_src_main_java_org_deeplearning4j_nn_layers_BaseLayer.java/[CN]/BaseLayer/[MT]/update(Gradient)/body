@@ -1,5 +1,10 @@
 {
   for (  String s : conf.variables()) {
-    if (gradient.gradientForVariable().containsKey(s))     getParam(s).addi(gradient.gradientForVariable().get(s));
+    if (gradient.gradientForVariable().containsKey(s)) {
+      if (s.equals(DefaultParamInitializer.BIAS_KEY) && gradient.gradientForVariable().get(s).rows() > 1) {
+        getParam(s).addi(gradient.gradientForVariable().get(s).mean(1));
+      }
+ else       getParam(s).addi(gradient.gradientForVariable().get(s));
+    }
   }
 }

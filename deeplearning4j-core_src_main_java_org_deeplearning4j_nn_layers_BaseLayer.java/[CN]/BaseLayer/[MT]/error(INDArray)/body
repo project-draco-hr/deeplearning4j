@@ -1,7 +1,7 @@
 {
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
   Gradient nextLayerGradient=new DefaultGradient();
-  INDArray wErrorSignal=errorSignal.mmul(W);
+  INDArray wErrorSignal=errorSignal.mmul(W.transpose());
   nextLayerGradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,wErrorSignal);
   return nextLayerGradient;
 }
