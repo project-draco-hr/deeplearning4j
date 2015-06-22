@@ -8,6 +8,7 @@
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
   TextVectorizer vectorizer=new TfidfVectorizer.Builder().minWords(1).index(index).cache(cache).stopWords(new ArrayList<String>()).tokenize(tokenizerFactory).labels(labels).iterate(iter).build();
   vectorizer.fit();
+  vectorizer.vectorize("",null);
   VocabWord word=vectorizer.vocab().wordFor("file");
   assumeNotNull(word);
   assertEquals(word,vectorizer.vocab().tokenFor("file"));
