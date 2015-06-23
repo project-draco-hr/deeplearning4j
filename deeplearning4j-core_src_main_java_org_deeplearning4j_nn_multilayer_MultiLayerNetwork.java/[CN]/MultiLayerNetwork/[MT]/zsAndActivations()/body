@@ -7,7 +7,7 @@
     currInput=zFromPrevLayer(i,currInput);
     applyDropConnectIfNecessary(currInput);
     zs.add(currInput);
-    activations.add(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(layerWiseConfigurations.getConf(i).getActivationFunction(),currInput)));
+    activations.add(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(layerWiseConfigurations.getConf(i).getActivationFunction(),currInput.dup())));
   }
   return new Pair<>(zs,activations);
 }
