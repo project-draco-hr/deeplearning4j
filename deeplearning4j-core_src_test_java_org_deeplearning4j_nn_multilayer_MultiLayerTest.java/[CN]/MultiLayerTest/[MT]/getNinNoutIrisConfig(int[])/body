@@ -1,0 +1,4 @@
+{
+  MultiLayerConfiguration c=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layer(new RBM()).list(hiddenLayerSizes.length + 1).hiddenLayerSizes(hiddenLayerSizes).override(hiddenLayerSizes.length,new ClassifierOverride()).build();
+  return c;
+}

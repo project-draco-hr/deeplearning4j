@@ -1,0 +1,30 @@
+{
+  int[] hiddenLayerSizes1={13};
+  int[] expNin1={4,13};
+  int[] expNout1={13,3};
+  MultiLayerConfiguration conf1=getNinNoutIrisConfig(hiddenLayerSizes1);
+  MultiLayerNetwork net1=new MultiLayerNetwork(conf1);
+  net1.init();
+  checkNinNoutForEachLayer(expNin1,expNout1,conf1,net1);
+  int[] hiddenLayerSizes2={5,7};
+  int[] expNin2={4,5,7};
+  int[] expNout2={5,7,3};
+  MultiLayerConfiguration conf2=getNinNoutIrisConfig(hiddenLayerSizes2);
+  MultiLayerNetwork net2=new MultiLayerNetwork(conf2);
+  net2.init();
+  checkNinNoutForEachLayer(expNin2,expNout2,conf2,net2);
+  int[] hiddenLayerSizes3={5,7,9};
+  int[] expNin3={4,5,7,9};
+  int[] expNout3={5,7,9,3};
+  MultiLayerConfiguration conf3=getNinNoutIrisConfig(hiddenLayerSizes3);
+  MultiLayerNetwork net3=new MultiLayerNetwork(conf3);
+  net3.init();
+  checkNinNoutForEachLayer(expNin3,expNout3,conf3,net3);
+  int[] hiddenLayerSizes4={5,7,9,11,13,15,17};
+  int[] expNin4={4,5,7,9,11,13,15,17};
+  int[] expNout4={5,7,9,11,13,15,17,3};
+  MultiLayerConfiguration conf4=getNinNoutIrisConfig(hiddenLayerSizes4);
+  MultiLayerNetwork net4=new MultiLayerNetwork(conf4);
+  net4.init();
+  checkNinNoutForEachLayer(expNin4,expNout4,conf4,net4);
+}
