@@ -15,11 +15,11 @@
   output.setLabels(labels);
   for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
     int numLayers=getnLayers() - 1;
-    List<Gradient> weightUpdates=new ArrayList<>();
-    Pair<List<INDArray>,List<INDArray>> zsAndActivations=zsAndActivations();
-    List<INDArray> activations=zsAndActivations.getSecond();
+    List<Gradient> gradientUpdates=new ArrayList<>();
+    Pair<List<INDArray>,List<INDArray>> activationsAndDeriv=feedForwardActivationsAndDerivatives();
+    List<INDArray> activations=activationsAndDeriv.getFirst();
     INDArray outputActivation=activations.get(activations.size() - 1);
-    List<INDArray> derivatives=zsAndActivations.getFirst();
+    List<INDArray> derivatives=activationsAndDeriv.getSecond();
     INDArray activationDeriv=derivatives.get(derivatives.size() - 1);
     INDArray layerInput=activations.get(activations.size() - 2);
     INDArray delta=outputActivation.sub(labels).transpose();
@@ -28,21 +28,21 @@
     }
     nextGradients.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(layerInput).transpose());
     nextGradients.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.transpose());
-    weightUpdates.add(nextGradients);
+    gradientUpdates.add(nextGradients);
     for (int j=numLayers - 1; j >= 0; j--) {
-      INDArray currDerivative=derivatives.get(j);
       INDArray currActivation=activations.get(j);
+      INDArray currDerivative=derivatives.get(j);
       Layer nextLayer=getLayers()[j + 1];
       nextGradients=getLayers()[j].backwardGradient(currDerivative,nextLayer,nextGradients,currActivation);
-      weightUpdates.add(nextGradients);
+      gradientUpdates.add(nextGradients);
     }
-    Collections.reverse(weightUpdates);
+    Collections.reverse(gradientUpdates);
     for (int k=0; k < numLayers; k++) {
       Layer currLayer=getLayers()[k];
-      for (      String paramType : weightUpdates.get(k).gradientForVariable().keySet()) {
-        INDArray gradients=weightUpdates.get(k).getGradientFor(paramType);
-        INDArray adjustedGradient=GradientAdjustment.updateGradientAccordingToParams(i,input.slices(),currLayer.conf(),currLayer.getParam(paramType),gradients,currLayer.getOptimizer().adaGradForVariables().get(paramType),currLayer.getOptimizer().getLastStep().get(paramType));
-        currLayer.update(adjustedGradient,paramType);
+      for (      String paramType : gradientUpdates.get(k).gradientForVariable().keySet()) {
+        INDArray gradient=gradientUpdates.get(k).getGradientFor(paramType);
+        GradientAdjustment.updateGradientAccordingToParams(i,input.slices(),currLayer.conf(),currLayer.getParam(paramType),gradient,currLayer.getOptimizer().adaGradForVariables().get(paramType),currLayer.getOptimizer().getLastStep().get(paramType),paramType);
+        currLayer.update(gradient,paramType);
       }
     }
     for (    IterationListener listener : listeners)     listener.iterationDone(getOutputLayer(),i);
