@@ -1,6 +1,9 @@
 {
   model.setScore();
   Pair<Gradient,Double> pair=model.gradientAndScore();
-  updateGradientAccordingToParams(pair.getFirst(),model,model.batchSize());
+  for (  String paramType : pair.getFirst().gradientForVariable().keySet()) {
+    INDArray adjustedGradient=updateGradientAccordingToParams(pair.getFirst().getGradientFor(paramType),model,model.batchSize(),paramType);
+    pair.getFirst().setGradientFor(paramType,adjustedGradient);
+  }
   return pair;
 }

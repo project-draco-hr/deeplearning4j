@@ -1,10 +1,10 @@
 {
   Gradient ret=new DefaultGradient();
   INDArray nextWeights=nextLayer.getParam(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray nextWeightDelta=nextGradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray weightDelta=nextWeights.mmul(nextWeightDelta.transpose());
-  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightDelta.mmul(derivative).transpose());
   INDArray nextBiasDelta=nextGradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,nextBiasDelta.mmul(derivative).transpose());
+  INDArray weightDelta=nextWeights.mmul(nextBiasDelta.transpose()).transpose();
+  weightDelta.muli(derivative);
+  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightDelta.transpose().mmul(activation).transpose());
+  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,weightDelta);
   return ret;
 }
