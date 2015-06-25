@@ -2,11 +2,13 @@
   INDArray currInput=this.input;
   List<INDArray> activations=new ArrayList<>();
   List<INDArray> derivatives=new ArrayList<>();
+  activations.add(currInput);
   for (int i=0; i < layers.length; i++) {
     currInput=zFromPrevLayer(i,currInput);
     applyDropConnectIfNecessary(currInput);
     activations.add(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(layerWiseConfigurations.getConf(i).getActivationFunction(),currInput.dup())));
     derivatives.add(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(layerWiseConfigurations.getConf(i).getActivationFunction(),currInput.dup()).derivative()));
   }
-  return new Pair<>(derivatives,activations);
+  derivatives.add(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(layerWiseConfigurations.getConf(layers.length - 1).getActivationFunction(),currInput.dup()).derivative()));
+  return new Pair<>(activations,derivatives);
 }
