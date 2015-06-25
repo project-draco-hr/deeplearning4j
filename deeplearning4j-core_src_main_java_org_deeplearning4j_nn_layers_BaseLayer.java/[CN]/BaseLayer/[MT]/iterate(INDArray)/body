@@ -1,5 +1,7 @@
 {
   this.input=input;
   Gradient gradient=gradient();
-  update(gradient);
+  for (  String paramType : gradient.gradientForVariable().keySet()) {
+    update(gradient.getGradientFor(paramType),paramType);
+  }
 }

@@ -1,0 +1,3 @@
+{
+  return GradientAdjustment.updateGradientAccordingToParams(iteration,batchSize,conf,model.getParam(paramType),gradient,adaGradForVariable.get(paramType),lastStep.get(paramType));
+}
