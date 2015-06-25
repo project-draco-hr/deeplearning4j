@@ -1,5 +1,5 @@
 {
   Serialization serialization=SerializationExtension.get(system);
-  Serializer serializer=serialization.findSerializerFor(system);
+  Serializer serializer=serialization.findSerializerFor(test);
   serializer.toBinary(test);
 }
