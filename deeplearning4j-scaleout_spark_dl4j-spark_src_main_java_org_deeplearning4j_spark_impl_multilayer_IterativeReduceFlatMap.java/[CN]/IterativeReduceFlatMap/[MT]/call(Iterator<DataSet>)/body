@@ -1,4 +1,7 @@
 {
+  if (!dataSetIterator.hasNext()) {
+    return Collections.singletonList(Nd4j.zeros(params.value().shape()));
+  }
   List<DataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
     collect.add(dataSetIterator.next());
