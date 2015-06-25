@@ -1,0 +1,12 @@
+{
+  ActorSystem as=ActorSystem.create("testserde");
+  try {
+    testSerialization(as,test);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+ finally {
+    as.shutdown();
+  }
+}
