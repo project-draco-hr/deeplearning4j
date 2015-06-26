@@ -17,11 +17,12 @@
     float[] l1WeightsFloat=asFloat(l1Weights);
     float[] l2WeightsFloat=asFloat(l2Weights);
     float l1BiasFloat=l1Bias.getFloat(0);
-    float[] l2BiasFloat=asFloat(l2Bias);
+    float l2BiasFloat=l2Bias.getFloat(0);
+    float[] l2BiasFloatArray=asFloat(l2Bias);
     float hiddenUnitPreSigmoid=dotProduct(l1WeightsFloat,xFloat) + l1BiasFloat;
     float hiddenUnitPostSigmoid=sigmoid(hiddenUnitPreSigmoid);
     float[] outputPreSoftmax=new float[3];
-    for (int i=0; i < 3; i++)     outputPreSoftmax[i]=hiddenUnitPostSigmoid * l2WeightsFloat[i] + l2BiasFloat[i];
+    for (int i=0; i < 3; i++)     outputPreSoftmax[i]=hiddenUnitPostSigmoid * l2WeightsFloat[i] + l2BiasFloatArray[i];
     float[] outputPostSoftmax=softmax(outputPreSoftmax);
     float[] deltaOut=vectorDifference(outputPostSoftmax,yFloat);
     float deltaHidden=0.0f;
@@ -47,7 +48,7 @@
     float[] expectedL2BiasAfter=new float[3];
     for (int i=0; i < 4; i++)     expectedL1WeightsAfter[i]=l1WeightsFloat[i] - 0.1f * dLdwHidden[i];
     for (int i=0; i < 3; i++)     expectedL2WeightsAfter[i]=l2WeightsFloat[i] - 0.1f * dLdwOut[i];
-    for (int i=0; i < 3; i++)     expectedL2BiasAfter[i]=l2BiasFloat[i] - 0.1f * dLdbOut[i];
+    for (int i=0; i < 3; i++)     expectedL2BiasAfter[i]=l2BiasFloatArray[i] - 0.1f * dLdbOut[i];
     if (printCalculations) {
       System.out.println("Expected L1 weights = " + Arrays.toString(expectedL1WeightsAfter));
       System.out.println("Expected L2 weights = " + Arrays.toString(expectedL2WeightsAfter));
