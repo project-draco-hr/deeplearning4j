@@ -27,7 +27,7 @@
     float[] deltaOut=vectorDifference(outputPostSoftmax,yFloat);
     float deltaHidden=0.0f;
     for (int i=0; i < 3; i++)     deltaHidden+=l2WeightsFloat[i] * deltaOut[i];
-    deltaHidden*=derivOfSigmoid(hiddenUnitPostSigmoid);
+    deltaHidden*=derivOfSigmoid(hiddenUnitPreSigmoid);
     float[] dLdwOut=new float[3];
     for (int i=0; i < dLdwOut.length; i++)     dLdwOut[i]=deltaOut[i] * hiddenUnitPostSigmoid;
     float[] dLdwHidden=new float[4];
