@@ -14,7 +14,7 @@
   ;
   output.setLabels(labels);
   for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
-    int numLayers=getnLayers() - 1;
+    int numLayers=getnLayers();
     List<Gradient> gradientUpdates=new ArrayList<>();
     Pair<List<INDArray>,List<INDArray>> activationsAndDeriv=feedForwardActivationsAndDerivatives();
     List<INDArray> activations=activationsAndDeriv.getFirst();
@@ -29,7 +29,7 @@
     nextGradients.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(layerInput).transpose());
     nextGradients.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.transpose());
     gradientUpdates.add(nextGradients);
-    for (int j=numLayers - 1; j >= 0; j--) {
+    for (int j=numLayers - 2; j >= 0; j--) {
       INDArray currActivation=activations.get(j);
       INDArray currDerivative=derivatives.get(j);
       Layer nextLayer=getLayers()[j + 1];
