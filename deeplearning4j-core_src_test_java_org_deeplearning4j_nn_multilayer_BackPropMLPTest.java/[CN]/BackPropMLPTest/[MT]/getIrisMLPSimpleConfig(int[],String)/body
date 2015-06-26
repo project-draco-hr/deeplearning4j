@@ -1,4 +1,12 @@
 {
-  MultiLayerConfiguration c=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.1)).activationFunction(activationFunction).lossFunction(LossFunction.XENT).optimizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).iterations(1).batchSize(1).constrainGradientToUnitNorm(false).corruptionLevel(0.0).layer(new RBM()).learningRate(0.1).useAdaGrad(false).regularization(false).l1(0.0).l2(0.0).dropOut(0.0).momentum(0.0).applySparsity(false).sparsity(0.0).seed(12345L).list(hiddenLayerSizes.length + 1).hiddenLayerSizes(hiddenLayerSizes).override(hiddenLayerSizes.length,new ClassifierOverride()).backward(true).pretrain(false).useDropConnect(false).build();
+  MultiLayerConfiguration c=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.1)).activationFunction(activationFunction).lossFunction(LossFunction.XENT).optimizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).iterations(1).batchSize(1).constrainGradientToUnitNorm(false).corruptionLevel(0.0).layer(new RBM()).learningRate(0.1).useAdaGrad(false).regularization(false).l1(0.0).l2(0.0).dropOut(0.0).momentum(0.0).applySparsity(false).sparsity(0.0).seed(12345L).list(hiddenLayerSizes.length + 1).hiddenLayerSizes(hiddenLayerSizes).backward(true).pretrain(false).useDropConnect(false).override(hiddenLayerSizes.length,new ConfOverride(){
+    @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
+      builder.activationFunction("softmax");
+      builder.layer(new OutputLayer());
+      builder.weightInit(WeightInit.DISTRIBUTION);
+      builder.dist(new NormalDistribution(0,0.1));
+    }
+  }
+).build();
   return c;
 }

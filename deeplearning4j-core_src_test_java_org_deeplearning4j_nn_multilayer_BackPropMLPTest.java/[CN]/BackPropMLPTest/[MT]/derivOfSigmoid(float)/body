@@ -1,3 +1,4 @@
 {
-  return (float)(Math.exp(in) / Math.pow(1 + Math.exp(in),2.0));
+  float v=in * (1 - in);
+  return v;
 }

@@ -1,0 +1,33 @@
+{
+  if (adaGrad == null)   adaGrad=new AdaGrad(params.shape());
+  if (lastStep == null)   lastStep=Nd4j.ones((params.shape()));
+  if (iteration != 0 && conf.getResetAdaGradIterations() > 0 && iteration % conf.getResetAdaGradIterations() == 0) {
+    adaGrad.historicalGradient=null;
+    log.info("Resetting adagrad");
+  }
+  double momentum=conf.getMomentum();
+  if (conf.getMomentumAfter() != null && !conf.getMomentumAfter().isEmpty()) {
+    int key=conf.getMomentumAfter().keySet().iterator().next();
+    if (iteration >= key) {
+      momentum=conf.getMomentumAfter().get(key);
+    }
+  }
+  if (conf.getRmsDecay() > 0) {
+    lastStep.assign(lastStep.mul(conf.getRmsDecay()).addi(Transforms.pow(gradient,2).muli((1 - conf.getRmsDecay()))));
+    gradient=gradient.mul(conf.getLr()).negi().divi(Transforms.sqrt(lastStep.add(Nd4j.EPS_THRESHOLD)));
+  }
+  if (conf.isUseAdaGrad()) {
+    gradient=adaGrad.getGradient(gradient);
+  }
+ else {
+    gradient.muli(conf.getLr());
+  }
+  if (momentum > 0) {
+    gradient=lastStep.mul(momentum).subi(gradient);
+    lastStep.assign(gradient);
+  }
+  if (conf.isUseRegularization() && conf.getL2() > 0 && !(gradient.equals(DefaultParamInitializer.BIAS_KEY)))   gradient.subi(params.mul(conf.getL2()));
+ else   if (conf.isUseRegularization() && conf.getL1() < 0 && !(gradient.equals(DefaultParamInitializer.BIAS_KEY)))   gradient.subi(Transforms.sign(params).muli(conf.getL1()));
+  if (conf.isConstrainGradientToUnitNorm())   gradient.divi(gradient.norm2(Integer.MAX_VALUE));
+  gradient.divi(batchSize);
+}

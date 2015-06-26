@@ -1,11 +1,10 @@
 {
-  INDArray wt=nextLayer.getParam(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray delta=nextGradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  INDArray wLoss=wt.mmul(delta.transpose()).transpose();
-  INDArray deriv=derivativeActivation(z);
-  wLoss.muli(deriv);
   Gradient ret=new DefaultGradient();
-  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,wLoss);
-  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,wLoss.transpose().mmul(activation).transpose());
+  INDArray nextWeights=nextLayer.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray nextDelta=nextGradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
+  INDArray delta=nextWeights.mmul(nextDelta.transpose()).transpose();
+  delta.muli(derivative);
+  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.transpose().mmul(activation).transpose());
+  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta);
   return ret;
 }
