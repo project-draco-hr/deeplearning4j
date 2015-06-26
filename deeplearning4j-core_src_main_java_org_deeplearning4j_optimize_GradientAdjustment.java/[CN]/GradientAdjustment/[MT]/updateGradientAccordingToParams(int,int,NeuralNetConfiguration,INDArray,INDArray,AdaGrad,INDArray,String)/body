@@ -29,7 +29,5 @@
   if (conf.isUseRegularization() && conf.getL2() > 0 && !(gradient.equals(DefaultParamInitializer.BIAS_KEY)))   gradient.subi(params.mul(conf.getL2()));
  else   if (conf.isUseRegularization() && conf.getL1() < 0 && !(gradient.equals(DefaultParamInitializer.BIAS_KEY)))   gradient.subi(Transforms.sign(params).muli(conf.getL1()));
   if (conf.isConstrainGradientToUnitNorm())   gradient.divi(gradient.norm2(Integer.MAX_VALUE));
-  if (paramType.contains("W")) {
-    gradient.divi(batchSize);
-  }
+  gradient.divi(batchSize);
 }
