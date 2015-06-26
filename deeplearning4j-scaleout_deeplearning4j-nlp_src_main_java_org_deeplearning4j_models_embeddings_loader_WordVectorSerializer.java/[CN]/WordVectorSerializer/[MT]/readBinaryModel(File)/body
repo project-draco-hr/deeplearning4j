@@ -2,7 +2,6 @@
   InMemoryLookupTable lookupTable;
   VocabCache cache;
   INDArray syn0;
-  float vector;
   int words, size;
   try (BufferedInputStream bis=new BufferedInputStream(GzipUtils.isCompressedFilename(modelFile.getName()) ? new GZIPInputStream(new FileInputStream(modelFile)) : new FileInputStream(modelFile));DataInputStream dis=new DataInputStream(bis)){
     words=Integer.parseInt(readString(dis));
@@ -17,10 +16,11 @@
       if (word.isEmpty()) {
         continue;
       }
+      float[] vector=new float[size];
       for (int j=0; j < size; j++) {
-        vector=readFloat(dis);
-        syn0.put(i,j,vector);
+        vector[j]=readFloat(dis);
       }
+      syn0.putRow(i,Transforms.unitVec(Nd4j.create(vector)));
       cache.addWordToIndex(cache.numWords(),word);
       cache.addToken(new VocabWord(1,word));
       cache.putVocabWord(word);

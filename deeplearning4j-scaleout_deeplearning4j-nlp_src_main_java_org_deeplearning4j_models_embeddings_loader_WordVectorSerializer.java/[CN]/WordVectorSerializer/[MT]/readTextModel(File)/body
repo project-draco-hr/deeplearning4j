@@ -16,9 +16,11 @@
     if (word.isEmpty()) {
       continue;
     }
+    float[] vector=new float[split.length - 1];
     for (int i=1; i < split.length; i++) {
-      syn0.put(currLine,i - 1,Float.parseFloat(split[i]));
+      vector[i]=Float.parseFloat(split[i]);
     }
+    syn0.putRow(currLine,Transforms.unitVec(Nd4j.create(vector)));
     cache.addWordToIndex(cache.numWords(),word);
     cache.addToken(new VocabWord(1,word));
     cache.putVocabWord(word);
