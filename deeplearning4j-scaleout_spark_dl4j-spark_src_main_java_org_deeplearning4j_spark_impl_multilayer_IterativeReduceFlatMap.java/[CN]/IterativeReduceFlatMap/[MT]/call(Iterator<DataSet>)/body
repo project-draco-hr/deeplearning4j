@@ -7,6 +7,7 @@
     collect.add(dataSetIterator.next());
   }
   DataSet data=DataSet.merge(collect);
+  log.debug("Training on " + data.labelCounts());
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
   INDArray val=params.value();
