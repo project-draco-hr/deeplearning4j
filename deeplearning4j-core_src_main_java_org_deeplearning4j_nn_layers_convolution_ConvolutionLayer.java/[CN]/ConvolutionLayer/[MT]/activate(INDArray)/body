@@ -1,4 +1,7 @@
 {
+  if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect()) {
+    input=input.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(input.shape()));
+  }
   int currentFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
   int inputChannels=ConvolutionUtils.numChannels(input.shape());
   INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),currentFeatureMaps},conf.getFeatureMapSize()));
