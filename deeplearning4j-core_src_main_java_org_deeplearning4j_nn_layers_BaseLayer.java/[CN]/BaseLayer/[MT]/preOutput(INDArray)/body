@@ -1,6 +1,7 @@
 {
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
-  this.input=x;
+  this.input=x.dup();
+  applyDropOutIfNecessary(x);
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
   INDArray ret=input().mmul(W).addiRowVector(b);
