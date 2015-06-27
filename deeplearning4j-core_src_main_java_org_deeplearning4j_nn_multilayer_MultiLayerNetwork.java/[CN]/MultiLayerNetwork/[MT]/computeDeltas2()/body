@@ -15,7 +15,6 @@
   for (int i=weights.size() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(ix);
     preCons[i]=Transforms.pow(activations.get(i).transpose(),2).mmul(Transforms.pow(ix,2)).muli(labels.slices());
-    applyDropConnectIfNecessary(deltas[i]);
     if (i > 0) {
       ix=ix.mmul(weights.get(i).transpose()).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(activationFunctions.get(i - 1),activations.get(i)).derivative()));
     }
