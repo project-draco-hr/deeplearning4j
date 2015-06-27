@@ -1,5 +1,10 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
+  if (conf.isUseDropConnect()) {
+    if (conf.getDropOut() > 0) {
+      W=W.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(W.shape()));
+    }
+  }
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   if (conf.getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W).addiRowVector(hBias);

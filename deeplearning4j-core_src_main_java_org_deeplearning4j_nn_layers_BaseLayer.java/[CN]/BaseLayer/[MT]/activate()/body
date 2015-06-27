@@ -1,6 +1,11 @@
 {
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  if (conf.isUseDropConnect()) {
+    if (conf.getDropOut() > 0) {
+      W=W.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(W.shape()));
+    }
+  }
   INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),input().mmul(W).addiRowVector(b)));
   return ret;
 }
