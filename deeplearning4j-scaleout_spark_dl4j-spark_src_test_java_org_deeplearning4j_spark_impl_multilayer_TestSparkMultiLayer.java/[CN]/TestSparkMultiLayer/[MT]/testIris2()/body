@@ -20,4 +20,5 @@
   writeTo.delete();
   Evaluation evaluation=new Evaluation();
   evaluation.eval(d.getLabels(),network2.output(d.getFeatureMatrix()));
+  System.out.println(evaluation.stats());
 }
