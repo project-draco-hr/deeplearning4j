@@ -1,5 +1,5 @@
 {
   LinAlgExceptions.assertRows(input,labels);
   INDArray output=output(input);
-  score=LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
+  score=-LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
 }

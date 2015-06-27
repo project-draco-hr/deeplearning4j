@@ -1,8 +1,9 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.GRADIENT_DESCENT).activationFunction("softmax").iterations(100).weightInit(WeightInit.ZERO).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).activationFunction("softmax").iterations(5).weightInit(WeightInit.XAVIER).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
   OutputLayer l=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1)));
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next();
+  next.shuffle();
   SplitTestAndTrain trainTest=next.splitTestAndTrain(110);
   trainTest.getTrain().normalizeZeroMeanZeroUnitVariance();
   l.fit(trainTest.getTrain());
