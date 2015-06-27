@@ -1,5 +1,5 @@
 {
-  setInput(examples);
+  setInput(examples.dup());
   if (layerWiseConfigurations.isPretrain()) {
     pretrain(getInput());
     finetune(labels);

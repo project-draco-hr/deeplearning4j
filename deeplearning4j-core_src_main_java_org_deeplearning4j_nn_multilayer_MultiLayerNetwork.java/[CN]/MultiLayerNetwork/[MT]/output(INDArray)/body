@@ -1,4 +1,3 @@
 {
-  List<INDArray> activations=feedForward(x);
-  return activations.get(activations.size() - 1);
+  return output(x,false);
 }

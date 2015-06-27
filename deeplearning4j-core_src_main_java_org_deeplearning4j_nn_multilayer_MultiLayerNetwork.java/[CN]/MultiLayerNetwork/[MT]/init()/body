@@ -2,7 +2,7 @@
   if (layerWiseConfigurations == null || layers == null)   intializeConfigurations();
   if (initCalled)   return;
   INDArray layerInput=input();
-  int inputSize=0;
+  int inputSize;
   if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
   int[] hiddenLayerSizes=layerWiseConfigurations.getHiddenLayerSizes();
   int numHiddenLayersSizesUsed=0;

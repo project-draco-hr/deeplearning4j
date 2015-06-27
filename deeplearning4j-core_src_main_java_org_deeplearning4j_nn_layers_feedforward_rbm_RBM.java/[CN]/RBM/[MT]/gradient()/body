@@ -17,9 +17,9 @@
   }
   INDArray wGradient=input().transposei().mmul(probHidden.getSecond()).subi(nvSamples.transposei().mmul(nhMeans));
   INDArray hBiasGradient;
-  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).mean(0);
- else   hBiasGradient=probHidden.getSecond().sub(nhMeans).mean(0);
-  INDArray vBiasGradient=input.sub(nvSamples).mean(0);
+  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).sum(0);
+ else   hBiasGradient=probHidden.getSecond().sub(nhMeans).sum(0);
+  INDArray vBiasGradient=input.sub(nvSamples).sum(0);
   Gradient ret=new DefaultGradient();
   ret.gradientForVariable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
   ret.gradientForVariable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
