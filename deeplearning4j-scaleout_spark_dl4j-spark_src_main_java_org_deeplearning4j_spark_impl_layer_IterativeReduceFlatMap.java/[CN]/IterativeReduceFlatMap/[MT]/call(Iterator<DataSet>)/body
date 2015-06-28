@@ -1,0 +1,23 @@
+{
+  if (!dataSetIterator.hasNext()) {
+    return Collections.singletonList(Nd4j.zeros(params.value().shape()));
+  }
+  List<DataSet> collect=new ArrayList<>();
+  while (dataSetIterator.hasNext()) {
+    collect.add(dataSetIterator.next());
+  }
+  DataSet data=DataSet.merge(collect);
+  log.debug("Training on " + data.labelCounts());
+  NeuralNetConfiguration conf=NeuralNetConfiguration.fromJson(json);
+  LayerFactory layerFactory=LayerFactories.getFactory(conf.getLayer());
+  Layer network=layerFactory.create(conf);
+  INDArray val=params.value();
+  if (val.length() != network.numParams())   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
+  network.setParams(val);
+  if (network instanceof OutputLayer) {
+    OutputLayer o=(OutputLayer)network;
+    o.fit(data);
+  }
+ else   network.fit(data.getFeatureMatrix());
+  return Collections.singletonList(network.params());
+}

@@ -1,7 +1,11 @@
 {
   try {
     Layer network=(Layer)this.network;
-    network.fit(v1.getFeatureMatrix());
+    if (network instanceof OutputLayer) {
+      OutputLayer o=(OutputLayer)network;
+      o.fit(v1);
+    }
+ else     network.fit(v1.getFeatureMatrix());
     return network.params();
   }
  catch (  Exception e) {

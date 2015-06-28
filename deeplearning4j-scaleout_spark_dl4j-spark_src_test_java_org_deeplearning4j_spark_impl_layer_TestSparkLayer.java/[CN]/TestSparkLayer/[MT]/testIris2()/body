@@ -1,0 +1,20 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).activationFunction("softmax").iterations(10).weightInit(WeightInit.XAVIER).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
+  System.out.println("Initializing network");
+  SparkDl4jLayer master=new SparkDl4jLayer(sc,conf);
+  DataSet d=new IrisDataSetIterator(150,150).next();
+  d.normalizeZeroMeanZeroUnitVariance();
+  d.shuffle();
+  List<DataSet> next=d.asList();
+  JavaRDD<DataSet> data=sc.parallelize(next);
+  OutputLayer network2=(OutputLayer)master.fitDataSet(data);
+  INDArray params=network2.params();
+  File writeTo=new File(UUID.randomUUID().toString());
+  Nd4j.writeTxt(params,writeTo.getAbsolutePath(),",");
+  INDArray load=Nd4j.readTxt(writeTo.getAbsolutePath(),",");
+  assertEquals(params,load);
+  writeTo.delete();
+  Evaluation evaluation=new Evaluation();
+  evaluation.eval(d.getLabels(),network2.output(d.getFeatureMatrix()));
+  System.out.println(evaluation.stats());
+}
