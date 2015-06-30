@@ -1,0 +1,7 @@
+{
+  if (this == o)   return true;
+  if (o == null || getClass() != o.getClass())   return false;
+  ModelAndGradient that=(ModelAndGradient)o;
+  if (gradient != null ? !gradient.equals(that.gradient) : that.gradient != null)   return false;
+  return !(model != null ? !model.equals(that.model) : that.model != null);
+}

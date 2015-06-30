@@ -1,4 +1,9 @@
 {
+  SimpleModule module=new SimpleModule();
+  module.addSerializer(Gradient.class,new GradientSerializer());
+  module.addSerializer(Model.class,new ModelSerializer());
+  module.addSerializer(INDArray.class,new VectorSerializer());
+  bootstrap.getObjectMapper().registerModule(module);
   bootstrap.addBundle(new ViewBundle<UIConfiguration>(){
     @Override public ImmutableMap<String,ImmutableMap<String,String>> getViewConfiguration(    UIConfiguration arg0){
       return ImmutableMap.of();

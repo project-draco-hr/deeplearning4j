@@ -1,0 +1,12 @@
+{
+  jsonGenerator.writeStartObject();
+  for (  Map.Entry<String,INDArray> entry : gradient.gradientForVariable().entrySet()) {
+    jsonGenerator.writeArrayFieldStart(entry.getKey());
+    INDArray view=entry.getValue().linearView();
+    for (int i=0; i < view.length(); i++) {
+      jsonGenerator.writeNumber(view.getDouble(i));
+    }
+    jsonGenerator.writeEndArray();
+  }
+  jsonGenerator.writeEndObject();
+}
