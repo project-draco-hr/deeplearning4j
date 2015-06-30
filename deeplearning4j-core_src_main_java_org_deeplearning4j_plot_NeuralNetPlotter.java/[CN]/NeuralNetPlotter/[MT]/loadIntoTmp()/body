@@ -1,5 +1,5 @@
 {
-  File plotPath=new File(localPath + "plot.py");
+  File plotPath=new File(localPath,"plot.py");
   try {
     List<String> lines=IOUtils.readLines(script.getInputStream());
     FileUtils.writeLines(plotPath,lines);

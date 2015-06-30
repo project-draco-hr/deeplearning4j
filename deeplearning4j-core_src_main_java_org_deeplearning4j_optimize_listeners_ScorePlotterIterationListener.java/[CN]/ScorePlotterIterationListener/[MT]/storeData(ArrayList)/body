@@ -1,6 +1,6 @@
 {
   try {
-    String filePath=System.getProperty("java.io.tmpdir") + File.separator + UUID.randomUUID().toString();
+    String filePath=System.getProperty("java.io.tmpdir") + File.separator + ID_FOR_SESSION;
     File write=new File(filePath);
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(write,true));
     write.deleteOnExit();
@@ -14,7 +14,7 @@
     bos.write(line.getBytes());
     bos.flush();
     bos.close();
-    return filePath + ",loss";
+    return filePath + "-loss";
   }
  catch (  IOException e) {
     throw new RuntimeException(e);
