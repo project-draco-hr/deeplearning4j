@@ -10,5 +10,5 @@ def plot_matrices(orig_path, plot_type, filename):
     plt.tight_layout()
     plt.savefig(filename, format='png')
     plt.show(block=False)
-    time.sleep(5)
+    time.sleep(GLOBAL_TIME)
     plt.close()

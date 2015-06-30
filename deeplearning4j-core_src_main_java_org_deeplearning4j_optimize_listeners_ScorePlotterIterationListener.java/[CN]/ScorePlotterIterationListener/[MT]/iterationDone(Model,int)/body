@@ -1,0 +1,7 @@
+{
+  scores.add(-model.score());
+  if (iteration == 0 && renderFirst || iteration > 0 && iteration % this.iterations == 0) {
+    String filePath=storeData(scores);
+    plotter.plotLossFunction(filePath);
+  }
+}
