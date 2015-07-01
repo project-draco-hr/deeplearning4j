@@ -14,5 +14,5 @@
     String variable=network.conf().variables().get(i);
     variablesAndGradients[count++]=gradient.getGradientFor(variable);
   }
-  graphPlotType("histogram",titles,variablesAndGradients,graphFilePath + "weightHistograms.png");
+  graphPlotType("histogram",titles,variablesAndGradients,layerGraphFilePath + "weightHistograms.png");
 }

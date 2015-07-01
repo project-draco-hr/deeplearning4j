@@ -1,5 +1,5 @@
 {
-  graphPlotType("histogram",Arrays.asList("W","w-gradient"),new INDArray[]{layer.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient},graphFilePath + "weightHistograms.png");
+  graphPlotType("histogram",Arrays.asList("W","w-gradient"),new INDArray[]{layer.getParam(DefaultParamInitializer.WEIGHT_KEY),gradient},layerGraphFilePath + "weightHistograms.png");
   plotActivations(layer);
   renderFilter(layer,patchesPerRow);
 }
