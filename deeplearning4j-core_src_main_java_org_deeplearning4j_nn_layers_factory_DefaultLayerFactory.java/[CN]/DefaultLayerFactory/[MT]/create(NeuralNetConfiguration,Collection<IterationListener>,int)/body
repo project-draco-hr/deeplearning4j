@@ -1,6 +1,7 @@
 {
   Layer ret=getInstance(conf);
   ret.setIterationListeners(iterationListeners);
+  ret.setIndex(index);
   Map<String,INDArray> params=getParams(conf);
   ret.setParamTable(params);
   ret.setConf(conf);
