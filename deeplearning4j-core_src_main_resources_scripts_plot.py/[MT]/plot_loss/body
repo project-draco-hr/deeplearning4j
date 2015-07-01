@@ -1,9 +1,8 @@
 def plot_loss(dataPath, filename):
-    (path, chart_title) = dataPath.split(',')
+    print 'Rendering Loss Function graph...'
     values = load_file(path)
-    print (('Loading matrix ' + chart_title) + '\n')
     plt.plot(values, 'b')
-    plt.title(chart_title)
+    plt.title('Loss Function Plot')
     plt.savefig(filename, format='png')
     plt.show(block=False)
     time.sleep(GLOBAL_TIME)

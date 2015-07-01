@@ -1,6 +1,5 @@
 {
-  INDArray weight=layer.getParam(DefaultParamInitializer.WEIGHT_KEY);
   plotWeightHistograms(layer,gradient);
   plotActivations(layer);
-  renderFilter(weight,patchesPerRow);
+  renderFilter(layer,patchesPerRow);
 }

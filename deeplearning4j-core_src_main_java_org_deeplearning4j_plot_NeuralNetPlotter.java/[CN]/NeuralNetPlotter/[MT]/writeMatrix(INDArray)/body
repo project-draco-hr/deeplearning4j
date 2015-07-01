@@ -1,7 +1,7 @@
 {
   try {
-    String filePath=System.getProperty("java.io.tmpdir") + File.separator + UUID.randomUUID().toString();
-    File write=new File(filePath);
+    String tmpFilePath=dataFilePath + UUID.randomUUID().toString();
+    File write=new File(tmpFilePath);
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(write,true));
     write.deleteOnExit();
     for (int i=0; i < matrix.rows(); i++) {
@@ -17,7 +17,7 @@
       bos.flush();
     }
     bos.close();
-    return filePath;
+    return tmpFilePath;
   }
  catch (  IOException e) {
     throw new RuntimeException(e);

@@ -2,7 +2,5 @@ def render_activation_probability(dataPath, filename):
     hidden_mean = load_file(dataPath)
     img = Image.fromarray((sigmoid(hidden_mean) * 256))
     if (img.mode != 'RGB'):
-        new_img = img.convert('RGB')
-    new_img.save(filename, 'PNG')
-    new_img.show()
-    new_img.close()
+        img = img.convert('RGB')
+    img.save(filename, 'PNG')

@@ -1,7 +1,8 @@
 {
   try {
-    String filePath=System.getProperty("java.io.tmpdir") + File.separator + ID_FOR_SESSION;
-    File write=new File(filePath);
+    String filePath=plotter.getDataFilePath();
+    String tmpFilePath=UUID.randomUUID().toString();
+    File write=new File(filePath,tmpFilePath);
     BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(write,true));
     write.deleteOnExit();
     StringBuilder sb=new StringBuilder();
@@ -14,7 +15,7 @@
     bos.write(line.getBytes());
     bos.flush();
     bos.close();
-    return filePath + "-loss";
+    return filePath + tmpFilePath;
   }
  catch (  IOException e) {
     throw new RuntimeException(e);
