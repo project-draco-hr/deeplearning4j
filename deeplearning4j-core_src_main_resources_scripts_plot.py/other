@@ -7,7 +7,7 @@ import seaborn
 import sys
 import time
 '\nOptimization Methods Visualalization\n\nGraph tools to help visualize how optimization is performing\n'
-GLOBAL_TIME = 3
+GLOBAL_TIME = 2
 if (__name__ == '__main__'):
     if (len(sys.argv) < 4):
         print 'Please specify a command: One of hbias,weights,plot and a file path'
@@ -24,7 +24,9 @@ if (__name__ == '__main__'):
     elif (plot_type == 'scatter'):
         plot_matrices(path, plot_type, filename)
     elif (plot_type == 'loss'):
-        plot_loss(path, filename)
+        plot_single_graph(path, plot_type, filename)
+    elif (plot_type == 'accuracy'):
+        plot_single_graph(path, plot_type, filename)
     elif (sys.argv[1] == 'filter'):
         filter_width = int(sys.argv[4])
         filter_height = int(sys.argv[5])

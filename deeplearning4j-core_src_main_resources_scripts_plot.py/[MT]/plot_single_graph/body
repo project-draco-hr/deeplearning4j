@@ -1,8 +1,8 @@
-def plot_loss(dataPath, filename):
-    print 'Rendering Loss Function graph...'
+def plot_single_graph(path, chart_title, filename):
+    print (('Graphing ' + chart_title) + '\n')
     values = load_file(path)
     plt.plot(values, 'b')
-    plt.title('Loss Function Plot')
+    plt.title(chart_title)
     plt.savefig(filename, format='png')
     plt.show(block=False)
     time.sleep(GLOBAL_TIME)
