@@ -1,0 +1,22 @@
+{
+  try {
+    String tmpFilePath=dataFilePath + UUID.randomUUID().toString();
+    File write=new File(tmpFilePath);
+    BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(write,true));
+    write.deleteOnExit();
+    StringBuilder sb=new StringBuilder();
+    for (    Object value : data) {
+      sb.append(String.format("%.10f",(Double)value));
+      sb.append(",");
+    }
+    String line=sb.toString();
+    line=line.substring(0,line.length() - 1);
+    bos.write(line.getBytes());
+    bos.flush();
+    bos.close();
+    return tmpFilePath;
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

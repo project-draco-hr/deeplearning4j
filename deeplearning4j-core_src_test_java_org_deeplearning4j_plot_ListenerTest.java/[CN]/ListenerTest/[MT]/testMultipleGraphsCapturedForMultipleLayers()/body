@@ -1,0 +1,10 @@
+{
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisSimpleConfig(new int[]{10,5},"sigmoid",5));
+  network.init();
+  IterationListener listener=new GradientPlotterIterationListener(4);
+  IterationListener listener2=new LossPlotterIterationListener(4);
+  network.setListeners(Arrays.asList(listener,listener2));
+  while (irisIter.hasNext())   network.fit(irisIter.next());
+  assertNotNull(network.getListeners().get(1).toString());
+  assertEquals(listener2.invoked(),true);
+}

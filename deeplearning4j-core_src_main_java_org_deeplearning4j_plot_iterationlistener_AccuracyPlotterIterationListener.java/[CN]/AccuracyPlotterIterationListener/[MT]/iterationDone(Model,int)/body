@@ -1,0 +1,9 @@
+{
+  double iterationAccuracy=this.calculateAccuracy();
+  accuracy.add(iterationAccuracy);
+  if (epochs == 0 && renderFirst || epochs > 0 && epochs % this.epochs == 0) {
+    this.invoke();
+    String dataFilePath=plotter.writeArray(accuracy);
+    plotter.renderGraph("accuracy",dataFilePath,plotter.getLayerGraphFilePath() + "accuracy.png");
+  }
+}
