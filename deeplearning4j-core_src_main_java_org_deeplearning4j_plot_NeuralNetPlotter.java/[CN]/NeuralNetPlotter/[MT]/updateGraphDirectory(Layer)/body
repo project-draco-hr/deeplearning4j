@@ -1,0 +1,10 @@
+{
+  String layerType=layer.getClass().toString();
+  String[] layerPath=layerType.split("\\.");
+  String layerName=Integer.toString(layer.getIndex()) + layerPath[layerPath.length - 1];
+  String newPath=graphFilePath + File.separator + layerName+ File.separator;
+  if (!new File(newPath).exists()) {
+    setupDirectory(newPath);
+    setLayerGraphFilePath(newPath);
+  }
+}

@@ -1,11 +1,18 @@
 {
-  File plotPath=new File(localPath + "plot.py");
-  try {
-    List<String> lines=IOUtils.readLines(script.getInputStream());
-    FileUtils.writeLines(plotPath,lines);
-  }
- catch (  IOException e) {
-    throw new IllegalStateException("Unable to load python file");
+  setupDirectory(dataFilePath);
+  setupDirectory(graphFilePath);
+  printDataFilePath();
+  printGraphFilePath();
+  File plotPath=new File(graphPath,"plot.py");
+  plotPath.deleteOnExit();
+  if (!plotPath.exists()) {
+    try {
+      List<String> lines=IOUtils.readLines(script.getInputStream());
+      FileUtils.writeLines(plotPath,lines);
+    }
+ catch (    IOException e) {
+      throw new IllegalStateException("Unable to load python file");
+    }
   }
   return plotPath.getAbsolutePath();
 }

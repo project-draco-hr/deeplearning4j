@@ -3,7 +3,7 @@
   Nd4j.MAX_ELEMENTS_PER_SLICE=-1;
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).layer(new org.deeplearning4j.nn.conf.layers.RBM()).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activationFunction("tanh").momentum(0.9).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).k(1).regularization(true).l2(2e-4).visibleUnit(org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).hiddenUnit(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).list(2).hiddenLayerSizes(3).override(1,new ClassifierOverride(1)).build();
   NeuralNetConfiguration conf2=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.RBM()).nIn(784).nOut(600).applySparsity(true).sparsity(0.1).build();
-  Layer l=LayerFactories.getFactory(conf2).create(conf2,Arrays.<IterationListener>asList(new ScoreIterationListener(2)));
+  Layer l=LayerFactories.getFactory(conf2).create(conf2,Arrays.<IterationListener>asList(new ScoreIterationListener(2)),0);
   MultiLayerNetwork d=new MultiLayerNetwork(conf);
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next();

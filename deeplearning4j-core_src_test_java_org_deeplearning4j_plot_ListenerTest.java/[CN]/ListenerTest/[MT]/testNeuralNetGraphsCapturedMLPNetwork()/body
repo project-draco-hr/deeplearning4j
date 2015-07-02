@@ -1,0 +1,10 @@
+{
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig(new int[]{5},"sigmoid"));
+  network.init();
+  DataSet data=irisIter.next();
+  IterationListener listener=new NeuralNetPlotterIterationListener(1,true);
+  network.setListeners(Collections.singletonList(listener));
+  network.fit(data.getFeatureMatrix(),data.getLabels());
+  assertNotNull(network.getListeners().get(0));
+  assertEquals(listener.invoked(),true);
+}

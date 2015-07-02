@@ -1,6 +1,0 @@
-{
-  INDArray weight=network.getParam(DefaultParamInitializer.WEIGHT_KEY);
-  plotWeightHistograms(network,gradient);
-  plotActivations(network);
-  renderFilter(weight,patchesPerRow);
-}

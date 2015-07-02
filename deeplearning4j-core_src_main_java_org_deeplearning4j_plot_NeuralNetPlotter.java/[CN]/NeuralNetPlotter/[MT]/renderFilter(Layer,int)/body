@@ -1,0 +1,18 @@
+{
+  INDArray weight=layer.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray w=weight.dup();
+  FilterRenderer render=new FilterRenderer();
+  try {
+    if (w.shape().length > 2) {
+      INDArray render2=w.transpose();
+      render.renderFilters(render2,layerGraphFilePath + "renderFilter.png",w.columns(),w.rows(),w.slices());
+    }
+ else {
+      render.renderFilters(w,layerGraphFilePath + "renderFilter.png",(int)Math.sqrt(w.rows()),(int)Math.sqrt(w.columns()),patchesPerRow);
+    }
+  }
+ catch (  Exception e) {
+    log.error("Unable to plot filter, continuing...",e);
+    e.printStackTrace();
+  }
+}

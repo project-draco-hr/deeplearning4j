@@ -1,6 +1,9 @@
 {
   if (iteration == 0 && renderFirst || iteration > 0 && iteration % this.iterations == 0) {
+    this.invoke();
     Layer layer=(Layer)model;
-    plotter.plotNetworkGradient(layer,layer.gradient(),patchesPerRow);
+    plotter.updateGraphDirectory(layer);
+    plotter.plotNetworkGradient(layer,layer.gradient());
+    plotter.renderFilter(layer,patchesPerRow);
   }
 }

@@ -1,8 +1,0 @@
-{
-  Layer ret=getInstance(conf);
-  ret.setIterationListeners(iterationListeners);
-  Map<String,INDArray> params=getParams(conf);
-  ret.setParamTable(params);
-  ret.setConf(conf);
-  return (E)ret;
-}

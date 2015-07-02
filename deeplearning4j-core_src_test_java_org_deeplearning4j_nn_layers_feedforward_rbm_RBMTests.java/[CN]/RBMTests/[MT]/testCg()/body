@@ -2,7 +2,7 @@
   float[][] data=new float[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0},{0,0,1,1,1,0}};
   INDArray input=Nd4j.create(data);
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.RMSE_XENT).learningRate(1e-1f).nIn(6).nOut(4).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
-  RBM rbm=LayerFactories.getFactory(conf).create(conf);
+  RBM rbm=LayerFactories.getFactory(conf).create(conf,Arrays.asList(new ComposableIterationListener(new NeuralNetPlotterIterationListener(10),new ScoreIterationListener(5)),new LossPlotterIterationListener(10)),0);
   double value=rbm.score();
   rbm.fit(input);
   value=rbm.score();
