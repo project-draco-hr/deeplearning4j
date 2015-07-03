@@ -25,6 +25,6 @@
   }
   glove.lookupTable().setSyn0(weights(glove,wordVectors));
   iter.close();
-  glove.lookupTable().setBias(Nd4j.readTxt(biases," "));
+  glove.lookupTable().setBias(Nd4j.read(biases));
   return glove;
 }

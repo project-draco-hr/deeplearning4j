@@ -1,0 +1,11 @@
+{
+  if (imagePath == null) {
+    throw new WebApplicationException(404);
+  }
+  File f=new File(imagePath);
+  if (!f.exists()) {
+    throw new WebApplicationException(404);
+  }
+  String mt=new MimetypesFileTypeMap().getContentType(f);
+  return Response.ok(f,mt).build();
+}

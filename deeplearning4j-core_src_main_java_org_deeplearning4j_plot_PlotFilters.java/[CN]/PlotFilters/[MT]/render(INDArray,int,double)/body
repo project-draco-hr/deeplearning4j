@@ -1,7 +1,7 @@
 {
   data.subi(data.mean(Integer.MAX_VALUE));
   data.divi(data.max(Integer.MAX_VALUE));
-  int n=(int)Math.ceil(FastMath.sqrt(data.size(0)));
+  int n=(int)Math.ceil(Math.sqrt(data.size(0)));
   int[][] padding=new int[4][];
   double end=Math.pow(n,2) - data.size(0);
   padding[0]=new int[]{0,(int)end};
