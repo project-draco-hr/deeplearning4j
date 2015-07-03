@@ -5,6 +5,7 @@
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1),listener));
+  Collection<IterationListener> listeners=Arrays.asList(new ScoreIterationListener(1),listener);
+  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,listeners,0);
   da.fit(input);
 }
