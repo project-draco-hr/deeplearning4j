@@ -1,0 +1,8 @@
+{
+  INDArray view=indArray.linearView();
+  jsonGenerator.writeStartArray();
+  for (int i=0; i < view.length(); i++) {
+    jsonGenerator.writeNumber(view.getDouble(i));
+  }
+  jsonGenerator.writeEndArray();
+}

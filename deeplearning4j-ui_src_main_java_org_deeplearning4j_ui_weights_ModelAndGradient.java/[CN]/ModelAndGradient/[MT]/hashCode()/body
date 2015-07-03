@@ -1,0 +1,5 @@
+{
+  int result=gradient != null ? gradient.hashCode() : 0;
+  result=31 * result + (model != null ? model.hashCode() : 0);
+  return result;
+}

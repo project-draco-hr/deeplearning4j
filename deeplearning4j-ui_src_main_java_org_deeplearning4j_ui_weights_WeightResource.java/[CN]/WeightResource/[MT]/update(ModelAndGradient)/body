@@ -1,0 +1,5 @@
+{
+  this.current=modelAndGrad;
+  updated=true;
+  return Response.ok(Collections.singletonMap("status","ok")).build();
+}

@@ -1,0 +1,9 @@
+{
+  if (current == null) {
+    current=new ModelAndGradient();
+    updated=true;
+    return Response.ok(current).build();
+  }
+  updated=false;
+  return Response.ok(current).build();
+}

@@ -1,0 +1,12 @@
+{
+  jsonGenerator.writeStartObject();
+  for (  String entry : model.conf().variables()) {
+    jsonGenerator.writeArrayFieldStart(entry);
+    INDArray view=model.getParam(entry).linearView();
+    for (int i=0; i < view.length(); i++) {
+      jsonGenerator.writeNumber(view.getDouble(i));
+    }
+    jsonGenerator.writeEndArray();
+  }
+  jsonGenerator.writeEndObject();
+}
