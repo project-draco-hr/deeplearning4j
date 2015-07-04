@@ -1,0 +1,5 @@
+{
+  final ObjectMapper result=new ObjectMapper();
+  result.registerModule(module());
+  return result;
+}

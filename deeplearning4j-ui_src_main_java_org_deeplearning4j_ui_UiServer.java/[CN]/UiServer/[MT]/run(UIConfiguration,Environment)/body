@@ -1,10 +1,17 @@
 {
   this.conf=uiConfiguration;
+  this.env=environment;
   environment.jersey().register(MultiPartFeature.class);
+  environment.jersey().register(new GenericExceptionMapper());
+  environment.jersey().register(new JsonProcessingExceptionMapper());
   environment.jersey().register(new TsneResource(conf.getUploadPath()));
   environment.jersey().register(new NearestNeighborsResource(conf.getUploadPath()));
   environment.jersey().register(new WeightResource());
   environment.jersey().register(new RendersResource());
+  environment.jersey().register(new GenericExceptionMapper());
   environment.jersey().register(new org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsResource(conf.getUploadPath()));
+  environment.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+  environment.getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  environment.getObjectMapper().registerModule(module());
   configureCors(environment);
 }

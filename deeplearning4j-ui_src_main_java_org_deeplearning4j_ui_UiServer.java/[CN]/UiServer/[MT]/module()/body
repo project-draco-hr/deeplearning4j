@@ -1,0 +1,6 @@
+{
+  SimpleModule module=new SimpleModule();
+  module.addSerializer(INDArray.class,new VectorSerializer());
+  module.addDeserializer(INDArray.class,new VectorDeSerializer());
+  return module;
+}

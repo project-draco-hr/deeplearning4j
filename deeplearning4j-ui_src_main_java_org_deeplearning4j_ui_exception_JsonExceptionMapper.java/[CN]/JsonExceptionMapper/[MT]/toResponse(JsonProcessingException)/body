@@ -1,0 +1,3 @@
+{
+  return Response.status(500).entity("WTF").type(MediaType.APPLICATION_JSON).build();
+}

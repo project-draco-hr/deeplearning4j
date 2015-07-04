@@ -1,0 +1,4 @@
+{
+  this.iterations=iterations;
+  target=client.target("http://localhost:8080").path("weights").path("update");
+}
