@@ -7,6 +7,7 @@
   environment.jersey().register(new TsneResource(conf.getUploadPath()));
   environment.jersey().register(new NearestNeighborsResource(conf.getUploadPath()));
   environment.jersey().register(new WeightResource());
+  environment.jersey().register(new ActivationsResource());
   environment.jersey().register(new RendersResource());
   environment.jersey().register(new GenericExceptionMapper());
   environment.jersey().register(new org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsResource(conf.getUploadPath()));
