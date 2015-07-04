@@ -15,7 +15,7 @@
         throw new RuntimeException(e);
       }
     }
-    man.setCurrent(cursor + 1);
+    man.setCurrent(cursor);
     try {
       INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(man.readImage()));
       if (binarize) {

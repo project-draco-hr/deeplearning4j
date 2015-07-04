@@ -14,13 +14,5 @@
   this.binarize=binarize;
   totalExamples=NUM_EXAMPLES;
   cursor=0;
-  man.setCurrent(cursor + 1);
-  int[][] image;
-  try {
-    image=man.readImage();
-  }
- catch (  IOException e) {
-    throw new IllegalStateException("Unable to read image");
-  }
-  inputColumns=ArrayUtil.flatten(image).length;
+  inputColumns=man.getImages().getEntryLength();
 }
