@@ -1,4 +1,10 @@
 {
-  ModelAndGradient g=new ModelAndGradient(model);
-  target.request(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
+  if (iteration % iterations == 0) {
+    ModelAndGradient g=new ModelAndGradient();
+    g.setGradients(model.gradient().gradientForVariable());
+    g.setParameters(model.paramTable());
+    g.setScore(model.score());
+    Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
+    System.out.println(resp);
+  }
 }

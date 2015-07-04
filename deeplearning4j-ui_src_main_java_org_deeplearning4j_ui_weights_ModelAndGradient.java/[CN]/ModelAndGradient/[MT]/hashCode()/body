@@ -1,5 +1,9 @@
 {
-  int result=gradient != null ? gradient.hashCode() : 0;
-  result=31 * result + (model != null ? model.hashCode() : 0);
+  int result;
+  long temp;
+  result=parameters != null ? parameters.hashCode() : 0;
+  result=31 * result + (gradients != null ? gradients.hashCode() : 0);
+  temp=Double.doubleToLongBits(score);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
   return result;
 }
