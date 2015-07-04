@@ -1,0 +1,4 @@
+{
+  this.imagePath=path.getPath();
+  return Response.ok(Collections.singletonMap("status","updated path")).build();
+}

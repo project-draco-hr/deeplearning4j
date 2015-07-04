@@ -1,0 +1,8 @@
+{
+  if (iteration % iterations == 0) {
+    PathUpdate update=new PathUpdate();
+    listener.iterationDone(model,iteration);
+    update.setPath(listener.getOutputFile().getPath());
+    target.request(MediaType.APPLICATION_JSON).post(Entity.entity(update,MediaType.APPLICATION_JSON));
+  }
+}
