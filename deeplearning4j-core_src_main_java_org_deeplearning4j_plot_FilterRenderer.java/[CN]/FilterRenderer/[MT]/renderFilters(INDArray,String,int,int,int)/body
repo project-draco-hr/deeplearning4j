@@ -17,7 +17,7 @@
     double col_max=column.max(Integer.MAX_VALUE).getDouble(0);
     log.debug("Rendering " + column.length() + " pixels in column "+ col+ " for filter patch "+ patchWidth+ " x "+ patchHeight+ ", total size: "+ (patchWidth * patchHeight)+ " at "+ curX);
     for (int i=0; i < column.length(); i++) {
-      double patch_normal=(column.getScalar(i).getDouble(0) - col_min) / (col_max - col_min + 0.000001f);
+      double patch_normal=(column.getDouble(0) - col_min) / (col_max - col_min + 0.000001f);
       equiv[i]=(int)(255 * patch_normal);
     }
     boolean outOfBounds=false;

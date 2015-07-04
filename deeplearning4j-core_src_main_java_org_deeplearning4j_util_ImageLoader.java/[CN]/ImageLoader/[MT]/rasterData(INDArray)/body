@@ -1,5 +1,0 @@
-{
-  int[] ret=new int[matrix.length()];
-  for (int i=0; i < ret.length; i++)   ret[i]=(int)Math.round((double)matrix.getScalar(i).element());
-  return ret;
-}
