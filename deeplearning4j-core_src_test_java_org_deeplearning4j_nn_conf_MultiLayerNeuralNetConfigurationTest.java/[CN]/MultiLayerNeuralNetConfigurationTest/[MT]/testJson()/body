@@ -18,6 +18,7 @@
   props2.load(bis);
   bis.close();
   assertEquals(props2.getProperty("json"),props.getProperty("json"));
-  MultiLayerConfiguration conf3=MultiLayerConfiguration.fromJson(props2.getProperty("json"));
+  String json2=props2.getProperty("json");
+  MultiLayerConfiguration conf3=MultiLayerConfiguration.fromJson(json2);
   assertEquals(conf.getConf(0),conf3.getConf(0));
 }
