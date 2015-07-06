@@ -1,39 +1,14 @@
 {
   int iterations=conf.getConf(0).getNumIterations();
-  long count=rdd.count();
-  int batchSize=conf.getConf(0).getBatchSize();
-  if (batchSize == 0)   batchSize=10;
   log.info("Running distributed training averaging each iteration " + averageEachIteration + " and "+ rdd.partitions().size()+ " partitions");
-  if (!averageEachIteration) {
-    MultiLayerNetwork network=new MultiLayerNetwork(conf);
-    network.init();
-    final INDArray params=network.params();
-    this.params=sc.broadcast(params);
-    log.info("Broadcasting initial parameters of length " + params.length());
-    int paramsLength=network.numParams();
-    if (params.length() != paramsLength)     throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-    JavaRDD<INDArray> results=rdd.sample(true,0.4).mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params));
-    log.debug("Ran iterative reduce...averaging results now.");
-    INDArray newParams=results.fold(Nd4j.zeros(results.first().shape()),new Add());
-    newParams.divi(rdd.partitions().size());
-    network.setParameters(newParams);
-    this.network=network;
-  }
+  if (!averageEachIteration)   runIteration(rdd);
  else {
     for (    NeuralNetConfiguration conf : this.conf.getConfs())     conf.setNumIterations(1);
     MultiLayerNetwork network=new MultiLayerNetwork(conf);
     network.init();
     final INDArray params=network.params();
     this.params=sc.broadcast(params);
-    for (int i=0; i < iterations; i++) {
-      JavaRDD<INDArray> results=rdd.sample(true,0.3).mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params));
-      int paramsLength=network.numParams();
-      if (params.length() != paramsLength)       throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
-      INDArray newParams=results.fold(Nd4j.zeros(results.first().shape()),new Add());
-      newParams.divi(rdd.partitions().size());
-    }
-    network.setParameters(this.params.value());
-    this.network=network;
+    for (int i=0; i < iterations; i++)     runIteration(rdd);
   }
   return network;
 }

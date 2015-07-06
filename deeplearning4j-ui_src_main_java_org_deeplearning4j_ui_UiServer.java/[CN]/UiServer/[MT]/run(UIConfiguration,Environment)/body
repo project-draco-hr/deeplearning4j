@@ -9,6 +9,7 @@
   environment.jersey().register(new WeightResource());
   environment.jersey().register(new ActivationsResource());
   environment.jersey().register(new RendersResource());
+  environment.jersey().register(new ApiResource());
   environment.jersey().register(new GenericExceptionMapper());
   environment.jersey().register(new org.deeplearning4j.ui.nearestneighbors.word2vec.NearestNeighborsResource(conf.getUploadPath()));
   environment.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);

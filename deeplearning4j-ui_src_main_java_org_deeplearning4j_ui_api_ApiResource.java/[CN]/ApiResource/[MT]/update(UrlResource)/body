@@ -1,0 +1,6 @@
+{
+  String content=client.target(resource.getUrl()).request(MediaType.TEXT_PLAIN_TYPE).get(String.class);
+  List<String> testLines=IOUtils.readLines(new ByteArrayInputStream(content.getBytes()));
+  this.coords=testLines;
+  return Response.ok(coords).build();
+}
