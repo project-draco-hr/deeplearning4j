@@ -13,9 +13,6 @@
     for (int i=0; i < words; i++) {
       word=readString(dis);
       log.trace("Loading " + word + " with word "+ i);
-      if (word.isEmpty()) {
-        continue;
-      }
       float[] vector=new float[size];
       for (int j=0; j < size; j++) {
         vector[j]=readFloat(dis);
@@ -24,7 +21,9 @@
       cache.addWordToIndex(cache.numWords(),word);
       cache.addToken(new VocabWord(1,word));
       cache.putVocabWord(word);
-      readString(dis);
+      if (linebreaks) {
+        dis.readByte();
+      }
     }
   }
    Word2Vec ret=new Word2Vec();
