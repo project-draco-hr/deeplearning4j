@@ -1,0 +1,6 @@
+{
+  if (coords.isEmpty())   throw new IllegalStateException("Unable to get coordinates; empty");
+  List<String> list=client.target(resource.getUrl()).request(MediaType.TEXT_PLAIN_TYPE).get(List.class);
+  this.coords=list;
+  return Response.ok(coords).build();
+}
