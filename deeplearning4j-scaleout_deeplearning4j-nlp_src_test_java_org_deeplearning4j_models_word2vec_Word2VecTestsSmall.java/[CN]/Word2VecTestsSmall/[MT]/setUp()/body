@@ -1,3 +1,3 @@
 {
-  word2vec=WordVectorSerializer.loadGoogleModel(new ClassPathResource("vec.bin").getFile(),true);
+  word2vec=WordVectorSerializer.loadGoogleModel(new ClassPathResource("vec.bin").getFile(),true,true);
 }

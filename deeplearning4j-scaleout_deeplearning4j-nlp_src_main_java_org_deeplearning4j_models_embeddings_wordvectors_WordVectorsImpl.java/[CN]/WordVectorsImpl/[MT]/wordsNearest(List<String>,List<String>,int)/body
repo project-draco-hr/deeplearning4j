@@ -23,7 +23,7 @@
     INDArray sort=sorted[0];
     List<String> ret=new ArrayList<>();
     if (top > sort.length())     top=sort.length();
-    int end=top + 1;
+    int end=top;
     for (int i=0; i < end; i++) {
       String word=vocab().wordAtIndex(sort.getInt(i));
       if (union.contains(word)) {

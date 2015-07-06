@@ -8,7 +8,7 @@
     INDArray sort=sorted[0];
     List<String> ret=new ArrayList<>();
     if (top > sort.length())     top=sort.length();
-    int end=top + 1;
+    int end=top;
     for (int i=0; i < end; i++) {
       String add=vocab().wordAtIndex(sort.getInt(i));
       if (add == null || add.equals("UNK") || add.equals("STOP")) {
