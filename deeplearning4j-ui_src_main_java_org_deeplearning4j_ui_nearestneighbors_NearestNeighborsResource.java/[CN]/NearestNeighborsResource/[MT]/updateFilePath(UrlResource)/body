@@ -1,6 +1,6 @@
 {
   if (!resource.getUrl().startsWith("http")) {
-    this.localFile=new File(resource.getUrl());
+    this.localFile=new File(".",resource.getUrl());
     handleUpload(localFile);
   }
  else {
