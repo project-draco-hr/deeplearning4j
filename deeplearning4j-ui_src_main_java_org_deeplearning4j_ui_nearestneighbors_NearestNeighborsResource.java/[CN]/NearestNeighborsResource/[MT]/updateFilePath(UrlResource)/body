@@ -1,0 +1,17 @@
+{
+  if (!resource.getUrl().startsWith("http")) {
+    this.localFile=new File(resource.getUrl());
+    handleUpload(localFile);
+  }
+ else {
+    File dl=new File(filePath,UUID.randomUUID().toString());
+    try {
+      FileUtils.copyURLToFile(new URL(resource.getUrl()),dl);
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+    handleUpload(dl);
+  }
+  return Response.ok(Collections.singletonMap("message","Uploaded file")).build();
+}
