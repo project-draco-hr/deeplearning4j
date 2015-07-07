@@ -1,6 +1,0 @@
-{
-  LinAlgExceptions.assertRows(input,labels);
-  INDArray output=output(input);
-  if (conf.getLossFunction() != LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY)   return LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
-  return -LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
-}
