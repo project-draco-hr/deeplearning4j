@@ -1,2 +1,10 @@
 {
+  List<String> testLines=null;
+  try {
+    testLines=FileUtils.readLines(path);
+    this.coords=testLines;
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
 }

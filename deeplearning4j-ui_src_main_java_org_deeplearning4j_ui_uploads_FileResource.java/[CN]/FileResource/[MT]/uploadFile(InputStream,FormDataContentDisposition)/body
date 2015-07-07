@@ -2,6 +2,6 @@
   String uploadedFileLocation=new File(filePath,fileDetail.getFileName()).getAbsolutePath();
   LOGGER.info(uploadedFileLocation);
   writeToFile(uploadedInputStream,uploadedFileLocation);
-  String output="{\"value\": \"File uploaded to : " + uploadedFileLocation + "\"}";
+  String output="{\"name\": \"" + fileDetail.getFileName() + "\"}";
   return Response.ok(output).build();
 }
