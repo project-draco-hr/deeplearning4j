@@ -1,10 +1,18 @@
 {
-  List<DataPoint> results=new ArrayList<>();
-  List<Double> distances=new ArrayList<>();
-  tree.search(tree.getItems().get(vocab.indexOf(query.getWord())),query.getNumWords(),results,distances);
   Map<String,Double> map=new HashMap<>();
-  for (int i=0; i < results.size(); i++) {
-    map.put(theVocab.get(results.get(i).getIndex()).getWord(),distances.get(i));
+  if (wordVectors != null) {
+    Collection<String> words=wordVectors.wordsNearest(query.getWord(),query.getNumWords());
+    for (    String word : words) {
+      map.put(word,wordVectors.similarity(query.getWord(),word));
+    }
+  }
+ else {
+    List<DataPoint> results=new ArrayList<>();
+    List<Double> distances=new ArrayList<>();
+    tree.search(tree.getItems().get(vocab.indexOf(query.getWord())),query.getNumWords(),results,distances);
+    for (int i=0; i < results.size(); i++) {
+      map.put(theVocab.get(results.get(i).getIndex()).getWord(),distances.get(i));
+    }
   }
   return Response.ok(map).build();
 }
