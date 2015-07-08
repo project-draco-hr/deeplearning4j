@@ -1,0 +1,22 @@
+{
+  int nIn=8;
+  int nOut=25;
+  int nHiddenUnits=17;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(nIn).nOut(nOut).activationFunction("tanh").list(2).hiddenLayerSizes(nHiddenUnits).override(1,new ClassifierOverride()).build();
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  Layer layer=network.getLayers()[0];
+  assertTrue(layer instanceof GravesLSTM);
+  Map<String,INDArray> paramTable=layer.paramTable();
+  assertTrue(paramTable.size() == 3);
+  INDArray recurrentWeights=paramTable.get(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
+  assertArrayEquals(recurrentWeights.shape(),new int[]{nHiddenUnits,4 * nHiddenUnits + 3});
+  INDArray inputWeights=paramTable.get(GravesLSTMParamInitializer.INPUT_WEIGHTS);
+  assertArrayEquals(inputWeights.shape(),new int[]{nIn,4 * nHiddenUnits});
+  INDArray biases=paramTable.get(GravesLSTMParamInitializer.BIAS);
+  assertArrayEquals(biases.shape(),new int[]{1,4 * nHiddenUnits});
+  INDArray forgetGateBiases=biases.get(new NDArrayIndex[]{NDArrayIndex.interval(nHiddenUnits,2 * nHiddenUnits),new NDArrayIndex(0)});
+  assertTrue(forgetGateBiases.gt(0).sum(0).getDouble(0) == nHiddenUnits);
+  int nParams=recurrentWeights.length() + inputWeights.length() + biases.length();
+  assertTrue(nParams == layer.numParams());
+}
