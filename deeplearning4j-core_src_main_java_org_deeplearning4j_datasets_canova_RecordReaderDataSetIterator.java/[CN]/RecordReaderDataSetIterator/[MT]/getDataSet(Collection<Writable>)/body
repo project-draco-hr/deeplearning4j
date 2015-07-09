@@ -19,8 +19,13 @@
  catch (      WritableConverterException e) {
         e.printStackTrace();
       }
-      int curr=Double.valueOf(current.toString()).intValue();
-      label=FeatureUtil.toOutcomeVector(curr,numPossibleLabels);
+      if (regression) {
+        label=Nd4j.scalar(Double.valueOf(current.toString()));
+      }
+ else {
+        int curr=Double.valueOf(current.toString()).intValue();
+        label=FeatureUtil.toOutcomeVector(curr,numPossibleLabels);
+      }
     }
  else {
       Writable current=currList.get(j);

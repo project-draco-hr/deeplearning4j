@@ -8,7 +8,7 @@
   for (int n=0; n < N; n++)   rows.putScalar(n + 1,rows.getDouble(n) + k);
   final INDArray beta=ones(N,1);
   final double logU=FastMath.log(u);
-  VPTree tree=new VPTree(d);
+  VPTree tree=new VPTree(d,simiarlityFunction,invert);
   log.info("Calculating probabilities of data similarities...");
   for (int i=0; i < N; i++) {
     if (i % 500 == 0)     log.info("Handled " + i + " records");
