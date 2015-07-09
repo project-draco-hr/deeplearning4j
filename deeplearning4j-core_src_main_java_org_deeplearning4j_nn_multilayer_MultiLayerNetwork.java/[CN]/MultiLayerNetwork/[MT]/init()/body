@@ -27,7 +27,7 @@
         if (type == Layer.Type.FEED_FORWARD || type == Layer.Type.RECURRENT) {
           if (i != (layers.length - 1)) {
             numHiddenLayersSizesUsed++;
-            conf.setNIn(layerInput.shape()[1]);
+            conf.setNIn(layerInput.size(1));
             conf.setNOut(hiddenLayerSizes[numHiddenLayersSizesUsed]);
           }
  else {

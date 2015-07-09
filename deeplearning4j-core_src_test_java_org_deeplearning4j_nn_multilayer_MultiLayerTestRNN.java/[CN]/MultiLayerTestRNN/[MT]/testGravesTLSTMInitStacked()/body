@@ -6,7 +6,7 @@
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   for (int i=0; i < nHiddenUnits.length; i++) {
-    Layer layer=network.getLayers()[i];
+    Layer layer=network.getLayer(i);
     assertTrue(layer instanceof GravesLSTM);
     Map<String,INDArray> paramTable=layer.paramTable();
     assertTrue(paramTable.size() == 3);

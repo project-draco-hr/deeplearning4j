@@ -8,6 +8,11 @@
   int hiddenLayerSize=recurrentWeights.rows();
   int miniBatchSize=dataShape[0];
   int nIn=inputWeights.shape()[0];
+  if (conf.isUseDropConnect()) {
+    if (conf.getDropOut() > 0) {
+      inputWeights=inputWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(inputWeights.shape()).divi(conf.getDropOut()));
+    }
+  }
   INDArray wi=inputWeights.get(interval(0,nIn),interval(0,hiddenLayerSize));
   INDArray wI=recurrentWeights.get(interval(0,hiddenLayerSize),interval(0,hiddenLayerSize));
   INDArray bi=biases.get(interval(0,hiddenLayerSize));
