@@ -1,0 +1,9 @@
+{
+  Nd4j.MAX_SLICES_TO_PRINT=-1;
+  Nd4j.MAX_ELEMENTS_PER_SLICE=-1;
+  DataSetIterator irisIter=new IrisDataSetIterator(1,1);
+  DataSet data=irisIter.next();
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig(new int[]{5},"sigmoid",1));
+  network.init();
+  network.fit(data.getFeatureMatrix(),data.getLabels());
+}

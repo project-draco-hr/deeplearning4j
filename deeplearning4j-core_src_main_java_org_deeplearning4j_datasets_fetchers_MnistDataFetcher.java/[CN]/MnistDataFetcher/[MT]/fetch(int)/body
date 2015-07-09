@@ -15,18 +15,16 @@
         throw new RuntimeException(e);
       }
     }
-    man.setCurrent(cursor + 1);
+    man.setCurrent(cursor);
     try {
       INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(man.readImage()));
       if (binarize) {
         for (int d=0; d < in.length(); d++) {
-          if (binarize) {
-            if (in.getDouble(d) > 30) {
-              in.putScalar(d,1);
-            }
+          if (in.getDouble(d) > 30) {
+            in.putScalar(d,1);
+          }
  else {
-              in.putScalar(d,0);
-            }
+            in.putScalar(d,0);
           }
         }
       }

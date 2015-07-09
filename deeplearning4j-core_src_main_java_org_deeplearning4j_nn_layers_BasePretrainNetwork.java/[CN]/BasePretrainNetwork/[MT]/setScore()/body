@@ -1,6 +1,0 @@
-{
-  if (this.input == null)   return;
-  INDArray output=transform(input);
-  score=-LossFunctions.score(input,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
-  if (conf.isMinimize())   score=-score;
-}
