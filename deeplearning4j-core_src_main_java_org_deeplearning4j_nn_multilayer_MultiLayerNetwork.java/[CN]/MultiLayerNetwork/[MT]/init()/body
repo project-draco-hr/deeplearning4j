@@ -18,16 +18,16 @@
           layerInput=input;
         }
         conf.setNIn(inputSize);
-        if (type == Layer.Type.FEED_FORWARD) {
+        if (type == Layer.Type.FEED_FORWARD || type == Layer.Type.RECURRENT) {
           conf.setNOut(hiddenLayerSizes[numHiddenLayersSizesUsed]);
         }
       }
  else       if (i < getLayers().length) {
         if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
-        if (type == Layer.Type.FEED_FORWARD) {
+        if (type == Layer.Type.FEED_FORWARD || type == Layer.Type.RECURRENT) {
           if (i != (layers.length - 1)) {
             numHiddenLayersSizesUsed++;
-            conf.setNIn(layerInput.columns());
+            conf.setNIn(layerInput.size(1));
             conf.setNOut(hiddenLayerSizes[numHiddenLayersSizesUsed]);
           }
  else {
