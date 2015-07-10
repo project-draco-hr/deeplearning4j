@@ -1,0 +1,17 @@
+{
+  numOutput_=0;
+  biasTerm_=true;
+  pad_=0;
+  padH_=0;
+  padW_=0;
+  kernelSize_=0;
+  kernelH_=0;
+  kernelW_=0;
+  group_=1;
+  stride_=1;
+  strideH_=0;
+  strideW_=0;
+  weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+  biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+  engine_=caffe.Caffe.ConvolutionParameter.Engine.DEFAULT;
+}

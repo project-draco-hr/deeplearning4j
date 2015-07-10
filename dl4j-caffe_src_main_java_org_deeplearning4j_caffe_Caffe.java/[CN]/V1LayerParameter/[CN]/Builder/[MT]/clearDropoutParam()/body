@@ -1,0 +1,11 @@
+{
+  if (dropoutParamBuilder_ == null) {
+    dropoutParam_=caffe.Caffe.DropoutParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    dropoutParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00040000);
+  return this;
+}

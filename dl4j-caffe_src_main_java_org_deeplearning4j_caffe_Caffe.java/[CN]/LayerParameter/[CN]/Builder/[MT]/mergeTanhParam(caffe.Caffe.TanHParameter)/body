@@ -1,0 +1,16 @@
+{
+  if (tanhParamBuilder_ == null) {
+    if (((bitField1_ & 0x00002000) == 0x00002000) && tanhParam_ != caffe.Caffe.TanHParameter.getDefaultInstance()) {
+      tanhParam_=caffe.Caffe.TanHParameter.newBuilder(tanhParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      tanhParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    tanhParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00002000;
+  return this;
+}

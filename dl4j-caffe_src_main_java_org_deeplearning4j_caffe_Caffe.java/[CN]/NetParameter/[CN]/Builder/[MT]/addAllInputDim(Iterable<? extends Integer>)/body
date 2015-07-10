@@ -1,0 +1,6 @@
+{
+  ensureInputDimIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,inputDim_);
+  onChanged();
+  return this;
+}

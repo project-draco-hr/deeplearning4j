@@ -1,0 +1,8 @@
+{
+  if (blobsBuilder_ == null) {
+    return java.util.Collections.unmodifiableList(blobs_);
+  }
+ else {
+    return blobsBuilder_.getMessageList();
+  }
+}

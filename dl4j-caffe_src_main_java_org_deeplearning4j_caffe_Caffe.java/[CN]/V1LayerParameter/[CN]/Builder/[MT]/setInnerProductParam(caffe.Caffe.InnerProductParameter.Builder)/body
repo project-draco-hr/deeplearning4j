@@ -1,0 +1,11 @@
+{
+  if (innerProductParamBuilder_ == null) {
+    innerProductParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    innerProductParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x08000000;
+  return this;
+}

@@ -1,0 +1,16 @@
+{
+  if (concatParamBuilder_ == null) {
+    if (((bitField0_ & 0x00004000) == 0x00004000) && concatParam_ != caffe.Caffe.ConcatParameter.getDefaultInstance()) {
+      concatParam_=caffe.Caffe.ConcatParameter.newBuilder(concatParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      concatParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    concatParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00004000;
+  return this;
+}

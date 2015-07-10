@@ -1,0 +1,195 @@
+{
+  if (other == caffe.Caffe.SolverParameter.getDefaultInstance())   return this;
+  if (other.hasNet()) {
+    bitField0_|=0x00000001;
+    net_=other.net_;
+    onChanged();
+  }
+  if (other.hasNetParam()) {
+    mergeNetParam(other.getNetParam());
+  }
+  if (other.hasTrainNet()) {
+    bitField0_|=0x00000004;
+    trainNet_=other.trainNet_;
+    onChanged();
+  }
+  if (!other.testNet_.isEmpty()) {
+    if (testNet_.isEmpty()) {
+      testNet_=other.testNet_;
+      bitField0_=(bitField0_ & ~0x00000008);
+    }
+ else {
+      ensureTestNetIsMutable();
+      testNet_.addAll(other.testNet_);
+    }
+    onChanged();
+  }
+  if (other.hasTrainNetParam()) {
+    mergeTrainNetParam(other.getTrainNetParam());
+  }
+  if (testNetParamBuilder_ == null) {
+    if (!other.testNetParam_.isEmpty()) {
+      if (testNetParam_.isEmpty()) {
+        testNetParam_=other.testNetParam_;
+        bitField0_=(bitField0_ & ~0x00000020);
+      }
+ else {
+        ensureTestNetParamIsMutable();
+        testNetParam_.addAll(other.testNetParam_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.testNetParam_.isEmpty()) {
+      if (testNetParamBuilder_.isEmpty()) {
+        testNetParamBuilder_.dispose();
+        testNetParamBuilder_=null;
+        testNetParam_=other.testNetParam_;
+        bitField0_=(bitField0_ & ~0x00000020);
+        testNetParamBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getTestNetParamFieldBuilder() : null;
+      }
+ else {
+        testNetParamBuilder_.addAllMessages(other.testNetParam_);
+      }
+    }
+  }
+  if (other.hasTrainState()) {
+    mergeTrainState(other.getTrainState());
+  }
+  if (testStateBuilder_ == null) {
+    if (!other.testState_.isEmpty()) {
+      if (testState_.isEmpty()) {
+        testState_=other.testState_;
+        bitField0_=(bitField0_ & ~0x00000080);
+      }
+ else {
+        ensureTestStateIsMutable();
+        testState_.addAll(other.testState_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.testState_.isEmpty()) {
+      if (testStateBuilder_.isEmpty()) {
+        testStateBuilder_.dispose();
+        testStateBuilder_=null;
+        testState_=other.testState_;
+        bitField0_=(bitField0_ & ~0x00000080);
+        testStateBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getTestStateFieldBuilder() : null;
+      }
+ else {
+        testStateBuilder_.addAllMessages(other.testState_);
+      }
+    }
+  }
+  if (!other.testIter_.isEmpty()) {
+    if (testIter_.isEmpty()) {
+      testIter_=other.testIter_;
+      bitField0_=(bitField0_ & ~0x00000100);
+    }
+ else {
+      ensureTestIterIsMutable();
+      testIter_.addAll(other.testIter_);
+    }
+    onChanged();
+  }
+  if (other.hasTestInterval()) {
+    setTestInterval(other.getTestInterval());
+  }
+  if (other.hasTestComputeLoss()) {
+    setTestComputeLoss(other.getTestComputeLoss());
+  }
+  if (other.hasTestInitialization()) {
+    setTestInitialization(other.getTestInitialization());
+  }
+  if (other.hasBaseLr()) {
+    setBaseLr(other.getBaseLr());
+  }
+  if (other.hasDisplay()) {
+    setDisplay(other.getDisplay());
+  }
+  if (other.hasAverageLoss()) {
+    setAverageLoss(other.getAverageLoss());
+  }
+  if (other.hasMaxIter()) {
+    setMaxIter(other.getMaxIter());
+  }
+  if (other.hasIterSize()) {
+    setIterSize(other.getIterSize());
+  }
+  if (other.hasLrPolicy()) {
+    bitField0_|=0x00020000;
+    lrPolicy_=other.lrPolicy_;
+    onChanged();
+  }
+  if (other.hasGamma()) {
+    setGamma(other.getGamma());
+  }
+  if (other.hasPower()) {
+    setPower(other.getPower());
+  }
+  if (other.hasMomentum()) {
+    setMomentum(other.getMomentum());
+  }
+  if (other.hasWeightDecay()) {
+    setWeightDecay(other.getWeightDecay());
+  }
+  if (other.hasRegularizationType()) {
+    bitField0_|=0x00400000;
+    regularizationType_=other.regularizationType_;
+    onChanged();
+  }
+  if (other.hasStepsize()) {
+    setStepsize(other.getStepsize());
+  }
+  if (!other.stepvalue_.isEmpty()) {
+    if (stepvalue_.isEmpty()) {
+      stepvalue_=other.stepvalue_;
+      bitField0_=(bitField0_ & ~0x01000000);
+    }
+ else {
+      ensureStepvalueIsMutable();
+      stepvalue_.addAll(other.stepvalue_);
+    }
+    onChanged();
+  }
+  if (other.hasClipGradients()) {
+    setClipGradients(other.getClipGradients());
+  }
+  if (other.hasSnapshot()) {
+    setSnapshot(other.getSnapshot());
+  }
+  if (other.hasSnapshotPrefix()) {
+    bitField0_|=0x08000000;
+    snapshotPrefix_=other.snapshotPrefix_;
+    onChanged();
+  }
+  if (other.hasSnapshotDiff()) {
+    setSnapshotDiff(other.getSnapshotDiff());
+  }
+  if (other.hasSolverMode()) {
+    setSolverMode(other.getSolverMode());
+  }
+  if (other.hasDeviceId()) {
+    setDeviceId(other.getDeviceId());
+  }
+  if (other.hasRandomSeed()) {
+    setRandomSeed(other.getRandomSeed());
+  }
+  if (other.hasSolverType()) {
+    setSolverType(other.getSolverType());
+  }
+  if (other.hasDelta()) {
+    setDelta(other.getDelta());
+  }
+  if (other.hasDebugInfo()) {
+    setDebugInfo(other.getDebugInfo());
+  }
+  if (other.hasSnapshotAfterTrain()) {
+    setSnapshotAfterTrain(other.getSnapshotAfterTrain());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

@@ -1,0 +1,8 @@
+{
+  if (lrnParamBuilder_ == null) {
+    return lrnParam_;
+  }
+ else {
+    return lrnParamBuilder_.getMessage();
+  }
+}

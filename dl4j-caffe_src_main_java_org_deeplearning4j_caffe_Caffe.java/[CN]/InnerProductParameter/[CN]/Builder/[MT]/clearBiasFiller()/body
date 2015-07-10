@@ -1,0 +1,11 @@
+{
+  if (biasFillerBuilder_ == null) {
+    biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    biasFillerBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000008);
+  return this;
+}

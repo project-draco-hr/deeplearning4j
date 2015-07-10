@@ -1,0 +1,12 @@
+{
+switch (value) {
+case 0:
+    return FAN_IN;
+case 1:
+  return FAN_OUT;
+case 2:
+return AVERAGE;
+default :
+return null;
+}
+}

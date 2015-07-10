@@ -1,0 +1,43 @@
+{
+  if (other == caffe.Caffe.SolverState.getDefaultInstance())   return this;
+  if (other.hasIter()) {
+    setIter(other.getIter());
+  }
+  if (other.hasLearnedNet()) {
+    bitField0_|=0x00000002;
+    learnedNet_=other.learnedNet_;
+    onChanged();
+  }
+  if (historyBuilder_ == null) {
+    if (!other.history_.isEmpty()) {
+      if (history_.isEmpty()) {
+        history_=other.history_;
+        bitField0_=(bitField0_ & ~0x00000004);
+      }
+ else {
+        ensureHistoryIsMutable();
+        history_.addAll(other.history_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.history_.isEmpty()) {
+      if (historyBuilder_.isEmpty()) {
+        historyBuilder_.dispose();
+        historyBuilder_=null;
+        history_=other.history_;
+        bitField0_=(bitField0_ & ~0x00000004);
+        historyBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getHistoryFieldBuilder() : null;
+      }
+ else {
+        historyBuilder_.addAllMessages(other.history_);
+      }
+    }
+  }
+  if (other.hasCurrentStep()) {
+    setCurrentStep(other.getCurrentStep());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

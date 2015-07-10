@@ -1,0 +1,7 @@
+{
+  if (biasFillerBuilder_ == null) {
+    biasFillerBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.FillerParameter,caffe.Caffe.FillerParameter.Builder,caffe.Caffe.FillerParameterOrBuilder>(getBiasFiller(),getParentForChildren(),isClean());
+    biasFiller_=null;
+  }
+  return biasFillerBuilder_;
+}

@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00000002);
+  engine_=caffe.Caffe.ReLUParameter.Engine.DEFAULT;
+  onChanged();
+  return this;
+}

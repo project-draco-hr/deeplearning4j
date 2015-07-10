@@ -1,0 +1,16 @@
+{
+  if (other == caffe.Caffe.HDF5DataParameter.getDefaultInstance())   return this;
+  if (other.hasSource()) {
+    bitField0_|=0x00000001;
+    source_=other.source_;
+    onChanged();
+  }
+  if (other.hasBatchSize()) {
+    setBatchSize(other.getBatchSize());
+  }
+  if (other.hasShuffle()) {
+    setShuffle(other.getShuffle());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

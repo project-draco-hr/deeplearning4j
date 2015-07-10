@@ -1,0 +1,11 @@
+{
+  if (contrastiveLossParamBuilder_ == null) {
+    contrastiveLossParam_=caffe.Caffe.ContrastiveLossParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    contrastiveLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00010000);
+  return this;
+}

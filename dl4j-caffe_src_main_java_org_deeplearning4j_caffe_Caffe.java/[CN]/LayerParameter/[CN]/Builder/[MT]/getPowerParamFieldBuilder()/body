@@ -1,0 +1,7 @@
+{
+  if (powerParamBuilder_ == null) {
+    powerParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.PowerParameter,caffe.Caffe.PowerParameter.Builder,caffe.Caffe.PowerParameterOrBuilder>(getPowerParam(),getParentForChildren(),isClean());
+    powerParam_=null;
+  }
+  return powerParamBuilder_;
+}

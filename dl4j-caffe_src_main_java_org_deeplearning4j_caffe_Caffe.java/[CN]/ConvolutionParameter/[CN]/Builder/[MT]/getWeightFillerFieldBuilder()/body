@@ -1,0 +1,7 @@
+{
+  if (weightFillerBuilder_ == null) {
+    weightFillerBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.FillerParameter,caffe.Caffe.FillerParameter.Builder,caffe.Caffe.FillerParameterOrBuilder>(getWeightFiller(),getParentForChildren(),isClean());
+    weightFiller_=null;
+  }
+  return weightFillerBuilder_;
+}

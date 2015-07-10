@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000100) == 0x00000100)) {
+    testIter_=new java.util.ArrayList<Integer>(testIter_);
+    bitField0_|=0x00000100;
+  }
+}

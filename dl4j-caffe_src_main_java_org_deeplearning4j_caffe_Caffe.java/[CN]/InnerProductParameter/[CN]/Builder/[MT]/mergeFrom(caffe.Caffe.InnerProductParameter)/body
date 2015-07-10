@@ -1,0 +1,20 @@
+{
+  if (other == caffe.Caffe.InnerProductParameter.getDefaultInstance())   return this;
+  if (other.hasNumOutput()) {
+    setNumOutput(other.getNumOutput());
+  }
+  if (other.hasBiasTerm()) {
+    setBiasTerm(other.getBiasTerm());
+  }
+  if (other.hasWeightFiller()) {
+    mergeWeightFiller(other.getWeightFiller());
+  }
+  if (other.hasBiasFiller()) {
+    mergeBiasFiller(other.getBiasFiller());
+  }
+  if (other.hasAxis()) {
+    setAxis(other.getAxis());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

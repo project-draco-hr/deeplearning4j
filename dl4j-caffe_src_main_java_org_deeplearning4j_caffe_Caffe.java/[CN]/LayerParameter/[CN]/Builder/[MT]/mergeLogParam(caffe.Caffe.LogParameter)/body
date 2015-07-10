@@ -1,0 +1,16 @@
+{
+  if (logParamBuilder_ == null) {
+    if (((bitField0_ & 0x40000000) == 0x40000000) && logParam_ != caffe.Caffe.LogParameter.getDefaultInstance()) {
+      logParam_=caffe.Caffe.LogParameter.newBuilder(logParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      logParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    logParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x40000000;
+  return this;
+}

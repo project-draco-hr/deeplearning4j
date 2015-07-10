@@ -1,0 +1,11 @@
+{
+  if (reluParamBuilder_ == null) {
+    reluParam_=caffe.Caffe.ReLUParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    reluParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000080);
+  return this;
+}

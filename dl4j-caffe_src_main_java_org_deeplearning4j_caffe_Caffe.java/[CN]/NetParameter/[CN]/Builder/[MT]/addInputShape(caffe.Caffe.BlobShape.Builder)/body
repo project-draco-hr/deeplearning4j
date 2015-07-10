@@ -1,0 +1,11 @@
+{
+  if (inputShapeBuilder_ == null) {
+    ensureInputShapeIsMutable();
+    inputShape_.add(builderForValue.build());
+    onChanged();
+  }
+ else {
+    inputShapeBuilder_.addMessage(builderForValue.build());
+  }
+  return this;
+}

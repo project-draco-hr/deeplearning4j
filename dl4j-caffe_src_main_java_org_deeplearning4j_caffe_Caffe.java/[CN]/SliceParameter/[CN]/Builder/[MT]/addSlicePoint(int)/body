@@ -1,0 +1,6 @@
+{
+  ensureSlicePointIsMutable();
+  slicePoint_.add(value);
+  onChanged();
+  return this;
+}

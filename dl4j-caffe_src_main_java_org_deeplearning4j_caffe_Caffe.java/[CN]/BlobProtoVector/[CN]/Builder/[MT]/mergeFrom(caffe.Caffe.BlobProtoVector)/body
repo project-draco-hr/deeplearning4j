@@ -1,0 +1,32 @@
+{
+  if (other == caffe.Caffe.BlobProtoVector.getDefaultInstance())   return this;
+  if (blobsBuilder_ == null) {
+    if (!other.blobs_.isEmpty()) {
+      if (blobs_.isEmpty()) {
+        blobs_=other.blobs_;
+        bitField0_=(bitField0_ & ~0x00000001);
+      }
+ else {
+        ensureBlobsIsMutable();
+        blobs_.addAll(other.blobs_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.blobs_.isEmpty()) {
+      if (blobsBuilder_.isEmpty()) {
+        blobsBuilder_.dispose();
+        blobsBuilder_=null;
+        blobs_=other.blobs_;
+        bitField0_=(bitField0_ & ~0x00000001);
+        blobsBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getBlobsFieldBuilder() : null;
+      }
+ else {
+        blobsBuilder_.addAllMessages(other.blobs_);
+      }
+    }
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

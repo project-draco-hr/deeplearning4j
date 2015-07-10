@@ -1,0 +1,11 @@
+{
+  if (imageDataParamBuilder_ == null) {
+    imageDataParam_=caffe.Caffe.ImageDataParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    imageDataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x08000000);
+  return this;
+}

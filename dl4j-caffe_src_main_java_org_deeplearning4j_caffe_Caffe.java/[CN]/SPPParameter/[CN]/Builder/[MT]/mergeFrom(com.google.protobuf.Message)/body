@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.SPPParameter) {
+    return mergeFrom((caffe.Caffe.SPPParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

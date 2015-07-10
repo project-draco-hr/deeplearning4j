@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.HingeLossParameter) {
+    return mergeFrom((caffe.Caffe.HingeLossParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

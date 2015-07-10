@@ -1,0 +1,12 @@
+{
+  super.clear();
+  name_="";
+  bitField0_=(bitField0_ & ~0x00000001);
+  shareMode_=caffe.Caffe.ParamSpec.DimCheckMode.STRICT;
+  bitField0_=(bitField0_ & ~0x00000002);
+  lrMult_=1F;
+  bitField0_=(bitField0_ & ~0x00000004);
+  decayMult_=1F;
+  bitField0_=(bitField0_ & ~0x00000008);
+  return this;
+}

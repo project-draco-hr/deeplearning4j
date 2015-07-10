@@ -1,0 +1,7 @@
+{
+  final ObjectMapper MAPPER=new ObjectMapper(new ProtobufFactory());
+  final ProtobufSchema caffeSchema=io.Reader.getCaffeSchema();
+  ClassPathResource googleNetPath=new ClassPathResource("models/small_nin_imagenet/nin_imagenet_conv.caffemodel");
+  byte[] googleNetSolverBytes=Files.readAllBytes(Paths.get(googleNetPath.getURI()));
+  NetParameter netClass=MAPPER.readerFor(NetParameter.class).with(caffeSchema).readValue(googleNetSolverBytes);
+}

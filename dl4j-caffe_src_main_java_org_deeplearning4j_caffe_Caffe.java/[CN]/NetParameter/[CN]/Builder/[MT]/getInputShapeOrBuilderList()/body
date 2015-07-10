@@ -1,0 +1,8 @@
+{
+  if (inputShapeBuilder_ != null) {
+    return inputShapeBuilder_.getMessageOrBuilderList();
+  }
+ else {
+    return java.util.Collections.unmodifiableList(inputShape_);
+  }
+}

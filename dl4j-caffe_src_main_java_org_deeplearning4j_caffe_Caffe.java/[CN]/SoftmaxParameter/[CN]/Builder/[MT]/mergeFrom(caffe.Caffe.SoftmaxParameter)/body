@@ -1,0 +1,11 @@
+{
+  if (other == caffe.Caffe.SoftmaxParameter.getDefaultInstance())   return this;
+  if (other.hasEngine()) {
+    setEngine(other.getEngine());
+  }
+  if (other.hasAxis()) {
+    setAxis(other.getAxis());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

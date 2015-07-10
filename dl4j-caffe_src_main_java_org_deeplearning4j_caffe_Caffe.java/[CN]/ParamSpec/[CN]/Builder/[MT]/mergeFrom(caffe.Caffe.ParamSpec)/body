@@ -1,0 +1,19 @@
+{
+  if (other == caffe.Caffe.ParamSpec.getDefaultInstance())   return this;
+  if (other.hasName()) {
+    bitField0_|=0x00000001;
+    name_=other.name_;
+    onChanged();
+  }
+  if (other.hasShareMode()) {
+    setShareMode(other.getShareMode());
+  }
+  if (other.hasLrMult()) {
+    setLrMult(other.getLrMult());
+  }
+  if (other.hasDecayMult()) {
+    setDecayMult(other.getDecayMult());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

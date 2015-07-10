@@ -1,0 +1,11 @@
+{
+  if (convolutionParamBuilder_ == null) {
+    convolutionParam_=caffe.Caffe.ConvolutionParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    convolutionParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00010000);
+  return this;
+}

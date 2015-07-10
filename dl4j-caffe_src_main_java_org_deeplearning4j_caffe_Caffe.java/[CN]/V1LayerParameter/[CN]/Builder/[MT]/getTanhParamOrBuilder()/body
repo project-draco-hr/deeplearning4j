@@ -1,0 +1,8 @@
+{
+  if (tanhParamBuilder_ != null) {
+    return tanhParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return tanhParam_;
+  }
+}

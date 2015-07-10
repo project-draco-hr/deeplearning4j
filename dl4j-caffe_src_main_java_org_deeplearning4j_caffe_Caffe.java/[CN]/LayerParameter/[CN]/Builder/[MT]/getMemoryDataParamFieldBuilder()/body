@@ -1,0 +1,7 @@
+{
+  if (memoryDataParamBuilder_ == null) {
+    memoryDataParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.MemoryDataParameter,caffe.Caffe.MemoryDataParameter.Builder,caffe.Caffe.MemoryDataParameterOrBuilder>(getMemoryDataParam(),getParentForChildren(),isClean());
+    memoryDataParam_=null;
+  }
+  return memoryDataParamBuilder_;
+}

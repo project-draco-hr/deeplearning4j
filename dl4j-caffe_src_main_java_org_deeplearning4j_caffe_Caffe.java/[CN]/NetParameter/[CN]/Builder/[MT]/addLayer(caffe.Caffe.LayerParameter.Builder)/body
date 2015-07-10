@@ -1,0 +1,11 @@
+{
+  if (layerBuilder_ == null) {
+    ensureLayerIsMutable();
+    layer_.add(builderForValue.build());
+    onChanged();
+  }
+ else {
+    layerBuilder_.addMessage(builderForValue.build());
+  }
+  return this;
+}

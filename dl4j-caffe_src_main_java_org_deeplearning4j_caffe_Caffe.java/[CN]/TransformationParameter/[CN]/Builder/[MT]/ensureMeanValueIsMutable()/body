@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+    meanValue_=new java.util.ArrayList<Float>(meanValue_);
+    bitField0_|=0x00000010;
+  }
+}

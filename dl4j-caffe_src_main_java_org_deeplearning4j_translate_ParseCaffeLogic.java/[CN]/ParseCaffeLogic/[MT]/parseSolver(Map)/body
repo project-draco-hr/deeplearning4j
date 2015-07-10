@@ -1,0 +1,26 @@
+{
+  HashMap<String,Object> translatedSolverMap=new HashMap<String,Object>();
+  HashMap<String,String> caffeToDL4JSolver=new HashMap<String,String>();
+  caffeToDL4JSolver.put("lr","baseLr");
+  caffeToDL4JSolver.put("averageLoss","averageLoss_");
+  caffeToDL4JSolver.put("maxIter","maxIter_");
+  caffeToDL4JSolver.put("iterSize","iterSize_");
+  caffeToDL4JSolver.put("lrPolicy","lrPolicy_");
+  caffeToDL4JSolver.put("gamma","gamma_");
+  caffeToDL4JSolver.put("power","power_");
+  caffeToDL4JSolver.put("momentum","momentum_");
+  caffeToDL4JSolver.put("weightDecay","weightDecay_");
+  caffeToDL4JSolver.put("regularization","regularizationType_");
+  caffeToDL4JSolver.put("stepSize","stepsize_");
+  caffeToDL4JSolver.put("backEnd","solverMode_");
+  caffeToDL4JSolver.put("deviceId","deviceId_");
+  caffeToDL4JSolver.put("randomSeed","randomSeed_");
+  caffeToDL4JSolver.put("solverType","solverType_");
+  caffeToDL4JSolver.put("delta","delta_");
+  for (  Map.Entry<String,String> entry : caffeToDL4JSolver.entrySet()) {
+    String dL4JKey=entry.getKey();
+    String caffeKey=entry.getValue();
+    translatedSolverMap.put(dL4JKey,caffeSovlerMap.get(caffeKey));
+  }
+  return translatedSolverMap;
+}

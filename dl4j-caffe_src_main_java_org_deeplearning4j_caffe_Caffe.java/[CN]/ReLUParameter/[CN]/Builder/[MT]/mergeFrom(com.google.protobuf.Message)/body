@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.ReLUParameter) {
+    return mergeFrom((caffe.Caffe.ReLUParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

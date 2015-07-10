@@ -1,0 +1,14 @@
+{
+  Object ref=detCropMode_;
+  if (!(ref instanceof String)) {
+    com.google.protobuf.ByteString bs=(com.google.protobuf.ByteString)ref;
+    String s=bs.toStringUtf8();
+    if (bs.isValidUtf8()) {
+      detCropMode_=s;
+    }
+    return s;
+  }
+ else {
+    return (String)ref;
+  }
+}

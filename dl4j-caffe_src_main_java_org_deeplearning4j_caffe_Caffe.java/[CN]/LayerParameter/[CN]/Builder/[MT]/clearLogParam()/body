@@ -1,0 +1,11 @@
+{
+  if (logParamBuilder_ == null) {
+    logParam_=caffe.Caffe.LogParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    logParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x40000000);
+  return this;
+}

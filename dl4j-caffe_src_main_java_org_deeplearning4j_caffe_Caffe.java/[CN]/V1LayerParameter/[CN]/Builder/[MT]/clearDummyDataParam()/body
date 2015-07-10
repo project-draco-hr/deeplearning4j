@@ -1,0 +1,11 @@
+{
+  if (dummyDataParamBuilder_ == null) {
+    dummyDataParam_=caffe.Caffe.DummyDataParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    dummyDataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00080000);
+  return this;
+}

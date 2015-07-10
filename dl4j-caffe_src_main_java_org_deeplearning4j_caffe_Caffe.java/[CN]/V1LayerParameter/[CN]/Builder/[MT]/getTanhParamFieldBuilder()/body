@@ -1,0 +1,7 @@
+{
+  if (tanhParamBuilder_ == null) {
+    tanhParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.TanHParameter,caffe.Caffe.TanHParameter.Builder,caffe.Caffe.TanHParameterOrBuilder>(getTanhParam(),getParentForChildren(),isClean());
+    tanhParam_=null;
+  }
+  return tanhParamBuilder_;
+}

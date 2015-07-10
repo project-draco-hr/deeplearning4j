@@ -1,0 +1,16 @@
+{
+  caffe.Caffe.BlobProtoVector result=new caffe.Caffe.BlobProtoVector(this);
+  int from_bitField0_=bitField0_;
+  if (blobsBuilder_ == null) {
+    if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      blobs_=java.util.Collections.unmodifiableList(blobs_);
+      bitField0_=(bitField0_ & ~0x00000001);
+    }
+    result.blobs_=blobs_;
+  }
+ else {
+    result.blobs_=blobsBuilder_.build();
+  }
+  onBuilt();
+  return result;
+}

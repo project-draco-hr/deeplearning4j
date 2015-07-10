@@ -1,0 +1,11 @@
+{
+  if (argmaxParamBuilder_ == null) {
+    argmaxParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    argmaxParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x00004000;
+  return this;
+}

@@ -1,0 +1,14 @@
+{
+  if (poolingParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    poolingParam_=value;
+    onChanged();
+  }
+ else {
+    poolingParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x80000000;
+  return this;
+}

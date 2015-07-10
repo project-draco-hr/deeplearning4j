@@ -1,0 +1,8 @@
+{
+  if (other == caffe.Caffe.ThresholdParameter.getDefaultInstance())   return this;
+  if (other.hasThreshold()) {
+    setThreshold(other.getThreshold());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

@@ -1,0 +1,15 @@
+{
+  if (other == caffe.Caffe.PythonParameter.getDefaultInstance())   return this;
+  if (other.hasModule()) {
+    bitField0_|=0x00000001;
+    module_=other.module_;
+    onChanged();
+  }
+  if (other.hasLayer()) {
+    bitField0_|=0x00000002;
+    layer_=other.layer_;
+    onChanged();
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

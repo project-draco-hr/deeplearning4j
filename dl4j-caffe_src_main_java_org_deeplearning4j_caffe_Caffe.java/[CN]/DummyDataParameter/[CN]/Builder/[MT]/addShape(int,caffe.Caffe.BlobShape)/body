@@ -1,0 +1,14 @@
+{
+  if (shapeBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureShapeIsMutable();
+    shape_.add(index,value);
+    onChanged();
+  }
+ else {
+    shapeBuilder_.addMessage(index,value);
+  }
+  return this;
+}

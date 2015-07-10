@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.LossParameter) {
+    return mergeFrom((caffe.Caffe.LossParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

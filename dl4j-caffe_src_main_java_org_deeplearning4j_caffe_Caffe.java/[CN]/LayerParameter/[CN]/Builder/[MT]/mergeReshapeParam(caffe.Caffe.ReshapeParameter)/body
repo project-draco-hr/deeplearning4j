@@ -1,0 +1,16 @@
+{
+  if (reshapeParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000100) == 0x00000100) && reshapeParam_ != caffe.Caffe.ReshapeParameter.getDefaultInstance()) {
+      reshapeParam_=caffe.Caffe.ReshapeParameter.newBuilder(reshapeParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      reshapeParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    reshapeParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000100;
+  return this;
+}

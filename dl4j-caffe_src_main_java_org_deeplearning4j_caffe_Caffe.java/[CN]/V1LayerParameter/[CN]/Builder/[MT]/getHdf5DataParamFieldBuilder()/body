@@ -1,0 +1,7 @@
+{
+  if (hdf5DataParamBuilder_ == null) {
+    hdf5DataParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.HDF5DataParameter,caffe.Caffe.HDF5DataParameter.Builder,caffe.Caffe.HDF5DataParameterOrBuilder>(getHdf5DataParam(),getParentForChildren(),isClean());
+    hdf5DataParam_=null;
+  }
+  return hdf5DataParamBuilder_;
+}

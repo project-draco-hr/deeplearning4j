@@ -1,0 +1,31 @@
+{
+  if (other == caffe.Caffe.FillerParameter.getDefaultInstance())   return this;
+  if (other.hasType()) {
+    bitField0_|=0x00000001;
+    type_=other.type_;
+    onChanged();
+  }
+  if (other.hasValue()) {
+    setValue(other.getValue());
+  }
+  if (other.hasMin()) {
+    setMin(other.getMin());
+  }
+  if (other.hasMax()) {
+    setMax(other.getMax());
+  }
+  if (other.hasMean()) {
+    setMean(other.getMean());
+  }
+  if (other.hasStd()) {
+    setStd(other.getStd());
+  }
+  if (other.hasSparse()) {
+    setSparse(other.getSparse());
+  }
+  if (other.hasVarianceNorm()) {
+    setVarianceNorm(other.getVarianceNorm());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

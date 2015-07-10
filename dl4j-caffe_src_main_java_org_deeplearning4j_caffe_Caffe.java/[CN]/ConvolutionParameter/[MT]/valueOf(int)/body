@@ -1,0 +1,12 @@
+{
+switch (value) {
+case 0:
+    return DEFAULT;
+case 1:
+  return CAFFE;
+case 2:
+return CUDNN;
+default :
+return null;
+}
+}

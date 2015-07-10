@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+    history_=new java.util.ArrayList<caffe.Caffe.BlobProto>(history_);
+    bitField0_|=0x00000004;
+  }
+}

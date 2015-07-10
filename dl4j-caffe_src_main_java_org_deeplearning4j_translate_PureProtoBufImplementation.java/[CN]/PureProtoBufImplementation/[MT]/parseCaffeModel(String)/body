@@ -1,0 +1,5 @@
+{
+  String path=new ClassPathResource(caffeModelPath).getURI().getPath();
+  InputStream is=new FileInputStream(path);
+  NetParameter net=NetParameter.parseFrom(CodedInputStream.newInstance(is));
+}

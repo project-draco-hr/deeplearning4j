@@ -1,0 +1,7 @@
+{
+  if (shapeBuilder_ == null) {
+    shapeBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.BlobShape,caffe.Caffe.BlobShape.Builder,caffe.Caffe.BlobShapeOrBuilder>(getShape(),getParentForChildren(),isClean());
+    shape_=null;
+  }
+  return shapeBuilder_;
+}

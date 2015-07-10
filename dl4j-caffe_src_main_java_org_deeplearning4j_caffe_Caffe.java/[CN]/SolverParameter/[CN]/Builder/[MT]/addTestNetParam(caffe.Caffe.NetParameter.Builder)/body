@@ -1,0 +1,11 @@
+{
+  if (testNetParamBuilder_ == null) {
+    ensureTestNetParamIsMutable();
+    testNetParam_.add(builderForValue.build());
+    onChanged();
+  }
+ else {
+    testNetParamBuilder_.addMessage(builderForValue.build());
+  }
+  return this;
+}

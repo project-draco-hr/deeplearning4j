@@ -1,0 +1,36 @@
+{
+  if (other == caffe.Caffe.DataParameter.getDefaultInstance())   return this;
+  if (other.hasSource()) {
+    bitField0_|=0x00000001;
+    source_=other.source_;
+    onChanged();
+  }
+  if (other.hasBatchSize()) {
+    setBatchSize(other.getBatchSize());
+  }
+  if (other.hasRandSkip()) {
+    setRandSkip(other.getRandSkip());
+  }
+  if (other.hasBackend()) {
+    setBackend(other.getBackend());
+  }
+  if (other.hasScale()) {
+    setScale(other.getScale());
+  }
+  if (other.hasMeanFile()) {
+    bitField0_|=0x00000020;
+    meanFile_=other.meanFile_;
+    onChanged();
+  }
+  if (other.hasCropSize()) {
+    setCropSize(other.getCropSize());
+  }
+  if (other.hasMirror()) {
+    setMirror(other.getMirror());
+  }
+  if (other.hasForceEncodedColor()) {
+    setForceEncodedColor(other.getForceEncodedColor());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

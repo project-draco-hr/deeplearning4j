@@ -1,0 +1,14 @@
+{
+  super.clear();
+  localSize_=5;
+  bitField0_=(bitField0_ & ~0x00000001);
+  alpha_=1F;
+  bitField0_=(bitField0_ & ~0x00000002);
+  beta_=0.75F;
+  bitField0_=(bitField0_ & ~0x00000004);
+  normRegion_=caffe.Caffe.LRNParameter.NormRegion.ACROSS_CHANNELS;
+  bitField0_=(bitField0_ & ~0x00000008);
+  k_=1F;
+  bitField0_=(bitField0_ & ~0x00000010);
+  return this;
+}

@@ -1,0 +1,16 @@
+{
+  if (thresholdParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000040) == 0x00000040) && thresholdParam_ != caffe.Caffe.ThresholdParameter.getDefaultInstance()) {
+      thresholdParam_=caffe.Caffe.ThresholdParameter.newBuilder(thresholdParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      thresholdParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    thresholdParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000040;
+  return this;
+}

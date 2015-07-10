@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.Datum) {
+    return mergeFrom((caffe.Caffe.Datum)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

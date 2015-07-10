@@ -1,0 +1,7 @@
+{
+  if (expParamBuilder_ == null) {
+    expParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ExpParameter,caffe.Caffe.ExpParameter.Builder,caffe.Caffe.ExpParameterOrBuilder>(getExpParam(),getParentForChildren(),isClean());
+    expParam_=null;
+  }
+  return expParamBuilder_;
+}

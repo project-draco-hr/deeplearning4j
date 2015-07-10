@@ -1,0 +1,11 @@
+{
+  if (powerParamBuilder_ == null) {
+    powerParam_=caffe.Caffe.PowerParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    powerParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000001);
+  return this;
+}

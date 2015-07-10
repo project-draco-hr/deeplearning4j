@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00800000) == 0x00800000)) {
+    blobsLr_=new java.util.ArrayList<Float>(blobsLr_);
+    bitField0_|=0x00800000;
+  }
+}

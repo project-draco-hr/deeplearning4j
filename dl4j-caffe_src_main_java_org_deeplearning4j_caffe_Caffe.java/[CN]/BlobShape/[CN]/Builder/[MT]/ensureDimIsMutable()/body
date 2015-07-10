@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+    dim_=new java.util.ArrayList<Long>(dim_);
+    bitField0_|=0x00000001;
+  }
+}

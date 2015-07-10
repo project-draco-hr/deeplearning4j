@@ -1,0 +1,100 @@
+{
+  super.clear();
+  name_="";
+  bitField0_=(bitField0_ & ~0x00000001);
+  type_="";
+  bitField0_=(bitField0_ & ~0x00000002);
+  numOutput_=0;
+  bitField0_=(bitField0_ & ~0x00000004);
+  biasterm_=true;
+  bitField0_=(bitField0_ & ~0x00000008);
+  if (weightFillerBuilder_ == null) {
+    weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+  }
+ else {
+    weightFillerBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000010);
+  if (biasFillerBuilder_ == null) {
+    biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+  }
+ else {
+    biasFillerBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000020);
+  pad_=0;
+  bitField0_=(bitField0_ & ~0x00000040);
+  kernelsize_=0;
+  bitField0_=(bitField0_ & ~0x00000080);
+  group_=1;
+  bitField0_=(bitField0_ & ~0x00000100);
+  stride_=1;
+  bitField0_=(bitField0_ & ~0x00000200);
+  pool_=caffe.Caffe.V0LayerParameter.PoolMethod.MAX;
+  bitField0_=(bitField0_ & ~0x00000400);
+  dropoutRatio_=0.5F;
+  bitField0_=(bitField0_ & ~0x00000800);
+  localSize_=5;
+  bitField0_=(bitField0_ & ~0x00001000);
+  alpha_=1F;
+  bitField0_=(bitField0_ & ~0x00002000);
+  beta_=0.75F;
+  bitField0_=(bitField0_ & ~0x00004000);
+  k_=1F;
+  bitField0_=(bitField0_ & ~0x00008000);
+  source_="";
+  bitField0_=(bitField0_ & ~0x00010000);
+  scale_=1F;
+  bitField0_=(bitField0_ & ~0x00020000);
+  meanfile_="";
+  bitField0_=(bitField0_ & ~0x00040000);
+  batchsize_=0;
+  bitField0_=(bitField0_ & ~0x00080000);
+  cropsize_=0;
+  bitField0_=(bitField0_ & ~0x00100000);
+  mirror_=false;
+  bitField0_=(bitField0_ & ~0x00200000);
+  if (blobsBuilder_ == null) {
+    blobs_=java.util.Collections.emptyList();
+    bitField0_=(bitField0_ & ~0x00400000);
+  }
+ else {
+    blobsBuilder_.clear();
+  }
+  blobsLr_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00800000);
+  weightDecay_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x01000000);
+  randSkip_=0;
+  bitField0_=(bitField0_ & ~0x02000000);
+  detFgThreshold_=0.5F;
+  bitField0_=(bitField0_ & ~0x04000000);
+  detBgThreshold_=0.5F;
+  bitField0_=(bitField0_ & ~0x08000000);
+  detFgFraction_=0.25F;
+  bitField0_=(bitField0_ & ~0x10000000);
+  detContextPad_=0;
+  bitField0_=(bitField0_ & ~0x20000000);
+  detCropMode_="warp";
+  bitField0_=(bitField0_ & ~0x40000000);
+  newNum_=0;
+  bitField0_=(bitField0_ & ~0x80000000);
+  newChannels_=0;
+  bitField1_=(bitField1_ & ~0x00000001);
+  newHeight_=0;
+  bitField1_=(bitField1_ & ~0x00000002);
+  newWidth_=0;
+  bitField1_=(bitField1_ & ~0x00000004);
+  shuffleImages_=false;
+  bitField1_=(bitField1_ & ~0x00000008);
+  concatDim_=1;
+  bitField1_=(bitField1_ & ~0x00000010);
+  if (hdf5OutputParamBuilder_ == null) {
+    hdf5OutputParam_=caffe.Caffe.HDF5OutputParameter.getDefaultInstance();
+  }
+ else {
+    hdf5OutputParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000020);
+  return this;
+}

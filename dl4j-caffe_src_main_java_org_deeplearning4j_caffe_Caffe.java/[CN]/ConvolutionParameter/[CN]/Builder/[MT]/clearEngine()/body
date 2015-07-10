@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00004000);
+  engine_=caffe.Caffe.ConvolutionParameter.Engine.DEFAULT;
+  onChanged();
+  return this;
+}

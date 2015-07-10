@@ -1,0 +1,11 @@
+{
+  source_="";
+  batchSize_=0;
+  randSkip_=0;
+  backend_=caffe.Caffe.DataParameter.DB.LEVELDB;
+  scale_=1F;
+  meanFile_="";
+  cropSize_=0;
+  mirror_=false;
+  forceEncodedColor_=false;
+}

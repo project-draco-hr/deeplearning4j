@@ -1,0 +1,14 @@
+{
+  if (historyBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureHistoryIsMutable();
+    history_.add(index,value);
+    onChanged();
+  }
+ else {
+    historyBuilder_.addMessage(index,value);
+  }
+  return this;
+}

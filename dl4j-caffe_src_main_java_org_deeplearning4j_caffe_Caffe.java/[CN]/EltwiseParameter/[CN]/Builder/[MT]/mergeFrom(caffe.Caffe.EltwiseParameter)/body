@@ -1,0 +1,22 @@
+{
+  if (other == caffe.Caffe.EltwiseParameter.getDefaultInstance())   return this;
+  if (other.hasOperation()) {
+    setOperation(other.getOperation());
+  }
+  if (!other.coeff_.isEmpty()) {
+    if (coeff_.isEmpty()) {
+      coeff_=other.coeff_;
+      bitField0_=(bitField0_ & ~0x00000002);
+    }
+ else {
+      ensureCoeffIsMutable();
+      coeff_.addAll(other.coeff_);
+    }
+    onChanged();
+  }
+  if (other.hasStableProdGrad()) {
+    setStableProdGrad(other.getStableProdGrad());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

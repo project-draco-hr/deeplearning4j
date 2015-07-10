@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.SolverState) {
+    return mergeFrom((caffe.Caffe.SolverState)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

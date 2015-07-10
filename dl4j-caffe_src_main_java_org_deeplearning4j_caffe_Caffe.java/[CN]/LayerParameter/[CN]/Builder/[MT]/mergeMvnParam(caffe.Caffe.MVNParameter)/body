@@ -1,0 +1,16 @@
+{
+  if (mvnParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000002) == 0x00000002) && mvnParam_ != caffe.Caffe.MVNParameter.getDefaultInstance()) {
+      mvnParam_=caffe.Caffe.MVNParameter.newBuilder(mvnParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      mvnParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    mvnParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000002;
+  return this;
+}

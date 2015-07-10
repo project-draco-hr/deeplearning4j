@@ -1,0 +1,25 @@
+{
+  caffe.Caffe.ReshapeParameter result=new caffe.Caffe.ReshapeParameter(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  if (shapeBuilder_ == null) {
+    result.shape_=shape_;
+  }
+ else {
+    result.shape_=shapeBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.axis_=axis_;
+  if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.numAxes_=numAxes_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

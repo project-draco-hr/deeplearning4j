@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.PythonParameter) {
+    return mergeFrom((caffe.Caffe.PythonParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

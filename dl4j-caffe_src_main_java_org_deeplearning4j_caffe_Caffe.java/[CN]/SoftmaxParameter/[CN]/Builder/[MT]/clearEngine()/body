@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00000001);
+  engine_=caffe.Caffe.SoftmaxParameter.Engine.DEFAULT;
+  onChanged();
+  return this;
+}

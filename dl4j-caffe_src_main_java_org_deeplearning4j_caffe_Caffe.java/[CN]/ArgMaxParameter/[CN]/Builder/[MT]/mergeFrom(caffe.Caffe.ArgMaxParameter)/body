@@ -1,0 +1,11 @@
+{
+  if (other == caffe.Caffe.ArgMaxParameter.getDefaultInstance())   return this;
+  if (other.hasOutMaxVal()) {
+    setOutMaxVal(other.getOutMaxVal());
+  }
+  if (other.hasTopK()) {
+    setTopK(other.getTopK());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

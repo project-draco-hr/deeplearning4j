@@ -1,0 +1,11 @@
+{
+  if (other == caffe.Caffe.PReLUParameter.getDefaultInstance())   return this;
+  if (other.hasFiller()) {
+    mergeFiller(other.getFiller());
+  }
+  if (other.hasChannelShared()) {
+    setChannelShared(other.getChannelShared());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

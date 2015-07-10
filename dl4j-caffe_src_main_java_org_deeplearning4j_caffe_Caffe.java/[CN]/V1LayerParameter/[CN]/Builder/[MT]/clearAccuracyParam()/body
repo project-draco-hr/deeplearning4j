@@ -1,0 +1,11 @@
+{
+  if (accuracyParamBuilder_ == null) {
+    accuracyParam_=caffe.Caffe.AccuracyParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    accuracyParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00001000);
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (infogainLossParamBuilder_ == null) {
+    infogainLossParam_=caffe.Caffe.InfogainLossParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    infogainLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x04000000);
+  return this;
+}

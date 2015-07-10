@@ -1,0 +1,16 @@
+{
+  if (flattenParamBuilder_ == null) {
+    if (((bitField0_ & 0x00800000) == 0x00800000) && flattenParam_ != caffe.Caffe.FlattenParameter.getDefaultInstance()) {
+      flattenParam_=caffe.Caffe.FlattenParameter.newBuilder(flattenParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      flattenParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    flattenParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00800000;
+  return this;
+}

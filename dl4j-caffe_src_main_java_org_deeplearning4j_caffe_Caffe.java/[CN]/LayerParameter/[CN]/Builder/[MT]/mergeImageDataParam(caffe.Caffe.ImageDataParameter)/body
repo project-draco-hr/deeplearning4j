@@ -1,0 +1,16 @@
+{
+  if (imageDataParamBuilder_ == null) {
+    if (((bitField0_ & 0x08000000) == 0x08000000) && imageDataParam_ != caffe.Caffe.ImageDataParameter.getDefaultInstance()) {
+      imageDataParam_=caffe.Caffe.ImageDataParameter.newBuilder(imageDataParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      imageDataParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    imageDataParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x08000000;
+  return this;
+}

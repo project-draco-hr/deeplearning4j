@@ -1,0 +1,16 @@
+{
+  if (hdf5OutputParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000020) == 0x00000020) && hdf5OutputParam_ != caffe.Caffe.HDF5OutputParameter.getDefaultInstance()) {
+      hdf5OutputParam_=caffe.Caffe.HDF5OutputParameter.newBuilder(hdf5OutputParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      hdf5OutputParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    hdf5OutputParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000020;
+  return this;
+}

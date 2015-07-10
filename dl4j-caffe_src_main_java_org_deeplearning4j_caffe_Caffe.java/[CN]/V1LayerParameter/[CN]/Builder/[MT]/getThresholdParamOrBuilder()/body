@@ -1,0 +1,8 @@
+{
+  if (thresholdParamBuilder_ != null) {
+    return thresholdParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return thresholdParam_;
+  }
+}

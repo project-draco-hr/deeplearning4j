@@ -1,0 +1,10 @@
+{
+switch (value) {
+case 0:
+    return STRICT;
+case 1:
+  return PERMISSIVE;
+default :
+return null;
+}
+}

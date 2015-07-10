@@ -1,0 +1,11 @@
+{
+  if (historyBuilder_ == null) {
+    ensureHistoryIsMutable();
+    history_.remove(index);
+    onChanged();
+  }
+ else {
+    historyBuilder_.remove(index);
+  }
+  return this;
+}

@@ -1,0 +1,16 @@
+{
+  if (memoryDataParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000001) == 0x00000001) && memoryDataParam_ != caffe.Caffe.MemoryDataParameter.getDefaultInstance()) {
+      memoryDataParam_=caffe.Caffe.MemoryDataParameter.newBuilder(memoryDataParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      memoryDataParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    memoryDataParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000001;
+  return this;
+}

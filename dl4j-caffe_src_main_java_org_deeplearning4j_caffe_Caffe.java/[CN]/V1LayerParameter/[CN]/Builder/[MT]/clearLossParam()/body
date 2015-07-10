@@ -1,0 +1,11 @@
+{
+  if (lossParamBuilder_ == null) {
+    lossParam_=caffe.Caffe.LossParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    lossParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000200);
+  return this;
+}

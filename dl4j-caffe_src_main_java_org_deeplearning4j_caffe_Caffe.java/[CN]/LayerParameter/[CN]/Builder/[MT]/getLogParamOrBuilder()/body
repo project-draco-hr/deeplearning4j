@@ -1,0 +1,8 @@
+{
+  if (logParamBuilder_ != null) {
+    return logParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return logParam_;
+  }
+}

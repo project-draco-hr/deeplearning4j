@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.PowerParameter) {
+    return mergeFrom((caffe.Caffe.PowerParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

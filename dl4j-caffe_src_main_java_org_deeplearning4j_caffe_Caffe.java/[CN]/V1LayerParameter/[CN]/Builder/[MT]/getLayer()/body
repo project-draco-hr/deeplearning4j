@@ -1,0 +1,8 @@
+{
+  if (layerBuilder_ == null) {
+    return layer_;
+  }
+ else {
+    return layerBuilder_.getMessage();
+  }
+}

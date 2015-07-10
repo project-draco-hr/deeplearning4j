@@ -1,0 +1,22 @@
+{
+  if (other == caffe.Caffe.NetState.getDefaultInstance())   return this;
+  if (other.hasPhase()) {
+    setPhase(other.getPhase());
+  }
+  if (other.hasLevel()) {
+    setLevel(other.getLevel());
+  }
+  if (!other.stage_.isEmpty()) {
+    if (stage_.isEmpty()) {
+      stage_=other.stage_;
+      bitField0_=(bitField0_ & ~0x00000004);
+    }
+ else {
+      ensureStageIsMutable();
+      stage_.addAll(other.stage_);
+    }
+    onChanged();
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

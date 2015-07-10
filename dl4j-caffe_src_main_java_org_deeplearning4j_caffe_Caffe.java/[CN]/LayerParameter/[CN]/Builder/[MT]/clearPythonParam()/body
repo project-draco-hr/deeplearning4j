@@ -1,0 +1,11 @@
+{
+  if (pythonParamBuilder_ == null) {
+    pythonParam_=caffe.Caffe.PythonParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    pythonParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000020);
+  return this;
+}

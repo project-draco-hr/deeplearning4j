@@ -1,0 +1,11 @@
+{
+  if (softmaxParamBuilder_ == null) {
+    softmaxParam_=caffe.Caffe.SoftmaxParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    softmaxParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000400);
+  return this;
+}

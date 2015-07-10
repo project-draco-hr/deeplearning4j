@@ -1,0 +1,14 @@
+{
+  if (accuracyParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    accuracyParam_=value;
+    onChanged();
+  }
+ else {
+    accuracyParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x00001000;
+  return this;
+}

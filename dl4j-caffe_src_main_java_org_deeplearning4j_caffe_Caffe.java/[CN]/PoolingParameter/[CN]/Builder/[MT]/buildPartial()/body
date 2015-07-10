@@ -1,0 +1,56 @@
+{
+  caffe.Caffe.PoolingParameter result=new caffe.Caffe.PoolingParameter(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.pool_=pool_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.pad_=pad_;
+  if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.padH_=padH_;
+  if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x00000008;
+  }
+  result.padW_=padW_;
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000010;
+  }
+  result.kernelSize_=kernelSize_;
+  if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+    to_bitField0_|=0x00000020;
+  }
+  result.kernelH_=kernelH_;
+  if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+    to_bitField0_|=0x00000040;
+  }
+  result.kernelW_=kernelW_;
+  if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+    to_bitField0_|=0x00000080;
+  }
+  result.stride_=stride_;
+  if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+    to_bitField0_|=0x00000100;
+  }
+  result.strideH_=strideH_;
+  if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+    to_bitField0_|=0x00000200;
+  }
+  result.strideW_=strideW_;
+  if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+    to_bitField0_|=0x00000400;
+  }
+  result.engine_=engine_;
+  if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+    to_bitField0_|=0x00000800;
+  }
+  result.globalPooling_=globalPooling_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

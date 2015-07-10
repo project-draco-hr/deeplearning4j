@@ -1,0 +1,13 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeEnum(1,operation_.getNumber());
+  }
+  for (int i=0; i < coeff_.size(); i++) {
+    output.writeFloat(2,coeff_.get(i));
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeBool(3,stableProdGrad_);
+  }
+  getUnknownFields().writeTo(output);
+}

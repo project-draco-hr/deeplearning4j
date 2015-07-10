@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.MVNParameter) {
+    return mergeFrom((caffe.Caffe.MVNParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

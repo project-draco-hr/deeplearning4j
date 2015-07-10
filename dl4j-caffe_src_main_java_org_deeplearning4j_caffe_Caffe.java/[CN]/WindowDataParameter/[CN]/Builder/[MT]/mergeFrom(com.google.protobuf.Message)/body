@@ -1,0 +1,9 @@
+{
+  if (other instanceof caffe.Caffe.WindowDataParameter) {
+    return mergeFrom((caffe.Caffe.WindowDataParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

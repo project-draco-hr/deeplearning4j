@@ -1,0 +1,46 @@
+{
+  caffe.Caffe.DummyDataParameter result=new caffe.Caffe.DummyDataParameter(this);
+  int from_bitField0_=bitField0_;
+  if (dataFillerBuilder_ == null) {
+    if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      dataFiller_=java.util.Collections.unmodifiableList(dataFiller_);
+      bitField0_=(bitField0_ & ~0x00000001);
+    }
+    result.dataFiller_=dataFiller_;
+  }
+ else {
+    result.dataFiller_=dataFillerBuilder_.build();
+  }
+  if (shapeBuilder_ == null) {
+    if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      shape_=java.util.Collections.unmodifiableList(shape_);
+      bitField0_=(bitField0_ & ~0x00000002);
+    }
+    result.shape_=shape_;
+  }
+ else {
+    result.shape_=shapeBuilder_.build();
+  }
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    num_=java.util.Collections.unmodifiableList(num_);
+    bitField0_=(bitField0_ & ~0x00000004);
+  }
+  result.num_=num_;
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    channels_=java.util.Collections.unmodifiableList(channels_);
+    bitField0_=(bitField0_ & ~0x00000008);
+  }
+  result.channels_=channels_;
+  if (((bitField0_ & 0x00000010) == 0x00000010)) {
+    height_=java.util.Collections.unmodifiableList(height_);
+    bitField0_=(bitField0_ & ~0x00000010);
+  }
+  result.height_=height_;
+  if (((bitField0_ & 0x00000020) == 0x00000020)) {
+    width_=java.util.Collections.unmodifiableList(width_);
+    bitField0_=(bitField0_ & ~0x00000020);
+  }
+  result.width_=width_;
+  onBuilt();
+  return result;
+}

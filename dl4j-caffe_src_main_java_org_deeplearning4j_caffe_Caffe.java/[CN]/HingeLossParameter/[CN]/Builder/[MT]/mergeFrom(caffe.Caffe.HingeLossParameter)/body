@@ -1,0 +1,8 @@
+{
+  if (other == caffe.Caffe.HingeLossParameter.getDefaultInstance())   return this;
+  if (other.hasNorm()) {
+    setNorm(other.getNorm());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

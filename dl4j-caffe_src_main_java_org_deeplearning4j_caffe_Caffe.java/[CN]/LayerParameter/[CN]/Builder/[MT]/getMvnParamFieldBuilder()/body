@@ -1,0 +1,7 @@
+{
+  if (mvnParamBuilder_ == null) {
+    mvnParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.MVNParameter,caffe.Caffe.MVNParameter.Builder,caffe.Caffe.MVNParameterOrBuilder>(getMvnParam(),getParentForChildren(),isClean());
+    mvnParam_=null;
+  }
+  return mvnParamBuilder_;
+}

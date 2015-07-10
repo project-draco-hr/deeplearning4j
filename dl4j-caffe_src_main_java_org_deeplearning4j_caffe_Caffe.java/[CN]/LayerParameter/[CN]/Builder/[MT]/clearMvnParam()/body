@@ -1,0 +1,11 @@
+{
+  if (mvnParamBuilder_ == null) {
+    mvnParam_=caffe.Caffe.MVNParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    mvnParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000002);
+  return this;
+}

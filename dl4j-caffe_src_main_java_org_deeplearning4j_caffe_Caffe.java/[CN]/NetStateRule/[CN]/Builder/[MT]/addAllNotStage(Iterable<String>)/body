@@ -1,0 +1,6 @@
+{
+  ensureNotStageIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,notStage_);
+  onChanged();
+  return this;
+}

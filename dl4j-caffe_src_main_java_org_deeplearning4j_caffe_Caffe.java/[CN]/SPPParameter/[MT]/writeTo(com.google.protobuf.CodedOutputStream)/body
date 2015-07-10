@@ -1,0 +1,13 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeUInt32(1,pyramidHeight_);
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeEnum(2,pool_.getNumber());
+  }
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    output.writeEnum(6,engine_.getNumber());
+  }
+  getUnknownFields().writeTo(output);
+}

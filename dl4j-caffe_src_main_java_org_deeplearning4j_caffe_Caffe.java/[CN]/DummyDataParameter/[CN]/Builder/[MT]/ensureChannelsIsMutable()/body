@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+    channels_=new java.util.ArrayList<Integer>(channels_);
+    bitField0_|=0x00000008;
+  }
+}

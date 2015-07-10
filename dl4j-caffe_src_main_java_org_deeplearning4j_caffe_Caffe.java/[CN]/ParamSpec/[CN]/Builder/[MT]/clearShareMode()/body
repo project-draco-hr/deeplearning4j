@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00000002);
+  shareMode_=caffe.Caffe.ParamSpec.DimCheckMode.STRICT;
+  onChanged();
+  return this;
+}

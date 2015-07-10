@@ -1,0 +1,7 @@
+{
+  if (logParamBuilder_ == null) {
+    logParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.LogParameter,caffe.Caffe.LogParameter.Builder,caffe.Caffe.LogParameterOrBuilder>(getLogParam(),getParentForChildren(),isClean());
+    logParam_=null;
+  }
+  return logParamBuilder_;
+}

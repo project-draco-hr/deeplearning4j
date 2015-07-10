@@ -1,0 +1,14 @@
+{
+  if (weightFillerBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    weightFiller_=value;
+    onChanged();
+  }
+ else {
+    weightFillerBuilder_.setMessage(value);
+  }
+  bitField0_|=0x00001000;
+  return this;
+}

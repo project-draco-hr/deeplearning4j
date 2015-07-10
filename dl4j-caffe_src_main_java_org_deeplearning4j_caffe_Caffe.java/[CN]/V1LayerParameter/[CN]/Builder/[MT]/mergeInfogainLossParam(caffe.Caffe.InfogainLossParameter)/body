@@ -1,0 +1,16 @@
+{
+  if (infogainLossParamBuilder_ == null) {
+    if (((bitField0_ & 0x04000000) == 0x04000000) && infogainLossParam_ != caffe.Caffe.InfogainLossParameter.getDefaultInstance()) {
+      infogainLossParam_=caffe.Caffe.InfogainLossParameter.newBuilder(infogainLossParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      infogainLossParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    infogainLossParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x04000000;
+  return this;
+}

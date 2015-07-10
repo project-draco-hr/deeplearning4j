@@ -1,0 +1,7 @@
+{
+  if (stateBuilder_ == null) {
+    stateBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.NetState,caffe.Caffe.NetState.Builder,caffe.Caffe.NetStateOrBuilder>(getState(),getParentForChildren(),isClean());
+    state_=null;
+  }
+  return stateBuilder_;
+}

@@ -1,0 +1,21 @@
+{
+  caffe.Caffe.NetState result=new caffe.Caffe.NetState(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.phase_=phase_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.level_=level_;
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    stage_=stage_.getUnmodifiableView();
+    bitField0_=(bitField0_ & ~0x00000004);
+  }
+  result.stage_=stage_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

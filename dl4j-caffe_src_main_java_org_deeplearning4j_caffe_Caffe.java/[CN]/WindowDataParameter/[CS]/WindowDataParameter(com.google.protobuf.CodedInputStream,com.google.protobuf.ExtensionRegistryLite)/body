@@ -1,0 +1,115 @@
+{
+  initFields();
+  int mutable_bitField0_=0;
+  com.google.protobuf.UnknownFieldSet.Builder unknownFields=com.google.protobuf.UnknownFieldSet.newBuilder();
+  try {
+    boolean done=false;
+    while (!done) {
+      int tag=input.readTag();
+switch (tag) {
+case 0:
+        done=true;
+      break;
+default :
+{
+      if (!parseUnknownField(input,unknownFields,extensionRegistry,tag)) {
+        done=true;
+      }
+      break;
+    }
+case 10:
+{
+    com.google.protobuf.ByteString bs=input.readBytes();
+    bitField0_|=0x00000001;
+    source_=bs;
+    break;
+  }
+case 21:
+{
+  bitField0_|=0x00000002;
+  scale_=input.readFloat();
+  break;
+}
+case 26:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+bitField0_|=0x00000004;
+meanFile_=bs;
+break;
+}
+case 32:
+{
+bitField0_|=0x00000008;
+batchSize_=input.readUInt32();
+break;
+}
+case 40:
+{
+bitField0_|=0x00000010;
+cropSize_=input.readUInt32();
+break;
+}
+case 48:
+{
+bitField0_|=0x00000020;
+mirror_=input.readBool();
+break;
+}
+case 61:
+{
+bitField0_|=0x00000040;
+fgThreshold_=input.readFloat();
+break;
+}
+case 69:
+{
+bitField0_|=0x00000080;
+bgThreshold_=input.readFloat();
+break;
+}
+case 77:
+{
+bitField0_|=0x00000100;
+fgFraction_=input.readFloat();
+break;
+}
+case 80:
+{
+bitField0_|=0x00000200;
+contextPad_=input.readUInt32();
+break;
+}
+case 90:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+bitField0_|=0x00000400;
+cropMode_=bs;
+break;
+}
+case 96:
+{
+bitField0_|=0x00000800;
+cacheImages_=input.readBool();
+break;
+}
+case 106:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+bitField0_|=0x00001000;
+rootFolder_=bs;
+break;
+}
+}
+}
+}
+ catch (com.google.protobuf.InvalidProtocolBufferException e) {
+throw e.setUnfinishedMessage(this);
+}
+catch (java.io.IOException e) {
+throw new com.google.protobuf.InvalidProtocolBufferException(e.getMessage()).setUnfinishedMessage(this);
+}
+ finally {
+this.unknownFields=unknownFields.build();
+makeExtensionsImmutable();
+}
+}

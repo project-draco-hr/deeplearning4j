@@ -1,0 +1,14 @@
+{
+  if (other == caffe.Caffe.PowerParameter.getDefaultInstance())   return this;
+  if (other.hasPower()) {
+    setPower(other.getPower());
+  }
+  if (other.hasScale()) {
+    setScale(other.getScale());
+  }
+  if (other.hasShift()) {
+    setShift(other.getShift());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

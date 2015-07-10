@@ -1,0 +1,11 @@
+{
+  if (tanhParamBuilder_ == null) {
+    tanhParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    tanhParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField1_|=0x00002000;
+  return this;
+}

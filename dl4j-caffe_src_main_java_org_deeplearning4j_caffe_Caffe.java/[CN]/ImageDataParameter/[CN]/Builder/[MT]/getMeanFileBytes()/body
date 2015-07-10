@@ -1,0 +1,11 @@
+{
+  Object ref=meanFile_;
+  if (ref instanceof String) {
+    com.google.protobuf.ByteString b=com.google.protobuf.ByteString.copyFromUtf8((String)ref);
+    meanFile_=b;
+    return b;
+  }
+ else {
+    return (com.google.protobuf.ByteString)ref;
+  }
+}

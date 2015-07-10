@@ -1,0 +1,52 @@
+{
+  if (other == caffe.Caffe.WindowDataParameter.getDefaultInstance())   return this;
+  if (other.hasSource()) {
+    bitField0_|=0x00000001;
+    source_=other.source_;
+    onChanged();
+  }
+  if (other.hasScale()) {
+    setScale(other.getScale());
+  }
+  if (other.hasMeanFile()) {
+    bitField0_|=0x00000004;
+    meanFile_=other.meanFile_;
+    onChanged();
+  }
+  if (other.hasBatchSize()) {
+    setBatchSize(other.getBatchSize());
+  }
+  if (other.hasCropSize()) {
+    setCropSize(other.getCropSize());
+  }
+  if (other.hasMirror()) {
+    setMirror(other.getMirror());
+  }
+  if (other.hasFgThreshold()) {
+    setFgThreshold(other.getFgThreshold());
+  }
+  if (other.hasBgThreshold()) {
+    setBgThreshold(other.getBgThreshold());
+  }
+  if (other.hasFgFraction()) {
+    setFgFraction(other.getFgFraction());
+  }
+  if (other.hasContextPad()) {
+    setContextPad(other.getContextPad());
+  }
+  if (other.hasCropMode()) {
+    bitField0_|=0x00000400;
+    cropMode_=other.cropMode_;
+    onChanged();
+  }
+  if (other.hasCacheImages()) {
+    setCacheImages(other.getCacheImages());
+  }
+  if (other.hasRootFolder()) {
+    bitField0_|=0x00001000;
+    rootFolder_=other.rootFolder_;
+    onChanged();
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000800) == 0x00000800)) {
+    lossWeight_=new java.util.ArrayList<Float>(lossWeight_);
+    bitField0_|=0x00000800;
+  }
+}

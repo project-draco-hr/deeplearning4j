@@ -1,0 +1,103 @@
+{
+  if (other == caffe.Caffe.DummyDataParameter.getDefaultInstance())   return this;
+  if (dataFillerBuilder_ == null) {
+    if (!other.dataFiller_.isEmpty()) {
+      if (dataFiller_.isEmpty()) {
+        dataFiller_=other.dataFiller_;
+        bitField0_=(bitField0_ & ~0x00000001);
+      }
+ else {
+        ensureDataFillerIsMutable();
+        dataFiller_.addAll(other.dataFiller_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.dataFiller_.isEmpty()) {
+      if (dataFillerBuilder_.isEmpty()) {
+        dataFillerBuilder_.dispose();
+        dataFillerBuilder_=null;
+        dataFiller_=other.dataFiller_;
+        bitField0_=(bitField0_ & ~0x00000001);
+        dataFillerBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getDataFillerFieldBuilder() : null;
+      }
+ else {
+        dataFillerBuilder_.addAllMessages(other.dataFiller_);
+      }
+    }
+  }
+  if (shapeBuilder_ == null) {
+    if (!other.shape_.isEmpty()) {
+      if (shape_.isEmpty()) {
+        shape_=other.shape_;
+        bitField0_=(bitField0_ & ~0x00000002);
+      }
+ else {
+        ensureShapeIsMutable();
+        shape_.addAll(other.shape_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.shape_.isEmpty()) {
+      if (shapeBuilder_.isEmpty()) {
+        shapeBuilder_.dispose();
+        shapeBuilder_=null;
+        shape_=other.shape_;
+        bitField0_=(bitField0_ & ~0x00000002);
+        shapeBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getShapeFieldBuilder() : null;
+      }
+ else {
+        shapeBuilder_.addAllMessages(other.shape_);
+      }
+    }
+  }
+  if (!other.num_.isEmpty()) {
+    if (num_.isEmpty()) {
+      num_=other.num_;
+      bitField0_=(bitField0_ & ~0x00000004);
+    }
+ else {
+      ensureNumIsMutable();
+      num_.addAll(other.num_);
+    }
+    onChanged();
+  }
+  if (!other.channels_.isEmpty()) {
+    if (channels_.isEmpty()) {
+      channels_=other.channels_;
+      bitField0_=(bitField0_ & ~0x00000008);
+    }
+ else {
+      ensureChannelsIsMutable();
+      channels_.addAll(other.channels_);
+    }
+    onChanged();
+  }
+  if (!other.height_.isEmpty()) {
+    if (height_.isEmpty()) {
+      height_=other.height_;
+      bitField0_=(bitField0_ & ~0x00000010);
+    }
+ else {
+      ensureHeightIsMutable();
+      height_.addAll(other.height_);
+    }
+    onChanged();
+  }
+  if (!other.width_.isEmpty()) {
+    if (width_.isEmpty()) {
+      width_=other.width_;
+      bitField0_=(bitField0_ & ~0x00000020);
+    }
+ else {
+      ensureWidthIsMutable();
+      width_.addAll(other.width_);
+    }
+    onChanged();
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

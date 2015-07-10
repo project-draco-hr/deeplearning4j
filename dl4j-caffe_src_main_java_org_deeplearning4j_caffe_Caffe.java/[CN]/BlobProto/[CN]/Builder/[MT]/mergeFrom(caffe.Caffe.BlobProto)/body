@@ -1,0 +1,42 @@
+{
+  if (other == caffe.Caffe.BlobProto.getDefaultInstance())   return this;
+  if (other.hasShape()) {
+    mergeShape(other.getShape());
+  }
+  if (!other.data_.isEmpty()) {
+    if (data_.isEmpty()) {
+      data_=other.data_;
+      bitField0_=(bitField0_ & ~0x00000002);
+    }
+ else {
+      ensureDataIsMutable();
+      data_.addAll(other.data_);
+    }
+    onChanged();
+  }
+  if (!other.diff_.isEmpty()) {
+    if (diff_.isEmpty()) {
+      diff_=other.diff_;
+      bitField0_=(bitField0_ & ~0x00000004);
+    }
+ else {
+      ensureDiffIsMutable();
+      diff_.addAll(other.diff_);
+    }
+    onChanged();
+  }
+  if (other.hasNum()) {
+    setNum(other.getNum());
+  }
+  if (other.hasChannels()) {
+    setChannels(other.getChannels());
+  }
+  if (other.hasHeight()) {
+    setHeight(other.getHeight());
+  }
+  if (other.hasWidth()) {
+    setWidth(other.getWidth());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

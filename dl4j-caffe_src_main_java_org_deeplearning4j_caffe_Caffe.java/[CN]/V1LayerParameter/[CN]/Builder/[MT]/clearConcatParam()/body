@@ -1,0 +1,11 @@
+{
+  if (concatParamBuilder_ == null) {
+    concatParam_=caffe.Caffe.ConcatParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    concatParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00004000);
+  return this;
+}

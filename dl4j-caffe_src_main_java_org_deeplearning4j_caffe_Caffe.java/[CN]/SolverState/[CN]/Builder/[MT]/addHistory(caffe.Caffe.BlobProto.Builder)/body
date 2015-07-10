@@ -1,0 +1,11 @@
+{
+  if (historyBuilder_ == null) {
+    ensureHistoryIsMutable();
+    history_.add(builderForValue.build());
+    onChanged();
+  }
+ else {
+    historyBuilder_.addMessage(builderForValue.build());
+  }
+  return this;
+}

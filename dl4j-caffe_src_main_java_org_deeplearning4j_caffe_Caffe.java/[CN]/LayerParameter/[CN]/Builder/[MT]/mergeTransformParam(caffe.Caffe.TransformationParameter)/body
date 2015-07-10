@@ -1,0 +1,16 @@
+{
+  if (transformParamBuilder_ == null) {
+    if (((bitField0_ & 0x00000800) == 0x00000800) && transformParam_ != caffe.Caffe.TransformationParameter.getDefaultInstance()) {
+      transformParam_=caffe.Caffe.TransformationParameter.newBuilder(transformParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      transformParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    transformParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00000800;
+  return this;
+}

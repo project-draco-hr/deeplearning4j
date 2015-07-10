@@ -1,0 +1,96 @@
+{
+  initFields();
+  int mutable_bitField0_=0;
+  com.google.protobuf.UnknownFieldSet.Builder unknownFields=com.google.protobuf.UnknownFieldSet.newBuilder();
+  try {
+    boolean done=false;
+    while (!done) {
+      int tag=input.readTag();
+switch (tag) {
+case 0:
+        done=true;
+      break;
+default :
+{
+      if (!parseUnknownField(input,unknownFields,extensionRegistry,tag)) {
+        done=true;
+      }
+      break;
+    }
+case 13:
+{
+    bitField0_|=0x00000001;
+    scale_=input.readFloat();
+    break;
+  }
+case 16:
+{
+  bitField0_|=0x00000002;
+  mirror_=input.readBool();
+  break;
+}
+case 24:
+{
+bitField0_|=0x00000004;
+cropSize_=input.readUInt32();
+break;
+}
+case 34:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+bitField0_|=0x00000008;
+meanFile_=bs;
+break;
+}
+case 45:
+{
+if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+meanValue_=new java.util.ArrayList<Float>();
+mutable_bitField0_|=0x00000010;
+}
+meanValue_.add(input.readFloat());
+break;
+}
+case 42:
+{
+int length=input.readRawVarint32();
+int limit=input.pushLimit(length);
+if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
+meanValue_=new java.util.ArrayList<Float>();
+mutable_bitField0_|=0x00000010;
+}
+while (input.getBytesUntilLimit() > 0) {
+meanValue_.add(input.readFloat());
+}
+input.popLimit(limit);
+break;
+}
+case 48:
+{
+bitField0_|=0x00000010;
+forceColor_=input.readBool();
+break;
+}
+case 56:
+{
+bitField0_|=0x00000020;
+forceGray_=input.readBool();
+break;
+}
+}
+}
+}
+ catch (com.google.protobuf.InvalidProtocolBufferException e) {
+throw e.setUnfinishedMessage(this);
+}
+catch (java.io.IOException e) {
+throw new com.google.protobuf.InvalidProtocolBufferException(e.getMessage()).setUnfinishedMessage(this);
+}
+ finally {
+if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+meanValue_=java.util.Collections.unmodifiableList(meanValue_);
+}
+this.unknownFields=unknownFields.build();
+makeExtensionsImmutable();
+}
+}

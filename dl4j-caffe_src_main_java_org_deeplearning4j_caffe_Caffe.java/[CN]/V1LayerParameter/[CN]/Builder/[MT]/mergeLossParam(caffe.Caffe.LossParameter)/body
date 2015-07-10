@@ -1,0 +1,16 @@
+{
+  if (lossParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000200) == 0x00000200) && lossParam_ != caffe.Caffe.LossParameter.getDefaultInstance()) {
+      lossParam_=caffe.Caffe.LossParameter.newBuilder(lossParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      lossParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    lossParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000200;
+  return this;
+}

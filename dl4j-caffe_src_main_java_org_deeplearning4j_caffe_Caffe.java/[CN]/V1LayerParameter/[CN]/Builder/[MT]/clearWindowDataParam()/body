@@ -1,0 +1,11 @@
+{
+  if (windowDataParamBuilder_ == null) {
+    windowDataParam_=caffe.Caffe.WindowDataParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    windowDataParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000080);
+  return this;
+}

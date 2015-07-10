@@ -1,0 +1,11 @@
+{
+  if (trainNetParamBuilder_ == null) {
+    trainNetParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    trainNetParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000010);
+  return this;
+}

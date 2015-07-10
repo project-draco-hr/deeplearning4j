@@ -1,0 +1,14 @@
+{
+  if (trainNetParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    trainNetParam_=value;
+    onChanged();
+  }
+ else {
+    trainNetParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x00000010;
+  return this;
+}

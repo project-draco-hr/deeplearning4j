@@ -1,0 +1,11 @@
+{
+  if (trainStateBuilder_ == null) {
+    trainState_=caffe.Caffe.NetState.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    trainStateBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000040);
+  return this;
+}

@@ -1,0 +1,7 @@
+{
+  if (historyBuilder_ == null) {
+    historyBuilder_=new com.google.protobuf.RepeatedFieldBuilder<caffe.Caffe.BlobProto,caffe.Caffe.BlobProto.Builder,caffe.Caffe.BlobProtoOrBuilder>(history_,((bitField0_ & 0x00000004) == 0x00000004),getParentForChildren(),isClean());
+    history_=null;
+  }
+  return historyBuilder_;
+}
