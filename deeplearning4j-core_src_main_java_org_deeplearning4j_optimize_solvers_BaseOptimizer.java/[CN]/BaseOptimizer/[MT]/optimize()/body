@@ -25,6 +25,7 @@
     }
   }
   for (int i=0; i < conf.getNumIterations(); i++) {
+    int v=conf.getNumIterations();
     preProcessLine(gradient);
     try {
       INDArray params=(INDArray)searchState.get(PARAMS_KEY);
@@ -33,10 +34,10 @@
  catch (    InvalidStepException e) {
       log.warn("Invalid step...continuing another iteration");
     }
-    for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     oldScore=score;
     pair=gradientAndScore();
     setupSearchState(pair);
+    for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
     postStep();
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
