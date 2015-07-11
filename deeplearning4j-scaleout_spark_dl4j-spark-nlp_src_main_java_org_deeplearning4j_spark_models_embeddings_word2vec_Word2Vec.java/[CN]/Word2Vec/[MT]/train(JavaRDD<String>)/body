@@ -8,21 +8,26 @@
   if (this.table == null)   lookupTable.resetWeights();
   Huffman huffman=new Huffman(vocabAndNumWords.getFirst().vocabWords());
   huffman.build();
+  log.info("Built huffman tree");
   JavaRDD<Pair<List<VocabWord>,AtomicLong>> r=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new TokentoVocabWord(vocabCacheBroadcast));
+  log.info("Built vocab..");
   final Word2VecParam param=new Word2VecParam.Builder().negative(lookupTable.getNegative()).window(conf.getInt(Word2VecPerformer.WINDOW,5)).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(lookupTable.getLr().get()).setMinAlpha(1e-2).setVectorLength(lookupTable.getVectorLength()).useAdaGrad(lookupTable.isUseAdaGrad()).weights(lookupTable).build();
   param.setTotalWords(vocabAndNumWords.getSecond().intValue());
   final List<Long> wordsSeen=new ArrayList<>();
-  long runningTotal=0;
-  final List<AtomicLong> frequencies=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,AtomicLong>(){
+  final JavaRDD<AtomicLong> frequencies=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,AtomicLong>(){
     @Override public AtomicLong call(    Pair<List<VocabWord>,AtomicLong> listAtomicLongPair) throws Exception {
       return listAtomicLongPair.getSecond();
     }
   }
-).collect();
-  for (int j=0; j < frequencies.size(); j++) {
-    wordsSeen.add(runningTotal + frequencies.get(j).get());
-    runningTotal+=frequencies.get(j).get();
+).cache();
+  final Accumulator<Double> acc=sc.accumulator(0L);
+  frequencies.foreach(new VoidFunction<AtomicLong>(){
+    @Override public void call(    AtomicLong atomicLong) throws Exception {
+      acc.add((double)atomicLong.get());
+      wordsSeen.add((long)(acc.value() + atomicLong.get()));
+    }
   }
+);
   JavaRDD<List<VocabWord>> words=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,List<VocabWord>>(){
     @Override public List<VocabWord> call(    Pair<List<VocabWord>,AtomicLong> listAtomicLongPair) throws Exception {
       return listAtomicLongPair.getFirst();
@@ -35,6 +40,8 @@
     }
   }
 ).cache();
+  log.info("Calculated word frequencies");
+  log.info("Training word 2vec");
   for (int i=0; i < conf.getInt(Word2VecPerformerVoid.ITERATIONS,5); i++) {
     final Broadcast<Word2VecParam> finalParamBroadcast=sc.broadcast(param);
     JavaRDD<Word2VecFuncCall> call=wordsAndWordsSeen.map(new Word2VecSetup(finalParamBroadcast));
