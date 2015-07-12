@@ -1,0 +1,8 @@
+{
+  if (dropoutParamBuilder_ == null) {
+    return dropoutParam_;
+  }
+ else {
+    return dropoutParamBuilder_.getMessage();
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (expParamBuilder_ == null) {
+    expParam_=Caffe.ExpParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    expParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00200000);
+  return this;
+}

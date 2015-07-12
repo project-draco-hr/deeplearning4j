@@ -1,0 +1,11 @@
+{
+  if (shapeBuilder_ == null) {
+    ensureShapeIsMutable();
+    com.google.protobuf.AbstractMessageLite.Builder.addAll(values,shape_);
+    onChanged();
+  }
+ else {
+    shapeBuilder_.addAllMessages(values);
+  }
+  return this;
+}

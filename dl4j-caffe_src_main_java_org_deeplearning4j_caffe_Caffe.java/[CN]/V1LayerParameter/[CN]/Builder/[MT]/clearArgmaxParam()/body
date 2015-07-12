@@ -1,0 +1,11 @@
+{
+  if (argmaxParamBuilder_ == null) {
+    argmaxParam_=Caffe.ArgMaxParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    argmaxParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00002000);
+  return this;
+}

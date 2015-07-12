@@ -1,0 +1,9 @@
+{
+  super(maxIter,realMin,initialMomentum,finalMomentum,momentum,switchMomentumIteration,normalize,usePca,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity,minGain);
+  this.y=y;
+  this.x=x;
+  this.numDimensions=numDimensions;
+  this.simiarlityFunction=simiarlityFunction;
+  this.theta=theta;
+  this.invert=invert;
+}

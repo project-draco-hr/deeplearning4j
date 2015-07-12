@@ -1,0 +1,8 @@
+{
+  if (reluParamBuilder_ != null) {
+    return reluParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return reluParam_;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (sigmoidParamBuilder_ == null) {
+    sigmoidParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    sigmoidParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField1_|=0x00000200;
+  return this;
+}

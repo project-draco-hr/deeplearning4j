@@ -1,0 +1,11 @@
+{
+  if (inputShapeBuilder_ == null) {
+    ensureInputShapeIsMutable();
+    inputShape_.remove(index);
+    onChanged();
+  }
+ else {
+    inputShapeBuilder_.remove(index);
+  }
+  return this;
+}

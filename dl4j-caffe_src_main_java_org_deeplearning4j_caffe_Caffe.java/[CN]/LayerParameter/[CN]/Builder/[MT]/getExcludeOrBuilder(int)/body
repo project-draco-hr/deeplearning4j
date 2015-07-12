@@ -1,0 +1,8 @@
+{
+  if (excludeBuilder_ == null) {
+    return exclude_.get(index);
+  }
+ else {
+    return excludeBuilder_.getMessageOrBuilder(index);
+  }
+}

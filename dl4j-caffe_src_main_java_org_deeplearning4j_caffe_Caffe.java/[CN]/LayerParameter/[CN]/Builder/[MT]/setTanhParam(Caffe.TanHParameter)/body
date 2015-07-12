@@ -1,0 +1,14 @@
+{
+  if (tanhParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    tanhParam_=value;
+    onChanged();
+  }
+ else {
+    tanhParamBuilder_.setMessage(value);
+  }
+  bitField1_|=0x00002000;
+  return this;
+}

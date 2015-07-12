@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+    testNet_=new com.google.protobuf.LazyStringArrayList(testNet_);
+    bitField0_|=0x00000008;
+  }
+}

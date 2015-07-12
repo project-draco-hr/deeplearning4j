@@ -1,0 +1,14 @@
+{
+  if (memoryDataParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    memoryDataParam_=value;
+    onChanged();
+  }
+ else {
+    memoryDataParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x20000000;
+  return this;
+}

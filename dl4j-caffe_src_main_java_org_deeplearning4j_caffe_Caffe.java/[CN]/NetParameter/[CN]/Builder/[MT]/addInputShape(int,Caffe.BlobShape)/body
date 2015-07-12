@@ -1,0 +1,14 @@
+{
+  if (inputShapeBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureInputShapeIsMutable();
+    inputShape_.add(index,value);
+    onChanged();
+  }
+ else {
+    inputShapeBuilder_.addMessage(index,value);
+  }
+  return this;
+}

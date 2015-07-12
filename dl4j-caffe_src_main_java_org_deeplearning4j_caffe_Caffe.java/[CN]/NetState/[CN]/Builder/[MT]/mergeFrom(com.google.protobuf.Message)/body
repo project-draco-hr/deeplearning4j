@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.NetState) {
+    return mergeFrom((Caffe.NetState)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

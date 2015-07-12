@@ -1,0 +1,7 @@
+{
+  if (dataParamBuilder_ == null) {
+    dataParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.DataParameter,Caffe.DataParameter.Builder,Caffe.DataParameterOrBuilder>(getDataParam(),getParentForChildren(),isClean());
+    dataParam_=null;
+  }
+  return dataParamBuilder_;
+}

@@ -1,0 +1,14 @@
+{
+  if (infogainLossParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    infogainLossParam_=value;
+    onChanged();
+  }
+ else {
+    infogainLossParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x04000000;
+  return this;
+}

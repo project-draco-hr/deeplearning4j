@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.BlobShape) {
+    return mergeFrom((Caffe.BlobShape)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

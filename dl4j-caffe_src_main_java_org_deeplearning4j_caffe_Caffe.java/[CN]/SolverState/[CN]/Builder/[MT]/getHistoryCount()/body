@@ -1,0 +1,8 @@
+{
+  if (historyBuilder_ == null) {
+    return history_.size();
+  }
+ else {
+    return historyBuilder_.getCount();
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (testStateBuilder_ == null) {
+    ensureTestStateIsMutable();
+    com.google.protobuf.AbstractMessageLite.Builder.addAll(values,testState_);
+    onChanged();
+  }
+ else {
+    testStateBuilder_.addAllMessages(values);
+  }
+  return this;
+}

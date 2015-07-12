@@ -1,0 +1,4 @@
+{
+  InputStream is=new BufferedInputStream(new FileInputStream(caffeModelPath));
+  return readCaffeModel(is,sizeLimitMb);
+}

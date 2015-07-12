@@ -1,0 +1,12 @@
+{
+switch (value) {
+case 0:
+    return SGD;
+case 1:
+  return NESTEROV;
+case 2:
+return ADAGRAD;
+default :
+return null;
+}
+}

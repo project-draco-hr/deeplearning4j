@@ -1,0 +1,8 @@
+{
+  if (reshapeParamBuilder_ != null) {
+    return reshapeParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return reshapeParam_;
+  }
+}

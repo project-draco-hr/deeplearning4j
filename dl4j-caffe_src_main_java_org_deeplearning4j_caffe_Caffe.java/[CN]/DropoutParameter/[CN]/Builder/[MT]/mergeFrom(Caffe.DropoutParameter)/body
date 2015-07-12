@@ -1,0 +1,8 @@
+{
+  if (other == Caffe.DropoutParameter.getDefaultInstance())   return this;
+  if (other.hasDropoutRatio()) {
+    setDropoutRatio(other.getDropoutRatio());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

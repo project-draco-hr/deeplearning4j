@@ -1,0 +1,8 @@
+{
+  if (poolingParamBuilder_ != null) {
+    return poolingParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return poolingParam_;
+  }
+}

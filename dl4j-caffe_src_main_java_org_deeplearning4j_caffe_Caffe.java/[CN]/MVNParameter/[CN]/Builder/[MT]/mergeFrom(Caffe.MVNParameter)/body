@@ -1,0 +1,14 @@
+{
+  if (other == Caffe.MVNParameter.getDefaultInstance())   return this;
+  if (other.hasNormalizeVariance()) {
+    setNormalizeVariance(other.getNormalizeVariance());
+  }
+  if (other.hasAcrossChannels()) {
+    setAcrossChannels(other.getAcrossChannels());
+  }
+  if (other.hasEps()) {
+    setEps(other.getEps());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

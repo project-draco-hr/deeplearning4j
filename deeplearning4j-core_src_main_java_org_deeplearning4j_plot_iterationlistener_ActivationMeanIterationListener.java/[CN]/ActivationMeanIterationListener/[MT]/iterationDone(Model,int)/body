@@ -1,7 +1,7 @@
 {
   if (iteration % this.iteration == 0) {
     Layer l=(Layer)model;
-    INDArray weights=l.activationMean();
+    INDArray weights=Transforms.sigmoid(l.activationMean());
     if (weights.rank() < 4) {
       if (weights.rank() == 2) {
         weights=weights.reshape(1,1,weights.rows(),weights.columns());
@@ -10,8 +10,7 @@
         weights=weights.reshape(Ints.concat(new int[]{1},weights.shape()));
       }
     }
-    INDArray plot=filters.render(weights,1);
-    BufferedImage image=ImageLoader.toBufferedImageRGB(plot);
+    BufferedImage image=ImageLoader.toImage(weights);
     try {
       ImageIO.write(image,"png",outputFile);
     }

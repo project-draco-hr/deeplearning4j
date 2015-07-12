@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.BlobProto) {
+    return mergeFrom((Caffe.BlobProto)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

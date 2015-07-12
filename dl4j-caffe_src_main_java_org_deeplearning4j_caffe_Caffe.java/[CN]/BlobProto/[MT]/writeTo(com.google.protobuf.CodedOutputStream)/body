@@ -1,0 +1,33 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeInt32(1,num_);
+  }
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    output.writeInt32(2,channels_);
+  }
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    output.writeInt32(3,height_);
+  }
+  if (((bitField0_ & 0x00000010) == 0x00000010)) {
+    output.writeInt32(4,width_);
+  }
+  if (getDataList().size() > 0) {
+    output.writeRawVarint32(42);
+    output.writeRawVarint32(dataMemoizedSerializedSize);
+  }
+  for (int i=0; i < data_.size(); i++) {
+    output.writeFloatNoTag(data_.get(i));
+  }
+  if (getDiffList().size() > 0) {
+    output.writeRawVarint32(50);
+    output.writeRawVarint32(diffMemoizedSerializedSize);
+  }
+  for (int i=0; i < diff_.size(); i++) {
+    output.writeFloatNoTag(diff_.get(i));
+  }
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeMessage(7,shape_);
+  }
+  getUnknownFields().writeTo(output);
+}

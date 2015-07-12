@@ -1,0 +1,112 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    output.writeBytes(1,getTrainNetBytes());
+  }
+  for (int i=0; i < testNet_.size(); i++) {
+    output.writeBytes(2,testNet_.getByteString(i));
+  }
+  for (int i=0; i < testIter_.size(); i++) {
+    output.writeInt32(3,testIter_.get(i));
+  }
+  if (((bitField0_ & 0x00000020) == 0x00000020)) {
+    output.writeInt32(4,testInterval_);
+  }
+  if (((bitField0_ & 0x00000100) == 0x00000100)) {
+    output.writeFloat(5,baseLr_);
+  }
+  if (((bitField0_ & 0x00000200) == 0x00000200)) {
+    output.writeInt32(6,display_);
+  }
+  if (((bitField0_ & 0x00000800) == 0x00000800)) {
+    output.writeInt32(7,maxIter_);
+  }
+  if (((bitField0_ & 0x00002000) == 0x00002000)) {
+    output.writeBytes(8,getLrPolicyBytes());
+  }
+  if (((bitField0_ & 0x00004000) == 0x00004000)) {
+    output.writeFloat(9,gamma_);
+  }
+  if (((bitField0_ & 0x00008000) == 0x00008000)) {
+    output.writeFloat(10,power_);
+  }
+  if (((bitField0_ & 0x00010000) == 0x00010000)) {
+    output.writeFloat(11,momentum_);
+  }
+  if (((bitField0_ & 0x00020000) == 0x00020000)) {
+    output.writeFloat(12,weightDecay_);
+  }
+  if (((bitField0_ & 0x00080000) == 0x00080000)) {
+    output.writeInt32(13,stepsize_);
+  }
+  if (((bitField0_ & 0x00200000) == 0x00200000)) {
+    output.writeInt32(14,snapshot_);
+  }
+  if (((bitField0_ & 0x00400000) == 0x00400000)) {
+    output.writeBytes(15,getSnapshotPrefixBytes());
+  }
+  if (((bitField0_ & 0x00800000) == 0x00800000)) {
+    output.writeBool(16,snapshotDiff_);
+  }
+  if (((bitField0_ & 0x01000000) == 0x01000000)) {
+    output.writeEnum(17,solverMode_.getNumber());
+  }
+  if (((bitField0_ & 0x02000000) == 0x02000000)) {
+    output.writeInt32(18,deviceId_);
+  }
+  if (((bitField0_ & 0x00000040) == 0x00000040)) {
+    output.writeBool(19,testComputeLoss_);
+  }
+  if (((bitField0_ & 0x04000000) == 0x04000000)) {
+    output.writeInt64(20,randomSeed_);
+  }
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    output.writeMessage(21,trainNetParam_);
+  }
+  for (int i=0; i < testNetParam_.size(); i++) {
+    output.writeMessage(22,testNetParam_.get(i));
+  }
+  if (((bitField0_ & 0x20000000) == 0x20000000)) {
+    output.writeBool(23,debugInfo_);
+  }
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeBytes(24,getNetBytes());
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeMessage(25,netParam_);
+  }
+  if (((bitField0_ & 0x00000010) == 0x00000010)) {
+    output.writeMessage(26,trainState_);
+  }
+  for (int i=0; i < testState_.size(); i++) {
+    output.writeMessage(27,testState_.get(i));
+  }
+  if (((bitField0_ & 0x40000000) == 0x40000000)) {
+    output.writeBool(28,snapshotAfterTrain_);
+  }
+  if (((bitField0_ & 0x00040000) == 0x00040000)) {
+    output.writeBytes(29,getRegularizationTypeBytes());
+  }
+  if (((bitField0_ & 0x08000000) == 0x08000000)) {
+    output.writeEnum(30,solverType_.getNumber());
+  }
+  if (((bitField0_ & 0x10000000) == 0x10000000)) {
+    output.writeFloat(31,delta_);
+  }
+  if (((bitField0_ & 0x00000080) == 0x00000080)) {
+    output.writeBool(32,testInitialization_);
+  }
+  if (((bitField0_ & 0x00000400) == 0x00000400)) {
+    output.writeInt32(33,averageLoss_);
+  }
+  for (int i=0; i < stepvalue_.size(); i++) {
+    output.writeInt32(34,stepvalue_.get(i));
+  }
+  if (((bitField0_ & 0x00100000) == 0x00100000)) {
+    output.writeFloat(35,clipGradients_);
+  }
+  if (((bitField0_ & 0x00001000) == 0x00001000)) {
+    output.writeInt32(36,iterSize_);
+  }
+  getUnknownFields().writeTo(output);
+}

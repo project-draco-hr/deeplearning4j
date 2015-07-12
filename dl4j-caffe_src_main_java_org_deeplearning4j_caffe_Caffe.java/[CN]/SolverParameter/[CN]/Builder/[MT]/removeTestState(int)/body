@@ -1,0 +1,11 @@
+{
+  if (testStateBuilder_ == null) {
+    ensureTestStateIsMutable();
+    testState_.remove(index);
+    onChanged();
+  }
+ else {
+    testStateBuilder_.remove(index);
+  }
+  return this;
+}
