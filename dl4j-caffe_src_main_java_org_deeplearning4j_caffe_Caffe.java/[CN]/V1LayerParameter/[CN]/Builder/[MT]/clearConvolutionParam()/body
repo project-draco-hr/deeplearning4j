@@ -1,6 +1,6 @@
 {
   if (convolutionParamBuilder_ == null) {
-    convolutionParam_=caffe.Caffe.ConvolutionParameter.getDefaultInstance();
+    convolutionParam_=Caffe.ConvolutionParameter.getDefaultInstance();
     onChanged();
   }
  else {

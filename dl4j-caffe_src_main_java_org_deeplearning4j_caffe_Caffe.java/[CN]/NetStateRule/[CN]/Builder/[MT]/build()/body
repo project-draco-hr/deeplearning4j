@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.NetStateRule result=buildPartial();
+  Caffe.NetStateRule result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

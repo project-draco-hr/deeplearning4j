@@ -55,7 +55,7 @@ break;
 case 45:
 {
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-lossWeight_=new java.util.ArrayList<Float>();
+lossWeight_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000020;
 }
 lossWeight_.add(input.readFloat());
@@ -66,7 +66,7 @@ case 42:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
-lossWeight_=new java.util.ArrayList<Float>();
+lossWeight_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000020;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -78,43 +78,43 @@ break;
 case 50:
 {
 if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
-param_=new java.util.ArrayList<caffe.Caffe.ParamSpec>();
+param_=new java.util.ArrayList<Caffe.ParamSpec>();
 mutable_bitField0_|=0x00000040;
 }
-param_.add(input.readMessage(caffe.Caffe.ParamSpec.PARSER,extensionRegistry));
+param_.add(input.readMessage(Caffe.ParamSpec.PARSER,extensionRegistry));
 break;
 }
 case 58:
 {
 if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
-blobs_=new java.util.ArrayList<caffe.Caffe.BlobProto>();
+blobs_=new java.util.ArrayList<Caffe.BlobProto>();
 mutable_bitField0_|=0x00000080;
 }
-blobs_.add(input.readMessage(caffe.Caffe.BlobProto.PARSER,extensionRegistry));
+blobs_.add(input.readMessage(Caffe.BlobProto.PARSER,extensionRegistry));
 break;
 }
 case 66:
 {
 if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
-include_=new java.util.ArrayList<caffe.Caffe.NetStateRule>();
+include_=new java.util.ArrayList<Caffe.NetStateRule>();
 mutable_bitField0_|=0x00000200;
 }
-include_.add(input.readMessage(caffe.Caffe.NetStateRule.PARSER,extensionRegistry));
+include_.add(input.readMessage(Caffe.NetStateRule.PARSER,extensionRegistry));
 break;
 }
 case 74:
 {
 if (!((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
-exclude_=new java.util.ArrayList<caffe.Caffe.NetStateRule>();
+exclude_=new java.util.ArrayList<Caffe.NetStateRule>();
 mutable_bitField0_|=0x00000400;
 }
-exclude_.add(input.readMessage(caffe.Caffe.NetStateRule.PARSER,extensionRegistry));
+exclude_.add(input.readMessage(Caffe.NetStateRule.PARSER,extensionRegistry));
 break;
 }
 case 80:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.Phase value=caffe.Caffe.Phase.valueOf(rawValue);
+Caffe.Phase value=Caffe.Phase.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(10,rawValue);
 }
@@ -127,7 +127,7 @@ break;
 case 88:
 {
 if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
-propagateDown_=new java.util.ArrayList<Boolean>();
+propagateDown_=new java.util.ArrayList<java.lang.Boolean>();
 mutable_bitField0_|=0x00000100;
 }
 propagateDown_.add(input.readBool());
@@ -138,7 +138,7 @@ case 90:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000100) == 0x00000100) && input.getBytesUntilLimit() > 0) {
-propagateDown_=new java.util.ArrayList<Boolean>();
+propagateDown_=new java.util.ArrayList<java.lang.Boolean>();
 mutable_bitField0_|=0x00000100;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -149,11 +149,11 @@ break;
 }
 case 802:
 {
-caffe.Caffe.TransformationParameter.Builder subBuilder=null;
+Caffe.TransformationParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000008) == 0x00000008)) {
 subBuilder=transformParam_.toBuilder();
 }
-transformParam_=input.readMessage(caffe.Caffe.TransformationParameter.PARSER,extensionRegistry);
+transformParam_=input.readMessage(Caffe.TransformationParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(transformParam_);
 transformParam_=subBuilder.buildPartial();
@@ -163,11 +163,11 @@ break;
 }
 case 810:
 {
-caffe.Caffe.LossParameter.Builder subBuilder=null;
+Caffe.LossParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000010) == 0x00000010)) {
 subBuilder=lossParam_.toBuilder();
 }
-lossParam_=input.readMessage(caffe.Caffe.LossParameter.PARSER,extensionRegistry);
+lossParam_=input.readMessage(Caffe.LossParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(lossParam_);
 lossParam_=subBuilder.buildPartial();
@@ -177,11 +177,11 @@ break;
 }
 case 818:
 {
-caffe.Caffe.AccuracyParameter.Builder subBuilder=null;
+Caffe.AccuracyParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000020) == 0x00000020)) {
 subBuilder=accuracyParam_.toBuilder();
 }
-accuracyParam_=input.readMessage(caffe.Caffe.AccuracyParameter.PARSER,extensionRegistry);
+accuracyParam_=input.readMessage(Caffe.AccuracyParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(accuracyParam_);
 accuracyParam_=subBuilder.buildPartial();
@@ -191,11 +191,11 @@ break;
 }
 case 826:
 {
-caffe.Caffe.ArgMaxParameter.Builder subBuilder=null;
+Caffe.ArgMaxParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000040) == 0x00000040)) {
 subBuilder=argmaxParam_.toBuilder();
 }
-argmaxParam_=input.readMessage(caffe.Caffe.ArgMaxParameter.PARSER,extensionRegistry);
+argmaxParam_=input.readMessage(Caffe.ArgMaxParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(argmaxParam_);
 argmaxParam_=subBuilder.buildPartial();
@@ -205,11 +205,11 @@ break;
 }
 case 834:
 {
-caffe.Caffe.ConcatParameter.Builder subBuilder=null;
+Caffe.ConcatParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000080) == 0x00000080)) {
 subBuilder=concatParam_.toBuilder();
 }
-concatParam_=input.readMessage(caffe.Caffe.ConcatParameter.PARSER,extensionRegistry);
+concatParam_=input.readMessage(Caffe.ConcatParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(concatParam_);
 concatParam_=subBuilder.buildPartial();
@@ -219,11 +219,11 @@ break;
 }
 case 842:
 {
-caffe.Caffe.ContrastiveLossParameter.Builder subBuilder=null;
+Caffe.ContrastiveLossParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000100) == 0x00000100)) {
 subBuilder=contrastiveLossParam_.toBuilder();
 }
-contrastiveLossParam_=input.readMessage(caffe.Caffe.ContrastiveLossParameter.PARSER,extensionRegistry);
+contrastiveLossParam_=input.readMessage(Caffe.ContrastiveLossParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(contrastiveLossParam_);
 contrastiveLossParam_=subBuilder.buildPartial();
@@ -233,11 +233,11 @@ break;
 }
 case 850:
 {
-caffe.Caffe.ConvolutionParameter.Builder subBuilder=null;
+Caffe.ConvolutionParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000200) == 0x00000200)) {
 subBuilder=convolutionParam_.toBuilder();
 }
-convolutionParam_=input.readMessage(caffe.Caffe.ConvolutionParameter.PARSER,extensionRegistry);
+convolutionParam_=input.readMessage(Caffe.ConvolutionParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(convolutionParam_);
 convolutionParam_=subBuilder.buildPartial();
@@ -247,11 +247,11 @@ break;
 }
 case 858:
 {
-caffe.Caffe.DataParameter.Builder subBuilder=null;
+Caffe.DataParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000400) == 0x00000400)) {
 subBuilder=dataParam_.toBuilder();
 }
-dataParam_=input.readMessage(caffe.Caffe.DataParameter.PARSER,extensionRegistry);
+dataParam_=input.readMessage(Caffe.DataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(dataParam_);
 dataParam_=subBuilder.buildPartial();
@@ -261,11 +261,11 @@ break;
 }
 case 866:
 {
-caffe.Caffe.DropoutParameter.Builder subBuilder=null;
+Caffe.DropoutParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000800) == 0x00000800)) {
 subBuilder=dropoutParam_.toBuilder();
 }
-dropoutParam_=input.readMessage(caffe.Caffe.DropoutParameter.PARSER,extensionRegistry);
+dropoutParam_=input.readMessage(Caffe.DropoutParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(dropoutParam_);
 dropoutParam_=subBuilder.buildPartial();
@@ -275,11 +275,11 @@ break;
 }
 case 874:
 {
-caffe.Caffe.DummyDataParameter.Builder subBuilder=null;
+Caffe.DummyDataParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00001000) == 0x00001000)) {
 subBuilder=dummyDataParam_.toBuilder();
 }
-dummyDataParam_=input.readMessage(caffe.Caffe.DummyDataParameter.PARSER,extensionRegistry);
+dummyDataParam_=input.readMessage(Caffe.DummyDataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(dummyDataParam_);
 dummyDataParam_=subBuilder.buildPartial();
@@ -289,11 +289,11 @@ break;
 }
 case 882:
 {
-caffe.Caffe.EltwiseParameter.Builder subBuilder=null;
+Caffe.EltwiseParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00002000) == 0x00002000)) {
 subBuilder=eltwiseParam_.toBuilder();
 }
-eltwiseParam_=input.readMessage(caffe.Caffe.EltwiseParameter.PARSER,extensionRegistry);
+eltwiseParam_=input.readMessage(Caffe.EltwiseParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(eltwiseParam_);
 eltwiseParam_=subBuilder.buildPartial();
@@ -303,11 +303,11 @@ break;
 }
 case 890:
 {
-caffe.Caffe.ExpParameter.Builder subBuilder=null;
+Caffe.ExpParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00004000) == 0x00004000)) {
 subBuilder=expParam_.toBuilder();
 }
-expParam_=input.readMessage(caffe.Caffe.ExpParameter.PARSER,extensionRegistry);
+expParam_=input.readMessage(Caffe.ExpParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(expParam_);
 expParam_=subBuilder.buildPartial();
@@ -317,11 +317,11 @@ break;
 }
 case 898:
 {
-caffe.Caffe.HDF5DataParameter.Builder subBuilder=null;
+Caffe.HDF5DataParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00010000) == 0x00010000)) {
 subBuilder=hdf5DataParam_.toBuilder();
 }
-hdf5DataParam_=input.readMessage(caffe.Caffe.HDF5DataParameter.PARSER,extensionRegistry);
+hdf5DataParam_=input.readMessage(Caffe.HDF5DataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(hdf5DataParam_);
 hdf5DataParam_=subBuilder.buildPartial();
@@ -331,11 +331,11 @@ break;
 }
 case 906:
 {
-caffe.Caffe.HDF5OutputParameter.Builder subBuilder=null;
+Caffe.HDF5OutputParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00020000) == 0x00020000)) {
 subBuilder=hdf5OutputParam_.toBuilder();
 }
-hdf5OutputParam_=input.readMessage(caffe.Caffe.HDF5OutputParameter.PARSER,extensionRegistry);
+hdf5OutputParam_=input.readMessage(Caffe.HDF5OutputParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(hdf5OutputParam_);
 hdf5OutputParam_=subBuilder.buildPartial();
@@ -345,11 +345,11 @@ break;
 }
 case 914:
 {
-caffe.Caffe.HingeLossParameter.Builder subBuilder=null;
+Caffe.HingeLossParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00040000) == 0x00040000)) {
 subBuilder=hingeLossParam_.toBuilder();
 }
-hingeLossParam_=input.readMessage(caffe.Caffe.HingeLossParameter.PARSER,extensionRegistry);
+hingeLossParam_=input.readMessage(Caffe.HingeLossParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(hingeLossParam_);
 hingeLossParam_=subBuilder.buildPartial();
@@ -359,11 +359,11 @@ break;
 }
 case 922:
 {
-caffe.Caffe.ImageDataParameter.Builder subBuilder=null;
+Caffe.ImageDataParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00080000) == 0x00080000)) {
 subBuilder=imageDataParam_.toBuilder();
 }
-imageDataParam_=input.readMessage(caffe.Caffe.ImageDataParameter.PARSER,extensionRegistry);
+imageDataParam_=input.readMessage(Caffe.ImageDataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(imageDataParam_);
 imageDataParam_=subBuilder.buildPartial();
@@ -373,11 +373,11 @@ break;
 }
 case 930:
 {
-caffe.Caffe.InfogainLossParameter.Builder subBuilder=null;
+Caffe.InfogainLossParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00100000) == 0x00100000)) {
 subBuilder=infogainLossParam_.toBuilder();
 }
-infogainLossParam_=input.readMessage(caffe.Caffe.InfogainLossParameter.PARSER,extensionRegistry);
+infogainLossParam_=input.readMessage(Caffe.InfogainLossParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(infogainLossParam_);
 infogainLossParam_=subBuilder.buildPartial();
@@ -387,11 +387,11 @@ break;
 }
 case 938:
 {
-caffe.Caffe.InnerProductParameter.Builder subBuilder=null;
+Caffe.InnerProductParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00200000) == 0x00200000)) {
 subBuilder=innerProductParam_.toBuilder();
 }
-innerProductParam_=input.readMessage(caffe.Caffe.InnerProductParameter.PARSER,extensionRegistry);
+innerProductParam_=input.readMessage(Caffe.InnerProductParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(innerProductParam_);
 innerProductParam_=subBuilder.buildPartial();
@@ -401,11 +401,11 @@ break;
 }
 case 946:
 {
-caffe.Caffe.LRNParameter.Builder subBuilder=null;
+Caffe.LRNParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00800000) == 0x00800000)) {
 subBuilder=lrnParam_.toBuilder();
 }
-lrnParam_=input.readMessage(caffe.Caffe.LRNParameter.PARSER,extensionRegistry);
+lrnParam_=input.readMessage(Caffe.LRNParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(lrnParam_);
 lrnParam_=subBuilder.buildPartial();
@@ -415,11 +415,11 @@ break;
 }
 case 954:
 {
-caffe.Caffe.MemoryDataParameter.Builder subBuilder=null;
+Caffe.MemoryDataParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x01000000) == 0x01000000)) {
 subBuilder=memoryDataParam_.toBuilder();
 }
-memoryDataParam_=input.readMessage(caffe.Caffe.MemoryDataParameter.PARSER,extensionRegistry);
+memoryDataParam_=input.readMessage(Caffe.MemoryDataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(memoryDataParam_);
 memoryDataParam_=subBuilder.buildPartial();
@@ -429,11 +429,11 @@ break;
 }
 case 962:
 {
-caffe.Caffe.MVNParameter.Builder subBuilder=null;
+Caffe.MVNParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x02000000) == 0x02000000)) {
 subBuilder=mvnParam_.toBuilder();
 }
-mvnParam_=input.readMessage(caffe.Caffe.MVNParameter.PARSER,extensionRegistry);
+mvnParam_=input.readMessage(Caffe.MVNParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(mvnParam_);
 mvnParam_=subBuilder.buildPartial();
@@ -443,11 +443,11 @@ break;
 }
 case 970:
 {
-caffe.Caffe.PoolingParameter.Builder subBuilder=null;
+Caffe.PoolingParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x04000000) == 0x04000000)) {
 subBuilder=poolingParam_.toBuilder();
 }
-poolingParam_=input.readMessage(caffe.Caffe.PoolingParameter.PARSER,extensionRegistry);
+poolingParam_=input.readMessage(Caffe.PoolingParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(poolingParam_);
 poolingParam_=subBuilder.buildPartial();
@@ -457,11 +457,11 @@ break;
 }
 case 978:
 {
-caffe.Caffe.PowerParameter.Builder subBuilder=null;
+Caffe.PowerParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x08000000) == 0x08000000)) {
 subBuilder=powerParam_.toBuilder();
 }
-powerParam_=input.readMessage(caffe.Caffe.PowerParameter.PARSER,extensionRegistry);
+powerParam_=input.readMessage(Caffe.PowerParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(powerParam_);
 powerParam_=subBuilder.buildPartial();
@@ -471,11 +471,11 @@ break;
 }
 case 986:
 {
-caffe.Caffe.ReLUParameter.Builder subBuilder=null;
+Caffe.ReLUParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x80000000) == 0x80000000)) {
 subBuilder=reluParam_.toBuilder();
 }
-reluParam_=input.readMessage(caffe.Caffe.ReLUParameter.PARSER,extensionRegistry);
+reluParam_=input.readMessage(Caffe.ReLUParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(reluParam_);
 reluParam_=subBuilder.buildPartial();
@@ -485,11 +485,11 @@ break;
 }
 case 994:
 {
-caffe.Caffe.SigmoidParameter.Builder subBuilder=null;
+Caffe.SigmoidParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000002) == 0x00000002)) {
 subBuilder=sigmoidParam_.toBuilder();
 }
-sigmoidParam_=input.readMessage(caffe.Caffe.SigmoidParameter.PARSER,extensionRegistry);
+sigmoidParam_=input.readMessage(Caffe.SigmoidParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(sigmoidParam_);
 sigmoidParam_=subBuilder.buildPartial();
@@ -499,11 +499,11 @@ break;
 }
 case 1002:
 {
-caffe.Caffe.SoftmaxParameter.Builder subBuilder=null;
+Caffe.SoftmaxParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000004) == 0x00000004)) {
 subBuilder=softmaxParam_.toBuilder();
 }
-softmaxParam_=input.readMessage(caffe.Caffe.SoftmaxParameter.PARSER,extensionRegistry);
+softmaxParam_=input.readMessage(Caffe.SoftmaxParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(softmaxParam_);
 softmaxParam_=subBuilder.buildPartial();
@@ -513,11 +513,11 @@ break;
 }
 case 1010:
 {
-caffe.Caffe.SliceParameter.Builder subBuilder=null;
+Caffe.SliceParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000010) == 0x00000010)) {
 subBuilder=sliceParam_.toBuilder();
 }
-sliceParam_=input.readMessage(caffe.Caffe.SliceParameter.PARSER,extensionRegistry);
+sliceParam_=input.readMessage(Caffe.SliceParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(sliceParam_);
 sliceParam_=subBuilder.buildPartial();
@@ -527,11 +527,11 @@ break;
 }
 case 1018:
 {
-caffe.Caffe.TanHParameter.Builder subBuilder=null;
+Caffe.TanHParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000020) == 0x00000020)) {
 subBuilder=tanhParam_.toBuilder();
 }
-tanhParam_=input.readMessage(caffe.Caffe.TanHParameter.PARSER,extensionRegistry);
+tanhParam_=input.readMessage(Caffe.TanHParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(tanhParam_);
 tanhParam_=subBuilder.buildPartial();
@@ -541,11 +541,11 @@ break;
 }
 case 1026:
 {
-caffe.Caffe.ThresholdParameter.Builder subBuilder=null;
+Caffe.ThresholdParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000040) == 0x00000040)) {
 subBuilder=thresholdParam_.toBuilder();
 }
-thresholdParam_=input.readMessage(caffe.Caffe.ThresholdParameter.PARSER,extensionRegistry);
+thresholdParam_=input.readMessage(Caffe.ThresholdParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(thresholdParam_);
 thresholdParam_=subBuilder.buildPartial();
@@ -555,11 +555,11 @@ break;
 }
 case 1034:
 {
-caffe.Caffe.WindowDataParameter.Builder subBuilder=null;
+Caffe.WindowDataParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000080) == 0x00000080)) {
 subBuilder=windowDataParam_.toBuilder();
 }
-windowDataParam_=input.readMessage(caffe.Caffe.WindowDataParameter.PARSER,extensionRegistry);
+windowDataParam_=input.readMessage(Caffe.WindowDataParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(windowDataParam_);
 windowDataParam_=subBuilder.buildPartial();
@@ -569,11 +569,11 @@ break;
 }
 case 1042:
 {
-caffe.Caffe.PythonParameter.Builder subBuilder=null;
+Caffe.PythonParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x20000000) == 0x20000000)) {
 subBuilder=pythonParam_.toBuilder();
 }
-pythonParam_=input.readMessage(caffe.Caffe.PythonParameter.PARSER,extensionRegistry);
+pythonParam_=input.readMessage(Caffe.PythonParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(pythonParam_);
 pythonParam_=subBuilder.buildPartial();
@@ -583,11 +583,11 @@ break;
 }
 case 1050:
 {
-caffe.Caffe.PReLUParameter.Builder subBuilder=null;
+Caffe.PReLUParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x10000000) == 0x10000000)) {
 subBuilder=preluParam_.toBuilder();
 }
-preluParam_=input.readMessage(caffe.Caffe.PReLUParameter.PARSER,extensionRegistry);
+preluParam_=input.readMessage(Caffe.PReLUParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(preluParam_);
 preluParam_=subBuilder.buildPartial();
@@ -597,11 +597,11 @@ break;
 }
 case 1058:
 {
-caffe.Caffe.SPPParameter.Builder subBuilder=null;
+Caffe.SPPParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000008) == 0x00000008)) {
 subBuilder=sppParam_.toBuilder();
 }
-sppParam_=input.readMessage(caffe.Caffe.SPPParameter.PARSER,extensionRegistry);
+sppParam_=input.readMessage(Caffe.SPPParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(sppParam_);
 sppParam_=subBuilder.buildPartial();
@@ -611,11 +611,11 @@ break;
 }
 case 1066:
 {
-caffe.Caffe.ReshapeParameter.Builder subBuilder=null;
+Caffe.ReshapeParameter.Builder subBuilder=null;
 if (((bitField1_ & 0x00000001) == 0x00000001)) {
 subBuilder=reshapeParam_.toBuilder();
 }
-reshapeParam_=input.readMessage(caffe.Caffe.ReshapeParameter.PARSER,extensionRegistry);
+reshapeParam_=input.readMessage(Caffe.ReshapeParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(reshapeParam_);
 reshapeParam_=subBuilder.buildPartial();
@@ -625,11 +625,11 @@ break;
 }
 case 1074:
 {
-caffe.Caffe.LogParameter.Builder subBuilder=null;
+Caffe.LogParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00400000) == 0x00400000)) {
 subBuilder=logParam_.toBuilder();
 }
-logParam_=input.readMessage(caffe.Caffe.LogParameter.PARSER,extensionRegistry);
+logParam_=input.readMessage(Caffe.LogParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(logParam_);
 logParam_=subBuilder.buildPartial();
@@ -639,11 +639,11 @@ break;
 }
 case 1082:
 {
-caffe.Caffe.FlattenParameter.Builder subBuilder=null;
+Caffe.FlattenParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00008000) == 0x00008000)) {
 subBuilder=flattenParam_.toBuilder();
 }
-flattenParam_=input.readMessage(caffe.Caffe.FlattenParameter.PARSER,extensionRegistry);
+flattenParam_=input.readMessage(Caffe.FlattenParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(flattenParam_);
 flattenParam_=subBuilder.buildPartial();
@@ -653,11 +653,11 @@ break;
 }
 case 1090:
 {
-caffe.Caffe.ReductionParameter.Builder subBuilder=null;
+Caffe.ReductionParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x40000000) == 0x40000000)) {
 subBuilder=reductionParam_.toBuilder();
 }
-reductionParam_=input.readMessage(caffe.Caffe.ReductionParameter.PARSER,extensionRegistry);
+reductionParam_=input.readMessage(Caffe.ReductionParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(reductionParam_);
 reductionParam_=subBuilder.buildPartial();

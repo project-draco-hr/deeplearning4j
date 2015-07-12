@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.ThresholdParameter parsedMessage=null;
+  Caffe.ThresholdParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.ThresholdParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.ThresholdParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

@@ -1,6 +1,6 @@
 {
   if (tanhParamBuilder_ == null) {
-    tanhParam_=caffe.Caffe.TanHParameter.getDefaultInstance();
+    tanhParam_=Caffe.TanHParameter.getDefaultInstance();
     onChanged();
   }
  else {

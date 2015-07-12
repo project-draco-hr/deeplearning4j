@@ -1,6 +1,6 @@
 {
   if (dropoutParamBuilder_ == null) {
-    dropoutParam_=caffe.Caffe.DropoutParameter.getDefaultInstance();
+    dropoutParam_=Caffe.DropoutParameter.getDefaultInstance();
     onChanged();
   }
  else {

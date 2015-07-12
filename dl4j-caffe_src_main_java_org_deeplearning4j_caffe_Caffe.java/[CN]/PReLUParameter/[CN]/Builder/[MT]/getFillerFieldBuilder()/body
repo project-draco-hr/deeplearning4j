@@ -1,6 +1,6 @@
 {
   if (fillerBuilder_ == null) {
-    fillerBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.FillerParameter,caffe.Caffe.FillerParameter.Builder,caffe.Caffe.FillerParameterOrBuilder>(getFiller(),getParentForChildren(),isClean());
+    fillerBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.FillerParameter,Caffe.FillerParameter.Builder,Caffe.FillerParameterOrBuilder>(getFiller(),getParentForChildren(),isClean());
     filler_=null;
   }
   return fillerBuilder_;

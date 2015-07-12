@@ -63,7 +63,7 @@ break;
 case 64:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.FillerParameter.VarianceNorm value=caffe.Caffe.FillerParameter.VarianceNorm.valueOf(rawValue);
+Caffe.FillerParameter.VarianceNorm value=Caffe.FillerParameter.VarianceNorm.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(8,rawValue);
 }

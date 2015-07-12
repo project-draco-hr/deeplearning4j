@@ -1,6 +1,6 @@
 {
   if (innerProductParamBuilder_ == null) {
-    innerProductParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.InnerProductParameter,caffe.Caffe.InnerProductParameter.Builder,caffe.Caffe.InnerProductParameterOrBuilder>(getInnerProductParam(),getParentForChildren(),isClean());
+    innerProductParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.InnerProductParameter,Caffe.InnerProductParameter.Builder,Caffe.InnerProductParameterOrBuilder>(getInnerProductParam(),getParentForChildren(),isClean());
     innerProductParam_=null;
   }
   return innerProductParamBuilder_;

@@ -1,6 +1,6 @@
 {
   if (contrastiveLossParamBuilder_ == null) {
-    contrastiveLossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ContrastiveLossParameter,caffe.Caffe.ContrastiveLossParameter.Builder,caffe.Caffe.ContrastiveLossParameterOrBuilder>(getContrastiveLossParam(),getParentForChildren(),isClean());
+    contrastiveLossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ContrastiveLossParameter,Caffe.ContrastiveLossParameter.Builder,Caffe.ContrastiveLossParameterOrBuilder>(getContrastiveLossParam(),getParentForChildren(),isClean());
     contrastiveLossParam_=null;
   }
   return contrastiveLossParamBuilder_;

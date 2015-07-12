@@ -1,6 +1,6 @@
 {
   if (accuracyParamBuilder_ == null) {
-    accuracyParam_=caffe.Caffe.AccuracyParameter.getDefaultInstance();
+    accuracyParam_=Caffe.AccuracyParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,6 +1,6 @@
 {
   super.clear();
-  operation_=caffe.Caffe.EltwiseParameter.EltwiseOp.SUM;
+  operation_=Caffe.EltwiseParameter.EltwiseOp.SUM;
   bitField0_=(bitField0_ & ~0x00000001);
   coeff_=java.util.Collections.emptyList();
   bitField0_=(bitField0_ & ~0x00000002);

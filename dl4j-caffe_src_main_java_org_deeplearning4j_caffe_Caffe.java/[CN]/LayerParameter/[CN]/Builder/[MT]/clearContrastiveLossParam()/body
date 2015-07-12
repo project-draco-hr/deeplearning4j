@@ -1,6 +1,6 @@
 {
   if (contrastiveLossParamBuilder_ == null) {
-    contrastiveLossParam_=caffe.Caffe.ContrastiveLossParameter.getDefaultInstance();
+    contrastiveLossParam_=Caffe.ContrastiveLossParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,6 +1,6 @@
 {
   if (reductionParamBuilder_ == null) {
-    reductionParam_=caffe.Caffe.ReductionParameter.getDefaultInstance();
+    reductionParam_=Caffe.ReductionParameter.getDefaultInstance();
     onChanged();
   }
  else {

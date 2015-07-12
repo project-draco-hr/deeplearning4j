@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.ImageDataParameter parsedMessage=null;
+  Caffe.ImageDataParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.ImageDataParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.ImageDataParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

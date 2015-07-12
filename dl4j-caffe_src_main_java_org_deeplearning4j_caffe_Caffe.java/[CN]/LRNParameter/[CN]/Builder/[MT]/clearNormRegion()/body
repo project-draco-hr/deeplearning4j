@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000008);
-  normRegion_=caffe.Caffe.LRNParameter.NormRegion.ACROSS_CHANNELS;
+  normRegion_=Caffe.LRNParameter.NormRegion.ACROSS_CHANNELS;
   onChanged();
   return this;
 }

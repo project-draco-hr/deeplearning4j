@@ -19,11 +19,11 @@ default :
     }
 case 10:
 {
-    caffe.Caffe.BlobShape.Builder subBuilder=null;
+    Caffe.BlobShape.Builder subBuilder=null;
     if (((bitField0_ & 0x00000001) == 0x00000001)) {
       subBuilder=shape_.toBuilder();
     }
-    shape_=input.readMessage(caffe.Caffe.BlobShape.PARSER,extensionRegistry);
+    shape_=input.readMessage(Caffe.BlobShape.PARSER,extensionRegistry);
     if (subBuilder != null) {
       subBuilder.mergeFrom(shape_);
       shape_=subBuilder.buildPartial();

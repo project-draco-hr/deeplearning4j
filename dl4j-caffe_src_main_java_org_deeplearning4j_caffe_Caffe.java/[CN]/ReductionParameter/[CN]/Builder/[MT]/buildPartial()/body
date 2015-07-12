@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.ReductionParameter result=new caffe.Caffe.ReductionParameter(this);
+  Caffe.ReductionParameter result=new Caffe.ReductionParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.ArgMaxParameter parsedMessage=null;
+  Caffe.ArgMaxParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.ArgMaxParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.ArgMaxParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

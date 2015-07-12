@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000004);
-  engine_=caffe.Caffe.SPPParameter.Engine.DEFAULT;
+  engine_=Caffe.SPPParameter.Engine.DEFAULT;
   onChanged();
   return this;
 }

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.SliceParameter result=new caffe.Caffe.SliceParameter(this);
+  Caffe.SliceParameter result=new Caffe.SliceParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

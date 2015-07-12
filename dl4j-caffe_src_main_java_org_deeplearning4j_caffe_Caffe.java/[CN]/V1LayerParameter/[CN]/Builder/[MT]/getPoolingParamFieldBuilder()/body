@@ -1,6 +1,6 @@
 {
   if (poolingParamBuilder_ == null) {
-    poolingParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.PoolingParameter,caffe.Caffe.PoolingParameter.Builder,caffe.Caffe.PoolingParameterOrBuilder>(getPoolingParam(),getParentForChildren(),isClean());
+    poolingParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.PoolingParameter,Caffe.PoolingParameter.Builder,Caffe.PoolingParameterOrBuilder>(getPoolingParam(),getParentForChildren(),isClean());
     poolingParam_=null;
   }
   return poolingParamBuilder_;

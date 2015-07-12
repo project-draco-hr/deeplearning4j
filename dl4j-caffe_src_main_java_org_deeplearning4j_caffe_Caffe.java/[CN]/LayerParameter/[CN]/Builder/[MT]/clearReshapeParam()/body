@@ -1,6 +1,6 @@
 {
   if (reshapeParamBuilder_ == null) {
-    reshapeParam_=caffe.Caffe.ReshapeParameter.getDefaultInstance();
+    reshapeParam_=Caffe.ReshapeParameter.getDefaultInstance();
     onChanged();
   }
  else {

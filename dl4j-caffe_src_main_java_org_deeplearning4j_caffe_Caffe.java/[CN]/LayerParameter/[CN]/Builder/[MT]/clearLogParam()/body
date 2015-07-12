@@ -1,6 +1,6 @@
 {
   if (logParamBuilder_ == null) {
-    logParam_=caffe.Caffe.LogParameter.getDefaultInstance();
+    logParam_=Caffe.LogParameter.getDefaultInstance();
     onChanged();
   }
  else {

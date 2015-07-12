@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.HDF5DataParameter result=buildPartial();
+  Caffe.HDF5DataParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

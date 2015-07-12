@@ -31,11 +31,11 @@ case 16:
 }
 case 26:
 {
-caffe.Caffe.FillerParameter.Builder subBuilder=null;
+Caffe.FillerParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000004) == 0x00000004)) {
   subBuilder=weightFiller_.toBuilder();
 }
-weightFiller_=input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry);
+weightFiller_=input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
   subBuilder.mergeFrom(weightFiller_);
   weightFiller_=subBuilder.buildPartial();
@@ -45,11 +45,11 @@ break;
 }
 case 34:
 {
-caffe.Caffe.FillerParameter.Builder subBuilder=null;
+Caffe.FillerParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000008) == 0x00000008)) {
 subBuilder=biasFiller_.toBuilder();
 }
-biasFiller_=input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry);
+biasFiller_=input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(biasFiller_);
 biasFiller_=subBuilder.buildPartial();

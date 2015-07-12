@@ -64,7 +64,7 @@ break;
 case 64:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.DataParameter.DB value=caffe.Caffe.DataParameter.DB.valueOf(rawValue);
+Caffe.DataParameter.DB value=Caffe.DataParameter.DB.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(8,rawValue);
 }

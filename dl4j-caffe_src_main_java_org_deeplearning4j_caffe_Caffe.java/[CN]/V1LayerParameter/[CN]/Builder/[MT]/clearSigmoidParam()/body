@@ -1,6 +1,6 @@
 {
   if (sigmoidParamBuilder_ == null) {
-    sigmoidParam_=caffe.Caffe.SigmoidParameter.getDefaultInstance();
+    sigmoidParam_=Caffe.SigmoidParameter.getDefaultInstance();
     onChanged();
   }
  else {

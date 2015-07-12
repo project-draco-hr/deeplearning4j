@@ -1,6 +1,6 @@
 {
   if (!((bitField0_ & 0x00000100) == 0x00000100)) {
-    layers_=new java.util.ArrayList<caffe.Caffe.V1LayerParameter>(layers_);
+    layers_=new java.util.ArrayList<Caffe.V1LayerParameter>(layers_);
     bitField0_|=0x00000100;
   }
 }

@@ -1,6 +1,6 @@
 {
   if (includeBuilder_ == null) {
-    includeBuilder_=new com.google.protobuf.RepeatedFieldBuilder<caffe.Caffe.NetStateRule,caffe.Caffe.NetStateRule.Builder,caffe.Caffe.NetStateRuleOrBuilder>(include_,((bitField0_ & 0x00000200) == 0x00000200),getParentForChildren(),isClean());
+    includeBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.NetStateRule,Caffe.NetStateRule.Builder,Caffe.NetStateRuleOrBuilder>(include_,((bitField0_ & 0x00000200) == 0x00000200),getParentForChildren(),isClean());
     include_=null;
   }
   return includeBuilder_;

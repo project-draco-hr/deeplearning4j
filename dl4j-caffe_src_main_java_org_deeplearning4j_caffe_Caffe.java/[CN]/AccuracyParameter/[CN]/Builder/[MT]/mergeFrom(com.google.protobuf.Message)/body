@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.AccuracyParameter) {
-    return mergeFrom((caffe.Caffe.AccuracyParameter)other);
+  if (other instanceof Caffe.AccuracyParameter) {
+    return mergeFrom((Caffe.AccuracyParameter)other);
   }
  else {
     super.mergeFrom(other);

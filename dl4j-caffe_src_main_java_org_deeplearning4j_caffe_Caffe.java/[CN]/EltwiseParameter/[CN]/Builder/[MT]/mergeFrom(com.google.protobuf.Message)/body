@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.EltwiseParameter) {
-    return mergeFrom((caffe.Caffe.EltwiseParameter)other);
+  if (other instanceof Caffe.EltwiseParameter) {
+    return mergeFrom((Caffe.EltwiseParameter)other);
   }
  else {
     super.mergeFrom(other);

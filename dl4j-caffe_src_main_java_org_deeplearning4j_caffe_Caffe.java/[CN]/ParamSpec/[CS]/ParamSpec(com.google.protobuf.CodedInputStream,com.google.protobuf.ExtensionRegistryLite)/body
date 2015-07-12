@@ -27,7 +27,7 @@ case 10:
 case 16:
 {
   int rawValue=input.readEnum();
-  caffe.Caffe.ParamSpec.DimCheckMode value=caffe.Caffe.ParamSpec.DimCheckMode.valueOf(rawValue);
+  Caffe.ParamSpec.DimCheckMode value=Caffe.ParamSpec.DimCheckMode.valueOf(rawValue);
   if (value == null) {
     unknownFields.mergeVarintField(2,rawValue);
   }

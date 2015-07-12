@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.SliceParameter) {
-    return mergeFrom((caffe.Caffe.SliceParameter)other);
+  if (other instanceof Caffe.SliceParameter) {
+    return mergeFrom((Caffe.SliceParameter)other);
   }
  else {
     super.mergeFrom(other);

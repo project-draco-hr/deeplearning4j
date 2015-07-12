@@ -20,7 +20,7 @@ default :
 case 8:
 {
     int rawValue=input.readEnum();
-    caffe.Caffe.PoolingParameter.PoolMethod value=caffe.Caffe.PoolingParameter.PoolMethod.valueOf(rawValue);
+    Caffe.PoolingParameter.PoolMethod value=Caffe.PoolingParameter.PoolMethod.valueOf(rawValue);
     if (value == null) {
       unknownFields.mergeVarintField(1,rawValue);
     }
@@ -87,7 +87,7 @@ break;
 case 88:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.PoolingParameter.Engine value=caffe.Caffe.PoolingParameter.Engine.valueOf(rawValue);
+Caffe.PoolingParameter.Engine value=Caffe.PoolingParameter.Engine.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(11,rawValue);
 }

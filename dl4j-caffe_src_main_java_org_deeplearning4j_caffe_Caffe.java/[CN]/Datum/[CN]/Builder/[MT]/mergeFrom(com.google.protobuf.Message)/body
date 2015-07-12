@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.Datum) {
-    return mergeFrom((caffe.Caffe.Datum)other);
+  if (other instanceof Caffe.Datum) {
+    return mergeFrom((Caffe.Datum)other);
   }
  else {
     super.mergeFrom(other);

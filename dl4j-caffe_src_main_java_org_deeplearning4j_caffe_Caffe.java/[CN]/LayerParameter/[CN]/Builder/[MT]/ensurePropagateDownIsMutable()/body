@@ -1,6 +1,6 @@
 {
   if (!((bitField0_ & 0x00000100) == 0x00000100)) {
-    propagateDown_=new java.util.ArrayList<Boolean>(propagateDown_);
+    propagateDown_=new java.util.ArrayList<java.lang.Boolean>(propagateDown_);
     bitField0_|=0x00000100;
   }
 }

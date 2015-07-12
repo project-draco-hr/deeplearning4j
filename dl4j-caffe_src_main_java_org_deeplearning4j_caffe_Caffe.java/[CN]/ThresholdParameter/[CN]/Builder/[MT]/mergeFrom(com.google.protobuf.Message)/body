@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ThresholdParameter) {
-    return mergeFrom((caffe.Caffe.ThresholdParameter)other);
+  if (other instanceof Caffe.ThresholdParameter) {
+    return mergeFrom((Caffe.ThresholdParameter)other);
   }
  else {
     super.mergeFrom(other);

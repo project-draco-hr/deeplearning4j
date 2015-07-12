@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.DropoutParameter) {
-    return mergeFrom((caffe.Caffe.DropoutParameter)other);
+  if (other instanceof Caffe.DropoutParameter) {
+    return mergeFrom((Caffe.DropoutParameter)other);
   }
  else {
     super.mergeFrom(other);

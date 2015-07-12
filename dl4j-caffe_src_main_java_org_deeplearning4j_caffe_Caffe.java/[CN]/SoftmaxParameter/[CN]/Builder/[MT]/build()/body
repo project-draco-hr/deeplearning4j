@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.SoftmaxParameter result=buildPartial();
+  Caffe.SoftmaxParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

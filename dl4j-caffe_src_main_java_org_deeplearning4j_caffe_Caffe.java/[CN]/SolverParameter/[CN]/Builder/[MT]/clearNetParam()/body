@@ -1,6 +1,6 @@
 {
   if (netParamBuilder_ == null) {
-    netParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+    netParam_=Caffe.NetParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.MemoryDataParameter) {
-    return mergeFrom((caffe.Caffe.MemoryDataParameter)other);
+  if (other instanceof Caffe.MemoryDataParameter) {
+    return mergeFrom((Caffe.MemoryDataParameter)other);
   }
  else {
     super.mergeFrom(other);

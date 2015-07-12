@@ -1,6 +1,6 @@
 {
   if (thresholdParamBuilder_ == null) {
-    thresholdParam_=caffe.Caffe.ThresholdParameter.getDefaultInstance();
+    thresholdParam_=Caffe.ThresholdParameter.getDefaultInstance();
     onChanged();
   }
  else {

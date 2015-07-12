@@ -1,6 +1,6 @@
 {
   super.clear();
-  phase_=caffe.Caffe.Phase.TEST;
+  phase_=Caffe.Phase.TEST;
   bitField0_=(bitField0_ & ~0x00000001);
   level_=0;
   bitField0_=(bitField0_ & ~0x00000002);

@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ArgMaxParameter) {
-    return mergeFrom((caffe.Caffe.ArgMaxParameter)other);
+  if (other instanceof Caffe.ArgMaxParameter) {
+    return mergeFrom((Caffe.ArgMaxParameter)other);
   }
  else {
     super.mergeFrom(other);

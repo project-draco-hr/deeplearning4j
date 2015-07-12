@@ -1,6 +1,6 @@
 {
   if (lossParamBuilder_ == null) {
-    lossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.LossParameter,caffe.Caffe.LossParameter.Builder,caffe.Caffe.LossParameterOrBuilder>(getLossParam(),getParentForChildren(),isClean());
+    lossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.LossParameter,Caffe.LossParameter.Builder,Caffe.LossParameterOrBuilder>(getLossParam(),getParentForChildren(),isClean());
     lossParam_=null;
   }
   return lossParamBuilder_;

@@ -1,6 +1,6 @@
 {
   if (sliceParamBuilder_ == null) {
-    sliceParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.SliceParameter,caffe.Caffe.SliceParameter.Builder,caffe.Caffe.SliceParameterOrBuilder>(getSliceParam(),getParentForChildren(),isClean());
+    sliceParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.SliceParameter,Caffe.SliceParameter.Builder,Caffe.SliceParameterOrBuilder>(getSliceParam(),getParentForChildren(),isClean());
     sliceParam_=null;
   }
   return sliceParamBuilder_;

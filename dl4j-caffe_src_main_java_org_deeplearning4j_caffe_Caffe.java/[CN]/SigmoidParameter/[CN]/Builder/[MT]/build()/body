@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.SigmoidParameter result=buildPartial();
+  Caffe.SigmoidParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

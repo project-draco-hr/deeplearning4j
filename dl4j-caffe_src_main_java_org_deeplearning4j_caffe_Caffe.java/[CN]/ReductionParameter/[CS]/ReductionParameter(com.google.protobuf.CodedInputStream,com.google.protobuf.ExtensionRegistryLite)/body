@@ -20,7 +20,7 @@ default :
 case 8:
 {
     int rawValue=input.readEnum();
-    caffe.Caffe.ReductionParameter.ReductionOp value=caffe.Caffe.ReductionParameter.ReductionOp.valueOf(rawValue);
+    Caffe.ReductionParameter.ReductionOp value=Caffe.ReductionParameter.ReductionOp.valueOf(rawValue);
     if (value == null) {
       unknownFields.mergeVarintField(1,rawValue);
     }

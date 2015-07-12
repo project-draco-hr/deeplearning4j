@@ -1,6 +1,6 @@
 {
   if (layerBuilder_ == null) {
-    layerBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.V0LayerParameter,caffe.Caffe.V0LayerParameter.Builder,caffe.Caffe.V0LayerParameterOrBuilder>(getLayer(),getParentForChildren(),isClean());
+    layerBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.V0LayerParameter,Caffe.V0LayerParameter.Builder,Caffe.V0LayerParameterOrBuilder>(getLayer(),getParentForChildren(),isClean());
     layer_=null;
   }
   return layerBuilder_;

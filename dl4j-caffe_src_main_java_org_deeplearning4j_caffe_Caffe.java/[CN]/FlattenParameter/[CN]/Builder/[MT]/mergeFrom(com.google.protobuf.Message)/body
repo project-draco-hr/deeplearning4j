@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.FlattenParameter) {
-    return mergeFrom((caffe.Caffe.FlattenParameter)other);
+  if (other instanceof Caffe.FlattenParameter) {
+    return mergeFrom((Caffe.FlattenParameter)other);
   }
  else {
     super.mergeFrom(other);

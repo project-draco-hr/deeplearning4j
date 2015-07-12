@@ -1,6 +1,6 @@
 {
   if (lossParamBuilder_ == null) {
-    lossParam_=caffe.Caffe.LossParameter.getDefaultInstance();
+    lossParam_=Caffe.LossParameter.getDefaultInstance();
     onChanged();
   }
  else {

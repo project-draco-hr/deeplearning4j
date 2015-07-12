@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.ReshapeParameter result=buildPartial();
+  Caffe.ReshapeParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

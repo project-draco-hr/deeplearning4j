@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.NetState) {
-    return mergeFrom((caffe.Caffe.NetState)other);
+  if (other instanceof Caffe.NetState) {
+    return mergeFrom((Caffe.NetState)other);
   }
  else {
     super.mergeFrom(other);

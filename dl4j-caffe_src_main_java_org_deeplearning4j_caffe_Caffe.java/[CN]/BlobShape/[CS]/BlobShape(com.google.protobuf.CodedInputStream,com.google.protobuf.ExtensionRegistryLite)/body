@@ -20,7 +20,7 @@ default :
 case 8:
 {
     if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-      dim_=new java.util.ArrayList<Long>();
+      dim_=new java.util.ArrayList<java.lang.Long>();
       mutable_bitField0_|=0x00000001;
     }
     dim_.add(input.readInt64());
@@ -31,7 +31,7 @@ case 10:
   int length=input.readRawVarint32();
   int limit=input.pushLimit(length);
   if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
-    dim_=new java.util.ArrayList<Long>();
+    dim_=new java.util.ArrayList<java.lang.Long>();
     mutable_bitField0_|=0x00000001;
   }
   while (input.getBytesUntilLimit() > 0) {

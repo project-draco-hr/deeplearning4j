@@ -1,6 +1,6 @@
 {
   if (netParamBuilder_ == null) {
-    netParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.NetParameter,caffe.Caffe.NetParameter.Builder,caffe.Caffe.NetParameterOrBuilder>(getNetParam(),getParentForChildren(),isClean());
+    netParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.NetParameter,Caffe.NetParameter.Builder,Caffe.NetParameterOrBuilder>(getNetParam(),getParentForChildren(),isClean());
     netParam_=null;
   }
   return netParamBuilder_;

@@ -55,11 +55,11 @@ break;
 }
 case 58:
 {
-caffe.Caffe.FillerParameter.Builder subBuilder=null;
+Caffe.FillerParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00001000) == 0x00001000)) {
 subBuilder=weightFiller_.toBuilder();
 }
-weightFiller_=input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry);
+weightFiller_=input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(weightFiller_);
 weightFiller_=subBuilder.buildPartial();
@@ -69,11 +69,11 @@ break;
 }
 case 66:
 {
-caffe.Caffe.FillerParameter.Builder subBuilder=null;
+Caffe.FillerParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00002000) == 0x00002000)) {
 subBuilder=biasFiller_.toBuilder();
 }
-biasFiller_=input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry);
+biasFiller_=input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(biasFiller_);
 biasFiller_=subBuilder.buildPartial();
@@ -120,7 +120,7 @@ break;
 case 120:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.ConvolutionParameter.Engine value=caffe.Caffe.ConvolutionParameter.Engine.valueOf(rawValue);
+Caffe.ConvolutionParameter.Engine value=Caffe.ConvolutionParameter.Engine.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(15,rawValue);
 }

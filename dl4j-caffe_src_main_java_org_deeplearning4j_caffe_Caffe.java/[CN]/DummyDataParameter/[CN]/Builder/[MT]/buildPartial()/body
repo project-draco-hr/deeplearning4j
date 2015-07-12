@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.DummyDataParameter result=new caffe.Caffe.DummyDataParameter(this);
+  Caffe.DummyDataParameter result=new Caffe.DummyDataParameter(this);
   int from_bitField0_=bitField0_;
   if (dataFillerBuilder_ == null) {
     if (((bitField0_ & 0x00000001) == 0x00000001)) {

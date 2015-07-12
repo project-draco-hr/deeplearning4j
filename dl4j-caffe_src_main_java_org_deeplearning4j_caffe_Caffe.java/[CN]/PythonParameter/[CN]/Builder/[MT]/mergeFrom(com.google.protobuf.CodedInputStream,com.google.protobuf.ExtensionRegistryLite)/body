@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.PythonParameter parsedMessage=null;
+  Caffe.PythonParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.PythonParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.PythonParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.WindowDataParameter result=buildPartial();
+  Caffe.WindowDataParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

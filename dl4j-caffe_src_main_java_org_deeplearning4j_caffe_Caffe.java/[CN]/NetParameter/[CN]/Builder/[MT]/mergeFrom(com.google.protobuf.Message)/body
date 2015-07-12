@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.NetParameter) {
-    return mergeFrom((caffe.Caffe.NetParameter)other);
+  if (other instanceof Caffe.NetParameter) {
+    return mergeFrom((Caffe.NetParameter)other);
   }
  else {
     super.mergeFrom(other);

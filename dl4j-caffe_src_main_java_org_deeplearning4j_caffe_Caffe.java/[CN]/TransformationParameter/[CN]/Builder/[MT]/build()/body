@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.TransformationParameter result=buildPartial();
+  Caffe.TransformationParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

@@ -6,7 +6,7 @@
   bitField0_=(bitField0_ & ~0x00000002);
   randSkip_=0;
   bitField0_=(bitField0_ & ~0x00000004);
-  backend_=caffe.Caffe.DataParameter.DB.LEVELDB;
+  backend_=Caffe.DataParameter.DB.LEVELDB;
   bitField0_=(bitField0_ & ~0x00000008);
   scale_=1F;
   bitField0_=(bitField0_ & ~0x00000010);

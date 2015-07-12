@@ -1,6 +1,6 @@
 {
   super.clear();
-  engine_=caffe.Caffe.SigmoidParameter.Engine.DEFAULT;
+  engine_=Caffe.SigmoidParameter.Engine.DEFAULT;
   bitField0_=(bitField0_ & ~0x00000001);
   return this;
 }

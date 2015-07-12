@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.ThresholdParameter result=buildPartial();
+  Caffe.ThresholdParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

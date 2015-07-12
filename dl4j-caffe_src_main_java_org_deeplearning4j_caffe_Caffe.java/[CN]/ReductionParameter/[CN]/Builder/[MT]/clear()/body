@@ -1,6 +1,6 @@
 {
   super.clear();
-  operation_=caffe.Caffe.ReductionParameter.ReductionOp.SUM;
+  operation_=Caffe.ReductionParameter.ReductionOp.SUM;
   bitField0_=(bitField0_ & ~0x00000001);
   axis_=0;
   bitField0_=(bitField0_ & ~0x00000002);

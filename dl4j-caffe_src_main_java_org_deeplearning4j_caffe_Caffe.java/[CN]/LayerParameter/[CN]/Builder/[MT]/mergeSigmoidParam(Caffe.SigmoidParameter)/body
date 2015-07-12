@@ -1,0 +1,16 @@
+{
+  if (sigmoidParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000200) == 0x00000200) && sigmoidParam_ != Caffe.SigmoidParameter.getDefaultInstance()) {
+      sigmoidParam_=Caffe.SigmoidParameter.newBuilder(sigmoidParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      sigmoidParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    sigmoidParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000200;
+  return this;
+}

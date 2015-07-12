@@ -3,7 +3,7 @@
   net_="";
   bitField0_=(bitField0_ & ~0x00000001);
   if (netParamBuilder_ == null) {
-    netParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+    netParam_=Caffe.NetParameter.getDefaultInstance();
   }
  else {
     netParamBuilder_.clear();
@@ -14,7 +14,7 @@
   testNet_=com.google.protobuf.LazyStringArrayList.EMPTY;
   bitField0_=(bitField0_ & ~0x00000008);
   if (trainNetParamBuilder_ == null) {
-    trainNetParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+    trainNetParam_=Caffe.NetParameter.getDefaultInstance();
   }
  else {
     trainNetParamBuilder_.clear();
@@ -28,7 +28,7 @@
     testNetParamBuilder_.clear();
   }
   if (trainStateBuilder_ == null) {
-    trainState_=caffe.Caffe.NetState.getDefaultInstance();
+    trainState_=Caffe.NetState.getDefaultInstance();
   }
  else {
     trainStateBuilder_.clear();
@@ -83,13 +83,13 @@
   bitField0_=(bitField0_ & ~0x08000000);
   snapshotDiff_=false;
   bitField0_=(bitField0_ & ~0x10000000);
-  solverMode_=caffe.Caffe.SolverParameter.SolverMode.GPU;
+  solverMode_=Caffe.SolverParameter.SolverMode.GPU;
   bitField0_=(bitField0_ & ~0x20000000);
   deviceId_=0;
   bitField0_=(bitField0_ & ~0x40000000);
   randomSeed_=-1L;
   bitField0_=(bitField0_ & ~0x80000000);
-  solverType_=caffe.Caffe.SolverParameter.SolverType.SGD;
+  solverType_=Caffe.SolverParameter.SolverType.SGD;
   bitField1_=(bitField1_ & ~0x00000001);
   delta_=1e-08F;
   bitField1_=(bitField1_ & ~0x00000002);

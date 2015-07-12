@@ -38,7 +38,7 @@ break;
 case 32:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.LRNParameter.NormRegion value=caffe.Caffe.LRNParameter.NormRegion.valueOf(rawValue);
+Caffe.LRNParameter.NormRegion value=Caffe.LRNParameter.NormRegion.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(4,rawValue);
 }

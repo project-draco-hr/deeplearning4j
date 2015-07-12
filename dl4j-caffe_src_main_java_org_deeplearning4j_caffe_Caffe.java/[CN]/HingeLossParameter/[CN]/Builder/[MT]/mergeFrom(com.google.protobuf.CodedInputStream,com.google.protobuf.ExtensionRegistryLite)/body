@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.HingeLossParameter parsedMessage=null;
+  Caffe.HingeLossParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.HingeLossParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.HingeLossParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

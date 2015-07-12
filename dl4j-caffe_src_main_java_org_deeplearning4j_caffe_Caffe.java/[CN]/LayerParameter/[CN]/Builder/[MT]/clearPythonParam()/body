@@ -1,6 +1,6 @@
 {
   if (pythonParamBuilder_ == null) {
-    pythonParam_=caffe.Caffe.PythonParameter.getDefaultInstance();
+    pythonParam_=Caffe.PythonParameter.getDefaultInstance();
     onChanged();
   }
  else {

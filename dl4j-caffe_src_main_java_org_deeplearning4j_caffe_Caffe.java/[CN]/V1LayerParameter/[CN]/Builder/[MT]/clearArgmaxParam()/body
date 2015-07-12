@@ -1,6 +1,6 @@
 {
   if (argmaxParamBuilder_ == null) {
-    argmaxParam_=caffe.Caffe.ArgMaxParameter.getDefaultInstance();
+    argmaxParam_=Caffe.ArgMaxParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,6 +1,6 @@
 {
   if (hdf5DataParamBuilder_ == null) {
-    hdf5DataParam_=caffe.Caffe.HDF5DataParameter.getDefaultInstance();
+    hdf5DataParam_=Caffe.HDF5DataParameter.getDefaultInstance();
     onChanged();
   }
  else {

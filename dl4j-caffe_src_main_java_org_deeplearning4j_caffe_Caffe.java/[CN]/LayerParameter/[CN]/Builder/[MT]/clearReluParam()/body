@@ -1,6 +1,6 @@
 {
   if (reluParamBuilder_ == null) {
-    reluParam_=caffe.Caffe.ReLUParameter.getDefaultInstance();
+    reluParam_=Caffe.ReLUParameter.getDefaultInstance();
     onChanged();
   }
  else {

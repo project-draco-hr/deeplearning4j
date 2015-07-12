@@ -1,6 +1,6 @@
 {
   super.clear();
-  engine_=caffe.Caffe.SoftmaxParameter.Engine.DEFAULT;
+  engine_=Caffe.SoftmaxParameter.Engine.DEFAULT;
   bitField0_=(bitField0_ & ~0x00000001);
   axis_=1;
   bitField0_=(bitField0_ & ~0x00000002);

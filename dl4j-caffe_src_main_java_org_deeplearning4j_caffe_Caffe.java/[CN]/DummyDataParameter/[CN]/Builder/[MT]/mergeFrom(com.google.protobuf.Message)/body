@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.DummyDataParameter) {
-    return mergeFrom((caffe.Caffe.DummyDataParameter)other);
+  if (other instanceof Caffe.DummyDataParameter) {
+    return mergeFrom((Caffe.DummyDataParameter)other);
   }
  else {
     super.mergeFrom(other);

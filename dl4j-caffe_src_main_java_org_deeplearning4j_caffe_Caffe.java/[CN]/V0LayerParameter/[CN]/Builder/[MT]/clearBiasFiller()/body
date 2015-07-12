@@ -1,6 +1,6 @@
 {
   if (biasFillerBuilder_ == null) {
-    biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    biasFiller_=Caffe.FillerParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.PoolingParameter) {
-    return mergeFrom((caffe.Caffe.PoolingParameter)other);
+  if (other instanceof Caffe.PoolingParameter) {
+    return mergeFrom((Caffe.PoolingParameter)other);
   }
  else {
     super.mergeFrom(other);

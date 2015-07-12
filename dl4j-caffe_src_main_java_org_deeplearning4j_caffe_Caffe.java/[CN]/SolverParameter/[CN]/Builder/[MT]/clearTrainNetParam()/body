@@ -1,6 +1,6 @@
 {
   if (trainNetParamBuilder_ == null) {
-    trainNetParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+    trainNetParam_=Caffe.NetParameter.getDefaultInstance();
     onChanged();
   }
  else {

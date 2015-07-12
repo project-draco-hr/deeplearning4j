@@ -26,7 +26,7 @@ case 8:
 case 16:
 {
   int rawValue=input.readEnum();
-  caffe.Caffe.SPPParameter.PoolMethod value=caffe.Caffe.SPPParameter.PoolMethod.valueOf(rawValue);
+  Caffe.SPPParameter.PoolMethod value=Caffe.SPPParameter.PoolMethod.valueOf(rawValue);
   if (value == null) {
     unknownFields.mergeVarintField(2,rawValue);
   }
@@ -39,7 +39,7 @@ case 16:
 case 48:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.SPPParameter.Engine value=caffe.Caffe.SPPParameter.Engine.valueOf(rawValue);
+Caffe.SPPParameter.Engine value=Caffe.SPPParameter.Engine.valueOf(rawValue);
 if (value == null) {
   unknownFields.mergeVarintField(6,rawValue);
 }

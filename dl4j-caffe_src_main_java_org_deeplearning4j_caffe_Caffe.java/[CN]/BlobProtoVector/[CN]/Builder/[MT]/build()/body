@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.BlobProtoVector result=buildPartial();
+  Caffe.BlobProtoVector result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

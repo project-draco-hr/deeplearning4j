@@ -14,7 +14,7 @@
   bitField0_=(bitField0_ & ~0x00000020);
   sparse_=-1;
   bitField0_=(bitField0_ & ~0x00000040);
-  varianceNorm_=caffe.Caffe.FillerParameter.VarianceNorm.FAN_IN;
+  varianceNorm_=Caffe.FillerParameter.VarianceNorm.FAN_IN;
   bitField0_=(bitField0_ & ~0x00000080);
   return this;
 }

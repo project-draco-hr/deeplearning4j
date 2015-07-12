@@ -20,7 +20,7 @@ default :
 case 8:
 {
     int rawValue=input.readEnum();
-    caffe.Caffe.TanHParameter.Engine value=caffe.Caffe.TanHParameter.Engine.valueOf(rawValue);
+    Caffe.TanHParameter.Engine value=Caffe.TanHParameter.Engine.valueOf(rawValue);
     if (value == null) {
       unknownFields.mergeVarintField(1,rawValue);
     }

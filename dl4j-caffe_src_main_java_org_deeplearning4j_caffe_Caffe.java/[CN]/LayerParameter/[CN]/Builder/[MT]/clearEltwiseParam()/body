@@ -1,6 +1,6 @@
 {
   if (eltwiseParamBuilder_ == null) {
-    eltwiseParam_=caffe.Caffe.EltwiseParameter.getDefaultInstance();
+    eltwiseParam_=Caffe.EltwiseParameter.getDefaultInstance();
     onChanged();
   }
  else {

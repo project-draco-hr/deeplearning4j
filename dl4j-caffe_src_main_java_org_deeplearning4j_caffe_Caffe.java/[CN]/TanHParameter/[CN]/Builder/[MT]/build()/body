@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.TanHParameter result=buildPartial();
+  Caffe.TanHParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

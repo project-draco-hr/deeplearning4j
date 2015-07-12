@@ -11,7 +11,7 @@
   stride_=1;
   strideH_=0;
   strideW_=0;
-  weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
-  biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
-  engine_=caffe.Caffe.ConvolutionParameter.Engine.DEFAULT;
+  weightFiller_=Caffe.FillerParameter.getDefaultInstance();
+  biasFiller_=Caffe.FillerParameter.getDefaultInstance();
+  engine_=Caffe.ConvolutionParameter.Engine.DEFAULT;
 }

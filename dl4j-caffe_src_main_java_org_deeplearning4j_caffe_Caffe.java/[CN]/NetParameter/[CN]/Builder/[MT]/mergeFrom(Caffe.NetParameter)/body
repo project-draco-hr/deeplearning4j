@@ -1,0 +1,122 @@
+{
+  if (other == Caffe.NetParameter.getDefaultInstance())   return this;
+  if (other.hasName()) {
+    bitField0_|=0x00000001;
+    name_=other.name_;
+    onChanged();
+  }
+  if (!other.input_.isEmpty()) {
+    if (input_.isEmpty()) {
+      input_=other.input_;
+      bitField0_=(bitField0_ & ~0x00000002);
+    }
+ else {
+      ensureInputIsMutable();
+      input_.addAll(other.input_);
+    }
+    onChanged();
+  }
+  if (inputShapeBuilder_ == null) {
+    if (!other.inputShape_.isEmpty()) {
+      if (inputShape_.isEmpty()) {
+        inputShape_=other.inputShape_;
+        bitField0_=(bitField0_ & ~0x00000004);
+      }
+ else {
+        ensureInputShapeIsMutable();
+        inputShape_.addAll(other.inputShape_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.inputShape_.isEmpty()) {
+      if (inputShapeBuilder_.isEmpty()) {
+        inputShapeBuilder_.dispose();
+        inputShapeBuilder_=null;
+        inputShape_=other.inputShape_;
+        bitField0_=(bitField0_ & ~0x00000004);
+        inputShapeBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getInputShapeFieldBuilder() : null;
+      }
+ else {
+        inputShapeBuilder_.addAllMessages(other.inputShape_);
+      }
+    }
+  }
+  if (!other.inputDim_.isEmpty()) {
+    if (inputDim_.isEmpty()) {
+      inputDim_=other.inputDim_;
+      bitField0_=(bitField0_ & ~0x00000008);
+    }
+ else {
+      ensureInputDimIsMutable();
+      inputDim_.addAll(other.inputDim_);
+    }
+    onChanged();
+  }
+  if (other.hasForceBackward()) {
+    setForceBackward(other.getForceBackward());
+  }
+  if (other.hasState()) {
+    mergeState(other.getState());
+  }
+  if (other.hasDebugInfo()) {
+    setDebugInfo(other.getDebugInfo());
+  }
+  if (layerBuilder_ == null) {
+    if (!other.layer_.isEmpty()) {
+      if (layer_.isEmpty()) {
+        layer_=other.layer_;
+        bitField0_=(bitField0_ & ~0x00000080);
+      }
+ else {
+        ensureLayerIsMutable();
+        layer_.addAll(other.layer_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.layer_.isEmpty()) {
+      if (layerBuilder_.isEmpty()) {
+        layerBuilder_.dispose();
+        layerBuilder_=null;
+        layer_=other.layer_;
+        bitField0_=(bitField0_ & ~0x00000080);
+        layerBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getLayerFieldBuilder() : null;
+      }
+ else {
+        layerBuilder_.addAllMessages(other.layer_);
+      }
+    }
+  }
+  if (layersBuilder_ == null) {
+    if (!other.layers_.isEmpty()) {
+      if (layers_.isEmpty()) {
+        layers_=other.layers_;
+        bitField0_=(bitField0_ & ~0x00000100);
+      }
+ else {
+        ensureLayersIsMutable();
+        layers_.addAll(other.layers_);
+      }
+      onChanged();
+    }
+  }
+ else {
+    if (!other.layers_.isEmpty()) {
+      if (layersBuilder_.isEmpty()) {
+        layersBuilder_.dispose();
+        layersBuilder_=null;
+        layers_=other.layers_;
+        bitField0_=(bitField0_ & ~0x00000100);
+        layersBuilder_=com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ? getLayersFieldBuilder() : null;
+      }
+ else {
+        layersBuilder_.addAllMessages(other.layers_);
+      }
+    }
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

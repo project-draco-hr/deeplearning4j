@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.InfogainLossParameter parsedMessage=null;
+  Caffe.InfogainLossParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.InfogainLossParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.InfogainLossParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

@@ -1,6 +1,6 @@
 {
   if (memoryDataParamBuilder_ == null) {
-    memoryDataParam_=caffe.Caffe.MemoryDataParameter.getDefaultInstance();
+    memoryDataParam_=Caffe.MemoryDataParameter.getDefaultInstance();
     onChanged();
   }
  else {

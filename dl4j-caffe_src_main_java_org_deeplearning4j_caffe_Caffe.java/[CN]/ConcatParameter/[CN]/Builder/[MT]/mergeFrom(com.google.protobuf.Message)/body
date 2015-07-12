@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ConcatParameter) {
-    return mergeFrom((caffe.Caffe.ConcatParameter)other);
+  if (other instanceof Caffe.ConcatParameter) {
+    return mergeFrom((Caffe.ConcatParameter)other);
   }
  else {
     super.mergeFrom(other);

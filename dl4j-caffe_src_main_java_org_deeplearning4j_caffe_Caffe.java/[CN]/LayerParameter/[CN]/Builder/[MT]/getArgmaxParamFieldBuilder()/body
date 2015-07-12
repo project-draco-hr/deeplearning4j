@@ -1,6 +1,6 @@
 {
   if (argmaxParamBuilder_ == null) {
-    argmaxParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ArgMaxParameter,caffe.Caffe.ArgMaxParameter.Builder,caffe.Caffe.ArgMaxParameterOrBuilder>(getArgmaxParam(),getParentForChildren(),isClean());
+    argmaxParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ArgMaxParameter,Caffe.ArgMaxParameter.Builder,Caffe.ArgMaxParameterOrBuilder>(getArgmaxParam(),getParentForChildren(),isClean());
     argmaxParam_=null;
   }
   return argmaxParamBuilder_;

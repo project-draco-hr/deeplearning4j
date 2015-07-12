@@ -1,6 +1,6 @@
 {
   if (mvnParamBuilder_ == null) {
-    mvnParam_=caffe.Caffe.MVNParameter.getDefaultInstance();
+    mvnParam_=Caffe.MVNParameter.getDefaultInstance();
     onChanged();
   }
  else {

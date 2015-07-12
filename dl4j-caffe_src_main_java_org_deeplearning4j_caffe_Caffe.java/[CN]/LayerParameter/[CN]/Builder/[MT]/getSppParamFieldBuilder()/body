@@ -1,6 +1,6 @@
 {
   if (sppParamBuilder_ == null) {
-    sppParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.SPPParameter,caffe.Caffe.SPPParameter.Builder,caffe.Caffe.SPPParameterOrBuilder>(getSppParam(),getParentForChildren(),isClean());
+    sppParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.SPPParameter,Caffe.SPPParameter.Builder,Caffe.SPPParameterOrBuilder>(getSppParam(),getParentForChildren(),isClean());
     sppParam_=null;
   }
   return sppParamBuilder_;

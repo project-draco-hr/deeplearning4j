@@ -1,6 +1,6 @@
 {
   if (innerProductParamBuilder_ == null) {
-    innerProductParam_=caffe.Caffe.InnerProductParameter.getDefaultInstance();
+    innerProductParam_=Caffe.InnerProductParameter.getDefaultInstance();
     onChanged();
   }
  else {

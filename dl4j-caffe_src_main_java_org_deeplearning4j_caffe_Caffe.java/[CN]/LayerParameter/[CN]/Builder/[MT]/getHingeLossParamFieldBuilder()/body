@@ -1,6 +1,6 @@
 {
   if (hingeLossParamBuilder_ == null) {
-    hingeLossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.HingeLossParameter,caffe.Caffe.HingeLossParameter.Builder,caffe.Caffe.HingeLossParameterOrBuilder>(getHingeLossParam(),getParentForChildren(),isClean());
+    hingeLossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.HingeLossParameter,Caffe.HingeLossParameter.Builder,Caffe.HingeLossParameterOrBuilder>(getHingeLossParam(),getParentForChildren(),isClean());
     hingeLossParam_=null;
   }
   return hingeLossParamBuilder_;

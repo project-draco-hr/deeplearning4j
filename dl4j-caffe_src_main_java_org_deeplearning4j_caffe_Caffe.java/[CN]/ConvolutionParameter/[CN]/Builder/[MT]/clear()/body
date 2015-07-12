@@ -25,20 +25,20 @@
   strideW_=0;
   bitField0_=(bitField0_ & ~0x00000800);
   if (weightFillerBuilder_ == null) {
-    weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    weightFiller_=Caffe.FillerParameter.getDefaultInstance();
   }
  else {
     weightFillerBuilder_.clear();
   }
   bitField0_=(bitField0_ & ~0x00001000);
   if (biasFillerBuilder_ == null) {
-    biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    biasFiller_=Caffe.FillerParameter.getDefaultInstance();
   }
  else {
     biasFillerBuilder_.clear();
   }
   bitField0_=(bitField0_ & ~0x00002000);
-  engine_=caffe.Caffe.ConvolutionParameter.Engine.DEFAULT;
+  engine_=Caffe.ConvolutionParameter.Engine.DEFAULT;
   bitField0_=(bitField0_ & ~0x00004000);
   return this;
 }

@@ -38,7 +38,7 @@ case 18:
 case 24:
 {
 if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
-  testIter_=new java.util.ArrayList<Integer>();
+  testIter_=new java.util.ArrayList<java.lang.Integer>();
   mutable_bitField0_|=0x00000100;
 }
 testIter_.add(input.readInt32());
@@ -49,7 +49,7 @@ case 26:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000100) == 0x00000100) && input.getBytesUntilLimit() > 0) {
-testIter_=new java.util.ArrayList<Integer>();
+testIter_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000100;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -141,7 +141,7 @@ break;
 case 136:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.SolverParameter.SolverMode value=caffe.Caffe.SolverParameter.SolverMode.valueOf(rawValue);
+Caffe.SolverParameter.SolverMode value=Caffe.SolverParameter.SolverMode.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(17,rawValue);
 }
@@ -171,11 +171,11 @@ break;
 }
 case 170:
 {
-caffe.Caffe.NetParameter.Builder subBuilder=null;
+Caffe.NetParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000008) == 0x00000008)) {
 subBuilder=trainNetParam_.toBuilder();
 }
-trainNetParam_=input.readMessage(caffe.Caffe.NetParameter.PARSER,extensionRegistry);
+trainNetParam_=input.readMessage(Caffe.NetParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(trainNetParam_);
 trainNetParam_=subBuilder.buildPartial();
@@ -186,10 +186,10 @@ break;
 case 178:
 {
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-testNetParam_=new java.util.ArrayList<caffe.Caffe.NetParameter>();
+testNetParam_=new java.util.ArrayList<Caffe.NetParameter>();
 mutable_bitField0_|=0x00000020;
 }
-testNetParam_.add(input.readMessage(caffe.Caffe.NetParameter.PARSER,extensionRegistry));
+testNetParam_.add(input.readMessage(Caffe.NetParameter.PARSER,extensionRegistry));
 break;
 }
 case 184:
@@ -207,11 +207,11 @@ break;
 }
 case 202:
 {
-caffe.Caffe.NetParameter.Builder subBuilder=null;
+Caffe.NetParameter.Builder subBuilder=null;
 if (((bitField0_ & 0x00000002) == 0x00000002)) {
 subBuilder=netParam_.toBuilder();
 }
-netParam_=input.readMessage(caffe.Caffe.NetParameter.PARSER,extensionRegistry);
+netParam_=input.readMessage(Caffe.NetParameter.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(netParam_);
 netParam_=subBuilder.buildPartial();
@@ -221,11 +221,11 @@ break;
 }
 case 210:
 {
-caffe.Caffe.NetState.Builder subBuilder=null;
+Caffe.NetState.Builder subBuilder=null;
 if (((bitField0_ & 0x00000010) == 0x00000010)) {
 subBuilder=trainState_.toBuilder();
 }
-trainState_=input.readMessage(caffe.Caffe.NetState.PARSER,extensionRegistry);
+trainState_=input.readMessage(Caffe.NetState.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(trainState_);
 trainState_=subBuilder.buildPartial();
@@ -236,10 +236,10 @@ break;
 case 218:
 {
 if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
-testState_=new java.util.ArrayList<caffe.Caffe.NetState>();
+testState_=new java.util.ArrayList<Caffe.NetState>();
 mutable_bitField0_|=0x00000080;
 }
-testState_.add(input.readMessage(caffe.Caffe.NetState.PARSER,extensionRegistry));
+testState_.add(input.readMessage(Caffe.NetState.PARSER,extensionRegistry));
 break;
 }
 case 224:
@@ -258,7 +258,7 @@ break;
 case 240:
 {
 int rawValue=input.readEnum();
-caffe.Caffe.SolverParameter.SolverType value=caffe.Caffe.SolverParameter.SolverType.valueOf(rawValue);
+Caffe.SolverParameter.SolverType value=Caffe.SolverParameter.SolverType.valueOf(rawValue);
 if (value == null) {
 unknownFields.mergeVarintField(30,rawValue);
 }
@@ -289,7 +289,7 @@ break;
 case 272:
 {
 if (!((mutable_bitField0_ & 0x01000000) == 0x01000000)) {
-stepvalue_=new java.util.ArrayList<Integer>();
+stepvalue_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x01000000;
 }
 stepvalue_.add(input.readInt32());
@@ -300,7 +300,7 @@ case 274:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x01000000) == 0x01000000) && input.getBytesUntilLimit() > 0) {
-stepvalue_=new java.util.ArrayList<Integer>();
+stepvalue_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x01000000;
 }
 while (input.getBytesUntilLimit() > 0) {

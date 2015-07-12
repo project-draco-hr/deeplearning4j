@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.LayerParameter parsedMessage=null;
+  Caffe.LayerParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.LayerParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.LayerParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

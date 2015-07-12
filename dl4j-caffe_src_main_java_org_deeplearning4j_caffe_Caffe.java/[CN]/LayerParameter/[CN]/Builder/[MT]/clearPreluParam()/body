@@ -1,6 +1,6 @@
 {
   if (preluParamBuilder_ == null) {
-    preluParam_=caffe.Caffe.PReLUParameter.getDefaultInstance();
+    preluParam_=Caffe.PReLUParameter.getDefaultInstance();
     onChanged();
   }
  else {

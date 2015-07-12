@@ -20,7 +20,7 @@ default :
 case 8:
 {
     int rawValue=input.readEnum();
-    caffe.Caffe.SigmoidParameter.Engine value=caffe.Caffe.SigmoidParameter.Engine.valueOf(rawValue);
+    Caffe.SigmoidParameter.Engine value=Caffe.SigmoidParameter.Engine.valueOf(rawValue);
     if (value == null) {
       unknownFields.mergeVarintField(1,rawValue);
     }

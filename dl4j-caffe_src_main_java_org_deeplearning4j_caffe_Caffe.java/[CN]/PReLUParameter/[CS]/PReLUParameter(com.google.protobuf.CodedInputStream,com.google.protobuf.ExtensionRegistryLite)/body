@@ -19,11 +19,11 @@ default :
     }
 case 10:
 {
-    caffe.Caffe.FillerParameter.Builder subBuilder=null;
+    Caffe.FillerParameter.Builder subBuilder=null;
     if (((bitField0_ & 0x00000001) == 0x00000001)) {
       subBuilder=filler_.toBuilder();
     }
-    filler_=input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry);
+    filler_=input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry);
     if (subBuilder != null) {
       subBuilder.mergeFrom(filler_);
       filler_=subBuilder.buildPartial();

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.PoolingParameter result=new caffe.Caffe.PoolingParameter(this);
+  Caffe.PoolingParameter result=new Caffe.PoolingParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

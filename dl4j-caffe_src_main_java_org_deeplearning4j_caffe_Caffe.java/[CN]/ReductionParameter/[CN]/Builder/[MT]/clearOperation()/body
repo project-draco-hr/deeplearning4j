@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000001);
-  operation_=caffe.Caffe.ReductionParameter.ReductionOp.SUM;
+  operation_=Caffe.ReductionParameter.ReductionOp.SUM;
   onChanged();
   return this;
 }

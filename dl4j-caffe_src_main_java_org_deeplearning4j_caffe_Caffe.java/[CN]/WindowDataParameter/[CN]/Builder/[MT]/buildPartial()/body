@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.WindowDataParameter result=new caffe.Caffe.WindowDataParameter(this);
+  Caffe.WindowDataParameter result=new Caffe.WindowDataParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

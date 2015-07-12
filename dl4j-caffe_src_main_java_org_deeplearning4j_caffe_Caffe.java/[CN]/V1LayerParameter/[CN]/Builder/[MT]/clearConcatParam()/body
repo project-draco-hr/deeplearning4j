@@ -1,6 +1,6 @@
 {
   if (concatParamBuilder_ == null) {
-    concatParam_=caffe.Caffe.ConcatParameter.getDefaultInstance();
+    concatParam_=Caffe.ConcatParameter.getDefaultInstance();
     onChanged();
   }
  else {

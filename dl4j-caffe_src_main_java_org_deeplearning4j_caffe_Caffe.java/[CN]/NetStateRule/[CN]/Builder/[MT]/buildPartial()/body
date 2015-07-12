@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.NetStateRule result=new caffe.Caffe.NetStateRule(this);
+  Caffe.NetStateRule result=new Caffe.NetStateRule(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

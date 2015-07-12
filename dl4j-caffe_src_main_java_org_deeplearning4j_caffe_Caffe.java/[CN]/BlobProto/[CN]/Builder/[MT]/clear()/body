@@ -1,7 +1,7 @@
 {
   super.clear();
   if (shapeBuilder_ == null) {
-    shape_=caffe.Caffe.BlobShape.getDefaultInstance();
+    shape_=Caffe.BlobShape.getDefaultInstance();
   }
  else {
     shapeBuilder_.clear();

@@ -1,6 +1,6 @@
 {
   if (flattenParamBuilder_ == null) {
-    flattenParam_=caffe.Caffe.FlattenParameter.getDefaultInstance();
+    flattenParam_=Caffe.FlattenParameter.getDefaultInstance();
     onChanged();
   }
  else {

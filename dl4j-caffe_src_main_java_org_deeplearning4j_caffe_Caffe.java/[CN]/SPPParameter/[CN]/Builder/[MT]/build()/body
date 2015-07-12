@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.SPPParameter result=buildPartial();
+  Caffe.SPPParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

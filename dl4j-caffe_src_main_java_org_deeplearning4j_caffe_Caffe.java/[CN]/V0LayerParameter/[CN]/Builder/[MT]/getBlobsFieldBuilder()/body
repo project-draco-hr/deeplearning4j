@@ -1,6 +1,6 @@
 {
   if (blobsBuilder_ == null) {
-    blobsBuilder_=new com.google.protobuf.RepeatedFieldBuilder<caffe.Caffe.BlobProto,caffe.Caffe.BlobProto.Builder,caffe.Caffe.BlobProtoOrBuilder>(blobs_,((bitField0_ & 0x00400000) == 0x00400000),getParentForChildren(),isClean());
+    blobsBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.BlobProto,Caffe.BlobProto.Builder,Caffe.BlobProtoOrBuilder>(blobs_,((bitField0_ & 0x00400000) == 0x00400000),getParentForChildren(),isClean());
     blobs_=null;
   }
   return blobsBuilder_;

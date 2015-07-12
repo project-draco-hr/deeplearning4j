@@ -27,10 +27,10 @@ case 10:
 case 18:
 {
   if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
-    layers_=new java.util.ArrayList<caffe.Caffe.V1LayerParameter>();
+    layers_=new java.util.ArrayList<Caffe.V1LayerParameter>();
     mutable_bitField0_|=0x00000100;
   }
-  layers_.add(input.readMessage(caffe.Caffe.V1LayerParameter.PARSER,extensionRegistry));
+  layers_.add(input.readMessage(Caffe.V1LayerParameter.PARSER,extensionRegistry));
   break;
 }
 case 26:
@@ -46,7 +46,7 @@ break;
 case 32:
 {
 if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-inputDim_=new java.util.ArrayList<Integer>();
+inputDim_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000008;
 }
 inputDim_.add(input.readInt32());
@@ -57,7 +57,7 @@ case 34:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000008) == 0x00000008) && input.getBytesUntilLimit() > 0) {
-inputDim_=new java.util.ArrayList<Integer>();
+inputDim_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000008;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -74,11 +74,11 @@ break;
 }
 case 50:
 {
-caffe.Caffe.NetState.Builder subBuilder=null;
+Caffe.NetState.Builder subBuilder=null;
 if (((bitField0_ & 0x00000004) == 0x00000004)) {
 subBuilder=state_.toBuilder();
 }
-state_=input.readMessage(caffe.Caffe.NetState.PARSER,extensionRegistry);
+state_=input.readMessage(Caffe.NetState.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(state_);
 state_=subBuilder.buildPartial();
@@ -95,19 +95,19 @@ break;
 case 66:
 {
 if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-inputShape_=new java.util.ArrayList<caffe.Caffe.BlobShape>();
+inputShape_=new java.util.ArrayList<Caffe.BlobShape>();
 mutable_bitField0_|=0x00000004;
 }
-inputShape_.add(input.readMessage(caffe.Caffe.BlobShape.PARSER,extensionRegistry));
+inputShape_.add(input.readMessage(Caffe.BlobShape.PARSER,extensionRegistry));
 break;
 }
 case 802:
 {
 if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
-layer_=new java.util.ArrayList<caffe.Caffe.LayerParameter>();
+layer_=new java.util.ArrayList<Caffe.LayerParameter>();
 mutable_bitField0_|=0x00000080;
 }
-layer_.add(input.readMessage(caffe.Caffe.LayerParameter.PARSER,extensionRegistry));
+layer_.add(input.readMessage(Caffe.LayerParameter.PARSER,extensionRegistry));
 break;
 }
 }

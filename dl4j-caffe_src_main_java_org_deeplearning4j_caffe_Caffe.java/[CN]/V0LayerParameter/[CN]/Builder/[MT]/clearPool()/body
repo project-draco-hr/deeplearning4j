@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000400);
-  pool_=caffe.Caffe.V0LayerParameter.PoolMethod.MAX;
+  pool_=Caffe.V0LayerParameter.PoolMethod.MAX;
   onChanged();
   return this;
 }

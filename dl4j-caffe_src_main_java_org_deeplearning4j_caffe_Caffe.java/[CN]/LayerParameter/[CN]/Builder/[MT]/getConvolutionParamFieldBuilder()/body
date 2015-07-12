@@ -1,6 +1,6 @@
 {
   if (convolutionParamBuilder_ == null) {
-    convolutionParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ConvolutionParameter,caffe.Caffe.ConvolutionParameter.Builder,caffe.Caffe.ConvolutionParameterOrBuilder>(getConvolutionParam(),getParentForChildren(),isClean());
+    convolutionParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ConvolutionParameter,Caffe.ConvolutionParameter.Builder,Caffe.ConvolutionParameterOrBuilder>(getConvolutionParam(),getParentForChildren(),isClean());
     convolutionParam_=null;
   }
   return convolutionParamBuilder_;

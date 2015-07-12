@@ -1,6 +1,6 @@
 {
   if (weightFillerBuilder_ == null) {
-    weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    weightFiller_=Caffe.FillerParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -33,10 +33,10 @@ case 18:
 case 26:
 {
 if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-  history_=new java.util.ArrayList<caffe.Caffe.BlobProto>();
+  history_=new java.util.ArrayList<Caffe.BlobProto>();
   mutable_bitField0_|=0x00000004;
 }
-history_.add(input.readMessage(caffe.Caffe.BlobProto.PARSER,extensionRegistry));
+history_.add(input.readMessage(Caffe.BlobProto.PARSER,extensionRegistry));
 break;
 }
 case 32:

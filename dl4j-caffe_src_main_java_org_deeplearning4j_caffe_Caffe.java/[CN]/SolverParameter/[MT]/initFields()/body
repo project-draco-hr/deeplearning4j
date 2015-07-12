@@ -1,11 +1,11 @@
 {
   net_="";
-  netParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+  netParam_=Caffe.NetParameter.getDefaultInstance();
   trainNet_="";
   testNet_=com.google.protobuf.LazyStringArrayList.EMPTY;
-  trainNetParam_=caffe.Caffe.NetParameter.getDefaultInstance();
+  trainNetParam_=Caffe.NetParameter.getDefaultInstance();
   testNetParam_=java.util.Collections.emptyList();
-  trainState_=caffe.Caffe.NetState.getDefaultInstance();
+  trainState_=Caffe.NetState.getDefaultInstance();
   testState_=java.util.Collections.emptyList();
   testIter_=java.util.Collections.emptyList();
   testInterval_=0;
@@ -28,10 +28,10 @@
   snapshot_=0;
   snapshotPrefix_="";
   snapshotDiff_=false;
-  solverMode_=caffe.Caffe.SolverParameter.SolverMode.GPU;
+  solverMode_=Caffe.SolverParameter.SolverMode.GPU;
   deviceId_=0;
   randomSeed_=-1L;
-  solverType_=caffe.Caffe.SolverParameter.SolverType.SGD;
+  solverType_=Caffe.SolverParameter.SolverType.SGD;
   delta_=1e-08F;
   debugInfo_=false;
   snapshotAfterTrain_=true;

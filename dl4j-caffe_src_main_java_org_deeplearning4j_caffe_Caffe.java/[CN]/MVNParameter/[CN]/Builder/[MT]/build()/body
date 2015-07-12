@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.MVNParameter result=buildPartial();
+  Caffe.MVNParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

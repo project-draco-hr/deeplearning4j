@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.LogParameter result=buildPartial();
+  Caffe.LogParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

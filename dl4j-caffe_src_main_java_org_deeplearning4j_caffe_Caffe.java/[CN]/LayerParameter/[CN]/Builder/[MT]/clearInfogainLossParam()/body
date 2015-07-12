@@ -1,6 +1,6 @@
 {
   if (infogainLossParamBuilder_ == null) {
-    infogainLossParam_=caffe.Caffe.InfogainLossParameter.getDefaultInstance();
+    infogainLossParam_=Caffe.InfogainLossParameter.getDefaultInstance();
     onChanged();
   }
  else {

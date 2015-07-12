@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.NetParameter result=new caffe.Caffe.NetParameter(this);
+  Caffe.NetParameter result=new Caffe.NetParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ContrastiveLossParameter) {
-    return mergeFrom((caffe.Caffe.ContrastiveLossParameter)other);
+  if (other instanceof Caffe.ContrastiveLossParameter) {
+    return mergeFrom((Caffe.ContrastiveLossParameter)other);
   }
  else {
     super.mergeFrom(other);

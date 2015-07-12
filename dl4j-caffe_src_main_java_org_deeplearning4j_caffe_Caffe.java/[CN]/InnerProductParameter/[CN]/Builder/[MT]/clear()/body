@@ -5,14 +5,14 @@
   biasTerm_=true;
   bitField0_=(bitField0_ & ~0x00000002);
   if (weightFillerBuilder_ == null) {
-    weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    weightFiller_=Caffe.FillerParameter.getDefaultInstance();
   }
  else {
     weightFillerBuilder_.clear();
   }
   bitField0_=(bitField0_ & ~0x00000004);
   if (biasFillerBuilder_ == null) {
-    biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+    biasFiller_=Caffe.FillerParameter.getDefaultInstance();
   }
  else {
     biasFillerBuilder_.clear();

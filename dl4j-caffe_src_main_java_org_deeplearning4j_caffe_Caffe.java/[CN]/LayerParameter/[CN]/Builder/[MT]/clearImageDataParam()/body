@@ -1,6 +1,6 @@
 {
   if (imageDataParamBuilder_ == null) {
-    imageDataParam_=caffe.Caffe.ImageDataParameter.getDefaultInstance();
+    imageDataParam_=Caffe.ImageDataParameter.getDefaultInstance();
     onChanged();
   }
  else {

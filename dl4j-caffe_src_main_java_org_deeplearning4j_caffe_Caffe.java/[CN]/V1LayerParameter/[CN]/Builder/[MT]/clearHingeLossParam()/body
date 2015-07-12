@@ -1,6 +1,6 @@
 {
   if (hingeLossParamBuilder_ == null) {
-    hingeLossParam_=caffe.Caffe.HingeLossParameter.getDefaultInstance();
+    hingeLossParam_=Caffe.HingeLossParameter.getDefaultInstance();
     onChanged();
   }
  else {

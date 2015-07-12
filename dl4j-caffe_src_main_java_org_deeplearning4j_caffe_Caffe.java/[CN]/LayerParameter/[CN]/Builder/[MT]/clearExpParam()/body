@@ -1,6 +1,6 @@
 {
   if (expParamBuilder_ == null) {
-    expParam_=caffe.Caffe.ExpParameter.getDefaultInstance();
+    expParam_=Caffe.ExpParameter.getDefaultInstance();
     onChanged();
   }
  else {

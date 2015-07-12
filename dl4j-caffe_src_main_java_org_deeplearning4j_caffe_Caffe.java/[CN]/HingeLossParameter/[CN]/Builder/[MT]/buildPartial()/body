@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.HingeLossParameter result=new caffe.Caffe.HingeLossParameter(this);
+  Caffe.HingeLossParameter result=new Caffe.HingeLossParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.BlobProtoVector result=new caffe.Caffe.BlobProtoVector(this);
+  Caffe.BlobProtoVector result=new Caffe.BlobProtoVector(this);
   int from_bitField0_=bitField0_;
   if (blobsBuilder_ == null) {
     if (((bitField0_ & 0x00000001) == 0x00000001)) {

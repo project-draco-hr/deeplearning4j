@@ -20,10 +20,10 @@ default :
 case 10:
 {
     if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-      blobs_=new java.util.ArrayList<caffe.Caffe.BlobProto>();
+      blobs_=new java.util.ArrayList<Caffe.BlobProto>();
       mutable_bitField0_|=0x00000001;
     }
-    blobs_.add(input.readMessage(caffe.Caffe.BlobProto.PARSER,extensionRegistry));
+    blobs_.add(input.readMessage(Caffe.BlobProto.PARSER,extensionRegistry));
     break;
   }
 }

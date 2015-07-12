@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000002);
-  pool_=caffe.Caffe.SPPParameter.PoolMethod.MAX;
+  pool_=Caffe.SPPParameter.PoolMethod.MAX;
   onChanged();
   return this;
 }

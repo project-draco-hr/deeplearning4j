@@ -1,6 +1,6 @@
 {
   if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-    dataFiller_=new java.util.ArrayList<caffe.Caffe.FillerParameter>(dataFiller_);
+    dataFiller_=new java.util.ArrayList<Caffe.FillerParameter>(dataFiller_);
     bitField0_|=0x00000001;
   }
 }

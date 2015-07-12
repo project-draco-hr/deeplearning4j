@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.LogParameter) {
-    return mergeFrom((caffe.Caffe.LogParameter)other);
+  if (other instanceof Caffe.LogParameter) {
+    return mergeFrom((Caffe.LogParameter)other);
   }
  else {
     super.mergeFrom(other);

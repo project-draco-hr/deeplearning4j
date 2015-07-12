@@ -1,6 +1,6 @@
 {
   if (stateBuilder_ == null) {
-    state_=caffe.Caffe.NetState.getDefaultInstance();
+    state_=Caffe.NetState.getDefaultInstance();
     onChanged();
   }
  else {

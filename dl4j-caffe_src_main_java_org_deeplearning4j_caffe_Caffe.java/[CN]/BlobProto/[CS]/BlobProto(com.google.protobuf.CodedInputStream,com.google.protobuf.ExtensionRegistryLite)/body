@@ -44,7 +44,7 @@ break;
 case 45:
 {
 if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-data_=new java.util.ArrayList<Float>();
+data_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000002;
 }
 data_.add(input.readFloat());
@@ -55,7 +55,7 @@ case 42:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
-data_=new java.util.ArrayList<Float>();
+data_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000002;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -67,7 +67,7 @@ break;
 case 53:
 {
 if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-diff_=new java.util.ArrayList<Float>();
+diff_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000004;
 }
 diff_.add(input.readFloat());
@@ -78,7 +78,7 @@ case 50:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
-diff_=new java.util.ArrayList<Float>();
+diff_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000004;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -89,11 +89,11 @@ break;
 }
 case 58:
 {
-caffe.Caffe.BlobShape.Builder subBuilder=null;
+Caffe.BlobShape.Builder subBuilder=null;
 if (((bitField0_ & 0x00000001) == 0x00000001)) {
 subBuilder=shape_.toBuilder();
 }
-shape_=input.readMessage(caffe.Caffe.BlobShape.PARSER,extensionRegistry);
+shape_=input.readMessage(Caffe.BlobShape.PARSER,extensionRegistry);
 if (subBuilder != null) {
 subBuilder.mergeFrom(shape_);
 shape_=subBuilder.buildPartial();

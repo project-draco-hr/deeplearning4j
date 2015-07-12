@@ -1,6 +1,6 @@
 {
   if (dummyDataParamBuilder_ == null) {
-    dummyDataParam_=caffe.Caffe.DummyDataParameter.getDefaultInstance();
+    dummyDataParam_=Caffe.DummyDataParameter.getDefaultInstance();
     onChanged();
   }
  else {

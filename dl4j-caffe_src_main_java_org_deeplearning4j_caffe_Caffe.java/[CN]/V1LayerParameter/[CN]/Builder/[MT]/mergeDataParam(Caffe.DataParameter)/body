@@ -1,0 +1,16 @@
+{
+  if (dataParamBuilder_ == null) {
+    if (((bitField0_ & 0x00020000) == 0x00020000) && dataParam_ != Caffe.DataParameter.getDefaultInstance()) {
+      dataParam_=Caffe.DataParameter.newBuilder(dataParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      dataParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    dataParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00020000;
+  return this;
+}

@@ -50,7 +50,7 @@ break;
 case 53:
 {
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-floatData_=new java.util.ArrayList<Float>();
+floatData_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000020;
 }
 floatData_.add(input.readFloat());
@@ -61,7 +61,7 @@ case 50:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
-floatData_=new java.util.ArrayList<Float>();
+floatData_=new java.util.ArrayList<java.lang.Float>();
 mutable_bitField0_|=0x00000020;
 }
 while (input.getBytesUntilLimit() > 0) {

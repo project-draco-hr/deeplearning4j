@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.NetStateRule parsedMessage=null;
+  Caffe.NetStateRule parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.NetStateRule)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.NetStateRule)e.getUnfinishedMessage();
     throw e;
   }
  finally {

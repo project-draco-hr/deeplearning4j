@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000010);
-  phase_=caffe.Caffe.Phase.TRAIN;
+  phase_=Caffe.Phase.TRAIN;
   onChanged();
   return this;
 }

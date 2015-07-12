@@ -1,6 +1,6 @@
 {
   if (reductionParamBuilder_ == null) {
-    reductionParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ReductionParameter,caffe.Caffe.ReductionParameter.Builder,caffe.Caffe.ReductionParameterOrBuilder>(getReductionParam(),getParentForChildren(),isClean());
+    reductionParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ReductionParameter,Caffe.ReductionParameter.Builder,Caffe.ReductionParameterOrBuilder>(getReductionParam(),getParentForChildren(),isClean());
     reductionParam_=null;
   }
   return reductionParamBuilder_;

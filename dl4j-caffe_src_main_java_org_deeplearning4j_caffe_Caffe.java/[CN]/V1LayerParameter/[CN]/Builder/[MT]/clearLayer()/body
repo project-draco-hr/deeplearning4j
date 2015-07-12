@@ -1,6 +1,6 @@
 {
   if (layerBuilder_ == null) {
-    layer_=caffe.Caffe.V0LayerParameter.getDefaultInstance();
+    layer_=Caffe.V0LayerParameter.getDefaultInstance();
     onChanged();
   }
  else {

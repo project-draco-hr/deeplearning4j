@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.FillerParameter result=new caffe.Caffe.FillerParameter(this);
+  Caffe.FillerParameter result=new Caffe.FillerParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

@@ -1,6 +1,6 @@
 {
   if (powerParamBuilder_ == null) {
-    powerParam_=caffe.Caffe.PowerParameter.getDefaultInstance();
+    powerParam_=Caffe.PowerParameter.getDefaultInstance();
     onChanged();
   }
  else {

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.FlattenParameter result=buildPartial();
+  Caffe.FlattenParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

@@ -20,7 +20,7 @@ default :
 case 8:
 {
     int rawValue=input.readEnum();
-    caffe.Caffe.EltwiseParameter.EltwiseOp value=caffe.Caffe.EltwiseParameter.EltwiseOp.valueOf(rawValue);
+    Caffe.EltwiseParameter.EltwiseOp value=Caffe.EltwiseParameter.EltwiseOp.valueOf(rawValue);
     if (value == null) {
       unknownFields.mergeVarintField(1,rawValue);
     }
@@ -33,7 +33,7 @@ case 8:
 case 21:
 {
   if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-    coeff_=new java.util.ArrayList<Float>();
+    coeff_=new java.util.ArrayList<java.lang.Float>();
     mutable_bitField0_|=0x00000002;
   }
   coeff_.add(input.readFloat());
@@ -44,7 +44,7 @@ case 18:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
-  coeff_=new java.util.ArrayList<Float>();
+  coeff_=new java.util.ArrayList<java.lang.Float>();
   mutable_bitField0_|=0x00000002;
 }
 while (input.getBytesUntilLimit() > 0) {

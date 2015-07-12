@@ -16,7 +16,7 @@
   forceBackward_=false;
   bitField0_=(bitField0_ & ~0x00000010);
   if (stateBuilder_ == null) {
-    state_=caffe.Caffe.NetState.getDefaultInstance();
+    state_=Caffe.NetState.getDefaultInstance();
   }
  else {
     stateBuilder_.clear();

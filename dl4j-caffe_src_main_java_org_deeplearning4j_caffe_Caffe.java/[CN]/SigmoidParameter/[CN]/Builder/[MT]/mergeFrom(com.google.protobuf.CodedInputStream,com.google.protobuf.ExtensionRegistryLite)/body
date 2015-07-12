@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.SigmoidParameter parsedMessage=null;
+  Caffe.SigmoidParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.SigmoidParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.SigmoidParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

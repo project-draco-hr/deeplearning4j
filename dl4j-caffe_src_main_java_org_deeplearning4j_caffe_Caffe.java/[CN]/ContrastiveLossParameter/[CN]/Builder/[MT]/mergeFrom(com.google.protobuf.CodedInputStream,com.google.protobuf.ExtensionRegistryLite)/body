@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.ContrastiveLossParameter parsedMessage=null;
+  Caffe.ContrastiveLossParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.ContrastiveLossParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.ContrastiveLossParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

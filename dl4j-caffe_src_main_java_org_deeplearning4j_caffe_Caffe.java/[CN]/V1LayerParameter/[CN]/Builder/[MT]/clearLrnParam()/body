@@ -1,6 +1,6 @@
 {
   if (lrnParamBuilder_ == null) {
-    lrnParam_=caffe.Caffe.LRNParameter.getDefaultInstance();
+    lrnParam_=Caffe.LRNParameter.getDefaultInstance();
     onChanged();
   }
  else {

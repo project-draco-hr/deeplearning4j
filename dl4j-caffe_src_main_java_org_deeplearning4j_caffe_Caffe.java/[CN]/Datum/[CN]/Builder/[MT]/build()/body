@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.Datum result=buildPartial();
+  Caffe.Datum result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

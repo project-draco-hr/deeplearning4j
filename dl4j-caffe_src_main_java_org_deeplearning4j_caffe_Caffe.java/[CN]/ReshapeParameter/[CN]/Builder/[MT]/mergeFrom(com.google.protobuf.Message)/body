@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ReshapeParameter) {
-    return mergeFrom((caffe.Caffe.ReshapeParameter)other);
+  if (other instanceof Caffe.ReshapeParameter) {
+    return mergeFrom((Caffe.ReshapeParameter)other);
   }
  else {
     super.mergeFrom(other);

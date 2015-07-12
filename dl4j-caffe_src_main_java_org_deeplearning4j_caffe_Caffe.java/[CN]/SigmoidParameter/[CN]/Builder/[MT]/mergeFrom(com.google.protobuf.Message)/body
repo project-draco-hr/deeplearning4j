@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.SigmoidParameter) {
-    return mergeFrom((caffe.Caffe.SigmoidParameter)other);
+  if (other instanceof Caffe.SigmoidParameter) {
+    return mergeFrom((Caffe.SigmoidParameter)other);
   }
  else {
     super.mergeFrom(other);

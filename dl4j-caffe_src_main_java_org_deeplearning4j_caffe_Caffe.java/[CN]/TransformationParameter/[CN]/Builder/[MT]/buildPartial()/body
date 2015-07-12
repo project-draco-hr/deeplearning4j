@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.TransformationParameter result=new caffe.Caffe.TransformationParameter(this);
+  Caffe.TransformationParameter result=new Caffe.TransformationParameter(this);
   int from_bitField0_=bitField0_;
   int to_bitField0_=0;
   if (((from_bitField0_ & 0x00000001) == 0x00000001)) {

@@ -20,16 +20,16 @@ default :
 case 10:
 {
     if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-      dataFiller_=new java.util.ArrayList<caffe.Caffe.FillerParameter>();
+      dataFiller_=new java.util.ArrayList<Caffe.FillerParameter>();
       mutable_bitField0_|=0x00000001;
     }
-    dataFiller_.add(input.readMessage(caffe.Caffe.FillerParameter.PARSER,extensionRegistry));
+    dataFiller_.add(input.readMessage(Caffe.FillerParameter.PARSER,extensionRegistry));
     break;
   }
 case 16:
 {
   if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-    num_=new java.util.ArrayList<Integer>();
+    num_=new java.util.ArrayList<java.lang.Integer>();
     mutable_bitField0_|=0x00000004;
   }
   num_.add(input.readUInt32());
@@ -40,7 +40,7 @@ case 18:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
-  num_=new java.util.ArrayList<Integer>();
+  num_=new java.util.ArrayList<java.lang.Integer>();
   mutable_bitField0_|=0x00000004;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -52,7 +52,7 @@ break;
 case 24:
 {
 if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-channels_=new java.util.ArrayList<Integer>();
+channels_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000008;
 }
 channels_.add(input.readUInt32());
@@ -63,7 +63,7 @@ case 26:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000008) == 0x00000008) && input.getBytesUntilLimit() > 0) {
-channels_=new java.util.ArrayList<Integer>();
+channels_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000008;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -75,7 +75,7 @@ break;
 case 32:
 {
 if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-height_=new java.util.ArrayList<Integer>();
+height_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000010;
 }
 height_.add(input.readUInt32());
@@ -86,7 +86,7 @@ case 34:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
-height_=new java.util.ArrayList<Integer>();
+height_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000010;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -98,7 +98,7 @@ break;
 case 40:
 {
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-width_=new java.util.ArrayList<Integer>();
+width_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000020;
 }
 width_.add(input.readUInt32());
@@ -109,7 +109,7 @@ case 42:
 int length=input.readRawVarint32();
 int limit=input.pushLimit(length);
 if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
-width_=new java.util.ArrayList<Integer>();
+width_=new java.util.ArrayList<java.lang.Integer>();
 mutable_bitField0_|=0x00000020;
 }
 while (input.getBytesUntilLimit() > 0) {
@@ -121,10 +121,10 @@ break;
 case 50:
 {
 if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-shape_=new java.util.ArrayList<caffe.Caffe.BlobShape>();
+shape_=new java.util.ArrayList<Caffe.BlobShape>();
 mutable_bitField0_|=0x00000002;
 }
-shape_.add(input.readMessage(caffe.Caffe.BlobShape.PARSER,extensionRegistry));
+shape_.add(input.readMessage(Caffe.BlobShape.PARSER,extensionRegistry));
 break;
 }
 }

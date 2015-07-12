@@ -1,0 +1,16 @@
+{
+  if (shapeBuilder_ == null) {
+    if (((bitField0_ & 0x00000001) == 0x00000001) && shape_ != Caffe.BlobShape.getDefaultInstance()) {
+      shape_=Caffe.BlobShape.newBuilder(shape_).mergeFrom(value).buildPartial();
+    }
+ else {
+      shape_=value;
+    }
+    onChanged();
+  }
+ else {
+    shapeBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00000001;
+  return this;
+}

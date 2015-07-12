@@ -1,6 +1,6 @@
 {
   if (windowDataParamBuilder_ == null) {
-    windowDataParam_=caffe.Caffe.WindowDataParameter.getDefaultInstance();
+    windowDataParam_=Caffe.WindowDataParameter.getDefaultInstance();
     onChanged();
   }
  else {

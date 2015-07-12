@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.ArgMaxParameter result=buildPartial();
+  Caffe.ArgMaxParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

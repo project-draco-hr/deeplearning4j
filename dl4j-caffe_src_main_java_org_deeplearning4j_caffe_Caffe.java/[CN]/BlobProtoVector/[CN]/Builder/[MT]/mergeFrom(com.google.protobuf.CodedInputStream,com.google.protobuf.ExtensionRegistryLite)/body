@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.BlobProtoVector parsedMessage=null;
+  Caffe.BlobProtoVector parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.BlobProtoVector)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.BlobProtoVector)e.getUnfinishedMessage();
     throw e;
   }
  finally {

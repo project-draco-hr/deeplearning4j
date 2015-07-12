@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.V1LayerParameter) {
-    return mergeFrom((caffe.Caffe.V1LayerParameter)other);
+  if (other instanceof Caffe.V1LayerParameter) {
+    return mergeFrom((Caffe.V1LayerParameter)other);
   }
  else {
     super.mergeFrom(other);

@@ -1,6 +1,6 @@
 {
   if (shapeBuilder_ == null) {
-    shapeBuilder_=new com.google.protobuf.RepeatedFieldBuilder<caffe.Caffe.BlobShape,caffe.Caffe.BlobShape.Builder,caffe.Caffe.BlobShapeOrBuilder>(shape_,((bitField0_ & 0x00000002) == 0x00000002),getParentForChildren(),isClean());
+    shapeBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.BlobShape,Caffe.BlobShape.Builder,Caffe.BlobShapeOrBuilder>(shape_,((bitField0_ & 0x00000002) == 0x00000002),getParentForChildren(),isClean());
     shape_=null;
   }
   return shapeBuilder_;

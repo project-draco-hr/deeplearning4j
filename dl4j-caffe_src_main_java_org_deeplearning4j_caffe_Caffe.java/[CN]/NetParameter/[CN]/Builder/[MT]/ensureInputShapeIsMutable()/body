@@ -1,6 +1,6 @@
 {
   if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-    inputShape_=new java.util.ArrayList<caffe.Caffe.BlobShape>(inputShape_);
+    inputShape_=new java.util.ArrayList<Caffe.BlobShape>(inputShape_);
     bitField0_|=0x00000004;
   }
 }

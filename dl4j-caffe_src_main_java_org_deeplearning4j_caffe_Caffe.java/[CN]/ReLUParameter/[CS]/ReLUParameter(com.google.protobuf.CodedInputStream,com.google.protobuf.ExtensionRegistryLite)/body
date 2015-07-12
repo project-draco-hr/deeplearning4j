@@ -26,7 +26,7 @@ case 13:
 case 16:
 {
   int rawValue=input.readEnum();
-  caffe.Caffe.ReLUParameter.Engine value=caffe.Caffe.ReLUParameter.Engine.valueOf(rawValue);
+  Caffe.ReLUParameter.Engine value=Caffe.ReLUParameter.Engine.valueOf(rawValue);
   if (value == null) {
     unknownFields.mergeVarintField(2,rawValue);
   }

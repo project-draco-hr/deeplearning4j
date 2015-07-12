@@ -1,6 +1,6 @@
 {
   if (sppParamBuilder_ == null) {
-    sppParam_=caffe.Caffe.SPPParameter.getDefaultInstance();
+    sppParam_=Caffe.SPPParameter.getDefaultInstance();
     onChanged();
   }
  else {

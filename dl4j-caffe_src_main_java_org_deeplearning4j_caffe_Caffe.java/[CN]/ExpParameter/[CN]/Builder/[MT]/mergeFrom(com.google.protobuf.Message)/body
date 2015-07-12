@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ExpParameter) {
-    return mergeFrom((caffe.Caffe.ExpParameter)other);
+  if (other instanceof Caffe.ExpParameter) {
+    return mergeFrom((Caffe.ExpParameter)other);
   }
  else {
     super.mergeFrom(other);

@@ -6,5 +6,5 @@
   mean_=0F;
   std_=1F;
   sparse_=-1;
-  varianceNorm_=caffe.Caffe.FillerParameter.VarianceNorm.FAN_IN;
+  varianceNorm_=Caffe.FillerParameter.VarianceNorm.FAN_IN;
 }

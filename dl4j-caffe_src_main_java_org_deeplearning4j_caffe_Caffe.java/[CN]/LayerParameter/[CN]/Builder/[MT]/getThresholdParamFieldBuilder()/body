@@ -1,6 +1,6 @@
 {
   if (thresholdParamBuilder_ == null) {
-    thresholdParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.ThresholdParameter,caffe.Caffe.ThresholdParameter.Builder,caffe.Caffe.ThresholdParameterOrBuilder>(getThresholdParam(),getParentForChildren(),isClean());
+    thresholdParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ThresholdParameter,Caffe.ThresholdParameter.Builder,Caffe.ThresholdParameterOrBuilder>(getThresholdParam(),getParentForChildren(),isClean());
     thresholdParam_=null;
   }
   return thresholdParamBuilder_;

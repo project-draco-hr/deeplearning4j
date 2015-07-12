@@ -1,6 +1,6 @@
 {
   bitField0_=(bitField0_ & ~0x00000080);
-  varianceNorm_=caffe.Caffe.FillerParameter.VarianceNorm.FAN_IN;
+  varianceNorm_=Caffe.FillerParameter.VarianceNorm.FAN_IN;
   onChanged();
   return this;
 }

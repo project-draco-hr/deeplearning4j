@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.PReLUParameter) {
-    return mergeFrom((caffe.Caffe.PReLUParameter)other);
+  if (other instanceof Caffe.PReLUParameter) {
+    return mergeFrom((Caffe.PReLUParameter)other);
   }
  else {
     super.mergeFrom(other);

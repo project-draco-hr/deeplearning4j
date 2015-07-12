@@ -1,10 +1,10 @@
 {
-  caffe.Caffe.HDF5DataParameter parsedMessage=null;
+  Caffe.HDF5DataParameter parsedMessage=null;
   try {
     parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
   }
  catch (  com.google.protobuf.InvalidProtocolBufferException e) {
-    parsedMessage=(caffe.Caffe.HDF5DataParameter)e.getUnfinishedMessage();
+    parsedMessage=(Caffe.HDF5DataParameter)e.getUnfinishedMessage();
     throw e;
   }
  finally {

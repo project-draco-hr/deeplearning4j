@@ -1,6 +1,6 @@
 {
   if (softmaxParamBuilder_ == null) {
-    softmaxParam_=caffe.Caffe.SoftmaxParameter.getDefaultInstance();
+    softmaxParam_=Caffe.SoftmaxParameter.getDefaultInstance();
     onChanged();
   }
  else {

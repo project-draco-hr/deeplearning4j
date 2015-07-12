@@ -3,13 +3,13 @@
   type_="";
   numOutput_=0;
   biasterm_=true;
-  weightFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
-  biasFiller_=caffe.Caffe.FillerParameter.getDefaultInstance();
+  weightFiller_=Caffe.FillerParameter.getDefaultInstance();
+  biasFiller_=Caffe.FillerParameter.getDefaultInstance();
   pad_=0;
   kernelsize_=0;
   group_=1;
   stride_=1;
-  pool_=caffe.Caffe.V0LayerParameter.PoolMethod.MAX;
+  pool_=Caffe.V0LayerParameter.PoolMethod.MAX;
   dropoutRatio_=0.5F;
   localSize_=5;
   alpha_=1F;
@@ -36,5 +36,5 @@
   newWidth_=0;
   shuffleImages_=false;
   concatDim_=1;
-  hdf5OutputParam_=caffe.Caffe.HDF5OutputParameter.getDefaultInstance();
+  hdf5OutputParam_=Caffe.HDF5OutputParameter.getDefaultInstance();
 }

@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.BlobShape result=buildPartial();
+  Caffe.BlobShape result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }

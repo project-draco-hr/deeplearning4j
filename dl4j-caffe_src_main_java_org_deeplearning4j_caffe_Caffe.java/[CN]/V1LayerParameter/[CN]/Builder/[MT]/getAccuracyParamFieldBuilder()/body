@@ -1,6 +1,6 @@
 {
   if (accuracyParamBuilder_ == null) {
-    accuracyParamBuilder_=new com.google.protobuf.SingleFieldBuilder<caffe.Caffe.AccuracyParameter,caffe.Caffe.AccuracyParameter.Builder,caffe.Caffe.AccuracyParameterOrBuilder>(getAccuracyParam(),getParentForChildren(),isClean());
+    accuracyParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.AccuracyParameter,Caffe.AccuracyParameter.Builder,Caffe.AccuracyParameterOrBuilder>(getAccuracyParam(),getParentForChildren(),isClean());
     accuracyParam_=null;
   }
   return accuracyParamBuilder_;

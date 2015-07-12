@@ -1,6 +1,6 @@
 {
-  if (other instanceof caffe.Caffe.ImageDataParameter) {
-    return mergeFrom((caffe.Caffe.ImageDataParameter)other);
+  if (other instanceof Caffe.ImageDataParameter) {
+    return mergeFrom((Caffe.ImageDataParameter)other);
   }
  else {
     super.mergeFrom(other);

@@ -1,6 +1,6 @@
 {
   if (transformParamBuilder_ == null) {
-    transformParam_=caffe.Caffe.TransformationParameter.getDefaultInstance();
+    transformParam_=Caffe.TransformationParameter.getDefaultInstance();
     onChanged();
   }
  else {

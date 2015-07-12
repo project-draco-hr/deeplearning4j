@@ -1,5 +1,5 @@
 {
-  caffe.Caffe.V0LayerParameter result=buildPartial();
+  Caffe.V0LayerParameter result=buildPartial();
   if (!result.isInitialized()) {
     throw newUninitializedMessageException(result);
   }
