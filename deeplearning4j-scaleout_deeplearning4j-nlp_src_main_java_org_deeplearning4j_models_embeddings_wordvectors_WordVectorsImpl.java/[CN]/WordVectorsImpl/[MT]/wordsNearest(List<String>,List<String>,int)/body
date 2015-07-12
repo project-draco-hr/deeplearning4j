@@ -19,25 +19,17 @@
     INDArray syn0=l.getSyn0();
     INDArray weights=Transforms.unitVec(mean);
     INDArray distances=syn0.mmul(weights.transpose());
-    INDArray[] sorted=Nd4j.sortWithIndices(distances,0,false);
+    INDArray[] sorted=getTopN(distances.vectorAlongDimension(0,0),top + union.size());
     INDArray sort=sorted[0];
     List<String> ret=new ArrayList<>();
-    if (top > sort.length())     top=sort.length();
-    int end=top;
-    for (int i=0; i < end; i++) {
+    for (int i=0; i < sort.length(); i++) {
       String word=vocab().wordAtIndex(sort.getInt(i));
-      if (union.contains(word)) {
-        end++;
-        if (end >= sort.length())         break;
-        continue;
+      if (word != null && !word.equals("UNK") && !word.equals("STOP") && !union.contains(word)) {
+        ret.add(word);
+        if (ret.size() >= top) {
+          break;
+        }
       }
-      String add=vocab().wordAtIndex(sort.getInt(i));
-      if (add == null || add.equals("UNK") || add.equals("STOP")) {
-        end++;
-        if (end >= sort.length())         break;
-        continue;
-      }
-      ret.add(vocab().wordAtIndex(sort.getInt(i)));
     }
     return ret;
   }

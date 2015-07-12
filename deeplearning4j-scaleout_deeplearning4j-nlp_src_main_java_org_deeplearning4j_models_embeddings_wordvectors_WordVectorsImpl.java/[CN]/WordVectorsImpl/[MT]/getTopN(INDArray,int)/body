@@ -1,0 +1,31 @@
+{
+  Comparator comparator=new Comparator<Double[]>(){
+    @Override public int compare(    Double[] o1,    Double[] o2){
+      return Double.compare(o1[0],o2[0]);
+    }
+  }
+;
+  PriorityQueue<Double[]> queue=new PriorityQueue(comparator);
+  for (int j=0; j < vec.length(); j++) {
+    final Double[] pair=new Double[]{vec.getDouble(j),(double)j};
+    if (queue.size() < N) {
+      queue.add(pair);
+    }
+ else {
+      Double[] head=queue.peek();
+      if (comparator.compare(pair,head) > 0) {
+        queue.poll();
+        queue.add(pair);
+      }
+    }
+  }
+  vec=Nd4j.create(queue.size());
+  INDArray indexVector=Nd4j.create(queue.size());
+  int index=queue.size();
+  while (!queue.isEmpty()) {
+    Double[] pair=queue.poll();
+    vec.putScalar(--index,pair[0]);
+    indexVector.putScalar(index,pair[1]);
+  }
+  return new INDArray[]{indexVector,vec};
+}
