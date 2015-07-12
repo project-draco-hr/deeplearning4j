@@ -1,0 +1,11 @@
+{
+  if (hdf5DataParamBuilder_ == null) {
+    hdf5DataParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    hdf5DataParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x01000000;
+  return this;
+}

@@ -1,0 +1,14 @@
+{
+  if (thresholdParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    thresholdParam_=value;
+    onChanged();
+  }
+ else {
+    thresholdParamBuilder_.setMessage(value);
+  }
+  bitField1_|=0x00000040;
+  return this;
+}

@@ -1,0 +1,7 @@
+{
+  if (eltwiseParamBuilder_ == null) {
+    eltwiseParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.EltwiseParameter,Caffe.EltwiseParameter.Builder,Caffe.EltwiseParameterOrBuilder>(getEltwiseParam(),getParentForChildren(),isClean());
+    eltwiseParam_=null;
+  }
+  return eltwiseParamBuilder_;
+}

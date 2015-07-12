@@ -1,0 +1,8 @@
+{
+  if (convolutionParamBuilder_ == null) {
+    return convolutionParam_;
+  }
+ else {
+    return convolutionParamBuilder_.getMessage();
+  }
+}

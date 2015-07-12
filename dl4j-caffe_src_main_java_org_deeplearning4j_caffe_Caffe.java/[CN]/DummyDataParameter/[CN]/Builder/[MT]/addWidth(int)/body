@@ -1,0 +1,6 @@
+{
+  ensureWidthIsMutable();
+  width_.add(value);
+  onChanged();
+  return this;
+}

@@ -1,0 +1,8 @@
+{
+  if (pythonParamBuilder_ != null) {
+    return pythonParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return pythonParam_;
+  }
+}

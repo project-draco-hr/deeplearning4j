@@ -1,0 +1,28 @@
+{
+  super.clear();
+  pool_=Caffe.PoolingParameter.PoolMethod.MAX;
+  bitField0_=(bitField0_ & ~0x00000001);
+  pad_=0;
+  bitField0_=(bitField0_ & ~0x00000002);
+  padH_=0;
+  bitField0_=(bitField0_ & ~0x00000004);
+  padW_=0;
+  bitField0_=(bitField0_ & ~0x00000008);
+  kernelSize_=0;
+  bitField0_=(bitField0_ & ~0x00000010);
+  kernelH_=0;
+  bitField0_=(bitField0_ & ~0x00000020);
+  kernelW_=0;
+  bitField0_=(bitField0_ & ~0x00000040);
+  stride_=1;
+  bitField0_=(bitField0_ & ~0x00000080);
+  strideH_=0;
+  bitField0_=(bitField0_ & ~0x00000100);
+  strideW_=0;
+  bitField0_=(bitField0_ & ~0x00000200);
+  engine_=Caffe.PoolingParameter.Engine.DEFAULT;
+  bitField0_=(bitField0_ & ~0x00000400);
+  globalPooling_=false;
+  bitField0_=(bitField0_ & ~0x00000800);
+  return this;
+}

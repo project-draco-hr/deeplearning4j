@@ -1,0 +1,7 @@
+{
+  if (dropoutParamBuilder_ == null) {
+    dropoutParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.DropoutParameter,Caffe.DropoutParameter.Builder,Caffe.DropoutParameterOrBuilder>(getDropoutParam(),getParentForChildren(),isClean());
+    dropoutParam_=null;
+  }
+  return dropoutParamBuilder_;
+}

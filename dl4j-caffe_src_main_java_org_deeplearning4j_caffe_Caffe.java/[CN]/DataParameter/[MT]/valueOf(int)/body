@@ -1,0 +1,10 @@
+{
+switch (value) {
+case 0:
+    return LEVELDB;
+case 1:
+  return LMDB;
+default :
+return null;
+}
+}

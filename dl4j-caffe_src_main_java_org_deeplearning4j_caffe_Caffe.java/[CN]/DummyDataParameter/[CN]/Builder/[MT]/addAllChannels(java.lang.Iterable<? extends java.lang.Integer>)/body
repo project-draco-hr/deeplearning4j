@@ -1,0 +1,6 @@
+{
+  ensureChannelsIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,channels_);
+  onChanged();
+  return this;
+}

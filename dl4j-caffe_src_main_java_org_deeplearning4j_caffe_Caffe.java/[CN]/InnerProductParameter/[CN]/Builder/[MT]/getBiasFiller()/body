@@ -1,0 +1,8 @@
+{
+  if (biasFillerBuilder_ == null) {
+    return biasFiller_;
+  }
+ else {
+    return biasFillerBuilder_.getMessage();
+  }
+}

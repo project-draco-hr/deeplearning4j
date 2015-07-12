@@ -1,0 +1,6 @@
+{
+  ensureMeanValueIsMutable();
+  meanValue_.add(value);
+  onChanged();
+  return this;
+}

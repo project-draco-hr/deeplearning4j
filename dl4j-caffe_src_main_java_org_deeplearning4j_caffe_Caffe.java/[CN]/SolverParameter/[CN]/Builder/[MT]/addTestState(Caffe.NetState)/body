@@ -1,0 +1,14 @@
+{
+  if (testStateBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureTestStateIsMutable();
+    testState_.add(value);
+    onChanged();
+  }
+ else {
+    testStateBuilder_.addMessage(value);
+  }
+  return this;
+}

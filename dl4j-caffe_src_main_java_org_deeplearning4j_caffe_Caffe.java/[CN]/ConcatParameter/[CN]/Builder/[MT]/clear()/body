@@ -1,0 +1,8 @@
+{
+  super.clear();
+  axis_=1;
+  bitField0_=(bitField0_ & ~0x00000001);
+  concatDim_=1;
+  bitField0_=(bitField0_ & ~0x00000002);
+  return this;
+}

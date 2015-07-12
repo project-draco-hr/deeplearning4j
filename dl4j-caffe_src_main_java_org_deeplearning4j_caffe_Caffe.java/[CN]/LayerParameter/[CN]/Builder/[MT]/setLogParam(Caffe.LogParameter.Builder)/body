@@ -1,0 +1,11 @@
+{
+  if (logParamBuilder_ == null) {
+    logParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    logParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x40000000;
+  return this;
+}

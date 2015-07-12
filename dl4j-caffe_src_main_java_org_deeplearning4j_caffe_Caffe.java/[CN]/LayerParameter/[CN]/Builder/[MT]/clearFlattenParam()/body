@@ -1,0 +1,11 @@
+{
+  if (flattenParamBuilder_ == null) {
+    flattenParam_=Caffe.FlattenParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    flattenParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00800000);
+  return this;
+}

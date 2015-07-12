@@ -1,0 +1,14 @@
+{
+  if (lrnParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    lrnParam_=value;
+    onChanged();
+  }
+ else {
+    lrnParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x10000000;
+  return this;
+}

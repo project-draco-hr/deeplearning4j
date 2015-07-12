@@ -1,0 +1,11 @@
+{
+  if (innerProductParamBuilder_ == null) {
+    innerProductParam_=Caffe.InnerProductParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    innerProductParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x08000000);
+  return this;
+}

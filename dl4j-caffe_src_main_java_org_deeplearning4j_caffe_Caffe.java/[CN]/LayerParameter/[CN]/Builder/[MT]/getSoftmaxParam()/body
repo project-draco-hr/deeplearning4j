@@ -1,0 +1,8 @@
+{
+  if (softmaxParamBuilder_ == null) {
+    return softmaxParam_;
+  }
+ else {
+    return softmaxParamBuilder_.getMessage();
+  }
+}

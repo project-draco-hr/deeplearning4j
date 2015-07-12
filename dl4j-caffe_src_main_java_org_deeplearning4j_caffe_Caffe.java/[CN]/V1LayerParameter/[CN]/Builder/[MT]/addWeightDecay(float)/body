@@ -1,0 +1,6 @@
+{
+  ensureWeightDecayIsMutable();
+  weightDecay_.add(value);
+  onChanged();
+  return this;
+}

@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.SoftmaxParameter) {
+    return mergeFrom((Caffe.SoftmaxParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

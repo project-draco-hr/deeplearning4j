@@ -1,0 +1,8 @@
+{
+  if (layerBuilder_ == null) {
+    return layer_.get(index);
+  }
+ else {
+    return layerBuilder_.getMessage(index);
+  }
+}

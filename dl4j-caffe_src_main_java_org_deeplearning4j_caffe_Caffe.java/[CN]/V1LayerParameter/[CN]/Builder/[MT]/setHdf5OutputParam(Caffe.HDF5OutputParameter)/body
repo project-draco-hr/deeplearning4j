@@ -1,0 +1,14 @@
+{
+  if (hdf5OutputParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    hdf5OutputParam_=value;
+    onChanged();
+  }
+ else {
+    hdf5OutputParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x00800000;
+  return this;
+}

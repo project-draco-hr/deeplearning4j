@@ -1,0 +1,7 @@
+{
+  if (preluParamBuilder_ == null) {
+    preluParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.PReLUParameter,Caffe.PReLUParameter.Builder,Caffe.PReLUParameterOrBuilder>(getPreluParam(),getParentForChildren(),isClean());
+    preluParam_=null;
+  }
+  return preluParamBuilder_;
+}

@@ -1,0 +1,8 @@
+{
+  if (blobsBuilder_ == null) {
+    return blobs_.size();
+  }
+ else {
+    return blobsBuilder_.getCount();
+  }
+}

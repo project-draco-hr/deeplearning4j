@@ -1,0 +1,18 @@
+{
+  super.clear();
+  channels_=0;
+  bitField0_=(bitField0_ & ~0x00000001);
+  height_=0;
+  bitField0_=(bitField0_ & ~0x00000002);
+  width_=0;
+  bitField0_=(bitField0_ & ~0x00000004);
+  data_=com.google.protobuf.ByteString.EMPTY;
+  bitField0_=(bitField0_ & ~0x00000008);
+  label_=0;
+  bitField0_=(bitField0_ & ~0x00000010);
+  floatData_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00000020);
+  encoded_=false;
+  bitField0_=(bitField0_ & ~0x00000040);
+  return this;
+}

@@ -1,0 +1,5 @@
+{
+  bitField1_|=0x00000001;
+  onChanged();
+  return getPowerParamFieldBuilder().getBuilder();
+}

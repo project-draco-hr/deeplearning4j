@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.TanHParameter) {
+    return mergeFrom((Caffe.TanHParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

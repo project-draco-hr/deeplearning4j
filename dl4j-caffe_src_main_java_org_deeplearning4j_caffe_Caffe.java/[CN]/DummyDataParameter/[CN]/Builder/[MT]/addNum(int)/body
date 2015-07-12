@@ -1,0 +1,6 @@
+{
+  ensureNumIsMutable();
+  num_.add(value);
+  onChanged();
+  return this;
+}

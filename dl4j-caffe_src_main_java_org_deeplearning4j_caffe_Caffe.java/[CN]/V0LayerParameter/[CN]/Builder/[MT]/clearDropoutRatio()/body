@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00000800);
+  dropoutRatio_=0.5F;
+  onChanged();
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (other == Caffe.ContrastiveLossParameter.getDefaultInstance())   return this;
+  if (other.hasMargin()) {
+    setMargin(other.getMargin());
+  }
+  if (other.hasLegacyVersion()) {
+    setLegacyVersion(other.getLegacyVersion());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

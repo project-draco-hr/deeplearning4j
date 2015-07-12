@@ -1,0 +1,8 @@
+{
+  if (lossParamBuilder_ == null) {
+    return lossParam_;
+  }
+ else {
+    return lossParamBuilder_.getMessage();
+  }
+}
