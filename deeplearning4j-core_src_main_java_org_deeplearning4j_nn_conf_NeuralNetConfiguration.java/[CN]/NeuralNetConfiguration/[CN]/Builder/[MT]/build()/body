@@ -3,5 +3,7 @@
   ret.useAdaGrad=this.useAdaGrad;
   ret.rmsDecay=rmsDecay;
   ret.stepFunction=stepFunction;
+  ret.useDropConnect=true;
+  ret.rho=rho;
   return ret;
 }

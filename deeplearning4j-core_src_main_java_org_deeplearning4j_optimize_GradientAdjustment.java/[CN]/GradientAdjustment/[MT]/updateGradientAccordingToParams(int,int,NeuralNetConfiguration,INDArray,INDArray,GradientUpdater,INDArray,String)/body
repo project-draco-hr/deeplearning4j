@@ -2,7 +2,6 @@
   if (adaGrad == null)   adaGrad=new AdaGrad(params.shape());
   if (lastStep == null)   lastStep=Nd4j.ones((params.shape()));
   if (iteration != 0 && conf.getResetAdaGradIterations() > 0 && iteration % conf.getResetAdaGradIterations() == 0) {
-    adaGrad.historicalGradient=null;
     log.info("Resetting adagrad");
   }
   double momentum=conf.getMomentum();
