@@ -4,6 +4,7 @@
   setupSearchState(pair);
   score=pair.getSecond();
   INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
+  INDArray searchDirection=(INDArray)searchState.get(SEARCH_DIR);
   for (  TerminationCondition condition : terminationConditions)   if (condition.terminate(0.0,0.0,new Object[]{gradient})) {
     log.info("Hit termination condition " + condition.getClass().getName());
     return true;
@@ -11,8 +12,8 @@
   boolean testLineSearch=preFirstStepProcess(gradient);
   if (testLineSearch) {
     try {
-      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
-      step=lineMaximizer.optimize(step,params,gradient);
+      INDArray parameters=(INDArray)searchState.get(PARAMS_KEY);
+      step=lineMaximizer.optimize(step,parameters,gradient,searchDirection);
     }
  catch (    InvalidStepException e) {
       log.warn("Invalid step...continuing another iteration");
@@ -28,8 +29,8 @@
     int v=conf.getNumIterations();
     preProcessLine(gradient);
     try {
-      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
-      step=lineMaximizer.optimize(step,params,gradient,getPoint(gradient));
+      INDArray parameters=(INDArray)searchState.get(PARAMS_KEY);
+      step=lineMaximizer.optimize(step,parameters,gradient,searchDirection);
     }
  catch (    InvalidStepException e) {
       log.warn("Invalid step...continuing another iteration");
