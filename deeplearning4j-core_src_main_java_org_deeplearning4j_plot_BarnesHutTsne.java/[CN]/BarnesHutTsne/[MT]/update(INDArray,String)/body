@@ -5,7 +5,7 @@
   INDArray gradChange=gains.mul(yGrads);
   if (useAdaGrad) {
     if (adaGrad == null)     adaGrad=new AdaGrad(gradChange.shape());
-    gradChange=adaGrad.getGradient(gradChange);
+    gradChange=adaGrad.getGradient(gradChange,0);
   }
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);

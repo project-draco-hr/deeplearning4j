@@ -40,6 +40,7 @@
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
     postStep();
+    this.iteration++;
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
   }
   return true;

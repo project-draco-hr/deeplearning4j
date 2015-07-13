@@ -16,7 +16,7 @@
     gradient=gradient.mul(conf.getLr()).negi().divi(Transforms.sqrt(lastStep.add(Nd4j.EPS_THRESHOLD)));
   }
   if (conf.isUseAdaGrad()) {
-    gradient=adaGrad.getGradient(gradient);
+    gradient=adaGrad.getGradient(gradient,0);
   }
  else {
     gradient.muli(conf.getLr());

@@ -1,6 +1,6 @@
 {
   for (  Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
     GradientUpdater updater=init(gradientPair.getKey(),gradientPair.getValue(),layer);
-    postApply(layer,updater.getGradient(gradientPair.getValue()),gradientPair.getKey());
+    postApply(layer,updater.getGradient(gradientPair.getValue(),iteration),gradientPair.getKey());
   }
 }
