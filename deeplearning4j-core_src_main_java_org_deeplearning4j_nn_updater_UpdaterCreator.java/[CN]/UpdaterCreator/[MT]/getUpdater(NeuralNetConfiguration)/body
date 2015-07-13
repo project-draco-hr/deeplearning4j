@@ -1,0 +1,9 @@
+{
+  boolean hasMomentum=conf.getMomentum() > 0;
+  boolean hasLearningRate=conf.getLr() > 0;
+  boolean hasRms=conf.getRmsDecay() > 0;
+  boolean isAdaGrad=conf.isUseAdaGrad();
+  if (conf.getMomentum() > 0) {
+  }
+  return null;
+}
