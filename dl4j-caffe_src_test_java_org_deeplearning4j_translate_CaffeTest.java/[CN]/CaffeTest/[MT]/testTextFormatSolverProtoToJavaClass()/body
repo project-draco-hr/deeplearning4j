@@ -1,6 +1,5 @@
 {
-  String imagenetSolverProtoPath=new ClassPathResource("nin_imagenet/solver.prototxt").getURL().getFile();
-  Caffe.SolverParameter solver=CaffeModelToJavaClass.readTextFormatSolverProto(imagenetSolverProtoPath);
+  SolverParameter solver=CaffeModelToJavaClass.readTextFormatSolver(getImageNetTextFormatSolverPath());
   assertEquals(solver.getMaxIter(),450000);
   assertEquals(solver.getMomentum(),0.9f,1e-3);
   assertEquals(solver.getBaseLr(),0.01,1e-3);

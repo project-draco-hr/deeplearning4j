@@ -1,6 +1,5 @@
 {
-  String imagenetCaffeModelPath=new ClassPathResource("nin_imagenet/nin_imagenet_conv.caffemodel").getURL().getFile();
-  NetParameter net=CaffeModelToJavaClass.readBinaryCaffeModel(imagenetCaffeModelPath,1000);
+  NetParameter net=CaffeModelToJavaClass.readBinaryNet(getImageNetBinaryNetPath(),1000);
   assertEquals(net.getName(),"CaffeNet");
   assertEquals(net.getLayersCount(),31);
   assertEquals(net.getLayers(0).getName(),"data");
