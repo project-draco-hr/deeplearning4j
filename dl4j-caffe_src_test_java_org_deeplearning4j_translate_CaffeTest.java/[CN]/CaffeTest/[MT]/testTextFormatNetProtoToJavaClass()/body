@@ -1,0 +1,8 @@
+{
+  String imagenetNetProtoPath=new ClassPathResource("nin_imagenet/train_val.prototxt").getURL().getFile();
+  Caffe.NetParameter net=CaffeModelToJavaClass.readTextFormatNetProto(imagenetNetProtoPath);
+  assertEquals(net.getName(),"nin_imagenet");
+  assertEquals(net.getLayersCount(),33);
+  assertEquals(net.getLayers(0).getName(),"data");
+  assertEquals(net.getLayers(32).getName(),"loss");
+}
