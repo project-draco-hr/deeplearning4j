@@ -1,9 +1,18 @@
 {
-  boolean hasMomentum=conf.getMomentum() > 0;
-  boolean hasLearningRate=conf.getLr() > 0;
-  boolean hasRms=conf.getRmsDecay() > 0;
-  boolean isAdaGrad=conf.isUseAdaGrad();
-  if (conf.getMomentum() > 0) {
-  }
-  return null;
+  Updater updater=conf.getUpdater();
+switch (updater) {
+case ADADELTA:
+    return new AdaDeltaUpdater();
+case ADAGRAD:
+  return new AdaGradUpdater();
+case ADAM:
+return new AdamUpdater();
+case NESTEROVS:
+return new NesterovsUpdater();
+case RMSPROP:
+return new RmsPropUpdater();
+case CUSTOM:
+throw new UnsupportedOperationException("Not implemented yet.");
+}
+return null;
 }
