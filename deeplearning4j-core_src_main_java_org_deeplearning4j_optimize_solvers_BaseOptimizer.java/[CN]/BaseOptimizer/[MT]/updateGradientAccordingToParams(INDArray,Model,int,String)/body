@@ -1,3 +1,7 @@
 {
-  GradientAdjustment.updateGradientAccordingToParams(iteration,batchSize,conf,model.getParam(paramType),gradient,adaGradForVariable.get(paramType),lastStep.get(paramType),paramType);
+  if (updater == null)   updater=UpdaterCreator.getUpdater(model.conf());
+  Layer layer=(Layer)model;
+  Gradient g=new DefaultGradient();
+  g.setGradientFor(paramType,gradient);
+  updater.update(layer,g);
 }
