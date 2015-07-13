@@ -3,6 +3,6 @@ int batchSize
 NeuralNetConfiguration conf
 INDArray params
 INDArray gradient
-AdaGrad adaGrad
+GradientUpdater adaGrad
 INDArray lastStep
 String paramType

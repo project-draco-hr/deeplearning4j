@@ -41,7 +41,7 @@
       Layer currLayer=getLayers()[k];
       for (      String paramType : gradientUpdates.get(k).gradientForVariable().keySet()) {
         INDArray gradient=gradientUpdates.get(k).getGradientFor(paramType);
-        GradientAdjustment.updateGradientAccordingToParams(i,input.slices(),currLayer.conf(),currLayer.getParam(paramType),gradient,currLayer.getOptimizer().adaGradForVariables().get(paramType),currLayer.getOptimizer().getLastStep().get(paramType),paramType);
+        GradientAdjustment.updateGradientAccordingToParams(i,input.slices(),currLayer.conf(),currLayer.getParam(paramType),gradient,currLayer.getOptimizer().updaterForVariables().get(paramType),currLayer.getOptimizer().getLastStep().get(paramType),paramType);
         currLayer.update(gradient,paramType);
       }
     }

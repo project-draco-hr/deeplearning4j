@@ -1,0 +1,8 @@
+{
+  Adam adam=(Adam)updaterForVariable.get(variable);
+  if (adam == null) {
+    adam=new Adam();
+    updaterForVariable.put(variable,adam);
+  }
+  return adam;
+}
