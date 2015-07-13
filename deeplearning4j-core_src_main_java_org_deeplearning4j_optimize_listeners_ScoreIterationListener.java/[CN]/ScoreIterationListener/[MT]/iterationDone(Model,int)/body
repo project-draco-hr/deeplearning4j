@@ -1,6 +1,6 @@
 {
   if (iteration % printIterations == 0) {
-    model.setScore();
+    invoke();
     log.info("Score at iteration " + iteration + " is "+ model.score());
   }
 }
