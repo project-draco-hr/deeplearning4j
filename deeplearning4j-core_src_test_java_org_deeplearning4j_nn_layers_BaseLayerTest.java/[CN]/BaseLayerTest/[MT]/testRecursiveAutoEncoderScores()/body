@@ -1,0 +1,9 @@
+{
+  DataSet data=irisIter.next();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RecursiveAutoEncoder()).nIn(4).nOut(3).activationFunction("sigmoid").optimizationAlgo(OptimizationAlgorithm.LBFGS).iterations(1).seed(123).build();
+  Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf);
+  layer.fit(data.getFeatureMatrix());
+  double score=layer.score();
+  double score2=101.61147665977478;
+  assertEquals(score,score2,1e-3);
+}
