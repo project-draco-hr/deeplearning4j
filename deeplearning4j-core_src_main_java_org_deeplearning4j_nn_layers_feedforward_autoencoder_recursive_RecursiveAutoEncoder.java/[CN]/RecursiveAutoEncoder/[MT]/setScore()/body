@@ -1,4 +1,5 @@
 {
   gradient();
-  score=scoreSnapShot();
+  score=0.5 * pow(y.sub(allInput),2).mean(Integer.MAX_VALUE).getDouble(0);
+  ;
 }
