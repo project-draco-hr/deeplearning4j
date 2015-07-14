@@ -2,7 +2,7 @@
   model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
   setupSearchState(pair);
-  score=pair.getSecond();
+  score=model.score();
   INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
   INDArray searchDirection=(INDArray)searchState.get(SEARCH_DIR);
   for (  TerminationCondition condition : terminationConditions)   if (condition.terminate(0.0,0.0,new Object[]{gradient})) {
@@ -26,7 +26,6 @@
     }
   }
   for (int i=0; i < conf.getNumIterations(); i++) {
-    int v=conf.getNumIterations();
     preProcessLine(gradient);
     try {
       INDArray parameters=(INDArray)searchState.get(PARAMS_KEY);
@@ -38,6 +37,7 @@
     oldScore=score;
     pair=gradientAndScore();
     setupSearchState(pair);
+    score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
     postStep();

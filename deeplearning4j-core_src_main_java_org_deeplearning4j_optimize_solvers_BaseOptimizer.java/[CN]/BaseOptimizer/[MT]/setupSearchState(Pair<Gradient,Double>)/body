@@ -1,10 +1,7 @@
 {
   INDArray gradient=pair.getFirst().gradient(conf.variables());
   INDArray params=model.params();
-  INDArray searchDirection=gradient.dup();
   searchState.put(GRADIENT_KEY,gradient);
   searchState.put(SCORE_KEY,pair.getSecond());
   searchState.put(PARAMS_KEY,params);
-  searchState.put("searchDirection",searchDirection);
-  score=pair.getSecond();
 }
