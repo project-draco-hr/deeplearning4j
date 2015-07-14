@@ -1,6 +1,5 @@
 {
   super.setupSearchState(pair);
   INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
-  INDArray searchDirection=gradient.dup();
-  searchState.put("searchDirection",searchDirection);
+  searchState.put("searchDirection",gradient);
 }
