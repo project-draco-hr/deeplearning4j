@@ -25,8 +25,9 @@
       return false;
     }
   }
+  preProcessLine(gradient);
+  searchDirection=(INDArray)searchState.get(SEARCH_DIR);
   for (int i=0; i < conf.getNumIterations(); i++) {
-    preProcessLine(gradient);
     try {
       INDArray parameters=(INDArray)searchState.get(PARAMS_KEY);
       step=lineMaximizer.optimize(step,parameters,gradient,searchDirection);
