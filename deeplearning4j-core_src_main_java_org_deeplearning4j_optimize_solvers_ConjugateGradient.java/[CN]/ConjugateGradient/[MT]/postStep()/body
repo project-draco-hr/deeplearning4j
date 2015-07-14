@@ -1,22 +1,2 @@
 {
-  INDArray g=(INDArray)searchState.get(GRADIENT_KEY);
-  INDArray xi=(INDArray)searchState.get("xi");
-  INDArray h=(INDArray)searchState.get("h");
-  searchState.put("gg",pow(g,2).sum(Integer.MAX_VALUE).getDouble(0));
-  searchState.put("dgg",xi.mul(xi.sub(g)).sum(Integer.MAX_VALUE).getDouble(0));
-  double dgg=(double)searchState.get("dgg");
-  double gg=(double)searchState.get("gg");
-  double gam=dgg / gg;
-  searchState.put("gam",gam);
-  if (h == null)   h=g;
-  g.assign(xi);
-  h.muli(gam).addi(xi);
-  if (Nd4j.getBlasWrapper().dot(xi,h) > 0)   xi.assign(h);
- else {
-    logger.warn("Reverting back to GA");
-    h.assign(xi);
-  }
-  searchState.put(GRADIENT_KEY,g);
-  searchState.put("xi",xi);
-  searchState.put("h",xi.add(h.mul(gam)));
 }
