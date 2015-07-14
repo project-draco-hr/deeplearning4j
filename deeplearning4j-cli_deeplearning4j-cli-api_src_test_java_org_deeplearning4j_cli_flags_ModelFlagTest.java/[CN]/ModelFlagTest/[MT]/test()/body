@@ -1,7 +1,0 @@
-{
-  Model testModelFlag=new Model();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().dist(new NormalDistribution(1,1e-1)).layer(new RBM()).build();
-  String json=conf.toJson();
-  NeuralNetConfiguration testConfig=testModelFlag.value(json);
-  assertEquals(conf,testConfig);
-}

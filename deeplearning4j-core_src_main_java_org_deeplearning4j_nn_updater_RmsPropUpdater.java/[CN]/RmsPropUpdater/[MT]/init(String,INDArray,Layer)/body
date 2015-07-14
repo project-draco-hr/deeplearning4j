@@ -1,0 +1,8 @@
+{
+  org.nd4j.linalg.learning.RmsPropUpdater updater=(org.nd4j.linalg.learning.RmsPropUpdater)updaterForVariable.get(variable);
+  if (updater == null) {
+    updater=new org.nd4j.linalg.learning.RmsPropUpdater();
+    updaterForVariable.put(variable,updater);
+  }
+  return updater;
+}

@@ -1,0 +1,18 @@
+{
+  Updater updater=conf.getUpdater();
+switch (updater) {
+case ADADELTA:
+    return new AdaDeltaUpdater();
+case ADAGRAD:
+  return new AdaGradUpdater();
+case ADAM:
+return new AdamUpdater();
+case NESTEROVS:
+return new NesterovsUpdater();
+case RMSPROP:
+return new RmsPropUpdater();
+case CUSTOM:
+throw new UnsupportedOperationException("Not implemented yet.");
+}
+return null;
+}

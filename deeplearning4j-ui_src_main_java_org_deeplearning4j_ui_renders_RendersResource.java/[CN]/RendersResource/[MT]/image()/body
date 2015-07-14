@@ -2,10 +2,18 @@
   if (imagePath == null) {
     throw new WebApplicationException(404);
   }
-  File f=new File(imagePath);
+  final File f=new File(imagePath);
   if (!f.exists()) {
     throw new WebApplicationException(404);
   }
-  String mt=new MimetypesFileTypeMap().getContentType(f);
-  return Response.ok(f,mt).build();
+  return Response.ok().entity(new StreamingOutput(){
+    @Override public void write(    OutputStream output) throws IOException, WebApplicationException {
+      FileInputStream fis=new FileInputStream(f);
+      byte[] bytes=IOUtils.toByteArray(fis);
+      fis.close();
+      output.write(bytes);
+      output.flush();
+    }
+  }
+).build();
 }
