@@ -1,0 +1,4 @@
+{
+  if (parameters.data().dataType() == DataBuffer.Type.DOUBLE)   Nd4j.getBlasWrapper().level1().axpy(searchDirection.length(),-step,searchDirection,parameters);
+ else   if (parameters.data().dataType() == DataBuffer.Type.FLOAT)   Nd4j.getBlasWrapper().level1().axpy(searchDirection.length(),(float)-step,searchDirection,parameters);
+}

@@ -1,5 +1,0 @@
-{
-  double scalar=(double)params[0];
-  if (x.data().dataType() == DataBuffer.Type.DOUBLE)   Nd4j.getBlasWrapper().level1().axpy(line.length(),-scalar,line,x);
- else   if (x.data().dataType() == DataBuffer.Type.FLOAT)   Nd4j.getBlasWrapper().level1().axpy(line.length(),(float)-scalar,line,x);
-}
