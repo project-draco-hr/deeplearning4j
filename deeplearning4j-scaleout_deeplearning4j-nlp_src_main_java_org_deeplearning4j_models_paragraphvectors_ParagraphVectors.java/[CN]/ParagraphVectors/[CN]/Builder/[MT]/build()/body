@@ -33,6 +33,7 @@
     ret.docIter=docIter;
     ret.lookupTable=lookupTable;
     ret.tokenizerFactory=tokenizerFactory;
+    ret.labels=labels;
     return ret;
   }
  else {
@@ -72,6 +73,7 @@
     }
     ret.lookupTable=lookupTable;
     ret.tokenizerFactory=tokenizerFactory;
+    ret.labels=labels;
     return ret;
   }
 }
