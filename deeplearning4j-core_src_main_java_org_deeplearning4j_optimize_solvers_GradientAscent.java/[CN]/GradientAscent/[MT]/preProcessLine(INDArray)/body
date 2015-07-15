@@ -1,4 +1,4 @@
 {
-  double norm2=line.norm2(Integer.MAX_VALUE).getDouble(0);
-  if (norm2 > stepMax)   line.muli(stepMax / norm2);
+  double norm2=gradient.norm2(Integer.MAX_VALUE).getDouble(0);
+  if (norm2 > stepMax)   gradient.muli(stepMax / norm2);
 }
