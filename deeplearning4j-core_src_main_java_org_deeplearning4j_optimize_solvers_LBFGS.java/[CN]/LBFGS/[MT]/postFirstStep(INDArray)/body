@@ -1,7 +1,7 @@
 {
   super.postFirstStep(gradient);
   if (step == 0.0) {
-    log.info("Unable to step in that direction...resetting");
+    log.debug("Unable to step in that direction...resetting");
     setupSearchState(model.gradientAndScore());
     step=1.0;
   }
