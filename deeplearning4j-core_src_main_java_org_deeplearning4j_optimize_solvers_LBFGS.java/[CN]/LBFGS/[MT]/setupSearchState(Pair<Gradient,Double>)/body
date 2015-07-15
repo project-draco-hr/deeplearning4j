@@ -8,5 +8,5 @@
   searchState.put("alpha",Nd4j.create(m));
   searchState.put("oldparams",params.dup());
   searchState.put("oldgradient",gradient.dup());
-  searchState.put(SEARCH_DIR,Nd4j.zeros(params.shape()));
+  searchState.put(SEARCH_DIR,gradient.dup().mul(Nd4j.norm2(gradient).rdivi(1.0).getDouble(0)).negi());
 }
