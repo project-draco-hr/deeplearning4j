@@ -17,7 +17,7 @@
         List<String> row=new ArrayList<>(Arrays.asList(splitOnCharWithQuoting(line,sep.charAt(0),'"','\\')));
         if (numColumns < 0)         numColumns=row.size();
  else         if (row.size() != numColumns)         log.warn("Row " + i + " had invalid number of columns  line was "+ line);
- else         add(row);
+        add(row);
       }
     }
  else {
@@ -26,7 +26,7 @@
  else       if (row.size() != numColumns) {
         log.warn("Could not add " + line);
       }
- else       add(row);
+      add(row);
     }
   }
   fillOut();

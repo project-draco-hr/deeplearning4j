@@ -1,0 +1,8 @@
+{
+  String s="1; hello";
+  ByteArrayInputStream bis=new ByteArrayInputStream(s.getBytes());
+  LabelAwareSentenceIterator labelAwareSentenceIterator=new LabelAwareListSentenceIterator(bis,";",0,1);
+  assertTrue(labelAwareSentenceIterator.hasNext());
+  labelAwareSentenceIterator.nextSentence();
+  assertEquals("1",labelAwareSentenceIterator.currentLabel());
+}
