@@ -13,21 +13,67 @@
   log.info("Built vocab..");
   final Word2VecParam param=new Word2VecParam.Builder().negative(lookupTable.getNegative()).window(conf.getInt(Word2VecPerformer.WINDOW,5)).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(lookupTable.getLr().get()).setMinAlpha(1e-2).setVectorLength(lookupTable.getVectorLength()).useAdaGrad(lookupTable.isUseAdaGrad()).weights(lookupTable).build();
   param.setTotalWords(vocabAndNumWords.getSecond().intValue());
-  final List<Long> wordsSeen=new ArrayList<>();
+  log.info("Counting words within sentences..");
   final JavaRDD<AtomicLong> frequencies=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,AtomicLong>(){
     @Override public AtomicLong call(    Pair<List<VocabWord>,AtomicLong> listAtomicLongPair) throws Exception {
       return listAtomicLongPair.getSecond();
     }
   }
 ).cache();
-  final Accumulator<Double> acc=sc.accumulator(0L);
-  frequencies.foreach(new VoidFunction<AtomicLong>(){
-    @Override public void call(    AtomicLong atomicLong) throws Exception {
-      acc.add((double)atomicLong.get());
-      wordsSeen.add((long)(acc.value() + atomicLong.get()));
+  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartition());
+  Function2 foldWithinPartition=new Function2<Integer,Iterator<AtomicLong>,Iterator<Long>>(){
+    @Override public Iterator<Long> call(    Integer ind,    Iterator<AtomicLong> partition) throws Exception {
+      List<Long> foldedItemList=new ArrayList<Long>(){
+{
+          add(0L);
+        }
+      }
+;
+      while (partition.hasNext()) {
+        Long curPartitionItem=partition.next().get();
+        Integer lastFoldedIndex=foldedItemList.size() - 1;
+        Long lastFoldedItem=foldedItemList.get(lastFoldedIndex);
+        Long sumLastCurrent=curPartitionItem + lastFoldedItem;
+        foldedItemList.set(lastFoldedIndex,sumLastCurrent);
+        foldedItemList.add(sumLastCurrent);
+      }
+      Long maxFoldedItem=foldedItemList.remove(foldedItemList.size() - 1);
+      Counter<Integer> partitionIndex2maxItemCounter=new Counter<>();
+      partitionIndex2maxItemCounter.incrementCount(ind,maxFoldedItem);
+      maxPerPartitionAcc.add(partitionIndex2maxItemCounter);
+      return foldedItemList.iterator();
+    }
+  }
+;
+  JavaRDD<Long> foldWithinPartitionRDD=frequencies.mapPartitionsWithIndex(foldWithinPartition,true);
+  foldWithinPartitionRDD.foreachPartition(new VoidFunction<Iterator<Long>>(){
+    @Override public void call(    Iterator<Long> integerIterator) throws Exception {
     }
   }
 );
+  foldWithinPartitionRDD.cache();
+  final Counter<Integer> maxPerPartitionCounter=maxPerPartitionAcc.value();
+  final Broadcast<Counter<Integer>> broadcastedmaxPerPartitionCounter=sc.broadcast(maxPerPartitionCounter);
+  Function2 foldBetweenPartitions=new Function2<Integer,Iterator<Long>,Iterator<Long>>(){
+    @Override public Iterator<Long> call(    Integer ind,    Iterator<Long> partition) throws Exception {
+      int sumToAdd=0;
+      Counter<Integer> maxPerPartitionCounterInScope=broadcastedmaxPerPartitionCounter.value();
+      if (ind != 0) {
+        for (int i=0; i < ind; i++) {
+          sumToAdd+=maxPerPartitionCounterInScope.getCount(i);
+        }
+      }
+      List<Long> itemsAddedToList=new ArrayList<>();
+      while (partition.hasNext()) {
+        itemsAddedToList.add(partition.next() + sumToAdd);
+      }
+      return itemsAddedToList.iterator();
+    }
+  }
+;
+  JavaRDD foldBetweenPartitionRDD=foldWithinPartitionRDD.mapPartitionsWithIndex(foldBetweenPartitions,true);
+  final List<Long> wordsSeen=foldBetweenPartitionRDD.collect();
+  log.info("Calculating word frequencies...");
   JavaRDD<List<VocabWord>> words=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,List<VocabWord>>(){
     @Override public List<VocabWord> call(    Pair<List<VocabWord>,AtomicLong> listAtomicLongPair) throws Exception {
       return listAtomicLongPair.getFirst();
@@ -40,18 +86,20 @@
     }
   }
 ).cache();
-  log.info("Calculated word frequencies");
   log.info("Training word 2vec");
   for (int i=0; i < conf.getInt(Word2VecPerformerVoid.ITERATIONS,5); i++) {
     final Broadcast<Word2VecParam> finalParamBroadcast=sc.broadcast(param);
     if (finalParamBroadcast.value() == null)     throw new IllegalStateException("Value not found for param broadcast");
     JavaRDD<Word2VecFuncCall> call=wordsAndWordsSeen.map(new Word2VecSetup(finalParamBroadcast));
-    call.map(new SentenceBatch()).foreach(new VoidFunction<Word2VecChange>(){
+    JavaRDD<Word2VecChange> change2=call.map(new SentenceBatch());
+    change2.foreach(new VoidFunction<Word2VecChange>(){
       @Override public void call(      Word2VecChange change) throws Exception {
         change.apply(lookupTable);
       }
     }
 );
+    change2.unpersist();
+    change2=null;
     log.info("Iteration " + i);
   }
   return new Pair<VocabCache,WeightLookupTable>(vocabCacheBroadcast.getValue(),lookupTable);
