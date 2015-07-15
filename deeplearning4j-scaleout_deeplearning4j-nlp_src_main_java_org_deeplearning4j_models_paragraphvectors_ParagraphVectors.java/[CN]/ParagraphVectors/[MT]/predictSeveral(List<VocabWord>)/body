@@ -1,0 +1,14 @@
+{
+  INDArray arr=Nd4j.create(document.size(),this.layerSize);
+  for (int i=0; i < document.size(); i++) {
+    arr.putRow(i,getWordVectorMatrix(document.get(i).getWord()));
+  }
+  INDArray docMean=arr.mean(0);
+  Counter<String> distances=new Counter<>();
+  for (  String s : labels) {
+    INDArray otherVec=getWordVectorMatrix(s);
+    double sim=Transforms.cosineSim(docMean,otherVec);
+    distances.incrementCount(s,sim);
+  }
+  return distances;
+}
