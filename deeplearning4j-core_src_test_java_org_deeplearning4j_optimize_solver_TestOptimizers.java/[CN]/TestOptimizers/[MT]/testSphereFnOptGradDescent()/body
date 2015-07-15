@@ -1,0 +1,6 @@
+{
+  int[] numLineSearchIter={1,2,5,10};
+  for (  int n : numLineSearchIter)   testSphereFnOptHelper(OptimizationAlgorithm.GRADIENT_DESCENT,n,2);
+  for (  int n : numLineSearchIter)   testSphereFnOptHelper(OptimizationAlgorithm.GRADIENT_DESCENT,n,10);
+  for (  int n : numLineSearchIter)   testSphereFnOptHelper(OptimizationAlgorithm.GRADIENT_DESCENT,n,100);
+}
