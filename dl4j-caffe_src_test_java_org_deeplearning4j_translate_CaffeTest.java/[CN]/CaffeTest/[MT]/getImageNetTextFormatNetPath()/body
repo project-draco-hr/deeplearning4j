@@ -1,0 +1,3 @@
+{
+  return new ClassPathResource("nin_imagenet/train_val.prototxt").getURL().getFile();
+}

@@ -1,0 +1,7 @@
+{
+  if (c1 == null) {
+    return new Counter<>();
+  }
+  addInPlace(c1,c2);
+  return c1;
+}
