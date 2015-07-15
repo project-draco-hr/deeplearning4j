@@ -14,14 +14,14 @@
   }
   ConvexOptimizer opt;
 switch (oa) {
-case CONJUGATE_GRADIENT:
-    opt=new ConjugateGradient(conf,new DefaultStepFunction(),null,m);
+case STOCHASTIC_GRADIENT_DESCENT:
+    opt=new StochasticGradientDescent(conf,new DefaultStepFunction(),null,m);
   break;
-case GRADIENT_DESCENT:
-opt=new GradientAscent(conf,new NegativeDefaultStepFunction(),null,m);
+case LINE_GRADIENT_DESCENT:
+opt=new LineGradientAscent(conf,new DefaultStepFunction(),null,m);
 break;
-case ITERATION_GRADIENT_DESCENT:
-opt=new IterationGradientDescent(conf,new DefaultStepFunction(),null,m);
+case CONJUGATE_GRADIENT:
+opt=new ConjugateGradient(conf,new DefaultStepFunction(),null,m);
 break;
 case LBFGS:
 opt=new LBFGS(conf,new DefaultStepFunction(),null,m);
