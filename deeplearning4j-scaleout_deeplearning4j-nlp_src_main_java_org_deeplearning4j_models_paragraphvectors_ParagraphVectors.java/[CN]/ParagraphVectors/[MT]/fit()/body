@@ -2,6 +2,10 @@
   boolean loaded=buildVocab();
   if (!loaded && saveVocab)   vocab().saveVocab();
   if (stopWords == null)   readStopWords();
+  for (  String label : labels) {
+    vocab().addToken(new VocabWord(1,label));
+    vocab().putVocabWord(label);
+  }
   log.info("Training word2vec multithreaded");
   if (sentenceIter != null)   sentenceIter.reset();
   if (docIter != null)   docIter.reset();
