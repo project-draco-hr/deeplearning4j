@@ -1,24 +1,15 @@
 {
-  double syOld, yy;
   INDArray oldParameters=(INDArray)searchState.get("oldparams");
   INDArray params=model.params();
   oldParameters.assign(params.sub(oldParameters));
   INDArray oldGradient=(INDArray)searchState.get("oldgradient");
   oldGradient.subi(gradient);
-  double sy=Nd4j.getBlasWrapper().dot(oldParameters,oldGradient.transpose()) + Nd4j.EPS_THRESHOLD;
   LinkedList<Double> rho=(LinkedList<Double>)searchState.get("rho");
-  rho.add(1.0 / sy);
   LinkedList<INDArray> s=(LinkedList<INDArray>)searchState.get("s");
   LinkedList<INDArray> y=(LinkedList<INDArray>)searchState.get("y");
-  if (s.size() == 0) {
-    syOld=Nd4j.getBlasWrapper().dot(oldParameters.transpose(),oldGradient) + Nd4j.EPS_THRESHOLD;
-    yy=Nd4j.getBlasWrapper().dot(oldGradient.transpose(),oldGradient) + Nd4j.EPS_THRESHOLD;
-  }
- else {
-    syOld=Nd4j.getBlasWrapper().dot(s.get(s.size() - 1).transpose(),y.get(y.size() - 1)) + Nd4j.EPS_THRESHOLD;
-    yy=Nd4j.getBlasWrapper().dot(y.get(y.size() - 1).transpose(),y.get(y.size() - 1)) + Nd4j.EPS_THRESHOLD;
-  }
-  double gamma=syOld / yy;
+  double sy=Nd4j.getBlasWrapper().dot(oldParameters,oldGradient.transpose()) + Nd4j.EPS_THRESHOLD;
+  double yy=Nd4j.getBlasWrapper().dot(oldGradient.transpose(),oldGradient) + Nd4j.EPS_THRESHOLD;
+  rho.add(1.0 / sy);
   s.add(oldParameters);
   y.add(oldGradient);
   if (s.size() != y.size())   throw new IllegalStateException("Gradient and parameter sizes are not equal");
@@ -30,15 +21,14 @@
     alpha.putScalar(i,rho.get(i) * Nd4j.getBlasWrapper().dot(gradient,s.get(i).transpose()));
     Nd4j.getBlasWrapper().level1().axpy(gradient.length(),-1.0f * alpha.getFloat(i),gradient,y.get(i));
   }
-  INDArray r=gradient.dup();
-  r.muli(gamma);
+  double gamma=sy / yy;
+  INDArray searchDir=gradient.dup().muli(gamma);
   for (int i=0; i < y.size(); i++) {
     if (i >= alpha.length())     break;
-    double beta=rho.get(i) * Nd4j.getBlasWrapper().dot(y.get(i).transpose(),r);
-    Nd4j.getBlasWrapper().level1().axpy(gradient.length(),alpha.getFloat(i) - (float)beta,s.get(i),r);
+    double beta=rho.get(i) * Nd4j.getBlasWrapper().dot(y.get(i).transpose(),searchDir);
   }
   oldParameters.assign(params);
   oldGradient.assign(gradient);
   INDArray searchDirection=(INDArray)searchState.get(SEARCH_DIR);
-  searchDirection.assign(r);
+  searchDirection.assign(searchDir.negi());
 }
