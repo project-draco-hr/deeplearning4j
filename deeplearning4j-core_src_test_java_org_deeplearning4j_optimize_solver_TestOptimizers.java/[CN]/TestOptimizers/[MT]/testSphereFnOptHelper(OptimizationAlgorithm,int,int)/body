@@ -1,6 +1,6 @@
 {
   if (PRINT_OPT_RESULTS)   System.out.println("---------\n Alg=" + oa + ", nIter="+ numLineSearchIter+ ", nDimensions="+ nDimensions);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().numLineSearchIterations(numLineSearchIter).iterations(1000).learningRate(0.01).layer(new RBM()).batchSize(1).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().numLineSearchIterations(numLineSearchIter).iterations(1).learningRate(0.01).layer(new RBM()).batchSize(1).build();
   conf.addVariable("x");
   Random rng=new DefaultRandom(12345L);
   org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-10,10);
