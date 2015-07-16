@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.SigmoidParameter) {
-    return mergeFrom((Caffe.SigmoidParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

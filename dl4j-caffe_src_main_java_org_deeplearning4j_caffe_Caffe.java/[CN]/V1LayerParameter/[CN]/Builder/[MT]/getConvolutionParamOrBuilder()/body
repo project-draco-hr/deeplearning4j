@@ -1,8 +1,0 @@
-{
-  if (convolutionParamBuilder_ != null) {
-    return convolutionParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return convolutionParam_;
-  }
-}

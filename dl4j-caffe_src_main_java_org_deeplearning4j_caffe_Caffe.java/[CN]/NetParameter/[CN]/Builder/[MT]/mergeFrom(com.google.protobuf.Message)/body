@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.NetParameter) {
-    return mergeFrom((Caffe.NetParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

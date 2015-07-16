@@ -1,8 +1,0 @@
-{
-  if (memoryDataParamBuilder_ != null) {
-    return memoryDataParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return memoryDataParam_;
-  }
-}

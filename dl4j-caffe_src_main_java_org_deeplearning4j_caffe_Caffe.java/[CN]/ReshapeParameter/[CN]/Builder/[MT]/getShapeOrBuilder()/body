@@ -1,8 +1,0 @@
-{
-  if (shapeBuilder_ != null) {
-    return shapeBuilder_.getMessageOrBuilder();
-  }
- else {
-    return shape_;
-  }
-}

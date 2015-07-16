@@ -1,8 +1,0 @@
-{
-  if (imageDataParamBuilder_ != null) {
-    return imageDataParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return imageDataParam_;
-  }
-}

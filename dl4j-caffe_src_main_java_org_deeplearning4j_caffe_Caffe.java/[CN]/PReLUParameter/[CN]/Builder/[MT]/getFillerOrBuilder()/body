@@ -1,8 +1,0 @@
-{
-  if (fillerBuilder_ != null) {
-    return fillerBuilder_.getMessageOrBuilder();
-  }
- else {
-    return filler_;
-  }
-}

@@ -1,6 +1,0 @@
-{
-  ensureMeanValueIsMutable();
-  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,meanValue_);
-  onChanged();
-  return this;
-}

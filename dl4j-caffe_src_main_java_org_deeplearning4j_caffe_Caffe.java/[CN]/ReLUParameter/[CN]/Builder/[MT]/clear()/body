@@ -1,8 +1,0 @@
-{
-  super.clear();
-  negativeSlope_=0F;
-  bitField0_=(bitField0_ & ~0x00000001);
-  engine_=Caffe.ReLUParameter.Engine.DEFAULT;
-  bitField0_=(bitField0_ & ~0x00000002);
-  return this;
-}
