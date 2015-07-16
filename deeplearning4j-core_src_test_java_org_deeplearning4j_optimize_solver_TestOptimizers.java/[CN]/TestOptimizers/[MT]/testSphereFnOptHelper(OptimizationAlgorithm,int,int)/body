@@ -12,33 +12,15 @@
     System.out.println(scoreBefore);
     System.out.println(m.params());
   }
-  ConvexOptimizer opt;
-switch (oa) {
-case STOCHASTIC_GRADIENT_DESCENT:
-    opt=new StochasticGradientDescent(conf,new DefaultStepFunction(),null,m);
-  break;
-case LINE_GRADIENT_DESCENT:
-opt=new LineGradientDescent(conf,new DefaultStepFunction(),null,m);
-break;
-case CONJUGATE_GRADIENT:
-opt=new ConjugateGradient(conf,new DefaultStepFunction(),null,m);
-break;
-case LBFGS:
-opt=new LBFGS(conf,new DefaultStepFunction(),null,m);
-break;
-default :
-fail("Not supported: " + oa);
-opt=null;
-break;
-}
-opt.setupSearchState(m.gradientAndScore());
-opt.optimize();
-double scoreAfter=m.score();
-assertTrue(!Double.isNaN(scoreAfter) && !Double.isInfinite(scoreAfter));
-if (PRINT_OPT_RESULTS) {
-System.out.println("After:");
-System.out.println(scoreAfter);
-System.out.println(m.params());
-}
-assertTrue("Score did not improve after optimization (b=" + scoreBefore + ",a="+ scoreAfter+ ")",scoreAfter < scoreBefore);
+  ConvexOptimizer opt=getOptimizer(oa,conf,m);
+  opt.setupSearchState(m.gradientAndScore());
+  opt.optimize();
+  double scoreAfter=m.score();
+  assertTrue(!Double.isNaN(scoreAfter) && !Double.isInfinite(scoreAfter));
+  if (PRINT_OPT_RESULTS) {
+    System.out.println("After:");
+    System.out.println(scoreAfter);
+    System.out.println(m.params());
+  }
+  assertTrue("Score did not improve after optimization (b=" + scoreBefore + ",a="+ scoreAfter+ ")",scoreAfter < scoreBefore);
 }
