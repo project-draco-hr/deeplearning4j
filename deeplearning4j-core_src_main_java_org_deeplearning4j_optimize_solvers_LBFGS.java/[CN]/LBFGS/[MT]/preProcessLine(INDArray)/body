@@ -24,7 +24,7 @@
   s.addFirst(sCurrent);
   y.addFirst(yCurrent);
   if (s.size() != y.size())   throw new IllegalStateException("Gradient and parameter sizes are not equal");
-  int numVectors=Integer.min(m,s.size());
+  int numVectors=Math.min(m,s.size());
   double[] alpha=new double[numVectors];
   Iterator<INDArray> sIter=s.iterator();
   Iterator<INDArray> yIter=y.iterator();
