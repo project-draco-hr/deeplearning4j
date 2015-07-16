@@ -1,10 +1,10 @@
 {
   INDArray gLast=(INDArray)searchState.get(GRADIENT_KEY);
   INDArray searchDirLast=(INDArray)searchState.get(SEARCH_DIR);
-  double dgg=Nd4j.getBlasWrapper().dot(line.sub(gLast),line);
+  double dgg=Nd4j.getBlasWrapper().dot(gradient.sub(gLast),gradient);
   double gg=Nd4j.getBlasWrapper().dot(gLast,gLast);
   double gamma=dgg / gg;
-  INDArray searchDir=line.neg().addi(searchDirLast.muli(gamma));
-  searchState.put(GRADIENT_KEY,line);
+  INDArray searchDir=gradient.neg().addi(searchDirLast.muli(gamma));
+  searchState.put(GRADIENT_KEY,gradient);
   searchState.put(SEARCH_DIR,searchDir);
 }
