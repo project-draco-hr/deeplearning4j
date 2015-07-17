@@ -1,7 +1,0 @@
-{
-  super.setupSearchState(pair);
-  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
-  INDArray params=model.params();
-  searchState.put(PARAMS_KEY,params);
-  searchState.put(GRADIENT_KEY,gradient);
-}
