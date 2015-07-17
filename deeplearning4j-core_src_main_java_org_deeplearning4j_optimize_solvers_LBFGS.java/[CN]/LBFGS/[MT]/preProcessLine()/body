@@ -1,0 +1,4 @@
+{
+  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
+  searchState.put(SEARCH_DIR,gradient.dup().mul(Nd4j.norm2(gradient).rdivi(1.0).getDouble(0)).negi());
+}

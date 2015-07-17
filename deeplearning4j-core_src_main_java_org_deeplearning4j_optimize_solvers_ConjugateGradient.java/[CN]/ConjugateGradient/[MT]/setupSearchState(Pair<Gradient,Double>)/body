@@ -2,7 +2,6 @@
   super.setupSearchState(pair);
   INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
   INDArray params=model.params();
-  searchState.put(SEARCH_DIR,Nd4j.zeros(params.shape()));
   searchState.put(PARAMS_KEY,params);
   searchState.put(GRADIENT_KEY,gradient);
 }
