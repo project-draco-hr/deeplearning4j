@@ -1,7 +1,11 @@
 {
-  double r=0.0;
-  for (  Integer i : confusion.getClasses()) {
-    r+=recall(i);
+  double recallAcc=0.0;
+  double classCount=0.0;
+  for (  Integer classLabel : confusion.getClasses()) {
+    recallAcc+=recall(classLabel);
+    if (truePositives.getCount(classLabel) > 0) {
+      classCount+=1.0;
+    }
   }
-  return r / (double)confusion.getClasses().size();
+  return recallAcc / classCount;
 }

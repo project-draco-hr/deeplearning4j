@@ -1,7 +1,11 @@
 {
-  double prec=0.0;
-  for (  Integer i : confusion.getClasses()) {
-    prec+=precision(i);
+  double precisionAcc=0.0;
+  double classCount=0.0;
+  for (  Integer classLabel : confusion.getClasses()) {
+    precisionAcc+=precision(classLabel);
+    if (truePositives.getCount(classLabel) > 0) {
+      classCount+=1.0;
+    }
   }
-  return prec / (double)confusion.getClasses().size();
+  return precisionAcc / classCount;
 }

@@ -1,4 +1,12 @@
 {
+  if (confusion == null) {
+    log.warn("Creating confusion matrix based on classes passed in . Will assume the label distribution passed in is indicative of the overall dataset");
+    Set<Integer> classes=new HashSet<>();
+    for (int i=0; i < realOutcomes.rows(); i++) {
+      classes.add(Nd4j.getBlasWrapper().iamax(realOutcomes.slice(i)));
+    }
+    confusion=new ConfusionMatrix<>(new ArrayList<>(classes));
+  }
   if (realOutcomes.length() != guesses.length())   throw new IllegalArgumentException("Unable to evaluate. Outcome matrices not same length");
   for (int i=0; i < realOutcomes.rows(); i++) {
     INDArray currRow=realOutcomes.getRow(i);
@@ -29,7 +37,7 @@
     if (currMax == guessMax) {
       incrementTruePositives(guessMax);
       for (      Integer clazz : confusion.getClasses()) {
-        if (clazz != guessMax)         trueNegative.incrementCount(clazz,1.0);
+        if (clazz != guessMax)         trueNegatives.incrementCount(clazz,1.0);
       }
     }
  else {
