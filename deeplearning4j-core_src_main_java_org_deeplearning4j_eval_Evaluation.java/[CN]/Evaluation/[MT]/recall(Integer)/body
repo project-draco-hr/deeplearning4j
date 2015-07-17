@@ -1,0 +1,6 @@
+{
+  double tpCount=truePositives.getCount(classLabel);
+  double fnCount=falseNegatives.getCount(classLabel);
+  if (tpCount == 0)   return 0;
+  return tpCount / (tpCount + fnCount);
+}

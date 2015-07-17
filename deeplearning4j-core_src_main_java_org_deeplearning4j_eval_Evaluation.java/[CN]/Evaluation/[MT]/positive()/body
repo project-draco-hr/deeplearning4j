@@ -1,3 +1,3 @@
 {
-  return truePositives.totalCount() + falseNegatives.totalCount();
+  return truePositives() + falseNegatives();
 }

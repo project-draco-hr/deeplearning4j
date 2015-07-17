@@ -1,6 +1,6 @@
 {
   StringBuilder builder=new StringBuilder().append("\n");
-  Set<Integer> classes=confusion.getClasses();
+  List<Integer> classes=confusion.getClasses();
   for (  Integer clazz : classes) {
     for (    Integer clazz2 : classes) {
       int count=confusion.getCount(clazz,clazz2);

@@ -1,5 +1,5 @@
 {
-  ConfusionMatrix<String> confusionMatrix=new ConfusionMatrix<>();
+  ConfusionMatrix<String> confusionMatrix=new ConfusionMatrix<>(Arrays.asList("a","b","c"));
   confusionMatrix.add("a","a",88);
   confusionMatrix.add("a","b",10);
   confusionMatrix.add("b","a",14);
