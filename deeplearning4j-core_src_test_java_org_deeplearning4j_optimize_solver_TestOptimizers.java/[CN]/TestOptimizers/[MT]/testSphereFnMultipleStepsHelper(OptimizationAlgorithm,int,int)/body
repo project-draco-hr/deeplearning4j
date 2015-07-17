@@ -1,7 +1,7 @@
 {
   Random rng=new DefaultRandom(12345L);
   org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-10,10);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().numLineSearchIterations(maxNumLineSearchIter).iterations(1).learningRate(0.01).layer(new RBM()).batchSize(1).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(1).learningRate(0.01).layer(new RBM()).batchSize(1).build();
   conf.addVariable("x");
   Model m=new SphereFunctionModel(100,dist,conf);
   double[] scores=new double[nSteps + 1];
