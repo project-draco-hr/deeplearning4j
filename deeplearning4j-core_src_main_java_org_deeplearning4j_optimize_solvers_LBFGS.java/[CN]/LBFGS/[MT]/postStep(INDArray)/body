@@ -1,0 +1,57 @@
+{
+  INDArray oldParameters=(INDArray)searchState.get("oldparams");
+  INDArray params=model.params();
+  INDArray oldGradient=(INDArray)searchState.get(GRADIENT_KEY);
+  LinkedList<Double> rho=(LinkedList<Double>)searchState.get("rho");
+  LinkedList<INDArray> s=(LinkedList<INDArray>)searchState.get("s");
+  LinkedList<INDArray> y=(LinkedList<INDArray>)searchState.get("y");
+  double sy=Nd4j.getBlasWrapper().dot(oldParameters,oldGradient) + Nd4j.EPS_THRESHOLD;
+  double yy=Nd4j.getBlasWrapper().dot(oldGradient,oldGradient) + Nd4j.EPS_THRESHOLD;
+  INDArray sCurrent;
+  INDArray yCurrent;
+  if (s.size() >= m) {
+    sCurrent=s.removeLast();
+    yCurrent=y.removeLast();
+    rho.removeLast();
+    sCurrent.assign(params).subi(oldParameters);
+    yCurrent.assign(gradient).subi(oldGradient);
+  }
+ else {
+    sCurrent=params.sub(oldParameters);
+    yCurrent=gradient.sub(oldGradient);
+  }
+  rho.addFirst(1.0 / sy);
+  s.addFirst(sCurrent);
+  y.addFirst(yCurrent);
+  if (s.size() != y.size())   throw new IllegalStateException("Gradient and parameter sizes are not equal");
+  int numVectors=Math.min(m,s.size());
+  double[] alpha=new double[numVectors];
+  Iterator<INDArray> sIter=s.iterator();
+  Iterator<INDArray> yIter=y.iterator();
+  Iterator<Double> rhoIter=rho.iterator();
+  INDArray searchDir=(INDArray)searchState.get(SEARCH_DIR);
+  searchDir.assign(gradient);
+  for (int i=0; i < numVectors; i++) {
+    INDArray si=sIter.next();
+    INDArray yi=yIter.next();
+    double rhoi=rhoIter.next();
+    if (si.length() != searchDir.length())     throw new IllegalStateException("Gradients and parameters length not equal");
+    alpha[i]=rhoi * Nd4j.getBlasWrapper().dot(si,searchDir);
+    Nd4j.getBlasWrapper().level1().axpy(searchDir.length(),-alpha[i],yi,searchDir);
+  }
+  double gamma=sy / yy;
+  searchDir.muli(gamma);
+  sIter=s.descendingIterator();
+  yIter=y.descendingIterator();
+  rhoIter=rho.descendingIterator();
+  for (int i=0; i < numVectors; i++) {
+    INDArray si=sIter.next();
+    INDArray yi=yIter.next();
+    double rhoi=rhoIter.next();
+    double beta=rhoi * Nd4j.getBlasWrapper().dot(yi,searchDir);
+    Nd4j.getBlasWrapper().level1().axpy(gradient.length(),alpha[i] - beta,si,searchDir);
+  }
+  searchDir.negi();
+  oldParameters.assign(params);
+  oldGradient.assign(gradient);
+}

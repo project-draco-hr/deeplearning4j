@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.ConcatParameter) {
-    return mergeFrom((Caffe.ConcatParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

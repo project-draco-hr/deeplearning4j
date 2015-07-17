@@ -1,0 +1,3 @@
+{
+  return Nd4j.getBlasWrapper().dot(parameters,parameters);
+}

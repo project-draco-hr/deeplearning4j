@@ -1,8 +1,0 @@
-{
-  if (excludeBuilder_ == null) {
-    return exclude_.size();
-  }
- else {
-    return excludeBuilder_.getCount();
-  }
-}

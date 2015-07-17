@@ -1,5 +1,0 @@
-{
-  NetParameter net=readTextFormatNet(textFormatNetPath);
-  SolverParameter solver=readTextFormatSolver(textFormatSolverPath);
-  return new CaffeSolverNetContainer(net,solver);
-}

@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.PoolingParameter) {
-    return mergeFrom((Caffe.PoolingParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

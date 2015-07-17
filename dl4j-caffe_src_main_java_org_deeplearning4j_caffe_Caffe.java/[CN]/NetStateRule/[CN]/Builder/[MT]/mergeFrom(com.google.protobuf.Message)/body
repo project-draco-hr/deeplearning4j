@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.NetStateRule) {
-    return mergeFrom((Caffe.NetStateRule)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

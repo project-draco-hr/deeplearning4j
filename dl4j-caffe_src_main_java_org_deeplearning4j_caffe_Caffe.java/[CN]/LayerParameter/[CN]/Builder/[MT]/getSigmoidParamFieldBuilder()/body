@@ -1,7 +1,0 @@
-{
-  if (sigmoidParamBuilder_ == null) {
-    sigmoidParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.SigmoidParameter,Caffe.SigmoidParameter.Builder,Caffe.SigmoidParameterOrBuilder>(getSigmoidParam(),getParentForChildren(),isClean());
-    sigmoidParam_=null;
-  }
-  return sigmoidParamBuilder_;
-}

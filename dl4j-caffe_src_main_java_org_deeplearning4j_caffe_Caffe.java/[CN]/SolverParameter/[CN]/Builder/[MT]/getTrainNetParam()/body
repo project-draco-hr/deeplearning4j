@@ -1,8 +1,0 @@
-{
-  if (trainNetParamBuilder_ == null) {
-    return trainNetParam_;
-  }
- else {
-    return trainNetParamBuilder_.getMessage();
-  }
-}

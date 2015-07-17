@@ -18,5 +18,4 @@
  else     if (i < recurrentPlusDecoder)     decoderWeightsLinear.putScalar(count++,params.getDouble(i));
  else     decoderBiasLinear.putScalar(count++,params.getDouble(i));
   }
-  setScore();
 }

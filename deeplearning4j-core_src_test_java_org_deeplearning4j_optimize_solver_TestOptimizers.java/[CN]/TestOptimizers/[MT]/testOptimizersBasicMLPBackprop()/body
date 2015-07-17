@@ -1,0 +1,9 @@
+{
+  DataSetIterator iter=new IrisDataSetIterator(5,50);
+  for (  OptimizationAlgorithm oa : OptimizationAlgorithm.values()) {
+    MultiLayerNetwork network=new MultiLayerNetwork(getMLPConfigIris(oa));
+    network.init();
+    iter.reset();
+    network.fit(iter);
+  }
+}

@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.InfogainLossParameter) {
-    return mergeFrom((Caffe.InfogainLossParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

@@ -1,7 +1,0 @@
-{
-  if (paramBuilder_ == null) {
-    paramBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.ParamSpec,Caffe.ParamSpec.Builder,Caffe.ParamSpecOrBuilder>(param_,((bitField0_ & 0x00000040) == 0x00000040),getParentForChildren(),isClean());
-    param_=null;
-  }
-  return paramBuilder_;
-}

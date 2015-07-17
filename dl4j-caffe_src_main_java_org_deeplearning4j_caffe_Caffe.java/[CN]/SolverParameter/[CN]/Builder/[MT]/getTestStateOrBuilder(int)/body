@@ -1,8 +1,0 @@
-{
-  if (testStateBuilder_ == null) {
-    return testState_.get(index);
-  }
- else {
-    return testStateBuilder_.getMessageOrBuilder(index);
-  }
-}

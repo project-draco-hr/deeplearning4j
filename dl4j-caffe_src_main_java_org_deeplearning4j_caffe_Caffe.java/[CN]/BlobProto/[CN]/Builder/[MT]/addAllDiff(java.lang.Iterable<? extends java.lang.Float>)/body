@@ -1,6 +1,0 @@
-{
-  ensureDiffIsMutable();
-  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,diff_);
-  onChanged();
-  return this;
-}

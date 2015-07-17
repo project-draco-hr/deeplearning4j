@@ -1,6 +1,0 @@
-{
-  double alam=(double)params[0];
-  double oldAlam=(double)params[1];
-  double scalar=alam - oldAlam;
-  Nd4j.getBlasWrapper().level1().axpy(line.length(),scalar,line,x);
-}

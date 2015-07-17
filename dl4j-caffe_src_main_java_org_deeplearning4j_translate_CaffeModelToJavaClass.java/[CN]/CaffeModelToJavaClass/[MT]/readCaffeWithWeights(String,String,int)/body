@@ -1,5 +1,0 @@
-{
-  NetParameter net=readBinaryNet(binaryNetPath,sizeLimitMb);
-  SolverParameter solver=readTextFormatSolver(textFormatSolverPath);
-  return new CaffeSolverNetContainer(net,solver);
-}

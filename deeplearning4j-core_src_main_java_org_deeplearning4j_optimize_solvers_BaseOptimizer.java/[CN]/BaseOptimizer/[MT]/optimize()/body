@@ -1,47 +1,42 @@
 {
+  INDArray gradient;
+  INDArray searchDirection;
+  INDArray parameters=null;
   model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
-  setupSearchState(pair);
   score=pair.getSecond();
-  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
-  for (  TerminationCondition condition : terminationConditions)   if (condition.terminate(0.0,0.0,new Object[]{gradient})) {
-    log.info("Hit termination condition " + condition.getClass().getName());
-    return true;
-  }
-  boolean testLineSearch=preFirstStepProcess(gradient);
-  if (testLineSearch) {
-    try {
-      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
-      step=lineMaximizer.optimize(step,params,gradient);
-    }
- catch (    InvalidStepException e) {
-      log.warn("Invalid step...continuing another iteration");
-    }
-    gradient=(INDArray)searchState.get(GRADIENT_KEY);
-    postFirstStep(gradient);
-    if (step == 0.0) {
-      log.warn("Unable to step in direction");
-      return false;
-    }
-  }
+  setupSearchState(pair);
+  preProcessLine();
   for (int i=0; i < conf.getNumIterations(); i++) {
-    int v=conf.getNumIterations();
-    preProcessLine(gradient);
+    gradient=(INDArray)searchState.get(GRADIENT_KEY);
+    searchDirection=(INDArray)searchState.get(SEARCH_DIR);
+    parameters=(INDArray)searchState.get(PARAMS_KEY);
     try {
-      INDArray params=(INDArray)searchState.get(PARAMS_KEY);
-      step=lineMaximizer.optimize(step,params,gradient);
+      step=lineMaximizer.optimize(parameters,gradient,searchDirection);
     }
  catch (    InvalidStepException e) {
-      log.warn("Invalid step...continuing another iteration");
+      log.warn("Invalid step...continuing another iteration: {}",e.getMessage());
+      step=0.0;
+    }
+    if (step != 0.0) {
+      stepFunction.step(parameters,searchDirection,step);
+      model.setParams(parameters);
+    }
+ else {
+      log.warn("Step size returned by line search is 0.0.");
     }
     oldScore=score;
     pair=gradientAndScore();
-    setupSearchState(pair);
+    postStep(pair.getFirst().gradient());
+    score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
-    for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
-    postStep();
+    for (    TerminationCondition condition : terminationConditions) {
+      if (condition.terminate(score,oldScore,new Object[]{pair.getFirst().gradient()})) {
+        log.debug("Hit termination condition: score={}, oldScore={}, condition={}",score,oldScore,condition);
+        return true;
+      }
+    }
     this.iteration++;
-    for (    TerminationCondition condition : terminationConditions)     if (condition.terminate(score,oldScore,new Object[]{gradient}))     return true;
   }
   return true;
 }

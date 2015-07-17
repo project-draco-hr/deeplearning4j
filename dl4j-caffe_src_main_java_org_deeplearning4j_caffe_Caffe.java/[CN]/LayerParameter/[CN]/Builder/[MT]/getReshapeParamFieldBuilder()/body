@@ -1,7 +1,0 @@
-{
-  if (reshapeParamBuilder_ == null) {
-    reshapeParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ReshapeParameter,Caffe.ReshapeParameter.Builder,Caffe.ReshapeParameterOrBuilder>(getReshapeParam(),getParentForChildren(),isClean());
-    reshapeParam_=null;
-  }
-  return reshapeParamBuilder_;
-}
