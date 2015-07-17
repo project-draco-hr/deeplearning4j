@@ -1,0 +1,20 @@
+{
+  INDArray paramExceeds512=parameters.cond(new Condition(){
+    @Override public Boolean apply(    Number input){
+      return Math.abs(input.doubleValue()) > 5.12;
+    }
+    @Override public Boolean apply(    IComplexNumber input){
+      throw new UnsupportedOperationException();
+    }
+  }
+);
+  int nExceeds512=paramExceeds512.sum(Integer.MAX_VALUE).getInt(0);
+  if (nExceeds512 > 0)   return Double.POSITIVE_INFINITY;
+  int nDim=parameters.length();
+  double costFn=10 * parameters.length();
+  for (int i=0; i < nDim; i++) {
+    double xi=parameters.getDouble(i);
+    costFn+=xi * xi - 10.0 * Math.cos(2.0 * Math.PI * xi);
+  }
+  return costFn;
+}
