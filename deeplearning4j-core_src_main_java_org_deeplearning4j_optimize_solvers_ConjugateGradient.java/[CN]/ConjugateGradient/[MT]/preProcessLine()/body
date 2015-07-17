@@ -1,5 +1,6 @@
 {
   INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
   INDArray searchDir=(INDArray)searchState.get(SEARCH_DIR);
-  searchDir.assign(gradient).negi();
+  if (searchDir == null)   searchState.put(SEARCH_DIR,gradient.neg());
+ else   searchDir.assign(gradient).negi();
 }
