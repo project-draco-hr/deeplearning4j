@@ -3,7 +3,7 @@
     this.input=input.dup();
     applyDropOutIfNecessary(this.input);
   }
-  Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(getIterationListeners()).build();
+  Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(getListeners()).build();
   this.optimizer=solver.getOptimizer();
   solver.optimize();
 }

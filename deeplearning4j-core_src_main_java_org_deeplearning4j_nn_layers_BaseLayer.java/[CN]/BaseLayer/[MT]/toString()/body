@@ -1,3 +1,3 @@
 {
-  return getClass().getName() + "{" + "conf="+ conf+ ", input="+ input+ ", params="+ params+ ", dropoutMask="+ dropoutMask+ ", paramInitializer="+ paramInitializer+ ", score="+ score+ ", optimizer="+ optimizer+ ", iterationListeners="+ iterationListeners+ '}';
+  return getClass().getName() + "{" + "conf="+ conf+ ", input="+ input+ ", params="+ params+ ", dropoutMask="+ dropoutMask+ ", paramInitializer="+ paramInitializer+ ", score="+ score+ ", optimizer="+ optimizer+ ", listeners="+ listeners+ '}';
 }
