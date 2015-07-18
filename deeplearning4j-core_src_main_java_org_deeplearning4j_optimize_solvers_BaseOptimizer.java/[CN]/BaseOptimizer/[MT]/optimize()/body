@@ -23,7 +23,7 @@
       model.setParams(parameters);
     }
  else {
-      log.warn("Step size returned by line search is 0.0.");
+      log.debug("Step size returned by line search is 0.0.");
     }
     oldScore=score;
     pair=gradientAndScore();
