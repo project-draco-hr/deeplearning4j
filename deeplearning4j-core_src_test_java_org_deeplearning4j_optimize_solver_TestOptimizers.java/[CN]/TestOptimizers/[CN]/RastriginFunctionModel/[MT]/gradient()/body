@@ -1,11 +1,8 @@
 {
-  int nDim=parameters.length();
-  INDArray gradient=Nd4j.zeros(nDim);
-  for (int i=0; i < nDim; i++) {
-    double xi=parameters.getDouble(i);
-    double g=2 * xi + 20 * Math.PI * Math.sin(2 * Math.PI * xi);
-    gradient.put(0,i,g);
-  }
+  INDArray gradient=parameters.mul(2 * Math.PI);
+  Nd4j.getExecutioner().exec(new Sin(gradient));
+  gradient.muli(20 * Math.PI);
+  gradient.addi(parameters.mul(2));
   Gradient g=new DefaultGradient();
   g.gradientForVariable().put("x",gradient);
   return g;
