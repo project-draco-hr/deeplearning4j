@@ -1,6 +1,6 @@
 {
-  INDArray test=Nd4j.rand(new int[]{328,400,4});
-  PlotFilters render=new PlotFilters();
-  INDArray rendered=render.render(test,1,1);
-  assertArrayEquals(new int[]{7619,95},rendered.shape());
+  INDArray test=Nd4j.rand(new int[]{784,600}).transpose();
+  PlotFilters render=new PlotFilters(test,new int[]{10,10},new int[]{0,0},new int[]{28,28});
+  render.plot();
+  INDArray rendered=render.getPlot();
 }
