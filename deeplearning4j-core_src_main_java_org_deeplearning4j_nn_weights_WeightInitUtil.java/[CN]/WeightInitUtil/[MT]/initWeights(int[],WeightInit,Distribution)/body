@@ -6,8 +6,7 @@ case NORMALIZED:
     ret=Nd4j.rand(shape,Nd4j.getRandom());
   return ret.subi(0.5).divi(shape[0]);
 case XAVIER:
-double var=2 / (double)shape[0];
-ret=Nd4j.getDistributions().createNormal(0,var).sample(shape);
+ret=Nd4j.randn(shape).divi(FastMath.sqrt(shape[0] + shape[shape.length - 1]));
 return ret;
 case UNIFORM:
 double a=1 / (double)shape[0];
