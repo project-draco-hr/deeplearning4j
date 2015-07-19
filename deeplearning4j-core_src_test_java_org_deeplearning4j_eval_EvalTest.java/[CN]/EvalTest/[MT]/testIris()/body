@@ -1,0 +1,25 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).activationFunction("softmax").iterations(500).weightInit(WeightInit.XAVIER).seed(42).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
+  OutputLayer l=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(500)),0);
+  DataSetIterator iter=new IrisDataSetIterator(150,150);
+  DataSet next=iter.next();
+  next.shuffle();
+  SplitTestAndTrain trainTest=next.splitTestAndTrain(110,new Random(42));
+  DataSet train=trainTest.getTrain();
+  train.normalizeZeroMeanZeroUnitVariance();
+  DataSet test=trainTest.getTest();
+  test.normalizeZeroMeanZeroUnitVariance();
+  INDArray testFeature=test.getFeatureMatrix();
+  INDArray testLabel=test.getLabels();
+  l.fit(train);
+  INDArray testPredictedLabel=l.output(testFeature);
+  Evaluation eval=new Evaluation(3);
+  eval.eval(testLabel,testPredictedLabel);
+  double eval1F1=eval.f1();
+  double eval1Acc=eval.accuracy();
+  Evaluation eval2=new Evaluation();
+  eval2.eval(testLabel,testPredictedLabel);
+  double eval2F1=eval2.f1();
+  double eval2Acc=eval2.accuracy();
+  assertTrue(eval1F1 == eval2F1 && eval1Acc == eval2Acc);
+}
