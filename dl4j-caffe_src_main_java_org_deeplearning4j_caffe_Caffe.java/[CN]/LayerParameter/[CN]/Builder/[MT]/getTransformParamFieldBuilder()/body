@@ -1,7 +1,0 @@
-{
-  if (transformParamBuilder_ == null) {
-    transformParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.TransformationParameter,Caffe.TransformationParameter.Builder,Caffe.TransformationParameterOrBuilder>(getTransformParam(),getParentForChildren(),isClean());
-    transformParam_=null;
-  }
-  return transformParamBuilder_;
-}

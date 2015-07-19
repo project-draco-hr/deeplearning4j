@@ -1,11 +1,8 @@
 {
   super.setupSearchState(pair);
-  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
   INDArray params=(INDArray)searchState.get(PARAMS_KEY);
-  searchState.put("s",new LinkedList());
-  searchState.put("y",new LinkedList());
-  searchState.put("rho",new LinkedList());
-  searchState.put("alpha",Nd4j.create(m));
+  searchState.put("s",new LinkedList<INDArray>());
+  searchState.put("y",new LinkedList<INDArray>());
+  searchState.put("rho",new LinkedList<Double>());
   searchState.put("oldparams",params.dup());
-  searchState.put("oldgradient",gradient.dup());
 }

@@ -1,4 +1,4 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).nIn(4).nOut(3).activationFunction(activationFunction).lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.ITERATION_GRADIENT_DESCENT).iterations(iterations).weightInit(WeightInit.XAVIER).learningRate(1e-1).seed(12345L).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).nIn(4).nOut(3).activationFunction(activationFunction).lossFunction(LossFunctions.LossFunction.MCXENT).iterations(iterations).weightInit(WeightInit.XAVIER).learningRate(1e-1).seed(12345L).build();
   return LayerFactories.getFactory(conf.getLayer()).create(conf);
 }

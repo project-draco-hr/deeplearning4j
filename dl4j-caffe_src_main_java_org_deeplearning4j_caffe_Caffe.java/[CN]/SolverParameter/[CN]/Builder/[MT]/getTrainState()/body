@@ -1,8 +1,0 @@
-{
-  if (trainStateBuilder_ == null) {
-    return trainState_;
-  }
- else {
-    return trainStateBuilder_.getMessage();
-  }
-}

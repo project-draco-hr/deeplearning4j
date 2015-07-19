@@ -1,6 +1,5 @@
 {
-  LinAlgExceptions.assertRows(input,labels);
-  if (input == null)   return;
+  if (input == null || labels == null)   return;
   INDArray output=output(input);
   if (conf.getLossFunction() == LossFunctions.LossFunction.CUSTOM) {
     LossFunction create=Nd4j.getOpFactory().createLossFunction(conf.getCustomLossFunction(),input,output);

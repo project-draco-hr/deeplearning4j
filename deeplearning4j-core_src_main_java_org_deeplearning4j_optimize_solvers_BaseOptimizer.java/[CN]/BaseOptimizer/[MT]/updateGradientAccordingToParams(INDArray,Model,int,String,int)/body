@@ -4,4 +4,5 @@
   Gradient g=new DefaultGradient();
   g.setGradientFor(paramType,gradient);
   updater.update(layer,g,iteration);
+  gradient.assign(g.getGradientFor(paramType));
 }

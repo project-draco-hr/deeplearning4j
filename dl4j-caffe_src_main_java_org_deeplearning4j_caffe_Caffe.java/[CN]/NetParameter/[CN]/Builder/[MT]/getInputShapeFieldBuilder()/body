@@ -1,7 +1,0 @@
-{
-  if (inputShapeBuilder_ == null) {
-    inputShapeBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.BlobShape,Caffe.BlobShape.Builder,Caffe.BlobShapeOrBuilder>(inputShape_,((bitField0_ & 0x00000004) == 0x00000004),getParentForChildren(),isClean());
-    inputShape_=null;
-  }
-  return inputShapeBuilder_;
-}

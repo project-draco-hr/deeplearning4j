@@ -1,7 +1,0 @@
-{
-  if (trainStateBuilder_ == null) {
-    trainStateBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.NetState,Caffe.NetState.Builder,Caffe.NetStateOrBuilder>(getTrainState(),getParentForChildren(),isClean());
-    trainState_=null;
-  }
-  return trainStateBuilder_;
-}

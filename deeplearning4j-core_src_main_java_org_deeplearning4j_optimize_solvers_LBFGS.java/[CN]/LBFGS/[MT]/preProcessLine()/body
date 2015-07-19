@@ -1,0 +1,10 @@
+{
+  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
+  INDArray searchDir=(INDArray)searchState.get(SEARCH_DIR);
+  if (searchDir == null) {
+    searchState.put(SEARCH_DIR,gradient.div(-1.0 * Nd4j.norm2(gradient).getDouble(0)));
+  }
+ else {
+    searchDir.assign(gradient).divi(-1.0 * Nd4j.norm2(gradient).getDouble(0));
+  }
+}

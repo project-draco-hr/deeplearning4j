@@ -1,6 +1,0 @@
-{
-  bitField0_=(bitField0_ & ~0x00000001);
-  pool_=Caffe.PoolingParameter.PoolMethod.MAX;
-  onChanged();
-  return this;
-}

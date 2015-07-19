@@ -1,0 +1,5 @@
+{
+  Random rng=new DefaultRandom(12345L);
+  org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-4.0,4.0);
+  return dist.sample(new int[]{1,nDimensions});
+}

@@ -5,6 +5,6 @@
   this.terminationConditions=terminationConditions;
   this.model=model;
   lineMaximizer=new BackTrackLineSearch(model,stepFunction,this);
-  lineMaximizer.setStpmax(stpMax);
-  lineMaximizer.setMaxIterations(conf.getNumLineSearchIterations());
+  lineMaximizer.setStepMax(stepMax);
+  lineMaximizer.setMaxIterations(conf.getMaxNumLineSearchIterations());
 }

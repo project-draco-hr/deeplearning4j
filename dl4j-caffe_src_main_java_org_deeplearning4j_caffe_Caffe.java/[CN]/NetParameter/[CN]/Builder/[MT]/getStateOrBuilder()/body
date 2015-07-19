@@ -1,8 +1,0 @@
-{
-  if (stateBuilder_ != null) {
-    return stateBuilder_.getMessageOrBuilder();
-  }
- else {
-    return state_;
-  }
-}

@@ -1,8 +1,0 @@
-{
-  if (poolingParamBuilder_ == null) {
-    return poolingParam_;
-  }
- else {
-    return poolingParamBuilder_.getMessage();
-  }
-}

@@ -1,0 +1,11 @@
+{
+  INDArray gLast=(INDArray)searchState.get(GRADIENT_KEY);
+  INDArray searchDirLast=(INDArray)searchState.get(SEARCH_DIR);
+  double dgg=Nd4j.getBlasWrapper().dot(gradient.sub(gLast),gradient);
+  double gg=Nd4j.getBlasWrapper().dot(gLast,gLast);
+  double gamma=Math.max(dgg / gg,0.0);
+  if (dgg <= 0.0)   logger.debug("Polak-Ribiere gamma <= 0.0; using gamma=0.0 -> SGD line search. dgg={}, gg={}",dgg,gg);
+  INDArray searchDir=searchDirLast.muli(gamma).subi(gradient);
+  searchState.put(GRADIENT_KEY,gradient);
+  searchState.put(SEARCH_DIR,searchDir);
+}

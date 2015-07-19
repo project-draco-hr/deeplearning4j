@@ -1,7 +1,0 @@
-{
-  double alam=(double)params[0];
-  double oldAlam=(double)params[1];
-  if (x.data().dataType() == DataBuffer.Type.DOUBLE)   Nd4j.getBlasWrapper().axpy(alam - oldAlam,line,x);
- else   if (x.data().dataType() == DataBuffer.Type.FLOAT)   Nd4j.getBlasWrapper().axpy((float)(alam - oldAlam),line,x);
-  x.subi(line.mul(alam - oldAlam));
-}
