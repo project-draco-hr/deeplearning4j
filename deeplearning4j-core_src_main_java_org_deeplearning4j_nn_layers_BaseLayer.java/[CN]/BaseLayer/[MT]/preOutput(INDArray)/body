@@ -1,7 +1,6 @@
 {
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
   this.input=x.dup();
-  applyDropOutIfNecessary(x);
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
   if (conf.isUseDropConnect()) {
