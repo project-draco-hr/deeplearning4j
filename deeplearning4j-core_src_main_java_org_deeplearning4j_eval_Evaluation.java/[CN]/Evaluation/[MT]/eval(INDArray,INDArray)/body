@@ -1,4 +1,5 @@
 {
+  numRowCounter+=realOutcomes.shape()[0];
   if (confusion == null) {
     log.warn("Creating confusion matrix based on classes passed in . Will assume the label distribution passed in is indicative of the overall dataset");
     Set<Integer> classes=new HashSet<>();
@@ -43,6 +44,9 @@
  else {
       incrementFalseNegatives(currMax);
       incrementFalsePositives(guessMax);
+      for (      Integer clazz : confusion.getClasses()) {
+        if (clazz != guessMax && clazz != currMax)         trueNegatives.incrementCount(clazz,1.0);
+      }
     }
   }
 }
