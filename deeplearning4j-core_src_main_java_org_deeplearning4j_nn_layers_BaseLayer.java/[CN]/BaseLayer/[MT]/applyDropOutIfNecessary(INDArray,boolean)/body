@@ -1,0 +1,5 @@
+{
+  if (conf.getDropOut() > 0 && !conf.isUseDropConnect() && training) {
+    dropoutMask=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
+  }
+}

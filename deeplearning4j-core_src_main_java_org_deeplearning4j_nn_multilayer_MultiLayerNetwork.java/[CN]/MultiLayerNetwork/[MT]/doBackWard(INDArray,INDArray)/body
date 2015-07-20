@@ -9,14 +9,14 @@
   OutputLayer output=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (output.conf().getWeightInit() == WeightInit.ZERO) {
-    throw new IllegalStateException("Output layer weights cannot be intialized to zero when using backprop.");
+    throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
   }
   ;
   output.setLabels(labels);
   for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
     int numLayers=getnLayers();
     List<Gradient> gradientUpdates=new ArrayList<>();
-    Pair<List<INDArray>,List<INDArray>> activationsAndDeriv=feedForwardActivationsAndDerivatives();
+    Pair<List<INDArray>,List<INDArray>> activationsAndDeriv=feedForwardActivationsAndDerivatives(true);
     List<INDArray> activations=activationsAndDeriv.getFirst();
     INDArray outputActivation=activations.get(activations.size() - 1);
     List<INDArray> derivatives=activationsAndDeriv.getSecond();

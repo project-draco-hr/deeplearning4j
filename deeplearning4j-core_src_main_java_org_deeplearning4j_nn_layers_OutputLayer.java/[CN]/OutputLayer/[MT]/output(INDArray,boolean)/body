@@ -6,6 +6,6 @@
     return ret;
   }
   this.input=x.dup();
-  if (!test)   applyDropOutIfNecessary(input());
+  if (!test)   applyDropOutIfNecessary(input(),!test);
   return super.activate();
 }

@@ -1,0 +1,14 @@
+{
+  if (x == null)   throw new IllegalArgumentException("No null input allowed");
+  setInput(x.dup(),training);
+  applyDropOutIfNecessary(this.input,training);
+  INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
+  INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  if (conf.isUseDropConnect() && training) {
+    if (conf.getDropOut() > 0) {
+      W=Dropout.applyDropConnect(this,DefaultParamInitializer.WEIGHT_KEY);
+    }
+  }
+  INDArray ret=input().mmul(W).addiRowVector(b);
+  return ret;
+}

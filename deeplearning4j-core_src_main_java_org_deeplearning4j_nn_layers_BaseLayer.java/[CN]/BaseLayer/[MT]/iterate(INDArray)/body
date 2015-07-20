@@ -1,6 +1,6 @@
 {
-  this.input=input.dup();
-  applyDropOutIfNecessary(this.input);
+  setInput(input.dup());
+  applyDropOutIfNecessary(this.input,true);
   Gradient gradient=gradient();
   for (  String paramType : gradient.gradientForVariable().keySet()) {
     update(gradient.getGradientFor(paramType),paramType);

@@ -1,4 +1,4 @@
 {
-  if (paramType.contains("b"))   setParam(paramType,getParam(paramType).addi(gradient.sum(0)));
- else   setParam(paramType,getParam(paramType).addi(gradient));
+  if (paramType.contains("b"))   setParam(paramType,getParam(paramType).subi(gradient.sum(0)));
+ else   setParam(paramType,getParam(paramType).subi(gradient));
 }

@@ -1,7 +1,7 @@
 {
   if (input != null) {
     this.input=input.dup();
-    applyDropOutIfNecessary(this.input);
+    applyDropOutIfNecessary(this.input,true);
   }
   Solver solver=new Solver.Builder().model(this).configure(conf()).listeners(getIterationListeners()).build();
   this.optimizer=solver.getOptimizer();

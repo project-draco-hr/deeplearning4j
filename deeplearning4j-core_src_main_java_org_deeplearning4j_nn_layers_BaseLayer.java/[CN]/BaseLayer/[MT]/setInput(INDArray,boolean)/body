@@ -1,0 +1,4 @@
+{
+  if (conf.getDropOut() > 0 && training)   this.dropoutMask=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
+  this.input=input;
+}

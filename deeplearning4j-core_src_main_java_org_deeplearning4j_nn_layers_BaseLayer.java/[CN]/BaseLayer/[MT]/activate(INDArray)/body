@@ -1,4 +1,3 @@
 {
-  this.input=input.dup();
-  return activate();
+  return activate(input,true);
 }
