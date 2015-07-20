@@ -1,4 +1,9 @@
 {
+  INDArray[] activations=activateHelper();
+  INDArray outputActivations=activations[0];
+  INDArray memCellActivations=activations[1];
+  INDArray ifogZs=activations[2];
+  INDArray ifogAs=activations[3];
   INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS);
   INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
   int hiddenLayerSize=recurrentWeights.rows();
@@ -44,7 +49,7 @@
     INDArray zi=ifogZs.slice(t,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
     INDArray ag=ifogAs.slice(t,0).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
     INDArray deltai=nablaCellState.mul(ag).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("tanh",zi).derivative()));
-    INDArray prevLayerActivationSlice=activation.slice(t,2);
+    INDArray prevLayerActivationSlice=input.slice(t,2);
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevLayerActivationSlice).transpose());

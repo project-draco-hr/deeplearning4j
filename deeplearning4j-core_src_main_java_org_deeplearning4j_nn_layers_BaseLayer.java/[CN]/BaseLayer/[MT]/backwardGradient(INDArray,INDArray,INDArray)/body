@@ -1,8 +1,0 @@
-{
-  Gradient ret=new DefaultGradient();
-  INDArray delta=epsilon.muli(derivative);
-  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.transpose().mmul(activation).transpose());
-  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.sum(0));
-  INDArray epsilonNext=params.get(DefaultParamInitializer.WEIGHT_KEY).mmul(delta.transpose()).transpose();
-  return new Pair<>(ret,epsilonNext);
-}
