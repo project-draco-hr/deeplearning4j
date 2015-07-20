@@ -23,7 +23,7 @@
         }
       }
  else       if (i < getLayers().length) {
-        if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput);
+        if (input != null)         layerInput=activationFromPrevLayer(i - 1,layerInput,true);
         if (type == Layer.Type.FEED_FORWARD || type == Layer.Type.RECURRENT) {
           if (i != (layers.length - 1)) {
             numHiddenLayersSizesUsed++;
