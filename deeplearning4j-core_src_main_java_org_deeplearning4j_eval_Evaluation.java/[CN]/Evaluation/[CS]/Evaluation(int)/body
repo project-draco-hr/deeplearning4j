@@ -1,4 +1,5 @@
 {
   for (int i=0; i < numClasses; i++)   classLabels.add(i);
   confusion=new ConfusionMatrix<>(classLabels);
+  numRowCounter=0;
 }

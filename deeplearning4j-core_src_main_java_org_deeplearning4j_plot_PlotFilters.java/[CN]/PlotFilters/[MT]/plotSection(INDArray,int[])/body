@@ -1,0 +1,28 @@
+{
+  INDArray ret=Nd4j.zeros(retShape);
+  if (input.getLeadingOnes() == 2)   input=input.reshape(input.size(-2),input.size(-1));
+  int h=imageShape[0];
+  int w=imageShape[1];
+  int hs=tileSpacing[0];
+  int ws=tileSpacing[1];
+  for (int tileRow=0; tileRow < tileShape[0]; tileRow++) {
+    for (int tileCol=0; tileCol < tileShape[1]; tileCol++) {
+      if (tileRow * tileShape[1] + tileCol < input.size(0)) {
+        INDArray image=input.get(new NDArrayIndex(tileRow * tileShape[1] + tileCol));
+        image=image.reshape(imageShape);
+        if (scaleRowsToInterval) {
+          image=scale(image);
+        }
+        if (outputPixels)         image.muli(255);
+        int rowBegin=tileRow * (h + hs);
+        int rowEnd=tileRow * (h + hs) + h;
+        int colBegin=tileCol * (w + ws);
+        int colEnd=tileCol * (w + ws) + w;
+        NDArrayIndex rowIndex=NDArrayIndex.interval(rowBegin,rowEnd);
+        NDArrayIndex colIndex=NDArrayIndex.interval(colBegin,colEnd);
+        ret.put(new NDArrayIndex[]{rowIndex,colIndex},image);
+      }
+    }
+  }
+  return ret;
+}

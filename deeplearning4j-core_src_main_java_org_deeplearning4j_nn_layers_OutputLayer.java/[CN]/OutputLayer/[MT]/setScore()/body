@@ -1,6 +1,5 @@
 {
-  LinAlgExceptions.assertRows(input,labels);
-  if (input == null)   return;
+  if (input == null || labels == null)   return;
   INDArray output=output(input);
   if (conf.getLossFunction() == LossFunctions.LossFunction.CUSTOM) {
     LossFunction create=Nd4j.getOpFactory().createLossFunction(conf.getCustomLossFunction(),input,output);
@@ -8,7 +7,7 @@
     score=create.currentResult().doubleValue();
   }
  else {
-    score=LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
+    score=LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.getL1(),l1Magnitude(),l2Magnitude(),conf.isUseRegularization());
   }
   if (conf.isMinimize())   score=-score;
 }

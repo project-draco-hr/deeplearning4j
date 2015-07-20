@@ -1,15 +1,9 @@
 {
   if (iteration % this.iteration == 0) {
     INDArray weights=model.getParam(variables.get(0));
-    if (weights.rank() < 4) {
-      if (weights.rank() == 2) {
-        weights=weights.reshape(1,1,weights.rows(),weights.columns());
-      }
- else       if (weights.rank() == 3) {
-        weights=weights.reshape(Ints.concat(new int[]{1},weights.shape()));
-      }
-    }
-    INDArray plot=filters.render(weights,1);
+    filters.setInput(weights.transpose());
+    filters.plot();
+    INDArray plot=filters.getPlot();
     BufferedImage image=ImageLoader.toImage(plot);
     try {
       outputFile.createNewFile();

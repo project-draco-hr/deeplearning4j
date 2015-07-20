@@ -1,6 +1,4 @@
 {
-  if (this.input == null)   return;
   INDArray forward=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",forward(xi,xs)).derivative(),1);
-  score=LossFunctions.score(xs,conf.getLossFunction(),forward,conf.getL2(),conf.isUseRegularization());
-  if (conf.isMinimize())   score=-score;
+  score=LossFunctions.score(xs,conf.getLossFunction(),forward,conf.getL2(),conf.getL1(),l1Magnitude(),l2Magnitude(),conf.isUseRegularization());
 }

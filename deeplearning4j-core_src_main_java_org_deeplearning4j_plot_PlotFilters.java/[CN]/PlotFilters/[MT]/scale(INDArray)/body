@@ -1,0 +1,3 @@
+{
+  return toScale.sub(toScale.min(Integer.MAX_VALUE)).muli(1.0 / (Nd4j.EPS_THRESHOLD + toScale.max(Integer.MAX_VALUE).getDouble(0)));
+}

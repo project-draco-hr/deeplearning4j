@@ -4,6 +4,6 @@
     init();
   }
   for (  Layer layer : layers) {
-    layer.setIterationListeners(listeners);
+    layer.setListeners(listeners);
   }
 }

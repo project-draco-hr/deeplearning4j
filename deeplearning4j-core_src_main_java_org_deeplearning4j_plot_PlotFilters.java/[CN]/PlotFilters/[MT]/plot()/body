@@ -1,0 +1,14 @@
+{
+  int[] retShape={(imageShape[0] + tileSpacing[0]) * tileShape[0] - tileSpacing[0],(imageShape[1] + tileSpacing[1]) * tileShape[1] - tileSpacing[1]};
+  if (input.rank() == 2) {
+    plot=plotSection(input,retShape);
+    return;
+  }
+ else {
+    plot=Nd4j.zeros(retShape[0],retShape[1],4);
+    for (int i=0; i < 4; i++) {
+      INDArray retSection=plotSection(input.slice(i),retShape);
+      plot.putSlice(i,retSection);
+    }
+  }
+}
