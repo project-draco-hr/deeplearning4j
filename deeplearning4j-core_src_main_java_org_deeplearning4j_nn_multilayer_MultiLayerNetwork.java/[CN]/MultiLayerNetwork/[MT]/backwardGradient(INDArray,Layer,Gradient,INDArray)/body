@@ -1,3 +1,15 @@
 {
-  throw new UnsupportedOperationException();
+  INDArray currEpsilon=null;
+  Gradient outputGradient=new DefaultGradient();
+  Map<String,INDArray> gradientMap=outputGradient.gradientForVariable();
+  for (int i=layers.length - 1; i >= 0; i--) {
+    Pair<Gradient,INDArray> out=null;
+    currEpsilon=out.getSecond();
+    Map<String,INDArray> layerGradMap=out.getFirst().gradientForVariable();
+    for (    Map.Entry<String,INDArray> entry : layerGradMap.entrySet()) {
+      String newKey=String.valueOf(i) + "_" + entry.getKey();
+      gradientMap.put(newKey,entry.getValue());
+    }
+  }
+  return null;
 }
