@@ -1,4 +1,4 @@
 {
-  listener=new PlotFiltersIterationListener(variables);
+  listener=new PlotFiltersIterationListener(null,variables,0);
   this.iterations=iterations;
 }
