@@ -1,5 +1,5 @@
 {
-  fit(matrix);
+  fit(matrix,nDims);
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path)));
   for (int i=0; i < y.rows(); i++) {
     if (i >= labels.size())     break;
