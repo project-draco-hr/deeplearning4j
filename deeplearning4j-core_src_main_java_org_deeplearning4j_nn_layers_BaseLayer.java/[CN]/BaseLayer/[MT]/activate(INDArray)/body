@@ -1,5 +1,4 @@
 {
   this.input=input.dup();
-  applyDropOutIfNecessary(this.input);
   return activate();
 }
