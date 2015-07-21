@@ -45,7 +45,7 @@
         if (update != null)         currLayer.update(update,paramType);
       }
     }
-    getOutputLayer().setScore();
+    getOutputLayer().computeGradientAndScore();
     for (    IterationListener listener : listeners)     listener.iterationDone(getOutputLayer(),i);
   }
 }
