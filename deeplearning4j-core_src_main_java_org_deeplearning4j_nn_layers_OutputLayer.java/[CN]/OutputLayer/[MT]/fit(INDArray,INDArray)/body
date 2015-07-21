@@ -1,6 +1,6 @@
 {
   this.input=examples.dup();
-  applyDropOutIfNecessary(this.input);
+  applyDropOutIfNecessary(this.input,true);
   this.labels=labels;
   Solver solver=new Solver.Builder().configure(conf()).listeners(getIterationListeners()).model(this).build();
   solver.optimize();

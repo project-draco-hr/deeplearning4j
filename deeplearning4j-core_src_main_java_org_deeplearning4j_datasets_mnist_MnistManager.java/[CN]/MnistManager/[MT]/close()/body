@@ -1,0 +1,18 @@
+{
+  if (images != null) {
+    try {
+      images.close();
+    }
+ catch (    IOException e) {
+    }
+    images=null;
+  }
+  if (labels != null) {
+    try {
+      labels.close();
+    }
+ catch (    IOException e) {
+    }
+    labels=null;
+  }
+}

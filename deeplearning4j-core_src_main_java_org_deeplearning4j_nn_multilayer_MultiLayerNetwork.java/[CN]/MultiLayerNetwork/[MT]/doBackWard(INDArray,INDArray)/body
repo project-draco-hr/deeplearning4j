@@ -8,10 +8,10 @@
   OutputLayer output=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (output.conf().getWeightInit() == WeightInit.ZERO) {
-    throw new IllegalStateException("Output layer weights cannot be intialized to zero when using backprop.");
+    throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
   }
   output.setLabels(labels);
-  for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
+  for (int i=0; i < getLayerWiseConfigurations().getConf(getLayerWiseConfigurations().getConfs().size() - 1).getNumIterations(); i++) {
     int numLayers=getnLayers();
     List<Gradient> gradientUpdates=new ArrayList<>();
     List<INDArray> activations=feedForward();
@@ -37,7 +37,7 @@
         if (update != null)         currLayer.update(update,paramType);
       }
     }
-    getOutputLayer().setScore();
+    getOutputLayer().computeGradientAndScore();
     for (    IterationListener listener : listeners)     listener.iterationDone(getOutputLayer(),i);
   }
 }

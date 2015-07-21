@@ -30,9 +30,7 @@
  else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(c.getRow(t)));
   }
   if (conf.getDropOut() > 0) {
-    double scale=1 / (1 - conf.getDropOut());
-    u2=Nd4j.rand(hOut.shape()).lti(1 - conf.getDropOut()).muli(scale);
-    hOut.muli(u2);
+    u2=Dropout.applyDropout(hOut,conf.getDropOut(),u2);
   }
   INDArray y=hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias);
   return y;

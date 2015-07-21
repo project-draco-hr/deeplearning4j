@@ -1,0 +1,18 @@
+{
+  Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
+  Nd4j.MAX_SLICES_TO_PRINT=Integer.MAX_VALUE;
+  NeuralNetConfiguration neuralNetConfiguration=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).activationFunction("softmax").updater(Updater.SGD).regularization(true).l1(1).l2(1e-3).seed(123).iterations(1000).weightInit(WeightInit.XAVIER).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
+  OutputLayer o=LayerFactories.getFactory(neuralNetConfiguration).create(neuralNetConfiguration);
+  int numSamples=150;
+  int batchSize=150;
+  DataSetIterator iter=new IrisDataSetIterator(batchSize,numSamples);
+  DataSet iris=iter.next();
+  iris.normalizeZeroMeanZeroUnitVariance();
+  o.setListeners(new ScoreIterationListener(1));
+  SplitTestAndTrain t=iris.splitTestAndTrain(0.8);
+  o.fit(t.getTrain());
+  log.info("Evaluate model....");
+  Evaluation eval=new Evaluation(3);
+  eval.eval(t.getTest().getLabels(),o.output(t.getTest().getFeatureMatrix(),true));
+  log.info(eval.stats());
+}

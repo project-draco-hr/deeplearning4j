@@ -1,0 +1,9 @@
+{
+  if (lastWeights == null)   lastWeights=model.getParam(param).dup();
+ else {
+    count++;
+    if (count < 2)     return;
+    if (count > 2)     assertNotEquals(lastWeights,model.getParam(param));
+    lastWeights=model.getParam(param).dup();
+  }
+}

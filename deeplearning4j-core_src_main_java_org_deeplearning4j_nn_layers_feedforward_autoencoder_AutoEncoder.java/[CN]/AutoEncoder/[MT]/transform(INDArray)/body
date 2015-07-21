@@ -1,4 +1,3 @@
 {
-  INDArray y=encode(x);
-  return decode(y);
+  return decode(encode(data,true));
 }

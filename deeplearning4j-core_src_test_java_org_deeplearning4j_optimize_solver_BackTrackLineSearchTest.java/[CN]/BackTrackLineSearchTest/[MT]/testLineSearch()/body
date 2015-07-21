@@ -4,7 +4,7 @@
   OutputLayer layer=getIrisLogisticLayerConfig("softmax",10);
   layer.setInput(data.getFeatureMatrix());
   layer.setLabels(data.getLabels());
-  layer.setScore();
+  layer.computeGradientAndScore();
   BackTrackLineSearch lineSearch=new BackTrackLineSearch(layer,layer.getOptimizer());
   double step=lineSearch.optimize(layer.params(),layer.gradient().gradient(),layer.gradient().gradient().dup().negi());
   assertEquals(0.0,step,1e-1);

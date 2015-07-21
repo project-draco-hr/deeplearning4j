@@ -1,11 +1,4 @@
 {
   LinAlgExceptions.assertRows(input,labels);
-  INDArray netOut=activate(input);
-  INDArray dy=netOut.sub(labels);
-  INDArray wGradient=getWeightGradient();
-  INDArray bGradient=dy.sum(0);
-  Gradient g=new DefaultGradient();
-  g.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,wGradient);
-  g.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,bGradient);
-  return g;
+  return gradient;
 }
