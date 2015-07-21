@@ -13,7 +13,7 @@
   }
   ;
   output.setLabels(labels);
-  for (int i=0; i < getLayerWiseConfigurations().getConf(0).getNumIterations(); i++) {
+  for (int i=0; i < getLayerWiseConfigurations().getConf(getLayerWiseConfigurations().getConfs().size() - 1).getNumIterations(); i++) {
     int numLayers=getnLayers();
     List<Gradient> gradientUpdates=new ArrayList<>();
     Pair<List<INDArray>,List<INDArray>> activationsAndDeriv=feedForwardActivationsAndDerivatives(true);

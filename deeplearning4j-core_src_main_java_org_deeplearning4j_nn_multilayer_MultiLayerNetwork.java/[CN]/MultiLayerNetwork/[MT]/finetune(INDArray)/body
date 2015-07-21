@@ -4,6 +4,10 @@
     log.warn("Output layer not instance of output layer returning.");
     return;
   }
+  if (layerWiseConfigurations.isBackward()) {
+    log.info("Will use backpropagation for finetune");
+    return;
+  }
   log.info("Finetune phase");
   OutputLayer o=(OutputLayer)getOutputLayer();
   if (getOutputLayer().conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {

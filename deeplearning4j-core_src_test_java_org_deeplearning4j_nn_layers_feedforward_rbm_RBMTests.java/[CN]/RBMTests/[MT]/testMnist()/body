@@ -1,6 +1,5 @@
 {
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
-  RandomGenerator gen=new MersenneTwister(123);
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(30).constrainGradientToUnitNorm(true).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(784).nOut(600).layer(new org.deeplearning4j.nn.conf.layers.RBM()).build();
   fetcher.fetch(10);
