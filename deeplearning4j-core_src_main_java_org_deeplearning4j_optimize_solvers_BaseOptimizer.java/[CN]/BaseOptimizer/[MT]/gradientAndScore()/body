@@ -1,5 +1,5 @@
 {
-  model.setScore();
+  model.computeGradientAndScore();
   Pair<Gradient,Double> pair=model.gradientAndScore();
   for (  String paramType : pair.getFirst().gradientForVariable().keySet()) {
     INDArray gradient=pair.getFirst().getGradientFor(paramType);

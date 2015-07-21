@@ -6,7 +6,7 @@
   double score=layer.score();
   INDArray parameters=layer.params();
   layer.setParams(parameters);
-  layer.setScore();
+  layer.computeGradientAndScore();
   double score2=layer.score();
   assertEquals(parameters,layer.params());
   assertEquals(score,score2,1e-3);

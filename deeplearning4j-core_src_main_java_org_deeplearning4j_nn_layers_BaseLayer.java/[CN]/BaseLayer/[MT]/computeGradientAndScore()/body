@@ -7,6 +7,6 @@
     score=create.currentResult().doubleValue();
   }
  else {
-    score=LossFunctions.score(input,conf.getLossFunction(),output,conf.getL2(),conf.getL1(),l1Magnitude(),l2Magnitude(),conf.isUseRegularization());
+    score=LossCalculation.builder().l1(conf.getL1()).l2(conf.getL2()).l1Magnitude(l1Magnitude()).l2Magnitude(l2Magnitude()).labels(input).z(output).lossFunction(conf.getLossFunction()).useRegularization(conf.isUseRegularization()).build().score();
   }
 }

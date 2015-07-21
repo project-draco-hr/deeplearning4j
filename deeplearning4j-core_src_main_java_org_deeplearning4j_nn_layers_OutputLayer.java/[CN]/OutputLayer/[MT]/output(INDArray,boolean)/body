@@ -6,7 +6,6 @@
     softMax.exec(1);
     return softMax.z();
   }
-  this.input=x.dup();
   if (!test)   applyDropOutIfNecessary(input(),!test);
   return super.activate();
 }
