@@ -9,5 +9,6 @@
   INDArray wGradient=corruptedX.transposei().mmul(hiddenLoss).addi(visibleLoss.transposei().mmul(y));
   INDArray hBiasGradient=hiddenLoss.sum(0);
   INDArray vBiasGradient=visibleLoss.sum(0);
-  return createGradient(wGradient,vBiasGradient,hBiasGradient);
+  gradient=createGradient(wGradient,vBiasGradient,hBiasGradient);
+  setScoreWithZ(z);
 }

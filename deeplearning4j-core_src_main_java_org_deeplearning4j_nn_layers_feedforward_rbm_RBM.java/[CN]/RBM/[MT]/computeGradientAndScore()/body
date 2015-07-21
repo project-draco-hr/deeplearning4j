@@ -19,10 +19,12 @@
   INDArray hBiasGradient;
   if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).sum(0);
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).sum(0);
-  INDArray vBiasGradient=input.sub(nvSamples).sum(0);
+  INDArray delta=input.sub(nvSamples);
+  INDArray vBiasGradient=delta.sum(0);
   Gradient ret=new DefaultGradient();
   ret.gradientForVariable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
   ret.gradientForVariable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
   ret.gradientForVariable().put(PretrainParamInitializer.WEIGHT_KEY,wGradient);
-  return ret;
+  gradient=ret;
+  setScoreWithZ(delta);
 }
