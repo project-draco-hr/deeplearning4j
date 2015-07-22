@@ -1,0 +1,8 @@
+{
+  INDArray output=output(input);
+  INDArray delta=gradient().getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
+  Gradient ret=new DefaultGradient();
+  ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(input).transpose());
+  ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.transpose().sum(0));
+  return new Pair<>(ret,getParam(DefaultParamInitializer.WEIGHT_KEY));
+}

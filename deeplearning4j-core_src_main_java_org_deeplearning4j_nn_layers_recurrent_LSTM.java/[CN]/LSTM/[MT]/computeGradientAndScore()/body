@@ -1,0 +1,13 @@
+{
+  INDArray forward=forward(xi,xs);
+  INDArray probas=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",forward).derivative(),1);
+  gradient=backward(probas);
+  if (conf.getLossFunction() == LossFunctions.LossFunction.CUSTOM) {
+    LossFunction create=Nd4j.getOpFactory().createLossFunction(conf.getCustomLossFunction(),input,forward);
+    create.exec();
+    score=create.currentResult().doubleValue();
+  }
+ else {
+    score=LossCalculation.builder().l1(conf.getL1()).l2(conf.getL2()).l1Magnitude(l1Magnitude()).l2Magnitude(l2Magnitude()).labels(xs).z(probas).lossFunction(conf.getLossFunction()).useRegularization(conf.isUseRegularization()).build().score();
+  }
+}

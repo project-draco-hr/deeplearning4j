@@ -1,0 +1,7 @@
+{
+  if (dropoutMask == null || !Shape.shapeEquals(input.shape(),dropoutMask.shape())) {
+    dropoutMask=Nd4j.getDistributions().createBinomial(1,dropout).sample(input.shape()).muli(dropout);
+  }
+  input.muli(dropoutMask);
+  return dropoutMask;
+}

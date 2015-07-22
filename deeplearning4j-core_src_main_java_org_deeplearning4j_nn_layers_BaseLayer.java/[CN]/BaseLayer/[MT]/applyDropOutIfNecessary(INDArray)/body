@@ -1,5 +1,0 @@
-{
-  if (conf.getDropOut() > 0 && !conf.isUseDropConnect()) {
-    input.muli(dropoutMask);
-  }
-}

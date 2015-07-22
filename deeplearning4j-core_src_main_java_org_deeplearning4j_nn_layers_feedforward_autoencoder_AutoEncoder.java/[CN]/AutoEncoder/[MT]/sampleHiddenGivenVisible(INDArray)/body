@@ -1,4 +1,4 @@
 {
-  INDArray ret=encode(v);
+  INDArray ret=encode(v,true);
   return new Pair<>(ret,ret);
 }

@@ -1,0 +1,24 @@
+{
+  setInput(input);
+  if (!(getOutputLayer() instanceof OutputLayer)) {
+    log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
+    return;
+  }
+  List<INDArray> activations=feedForward();
+  OutputLayer outputLayer=(OutputLayer)getOutputLayer();
+  if (labels == null)   throw new IllegalStateException("No labels found");
+  if (outputLayer.conf().getWeightInit() == WeightInit.ZERO) {
+    throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
+  }
+  outputLayer.setLabels(labels);
+  outputLayer.computeGradientAndScore();
+  Gradient nextGradients;
+  int numLayers=getnLayers();
+  Pair<Gradient,INDArray> pair=outputLayer.backwardGradient(null,null);
+  multiGradientAndScore.put(numLayers,outputLayer.gradientAndScore());
+  for (int j=numLayers - 2; j >= 0; j--) {
+    Layer currLayer=getLayers()[j];
+    pair=currLayer.backwardGradient(pair.getFirst(),pair.getSecond());
+    multiGradientAndScore.put(j,currLayer.gradientAndScore());
+  }
+}

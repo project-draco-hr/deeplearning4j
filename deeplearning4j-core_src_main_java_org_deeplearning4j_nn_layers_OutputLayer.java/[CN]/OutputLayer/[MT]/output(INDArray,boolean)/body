@@ -1,11 +1,11 @@
 {
   if (x == null)   throw new IllegalArgumentException("No null input allowed");
-  INDArray preOutput=preOutput(x);
+  INDArray preOutput=preOutput(x,!test);
   if (conf.getActivationFunction().equals("softmax")) {
-    INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preOutput),1);
-    return ret;
+    SoftMax softMax=new SoftMax(preOutput);
+    softMax.exec(1);
+    return softMax.z();
   }
-  this.input=x.dup();
-  if (!test)   applyDropOutIfNecessary(input());
+  if (!test)   applyDropOutIfNecessary(input(),!test);
   return super.activate();
 }
