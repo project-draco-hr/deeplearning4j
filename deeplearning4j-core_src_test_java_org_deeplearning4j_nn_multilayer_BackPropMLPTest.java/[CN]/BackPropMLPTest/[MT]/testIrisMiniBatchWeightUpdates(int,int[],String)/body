@@ -68,14 +68,9 @@
       layerWeightsAfter[i]=layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
       layerBiasesAfter[i]=layers[i].getParam(DefaultParamInitializer.BIAS_KEY).dup();
     }
-    float eps=1e-1f;
     for (int i=0; i < nLayers; i++) {
-      float[] expWeights=asFloat(expectedWeights[i]);
-      float[] actWeights=asFloat(layerWeightsAfter[i]);
-      assertArrayEquals(expWeights,actWeights,eps);
-      float[] expBiases=asFloat(expectedBiases[i]);
-      float[] actBiases=asFloat(layerBiasesAfter[i]);
-      assertArrayEquals(expBiases,actBiases,eps);
+      assertEquals(expectedWeights[i],layerWeightsAfter[i]);
+      assertEquals(expectedBiases[i],layerBiasesAfter[i]);
     }
   }
 }

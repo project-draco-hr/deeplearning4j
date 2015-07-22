@@ -12,6 +12,7 @@
   }
   outputLayer.setLabels(labels);
   outputLayer.computeGradientAndScore();
+  Gradient nextGradients;
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> pair=outputLayer.backwardGradient(null,null);
   multiGradientAndScore.put(numLayers,outputLayer.gradientAndScore());
