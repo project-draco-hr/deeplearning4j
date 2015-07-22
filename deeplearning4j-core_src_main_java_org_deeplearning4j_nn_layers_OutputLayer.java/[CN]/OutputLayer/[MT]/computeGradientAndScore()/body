@@ -2,7 +2,8 @@
   if (input == null || labels == null)   return;
   INDArray output=output(input);
   INDArray wGradient=getWeightGradient(output);
-  INDArray bGradient=wGradient.sum(0);
+  INDArray dy=labels.sub(output);
+  INDArray bGradient=dy.mean(0);
   Gradient g=new DefaultGradient();
   g.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,wGradient);
   g.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,bGradient);
