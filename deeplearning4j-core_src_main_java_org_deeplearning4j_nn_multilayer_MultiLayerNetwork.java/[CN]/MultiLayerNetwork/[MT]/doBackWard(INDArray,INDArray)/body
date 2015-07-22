@@ -5,28 +5,24 @@
     log.warn("Warning: final layer isn't output layer. You can ignore this message if you just intend on using a a deep neural network with no output layer.");
     return;
   }
-  OutputLayer output=(OutputLayer)getOutputLayer();
+  OutputLayer outputLayer=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
-  if (output.conf().getWeightInit() == WeightInit.ZERO) {
+  if (outputLayer.conf().getWeightInit() == WeightInit.ZERO) {
     throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
   }
-  output.setLabels(labels);
+  outputLayer.setLabels(labels);
   for (int i=0; i < getLayerWiseConfigurations().getConf(getLayerWiseConfigurations().getConfs().size() - 1).getNumIterations(); i++) {
     int numLayers=getnLayers();
+    INDArray delta=outputLayer.gradient().getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
     List<Gradient> gradientUpdates=new ArrayList<>();
-    List<INDArray> activations=feedForward();
-    INDArray outputActivation=activations.get(activations.size() - 1);
-    INDArray outputLayerInput=activations.get(activations.size() - 2);
-    INDArray delta=outputActivation.sub(labels).transpose();
     Gradient outputLayerGradients=new DefaultGradient();
-    outputLayerGradients.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(outputLayerInput).transpose());
+    outputLayerGradients.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(outputLayer.getInput()).transpose());
     outputLayerGradients.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.transpose().sum(0));
     gradientUpdates.add(outputLayerGradients);
-    INDArray nextEpsilon=output.getParam(DefaultParamInitializer.WEIGHT_KEY).mmul(delta).transpose();
+    Pair<Gradient,INDArray> pair=new Pair<>(outputLayerGradients,outputLayer.getParam(DefaultParamInitializer.WEIGHT_KEY));
     for (int j=numLayers - 2; j >= 0; j--) {
-      Pair<Gradient,INDArray> pair=getLayers()[j].backwardGradient(nextEpsilon);
+      pair=getLayers()[j].backwardGradient(pair.getFirst(),pair.getSecond());
       gradientUpdates.add(pair.getFirst());
-      nextEpsilon=pair.getSecond();
     }
     Collections.reverse(gradientUpdates);
     for (int k=0; k < numLayers; k++) {
