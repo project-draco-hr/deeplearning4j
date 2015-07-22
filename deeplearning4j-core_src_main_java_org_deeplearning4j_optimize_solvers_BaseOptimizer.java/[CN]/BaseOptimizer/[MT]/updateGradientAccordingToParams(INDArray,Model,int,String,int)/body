@@ -1,8 +1,0 @@
-{
-  if (updater == null)   updater=UpdaterCreator.getUpdater(model.conf());
-  Layer layer=(Layer)model;
-  Gradient g=new DefaultGradient();
-  g.setGradientFor(paramType,gradient);
-  updater.update(layer,g,iteration);
-  gradient.assign(g.getGradientFor(paramType));
-}

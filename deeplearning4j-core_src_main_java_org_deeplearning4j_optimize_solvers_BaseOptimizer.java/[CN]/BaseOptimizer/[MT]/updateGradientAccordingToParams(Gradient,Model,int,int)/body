@@ -1,0 +1,5 @@
+{
+  if (updater == null)   updater=UpdaterCreator.getUpdater(model.conf());
+  Layer layer=(Layer)model;
+  updater.update(layer,gradient,iteration);
+}
