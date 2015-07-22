@@ -21,7 +21,7 @@
     logger.warn("Attempted step too big. scaling: sum= {}, stepMax= {}",sum,stepMax);
     searchDirection.muli(stepMax / sum);
   }
-  if (slope >= 0.0)   throw new InvalidStepException("Slope " + slope + " is >= 0.0. Expect slope < 0.0");
+  if (slope <= 0.0)   throw new InvalidStepException("Slope " + slope + " is <= 0.0. Expect slope > 0.0");
   INDArray candidateParameters=null;
   for (int iteration=0; iteration < maxIterations; iteration++) {
     if (logger.isTraceEnabled()) {
@@ -44,7 +44,7 @@
     }
     score=setScoreFor(candidateParameters);
     logger.debug("Model score after step = {}",score);
-    if (score <= oldScore + ALF * step * slope) {
+    if (score <= oldScore - ALF * step * slope) {
       logger.debug("Sufficient decrease (Wolfe cond.), exiting backtrack on iter {}: score={}, oldScore={}",iteration,score,oldScore);
       if (score > oldScore)       throw new IllegalStateException("Function did not decrease: score = " + score + " > "+ oldScore+ " = oldScore");
       return step;
@@ -59,23 +59,23 @@
       }
     }
  else {
-      if (step == 1.0)       tmpStep=-slope / (2.0 * (score - oldScore - slope));
+      if (step == 1.0)       tmpStep=slope / (2.0 * (score - oldScore + slope));
  else {
-        rhs1=score - oldScore - step * slope;
-        rhs2=score2 - oldScore - step2 * slope;
+        rhs1=score - oldScore + step * slope;
+        rhs2=score2 - oldScore + step2 * slope;
         if (step == step2)         throw new IllegalStateException("FAILURE: dividing by step-step2 which equals 0. step=" + step);
         double stepSquared=step * step;
         double step2Squared=step2 * step2;
         a=(rhs1 / stepSquared - rhs2 / step2Squared) / (step - step2);
         b=(-step2 * rhs1 / stepSquared + step * rhs2 / step2Squared) / (step - step2);
-        if (a == 0.0)         tmpStep=-slope / (2.0 * b);
+        if (a == 0.0)         tmpStep=slope / (2.0 * b);
  else {
-          disc=b * b - 3.0 * a * slope;
+          disc=b * b + 3.0 * a * slope;
           if (disc < 0.0) {
             tmpStep=0.5 * step;
           }
  else           if (b <= 0.0)           tmpStep=(-b + FastMath.sqrt(disc)) / (3.0 * a);
- else           tmpStep=-slope / (b + FastMath.sqrt(disc));
+ else           tmpStep=slope / (b + FastMath.sqrt(disc));
         }
         if (tmpStep > 0.5 * step)         tmpStep=0.5 * step;
       }
