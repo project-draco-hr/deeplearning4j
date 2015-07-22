@@ -1,0 +1,12 @@
+{
+  Gradient nextGradients=new DefaultGradient();
+  INDArray activationDeriv=derivative;
+  INDArray layerInput=input;
+  INDArray delta=activation.sub(labels).transpose();
+  if (conf().getLossFunction() != LossFunctions.LossFunction.XENT) {
+    delta.muli(activationDeriv);
+  }
+  nextGradients.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.mmul(layerInput).transpose());
+  nextGradients.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.transpose());
+  return nextGradients;
+}
