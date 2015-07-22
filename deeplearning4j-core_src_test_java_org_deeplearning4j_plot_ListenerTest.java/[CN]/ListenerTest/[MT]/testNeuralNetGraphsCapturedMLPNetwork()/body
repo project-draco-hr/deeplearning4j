@@ -5,6 +5,6 @@
   IterationListener listener=new NeuralNetPlotterIterationListener(1,true);
   network.setListeners(Collections.singletonList(listener));
   network.fit(data.getFeatureMatrix(),data.getLabels());
-  assertNotNull(network.getListeners().get(0));
+  assertNotNull(network.getListeners());
   assertEquals(listener.invoked(),true);
 }
