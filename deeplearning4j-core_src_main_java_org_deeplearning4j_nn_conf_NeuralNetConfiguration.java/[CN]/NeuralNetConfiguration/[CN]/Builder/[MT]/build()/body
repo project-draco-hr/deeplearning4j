@@ -1,5 +1,5 @@
 {
-  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,rng,seed,dist,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,filterSize,stride,featureMapSize,kernel,batchSize,numLineSearchIterations,maxNumLineSearchIterations,minimize,layer,convolutionType,poolingType,l1,customLossFunction);
+  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,rng,seed,dist,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,filterSize,filterDepth,stride,featureMapSize,kernel,batchSize,numLineSearchIterations,maxNumLineSearchIterations,minimize,layer,convolutionType,poolingType,l1,customLossFunction);
   ret.useAdaGrad=this.useAdaGrad;
   ret.rmsDecay=rmsDecay;
   ret.stepFunction=stepFunction;
@@ -9,17 +9,20 @@
   ret.channels=channels;
   if (layer != null) {
     Class<? extends Layer> layerClazz=layer.getClass();
-    Field[] neuralNetConfFields=NeuralNetConfiguration.class.getDeclaredFields();
-    Field[] layerFields=layerClazz.getDeclaredFields();
+    Field[] neuralNetConfFields=Dl4jReflection.getAllFields(NeuralNetConfiguration.class);
+    Field[] layerFields=Dl4jReflection.getAllFields(layerClazz);
     for (    Field neuralNetField : neuralNetConfFields) {
+      neuralNetField.setAccessible(true);
       for (      Field layerField : layerFields) {
+        layerField.setAccessible(true);
         if (neuralNetField.getName().equals(layerField.getName())) {
           try {
-            Object valForConfig=neuralNetField.get(this);
+            Object valForConfig=neuralNetField.get(ret);
             Object layerFieldValue=layerField.get(layer);
             if (layerFieldValue != null) {
-              if (valForConfig.getClass().isAssignableFrom(layerFieldValue.getClass())) {
-                neuralNetField.set(this,layerFieldValue);
+              if (valForConfig.getClass().equals(layerFieldValue.getClass())) {
+                System.out.println(neuralNetField);
+                neuralNetField.set(ret,layerFieldValue);
               }
             }
           }
