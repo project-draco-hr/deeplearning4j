@@ -1,4 +1,4 @@
 {
   setParams(params().addi(l.params().divi(batchSize)));
-  setScore();
+  computeGradientAndScore();
 }

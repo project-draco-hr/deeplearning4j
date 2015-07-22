@@ -6,7 +6,7 @@
   network3.init();
   INDArray params=network3.params();
   network3.setParameters(params);
-  network3.setScore();
+  network3.computeGradientAndScore();
   INDArray params4=network3.params();
   assertEquals(params,params4);
 }

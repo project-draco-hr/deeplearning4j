@@ -4,6 +4,7 @@
     for (    String paramType : pair.getFirst().gradientForVariable().keySet()) {
       model.update(pair.getFirst().getGradientFor(paramType),paramType);
     }
+    model.computeGradientAndScore();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
   }
   return true;

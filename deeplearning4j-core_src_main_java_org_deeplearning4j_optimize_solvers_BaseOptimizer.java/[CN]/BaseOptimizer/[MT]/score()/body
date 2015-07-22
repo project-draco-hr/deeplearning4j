@@ -1,4 +1,4 @@
 {
-  model.setScore();
+  model.computeGradientAndScore();
   return model.score();
 }

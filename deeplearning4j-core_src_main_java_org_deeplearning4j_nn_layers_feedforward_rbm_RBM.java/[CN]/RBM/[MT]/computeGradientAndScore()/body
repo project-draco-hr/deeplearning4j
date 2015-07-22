@@ -1,0 +1,30 @@
+{
+  int k=conf.getK();
+  Pair<INDArray,INDArray> probHidden=sampleHiddenGivenVisible(input());
+  INDArray chainStart=probHidden.getSecond();
+  Pair<Pair<INDArray,INDArray>,Pair<INDArray,INDArray>> matrices;
+  INDArray nvMeans=null;
+  INDArray nvSamples=null;
+  INDArray nhMeans=null;
+  INDArray nhSamples=null;
+  for (int i=0; i < k; i++) {
+    if (i == 0)     matrices=gibbhVh(chainStart);
+ else     matrices=gibbhVh(nhSamples);
+    nvMeans=matrices.getFirst().getFirst();
+    nvSamples=matrices.getFirst().getSecond();
+    nhMeans=matrices.getSecond().getFirst();
+    nhSamples=matrices.getSecond().getSecond();
+  }
+  INDArray wGradient=input().transposei().mmul(probHidden.getSecond()).subi(nvSamples.transposei().mmul(nhMeans));
+  INDArray hBiasGradient;
+  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).sum(0);
+ else   hBiasGradient=probHidden.getSecond().sub(nhMeans).sum(0);
+  INDArray delta=input.sub(nvSamples);
+  INDArray vBiasGradient=delta.sum(0);
+  Gradient ret=new DefaultGradient();
+  ret.gradientForVariable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
+  ret.gradientForVariable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
+  ret.gradientForVariable().put(PretrainParamInitializer.WEIGHT_KEY,wGradient);
+  gradient=ret;
+  setScoreWithZ(delta);
+}
