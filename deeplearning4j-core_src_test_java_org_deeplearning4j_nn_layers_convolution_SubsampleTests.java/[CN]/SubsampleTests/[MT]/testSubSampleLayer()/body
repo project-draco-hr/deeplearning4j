@@ -1,7 +1,7 @@
 {
   DataSetIterator mnistIter=new MnistDataSetIterator(100,100);
   DataSet mnist=mnistIter.next();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").constrainGradientToUnitNorm(true).convolutionType(ConvolutionLayer.ConvolutionType.MAX).filterSize(5,1,28,28).layer(new SubsamplingLayer()).nIn(784).nOut(1).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").constrainGradientToUnitNorm(true).poolingType(SubsamplingLayer.poolingType.MAX).filterSize(5,1,28,28).layer(new SubsamplingLayer()).nIn(784).nOut(1).build();
   Layer model=LayerFactories.getFactory(new SubsamplingLayer()).create(conf);
   INDArray input=mnist.getFeatureMatrix().reshape(mnist.numExamples(),1,28,28);
   input=input.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.interval(0,20),NDArrayIndex.interval(0,20));
