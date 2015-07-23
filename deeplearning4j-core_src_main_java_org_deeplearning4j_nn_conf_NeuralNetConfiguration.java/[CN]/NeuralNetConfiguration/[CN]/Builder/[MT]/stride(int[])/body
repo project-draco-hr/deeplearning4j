@@ -1,4 +1,5 @@
 {
+  if (stride.length != 2)   throw new IllegalArgumentException("Invalid stride  must be length 2");
   this.stride=stride;
   return this;
 }

@@ -1,7 +1,6 @@
 {
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
   conf.confs=this.confs;
-  if (hiddenLayerSizes == null)   throw new IllegalStateException("Please specify hidden layer sizes");
   conf.hiddenLayerSizes=this.hiddenLayerSizes;
   conf.useDropConnect=useDropConnect;
   conf.pretrain=pretrain;
@@ -9,7 +8,6 @@
   conf.dampingFactor=dampingFactor;
   conf.processors=preProcessors;
   conf.backward=backward;
-  conf.backprop=backprop;
   conf.inputPreProcessors=inputPreProcessor;
   Nd4j.getRandom().setSeed(conf.getConf(0).getSeed());
   return conf;

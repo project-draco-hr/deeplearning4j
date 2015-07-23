@@ -1,6 +1,6 @@
 {
   INDArray pooled=null;
-switch (conf.getConvolutionType()) {
+switch (conf.getPoolingType()) {
 case MAX:
     pooled=Transforms.maxPool(convolution,conf.getStride(),false);
   break;

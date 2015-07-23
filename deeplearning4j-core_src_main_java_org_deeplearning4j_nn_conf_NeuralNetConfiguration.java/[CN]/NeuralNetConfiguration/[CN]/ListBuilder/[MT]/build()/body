@@ -1,8 +1,7 @@
 {
   List<NeuralNetConfiguration> list=new ArrayList<>();
   for (int i=0; i < layerwise.size(); i++) {
-    if (confOverrides.get(i) != null)     confOverrides.get(i).overrideLayer(i,layerwise.get(i));
     list.add(layerwise.get(i).build());
   }
-  return new MultiLayerConfiguration.Builder().backprop(backprop).inputPreProcessors(inputPreProcessor).useDropConnect(useDropConnect).pretrain(pretrain).preProcessors(preProcessors).hiddenLayerSizes(hiddenLayerSizes).confs(list).build();
+  return new MultiLayerConfiguration.Builder().backprop(backward).inputPreProcessors(inputPreProcessor).useDropConnect(useDropConnect).pretrain(pretrain).preProcessors(preProcessors).hiddenLayerSizes(hiddenLayerSizes).confs(list).build();
 }

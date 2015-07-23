@@ -1,0 +1,13 @@
+{
+  INDArray gy=gradient.getGradientFor(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  INDArray biasGradient=gradient.getGradientFor(ConvolutionParamInitializer.CONVOLUTION_BIAS);
+  getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS).addi(gy.sum(0,2,3));
+  INDArray gcol=Nd4j.tensorMmul(getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS),gy.slice(0),new int[][]{{0,1}});
+  gcol=Nd4j.rollAxis(gcol,3);
+  INDArray z=preOutput(input());
+  INDArray weightGradient=Convolution.conv2d(gcol,z,conf.getConvolutionType());
+  Gradient retGradient=new DefaultGradient();
+  retGradient.setGradientFor(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,weightGradient);
+  retGradient.setGradientFor(ConvolutionParamInitializer.CONVOLUTION_BIAS,biasGradient);
+  return new Pair<>(retGradient,weightGradient);
+}
