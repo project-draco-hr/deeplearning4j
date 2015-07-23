@@ -51,7 +51,6 @@
     double beta=rhoi * Nd4j.getBlasWrapper().dot(yi,searchDir);
     Nd4j.getBlasWrapper().level1().axpy(gradient.length(),alpha[i] - beta,si,searchDir);
   }
-  searchDir.negi();
   oldParameters.assign(params);
   oldGradient.assign(gradient);
 }
