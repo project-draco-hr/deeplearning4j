@@ -1,6 +1,6 @@
 {
   INDArray z=preOutput(input,true);
-  INDArray error=Nd4j.create(Ints.concat(new int[]{conf.getNIn(),conf.getNOut()},conf.getFeatureMapSize()));
+  INDArray error=Nd4j.create(Ints.concat(new int[]{conf.getNIn(),conf.getNOut()},conf.getKernelSize()));
   if (layer.conf().getPoolingType() == PoolingType.AVG) {
     int[] filterSize=conf.getKernelSize();
     int currLayerFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
