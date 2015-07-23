@@ -5,5 +5,5 @@
     finetune(labels);
   }
   if (layerWiseConfigurations.isBackward())   setLabels(labels);
-  doBackWard();
+  backprop();
 }

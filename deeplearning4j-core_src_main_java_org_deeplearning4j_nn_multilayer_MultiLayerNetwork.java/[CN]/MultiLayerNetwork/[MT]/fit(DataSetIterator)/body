@@ -10,7 +10,7 @@
       DataSet next=iter.next();
       setInput(next.getFeatureMatrix());
       setLabels(next.getLabels());
-      doBackWard();
+      backprop();
     }
   }
 }
