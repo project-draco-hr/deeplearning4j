@@ -1,6 +1,6 @@
 {
   Class<?> layerClazz=layer.getClass();
-  Field[] neuralNetConfFields=Dl4jReflection.getAllFields(NeuralNetConfiguration.class);
+  Field[] neuralNetConfFields=Dl4jReflection.getAllFields(configInst.getClass());
   Field[] layerFields=Dl4jReflection.getAllFields(layerClazz);
   for (  Field neuralNetField : neuralNetConfFields) {
     neuralNetField.setAccessible(true);
