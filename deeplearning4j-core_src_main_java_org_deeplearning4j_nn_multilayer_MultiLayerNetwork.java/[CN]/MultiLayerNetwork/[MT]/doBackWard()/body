@@ -1,5 +1,6 @@
 {
   setInput(input);
+  gradient=new DefaultGradient();
   if (!(getOutputLayer() instanceof OutputLayer)) {
     log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
     return;
@@ -12,13 +13,19 @@
   }
   outputLayer.setLabels(labels);
   outputLayer.computeGradientAndScore();
-  Gradient nextGradients;
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> pair=outputLayer.backwardGradient(null,null);
-  multiGradientAndScore.put(numLayers,outputLayer.gradientAndScore());
+  for (  String paramType : outputLayer.gradient().gradientForVariable().keySet()) {
+    String multiGradientKey=String.valueOf(numLayers) + "_" + paramType;
+    gradient.setGradientFor(multiGradientKey,outputLayer.gradient().getGradientFor(paramType));
+  }
   for (int j=numLayers - 2; j >= 0; j--) {
     Layer currLayer=getLayers()[j];
     pair=currLayer.backwardGradient(pair.getFirst(),pair.getSecond());
-    multiGradientAndScore.put(j,currLayer.gradientAndScore());
+    for (    String paramType : currLayer.gradient().gradientForVariable().keySet()) {
+      String multiGradientKey=String.valueOf(j) + "_" + paramType;
+      gradient.setGradientFor(multiGradientKey,pair.getFirst().getGradientFor(paramType));
+    }
   }
+  score=outputLayer.score();
 }

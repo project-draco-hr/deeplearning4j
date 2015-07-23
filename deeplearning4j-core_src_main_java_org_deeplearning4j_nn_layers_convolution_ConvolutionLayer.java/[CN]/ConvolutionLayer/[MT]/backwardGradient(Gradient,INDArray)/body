@@ -5,7 +5,7 @@
   INDArray delta=epsilon.muli(activationDerivative);
   delta=Nd4j.rollAxis(delta,3);
   Gradient ret=new DefaultGradient();
-  ret.setGradientFor(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,Convolution.conv2d(epsilon,input,Convolution.Type.VALID));
+  ret.setGradientFor(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,Convolution.conv2d(delta,input,Convolution.Type.VALID));
   ret.setGradientFor(ConvolutionParamInitializer.CONVOLUTION_BIAS,delta.sum(0,2,3));
   return new Pair<>(ret,getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS));
 }
