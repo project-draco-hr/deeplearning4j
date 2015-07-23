@@ -1,5 +1,5 @@
 {
-  ConvolutionLayer conv=new ConvolutionLayer.Builder(filterSize,filterDepth,convType).activation(act).build();
+  ConvolutionLayer conv=new ConvolutionLayer.Builder(filterSize,convType).activation(act).build();
   SubsamplingLayer sample=new SubsamplingLayer.Builder(poolType,stride).build();
   RBM rbm=new RBM.Builder(hidden,visible,k).nIn(numIn).nOut(numOut).build();
   OutputLayer out=new OutputLayer.Builder(loss).nIn(numIn).nOut(numOut).activation(act).dropOut(drop).build();
@@ -8,8 +8,6 @@
   assertTrue(out.getDropOut() == drop);
   assertTrue(out.getActivationFunction().equals(act));
   assertTrue(conv.getConvolutionType() == convType);
-  assertTrue(conv.getFilterSize() == filterSize);
-  assertTrue(conv.getFilterDepth() == filterDepth && conv.getActivationFunction().equals(act));
   assertTrue(sample.getPoolingType() == poolType);
   assertTrue(sample.getStride() == stride);
   assertTrue(rbm.getNIn() == numIn);
