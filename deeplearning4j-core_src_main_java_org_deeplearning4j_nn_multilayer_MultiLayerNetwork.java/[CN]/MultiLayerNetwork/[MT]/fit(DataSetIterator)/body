@@ -4,7 +4,7 @@
     iter.reset();
     finetune(iter);
   }
-  if (layerWiseConfigurations.isBackward()) {
+  if (layerWiseConfigurations.isBackprop()) {
     iter.reset();
     while (iter.hasNext()) {
       DataSet next=iter.next();

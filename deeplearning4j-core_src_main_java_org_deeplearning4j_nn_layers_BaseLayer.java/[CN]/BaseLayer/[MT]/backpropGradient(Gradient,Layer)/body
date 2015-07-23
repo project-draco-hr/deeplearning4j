@@ -1,10 +1,11 @@
 {
   INDArray z=preOutput(input);
+  INDArray weights=getParam(DefaultParamInitializer.WEIGHT_KEY);
   INDArray activationDerivative=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),z).derivative());
   INDArray epsilon=weights.mmul(gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY).transpose()).transpose();
   INDArray delta=epsilon.muli(activationDerivative);
   Gradient ret=new DefaultGradient();
   ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.transpose().mmul(input).transpose());
   ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.sum(0));
-  return new Pair<>(ret,getParam(DefaultParamInitializer.WEIGHT_KEY));
+  return ret;
 }

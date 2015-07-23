@@ -4,7 +4,7 @@
     log.warn("Output layer not instance of output layer returning.");
     return;
   }
-  if (layerWiseConfigurations.isBackward()) {
+  if (layerWiseConfigurations.isBackprop()) {
     log.info("Will use backpropagation for finetune");
     return;
   }

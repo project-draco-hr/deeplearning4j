@@ -4,6 +4,6 @@
     pretrain(getInput());
     finetune(labels);
   }
-  if (layerWiseConfigurations.isBackward())   setLabels(labels);
+  if (layerWiseConfigurations.isBackprop())   setLabels(labels);
   backprop();
 }

@@ -8,6 +8,7 @@
   INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
   int hiddenLayerSize=recurrentWeights.rows();
   int prevLayerSize=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS).shape()[0];
+  INDArray weights=getParam(DefaultParamInitializer.WEIGHT_KEY);
   INDArray epsilon=weights.mmul(gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY).transpose()).transpose();
   int miniBatchSize=epsilon.size(0);
   int timeSeriesLength=(epsilon.rank() < 3 ? 1 : epsilon.size(2));
@@ -86,5 +87,5 @@
   ret.gradientForVariable().put(GravesLSTMParamInitializer.INPUT_WEIGHTS,inputWeightGradients.sum(2));
   ret.gradientForVariable().put(GravesLSTMParamInitializer.RECURRENT_WEIGHTS,recurrentWeightGradients.sum(2));
   ret.gradientForVariable().put(GravesLSTMParamInitializer.BIAS,biasGradients.sum(2).sum(0));
-  return new Pair<>(ret,getParam(DefaultParamInitializer.WEIGHT_KEY));
+  return ret;
 }
