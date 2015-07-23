@@ -1,4 +1,7 @@
 {
+  if (labels.indexOf(label) < 0) {
+    throw new IllegalArgumentException("Label not found in a dictionary.");
+  }
   INDArray tfidf=tfidfForInput(text);
   INDArray label2=FeatureUtil.toOutcomeVector(labels.indexOf(label),labels.size());
   return new DataSet(tfidf,label2);
