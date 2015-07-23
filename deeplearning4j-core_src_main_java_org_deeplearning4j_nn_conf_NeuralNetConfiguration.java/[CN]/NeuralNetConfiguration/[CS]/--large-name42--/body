@@ -37,7 +37,6 @@
   this.hiddenUnit=hiddenUnit;
   if (weightShape != null)   this.weightShape=weightShape;
  else   this.weightShape=new int[]{nIn,nOut};
-  this.filterSize=filterSize;
-  this.filterDepth=filterDepth;
+  this.kernelSize=filterSize;
   this.stride=stride;
 }

@@ -25,10 +25,9 @@
   assertTrue(out.conf().getNIn() == newNumIn);
   assertTrue(out.conf().getNOut() == newNumOut);
   assertTrue(out.conf().getLossFunction().equals(newLoss));
-  NeuralNetConfiguration convConf=new NeuralNetConfiguration.Builder().activationFunction(act).filterSize(filterSize).filterDepth(filterDepth).layer(new ConvolutionLayer.Builder(newFS,newFD,newConvType).activation(newAct).build()).build();
+  NeuralNetConfiguration convConf=new NeuralNetConfiguration.Builder().activationFunction(act).filterSize(filterSize).filterDepth(filterDepth).layer(new ConvolutionLayer.Builder(newFS,newConvType).activation(newAct).build()).build();
   Layer conv=LayerFactories.getFactory(convConf.getLayer()).create(convConf);
-  assertTrue(conv.conf().getFilterSize() == newFS);
-  assertTrue(conv.conf().getFilterDepth() == newFD);
+  assertTrue(conv.conf().getKernelSize() == newFS);
   assertTrue(conv.conf().getConvolutionType().equals(newConvType));
   NeuralNetConfiguration poolConf=new NeuralNetConfiguration.Builder().stride(stride).poolingType(poolType).layer(new SubsamplingLayer.Builder(newPoolType,newStride).build()).build();
   Layer pool=LayerFactories.getFactory(poolConf.getLayer()).create(poolConf);
