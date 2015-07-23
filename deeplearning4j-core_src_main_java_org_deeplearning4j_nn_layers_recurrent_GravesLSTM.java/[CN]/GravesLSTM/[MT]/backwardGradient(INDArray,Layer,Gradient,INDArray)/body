@@ -18,8 +18,8 @@
   INDArray inputWeightGradients=Nd4j.zeros(new int[]{prevLayerSize,4 * hiddenLayerSize,timeSeriesLength});
   INDArray recurrentWeightGradients=Nd4j.zeros(new int[]{hiddenLayerSize,4 * hiddenLayerSize + 3,timeSeriesLength});
   for (int t=timeSeriesLength - 1; t >= 0; t--) {
-    INDArray prevMemCellActivations=(t == 0 ? Nd4j.zeros(hiddenLayerSize,hiddenLayerSize) : memCellActivations.slice(t - 1,2));
-    INDArray prevHiddenUnitActivation=(t == 0 ? Nd4j.zeros(hiddenLayerSize,hiddenLayerSize) : outputActivations.slice(t - 1,2));
+    INDArray prevMemCellActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : memCellActivations.slice(t - 1,2));
+    INDArray prevHiddenUnitActivation=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.slice(t - 1,2));
     INDArray nextLayerDeltaSlice=nextDelta;
     if (!is2dInput) {
       nextLayerDeltaSlice=nextDelta.slice(t,2);
