@@ -1,0 +1,4 @@
+{
+  for (  OutputPreProcessor outputPreProcessor : outputPreProcessors)   toReverse=outputPreProcessor.backward(toReverse);
+  return toReverse;
+}
