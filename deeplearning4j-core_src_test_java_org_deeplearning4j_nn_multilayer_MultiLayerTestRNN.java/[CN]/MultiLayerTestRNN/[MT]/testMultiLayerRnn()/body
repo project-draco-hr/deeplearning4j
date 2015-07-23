@@ -1,0 +1,7 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(10).nOut(10).activationFunction("sigmoid").optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).lossFunction(LossFunctions.LossFunction.RMSE_XENT).weightInit(WeightInit.DISTRIBUTION).list(2).hiddenLayerSizes(10,10).override(1,new ConfOverride(){
+    @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
+    }
+  }
+).backward(true).pretrain(false).build();
+}
