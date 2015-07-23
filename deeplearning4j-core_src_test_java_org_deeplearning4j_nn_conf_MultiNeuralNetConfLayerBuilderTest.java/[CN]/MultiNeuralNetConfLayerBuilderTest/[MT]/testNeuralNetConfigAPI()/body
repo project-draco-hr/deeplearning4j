@@ -1,0 +1,17 @@
+{
+  LossFunction newLoss=LossFunction.SQUARED_LOSS;
+  int newNumIn=numIn + 1;
+  int newNumOut=numOut + 1;
+  WeightInit newWeight=WeightInit.UNIFORM;
+  String newAct="rectify";
+  double newDrop=0.5;
+  int[] newFS=new int[]{3,3};
+  int newFD=7;
+  int[] newStride=new int[]{3,3};
+  Convolution.Type newConvType=Convolution.Type.SAME;
+  SubsamplingLayer.poolingType newPoolType=poolingType.AVG;
+  double newCorrupt=0.5;
+  double newSparsity=0.5;
+  HiddenUnit newHidden=HiddenUnit.BINARY;
+  VisibleUnit newVisible=VisibleUnit.BINARY;
+}

@@ -1,0 +1,11 @@
+{
+  if (layerwise.size() < 2) {
+    throw new IllegalArgumentException("IndexOutOfBounds: Layer Index exceeds listed size. List at least 2 layers");
+  }
+  if (layerwise.size() < ind + 1) {
+    throw new IllegalArgumentException("IndexOutOfBounds: Layer Index exceeds listed size");
+  }
+  Builder overRiddenBuilder=overRideFields(layerwise.get(ind),layer);
+  layerwise.put(ind,overRiddenBuilder);
+  return this;
+}
