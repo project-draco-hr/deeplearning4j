@@ -8,7 +8,6 @@
   ret.miniBatch=miniBatch;
   ret.rho=rho;
   ret.updater=updater;
-  ret.channels=channels;
   ret=overRideFields(ret,layer);
   return ret;
 }
