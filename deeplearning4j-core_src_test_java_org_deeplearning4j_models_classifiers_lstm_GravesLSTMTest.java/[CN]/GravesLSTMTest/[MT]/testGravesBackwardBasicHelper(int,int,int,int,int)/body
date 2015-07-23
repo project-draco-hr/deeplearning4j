@@ -3,12 +3,16 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(nIn).nOut(lstmNHiddenUnits).build();
   GravesLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf);
   lstm.activate(inputData);
+  assertNotNull(lstm.input());
   Gradient gradient=new DefaultGradient();
   INDArray pseudoBiasGradients=Nd4j.ones(miniBatchSize,nOut,timeSeriesLength);
   gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,pseudoBiasGradients);
   INDArray pseudoWeightGradients=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,nOut,timeSeriesLength);
   gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,pseudoWeightGradients);
-  Gradient outGradient=lstm.backpropGradient(gradient,lstm);
+  INDArray epsilon=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,timeSeriesLength);
+  Pair<Gradient,INDArray> out=lstm.backpropGradient(epsilon,null,null);
+  Gradient outGradient=out.getFirst();
+  INDArray nextEpsilon=out.getSecond();
   INDArray biasGradient=outGradient.getGradientFor(GravesLSTMParamInitializer.BIAS);
   INDArray inWeightGradient=outGradient.getGradientFor(GravesLSTMParamInitializer.INPUT_WEIGHTS);
   INDArray recurrentWeightGradient=outGradient.getGradientFor(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
@@ -18,6 +22,8 @@
   assertArrayEquals(biasGradient.shape(),new int[]{1,4 * lstmNHiddenUnits});
   assertArrayEquals(inWeightGradient.shape(),new int[]{nIn,4 * lstmNHiddenUnits});
   assertArrayEquals(recurrentWeightGradient.shape(),new int[]{lstmNHiddenUnits,4 * lstmNHiddenUnits + 3});
+  assertNotNull(nextEpsilon);
+  assertArrayEquals(nextEpsilon.shape(),new int[]{miniBatchSize,nIn,timeSeriesLength});
   for (  String s : outGradient.gradientForVariable().keySet()) {
     lstm.update(outGradient.getGradientFor(s),s);
   }

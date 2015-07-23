@@ -17,7 +17,6 @@
     float[] l1WeightsFloat=asFloat(l1Weights);
     float[] l2WeightsFloat=asFloat(l2Weights);
     float l1BiasFloat=l1Bias.getFloat(0);
-    float l2BiasFloat=l2Bias.getFloat(0);
     float[] l2BiasFloatArray=asFloat(l2Bias);
     float hiddenUnitPreSigmoid=dotProduct(l1WeightsFloat,xFloat) + l1BiasFloat;
     float hiddenUnitPostSigmoid=sigmoid(hiddenUnitPreSigmoid);

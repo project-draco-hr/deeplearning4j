@@ -8,9 +8,9 @@
   INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
   int hiddenLayerSize=recurrentWeights.rows();
   int prevLayerSize=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS).shape()[0];
-  int miniBatchSize=nextDelta.size(0);
-  boolean is2dInput=nextDelta.rank() < 3;
-  int timeSeriesLength=(is2dInput ? 1 : nextDelta.size(2));
+  int miniBatchSize=epsilon.size(0);
+  boolean is2dInput=epsilon.rank() < 3;
+  int timeSeriesLength=(is2dInput ? 1 : epsilon.size(2));
   INDArray wi=inputWeights.get(interval(0,prevLayerSize),interval(0,hiddenLayerSize));
   INDArray wI=recurrentWeights.get(interval(0,hiddenLayerSize),interval(0,hiddenLayerSize));
   INDArray wf=inputWeights.get(interval(0,prevLayerSize),interval(hiddenLayerSize,2 * hiddenLayerSize));
@@ -27,17 +27,13 @@
   INDArray recurrentWeightGradients=Nd4j.zeros(new int[]{hiddenLayerSize,4 * hiddenLayerSize + 3,timeSeriesLength});
   INDArray epsilonNext=Nd4j.zeros(miniBatchSize,prevLayerSize,timeSeriesLength);
   for (int t=timeSeriesLength - 1; t >= 0; t--) {
-    INDArray prevMemCellActivations=(t == 0 ? Nd4j.zeros(hiddenLayerSize,hiddenLayerSize) : memCellActivations.slice(t - 1,2));
-    INDArray prevHiddenUnitActivation=(t == 0 ? Nd4j.zeros(hiddenLayerSize,hiddenLayerSize) : outputActivations.slice(t - 1,2));
-    INDArray nextLayerDeltaSlice=nextDelta;
-    if (!is2dInput) {
-      nextLayerDeltaSlice=nextDelta.slice(t,2);
-    }
+    INDArray prevMemCellActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : memCellActivations.slice(t - 1,2));
+    INDArray prevHiddenUnitActivation=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.slice(t - 1,2));
     INDArray deltaiNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.slice(t + 1,2).get(new NDArrayIndex[]{interval(0,miniBatchSize),interval(0,hiddenLayerSize)}));
     INDArray deltafNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.slice(t + 1,2).get(new NDArrayIndex[]{interval(0,miniBatchSize),interval(hiddenLayerSize,2 * hiddenLayerSize)}));
     INDArray deltaoNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.slice(t + 1,2).get(new NDArrayIndex[]{interval(0,miniBatchSize),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)}));
     INDArray deltagNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.slice(t + 1,2).get(new NDArrayIndex[]{interval(0,miniBatchSize),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)}));
-    INDArray epsilonSlice=epsilon.slice(t,2);
+    INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.slice(t,2));
     INDArray nablaOut=epsilonSlice.addi(deltaiNext.mmul(wI.transpose())).addi(deltafNext.mmul(wF.transpose())).addi(deltaoNext.mmul(wO.transpose())).addi(deltagNext.mmul(wG.transpose()));
     INDArray sigmahOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),prevMemCellActivations.dup()));
     INDArray zo=ifogZs.slice(t,2).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
@@ -90,5 +86,5 @@
   ret.gradientForVariable().put(GravesLSTMParamInitializer.INPUT_WEIGHTS,inputWeightGradients.sum(2));
   ret.gradientForVariable().put(GravesLSTMParamInitializer.RECURRENT_WEIGHTS,recurrentWeightGradients.sum(2));
   ret.gradientForVariable().put(GravesLSTMParamInitializer.BIAS,biasGradients.sum(2).sum(0));
-  return ret;
+  return new Pair<>(ret,epsilonNext);
 }
