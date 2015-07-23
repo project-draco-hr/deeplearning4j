@@ -2,12 +2,11 @@
   INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
   INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS);
   INDArray biases=getParam(GravesLSTMParamInitializer.BIAS);
-  int[] dataShape=input.shape();
-  boolean is2dInput=dataShape.length < 3;
-  int timeSeriesLength=(is2dInput ? 1 : dataShape[2]);
-  int hiddenLayerSize=recurrentWeights.rows();
-  int miniBatchSize=dataShape[0];
-  int nIn=inputWeights.shape()[0];
+  boolean is2dInput=input.rank() < 3;
+  int timeSeriesLength=(is2dInput ? 1 : input.size(2));
+  int hiddenLayerSize=recurrentWeights.size(0);
+  int miniBatchSize=input.size(0);
+  int nIn=inputWeights.size(0);
   if (conf.isUseDropConnect() && training) {
     if (conf.getDropOut() > 0) {
       inputWeights=Dropout.applyDropConnect(this,GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
