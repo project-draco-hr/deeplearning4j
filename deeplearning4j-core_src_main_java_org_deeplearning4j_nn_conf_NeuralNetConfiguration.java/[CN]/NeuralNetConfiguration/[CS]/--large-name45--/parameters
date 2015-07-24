@@ -15,7 +15,6 @@ WeightInit weightInit
 OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
-DefaultRandom rng
 long seed
 Distribution dist
 int nIn
@@ -26,8 +25,7 @@ RBM.HiddenUnit hiddenUnit
 int[] weightShape
 int[] kernelSize
 int[] stride
-int[] featureMapSize
-int kernel
+int padding
 int batchSize
 int numLineSearchIterations
 int maxNumLineSearchIterations

@@ -1,6 +1,6 @@
 {
   if (layer == null)   throw new IllegalStateException("No layer defined.");
-  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,rng,seed,dist,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,kernelSize,stride,featureMapSize,kernel,batchSize,numLineSearchIterations,maxNumLineSearchIterations,minimize,layer,convolutionType,poolingType,l1,customLossFunction);
+  NeuralNetConfiguration ret=new NeuralNetConfiguration(sparsity,useAdaGrad,lr,k,corruptionLevel,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,dropOut,applySparsity,weightInit,optimizationAlgo,lossFunction,constrainGradientToUnitNorm,seed,dist,nIn,nOut,activationFunction,visibleUnit,hiddenUnit,weightShape,kernelSize,stride,padding,batchSize,numLineSearchIterations,maxNumLineSearchIterations,minimize,layer,convolutionType,poolingType,l1,customLossFunction);
   ret.useAdaGrad=this.useAdaGrad;
   ret.rmsDecay=rmsDecay;
   ret.stepFunction=stepFunction;
