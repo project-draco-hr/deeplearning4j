@@ -2,23 +2,24 @@
   if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
     input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
   }
-  int currentFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
-  int inputChannels=ConvolutionUtils.numChannels(input.shape());
-  INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),currentFeatureMaps},conf.getKernelSize()));
+  int numFeatureMaps=conf.getNOut();
+  int inputChannels=conf.getNIn();
+  INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),numFeatureMaps},conf.getKernelSize()));
   INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
-  INDArray filters=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  INDArray kernelWeights=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
   if (conf.getDropOut() > 0 && conf.isUseDropConnect()) {
-    filters=filters.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(filters.shape()));
+    kernelWeights=kernelWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(kernelWeights.shape()));
   }
-  for (int i=0; i < currentFeatureMaps; i++) {
-    INDArray featureMap=Nd4j.create(Ints.concat(new int[]{input.slices(),conf.getKernelSize()[1]},conf.getKernelSize()));
+  for (int i=0; i < numFeatureMaps; i++) {
+    INDArray featureMap=Nd4j.create(Ints.concat(new int[]{input.slices(),inputChannels},conf.getKernelSize()));
     for (int j=0; j < inputChannels; j++) {
-      INDArray convolved=Nd4j.getConvolution().convn(input,filters.slice(i).slice(j),Convolution.Type.VALID);
+      INDArray temp=kernelWeights.slice(i).slice(j);
+      INDArray convolved=Nd4j.getConvolution().convn(input,kernelWeights.slice(i).slice(j),conf.getConvolutionType());
       featureMap.addi(convolved.broadcast(featureMap.shape()));
     }
     featureMap.addi(bias.getDouble(i));
-    INDArray activationForSlice=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap));
-    ret.put(new NDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),new NDArrayIndex(new int[]{i}),NDArrayIndex.all()},activationForSlice);
+    INDArray activationForFeatureMap=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap));
+    ret.put(new NDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),new NDArrayIndex(new int[]{i}),NDArrayIndex.all()},activationForFeatureMap);
   }
   return ret;
 }
