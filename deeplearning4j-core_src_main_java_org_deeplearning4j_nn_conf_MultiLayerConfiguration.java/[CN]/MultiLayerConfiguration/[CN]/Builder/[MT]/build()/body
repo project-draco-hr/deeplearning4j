@@ -8,6 +8,7 @@
   conf.dampingFactor=dampingFactor;
   conf.processors=preProcessors;
   conf.backward=backward;
+  conf.backprop=backprop;
   conf.inputPreProcessors=inputPreProcessor;
   Nd4j.getRandom().setSeed(conf.getConf(0).getSeed());
   return conf;
