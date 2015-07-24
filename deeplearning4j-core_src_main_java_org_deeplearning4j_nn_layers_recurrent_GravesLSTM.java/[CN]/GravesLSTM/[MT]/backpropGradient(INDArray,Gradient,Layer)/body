@@ -36,15 +36,18 @@
     INDArray sigmahPrimeOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),prevMemCellActivations.dup()));
     INDArray nextForgetGateAs=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : ifogAs.slice(t,2).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)));
     INDArray nablaCellState=nablaOut.mul(prevHiddenUnitActivation).muli(sigmahPrimeOfS).addi(nextForgetGateAs.mul(prevMemCellActivations)).addi(deltafNext.mmul(Nd4j.diag(wFF))).addi(deltaoNext.mmul(Nd4j.diag(wOO))).addi(deltagNext.mmul(Nd4j.diag(wGG)));
-    INDArray zf=ifogZs.slice(t,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
+    INDArray zf=ifogZs.slice(t,2).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
     INDArray deltaf=nablaCellState.mul(prevMemCellActivations).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zf).derivative()));
-    INDArray zg=ifogZs.slice(t,0).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
-    INDArray ai=ifogAs.slice(t,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
+    INDArray zg=ifogZs.slice(t,2).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
+    INDArray ai=ifogAs.slice(t,2).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
     INDArray deltag=nablaCellState.mul(ai).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("tanh",zg).derivative()));
-    INDArray zi=ifogZs.slice(t,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
-    INDArray ag=ifogAs.slice(t,0).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
+    INDArray zi=ifogZs.slice(t,2).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
+    INDArray ag=ifogAs.slice(t,2).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
     INDArray deltai=nablaCellState.mul(ag).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("tanh",zi).derivative()));
-    INDArray prevLayerActivationSlice=epsilon.slice(t,2);
+    INDArray prevLayerActivationSlice=epsilon;
+    if (!is2dInput) {
+      prevLayerActivationSlice=epsilon.slice(t,2);
+    }
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevLayerActivationSlice).transpose());
