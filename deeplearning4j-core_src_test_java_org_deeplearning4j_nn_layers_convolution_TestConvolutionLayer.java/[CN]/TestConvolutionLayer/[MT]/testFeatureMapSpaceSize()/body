@@ -3,16 +3,16 @@
   int inputHeight=28;
   int kernelWidth=9;
   int kernelHeight=9;
-  int stride=3;
+  int[] stride=new int[]{3};
   int padding=1;
   int nIn=1;
   int nOut=2;
   DataSetIterator mnist=new MnistDataSetIterator(10,10);
   DataSet next=mnist.next();
-  Layer layer=getCNNConfig(1,nIn,nOut,kernelWidth,kernelHeight);
+  Layer layer=getCNNConfig(nIn,nOut,kernelWidth,kernelHeight,stride);
   INDArray input=next.getFeatureMatrix().reshape(next.numExamples(),1,inputWidth,inputHeight);
   INDArray conv=layer.activate(input);
-  int featureMapWidth=(inputWidth - kernelWidth) + (2 * padding) / stride + 1;
+  int featureMapWidth=(inputWidth - kernelWidth) + (2 * padding) / stride[0] + 1;
   assertEquals(featureMapWidth,conv.shape()[0]);
   assertEquals(nOut,conv.shape()[2]);
 }
