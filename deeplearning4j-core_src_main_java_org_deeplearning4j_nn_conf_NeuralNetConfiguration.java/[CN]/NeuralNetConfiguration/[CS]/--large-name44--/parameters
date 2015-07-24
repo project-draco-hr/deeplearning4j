@@ -24,8 +24,7 @@ String activationFunction
 RBM.VisibleUnit visibleUnit
 RBM.HiddenUnit hiddenUnit
 int[] weightShape
-int[] filterSize
-int filterDepth
+int[] kernelSize
 int[] stride
 int[] featureMapSize
 int kernel

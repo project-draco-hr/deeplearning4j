@@ -1,7 +1,7 @@
 {
   this.nIn=builder.nIn;
   this.nOut=builder.nOut;
-  this.kernelSize=builder.filterSize;
+  this.kernelSize=builder.kernelSize;
   this.convolutionType=builder.convolutionType;
   this.activationFunction=builder.activationFunction;
   this.weightInit=builder.weightInit;
