@@ -2,8 +2,11 @@
   if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
     input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
   }
-  int currentFeatureMaps=ConvolutionUtils.numFeatureMap(conf);
-  int inputChannels=ConvolutionUtils.numChannels(input.shape());
+  int currentFeatureMaps=input.size(1);
+  if (currentFeatureMaps != conf.getKernelSize()[1]) {
+    throw new IllegalArgumentException("Input feature maps must be equal to number of feature maps for thwe kernel");
+  }
+  int inputChannels=currentFeatureMaps;
   INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),currentFeatureMaps},conf.getKernelSize()));
   INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
   INDArray filters=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);

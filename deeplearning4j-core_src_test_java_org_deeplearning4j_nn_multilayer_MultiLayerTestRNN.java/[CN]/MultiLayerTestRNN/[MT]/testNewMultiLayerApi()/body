@@ -1,0 +1,20 @@
+{
+  final int numRows=28;
+  final int numColumns=28;
+  int outputNum=10;
+  int numSamples=1000;
+  int batchSize=10;
+  int iterations=10;
+  int seed=123;
+  int listenerFreq=iterations / 5;
+  MnistDataFetcher fetcher=new MnistDataFetcher(true);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(numRows * numColumns).nOut(numRows * numColumns).activationFunction("sigmoid").optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).lossFunction(LossFunctions.LossFunction.RMSE_XENT).list(3).layer(0,new LSTM.Builder().nIn(numRows * numColumns).nOut(numRows * numColumns).build()).layer(1,new LSTM.Builder().nIn(numRows * numColumns).nOut(numRows * numColumns).build()).layer(2,new LSTM.Builder().nIn(numRows * numColumns).nOut(numRows * numColumns).build()).build();
+  MultiLayerNetwork model=new MultiLayerNetwork(conf);
+  model.init();
+  model.setListeners(Arrays.asList((IterationListener)new ScoreIterationListener(listenerFreq)));
+  for (int i=0; i < (numSamples / batchSize); i++) {
+    fetcher.fetch(batchSize);
+    DataSet mnist=fetcher.next();
+    model.fit(mnist);
+  }
+}
