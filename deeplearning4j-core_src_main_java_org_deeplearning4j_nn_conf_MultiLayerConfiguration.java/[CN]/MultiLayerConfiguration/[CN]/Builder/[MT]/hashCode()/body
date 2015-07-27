@@ -8,6 +8,6 @@
   result=31 * result + (useRBMPropUpAsActivations ? 1 : 0);
   temp=Double.doubleToLongBits(dampingFactor);
   result=31 * result + (int)(temp ^ (temp >>> 32));
-  result=31 * result + (preProcessors != null ? preProcessors.hashCode() : 0);
+  result=31 * result + (outputPreProcessors != null ? outputPreProcessors.hashCode() : 0);
   return result;
 }

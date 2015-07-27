@@ -1,0 +1,4 @@
+{
+  for (  OutputPreProcessor outputPreProcessor : outputPreProcessors)   output=outputPreProcessor.backprop(output);
+  return output;
+}

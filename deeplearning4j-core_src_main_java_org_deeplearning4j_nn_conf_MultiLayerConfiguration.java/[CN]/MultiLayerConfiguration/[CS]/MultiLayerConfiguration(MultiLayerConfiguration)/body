@@ -6,7 +6,7 @@
   this.pretrain=multiLayerConfiguration.pretrain;
   this.useRBMPropUpAsActivations=multiLayerConfiguration.useRBMPropUpAsActivations;
   this.dampingFactor=multiLayerConfiguration.dampingFactor;
-  this.processors=new HashMap<>(multiLayerConfiguration.processors);
+  this.outputPreProcessors=new HashMap<>(multiLayerConfiguration.outputPreProcessors);
   this.backward=multiLayerConfiguration.backward;
   this.backprop=multiLayerConfiguration.backprop;
   this.inputPreProcessors=multiLayerConfiguration.inputPreProcessors;
