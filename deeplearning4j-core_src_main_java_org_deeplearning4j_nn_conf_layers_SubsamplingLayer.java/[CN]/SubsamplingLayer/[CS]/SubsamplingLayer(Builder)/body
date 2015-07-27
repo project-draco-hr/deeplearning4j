@@ -1,4 +1,5 @@
 {
+  super(builder);
   this.poolingType=builder.poolingType;
   this.stride=builder.stride;
 }
