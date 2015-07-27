@@ -1,0 +1,5 @@
+{
+  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("basic/word2vec.txt").getFile().getAbsolutePath(),3);
+  Word2Vec model=new Word2Vec();
+  model.train(corpus);
+}

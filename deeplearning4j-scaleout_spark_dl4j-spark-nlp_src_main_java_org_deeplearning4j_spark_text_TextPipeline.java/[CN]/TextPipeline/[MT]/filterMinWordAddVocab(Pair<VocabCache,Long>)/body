@@ -1,0 +1,24 @@
+{
+  InMemoryLookupCache lookupCacheObject=(InMemoryLookupCache)pair.getFirst();
+  Long wordCount=pair.getSecond();
+  for (  Entry<String,Double> entry : lookupCacheObject.getWordFrequencies().entrySet()) {
+    String stringToken=entry.getKey();
+    Double tokenCount=entry.getValue();
+    if (tokenCount < minWordFrequency) {
+      stringToken=org.deeplearning4j.models.word2vec.Word2Vec.UNK;
+    }
+    VocabWord actualToken;
+    if (lookupCacheObject.hasToken(stringToken))     actualToken=lookupCacheObject.tokenFor(stringToken);
+ else {
+      actualToken=new VocabWord(1.0,stringToken);
+    }
+    boolean vocabContainsWord=lookupCacheObject.containsWord(stringToken);
+    if (!vocabContainsWord) {
+      lookupCacheObject.addToken(actualToken);
+      int idx=lookupCacheObject.numWords();
+      actualToken.setIndex(idx);
+      lookupCacheObject.putVocabWord(stringToken);
+    }
+  }
+  return new Pair<>((VocabCache)lookupCacheObject,wordCount);
+}
