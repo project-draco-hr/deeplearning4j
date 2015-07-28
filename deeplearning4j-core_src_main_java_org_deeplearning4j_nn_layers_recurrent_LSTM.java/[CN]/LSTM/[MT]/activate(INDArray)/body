@@ -1,4 +1,5 @@
 {
+  this.x=input;
   INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
   INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
   INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
