@@ -19,4 +19,11 @@
   for (int i=0; i < w0.length(); i++)   assertTrue(w0.getDouble(i) >= 10.0 && w0.getDouble(i) <= 11.0);
   w1=net.getLayer(1).getParam(DefaultParamInitializer.WEIGHT_KEY).linearView();
   for (int i=0; i < w1.length(); i++)   assertTrue(w1.getDouble(i) >= 20.0 && w0.getDouble(i) <= 21.0);
+  conf=new NeuralNetConfiguration.Builder().activationFunction("sigmoid").weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-30,-20)).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertTrue(conf.getConf(0).getWeightInit() == WeightInit.DISTRIBUTION);
+  assertTrue(conf.getConf(1).getWeightInit() == WeightInit.DISTRIBUTION);
+  assertTrue(conf.getConf(0).getDist() instanceof UniformDistribution);
+  assertTrue(conf.getConf(1).getDist() instanceof UniformDistribution);
 }
