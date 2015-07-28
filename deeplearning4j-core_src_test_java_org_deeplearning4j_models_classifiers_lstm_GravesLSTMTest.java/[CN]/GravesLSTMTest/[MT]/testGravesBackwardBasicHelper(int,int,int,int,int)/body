@@ -3,6 +3,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").dist(new UniformDistribution(0,1)).layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(lstmNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).build();
   GravesLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf);
   lstm.activate(inputData);
+  assertNotNull(lstm.input());
   Gradient gradient=createPrevGradient(miniBatchSize,nOut,lstmNHiddenUnits,timeSeriesLength);
   Layer prevLayer=createOutputLayer();
   INDArray epsilon=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,timeSeriesLength);
@@ -19,6 +20,7 @@
   assertArrayEquals(inWeightGradient.shape(),new int[]{nIn,4 * lstmNHiddenUnits});
   assertArrayEquals(recurrentWeightGradient.shape(),new int[]{lstmNHiddenUnits,4 * lstmNHiddenUnits + 3});
   assertNotNull(nextEpsilon);
+  assertArrayEquals(nextEpsilon.shape(),new int[]{miniBatchSize,nIn,timeSeriesLength});
   for (  String s : outGradient.gradientForVariable().keySet()) {
     lstm.update(outGradient.getGradientFor(s),s);
   }
