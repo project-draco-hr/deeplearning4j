@@ -4,8 +4,4 @@
   model.train(corpus);
   InMemoryLookupCache lookupCache=(InMemoryLookupCache)model.getVocabCacheBroadcast().value();
   Collection<String> lst=model.wordsNearest("day",10);
-  FileWriter writer=new FileWriter("testSparkWord2Vec.txt");
-  for (  String str : lst) {
-    writer.write(str + "\n");
-  }
 }
