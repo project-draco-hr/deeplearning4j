@@ -1,7 +1,8 @@
 {
-  TextPipeline pipeline=new TextPipeline(rdd);
-  Pair<VocabCache,Long> vocabAndNumWords=pipeline.process(tokenizerFactoryClazz);
   SparkConf conf=rdd.context().getConf();
+  int minWords=conf.getInt(Word2VecPerformer.NUM_WORDS,5);
+  TextPipeline pipeline=new TextPipeline(rdd,minWords);
+  Pair<VocabCache,Long> vocabAndNumWords=pipeline.process(tokenizerFactoryClazz);
   final JavaSparkContext sc=new JavaSparkContext(rdd.context());
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
   final InMemoryLookupTable lookupTable=this.table != null ? table : (InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(Word2VecPerformerVoid.ALPHA,0.025)).vectorLength(conf.getInt(Word2VecPerformerVoid.VECTOR_LENGTH,100)).negative(conf.getDouble(Word2VecPerformerVoid.NEGATIVE,5)).useAdaGrad(conf.getBoolean(Word2VecPerformerVoid.ADAGRAD,false)).build();
@@ -12,6 +13,7 @@
   JavaRDD<Pair<List<VocabWord>,AtomicLong>> r=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new TokentoVocabWord(vocabCacheBroadcast));
   log.info("Built vocab..");
   final Word2VecParam param=new Word2VecParam.Builder().negative(0.0).window(conf.getInt(Word2VecPerformer.WINDOW,5)).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(lookupTable.getLr().get()).setMinAlpha(1e-2).setVectorLength(lookupTable.getVectorLength()).useAdaGrad(lookupTable.isUseAdaGrad()).weights(lookupTable).build();
+  param.getTotalWords();
   param.setTotalWords(vocabAndNumWords.getSecond().intValue());
   log.info("Counting words within sentences..");
   final JavaRDD<AtomicLong> frequencies=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,AtomicLong>(){
@@ -20,7 +22,7 @@
     }
   }
 ).cache();
-  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartition());
+  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartitionAccumulator());
   Function2 foldWithinPartition=new Function2<Integer,Iterator<AtomicLong>,Iterator<Long>>(){
     @Override public Iterator<Long> call(    Integer ind,    Iterator<AtomicLong> partition) throws Exception {
       List<Long> foldedItemList=new ArrayList<Long>(){
@@ -45,7 +47,7 @@
     }
   }
 ;
-  JavaRDD<Long> foldWithinPartitionRDD=frequencies.mapPartitionsWithIndex(foldWithinPartition,true);
+  @SuppressWarnings("unchecked") JavaRDD<Long> foldWithinPartitionRDD=frequencies.mapPartitionsWithIndex(foldWithinPartition,true);
   foldWithinPartitionRDD.foreachPartition(new VoidFunction<Iterator<Long>>(){
     @Override public void call(    Iterator<Long> integerIterator) throws Exception {
     }
@@ -71,8 +73,8 @@
     }
   }
 ;
-  JavaRDD foldBetweenPartitionRDD=foldWithinPartitionRDD.mapPartitionsWithIndex(foldBetweenPartitions,true);
-  final List<Long> wordsSeen=foldBetweenPartitionRDD.collect();
+  @SuppressWarnings("unchecked") JavaRDD foldBetweenPartitionRDD=foldWithinPartitionRDD.mapPartitionsWithIndex(foldBetweenPartitions,true);
+  @SuppressWarnings("unchecked") final List<Long> wordsSeen=foldBetweenPartitionRDD.collect();
   log.info("Calculating word frequencies...");
   JavaRDD<List<VocabWord>> words=r.map(new Function<Pair<List<VocabWord>,AtomicLong>,List<VocabWord>>(){
     @Override public List<VocabWord> call(    Pair<List<VocabWord>,AtomicLong> listAtomicLongPair) throws Exception {
@@ -99,8 +101,9 @@
     }
 );
     change2.unpersist();
-    change2=null;
     log.info("Iteration " + i);
   }
+  super.lookupTable=lookupTable;
+  super.vocab=vocabCacheBroadcast.getValue();
   return new Pair<VocabCache,WeightLookupTable>(vocabCacheBroadcast.getValue(),lookupTable);
 }

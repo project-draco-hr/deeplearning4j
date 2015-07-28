@@ -14,7 +14,7 @@
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);
     INDArray syn1=weights.getSyn1().slice(point);
-    double dot=Nd4j.getBlasWrapper().dot(l1,syn1);
+    double dot=Nd4j.getBlasWrapper().level1().dot(syn1.length(),1.0,l1,syn1);
     if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     double f=expTable[idx];
