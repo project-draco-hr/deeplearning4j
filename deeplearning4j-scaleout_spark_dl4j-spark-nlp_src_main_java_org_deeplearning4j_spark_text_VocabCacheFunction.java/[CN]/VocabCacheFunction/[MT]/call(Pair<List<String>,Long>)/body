@@ -1,10 +1,17 @@
 {
-  long wordsEncountered=v1.getSecond();
-  for (  String token : v1.getFirst()) {
-    boolean isStopWord=stopWords.getValue().contains(token);
-    if (isStopWord)     token="STOP";
-    if (token.isEmpty())     continue;
-    vocab.incrementWordCount(token);
+  Long sentenceWordCount=pair.getSecond();
+  wordCountAcc.add((double)sentenceWordCount);
+  List<String> lstOfWords=pair.getFirst();
+  List<String> stops=stopWords.getValue();
+  Counter<String> counter=new Counter<>();
+  for (  String w : lstOfWords) {
+    if (w.isEmpty())     continue;
+    if (stops.contains(w)) {
+      counter.incrementCount("STOP",1.0);
+    }
+ else {
+      counter.incrementCount(w,1.0);
+    }
   }
-  return new Pair<>(vocab,wordsEncountered);
+  wordFreqAcc.add(counter);
 }

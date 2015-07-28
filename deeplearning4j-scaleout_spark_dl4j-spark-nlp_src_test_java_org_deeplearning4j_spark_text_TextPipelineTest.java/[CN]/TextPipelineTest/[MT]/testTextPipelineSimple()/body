@@ -3,26 +3,18 @@
   TextPipeline pipeline=new TextPipeline(corpus,1);
   Pair<VocabCache,Long> pair=pipeline.process();
   InMemoryLookupCache lookupCache=(InMemoryLookupCache)pair.getFirst();
-  assertEquals(lookupCache.vocabs.size(),7);
+  assertEquals(lookupCache.vocabs.size(),6);
   ArrayList<Integer> vocabWordInds=new ArrayList<>();
   for (  VocabWord vw : lookupCache.vocabs.values()) {
     vocabWordInds.add(vw.getIndex());
   }
-  assertTrue(Collections.min(vocabWordInds) == 1);
-  assertTrue(Collections.max(vocabWordInds) == 7);
+  assertTrue(Collections.min(vocabWordInds) == 0);
+  assertTrue(Collections.max(vocabWordInds) == 5);
   assertTrue(lookupCache.vocabs.containsKey("She"));
   assertTrue(lookupCache.vocabs.containsKey("found"));
-  assertTrue(lookupCache.vocabs.containsKey("STOP"));
   assertTrue(lookupCache.vocabs.containsKey("one"));
   assertTrue(lookupCache.vocabs.containsKey("two"));
   assertTrue(lookupCache.vocabs.containsKey("ba"));
   assertTrue(lookupCache.vocabs.containsKey("abab"));
   assertTrue(pair.getSecond() == 8);
-  assertTrue(lookupCache.wordFrequencies.getCount("She") == 1.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("found") == 1.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("STOP") == 2.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("one") == 1.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("two") == 1.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("ba") == 1.0);
-  assertTrue(lookupCache.wordFrequencies.getCount("abab") == 1.0);
 }

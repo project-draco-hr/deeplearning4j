@@ -1,7 +1,6 @@
 {
-  InMemoryLookupCache lookupCacheObject=(InMemoryLookupCache)pair.getFirst();
-  Long wordCount=pair.getSecond();
-  for (  Entry<String,Double> entry : lookupCacheObject.getWordFrequencies().entrySet()) {
+  InMemoryLookupCache lookupCacheObject=new InMemoryLookupCache();
+  for (  Entry<String,Double> entry : wordFreq.entrySet()) {
     String stringToken=entry.getKey();
     Double tokenCount=entry.getValue();
     if (tokenCount < minWordFrequency) {
@@ -19,6 +18,7 @@
       actualToken.setIndex(idx);
       lookupCacheObject.putVocabWord(stringToken);
     }
+    lookupCacheObject.setWordFrequencies(wordFreq);
   }
   return new Pair<>((VocabCache)lookupCacheObject,wordCount);
 }

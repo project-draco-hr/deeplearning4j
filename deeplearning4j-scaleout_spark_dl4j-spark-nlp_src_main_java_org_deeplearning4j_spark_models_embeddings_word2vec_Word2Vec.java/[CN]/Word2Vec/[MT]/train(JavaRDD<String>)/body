@@ -1,7 +1,8 @@
 {
-  TextPipeline pipeline=new TextPipeline(rdd);
-  Pair<VocabCache,Long> vocabAndNumWords=pipeline.process(tokenizerFactoryClazz);
   SparkConf conf=rdd.context().getConf();
+  int minWords=conf.getInt(Word2VecPerformer.NUM_WORDS,5);
+  TextPipeline pipeline=new TextPipeline(rdd,minWords);
+  Pair<VocabCache,Long> vocabAndNumWords=pipeline.process(tokenizerFactoryClazz);
   final JavaSparkContext sc=new JavaSparkContext(rdd.context());
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
   final InMemoryLookupTable lookupTable=this.table != null ? table : (InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(Word2VecPerformerVoid.ALPHA,0.025)).vectorLength(conf.getInt(Word2VecPerformerVoid.VECTOR_LENGTH,100)).negative(conf.getDouble(Word2VecPerformerVoid.NEGATIVE,5)).useAdaGrad(conf.getBoolean(Word2VecPerformerVoid.ADAGRAD,false)).build();
@@ -21,7 +22,7 @@
     }
   }
 ).cache();
-  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartition());
+  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartitionAccumulator());
   Function2 foldWithinPartition=new Function2<Integer,Iterator<AtomicLong>,Iterator<Long>>(){
     @Override public Iterator<Long> call(    Integer ind,    Iterator<AtomicLong> partition) throws Exception {
       List<Long> foldedItemList=new ArrayList<Long>(){
@@ -102,5 +103,7 @@
     change2.unpersist();
     log.info("Iteration " + i);
   }
+  super.lookupTable=lookupTable;
+  super.vocab=vocabCacheBroadcast.getValue();
   return new Pair<VocabCache,WeightLookupTable>(vocabCacheBroadcast.getValue(),lookupTable);
 }

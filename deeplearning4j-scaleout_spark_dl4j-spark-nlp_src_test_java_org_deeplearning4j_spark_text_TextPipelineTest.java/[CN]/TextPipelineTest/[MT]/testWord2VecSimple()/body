@@ -2,4 +2,26 @@
   JavaRDD<String> corpus=sc.textFile(new ClassPathResource("basic/word2vec.txt").getFile().getAbsolutePath(),3);
   Word2Vec model=new Word2Vec();
   model.train(corpus);
+  InMemoryLookupCache lookupCache=(InMemoryLookupCache)model.getVocabCacheBroadcast().value();
+  assertEquals(lookupCache.vocabs.size(),7);
+  ArrayList<Integer> vocabWordInds=new ArrayList<>();
+  for (  VocabWord vw : lookupCache.vocabs.values()) {
+    vocabWordInds.add(vw.getIndex());
+  }
+  assertTrue(Collections.min(vocabWordInds) == 1);
+  assertTrue(Collections.max(vocabWordInds) == 7);
+  assertTrue(lookupCache.vocabs.containsKey("She"));
+  assertTrue(lookupCache.vocabs.containsKey("found"));
+  assertTrue(lookupCache.vocabs.containsKey("STOP"));
+  assertTrue(lookupCache.vocabs.containsKey("one"));
+  assertTrue(lookupCache.vocabs.containsKey("two"));
+  assertTrue(lookupCache.vocabs.containsKey("ba"));
+  assertTrue(lookupCache.vocabs.containsKey("abab"));
+  assertTrue(lookupCache.wordFrequencies.getCount("She") == 1.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("found") == 1.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("STOP") == 2.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("one") == 1.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("two") == 1.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("ba") == 1.0);
+  assertTrue(lookupCache.wordFrequencies.getCount("abab") == 1.0);
 }
