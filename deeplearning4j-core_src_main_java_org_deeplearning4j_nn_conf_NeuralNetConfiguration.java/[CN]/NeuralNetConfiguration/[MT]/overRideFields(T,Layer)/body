@@ -8,11 +8,43 @@
       layerField.setAccessible(true);
       if (neuralNetField.getName().equals(layerField.getName())) {
         try {
-          Object valForConfig=neuralNetField.get(configInst);
           Object layerFieldValue=layerField.get(layer);
           if (layerFieldValue != null) {
-            if (valForConfig.getClass().equals(layerFieldValue.getClass())) {
-              neuralNetField.set(configInst,layerFieldValue);
+            if (neuralNetField.getType().isAssignableFrom(layerField.getType())) {
+              if (!ClassUtils.isPrimitiveOrWrapper(layerField.getType())) {
+                neuralNetField.set(configInst,layerFieldValue);
+              }
+ else {
+                Class<?> primitiveClass=layerField.getType();
+                if (primitiveClass == double.class || primitiveClass == Double.class) {
+                  if (!Double.isNaN((double)layerFieldValue)) {
+                    neuralNetField.set(configInst,layerFieldValue);
+                  }
+                }
+ else                 if (primitiveClass == float.class || primitiveClass == Float.class) {
+                  if (!Float.isNaN((float)layerFieldValue)) {
+                    neuralNetField.set(configInst,layerFieldValue);
+                  }
+                }
+ else                 if (primitiveClass == int.class || primitiveClass == Integer.class) {
+                  if (((int)layerFieldValue) != Integer.MIN_VALUE) {
+                    neuralNetField.set(configInst,layerFieldValue);
+                  }
+                }
+ else                 if (primitiveClass == long.class || primitiveClass == Long.class) {
+                  if (((long)layerFieldValue) != Long.MIN_VALUE) {
+                    neuralNetField.set(configInst,layerFieldValue);
+                  }
+                }
+ else                 if (primitiveClass == char.class || primitiveClass == Character.class) {
+                  if (((char)layerFieldValue) != Character.MIN_VALUE) {
+                    neuralNetField.set(configInst,layerFieldValue);
+                  }
+                }
+ else {
+                  throw new RuntimeException("Primitive type not settable via reflection");
+                }
+              }
             }
           }
         }
