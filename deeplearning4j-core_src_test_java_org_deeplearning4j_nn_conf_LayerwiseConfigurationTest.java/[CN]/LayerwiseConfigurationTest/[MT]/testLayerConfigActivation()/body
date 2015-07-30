@@ -1,0 +1,12 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertTrue(conf.getConf(0).getActivationFunction().equals("relu"));
+  assertTrue(conf.getConf(1).getActivationFunction().equals("relu"));
+  conf=new NeuralNetConfiguration.Builder().activationFunction("sigmoid").list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).activation("tanh").build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).activation("relu").build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertTrue(conf.getConf(0).getActivationFunction().equals("tanh"));
+  assertTrue(conf.getConf(1).getActivationFunction().equals("relu"));
+}
