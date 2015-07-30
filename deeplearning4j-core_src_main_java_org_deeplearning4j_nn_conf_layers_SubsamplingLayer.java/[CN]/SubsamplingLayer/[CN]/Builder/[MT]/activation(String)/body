@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("SubsamplingLayer does not accept activation");
+  this.activationFunction=activationFunction;
+  return this;
 }
