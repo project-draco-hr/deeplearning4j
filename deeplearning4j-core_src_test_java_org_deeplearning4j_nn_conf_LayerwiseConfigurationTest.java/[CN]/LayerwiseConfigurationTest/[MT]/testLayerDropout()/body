@@ -1,0 +1,13 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().dropOut(0.47).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertTrue(conf.getConf(0).getDropOut() == 0.47);
+  assertTrue(conf.getConf(1).getDropOut() == 0.47);
+  conf=new NeuralNetConfiguration.Builder().dropOut(0.5).list(3).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).dropOut(0.2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).dropOut(0.4).build()).layer(2,new DenseLayer.Builder().nIn(2).nOut(2).dropOut(0.0).build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertTrue(conf.getConf(0).getDropOut() == 0.2);
+  assertTrue(conf.getConf(1).getDropOut() == 0.4);
+  assertTrue(conf.getConf(2).getDropOut() == 0.0);
+}
