@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("ConvolutionLayer Layer does not accept dropout");
+  this.dropOut=dropOut;
+  return this;
 }
