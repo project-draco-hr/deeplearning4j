@@ -3,5 +3,5 @@
   for (int i=0; i < layerwise.size(); i++) {
     list.add(layerwise.get(i).build());
   }
-  return new MultiLayerConfiguration.Builder().backprop(backprop).inputPreProcessors(inputPreProcessors).useDropConnect(useDropConnect).pretrain(pretrain).outputPreProcessors(outputPreProcessors).hiddenLayerSizes(hiddenLayerSizes).confs(list).build();
+  return new MultiLayerConfiguration.Builder().backprop(backprop).inputPreProcessors(inputPreProcessors).useDropConnect(useDropConnect).pretrain(pretrain).outputPostProcessors(outputPostProcessors).hiddenLayerSizes(hiddenLayerSizes).confs(list).build();
 }
