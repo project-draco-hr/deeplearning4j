@@ -1,6 +1,5 @@
 {
   String multiGradientKey;
-  INDArray currGradient=null;
   gradient=new DefaultGradient();
   Layer currLayer, prevLayer;
   if (!(getOutputLayer() instanceof OutputLayer)) {
