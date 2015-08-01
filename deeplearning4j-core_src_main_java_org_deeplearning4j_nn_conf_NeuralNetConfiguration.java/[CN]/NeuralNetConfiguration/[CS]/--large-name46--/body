@@ -11,7 +11,6 @@
   this.sparsity=sparsity;
   this.useAdaGrad=useAdaGrad;
   this.lr=lr;
-  this.kernel=kernel;
   this.k=k;
   this.corruptionLevel=corruptionLevel;
   this.numIterations=numIterations;
@@ -26,7 +25,6 @@
   this.optimizationAlgo=optimizationAlgo;
   this.lossFunction=lossFunction;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
-  this.rng=null;
   this.seed=seed;
   this.dist=dist;
   this.nIn=nIn;
@@ -36,6 +34,7 @@
   this.hiddenUnit=hiddenUnit;
   if (weightShape != null)   this.weightShape=weightShape;
  else   this.weightShape=new int[]{nIn,nOut};
-  this.kernelSize=filterSize;
+  this.kernelSize=kernelSize;
   this.stride=stride;
+  this.padding=padding;
 }

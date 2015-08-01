@@ -1,5 +1,5 @@
 {
   super(builder);
-  this.kernelSize=builder.filterSize;
+  this.kernelSize=builder.kernelSize;
   this.convolutionType=builder.convolutionType;
 }
