@@ -6,10 +6,10 @@
   conf.pretrain=pretrain;
   conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
-  conf.processors=preProcessors;
+  conf.outputPostProcessors=outputPostProcessors;
   conf.backward=backward;
   conf.backprop=backprop;
-  conf.inputPreProcessors=inputPreProcessor;
+  conf.inputPreProcessors=inputPreProcessors;
   Nd4j.getRandom().setSeed(conf.getConf(0).getSeed());
   return conf;
 }

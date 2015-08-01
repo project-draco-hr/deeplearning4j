@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("RBM does not accept activation");
+  this.activationFunction=activationFunction;
+  return this;
 }

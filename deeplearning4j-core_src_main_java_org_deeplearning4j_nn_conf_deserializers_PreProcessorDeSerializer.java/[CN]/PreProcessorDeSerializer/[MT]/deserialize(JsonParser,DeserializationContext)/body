@@ -4,8 +4,8 @@
   String[] split=val.split("\t");
   if (split.length >= 2) {
     try {
-      Class<? extends OutputPreProcessor> clazz2=(Class<? extends OutputPreProcessor>)Class.forName(split[0]);
-      OutputPreProcessor ret=clazz2.newInstance();
+      Class<? extends OutputPostProcessor> clazz2=(Class<? extends OutputPostProcessor>)Class.forName(split[0]);
+      OutputPostProcessor ret=clazz2.newInstance();
       Properties props=new Properties();
       props.load(new StringReader(split[1]));
       Dl4jReflection.setProperties(ret,props);

@@ -1,6 +1,6 @@
 {
   model.computeGradientAndScore();
   Pair<Gradient,Double> pair=model.gradientAndScore();
-  updateGradientAccordingToParams(pair.getFirst(),model,model.batchSize(),iteration);
+  updateGradientAccordingToParams(pair.getFirst(),model,model.batchSize());
   return pair;
 }

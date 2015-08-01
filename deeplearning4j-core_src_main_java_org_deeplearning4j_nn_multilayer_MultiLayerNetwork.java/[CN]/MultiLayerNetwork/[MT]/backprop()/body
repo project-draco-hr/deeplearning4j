@@ -1,5 +1,6 @@
 {
-  setInput(input);
+  String multiGradientKey;
+  INDArray currGradient=null;
   gradient=new DefaultGradient();
   Layer currLayer, prevLayer;
   if (!(getOutputLayer() instanceof OutputLayer)) {
@@ -17,18 +18,23 @@
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> currentPair=outputLayer.backpropGradient(null,null,null);
   for (  String paramType : outputLayer.gradient().gradientForVariable().keySet()) {
-    String multiGradientKey=String.valueOf(numLayers) + "_" + paramType;
-    gradient.setGradientFor(multiGradientKey,outputLayer.gradient().getGradientFor(paramType));
+    multiGradientKey=String.valueOf(numLayers) + "_" + paramType;
+    currGradient=currentPair.getFirst().getGradientFor(paramType);
+    if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)     currGradient=this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currGradient);
+    gradient.setGradientFor(multiGradientKey,currGradient);
   }
   prevLayer=outputLayer;
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayers()[j];
+    if (getLayerWiseConfigurations().getOutputPostProcess(j) != null)     currGradient=this.layerWiseConfigurations.getOutputPostProcess(j).backprop(currGradient);
     currentPair=currLayer.backpropGradient(currentPair.getSecond(),currentPair.getFirst(),prevLayer);
     prevLayer=currLayer;
     Gradient layerGradient=currentPair.getFirst();
     for (    String paramType : layerGradient.gradientForVariable().keySet()) {
-      String multiGradientKey=String.valueOf(j) + "_" + paramType;
+      multiGradientKey=String.valueOf(j) + "_" + paramType;
+      currGradient=currentPair.getFirst().getGradientFor(paramType);
       gradient.setGradientFor(multiGradientKey,layerGradient.getGradientFor(paramType));
+      if (getLayerWiseConfigurations().getInputPreProcess(j) != null)       currGradient=this.layerWiseConfigurations.getInputPreProcess(j).backprop(currGradient);
     }
   }
   score=outputLayer.score();

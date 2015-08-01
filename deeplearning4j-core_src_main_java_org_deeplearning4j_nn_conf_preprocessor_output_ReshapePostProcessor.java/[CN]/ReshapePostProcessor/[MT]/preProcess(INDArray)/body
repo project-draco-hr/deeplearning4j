@@ -1,0 +1,4 @@
+{
+  this.prevShape=output.shape();
+  return output.reshape(newShape);
+}
