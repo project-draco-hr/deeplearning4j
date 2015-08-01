@@ -1,6 +1,6 @@
 {
   log.info("Finetune phase ");
-  if (layerWiseConfigurations.isBackward()) {
+  if (layerWiseConfigurations.isBackprop()) {
     log.info("Will use backpropagation for finetune");
     return;
   }

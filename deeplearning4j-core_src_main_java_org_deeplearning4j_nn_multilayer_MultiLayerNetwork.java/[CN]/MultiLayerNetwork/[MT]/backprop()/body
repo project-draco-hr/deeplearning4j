@@ -6,35 +6,33 @@
     log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
     return;
   }
-  List<INDArray> activations=feedForward();
+  feedForward();
   OutputLayer outputLayer=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (outputLayer.conf().getWeightInit() == WeightInit.ZERO) {
     throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
   }
   outputLayer.setLabels(labels);
-  outputLayer.computeGradientAndScore();
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> currentPair=outputLayer.backpropGradient(null,null,null);
-  for (  String paramType : outputLayer.gradient().gradientForVariable().keySet()) {
-    multiGradientKey=String.valueOf(numLayers) + "_" + paramType;
-    currGradient=currentPair.getFirst().getGradientFor(paramType);
-    if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)     currGradient=this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currGradient);
-    gradient.setGradientFor(multiGradientKey,currGradient);
+  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currentPair=this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currentPair);
+  Map<String,INDArray> tempGradientMap=currentPair.getFirst().gradientForVariable();
+  for (  Map.Entry<String,INDArray> entry : tempGradientMap.entrySet()) {
+    multiGradientKey=String.valueOf(numLayers) + "_" + entry.getKey();
+    gradient.setGradientFor(multiGradientKey,entry.getValue());
   }
   prevLayer=outputLayer;
   for (int j=numLayers - 2; j >= 0; j--) {
-    currLayer=getLayers()[j];
-    if (getLayerWiseConfigurations().getOutputPostProcess(j) != null)     currGradient=this.layerWiseConfigurations.getOutputPostProcess(j).backprop(currGradient);
+    currLayer=getLayer(j);
+    if (getLayerWiseConfigurations().getOutputPostProcess(j) != null)     currentPair=this.layerWiseConfigurations.getOutputPostProcess(j).backprop(currentPair);
     currentPair=currLayer.backpropGradient(currentPair.getSecond(),currentPair.getFirst(),prevLayer);
     prevLayer=currLayer;
-    Gradient layerGradient=currentPair.getFirst();
-    for (    String paramType : layerGradient.gradientForVariable().keySet()) {
-      multiGradientKey=String.valueOf(j) + "_" + paramType;
-      currGradient=currentPair.getFirst().getGradientFor(paramType);
-      gradient.setGradientFor(multiGradientKey,layerGradient.getGradientFor(paramType));
-      if (getLayerWiseConfigurations().getInputPreProcess(j) != null)       currGradient=this.layerWiseConfigurations.getInputPreProcess(j).backprop(currGradient);
+    tempGradientMap=currentPair.getFirst().gradientForVariable();
+    for (    Map.Entry<String,INDArray> entry : tempGradientMap.entrySet()) {
+      multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
+      gradient.setGradientFor(multiGradientKey,entry.getValue());
     }
+    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currentPair=this.layerWiseConfigurations.getInputPreProcess(j).backprop(currentPair);
   }
   score=outputLayer.score();
 }
