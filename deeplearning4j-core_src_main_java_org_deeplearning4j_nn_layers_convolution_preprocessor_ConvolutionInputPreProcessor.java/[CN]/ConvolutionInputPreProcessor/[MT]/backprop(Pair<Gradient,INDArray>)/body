@@ -1,8 +1,9 @@
 {
+  INDArray output=pair.getSecond();
   if (shape == null || ArrayUtil.prod(shape) != output.length()) {
     int[] otherOutputs=null;
     if (output.shape().length == 2) {
-      return output;
+      return new Pair<>(pair.getFirst(),output);
     }
  else     if (output.shape().length == 4) {
       otherOutputs=new int[3];
@@ -14,5 +15,5 @@
     System.arraycopy(output.shape(),1,otherOutputs,0,otherOutputs.length);
     shape=new int[]{outputShape,ArrayUtil.prod(otherOutputs)};
   }
-  return output.reshape(shape);
+  return new Pair<>(pair.getFirst(),output.reshape(shape));
 }

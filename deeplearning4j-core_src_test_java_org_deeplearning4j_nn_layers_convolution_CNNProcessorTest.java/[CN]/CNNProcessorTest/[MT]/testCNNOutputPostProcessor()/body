@@ -2,10 +2,10 @@
   INDArray in2D=Nd4j.create(1,784);
   INDArray in4D=Nd4j.create(20,1,28,28);
   ConvolutionOutputPostProcessor convProcessor=new ConvolutionOutputPostProcessor(rows,cols,1);
-  INDArray check2to4=convProcessor.backprop(in2D);
+  INDArray check2to4=convProcessor.backprop(new Pair<>((Gradient)null,in2D)).getSecond();
   int val2to4=check2to4.shape().length;
   assertTrue(val2to4 == 4);
-  INDArray result2=convProcessor.backprop(in4D);
+  INDArray result2=convProcessor.backprop(new Pair<>((Gradient)null,in4D)).getSecond();
   int val4to4=result2.shape().length;
   assertTrue(val4to4 == 4);
 }
