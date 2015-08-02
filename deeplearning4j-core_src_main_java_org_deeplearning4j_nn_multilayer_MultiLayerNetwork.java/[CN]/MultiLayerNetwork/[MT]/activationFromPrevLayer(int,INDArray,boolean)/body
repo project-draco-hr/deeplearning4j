@@ -1,8 +1,8 @@
 {
-  if (getLayerWiseConfigurations().getInputPreProcess(curr) != null)   input=getLayerWiseConfigurations().getInputPreProcess(curr).preProcess(input);
+  if (getLayerWiseConfigurations().getInputPreProcess(curr) != null)   input=getLayerWiseConfigurations().getInputPreProcess(curr).process(input);
   INDArray ret=layers[curr].activate(input,training);
   if (getLayerWiseConfigurations().getOutputPostProcessors() != null && getLayerWiseConfigurations().getOutputPostProcess(curr) != null) {
-    ret=getLayerWiseConfigurations().getOutputPostProcess(curr).preProcess(ret);
+    ret=getLayerWiseConfigurations().getOutputPostProcess(curr).process(ret);
     return ret;
   }
   return ret;
