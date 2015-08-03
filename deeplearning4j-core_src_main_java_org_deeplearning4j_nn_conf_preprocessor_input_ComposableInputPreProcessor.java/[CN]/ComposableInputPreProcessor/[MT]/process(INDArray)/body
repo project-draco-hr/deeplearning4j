@@ -1,4 +1,0 @@
-{
-  for (  InputPreProcessor preProcessor : inputPreProcessors)   input=preProcessor.process(input);
-  return input;
-}

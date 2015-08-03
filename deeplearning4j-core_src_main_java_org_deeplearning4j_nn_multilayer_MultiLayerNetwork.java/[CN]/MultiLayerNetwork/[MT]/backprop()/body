@@ -14,25 +14,22 @@
   }
   outputLayer.setLabels(labels);
   int numLayers=getnLayers();
-  Pair<Gradient,INDArray> currentPair=outputLayer.backpropGradient(null,null,null);
-  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currentPair=this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currentPair);
-  Map<String,INDArray> tempGradientMap=currentPair.getFirst().gradientForVariable();
-  for (  Map.Entry<String,INDArray> entry : tempGradientMap.entrySet()) {
+  Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null,null,null);
+  for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
     multiGradientKey=String.valueOf(numLayers) + "_" + entry.getKey();
     gradient.setGradientFor(multiGradientKey,entry.getValue());
   }
+  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
   prevLayer=outputLayer;
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
-    if (getLayerWiseConfigurations().getOutputPostProcess(j) != null)     currentPair=this.layerWiseConfigurations.getOutputPostProcess(j).backprop(currentPair);
-    currentPair=currLayer.backpropGradient(currentPair.getSecond(),currentPair.getFirst(),prevLayer);
-    prevLayer=currLayer;
-    tempGradientMap=currentPair.getFirst().gradientForVariable();
-    for (    Map.Entry<String,INDArray> entry : tempGradientMap.entrySet()) {
+    currPair=currLayer.backpropGradient(currPair.getSecond(),currPair.getFirst(),prevLayer);
+    for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
       multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
       gradient.setGradientFor(multiGradientKey,entry.getValue());
     }
-    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currentPair=this.layerWiseConfigurations.getInputPreProcess(j).backprop(currentPair);
+    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
+    prevLayer=currLayer;
   }
   score=outputLayer.score();
 }

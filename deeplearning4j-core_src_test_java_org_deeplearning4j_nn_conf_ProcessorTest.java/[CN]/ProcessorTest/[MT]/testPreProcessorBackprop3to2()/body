@@ -1,0 +1,6 @@
+{
+  ReshapeProcessor processor=new ReshapeProcessor(new int[]{1,784,7},new int[]{1,5488});
+  INDArray check3to2=processor.backprop(in4D);
+  int val3to2=check3to2.shape().length;
+  assertTrue(val3to2 == 3);
+}

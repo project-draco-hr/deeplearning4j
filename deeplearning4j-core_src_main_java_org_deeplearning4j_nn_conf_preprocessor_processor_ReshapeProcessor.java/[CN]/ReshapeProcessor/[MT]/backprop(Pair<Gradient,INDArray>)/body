@@ -1,4 +1,0 @@
-{
-  if (fromShape == null)   return input;
-  return new Pair<>(input.getFirst(),input.getSecond().reshape(fromShape));
-}
