@@ -1,0 +1,4 @@
+{
+  if (fromShape == null)   return output;
+  return output.reshape(fromShape);
+}
