@@ -1,0 +1,5 @@
+{
+  if (output.rank() != 2)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 2 (i.e., epsilons from feed forward layer)");
+  INDArray reshaped=output.reshape(miniBatchSize,timeSeriesLength,rnnLayerSize);
+  return reshaped.permute(0,2,1);
+}

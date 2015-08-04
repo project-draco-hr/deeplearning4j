@@ -1,0 +1,28 @@
+{
+  int miniBatchSize=5;
+  int hiddenLayerSize=7;
+  int timeSeriesLength=9;
+  RnnToFeedForwardPreProcessor proc=new RnnToFeedForwardPreProcessor(miniBatchSize,hiddenLayerSize,timeSeriesLength);
+  INDArray activations3d=Nd4j.zeros(miniBatchSize,hiddenLayerSize,timeSeriesLength);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < hiddenLayerSize; j++) {
+      for (int k=0; k < timeSeriesLength; k++) {
+        double value=100 * i + 10 * j + k;
+        activations3d.putScalar(new int[]{i,j,k},value);
+      }
+    }
+  }
+  INDArray activations2d=proc.preProcess(activations3d);
+  assertArrayEquals(activations2d.shape(),new int[]{miniBatchSize * timeSeriesLength,hiddenLayerSize});
+  int nRows=activations2d.rows();
+  for (int i=0; i < nRows; i++) {
+    INDArray row=activations2d.getRow(i);
+    assertArrayEquals(row.shape(),new int[]{1,hiddenLayerSize});
+    int origExampleNum=i / timeSeriesLength;
+    int time=i % timeSeriesLength;
+    INDArray expectedRow=activations3d.slice(time,2).getRow(origExampleNum);
+    assertTrue(row.equals(expectedRow));
+  }
+  INDArray out=proc.backprop(activations2d);
+  assertTrue(out.equals(activations3d));
+}
