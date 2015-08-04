@@ -1,4 +1,4 @@
 {
-  if (fromShape == null)   return output;
+  if (fromShape == null || output.shape().length == fromShape.length)   return output;
   return output.reshape(fromShape);
 }
