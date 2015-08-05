@@ -1,4 +1,5 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").iterations(1).stride(stride).padding(padding).layer(new ConvolutionLayer.Builder(new int[]{kernelWidth,kernelHeight},Convolution.Type.SAME).nIn(nIn).nOut(nOut).build()).build();
-  return LayerFactories.getFactory(new ConvolutionLayer()).create(conf);
+  ConvolutionLayer layer=new ConvolutionLayer.Builder(new int[]{kernelWidth,kernelHeight},Convolution.Type.SAME).nIn(nIn).nOut(nOut).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").iterations(1).stride(stride).padding(padding).layer(layer).build();
+  return LayerFactories.getFactory(conf).create(conf);
 }
