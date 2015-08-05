@@ -75,18 +75,11 @@
     }
     INDArray dLdwOO=deltao.mul(currMemCellActivations).sum(0).transpose();
     recurrentWeightGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),new NDArrayIndex(4 * hiddenLayerSize + 1)},dLdwOO);
-    if (miniBatchSize == 1) {
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{interval(0,hiddenLayerSize)},deltai);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag);
-    }
- else {
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao);
-      biasGradients.slice(t,2).put(new NDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag);
-    }
+    INDArray bGradSlice=(is2dInput ? biasGradients : biasGradients.slice(t,2));
+    bGradSlice.put(new NDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai);
+    bGradSlice.put(new NDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf);
+    bGradSlice.put(new NDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao);
+    bGradSlice.put(new NDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag);
     INDArray epsilonNextSlice=wi.mmul(deltai.transpose()).transpose().addi(wf.mmul(deltaf.transpose()).transpose()).addi(wo.mmul(deltao.transpose()).transpose()).addi(wg.mmul(deltag.transpose()).transpose());
     epsilonNext.slice(t,2).assign(epsilonNextSlice);
   }
