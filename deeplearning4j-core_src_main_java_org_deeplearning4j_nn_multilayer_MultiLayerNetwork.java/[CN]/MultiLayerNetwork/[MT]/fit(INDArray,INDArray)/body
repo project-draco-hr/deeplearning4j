@@ -1,11 +1,11 @@
 {
   setInput(data.dup());
+  setLabels(labels.dup());
   if (layerWiseConfigurations.isPretrain()) {
-    pretrain(getInput());
-    finetune(labels);
+    pretrain(data);
+    finetune();
   }
   if (layerWiseConfigurations.isBackprop()) {
-    setLabels(labels);
     backprop();
   }
 }
