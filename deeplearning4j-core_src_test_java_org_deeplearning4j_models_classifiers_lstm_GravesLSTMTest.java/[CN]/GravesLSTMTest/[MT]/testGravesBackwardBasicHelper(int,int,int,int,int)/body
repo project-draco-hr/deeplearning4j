@@ -4,10 +4,8 @@
   GravesLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf);
   lstm.activate(inputData);
   assertNotNull(lstm.input());
-  Gradient gradient=createPrevGradient(miniBatchSize,nOut,lstmNHiddenUnits,timeSeriesLength);
-  Layer prevLayer=createOutputLayer();
   INDArray epsilon=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,timeSeriesLength);
-  Pair<Gradient,INDArray> out=lstm.backpropGradient(epsilon,gradient,prevLayer);
+  Pair<Gradient,INDArray> out=lstm.backpropGradient(epsilon,null,null);
   Gradient outGradient=out.getFirst();
   INDArray nextEpsilon=out.getSecond();
   INDArray biasGradient=outGradient.getGradientFor(GravesLSTMParamInitializer.BIAS);

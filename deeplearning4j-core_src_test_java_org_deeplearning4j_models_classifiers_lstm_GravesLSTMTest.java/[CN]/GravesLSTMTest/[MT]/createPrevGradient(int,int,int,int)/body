@@ -1,8 +1,0 @@
-{
-  Gradient gradient=new DefaultGradient();
-  INDArray pseudoBiasGradients=Nd4j.ones(miniBatchSize,nOut,timeSeriesLength);
-  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,pseudoBiasGradients);
-  INDArray pseudoWeightGradients=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,nOut,timeSeriesLength);
-  gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,pseudoWeightGradients);
-  return gradient;
-}
