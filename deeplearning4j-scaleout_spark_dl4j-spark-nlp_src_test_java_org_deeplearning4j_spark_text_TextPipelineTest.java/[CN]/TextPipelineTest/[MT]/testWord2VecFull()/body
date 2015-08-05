@@ -1,0 +1,7 @@
+{
+  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath());
+  Word2Vec model=new Word2Vec();
+  model.train(corpus);
+  InMemoryLookupCache lookupCache=(InMemoryLookupCache)model.getVocabCacheBroadcast().value();
+  Collection<String> lst=model.wordsNearest("day",10);
+}

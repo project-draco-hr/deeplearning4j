@@ -1,0 +1,20 @@
+{
+  Nd4j.getRandom().setSeed(12345L);
+  int miniBatchSize=5;
+  int hiddenLayerSize=7;
+  int timeSeriesLength=9;
+  FeedForwardToRnnPreProcessor proc=new FeedForwardToRnnPreProcessor(miniBatchSize,hiddenLayerSize,timeSeriesLength);
+  INDArray activations2d=Nd4j.rand(miniBatchSize * timeSeriesLength,hiddenLayerSize);
+  INDArray activations3d=proc.preProcess(activations2d);
+  assertArrayEquals(activations3d.shape(),new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
+  int nRows2D=miniBatchSize * timeSeriesLength;
+  for (int i=0; i < nRows2D; i++) {
+    int time=i % timeSeriesLength;
+    int example=i / timeSeriesLength;
+    INDArray row2d=activations2d.getRow(i);
+    INDArray row3d=activations3d.slice(time,2).getRow(example);
+    assertTrue(row2d.equals(row3d));
+  }
+  INDArray epsilon2d=proc.backprop(activations3d);
+  assertTrue(epsilon2d.equals(activations2d));
+}

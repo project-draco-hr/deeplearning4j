@@ -2,26 +2,16 @@
   if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
     input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
   }
-  int currentFeatureMaps=input.size(1);
-  if (currentFeatureMaps != conf.getKernelSize()[1]) {
-    throw new IllegalArgumentException("Input feature maps must be equal to number of feature maps for thwe kernel");
-  }
-  int inputChannels=currentFeatureMaps;
-  INDArray ret=Nd4j.create(Ints.concat(new int[]{input.slices(),currentFeatureMaps},conf.getKernelSize()));
   INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
-  INDArray filters=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  INDArray kernelWeights=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  kernelWeights=kernelWeights.reshape(Ints.concat(kernelWeights.shape(),new int[]{1,1}));
   if (conf.getDropOut() > 0 && conf.isUseDropConnect()) {
-    filters=filters.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(filters.shape()));
+    kernelWeights=kernelWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(kernelWeights.shape()));
   }
-  for (int i=0; i < currentFeatureMaps; i++) {
-    INDArray featureMap=Nd4j.create(Ints.concat(new int[]{input.slices(),conf.getKernelSize()[1]},conf.getKernelSize()));
-    for (int j=0; j < inputChannels; j++) {
-      INDArray convolved=Nd4j.getConvolution().convn(input,filters.slice(i).slice(j),Convolution.Type.VALID);
-      featureMap.addi(convolved.broadcast(featureMap.shape()));
-    }
-    featureMap.addi(bias.getDouble(i));
-    INDArray activationForSlice=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),featureMap));
-    ret.put(new NDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),new NDArrayIndex(new int[]{i}),NDArrayIndex.all()},activationForSlice);
-  }
-  return ret;
+  INDArray convolved=Convolution.im2col(input,conf.getKernelSize(),conf.getStride(),conf.getPadding());
+  INDArray activation=Nd4j.tensorMmul(convolved,kernelWeights,new int[][]{{1,2,3},{1,2,3}});
+  activation=activation.reshape(activation.size(0),activation.size(1),activation.size(2),activation.size(3));
+  bias=bias.broadcast(activation.shape()).reshape(activation.shape());
+  activation.addi(bias);
+  return Nd4j.rollAxis(activation,3,1);
 }

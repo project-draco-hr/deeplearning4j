@@ -1,3 +1,0 @@
-{
-  return Nd4j.getDistributions().createBinomial(1,output).sample(output.shape());
-}

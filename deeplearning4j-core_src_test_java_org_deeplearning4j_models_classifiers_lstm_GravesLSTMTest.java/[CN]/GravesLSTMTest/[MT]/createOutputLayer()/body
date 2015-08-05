@@ -1,0 +1,4 @@
+{
+  NeuralNetConfiguration outputConf=new NeuralNetConfiguration.Builder().activationFunction("softmax").layer(new OutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).build()).build();
+  return LayerFactories.getFactory(outputConf.getLayer()).create(outputConf);
+}

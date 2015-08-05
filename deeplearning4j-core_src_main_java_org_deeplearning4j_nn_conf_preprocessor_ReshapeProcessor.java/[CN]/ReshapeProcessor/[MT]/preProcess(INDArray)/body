@@ -1,0 +1,4 @@
+{
+  if (input.shape().length == toShape.length)   return input;
+  return input.reshape(toShape);
+}
