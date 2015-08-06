@@ -10,6 +10,10 @@ int outH=epsilon.size(2);
 int outW=epsilon.size(3);
 INDArray ret2=Nd4j.zeros(n,c,conf.getKernelSize()[0],conf.getKernelSize()[1],outH,outW);
 INDArray reverse=Nd4j.rollAxis(ret2.reshape(n,c,-1,outH,outW),2);
+for (int i=0; i < epsilon.tensorssAlongDimension(2); i++) {
+INDArray epsilonI=epsilon.tensorAlongDimension(i,2);
+ret2.slice(maxIndexes.getInt(i)).putSlice(maxIndexes.getInt(i),epsilonI);
+}
 reverse.assign(epsilon);
 INDArray finalRet=Convolution.col2im(reverse,conf.getStride(),conf.getPadding(),width,height);
 ret.gradientForVariable().put(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,finalRet);
