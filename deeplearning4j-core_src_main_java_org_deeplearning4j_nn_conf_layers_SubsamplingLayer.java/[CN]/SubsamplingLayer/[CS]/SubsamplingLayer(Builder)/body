@@ -1,6 +1,7 @@
 {
   super(builder);
   this.poolingType=builder.poolingType;
-  this.stride=builder.stride;
   this.kernelSize=builder.kernelSize;
+  this.stride=builder.stride;
+  this.padding=builder.padding;
 }
