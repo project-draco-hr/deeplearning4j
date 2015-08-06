@@ -1,5 +1,15 @@
 {
   Gradient ret=new DefaultGradient();
-  ret.gradientForVariable().put(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,null);
-  return new Pair<>(ret,z);
+  int n=epsilon.size(0);
+  int c=epsilon.size(1);
+  int outH=epsilon.size(2);
+  int outW=epsilon.size(3);
+  int height=epsilon.size(-2);
+  int width=epsilon.size(-1);
+  INDArray ret2=Nd4j.zeros(n,c,conf.getKernelSize()[0],conf.getKernelSize()[1],outH,outW);
+  INDArray reverse=Nd4j.rollAxis(ret2.reshape(n,c,-1,outH,outW),2);
+  reverse.assign(epsilon);
+  INDArray finalRet=Convolution.col2im(reverse,conf.getStride(),conf.getPadding(),width,height);
+  ret.gradientForVariable().put(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,finalRet);
+  return new Pair<>(ret,null);
 }
