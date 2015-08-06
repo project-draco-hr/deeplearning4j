@@ -16,6 +16,8 @@ int outHeight=pooled.size(5);
 INDArray ret=pooled.reshape(n,c,kh * kw,outHeight,outWidth);
 maxIndexes=Nd4j.argMax(ret,2);
 return ret.max(2);
+case NONE:
+return input;
 default :
 throw new IllegalStateException("Pooling type not supported!");
 }
