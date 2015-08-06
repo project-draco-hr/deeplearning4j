@@ -1,5 +1,5 @@
 {
-  Pair<Gradient,INDArray> pair=getGradientsAndDelta(output(input));
+  Pair<Gradient,INDArray> pair=getGradientsAndDelta(output(true));
   INDArray delta=pair.getSecond();
   INDArray epsilonNext=params.get(DefaultParamInitializer.WEIGHT_KEY).mmul(delta.transpose()).transpose();
   return new Pair<>(pair.getFirst(),epsilonNext);

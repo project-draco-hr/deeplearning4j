@@ -1,5 +1,5 @@
 {
-  INDArray[] activations=activateHelper(input(),true);
+  INDArray[] activations=activateHelper(true);
   INDArray outputActivations=activations[0];
   INDArray memCellActivations=activations[1];
   INDArray ifogZs=activations[2];
