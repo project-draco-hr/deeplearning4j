@@ -1,6 +1,6 @@
 {
   if (input == null || labels == null)   return;
-  INDArray output=output(true);
+  INDArray output=output(input);
   Pair<Gradient,INDArray> pair=getGradientsAndDelta(output);
   this.gradient=pair.getFirst();
   setScoreWithZ(output);
