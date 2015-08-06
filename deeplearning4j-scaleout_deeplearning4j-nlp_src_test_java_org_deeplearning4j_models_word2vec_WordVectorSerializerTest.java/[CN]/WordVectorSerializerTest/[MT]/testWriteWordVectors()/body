@@ -1,0 +1,11 @@
+{
+  String pathToFile="test_writing_word_vector.txt";
+  Word2Vec vec=WordVectorSerializer.loadGoogleModel(textFile,false);
+  InMemoryLookupTable lookupTable=(InMemoryLookupTable)vec.lookupTable();
+  InMemoryLookupCache lookupCache=(InMemoryLookupCache)vec.vocab();
+  WordVectorSerializer.writeWordVectors(lookupTable,lookupCache,pathToFile);
+  WordVectors wordVectors=WordVectorSerializer.loadTxtVectors(new File(pathToFile));
+  assertTrue(wordVectors.getWordVector("<s>").length == 1000);
+  assertTrue(wordVectors.getWordVector("Adam").length == 1000);
+  assertTrue(wordVectors.getWordVector("awesome").length == 1000);
+}
