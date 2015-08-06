@@ -1,9 +1,0 @@
-{
-  DataSetIterator mnistIter=new MnistDataSetIterator(1,1);
-  DataSet mnist=mnistIter.next();
-  Layer model=getSubsamplingLayer();
-  INDArray input=mnist.getFeatureMatrix().reshape(mnist.numExamples(),1,28,28);
-  INDArray output=model.activate(input);
-  assertTrue(Arrays.equals(new int[]{mnist.numExamples(),1,14,14},output.shape()));
-  assertEquals(mnist.numExamples(),output.shape()[0],1e-4);
-}

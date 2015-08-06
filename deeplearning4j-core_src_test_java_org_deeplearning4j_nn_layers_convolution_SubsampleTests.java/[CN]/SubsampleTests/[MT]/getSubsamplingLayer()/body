@@ -1,4 +1,0 @@
-{
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("relu").constrainGradientToUnitNorm(true).poolingType(SubsamplingLayer.PoolingType.MAX).seed(123).nIn(1).nOut(20).layer(new SubsamplingLayer.Builder().build()).build();
-  return LayerFactories.getFactory(new SubsamplingLayer()).create(conf);
-}

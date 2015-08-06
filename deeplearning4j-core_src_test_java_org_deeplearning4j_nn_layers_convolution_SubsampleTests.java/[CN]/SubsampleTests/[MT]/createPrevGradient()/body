@@ -1,0 +1,7 @@
+{
+  Gradient gradient=new DefaultGradient();
+  INDArray pseudoGradients=Nd4j.ones(nExamples,nChannels,outH,outW);
+  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,pseudoGradients);
+  gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,pseudoGradients);
+  return gradient;
+}
