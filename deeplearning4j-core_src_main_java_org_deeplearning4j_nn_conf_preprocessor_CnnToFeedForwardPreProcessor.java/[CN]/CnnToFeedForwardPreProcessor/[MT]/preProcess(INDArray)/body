@@ -1,0 +1,14 @@
+{
+  int[] otherOutputs=null;
+  if (input.shape().length == 2) {
+    return input;
+  }
+ else   if (input.shape().length == 4) {
+    otherOutputs=new int[3];
+  }
+ else   if (input.shape().length == 3) {
+    otherOutputs=new int[2];
+  }
+  shape=new int[]{input.shape()[0],ArrayUtil.prod(otherOutputs)};
+  return input.reshape(shape);
+}

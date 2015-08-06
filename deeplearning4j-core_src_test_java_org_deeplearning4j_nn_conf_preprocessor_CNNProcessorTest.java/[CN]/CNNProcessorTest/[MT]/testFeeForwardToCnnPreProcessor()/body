@@ -1,0 +1,9 @@
+{
+  FeedForwardToCnnPreProcessor convProcessor=new FeedForwardToCnnPreProcessor(rows,cols,1);
+  INDArray check2to4=convProcessor.preProcess(in2D);
+  int val2to4=check2to4.shape().length;
+  assertTrue(val2to4 == 4);
+  INDArray result2=convProcessor.preProcess(in4D);
+  int val4to4=result2.shape().length;
+  assertTrue(val4to4 == 4);
+}
