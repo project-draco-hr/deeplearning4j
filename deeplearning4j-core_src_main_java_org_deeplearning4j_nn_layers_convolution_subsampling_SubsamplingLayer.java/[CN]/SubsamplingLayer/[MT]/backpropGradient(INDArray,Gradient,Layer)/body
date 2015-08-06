@@ -1,5 +1,20 @@
 {
+  int inHeight=(input.shape()[2] + conf.getKernelSize()[0]) * conf.getStride()[0] + 1;
+  int inWidth=(input.shape()[3] + conf.getKernelSize()[1]) * conf.getStride()[1] + 1;
+  INDArray scaled=null;
   Gradient ret=new DefaultGradient();
   ret.gradientForVariable().put(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS,null);
-  return new Pair<>(ret,z);
+switch (conf.getPoolingType()) {
+case AVG:
+    scaled=Convolution.col2im(epsilon,conf.getStride(),conf.getPadding(),inHeight,inWidth);
+  return new Pair<>(ret,scaled);
+case MAX:
+return new Pair<>(ret,scaled);
+case SUM:
+return new Pair<>(ret,scaled);
+case NONE:
+return new Pair<>(ret,epsilon);
+default :
+throw new IllegalStateException("Pooling type not supported!");
+}
 }

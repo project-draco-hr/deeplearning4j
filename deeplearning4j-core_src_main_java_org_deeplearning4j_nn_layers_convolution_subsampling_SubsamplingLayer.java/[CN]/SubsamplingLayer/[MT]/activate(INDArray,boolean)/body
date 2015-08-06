@@ -15,6 +15,10 @@ int outWidth=pooled.size(4);
 int outHeight=pooled.size(5);
 INDArray ret=pooled.reshape(n,c,kh * kw,outHeight,outWidth);
 return ret.max(2);
+case SUM:
+return pooled.sum(2,3);
+case NONE:
+return input;
 default :
 throw new IllegalStateException("Pooling type not supported!");
 }
