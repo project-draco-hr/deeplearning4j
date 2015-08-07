@@ -16,7 +16,7 @@
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null,null,null);
   for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
-    multiGradientKey=String.valueOf(numLayers) + "_" + entry.getKey();
+    multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
     gradient.setGradientFor(multiGradientKey,entry.getValue());
   }
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
