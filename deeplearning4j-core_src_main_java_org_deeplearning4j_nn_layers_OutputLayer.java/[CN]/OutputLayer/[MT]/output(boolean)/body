@@ -7,5 +7,5 @@
     return softMax.z();
   }
   if (training)   applyDropOutIfNecessary(input(),training);
-  return super.activate();
+  return super.activate(true);
 }
