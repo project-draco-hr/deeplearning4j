@@ -1,7 +1,7 @@
 {
   INDArray forward=forward(xi,xs);
   INDArray probas=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",forward).derivative(),1);
-  gradient=backward(probas);
+  gradient=backprop(probas);
   if (conf.getLossFunction() == LossFunctions.LossFunction.CUSTOM) {
     LossFunction create=Nd4j.getOpFactory().createLossFunction(conf.getCustomLossFunction(),input,forward);
     create.exec();

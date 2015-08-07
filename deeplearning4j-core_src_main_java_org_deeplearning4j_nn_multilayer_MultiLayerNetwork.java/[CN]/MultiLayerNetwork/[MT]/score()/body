@@ -1,4 +1,3 @@
 {
-  if (getOutputLayer().input() == null)   feedForward();
-  return getOutputLayer().score();
+  return score;
 }

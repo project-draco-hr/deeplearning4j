@@ -1,6 +1,0 @@
-{
-  INDArray w=getParam(RecursiveParamInitializer.W);
-  INDArray c=getParam(RecursiveParamInitializer.C);
-  INDArray inputTimesW=data.mmul(w);
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),inputTimesW.addiRowVector(c)));
-}

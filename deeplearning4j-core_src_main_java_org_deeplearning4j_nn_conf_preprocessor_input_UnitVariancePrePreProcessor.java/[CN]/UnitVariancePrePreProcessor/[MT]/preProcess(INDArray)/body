@@ -1,6 +1,0 @@
-{
-  INDArray columnStds=input.std(0);
-  columnStds.addi(Nd4j.EPS_THRESHOLD);
-  input.diviRowVector(columnStds);
-  return input;
-}

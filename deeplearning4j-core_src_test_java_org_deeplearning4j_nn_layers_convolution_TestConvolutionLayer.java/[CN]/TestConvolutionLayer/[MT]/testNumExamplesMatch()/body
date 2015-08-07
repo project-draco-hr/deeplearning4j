@@ -1,0 +1,8 @@
+{
+  DataSetIterator mnist=new MnistDataSetIterator(10,10);
+  DataSet next=mnist.next();
+  Layer layer=getCNNConfig(1,2,9,9,new int[]{3,3},new int[]{1,1});
+  INDArray input=next.getFeatureMatrix().reshape(next.numExamples(),1,28,28);
+  INDArray conv=layer.activate(input);
+  assertEquals(input.slices(),conv.slices());
+}

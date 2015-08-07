@@ -1,7 +1,7 @@
 {
   int nIn=13;
   int nHiddenUnits=17;
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(nIn).nOut(nHiddenUnits).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(nHiddenUnits).build()).activationFunction("tanh").build();
   GravesLSTM layer=LayerFactories.getFactory(conf.getLayer()).create(conf);
   INDArray dataSingleExampleTimeLength1=Nd4j.ones(1,nIn,1);
   INDArray activations1=layer.activate(dataSingleExampleTimeLength1);

@@ -1,0 +1,6 @@
+{
+  ReshapePreProcessor processor=new ReshapePreProcessor(new int[]{20,1,28,28},new int[]{20,784});
+  INDArray result2=processor.preProcess(in4D);
+  int val4to4=result2.shape().length;
+  assertTrue(val4to4 == 2);
+}
