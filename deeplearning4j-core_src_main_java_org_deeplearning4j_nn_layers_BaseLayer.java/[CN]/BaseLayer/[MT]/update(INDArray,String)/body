@@ -1,4 +1,3 @@
 {
-  if (!Shape.shapeEquals(gradient.shape(),getParam(paramType).shape()))   getParam(paramType).addi(gradient.sum(0));
- else   getParam(paramType).addi(gradient);
+  setParam(paramType,getParam(paramType).addi(gradient));
 }

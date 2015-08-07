@@ -7,7 +7,7 @@
     }
     currInput=combined;
     allInput=combined;
-    INDArray encoded=transform(combined);
+    INDArray encoded=activate(combined);
     y=decode(encoded);
     INDArray currVisibleLoss=currInput.sub(y);
     INDArray currHiddenLoss=currVisibleLoss.mmul(getParam(RecursiveParamInitializer.W)).muli(encoded).muli(encoded.rsub(1));

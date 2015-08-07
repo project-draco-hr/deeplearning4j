@@ -1,5 +1,7 @@
 {
   super(builder);
-  this.kernelSize=builder.filterSize;
   this.convolutionType=builder.convolutionType;
+  this.kernelSize=builder.kernelSize;
+  this.stride=builder.stride;
+  this.padding=builder.padding;
 }

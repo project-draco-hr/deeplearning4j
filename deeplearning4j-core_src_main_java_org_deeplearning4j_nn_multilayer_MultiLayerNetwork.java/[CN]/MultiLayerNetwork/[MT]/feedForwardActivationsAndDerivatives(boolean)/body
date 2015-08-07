@@ -1,5 +1,5 @@
 {
-  INDArray currInput=this.input;
+  INDArray currInput=input;
   List<INDArray> activations=new ArrayList<>();
   List<INDArray> derivatives=new ArrayList<>();
   activations.add(currInput);

@@ -1,0 +1,4 @@
+{
+  for (  OutputPostProcessor outputPostProcessor : outputPostProcessors)   output=outputPostProcessor.process(output);
+  return output;
+}

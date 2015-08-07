@@ -1,0 +1,12 @@
+{
+  FeedForwardToCnnPreProcessor convProcessor=new FeedForwardToCnnPreProcessor(rows,cols,1);
+  INDArray check2to2=convProcessor.backprop(in2D);
+  int val2to2=check2to2.shape().length;
+  assertTrue(val2to2 == 2);
+  INDArray check3to2=convProcessor.backprop(in3D);
+  int val3to2=check3to2.shape().length;
+  assertTrue(val3to2 == 2);
+  INDArray check4to2=convProcessor.backprop(in4D);
+  int val4to2=check4to2.shape().length;
+  assertTrue(val4to2 == 2);
+}

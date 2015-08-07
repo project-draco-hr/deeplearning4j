@@ -2,7 +2,7 @@
   int nIn=8;
   int nOut=25;
   int nHiddenUnits=17;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(nIn).nOut(nOut).activationFunction("tanh").list(2).hiddenLayerSizes(nHiddenUnits).override(1,new ClassifierOverride()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM()).nIn(nIn).nOut(nOut).activationFunction("tanh").list(2).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(nHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).layer(1,new OutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(nHiddenUnits).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).build()).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   Layer layer=network.getLayer(0);
@@ -15,7 +15,7 @@
   assertArrayEquals(inputWeights.shape(),new int[]{nIn,4 * nHiddenUnits});
   INDArray biases=paramTable.get(GravesLSTMParamInitializer.BIAS);
   assertArrayEquals(biases.shape(),new int[]{1,4 * nHiddenUnits});
-  INDArray forgetGateBiases=biases.get(new NDArrayIndex[]{NDArrayIndex.interval(nHiddenUnits,2 * nHiddenUnits),new NDArrayIndex(0)});
+  INDArray forgetGateBiases=biases.get(new NDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nHiddenUnits,2 * nHiddenUnits)});
   assertTrue(forgetGateBiases.gt(0).sum(0).getDouble(0) == nHiddenUnits);
   int nParams=recurrentWeights.length() + inputWeights.length() + biases.length();
   assertTrue(nParams == layer.numParams());

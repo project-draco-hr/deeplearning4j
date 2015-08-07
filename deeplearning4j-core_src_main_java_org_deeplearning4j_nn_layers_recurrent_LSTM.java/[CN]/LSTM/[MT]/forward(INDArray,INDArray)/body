@@ -2,5 +2,6 @@
   this.xs=xs;
   this.xi=xi;
   x=Nd4j.vstack(xi,xs);
-  return activate(x);
+  setInput(x);
+  return activate();
 }

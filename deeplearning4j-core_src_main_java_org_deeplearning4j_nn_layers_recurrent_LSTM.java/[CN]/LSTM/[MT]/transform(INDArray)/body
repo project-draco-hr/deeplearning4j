@@ -1,3 +1,0 @@
-{
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",activate(data)).derivative(),1);
-}

@@ -1,0 +1,7 @@
+{
+  DataSetIterator mnistIter=new MnistDataSetIterator(nExamples,nExamples);
+  DataSet mnist=mnistIter.next();
+  Layer model=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
+  INDArray input=mnist.getFeatureMatrix().reshape(mnist.numExamples(),1,28,28);
+  INDArray output=model.activate(input);
+}
