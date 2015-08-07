@@ -1,9 +1,7 @@
 {
-  this.nIn=builder.nIn;
-  this.nOut=builder.nOut;
-  this.kernelSize=builder.filterSize;
+  super(builder);
   this.convolutionType=builder.convolutionType;
-  this.activationFunction=builder.activationFunction;
-  this.weightInit=builder.weightInit;
-  this.dropOut=builder.dropOut;
+  this.kernelSize=builder.kernelSize;
+  this.stride=builder.stride;
+  this.padding=builder.padding;
 }

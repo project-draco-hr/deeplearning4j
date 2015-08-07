@@ -3,5 +3,5 @@
     @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
     }
   }
-).backward(true).pretrain(false).build();
+).backprop(true).pretrain(false).build();
 }

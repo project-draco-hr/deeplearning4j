@@ -1,6 +1,13 @@
 {
   JavaSparkContext sc=new JavaSparkContext(corpus.context());
-  Broadcast<List<String>> broadcast=sc.broadcast(stopWords);
+  Accumulator<Counter<String>> wordFreqAcc=sc.accumulator(new Counter<String>(),new WordFreqAccumulator());
+  Accumulator<Double> wordCountAcc=sc.accumulator(0L);
+  final Broadcast<List<String>> broadcast=sc.broadcast(stopWords);
   int nGrams=corpus.context().conf().getInt(Word2VecPerformer.N_GRAMS,1);
-  return corpus.map(new TokenizerFunction(tokenizer,nGrams)).map(new VocabCacheFunction(minWordFrequency,new InMemoryLookupCache(),broadcast)).cache().collect().get(0);
+  JavaRDD<Pair<List<String>,Long>> tokenizedRDD=corpus.map(new TokenizerFunction(tokenizer,nGrams));
+  VocabCacheFunction accClass=new VocabCacheFunction(broadcast,wordFreqAcc,wordCountAcc);
+  tokenizedRDD.foreach(accClass);
+  Long totalWordCount=accClass.getWordCountAcc().value().longValue();
+  Counter<String> wordFreq=accClass.getWordFreqAcc().value();
+  return filterMinWordAddVocab(wordFreq,totalWordCount);
 }

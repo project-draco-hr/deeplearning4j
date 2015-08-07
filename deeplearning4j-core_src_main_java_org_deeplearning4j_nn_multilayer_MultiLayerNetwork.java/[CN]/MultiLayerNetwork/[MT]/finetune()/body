@@ -1,0 +1,16 @@
+{
+  if (!(getOutputLayer() instanceof OutputLayer)) {
+    log.warn("Output layer not instance of output layer returning.");
+    return;
+  }
+  if (labels == null)   throw new IllegalStateException("No labels found");
+  log.info("Finetune phase");
+  OutputLayer output=(OutputLayer)getOutputLayer();
+  if (output.conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
+    feedForward();
+    output.fit(output.input(),labels);
+  }
+ else {
+    throw new UnsupportedOperationException();
+  }
+}

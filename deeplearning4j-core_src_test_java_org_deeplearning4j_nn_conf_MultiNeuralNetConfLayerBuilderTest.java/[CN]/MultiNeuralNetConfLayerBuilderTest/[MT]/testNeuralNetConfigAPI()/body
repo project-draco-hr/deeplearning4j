@@ -9,7 +9,7 @@
   int newFD=7;
   int[] newStride=new int[]{3,3};
   Convolution.Type newConvType=Convolution.Type.SAME;
-  SubsamplingLayer.poolingType newPoolType=poolingType.AVG;
+  PoolingType newPoolType=PoolingType.AVG;
   double newCorrupt=0.5;
   double newSparsity=0.5;
   HiddenUnit newHidden=HiddenUnit.BINARY;

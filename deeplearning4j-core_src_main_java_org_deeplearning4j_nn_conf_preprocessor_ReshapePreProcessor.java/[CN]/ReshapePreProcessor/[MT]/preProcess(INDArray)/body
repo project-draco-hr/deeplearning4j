@@ -1,0 +1,5 @@
+{
+  if (dynamic)   fromShape[0]=input.shape()[0];
+  if (input.shape().length == toShape.length)   return input;
+  return input.reshape(toShape);
+}

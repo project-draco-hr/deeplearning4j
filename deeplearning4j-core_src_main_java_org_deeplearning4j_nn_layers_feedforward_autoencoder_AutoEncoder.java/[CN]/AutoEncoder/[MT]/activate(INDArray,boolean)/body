@@ -1,4 +1,4 @@
 {
-  INDArray y=encode(input,training);
-  return y;
+  setInput(input);
+  return decode(encode(training));
 }
