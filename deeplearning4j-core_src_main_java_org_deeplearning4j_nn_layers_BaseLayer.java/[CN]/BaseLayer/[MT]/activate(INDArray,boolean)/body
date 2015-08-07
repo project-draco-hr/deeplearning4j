@@ -1,4 +1,4 @@
 {
-  setInput(input);
-  return activate(true);
+  setInput(input,training);
+  return activate(training);
 }
