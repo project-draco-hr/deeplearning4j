@@ -1,0 +1,8 @@
+{
+  if (layer instanceof MultiLayerNetwork) {
+    return new MultiLayerUpdater((MultiLayerNetwork)layer);
+  }
+ else {
+    return getUpdater(layer.conf());
+  }
+}
