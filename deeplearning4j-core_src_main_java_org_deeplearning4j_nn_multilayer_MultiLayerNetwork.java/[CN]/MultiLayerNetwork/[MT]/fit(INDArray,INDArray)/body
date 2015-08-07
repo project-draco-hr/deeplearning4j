@@ -6,6 +6,7 @@
     finetune();
   }
   if (layerWiseConfigurations.isBackprop()) {
-    backprop();
+    Solver solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+    solver.optimize();
   }
 }

@@ -17,7 +17,8 @@
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       setInput(next.getFeatureMatrix());
       setLabels(next.getLabels());
-      backprop();
+      Solver solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+      solver.optimize();
     }
   }
 }
