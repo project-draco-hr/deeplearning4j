@@ -1,31 +1,31 @@
 {
-  INDArray labelsSubOut=labels.sub(output);
+  INDArray outSubLabels=output.sub(labels);
   Gradient gradient=new DefaultGradient();
-  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,labelsSubOut.sum(0));
+  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 switch (conf.getLossFunction()) {
 case MCXENT:
-    gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labelsSubOut));
-  return new Pair<>(gradient,labelsSubOut);
+    gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels));
+  return new Pair<>(gradient,outSubLabels);
 case XENT:
-gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labelsSubOut.div(output.mul(output.rsub(1)))));
-return new Pair<>(gradient,labelsSubOut);
+gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels.div(output.mul(output.rsub(1)))));
+return new Pair<>(gradient,outSubLabels);
 case MSE:
-gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labelsSubOut.neg()));
-return new Pair<>(gradient,labelsSubOut);
+gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels.neg()));
+return new Pair<>(gradient,outSubLabels);
 case EXPLL:
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labels.rsub(1).divi(output)));
-return new Pair<>(gradient,labelsSubOut);
+return new Pair<>(gradient,outSubLabels);
 case RMSE_XENT:
-INDArray squaredrmseXentDiff=pow(labelsSubOut,2.0);
+INDArray squaredrmseXentDiff=pow(outSubLabels,2.0);
 INDArray sqrt=sqrt(squaredrmseXentDiff);
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(sqrt));
-return new Pair<>(gradient,labelsSubOut);
+return new Pair<>(gradient,outSubLabels);
 case SQUARED_LOSS:
-gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(input.transpose().mmul(pow(labelsSubOut,2))));
-return new Pair<>(gradient,labelsSubOut);
+gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(input.transpose().mmul(pow(outSubLabels,2))));
+return new Pair<>(gradient,outSubLabels);
 case NEGATIVELOGLIKELIHOOD:
-gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labelsSubOut));
-return new Pair<>(gradient,labelsSubOut);
+gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels));
+return new Pair<>(gradient,outSubLabels);
 default :
 throw new IllegalStateException("Invalid loss function: " + conf.getLossFunction());
 }
