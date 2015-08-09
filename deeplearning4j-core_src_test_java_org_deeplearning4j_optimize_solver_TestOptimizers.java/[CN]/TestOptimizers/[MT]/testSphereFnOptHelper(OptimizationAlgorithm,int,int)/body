@@ -5,6 +5,7 @@
   Random rng=new DefaultRandom(12345L);
   org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-10,10);
   Model m=new SphereFunctionModel(nDimensions,dist,conf);
+  m.computeGradientAndScore();
   double scoreBefore=m.score();
   assertTrue(!Double.isNaN(scoreBefore) && !Double.isInfinite(scoreBefore));
   if (PRINT_OPT_RESULTS) {
@@ -15,6 +16,7 @@
   ConvexOptimizer opt=getOptimizer(oa,conf,m);
   opt.setupSearchState(m.gradientAndScore());
   opt.optimize();
+  m.computeGradientAndScore();
   double scoreAfter=m.score();
   assertTrue(!Double.isNaN(scoreAfter) && !Double.isInfinite(scoreAfter));
   if (PRINT_OPT_RESULTS) {

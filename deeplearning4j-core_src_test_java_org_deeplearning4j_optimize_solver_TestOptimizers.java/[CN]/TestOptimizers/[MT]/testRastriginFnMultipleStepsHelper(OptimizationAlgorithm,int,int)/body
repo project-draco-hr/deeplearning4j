@@ -5,11 +5,13 @@
     conf.addVariable("x");
     Model m=new RastriginFunctionModel(100,conf);
     if (i == 0) {
+      m.computeGradientAndScore();
       scores[0]=m.score();
     }
  else {
       ConvexOptimizer opt=getOptimizer(oa,conf,m);
       opt.optimize();
+      m.computeGradientAndScore();
       scores[i]=m.score();
       assertTrue(!Double.isNaN(scores[i]) && !Double.isInfinite(scores[i]));
     }

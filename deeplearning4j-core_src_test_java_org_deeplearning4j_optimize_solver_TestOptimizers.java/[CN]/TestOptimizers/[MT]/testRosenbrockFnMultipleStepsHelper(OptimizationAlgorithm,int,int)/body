@@ -5,17 +5,19 @@
     conf.addVariable("x");
     Model m=new RosenbrockFunctionModel(100,conf);
     if (i == 0) {
+      m.computeGradientAndScore();
       scores[0]=m.score();
     }
  else {
       ConvexOptimizer opt=getOptimizer(oa,conf,m);
       opt.optimize();
+      m.computeGradientAndScore();
       scores[i]=m.score();
       assertTrue("NaN or infinite score: " + scores[i],!Double.isNaN(scores[i]) && !Double.isInfinite(scores[i]));
     }
   }
   if (PRINT_OPT_RESULTS) {
-    System.out.println("Rosenbrock: Multiple optimization iterations (" + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter="+ maxNumLineSearchIter+ ": "+ oa);
+    System.out.println("Rosenbrock: Multiple optimization iterations ( " + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter= "+ maxNumLineSearchIter+ ": "+ oa);
     System.out.println(Arrays.toString(scores));
   }
   for (int i=1; i < scores.length; i++) {
