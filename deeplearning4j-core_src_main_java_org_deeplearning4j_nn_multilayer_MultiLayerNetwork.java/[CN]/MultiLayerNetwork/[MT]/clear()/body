@@ -1,4 +1,6 @@
 {
   for (  Layer layer : layers)   layer.clear();
   input=null;
+  labels=null;
+  solver=null;
 }
