@@ -8,5 +8,5 @@
   network.setListeners(Collections.singletonList(listener));
   network.fit(data.getFeatureMatrix(),data.getLabels());
   double score=network.getLayer(1).score();
-  assertEquals(1.3201764822006226,score,1e-4);
+  assertEquals(0.9893960952758789,score,1e-4);
 }

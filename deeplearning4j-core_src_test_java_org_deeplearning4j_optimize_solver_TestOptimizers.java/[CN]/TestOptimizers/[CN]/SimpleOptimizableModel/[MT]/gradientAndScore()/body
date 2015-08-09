@@ -1,3 +1,4 @@
 {
-  return new Pair<Gradient,Double>(gradient(),score());
+  computeGradientAndScore();
+  return new Pair<>(gradient(),score());
 }

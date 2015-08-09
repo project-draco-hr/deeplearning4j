@@ -1,9 +1,0 @@
-{
-  INDArray gradient=parameters.mul(2 * Math.PI);
-  Nd4j.getExecutioner().exec(new Sin(gradient));
-  gradient.muli(20 * Math.PI);
-  gradient.addi(parameters.mul(2));
-  Gradient g=new DefaultGradient();
-  g.gradientForVariable().put("x",gradient);
-  return g;
-}
