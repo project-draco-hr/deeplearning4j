@@ -3,7 +3,7 @@
   for (int i=0; i <= nOptIter; i++) {
     Random rng=new DefaultRandom(12345L);
     org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-10,10);
-    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).learningRate(0.01).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).learningRate(0.1).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
     conf.addVariable("x");
     Model m=new SphereFunctionModel(100,dist,conf);
     if (i == 0) {
@@ -17,7 +17,7 @@
     }
   }
   if (PRINT_OPT_RESULTS) {
-    System.out.println("Multiple optimization iterations (" + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter="+ maxNumLineSearchIter+ ": "+ oa);
+    System.out.println("Multiple optimization iterations (" + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter= "+ maxNumLineSearchIter+ ": "+ oa);
     System.out.println(Arrays.toString(scores));
   }
   for (int i=1; i < scores.length; i++) {

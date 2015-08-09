@@ -15,7 +15,7 @@
     }
   }
   if (PRINT_OPT_RESULTS) {
-    System.out.println("Rastrigin: Multiple optimization iterations (" + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter="+ maxNumLineSearchIter+ ": "+ oa);
+    System.out.println("Rastrigin: Multiple optimization iterations ( " + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter="+ maxNumLineSearchIter+ ": "+ oa);
     System.out.println(Arrays.toString(scores));
   }
   for (int i=1; i < scores.length; i++) {

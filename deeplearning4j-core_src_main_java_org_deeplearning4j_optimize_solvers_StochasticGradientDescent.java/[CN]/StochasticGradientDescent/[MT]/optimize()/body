@@ -5,7 +5,6 @@
     for (    Map.Entry<String,INDArray> variables : model.paramTable().entrySet()) {
       stepFunction.step(variables.getValue(),gradient.getGradientFor(variables.getKey()));
     }
-    model.computeGradientAndScore();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
   }
   return true;
