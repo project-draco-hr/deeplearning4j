@@ -1,7 +1,7 @@
 {
-  this.score=Nd4j.getBlasWrapper().dot(parameters,parameters);
   INDArray gradient=parameters.mul(2);
   Gradient g=new DefaultGradient();
   g.gradientForVariable().put("x",gradient);
   this.gradient=g;
+  this.score=Nd4j.getBlasWrapper().dot(parameters,parameters);
 }

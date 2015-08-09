@@ -30,11 +30,13 @@
 );
   int nExceeds5=paramExceeds5.sum(Integer.MAX_VALUE).getInt(0);
   if (nExceeds5 > 0)   this.score=Double.POSITIVE_INFINITY;
-  double score=0.0;
-  for (int i=0; i < nDims - 1; i++) {
-    double xi=parameters.getDouble(i);
-    double xi1=parameters.getDouble(i + 1);
-    score+=100.0 * Math.pow((xi1 - xi * xi),2.0) + (xi - 1) * (xi - 1);
+ else {
+    double score=0.0;
+    for (int i=0; i < nDims - 1; i++) {
+      double xi=parameters.getDouble(i);
+      double xi1=parameters.getDouble(i + 1);
+      score+=100.0 * Math.pow((xi1 - xi * xi),2.0) + (xi - 1) * (xi - 1);
+    }
+    this.score=score;
   }
-  this.score=score;
 }
