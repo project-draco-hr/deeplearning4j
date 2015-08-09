@@ -1,5 +1,6 @@
 {
   MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig(new int[]{1},"sigmoid"));
+  network.setListeners(new ScoreIterationListener(1));
   network.init();
   DataSetIterator iter=new IrisDataSetIterator(1,10);
   while (iter.hasNext())   network.fit(iter.next());
