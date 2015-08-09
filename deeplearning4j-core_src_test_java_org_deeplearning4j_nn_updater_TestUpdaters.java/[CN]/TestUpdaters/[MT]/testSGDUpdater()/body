@@ -15,8 +15,6 @@
   INDArray biasGradExpected=Nd4j.ones(1,nOut).muli(lr);
   INDArray weightGradActual=gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
   INDArray biasGradActual=gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  System.out.println(weightGradActual);
-  System.out.println(biasGradActual);
   assertTrue(weightGradExpected.equals(weightGradActual));
   assertTrue(biasGradExpected.equals(biasGradActual));
 }
