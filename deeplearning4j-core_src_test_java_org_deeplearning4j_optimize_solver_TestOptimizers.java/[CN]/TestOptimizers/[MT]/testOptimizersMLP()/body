@@ -2,8 +2,9 @@
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   OptimizationAlgorithm[] toTest={OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT,OptimizationAlgorithm.LINE_GRADIENT_DESCENT,OptimizationAlgorithm.CONJUGATE_GRADIENT,OptimizationAlgorithm.LBFGS};
   DataSet ds=iter.next();
+  ds.normalizeZeroMeanZeroUnitVariance();
   for (  OptimizationAlgorithm oa : toTest) {
-    int nIter=(oa == OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT ? 1 : 5);
+    int nIter=5;
     MultiLayerNetwork network=new MultiLayerNetwork(getMLPConfigIris(oa,nIter));
     network.init();
     double score=network.score(ds);
@@ -12,16 +13,16 @@
       System.out.println("testOptimizersMLP() - " + oa);
       System.out.println(score);
     }
-    int nCallsToOptimizer=5;
+    int nCallsToOptimizer=30;
     double[] scores=new double[nCallsToOptimizer + 1];
     scores[0]=score;
     for (int i=0; i < nCallsToOptimizer; i++) {
-      iter.reset();
-      network.fit(iter);
+      network.fit(ds);
       double scoreAfter=network.score(ds);
       scores[i + 1]=scoreAfter;
       if (PRINT_OPT_RESULTS)       System.out.println(scoreAfter);
       assertTrue("Score is NaN after optimization",!Double.isNaN(scoreAfter));
+      assertTrue("OA=" + oa + ", before="+ score+ ", after="+ scoreAfter,scoreAfter < score);
       score=scoreAfter;
     }
     if (PRINT_OPT_RESULTS)     System.out.println(oa + " - " + Arrays.toString(scores));
