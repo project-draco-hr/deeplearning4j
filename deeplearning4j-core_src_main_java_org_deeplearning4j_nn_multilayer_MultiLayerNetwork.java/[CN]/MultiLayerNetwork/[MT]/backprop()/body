@@ -7,6 +7,7 @@
     return;
   }
   feedForward();
+  int miniBatchSize=input.size(0);
   OutputLayer outputLayer=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (outputLayer.conf().getWeightInit() == WeightInit.ZERO) {
@@ -16,8 +17,9 @@
   int numLayers=getnLayers();
   Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null,null,null);
   for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
-    multiGradientKey=String.valueOf(numLayers) + "_" + entry.getKey();
-    gradient.setGradientFor(multiGradientKey,entry.getValue());
+    multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
+    INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
+    gradient.setGradientFor(multiGradientKey,g);
   }
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
   prevLayer=outputLayer;
@@ -26,10 +28,12 @@
     currPair=currLayer.backpropGradient(currPair.getSecond(),currPair.getFirst(),prevLayer);
     for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
       multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
-      gradient.setGradientFor(multiGradientKey,entry.getValue());
+      INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
+      gradient.setGradientFor(multiGradientKey,g);
     }
     if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
     prevLayer=currLayer;
   }
+  feedForward();
   score=outputLayer.score();
 }

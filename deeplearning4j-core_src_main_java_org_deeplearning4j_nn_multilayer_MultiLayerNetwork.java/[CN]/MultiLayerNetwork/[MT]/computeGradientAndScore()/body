@@ -1,3 +1,4 @@
 {
   backprop();
+  this.score=((OutputLayer)getOutputLayer()).computeScore();
 }

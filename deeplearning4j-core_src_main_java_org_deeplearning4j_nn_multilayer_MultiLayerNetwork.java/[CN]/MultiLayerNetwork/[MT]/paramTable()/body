@@ -1,3 +1,11 @@
 {
-  throw new UnsupportedOperationException();
+  Map<String,INDArray> allParams=new HashMap<>();
+  for (int i=0; i < layers.length; i++) {
+    Map<String,INDArray> paramMap=layers[i].paramTable();
+    for (    Map.Entry<String,INDArray> entry : paramMap.entrySet()) {
+      String newKey=i + "_" + entry.getKey();
+      allParams.put(newKey,entry.getValue());
+    }
+  }
+  return allParams;
 }

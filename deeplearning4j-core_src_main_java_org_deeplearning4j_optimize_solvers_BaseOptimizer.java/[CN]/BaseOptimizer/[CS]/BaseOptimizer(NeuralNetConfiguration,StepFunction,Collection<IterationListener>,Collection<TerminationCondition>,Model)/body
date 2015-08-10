@@ -1,10 +1,10 @@
 {
   this.conf=conf;
-  this.stepFunction=stepFunction;
+  this.stepFunction=(stepFunction != null ? stepFunction : getDefaultStepFunctionForOptimizer(this.getClass()));
   this.iterationListeners=iterationListeners != null ? iterationListeners : new ArrayList<IterationListener>();
   this.terminationConditions=terminationConditions;
   this.model=model;
-  lineMaximizer=new BackTrackLineSearch(model,stepFunction,this);
+  lineMaximizer=new BackTrackLineSearch(model,this.stepFunction,this);
   lineMaximizer.setStepMax(stepMax);
   lineMaximizer.setMaxIterations(conf.getMaxNumLineSearchIterations());
 }

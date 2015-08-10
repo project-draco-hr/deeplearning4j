@@ -6,5 +6,6 @@
   INDArray input=mnist.getFeatureMatrix().reshape(mnist.numExamples(),1,28,28);
   INDArray activations=model.activate(input);
   Pair<Gradient,INDArray> out=model.backpropGradient(epsilon,gradient,null);
-  assertEquals(10,out.getSecond().size(1));
+  assertEquals(4,out.getSecond().shape().length);
+  assertEquals(20,out.getSecond().size(0));
 }

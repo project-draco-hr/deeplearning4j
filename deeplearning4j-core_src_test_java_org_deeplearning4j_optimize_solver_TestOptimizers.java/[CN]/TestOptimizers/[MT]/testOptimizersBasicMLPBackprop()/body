@@ -1,7 +1,8 @@
 {
   DataSetIterator iter=new IrisDataSetIterator(5,50);
-  for (  OptimizationAlgorithm oa : OptimizationAlgorithm.values()) {
-    MultiLayerNetwork network=new MultiLayerNetwork(getMLPConfigIris(oa));
+  OptimizationAlgorithm[] toTest={OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT,OptimizationAlgorithm.LINE_GRADIENT_DESCENT,OptimizationAlgorithm.CONJUGATE_GRADIENT,OptimizationAlgorithm.LBFGS};
+  for (  OptimizationAlgorithm oa : toTest) {
+    MultiLayerNetwork network=new MultiLayerNetwork(getMLPConfigIris(oa,1));
     network.init();
     iter.reset();
     network.fit(iter);

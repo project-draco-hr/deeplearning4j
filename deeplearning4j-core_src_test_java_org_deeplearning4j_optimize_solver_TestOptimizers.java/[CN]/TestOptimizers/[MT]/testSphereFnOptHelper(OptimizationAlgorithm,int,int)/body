@@ -1,10 +1,11 @@
 {
-  if (PRINT_OPT_RESULTS)   System.out.println("---------\n Alg=" + oa + ", nIter="+ numLineSearchIter+ ", nDimensions="+ nDimensions);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(numLineSearchIter).iterations(1).learningRate(0.01).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
+  if (PRINT_OPT_RESULTS)   System.out.println("---------\n Alg= " + oa + ", nIter= "+ numLineSearchIter+ ", nDimensions= "+ nDimensions);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(numLineSearchIter).iterations(100).learningRate(1e-2).updater(Updater.SGD).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
   conf.addVariable("x");
   Random rng=new DefaultRandom(12345L);
   org.nd4j.linalg.api.rng.distribution.Distribution dist=new org.nd4j.linalg.api.rng.distribution.impl.UniformDistribution(rng,-10,10);
   Model m=new SphereFunctionModel(nDimensions,dist,conf);
+  m.computeGradientAndScore();
   double scoreBefore=m.score();
   assertTrue(!Double.isNaN(scoreBefore) && !Double.isInfinite(scoreBefore));
   if (PRINT_OPT_RESULTS) {
@@ -15,6 +16,7 @@
   ConvexOptimizer opt=getOptimizer(oa,conf,m);
   opt.setupSearchState(m.gradientAndScore());
   opt.optimize();
+  m.computeGradientAndScore();
   double scoreAfter=m.score();
   assertTrue(!Double.isNaN(scoreAfter) && !Double.isInfinite(scoreAfter));
   if (PRINT_OPT_RESULTS) {
@@ -22,5 +24,5 @@
     System.out.println(scoreAfter);
     System.out.println(m.params());
   }
-  assertTrue("Score did not improve after optimization (b=" + scoreBefore + ",a="+ scoreAfter+ ")",scoreAfter < scoreBefore);
+  assertTrue("Score did not improve after optimization (b= " + scoreBefore + " ,a= "+ scoreAfter+ ")",scoreAfter < scoreBefore);
 }

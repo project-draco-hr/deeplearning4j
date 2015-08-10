@@ -3,7 +3,16 @@
   for (  Field f : fields) {
     try {
       f.setAccessible(true);
-      f.set(this,f.get(neuralNetConfiguration));
+      Object o=f.get(neuralNetConfiguration);
+      if (o instanceof List) {
+        f.set(this,new ArrayList<>((List<?>)o));
+      }
+ else       if (o instanceof Map) {
+        f.set(this,new HashMap<>((Map<?,?>)o));
+      }
+ else {
+        f.set(this,o);
+      }
     }
  catch (    IllegalAccessException e) {
       e.printStackTrace();
