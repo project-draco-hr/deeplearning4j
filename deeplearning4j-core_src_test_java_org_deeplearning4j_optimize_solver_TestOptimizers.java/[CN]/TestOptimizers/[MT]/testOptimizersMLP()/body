@@ -23,6 +23,7 @@
       scores[i + 1]=scoreAfter;
       if (PRINT_OPT_RESULTS)       System.out.println(scoreAfter);
       assertTrue("Score is NaN after optimization",!Double.isNaN(scoreAfter));
+      assertTrue("OA= " + oa + ", before= "+ score+ ", after= "+ scoreAfter,scoreAfter < score);
       score=scoreAfter;
     }
     if (PRINT_OPT_RESULTS)     System.out.println(oa + " - " + Arrays.toString(scores));
