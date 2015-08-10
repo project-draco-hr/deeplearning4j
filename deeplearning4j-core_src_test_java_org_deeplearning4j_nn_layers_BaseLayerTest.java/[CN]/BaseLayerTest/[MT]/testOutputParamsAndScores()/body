@@ -1,12 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(4).nOut(3).iterations(1).activationFunction("sigmoid").seed(123).list(2).hiddenLayerSizes(10).override(1,new ConfOverride(){
-    @Override public void overrideLayer(    int i,    NeuralNetConfiguration.Builder builder){
-      builder.activationFunction("softmax");
-      builder.layer(new OutputLayer());
-      builder.lossFunction(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD);
-    }
-  }
-).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).activationFunction("sigmoid").seed(123).list(2).layer(0,new RBM.Builder().nIn(4).nOut(10).build()).layer(1,new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).nIn(10).nOut(3).build()).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.fit(irisIter);
   double score=network.getLayer(1).score();

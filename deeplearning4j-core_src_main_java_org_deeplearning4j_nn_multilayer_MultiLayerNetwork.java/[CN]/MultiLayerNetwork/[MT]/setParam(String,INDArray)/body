@@ -1,3 +1,7 @@
 {
-  throw new UnsupportedOperationException();
+  int idx=key.indexOf("_");
+  if (idx == -1)   throw new IllegalStateException("Invalid param key: not have layer separator: \"" + key + "\"");
+  int layerIdx=Integer.parseInt(key.substring(0,idx));
+  String newKey=key.substring(idx + 1);
+  layers[layerIdx].setParam(newKey,val);
 }

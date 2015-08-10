@@ -1,4 +1,5 @@
 {
+  if (stepFunction == null)   return null;
   if (stepFunction instanceof org.deeplearning4j.nn.conf.stepfunctions.DefaultStepFunction)   return DEFAULT_STEP_FUNCTION_INSTANCE;
   if (stepFunction instanceof org.deeplearning4j.nn.conf.stepfunctions.GradientStepFunction)   return GRADIENT_STEP_FUNCTION_INSTANCE;
   if (stepFunction instanceof org.deeplearning4j.nn.conf.stepfunctions.NegativeDefaultStepFunction)   return NEGATIVE_DEFAULT_STEP_FUNCTION_INSTANCE;

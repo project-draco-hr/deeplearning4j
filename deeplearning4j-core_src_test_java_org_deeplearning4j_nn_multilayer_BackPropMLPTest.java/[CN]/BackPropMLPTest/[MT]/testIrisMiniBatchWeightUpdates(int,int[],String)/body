@@ -37,7 +37,8 @@
       INDArray sigmaPrimeOfZ;
       if (sigmoid)       sigmaPrimeOfZ=doSigmoidDerivative(layerZs[i]);
  else       sigmaPrimeOfZ=doTanhDerivative(layerZs[i]);
-      deltas[i]=deltas[i + 1].mmul(layerWeights[i + 1].transpose()).mul(sigmaPrimeOfZ);
+      INDArray epsilon=layerWeights[i + 1].mmul(deltas[i + 1].transpose()).transpose();
+      deltas[i]=epsilon.mul(sigmaPrimeOfZ);
       assertArrayEquals(deltas[i].shape(),new int[]{miniBatchSize,hiddenLayerSizes[i]});
     }
     INDArray[] dLdw=new INDArray[nLayers];
@@ -68,7 +69,7 @@
       layerWeightsAfter[i]=layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
       layerBiasesAfter[i]=layers[i].getParam(DefaultParamInitializer.BIAS_KEY).dup();
     }
-    float eps=0.01f;
+    float eps=1e-6f;
     for (int i=0; i < nLayers; i++) {
       assertArrayEquals(asFloat(expectedWeights[i]),asFloat(layerWeightsAfter[i]),eps);
       assertArrayEquals(asFloat(expectedBiases[i]),asFloat(layerBiasesAfter[i]),eps);

@@ -1,0 +1,42 @@
+{
+  int nDims=parameters.length();
+  INDArray gradient=Nd4j.zeros(nDims);
+  double x0=parameters.getDouble(0);
+  double x1=parameters.getDouble(1);
+  double g0=-400 * x0 * (x1 - x0 * x0) + 2 * (x0 - 1);
+  gradient.put(0,0,g0);
+  for (int i=1; i < nDims - 1; i++) {
+    double xim1=parameters.getDouble(i - 1);
+    double xi=parameters.getDouble(i);
+    double xip1=parameters.getDouble(i + 1);
+    double g=200 * (xi - xim1 * xim1) - 400 * xi * (xip1 - xi * xi) + 2 * (xi - 1);
+    gradient.put(0,i,g);
+  }
+  double xl=parameters.getDouble(nDims - 1);
+  double xlm1=parameters.getDouble(nDims - 2);
+  double gl=200 * (xl - xlm1 * xlm1);
+  gradient.put(0,nDims - 1,gl);
+  Gradient g=new DefaultGradient();
+  g.gradientForVariable().put("x",gradient);
+  this.gradient=g;
+  INDArray paramExceeds5=parameters.cond(new Condition(){
+    @Override public Boolean apply(    Number input){
+      return Math.abs(input.doubleValue()) > 5.0;
+    }
+    @Override public Boolean apply(    IComplexNumber input){
+      throw new UnsupportedOperationException();
+    }
+  }
+);
+  int nExceeds5=paramExceeds5.sum(Integer.MAX_VALUE).getInt(0);
+  if (nExceeds5 > 0)   this.score=Double.POSITIVE_INFINITY;
+ else {
+    double score=0.0;
+    for (int i=0; i < nDims - 1; i++) {
+      double xi=parameters.getDouble(i);
+      double xi1=parameters.getDouble(i + 1);
+      score+=100.0 * Math.pow((xi1 - xi * xi),2.0) + (xi - 1) * (xi - 1);
+    }
+    this.score=score;
+  }
+}

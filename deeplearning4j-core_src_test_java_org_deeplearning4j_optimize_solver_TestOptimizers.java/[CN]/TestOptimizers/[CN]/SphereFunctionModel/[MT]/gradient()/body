@@ -1,6 +1,0 @@
-{
-  INDArray gradient=parameters.mul(2);
-  Gradient g=new DefaultGradient();
-  g.gradientForVariable().put("x",gradient);
-  return g;
-}

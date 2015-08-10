@@ -1,0 +1,68 @@
+{
+  int totalExamples=10 * miniBatchSize;
+  if (totalExamples > 150) {
+    totalExamples=miniBatchSize * (150 / miniBatchSize);
+  }
+  if (miniBatchSize > 150)   fail();
+  DataSetIterator iris=new IrisDataSetIterator(miniBatchSize,totalExamples);
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig(hiddenLayerSizes,"sigmoid"));
+  network.init();
+  Layer[] layers=network.getLayers();
+  int nLayers=layers.length;
+  while (iris.hasNext()) {
+    DataSet data=iris.next();
+    INDArray x=data.getFeatureMatrix();
+    INDArray y=data.getLabels();
+    INDArray[] layerWeights=new INDArray[nLayers];
+    INDArray[] layerBiases=new INDArray[nLayers];
+    for (int i=0; i < nLayers; i++) {
+      layerWeights[i]=layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
+      layerBiases[i]=layers[i].getParam(DefaultParamInitializer.BIAS_KEY).dup();
+    }
+    INDArray[] layerZs=new INDArray[nLayers];
+    INDArray[] layerActivations=new INDArray[nLayers];
+    for (int i=0; i < nLayers; i++) {
+      INDArray layerInput=(i == 0 ? x : layerActivations[i - 1]);
+      layerZs[i]=layerInput.mmul(layerWeights[i]).addiRowVector(layerBiases[i]);
+      layerActivations[i]=(i == nLayers - 1 ? doSoftmax(layerZs[i].dup(),1) : doSigmoid(layerZs[i].dup()));
+    }
+    INDArray[] deltas=new INDArray[nLayers];
+    deltas[nLayers - 1]=layerActivations[nLayers - 1].sub(y);
+    assertArrayEquals(deltas[nLayers - 1].shape(),new int[]{miniBatchSize,3});
+    for (int i=nLayers - 2; i >= 0; i--) {
+      INDArray sigmaPrimeOfZ;
+      sigmaPrimeOfZ=doSigmoidDerivative(layerZs[i]);
+      INDArray epsilon=layerWeights[i + 1].mmul(deltas[i + 1].transpose()).transpose();
+      deltas[i]=epsilon.mul(sigmaPrimeOfZ);
+      assertArrayEquals(deltas[i].shape(),new int[]{miniBatchSize,hiddenLayerSizes[i]});
+    }
+    INDArray[] dLdw=new INDArray[nLayers];
+    INDArray[] dLdb=new INDArray[nLayers];
+    for (int i=0; i < nLayers; i++) {
+      INDArray prevActivations=(i == 0 ? x : layerActivations[i - 1]);
+      dLdw[i]=deltas[i].transpose().mmul(prevActivations).divi(miniBatchSize).transpose();
+      dLdb[i]=deltas[i].mean(0);
+      int nIn=(i == 0 ? 4 : hiddenLayerSizes[i - 1]);
+      int nOut=(i < nLayers - 1 ? hiddenLayerSizes[i] : 3);
+      assertArrayEquals(dLdw[i].shape(),new int[]{nIn,nOut});
+      assertArrayEquals(dLdb[i].shape(),new int[]{1,nOut});
+    }
+    network.setInput(x);
+    network.setLabels(y);
+    network.computeGradientAndScore();
+    Gradient gradient=network.gradientAndScore().getFirst();
+    float eps=1e-6f;
+    for (int i=0; i < hiddenLayerSizes.length; i++) {
+      String wKey=i + "_" + DefaultParamInitializer.WEIGHT_KEY;
+      String bKey=i + "_" + DefaultParamInitializer.BIAS_KEY;
+      INDArray wGrad=gradient.getGradientFor(wKey);
+      INDArray bGrad=gradient.getGradientFor(bKey);
+      float[] wGradf=asFloat(wGrad);
+      float[] bGradf=asFloat(bGrad);
+      float[] expWGradf=asFloat(dLdw[i]);
+      float[] expBGradf=asFloat(dLdb[i]);
+      assertArrayEquals(wGradf,expWGradf,eps);
+      assertArrayEquals(bGradf,expBGradf,eps);
+    }
+  }
+}

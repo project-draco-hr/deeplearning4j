@@ -1,24 +1,31 @@
 {
   double[] scores=new double[nOptIter + 1];
   for (int i=0; i <= nOptIter; i++) {
-    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).learningRate(0.01).layer(new RBM()).batchSize(1).build();
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).stepFunction(new org.deeplearning4j.nn.conf.stepfunctions.NegativeDefaultStepFunction()).learningRate(1e-1).updater(Updater.SGD).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
     conf.addVariable("x");
     Model m=new RosenbrockFunctionModel(100,conf);
     if (i == 0) {
+      m.computeGradientAndScore();
       scores[0]=m.score();
     }
  else {
       ConvexOptimizer opt=getOptimizer(oa,conf,m);
       opt.optimize();
+      m.computeGradientAndScore();
       scores[i]=m.score();
       assertTrue("NaN or infinite score: " + scores[i],!Double.isNaN(scores[i]) && !Double.isInfinite(scores[i]));
     }
   }
   if (PRINT_OPT_RESULTS) {
-    System.out.println("Rosenbrock: Multiple optimization iterations (" + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter="+ maxNumLineSearchIter+ ": "+ oa);
+    System.out.println("Rosenbrock: Multiple optimization iterations ( " + nOptIter + " opt. iter.) score vs iteration, maxNumLineSearchIter= "+ maxNumLineSearchIter+ ": "+ oa);
     System.out.println(Arrays.toString(scores));
   }
   for (int i=1; i < scores.length; i++) {
-    assertTrue(scores[i] < scores[i - 1] || (scores[i] == 0.0 && scores[i - 1] == 0.0));
+    if (i == 1) {
+      assertTrue(scores[i] < scores[i - 1]);
+    }
+ else {
+      assertTrue(scores[i] <= scores[i - 1]);
+    }
   }
 }
