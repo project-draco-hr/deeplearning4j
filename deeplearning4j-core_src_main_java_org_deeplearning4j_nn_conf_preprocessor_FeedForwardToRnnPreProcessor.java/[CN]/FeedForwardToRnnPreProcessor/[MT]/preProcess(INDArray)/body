@@ -1,5 +1,6 @@
 {
   if (input.rank() != 2)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 2 (i.e., activations for FF layer)");
-  INDArray reshaped=input.reshape(miniBatchSize,timeSeriesLength,rnnLayerSize);
+  int[] shape=input.shape();
+  INDArray reshaped=input.reshape(shape[0] / timeSeriesLength,timeSeriesLength,shape[1]);
   return reshaped.permute(0,2,1);
 }
