@@ -1,5 +1,5 @@
 {
-  OutputLayer layer=getIrisLogisticLayerConfig("softmax",1,1,LossFunctions.LossFunction.RMSE_XENT);
+  OutputLayer layer=getIrisLogisticLayerConfig("softmax",1,LossFunctions.LossFunction.RMSE_XENT);
   layer.setInput(irisData.getFeatureMatrix());
   layer.setLabels(irisData.getLabels());
   layer.computeGradientAndScore();
