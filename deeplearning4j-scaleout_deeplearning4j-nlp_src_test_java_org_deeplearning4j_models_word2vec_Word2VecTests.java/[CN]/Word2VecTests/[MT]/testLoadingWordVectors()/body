@@ -3,7 +3,7 @@
   if (!modelFile.exists()) {
     testRunWord2Vec();
   }
-  WordVectors wordVectors=WordVectorSerializer.loadGoogleModel(modelFile,false);
+  WordVectors wordVectors=WordVectorSerializer.loadTxtVectors(modelFile);
   Collection<String> lst=wordVectors.wordsNearest("day",10);
   System.out.println(Arrays.toString(lst.toArray()));
 }

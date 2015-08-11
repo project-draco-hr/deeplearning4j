@@ -1,7 +1,0 @@
-{
-  INDArray arr=Nd4j.arange(1,5);
-  System.out.println(Arrays.toString(arr.shape()));
-  System.out.println(Transforms.unitVec(arr));
-  INDArray arr2=Nd4j.concat(0,arr,arr);
-  System.out.println(Transforms.unitVec(arr2));
-}
