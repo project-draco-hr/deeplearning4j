@@ -7,5 +7,5 @@
   INDArray activations=model.activate(input);
   Pair<Gradient,INDArray> out=model.backpropGradient(epsilon,gradient,null);
   assertEquals(4,out.getSecond().shape().length);
-  assertEquals(20,out.getSecond().size(1));
+  assertEquals(nChannels,out.getSecond().size(1));
 }

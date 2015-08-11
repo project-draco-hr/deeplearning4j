@@ -1,11 +1,11 @@
 {
   OptimizationAlgorithm optimizer=OptimizationAlgorithm.LBFGS;
   DataSet data=irisIter.next();
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",2,optimizer));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",5,optimizer));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
   network.setListeners(Collections.singletonList(listener));
   network.fit(data.getFeatureMatrix(),data.getLabels());
   double score=network.getLayer(1).score();
-  assertEquals(0.8187665939331055,score,1e-4);
+  assertEquals(0.13493062257766725,score,1e-4);
 }
