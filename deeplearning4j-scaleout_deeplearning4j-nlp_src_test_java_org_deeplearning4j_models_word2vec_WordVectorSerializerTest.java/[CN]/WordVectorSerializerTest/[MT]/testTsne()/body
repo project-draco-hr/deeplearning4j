@@ -1,9 +1,0 @@
-{
-  Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  ClassPathResource resource=new ClassPathResource("words.txt");
-  BarnesHutTsne tsne=new BarnesHutTsne.Builder().theta(0.5).learningRate(500).setMaxIter(2).build();
-  WordVectors vec=WordVectorSerializer.loadTxtVectors(resource.getFile());
-  InMemoryLookupTable table=(InMemoryLookupTable)vec.lookupTable();
-  List<String> labels=new ArrayList<>(vec.vocab().words());
-  tsne.plot(table.getSyn0().divRowVector(table.getSyn0().norm2(0)),2,labels);
-}

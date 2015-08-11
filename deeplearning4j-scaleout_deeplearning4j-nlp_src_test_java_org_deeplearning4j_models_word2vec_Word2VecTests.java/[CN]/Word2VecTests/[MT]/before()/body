@@ -1,3 +1,9 @@
 {
-  new File("word2vec-index").delete();
+  File googleModelTextFile=new ClassPathResource("word2vecserialization/google_news_30.txt").getFile();
+  googleModel=WordVectorSerializer.loadGoogleModel(googleModelTextFile,false);
+  inputFile=new ClassPathResource("/big/raw_sentences.txt").getFile();
+  binaryFile=new ClassPathResource("word2vecserialization/raw_sentence_word2vec.bin.gz").getFile();
+  textFile=new ClassPathResource("word2vecserialization/raw_sentence_word2vec.txt").getFile();
+  pathToWriteto="testing_word2vec_serialization.txt";
+  FileUtils.deleteDirectory(new File("word2vec-index"));
 }

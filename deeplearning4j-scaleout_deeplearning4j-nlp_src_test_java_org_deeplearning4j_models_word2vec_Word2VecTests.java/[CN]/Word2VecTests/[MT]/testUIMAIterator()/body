@@ -1,0 +1,4 @@
+{
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
+  assertEquals(iter.nextSentence(),"No ,  he says now .");
+}

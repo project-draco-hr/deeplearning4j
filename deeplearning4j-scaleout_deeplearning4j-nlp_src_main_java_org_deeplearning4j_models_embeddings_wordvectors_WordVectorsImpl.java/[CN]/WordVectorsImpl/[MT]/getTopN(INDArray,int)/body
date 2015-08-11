@@ -14,13 +14,10 @@
       }
     }
   }
-  vec=Nd4j.create(queue.size());
-  INDArray indexVector=Nd4j.create(queue.size());
-  int index=queue.size();
+  List<Double> lowToHighSimLst=new ArrayList<>();
   while (!queue.isEmpty()) {
-    Double[] pair=queue.poll();
-    vec.putScalar(--index,pair[0]);
-    indexVector.putScalar(index,pair[1]);
+    double ind=queue.poll()[1];
+    lowToHighSimLst.add(ind);
   }
-  return new INDArray[]{indexVector,vec};
+  return Lists.reverse(lowToHighSimLst);
 }
