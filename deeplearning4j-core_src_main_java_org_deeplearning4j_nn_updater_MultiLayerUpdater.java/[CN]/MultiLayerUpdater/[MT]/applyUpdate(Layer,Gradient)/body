@@ -1,6 +1,0 @@
-{
-  Map<String,INDArray> gMap=gradient.gradientForVariable();
-  for (  Map.Entry<String,INDArray> entry : gMap.entrySet()) {
-    layer.getParam(entry.getKey()).addi(entry.getValue());
-  }
-}
