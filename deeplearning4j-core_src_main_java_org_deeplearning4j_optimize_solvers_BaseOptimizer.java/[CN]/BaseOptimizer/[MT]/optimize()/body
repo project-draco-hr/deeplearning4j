@@ -5,7 +5,13 @@
   model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
   score=pair.getSecond();
-  setupSearchState(pair);
+  if (searchState.isEmpty()) {
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+    setupSearchState(pair);
+  }
+ else {
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+  }
   preProcessLine();
   for (int i=0; i < conf.getNumIterations(); i++) {
     gradient=(INDArray)searchState.get(GRADIENT_KEY);
