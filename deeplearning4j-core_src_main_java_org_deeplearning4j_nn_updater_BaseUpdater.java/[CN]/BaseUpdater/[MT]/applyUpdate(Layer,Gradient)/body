@@ -1,5 +1,0 @@
-{
-  for (  Map.Entry<String,INDArray> variables : layer.paramTable().entrySet()) {
-    layer.getParam(variables.getKey()).addi(gradient.getGradientFor(variables.getKey()));
-  }
-}

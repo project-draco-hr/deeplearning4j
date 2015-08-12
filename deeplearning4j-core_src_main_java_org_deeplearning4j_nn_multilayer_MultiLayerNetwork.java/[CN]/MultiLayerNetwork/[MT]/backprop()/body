@@ -34,6 +34,4 @@
     if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
     prevLayer=currLayer;
   }
-  feedForward();
-  score=outputLayer.score();
 }

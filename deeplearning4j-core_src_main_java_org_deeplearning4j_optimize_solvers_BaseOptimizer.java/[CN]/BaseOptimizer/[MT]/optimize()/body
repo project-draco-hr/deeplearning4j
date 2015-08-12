@@ -5,7 +5,13 @@
   model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
   score=pair.getSecond();
-  setupSearchState(pair);
+  if (searchState.isEmpty()) {
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+    setupSearchState(pair);
+  }
+ else {
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+  }
   preProcessLine();
   for (int i=0; i < conf.getNumIterations(); i++) {
     gradient=(INDArray)searchState.get(GRADIENT_KEY);
@@ -27,12 +33,12 @@
     }
     oldScore=score;
     pair=gradientAndScore();
-    postStep(pair.getFirst().gradient());
+    postStep(pair.getFirst().gradient(conf.getVariables()));
     score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     for (    TerminationCondition condition : terminationConditions) {
       if (condition.terminate(score,oldScore,new Object[]{pair.getFirst().gradient()})) {
-        log.debug("Hit termination condition: score={}, oldScore={}, condition={}",score,oldScore,condition);
+        log.debug("Hit termination condition on iteration {}: score={}, oldScore={}, condition={}",i,score,oldScore,condition);
         return true;
       }
     }
