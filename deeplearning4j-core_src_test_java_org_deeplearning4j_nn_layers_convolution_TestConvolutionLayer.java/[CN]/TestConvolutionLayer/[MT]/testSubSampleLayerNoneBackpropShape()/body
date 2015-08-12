@@ -1,0 +1,4 @@
+{
+  INDArray input=getData();
+  Layer layer=getCNNConfig(nChannelsIn,depth,kernelSize,stride,padding);
+}
