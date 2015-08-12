@@ -2,8 +2,8 @@
   if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
     input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
   }
-  INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
-  INDArray kernelWeights=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
+  INDArray bias=getParam(ConvolutionParamInitializer.BIAS_KEY);
+  INDArray kernelWeights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
   kernelWeights=kernelWeights.dup().reshape(Ints.concat(kernelWeights.shape(),new int[]{1,1}));
   if (conf.getDropOut() > 0 && conf.isUseDropConnect()) {
     kernelWeights=kernelWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(kernelWeights.shape()));
