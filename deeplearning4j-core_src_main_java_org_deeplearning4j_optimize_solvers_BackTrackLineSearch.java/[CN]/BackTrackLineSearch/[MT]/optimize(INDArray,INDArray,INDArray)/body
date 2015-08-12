@@ -24,9 +24,6 @@
     log.warn("Attempted step too big. scaling: sum= {}, stepMax= {}",sum,stepMax);
     searchDirection.muli(stepMax / sum);
   }
-  if (slope >= 0.0) {
-    throw new InvalidStepException("Slope " + slope + " is >= 0.0. Expect slope < 0.0 when minimizing objective function");
-  }
   INDArray candidateParameters=null;
   for (int iteration=0; iteration < maxIterations; iteration++) {
     if (log.isTraceEnabled()) {

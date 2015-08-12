@@ -1,7 +1,7 @@
 {
   OptimizationAlgorithm optimizer=OptimizationAlgorithm.CONJUGATE_GRADIENT;
   DataSet data=irisIter.next();
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",10,optimizer));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",5,optimizer));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
   network.setListeners(Collections.singletonList(listener));
