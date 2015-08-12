@@ -23,11 +23,11 @@ String activationFunction
 RBM.VisibleUnit visibleUnit
 RBM.HiddenUnit hiddenUnit
 int[] weightShape
-int timeSeriesLength
 int[] kernelSize
 int[] stride
 int[] padding
 int batchSize
+int numLineSearchIterations
 int maxNumLineSearchIterations
 boolean minimize
 Layer layer
