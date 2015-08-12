@@ -3,7 +3,6 @@
   this.customLossFunction=customLossFunction;
   this.convolutionType=convolutionType;
   this.poolingType=poolingType;
-  this.numLineSearchIterations=numLineSearchIterations;
   this.maxNumLineSearchIterations=maxNumLineSearchIterations;
   this.l1=l1;
   this.batchSize=batchSize;
@@ -34,6 +33,7 @@
   this.hiddenUnit=hiddenUnit;
   if (weightShape != null)   this.weightShape=weightShape;
  else   this.weightShape=new int[]{nIn,nOut};
+  this.timeSeriesLength=timeSeriesLength;
   this.kernelSize=kernelSize;
   this.stride=stride;
   this.padding=padding;

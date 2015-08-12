@@ -1,9 +1,8 @@
 {
   Nd4j.getRandom().setSeed(123);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(trainingSet.numInputs()).nOut(trainingSet.numOutcomes()).weightInit(WeightInit.VI).iterations(3).activationFunction("tanh").visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).build();
-  Layer model=LayerFactories.getFactory(conf).create(conf);
+  Layer model=getRBMLayer(trainingSet.numInputs(),trainingSet.numOutcomes(),WeightInit.VI);
   INDArray modelWeights=model.getParam(DefaultParamInitializer.WEIGHT_KEY);
-  Layer model2=LayerFactories.getFactory(conf).create(conf);
+  Layer model2=getRBMLayer(trainingSet.numInputs(),trainingSet.numOutcomes(),WeightInit.VI);
   INDArray modelWeights2=model2.getParam(DefaultParamInitializer.WEIGHT_KEY);
   assertEquals(modelWeights,modelWeights2);
 }
