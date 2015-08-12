@@ -1,5 +1,0 @@
-{
-  RBM layer=new RBM.Builder().nIn(1).nOut(1).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).build();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.UNIFORM).iterations(3).timeSeriesLength(1).activationFunction("tanh").regularization(false).dist(new NormalDistribution(1,1)).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).layer(layer).build();
-  assertEquals(conf.getTimeSeriesLength(),1);
-}

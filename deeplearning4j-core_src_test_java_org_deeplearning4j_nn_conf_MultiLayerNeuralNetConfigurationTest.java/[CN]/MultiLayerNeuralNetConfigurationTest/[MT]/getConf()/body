@@ -1,4 +1,4 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).seed(12345l).list(2).layer(0,new RBM.Builder().nIn(2).nOut(2).build()).layer(1,new OutputLayer.Builder().nIn(2).nOut(1).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM()).nIn(2).nOut(1).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).seed(12345l).list(2).hiddenLayerSizes(5).override(1,new ClassifierOverride()).build();
   return conf;
 }

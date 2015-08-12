@@ -1,4 +1,0 @@
-{
-  NeuralNetConfiguration conf=getRBMConfig(nIn,nOut,weightInit);
-  return LayerFactories.getFactory(conf).create(conf);
-}
