@@ -13,7 +13,7 @@ INDArray reverse=Nd4j.rollAxis(ret2.reshape(n,c,-1,outH,outW),2);
 Iterator<int[]> iter=new NdIndexIterator(n,c,outH,outW);
 while (iter.hasNext()) {
 int[] next=iter.next();
-NDArrayIndex[] indexes=NDArrayIndex.indexesFor(next);
+INDArrayIndex[] indexes=NDArrayIndex.indexesFor(next);
 reverse.get(indexes).put(indexes,epsilon.get(indexes));
 }
 INDArray finalRet=Convolution.col2im(ret2,conf.getStride(),conf.getPadding(),width,height);

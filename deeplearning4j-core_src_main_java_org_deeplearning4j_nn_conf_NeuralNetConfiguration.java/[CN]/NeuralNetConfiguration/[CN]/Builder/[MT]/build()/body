@@ -8,6 +8,7 @@
   ret.miniBatch=miniBatch;
   ret.rho=rho;
   ret.updater=updater;
+  ret.timeSeriesLength=timeSeriesLength;
   ret=overRideFields(ret,layer);
   return ret;
 }
