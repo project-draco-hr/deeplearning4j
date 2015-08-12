@@ -8,7 +8,7 @@
   params.put(RECURRENT_WEIGHTS,WeightInitUtil.initWeights(nL,4 * nL + 3,conf.getWeightInit(),dist));
   params.put(INPUT_WEIGHTS,WeightInitUtil.initWeights(nLast,4 * nL,conf.getWeightInit(),dist));
   INDArray biases=Nd4j.zeros(1,4 * nL);
-  biases.put(new NDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(5));
+  biases.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(5));
   params.put(BIAS,biases);
   params.get(RECURRENT_WEIGHTS).data().persist();
   params.get(INPUT_WEIGHTS).data().persist();
