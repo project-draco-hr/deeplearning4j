@@ -4,16 +4,14 @@
   if (!(mln.getOutputLayer() instanceof OutputLayer))   throw new IllegalArgumentException("Cannot check backprop gradients without OutputLayer");
   mln.setInput(input);
   mln.setLabels(labels);
-  mln.feedForward();
   mln.computeGradientAndScore();
   Pair<Gradient,Double> gradAndScore=mln.gradientAndScore();
   if (useUpdater) {
     Updater updater=UpdaterCreator.getUpdater(mln);
     updater.update(mln,gradAndScore.getFirst(),0);
   }
-  INDArray gradientToCheck=gradAndScore.getFirst().gradient(mln.conf().getVariables());
+  INDArray gradientToCheck=gradAndScore.getFirst().gradient();
   INDArray originalParams=mln.params();
-  OutputLayer ol=(OutputLayer)mln.getOutputLayer();
   int nParams=mln.numParams();
   int totalNFailures=0;
   double maxError=0.0;
@@ -21,29 +19,30 @@
     INDArray params=originalParams.dup();
     params.putScalar(i,params.getDouble(i) + epsilon);
     mln.setParameters(params);
-    mln.feedForward();
-    double scorePlus=ol.computeScore();
-    params.putScalar(i,params.getDouble(i) - 2 * epsilon);
+    mln.computeGradientAndScore();
+    double scorePlus=mln.score();
+    params.putScalar(i,params.getDouble(i) - epsilon);
     mln.setParameters(params);
-    mln.feedForward();
-    double scoreMinus=ol.computeScore();
-    double numericalGradient=(scorePlus - scoreMinus) / (2 * epsilon);
+    mln.computeGradientAndScore();
+    double scoreMinus=mln.score();
+    double scoreDelta=scorePlus - scoreMinus;
+    double numericalGradient=scoreDelta / (2 * epsilon);
     if (Double.isNaN(numericalGradient))     throw new IllegalStateException("Numerical gradient was NaN for parameter " + i + " of "+ nParams);
     double backpropGradient=gradientToCheck.getDouble(i);
-    double relError=Math.abs(numericalGradient - backpropGradient) / Math.abs(numericalGradient);
+    double relError=Math.abs(backpropGradient - numericalGradient) / (Math.abs(numericalGradient) + Math.abs(backpropGradient));
     if (relError > maxRelError) {
-      if (print)       System.out.println("Param " + i + " FAILED: grad="+ backpropGradient+ ", numericalGrad="+ numericalGradient+ ", relError="+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus="+ scoreMinus);
+      if (print)       log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
       if (exitOnFirstError)       return false;
       if (relError > maxError)       maxError=relError;
       totalNFailures++;
     }
  else     if (print) {
-      System.out.println("Param " + i + " passed: grad="+ backpropGradient+ ", numericalGrad="+ numericalGradient+ ", relError="+ relError);
+      log.info("Param " + i + " passed: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError);
     }
   }
   if (print) {
     int nPass=nParams - totalNFailures;
-    System.out.println("GradientCheckUtil.checkGradients(): " + nParams + " params checked, "+ nPass+ " passed, "+ totalNFailures+ " failed. Largest relative error = "+ maxError);
+    log.info("GradientCheckUtil.checkGradients(): " + nParams + " params checked, "+ nPass+ " passed, "+ totalNFailures+ " failed. Largest relative error = "+ maxError);
   }
   return totalNFailures == 0;
 }
