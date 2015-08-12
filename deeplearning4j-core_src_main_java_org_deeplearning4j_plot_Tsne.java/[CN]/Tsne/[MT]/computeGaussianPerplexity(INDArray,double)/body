@@ -8,7 +8,8 @@
     if (i % 500 == 0 && i > 0)     log.info("Handled " + i + " records");
     double betaMin=Double.NEGATIVE_INFINITY;
     double betaMax=Double.POSITIVE_INFINITY;
-    NDArrayIndex[] range=new NDArrayIndex[]{NDArrayIndex.concat(NDArrayIndex.interval(0,i),NDArrayIndex.interval(i + 1,d.columns()))};
+    int[] vals=Ints.concat(ArrayUtil.range(0,i),ArrayUtil.range(i + 1,d.columns()));
+    INDArrayIndex[] range=new INDArrayIndex[]{new NDArrayIndex(vals)};
     INDArray row=d.slice(i).get(range);
     Pair<INDArray,INDArray> pair=hBeta(row,beta.getDouble(i));
     INDArray hDiff=pair.getFirst().sub(logU);
