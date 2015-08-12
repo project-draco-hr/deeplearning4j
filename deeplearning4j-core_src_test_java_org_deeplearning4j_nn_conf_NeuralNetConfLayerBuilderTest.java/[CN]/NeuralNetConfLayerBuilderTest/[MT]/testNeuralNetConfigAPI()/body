@@ -7,7 +7,7 @@
   double newDrop=0.5;
   int[] newFS=new int[]{3,3};
   int newFD=7;
-  int[] newStride=new int[]{3,3};
+  int[] newStride=new int[]{2,2};
   Convolution.Type newConvType=Convolution.Type.SAME;
   PoolingType newPoolType=PoolingType.AVG;
   double newCorrupt=0.5;
@@ -32,7 +32,7 @@
   NeuralNetConfiguration poolConf=new NeuralNetConfiguration.Builder().stride(stride).poolingType(poolType).layer(new SubsamplingLayer.Builder(newPoolType,newStride).build()).build();
   Layer pool=LayerFactories.getFactory(poolConf.getLayer()).create(poolConf);
   assertTrue(pool.conf().getPoolingType() == newPoolType);
-  assertTrue(pool.conf().getStride() == newStride);
+  assertArrayEquals(pool.conf().getStride(),newStride);
   NeuralNetConfiguration autoConf=new NeuralNetConfiguration.Builder().nIn(numIn).nOut(numOut).corruptionLevel(corrupt).sparsity(sparsity).activationFunction(act).weightInit(weight).layer(new AutoEncoder.Builder(newCorrupt,newSparsity).nIn(newNumIn).nOut(newNumOut).activation(newAct).weightInit(newWeight).build()).build();
   Layer auto=LayerFactories.getFactory(autoConf.getLayer()).create(autoConf);
   assertTrue(auto.conf().getNIn() == newNumIn);
