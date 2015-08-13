@@ -25,7 +25,7 @@
   assertTrue(out.conf().getNIn() == newNumIn);
   assertTrue(out.conf().getNOut() == newNumOut);
   assertTrue(out.conf().getLossFunction().equals(newLoss));
-  NeuralNetConfiguration convConf=new NeuralNetConfiguration.Builder().activationFunction(act).kernelSize(kernelSize).layer(new ConvolutionLayer.Builder(newFS,newConvType).activation(newAct).build()).build();
+  NeuralNetConfiguration convConf=new NeuralNetConfiguration.Builder().activationFunction(act).kernelSize(kernelSize).layer(new ConvolutionLayer.Builder(newFS,new int[]{1,1}).activation(newAct).build()).build();
   Layer conv=LayerFactories.getFactory(convConf.getLayer()).create(convConf);
   assertTrue(conv.conf().getKernelSize() == newFS);
   assertTrue(conv.conf().getConvolutionType().equals(newConvType));
