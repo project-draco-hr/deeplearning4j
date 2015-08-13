@@ -1,0 +1,11 @@
+{
+  this.corpusRDD=corpusRDD;
+  this.numWords=numWords;
+  this.nGrams=nGrams;
+  this.tokenizer=tokenizer;
+  this.tokenizerPreprocessor=tokenPreprocessor;
+  if (removeStopWords) {
+    stopWords=StopWords.getStopWords();
+  }
+  setup();
+}

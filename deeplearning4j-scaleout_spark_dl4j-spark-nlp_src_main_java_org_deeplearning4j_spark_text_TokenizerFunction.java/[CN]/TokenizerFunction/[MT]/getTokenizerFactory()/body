@@ -1,5 +1,8 @@
 {
   try {
+    tokenizerFactory=((Class<? extends TokenizerFactory>)Class.forName(tokenizerFactoryClazz)).newInstance();
+    TokenPreProcess tokenPreProcess=((Class<? extends TokenPreProcess>)Class.forName(tokenizerPreprocessorClazz)).newInstance();
+    tokenizerFactory.setTokenPreProcessor(tokenPreProcess);
     Class<? extends TokenizerFactory> clazz=(Class<? extends TokenizerFactory>)Class.forName(tokenizerFactoryClazz);
     tokenizerFactory=clazz.newInstance();
     if (nGrams > 1) {

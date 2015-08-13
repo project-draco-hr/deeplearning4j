@@ -1,0 +1,8 @@
+{
+  for (  Entry<String,Double> entry : wordFreq.entrySet()) {
+    String stringToken=entry.getKey();
+    Double tokenCount=entry.getValue();
+    stringToken=filterMinWord(stringToken,tokenCount);
+    addTokenToVocabCache(stringToken,tokenCount);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  if (vocabCache.numWords() > 0) {
+    return vocabCacheBroadcast;
+  }
+ else {
+    throw new IllegalStateException("IllegalStateException: VocabCache not set at TextPipline.");
+  }
+}

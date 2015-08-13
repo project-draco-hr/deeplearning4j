@@ -1,0 +1,8 @@
+{
+  if (cumSumRDD != null) {
+    return cumSumRDD;
+  }
+ else {
+    throw new IllegalAccessError("Cumulative Sum list not defined. Call buildCumSum() first.");
+  }
+}
