@@ -1,0 +1,18 @@
+{
+  final JavaSparkContext sc=new JavaSparkContext(corpusRDD.context());
+  final SparkConf conf=sc.getConf();
+  int numWords=assignVar(NUM_WORDS,conf,Integer.class);
+  int nGrams=assignVar(N_GRAMS,conf,Integer.class);
+  String tokenizer=assignVar(TOKENIZER,conf,String.class);
+  String tokenPreprocessor=assignVar(TOKEN_PREPROCESSOR,conf,String.class);
+  boolean removeStop=assignVar(REMOVE_STOPWORDS,conf,Boolean.class);
+  this.corpusRDD=corpusRDD;
+  this.numWords=numWords;
+  this.nGrams=nGrams;
+  this.tokenizer=tokenizer;
+  this.tokenizerPreprocessor=tokenPreprocessor;
+  if (removeStop) {
+    stopWords=StopWords.getStopWords();
+  }
+  setup();
+}

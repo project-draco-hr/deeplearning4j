@@ -1,0 +1,7 @@
+{
+  String tokenizerString=(String)defaultVals.get(TOKENIZER);
+  String tokenizerPreprocessString=(String)defaultVals.get(TOKEN_PREPROCESSOR);
+  TokenizerFunction tokenizerFunction=new TokenizerFunction(tokenizerString,tokenizerPreprocessString,1);
+  List<String> tokenList=tokenizerFunction.call(sentenceList.get(0));
+  assertTrue(tokenList.equals(Arrays.asList("this","is","a","strange","strange","world")));
+}

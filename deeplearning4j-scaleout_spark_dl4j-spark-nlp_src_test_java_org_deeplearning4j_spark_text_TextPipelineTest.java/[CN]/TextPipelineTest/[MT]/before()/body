@@ -1,0 +1,4 @@
+{
+  conf=new SparkConf().setMaster("local[4]").setAppName("sparktest").set(NUM_WORDS,String.valueOf(1)).set(N_GRAMS,String.valueOf(1)).set(TOKENIZER,"org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").set(TOKEN_PREPROCESSOR,"org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").set(REMOVE_STOPWORDS,String.valueOf(true));
+  sentenceList=Arrays.asList("This is a strange strange world.","Flowers are red.");
+}

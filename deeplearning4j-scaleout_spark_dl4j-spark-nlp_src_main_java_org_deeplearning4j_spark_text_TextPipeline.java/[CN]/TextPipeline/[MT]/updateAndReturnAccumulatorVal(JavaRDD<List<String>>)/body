@@ -1,10 +1,6 @@
 {
   UpdateAccumulatorFunction accumulatorClassFunction=new UpdateAccumulatorFunction(stopWordBroadCast,wordFreqAcc);
   JavaRDD<Pair<List<String>,AtomicLong>> sentenceWordsCountRDD=tokenizedRDD.map(accumulatorClassFunction);
-  tokenizedRDD.foreach(new VoidFunction<List<String>>(){
-    public void call(    List<String> lst){
-    }
-  }
-);
+  tokenizedRDD.count();
   return sentenceWordsCountRDD;
 }

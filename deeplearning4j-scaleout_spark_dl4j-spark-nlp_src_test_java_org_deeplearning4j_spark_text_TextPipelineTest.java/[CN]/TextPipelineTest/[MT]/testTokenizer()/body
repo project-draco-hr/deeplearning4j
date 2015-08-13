@@ -1,0 +1,8 @@
+{
+  JavaSparkContext sc=new JavaSparkContext(getConfClone());
+  JavaRDD<String> corpusRDD=getCorpusRDD(sc);
+  TextPipeline pipeline=new TextPipeline(corpusRDD);
+  JavaRDD<List<String>> tokenizedRDD=pipeline.tokenize();
+  assertEquals(tokenizedRDD.first(),Arrays.asList("this","is","a","strange","strange","world"));
+  sc.stop();
+}

@@ -1,9 +1,0 @@
-{
-  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath(),3);
-  TextPipeline pipeline=new TextPipeline(corpus,1);
-  Pair<VocabCache,Long> pair=pipeline.process();
-  InMemoryLookupCache lookupCache=(InMemoryLookupCache)pair.getFirst();
-  assertEquals(lookupCache.vocabs.size(),542);
-  assertEquals(lookupCache.vocabs.get("SHOULD").getIndex(),5);
-  assertEquals((int)lookupCache.wordFrequencies.getCount("SHOULD"),4);
-}
