@@ -1,0 +1,6 @@
+{
+  Layer model=getSubsamplingLayer(SubsamplingLayer.PoolingType.NONE);
+  Gradient gradient=createPrevGradient();
+  Pair<Gradient,INDArray> out=model.backpropGradient(epsilon,gradient,null);
+  assertEquals(depth,out.getSecond().size(1));
+}

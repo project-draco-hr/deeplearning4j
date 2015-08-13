@@ -1,8 +1,0 @@
-{
-  INDArray input=getData();
-  Layer layer=getCNNConfig(nChannelsIn,depth,kernelSize,stride,padding);
-  INDArray convActivations=layer.activate(input);
-  int featureMapWidth=(inputWidth - kernelSize[0] + 2 * padding[0]) / stride[0] + 1;
-  assertEquals(featureMapWidth,convActivations.size(2));
-  assertEquals(depth,convActivations.size(0));
-}

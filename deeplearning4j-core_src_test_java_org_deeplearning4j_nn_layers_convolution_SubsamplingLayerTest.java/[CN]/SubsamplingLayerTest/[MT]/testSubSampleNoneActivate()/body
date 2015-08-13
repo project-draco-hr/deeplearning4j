@@ -1,0 +1,7 @@
+{
+  INDArray input=getData();
+  Layer model=getSubsamplingLayer(SubsamplingLayer.PoolingType.NONE);
+  INDArray output=model.activate(input);
+  assertTrue(Arrays.equals(new int[]{nExamples,nChannelsIn,inputWidth,inputHeight},output.shape()));
+  assertEquals(nExamples,output.shape()[0],1e-4);
+}

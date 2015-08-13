@@ -1,0 +1,7 @@
+{
+  INDArray activation=Nd4j.tensorMmul(featureMaps,kernelWeights,new int[][]{{1,2,3},{1,2,3}});
+  activation=activation.reshape(activation.size(0),activation.size(1),activation.size(2),activation.size(3));
+  bias=bias.broadcast(activation.shape()).reshape(activation.shape());
+  activation.addi(bias);
+  return activation;
+}
