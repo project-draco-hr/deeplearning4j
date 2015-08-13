@@ -2,16 +2,12 @@
   if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
     input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
   }
-  INDArray bias=getParam(ConvolutionParamInitializer.CONVOLUTION_BIAS);
-  INDArray kernelWeights=getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS);
-  kernelWeights=kernelWeights.dup().reshape(Ints.concat(kernelWeights.shape(),new int[]{1,1}));
+  INDArray kernelWeights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
+  INDArray bias=getParam(ConvolutionParamInitializer.BIAS_KEY);
   if (conf.getDropOut() > 0 && conf.isUseDropConnect()) {
     kernelWeights=kernelWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(kernelWeights.shape()));
   }
-  INDArray convolved=Convolution.im2col(input,conf.getKernelSize(),conf.getStride(),conf.getPadding());
-  INDArray activation=Nd4j.tensorMmul(convolved,kernelWeights,new int[][]{{1,2,3},{1,2,3}});
-  activation=activation.reshape(activation.size(0),activation.size(1),activation.size(2),activation.size(3));
-  bias=bias.broadcast(activation.shape()).reshape(activation.shape());
-  activation.addi(bias);
+  INDArray featureMaps=createFeatureMaps();
+  INDArray activation=calculateActivation(featureMaps,kernelWeights,bias);
   return Nd4j.rollAxis(activation,3,1);
 }

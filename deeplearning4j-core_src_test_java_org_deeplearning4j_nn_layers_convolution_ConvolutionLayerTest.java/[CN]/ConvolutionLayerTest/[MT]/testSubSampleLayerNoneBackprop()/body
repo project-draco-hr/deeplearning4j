@@ -1,0 +1,6 @@
+{
+  Layer layer=getCNNConfig(nChannelsIn,depth,kernelSize,stride,padding);
+  Gradient gradient=createPrevGradient();
+  Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon,gradient,null);
+  assertEquals(nExamples,out.getSecond().size(1));
+}

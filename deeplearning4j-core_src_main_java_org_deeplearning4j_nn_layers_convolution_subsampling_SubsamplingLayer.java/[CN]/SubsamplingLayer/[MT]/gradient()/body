@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException();
+  if (gradient == null)   throw new NullPointerException("Gradient has not been set");
+  return gradient;
 }
