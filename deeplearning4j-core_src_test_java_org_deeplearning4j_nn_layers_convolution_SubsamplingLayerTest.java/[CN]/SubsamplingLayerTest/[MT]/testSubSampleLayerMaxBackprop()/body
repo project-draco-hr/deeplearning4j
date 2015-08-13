@@ -1,0 +1,9 @@
+{
+  INDArray input=getData();
+  Layer model=getSubsamplingLayer(SubsamplingLayer.PoolingType.MAX);
+  Gradient gradient=createPrevGradient();
+  model.activate(input);
+  Pair<Gradient,INDArray> out=model.backpropGradient(epsilon,gradient,null);
+  assertEquals(input.shape().length,out.getSecond().shape().length);
+  assertEquals(depth,out.getSecond().size(1));
+}

@@ -1,3 +1,14 @@
 {
-  return null;
+  if (x == null)   throw new IllegalArgumentException("No null input allowed");
+  setInput(x,training);
+  applyDropOutIfNecessary(x,training);
+  INDArray b=getParam(ConvolutionParamInitializer.BIAS_KEY);
+  INDArray W=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
+  if (conf.isUseDropConnect() && training) {
+    if (conf.getDropOut() > 0) {
+      W=Dropout.applyDropConnect(this,ConvolutionParamInitializer.WEIGHT_KEY);
+    }
+  }
+  INDArray ret=x.mmul(W).addiRowVector(b);
+  return ret;
 }
