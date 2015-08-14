@@ -27,7 +27,7 @@
   pipeline.buildVocabWordListRDD();
   totalWordCount=pipeline.getTotalWordCount();
   sentenceWordsCountRDD=pipeline.getSentenceCountRDD();
-  vocabWordListRDD=pipeline.getvocabWordListRDD();
+  vocabWordListRDD=pipeline.getVocabWordListRDD();
   vocabCache=pipeline.getVocabCache();
   vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
   log.info("Building Huffman Tree ...");

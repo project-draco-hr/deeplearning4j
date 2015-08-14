@@ -1,0 +1,6 @@
+{
+  List<String> wordsList=pair.getFirst();
+  List<VocabWord> vocabWordsList=new ArrayList<>();
+  for (  String s : wordsList)   vocabWordsList.add(vocabCacheBroadcast.getValue().wordFor(s));
+  return vocabWordsList;
+}
