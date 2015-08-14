@@ -1,5 +1,5 @@
 {
-  Layer model=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
+  Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
   Gradient gradient=createPrevGradient();
-  Pair<Gradient,INDArray> out=model.backpropGradient(epsilon,gradient,null);
+  Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon,gradient,null);
 }

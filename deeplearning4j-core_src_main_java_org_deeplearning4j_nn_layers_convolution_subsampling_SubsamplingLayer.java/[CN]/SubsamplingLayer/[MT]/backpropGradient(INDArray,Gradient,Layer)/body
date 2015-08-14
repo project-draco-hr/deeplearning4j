@@ -1,32 +1,29 @@
 {
-  Gradient ret=new DefaultGradient();
-  int height=epsilon.size(-2);
-  int width=epsilon.size(-1);
+  int inputHeight=input().size(-2);
+  int inputWidth=input().size(-1);
+  INDArray reshapeEpsilon, retE;
 switch (conf.getPoolingType()) {
 case MAX:
     int n=epsilon.size(0);
   int c=epsilon.size(1);
 int outH=epsilon.size(2);
 int outW=epsilon.size(3);
-INDArray ret2=Nd4j.zeros(n,c,conf.getKernelSize()[0],conf.getKernelSize()[1],outH,outW);
-INDArray reverse=Nd4j.rollAxis(ret2.reshape(n,c,-1,outH,outW),2);
+retE=Nd4j.zeros(n,c,conf.getKernelSize()[0],conf.getKernelSize()[1],outH,outW);
+reshapeEpsilon=Nd4j.rollAxis(retE.reshape(n,c,-1,outH,outW),2);
 Iterator<int[]> iter=new NdIndexIterator(n,c,outH,outW);
 while (iter.hasNext()) {
 int[] next=iter.next();
 INDArrayIndex[] indexes=NDArrayIndex.indexesFor(next);
-reverse.get(indexes).put(indexes,epsilon.get(indexes));
+reshapeEpsilon.get(indexes).put(indexes,epsilon.get(indexes));
 }
-INDArray finalRet=Convolution.col2im(ret2,conf.getStride(),conf.getPadding(),height,width);
-ret.gradientForVariable().put(ConvolutionParamInitializer.WEIGHT_KEY,finalRet);
-return new Pair<>(ret,finalRet);
+reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
+return new Pair<>(gradient,reshapeEpsilon);
 case AVG:
-INDArray subError=epsilon.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
-INDArray tiled=Nd4j.tile(subError,1,1,conf.getKernelSize()[0],conf.getKernelSize()[1],1,1);
-INDArray convolution=Convolution.col2im(tiled,conf.getStride(),conf.getPadding(),height,width);
-convolution.divi(ArrayUtil.prod(conf.getKernelSize()));
-if (convolution.rank() < 4) convolution=convolution.reshape(Ints.concat(new int[]{1},convolution.shape()));
-ret.gradientForVariable().put(ConvolutionParamInitializer.WEIGHT_KEY,convolution);
-return new Pair<>(ret,convolution);
+retE=epsilon.slice(0).get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
+reshapeEpsilon=Nd4j.tile(retE,1,1,conf.getKernelSize()[0],conf.getKernelSize()[1],1,1);
+reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
+reshapeEpsilon.divi(ArrayUtil.prod(conf.getKernelSize()));
+return new Pair<>(gradient,reshapeEpsilon);
 case NONE:
 return new Pair<>(gradient,epsilon);
 default :
