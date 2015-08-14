@@ -1,4 +1,7 @@
 {
+  if (wordFreq.size() == 0) {
+    throw new IllegalStateException("IllegalStateException: wordFreqCounter has nothing. Check accumulator updating");
+  }
   for (  Entry<String,Double> entry : wordFreq.entrySet()) {
     String stringToken=entry.getKey();
     Double tokenCount=entry.getValue();
