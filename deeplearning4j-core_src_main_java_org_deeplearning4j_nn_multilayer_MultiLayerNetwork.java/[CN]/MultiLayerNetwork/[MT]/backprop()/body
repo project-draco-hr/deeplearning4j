@@ -15,23 +15,27 @@
   }
   outputLayer.setLabels(labels);
   int numLayers=getnLayers();
+  LinkedList<Pair<String,INDArray>> gradientList=new LinkedList<>();
   Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null,null,null);
   for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
     multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
     INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
-    gradient.setGradientFor(multiGradientKey,g);
+    gradientList.addLast(new Pair<>(multiGradientKey,g));
   }
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
   prevLayer=outputLayer;
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
     currPair=currLayer.backpropGradient(currPair.getSecond(),currPair.getFirst(),prevLayer);
+    LinkedList<Pair<String,INDArray>> tempList=new LinkedList<>();
     for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
       multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
       INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
-      gradient.setGradientFor(multiGradientKey,g);
+      tempList.addFirst(new Pair<>(multiGradientKey,g));
     }
+    for (    Pair<String,INDArray> pair : tempList)     gradientList.addFirst(pair);
     if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
     prevLayer=currLayer;
   }
+  for (  Pair<String,INDArray> pair : gradientList)   gradient.setGradientFor(pair.getFirst(),pair.getSecond());
 }

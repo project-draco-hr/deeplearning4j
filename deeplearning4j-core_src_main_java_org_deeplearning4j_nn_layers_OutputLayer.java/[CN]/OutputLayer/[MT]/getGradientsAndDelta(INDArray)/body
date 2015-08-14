@@ -2,13 +2,14 @@
   INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),preOut.dup()));
   INDArray outSubLabels=output.sub(labels);
   Gradient gradient=new DefaultGradient();
-  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 switch (conf.getLossFunction()) {
 case MCXENT:
     gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels));
-  return new Triple<>(gradient,outSubLabels,output);
+  gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
+return new Triple<>(gradient,outSubLabels,output);
 case XENT:
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels.div(output.mul(output.rsub(1)))));
+gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 case MSE:
 INDArray delta=outSubLabels.mul(derivativeActivation(preOut));
@@ -17,17 +18,21 @@ gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.sum(0)
 return new Triple<>(gradient,delta,output);
 case EXPLL:
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(labels.rsub(1).divi(output)));
+gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 case RMSE_XENT:
 INDArray squaredrmseXentDiff=pow(outSubLabels,2.0);
 INDArray sqrt=sqrt(squaredrmseXentDiff);
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(sqrt));
+gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 case SQUARED_LOSS:
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(input.transpose().mmul(pow(outSubLabels,2))));
+gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 case NEGATIVELOGLIKELIHOOD:
 gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels));
+gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 default :
 throw new IllegalStateException("Invalid loss function: " + conf.getLossFunction());
