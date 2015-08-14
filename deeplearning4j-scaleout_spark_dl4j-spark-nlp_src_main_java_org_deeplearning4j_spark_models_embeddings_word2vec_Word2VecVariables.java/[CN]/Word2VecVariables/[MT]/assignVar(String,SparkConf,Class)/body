@@ -12,6 +12,9 @@
  else   if (clazz.equals(String.class)) {
     ret=conf.get(variableName,(String)getDefault(variableName));
   }
+ else   if (clazz.equals(Long.class)) {
+    ret=conf.getLong(variableName,(Long)getDefault(variableName));
+  }
  else {
     throw new Exception("Variable Type not supported. Only boolean, int, double and String supported.");
   }

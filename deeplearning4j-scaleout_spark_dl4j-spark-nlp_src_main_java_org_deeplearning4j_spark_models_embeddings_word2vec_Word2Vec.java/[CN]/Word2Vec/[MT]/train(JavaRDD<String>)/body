@@ -1,19 +1,6 @@
 {
   log.info("Start training ...");
   final JavaSparkContext sc=new JavaSparkContext(corpusRDD.context());
-  final SparkConf conf=sc.getConf();
-  int vectorLength=assignVar(VECTOR_LENGTH,conf,Integer.class);
-  boolean useAdaGrad=assignVar(ADAGRAD,conf,Boolean.class);
-  int negative=assignVar(NEGATIVE,conf,Integer.class);
-  int numWords=assignVar(NUM_WORDS,conf,Integer.class);
-  int window=assignVar(WINDOW,conf,Integer.class);
-  double alpha=assignVar(ALPHA,conf,Double.class);
-  double minAlpha=assignVar(MIN_ALPHA,conf,Double.class);
-  int iterations=assignVar(ITERATIONS,conf,Integer.class);
-  int nGrams=assignVar(N_GRAMS,conf,Integer.class);
-  String tokenizer=assignVar(TOKENIZER,conf,String.class);
-  String tokenPreprocessor=assignVar(TOKEN_PREPROCESSOR,conf,String.class);
-  boolean removeStop=assignVar(REMOVE_STOPWORDS,conf,Boolean.class);
   final JavaRDD<AtomicLong> sentenceWordsCountRDD;
   final JavaRDD<List<VocabWord>> vocabWordListRDD;
   final Long totalWordCount;
@@ -22,7 +9,7 @@
   final Broadcast<VocabCache> vocabCacheBroadcast;
   final JavaRDD<Long> sentenceCumSumCountRDD;
   log.info("Tokenization and building VocabCache ...");
-  TextPipeline pipeline=new TextPipeline(corpusRDD,numWords,nGrams,tokenizer,tokenPreprocessor,removeStop);
+  TextPipeline pipeline=new TextPipeline(corpusRDD,getTokenizerVarMap());
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
   totalWordCount=pipeline.getTotalWordCount();
@@ -37,38 +24,7 @@
   sentenceCumSumCountRDD=new CountCumSum(sentenceWordsCountRDD).buildCumSum();
   log.info("Mapping to RDD(vocabWordList, cumulative sentence count) ...");
   vocabWordListSentenceCumSumRDD=vocabWordListRDD.zip(sentenceCumSumCountRDD).setName("vocabWordListSentenceCumSumRDD").cache();
-  log.info("Building Word2VecParams ...");
-  final InMemoryLookupTable lookupTable;
-  if (table != null) {
-    lookupTable=table;
-  }
- else {
-    lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(vocabCache).vectorLength(vectorLength).negative(negative).build();
-    lookupTable.resetWeights();
-  }
-  final Word2VecParam param=new Word2VecParam.Builder().negative(negative).window(window).expTable(sc.broadcast(lookupTable.getExpTable())).setAlpha(alpha).setMinAlpha(minAlpha).setVectorLength(vectorLength).useAdaGrad(useAdaGrad).weights(lookupTable).build();
-  param.setTotalWords(totalWordCount.intValue());
-  log.info("Training word 2vec");
-  Word2VecParam prevParam;
-  for (int i=0; i < iterations; i++) {
-    final Broadcast<Word2VecParam> finalParamBroadcast=sc.broadcast(param);
-    if (finalParamBroadcast.value() == null)     throw new IllegalStateException("Value not found for param broadcast");
-    JavaRDD<Word2VecFuncCall> call=vocabWordListSentenceCumSumRDD.map(new Word2VecSetup(finalParamBroadcast));
-    JavaRDD<Word2VecChange> change2=call.map(new SentenceBatch());
-    change2.foreach(new VoidFunction<Word2VecChange>(){
-      @Override public void call(      Word2VecChange change) throws Exception {
-        change.apply(lookupTable);
-      }
-    }
-);
-    change2.unpersist();
-    prevParam=param;
-    if (prevParam.equals(param)) {
-      throw new Exception("Param is not update.");
-    }
-    log.info("Iteration " + i);
-  }
-  super.lookupTable=lookupTable;
-  super.vocab=vocabCacheBroadcast.getValue();
+  log.info("Broadcasting word2vec variable map to workers ...");
+  Broadcast<Map<String,Object>> word2vecVarMapBroadcast=sc.broadcast(getWord2vecVarMap());
   return new Pair<VocabCache,WeightLookupTable>(vocabCacheBroadcast.getValue(),lookupTable);
 }
