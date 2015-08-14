@@ -1,0 +1,16 @@
+{
+  Layer layer=getContainedConfig();
+  INDArray col=getContainedCol();
+  INDArray expectedWeightGradient=Nd4j.create(new double[]{-1440.,-1440.,-1984.,-1984.,-1440.,-1440.,-1984.,-1984.},new int[]{2,1,2,2});
+  INDArray expectedBiasGradient=Nd4j.create(new double[]{-544.,-544.},new int[]{2});
+  INDArray expectedEpsilon=Nd4j.create(new double[]{-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.},new int[]{1,1,8,8});
+  org.deeplearning4j.nn.layers.convolution.ConvolutionLayer layer2=(org.deeplearning4j.nn.layers.convolution.ConvolutionLayer)layer;
+  layer2.setCol(col);
+  Pair<Gradient,INDArray> pair=layer2.backpropGradient(epsilon,null,null);
+  assertEquals(expectedEpsilon.shape(),pair.getSecond().shape());
+  assertEquals(expectedWeightGradient.shape(),pair.getFirst().getGradientFor("W").shape());
+  assertEquals(expectedBiasGradient.shape(),pair.getFirst().getGradientFor("b").shape());
+  assertEquals(expectedEpsilon,pair.getSecond());
+  assertEquals(expectedWeightGradient,pair.getFirst().getGradientFor("W"));
+  assertEquals(expectedBiasGradient,pair.getFirst().getGradientFor("b"));
+}

@@ -1,0 +1,5 @@
+{
+  INDArray z=preOutput(true);
+  INDArray activationDerivative=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),z).derivative());
+  return epsilon.mmul(activationDerivative);
+}

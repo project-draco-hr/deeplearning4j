@@ -16,7 +16,7 @@ int[] next=iter.next();
 INDArrayIndex[] indexes=NDArrayIndex.indexesFor(next);
 reverse.get(indexes).put(indexes,epsilon.get(indexes));
 }
-INDArray finalRet=Convolution.col2im(ret2,conf.getStride(),conf.getPadding(),width,height);
+INDArray finalRet=Convolution.col2im(ret2,conf.getStride(),conf.getPadding(),height,width);
 ret.gradientForVariable().put(ConvolutionParamInitializer.WEIGHT_KEY,finalRet);
 return new Pair<>(ret,finalRet);
 case AVG:
