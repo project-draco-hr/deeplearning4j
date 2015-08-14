@@ -10,7 +10,7 @@
     Updater updater=UpdaterCreator.getUpdater(mln);
     updater.update(mln,gradAndScore.getFirst(),0);
   }
-  INDArray gradientToCheck=gradAndScore.getFirst().gradient();
+  INDArray gradientToCheck=gradAndScore.getFirst().gradient(mln.conf().variables());
   INDArray originalParams=mln.params();
   int nParams=mln.numParams();
   int totalNFailures=0;
@@ -21,7 +21,7 @@
     mln.setParameters(params);
     mln.computeGradientAndScore();
     double scorePlus=mln.score();
-    params.putScalar(i,params.getDouble(i) - epsilon);
+    params.putScalar(i,params.getDouble(i) - 2 * epsilon);
     mln.setParameters(params);
     mln.computeGradientAndScore();
     double scoreMinus=mln.score();
@@ -30,10 +30,10 @@
     if (Double.isNaN(numericalGradient))     throw new IllegalStateException("Numerical gradient was NaN for parameter " + i + " of "+ nParams);
     double backpropGradient=gradientToCheck.getDouble(i);
     double relError=Math.abs(backpropGradient - numericalGradient) / (Math.abs(numericalGradient) + Math.abs(backpropGradient));
+    if (relError > maxError)     maxError=relError;
     if (relError > maxRelError) {
       if (print)       log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
       if (exitOnFirstError)       return false;
-      if (relError > maxError)       maxError=relError;
       totalNFailures++;
     }
  else     if (print) {

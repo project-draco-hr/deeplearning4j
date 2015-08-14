@@ -1,14 +1,39 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).regularization(false).seed(12345L).list(2).layer(0,new DenseLayer.Builder().nIn(4).nOut(3).build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(3).nOut(3).build()).build();
-  MultiLayerNetwork mln=new MultiLayerNetwork(conf);
-  mln.init();
-  for (int i=0; i < mln.getnLayers(); i++) {
-    System.out.println("Layer " + i + " # params: "+ mln.getLayer(i).numParams());
-  }
+  String[] activFns={"sigmoid","tanh","relu","hardtanh"};
+  boolean[] characteristic={false,true};
+  LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
+  String[] outputActivations={"softmax","tanh"};
   DataSet ds=new IrisDataSetIterator(150,150).next();
   ds.normalizeZeroMeanZeroUnitVariance();
   INDArray input=ds.getFeatureMatrix();
   INDArray labels=ds.getLabels();
-  boolean gradOK=GradientCheckUtil.checkGradients(mln,DEFAULT_EPS,DEFAULT_MAX_REL_ERROR,PRINT_RESULTS,RETURN_ON_FIRST_FAILURE,input,labels,false);
-  assertTrue(gradOK);
+  for (  String afn : activFns) {
+    for (    boolean doLearningFirst : characteristic) {
+      for (int i=0; i < lossFunctions.length; i++) {
+        LossFunction lf=lossFunctions[i];
+        String outputActivation=outputActivations[i];
+        MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction(afn).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).updater(Updater.SGD).learningRate(0.1).seed(12345L).list(2).layer(0,new DenseLayer.Builder().nIn(4).nOut(3).build()).layer(1,new OutputLayer.Builder(lf).activation(outputActivation).nIn(3).nOut(3).build()).pretrain(false).backprop(true).build();
+        MultiLayerNetwork mln=new MultiLayerNetwork(conf);
+        mln.init();
+        if (doLearningFirst) {
+          mln.setInput(ds.getFeatures());
+          mln.setLabels(ds.getLabels());
+          mln.computeGradientAndScore();
+          double scoreBefore=mln.score();
+          for (int j=0; j < 10; j++)           mln.fit(ds);
+          mln.computeGradientAndScore();
+          double scoreAfter=mln.score();
+          String msg="testGradMLP2LayerIrisSimple() - score did not (sufficiently) decrease during learning - activationFn=" + afn + ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst+ " (before="+ scoreBefore+ ", scoreAfter="+ scoreAfter+ ")";
+          assertTrue(msg,scoreAfter < 0.8 * scoreBefore);
+        }
+        if (PRINT_RESULTS) {
+          System.out.println("testGradientMLP2LayerIrisSimpleRandom() - activationFn=" + afn + ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst);
+          for (int j=0; j < mln.getnLayers(); j++)           System.out.println("Layer " + j + " # params: "+ mln.getLayer(j).numParams());
+        }
+        boolean gradOK=GradientCheckUtil.checkGradients(mln,DEFAULT_EPS,DEFAULT_MAX_REL_ERROR,PRINT_RESULTS,RETURN_ON_FIRST_FAILURE,input,labels,false);
+        String msg="testGradMLP2LayerIrisSimple() - activationFn=" + afn + ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst;
+        assertTrue(msg,gradOK);
+      }
+    }
+  }
 }

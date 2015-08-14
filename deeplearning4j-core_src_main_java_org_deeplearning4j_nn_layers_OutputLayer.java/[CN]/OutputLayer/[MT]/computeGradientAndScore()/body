@@ -1,7 +1,7 @@
 {
   if (input == null || labels == null)   return;
-  INDArray output=output(input);
-  Pair<Gradient,INDArray> pair=getGradientsAndDelta(output);
-  this.gradient=pair.getFirst();
-  setScoreWithZ(output);
+  INDArray z=preOutput(input);
+  Triple<Gradient,INDArray,INDArray> triple=getGradientsAndDelta(z);
+  this.gradient=triple.getFirst();
+  setScoreWithZ(triple.getThird());
 }
