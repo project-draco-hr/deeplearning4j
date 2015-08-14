@@ -1,13 +1,14 @@
 {
-  INDArray gy=gradient.getGradientFor(ConvolutionParamInitializer.WEIGHT_KEY);
-  INDArray biasGradient=gradient.getGradientFor(ConvolutionParamInitializer.BIAS_KEY);
-  getParam(ConvolutionParamInitializer.BIAS_KEY).addi(gy.sum(0,2,3));
-  INDArray gcol=Nd4j.tensorMmul(getParam(ConvolutionParamInitializer.WEIGHT_KEY),gy.slice(0),new int[][]{{0,1}});
-  gcol=Nd4j.rollAxis(gcol,3);
-  INDArray z=preOutput(input());
-  INDArray weightGradient=Convolution.conv2d(gcol,z,conf.getConvolutionType());
+  int inputHeight=input().size(-2);
+  int inputWidth=input().size(-1);
+  INDArray weights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
+  INDArray delta=calculateDelta(epsilon);
   Gradient retGradient=new DefaultGradient();
+  retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,delta.sum(0,2,3));
+  INDArray weightGradient=Nd4j.tensorMmul(delta,col,new int[][]{{0,2,3},{0,4,5}});
   retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGradient);
-  retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,biasGradient);
-  return new Pair<>(retGradient,weightGradient);
+  INDArray nextEpsilon=Nd4j.tensorMmul(weights,delta.slice(0),new int[][]{{0,1}});
+  nextEpsilon=Nd4j.rollAxis(nextEpsilon,3);
+  nextEpsilon=Convolution.col2im(nextEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
+  return new Pair<>(retGradient,nextEpsilon);
 }

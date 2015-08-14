@@ -1,0 +1,14 @@
+{
+  INDArray Weights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
+  INDArray bias=getParam(ConvolutionParamInitializer.BIAS_KEY);
+  if (conf.isUseDropConnect() && training) {
+    if (conf.getDropOut() > 0) {
+      Weights=Dropout.applyDropConnect(this,ConvolutionParamInitializer.WEIGHT_KEY);
+    }
+  }
+  INDArray z=Nd4j.tensorMmul(col,Weights,new int[][]{{1,2,3},{1,2,3}});
+  z=z.reshape(z.size(0),z.size(1),z.size(2),z.size(3));
+  bias=bias.broadcast(z.shape()).reshape(z.shape());
+  z.addi(bias);
+  return Nd4j.rollAxis(z,3,1);
+}

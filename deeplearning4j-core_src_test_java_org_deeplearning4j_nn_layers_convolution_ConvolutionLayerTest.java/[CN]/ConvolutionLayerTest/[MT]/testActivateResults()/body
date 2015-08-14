@@ -1,7 +1,7 @@
 {
   Layer layer=getContainedConfig();
   INDArray input=getContainedData();
-  INDArray expectedOutput=Nd4j.create(new double[]{4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8.},new int[]{1,2,4,4});
+  INDArray expectedOutput=Nd4j.create(new double[]{0.98201379,0.98201379,0.98201379,0.98201379,0.99966465,0.99966465,0.99966465,0.99966465,0.98201379,0.98201379,0.98201379,0.98201379,0.99966465,0.99966465,0.99966465,0.99966465,0.98201379,0.98201379,0.98201379,0.98201379,0.99966465,0.99966465,0.99966465,0.99966465,0.98201379,0.98201379,0.98201379,0.98201379,0.99966465,0.99966465,0.99966465,0.99966465},new int[]{1,2,4,4});
   INDArray convActivations=layer.activate(input);
   assertEquals(expectedOutput,convActivations);
   assertEquals(expectedOutput.shape(),convActivations.shape());
