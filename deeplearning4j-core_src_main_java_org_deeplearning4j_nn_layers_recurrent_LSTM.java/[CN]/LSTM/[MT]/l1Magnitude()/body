@@ -1,3 +1,0 @@
-{
-  return Transforms.abs(getParam(LSTMParamInitializer.RECURRENT_WEIGHTS)).sum(Integer.MAX_VALUE).getDouble(0);
-}
