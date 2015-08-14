@@ -1,8 +1,15 @@
 {
+  INDArray expectedContainedEpsilonInput=Nd4j.create(new double[]{1.,2.,3.,4.,5.,6.,7.,8.},new int[]{1,2,2,2});
+  INDArray expectedContainedEpsilonResult=Nd4j.create(new double[]{0.25,0.25,0.5,0.5,0.75,0.75,1.,1.,0.25,0.25,0.5,0.5,0.75,0.75,1.,1.,1.25,1.25,1.5,1.5,1.75,1.75,2.},new int[]{1,2,4,4});
   INDArray input=getData();
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.AVG);
-  Gradient gradient=createPrevGradient();
   layer.activate(input);
+  Gradient gradient=createPrevGradient();
+  Pair<Gradient,INDArray> containedOutput=layer.backpropGradient(expectedContainedEpsilonInput,gradient,null);
+  assertEquals(expectedContainedEpsilonResult,containedOutput.getSecond());
+  assertEquals(gradient.getGradientFor("W"),containedOutput.getFirst().getGradientFor("W"));
+  assertEquals(expectedContainedEpsilonResult.shape().length,containedOutput.getSecond().shape().length);
+  gradient=createPrevGradient();
   Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon,gradient,null);
   assertEquals(input.shape().length,out.getSecond().shape().length);
   assertEquals(depth,out.getSecond().size(1));
