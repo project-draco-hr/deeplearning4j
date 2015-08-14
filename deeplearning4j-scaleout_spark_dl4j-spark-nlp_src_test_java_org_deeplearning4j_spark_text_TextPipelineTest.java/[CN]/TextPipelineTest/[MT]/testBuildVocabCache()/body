@@ -2,10 +2,7 @@
   JavaSparkContext sc=new JavaSparkContext(getConfClone());
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
   TextPipeline pipeline=new TextPipeline(corpusRDD);
-  JavaRDD<List<String>> tokenizedRDD=pipeline.tokenize();
-  pipeline.updateAndReturnAccumulatorVal(tokenizedRDD);
-  Counter<String> wordFreqCounter=pipeline.getWordFreqAcc().value();
-  pipeline.filterMinWordAddVocab(wordFreqCounter);
+  pipeline.buildVocabCache();
   VocabCache vocabCache=pipeline.getVocabCache();
   assertTrue(vocabCache != null);
   VocabWord redVocab=vocabCache.tokenFor("red");

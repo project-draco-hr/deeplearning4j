@@ -4,12 +4,7 @@
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
   TextPipeline pipeline=new TextPipeline(corpusRDD);
   JavaRDD<List<String>> tokenizedRDD=pipeline.tokenize();
-  JavaRDD<Pair<List<String>,AtomicLong>> sentenceWordsCountRDD=pipeline.updateAndReturnAccumulatorVal(tokenizedRDD);
-  List<Pair<List<String>,AtomicLong>> ret=sentenceWordsCountRDD.collect();
-  assertEquals(ret.get(0).getFirst(),Arrays.asList("this","is","a","strange","strange","world"));
-  assertEquals(ret.get(1).getFirst(),Arrays.asList("flowers","are","red"));
-  assertEquals(ret.get(0).getSecond().get(),6);
-  assertEquals(ret.get(1).getSecond().get(),3);
+  pipeline.updateAndReturnAccumulatorVal(tokenizedRDD);
   Counter<String> wordFreqCounter=pipeline.getWordFreqAcc().value();
   assertEquals(wordFreqCounter.getCount("is"),1,0);
   assertEquals(wordFreqCounter.getCount("this"),1,0);
