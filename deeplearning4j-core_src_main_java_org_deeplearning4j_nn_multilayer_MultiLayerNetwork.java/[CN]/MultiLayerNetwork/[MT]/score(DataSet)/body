@@ -4,7 +4,7 @@
   if (getOutputLayer() instanceof OutputLayer) {
     OutputLayer ol=(OutputLayer)getOutputLayer();
     ol.setLabels(data.getLabels());
-    ol.computeScore();
+    ol.computeScore(calcL1(),calcL2());
     this.score=ol.score();
   }
  else {
