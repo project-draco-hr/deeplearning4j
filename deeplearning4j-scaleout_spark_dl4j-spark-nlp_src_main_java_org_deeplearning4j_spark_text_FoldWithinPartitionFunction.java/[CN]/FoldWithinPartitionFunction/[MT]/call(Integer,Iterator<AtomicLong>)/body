@@ -1,0 +1,23 @@
+{
+  List<AtomicLong> foldedItemList=new ArrayList<AtomicLong>(){
+{
+      add(new AtomicLong(0L));
+    }
+  }
+;
+  int foldedItemListSize=1;
+  while (partition.hasNext()) {
+    long curPartitionItem=partition.next().get();
+    int lastFoldedIndex=foldedItemListSize - 1;
+    long lastFoldedItem=foldedItemList.get(lastFoldedIndex).get();
+    AtomicLong sumLastCurrent=new AtomicLong(curPartitionItem + lastFoldedItem);
+    foldedItemList.set(lastFoldedIndex,sumLastCurrent);
+    foldedItemList.add(sumLastCurrent);
+    foldedItemListSize+=1;
+  }
+  long maxFoldedItem=foldedItemList.remove(foldedItemListSize - 1).get();
+  Counter<Integer> partitionIndex2maxItemCounter=new Counter<>();
+  partitionIndex2maxItemCounter.incrementCount(ind,maxFoldedItem);
+  maxPerPartitionAcc.add(partitionIndex2maxItemCounter);
+  return foldedItemList.iterator();
+}
