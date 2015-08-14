@@ -1,7 +1,3 @@
 {
-  rdd.foreachPartition(new VoidFunction<Iterator<?>>(){
-    @Override public void call(    Iterator<?> integerIterator) throws Exception {
-    }
-  }
-);
+  rdd.foreachPartition(new MapPerPartitionVoidFunction());
 }

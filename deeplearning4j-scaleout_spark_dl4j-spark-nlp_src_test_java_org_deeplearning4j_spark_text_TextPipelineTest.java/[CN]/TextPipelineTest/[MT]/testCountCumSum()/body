@@ -1,0 +1,13 @@
+{
+  JavaSparkContext sc=new JavaSparkContext(getConfClone());
+  JavaRDD<String> corpusRDD=getCorpusRDD(sc,2);
+  TextPipeline pipeline=new TextPipeline(corpusRDD);
+  pipeline.buildVocabCache();
+  pipeline.buildVocabWordListRDD();
+  JavaRDD<AtomicLong> sentenceCountRDD=pipeline.getSentenceCountRDD();
+  CountCumSum countCumSum=new CountCumSum(sentenceCountRDD);
+  JavaRDD<Long> sentenceCountCumSumRDD=countCumSum.buildCumSum();
+  List<Long> sentenceCountCumSumList=sentenceCountCumSumRDD.collect();
+  assertTrue(sentenceCountCumSumList.get(0) == 6L);
+  assertTrue(sentenceCountCumSumList.get(1) == 9L);
+}
