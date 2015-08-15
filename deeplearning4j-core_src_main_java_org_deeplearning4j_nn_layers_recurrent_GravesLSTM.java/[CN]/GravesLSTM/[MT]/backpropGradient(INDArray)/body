@@ -4,8 +4,8 @@
   INDArray memCellActivations=activations[1];
   INDArray ifogZs=activations[2];
   INDArray ifogAs=activations[3];
-  INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS);
-  INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
+  INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   int hiddenLayerSize=recurrentWeights.size(0);
   int prevLayerSize=inputWeights.size(0);
   int miniBatchSize=epsilon.size(0);
@@ -84,8 +84,8 @@
     epsilonNext.slice(t,2).assign(epsilonNextSlice);
   }
   Gradient retGradient=new DefaultGradient();
-  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.INPUT_WEIGHTS,inputWeightGradients.sum(2));
-  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.RECURRENT_WEIGHTS,recurrentWeightGradients.sum(2));
-  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.BIAS,biasGradients.sum(2).sum(0));
+  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY,inputWeightGradients.sum(2));
+  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY,recurrentWeightGradients.sum(2));
+  retGradient.gradientForVariable().put(GravesLSTMParamInitializer.BIAS_KEY,biasGradients.sum(2).sum(0));
   return new Pair<>(retGradient,epsilonNext);
 }
