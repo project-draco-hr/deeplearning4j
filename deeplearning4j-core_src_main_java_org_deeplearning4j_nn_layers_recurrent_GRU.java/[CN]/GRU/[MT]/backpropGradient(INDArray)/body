@@ -55,7 +55,6 @@
       INDArray sigmaPrimeCNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zcNext).derivative());
       INDArray second=aOut.sub(acNext).muli(sigmaPrimeUNext);
       INDArray third=auNext.rsub(1.0).muli(sigmaPrimeCNext);
-      INDArray tempTest=Nd4j.diag(Nd4j.diag(wC));
       INDArray temp=Nd4j.diag(Nd4j.diag(wC)).mmul(arNext.transpose()).transpose().addi(Nd4j.diag(Nd4j.diag(wR)).mmul(wC.mmul(aOut.transpose())).transpose().muli(sigmaPrimeR));
       third.muli(temp);
       dOutNextdOut=auNext.add(second).addi(third);
@@ -70,7 +69,7 @@
     INDArray sigmaPrimeC=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zc).derivative());
     INDArray au=aSlice.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
     INDArray deltaC=deltaOut.mul(sigmaPrimeC).muli(au.rsub(1.0));
-    INDArray deltaR=deltaC.mul(Nd4j.diag(Nd4j.diag(wC))).muli(prevOut).muli(sigmaPrimeR);
+    INDArray deltaR=deltaC.mul(Nd4j.diag(Nd4j.diag(wC)).mmul(prevOut.transpose()).transpose()).muli(sigmaPrimeR);
     INDArray prevLayerActivationSlice=(is2dInput ? input : input.slice(t,2));
     inputWeightGradients.get(NDArrayIndex.all(),interval(0,layerSize)).addi(deltaR.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize)).addi(deltaU.transpose().mmul(prevLayerActivationSlice).transpose());
