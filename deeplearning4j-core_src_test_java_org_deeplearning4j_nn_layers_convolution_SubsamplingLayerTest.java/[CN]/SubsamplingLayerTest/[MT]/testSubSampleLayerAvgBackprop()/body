@@ -5,7 +5,7 @@
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.AVG);
   layer.activate(input);
   Pair<Gradient,INDArray> containedOutput=layer.backpropGradient(expectedContainedEpsilonInput);
-  assertEquals(expectedContainedEpsilonResult,containedOutput.getSecond());
+  assertEquals(expectedContainedEpsilonResult.toString(),containedOutput.getSecond().toString());
   assertEquals(null,containedOutput.getFirst().getGradientFor("W"));
   assertEquals(expectedContainedEpsilonResult.shape().length,containedOutput.getSecond().shape().length);
   Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon);

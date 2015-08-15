@@ -4,6 +4,6 @@
   int[] padding=new int[]{1,1};
   Layer layer=getCNNConfig(nChannelsIn,depth,kernelSize,stride,padding);
   layer.activate(input);
-  assertEquals(input,layer.input());
-  assertEquals(input.shape(),layer.input().shape());
+  assertEquals(input.toString(),layer.input().toString());
+  assertArrayEquals(input.shape(),layer.input().shape());
 }
