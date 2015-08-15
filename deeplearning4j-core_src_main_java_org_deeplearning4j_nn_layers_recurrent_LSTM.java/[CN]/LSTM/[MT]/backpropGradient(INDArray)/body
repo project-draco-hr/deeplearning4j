@@ -46,6 +46,5 @@
   retGradient.gradientForVariable().put(LSTMParamInitializer.INPUT_WEIGHT_KEY,inputWeightGradients);
   retGradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHT_KEY,recurrentWeightGradients);
   retGradient.gradientForVariable().put(LSTMParamInitializer.BIAS_KEY,biasGradients);
-  INDArray nextEpsilon=null;
-  return new Pair<>(retGradient,nextEpsilon);
+  return new Pair<>(retGradient,inputWeightGradients);
 }
