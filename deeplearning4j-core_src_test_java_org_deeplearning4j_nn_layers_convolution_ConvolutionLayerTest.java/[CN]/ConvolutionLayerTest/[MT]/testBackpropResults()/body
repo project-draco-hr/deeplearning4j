@@ -6,7 +6,7 @@
   INDArray expectedEpsilon=Nd4j.create(new double[]{-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.,-56.},new int[]{1,1,8,8});
   org.deeplearning4j.nn.layers.convolution.ConvolutionLayer layer2=(org.deeplearning4j.nn.layers.convolution.ConvolutionLayer)layer;
   layer2.setCol(col);
-  Pair<Gradient,INDArray> pair=layer2.backpropGradient(epsilon,null,null);
+  Pair<Gradient,INDArray> pair=layer2.backpropGradient(epsilon);
   assertEquals(expectedEpsilon.shape(),pair.getSecond().shape());
   assertEquals(expectedWeightGradient.shape(),pair.getFirst().getGradientFor("W").shape());
   assertEquals(expectedBiasGradient.shape(),pair.getFirst().getGradientFor("b").shape());
