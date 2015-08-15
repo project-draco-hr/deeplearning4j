@@ -1,0 +1,33 @@
+{
+  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHTS);
+  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHTS);
+  INDArray biases=getParam(GRUParamInitializer.BIAS);
+  boolean is2dInput=input.rank() < 3;
+  int timeSeriesLength=(is2dInput ? 1 : input.size(2));
+  int hiddenLayerSize=recurrentWeights.size(0);
+  int miniBatchSize=input.size(0);
+  if (conf.isUseDropConnect() && training) {
+    if (conf.getDropOut() > 0) {
+      inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHTS);
+    }
+  }
+  INDArray outputActivations=Nd4j.zeros(miniBatchSize,hiddenLayerSize,timeSeriesLength);
+  INDArray rucZs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize,timeSeriesLength);
+  INDArray rucAs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize,timeSeriesLength);
+  for (int t=0; t < timeSeriesLength; t++) {
+    INDArray prevLayerInputSlice=(is2dInput ? input : input.slice(t,2));
+    INDArray prevOutputActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.slice(t - 1,2));
+    INDArray zs=prevLayerInputSlice.mmul(inputWeights).addi(prevOutputActivations.mmul(recurrentWeights)).addiRowVector(biases);
+    INDArray as=zs.dup();
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",as.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize))));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize))));
+    INDArray candidateAs=as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
+    INDArray updateAs=as.get(NDArrayIndex.all(),NDArrayIndex.interval(hiddenLayerSize,2 * hiddenLayerSize));
+    INDArray oneMinUpdateAs=updateAs.rsub(1);
+    INDArray outputASlice=updateAs.mul(prevOutputActivations).addi(oneMinUpdateAs.muli(candidateAs));
+    rucZs.slice(t,2).assign(zs);
+    rucAs.slice(t,2).assign(as);
+    outputActivations.slice(t,2).assign(outputASlice);
+  }
+  return new INDArray[]{outputActivations,rucZs,rucAs};
+}
