@@ -1,5 +1,4 @@
 {
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
-  Gradient gradient=createPrevGradient();
-  Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon,gradient,null);
+  layer.backpropGradient(epsilon);
 }
