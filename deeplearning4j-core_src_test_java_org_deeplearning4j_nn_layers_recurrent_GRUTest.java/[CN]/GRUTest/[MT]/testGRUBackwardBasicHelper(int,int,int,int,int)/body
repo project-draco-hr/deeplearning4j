@@ -1,0 +1,22 @@
+{
+  INDArray inputData=Nd4j.ones(miniBatchSize,nIn,timeSeriesLength);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").dist(new UniformDistribution(0,1)).layer(new org.deeplearning4j.nn.conf.layers.GRU.Builder().nIn(nIn).nOut(gruNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).build();
+  GRU gru=LayerFactories.getFactory(conf.getLayer()).create(conf);
+  gru.activate(inputData);
+  assertNotNull(gru.input());
+  INDArray epsilon=Nd4j.ones(miniBatchSize,gruNHiddenUnits,timeSeriesLength);
+  Pair<Gradient,INDArray> out=gru.backpropGradient(epsilon);
+  Gradient outGradient=out.getFirst();
+  INDArray nextEpsilon=out.getSecond();
+  INDArray biasGradient=outGradient.getGradientFor(GRUParamInitializer.BIAS);
+  INDArray inWeightGradient=outGradient.getGradientFor(GRUParamInitializer.INPUT_WEIGHTS);
+  INDArray recurrentWeightGradient=outGradient.getGradientFor(GRUParamInitializer.RECURRENT_WEIGHTS);
+  assertNotNull(biasGradient);
+  assertNotNull(inWeightGradient);
+  assertNotNull(recurrentWeightGradient);
+  assertArrayEquals(biasGradient.shape(),new int[]{1,3 * gruNHiddenUnits});
+  assertArrayEquals(inWeightGradient.shape(),new int[]{nIn,3 * gruNHiddenUnits});
+  assertArrayEquals(recurrentWeightGradient.shape(),new int[]{gruNHiddenUnits,3 * gruNHiddenUnits + 3});
+  assertNotNull(nextEpsilon);
+  assertArrayEquals(nextEpsilon.shape(),new int[]{miniBatchSize,nIn,timeSeriesLength});
+}
