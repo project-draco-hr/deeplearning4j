@@ -1,7 +1,0 @@
-{
-  this.xs=xs;
-  this.xi=xi;
-  x=Nd4j.vstack(xi,xs);
-  setInput(x);
-  return activate();
-}
