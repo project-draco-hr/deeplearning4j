@@ -6,11 +6,11 @@
   Pair<Gradient,Double> pair=gradientAndScore();
   score=pair.getSecond();
   if (searchState.isEmpty()) {
-    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient());
     setupSearchState(pair);
   }
  else {
-    searchState.put(GRADIENT_KEY,pair.getFirst().gradient(conf.getVariables()));
+    searchState.put(GRADIENT_KEY,pair.getFirst().gradient());
   }
   preProcessLine();
   for (int i=0; i < conf.getNumIterations(); i++) {
@@ -33,7 +33,7 @@
     }
     oldScore=score;
     pair=gradientAndScore();
-    postStep(pair.getFirst().gradient(conf.getVariables()));
+    postStep(pair.getFirst().gradient());
     score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     for (    TerminationCondition condition : terminationConditions) {

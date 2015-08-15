@@ -1,0 +1,4 @@
+{
+  if (!conf.isUseRegularization() || conf.getL1() <= 0.0)   return 0.0;
+  return conf.getL1() * Transforms.abs(getParam(ConvolutionParamInitializer.WEIGHT_KEY)).sum(Integer.MAX_VALUE).getDouble(0);
+}

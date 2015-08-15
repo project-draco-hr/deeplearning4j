@@ -1,13 +1,8 @@
 {
-  if (conf.getDropOut() > 0.0 && !conf.isUseDropConnect() && training) {
-    input=Dropout.applyDropout(input,conf.getDropOut(),dropoutMask);
-  }
-  INDArray kernelWeights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
-  INDArray bias=getParam(ConvolutionParamInitializer.BIAS_KEY);
-  if (conf.getDropOut() > 0 && conf.isUseDropConnect()) {
-    kernelWeights=kernelWeights.mul(Nd4j.getDistributions().createBinomial(1,conf.getDropOut()).sample(kernelWeights.shape()));
-  }
-  INDArray featureMaps=createFeatureMaps();
-  INDArray activation=calculateActivation(featureMaps,kernelWeights,bias);
-  return Nd4j.rollAxis(activation,3,1);
+  if (input == null)   throw new IllegalArgumentException("No null input allowed");
+  applyDropOutIfNecessary(input,training);
+  col=createFeatureMapColumn();
+  INDArray z=preOutput(training);
+  INDArray activation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),z));
+  return activation;
 }

@@ -1,7 +1,7 @@
 {
-  INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHTS);
-  INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHTS);
-  INDArray biases=getParam(GravesLSTMParamInitializer.BIAS);
+  INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray biases=getParam(GravesLSTMParamInitializer.BIAS_KEY);
   boolean is2dInput=input.rank() < 3;
   int timeSeriesLength=(is2dInput ? 1 : input.size(2));
   int hiddenLayerSize=recurrentWeights.size(0);
@@ -9,7 +9,7 @@
   int nIn=inputWeights.size(0);
   if (conf.isUseDropConnect() && training) {
     if (conf.getDropOut() > 0) {
-      inputWeights=Dropout.applyDropConnect(this,GravesLSTMParamInitializer.INPUT_WEIGHTS);
+      inputWeights=Dropout.applyDropConnect(this,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
     }
   }
   INDArray wi=inputWeights.get(NDArrayIndex.all(),interval(0,hiddenLayerSize));

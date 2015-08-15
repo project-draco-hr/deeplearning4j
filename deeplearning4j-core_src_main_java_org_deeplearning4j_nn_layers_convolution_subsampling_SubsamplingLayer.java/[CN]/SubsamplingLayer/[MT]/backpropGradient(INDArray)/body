@@ -1,0 +1,33 @@
+{
+  int inputHeight=input().size(-2);
+  int inputWidth=input().size(-1);
+  INDArray reshapeEpsilon, retE;
+  Gradient retGradient=new DefaultGradient();
+switch (conf.getPoolingType()) {
+case MAX:
+    int n=epsilon.size(0);
+  int c=epsilon.size(1);
+int outH=epsilon.size(2);
+int outW=epsilon.size(3);
+retE=Nd4j.zeros(n,c,conf.getKernelSize()[0],conf.getKernelSize()[1],outH,outW);
+reshapeEpsilon=Nd4j.rollAxis(retE.reshape(n,c,-1,outH,outW),2);
+Iterator<int[]> iter=new NdIndexIterator(n,c,outH,outW);
+while (iter.hasNext()) {
+int[] next=iter.next();
+INDArrayIndex[] indexes=NDArrayIndex.indexesFor(next);
+reshapeEpsilon.get(indexes).put(indexes,epsilon.get(indexes));
+}
+reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
+return new Pair<>(retGradient,reshapeEpsilon);
+case AVG:
+retE=epsilon.slice(0).get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
+reshapeEpsilon=Nd4j.tile(retE,1,1,conf.getKernelSize()[0],conf.getKernelSize()[1],1,1);
+reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
+reshapeEpsilon.divi(ArrayUtil.prod(conf.getKernelSize()));
+return new Pair<>(retGradient,reshapeEpsilon);
+case NONE:
+return new Pair<>(retGradient,epsilon);
+default :
+throw new IllegalStateException("Un supported pooling type");
+}
+}
