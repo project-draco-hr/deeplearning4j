@@ -10,7 +10,7 @@
     INDArray encoded=activate(combined);
     y=decode(encoded);
     INDArray currVisibleLoss=currInput.sub(y);
-    INDArray currHiddenLoss=currVisibleLoss.mmul(getParam(RecursiveParamInitializer.W)).muli(encoded).muli(encoded.rsub(1));
+    INDArray currHiddenLoss=currVisibleLoss.mmul(getParam(RecursiveParamInitializer.ENCODER_WEIGHT_KEY)).muli(encoded).muli(encoded.rsub(1));
     INDArray hiddenGradient=y.transpose().mmul(currHiddenLoss);
     INDArray visibleGradient=encoded.transpose().mmul(currVisibleLoss);
     if (visibleLoss == null)     visibleLoss=visibleGradient;

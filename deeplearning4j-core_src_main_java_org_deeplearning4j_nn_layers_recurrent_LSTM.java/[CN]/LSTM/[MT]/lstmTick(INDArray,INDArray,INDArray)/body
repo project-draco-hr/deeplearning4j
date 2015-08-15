@@ -1,7 +1,7 @@
 {
-  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
-  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
-  INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
+  INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  INDArray decoderBias=getParam(LSTMParamInitializer.BIAS_KEY);
   int t=0;
   int d=decoderWeights.rows();
   INDArray hIn=Nd4j.zeros(1,recurrentWeights.rows());
