@@ -30,6 +30,7 @@
     if (Double.isNaN(numericalGradient))     throw new IllegalStateException("Numerical gradient was NaN for parameter " + i + " of "+ nParams);
     double backpropGradient=gradientToCheck.getDouble(i);
     double relError=Math.abs(backpropGradient - numericalGradient) / (Math.abs(numericalGradient) + Math.abs(backpropGradient));
+    if (backpropGradient == 0.0 && numericalGradient == 0.0)     relError=0.0;
     if (relError > maxError)     maxError=relError;
     if (relError > maxRelError || Double.isNaN(relError)) {
       if (print)       log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
