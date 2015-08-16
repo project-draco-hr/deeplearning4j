@@ -1,6 +1,6 @@
 {
-  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
-  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
+  INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   INDArray dY=Nd4j.vstack(Nd4j.zeros(y.columns()),y);
   INDArray dWd=hOut.transpose().mmul(dY);
   INDArray dBd=Nd4j.sum(dWd,0);
@@ -44,8 +44,8 @@
   }
   clear();
   Gradient gradient=new DefaultGradient();
-  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_BIAS,dBd);
-  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_WEIGHTS,dWd);
-  gradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHTS,dRecurrentWeights);
+  gradient.gradientForVariable().put(LSTMParamInitializer.BIAS_KEY,dBd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.INPUT_WEIGHT_KEY,dWd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHT_KEY,dRecurrentWeights);
   return gradient;
 }

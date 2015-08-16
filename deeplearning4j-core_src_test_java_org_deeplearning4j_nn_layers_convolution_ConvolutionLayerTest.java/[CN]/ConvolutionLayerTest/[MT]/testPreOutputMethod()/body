@@ -5,6 +5,6 @@
   org.deeplearning4j.nn.layers.convolution.ConvolutionLayer layer2=(org.deeplearning4j.nn.layers.convolution.ConvolutionLayer)layer;
   layer2.setCol(col);
   INDArray activation=layer2.preOutput(true);
-  assertEquals(expectedOutput.shape(),activation.shape());
-  assertEquals(expectedOutput,activation);
+  assertArrayEquals(expectedOutput.shape(),activation.shape());
+  assertEquals(expectedOutput.toString(),activation.toString());
 }
