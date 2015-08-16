@@ -9,5 +9,5 @@
   layer2.setCol(col);
   INDArray delta=layer2.calculateDelta(epsilon);
   assertArrayEquals(expectedOutput.shape(),delta.shape());
-  assertEquals(expectedOutput.toString(),delta.toString());
+  assertEquals(expectedOutput,delta);
 }
