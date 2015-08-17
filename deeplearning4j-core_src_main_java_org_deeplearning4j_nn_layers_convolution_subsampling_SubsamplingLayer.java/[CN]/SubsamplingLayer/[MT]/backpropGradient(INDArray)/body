@@ -20,7 +20,7 @@ reshapeEpsilon.get(indexes).put(indexes,epsilon.get(indexes));
 reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
 return new Pair<>(retGradient,reshapeEpsilon);
 case AVG:
-retE=epsilon.slice(0).get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
+retE=epsilon.get(NDArrayIndex.point(0),NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
 reshapeEpsilon=Nd4j.tile(retE,1,1,conf.getKernelSize()[0],conf.getKernelSize()[1],1,1);
 reshapeEpsilon=Convolution.col2im(reshapeEpsilon,conf.getStride(),conf.getPadding(),inputHeight,inputWidth);
 reshapeEpsilon.divi(ArrayUtil.prod(conf.getKernelSize()));
