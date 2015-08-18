@@ -1,0 +1,21 @@
+{
+  NeuralNetConfiguration confExpected=new NeuralNetConfiguration.Builder().layer(layer).build();
+  NeuralNetConfiguration confActual;
+  byte[] data;
+  try (ByteArrayOutputStream bos=new ByteArrayOutputStream();ObjectOutput out=new ObjectOutputStream(bos)){
+    out.writeObject(confExpected);
+    data=bos.toByteArray();
+  }
+   try (ByteArrayInputStream bis=new ByteArrayInputStream(data);ObjectInput in=new ObjectInputStream(bis)){
+    confActual=(NeuralNetConfiguration)in.readObject();
+  }
+   assertEquals("unequal Java serialization",confExpected.getLayer(),confActual.getLayer());
+  String json=confExpected.toJson();
+  confActual=NeuralNetConfiguration.fromJson(json);
+  assertEquals("unequal JSON serialization",confExpected.getLayer(),confActual.getLayer());
+  String yaml=confExpected.toYaml();
+  confActual=NeuralNetConfiguration.fromYaml(yaml);
+  assertEquals("unequal YAML serialization",confExpected.getLayer(),confActual.getLayer());
+  confActual.getLayer().setDropOut(new java.util.Random().nextDouble());
+  assertNotEquals("broken equals method (missing callSuper?)",confExpected.getLayer(),confActual.getLayer());
+}
