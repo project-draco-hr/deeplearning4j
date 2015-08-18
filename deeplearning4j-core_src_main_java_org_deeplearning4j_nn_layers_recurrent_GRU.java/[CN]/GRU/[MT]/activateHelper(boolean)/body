@@ -1,14 +1,14 @@
 {
-  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHTS);
-  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHTS);
-  INDArray biases=getParam(GRUParamInitializer.BIAS);
+  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHT_KEY);
+  INDArray biases=getParam(GRUParamInitializer.BIAS_KEY);
   boolean is2dInput=input.rank() < 3;
   int timeSeriesLength=(is2dInput ? 1 : input.size(2));
   int hiddenLayerSize=recurrentWeights.size(0);
   int miniBatchSize=input.size(0);
   if (conf.isUseDropConnect() && training) {
     if (conf.getDropOut() > 0) {
-      inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHTS);
+      inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHT_KEY);
     }
   }
   INDArray outputActivations=Nd4j.zeros(miniBatchSize,hiddenLayerSize,timeSeriesLength);

@@ -1,5 +1,5 @@
 {
   if (!conf.isUseRegularization() || conf.getL1() <= 0.0)   return 0.0;
-  double l1=Transforms.abs(getParam(GRUParamInitializer.RECURRENT_WEIGHTS)).sum(Integer.MAX_VALUE).getDouble(0) + Transforms.abs(getParam(GRUParamInitializer.INPUT_WEIGHTS)).sum(Integer.MAX_VALUE).getDouble(0);
+  double l1=Transforms.abs(getParam(GRUParamInitializer.RECURRENT_WEIGHT_KEY)).sum(Integer.MAX_VALUE).getDouble(0) + Transforms.abs(getParam(GRUParamInitializer.INPUT_WEIGHT_KEY)).sum(Integer.MAX_VALUE).getDouble(0);
   return conf.getL1() * l1;
 }

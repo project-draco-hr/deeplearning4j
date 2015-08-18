@@ -9,11 +9,11 @@
   assertTrue(layer instanceof GRU);
   Map<String,INDArray> paramTable=layer.paramTable();
   assertTrue(paramTable.size() == 3);
-  INDArray recurrentWeights=paramTable.get(GRUParamInitializer.RECURRENT_WEIGHTS);
+  INDArray recurrentWeights=paramTable.get(GRUParamInitializer.RECURRENT_WEIGHT_KEY);
   assertArrayEquals(recurrentWeights.shape(),new int[]{nHiddenUnits,3 * nHiddenUnits});
-  INDArray inputWeights=paramTable.get(GRUParamInitializer.INPUT_WEIGHTS);
+  INDArray inputWeights=paramTable.get(GRUParamInitializer.INPUT_WEIGHT_KEY);
   assertArrayEquals(inputWeights.shape(),new int[]{nIn,3 * nHiddenUnits});
-  INDArray biases=paramTable.get(GRUParamInitializer.BIAS);
+  INDArray biases=paramTable.get(GRUParamInitializer.BIAS_KEY);
   assertArrayEquals(biases.shape(),new int[]{1,3 * nHiddenUnits});
   int nParams=recurrentWeights.length() + inputWeights.length() + biases.length();
   assertTrue(nParams == layer.numParams());

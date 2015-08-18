@@ -3,8 +3,8 @@
   INDArray outputActivations=activations[0];
   INDArray rucZs=activations[1];
   INDArray rucAs=activations[2];
-  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHTS);
-  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHTS);
+  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHT_KEY);
   int layerSize=recurrentWeights.size(0);
   int prevLayerSize=inputWeights.size(0);
   int miniBatchSize=epsilon.size(0);
@@ -90,8 +90,8 @@
     deltaCNext=deltaC;
   }
   Gradient g=new DefaultGradient();
-  g.setGradientFor(GRUParamInitializer.INPUT_WEIGHTS,inputWeightGradients);
-  g.setGradientFor(GRUParamInitializer.RECURRENT_WEIGHTS,recurrentWeightGradients);
-  g.setGradientFor(GRUParamInitializer.BIAS,biasGradients.sum(0));
+  g.setGradientFor(GRUParamInitializer.INPUT_WEIGHT_KEY,inputWeightGradients);
+  g.setGradientFor(GRUParamInitializer.RECURRENT_WEIGHT_KEY,recurrentWeightGradients);
+  g.setGradientFor(GRUParamInitializer.BIAS_KEY,biasGradients.sum(0));
   return new Pair<>(g,epsilonNext);
 }
