@@ -5,7 +5,7 @@
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.AVG);
   INDArray containedOutput=layer.activate(containedInput);
   assertTrue(Arrays.equals(containedExpectedOut.shape(),containedOutput.shape()));
-  assertEquals(containedExpectedOut.toString(),containedOutput.toString());
+  assertEquals(containedExpectedOut,containedOutput);
   INDArray output=layer.activate(input);
   assertTrue(Arrays.equals(new int[]{nExamples,nChannelsIn,featureMapWidth,featureMapHeight},output.shape()));
   assertEquals(nChannelsIn,output.size(1),1e-4);
