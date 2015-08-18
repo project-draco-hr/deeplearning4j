@@ -3,9 +3,9 @@
   INDArray expectedContainedEpsilonResult=Nd4j.create(new double[]{0.,0.,0.,1.,1.,0.,0.,0.,0.,0.,1.,0.,0.,1.,0.,0.,0.,0.,0.,1.,1.,0.,0.,0.,1.,0.,1.,0.,0.,0.,0.,0.},new int[]{1,2,4,4});
   INDArray input=getData();
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.MAX);
-  layer.setInput(input);
+  layer.activate(input);
   Pair<Gradient,INDArray> containedOutput=layer.backpropGradient(expectedContainedEpsilonInput);
-  assertEquals(expectedContainedEpsilonResult.toString(),containedOutput.getSecond().toString());
+  assertEquals(expectedContainedEpsilonResult,containedOutput.getSecond());
   assertEquals(null,containedOutput.getFirst().getGradientFor("W"));
   assertEquals(expectedContainedEpsilonResult.shape().length,containedOutput.getSecond().shape().length);
   Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon);
