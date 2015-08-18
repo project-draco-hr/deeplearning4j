@@ -6,7 +6,6 @@
     log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
     return;
   }
-  int miniBatchSize=input.size(0);
   OutputLayer outputLayer=(OutputLayer)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (outputLayer.conf().getWeightInit() == WeightInit.ZERO) {
@@ -18,8 +17,7 @@
   Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null);
   for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
     multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
-    INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
-    gradientList.addLast(new Pair<>(multiGradientKey,g));
+    gradientList.addLast(new Pair<>(multiGradientKey,entry.getValue()));
   }
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
   for (int j=numLayers - 2; j >= 0; j--) {
@@ -28,8 +26,7 @@
     LinkedList<Pair<String,INDArray>> tempList=new LinkedList<>();
     for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
       multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
-      INDArray g=(miniBatchSize > 1 ? entry.getValue().divi(miniBatchSize) : entry.getValue());
-      tempList.addFirst(new Pair<>(multiGradientKey,g));
+      tempList.addFirst(new Pair<>(multiGradientKey,entry.getValue()));
     }
     for (    Pair<String,INDArray> pair : tempList)     gradientList.addFirst(pair);
     if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));

@@ -1,6 +1,6 @@
 {
   this.defaultConfiguration=network.defaultConfiguration;
-  this.input=network.input;
+  setInput(network.input);
   this.labels=network.labels;
   this.layers=ArrayUtils.clone(network.layers);
 }

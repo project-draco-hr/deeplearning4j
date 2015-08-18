@@ -1,6 +1,6 @@
 {
   if (input == null)   throw new IllegalStateException("Unable to perform feed forward; no input found");
- else   if (this.getLayerWiseConfigurations().getInputPreProcess(0) != null)   this.input=getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input);
- else   this.input=input;
+ else   if (this.getLayerWiseConfigurations().getInputPreProcess(0) != null)   setInput(getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input));
+ else   setInput(input);
   return feedForward();
 }

@@ -6,5 +6,5 @@
   layer2.setCol(col);
   INDArray activation=layer2.preOutput(true);
   assertArrayEquals(expectedOutput.shape(),activation.shape());
-  assertEquals(expectedOutput.toString(),activation.toString());
+  assertEquals(expectedOutput,activation);
 }
