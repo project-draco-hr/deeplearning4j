@@ -69,12 +69,12 @@
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevHiddenUnitActivation).transpose());
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag.transpose().mmul(prevHiddenUnitActivation).transpose());
       INDArray dLdwFF=deltaf.mul(prevMemCellActivations).sum(0).transpose();
-      recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),new NDArrayIndex(4 * hiddenLayerSize)},dLdwFF);
+      recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize)},dLdwFF);
       INDArray dLdwGG=deltag.mul(prevMemCellActivations).sum(0).transpose();
-      recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),new NDArrayIndex(4 * hiddenLayerSize + 2)},dLdwGG);
+      recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize + 2)},dLdwGG);
     }
     INDArray dLdwOO=deltao.mul(currMemCellActivations).sum(0).transpose();
-    recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),new NDArrayIndex(4 * hiddenLayerSize + 1)},dLdwOO);
+    recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize + 1)},dLdwOO);
     INDArray bGradSlice=(is2dInput ? biasGradients : biasGradients.tensorAlongDimension(t,1,0));
     bGradSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai);
     bGradSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf);
