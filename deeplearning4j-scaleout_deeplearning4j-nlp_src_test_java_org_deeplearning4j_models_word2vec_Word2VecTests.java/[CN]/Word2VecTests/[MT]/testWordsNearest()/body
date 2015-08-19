@@ -1,0 +1,6 @@
+{
+  testGoogleModelLoaded();
+  List<Object> lst=Arrays.asList(googleModel.wordsNearest("Benkovic",10).toArray());
+  assertEquals(lst.get(0),"Gopie");
+  assertEquals(lst.get(1),"JIM_HOOK_Senior");
+}

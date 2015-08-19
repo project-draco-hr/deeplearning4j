@@ -1,0 +1,5 @@
+{
+  if (tokenizerFactory == null)   tokenizerFactory=getTokenizerFactory();
+  if (v1.isEmpty())   return Arrays.asList("");
+  return tokenizerFactory.create(v1).getTokens();
+}

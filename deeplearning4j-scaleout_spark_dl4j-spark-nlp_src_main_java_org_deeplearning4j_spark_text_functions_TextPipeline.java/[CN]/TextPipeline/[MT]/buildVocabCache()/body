@@ -1,0 +1,7 @@
+{
+  JavaRDD<List<String>> tokenizedRDD=tokenize();
+  sentenceWordsCountRDD=updateAndReturnAccumulatorVal(tokenizedRDD).cache();
+  Counter<String> wordFreqCounter=wordFreqAcc.value();
+  filterMinWordAddVocab(wordFreqCounter);
+  vocabCacheBroadcast=sc.broadcast(vocabCache);
+}

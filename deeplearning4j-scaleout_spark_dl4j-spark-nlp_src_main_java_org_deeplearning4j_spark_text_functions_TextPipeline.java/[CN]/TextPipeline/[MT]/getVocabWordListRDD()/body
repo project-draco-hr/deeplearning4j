@@ -1,0 +1,8 @@
+{
+  if (vocabWordListRDD != null) {
+    return vocabWordListRDD;
+  }
+ else {
+    throw new IllegalStateException("IllegalStateException: vocabWordListRDD not set at TextPipline.");
+  }
+}
