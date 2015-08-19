@@ -39,4 +39,5 @@
   inMemoryLookupTable.setSyn0(syn0);
   inMemoryLookupTable.setVocab(vocabCache);
   lookupTable=inMemoryLookupTable;
+  return new Pair<>(vocabCacheBroadcast.getValue(),this.lookupTable);
 }
