@@ -1,8 +1,8 @@
 {
   Nd4j.getRandom().setSeed(12345L);
   int timeSeriesLength=1;
-  int nIn=5;
-  int layerSize=7;
+  int nIn=1;
+  int layerSize=2;
   int nOut=3;
   int miniBatchSize=11;
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.1)).regularization(false).updater(Updater.NONE).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor(timeSeriesLength)).pretrain(false).backprop(true).build();

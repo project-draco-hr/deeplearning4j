@@ -1,7 +1,7 @@
 {
   INDArray[] activations=activateHelper(true);
   INDArray outputActivations=activations[0];
-  INDArray memCellActivations=activations[1];
+  INDArray memCellState=activations[1];
   INDArray ifogZs=activations[2];
   INDArray ifogAs=activations[3];
   INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
@@ -28,22 +28,22 @@
   INDArray epsilonNext=Nd4j.zeros(miniBatchSize,prevLayerSize,timeSeriesLength);
   INDArray nablaCellStateNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
   for (int t=timeSeriesLength - 1; t >= 0; t--) {
-    INDArray prevMemCellActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : memCellActivations.tensorAlongDimension(t - 1,1,0));
+    INDArray prevMemCellState=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : memCellState.tensorAlongDimension(t - 1,1,0));
     INDArray prevHiddenUnitActivation=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.tensorAlongDimension(t - 1,1,0));
-    INDArray currMemCellActivations=(is2dInput ? memCellActivations : memCellActivations.tensorAlongDimension(t,1,0));
+    INDArray currMemCellState=(is2dInput ? memCellState : memCellState.tensorAlongDimension(t,1,0));
     INDArray deltaiNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.tensorAlongDimension(t + 1,1,0).get(new INDArrayIndex[]{interval(0,miniBatchSize),interval(0,hiddenLayerSize)}));
     INDArray deltafNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.tensorAlongDimension(t + 1,1,0).get(new INDArrayIndex[]{interval(0,miniBatchSize),interval(hiddenLayerSize,2 * hiddenLayerSize)}));
     INDArray deltaoNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.tensorAlongDimension(t + 1,1,0).get(new INDArrayIndex[]{interval(0,miniBatchSize),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)}));
     INDArray deltagNext=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : biasGradients.tensorAlongDimension(t + 1,1,0).get(new INDArrayIndex[]{interval(0,miniBatchSize),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)}));
     INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.tensorAlongDimension(t,1,0));
     INDArray nablaOut=epsilonSlice.dup().addi(deltaiNext.mmul(wI.transpose())).addi(deltafNext.mmul(wF.transpose())).addi(deltaoNext.mmul(wO.transpose())).addi(deltagNext.mmul(wG.transpose()));
-    INDArray sigmahOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currMemCellActivations.dup()));
+    INDArray sigmahOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currMemCellState.dup()));
     INDArray zo;
     if (is2dInput)     zo=ifogZs.get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
  else     zo=ifogZs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
-    INDArray sigmaoPrimeOfZo=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zo).derivative());
+    INDArray sigmaoPrimeOfZo=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zo.dup()).derivative());
     INDArray deltao=nablaOut.mul(sigmahOfS).muli(sigmaoPrimeOfZo);
-    INDArray sigmahPrimeOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currMemCellActivations.dup()).derivative());
+    INDArray sigmahPrimeOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currMemCellState.dup()).derivative());
     INDArray ao;
     if (is2dInput)     ao=ifogAs.get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
  else     ao=ifogAs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
@@ -51,29 +51,30 @@
     INDArray nablaCellState=nablaOut.mul(ao).muli(sigmahPrimeOfS).addi(nextForgetGateAs.mul(nablaCellStateNext)).addi(deltafNext.mmul(Nd4j.diag(wFF))).addi(deltaoNext.mmul(Nd4j.diag(wOO))).addi(deltagNext.mmul(Nd4j.diag(wGG)));
     nablaCellStateNext=nablaCellState;
     INDArray zf=(is2dInput ? ifogZs.get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)) : ifogZs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)));
-    INDArray deltaf=nablaCellState.mul(prevMemCellActivations).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zf).derivative()));
+    INDArray deltaf=nablaCellState.mul(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zf.dup()).derivative()));
     INDArray zg=(is2dInput ? ifogZs.get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)) : ifogZs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)));
-    INDArray ai=(is2dInput ? ifogAs.get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)) : ifogAs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)));
-    INDArray deltag=nablaCellState.mul(ai).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zg).derivative()));
+    INDArray ai=(is2dInput ? ifogAs.get(NDArrayIndex.all(),interval(0,hiddenLayerSize)) : ifogAs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(0,hiddenLayerSize)));
+    INDArray deltag=nablaCellState.mul(ai).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zg.dup()).derivative()));
     INDArray zi=(is2dInput ? ifogZs.get(NDArrayIndex.all(),interval(0,hiddenLayerSize)) : ifogZs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(0,hiddenLayerSize)));
     INDArray ag=(is2dInput ? ifogAs.get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)) : ifogAs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)));
-    INDArray deltai=nablaCellState.mul(ag).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zi).derivative()));
+    INDArray deltai=nablaCellState.mul(ag).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zi.dup()).derivative()));
     INDArray prevLayerActivationSlice=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
-    inputWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai.transpose().mmul(prevLayerActivationSlice).transpose());
-    inputWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf.transpose().mmul(prevLayerActivationSlice).transpose());
-    inputWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevLayerActivationSlice).transpose());
-    inputWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag.transpose().mmul(prevLayerActivationSlice).transpose());
+    INDArray iwgSlice=inputWeightGradients.tensorAlongDimension(t,1,0);
+    iwgSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai.transpose().mmul(prevLayerActivationSlice).transpose());
+    iwgSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf.transpose().mmul(prevLayerActivationSlice).transpose());
+    iwgSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevLayerActivationSlice).transpose());
+    iwgSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag.transpose().mmul(prevLayerActivationSlice).transpose());
     if (t > 0) {
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai.transpose().mmul(prevHiddenUnitActivation).transpose());
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)},deltaf.transpose().mmul(prevHiddenUnitActivation).transpose());
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)},deltao.transpose().mmul(prevHiddenUnitActivation).transpose());
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize)},deltag.transpose().mmul(prevHiddenUnitActivation).transpose());
-      INDArray dLdwFF=deltaf.mul(prevMemCellActivations).sum(0).transpose();
+      INDArray dLdwFF=deltaf.mul(prevMemCellState).sum(0).transpose();
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize)},dLdwFF);
-      INDArray dLdwGG=deltag.mul(prevMemCellActivations).sum(0).transpose();
+      INDArray dLdwGG=deltag.mul(prevMemCellState).sum(0).transpose();
       recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize + 2)},dLdwGG);
     }
-    INDArray dLdwOO=deltao.mul(currMemCellActivations).sum(0).transpose();
+    INDArray dLdwOO=deltao.mul(currMemCellState).sum(0).transpose();
     recurrentWeightGradients.tensorAlongDimension(t,1,0).put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.point(4 * hiddenLayerSize + 1)},dLdwOO);
     INDArray bGradSlice=(is2dInput ? biasGradients : biasGradients.tensorAlongDimension(t,1,0));
     bGradSlice.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)},deltai);
