@@ -3,7 +3,7 @@
   INDArray input=getContainedData();
   INDArray col=getContainedCol();
   INDArray epsilon=Nd4j.ones(1,2,4,4);
-  INDArray expectedOutput=Nd4j.create(new double[]{-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.,-12.,-12.,-12.,-12.,-56.,-56.,-56.,-56.},new int[]{1,2,4,4});
+  INDArray expectedOutput=Nd4j.create(new double[]{0.02036651,0.02036651,0.02036651,0.02036651,0.00039383,0.00039383,0.00039383,0.00039383,0.02036651,0.02036651,0.02036651,0.02036651,0.00039383,0.00039383,0.00039383,0.00039383,0.02036651,0.02036651,0.02036651,0.02036651,0.00039383,0.00039383,0.00039383,0.00039383,0.02036651,0.02036651,0.02036651,0.02036651,0.00039383,0.00039383,0.00039383,0.00039383},new int[]{1,2,4,4});
   layer.setInput(input);
   org.deeplearning4j.nn.layers.convolution.ConvolutionLayer layer2=(org.deeplearning4j.nn.layers.convolution.ConvolutionLayer)layer;
   layer2.setCol(col);

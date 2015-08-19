@@ -1,0 +1,7 @@
+{
+  INDArray input=getMnistData();
+  Layer layer=getMNISTConfig();
+  layer.activate(input);
+  assertEquals(input,layer.input());
+  assertArrayEquals(input.shape(),layer.input().shape());
+}
