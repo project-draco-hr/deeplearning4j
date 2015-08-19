@@ -1,7 +1,7 @@
 {
   if (conf.getKernelSize().length < 2)   throw new IllegalArgumentException("Filter size must be == 2");
-  params.put(CONVOLUTION_BIAS,createBias(conf));
-  params.put(CONVOLUTION_WEIGHTS,createWeightMatrix(conf));
-  conf.addVariable(CONVOLUTION_WEIGHTS);
-  conf.addVariable(CONVOLUTION_BIAS);
+  params.put(BIAS_KEY,createBias(conf));
+  params.put(WEIGHT_KEY,createWeightMatrix(conf));
+  conf.addVariable(WEIGHT_KEY);
+  conf.addVariable(BIAS_KEY);
 }

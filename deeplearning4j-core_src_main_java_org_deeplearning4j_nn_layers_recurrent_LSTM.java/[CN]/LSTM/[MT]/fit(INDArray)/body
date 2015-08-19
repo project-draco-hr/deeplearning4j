@@ -1,6 +1,6 @@
 {
   xi=data.slice(0);
-  NDArrayIndex[] everythingElse={NDArrayIndex.interval(1,data.rows()),NDArrayIndex.interval(0,data.columns())};
+  INDArrayIndex[] everythingElse={NDArrayIndex.interval(1,data.rows()),NDArrayIndex.interval(0,data.columns())};
   xs=data.get(everythingElse);
   Solver solver=new Solver.Builder().configure(conf).model(this).listeners(getListeners()).build();
   solver.optimize();

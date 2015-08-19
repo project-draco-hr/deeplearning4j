@@ -1,6 +1,6 @@
 {
-  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
-  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
+  INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   INDArray dY=Nd4j.vstack(Nd4j.zeros(y.columns()),y);
   INDArray dWd=hOut.transpose().mmul(dY);
   INDArray dBd=Nd4j.sum(dWd,0);
@@ -19,22 +19,22 @@
   for (int t=n - 1; t > 0; t--) {
     if (conf.getActivationFunction().equals("tanh")) {
       INDArray tanhCt=tanh(c.slice(t));
-      dIFogF.slice(t).put(new NDArrayIndex[]{interval(2 * d,3 * d)},tanhCt.mul(dHout.slice(t)));
+      dIFogF.slice(t).put(new INDArrayIndex[]{interval(2 * d,3 * d)},tanhCt.mul(dHout.slice(t)));
       dC.slice(t).addi(pow(tanhCt,2).rsubi(1).muli(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(dHout.slice(t))));
     }
  else {
-      dIFogF.slice(t).put(new NDArrayIndex[]{interval(2 * d,3 * d)},c.slice(t).mul(dHout.slice(t)));
+      dIFogF.slice(t).put(new INDArrayIndex[]{interval(2 * d,3 * d)},c.slice(t).mul(dHout.slice(t)));
       dC.slice(t).addi(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(dHout.slice(t)));
     }
     if (t > 0) {
-      dIFogF.slice(t).put(new NDArrayIndex[]{interval(d,2 * d)},c.slice(t - 1).mul(dC.slice(t)));
+      dIFogF.slice(t).put(new INDArrayIndex[]{interval(d,2 * d)},c.slice(t - 1).mul(dC.slice(t)));
       dC.slice(t - 1).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(dC.slice(t)));
     }
-    dIFogF.slice(t).put(new NDArrayIndex[]{interval(0,d)},iFogF.slice(t).get(interval(3 * d,iFogF.columns())).mul(dC.slice(t)));
-    dIFogF.slice(t).put(new NDArrayIndex[]{interval(3 * d,dIFogF.columns())},iFogF.slice(t).get(interval(0,d)).mul(dC.slice(t)));
-    dIFog.slice(t).put(new NDArrayIndex[]{interval(3 * d,dIFog.columns())},pow(iFogF.slice(t).get(interval(3 * d,iFogF.columns())),2).rsubi(1).mul(dIFogF.slice(t).get(interval(3 * d,dIFogF.columns()))));
+    dIFogF.slice(t).put(new INDArrayIndex[]{interval(0,d)},iFogF.slice(t).get(interval(3 * d,iFogF.columns())).mul(dC.slice(t)));
+    dIFogF.slice(t).put(new INDArrayIndex[]{interval(3 * d,dIFogF.columns())},iFogF.slice(t).get(interval(0,d)).mul(dC.slice(t)));
+    dIFog.slice(t).put(new INDArrayIndex[]{interval(3 * d,dIFog.columns())},pow(iFogF.slice(t).get(interval(3 * d,iFogF.columns())),2).rsubi(1).mul(dIFogF.slice(t).get(interval(3 * d,dIFogF.columns()))));
     y=iFogF.slice(t).get(interval(0,3 * d));
-    dIFogF.slice(t).put(new NDArrayIndex[]{interval(0,3 * d)},y.mul(y.rsub(1)).mul(dIFogF.slice(t).get(interval(0,3 * d))));
+    dIFogF.slice(t).put(new INDArrayIndex[]{interval(0,3 * d)},y.mul(y.rsub(1)).mul(dIFogF.slice(t).get(interval(0,3 * d))));
     dRecurrentWeights.addi(hIn.slice(t).transpose().mmul(dIFog.slice(t)));
     dHin.slice(t).assign(dIFog.slice(t).mmul(recurrentWeights.transpose()));
     INDArray get=dHin.slice(t).get(interval(1,1 + d));
@@ -44,8 +44,8 @@
   }
   clear();
   Gradient gradient=new DefaultGradient();
-  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_BIAS,dBd);
-  gradient.gradientForVariable().put(LSTMParamInitializer.DECODER_WEIGHTS,dWd);
-  gradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHTS,dRecurrentWeights);
+  gradient.gradientForVariable().put(LSTMParamInitializer.BIAS_KEY,dBd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.INPUT_WEIGHT_KEY,dWd);
+  gradient.gradientForVariable().put(LSTMParamInitializer.RECURRENT_WEIGHT_KEY,dRecurrentWeights);
   return gradient;
 }

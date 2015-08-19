@@ -1,0 +1,5 @@
+{
+  INDArray input=getData();
+  Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
+  layer.activate(input);
+}

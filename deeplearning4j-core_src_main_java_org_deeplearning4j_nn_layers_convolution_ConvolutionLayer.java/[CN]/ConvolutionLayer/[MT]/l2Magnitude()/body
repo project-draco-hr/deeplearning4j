@@ -1,3 +1,0 @@
-{
-  return Transforms.pow(getParam(ConvolutionParamInitializer.CONVOLUTION_WEIGHTS),2).sum(Integer.MAX_VALUE).getDouble(0);
-}

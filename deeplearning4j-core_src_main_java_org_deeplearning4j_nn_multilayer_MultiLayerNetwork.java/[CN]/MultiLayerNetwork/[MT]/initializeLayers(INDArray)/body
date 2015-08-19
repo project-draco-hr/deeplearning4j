@@ -1,5 +1,5 @@
 {
   if (input == null)   throw new IllegalArgumentException("Unable to initialize neuralNets with empty input");
-  this.input=input;
+  setInput(input);
   if (!initCalled)   init();
 }

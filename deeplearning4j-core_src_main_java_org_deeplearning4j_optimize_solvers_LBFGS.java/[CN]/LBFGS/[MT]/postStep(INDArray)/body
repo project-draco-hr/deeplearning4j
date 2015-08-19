@@ -1,24 +1,24 @@
 {
-  INDArray oldParameters=(INDArray)searchState.get("oldparams");
-  INDArray params=model.params();
-  INDArray oldGradient=(INDArray)searchState.get(GRADIENT_KEY);
+  INDArray previousParameters=(INDArray)searchState.get("oldparams");
+  INDArray parameters=model.params();
+  INDArray previousGradient=(INDArray)searchState.get(GRADIENT_KEY);
   LinkedList<Double> rho=(LinkedList<Double>)searchState.get("rho");
   LinkedList<INDArray> s=(LinkedList<INDArray>)searchState.get("s");
   LinkedList<INDArray> y=(LinkedList<INDArray>)searchState.get("y");
-  double sy=Nd4j.getBlasWrapper().dot(oldParameters,oldGradient) + Nd4j.EPS_THRESHOLD;
-  double yy=Nd4j.getBlasWrapper().dot(oldGradient,oldGradient) + Nd4j.EPS_THRESHOLD;
+  double sy=Nd4j.getBlasWrapper().dot(previousParameters,previousGradient) + Nd4j.EPS_THRESHOLD;
+  double yy=Nd4j.getBlasWrapper().dot(previousGradient,previousGradient) + Nd4j.EPS_THRESHOLD;
   INDArray sCurrent;
   INDArray yCurrent;
   if (s.size() >= m) {
     sCurrent=s.removeLast();
     yCurrent=y.removeLast();
     rho.removeLast();
-    sCurrent.assign(params).subi(oldParameters);
-    yCurrent.assign(gradient).subi(oldGradient);
+    sCurrent.assign(parameters).subi(previousParameters);
+    yCurrent.assign(gradient).subi(previousGradient);
   }
  else {
-    sCurrent=params.sub(oldParameters);
-    yCurrent=gradient.sub(oldGradient);
+    sCurrent=parameters.sub(previousParameters);
+    yCurrent=gradient.sub(previousGradient);
   }
   rho.addFirst(1.0 / sy);
   s.addFirst(sCurrent);
@@ -51,6 +51,6 @@
     double beta=rhoi * Nd4j.getBlasWrapper().dot(yi,searchDir);
     Nd4j.getBlasWrapper().level1().axpy(gradient.length(),alpha[i] - beta,si,searchDir);
   }
-  oldParameters.assign(params);
-  oldGradient.assign(gradient);
+  previousParameters.assign(parameters);
+  previousGradient.assign(gradient);
 }

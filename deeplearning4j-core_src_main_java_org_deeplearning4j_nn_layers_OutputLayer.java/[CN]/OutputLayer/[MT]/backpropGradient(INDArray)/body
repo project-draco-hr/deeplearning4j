@@ -1,0 +1,6 @@
+{
+  Triple<Gradient,INDArray,INDArray> triple=getGradientsAndDelta(preOutput(input));
+  INDArray delta=triple.getSecond();
+  INDArray epsilonNext=params.get(DefaultParamInitializer.WEIGHT_KEY).mmul(delta.transpose()).transpose();
+  return new Pair<>(triple.getFirst(),epsilonNext);
+}

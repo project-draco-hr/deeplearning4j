@@ -5,6 +5,6 @@
     score=create.currentResult().doubleValue();
   }
  else {
-    score=LossCalculation.builder().l1(conf.getL1()).l2(conf.getL2()).l1Magnitude(l1Magnitude()).l2Magnitude(l2Magnitude()).labels(input).z(z).lossFunction(conf.getLossFunction()).useRegularization(conf.isUseRegularization()).build().score();
+    score=LossCalculation.builder().l1(calcL1()).l2(calcL2()).labels(input).z(z).lossFunction(conf.getLossFunction()).miniBatch(conf.isMiniBatch()).miniBatchSize(getInputMiniBatchSize()).useRegularization(conf.isUseRegularization()).build().score();
   }
 }

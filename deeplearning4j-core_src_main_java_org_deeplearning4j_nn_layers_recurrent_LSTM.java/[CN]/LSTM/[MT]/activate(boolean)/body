@@ -1,8 +1,8 @@
 {
   this.x=input;
-  INDArray decoderWeights=getParam(LSTMParamInitializer.DECODER_WEIGHTS);
-  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHTS);
-  INDArray decoderBias=getParam(LSTMParamInitializer.DECODER_BIAS);
+  INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  INDArray decoderBias=getParam(LSTMParamInitializer.BIAS_KEY);
   if (conf.getDropOut() > 0) {
     double scale=1 / (1 - conf.getDropOut());
     u=Nd4j.rand(x.shape()).lti(1 - conf.getDropOut()).muli(scale);
@@ -19,11 +19,11 @@
   for (int t=0; t < n; t++) {
     prev=t == 0 ? Nd4j.zeros(d) : hOut.getRow(t - 1);
     hIn.put(t,0,1.0);
-    hIn.slice(t).put(new NDArrayIndex[]{interval(1,1 + d)},x.slice(t));
-    hIn.slice(t).put(new NDArrayIndex[]{interval(1 + d,hIn.columns())},prev);
+    hIn.slice(t).put(new INDArrayIndex[]{interval(1,1 + d)},x.slice(t));
+    hIn.slice(t).put(new INDArrayIndex[]{interval(1 + d,hIn.columns())},prev);
     iFog.putRow(t,hIn.slice(t).mmul(recurrentWeights));
-    iFogF.slice(t).put(new NDArrayIndex[]{interval(0,3 * d)},sigmoid(iFog.slice(t).get(interval(0,3 * d))));
-    iFogF.slice(t).put(new NDArrayIndex[]{interval(3 * d,iFogF.columns() - 1)},tanh(iFog.slice(t).get(interval(3 * d,iFog.columns() - 1))));
+    iFogF.slice(t).put(new INDArrayIndex[]{interval(0,3 * d)},sigmoid(iFog.slice(t).get(interval(0,3 * d))));
+    iFogF.slice(t).put(new INDArrayIndex[]{interval(3 * d,iFogF.columns() - 1)},tanh(iFog.slice(t).get(interval(3 * d,iFog.columns() - 1))));
     INDArray cPut=iFogF.slice(t).get(interval(0,d)).mul(iFogF.slice(t).get(interval(3 * d,iFogF.columns())));
     c.putRow(t,cPut);
     if (t > 0)     c.slice(t).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(c.getRow(t - 1)));

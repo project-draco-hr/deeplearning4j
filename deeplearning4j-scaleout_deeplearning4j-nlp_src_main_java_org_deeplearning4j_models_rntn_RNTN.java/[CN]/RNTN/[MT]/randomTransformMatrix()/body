@@ -1,9 +1,9 @@
 {
   INDArray binary=Nd4j.create(numHidden,numHidden * 2 + 1);
   INDArray block=randomTransformBlock();
-  NDArrayIndex[] indices=new NDArrayIndex[]{interval(0,block.rows()),interval(0,block.columns())};
+  INDArrayIndex[] indices=new INDArrayIndex[]{interval(0,block.rows()),interval(0,block.columns())};
   binary.put(indices,block);
-  NDArrayIndex[] indices2=new NDArrayIndex[]{interval(0,block.rows()),interval(numHidden,numHidden + block.columns())};
+  INDArrayIndex[] indices2=new INDArrayIndex[]{interval(0,block.rows()),interval(numHidden,numHidden + block.columns())};
   binary.put(indices2,randomTransformBlock());
   Nd4j.getBlasWrapper().level1().scal(binary.length(),scalingForInit,binary);
   return binary;

@@ -1,0 +1,4 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345L).iterations(1).maxNumLineSearchIterations(maxIterations).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(lossFunction).nIn(4).nOut(3).activation(activationFunction).weightInit(WeightInit.XAVIER).build()).build();
+  return LayerFactories.getFactory(conf.getLayer()).create(conf);
+}

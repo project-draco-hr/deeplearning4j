@@ -1,11 +1,11 @@
 {
-  OutputLayer layer=getIrisLogisticLayerConfig("softmax",1,5,LossFunctions.LossFunction.RMSE_XENT);
+  OutputLayer layer=getIrisLogisticLayerConfig("softmax",5,LossFunctions.LossFunction.RMSE_XENT);
   layer.setInput(irisData.getFeatureMatrix());
   layer.setLabels(irisData.getLabels());
   layer.computeGradientAndScore();
   score1=layer.score();
   BackTrackLineSearch lineSearch=new BackTrackLineSearch(layer,layer.getOptimizer());
-  double step=lineSearch.optimize(layer.params(),layer.gradient().gradient(),layer.gradient().gradient());
+  lineSearch.optimize(layer.params(),layer.gradient().gradient(),layer.gradient().gradient());
   score2=layer.score();
   assertTrue(score1 > score2);
 }

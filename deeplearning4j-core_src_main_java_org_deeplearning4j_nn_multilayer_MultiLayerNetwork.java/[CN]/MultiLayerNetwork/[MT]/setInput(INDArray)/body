@@ -1,4 +1,5 @@
 {
   this.input=input;
   if (this.layers == null)   this.initializeLayers(getInput());
+  if (input != null)   setInputMiniBatchSize(input.size(0));
 }

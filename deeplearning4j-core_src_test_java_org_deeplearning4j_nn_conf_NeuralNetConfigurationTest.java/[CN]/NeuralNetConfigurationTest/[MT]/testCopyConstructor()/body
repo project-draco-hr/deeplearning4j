@@ -1,5 +1,5 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().dist(new NormalDistribution(1,1)).layer(new RBM()).useAdaGrad(false).build();
+  NeuralNetConfiguration conf=getRBMConfig(1,1,WeightInit.UNIFORM);
   NeuralNetConfiguration conf2=new NeuralNetConfiguration(conf);
   assertEquals(conf,conf2);
 }

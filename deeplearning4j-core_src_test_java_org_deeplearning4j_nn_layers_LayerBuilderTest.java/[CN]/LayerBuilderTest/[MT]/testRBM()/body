@@ -1,0 +1,7 @@
+{
+  RBM rbm=new RBM.Builder(hidden,visible,k).build();
+  checkSerialization(rbm);
+  assertEquals(hidden,rbm.getHiddenUnit());
+  assertEquals(visible,rbm.getVisibleUnit());
+  assertEquals(k,rbm.getK());
+}

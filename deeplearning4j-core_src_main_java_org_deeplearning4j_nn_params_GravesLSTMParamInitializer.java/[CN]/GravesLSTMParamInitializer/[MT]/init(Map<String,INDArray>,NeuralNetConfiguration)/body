@@ -2,15 +2,15 @@
   Distribution dist=Distributions.createDistribution(conf.getDist());
   int nL=conf.getNOut();
   int nLast=conf.getNIn();
-  conf.addVariable(RECURRENT_WEIGHTS);
-  conf.addVariable(INPUT_WEIGHTS);
-  conf.addVariable(BIAS);
-  params.put(RECURRENT_WEIGHTS,WeightInitUtil.initWeights(nL,4 * nL + 3,conf.getWeightInit(),dist));
-  params.put(INPUT_WEIGHTS,WeightInitUtil.initWeights(nLast,4 * nL,conf.getWeightInit(),dist));
+  conf.addVariable(RECURRENT_WEIGHT_KEY);
+  conf.addVariable(INPUT_WEIGHT_KEY);
+  conf.addVariable(BIAS_KEY);
+  params.put(RECURRENT_WEIGHT_KEY,WeightInitUtil.initWeights(nL,4 * nL + 3,conf.getWeightInit(),dist));
+  params.put(INPUT_WEIGHT_KEY,WeightInitUtil.initWeights(nLast,4 * nL,conf.getWeightInit(),dist));
   INDArray biases=Nd4j.zeros(1,4 * nL);
-  biases.put(new NDArrayIndex[]{NDArrayIndex.interval(nL,2 * nL),new NDArrayIndex(0)},Nd4j.ones(1,nL).muli(5));
-  params.put(BIAS,biases);
-  params.get(RECURRENT_WEIGHTS).data().persist();
-  params.get(INPUT_WEIGHTS).data().persist();
-  params.get(BIAS).data().persist();
+  biases.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(5));
+  params.put(BIAS_KEY,biases);
+  params.get(RECURRENT_WEIGHT_KEY).data().persist();
+  params.get(INPUT_WEIGHT_KEY).data().persist();
+  params.get(BIAS_KEY).data().persist();
 }
