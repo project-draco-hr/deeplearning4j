@@ -1,5 +1,9 @@
 {
-  DataSetIterator data=new MnistDataSetIterator(5,5);
+  int inputWidth=28;
+  int inputHeight=28;
+  int nChannelsIn=1;
+  int nExamples=5;
+  DataSetIterator data=new MnistDataSetIterator(nExamples,nExamples);
   DataSet mnist=data.next();
   nExamples=mnist.numExamples();
   return mnist.getFeatureMatrix().reshape(nExamples,nChannelsIn,inputHeight,inputWidth);
