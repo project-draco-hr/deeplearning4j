@@ -1,6 +1,6 @@
 {
   if (pair1 == null) {
-    return new Pair<>(0,Nd4j.zeros(vectorLength));
+    return new Pair<>(0,Nd4j.zeros(vocabSize,vectorLength));
   }
   addInPlace(pair1,pair2);
   return pair1;

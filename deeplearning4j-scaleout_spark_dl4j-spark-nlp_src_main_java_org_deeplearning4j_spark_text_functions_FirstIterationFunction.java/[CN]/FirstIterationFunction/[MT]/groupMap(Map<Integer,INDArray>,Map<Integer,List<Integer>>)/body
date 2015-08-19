@@ -1,5 +1,5 @@
 {
-  Map<Integer,List<INDArray>> pointSyn0VecMap=new HashMap<>();
+  Map<Integer,INDArray> pointSyn0VecMap=new HashMap<>();
   for (  Entry<Integer,List<Integer>> pointIndexList : pointIndexListMap.entrySet()) {
     int point=pointIndexList.getKey();
     List<Integer> indexList=pointIndexList.getValue();
@@ -7,12 +7,10 @@
       int index=indexList.get(i);
       INDArray syn0Vec=indexSyn0VecMap.get(index);
       if (!pointSyn0VecMap.containsKey(point)) {
-        ArrayList<INDArray> indArrays=new ArrayList<>();
-        pointSyn0VecMap.put(point,indArrays);
-        indArrays.add(syn0Vec);
+        pointSyn0VecMap.put(point,syn0Vec);
       }
  else {
-        pointSyn0VecMap.get(point).add(syn0Vec);
+        pointSyn0VecMap.get(point).addi(syn0Vec);
       }
     }
   }

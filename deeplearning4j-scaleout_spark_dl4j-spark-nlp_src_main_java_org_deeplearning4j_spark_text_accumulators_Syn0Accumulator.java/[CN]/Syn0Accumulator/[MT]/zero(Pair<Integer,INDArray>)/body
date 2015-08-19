@@ -1,3 +1,3 @@
 {
-  return new Pair<>(0,Nd4j.zeros(vectorLength));
+  return new Pair<>(0,Nd4j.zeros(vocabSize,vectorLength));
 }
