@@ -1,3 +1,0 @@
-{
-  return Nd4j.rand(new int[]{1,vectorLength},rng).subi(0.5).divi(vectorLength);
-}

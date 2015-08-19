@@ -1,7 +1,8 @@
 {
   JavaSparkContext sc=new JavaSparkContext(conf);
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
-  TextPipeline pipeline=new TextPipeline(corpusRDD,word2vec.getTokenizerVarMap());
+  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
+  TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   JavaRDD<List<String>> tokenizedRDD=pipeline.tokenize();
   pipeline.updateAndReturnAccumulatorVal(tokenizedRDD);
   Counter<String> wordFreqCounter=pipeline.getWordFreqAcc().value();

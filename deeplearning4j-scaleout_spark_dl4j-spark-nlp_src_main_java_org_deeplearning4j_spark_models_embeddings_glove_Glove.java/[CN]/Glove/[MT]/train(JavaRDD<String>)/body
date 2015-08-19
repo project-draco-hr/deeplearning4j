@@ -23,7 +23,8 @@
     }
   }
 ;
-  TextPipeline pipeline=new TextPipeline(rdd,tokenizerVarMap);
+  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
+  TextPipeline pipeline=new TextPipeline(rdd,broadcastTokenizerVarMap);
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
   Long totalWordCount=pipeline.getTotalWordCount();

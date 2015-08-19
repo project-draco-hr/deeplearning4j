@@ -1,5 +1,5 @@
 {
   conf=new SparkConf().setMaster("local[4]").setAppName("sparktest");
-  word2vec=new Word2Vec().setNumWords(1).setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(true).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(100).setWindow(5).setAlpha(0.025).setMinAlpha(0.01).setIterations(1);
+  word2vec=new Word2Vec().setNumWords(1).setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(true).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(100).setWindow(5).setAlpha(0.025).setMinAlpha(0.0001).setIterations(1);
   sentenceList=Arrays.asList("This is a strange strange world.","Flowers are red.");
 }

@@ -1,0 +1,38 @@
+{
+  final int currentWordIndex=currentWord.getIndex();
+  if (w2 == null || w2.getIndex() < 0 || currentWordIndex == w2.getIndex())   return;
+  INDArray neu1e=Nd4j.create(vectorLength);
+  INDArray randomSyn0Vec=getRandomSyn0Vec(vectorLength);
+  for (int i=0; i < currentWord.getCodeLength(); i++) {
+    int code=currentWord.getCodes().get(i);
+    int point=currentWord.getPoints().get(i);
+    if (pointIndexListMap.containsKey(point)) {
+      pointIndexListMap.get(point).add(currentWordIndex);
+    }
+ else {
+      pointIndexListMap.put(point,new ArrayList<Integer>(){
+{
+          add(currentWordIndex);
+        }
+      }
+);
+    }
+    INDArray syn1VecCurrentIndex;
+    if (pointSyn1VecMap.containsKey(point)) {
+      syn1VecCurrentIndex=pointSyn1VecMap.get(point);
+    }
+ else {
+      syn1VecCurrentIndex=Nd4j.zeros(1,vectorLength);
+      pointSyn1VecMap.put(point,syn1VecCurrentIndex);
+    }
+    double dot=Nd4j.getBlasWrapper().level1().dot(vectorLength,1.0,randomSyn0Vec,syn1VecCurrentIndex);
+    if (dot < -maxExp || dot >= maxExp)     continue;
+    int idx=(int)((dot + maxExp) * ((double)expTable.length / maxExp / 2.0));
+    double f=expTable[idx];
+    double g=(1 - code - f) * (useAdaGrad ? currentWord.getGradient(i,currentSentenceAlpha) : currentSentenceAlpha);
+    Nd4j.getBlasWrapper().level1().axpy(vectorLength,g,syn1VecCurrentIndex,neu1e);
+    Nd4j.getBlasWrapper().level1().axpy(vectorLength,g,randomSyn0Vec,syn1VecCurrentIndex);
+  }
+  Nd4j.getBlasWrapper().level1().axpy(vectorLength,1.0f,neu1e,randomSyn0Vec);
+  indexSyn0VecMap.put(currentWordIndex,randomSyn0Vec);
+}
