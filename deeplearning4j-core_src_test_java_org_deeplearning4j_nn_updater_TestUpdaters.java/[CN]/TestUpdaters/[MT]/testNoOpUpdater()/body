@@ -3,7 +3,7 @@
   int nIn=3;
   int nOut=5;
   double lr=0.1;
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().updater(org.deeplearning4j.nn.conf.Updater.NONE).learningRate(lr).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).build();
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
   Updater updater=UpdaterCreator.getUpdater(layer);
   INDArray weightGradient=Nd4j.zeros(nIn,nOut);

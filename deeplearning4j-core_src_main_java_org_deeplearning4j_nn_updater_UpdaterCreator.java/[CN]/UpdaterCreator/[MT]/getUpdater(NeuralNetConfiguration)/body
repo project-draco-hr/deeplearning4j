@@ -1,5 +1,5 @@
 {
-  Updater updater=conf.getUpdater();
+  Updater updater=conf.getLayer().getUpdater();
 switch (updater) {
 case ADADELTA:
     return new AdaDeltaUpdater();
