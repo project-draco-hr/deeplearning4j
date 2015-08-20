@@ -1,5 +1,5 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getLayer().getDist());
   INDArray ret=WeightInitUtil.initWeights(conf.getNIn(),conf.getNOut(),conf.getLayer().getWeightInit(),dist);
   ret.data().persist();
   return ret;

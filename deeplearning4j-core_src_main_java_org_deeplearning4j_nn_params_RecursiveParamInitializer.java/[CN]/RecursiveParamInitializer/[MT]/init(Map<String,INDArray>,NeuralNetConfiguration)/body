@@ -1,5 +1,5 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getLayer().getDist());
   int vis=conf.getNIn();
   int out=vis * 2;
   params.put(ENCODER_WEIGHT_KEY,WeightInitUtil.initWeights(new int[]{out,vis},conf.getLayer().getWeightInit(),dist));

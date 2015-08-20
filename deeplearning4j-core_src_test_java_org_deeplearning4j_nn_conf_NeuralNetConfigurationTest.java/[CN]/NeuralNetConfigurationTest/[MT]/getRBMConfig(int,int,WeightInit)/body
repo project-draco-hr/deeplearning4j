@@ -1,5 +1,5 @@
 {
-  RBM layer=new RBM.Builder().nIn(nIn).nOut(nOut).weightInit(weightInit).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).activation("tanh").build();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(3).regularization(false).dist(new NormalDistribution(1,1)).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).layer(layer).build();
+  RBM layer=new RBM.Builder().nIn(nIn).nOut(nOut).weightInit(weightInit).dist(new NormalDistribution(1,1)).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).activation("tanh").build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(3).regularization(false).lossFunction(LossFunctions.LossFunction.RMSE_XENT).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).layer(layer).build();
   return conf;
 }

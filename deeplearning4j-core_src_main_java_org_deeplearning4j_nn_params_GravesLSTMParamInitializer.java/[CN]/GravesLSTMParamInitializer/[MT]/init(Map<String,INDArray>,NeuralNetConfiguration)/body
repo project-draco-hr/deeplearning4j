@@ -1,5 +1,5 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getLayer().getDist());
   int nL=conf.getNOut();
   int nLast=conf.getNIn();
   conf.addVariable(RECURRENT_WEIGHT_KEY);

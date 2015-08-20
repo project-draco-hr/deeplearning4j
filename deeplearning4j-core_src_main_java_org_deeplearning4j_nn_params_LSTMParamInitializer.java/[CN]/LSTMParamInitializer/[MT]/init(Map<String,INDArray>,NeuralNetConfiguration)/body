@@ -1,5 +1,5 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
+  Distribution dist=Distributions.createDistribution(conf.getLayer().getDist());
   int inputSize=conf.getNIn();
   int hiddenSize=conf.getNIn();
   int outputSize=conf.getNOut();
