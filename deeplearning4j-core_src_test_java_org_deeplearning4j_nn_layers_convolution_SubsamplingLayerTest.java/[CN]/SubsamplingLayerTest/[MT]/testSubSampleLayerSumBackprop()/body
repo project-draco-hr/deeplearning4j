@@ -1,4 +1,6 @@
 {
   Layer layer=getSubsamplingLayer(SubsamplingLayer.PoolingType.SUM);
+  INDArray input=getData();
+  layer.setInput(input);
   layer.backpropGradient(epsilon);
 }

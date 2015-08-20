@@ -1,0 +1,13 @@
+{
+  Map<String,Object> word2vecVarMap=word2vecVarMapBroadcast.getValue();
+  this.expTable=expTableBroadcast.getValue();
+  this.vectorLength=(int)word2vecVarMap.get("vectorLength");
+  this.useAdaGrad=(boolean)word2vecVarMap.get("useAdaGrad");
+  this.negative=(int)word2vecVarMap.get("negative");
+  this.window=(int)word2vecVarMap.get("window");
+  this.alpha=(double)word2vecVarMap.get("alpha");
+  this.minAlpha=(double)word2vecVarMap.get("minAlpha");
+  this.totalWordCount=(long)word2vecVarMap.get("totalWordCount");
+  this.seed=(long)word2vecVarMap.get("seed");
+  this.maxExp=(int)word2vecVarMap.get("maxExp");
+}

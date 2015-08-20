@@ -1,0 +1,21 @@
+{
+  List<String> stops=stopWords.getValue();
+  Counter<String> counter=new Counter<>();
+  for (  String w : lstOfWords) {
+    if (w.isEmpty())     continue;
+    if (!stops.isEmpty()) {
+      if (stops.contains(w)) {
+        counter.incrementCount("STOP",1.0);
+      }
+ else {
+        counter.incrementCount(w,1.0);
+      }
+    }
+ else {
+      counter.incrementCount(w,1.0);
+    }
+  }
+  wordFreqAcc.add(counter);
+  AtomicLong lstOfWordsSize=new AtomicLong(lstOfWords.size());
+  return new Pair<>(lstOfWords,lstOfWordsSize);
+}

@@ -1,0 +1,22 @@
+{
+  Object ret;
+  if (clazz.equals(Integer.class)) {
+    ret=conf.getInt(variableName,(Integer)getDefault(variableName));
+  }
+ else   if (clazz.equals(Double.class)) {
+    ret=conf.getDouble(variableName,(Double)getDefault(variableName));
+  }
+ else   if (clazz.equals(Boolean.class)) {
+    ret=conf.getBoolean(variableName,(Boolean)getDefault(variableName));
+  }
+ else   if (clazz.equals(String.class)) {
+    ret=conf.get(variableName,(String)getDefault(variableName));
+  }
+ else   if (clazz.equals(Long.class)) {
+    ret=conf.getLong(variableName,(Long)getDefault(variableName));
+  }
+ else {
+    throw new Exception("Variable Type not supported. Only boolean, int, double and String supported.");
+  }
+  return (T)ret;
+}

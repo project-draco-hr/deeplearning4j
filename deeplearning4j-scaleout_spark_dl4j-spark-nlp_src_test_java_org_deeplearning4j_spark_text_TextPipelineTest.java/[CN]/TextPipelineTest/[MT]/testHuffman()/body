@@ -1,0 +1,17 @@
+{
+  JavaSparkContext sc=new JavaSparkContext(conf);
+  JavaRDD<String> corpusRDD=getCorpusRDD(sc);
+  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
+  TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
+  pipeline.buildVocabCache();
+  VocabCache vocabCache=pipeline.getVocabCache();
+  Huffman huffman=new Huffman(vocabCache.vocabWords());
+  huffman.build();
+  Collection<VocabWord> vocabWords=vocabCache.vocabWords();
+  System.out.println("Huffman Test:");
+  for (  VocabWord vocabWord : vocabWords) {
+    System.out.println(vocabWord.getCodes());
+    System.out.println(vocabWord.getPoints());
+  }
+  sc.stop();
+}

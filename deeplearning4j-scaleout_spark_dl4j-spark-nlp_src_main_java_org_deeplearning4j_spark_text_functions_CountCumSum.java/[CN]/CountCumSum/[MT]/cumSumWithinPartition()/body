@@ -1,0 +1,6 @@
+{
+  final Accumulator<Counter<Integer>> maxPerPartitionAcc=sc.accumulator(new Counter<Integer>(),new MaxPerPartitionAccumulator());
+  foldWithinPartitionRDD=sentenceCountRDD.mapPartitionsWithIndex(new FoldWithinPartitionFunction(maxPerPartitionAcc),true).cache();
+  actionForMapPartition(foldWithinPartitionRDD);
+  broadcastedMaxPerPartitionCounter=sc.broadcast(maxPerPartitionAcc.value());
+}

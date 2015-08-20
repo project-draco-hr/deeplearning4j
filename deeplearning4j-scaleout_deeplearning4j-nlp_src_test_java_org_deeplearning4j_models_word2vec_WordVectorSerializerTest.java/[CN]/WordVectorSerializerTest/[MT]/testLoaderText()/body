@@ -1,5 +1,6 @@
 {
   Word2Vec vec=WordVectorSerializer.loadGoogleModel(textFile,false);
-  assertEquals(5,vec.vocab().numWords());
-  assertTrue(vec.vocab().numWords() > 0);
+  assertEquals(vec.vocab().numWords(),30);
+  assertTrue(vec.vocab().hasToken("Morgan_Freeman"));
+  assertTrue(vec.vocab().hasToken("JA_Montalbano"));
 }

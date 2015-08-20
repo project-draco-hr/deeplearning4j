@@ -2,6 +2,6 @@
   for (  Integer i : changes.keySet()) {
     Set<INDArray> changes=this.changes.get(i);
     INDArray toChange=table.getSyn0().slice(i);
-    for (    INDArray syn1 : changes)     Nd4j.getBlasWrapper().axpy(1,syn1,toChange);
+    for (    INDArray syn1 : changes)     Nd4j.getBlasWrapper().level1().axpy(toChange.length(),1,syn1,toChange);
   }
 }

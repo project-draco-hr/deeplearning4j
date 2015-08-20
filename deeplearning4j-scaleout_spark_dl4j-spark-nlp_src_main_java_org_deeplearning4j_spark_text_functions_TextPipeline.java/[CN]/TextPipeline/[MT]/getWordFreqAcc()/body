@@ -1,0 +1,8 @@
+{
+  if (wordFreqAcc != null) {
+    return wordFreqAcc;
+  }
+ else {
+    throw new IllegalStateException("IllegalStateException: wordFreqAcc not set at TextPipline.");
+  }
+}

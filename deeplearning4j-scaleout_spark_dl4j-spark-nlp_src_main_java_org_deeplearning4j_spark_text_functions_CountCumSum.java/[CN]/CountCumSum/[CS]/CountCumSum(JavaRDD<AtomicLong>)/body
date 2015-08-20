@@ -1,0 +1,4 @@
+{
+  this.sentenceCountRDD=sentenceCountRDD;
+  this.sc=new JavaSparkContext(sentenceCountRDD.context());
+}

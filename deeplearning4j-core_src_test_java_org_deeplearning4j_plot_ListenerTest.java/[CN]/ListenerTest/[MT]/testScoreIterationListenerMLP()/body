@@ -1,5 +1,5 @@
 {
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig(new int[]{5},"sigmoid",5));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig("sigmoid",5));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
   network.setListeners(Collections.singletonList(listener));

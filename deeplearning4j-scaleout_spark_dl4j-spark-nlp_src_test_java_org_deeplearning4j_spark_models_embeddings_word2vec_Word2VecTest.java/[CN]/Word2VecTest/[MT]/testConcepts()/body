@@ -1,14 +1,11 @@
 {
-  JavaRDD<String> corpus=sc.textFile(new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath()).map(new Function<String,String>(){
-    @Override public String call(    String s) throws Exception {
-      return s.toLowerCase();
-    }
-  }
-).cache();
-  Word2Vec word2Vec=new Word2Vec();
-  sc.getConf().set(Word2VecPerformer.NEGATIVE,String.valueOf(0));
+  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  String dataPath=new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath();
+  JavaRDD<String> corpus=sc.textFile(dataPath);
+  Word2Vec word2Vec=new Word2Vec().setNumWords(1).setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(false).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(100).setWindow(5).setAlpha(0.025).setMinAlpha(0.0001).setIterations(1);
   Pair<VocabCache,WeightLookupTable> table=word2Vec.train(corpus);
+  WeightLookupTable second=table.getSecond();
   WordVectors vectors=WordVectorSerializer.fromPair(new Pair<>((InMemoryLookupTable)table.getSecond(),table.getFirst()));
-  Collection<String> words=vectors.wordsNearest("day",20);
-  assertTrue(words.contains("week"));
+  WordVectorSerializer.writeWordVectors((InMemoryLookupTable)table.getSecond(),(InMemoryLookupCache)table.getFirst(),"spark_wordvectors.txt");
 }

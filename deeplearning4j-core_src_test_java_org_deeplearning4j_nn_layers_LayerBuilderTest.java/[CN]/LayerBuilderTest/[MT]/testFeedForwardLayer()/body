@@ -1,0 +1,6 @@
+{
+  RecursiveAutoEncoder ff=new RecursiveAutoEncoder.Builder().nIn(numIn).nOut(numOut).build();
+  checkSerialization(ff);
+  assertEquals(numIn,ff.getNIn());
+  assertEquals(numOut,ff.getNOut());
+}

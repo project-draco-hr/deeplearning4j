@@ -1,15 +1,43 @@
 {
-  TextPipeline pipeline=new TextPipeline(rdd);
-  final Pair<VocabCache,Long> vocabAndNumWords=pipeline.process();
-  SparkConf conf=rdd.context().getConf();
-  JavaSparkContext sc=new JavaSparkContext(rdd.context());
+  final JavaSparkContext sc=new JavaSparkContext(rdd.context());
+  final SparkConf conf=sc.getConf();
+  final int vectorLength=assignVar(VECTOR_LENGTH,conf,Integer.class);
+  final boolean useAdaGrad=assignVar(ADAGRAD,conf,Boolean.class);
+  final double negative=assignVar(NEGATIVE,conf,Double.class);
+  final int numWords=assignVar(NUM_WORDS,conf,Integer.class);
+  final int window=assignVar(WINDOW,conf,Integer.class);
+  final double alpha=assignVar(ALPHA,conf,Double.class);
+  final double minAlpha=assignVar(MIN_ALPHA,conf,Double.class);
+  final int iterations=assignVar(ITERATIONS,conf,Integer.class);
+  final int nGrams=assignVar(N_GRAMS,conf,Integer.class);
+  final String tokenizer=assignVar(TOKENIZER,conf,String.class);
+  final String tokenPreprocessor=assignVar(TOKEN_PREPROCESSOR,conf,String.class);
+  final boolean removeStop=assignVar(REMOVE_STOPWORDS,conf,Boolean.class);
+  Map<String,Object> tokenizerVarMap=new HashMap<String,Object>(){
+{
+      put("numWords",numWords);
+      put("nGrams",nGrams);
+      put("tokenizer",tokenizer);
+      put("tokenPreprocessor",tokenPreprocessor);
+      put("removeStop",removeStop);
+    }
+  }
+;
+  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
+  TextPipeline pipeline=new TextPipeline(rdd,broadcastTokenizerVarMap);
+  pipeline.buildVocabCache();
+  pipeline.buildVocabWordListRDD();
+  Long totalWordCount=pipeline.getTotalWordCount();
+  VocabCache vocabCache=pipeline.getVocabCache();
+  JavaRDD<Pair<List<String>,AtomicLong>> sentenceWordsCountRDD=pipeline.getSentenceWordsCountRDD();
+  final Pair<VocabCache,Long> vocabAndNumWords=new Pair<>(vocabCache,totalWordCount);
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
   final GloveWeightLookupTable gloveWeightLookupTable=new GloveWeightLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(GlovePerformer.ALPHA,0.01)).maxCount(conf.getDouble(GlovePerformer.MAX_COUNT,100)).vectorLength(conf.getInt(GlovePerformer.VECTOR_LENGTH,300)).xMax(conf.getDouble(GlovePerformer.X_MAX,0.75)).build();
   gloveWeightLookupTable.resetWeights();
   gloveWeightLookupTable.getBiasAdaGrad().historicalGradient=Nd4j.ones(gloveWeightLookupTable.getSyn0().rows());
   gloveWeightLookupTable.getWeightAdaGrad().historicalGradient=Nd4j.ones(gloveWeightLookupTable.getSyn0().shape());
   log.info("Created lookup table of size " + Arrays.toString(gloveWeightLookupTable.getSyn0().shape()));
-  CounterMap<String,String> coOccurrenceCounts=rdd.map(new TokenizerFunction(tokenizerFactoryClazz)).map(new CoOccurrenceCalculator(symmetric,vocabCacheBroadcast,windowSize)).fold(new CounterMap<String,String>(),new CoOccurrenceCounts());
+  CounterMap<String,String> coOccurrenceCounts=sentenceWordsCountRDD.map(new CoOccurrenceCalculator(symmetric,vocabCacheBroadcast,windowSize)).fold(new CounterMap<String,String>(),new CoOccurrenceCounts());
   Iterator<Pair<String,String>> pair2=coOccurrenceCounts.getPairIterator();
   List<Triple<String,String,Double>> counts=new ArrayList<>();
   while (pair2.hasNext()) {

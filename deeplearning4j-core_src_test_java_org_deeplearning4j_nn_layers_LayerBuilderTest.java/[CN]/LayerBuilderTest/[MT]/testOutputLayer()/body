@@ -1,0 +1,5 @@
+{
+  OutputLayer out=new OutputLayer.Builder(loss).build();
+  checkSerialization(out);
+  assertEquals(loss,out.getLossFunction());
+}

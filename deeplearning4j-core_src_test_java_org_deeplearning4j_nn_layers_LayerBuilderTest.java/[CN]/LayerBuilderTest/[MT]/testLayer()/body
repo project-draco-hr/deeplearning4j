@@ -1,0 +1,9 @@
+{
+  RecursiveAutoEncoder layer=new RecursiveAutoEncoder.Builder().activation(act).weightInit(weight).dist(dist).dropOut(dropOut).updater(updater).build();
+  checkSerialization(layer);
+  assertEquals(act,layer.getActivationFunction());
+  assertEquals(weight,layer.getWeightInit());
+  assertEquals(dist,layer.getDist());
+  assertEquals(dropOut,layer.getDropOut(),DELTA);
+  assertEquals(updater,layer.getUpdater());
+}

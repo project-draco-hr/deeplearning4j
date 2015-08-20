@@ -17,13 +17,13 @@
   if (lookupTable() instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable();
     INDArray syn0=l.getSyn0();
+    syn0.diviRowVector(syn0.norm2(1));
     INDArray weights=Transforms.unitVec(mean);
-    INDArray distances=syn0.mmul(weights.transpose());
-    INDArray[] sorted=getTopN(distances.vectorAlongDimension(0,0),top + union.size());
-    INDArray sort=sorted[0];
+    INDArray similarity=weights.mmul(syn0.transpose());
+    List<Double> highToLowSimList=getTopN(similarity,top);
     List<String> ret=new ArrayList<>();
-    for (int i=0; i < sort.length(); i++) {
-      String word=vocab().wordAtIndex(sort.getInt(i));
+    for (int i=0; i < highToLowSimList.size(); i++) {
+      String word=vocab().wordAtIndex(highToLowSimList.get(i).intValue());
       if (word != null && !word.equals("UNK") && !word.equals("STOP") && !union.contains(word)) {
         ret.add(word);
         if (ret.size() >= top) {

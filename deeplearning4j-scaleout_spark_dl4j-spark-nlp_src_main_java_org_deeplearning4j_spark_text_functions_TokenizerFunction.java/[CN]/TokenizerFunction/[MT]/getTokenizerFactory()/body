@@ -1,0 +1,16 @@
+{
+  try {
+    Class<? extends TokenPreProcess> clazz=(Class<? extends TokenPreProcess>)Class.forName(tokenizerPreprocessorClazz);
+    TokenPreProcess tokenPreProcessInst=clazz.newInstance();
+    Class<? extends TokenizerFactory> clazz2=(Class<? extends TokenizerFactory>)Class.forName(tokenizerFactoryClazz);
+    tokenizerFactory=clazz2.newInstance();
+    tokenizerFactory.setTokenPreProcessor(tokenPreProcessInst);
+    if (nGrams > 1) {
+      tokenizerFactory=new NGramTokenizerFactory(tokenizerFactory,nGrams,nGrams);
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return tokenizerFactory;
+}

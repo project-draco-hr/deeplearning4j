@@ -1,6 +1,0 @@
-{
-  Layer layer=getCNNConfig(nChannelsIn,depth,kernelSize,stride,padding);
-  Pair<Gradient,INDArray> out=layer.backpropGradient(epsilon);
-  assertEquals(epsilon.shape().length,out.getSecond().shape().length);
-  assertEquals(nExamples,out.getSecond().size(1));
-}

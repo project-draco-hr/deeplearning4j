@@ -1,0 +1,8 @@
+{
+  ConvolutionLayer conv=new ConvolutionLayer.Builder(kernelSize,stride,padding).convolutionType(convType).build();
+  checkSerialization(conv);
+  assertEquals(convType,conv.getConvolutionType());
+  assertArrayEquals(kernelSize,conv.getKernelSize());
+  assertArrayEquals(stride,conv.getStride());
+  assertArrayEquals(padding,conv.getPadding());
+}

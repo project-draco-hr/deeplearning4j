@@ -1,0 +1,11 @@
+{
+  Map<String,Object> tokenizerVarMap=broadcasTokenizerVarMap.getValue();
+  this.corpusRDD=corpusRDD;
+  this.numWords=(int)tokenizerVarMap.get("numWords");
+  this.nGrams=(int)tokenizerVarMap.get("nGrams");
+  this.tokenizer=(String)tokenizerVarMap.get("tokenizer");
+  this.tokenizerPreprocessor=(String)tokenizerVarMap.get("tokenPreprocessor");
+  if ((boolean)tokenizerVarMap.get("removeStop")) {
+    stopWords=StopWords.getStopWords();
+  }
+}
