@@ -5,16 +5,13 @@
     if (i == 0) {
       while (iter.hasNext()) {
         DataSet next=iter.next();
-        setInput(next.getFeatureMatrix());
-        if (this.getInput() == null || this.getLayers() == null) {
-          setInput(input);
-          initializeLayers(input);
-        }
- else         setInput(input);
-        getLayers()[i].fit(this.input);
-        log.info("Training on layer " + (i + 1) + " with "+ input.slices()+ " examples");
+        if (getLayerWiseConfigurations().getInputPreProcess(i) != null)         layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(next.getFeatureMatrix());
+ else         layerInput=next.getFeatureMatrix();
+        setInput(layerInput);
+        if (this.getInput() == null || this.getLayers() == null)         initializeLayers(input());
+        getLayers()[i].fit(input());
+        log.info("Training on layer " + (i + 1) + " with "+ input().slices()+ " examples");
       }
-      iter.reset();
     }
  else {
       while (iter.hasNext()) {
@@ -24,7 +21,7 @@
         log.info("Training on layer " + (i + 1) + " with "+ layerInput.slices()+ " examples");
         getLayers()[i].fit(layerInput);
       }
-      iter.reset();
     }
+    iter.reset();
   }
 }

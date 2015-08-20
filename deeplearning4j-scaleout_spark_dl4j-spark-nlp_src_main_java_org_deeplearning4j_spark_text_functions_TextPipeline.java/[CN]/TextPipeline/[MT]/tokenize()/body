@@ -1,0 +1,6 @@
+{
+  if (corpusRDD == null) {
+    throw new IllegalStateException("corpusRDD not assigned. Define TextPipeline with corpusRDD assigned.");
+  }
+  return corpusRDD.map(new TokenizerFunction(tokenizer,tokenizerPreprocessor,nGrams));
+}

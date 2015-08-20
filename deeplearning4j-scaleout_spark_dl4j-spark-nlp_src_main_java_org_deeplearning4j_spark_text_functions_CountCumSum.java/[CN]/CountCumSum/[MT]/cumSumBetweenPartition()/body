@@ -1,0 +1,4 @@
+{
+  cumSumRDD=foldWithinPartitionRDD.mapPartitionsWithIndex(new FoldBetweenPartitionFunction(broadcastedMaxPerPartitionCounter),true).setName("cumSumRDD").cache();
+  foldWithinPartitionRDD.unpersist();
+}

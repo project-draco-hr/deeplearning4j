@@ -1,6 +1,6 @@
 {
   if (sc != null)   return sc;
-  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest").set(Word2VecPerformer.NUM_WORDS,String.valueOf(1));
+  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest").set(Word2VecVariables.NUM_WORDS,String.valueOf(1));
   sc=new JavaSparkContext(sparkConf);
   return sc;
 }

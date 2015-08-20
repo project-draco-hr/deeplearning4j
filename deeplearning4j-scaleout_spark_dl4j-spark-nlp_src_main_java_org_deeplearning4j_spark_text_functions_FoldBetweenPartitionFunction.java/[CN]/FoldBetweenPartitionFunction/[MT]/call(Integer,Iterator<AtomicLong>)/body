@@ -1,0 +1,14 @@
+{
+  int sumToAdd=0;
+  Counter<Integer> maxPerPartitionCounterInScope=broadcastedMaxPerPartitionCounter.value();
+  if (ind != 0) {
+    for (int i=0; i < ind; i++) {
+      sumToAdd+=maxPerPartitionCounterInScope.getCount(i);
+    }
+  }
+  List<Long> itemsAddedToList=new ArrayList<>();
+  while (partition.hasNext()) {
+    itemsAddedToList.add(partition.next().get() + sumToAdd);
+  }
+  return itemsAddedToList.iterator();
+}

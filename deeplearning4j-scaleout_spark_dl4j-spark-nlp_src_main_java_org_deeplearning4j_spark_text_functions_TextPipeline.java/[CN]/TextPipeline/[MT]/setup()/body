@@ -1,0 +1,5 @@
+{
+  this.sc=new JavaSparkContext(corpusRDD.context());
+  this.wordFreqAcc=sc.accumulator(new Counter<String>(),new WordFreqAccumulator());
+  this.stopWordBroadCast=sc.broadcast(stopWords);
+}

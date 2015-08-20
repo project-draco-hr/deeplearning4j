@@ -1,0 +1,17 @@
+{
+  VocabWord actualToken;
+  if (vocabCache.hasToken(stringToken)) {
+    actualToken=vocabCache.tokenFor(stringToken);
+    actualToken.increment(tokenCount.intValue());
+  }
+ else {
+    actualToken=new VocabWord(tokenCount,stringToken);
+  }
+  boolean vocabContainsWord=vocabCache.containsWord(stringToken);
+  if (!vocabContainsWord) {
+    vocabCache.addToken(actualToken);
+    int idx=vocabCache.numWords();
+    actualToken.setIndex(idx);
+    vocabCache.putVocabWord(stringToken);
+  }
+}

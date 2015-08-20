@@ -1,0 +1,8 @@
+{
+  if (sentenceCountRDD != null) {
+    return sentenceCountRDD;
+  }
+ else {
+    throw new IllegalStateException("IllegalStateException: sentenceCountRDD not set at TextPipline.");
+  }
+}

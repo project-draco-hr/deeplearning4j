@@ -1,0 +1,15 @@
+{
+  SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
+  TokenizerFactory t=new DefaultTokenizerFactory();
+  t.setTokenPreProcessor(new CommonPreprocessor());
+  InMemoryLookupCache cache=new InMemoryLookupCache();
+  WeightLookupTable table=new InMemoryLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
+  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(5).iterations(1).layerSize(100).lookupTable(table).stopWords(new ArrayList<String>()).vocabCache(cache).seed(42).windowSize(5).iterate(iter).tokenizerFactory(t).build();
+  assertEquals(new ArrayList<String>(),vec.getStopWords());
+  vec.fit();
+  WordVectorSerializer.writeWordVectors(vec,pathToWriteto);
+  Collection<String> lst=vec.wordsNearest("day",10);
+  System.out.println(Arrays.toString(lst.toArray()));
+  System.out.println(vec.similarity("day","night"));
+  new File("cache.ser").delete();
+}

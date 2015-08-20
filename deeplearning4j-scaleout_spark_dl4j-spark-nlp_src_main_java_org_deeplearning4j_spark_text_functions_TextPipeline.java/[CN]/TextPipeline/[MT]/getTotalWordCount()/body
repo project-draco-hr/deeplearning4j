@@ -1,0 +1,8 @@
+{
+  if (totalWordCount != 0L) {
+    return totalWordCount;
+  }
+ else {
+    throw new IllegalStateException("IllegalStateException: totalWordCount not set at TextPipline.");
+  }
+}
