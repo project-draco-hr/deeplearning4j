@@ -3,9 +3,9 @@
   INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
   INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   INDArray decoderBias=getParam(LSTMParamInitializer.BIAS_KEY);
-  if (conf.getDropOut() > 0) {
-    double scale=1 / (1 - conf.getDropOut());
-    u=Nd4j.rand(x.shape()).lti(1 - conf.getDropOut()).muli(scale);
+  if (conf.getLayer().getDropOut() > 0) {
+    double scale=1 / (1 - conf.getLayer().getDropOut());
+    u=Nd4j.rand(x.shape()).lti(1 - conf.getLayer().getDropOut()).muli(scale);
     x.muli(u);
   }
   int n=x.rows();
@@ -30,8 +30,8 @@
     if (conf.getLayer().getActivationFunction().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(tanh(c.getRow(t))));
  else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(c.getRow(t)));
   }
-  if (conf.getDropOut() > 0) {
-    u2=Dropout.applyDropout(hOut,conf.getDropOut(),u2);
+  if (conf.getLayer().getDropOut() > 0) {
+    u2=Dropout.applyDropout(hOut,conf.getLayer().getDropOut(),u2);
   }
   INDArray y=hOut.get(interval(1,hOut.rows())).mmul(decoderWeights).addiRowVector(decoderBias);
   return y;

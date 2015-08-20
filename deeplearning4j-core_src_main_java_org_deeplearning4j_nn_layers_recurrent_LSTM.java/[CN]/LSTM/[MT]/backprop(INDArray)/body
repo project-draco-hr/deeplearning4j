@@ -5,7 +5,7 @@
   INDArray dWd=hOut.transpose().mmul(dY);
   INDArray dBd=Nd4j.sum(dWd,0);
   INDArray dHout=dY.mmul(decoderWeights.transpose());
-  if (conf.getDropOut() > 0) {
+  if (conf.getLayer().getDropOut() > 0) {
     dHout.muli(u2);
   }
   INDArray dIFog=Nd4j.zeros(iFog.shape());
@@ -40,7 +40,7 @@
     INDArray get=dHin.slice(t).get(interval(1,1 + d));
     dx.slice(t).assign(get);
     if (t > 0)     dHout.slice(t - 1).addi(dHin.slice(t).get(interval(1 + d,dHin.columns())));
-    if (conf.getDropOut() > 0)     dx.muli(u);
+    if (conf.getLayer().getDropOut() > 0)     dx.muli(u);
   }
   clear();
   Gradient gradient=new DefaultGradient();
