@@ -1,8 +1,0 @@
-{
-  Integer randNum=pair1.getFirst();
-  INDArray syn0=pair1.getSecond();
-  int nthRow=pair2.getFirst();
-  INDArray syn0VecUpdate=pair2.getSecond();
-  syn0.getRow(nthRow).addi(syn0VecUpdate);
-  return new Pair<>(randNum,syn0);
-}
