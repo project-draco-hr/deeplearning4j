@@ -9,6 +9,7 @@
  else   if (input.shape().length == 3) {
     otherOutputs=new int[2];
   }
+  System.arraycopy(input.shape(),1,otherOutputs,0,otherOutputs.length);
   int[] shape=new int[]{input.shape()[0],ArrayUtil.prod(otherOutputs)};
   return input.reshape(shape);
 }
