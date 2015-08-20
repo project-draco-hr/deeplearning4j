@@ -38,7 +38,7 @@
     INDArray inputActivations=miniBatchData.mmul(wi).addi(prevOutputActivations.mmul(wI)).addiRowVector(bi);
     INDArrayIndex[] iIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)};
     ifogZ.tensorAlongDimension(t,1,0).put(iIndexes,inputActivations);
-    ifogA.tensorAlongDimension(t,1,0).put(iIndexes,Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),inputActivations)));
+    ifogA.tensorAlongDimension(t,1,0).put(iIndexes,Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),inputActivations)));
     INDArray forgetGateActivations=miniBatchData.mmul(wf).addi(prevOutputActivations.mmul(wF)).addi(prevMemCellActivations.mmul(Nd4j.diag(wFF))).addiRowVector(bf);
     INDArrayIndex[] fIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)};
     ifogZ.tensorAlongDimension(t,1,0).put(fIndexes,forgetGateActivations);
@@ -48,7 +48,7 @@
     ifogZ.tensorAlongDimension(t,1,0).put(gIndexes,inputModGateActivations);
     ifogA.tensorAlongDimension(t,1,0).put(gIndexes,Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",inputModGateActivations)));
     INDArray currentMemoryCellActivations=forgetGateActivations.mul(prevMemCellActivations).addi(inputModGateActivations.mul(inputActivations));
-    currentMemoryCellActivations=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currentMemoryCellActivations));
+    currentMemoryCellActivations=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currentMemoryCellActivations));
     INDArray outputGateActivations=miniBatchData.mmul(wo).addi(prevOutputActivations.mmul(wO)).addi(currentMemoryCellActivations.mmul(Nd4j.diag(wOO))).addiRowVector(bo);
     INDArrayIndex[] oIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)};
     ifogZ.tensorAlongDimension(t,1,0).put(oIndexes,outputGateActivations);

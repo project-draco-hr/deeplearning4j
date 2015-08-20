@@ -5,7 +5,7 @@
   INDArray data=Nd4j.create(new double[][]{{1,1,1,0,0,0},{1,0,1,0,0,0},{1,1,1,0,0,0},{0,0,1,1,1,0},{0,0,1,1,0,0},{0,0,1,1,1,0}});
   INDArray data2=Nd4j.create(new double[][]{{1,0},{1,0},{1,0},{0,1},{0,1},{0,1}});
   DataSet dataset=new DataSet(data,data2);
-  NeuralNetConfiguration neuralNetConfiguration=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).weightInit(WeightInit.ZERO).activationFunction("softmax").updater(Updater.SGD).seed(123).iterations(200).learningRate(1e-2).nIn(6).nOut(2).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).build();
+  NeuralNetConfiguration neuralNetConfiguration=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).weightInit(WeightInit.ZERO).updater(Updater.SGD).seed(123).iterations(200).learningRate(1e-2).nIn(6).nOut(2).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder().activation("softmax").build()).build();
   OutputLayer o=LayerFactories.getFactory(neuralNetConfiguration).create(neuralNetConfiguration);
   o.setListeners(new ScoreIterationListener(1));
   o.fit(dataset);

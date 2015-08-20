@@ -1,5 +1,5 @@
 {
-  INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),preOut.dup()));
+  INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),preOut.dup()));
   INDArray outSubLabels=output.sub(labels);
   Gradient gradient=new DefaultGradient();
 switch (conf.getLossFunction()) {

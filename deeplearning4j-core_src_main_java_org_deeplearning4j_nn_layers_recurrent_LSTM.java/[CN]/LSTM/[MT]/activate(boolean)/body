@@ -27,7 +27,7 @@
     INDArray cPut=iFogF.slice(t).get(interval(0,d)).mul(iFogF.slice(t).get(interval(3 * d,iFogF.columns())));
     c.putRow(t,cPut);
     if (t > 0)     c.slice(t).addi(iFogF.slice(t).get(interval(d,2 * d)).mul(c.getRow(t - 1)));
-    if (conf.getActivationFunction().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(tanh(c.getRow(t))));
+    if (conf.getLayer().getActivationFunction().equals("tanh"))     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(tanh(c.getRow(t))));
  else     hOut.slice(t).assign(iFogF.slice(t).get(interval(2 * d,3 * d)).mul(c.getRow(t)));
   }
   if (conf.getDropOut() > 0) {

@@ -5,6 +5,6 @@
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   INDArray preAct=input.mmul(W).addiRowVector(hBias);
-  INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),preAct));
+  INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),preAct));
   return ret;
 }
