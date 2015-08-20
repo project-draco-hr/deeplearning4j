@@ -1,5 +1,5 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(10).weightInit(WeightInit.XAVIER).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder().activation("softmax").build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(10).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder().weightInit(WeightInit.XAVIER).activation("softmax").build()).build();
   System.out.println("Initializing network");
   SparkDl4jLayer master=new SparkDl4jLayer(sc,conf);
   DataSet d=new IrisDataSetIterator(150,150).next();
