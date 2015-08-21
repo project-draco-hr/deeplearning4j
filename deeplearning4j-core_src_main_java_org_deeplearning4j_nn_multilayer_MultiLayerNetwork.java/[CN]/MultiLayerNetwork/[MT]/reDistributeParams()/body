@@ -1,0 +1,18 @@
+{
+  List<INDArray> params=new ArrayList<>();
+  for (  Layer l : layers) {
+    INDArray paramsForL=l.params();
+    params.add(paramsForL);
+  }
+  this.params=Nd4j.toFlattened(params);
+  int idx=0;
+  for (  Layer l : layers) {
+    INDArray paramsForL=l.params();
+    params.add(paramsForL);
+    int range=l.numParams();
+    INDArray get=this.params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,range + idx));
+    if (get.length() < 1)     continue;
+    l.setParams(get);
+    idx+=range;
+  }
+}
