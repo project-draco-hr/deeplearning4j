@@ -1,5 +1,5 @@
 {
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisSimpleConfig(new int[]{10,5},"sigmoid",5));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisSimpleConfig("sigmoid",5));
   network.init();
   IterationListener listener=new GradientPlotterIterationListener(2);
   IterationListener listener2=new LossPlotterIterationListener(2);

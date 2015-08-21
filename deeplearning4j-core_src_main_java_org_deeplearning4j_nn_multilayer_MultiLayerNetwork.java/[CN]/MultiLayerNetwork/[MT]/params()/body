@@ -1,5 +1,7 @@
 {
   List<INDArray> params=new ArrayList<>();
-  for (int i=0; i < getnLayers(); i++)   params.add(layers[i].params());
+  for (  Layer layer : getLayers())   if (!(layer instanceof SubsamplingLayer)) {
+    params.add(layer.params());
+  }
   return Nd4j.toFlattened(params);
 }
