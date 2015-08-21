@@ -3,9 +3,9 @@
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
   String dataPath=new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath();
   JavaRDD<String> corpus=sc.textFile(dataPath);
-  Word2Vec word2Vec=new Word2Vec().setNumWords(1).setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(false).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(100).setWindow(5).setAlpha(0.025).setMinAlpha(0.0001).setIterations(1);
-  Pair<VocabCache,WeightLookupTable> table=word2Vec.train(corpus);
-  WeightLookupTable second=table.getSecond();
-  WordVectors vectors=WordVectorSerializer.fromPair(new Pair<>((InMemoryLookupTable)table.getSecond(),table.getFirst()));
-  WordVectorSerializer.writeWordVectors((InMemoryLookupTable)table.getSecond(),(InMemoryLookupCache)table.getFirst(),"spark_wordvectors.txt");
+  Word2Vec word2Vec=new Word2Vec().setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(false).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(100).setWindow(5).setAlpha(0.025).setMinAlpha(0.0001).setIterations(1).setNumWords(5);
+  word2Vec.train(corpus);
+  Collection<String> words=word2Vec.wordsNearest("day",10);
+  System.out.println(words);
+  sc.stop();
 }
