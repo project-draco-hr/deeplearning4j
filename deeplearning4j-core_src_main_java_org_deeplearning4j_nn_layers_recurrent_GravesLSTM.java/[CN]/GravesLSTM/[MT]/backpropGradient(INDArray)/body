@@ -48,7 +48,7 @@
     if (is2dInput)     ao=ifogAs.get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
  else     ao=ifogAs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
     INDArray nextForgetGateAs=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : ifogAs.tensorAlongDimension(t + 1,1,0).get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize)));
-    INDArray nablaCellState=nablaOut.mul(ao).muli(sigmahPrimeOfS).addi(nextForgetGateAs.mul(nablaCellStateNext)).addi(deltafNext.mmul(Nd4j.diag(wFF))).addi(deltaoNext.mmul(Nd4j.diag(wOO))).addi(deltagNext.mmul(Nd4j.diag(wGG)));
+    INDArray nablaCellState=nablaOut.mul(ao).muli(sigmahPrimeOfS).addi(nextForgetGateAs.mul(nablaCellStateNext)).addi(deltafNext.mmul(Nd4j.diag(wFF))).addi(deltao.mmul(Nd4j.diag(wOO))).addi(deltagNext.mmul(Nd4j.diag(wGG)));
     nablaCellStateNext=nablaCellState;
     INDArray zf=(is2dInput ? ifogZs.get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)) : ifogZs.tensorAlongDimension(t,1,0).get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)));
     INDArray deltaf=nablaCellState.mul(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zf.dup()).derivative()));
