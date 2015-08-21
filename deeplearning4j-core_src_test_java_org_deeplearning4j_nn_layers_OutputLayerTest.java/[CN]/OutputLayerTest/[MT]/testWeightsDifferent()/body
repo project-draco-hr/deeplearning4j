@@ -1,7 +1,7 @@
 {
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
   Nd4j.MAX_SLICES_TO_PRINT=Integer.MAX_VALUE;
-  NeuralNetConfiguration neuralNetConfiguration=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).constrainGradientToUnitNorm(true).seed(123).iterations(1000).learningRate(1e-1).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder().weightInit(WeightInit.XAVIER).updater(Updater.ADAGRAD).activation("softmax").build()).build();
+  NeuralNetConfiguration neuralNetConfiguration=new NeuralNetConfiguration.Builder().lossFunction(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).constrainGradientToUnitNorm(true).seed(123).iterations(1000).learningRate(1e-1).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).updater(Updater.ADAGRAD).activation("softmax").build()).build();
   OutputLayer o=LayerFactories.getFactory(neuralNetConfiguration).create(neuralNetConfiguration);
   int numSamples=150;
   int batchSize=150;

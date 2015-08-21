@@ -10,9 +10,6 @@ OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
 long seed
-int nIn
-int nOut
-int[] weightShape
 int timeSeriesLength
 int batchSize
 int maxNumLineSearchIterations

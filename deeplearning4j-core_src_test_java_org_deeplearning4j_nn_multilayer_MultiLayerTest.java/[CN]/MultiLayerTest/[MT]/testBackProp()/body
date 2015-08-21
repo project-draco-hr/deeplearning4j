@@ -1,6 +1,6 @@
 {
   Nd4j.getRandom().setSeed(123);
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LINE_GRADIENT_DESCENT).iterations(5).seed(123).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer()).list(3).layer(0,new DenseLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(1,new DenseLayer.Builder().nIn(3).nOut(2).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(2,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nIn(2).nOut(3).build()).backprop(true).pretrain(false).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LINE_GRADIENT_DESCENT).iterations(5).seed(123).list(3).layer(0,new DenseLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(1,new DenseLayer.Builder().nIn(3).nOut(2).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(2,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nIn(2).nOut(3).build()).backprop(true).pretrain(false).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   network.setListeners(Lists.<IterationListener>newArrayList(new ScoreIterationListener(1)));

@@ -1,3 +1,3 @@
 {
-  return conf.getNOut();
+  return ((org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer()).getNOut();
 }

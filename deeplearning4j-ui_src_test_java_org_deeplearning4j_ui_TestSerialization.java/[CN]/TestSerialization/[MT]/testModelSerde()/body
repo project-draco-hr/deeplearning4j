@@ -1,6 +1,6 @@
 {
   ObjectMapper mapper=getMapper();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9f).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1000).constrainGradientToUnitNorm(true).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.AutoEncoder.Builder().corruptionLevel(0.6).sparsity(0.5).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9f).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1000).constrainGradientToUnitNorm(true).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.AutoEncoder.Builder().nIn(4).nOut(3).corruptionLevel(0.6).sparsity(0.5).build()).build();
   DataSet d2=new IrisDataSetIterator(150,150).next();
   INDArray input=d2.getFeatureMatrix();
   AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1),new HistogramIterationListener(1)),0);

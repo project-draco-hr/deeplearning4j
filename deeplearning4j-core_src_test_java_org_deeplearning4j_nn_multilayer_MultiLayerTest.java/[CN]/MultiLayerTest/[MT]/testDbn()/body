@@ -1,7 +1,7 @@
 {
   Nd4j.MAX_SLICES_TO_PRINT=-1;
   Nd4j.MAX_ELEMENTS_PER_SLICE=-1;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).momentum(0.9).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).regularization(true).l2(2e-4).lossFunction(LossFunctions.LossFunction.RMSE_XENT).nIn(4).nOut(3).list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).momentum(0.9).optimizationAlgo(OptimizationAlgorithm.LBFGS).constrainGradientToUnitNorm(true).regularization(true).l2(2e-4).lossFunction(LossFunctions.LossFunction.RMSE_XENT).list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build()).build();
   MultiLayerNetwork d=new MultiLayerNetwork(conf);
   DataSetIterator iter=new IrisDataSetIterator(150,150);
   DataSet next=iter.next();

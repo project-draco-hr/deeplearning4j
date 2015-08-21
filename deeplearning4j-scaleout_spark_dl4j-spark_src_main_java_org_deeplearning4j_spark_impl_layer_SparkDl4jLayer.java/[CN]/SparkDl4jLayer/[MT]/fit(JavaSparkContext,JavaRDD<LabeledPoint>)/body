@@ -1,3 +1,4 @@
 {
-  return fitDataSet(MLLibUtil.fromLabeledPoint(sc,rdd,conf.getNOut()));
+  FeedForwardLayer ffLayer=(FeedForwardLayer)conf.getLayer();
+  return fitDataSet(MLLibUtil.fromLabeledPoint(sc,rdd,ffLayer.getNOut()));
 }

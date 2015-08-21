@@ -17,9 +17,5 @@
   this.lossFunction=lossFunction;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
   this.seed=seed;
-  this.nIn=nIn;
-  this.nOut=nOut;
-  if (weightShape != null)   this.weightShape=weightShape;
- else   this.weightShape=new int[]{nIn,nOut};
   this.timeSeriesLength=timeSeriesLength;
 }

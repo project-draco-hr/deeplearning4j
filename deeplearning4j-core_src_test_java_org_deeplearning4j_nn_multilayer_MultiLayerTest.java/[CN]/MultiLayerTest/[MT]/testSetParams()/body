@@ -1,7 +1,7 @@
 {
   Nd4j.MAX_ELEMENTS_PER_SLICE=Integer.MAX_VALUE;
   Nd4j.MAX_SLICES_TO_PRINT=Integer.MAX_VALUE;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().nIn(4).nOut(3).layer(new org.deeplearning4j.nn.conf.layers.RBM()).list(1).layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).activation("tanh").build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(1).layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).activation("tanh").build()).build();
   MultiLayerNetwork network3=new MultiLayerNetwork(conf);
   network3.init();
   INDArray params=network3.params();
