@@ -3,7 +3,7 @@
   int inputWidth=input().size(-1);
   INDArray reshapeEpsilon, retE, reshaped;
   Gradient retGradient=new DefaultGradient();
-switch (conf.getPoolingType()) {
+switch (layerConf().getPoolingType()) {
 case MAX:
     int n=epsilon.size(0);
   int c=epsilon.size(1);
