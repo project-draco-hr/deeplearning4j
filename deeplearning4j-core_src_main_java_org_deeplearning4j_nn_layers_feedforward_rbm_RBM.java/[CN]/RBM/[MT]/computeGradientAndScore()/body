@@ -17,7 +17,7 @@
   }
   INDArray wGradient=input().transposei().mmul(probHidden.getSecond()).subi(nvSamples.transposei().mmul(nhMeans));
   INDArray hBiasGradient;
-  if (conf.getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(conf.getSparsity()).sum(0);
+  if (layerConf().getSparsity() != 0)   hBiasGradient=probHidden.getSecond().rsub(layerConf().getSparsity()).sum(0);
  else   hBiasGradient=probHidden.getSecond().sub(nhMeans).sum(0);
   INDArray delta=input.sub(nvSamples);
   INDArray vBiasGradient=delta.sum(0);

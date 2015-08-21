@@ -7,7 +7,6 @@
   this.l1=l1;
   this.batchSize=batchSize;
   this.layer=layer;
-  this.sparsity=sparsity;
   this.useAdaGrad=useAdaGrad;
   this.lr=lr;
   this.numIterations=numIterations;
@@ -16,7 +15,6 @@
   this.useRegularization=useRegularization;
   this.momentumAfter=momentumAfter;
   this.resetAdaGradIterations=resetAdaGradIterations;
-  this.applySparsity=applySparsity;
   this.optimizationAlgo=optimizationAlgo;
   this.lossFunction=lossFunction;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;

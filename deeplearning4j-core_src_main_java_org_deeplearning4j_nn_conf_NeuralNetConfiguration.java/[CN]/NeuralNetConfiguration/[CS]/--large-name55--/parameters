@@ -1,4 +1,3 @@
-double sparsity
 boolean useAdaGrad
 double lr
 int numIterations
@@ -7,7 +6,6 @@ double l2
 boolean useRegularization
 Map<Integer,Double> momentumAfter
 int resetAdaGradIterations
-boolean applySparsity
 OptimizationAlgorithm optimizationAlgo
 LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
