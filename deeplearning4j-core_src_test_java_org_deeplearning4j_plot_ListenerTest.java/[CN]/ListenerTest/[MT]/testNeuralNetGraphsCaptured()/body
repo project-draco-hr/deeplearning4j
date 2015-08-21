@@ -1,5 +1,5 @@
 {
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig("sigmoid",1));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisSimpleConfig("sigmoid",1));
   network.init();
   DataSet data=irisIter.next();
   IterationListener listener=new NeuralNetPlotterIterationListener(1,true);
