@@ -1,0 +1,10 @@
+{
+  while (pairIter.hasNext()) {
+    Tuple2<List<VocabWord>,Long> pair=pairIter.next();
+    List<VocabWord> vocabWordsList=pair._1();
+    Long sentenceCumSumCount=pair._2();
+    double currentSentenceAlpha=Math.max(minAlpha,alpha - (alpha - minAlpha) * (sentenceCumSumCount / (double)totalWordCount));
+    trainSentence(vocabWordsList,currentSentenceAlpha);
+  }
+  return indexSyn0VecMap.entrySet();
+}

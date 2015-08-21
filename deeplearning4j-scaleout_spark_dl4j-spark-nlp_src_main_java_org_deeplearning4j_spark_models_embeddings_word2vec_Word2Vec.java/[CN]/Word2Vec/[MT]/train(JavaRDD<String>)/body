@@ -7,7 +7,6 @@
   final JavaRDD<List<VocabWord>> vocabWordListRDD;
   final JavaPairRDD<List<VocabWord>,Long> vocabWordListSentenceCumSumRDD;
   final VocabCache vocabCache;
-  final Broadcast<VocabCache> vocabCacheBroadcast;
   final JavaRDD<Long> sentenceCumSumCountRDD;
   log.info("Tokenization and building VocabCache ...");
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
@@ -17,8 +16,8 @@
   word2vecVarMap.put("totalWordCount",pipeline.getTotalWordCount());
   sentenceWordsCountRDD=pipeline.getSentenceCountRDD();
   vocabWordListRDD=pipeline.getVocabWordListRDD();
-  vocabCache=pipeline.getVocabCache();
-  vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
+  Broadcast<VocabCache> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
+  vocabCache=vocabCacheBroadcast.getValue();
   log.info("Building Huffman Tree ...");
   Huffman huffman=new Huffman(vocabCache.vocabWords());
   huffman.build();
@@ -31,6 +30,16 @@
   Broadcast<double[]> expTableBroadcast=sc.broadcast(expTable);
   log.info("Training word2vec sentences ...");
   FlatMapFunction firstIterFunc=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast);
-  JavaRDD<Pair<Integer,INDArray>> pointSyn0Vec=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
-  return new Pair<>(vocabCacheBroadcast.getValue(),this.lookupTable);
+  @SuppressWarnings("unchecked") JavaRDD<Pair<Integer,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
+  List<Pair<Integer,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
+  INDArray syn0=Nd4j.create(vocabCache.numWords(),vectorLength);
+  for (  Pair<Integer,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
+    syn0.getRow(syn0UpdateEntry.getFirst()).addi(syn0UpdateEntry.getSecond());
+  }
+  vocab=vocabCache;
+  InMemoryLookupTable inMemoryLookupTable=new InMemoryLookupTable();
+  inMemoryLookupTable.setVocab(vocabCache);
+  inMemoryLookupTable.setVectorLength(vectorLength);
+  inMemoryLookupTable.setSyn0(syn0);
+  lookupTable=inMemoryLookupTable;
 }
