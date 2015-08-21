@@ -20,7 +20,7 @@
     assertArrayEquals(row.shape(),new int[]{1,hiddenLayerSize});
     int origExampleNum=i / timeSeriesLength;
     int time=i % timeSeriesLength;
-    INDArray expectedRow=activations3d.slice(time,2).getRow(origExampleNum);
+    INDArray expectedRow=activations3d.tensorAlongDimension(time,1,0).getRow(origExampleNum);
     assertTrue(row.equals(expectedRow));
   }
   INDArray out=proc.backprop(activations2d);

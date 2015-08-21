@@ -12,7 +12,7 @@
     int time=i % timeSeriesLength;
     int example=i / timeSeriesLength;
     INDArray row2d=activations2d.getRow(i);
-    INDArray row3d=activations3d.slice(time,2).getRow(example);
+    INDArray row3d=activations3d.tensorAlongDimension(time,1,0).getRow(example);
     assertTrue(row2d.equals(row3d));
   }
   INDArray epsilon2d=proc.backprop(activations3d);

@@ -1,20 +1,19 @@
 {
   Nd4j.getRandom().setSeed(12345L);
-  int timeSeriesLength=1;
+  int timeSeriesLength=2;
   int nIn=2;
   int layerSize=2;
-  int nOut=3;
-  int miniBatchSize=11;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,5.0)).regularization(false).updater(Updater.NONE).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor(timeSeriesLength)).pretrain(false).backprop(true).build();
+  int nOut=2;
+  int miniBatchSize=1;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).regularization(false).updater(Updater.NONE).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor(timeSeriesLength)).pretrain(false).backprop(true).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   mln.init();
   Random r=new Random(12345L);
   INDArray input=Nd4j.zeros(miniBatchSize,nIn,timeSeriesLength);
-  int x=0;
   for (int i=0; i < miniBatchSize; i++) {
     for (int j=0; j < nIn; j++) {
       for (int k=0; k < timeSeriesLength; k++) {
-        input.putScalar(x++,r.nextDouble() - 0.5);
+        input.putScalar(new int[]{i,j,k},r.nextDouble() - 0.5);
       }
     }
   }
