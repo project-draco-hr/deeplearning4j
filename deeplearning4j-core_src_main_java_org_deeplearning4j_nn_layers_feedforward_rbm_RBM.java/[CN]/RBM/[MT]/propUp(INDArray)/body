@@ -6,9 +6,9 @@
     }
   }
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
-  if (conf.getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
+  if (layerConf().getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
   INDArray preSig=v.mmul(W).addiRowVector(hBias);
-switch (conf.getHiddenUnit()) {
+switch (layerConf().getHiddenUnit()) {
 case RECTIFIED:
     preSig=max(preSig,0.0);
   return preSig;

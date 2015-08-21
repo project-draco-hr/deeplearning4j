@@ -24,8 +24,6 @@
   this.seed=seed;
   this.nIn=nIn;
   this.nOut=nOut;
-  this.visibleUnit=visibleUnit;
-  this.hiddenUnit=hiddenUnit;
   if (weightShape != null)   this.weightShape=weightShape;
  else   this.weightShape=new int[]{nIn,nOut};
   this.timeSeriesLength=timeSeriesLength;

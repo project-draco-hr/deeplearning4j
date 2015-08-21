@@ -1,7 +1,7 @@
 {
   INDArray v1Mean=propDown(h);
   INDArray v1Sample;
-switch (conf.getVisibleUnit()) {
+switch (layerConf().getVisibleUnit()) {
 case GAUSSIAN:
 {
       v1Sample=v1Mean.add(Nd4j.randn(v1Mean.rows(),v1Mean.columns(),rng));

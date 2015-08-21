@@ -1,7 +1,7 @@
 {
   INDArray h1Mean=propUp(v);
   INDArray h1Sample;
-switch (conf.getHiddenUnit()) {
+switch (layerConf().getHiddenUnit()) {
 case RECTIFIED:
 {
       INDArray sigH1Mean=sigmoid(h1Mean);
