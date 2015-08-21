@@ -1,7 +1,7 @@
 {
   if (input == null)   throw new IllegalArgumentException("No null input allowed");
   applyDropOutIfNecessary(input,training);
-  col=Convolution.im2col(input,conf.getKernelSize(),conf.getStride(),conf.getPadding());
+  col=Convolution.im2col(input,layerConf().getKernelSize(),layerConf().getStride(),layerConf().getPadding());
   INDArray z=preOutput(training);
   INDArray activation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),z));
   return activation;
