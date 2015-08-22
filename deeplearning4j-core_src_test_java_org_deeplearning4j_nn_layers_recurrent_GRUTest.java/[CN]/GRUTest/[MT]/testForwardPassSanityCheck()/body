@@ -13,7 +13,7 @@
       }
     }
   }
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.1)).regularization(false).list(2).layer(0,new org.deeplearning4j.nn.conf.layers.GRU.Builder().activation("tanh").nIn(nIn).nOut(gruNUnits).build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(gruNUnits).nOut(nOut).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor(timeSeriesLength)).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.1)).regularization(false).list(2).layer(0,new org.deeplearning4j.nn.conf.layers.GRU.Builder().activation("tanh").nIn(nIn).nOut(gruNUnits).build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(gruNUnits).nOut(nOut).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   mln.init();
   List<INDArray> activations=mln.feedForward(inputData);

@@ -5,7 +5,7 @@
   int layerSize=2;
   int nOut=2;
   int miniBatchSize=5;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).regularization(false).updater(Updater.NONE).seed(12345L).list(3).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").build()).layer(1,new GravesLSTM.Builder().nIn(layerSize).nOut(layerSize).activation("tanh").build()).layer(2,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).build()).inputPreProcessor(2,new RnnToFeedForwardPreProcessor(timeSeriesLength)).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).regularization(false).updater(Updater.NONE).seed(12345L).list(3).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").build()).layer(1,new GravesLSTM.Builder().nIn(layerSize).nOut(layerSize).activation("tanh").build()).layer(2,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).build()).inputPreProcessor(2,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   mln.init();
   Random r=new Random(12345L);

@@ -3,9 +3,12 @@
   int miniBatchSize=5;
   int hiddenLayerSize=7;
   int timeSeriesLength=9;
-  FeedForwardToRnnPreProcessor proc=new FeedForwardToRnnPreProcessor(timeSeriesLength);
+  FeedForwardToRnnPreProcessor proc=new FeedForwardToRnnPreProcessor();
+  NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(hiddenLayerSize).build()).build();
+  DenseLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc);
+  layer.setInputMiniBatchSize(miniBatchSize);
   INDArray activations2d=Nd4j.rand(miniBatchSize * timeSeriesLength,hiddenLayerSize);
-  INDArray activations3d=proc.preProcess(activations2d);
+  INDArray activations3d=proc.preProcess(activations2d,layer);
   assertArrayEquals(activations3d.shape(),new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
   int nRows2D=miniBatchSize * timeSeriesLength;
   for (int i=0; i < nRows2D; i++) {
@@ -15,6 +18,6 @@
     INDArray row3d=activations3d.tensorAlongDimension(time,1,0).getRow(example);
     assertTrue(row2d.equals(row3d));
   }
-  INDArray epsilon2d=proc.backprop(activations3d);
+  INDArray epsilon2d=proc.backprop(activations3d,layer);
   assertTrue(epsilon2d.equals(activations2d));
 }
