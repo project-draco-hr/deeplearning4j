@@ -4,14 +4,12 @@
   this.l1=l1;
   this.batchSize=batchSize;
   this.layer=layer;
-  this.useAdaGrad=useAdaGrad;
   this.lr=lr;
   this.numIterations=numIterations;
   this.momentum=momentum;
   this.l2=l2;
   this.useRegularization=useRegularization;
   this.momentumAfter=momentumAfter;
-  this.resetAdaGradIterations=resetAdaGradIterations;
   this.optimizationAlgo=optimizationAlgo;
   this.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
   this.seed=seed;
