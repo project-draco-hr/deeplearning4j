@@ -42,7 +42,7 @@
       zSliceNext=rucZs.tensorAlongDimension(t,1,0);
     }
     INDArray zr=zSlice.get(NDArrayIndex.all(),interval(0,layerSize));
-    INDArray sigmaPrimeR=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zr.dup()).derivative());
+    INDArray sigmaPrimeZr=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zr.dup()).derivative());
     INDArray dOutNextdOut;
     if (t == timeSeriesLength - 1) {
       dOutNextdOut=Nd4j.zeros(miniBatchSize,layerSize);
@@ -56,7 +56,7 @@
       INDArray zcNext=zSliceNext.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
       INDArray sigmaPrimeUNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zuNext.dup()).derivative());
       INDArray sigmaPrimeCNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zcNext.dup()).derivative());
-      INDArray temp=arNext.mulRowVector(wCdiag).addi(wC.mmul(aOut.transpose()).transpose().muliRowVector(wRdiag).muli(sigmaPrimeR));
+      INDArray temp=arNext.mulRowVector(wCdiag).addi(wC.mmul(aOut.mul(sigmaPrimeZr).transpose()).transpose().muliRowVector(wRdiag));
       dOutNextdOut=auNext.add(aOut.sub(acNext).muli(sigmaPrimeUNext).muliRowVector(wUdiag));
       dOutNextdOut.addi(auNext.rsub(1.0).muli(sigmaPrimeCNext).muli(temp));
     }
@@ -70,7 +70,7 @@
     INDArray sigmaPrimeZc=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zc.dup()).derivative());
     INDArray au=aSlice.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
     INDArray deltaC=deltaOut.mul(sigmaPrimeZc).muli(au.rsub(1.0));
-    INDArray deltaR=deltaC.mulRowVector(wCdiag).muli(prevOut).muli(sigmaPrimeR);
+    INDArray deltaR=deltaC.mulRowVector(wCdiag).muli(prevOut).muli(sigmaPrimeZr);
     INDArray prevLayerActivationSlice=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
     inputWeightGradients.get(NDArrayIndex.all(),interval(0,layerSize)).addi(deltaR.transpose().mmul(prevLayerActivationSlice).transpose());
     inputWeightGradients.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize)).addi(deltaU.transpose().mmul(prevLayerActivationSlice).transpose());
