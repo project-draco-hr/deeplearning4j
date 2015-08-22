@@ -1,7 +1,6 @@
 {
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
   conf.confs=this.confs;
-  conf.useDropConnect=useDropConnect;
   conf.pretrain=pretrain;
   conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
