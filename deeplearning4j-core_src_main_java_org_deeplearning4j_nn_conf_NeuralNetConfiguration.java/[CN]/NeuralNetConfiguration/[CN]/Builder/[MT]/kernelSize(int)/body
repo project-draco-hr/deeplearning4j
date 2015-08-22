@@ -1,5 +1,0 @@
-{
-  if (kernelSize.length != 2)   throw new IllegalArgumentException("Kernel size of should be rows x columns (a 2d array)");
-  this.kernelSize=kernelSize;
-  return this;
-}

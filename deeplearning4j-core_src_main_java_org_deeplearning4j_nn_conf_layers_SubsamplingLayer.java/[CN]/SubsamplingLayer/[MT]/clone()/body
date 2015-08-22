@@ -1,0 +1,7 @@
+{
+  SubsamplingLayer clone=(SubsamplingLayer)super.clone();
+  if (clone.kernelSize != null)   clone.kernelSize=clone.kernelSize.clone();
+  if (clone.stride != null)   clone.stride=clone.stride.clone();
+  if (clone.padding != null)   clone.padding=clone.padding.clone();
+  return clone;
+}

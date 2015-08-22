@@ -1,5 +1,6 @@
 {
   JavaRDD<String> lines=sc.textFile(path);
-  JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(recordReader,labelIndex,conf.getConf(conf.getConfs().size() - 1).getNOut()));
+  FeedForwardLayer outputLayer=(FeedForwardLayer)conf.getConf(conf.getConfs().size() - 1).getLayer();
+  JavaRDD<DataSet> points=lines.map(new RecordReaderFunction(recordReader,labelIndex,outputLayer.getNOut()));
   return fitDataSet(points);
 }

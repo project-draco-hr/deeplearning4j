@@ -1,0 +1,17 @@
+boolean useAdaGrad
+double lr
+int numIterations
+double momentum
+double l2
+boolean useRegularization
+Map<Integer,Double> momentumAfter
+int resetAdaGradIterations
+OptimizationAlgorithm optimizationAlgo
+boolean constrainGradientToUnitNorm
+long seed
+int timeSeriesLength
+int batchSize
+int maxNumLineSearchIterations
+boolean minimize
+Layer layer
+double l1

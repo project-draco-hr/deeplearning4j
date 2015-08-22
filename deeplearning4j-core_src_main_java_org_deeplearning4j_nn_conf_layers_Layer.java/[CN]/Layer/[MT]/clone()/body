@@ -1,0 +1,10 @@
+{
+  try {
+    Layer clone=(Layer)super.clone();
+    if (clone.dist != null)     clone.dist=clone.dist.clone();
+    return clone;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException(e);
+  }
+}
