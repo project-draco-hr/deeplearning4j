@@ -2,7 +2,7 @@
   String[] activFns={"tanh","relu"};
   LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
   String[] outputActivations={"softmax","tanh"};
-  int timeSeriesLength=10;
+  int timeSeriesLength=6;
   int nIn=7;
   int layerSize=9;
   int nOut=4;
