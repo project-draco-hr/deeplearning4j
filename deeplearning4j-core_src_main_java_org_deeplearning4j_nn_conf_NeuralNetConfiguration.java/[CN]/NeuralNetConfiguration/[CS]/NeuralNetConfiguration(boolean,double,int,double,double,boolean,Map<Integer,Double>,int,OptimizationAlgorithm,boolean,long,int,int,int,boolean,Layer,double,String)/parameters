@@ -7,7 +7,6 @@ boolean useRegularization
 Map<Integer,Double> momentumAfter
 int resetAdaGradIterations
 OptimizationAlgorithm optimizationAlgo
-LossFunctions.LossFunction lossFunction
 boolean constrainGradientToUnitNorm
 long seed
 int timeSeriesLength
