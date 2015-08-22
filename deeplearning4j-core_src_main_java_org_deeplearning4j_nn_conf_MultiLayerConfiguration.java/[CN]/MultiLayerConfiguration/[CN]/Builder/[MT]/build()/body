@@ -1,13 +1,8 @@
 {
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
   conf.confs=this.confs;
-  conf.hiddenLayerSizes=this.hiddenLayerSizes;
-  conf.useDropConnect=useDropConnect;
   conf.pretrain=pretrain;
-  conf.useRBMPropUpAsActivations=useRBMPropUpAsActivations;
   conf.dampingFactor=dampingFactor;
-  conf.outputPostProcessors=outputPostProcessors;
-  conf.backward=backward;
   conf.backprop=backprop;
   conf.inputPreProcessors=inputPreProcessors;
   Nd4j.getRandom().setSeed(conf.getConf(0).getSeed());

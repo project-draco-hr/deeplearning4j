@@ -1,11 +1,25 @@
 {
   if (layer == null)   throw new IllegalStateException("No layer defined.");
-  NeuralNetConfiguration ret=new NeuralNetConfiguration(useAdaGrad,lr,numIterations,momentum,l2,useRegularization,momentumAfter,resetAdaGradIterations,optimizationAlgo,constrainGradientToUnitNorm,seed,timeSeriesLength,batchSize,maxNumLineSearchIterations,minimize,layer,l1);
-  ret.useAdaGrad=this.useAdaGrad;
-  ret.rmsDecay=rmsDecay;
-  ret.stepFunction=stepFunction;
-  ret.useDropConnect=useDropConnect;
-  ret.miniBatch=miniBatch;
-  ret.rho=rho;
-  return ret;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration();
+  conf.minimize=minimize;
+  conf.maxNumLineSearchIterations=maxNumLineSearchIterations;
+  conf.l1=l1;
+  conf.batchSize=batchSize;
+  conf.layer=layer;
+  conf.lr=lr;
+  conf.numIterations=numIterations;
+  conf.momentum=momentum;
+  conf.l2=l2;
+  conf.useRegularization=useRegularization;
+  conf.momentumAfter=momentumAfter;
+  conf.optimizationAlgo=optimizationAlgo;
+  conf.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
+  conf.seed=seed;
+  conf.timeSeriesLength=timeSeriesLength;
+  conf.rmsDecay=rmsDecay;
+  conf.stepFunction=stepFunction;
+  conf.useDropConnect=useDropConnect;
+  conf.miniBatch=miniBatch;
+  conf.rho=rho;
+  return conf;
 }

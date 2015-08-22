@@ -3,9 +3,5 @@
   ret.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
   ret.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
   ret.enable(SerializationFeature.INDENT_OUTPUT);
-  SimpleModule module=new SimpleModule();
-  module.addSerializer(OutputPostProcessor.class,new PreProcessorSerializer());
-  module.addDeserializer(OutputPostProcessor.class,new PreProcessorDeSerializer());
-  ret.registerModule(module);
   return ret;
 }
