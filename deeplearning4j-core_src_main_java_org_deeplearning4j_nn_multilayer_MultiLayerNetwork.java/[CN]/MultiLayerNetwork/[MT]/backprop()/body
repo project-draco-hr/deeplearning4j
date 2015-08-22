@@ -29,7 +29,7 @@
       tempList.addFirst(new Pair<>(multiGradientKey,entry.getValue()));
     }
     for (    Pair<String,INDArray> pair : tempList)     gradientList.addFirst(pair);
-    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond()));
+    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),getLayerWiseConfigurations().getInputPreProcess(j).backprop(currPair.getSecond()));
   }
   for (  Pair<String,INDArray> pair : gradientList)   gradient.setGradientFor(pair.getFirst(),pair.getSecond());
 }
