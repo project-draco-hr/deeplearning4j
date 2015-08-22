@@ -15,9 +15,6 @@
       }
       clone.inputPreProcessors=map;
     }
-    if (clone.outputPostProcessors != null) {
-      clone.outputPostProcessors=new HashMap<>(clone.outputPostProcessors);
-    }
     return clone;
   }
  catch (  CloneNotSupportedException e) {

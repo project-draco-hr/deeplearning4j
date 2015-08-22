@@ -5,6 +5,5 @@
   result=31 * result + (pretrain ? 1 : 0);
   temp=Double.doubleToLongBits(dampingFactor);
   result=31 * result + (int)(temp ^ (temp >>> 32));
-  result=31 * result + (outputPostProcessors != null ? outputPostProcessors.hashCode() : 0);
   return result;
 }
