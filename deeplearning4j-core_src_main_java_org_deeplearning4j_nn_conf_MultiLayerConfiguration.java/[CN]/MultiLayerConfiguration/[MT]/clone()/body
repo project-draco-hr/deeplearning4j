@@ -1,7 +1,6 @@
 {
   try {
     MultiLayerConfiguration clone=(MultiLayerConfiguration)super.clone();
-    if (clone.hiddenLayerSizes != null)     clone.hiddenLayerSizes=clone.hiddenLayerSizes.clone();
     if (clone.confs != null) {
       List<NeuralNetConfiguration> list=new ArrayList<>();
       for (      NeuralNetConfiguration conf : clone.confs) {
