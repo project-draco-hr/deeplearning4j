@@ -7,6 +7,5 @@
   ret.useDropConnect=useDropConnect;
   ret.miniBatch=miniBatch;
   ret.rho=rho;
-  ret=overrideFields(ret,layer);
   return ret;
 }
