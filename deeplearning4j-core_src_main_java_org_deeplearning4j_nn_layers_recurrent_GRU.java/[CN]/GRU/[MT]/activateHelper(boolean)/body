@@ -6,6 +6,8 @@
   int timeSeriesLength=(is2dInput ? 1 : input.size(2));
   int hiddenLayerSize=recurrentWeights.size(0);
   int miniBatchSize=input.size(0);
+  INDArray wRAndU=recurrentWeights.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize));
+  INDArray wC=recurrentWeights.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
   if (conf.isUseDropConnect() && training) {
     if (conf.getDropOut() > 0) {
       inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHT_KEY);
@@ -17,14 +19,20 @@
   for (int t=0; t < timeSeriesLength; t++) {
     INDArray prevLayerInputSlice=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
     INDArray prevOutputActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.tensorAlongDimension(t - 1,1,0));
-    INDArray zs=prevLayerInputSlice.mmul(inputWeights).addi(prevOutputActivations.mmul(recurrentWeights)).addiRowVector(biases);
+    INDArray zs=prevLayerInputSlice.mmul(inputWeights).addiRowVector(biases);
+    INDArray zrAndu=zs.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize));
+    zrAndu.addi(prevOutputActivations.mmul(wRAndU));
     INDArray as=zs.dup();
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",as.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize))));
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize))));
-    INDArray candidateAs=as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
-    INDArray updateAs=as.get(NDArrayIndex.all(),NDArrayIndex.interval(hiddenLayerSize,2 * hiddenLayerSize));
-    INDArray oneMinUpdateAs=updateAs.rsub(1);
-    INDArray outputASlice=updateAs.mul(prevOutputActivations).addi(oneMinUpdateAs.muli(candidateAs));
+    INDArray arAndu=as.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",arAndu));
+    INDArray ar=as.get(NDArrayIndex.all(),NDArrayIndex.interval(0,hiddenLayerSize));
+    INDArray zc=zs.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
+    zc.addi(ar.mul(prevOutputActivations).mmul(wC));
+    INDArray ac=as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
+    ac.assign(zc);
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),ac));
+    INDArray au=as.get(NDArrayIndex.all(),NDArrayIndex.interval(hiddenLayerSize,2 * hiddenLayerSize));
+    INDArray outputASlice=au.mul(prevOutputActivations).addi(au.rsub(1).muli(ac));
     rucZs.tensorAlongDimension(t,1,0).assign(zs);
     rucAs.tensorAlongDimension(t,1,0).assign(as);
     outputActivations.tensorAlongDimension(t,1,0).assign(outputASlice);
