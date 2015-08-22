@@ -1,4 +1,5 @@
 {
+  if (params != null)   return params;
   List<INDArray> params=new ArrayList<>();
   for (  Layer layer : getLayers())   if (!(layer instanceof SubsamplingLayer)) {
     params.add(layer.params());

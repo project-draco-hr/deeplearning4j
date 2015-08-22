@@ -1,0 +1,15 @@
+{
+  VocabWord currentWord=vocabWordsList.get(ithWordInSentence);
+  if (currentWord != null && !vocabWordsList.isEmpty()) {
+    int end=window * 2 + 1 - b;
+    for (int a=b; a < end; a++) {
+      if (a != window) {
+        int c=ithWordInSentence - window + a;
+        if (c >= 0 && c < vocabWordsList.size()) {
+          VocabWord lastWord=vocabWordsList.get(c);
+          iterateSample(currentWord,lastWord,currentSentenceAlpha);
+        }
+      }
+    }
+  }
+}
