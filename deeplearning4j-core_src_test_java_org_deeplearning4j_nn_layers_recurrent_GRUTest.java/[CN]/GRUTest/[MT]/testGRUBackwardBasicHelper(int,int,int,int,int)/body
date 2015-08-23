@@ -1,6 +1,6 @@
 {
   INDArray inputData=Nd4j.ones(miniBatchSize,nIn,timeSeriesLength);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("tanh").dist(new UniformDistribution(0,1)).layer(new org.deeplearning4j.nn.conf.layers.GRU.Builder().nIn(nIn).nOut(gruNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GRU.Builder().nIn(nIn).nOut(gruNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").build()).build();
   GRU gru=LayerFactories.getFactory(conf.getLayer()).create(conf);
   gru.activate(inputData);
   assertNotNull(gru.input());

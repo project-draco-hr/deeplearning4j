@@ -1,7 +1,7 @@
 {
   double[] scores=new double[nOptIter + 1];
   for (int i=0; i <= nOptIter; i++) {
-    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).stepFunction(new org.deeplearning4j.nn.conf.stepfunctions.NegativeDefaultStepFunction()).learningRate(1e-1).updater(Updater.SGD).layer(new RBM.Builder().nIn(1).nOut(1).build()).batchSize(1).build();
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).stepFunction(new org.deeplearning4j.nn.conf.stepfunctions.NegativeDefaultStepFunction()).learningRate(1e-1).layer(new RBM.Builder().nIn(1).nOut(1).updater(Updater.SGD).build()).batchSize(1).build();
     conf.addVariable("x");
     Model m=new RosenbrockFunctionModel(100,conf);
     if (i == 0) {

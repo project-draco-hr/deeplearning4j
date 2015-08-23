@@ -9,7 +9,7 @@
   INDArray wRAndU=recurrentWeights.get(NDArrayIndex.all(),NDArrayIndex.interval(0,2 * hiddenLayerSize));
   INDArray wC=recurrentWeights.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
   if (conf.isUseDropConnect() && training) {
-    if (conf.getDropOut() > 0) {
+    if (conf.getLayer().getDropOut() > 0) {
       inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHT_KEY);
     }
   }
@@ -30,7 +30,7 @@
     zc.addi(ar.mul(prevOutputActivations).mmul(wC));
     INDArray ac=as.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
     ac.assign(zc);
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),ac));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),ac));
     INDArray au=as.get(NDArrayIndex.all(),NDArrayIndex.interval(hiddenLayerSize,2 * hiddenLayerSize));
     INDArray outputASlice=au.mul(prevOutputActivations).addi(au.rsub(1).muli(ac));
     rucZs.tensorAlongDimension(t,1,0).assign(zs);

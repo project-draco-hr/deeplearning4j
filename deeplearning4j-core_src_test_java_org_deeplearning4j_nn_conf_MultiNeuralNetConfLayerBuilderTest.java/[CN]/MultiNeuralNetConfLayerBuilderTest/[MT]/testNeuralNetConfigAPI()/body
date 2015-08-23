@@ -3,7 +3,6 @@
   int newNumIn=numIn + 1;
   int newNumOut=numOut + 1;
   WeightInit newWeight=WeightInit.UNIFORM;
-  String newAct="rectify";
   double newDrop=0.5;
   int[] newFS=new int[]{3,3};
   int newFD=7;
@@ -14,7 +13,7 @@
   double newSparsity=0.5;
   HiddenUnit newHidden=HiddenUnit.BINARY;
   VisibleUnit newVisible=VisibleUnit.BINARY;
-  MultiLayerConfiguration multiConf1=new NeuralNetConfiguration.Builder().activationFunction(act).nIn(numIn).nOut(numOut).lossFunction(loss).list(2).layer(0,new DenseLayer.Builder().nIn(newNumIn).nOut(newNumOut).build()).layer(1,new DenseLayer.Builder().nIn(newNumIn + 1).nOut(newNumOut + 1).build()).build();
+  MultiLayerConfiguration multiConf1=new NeuralNetConfiguration.Builder().list(2).layer(0,new DenseLayer.Builder().nIn(newNumIn).nOut(newNumOut).activation(act).build()).layer(1,new DenseLayer.Builder().nIn(newNumIn + 1).nOut(newNumOut + 1).activation(act).build()).build();
   NeuralNetConfiguration firstLayer=multiConf1.getConf(0);
   NeuralNetConfiguration secondLayer=multiConf1.getConf(1);
   assertFalse(firstLayer.equals(secondLayer));

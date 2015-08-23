@@ -1,3 +1,12 @@
 {
-  return new NeuralNetConfiguration(this);
+  try {
+    NeuralNetConfiguration clone=(NeuralNetConfiguration)super.clone();
+    if (clone.momentumAfter != null)     clone.momentumAfter=new HashMap<>(clone.momentumAfter);
+    if (clone.layer != null)     clone.layer=clone.layer.clone();
+    if (clone.stepFunction != null)     clone.stepFunction=clone.stepFunction.clone();
+    return clone;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException(e);
+  }
 }

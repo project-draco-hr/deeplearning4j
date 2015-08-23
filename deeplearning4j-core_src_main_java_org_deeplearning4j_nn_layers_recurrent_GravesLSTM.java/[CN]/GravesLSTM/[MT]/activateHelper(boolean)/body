@@ -8,7 +8,7 @@
   int miniBatchSize=input.size(0);
   int nIn=inputWeights.size(0);
   if (conf.isUseDropConnect() && training) {
-    if (conf.getDropOut() > 0) {
+    if (conf.getLayer().getDropOut() > 0) {
       inputWeights=Dropout.applyDropConnect(this,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
     }
   }
@@ -38,7 +38,7 @@
     INDArray inputActivations=miniBatchData.mmul(wi).addi(prevOutputActivations.mmul(wI)).addiRowVector(bi);
     INDArrayIndex[] iIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)};
     ifogZ.tensorAlongDimension(t,1,0).put(iIndexes,inputActivations);
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),inputActivations));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),inputActivations));
     ifogA.tensorAlongDimension(t,1,0).put(iIndexes,inputActivations);
     INDArray forgetGateActivations=miniBatchData.mmul(wf).addi(prevOutputActivations.mmul(wF)).addi(prevMemCellState.mulRowVector(wFF.transpose())).addiRowVector(bf);
     INDArrayIndex[] fIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize)};
@@ -56,7 +56,7 @@
     ifogZ.tensorAlongDimension(t,1,0).put(oIndexes,outputGateActivations);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",outputGateActivations));
     ifogA.tensorAlongDimension(t,1,0).put(oIndexes,outputGateActivations);
-    INDArray currMemoryCellActivation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),currentMemoryCellState.dup()));
+    INDArray currMemoryCellActivation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currentMemoryCellState.dup()));
     INDArray currHiddenUnitActivations=outputGateActivations.mul(currMemoryCellActivation);
     outputActivations.tensorAlongDimension(t,1,0).assign(currHiddenUnitActivations);
     memCellState.tensorAlongDimension(t,1,0).assign(currentMemoryCellState);

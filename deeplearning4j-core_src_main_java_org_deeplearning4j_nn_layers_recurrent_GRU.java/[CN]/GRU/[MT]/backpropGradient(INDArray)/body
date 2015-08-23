@@ -55,7 +55,7 @@
       INDArray zuNext=zSliceNext.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
       INDArray zcNext=zSliceNext.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
       INDArray sigmaPrimeZuNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zuNext.dup()).derivative());
-      INDArray sigmaPrimeZcNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zcNext.dup()).derivative());
+      INDArray sigmaPrimeZcNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zcNext.dup()).derivative());
       INDArray temp=arNext.mulRowVector(wCdiag).addi(wC.mmul(aOut.mul(sigmaPrimeZr).transpose()).transpose().muliRowVector(wRdiag));
       dOutNextdOut=auNext.add(aOut.sub(acNext).muli(sigmaPrimeZuNext).muliRowVector(wUdiag));
       dOutNextdOut.addi(auNext.rsub(1.0).muli(sigmaPrimeZcNext).muli(temp));
@@ -67,7 +67,7 @@
     INDArray ac=aSlice.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
     INDArray deltaU=deltaOut.mul(sigmaPrimeZu).muli(prevOut.sub(ac));
     INDArray zc=zSlice.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
-    INDArray sigmaPrimeZc=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getActivationFunction(),zc.dup()).derivative());
+    INDArray sigmaPrimeZc=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zc.dup()).derivative());
     INDArray au=aSlice.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
     INDArray deltaC=deltaOut.mul(sigmaPrimeZc).muli(au.rsub(1.0));
     INDArray deltaR=deltaC.mulRowVector(wCdiag).muli(prevOut).muli(sigmaPrimeZr);

@@ -5,7 +5,7 @@
   int gruLayerSize=2;
   int nOut=2;
   int miniBatchSize=1;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).regularization(false).updater(Updater.NONE).seed(12345L).list(3).layer(0,new GRU.Builder().nIn(nIn).nOut(gruLayerSize).activation("tanh").build()).layer(1,new GRU.Builder().nIn(gruLayerSize).nOut(gruLayerSize).activation("tanh").build()).layer(2,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(gruLayerSize).nOut(nOut).build()).inputPreProcessor(2,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(3).layer(0,new GRU.Builder().nIn(nIn).nOut(gruLayerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(1,new GRU.Builder().nIn(gruLayerSize).nOut(gruLayerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(2,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(gruLayerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).inputPreProcessor(2,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   mln.init();
   Random r=new Random(12345L);

@@ -1,12 +1,13 @@
 {
-  Distribution dist=Distributions.createDistribution(conf.getDist());
-  int nL=conf.getNOut();
-  int nLast=conf.getNIn();
-  conf.addVariable(RECURRENT_WEIGHT_KEY);
+  org.deeplearning4j.nn.conf.layers.GRU layerConf=(org.deeplearning4j.nn.conf.layers.GRU)conf.getLayer();
+  Distribution dist=Distributions.createDistribution(layerConf.getDist());
+  int nL=layerConf.getNOut();
+  int nLast=layerConf.getNIn();
   conf.addVariable(INPUT_WEIGHT_KEY);
+  conf.addVariable(RECURRENT_WEIGHT_KEY);
   conf.addVariable(BIAS_KEY);
-  params.put(INPUT_WEIGHT_KEY,WeightInitUtil.initWeights(nLast,3 * nL,conf.getWeightInit(),dist));
-  params.put(RECURRENT_WEIGHT_KEY,WeightInitUtil.initWeights(nL,3 * nL,conf.getWeightInit(),dist));
+  params.put(INPUT_WEIGHT_KEY,WeightInitUtil.initWeights(nLast,3 * nL,layerConf.getWeightInit(),dist));
+  params.put(RECURRENT_WEIGHT_KEY,WeightInitUtil.initWeights(nL,3 * nL,layerConf.getWeightInit(),dist));
   params.put(BIAS_KEY,Nd4j.zeros(1,3 * nL));
   params.get(INPUT_WEIGHT_KEY).data().persist();
   params.get(RECURRENT_WEIGHT_KEY).data().persist();

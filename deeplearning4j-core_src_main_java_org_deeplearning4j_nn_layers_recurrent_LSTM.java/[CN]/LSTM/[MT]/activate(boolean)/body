@@ -3,9 +3,9 @@
   INDArray decoderWeights=getParam(LSTMParamInitializer.INPUT_WEIGHT_KEY);
   INDArray recurrentWeights=getParam(LSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   INDArray decoderBias=getParam(LSTMParamInitializer.BIAS_KEY);
-  if (conf.getDropOut() > 0) {
-    double scale=1 / (1 - conf.getDropOut());
-    u=Nd4j.rand(input.shape()).lti(1 - conf.getDropOut()).muli(scale);
+  if (conf.getLayer().getDropOut() > 0) {
+    double scale=1 / (1 - conf.getLayer().getDropOut());
+    u=Nd4j.rand(input.shape()).lti(1 - conf.getLayer().getDropOut()).muli(scale);
     input.muli(u);
   }
   int sequenceLen=input.rows();
@@ -27,7 +27,7 @@
     iFogA.slice(t).put(new INDArrayIndex[]{interval(3 * hiddenLayerSize,iFogA.columns() - 1)},tanh(iFogZ.slice(t).get(interval(3 * hiddenLayerSize,iFogZ.columns() - 1))));
     memCellActivations.putRow(t,iFogA.slice(t).get(interval(0,hiddenLayerSize)).mul(iFogA.slice(t).get(interval(3 * hiddenLayerSize,iFogA.columns()))));
     if (t > 0)     memCellActivations.slice(t).addi(iFogA.slice(t).get(interval(hiddenLayerSize,2 * hiddenLayerSize)).mul(prevMemCellActivations));
-    if (conf.getActivationFunction().equals("tanh")) {
+    if (conf.getLayer().getActivationFunction().equals("tanh")) {
       outputActivations.slice(t).assign(iFogA.slice(t).get(interval(2 * hiddenLayerSize,3 * hiddenLayerSize)).mul(tanh(memCellActivations.getRow(t))));
     }
  else {
@@ -35,8 +35,8 @@
     }
   }
   if (conf.isUseDropConnect() && training) {
-    if (conf.getDropOut() > 0) {
-      u2=Dropout.applyDropout(outputActivations,conf.getDropOut(),u2);
+    if (conf.getLayer().getDropOut() > 0) {
+      u2=Dropout.applyDropout(outputActivations,conf.getLayer().getDropOut(),u2);
       outputActivations.muli(u2);
     }
   }

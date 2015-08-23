@@ -1,14 +1,12 @@
 {
-  Builder b=new Builder();
-  Field[] fields=Builder.class.getDeclaredFields();
-  for (  Field f : fields) {
-    try {
-      f.setAccessible(true);
-      f.set(b,f.get(this));
-    }
- catch (    IllegalAccessException e) {
-      e.printStackTrace();
-    }
+  try {
+    Builder clone=(Builder)super.clone();
+    if (clone.momentumAfter != null)     clone.momentumAfter=new HashMap<>(clone.momentumAfter);
+    if (clone.layer != null)     clone.layer=clone.layer.clone();
+    if (clone.stepFunction != null)     clone.stepFunction=clone.stepFunction.clone();
+    return clone;
   }
-  return b;
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException(e);
+  }
 }
