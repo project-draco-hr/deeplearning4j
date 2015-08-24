@@ -9,7 +9,7 @@
   for (int j=0; j < getLayers().length; j++) {
     weights.add(getLayers()[j].getParam(DefaultParamInitializer.WEIGHT_KEY));
     biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
-    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
+    activationFunctions.add(getLayers()[j].conf().getLayer().getActivationFunction());
   }
   INDArray rix=rActivations.get(rActivations.size() - 1).divi((double)input.slices());
   LinAlgExceptions.assertValidNum(rix);

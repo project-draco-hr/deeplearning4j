@@ -1,5 +1,6 @@
 {
-  INDArray ret=Nd4j.valueArrayOf(conf.getNOut(),0.0);
+  org.deeplearning4j.nn.conf.layers.FeedForwardLayer layerConf=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)conf.getLayer();
+  INDArray ret=Nd4j.valueArrayOf(layerConf.getNOut(),0.0);
   ret.data().persist();
   return ret;
 }

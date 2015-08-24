@@ -1,7 +1,7 @@
 {
   if (input == null)   throw new IllegalArgumentException("No null input allowed");
   INDArray preOutput=preOutput(input,training);
-  if (conf.getActivationFunction().equals("softmax")) {
+  if (conf.getLayer().getActivationFunction().equals("softmax")) {
     SoftMax softMax=new SoftMax(preOutput);
     softMax.exec(1);
     return softMax.z();

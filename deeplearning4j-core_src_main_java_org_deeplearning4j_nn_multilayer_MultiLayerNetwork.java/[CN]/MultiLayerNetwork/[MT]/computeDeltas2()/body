@@ -10,7 +10,7 @@
   for (int j=0; j < getLayers().length; j++) {
     weights.add(getLayers()[j].getParam(DefaultParamInitializer.WEIGHT_KEY));
     biases.add(getLayers()[j].getParam(DefaultParamInitializer.BIAS_KEY));
-    activationFunctions.add(getLayers()[j].conf().getActivationFunction());
+    activationFunctions.add(getLayers()[j].conf().getLayer().getActivationFunction());
   }
   for (int i=weights.size() - 1; i >= 0; i--) {
     deltas[i]=activations.get(i).transpose().mmul(ix);

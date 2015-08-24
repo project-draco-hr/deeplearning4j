@@ -1,5 +1,5 @@
 {
-  ConvolutionLayer layer=new ConvolutionLayer.Builder(kernelSize,stride,padding).nIn(nIn).nOut(nOut).build();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().activationFunction("sigmoid").iterations(1).layer(layer).build();
+  ConvolutionLayer layer=new ConvolutionLayer.Builder(kernelSize,stride,padding).nIn(nIn).nOut(nOut).activation("sigmoid").build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(layer).build();
   return LayerFactories.getFactory(conf).create(conf);
 }

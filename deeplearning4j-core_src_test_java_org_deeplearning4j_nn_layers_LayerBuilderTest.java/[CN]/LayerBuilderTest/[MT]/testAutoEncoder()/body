@@ -1,6 +1,0 @@
-{
-  AutoEncoder enc=new AutoEncoder.Builder(corruptionLevel).sparsity(sparsity).build();
-  checkSerialization(enc);
-  assertEquals(corruptionLevel,enc.getCorruptionLevel(),DELTA);
-  assertEquals(sparsity,enc.getSparsity(),DELTA);
-}

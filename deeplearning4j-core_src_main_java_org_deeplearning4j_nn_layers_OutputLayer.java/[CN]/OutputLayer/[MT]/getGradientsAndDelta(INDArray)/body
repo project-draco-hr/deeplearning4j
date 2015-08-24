@@ -1,8 +1,8 @@
 {
-  INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getActivationFunction(),preOut.dup()));
+  INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),preOut.dup()));
   INDArray outSubLabels=output.sub(labels);
   Gradient gradient=new DefaultGradient();
-switch (conf.getLossFunction()) {
+switch (layerConf().getLossFunction()) {
 case MCXENT:
     gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.transpose().mmul(outSubLabels));
   gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
@@ -35,6 +35,6 @@ gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,input.tran
 gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,outSubLabels.sum(0));
 return new Triple<>(gradient,outSubLabels,output);
 default :
-throw new IllegalStateException("Invalid loss function: " + conf.getLossFunction());
+throw new IllegalStateException("Invalid loss function: " + layerConf().getLossFunction());
 }
 }

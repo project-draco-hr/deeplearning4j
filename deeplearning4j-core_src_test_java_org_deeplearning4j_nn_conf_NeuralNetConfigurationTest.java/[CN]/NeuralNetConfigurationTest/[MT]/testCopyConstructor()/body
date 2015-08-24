@@ -1,5 +1,0 @@
-{
-  NeuralNetConfiguration conf=getRBMConfig(1,1,WeightInit.UNIFORM);
-  NeuralNetConfiguration conf2=new NeuralNetConfiguration(conf);
-  assertEquals(conf,conf2);
-}
