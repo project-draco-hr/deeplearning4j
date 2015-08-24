@@ -1,0 +1,13 @@
+{
+  SolverParameter solver;
+  if (textFormatSolver instanceof String) {
+    solver=reader.readTextFormatSolver((String)textFormatSolver);
+  }
+ else   if (textFormatSolver instanceof File) {
+    solver=reader.readTextFormatSolver((File)textFormatSolver);
+  }
+ else {
+    throw new IllegalStateException("textFormatSolver must be of type String (file path) or File.");
+  }
+  return solver;
+}

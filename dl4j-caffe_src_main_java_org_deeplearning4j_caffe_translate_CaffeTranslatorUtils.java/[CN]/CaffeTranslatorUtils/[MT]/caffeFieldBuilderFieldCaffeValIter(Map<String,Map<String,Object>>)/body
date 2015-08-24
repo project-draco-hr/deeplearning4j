@@ -1,0 +1,13 @@
+{
+  List<List<Object>> lst=new ArrayList<>();
+  for (  Map.Entry<String,Map<String,Object>> entry : paramMap.entrySet()) {
+    String caffeField=entry.getKey();
+    Map.Entry builderField2CaffeVal=entry.getValue().entrySet().iterator().next();
+    String builderField=(String)builderField2CaffeVal.getKey();
+    if (builderField != null && !builderField.isEmpty()) {
+      Object caffeVal=builderField2CaffeVal.getValue();
+      lst.add(Arrays.asList(caffeField,builderField,caffeVal));
+    }
+  }
+  return lst;
+}

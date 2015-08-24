@@ -1,0 +1,23 @@
+{
+  Set<CaffeNode> startNodeSet=graph.getStartNodeSet();
+  Set<CaffeNode> endNodeSet=graph.getEndNodeSet();
+  for (  CaffeNode startNode : startNodeSet) {
+    if (startNode.getLayerSubType().equals(LayerSubType.CONNECTOR)) {
+      graph.removeStartNode(startNode);
+      Set<CaffeNode> topSet=forwardTrack(startNode,graph);
+      for (      CaffeNode topNode : topSet) {
+        graph.addStartNode(topNode);
+      }
+    }
+  }
+  for (  CaffeNode endNode : endNodeSet) {
+    if (endNode.getLayerSubType().equals(LayerSubType.CONNECTOR)) {
+      graph.removeEndNode(endNode);
+      Set<CaffeNode> bottomSet=backwardTrack(endNode);
+      for (      CaffeNode bottomNode : bottomSet) {
+        graph.addEndNode(bottomNode);
+        graph.removeStartNode(bottomNode);
+      }
+    }
+  }
+}

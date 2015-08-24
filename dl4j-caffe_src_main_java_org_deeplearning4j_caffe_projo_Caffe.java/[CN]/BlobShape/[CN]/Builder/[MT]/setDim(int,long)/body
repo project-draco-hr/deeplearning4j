@@ -1,0 +1,6 @@
+{
+  ensureDimIsMutable();
+  dim_.set(index,value);
+  onChanged();
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (shapeBuilder_ == null) {
+    ensureShapeIsMutable();
+    shape_.remove(index);
+    onChanged();
+  }
+ else {
+    shapeBuilder_.remove(index);
+  }
+  return this;
+}

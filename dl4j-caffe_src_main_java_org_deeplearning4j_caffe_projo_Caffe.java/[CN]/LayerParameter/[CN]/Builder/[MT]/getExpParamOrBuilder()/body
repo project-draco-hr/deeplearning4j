@@ -1,0 +1,8 @@
+{
+  if (expParamBuilder_ != null) {
+    return expParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return expParam_;
+  }
+}

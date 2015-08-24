@@ -1,0 +1,260 @@
+{
+  super.clear();
+  bottom_=com.google.protobuf.LazyStringArrayList.EMPTY;
+  bitField0_=(bitField0_ & ~0x00000001);
+  top_=com.google.protobuf.LazyStringArrayList.EMPTY;
+  bitField0_=(bitField0_ & ~0x00000002);
+  name_="";
+  bitField0_=(bitField0_ & ~0x00000004);
+  if (includeBuilder_ == null) {
+    include_=java.util.Collections.emptyList();
+    bitField0_=(bitField0_ & ~0x00000008);
+  }
+ else {
+    includeBuilder_.clear();
+  }
+  if (excludeBuilder_ == null) {
+    exclude_=java.util.Collections.emptyList();
+    bitField0_=(bitField0_ & ~0x00000010);
+  }
+ else {
+    excludeBuilder_.clear();
+  }
+  type_=Caffe.V1LayerParameter.LayerType.NONE;
+  bitField0_=(bitField0_ & ~0x00000020);
+  if (blobsBuilder_ == null) {
+    blobs_=java.util.Collections.emptyList();
+    bitField0_=(bitField0_ & ~0x00000040);
+  }
+ else {
+    blobsBuilder_.clear();
+  }
+  param_=com.google.protobuf.LazyStringArrayList.EMPTY;
+  bitField0_=(bitField0_ & ~0x00000080);
+  blobShareMode_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00000100);
+  blobsLr_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00000200);
+  weightDecay_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00000400);
+  lossWeight_=java.util.Collections.emptyList();
+  bitField0_=(bitField0_ & ~0x00000800);
+  if (accuracyParamBuilder_ == null) {
+    accuracyParam_=Caffe.AccuracyParameter.getDefaultInstance();
+  }
+ else {
+    accuracyParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00001000);
+  if (argmaxParamBuilder_ == null) {
+    argmaxParam_=Caffe.ArgMaxParameter.getDefaultInstance();
+  }
+ else {
+    argmaxParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00002000);
+  if (concatParamBuilder_ == null) {
+    concatParam_=Caffe.ConcatParameter.getDefaultInstance();
+  }
+ else {
+    concatParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00004000);
+  if (contrastiveLossParamBuilder_ == null) {
+    contrastiveLossParam_=Caffe.ContrastiveLossParameter.getDefaultInstance();
+  }
+ else {
+    contrastiveLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00008000);
+  if (convolutionParamBuilder_ == null) {
+    convolutionParam_=Caffe.ConvolutionParameter.getDefaultInstance();
+  }
+ else {
+    convolutionParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00010000);
+  if (dataParamBuilder_ == null) {
+    dataParam_=Caffe.DataParameter.getDefaultInstance();
+  }
+ else {
+    dataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00020000);
+  if (dropoutParamBuilder_ == null) {
+    dropoutParam_=Caffe.DropoutParameter.getDefaultInstance();
+  }
+ else {
+    dropoutParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00040000);
+  if (dummyDataParamBuilder_ == null) {
+    dummyDataParam_=Caffe.DummyDataParameter.getDefaultInstance();
+  }
+ else {
+    dummyDataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00080000);
+  if (eltwiseParamBuilder_ == null) {
+    eltwiseParam_=Caffe.EltwiseParameter.getDefaultInstance();
+  }
+ else {
+    eltwiseParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00100000);
+  if (expParamBuilder_ == null) {
+    expParam_=Caffe.ExpParameter.getDefaultInstance();
+  }
+ else {
+    expParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00200000);
+  if (hdf5DataParamBuilder_ == null) {
+    hdf5DataParam_=Caffe.HDF5DataParameter.getDefaultInstance();
+  }
+ else {
+    hdf5DataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00400000);
+  if (hdf5OutputParamBuilder_ == null) {
+    hdf5OutputParam_=Caffe.HDF5OutputParameter.getDefaultInstance();
+  }
+ else {
+    hdf5OutputParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00800000);
+  if (hingeLossParamBuilder_ == null) {
+    hingeLossParam_=Caffe.HingeLossParameter.getDefaultInstance();
+  }
+ else {
+    hingeLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x01000000);
+  if (imageDataParamBuilder_ == null) {
+    imageDataParam_=Caffe.ImageDataParameter.getDefaultInstance();
+  }
+ else {
+    imageDataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x02000000);
+  if (infogainLossParamBuilder_ == null) {
+    infogainLossParam_=Caffe.InfogainLossParameter.getDefaultInstance();
+  }
+ else {
+    infogainLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x04000000);
+  if (innerProductParamBuilder_ == null) {
+    innerProductParam_=Caffe.InnerProductParameter.getDefaultInstance();
+  }
+ else {
+    innerProductParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x08000000);
+  if (lrnParamBuilder_ == null) {
+    lrnParam_=Caffe.LRNParameter.getDefaultInstance();
+  }
+ else {
+    lrnParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x10000000);
+  if (memoryDataParamBuilder_ == null) {
+    memoryDataParam_=Caffe.MemoryDataParameter.getDefaultInstance();
+  }
+ else {
+    memoryDataParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x20000000);
+  if (mvnParamBuilder_ == null) {
+    mvnParam_=Caffe.MVNParameter.getDefaultInstance();
+  }
+ else {
+    mvnParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x40000000);
+  if (poolingParamBuilder_ == null) {
+    poolingParam_=Caffe.PoolingParameter.getDefaultInstance();
+  }
+ else {
+    poolingParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x80000000);
+  if (powerParamBuilder_ == null) {
+    powerParam_=Caffe.PowerParameter.getDefaultInstance();
+  }
+ else {
+    powerParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000001);
+  if (reluParamBuilder_ == null) {
+    reluParam_=Caffe.ReLUParameter.getDefaultInstance();
+  }
+ else {
+    reluParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000002);
+  if (sigmoidParamBuilder_ == null) {
+    sigmoidParam_=Caffe.SigmoidParameter.getDefaultInstance();
+  }
+ else {
+    sigmoidParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000004);
+  if (softmaxParamBuilder_ == null) {
+    softmaxParam_=Caffe.SoftmaxParameter.getDefaultInstance();
+  }
+ else {
+    softmaxParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000008);
+  if (sliceParamBuilder_ == null) {
+    sliceParam_=Caffe.SliceParameter.getDefaultInstance();
+  }
+ else {
+    sliceParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000010);
+  if (tanhParamBuilder_ == null) {
+    tanhParam_=Caffe.TanHParameter.getDefaultInstance();
+  }
+ else {
+    tanhParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000020);
+  if (thresholdParamBuilder_ == null) {
+    thresholdParam_=Caffe.ThresholdParameter.getDefaultInstance();
+  }
+ else {
+    thresholdParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000040);
+  if (windowDataParamBuilder_ == null) {
+    windowDataParam_=Caffe.WindowDataParameter.getDefaultInstance();
+  }
+ else {
+    windowDataParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000080);
+  if (transformParamBuilder_ == null) {
+    transformParam_=Caffe.TransformationParameter.getDefaultInstance();
+  }
+ else {
+    transformParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000100);
+  if (lossParamBuilder_ == null) {
+    lossParam_=Caffe.LossParameter.getDefaultInstance();
+  }
+ else {
+    lossParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000200);
+  if (layerBuilder_ == null) {
+    layer_=Caffe.V0LayerParameter.getDefaultInstance();
+  }
+ else {
+    layerBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000400);
+  return this;
+}

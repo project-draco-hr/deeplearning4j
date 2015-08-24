@@ -1,0 +1,7 @@
+{
+  if (trainNetParamBuilder_ == null) {
+    trainNetParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.NetParameter,Caffe.NetParameter.Builder,Caffe.NetParameterOrBuilder>(getTrainNetParam(),getParentForChildren(),isClean());
+    trainNetParam_=null;
+  }
+  return trainNetParamBuilder_;
+}

@@ -1,0 +1,8 @@
+{
+  if (includeBuilder_ == null) {
+    return include_.size();
+  }
+ else {
+    return includeBuilder_.getCount();
+  }
+}

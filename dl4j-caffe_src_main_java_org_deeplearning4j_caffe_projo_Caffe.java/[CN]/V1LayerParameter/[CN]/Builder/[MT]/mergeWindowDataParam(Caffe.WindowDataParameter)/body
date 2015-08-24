@@ -1,0 +1,16 @@
+{
+  if (windowDataParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000080) == 0x00000080) && windowDataParam_ != Caffe.WindowDataParameter.getDefaultInstance()) {
+      windowDataParam_=Caffe.WindowDataParameter.newBuilder(windowDataParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      windowDataParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    windowDataParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000080;
+  return this;
+}

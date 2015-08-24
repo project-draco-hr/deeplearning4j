@@ -1,0 +1,14 @@
+{
+  if (other == Caffe.LogParameter.getDefaultInstance())   return this;
+  if (other.hasBase()) {
+    setBase(other.getBase());
+  }
+  if (other.hasScale()) {
+    setScale(other.getScale());
+  }
+  if (other.hasShift()) {
+    setShift(other.getShift());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

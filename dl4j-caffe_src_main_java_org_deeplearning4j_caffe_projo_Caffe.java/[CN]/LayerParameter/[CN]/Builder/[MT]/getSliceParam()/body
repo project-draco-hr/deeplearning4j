@@ -1,0 +1,8 @@
+{
+  if (sliceParamBuilder_ == null) {
+    return sliceParam_;
+  }
+ else {
+    return sliceParamBuilder_.getMessage();
+  }
+}

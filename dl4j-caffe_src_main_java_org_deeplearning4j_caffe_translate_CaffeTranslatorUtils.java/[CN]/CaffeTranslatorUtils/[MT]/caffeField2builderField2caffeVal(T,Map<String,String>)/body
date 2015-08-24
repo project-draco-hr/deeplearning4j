@@ -1,0 +1,20 @@
+{
+  Map<String,Map<String,Object>> paramMap=new HashMap<>();
+  for (  Map.Entry<String,String> entry : paramMappings.entrySet()) {
+    String caffeFieldName=entry.getKey();
+    String builderFieldName=entry.getValue();
+    if (builderFieldName != null && !builderFieldName.isEmpty()) {
+      try {
+        Field caffeField=FieldUtils.getField(caffeInst.getClass(),caffeFieldName,true);
+        Object caffeFieldValue=caffeField.get(caffeInst);
+        Map<String,Object> innerMap=new HashMap<>();
+        innerMap.put(builderFieldName,caffeFieldValue);
+        paramMap.put(caffeFieldName,innerMap);
+      }
+ catch (      NoSuchElementException e) {
+        throw new NoSuchElementException(String.format("NoSuchElementException: %s is not a caffe field",caffeFieldName));
+      }
+    }
+  }
+  return paramMap;
+}

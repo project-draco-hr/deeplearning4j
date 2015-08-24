@@ -1,0 +1,6 @@
+{
+  NetParameter net=CaffeTestUtil.getNet();
+  Graph graph=new CaffeLayerGraphConversion(net).convert();
+  System.out.println(graph);
+  assertTrue(graph != null);
+}

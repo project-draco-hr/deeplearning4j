@@ -1,0 +1,6 @@
+{
+  ensureTestNetIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,testNet_);
+  onChanged();
+  return this;
+}

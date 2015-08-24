@@ -1,0 +1,7 @@
+{
+  if (testStateBuilder_ == null) {
+    testStateBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.NetState,Caffe.NetState.Builder,Caffe.NetStateOrBuilder>(testState_,((bitField0_ & 0x00000080) == 0x00000080),getParentForChildren(),isClean());
+    testState_=null;
+  }
+  return testStateBuilder_;
+}

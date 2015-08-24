@@ -1,0 +1,5 @@
+{
+  bitField1_|=0x00000002;
+  onChanged();
+  return getMvnParamFieldBuilder().getBuilder();
+}

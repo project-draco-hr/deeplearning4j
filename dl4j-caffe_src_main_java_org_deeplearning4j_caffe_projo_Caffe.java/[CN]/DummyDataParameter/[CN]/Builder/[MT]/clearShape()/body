@@ -1,0 +1,11 @@
+{
+  if (shapeBuilder_ == null) {
+    shape_=java.util.Collections.emptyList();
+    bitField0_=(bitField0_ & ~0x00000002);
+    onChanged();
+  }
+ else {
+    shapeBuilder_.clear();
+  }
+  return this;
+}

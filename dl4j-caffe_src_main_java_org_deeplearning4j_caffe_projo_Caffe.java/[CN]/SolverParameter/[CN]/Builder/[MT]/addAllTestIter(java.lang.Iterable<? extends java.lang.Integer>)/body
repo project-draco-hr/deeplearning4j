@@ -1,0 +1,6 @@
+{
+  ensureTestIterIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,testIter_);
+  onChanged();
+  return this;
+}

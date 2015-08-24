@@ -1,0 +1,21 @@
+{
+  layerMapping=new HashMap<LayerSubType,Object>(){
+{
+      put(LayerSubType.CONVOLUTION,new ConvolutionLayer.Builder());
+      put(LayerSubType.POOLING,new SubsamplingLayer.Builder());
+      put(LayerSubType.RELU,new DenseLayer.Builder().activation("relu"));
+      put(LayerSubType.SIGMOID,new DenseLayer.Builder().activation("sigmoid"));
+      put(LayerSubType.TANH,new DenseLayer.Builder().activation("tanh"));
+      put(LayerSubType.SOFTMAX,new DenseLayer.Builder().activation("softmax"));
+      put(LayerSubType.SOFTMAXWITHLOSS,new OutputLayer.Builder().lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).activation("softmax"));
+      put(LayerSubType.EUCLIDEANLOSS,new OutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE));
+      put(LayerSubType.SIGMOIDCROSSENTROPYLOSS,new OutputLayer.Builder().lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY));
+      put(LayerSubType.FLATTEN,null);
+      put(LayerSubType.RESHAPE,null);
+      put(LayerSubType.CONCAT,null);
+      put(LayerSubType.SLICE,null);
+      put(LayerSubType.SPLIT,null);
+    }
+  }
+;
+}

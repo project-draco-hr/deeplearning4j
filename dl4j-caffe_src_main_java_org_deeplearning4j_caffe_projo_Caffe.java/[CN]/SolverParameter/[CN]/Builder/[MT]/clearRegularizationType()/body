@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00400000);
+  regularizationType_=getDefaultInstance().getRegularizationType();
+  onChanged();
+  return this;
+}

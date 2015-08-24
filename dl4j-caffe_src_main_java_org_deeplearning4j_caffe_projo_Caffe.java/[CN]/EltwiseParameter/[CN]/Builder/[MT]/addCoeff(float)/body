@@ -1,0 +1,6 @@
+{
+  ensureCoeffIsMutable();
+  coeff_.add(value);
+  onChanged();
+  return this;
+}

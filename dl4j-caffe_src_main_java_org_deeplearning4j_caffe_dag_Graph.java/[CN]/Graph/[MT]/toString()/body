@@ -1,0 +1,12 @@
+{
+  String sizeString=String.format("\tSize: %s\n",graphSize());
+  String adjacencyString="";
+  for (  Map.Entry<T,Set<T>> entry : adjacencyListMap.entrySet()) {
+    String curNode=entry.getKey().toString();
+    String listNodes=Arrays.deepToString(entry.getValue().toArray());
+    adjacencyString+=String.format("\t%s -> %s\n",curNode,listNodes);
+  }
+  String[] classList=this.getClass().toString().split("\\.");
+  String className=classList[classList.length - 1];
+  return String.format("%s {\n%s%s}",className,sizeString,adjacencyString);
+}

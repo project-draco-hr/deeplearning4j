@@ -1,0 +1,39 @@
+{
+  final Map<String,String> convolutionMapping=new HashMap<String,String>(){
+{
+      put("numOutput_","nOut");
+      put("kernelSize_","kernelSize");
+      put("pad_","");
+      put("stride_","");
+      put("weightFiller_","weightInit");
+      put("biasFiller_","");
+      put("group_","");
+    }
+  }
+;
+  final Map<String,String> poolMapping=new HashMap<String,String>(){
+{
+      put("pool_","poolType");
+      put("kernelSize_","kernelSize");
+      put("stride_","stride");
+    }
+  }
+;
+  final Map<String,String> innerProductMapping=new HashMap<String,String>(){
+{
+      put("numOutput_","");
+      put("weightFiller_","weightInit");
+      put("biasFiller_","");
+      put("biasTerm_","");
+    }
+  }
+;
+  layerParamMapping=new HashMap<LayerSubType,Map<String,String>>(){
+{
+      put(LayerSubType.CONVOLUTION,convolutionMapping);
+      put(LayerSubType.POOLING,poolMapping);
+      put(LayerSubType.INNERPRODUCT,innerProductMapping);
+    }
+  }
+;
+}

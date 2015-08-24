@@ -1,0 +1,7 @@
+{
+  if (softmaxParamBuilder_ == null) {
+    softmaxParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.SoftmaxParameter,Caffe.SoftmaxParameter.Builder,Caffe.SoftmaxParameterOrBuilder>(getSoftmaxParam(),getParentForChildren(),isClean());
+    softmaxParam_=null;
+  }
+  return softmaxParamBuilder_;
+}

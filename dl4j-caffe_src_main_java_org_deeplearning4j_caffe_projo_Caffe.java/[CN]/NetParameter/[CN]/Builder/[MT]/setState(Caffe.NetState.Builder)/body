@@ -1,0 +1,11 @@
+{
+  if (stateBuilder_ == null) {
+    state_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    stateBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x00000020;
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (testNetParamBuilder_ == null) {
+    ensureTestNetParamIsMutable();
+    testNetParam_.remove(index);
+    onChanged();
+  }
+ else {
+    testNetParamBuilder_.remove(index);
+  }
+  return this;
+}

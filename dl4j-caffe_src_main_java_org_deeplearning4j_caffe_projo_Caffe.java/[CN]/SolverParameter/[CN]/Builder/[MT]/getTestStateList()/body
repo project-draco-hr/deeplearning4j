@@ -1,0 +1,8 @@
+{
+  if (testStateBuilder_ == null) {
+    return java.util.Collections.unmodifiableList(testState_);
+  }
+ else {
+    return testStateBuilder_.getMessageList();
+  }
+}

@@ -1,0 +1,8 @@
+{
+  if (shapeBuilder_ == null) {
+    return shape_;
+  }
+ else {
+    return shapeBuilder_.getMessage();
+  }
+}

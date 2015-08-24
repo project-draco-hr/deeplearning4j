@@ -1,0 +1,24 @@
+{
+  super.clear();
+  numOutput_=0;
+  bitField0_=(bitField0_ & ~0x00000001);
+  biasTerm_=true;
+  bitField0_=(bitField0_ & ~0x00000002);
+  if (weightFillerBuilder_ == null) {
+    weightFiller_=Caffe.FillerParameter.getDefaultInstance();
+  }
+ else {
+    weightFillerBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000004);
+  if (biasFillerBuilder_ == null) {
+    biasFiller_=Caffe.FillerParameter.getDefaultInstance();
+  }
+ else {
+    biasFillerBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x00000008);
+  axis_=1;
+  bitField0_=(bitField0_ & ~0x00000010);
+  return this;
+}

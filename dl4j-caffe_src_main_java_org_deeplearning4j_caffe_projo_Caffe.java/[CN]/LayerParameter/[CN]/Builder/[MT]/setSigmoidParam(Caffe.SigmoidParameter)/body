@@ -1,0 +1,14 @@
+{
+  if (sigmoidParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    sigmoidParam_=value;
+    onChanged();
+  }
+ else {
+    sigmoidParamBuilder_.setMessage(value);
+  }
+  bitField1_|=0x00000200;
+  return this;
+}

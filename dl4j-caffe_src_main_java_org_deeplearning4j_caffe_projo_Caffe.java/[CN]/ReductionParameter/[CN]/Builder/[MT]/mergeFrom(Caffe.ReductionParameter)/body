@@ -1,0 +1,14 @@
+{
+  if (other == Caffe.ReductionParameter.getDefaultInstance())   return this;
+  if (other.hasOperation()) {
+    setOperation(other.getOperation());
+  }
+  if (other.hasAxis()) {
+    setAxis(other.getAxis());
+  }
+  if (other.hasCoeff()) {
+    setCoeff(other.getCoeff());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

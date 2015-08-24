@@ -1,0 +1,8 @@
+{
+  if (eltwiseParamBuilder_ != null) {
+    return eltwiseParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return eltwiseParam_;
+  }
+}

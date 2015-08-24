@@ -1,0 +1,6 @@
+{
+  ensureFloatDataIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,floatData_);
+  onChanged();
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (testStateBuilder_ == null) {
+    ensureTestStateIsMutable();
+    testState_.add(index,builderForValue.build());
+    onChanged();
+  }
+ else {
+    testStateBuilder_.addMessage(index,builderForValue.build());
+  }
+  return this;
+}

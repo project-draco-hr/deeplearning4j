@@ -1,0 +1,6 @@
+{
+  ensureBlobShareModeIsMutable();
+  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,blobShareMode_);
+  onChanged();
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (memoryDataParamBuilder_ == null) {
+    memoryDataParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    memoryDataParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x20000000;
+  return this;
+}
