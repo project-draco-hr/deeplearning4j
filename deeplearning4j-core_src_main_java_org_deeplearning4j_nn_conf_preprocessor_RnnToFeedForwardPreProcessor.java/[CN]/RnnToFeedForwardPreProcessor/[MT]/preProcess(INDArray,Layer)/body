@@ -1,0 +1,6 @@
+{
+  if (input.rank() != 3)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 3 (i.e., activations for RNN layer)");
+  int[] shape=input.shape();
+  INDArray permuted=input.permute(0,2,1);
+  return permuted.reshape(shape[0] * shape[2],shape[1]);
+}

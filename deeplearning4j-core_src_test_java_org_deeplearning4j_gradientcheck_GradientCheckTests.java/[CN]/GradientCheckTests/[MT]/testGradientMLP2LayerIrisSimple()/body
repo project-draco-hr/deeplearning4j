@@ -1,5 +1,5 @@
 {
-  String[] activFns={"sigmoid","tanh","relu","hardtanh"};
+  String[] activFns={"sigmoid","tanh","relu","hardtanh","softplus"};
   boolean[] characteristic={false,true};
   LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
   String[] outputActivations={"softmax","tanh"};
@@ -7,12 +7,6 @@
   ds.normalizeZeroMeanZeroUnitVariance();
   INDArray input=ds.getFeatureMatrix();
   INDArray labels=ds.getLabels();
-  ServiceLoader<Nd4jBackend> loader=ServiceLoader.load(Nd4jBackend.class);
-  Iterator<Nd4jBackend> backendIterator=loader.iterator();
-  while (backendIterator.hasNext()) {
-    Nd4jBackend be=backendIterator.next();
-    System.out.println(be + "\t" + be.isAvailable()+ "\t"+ be.getPriority());
-  }
   for (  String afn : activFns) {
     for (    boolean doLearningFirst : characteristic) {
       for (int i=0; i < lossFunctions.length; i++) {
