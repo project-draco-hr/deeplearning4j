@@ -1,0 +1,6 @@
+{
+  Pair<Gradient,INDArray> gradAndEpsilonNext=super.backpropGradient(epsilon);
+  INDArray epsilon2d=gradAndEpsilonNext.getSecond();
+  INDArray epsilon3d=reshape2dTo3d(epsilon2d);
+  return new Pair<>(gradAndEpsilonNext.getFirst(),epsilon3d);
+}

@@ -14,12 +14,14 @@
         }
       }
     }
-    INDArray labels=Nd4j.zeros(miniBatchSize[i] * timeSeriesLength[i],nOut);
-    for (int m=0; m < labels.size(0); m++) {
-      int idx=r.nextInt(nOut);
-      labels.putScalar(new int[]{m,idx},1.0f);
+    INDArray labels=Nd4j.zeros(miniBatchSize[i],nOut,timeSeriesLength[i]);
+    for (int m=0; m < miniBatchSize[i]; m++) {
+      for (int j=0; j < timeSeriesLength[i]; j++) {
+        int idx=r.nextInt(nOut);
+        labels.putScalar(new int[]{m,idx,j},1.0f);
+      }
     }
-    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
+    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
     MultiLayerNetwork mln=new MultiLayerNetwork(conf);
     mln.init();
     boolean gradOK=GradientCheckUtil.checkGradients(mln,DEFAULT_EPS,DEFAULT_MAX_REL_ERROR,PRINT_RESULTS,RETURN_ON_FIRST_FAILURE,input,labels,true);

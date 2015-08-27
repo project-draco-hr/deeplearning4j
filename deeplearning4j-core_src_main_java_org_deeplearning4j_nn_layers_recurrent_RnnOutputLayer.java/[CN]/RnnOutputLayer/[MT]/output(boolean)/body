@@ -1,0 +1,4 @@
+{
+  INDArray output2d=super.output(training);
+  return reshape2dTo3d(output2d);
+}

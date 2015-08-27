@@ -1,0 +1,7 @@
+{
+  Evaluation eval=new Evaluation();
+  if (examples.rank() == 3)   examples=reshape3dTo2d(examples);
+  if (labels.rank() == 3)   labels=reshape3dTo2d(labels);
+  eval.eval(labels,labelProbabilities(examples));
+  return eval.f1();
+}

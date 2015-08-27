@@ -5,7 +5,7 @@
   int layerSize=2;
   int nOut=2;
   int miniBatchSize=5;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(3).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(1,new GravesLSTM.Builder().nIn(layerSize).nOut(layerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(2,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).inputPreProcessor(2,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(3).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(1,new GravesLSTM.Builder().nIn(layerSize).nOut(layerSize).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).layer(2,new RnnOutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1.0)).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   mln.init();
   Random r=new Random(12345L);
@@ -17,10 +17,12 @@
       }
     }
   }
-  INDArray labels=Nd4j.zeros(miniBatchSize * timeSeriesLength,nOut);
-  for (int i=0; i < labels.size(0); i++) {
-    int idx=r.nextInt(nOut);
-    labels.putScalar(new int[]{i,idx},1.0f);
+  INDArray labels=Nd4j.zeros(miniBatchSize,nOut,timeSeriesLength);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < timeSeriesLength; j++) {
+      int idx=r.nextInt(nOut);
+      labels.putScalar(new int[]{i,idx,j},1.0f);
+    }
   }
   if (PRINT_RESULTS) {
     System.out.println("testGravesLSTMBasic()");
