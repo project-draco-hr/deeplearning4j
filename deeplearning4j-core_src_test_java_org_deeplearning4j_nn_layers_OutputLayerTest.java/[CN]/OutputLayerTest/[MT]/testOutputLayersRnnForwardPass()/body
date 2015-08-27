@@ -1,0 +1,38 @@
+{
+  int nIn=2;
+  int nOut=5;
+  int layerSize=4;
+  int timeSeriesLength=2;
+  int miniBatchSize=3;
+  Random r=new Random(12345L);
+  INDArray input=Nd4j.zeros(miniBatchSize,nIn,timeSeriesLength);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < nIn; j++) {
+      for (int k=0; k < timeSeriesLength; k++) {
+        input.putScalar(new int[]{i,j,k},r.nextDouble() - 0.5);
+      }
+    }
+  }
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).activation("tanh").updater(Updater.NONE).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).build();
+  MultiLayerNetwork mln=new MultiLayerNetwork(conf);
+  mln.init();
+  INDArray out2d=mln.feedForward(input).get(2);
+  assertArrayEquals(out2d.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  INDArray out=mln.output(input);
+  assertArrayEquals(out.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  INDArray act=mln.activate();
+  assertArrayEquals(act.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  INDArray preout=mln.preOutput(input);
+  assertArrayEquals(preout.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  MultiLayerConfiguration confRnn=new NeuralNetConfiguration.Builder().seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).activation("tanh").updater(Updater.NONE).build()).layer(1,new org.deeplearning4j.nn.conf.layers.RnnOutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).build();
+  MultiLayerNetwork mlnRnn=new MultiLayerNetwork(confRnn);
+  mln.init();
+  INDArray out3d=mlnRnn.feedForward(input).get(2);
+  assertArrayEquals(out3d.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  INDArray outRnn=mlnRnn.output(input);
+  assertArrayEquals(outRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
+  INDArray actRnn=mlnRnn.activate();
+  assertArrayEquals(actRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
+  INDArray preoutRnn=mln.preOutput(input);
+  assertArrayEquals(preoutRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
+}

@@ -1,0 +1,46 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  FeedForwardToRnnPreProcessor proc=new FeedForwardToRnnPreProcessor();
+  int nIn=2;
+  int nOut=2;
+  int layerSize=4;
+  int timeSeriesLength=2;
+  int miniBatchSize=3;
+  Random r=new Random(12345L);
+  INDArray input=Nd4j.zeros(miniBatchSize,nIn,timeSeriesLength);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < nIn; j++) {
+      for (int k=0; k < timeSeriesLength; k++) {
+        input.putScalar(new int[]{i,j,k},r.nextDouble() - 0.5);
+      }
+    }
+  }
+  INDArray labels3d=Nd4j.zeros(miniBatchSize,nOut,timeSeriesLength);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < timeSeriesLength; j++) {
+      int idx=r.nextInt(nOut);
+      labels3d.putScalar(new int[]{i,idx,j},1.0f);
+    }
+  }
+  INDArray labels2d=proc.backprop(labels3d,null);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).activation("tanh").updater(Updater.NONE).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork mln=new MultiLayerNetwork(conf);
+  mln.init();
+  INDArray out2d=mln.feedForward(input).get(2);
+  INDArray out3d=proc.preProcess(out2d,mln.getLayer(0));
+  MultiLayerConfiguration confRnn=new NeuralNetConfiguration.Builder().seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).activation("tanh").updater(Updater.NONE).build()).layer(1,new org.deeplearning4j.nn.conf.layers.RnnOutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork mlnRnn=new MultiLayerNetwork(confRnn);
+  mlnRnn.init();
+  INDArray outRnn=mlnRnn.feedForward(input).get(2);
+  mln.setLabels(labels2d);
+  mlnRnn.setLabels(labels3d);
+  assertTrue(out3d.equals(outRnn));
+  mln.computeGradientAndScore();
+  mlnRnn.computeGradientAndScore();
+  double score=mln.score();
+  double scoreRNN=mlnRnn.score();
+  assertTrue(!Double.isNaN(score));
+  assertTrue(!Double.isNaN(scoreRNN));
+  double relError=Math.abs(score - scoreRNN) / (Math.abs(score) + Math.abs(scoreRNN));
+  assertTrue(relError < 1e-6);
+}
