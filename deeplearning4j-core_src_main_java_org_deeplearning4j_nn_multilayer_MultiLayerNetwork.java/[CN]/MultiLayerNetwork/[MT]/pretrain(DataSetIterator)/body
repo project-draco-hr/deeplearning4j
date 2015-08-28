@@ -5,7 +5,7 @@
     if (i == 0) {
       while (iter.hasNext()) {
         DataSet next=iter.next();
-        if (getLayerWiseConfigurations().getInputPreProcess(i) != null)         layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(next.getFeatureMatrix());
+        if (getLayerWiseConfigurations().getInputPreProcess(i) != null)         layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(next.getFeatureMatrix(),layers[i]);
  else         layerInput=next.getFeatureMatrix();
         setInput(layerInput);
         if (this.getInput() == null || this.getLayers() == null)         initializeLayers(input());
