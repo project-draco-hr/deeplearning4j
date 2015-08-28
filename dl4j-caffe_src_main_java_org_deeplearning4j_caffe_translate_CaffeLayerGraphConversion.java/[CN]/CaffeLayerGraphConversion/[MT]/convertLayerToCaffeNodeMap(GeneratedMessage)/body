@@ -1,15 +1,22 @@
 {
   Method getNameMethod=getMethodFromString("getName",layer.getClass());
-  Method getTypeMethod=getMethodFromString("getType",layer.getClass());
+  Method getLayerTypeMethod=getMethodFromString("getType",layer.getClass());
   Method getTopListMethod=getMethodFromString("getTopList",layer.getClass());
   Method getBottomListMethod=getMethodFromString("getBottomList",layer.getClass());
   Method getBlobListMethod=getMethodFromString("getBlobsList",layer.getClass());
-  Map<String,Set<CaffeNode>> caffeNodeMap=new HashMap<>();
-  caffeNodeMap.put("current",new HashSet<CaffeNode>());
-  caffeNodeMap.put("top",new HashSet<CaffeNode>());
-  caffeNodeMap.put("bottom",new HashSet<CaffeNode>());
+  Map<String,List<CaffeNode>> caffeNodeMap=new HashMap<>();
+  caffeNodeMap.put("current",new ArrayList<CaffeNode>());
+  caffeNodeMap.put("top",new ArrayList<CaffeNode>());
+  caffeNodeMap.put("bottom",new ArrayList<CaffeNode>());
   String layerName=(String)getNameMethod.invoke(layer);
-  String layerSubTypeString=((String)getTypeMethod.invoke(layer)).toUpperCase();
+  Object caffeRawLayerType=getLayerTypeMethod.invoke(layer);
+  String layerSubTypeString;
+  try {
+    layerSubTypeString=((String)FieldUtils.readField(caffeRawLayerType,"name",true)).toUpperCase();
+  }
+ catch (  IllegalArgumentException e) {
+    layerSubTypeString=((String)caffeRawLayerType).toUpperCase();
+  }
   if (!isSubTypeAvaliable(layerSubTypeString)) {
     return null;
   }
@@ -26,7 +33,7 @@
         Object val=FieldUtils.readField(layerClassParameter,stringField,true);
         field2valueMap.put(stringField,val);
       }
- catch (      IllegalArgumentException e) {
+ catch (      Exception e) {
         log.info(String.format("Cannot parse field '%s'",stringField));
       }
     }
@@ -41,9 +48,9 @@
   CaffeNode currentNode=new CaffeNode(layerName,layerType,layerSubType,field2valueMap,data,caffeNodeMap.get("bottom"));
   caffeNodeMap.get("current").add(currentNode);
   for (  String topLayerName : topList) {
-    Set<CaffeNode> bottomNodeSetTop=new HashSet<>();
-    bottomNodeSetTop.add(currentNode);
-    CaffeNode topNode=new CaffeNode(topLayerName,LayerType.CONNECTOR,LayerSubType.CONNECTOR,bottomNodeSetTop);
+    List<CaffeNode> bottomNodeListTop=new ArrayList<>();
+    bottomNodeListTop.add(currentNode);
+    CaffeNode topNode=new CaffeNode(topLayerName,LayerType.CONNECTOR,LayerSubType.CONNECTOR,bottomNodeListTop);
     caffeNodeMap.get("top").add(topNode);
   }
   return caffeNodeMap;

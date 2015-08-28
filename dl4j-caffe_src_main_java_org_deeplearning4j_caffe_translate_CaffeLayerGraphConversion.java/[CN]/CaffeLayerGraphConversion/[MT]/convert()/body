@@ -1,5 +1,5 @@
 {
-  List<Map<String,Set<CaffeNode>>> nodeMapList=convertNetToNodeMapList();
+  List<Map<String,List<CaffeNode>>> nodeMapList=convertNetToNodeMapList();
   Graph graph=convertNodeMapSetToGraph(nodeMapList);
   addStartEndNodesToGraph(graph);
   trimGraph(graph);

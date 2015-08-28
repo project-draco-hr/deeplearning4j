@@ -1,6 +1,6 @@
 {
   Graph graph=new Graph();
-  for (  Map<String,Set<CaffeNode>> nodeMap : nodeMapList) {
+  for (  Map<String,List<CaffeNode>> nodeMap : nodeMapList) {
     addNodeMapToGraph(nodeMap,graph);
   }
   addStartEndNodesToGraph(graph);

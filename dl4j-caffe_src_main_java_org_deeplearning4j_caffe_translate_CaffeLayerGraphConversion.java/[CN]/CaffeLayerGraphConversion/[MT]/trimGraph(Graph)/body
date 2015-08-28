@@ -1,7 +1,7 @@
 {
-  Map<CaffeNode,Set<CaffeNode>> adjacencyMap=graph.getAdjacencyListMap();
+  Map<CaffeNode,CopyOnWriteArrayList<CaffeNode>> adjacencyMap=graph.getAdjacencyListMap();
   for (  CaffeNode node : adjacencyMap.keySet()) {
-    if (node.getBottomNodeSet() == null || node.getBottomNodeSet().size() == 0) {
+    if (node.getBottomNodeList() == null || node.getBottomNodeList().size() == 0) {
       graph.addStartNode(node);
     }
     if (adjacencyMap.get(node).size() == 0) {
