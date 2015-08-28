@@ -2,7 +2,7 @@
   int nIn=2;
   int nOut=5;
   int layerSize=4;
-  int timeSeriesLength=2;
+  int timeSeriesLength=6;
   int miniBatchSize=3;
   Random r=new Random(12345L);
   INDArray input=Nd4j.zeros(miniBatchSize,nIn,timeSeriesLength);
@@ -28,11 +28,11 @@
   MultiLayerNetwork mlnRnn=new MultiLayerNetwork(confRnn);
   mln.init();
   INDArray out3d=mlnRnn.feedForward(input).get(2);
-  assertArrayEquals(out3d.shape(),new int[]{miniBatchSize * timeSeriesLength,nOut});
+  assertArrayEquals(out3d.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
   INDArray outRnn=mlnRnn.output(input);
   assertArrayEquals(outRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
   INDArray actRnn=mlnRnn.activate();
   assertArrayEquals(actRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
-  INDArray preoutRnn=mln.preOutput(input);
+  INDArray preoutRnn=mlnRnn.preOutput(input);
   assertArrayEquals(preoutRnn.shape(),new int[]{miniBatchSize,nOut,timeSeriesLength});
 }

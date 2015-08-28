@@ -1,4 +1,0 @@
-{
-  if (input != null && input.rank() == 3)   super.setInput(reshape3dTo2d(input),training);
- else   super.setInput(input,training);
-}
