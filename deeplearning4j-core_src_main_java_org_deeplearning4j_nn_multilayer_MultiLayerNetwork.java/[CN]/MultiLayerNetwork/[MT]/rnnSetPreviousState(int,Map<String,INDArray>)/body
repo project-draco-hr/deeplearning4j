@@ -1,0 +1,6 @@
+{
+  if (layer < 0 || layer >= layers.length)   throw new IllegalArgumentException("Invalid layer number");
+  if (!(layers[layer] instanceof BaseRecurrentLayer))   throw new IllegalArgumentException("Layer is not an RNN layer");
+  BaseRecurrentLayer r=(BaseRecurrentLayer)layers[layer];
+  r.rnnSetPreviousState(state);
+}
