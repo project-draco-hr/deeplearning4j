@@ -1,0 +1,11 @@
+{
+  if (lrnParamBuilder_ == null) {
+    lrnParam_=Caffe.LRNParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    lrnParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x80000000);
+  return this;
+}

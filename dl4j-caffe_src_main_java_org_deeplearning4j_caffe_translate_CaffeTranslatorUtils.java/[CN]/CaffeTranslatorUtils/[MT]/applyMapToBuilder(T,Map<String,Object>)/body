@@ -1,0 +1,12 @@
+{
+  for (  Map.Entry<String,Object> entry : builderParamMap.entrySet()) {
+    String builderFieldName=entry.getKey();
+    Object builderFieldValue=entry.getValue();
+    System.out.println(String.format("Field: %s   Value: %s",builderFieldName,builderFieldValue));
+    if (builderFieldName != null && !builderFieldName.isEmpty()) {
+      Field builderField=FieldUtils.getField(builderLikeObject.getClass(),builderFieldName,true);
+      builderField.setAccessible(true);
+      builderField.set(builderLikeObject,builderFieldValue);
+    }
+  }
+}

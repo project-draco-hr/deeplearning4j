@@ -1,0 +1,16 @@
+{
+  if (poolingParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000004) == 0x00000004) && poolingParam_ != Caffe.PoolingParameter.getDefaultInstance()) {
+      poolingParam_=Caffe.PoolingParameter.newBuilder(poolingParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      poolingParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    poolingParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000004;
+  return this;
+}

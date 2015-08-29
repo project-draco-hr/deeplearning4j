@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x80000000);
+  newNum_=0;
+  onChanged();
+  return this;
+}

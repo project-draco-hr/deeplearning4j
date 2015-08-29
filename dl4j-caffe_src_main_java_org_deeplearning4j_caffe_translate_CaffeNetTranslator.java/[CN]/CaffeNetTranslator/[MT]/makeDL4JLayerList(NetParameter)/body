@@ -1,0 +1,41 @@
+{
+  Graph caffeGraph=new CaffeLayerGraphConversion(net).convert();
+  final CaffeNode firstNode=(CaffeNode)caffeGraph.getStartNodeSet().toArray()[0];
+  List<CaffeNode> seen=new ArrayList<>();
+  Stack<CaffeNode> queue=new Stack<CaffeNode>(){
+{
+      add(firstNode);
+    }
+  }
+;
+  ArrayList<org.deeplearning4j.nn.conf.layers.Layer> dl4jLayerList=new ArrayList<>();
+  while (!queue.empty()) {
+    CaffeNode currentNode=queue.pop();
+    if (!currentNode.getLayerType().equals(CaffeNode.LayerType.CONNECTOR)) {
+      LayerSubType layerSubType=currentNode.getLayerSubType();
+      Map<String,Object> caffeFieldMap=currentNode.getMetaData();
+      if (layerMapping.containsKey(layerSubType) && layerMapping.get(layerSubType) != null) {
+        org.deeplearning4j.nn.conf.layers.Layer dl4jLayer=(org.deeplearning4j.nn.conf.layers.Layer)layerMapping.get(layerSubType);
+        if (layerParamMapping.containsKey(layerSubType)) {
+          Map<String,String> layerParamMap=layerParamMapping.get(layerSubType);
+          for (          Map.Entry<String,Object> entry : caffeFieldMap.entrySet()) {
+            String caffeFieldName=entry.getKey();
+            Object caffeValue=convertCaffeValue(caffeFieldName,entry.getValue());
+            if (layerParamMap.containsKey(caffeFieldName)) {
+              String dl4jFieldName=layerParamMap.get(caffeFieldName);
+              if (!dl4jFieldName.isEmpty()) {
+                FieldUtils.writeField(dl4jLayer,dl4jFieldName,caffeValue,true);
+              }
+            }
+          }
+        }
+        dl4jLayerList.add(dl4jLayer);
+      }
+    }
+    if (!seen.contains(currentNode)) {
+      seen.add(currentNode);
+      queue.addAll(caffeGraph.getNextNodes(currentNode));
+    }
+  }
+  return dl4jLayerList;
+}

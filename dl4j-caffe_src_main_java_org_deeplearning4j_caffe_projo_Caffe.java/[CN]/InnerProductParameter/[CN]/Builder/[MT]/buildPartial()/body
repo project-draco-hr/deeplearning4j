@@ -1,0 +1,38 @@
+{
+  Caffe.InnerProductParameter result=new Caffe.InnerProductParameter(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.numOutput_=numOutput_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.biasTerm_=biasTerm_;
+  if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x00000004;
+  }
+  if (weightFillerBuilder_ == null) {
+    result.weightFiller_=weightFiller_;
+  }
+ else {
+    result.weightFiller_=weightFillerBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x00000008;
+  }
+  if (biasFillerBuilder_ == null) {
+    result.biasFiller_=biasFiller_;
+  }
+ else {
+    result.biasFiller_=biasFillerBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000010;
+  }
+  result.axis_=axis_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

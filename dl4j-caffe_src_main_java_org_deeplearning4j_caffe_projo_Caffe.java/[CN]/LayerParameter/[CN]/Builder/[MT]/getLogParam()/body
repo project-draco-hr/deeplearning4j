@@ -1,0 +1,8 @@
+{
+  if (logParamBuilder_ == null) {
+    return logParam_;
+  }
+ else {
+    return logParamBuilder_.getMessage();
+  }
+}

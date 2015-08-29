@@ -1,0 +1,7 @@
+{
+  if (layersBuilder_ == null) {
+    layersBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.V1LayerParameter,Caffe.V1LayerParameter.Builder,Caffe.V1LayerParameterOrBuilder>(layers_,((bitField0_ & 0x00000100) == 0x00000100),getParentForChildren(),isClean());
+    layers_=null;
+  }
+  return layersBuilder_;
+}

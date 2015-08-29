@@ -1,0 +1,14 @@
+{
+  if (testNetParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureTestNetParamIsMutable();
+    testNetParam_.add(value);
+    onChanged();
+  }
+ else {
+    testNetParamBuilder_.addMessage(value);
+  }
+  return this;
+}

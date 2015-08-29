@@ -1,0 +1,10 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeInt32(1,ignoreLabel_);
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeBool(2,normalize_);
+  }
+  getUnknownFields().writeTo(output);
+}

@@ -1,0 +1,681 @@
+{
+  initFields();
+  int mutable_bitField0_=0;
+  int mutable_bitField1_=0;
+  com.google.protobuf.UnknownFieldSet.Builder unknownFields=com.google.protobuf.UnknownFieldSet.newBuilder();
+  try {
+    boolean done=false;
+    while (!done) {
+      int tag=input.readTag();
+switch (tag) {
+case 0:
+        done=true;
+      break;
+default :
+{
+      if (!parseUnknownField(input,unknownFields,extensionRegistry,tag)) {
+        done=true;
+      }
+      break;
+    }
+case 10:
+{
+    Caffe.V0LayerParameter.Builder subBuilder=null;
+    if (((bitField1_ & 0x00000001) == 0x00000001)) {
+      subBuilder=layer_.toBuilder();
+    }
+    layer_=input.readMessage(Caffe.V0LayerParameter.PARSER,extensionRegistry);
+    if (subBuilder != null) {
+      subBuilder.mergeFrom(layer_);
+      layer_=subBuilder.buildPartial();
+    }
+    bitField1_|=0x00000001;
+    break;
+  }
+case 18:
+{
+  com.google.protobuf.ByteString bs=input.readBytes();
+  if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+    bottom_=new com.google.protobuf.LazyStringArrayList();
+    mutable_bitField0_|=0x00000001;
+  }
+  bottom_.add(bs);
+  break;
+}
+case 26:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+  top_=new com.google.protobuf.LazyStringArrayList();
+  mutable_bitField0_|=0x00000002;
+}
+top_.add(bs);
+break;
+}
+case 34:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+bitField0_|=0x00000001;
+name_=bs;
+break;
+}
+case 40:
+{
+int rawValue=input.readEnum();
+Caffe.V1LayerParameter.LayerType value=Caffe.V1LayerParameter.LayerType.valueOf(rawValue);
+if (value == null) {
+unknownFields.mergeVarintField(5,rawValue);
+}
+ else {
+bitField0_|=0x00000002;
+type_=value;
+}
+break;
+}
+case 50:
+{
+if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+blobs_=new java.util.ArrayList<Caffe.BlobProto>();
+mutable_bitField0_|=0x00000040;
+}
+blobs_.add(input.readMessage(Caffe.BlobProto.PARSER,extensionRegistry));
+break;
+}
+case 61:
+{
+if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+blobsLr_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000200;
+}
+blobsLr_.add(input.readFloat());
+break;
+}
+case 58:
+{
+int length=input.readRawVarint32();
+int limit=input.pushLimit(length);
+if (!((mutable_bitField0_ & 0x00000200) == 0x00000200) && input.getBytesUntilLimit() > 0) {
+blobsLr_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000200;
+}
+while (input.getBytesUntilLimit() > 0) {
+blobsLr_.add(input.readFloat());
+}
+input.popLimit(limit);
+break;
+}
+case 69:
+{
+if (!((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
+weightDecay_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000400;
+}
+weightDecay_.add(input.readFloat());
+break;
+}
+case 66:
+{
+int length=input.readRawVarint32();
+int limit=input.pushLimit(length);
+if (!((mutable_bitField0_ & 0x00000400) == 0x00000400) && input.getBytesUntilLimit() > 0) {
+weightDecay_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000400;
+}
+while (input.getBytesUntilLimit() > 0) {
+weightDecay_.add(input.readFloat());
+}
+input.popLimit(limit);
+break;
+}
+case 74:
+{
+Caffe.ConcatParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000010) == 0x00000010)) {
+subBuilder=concatParam_.toBuilder();
+}
+concatParam_=input.readMessage(Caffe.ConcatParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(concatParam_);
+concatParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000010;
+break;
+}
+case 82:
+{
+Caffe.ConvolutionParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000040) == 0x00000040)) {
+subBuilder=convolutionParam_.toBuilder();
+}
+convolutionParam_=input.readMessage(Caffe.ConvolutionParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(convolutionParam_);
+convolutionParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000040;
+break;
+}
+case 90:
+{
+Caffe.DataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000080) == 0x00000080)) {
+subBuilder=dataParam_.toBuilder();
+}
+dataParam_=input.readMessage(Caffe.DataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(dataParam_);
+dataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000080;
+break;
+}
+case 98:
+{
+Caffe.DropoutParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000100) == 0x00000100)) {
+subBuilder=dropoutParam_.toBuilder();
+}
+dropoutParam_=input.readMessage(Caffe.DropoutParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(dropoutParam_);
+dropoutParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000100;
+break;
+}
+case 106:
+{
+Caffe.HDF5DataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00001000) == 0x00001000)) {
+subBuilder=hdf5DataParam_.toBuilder();
+}
+hdf5DataParam_=input.readMessage(Caffe.HDF5DataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(hdf5DataParam_);
+hdf5DataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00001000;
+break;
+}
+case 114:
+{
+Caffe.HDF5OutputParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00002000) == 0x00002000)) {
+subBuilder=hdf5OutputParam_.toBuilder();
+}
+hdf5OutputParam_=input.readMessage(Caffe.HDF5OutputParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(hdf5OutputParam_);
+hdf5OutputParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00002000;
+break;
+}
+case 122:
+{
+Caffe.ImageDataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00008000) == 0x00008000)) {
+subBuilder=imageDataParam_.toBuilder();
+}
+imageDataParam_=input.readMessage(Caffe.ImageDataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(imageDataParam_);
+imageDataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00008000;
+break;
+}
+case 130:
+{
+Caffe.InfogainLossParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00010000) == 0x00010000)) {
+subBuilder=infogainLossParam_.toBuilder();
+}
+infogainLossParam_=input.readMessage(Caffe.InfogainLossParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(infogainLossParam_);
+infogainLossParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00010000;
+break;
+}
+case 138:
+{
+Caffe.InnerProductParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00020000) == 0x00020000)) {
+subBuilder=innerProductParam_.toBuilder();
+}
+innerProductParam_=input.readMessage(Caffe.InnerProductParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(innerProductParam_);
+innerProductParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00020000;
+break;
+}
+case 146:
+{
+Caffe.LRNParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00040000) == 0x00040000)) {
+subBuilder=lrnParam_.toBuilder();
+}
+lrnParam_=input.readMessage(Caffe.LRNParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(lrnParam_);
+lrnParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00040000;
+break;
+}
+case 154:
+{
+Caffe.PoolingParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00200000) == 0x00200000)) {
+subBuilder=poolingParam_.toBuilder();
+}
+poolingParam_=input.readMessage(Caffe.PoolingParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(poolingParam_);
+poolingParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00200000;
+break;
+}
+case 162:
+{
+Caffe.WindowDataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x20000000) == 0x20000000)) {
+subBuilder=windowDataParam_.toBuilder();
+}
+windowDataParam_=input.readMessage(Caffe.WindowDataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(windowDataParam_);
+windowDataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x20000000;
+break;
+}
+case 170:
+{
+Caffe.PowerParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00400000) == 0x00400000)) {
+subBuilder=powerParam_.toBuilder();
+}
+powerParam_=input.readMessage(Caffe.PowerParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(powerParam_);
+powerParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00400000;
+break;
+}
+case 178:
+{
+Caffe.MemoryDataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00080000) == 0x00080000)) {
+subBuilder=memoryDataParam_.toBuilder();
+}
+memoryDataParam_=input.readMessage(Caffe.MemoryDataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(memoryDataParam_);
+memoryDataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00080000;
+break;
+}
+case 186:
+{
+Caffe.ArgMaxParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000008) == 0x00000008)) {
+subBuilder=argmaxParam_.toBuilder();
+}
+argmaxParam_=input.readMessage(Caffe.ArgMaxParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(argmaxParam_);
+argmaxParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000008;
+break;
+}
+case 194:
+{
+Caffe.EltwiseParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000400) == 0x00000400)) {
+subBuilder=eltwiseParam_.toBuilder();
+}
+eltwiseParam_=input.readMessage(Caffe.EltwiseParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(eltwiseParam_);
+eltwiseParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000400;
+break;
+}
+case 202:
+{
+Caffe.ThresholdParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x10000000) == 0x10000000)) {
+subBuilder=thresholdParam_.toBuilder();
+}
+thresholdParam_=input.readMessage(Caffe.ThresholdParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(thresholdParam_);
+thresholdParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x10000000;
+break;
+}
+case 210:
+{
+Caffe.DummyDataParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000200) == 0x00000200)) {
+subBuilder=dummyDataParam_.toBuilder();
+}
+dummyDataParam_=input.readMessage(Caffe.DummyDataParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(dummyDataParam_);
+dummyDataParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000200;
+break;
+}
+case 218:
+{
+Caffe.AccuracyParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000004) == 0x00000004)) {
+subBuilder=accuracyParam_.toBuilder();
+}
+accuracyParam_=input.readMessage(Caffe.AccuracyParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(accuracyParam_);
+accuracyParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000004;
+break;
+}
+case 234:
+{
+Caffe.HingeLossParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00004000) == 0x00004000)) {
+subBuilder=hingeLossParam_.toBuilder();
+}
+hingeLossParam_=input.readMessage(Caffe.HingeLossParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(hingeLossParam_);
+hingeLossParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00004000;
+break;
+}
+case 242:
+{
+Caffe.ReLUParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00800000) == 0x00800000)) {
+subBuilder=reluParam_.toBuilder();
+}
+reluParam_=input.readMessage(Caffe.ReLUParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(reluParam_);
+reluParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00800000;
+break;
+}
+case 250:
+{
+Caffe.SliceParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x04000000) == 0x04000000)) {
+subBuilder=sliceParam_.toBuilder();
+}
+sliceParam_=input.readMessage(Caffe.SliceParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(sliceParam_);
+sliceParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x04000000;
+break;
+}
+case 258:
+{
+if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+include_=new java.util.ArrayList<Caffe.NetStateRule>();
+mutable_bitField0_|=0x00000008;
+}
+include_.add(input.readMessage(Caffe.NetStateRule.PARSER,extensionRegistry));
+break;
+}
+case 266:
+{
+if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+exclude_=new java.util.ArrayList<Caffe.NetStateRule>();
+mutable_bitField0_|=0x00000010;
+}
+exclude_.add(input.readMessage(Caffe.NetStateRule.PARSER,extensionRegistry));
+break;
+}
+case 274:
+{
+Caffe.MVNParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00100000) == 0x00100000)) {
+subBuilder=mvnParam_.toBuilder();
+}
+mvnParam_=input.readMessage(Caffe.MVNParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(mvnParam_);
+mvnParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00100000;
+break;
+}
+case 285:
+{
+if (!((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
+lossWeight_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000800;
+}
+lossWeight_.add(input.readFloat());
+break;
+}
+case 282:
+{
+int length=input.readRawVarint32();
+int limit=input.pushLimit(length);
+if (!((mutable_bitField0_ & 0x00000800) == 0x00000800) && input.getBytesUntilLimit() > 0) {
+lossWeight_=new java.util.ArrayList<java.lang.Float>();
+mutable_bitField0_|=0x00000800;
+}
+while (input.getBytesUntilLimit() > 0) {
+lossWeight_.add(input.readFloat());
+}
+input.popLimit(limit);
+break;
+}
+case 290:
+{
+Caffe.TransformationParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x40000000) == 0x40000000)) {
+subBuilder=transformParam_.toBuilder();
+}
+transformParam_=input.readMessage(Caffe.TransformationParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(transformParam_);
+transformParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x40000000;
+break;
+}
+case 298:
+{
+Caffe.TanHParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x08000000) == 0x08000000)) {
+subBuilder=tanhParam_.toBuilder();
+}
+tanhParam_=input.readMessage(Caffe.TanHParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(tanhParam_);
+tanhParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x08000000;
+break;
+}
+case 306:
+{
+Caffe.SigmoidParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x01000000) == 0x01000000)) {
+subBuilder=sigmoidParam_.toBuilder();
+}
+sigmoidParam_=input.readMessage(Caffe.SigmoidParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(sigmoidParam_);
+sigmoidParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x01000000;
+break;
+}
+case 314:
+{
+Caffe.SoftmaxParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x02000000) == 0x02000000)) {
+subBuilder=softmaxParam_.toBuilder();
+}
+softmaxParam_=input.readMessage(Caffe.SoftmaxParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(softmaxParam_);
+softmaxParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x02000000;
+break;
+}
+case 322:
+{
+Caffe.ContrastiveLossParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000020) == 0x00000020)) {
+subBuilder=contrastiveLossParam_.toBuilder();
+}
+contrastiveLossParam_=input.readMessage(Caffe.ContrastiveLossParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(contrastiveLossParam_);
+contrastiveLossParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000020;
+break;
+}
+case 330:
+{
+Caffe.ExpParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x00000800) == 0x00000800)) {
+subBuilder=expParam_.toBuilder();
+}
+expParam_=input.readMessage(Caffe.ExpParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(expParam_);
+expParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000800;
+break;
+}
+case 338:
+{
+Caffe.LossParameter.Builder subBuilder=null;
+if (((bitField0_ & 0x80000000) == 0x80000000)) {
+subBuilder=lossParam_.toBuilder();
+}
+lossParam_=input.readMessage(Caffe.LossParameter.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(lossParam_);
+lossParam_=subBuilder.buildPartial();
+}
+bitField0_|=0x80000000;
+break;
+}
+case 8010:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+param_=new com.google.protobuf.LazyStringArrayList();
+mutable_bitField0_|=0x00000080;
+}
+param_.add(bs);
+break;
+}
+case 8016:
+{
+int rawValue=input.readEnum();
+Caffe.V1LayerParameter.DimCheckMode value=Caffe.V1LayerParameter.DimCheckMode.valueOf(rawValue);
+if (value == null) {
+unknownFields.mergeVarintField(1002,rawValue);
+}
+ else {
+if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+blobShareMode_=new java.util.ArrayList<Caffe.V1LayerParameter.DimCheckMode>();
+mutable_bitField0_|=0x00000100;
+}
+blobShareMode_.add(value);
+}
+break;
+}
+case 8018:
+{
+int length=input.readRawVarint32();
+int oldLimit=input.pushLimit(length);
+while (input.getBytesUntilLimit() > 0) {
+int rawValue=input.readEnum();
+Caffe.V1LayerParameter.DimCheckMode value=Caffe.V1LayerParameter.DimCheckMode.valueOf(rawValue);
+if (value == null) {
+unknownFields.mergeVarintField(1002,rawValue);
+}
+ else {
+if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+blobShareMode_=new java.util.ArrayList<Caffe.V1LayerParameter.DimCheckMode>();
+mutable_bitField0_|=0x00000100;
+}
+blobShareMode_.add(value);
+}
+}
+input.popLimit(oldLimit);
+break;
+}
+}
+}
+}
+ catch (com.google.protobuf.InvalidProtocolBufferException e) {
+throw e.setUnfinishedMessage(this);
+}
+catch (java.io.IOException e) {
+throw new com.google.protobuf.InvalidProtocolBufferException(e.getMessage()).setUnfinishedMessage(this);
+}
+ finally {
+if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+bottom_=bottom_.getUnmodifiableView();
+}
+if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+top_=top_.getUnmodifiableView();
+}
+if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+blobs_=java.util.Collections.unmodifiableList(blobs_);
+}
+if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+blobsLr_=java.util.Collections.unmodifiableList(blobsLr_);
+}
+if (((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
+weightDecay_=java.util.Collections.unmodifiableList(weightDecay_);
+}
+if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+include_=java.util.Collections.unmodifiableList(include_);
+}
+if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+exclude_=java.util.Collections.unmodifiableList(exclude_);
+}
+if (((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
+lossWeight_=java.util.Collections.unmodifiableList(lossWeight_);
+}
+if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+param_=param_.getUnmodifiableView();
+}
+if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+blobShareMode_=java.util.Collections.unmodifiableList(blobShareMode_);
+}
+this.unknownFields=unknownFields.build();
+makeExtensionsImmutable();
+}
+}

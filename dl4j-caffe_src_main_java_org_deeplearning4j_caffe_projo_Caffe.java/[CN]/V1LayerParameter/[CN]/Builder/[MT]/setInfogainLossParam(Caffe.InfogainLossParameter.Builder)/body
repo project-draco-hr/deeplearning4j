@@ -1,0 +1,11 @@
+{
+  if (infogainLossParamBuilder_ == null) {
+    infogainLossParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    infogainLossParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x04000000;
+  return this;
+}

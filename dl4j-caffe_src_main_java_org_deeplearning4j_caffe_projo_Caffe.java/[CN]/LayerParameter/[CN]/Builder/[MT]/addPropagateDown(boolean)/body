@@ -1,0 +1,6 @@
+{
+  ensurePropagateDownIsMutable();
+  propagateDown_.add(value);
+  onChanged();
+  return this;
+}

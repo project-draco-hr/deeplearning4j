@@ -1,0 +1,5 @@
+{
+  bitField1_|=0x00000020;
+  onChanged();
+  return getTanhParamFieldBuilder().getBuilder();
+}

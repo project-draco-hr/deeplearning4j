@@ -1,0 +1,8 @@
+{
+  if (excludeBuilder_ != null) {
+    return excludeBuilder_.getMessageOrBuilderList();
+  }
+ else {
+    return java.util.Collections.unmodifiableList(exclude_);
+  }
+}

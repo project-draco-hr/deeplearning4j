@@ -1,0 +1,29 @@
+{
+  NetParameter net;
+  if (binaryNet != null) {
+    if (binaryNet instanceof String) {
+      net=reader.readBinaryNet((String)binaryNet,sizeLimitMb);
+    }
+ else     if (binaryNet instanceof InputStream) {
+      net=reader.readBinaryNet((InputStream)binaryNet,sizeLimitMb);
+    }
+ else {
+      throw new IllegalStateException("binaryNet must be of type String (file path) or InputStream.");
+    }
+  }
+ else   if (textFormatNet != null) {
+    if (textFormatNet instanceof String) {
+      net=reader.readTextFormatNet((String)textFormatNet);
+    }
+ else     if (textFormatNet instanceof File) {
+      net=reader.readTextFormatNet((File)textFormatNet);
+    }
+ else {
+      throw new IllegalStateException("textFormatNet must be of type String (file path) or File.");
+    }
+  }
+ else {
+    throw new IllegalStateException("Must provide input for either textFormatNet or binaryNet.");
+  }
+  return net;
+}

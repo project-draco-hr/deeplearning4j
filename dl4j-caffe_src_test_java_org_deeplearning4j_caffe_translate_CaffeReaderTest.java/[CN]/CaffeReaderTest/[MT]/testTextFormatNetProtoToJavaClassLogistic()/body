@@ -1,0 +1,33 @@
+{
+  NetParameter net=reader.readTextFormatNet(getLogisticTextFormatNetPath());
+  assertEquals(net.getName(),"LogisticRegressionNet");
+  assertEquals(net.getLayerCount(),5);
+  LayerParameter firstLayer=net.getLayer(0);
+  assertTrue(firstLayer != null);
+  assertEquals(firstLayer.getName(),"data");
+  assertEquals(firstLayer.getType(),"HDF5Data");
+  List firstLayerTopList=firstLayer.getTopList();
+  assertEquals(firstLayerTopList.size(),2);
+  assertEquals(firstLayerTopList.get(0),"data");
+  assertEquals(firstLayerTopList.get(1),"label");
+  assertEquals(firstLayer.getBottomCount(),0);
+  LayerParameter secondLayer=net.getLayer(2);
+  assertTrue(secondLayer != null);
+  assertEquals(secondLayer.getName(),"fc1");
+  assertEquals(secondLayer.getType(),"InnerProduct");
+  List secondLayerTopList=secondLayer.getTopList();
+  assertEquals(secondLayerTopList.size(),1);
+  assertEquals(secondLayerTopList.get(0),"fc1");
+  List secondLayerBottomList=secondLayer.getBottomList();
+  assertEquals(secondLayerBottomList.size(),1);
+  assertEquals(secondLayerBottomList.get(0),"data");
+  LayerParameter thirdLayer=net.getLayer(3);
+  assertTrue(thirdLayer != null);
+  assertEquals(thirdLayer.getName(),"loss");
+  assertEquals(thirdLayer.getType(),"SoftmaxWithLoss");
+  List thirdLayerTopList=thirdLayer.getTopList();
+  List thirdLayerBottomList=thirdLayer.getBottomList();
+  assertEquals(thirdLayerTopList.get(0),"loss");
+  assertEquals(thirdLayerBottomList.get(0),"fc1");
+  assertEquals(thirdLayerBottomList.get(1),"label");
+}

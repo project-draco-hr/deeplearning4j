@@ -1,0 +1,8 @@
+{
+  if (testNetParamBuilder_ == null) {
+    return testNetParam_.size();
+  }
+ else {
+    return testNetParamBuilder_.getCount();
+  }
+}

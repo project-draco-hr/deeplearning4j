@@ -1,0 +1,28 @@
+{
+  Caffe.LRNParameter result=new Caffe.LRNParameter(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.localSize_=localSize_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.alpha_=alpha_;
+  if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.beta_=beta_;
+  if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x00000008;
+  }
+  result.normRegion_=normRegion_;
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000010;
+  }
+  result.k_=k_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

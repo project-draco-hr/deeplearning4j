@@ -1,0 +1,14 @@
+{
+  if (innerProductParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    innerProductParam_=value;
+    onChanged();
+  }
+ else {
+    innerProductParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x08000000;
+  return this;
+}

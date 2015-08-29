@@ -1,0 +1,8 @@
+{
+  if (blobsBuilder_ == null) {
+    return blobs_.get(index);
+  }
+ else {
+    return blobsBuilder_.getMessage(index);
+  }
+}

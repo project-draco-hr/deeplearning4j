@@ -1,0 +1,15 @@
+{
+  for (  Map.Entry entry : adjacencyListMap.entrySet()) {
+    T node=(T)entry.getKey();
+    List<T> neighbors=(List<T>)entry.getValue();
+    if (nodesToRemove.contains(node)) {
+      adjacencyListMap.remove(node);
+    }
+    for (    T neighborNode : neighbors) {
+      if (nodesToRemove.contains(neighborNode)) {
+        adjacencyListMap.remove(neighborNode);
+        neighbors.remove(neighborNode);
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (mvnParamBuilder_ == null) {
+    mvnParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    mvnParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField1_|=0x00000002;
+  return this;
+}

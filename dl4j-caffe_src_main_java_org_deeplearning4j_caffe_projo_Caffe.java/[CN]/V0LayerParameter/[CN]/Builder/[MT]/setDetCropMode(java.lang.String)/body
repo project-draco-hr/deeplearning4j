@@ -1,0 +1,9 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_|=0x40000000;
+  detCropMode_=value;
+  onChanged();
+  return this;
+}

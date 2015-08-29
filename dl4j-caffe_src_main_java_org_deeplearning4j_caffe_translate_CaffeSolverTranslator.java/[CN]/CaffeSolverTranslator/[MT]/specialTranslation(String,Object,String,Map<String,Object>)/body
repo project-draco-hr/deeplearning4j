@@ -1,0 +1,26 @@
+{
+  if (caffeFieldValue instanceof String)   caffeFieldValue=WordUtils.capitalizeFully((String)caffeFieldValue);
+  if (caffeFieldName.equals("solverType_")) {
+    if (caffeFieldValue.equals("sgd")) {
+      builderParamMap.put(builderFieldName,OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+    }
+ else {
+      log.info("Only SGD is supported. Switch to SGD.");
+      builderParamMap.put(builderFieldName,OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+    }
+  }
+ else   if (caffeFieldName.equals("regularizationType_")) {
+    if (caffeFieldValue.equals("l1")) {
+      builderParamMap.put("useRegularization",true);
+      builderParamMap.put("l1",true);
+    }
+ else     if (caffeFieldValue.equals("l2")) {
+      builderParamMap.put("useRegularization",true);
+      builderParamMap.put("l2",true);
+    }
+ else {
+      builderParamMap.put("useRegularization",false);
+    }
+  }
+  builderParamMap.put("minimize",true);
+}

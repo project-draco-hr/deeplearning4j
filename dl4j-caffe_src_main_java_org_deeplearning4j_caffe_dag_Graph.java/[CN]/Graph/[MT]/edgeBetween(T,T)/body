@@ -1,0 +1,9 @@
+{
+  Boolean ret=false;
+  if (adjacencyListMap.containsKey(nodeA)) {
+    for (    Node node : adjacencyListMap.get(nodeA)) {
+      if (node.equals(nodeB))       ret=true;
+    }
+  }
+  return ret;
+}

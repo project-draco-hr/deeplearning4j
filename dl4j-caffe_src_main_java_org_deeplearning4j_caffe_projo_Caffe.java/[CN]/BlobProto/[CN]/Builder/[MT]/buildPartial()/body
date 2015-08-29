@@ -1,0 +1,43 @@
+{
+  Caffe.BlobProto result=new Caffe.BlobProto(this);
+  int from_bitField0_=bitField0_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  if (shapeBuilder_ == null) {
+    result.shape_=shape_;
+  }
+ else {
+    result.shape_=shapeBuilder_.build();
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    data_=java.util.Collections.unmodifiableList(data_);
+    bitField0_=(bitField0_ & ~0x00000002);
+  }
+  result.data_=data_;
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    diff_=java.util.Collections.unmodifiableList(diff_);
+    bitField0_=(bitField0_ & ~0x00000004);
+  }
+  result.diff_=diff_;
+  if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.num_=num_;
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.channels_=channels_;
+  if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+    to_bitField0_|=0x00000008;
+  }
+  result.height_=height_;
+  if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+    to_bitField0_|=0x00000010;
+  }
+  result.width_=width_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

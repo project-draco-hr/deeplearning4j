@@ -1,0 +1,11 @@
+{
+  if (flattenParamBuilder_ == null) {
+    flattenParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    flattenParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x00800000;
+  return this;
+}

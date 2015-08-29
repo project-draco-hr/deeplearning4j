@@ -1,0 +1,7 @@
+{
+  if (imageDataParamBuilder_ == null) {
+    imageDataParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ImageDataParameter,Caffe.ImageDataParameter.Builder,Caffe.ImageDataParameterOrBuilder>(getImageDataParam(),getParentForChildren(),isClean());
+    imageDataParam_=null;
+  }
+  return imageDataParamBuilder_;
+}

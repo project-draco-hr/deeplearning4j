@@ -1,0 +1,10 @@
+{
+  if (builderContainer.getBuilder() != null)   throw new IllegalStateException("Builder should not already be assigned. " + "Parse Caffe solver first before Net.");
+  Map<String,Map<String,Object>> map=CaffeTranslatorUtils.caffeField2builderField2caffeVal(solver,solverParamMappings);
+  List<List<Object>> lst=CaffeTranslatorUtils.caffeFieldBuilderFieldCaffeValIter(map);
+  Map<String,Object> builderParamMap=new HashMap<>();
+  CaffeTranslatorUtils.translation2BuilderFieldBuilderValMap(lst,builderParamMap,this);
+  Builder builder=new NeuralNetConfiguration.Builder();
+  CaffeTranslatorUtils.applyMapToBuilder(builder,builderParamMap);
+  builderContainer.setBuilder(builder);
+}

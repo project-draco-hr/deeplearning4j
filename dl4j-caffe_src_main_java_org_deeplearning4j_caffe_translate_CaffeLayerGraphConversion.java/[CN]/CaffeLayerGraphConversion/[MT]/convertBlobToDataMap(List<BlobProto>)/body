@@ -1,0 +1,20 @@
+{
+  List<INDArray> blobDataList=new ArrayList<>();
+  for (  BlobProto blobProto : blobProtList) {
+    int[] dims;
+    List<Long> shape=blobProto.getShape().getDimList();
+    int height=blobProto.getHeight();
+    int width=blobProto.getWidth();
+    int num=blobProto.getNum();
+    int channel=blobProto.getChannels();
+    if ((height > 0 || width > 0 || num > 0 || channel > 0) && shape.size() == 0) {
+      dims=Ints.toArray(Arrays.asList(num,channel,width,height));
+    }
+ else {
+      dims=Ints.toArray(shape);
+    }
+    DataBuffer blobData=Nd4j.createBuffer(Doubles.toArray(blobProto.getDataList()));
+    blobDataList.add(Nd4j.create(blobData,dims));
+  }
+  return blobDataList;
+}

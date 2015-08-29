@@ -1,0 +1,8 @@
+{
+  if (concatParamBuilder_ != null) {
+    return concatParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return concatParam_;
+  }
+}

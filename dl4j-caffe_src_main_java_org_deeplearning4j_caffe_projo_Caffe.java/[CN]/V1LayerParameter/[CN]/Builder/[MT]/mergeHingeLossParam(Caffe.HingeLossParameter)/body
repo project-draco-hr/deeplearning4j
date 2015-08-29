@@ -1,0 +1,16 @@
+{
+  if (hingeLossParamBuilder_ == null) {
+    if (((bitField0_ & 0x01000000) == 0x01000000) && hingeLossParam_ != Caffe.HingeLossParameter.getDefaultInstance()) {
+      hingeLossParam_=Caffe.HingeLossParameter.newBuilder(hingeLossParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      hingeLossParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    hingeLossParamBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x01000000;
+  return this;
+}

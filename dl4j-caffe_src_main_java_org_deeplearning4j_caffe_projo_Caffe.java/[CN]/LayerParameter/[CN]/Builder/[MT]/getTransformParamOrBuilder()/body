@@ -1,0 +1,8 @@
+{
+  if (transformParamBuilder_ != null) {
+    return transformParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return transformParam_;
+  }
+}

@@ -1,0 +1,5 @@
+{
+  try (InputStream is=new BufferedInputStream(new FileInputStream(binaryNetPath))){
+    return readBinaryNet(is,sizeLimitMb);
+  }
+ }
