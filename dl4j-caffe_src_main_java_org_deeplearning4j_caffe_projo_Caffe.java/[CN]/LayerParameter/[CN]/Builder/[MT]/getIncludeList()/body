@@ -1,8 +1,0 @@
-{
-  if (includeBuilder_ == null) {
-    return java.util.Collections.unmodifiableList(include_);
-  }
- else {
-    return includeBuilder_.getMessageList();
-  }
-}

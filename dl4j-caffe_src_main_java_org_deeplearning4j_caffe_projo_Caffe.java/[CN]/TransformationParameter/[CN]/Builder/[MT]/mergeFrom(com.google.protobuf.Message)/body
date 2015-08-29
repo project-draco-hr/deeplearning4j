@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.TransformationParameter) {
-    return mergeFrom((Caffe.TransformationParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

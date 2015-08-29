@@ -1,7 +1,0 @@
-{
-  if (flattenParamBuilder_ == null) {
-    flattenParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.FlattenParameter,Caffe.FlattenParameter.Builder,Caffe.FlattenParameterOrBuilder>(getFlattenParam(),getParentForChildren(),isClean());
-    flattenParam_=null;
-  }
-  return flattenParamBuilder_;
-}

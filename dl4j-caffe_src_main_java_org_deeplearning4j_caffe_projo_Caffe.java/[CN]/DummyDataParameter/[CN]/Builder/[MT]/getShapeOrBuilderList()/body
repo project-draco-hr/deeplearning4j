@@ -1,8 +1,0 @@
-{
-  if (shapeBuilder_ != null) {
-    return shapeBuilder_.getMessageOrBuilderList();
-  }
- else {
-    return java.util.Collections.unmodifiableList(shape_);
-  }
-}

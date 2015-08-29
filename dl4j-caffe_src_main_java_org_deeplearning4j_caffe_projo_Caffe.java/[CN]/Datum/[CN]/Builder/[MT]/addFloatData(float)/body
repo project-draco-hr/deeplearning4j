@@ -1,6 +1,0 @@
-{
-  ensureFloatDataIsMutable();
-  floatData_.add(value);
-  onChanged();
-  return this;
-}

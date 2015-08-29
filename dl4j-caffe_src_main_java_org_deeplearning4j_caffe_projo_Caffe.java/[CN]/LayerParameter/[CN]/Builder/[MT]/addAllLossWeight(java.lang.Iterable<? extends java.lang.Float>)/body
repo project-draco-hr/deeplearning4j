@@ -1,6 +1,0 @@
-{
-  ensureLossWeightIsMutable();
-  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,lossWeight_);
-  onChanged();
-  return this;
-}

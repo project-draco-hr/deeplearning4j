@@ -1,6 +1,0 @@
-{
-  ensureWeightDecayIsMutable();
-  weightDecay_.set(index,value);
-  onChanged();
-  return this;
-}

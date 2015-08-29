@@ -1,9 +1,0 @@
-{
-  for (  List<Object> iter : caffeFieldBuilderFieldCaffeValIter) {
-    String caffeField=(String)iter.get(0);
-    String builderField=(String)iter.get(1);
-    Object caffeVal=iter.get(2);
-    builderParamMap.put(builderField,caffeVal);
-    functionInterface.specialTranslation(caffeField,caffeVal,builderField,builderParamMap);
-  }
-}

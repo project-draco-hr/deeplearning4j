@@ -1,8 +1,0 @@
-{
-  if (reductionParamBuilder_ == null) {
-    return reductionParam_;
-  }
- else {
-    return reductionParamBuilder_.getMessage();
-  }
-}

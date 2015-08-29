@@ -1,7 +1,0 @@
-{
-  if (windowDataParamBuilder_ == null) {
-    windowDataParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.WindowDataParameter,Caffe.WindowDataParameter.Builder,Caffe.WindowDataParameterOrBuilder>(getWindowDataParam(),getParentForChildren(),isClean());
-    windowDataParam_=null;
-  }
-  return windowDataParamBuilder_;
-}
