@@ -1,7 +1,0 @@
-{
-  CaffeNetTranslator netTranslator=new CaffeNetTranslator();
-  CaffeSolverTranslator solverTranslator=new CaffeSolverTranslator();
-  solverTranslator.translate(solver,nnCofigBuilderContainer);
-  netTranslator.translate(net,nnCofigBuilderContainer);
-  return nnCofigBuilderContainer.getListBuilder().build();
-}

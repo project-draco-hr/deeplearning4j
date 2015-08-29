@@ -1,7 +1,0 @@
-{
-  if (dataFillerBuilder_ == null) {
-    dataFillerBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.FillerParameter,Caffe.FillerParameter.Builder,Caffe.FillerParameterOrBuilder>(dataFiller_,((bitField0_ & 0x00000001) == 0x00000001),getParentForChildren(),isClean());
-    dataFiller_=null;
-  }
-  return dataFillerBuilder_;
-}

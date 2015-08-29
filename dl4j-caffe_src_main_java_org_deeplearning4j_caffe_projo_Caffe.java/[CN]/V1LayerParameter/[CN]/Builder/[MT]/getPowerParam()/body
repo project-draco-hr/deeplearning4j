@@ -1,8 +1,0 @@
-{
-  if (powerParamBuilder_ == null) {
-    return powerParam_;
-  }
- else {
-    return powerParamBuilder_.getMessage();
-  }
-}

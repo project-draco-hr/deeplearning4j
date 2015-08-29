@@ -1,8 +1,0 @@
-{
-  if (includeBuilder_ == null) {
-    return include_.get(index);
-  }
- else {
-    return includeBuilder_.getMessage(index);
-  }
-}

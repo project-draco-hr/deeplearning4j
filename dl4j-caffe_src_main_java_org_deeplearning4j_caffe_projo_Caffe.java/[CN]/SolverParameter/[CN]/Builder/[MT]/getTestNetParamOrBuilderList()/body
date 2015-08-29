@@ -1,8 +1,0 @@
-{
-  if (testNetParamBuilder_ != null) {
-    return testNetParamBuilder_.getMessageOrBuilderList();
-  }
- else {
-    return java.util.Collections.unmodifiableList(testNetParam_);
-  }
-}

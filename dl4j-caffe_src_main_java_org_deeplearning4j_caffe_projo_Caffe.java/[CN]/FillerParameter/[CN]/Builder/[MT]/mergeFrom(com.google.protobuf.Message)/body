@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.FillerParameter) {
-    return mergeFrom((Caffe.FillerParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

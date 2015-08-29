@@ -1,7 +1,0 @@
-{
-  if (reluParamBuilder_ == null) {
-    reluParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ReLUParameter,Caffe.ReLUParameter.Builder,Caffe.ReLUParameterOrBuilder>(getReluParam(),getParentForChildren(),isClean());
-    reluParam_=null;
-  }
-  return reluParamBuilder_;
-}

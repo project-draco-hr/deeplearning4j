@@ -1,7 +1,0 @@
-{
-  List<Map<String,List<CaffeNode>>> nodeMapList=convertNetToNodeMapList();
-  Graph graph=convertNodeMapSetToGraph(nodeMapList);
-  addStartEndNodesToGraph(graph);
-  trimGraph(graph);
-  return graph;
-}
