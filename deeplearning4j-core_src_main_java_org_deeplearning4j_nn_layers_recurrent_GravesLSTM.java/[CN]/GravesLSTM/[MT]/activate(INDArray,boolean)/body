@@ -1,4 +1,4 @@
 {
   setInput(input,training);
-  return activateHelper(training)[0];
+  return activateHelper(training,null,null)[0];
 }

@@ -1,3 +1,11 @@
 {
-  throw new UnsupportedOperationException("Not implemented");
+  INDArray[] activations=activateHelper(false,stateMap.get(STATE_KEY_PREV_ACTIVATION),stateMap.get(STATE_KEY_PREV_MEMCELL));
+  INDArray outAct=activations[0];
+  INDArray memCell=activations[1];
+  int tLength=outAct.size(2);
+  INDArray lastActSlice=outAct.tensorAlongDimension(tLength - 1,1,0);
+  INDArray lastMemSlice=memCell.tensorAlongDimension(tLength - 1,1,0);
+  stateMap.put(STATE_KEY_PREV_ACTIVATION,lastActSlice.dup());
+  stateMap.put(STATE_KEY_PREV_MEMCELL,lastMemSlice.dup());
+  return outAct;
 }

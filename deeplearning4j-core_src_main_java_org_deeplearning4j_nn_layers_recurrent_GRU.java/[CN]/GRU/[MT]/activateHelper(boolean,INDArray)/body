@@ -24,9 +24,10 @@
   INDArray outputActivations=Nd4j.zeros(miniBatchSize,hiddenLayerSize,timeSeriesLength);
   INDArray rucZs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize,timeSeriesLength);
   INDArray rucAs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize,timeSeriesLength);
+  if (prevOutputActivations == null)   prevOutputActivations=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
   for (int t=0; t < timeSeriesLength; t++) {
     INDArray prevLayerInputSlice=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
-    INDArray prevOutputActivations=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : outputActivations.tensorAlongDimension(t - 1,1,0));
+    if (t > 0)     prevOutputActivations=outputActivations.tensorAlongDimension(t - 1,1,0);
     INDArray zs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize);
     INDArray as=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize);
     INDArray zr=prevLayerInputSlice.mmul(wr).addi(prevOutputActivations.mmul(wR)).addiRowVector(br);
