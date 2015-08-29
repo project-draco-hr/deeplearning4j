@@ -1,0 +1,6 @@
+{
+  bitField0_=(bitField0_ & ~0x00000008);
+  biasterm_=true;
+  onChanged();
+  return this;
+}

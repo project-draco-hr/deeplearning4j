@@ -1,0 +1,36 @@
+{
+  if (other == Caffe.NetStateRule.getDefaultInstance())   return this;
+  if (other.hasPhase()) {
+    setPhase(other.getPhase());
+  }
+  if (other.hasMinLevel()) {
+    setMinLevel(other.getMinLevel());
+  }
+  if (other.hasMaxLevel()) {
+    setMaxLevel(other.getMaxLevel());
+  }
+  if (!other.stage_.isEmpty()) {
+    if (stage_.isEmpty()) {
+      stage_=other.stage_;
+      bitField0_=(bitField0_ & ~0x00000008);
+    }
+ else {
+      ensureStageIsMutable();
+      stage_.addAll(other.stage_);
+    }
+    onChanged();
+  }
+  if (!other.notStage_.isEmpty()) {
+    if (notStage_.isEmpty()) {
+      notStage_=other.notStage_;
+      bitField0_=(bitField0_ & ~0x00000010);
+    }
+ else {
+      ensureNotStageIsMutable();
+      notStage_.addAll(other.notStage_);
+    }
+    onChanged();
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

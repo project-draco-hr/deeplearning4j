@@ -1,0 +1,7 @@
+{
+  if (pythonParamBuilder_ == null) {
+    pythonParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.PythonParameter,Caffe.PythonParameter.Builder,Caffe.PythonParameterOrBuilder>(getPythonParam(),getParentForChildren(),isClean());
+    pythonParam_=null;
+  }
+  return pythonParamBuilder_;
+}

@@ -1,0 +1,11 @@
+{
+  if (historyBuilder_ == null) {
+    ensureHistoryIsMutable();
+    com.google.protobuf.AbstractMessageLite.Builder.addAll(values,history_);
+    onChanged();
+  }
+ else {
+    historyBuilder_.addAllMessages(values);
+  }
+  return this;
+}

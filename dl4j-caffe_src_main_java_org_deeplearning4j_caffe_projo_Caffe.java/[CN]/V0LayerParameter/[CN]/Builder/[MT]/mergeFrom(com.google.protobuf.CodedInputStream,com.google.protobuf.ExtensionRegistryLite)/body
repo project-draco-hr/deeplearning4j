@@ -1,0 +1,16 @@
+{
+  Caffe.V0LayerParameter parsedMessage=null;
+  try {
+    parsedMessage=PARSER.parsePartialFrom(input,extensionRegistry);
+  }
+ catch (  com.google.protobuf.InvalidProtocolBufferException e) {
+    parsedMessage=(Caffe.V0LayerParameter)e.getUnfinishedMessage();
+    throw e;
+  }
+ finally {
+    if (parsedMessage != null) {
+      mergeFrom(parsedMessage);
+    }
+  }
+  return this;
+}

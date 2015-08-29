@@ -1,0 +1,10 @@
+{
+  super.clear();
+  normalizeVariance_=true;
+  bitField0_=(bitField0_ & ~0x00000001);
+  acrossChannels_=false;
+  bitField0_=(bitField0_ & ~0x00000002);
+  eps_=1e-09F;
+  bitField0_=(bitField0_ & ~0x00000004);
+  return this;
+}

@@ -1,0 +1,8 @@
+{
+  if (infogainLossParamBuilder_ != null) {
+    return infogainLossParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return infogainLossParam_;
+  }
+}

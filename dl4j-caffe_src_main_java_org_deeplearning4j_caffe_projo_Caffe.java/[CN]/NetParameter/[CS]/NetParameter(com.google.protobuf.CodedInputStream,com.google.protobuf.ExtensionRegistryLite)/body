@@ -1,0 +1,141 @@
+{
+  initFields();
+  int mutable_bitField0_=0;
+  com.google.protobuf.UnknownFieldSet.Builder unknownFields=com.google.protobuf.UnknownFieldSet.newBuilder();
+  try {
+    boolean done=false;
+    while (!done) {
+      int tag=input.readTag();
+switch (tag) {
+case 0:
+        done=true;
+      break;
+default :
+{
+      if (!parseUnknownField(input,unknownFields,extensionRegistry,tag)) {
+        done=true;
+      }
+      break;
+    }
+case 10:
+{
+    com.google.protobuf.ByteString bs=input.readBytes();
+    bitField0_|=0x00000001;
+    name_=bs;
+    break;
+  }
+case 18:
+{
+  if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+    layers_=new java.util.ArrayList<Caffe.V1LayerParameter>();
+    mutable_bitField0_|=0x00000100;
+  }
+  layers_.add(input.readMessage(Caffe.V1LayerParameter.PARSER,extensionRegistry));
+  break;
+}
+case 26:
+{
+com.google.protobuf.ByteString bs=input.readBytes();
+if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+  input_=new com.google.protobuf.LazyStringArrayList();
+  mutable_bitField0_|=0x00000002;
+}
+input_.add(bs);
+break;
+}
+case 32:
+{
+if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+inputDim_=new java.util.ArrayList<java.lang.Integer>();
+mutable_bitField0_|=0x00000008;
+}
+inputDim_.add(input.readInt32());
+break;
+}
+case 34:
+{
+int length=input.readRawVarint32();
+int limit=input.pushLimit(length);
+if (!((mutable_bitField0_ & 0x00000008) == 0x00000008) && input.getBytesUntilLimit() > 0) {
+inputDim_=new java.util.ArrayList<java.lang.Integer>();
+mutable_bitField0_|=0x00000008;
+}
+while (input.getBytesUntilLimit() > 0) {
+inputDim_.add(input.readInt32());
+}
+input.popLimit(limit);
+break;
+}
+case 40:
+{
+bitField0_|=0x00000002;
+forceBackward_=input.readBool();
+break;
+}
+case 50:
+{
+Caffe.NetState.Builder subBuilder=null;
+if (((bitField0_ & 0x00000004) == 0x00000004)) {
+subBuilder=state_.toBuilder();
+}
+state_=input.readMessage(Caffe.NetState.PARSER,extensionRegistry);
+if (subBuilder != null) {
+subBuilder.mergeFrom(state_);
+state_=subBuilder.buildPartial();
+}
+bitField0_|=0x00000004;
+break;
+}
+case 56:
+{
+bitField0_|=0x00000008;
+debugInfo_=input.readBool();
+break;
+}
+case 66:
+{
+if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+inputShape_=new java.util.ArrayList<Caffe.BlobShape>();
+mutable_bitField0_|=0x00000004;
+}
+inputShape_.add(input.readMessage(Caffe.BlobShape.PARSER,extensionRegistry));
+break;
+}
+case 802:
+{
+if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+layer_=new java.util.ArrayList<Caffe.LayerParameter>();
+mutable_bitField0_|=0x00000080;
+}
+layer_.add(input.readMessage(Caffe.LayerParameter.PARSER,extensionRegistry));
+break;
+}
+}
+}
+}
+ catch (com.google.protobuf.InvalidProtocolBufferException e) {
+throw e.setUnfinishedMessage(this);
+}
+catch (java.io.IOException e) {
+throw new com.google.protobuf.InvalidProtocolBufferException(e.getMessage()).setUnfinishedMessage(this);
+}
+ finally {
+if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+layers_=java.util.Collections.unmodifiableList(layers_);
+}
+if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+input_=input_.getUnmodifiableView();
+}
+if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+inputDim_=java.util.Collections.unmodifiableList(inputDim_);
+}
+if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+inputShape_=java.util.Collections.unmodifiableList(inputShape_);
+}
+if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+layer_=java.util.Collections.unmodifiableList(layer_);
+}
+this.unknownFields=unknownFields.build();
+makeExtensionsImmutable();
+}
+}

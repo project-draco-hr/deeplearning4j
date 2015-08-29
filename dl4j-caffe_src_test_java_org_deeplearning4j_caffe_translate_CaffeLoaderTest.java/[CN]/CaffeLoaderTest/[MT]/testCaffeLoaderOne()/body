@@ -1,0 +1,12 @@
+{
+  SolverNetContainer container=new CaffeLoader().binaryNet(getLogisticBinaryNetPath()).textFormatSolver(getLogisticTextFormatSolverPath()).load();
+  assertTrue(container.getNet() != null);
+  assertTrue(container.getSolver() != null);
+  NetParameter net=container.getNet();
+  assertEquals(net.getName(),"LogisticRegressionNet");
+  assertEquals(net.getLayerCount(),3);
+  SolverParameter solver=container.getSolver();
+  assertEquals(solver.getBaseLr(),0.01,1e-3);
+  assertEquals(solver.getMaxIter(),1000);
+  assertEquals(solver.getLrPolicy(),"inv");
+}

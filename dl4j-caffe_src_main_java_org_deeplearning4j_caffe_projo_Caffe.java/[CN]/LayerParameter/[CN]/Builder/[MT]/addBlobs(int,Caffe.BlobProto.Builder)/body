@@ -1,0 +1,11 @@
+{
+  if (blobsBuilder_ == null) {
+    ensureBlobsIsMutable();
+    blobs_.add(index,builderForValue.build());
+    onChanged();
+  }
+ else {
+    blobsBuilder_.addMessage(index,builderForValue.build());
+  }
+  return this;
+}

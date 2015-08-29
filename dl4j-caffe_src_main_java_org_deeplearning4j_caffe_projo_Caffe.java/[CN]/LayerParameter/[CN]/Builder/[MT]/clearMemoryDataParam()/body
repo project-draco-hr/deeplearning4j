@@ -1,0 +1,11 @@
+{
+  if (memoryDataParamBuilder_ == null) {
+    memoryDataParam_=Caffe.MemoryDataParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    memoryDataParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000001);
+  return this;
+}

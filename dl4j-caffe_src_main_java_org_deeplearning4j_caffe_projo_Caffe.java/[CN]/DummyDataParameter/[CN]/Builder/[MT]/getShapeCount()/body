@@ -1,0 +1,8 @@
+{
+  if (shapeBuilder_ == null) {
+    return shape_.size();
+  }
+ else {
+    return shapeBuilder_.getCount();
+  }
+}

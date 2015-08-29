@@ -1,0 +1,11 @@
+{
+  if (tanhParamBuilder_ == null) {
+    tanhParam_=Caffe.TanHParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    tanhParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000020);
+  return this;
+}

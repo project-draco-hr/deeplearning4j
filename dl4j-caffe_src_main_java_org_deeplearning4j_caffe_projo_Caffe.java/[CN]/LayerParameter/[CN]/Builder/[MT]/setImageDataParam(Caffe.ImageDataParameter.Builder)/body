@@ -1,0 +1,11 @@
+{
+  if (imageDataParamBuilder_ == null) {
+    imageDataParam_=builderForValue.build();
+    onChanged();
+  }
+ else {
+    imageDataParamBuilder_.setMessage(builderForValue.build());
+  }
+  bitField0_|=0x08000000;
+  return this;
+}

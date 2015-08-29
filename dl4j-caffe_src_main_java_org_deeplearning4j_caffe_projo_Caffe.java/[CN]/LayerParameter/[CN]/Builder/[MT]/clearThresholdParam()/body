@@ -1,0 +1,11 @@
+{
+  if (thresholdParamBuilder_ == null) {
+    thresholdParam_=Caffe.ThresholdParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    thresholdParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00004000);
+  return this;
+}

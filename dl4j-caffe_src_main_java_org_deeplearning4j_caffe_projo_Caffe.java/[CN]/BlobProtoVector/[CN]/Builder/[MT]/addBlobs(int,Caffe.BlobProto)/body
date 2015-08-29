@@ -1,0 +1,14 @@
+{
+  if (blobsBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureBlobsIsMutable();
+    blobs_.add(index,value);
+    onChanged();
+  }
+ else {
+    blobsBuilder_.addMessage(index,value);
+  }
+  return this;
+}

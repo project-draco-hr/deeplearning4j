@@ -1,0 +1,183 @@
+{
+  Caffe.SolverParameter result=new Caffe.SolverParameter(this);
+  int from_bitField0_=bitField0_;
+  int from_bitField1_=bitField1_;
+  int to_bitField0_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.net_=net_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  if (netParamBuilder_ == null) {
+    result.netParam_=netParam_;
+  }
+ else {
+    result.netParam_=netParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.trainNet_=trainNet_;
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    testNet_=testNet_.getUnmodifiableView();
+    bitField0_=(bitField0_ & ~0x00000008);
+  }
+  result.testNet_=testNet_;
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000008;
+  }
+  if (trainNetParamBuilder_ == null) {
+    result.trainNetParam_=trainNetParam_;
+  }
+ else {
+    result.trainNetParam_=trainNetParamBuilder_.build();
+  }
+  if (testNetParamBuilder_ == null) {
+    if (((bitField0_ & 0x00000020) == 0x00000020)) {
+      testNetParam_=java.util.Collections.unmodifiableList(testNetParam_);
+      bitField0_=(bitField0_ & ~0x00000020);
+    }
+    result.testNetParam_=testNetParam_;
+  }
+ else {
+    result.testNetParam_=testNetParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+    to_bitField0_|=0x00000010;
+  }
+  if (trainStateBuilder_ == null) {
+    result.trainState_=trainState_;
+  }
+ else {
+    result.trainState_=trainStateBuilder_.build();
+  }
+  if (testStateBuilder_ == null) {
+    if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      testState_=java.util.Collections.unmodifiableList(testState_);
+      bitField0_=(bitField0_ & ~0x00000080);
+    }
+    result.testState_=testState_;
+  }
+ else {
+    result.testState_=testStateBuilder_.build();
+  }
+  if (((bitField0_ & 0x00000100) == 0x00000100)) {
+    testIter_=java.util.Collections.unmodifiableList(testIter_);
+    bitField0_=(bitField0_ & ~0x00000100);
+  }
+  result.testIter_=testIter_;
+  if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+    to_bitField0_|=0x00000020;
+  }
+  result.testInterval_=testInterval_;
+  if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+    to_bitField0_|=0x00000040;
+  }
+  result.testComputeLoss_=testComputeLoss_;
+  if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+    to_bitField0_|=0x00000080;
+  }
+  result.testInitialization_=testInitialization_;
+  if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+    to_bitField0_|=0x00000100;
+  }
+  result.baseLr_=baseLr_;
+  if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+    to_bitField0_|=0x00000200;
+  }
+  result.display_=display_;
+  if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+    to_bitField0_|=0x00000400;
+  }
+  result.averageLoss_=averageLoss_;
+  if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+    to_bitField0_|=0x00000800;
+  }
+  result.maxIter_=maxIter_;
+  if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+    to_bitField0_|=0x00001000;
+  }
+  result.iterSize_=iterSize_;
+  if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+    to_bitField0_|=0x00002000;
+  }
+  result.lrPolicy_=lrPolicy_;
+  if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+    to_bitField0_|=0x00004000;
+  }
+  result.gamma_=gamma_;
+  if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
+    to_bitField0_|=0x00008000;
+  }
+  result.power_=power_;
+  if (((from_bitField0_ & 0x00100000) == 0x00100000)) {
+    to_bitField0_|=0x00010000;
+  }
+  result.momentum_=momentum_;
+  if (((from_bitField0_ & 0x00200000) == 0x00200000)) {
+    to_bitField0_|=0x00020000;
+  }
+  result.weightDecay_=weightDecay_;
+  if (((from_bitField0_ & 0x00400000) == 0x00400000)) {
+    to_bitField0_|=0x00040000;
+  }
+  result.regularizationType_=regularizationType_;
+  if (((from_bitField0_ & 0x00800000) == 0x00800000)) {
+    to_bitField0_|=0x00080000;
+  }
+  result.stepsize_=stepsize_;
+  if (((bitField0_ & 0x01000000) == 0x01000000)) {
+    stepvalue_=java.util.Collections.unmodifiableList(stepvalue_);
+    bitField0_=(bitField0_ & ~0x01000000);
+  }
+  result.stepvalue_=stepvalue_;
+  if (((from_bitField0_ & 0x02000000) == 0x02000000)) {
+    to_bitField0_|=0x00100000;
+  }
+  result.clipGradients_=clipGradients_;
+  if (((from_bitField0_ & 0x04000000) == 0x04000000)) {
+    to_bitField0_|=0x00200000;
+  }
+  result.snapshot_=snapshot_;
+  if (((from_bitField0_ & 0x08000000) == 0x08000000)) {
+    to_bitField0_|=0x00400000;
+  }
+  result.snapshotPrefix_=snapshotPrefix_;
+  if (((from_bitField0_ & 0x10000000) == 0x10000000)) {
+    to_bitField0_|=0x00800000;
+  }
+  result.snapshotDiff_=snapshotDiff_;
+  if (((from_bitField0_ & 0x20000000) == 0x20000000)) {
+    to_bitField0_|=0x01000000;
+  }
+  result.solverMode_=solverMode_;
+  if (((from_bitField0_ & 0x40000000) == 0x40000000)) {
+    to_bitField0_|=0x02000000;
+  }
+  result.deviceId_=deviceId_;
+  if (((from_bitField0_ & 0x80000000) == 0x80000000)) {
+    to_bitField0_|=0x04000000;
+  }
+  result.randomSeed_=randomSeed_;
+  if (((from_bitField1_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x08000000;
+  }
+  result.solverType_=solverType_;
+  if (((from_bitField1_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x10000000;
+  }
+  result.delta_=delta_;
+  if (((from_bitField1_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x20000000;
+  }
+  result.debugInfo_=debugInfo_;
+  if (((from_bitField1_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x40000000;
+  }
+  result.snapshotAfterTrain_=snapshotAfterTrain_;
+  result.bitField0_=to_bitField0_;
+  onBuilt();
+  return result;
+}

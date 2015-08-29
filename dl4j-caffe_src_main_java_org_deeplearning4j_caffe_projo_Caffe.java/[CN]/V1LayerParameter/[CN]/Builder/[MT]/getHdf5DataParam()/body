@@ -1,0 +1,8 @@
+{
+  if (hdf5DataParamBuilder_ == null) {
+    return hdf5DataParam_;
+  }
+ else {
+    return hdf5DataParamBuilder_.getMessage();
+  }
+}

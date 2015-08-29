@@ -1,0 +1,5 @@
+{
+  CodedInputStream codeStream=CodedInputStream.newInstance(is);
+  codeStream.setSizeLimit(sizeLimitMb * 1024 * 1024);
+  return Caffe.NetParameter.parseFrom(codeStream);
+}

@@ -1,0 +1,16 @@
+{
+  if (fillerBuilder_ == null) {
+    if (((bitField0_ & 0x00000001) == 0x00000001) && filler_ != Caffe.FillerParameter.getDefaultInstance()) {
+      filler_=Caffe.FillerParameter.newBuilder(filler_).mergeFrom(value).buildPartial();
+    }
+ else {
+      filler_=value;
+    }
+    onChanged();
+  }
+ else {
+    fillerBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00000001;
+  return this;
+}

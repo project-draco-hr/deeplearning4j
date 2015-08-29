@@ -1,0 +1,8 @@
+{
+  if (argmaxParamBuilder_ != null) {
+    return argmaxParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return argmaxParam_;
+  }
+}

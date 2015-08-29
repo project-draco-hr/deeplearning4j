@@ -1,0 +1,12 @@
+{
+  SolverNetContainer container=CaffeTestUtil.getImageNetSolverNet();
+  CaffeNetTranslator netTranslator=new CaffeNetTranslator();
+  CaffeSolverTranslator solverTranslator=new CaffeSolverTranslator();
+  Caffe.SolverParameter solver=container.getSolver();
+  Caffe.NetParameter net=container.getNet();
+  NNCofigBuilderContainer nnCofigBuilderContainer=new NNCofigBuilderContainer();
+  solverTranslator.translate(solver,nnCofigBuilderContainer);
+  netTranslator.translate(net,nnCofigBuilderContainer);
+  MultiLayerConfiguration model=nnCofigBuilderContainer.getListBuilder().build();
+  assertTrue(model != null);
+}

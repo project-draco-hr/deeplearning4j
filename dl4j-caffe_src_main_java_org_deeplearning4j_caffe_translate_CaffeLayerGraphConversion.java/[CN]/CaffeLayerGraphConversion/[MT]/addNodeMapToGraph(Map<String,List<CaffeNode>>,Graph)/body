@@ -1,0 +1,11 @@
+{
+  CaffeNode currNode=nodeMap.get("current").iterator().next();
+  List<CaffeNode> topNodeSet=nodeMap.get("top");
+  List<CaffeNode> bottomNodeSet=nodeMap.get("bottom");
+  for (  CaffeNode topNode : topNodeSet) {
+    graph.addEdge(currNode,topNode);
+  }
+  for (  CaffeNode bottomNode : bottomNodeSet) {
+    graph.addEdge(bottomNode,currNode);
+  }
+}

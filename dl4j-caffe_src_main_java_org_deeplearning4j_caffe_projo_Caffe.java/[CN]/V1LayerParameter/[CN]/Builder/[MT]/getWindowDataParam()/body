@@ -1,0 +1,8 @@
+{
+  if (windowDataParamBuilder_ == null) {
+    return windowDataParam_;
+  }
+ else {
+    return windowDataParamBuilder_.getMessage();
+  }
+}

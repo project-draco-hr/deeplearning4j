@@ -1,0 +1,8 @@
+{
+  if (weightFillerBuilder_ == null) {
+    return weightFiller_;
+  }
+ else {
+    return weightFillerBuilder_.getMessage();
+  }
+}

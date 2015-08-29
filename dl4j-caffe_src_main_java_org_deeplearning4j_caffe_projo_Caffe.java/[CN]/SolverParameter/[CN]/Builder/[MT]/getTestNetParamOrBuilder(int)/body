@@ -1,0 +1,8 @@
+{
+  if (testNetParamBuilder_ == null) {
+    return testNetParam_.get(index);
+  }
+ else {
+    return testNetParamBuilder_.getMessageOrBuilder(index);
+  }
+}

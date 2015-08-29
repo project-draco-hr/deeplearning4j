@@ -1,0 +1,16 @@
+{
+  if (weightFillerBuilder_ == null) {
+    if (((bitField0_ & 0x00000004) == 0x00000004) && weightFiller_ != Caffe.FillerParameter.getDefaultInstance()) {
+      weightFiller_=Caffe.FillerParameter.newBuilder(weightFiller_).mergeFrom(value).buildPartial();
+    }
+ else {
+      weightFiller_=value;
+    }
+    onChanged();
+  }
+ else {
+    weightFillerBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00000004;
+  return this;
+}

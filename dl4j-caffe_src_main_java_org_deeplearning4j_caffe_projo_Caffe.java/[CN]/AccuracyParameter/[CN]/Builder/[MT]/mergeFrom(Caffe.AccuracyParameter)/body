@@ -1,0 +1,14 @@
+{
+  if (other == Caffe.AccuracyParameter.getDefaultInstance())   return this;
+  if (other.hasTopK()) {
+    setTopK(other.getTopK());
+  }
+  if (other.hasAxis()) {
+    setAxis(other.getAxis());
+  }
+  if (other.hasIgnoreLabel()) {
+    setIgnoreLabel(other.getIgnoreLabel());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

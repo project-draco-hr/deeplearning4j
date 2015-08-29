@@ -1,0 +1,57 @@
+{
+  Method getNameMethod=getMethodFromString("getName",layer.getClass());
+  Method getLayerTypeMethod=getMethodFromString("getType",layer.getClass());
+  Method getTopListMethod=getMethodFromString("getTopList",layer.getClass());
+  Method getBottomListMethod=getMethodFromString("getBottomList",layer.getClass());
+  Method getBlobListMethod=getMethodFromString("getBlobsList",layer.getClass());
+  Map<String,List<CaffeNode>> caffeNodeMap=new HashMap<>();
+  caffeNodeMap.put("current",new ArrayList<CaffeNode>());
+  caffeNodeMap.put("top",new ArrayList<CaffeNode>());
+  caffeNodeMap.put("bottom",new ArrayList<CaffeNode>());
+  String layerName=(String)getNameMethod.invoke(layer);
+  Object caffeRawLayerType=getLayerTypeMethod.invoke(layer);
+  String layerSubTypeString;
+  try {
+    layerSubTypeString=((String)FieldUtils.readField(caffeRawLayerType,"name",true)).toUpperCase();
+  }
+ catch (  IllegalArgumentException e) {
+    layerSubTypeString=((String)caffeRawLayerType).toUpperCase();
+  }
+  if (!isSubTypeAvaliable(layerSubTypeString)) {
+    return null;
+  }
+  LayerSubType layerSubType=subTypify(layerSubTypeString);
+  LayerType layerType=subType2TypeMap.get(layerSubType);
+  String paramMethodString=subType2MethodMap.get(layerSubTypeString);
+  Map<String,Object> field2valueMap=new HashMap<>();
+  if (!paramMethodString.isEmpty()) {
+    Method getParamMethod=getMethodFromString(subType2MethodMap.get(layerSubTypeString),layer.getClass());
+    Object layerClassParameter=getParamMethod.invoke(layer);
+    Set<String> layerStringFields=layerParamMapping.get(layerSubType).keySet();
+    for (    String stringField : layerStringFields) {
+      try {
+        Object val=FieldUtils.readField(layerClassParameter,stringField,true);
+        field2valueMap.put(stringField,val);
+      }
+ catch (      Exception e) {
+        log.info(String.format("Cannot parse field '%s'",stringField));
+      }
+    }
+  }
+  List<INDArray> data=convertBlobToDataMap((List<BlobProto>)getBlobListMethod.invoke(layer));
+  List<String> bottomList=(List<String>)getBottomListMethod.invoke(layer);
+  List<String> topList=(List<String>)getTopListMethod.invoke(layer);
+  for (  String bottomLayerName : bottomList) {
+    CaffeNode bottomNode=new CaffeNode(bottomLayerName,LayerType.CONNECTOR,LayerSubType.CONNECTOR);
+    caffeNodeMap.get("bottom").add(bottomNode);
+  }
+  CaffeNode currentNode=new CaffeNode(layerName,layerType,layerSubType,field2valueMap,data,caffeNodeMap.get("bottom"));
+  caffeNodeMap.get("current").add(currentNode);
+  for (  String topLayerName : topList) {
+    List<CaffeNode> bottomNodeListTop=new ArrayList<>();
+    bottomNodeListTop.add(currentNode);
+    CaffeNode topNode=new CaffeNode(topLayerName,LayerType.CONNECTOR,LayerSubType.CONNECTOR,bottomNodeListTop);
+    caffeNodeMap.get("top").add(topNode);
+  }
+  return caffeNodeMap;
+}

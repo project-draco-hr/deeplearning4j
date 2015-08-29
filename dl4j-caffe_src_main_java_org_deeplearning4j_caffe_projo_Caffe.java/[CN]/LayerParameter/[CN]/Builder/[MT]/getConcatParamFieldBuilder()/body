@@ -1,0 +1,7 @@
+{
+  if (concatParamBuilder_ == null) {
+    concatParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.ConcatParameter,Caffe.ConcatParameter.Builder,Caffe.ConcatParameterOrBuilder>(getConcatParam(),getParentForChildren(),isClean());
+    concatParam_=null;
+  }
+  return concatParamBuilder_;
+}

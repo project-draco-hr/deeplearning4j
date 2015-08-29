@@ -1,0 +1,24 @@
+{
+  solverParamMappings=new HashMap<String,String>(){
+{
+      put("baseLr_","lr");
+      put("momentum_","momentum");
+      put("maxIter_","numIterations");
+      put("randomSeed_","seed");
+      put("solverType_","optimizationAlgo");
+      put("regularizationType_","useRegularization");
+      put("display_","");
+      put("lrPolicy_","");
+      put("gamma_","");
+      put("power_","");
+      put("weightDecay_","");
+      put("stepsize_","");
+      put("stepvalue_","");
+      put("clipGradients_","");
+      put("solverMode_","");
+      put("deviceId_","");
+      put("delta_","");
+    }
+  }
+;
+}

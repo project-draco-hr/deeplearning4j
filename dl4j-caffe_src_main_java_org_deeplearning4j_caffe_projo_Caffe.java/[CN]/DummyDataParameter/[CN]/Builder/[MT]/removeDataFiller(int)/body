@@ -1,0 +1,11 @@
+{
+  if (dataFillerBuilder_ == null) {
+    ensureDataFillerIsMutable();
+    dataFiller_.remove(index);
+    onChanged();
+  }
+ else {
+    dataFillerBuilder_.remove(index);
+  }
+  return this;
+}

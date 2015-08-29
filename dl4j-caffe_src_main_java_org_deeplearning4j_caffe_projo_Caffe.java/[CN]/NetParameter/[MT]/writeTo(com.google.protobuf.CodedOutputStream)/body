@@ -1,0 +1,31 @@
+{
+  getSerializedSize();
+  if (((bitField0_ & 0x00000001) == 0x00000001)) {
+    output.writeBytes(1,getNameBytes());
+  }
+  for (int i=0; i < layers_.size(); i++) {
+    output.writeMessage(2,layers_.get(i));
+  }
+  for (int i=0; i < input_.size(); i++) {
+    output.writeBytes(3,input_.getByteString(i));
+  }
+  for (int i=0; i < inputDim_.size(); i++) {
+    output.writeInt32(4,inputDim_.get(i));
+  }
+  if (((bitField0_ & 0x00000002) == 0x00000002)) {
+    output.writeBool(5,forceBackward_);
+  }
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    output.writeMessage(6,state_);
+  }
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    output.writeBool(7,debugInfo_);
+  }
+  for (int i=0; i < inputShape_.size(); i++) {
+    output.writeMessage(8,inputShape_.get(i));
+  }
+  for (int i=0; i < layer_.size(); i++) {
+    output.writeMessage(100,layer_.get(i));
+  }
+  getUnknownFields().writeTo(output);
+}
