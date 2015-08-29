@@ -1,6 +1,0 @@
-{
-  ensureHeightIsMutable();
-  height_.set(index,value);
-  onChanged();
-  return this;
-}

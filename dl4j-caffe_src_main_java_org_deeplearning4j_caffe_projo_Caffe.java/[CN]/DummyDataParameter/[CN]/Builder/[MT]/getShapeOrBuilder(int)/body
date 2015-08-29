@@ -1,8 +1,0 @@
-{
-  if (shapeBuilder_ == null) {
-    return shape_.get(index);
-  }
- else {
-    return shapeBuilder_.getMessageOrBuilder(index);
-  }
-}

@@ -1,8 +1,0 @@
-{
-  if (contrastiveLossParamBuilder_ != null) {
-    return contrastiveLossParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return contrastiveLossParam_;
-  }
-}

@@ -1,8 +1,0 @@
-{
-  if (inputShapeBuilder_ == null) {
-    return inputShape_.size();
-  }
- else {
-    return inputShapeBuilder_.getCount();
-  }
-}

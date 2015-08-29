@@ -1,7 +1,0 @@
-{
-  List<Node> matchedNodeList=new ArrayList<>();
-  for (  Node node : adjacencyListMap.keySet()) {
-    if (node.getName().equals(nameOfNode))     matchedNodeList.add(node);
-  }
-  return matchedNodeList;
-}

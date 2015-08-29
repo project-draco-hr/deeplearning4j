@@ -1,8 +1,0 @@
-{
-  if (dataFillerBuilder_ == null) {
-    return dataFiller_.size();
-  }
- else {
-    return dataFillerBuilder_.getCount();
-  }
-}

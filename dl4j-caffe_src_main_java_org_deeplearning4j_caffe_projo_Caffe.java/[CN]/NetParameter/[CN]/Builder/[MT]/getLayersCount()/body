@@ -1,8 +1,0 @@
-{
-  if (layersBuilder_ == null) {
-    return layers_.size();
-  }
- else {
-    return layersBuilder_.getCount();
-  }
-}

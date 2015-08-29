@@ -1,8 +1,0 @@
-{
-  SolverNetContainer container=CaffeTestUtil.getLogisticSolverNet();
-  Caffe.SolverParameter solver=container.getSolver();
-  NNCofigBuilderContainer builderContainer=new NNCofigBuilderContainer();
-  CaffeSolverTranslator solverTranslator=new CaffeSolverTranslator();
-  solverTranslator.translate(solver,builderContainer);
-  assertTrue(builderContainer.getBuilder() != null);
-}

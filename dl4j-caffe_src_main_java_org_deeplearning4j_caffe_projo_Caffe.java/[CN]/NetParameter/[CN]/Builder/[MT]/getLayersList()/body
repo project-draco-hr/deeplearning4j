@@ -1,8 +1,0 @@
-{
-  if (layersBuilder_ == null) {
-    return java.util.Collections.unmodifiableList(layers_);
-  }
- else {
-    return layersBuilder_.getMessageList();
-  }
-}

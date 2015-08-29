@@ -1,6 +1,0 @@
-{
-  ensureSlicePointIsMutable();
-  com.google.protobuf.AbstractMessageLite.Builder.addAll(values,slicePoint_);
-  onChanged();
-  return this;
-}

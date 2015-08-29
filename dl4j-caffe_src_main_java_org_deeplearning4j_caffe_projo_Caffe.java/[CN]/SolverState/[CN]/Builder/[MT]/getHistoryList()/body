@@ -1,8 +1,0 @@
-{
-  if (historyBuilder_ == null) {
-    return java.util.Collections.unmodifiableList(history_);
-  }
- else {
-    return historyBuilder_.getMessageList();
-  }
-}
