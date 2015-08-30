@@ -1,0 +1,7 @@
+{
+  INDArray decoderWeights=getParam(ImageLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  int d=decoderWeights.rows();
+  Triple<INDArray,INDArray,INDArray> yhc=lstmTick(xi,Nd4j.zeros(d),Nd4j.zeros(d));
+  BeamSearch search=new BeamSearch(20,ws,yhc.getSecond(),yhc.getThird());
+  return search.search();
+}

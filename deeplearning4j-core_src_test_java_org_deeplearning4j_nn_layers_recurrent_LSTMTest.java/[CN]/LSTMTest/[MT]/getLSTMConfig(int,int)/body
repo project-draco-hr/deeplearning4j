@@ -1,5 +1,0 @@
-{
-  LSTM layer=new LSTM.Builder().nIn(nIn).nOut(nOut).activation("tanh").build();
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(layer).build();
-  return LayerFactories.getFactory(conf).create(conf);
-}

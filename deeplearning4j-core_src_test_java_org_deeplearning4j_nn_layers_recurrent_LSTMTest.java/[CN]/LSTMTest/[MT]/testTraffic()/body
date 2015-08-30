@@ -1,4 +1,0 @@
-{
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.LSTM.Builder().nIn(4).nOut(4).activation("tanh").build()).optimizationAlgo(OptimizationAlgorithm.LBFGS).build();
-  Layer l=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(10)),0);
-}
