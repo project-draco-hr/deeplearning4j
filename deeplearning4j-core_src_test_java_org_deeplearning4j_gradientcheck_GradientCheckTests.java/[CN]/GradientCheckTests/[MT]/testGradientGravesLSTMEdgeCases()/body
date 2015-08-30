@@ -1,0 +1,29 @@
+{
+  int[] timeSeriesLength={1,5,1};
+  int[] miniBatchSize={7,1,1};
+  int nIn=7;
+  int layerSize=9;
+  int nOut=4;
+  for (int i=0; i < timeSeriesLength.length; i++) {
+    Random r=new Random(12345L);
+    INDArray input=Nd4j.zeros(miniBatchSize[i],nIn,timeSeriesLength[i]);
+    for (int m=0; m < miniBatchSize[m]; m++) {
+      for (int j=0; j < nIn; j++) {
+        for (int k=0; k < timeSeriesLength[i]; k++) {
+          input.putScalar(new int[]{m,j,k},r.nextDouble() - 0.5);
+        }
+      }
+    }
+    INDArray labels=Nd4j.zeros(miniBatchSize[i] * timeSeriesLength[i],nOut);
+    for (int m=0; m < labels.size(0); m++) {
+      int idx=r.nextInt(nOut);
+      labels.putScalar(new int[]{m,idx},1.0f);
+    }
+    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new OutputLayer.Builder(LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).pretrain(false).backprop(true).build();
+    MultiLayerNetwork mln=new MultiLayerNetwork(conf);
+    mln.init();
+    boolean gradOK=GradientCheckUtil.checkGradients(mln,DEFAULT_EPS,DEFAULT_MAX_REL_ERROR,PRINT_RESULTS,RETURN_ON_FIRST_FAILURE,input,labels,true);
+    String msg="testGradientGravesLSTMEdgeCases() - timeSeriesLength=" + timeSeriesLength[i] + ", miniBatchSize="+ miniBatchSize[i];
+    assertTrue(msg,gradOK);
+  }
+}

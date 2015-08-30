@@ -1,0 +1,90 @@
+{
+  INDArray[] activations=activateHelper(true);
+  INDArray outputActivations=activations[0];
+  INDArray rucZs=activations[1];
+  INDArray rucAs=activations[2];
+  INDArray inputWeights=getParam(GRUParamInitializer.INPUT_WEIGHT_KEY);
+  INDArray recurrentWeights=getParam(GRUParamInitializer.RECURRENT_WEIGHT_KEY);
+  int layerSize=recurrentWeights.size(0);
+  int prevLayerSize=inputWeights.size(0);
+  int miniBatchSize=epsilon.size(0);
+  boolean is2dInput=epsilon.rank() < 3;
+  int timeSeriesLength=(is2dInput ? 1 : epsilon.size(2));
+  INDArray wr=inputWeights.get(NDArrayIndex.all(),interval(0,layerSize));
+  INDArray wu=inputWeights.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+  INDArray wc=inputWeights.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+  INDArray wR=recurrentWeights.get(NDArrayIndex.all(),interval(0,layerSize));
+  INDArray wU=recurrentWeights.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+  INDArray wC=recurrentWeights.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+  INDArray wRdiag=Nd4j.diag(wR).transpose();
+  INDArray wCdiag=Nd4j.diag(wC).transpose();
+  INDArray biasGradients=Nd4j.zeros(new int[]{1,3 * layerSize});
+  INDArray inputWeightGradients=Nd4j.zeros(new int[]{prevLayerSize,3 * layerSize});
+  INDArray recurrentWeightGradients=Nd4j.zeros(new int[]{layerSize,3 * layerSize});
+  INDArray epsilonNext=Nd4j.zeros(miniBatchSize,prevLayerSize,timeSeriesLength);
+  INDArray deltaOutNext=Nd4j.zeros(miniBatchSize,layerSize);
+  for (int t=timeSeriesLength - 1; t >= 0; t--) {
+    INDArray prevOut=(t == 0 ? Nd4j.zeros(miniBatchSize,layerSize) : outputActivations.tensorAlongDimension(t - 1,1,0));
+    INDArray aSlice=(is2dInput ? rucAs : rucAs.tensorAlongDimension(t,1,0));
+    INDArray zSlice=(is2dInput ? rucZs : rucZs.tensorAlongDimension(t,1,0));
+    INDArray aSliceNext;
+    INDArray zSliceNext;
+    if (t == timeSeriesLength - 1) {
+      aSliceNext=Nd4j.zeros(miniBatchSize,3 * layerSize);
+      zSliceNext=Nd4j.zeros(miniBatchSize,3 * layerSize);
+    }
+ else {
+      aSliceNext=rucAs.tensorAlongDimension(t + 1,1,0);
+      zSliceNext=rucZs.tensorAlongDimension(t + 1,1,0);
+    }
+    INDArray zr=zSlice.get(NDArrayIndex.all(),interval(0,layerSize));
+    INDArray sigmaPrimeZr=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zr.dup()).derivative());
+    INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.tensorAlongDimension(t,1,0));
+    INDArray deltaOut=epsilonSlice.dup();
+    if (t < timeSeriesLength - 1) {
+      INDArray aOut=(is2dInput ? outputActivations : outputActivations.tensorAlongDimension(t,1,0));
+      INDArray arNext=aSliceNext.get(NDArrayIndex.all(),interval(0,layerSize));
+      INDArray auNext=aSliceNext.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+      INDArray acNext=aSliceNext.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+      INDArray zrNext=zSliceNext.get(NDArrayIndex.all(),interval(0,layerSize));
+      INDArray zuNext=zSliceNext.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+      INDArray zcNext=zSliceNext.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+      INDArray sigmaPrimeZrNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zrNext.dup()).derivative());
+      INDArray sigmaPrimeZuNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zuNext.dup()).derivative());
+      INDArray sigmaPrimeZcNext=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zcNext.dup()).derivative());
+      deltaOut.addi(auNext.mul(deltaOutNext));
+      deltaOut.addi(aOut.sub(acNext).muli(sigmaPrimeZuNext).muli(wU.mmul(deltaOutNext.transpose()).transpose()));
+      deltaOut.addi(auNext.rsub(1.0).muli(sigmaPrimeZcNext).muli(arNext.add(aOut.mul(sigmaPrimeZrNext).muliRowVector(wRdiag))).muli(wC.mmul(deltaOutNext.transpose()).transpose()));
+    }
+    INDArray zu=zSlice.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+    INDArray sigmaPrimeZu=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zu.dup()).derivative());
+    INDArray ac=aSlice.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+    INDArray deltaU=deltaOut.mul(sigmaPrimeZu).muli(prevOut.sub(ac));
+    INDArray zc=zSlice.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize));
+    INDArray sigmaPrimeZc=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zc.dup()).derivative());
+    INDArray au=aSlice.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize));
+    INDArray deltaC=deltaOut.mul(sigmaPrimeZc).muli(au.rsub(1.0));
+    INDArray deltaR=deltaC.mulRowVector(wCdiag).muli(prevOut).muli(sigmaPrimeZr);
+    INDArray prevLayerActivationSlice=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
+    inputWeightGradients.get(NDArrayIndex.all(),interval(0,layerSize)).addi(deltaR.transpose().mmul(prevLayerActivationSlice).transpose());
+    inputWeightGradients.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize)).addi(deltaU.transpose().mmul(prevLayerActivationSlice).transpose());
+    inputWeightGradients.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize)).addi(deltaC.transpose().mmul(prevLayerActivationSlice).transpose());
+    if (t > 0) {
+      recurrentWeightGradients.get(NDArrayIndex.all(),interval(0,layerSize)).addi(deltaR.transpose().mmul(prevOut).transpose());
+      recurrentWeightGradients.get(NDArrayIndex.all(),interval(layerSize,2 * layerSize)).addi(deltaU.transpose().mmul(prevOut).transpose());
+      INDArray ar=aSlice.get(NDArrayIndex.all(),interval(0,layerSize));
+      recurrentWeightGradients.get(NDArrayIndex.all(),interval(2 * layerSize,3 * layerSize)).addi(deltaC.transpose().mmul(prevOut.mul(ar)).transpose());
+    }
+    biasGradients.get(NDArrayIndex.point(0),interval(0,layerSize)).addi(deltaR.sum(0));
+    biasGradients.get(NDArrayIndex.point(0),interval(layerSize,2 * layerSize)).addi(deltaU.sum(0));
+    biasGradients.get(NDArrayIndex.point(0),interval(2 * layerSize,3 * layerSize)).addi(deltaC.sum(0));
+    INDArray epsilonNextSlice=wr.mmul(deltaR.transpose()).transpose().addi(wu.mmul(deltaU.transpose()).transpose()).addi(wc.mmul(deltaC.transpose()).transpose());
+    epsilonNext.tensorAlongDimension(t,1,0).assign(epsilonNextSlice);
+    deltaOutNext=deltaOut;
+  }
+  Gradient g=new DefaultGradient();
+  g.setGradientFor(GRUParamInitializer.INPUT_WEIGHT_KEY,inputWeightGradients);
+  g.setGradientFor(GRUParamInitializer.RECURRENT_WEIGHT_KEY,recurrentWeightGradients);
+  g.setGradientFor(GRUParamInitializer.BIAS_KEY,biasGradients);
+  return new Pair<>(g,epsilonNext);
+}

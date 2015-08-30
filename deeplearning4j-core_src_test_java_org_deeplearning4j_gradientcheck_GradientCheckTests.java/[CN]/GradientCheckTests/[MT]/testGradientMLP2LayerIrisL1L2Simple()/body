@@ -1,5 +1,5 @@
 {
-  String[] activFns={"sigmoid","tanh","relu","hardtanh"};
+  String[] activFns={"sigmoid","tanh","relu"};
   boolean[] characteristic={false,true};
   LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
   String[] outputActivations={"softmax","tanh"};

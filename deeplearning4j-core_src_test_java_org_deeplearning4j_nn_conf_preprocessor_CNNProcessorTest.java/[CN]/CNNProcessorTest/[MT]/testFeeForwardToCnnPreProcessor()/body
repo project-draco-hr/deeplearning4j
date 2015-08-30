@@ -1,10 +1,10 @@
 {
   FeedForwardToCnnPreProcessor convProcessor=new FeedForwardToCnnPreProcessor(rows,cols,1);
-  INDArray check2to4=convProcessor.preProcess(in2D);
+  INDArray check2to4=convProcessor.preProcess(in2D,null);
   int val2to4=check2to4.shape().length;
   assertTrue(val2to4 == 4);
   assertEquals(Nd4j.create(1,1,28,28),check2to4);
-  INDArray check4to4=convProcessor.preProcess(in4D);
+  INDArray check4to4=convProcessor.preProcess(in4D,null);
   int val4to4=check4to4.shape().length;
   assertTrue(val4to4 == 4);
   assertEquals(Nd4j.create(20,1,28,28),check4to4);
