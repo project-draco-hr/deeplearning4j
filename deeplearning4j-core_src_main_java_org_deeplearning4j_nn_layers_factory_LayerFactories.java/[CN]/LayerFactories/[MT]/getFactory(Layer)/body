@@ -1,7 +1,6 @@
 {
   Class<? extends Layer> clazz=layer.getClass();
-  if (clazz.equals(ConvolutionDownSampleLayer.class))   return new ConvolutionLayerFactory(clazz);
- else   if (clazz.equals(ImageLSTM.class))   return new ImageLSTMLayerFactory(ImageLSTM.class);
+  if (clazz.equals(ImageLSTM.class))   return new ImageLSTMLayerFactory(ImageLSTM.class);
  else   if (clazz.equals(GravesLSTM.class))   return new GravesLSTMLayerFactory(GravesLSTM.class);
  else   if (clazz.equals(GRU.class))   return new GRULayerFactory(GRU.class);
  else   if (RecursiveAutoEncoder.class.isAssignableFrom(clazz))   return new RecursiveAutoEncoderLayerFactory(RecursiveAutoEncoder.class);

@@ -15,5 +15,9 @@
   model.init();
   model.setListeners(Arrays.asList((IterationListener)new ScoreIterationListener(listenerFreq)));
   model.fit(mnistIter);
-  DataSet data=mnistIter.next();
+  Evaluation eval=new Evaluation();
+  INDArray output=model.output(mnistIter.next().getFeatureMatrix());
+  eval.eval(mnistIter.next().getLabels(),output);
+  String results=eval.stats();
+  eval.stats();
 }
