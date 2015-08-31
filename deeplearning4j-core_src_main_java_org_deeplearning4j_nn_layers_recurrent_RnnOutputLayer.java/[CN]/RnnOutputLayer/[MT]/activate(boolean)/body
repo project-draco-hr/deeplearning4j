@@ -1,0 +1,4 @@
+{
+  INDArray activations2d=super.activate(training);
+  return reshape2dTo3d(activations2d);
+}

@@ -1,7 +1,7 @@
 {
   if (epsilon <= 0.0 || epsilon > 0.1)   throw new IllegalArgumentException("Invalid epsilon: expect epsilon in range (0,0.1], usually 1e-4 or so");
   if (maxRelError <= 0.0 || maxRelError > 0.25)   throw new IllegalArgumentException("Invalid maxRelativeError: " + maxRelError);
-  if (!(mln.getOutputLayer() instanceof OutputLayer))   throw new IllegalArgumentException("Cannot check backprop gradients without OutputLayer");
+  if (!(mln.getOutputLayer() instanceof BaseOutputLayer))   throw new IllegalArgumentException("Cannot check backprop gradients without OutputLayer");
   mln.setInput(input);
   mln.setLabels(labels);
   mln.computeGradientAndScore();
@@ -30,8 +30,9 @@
     if (Double.isNaN(numericalGradient))     throw new IllegalStateException("Numerical gradient was NaN for parameter " + i + " of "+ nParams);
     double backpropGradient=gradientToCheck.getDouble(i);
     double relError=Math.abs(backpropGradient - numericalGradient) / (Math.abs(numericalGradient) + Math.abs(backpropGradient));
+    if (backpropGradient == 0.0 && numericalGradient == 0.0)     relError=0.0;
     if (relError > maxError)     maxError=relError;
-    if (relError > maxRelError) {
+    if (relError > maxRelError || Double.isNaN(relError)) {
       if (print)       log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
       if (exitOnFirstError)       return false;
       totalNFailures++;

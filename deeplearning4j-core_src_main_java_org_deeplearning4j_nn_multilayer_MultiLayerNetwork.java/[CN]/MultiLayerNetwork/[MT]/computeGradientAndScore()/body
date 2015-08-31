@@ -1,5 +1,5 @@
 {
   feedForward();
   backprop();
-  score=((OutputLayer)getOutputLayer()).computeScore(calcL1(),calcL2());
+  score=((BaseOutputLayer)getOutputLayer()).computeScore(calcL1(),calcL2());
 }

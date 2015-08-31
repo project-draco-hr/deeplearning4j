@@ -2,7 +2,7 @@
   int nIn=8;
   int nOut=25;
   int[] nHiddenUnits={17,19,23};
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(4).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(17).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(17).nOut(19).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(2,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(19).nOut(23).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(3,new OutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(23).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(4).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(17).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(17).nOut(19).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(2,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(19).nOut(23).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).layer(3,new RnnOutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(23).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).activation("tanh").build()).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   for (int i=0; i < nHiddenUnits.length; i++) {
@@ -18,7 +18,7 @@
     INDArray biases=paramTable.get(GravesLSTMParamInitializer.BIAS_KEY);
     assertArrayEquals(biases.shape(),new int[]{1,4 * nHiddenUnits[i]});
     INDArray forgetGateBiases=biases.get(new INDArrayIndex[]{NDArrayIndex.interval(nHiddenUnits[i],2 * nHiddenUnits[i])});
-    assertTrue(forgetGateBiases.gt(0).sum(1).getDouble(0) == nHiddenUnits[i]);
+    assertTrue(forgetGateBiases.gt(0).sum(Integer.MAX_VALUE).getDouble(0) == nHiddenUnits[i]);
     int nParams=recurrentWeights.length() + inputWeights.length() + biases.length();
     assertTrue(nParams == layer.numParams());
   }
