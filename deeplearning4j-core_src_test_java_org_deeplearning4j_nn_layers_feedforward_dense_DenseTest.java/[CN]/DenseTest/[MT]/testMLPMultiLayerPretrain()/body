@@ -1,7 +1,7 @@
 {
-  MultiLayerNetwork model=getDenseMLNConfig(true,false);
+  MultiLayerNetwork model=getDenseMLNConfig(false,true);
   model.fit(iter);
-  MultiLayerNetwork model2=getDenseMLNConfig(true,false);
+  MultiLayerNetwork model2=getDenseMLNConfig(false,true);
   model2.fit(iter);
   DataSet test=iter.next();
   assertEquals(model.params(),model2.params());
