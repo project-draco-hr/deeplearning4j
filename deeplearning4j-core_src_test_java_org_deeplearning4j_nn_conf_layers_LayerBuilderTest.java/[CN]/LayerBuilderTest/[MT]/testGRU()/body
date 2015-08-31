@@ -1,0 +1,7 @@
+{
+  GRU gru=new GRU.Builder().activation("tanh").nIn(numIn).nOut(numOut).build();
+  checkSerialization(gru);
+  assertEquals(gru.nIn,numIn);
+  assertEquals(gru.nOut,numOut);
+  assertEquals(gru.activationFunction,"tanh");
+}

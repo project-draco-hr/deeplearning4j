@@ -1,11 +1,11 @@
 {
-  if (!(getOutputLayer() instanceof OutputLayer)) {
+  if (!(getOutputLayer() instanceof BaseOutputLayer)) {
     log.warn("Output layer not instance of output layer returning.");
     return;
   }
   if (labels == null)   throw new IllegalStateException("No labels found");
   log.info("Finetune phase");
-  OutputLayer output=(OutputLayer)getOutputLayer();
+  BaseOutputLayer output=(BaseOutputLayer)getOutputLayer();
   if (output.conf().getOptimizationAlgo() != OptimizationAlgorithm.HESSIAN_FREE) {
     feedForward();
     output.fit(output.input(),labels);

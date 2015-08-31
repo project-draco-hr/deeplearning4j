@@ -2,8 +2,8 @@
   setInput(data.getFeatureMatrix());
   feedForward(getInput());
   this.labels=data.getLabels();
-  if (getOutputLayer() instanceof OutputLayer) {
-    OutputLayer o=(OutputLayer)getOutputLayer();
+  if (getOutputLayer() instanceof BaseOutputLayer) {
+    BaseOutputLayer o=(BaseOutputLayer)getOutputLayer();
     o.setLabels(labels);
   }
 }
