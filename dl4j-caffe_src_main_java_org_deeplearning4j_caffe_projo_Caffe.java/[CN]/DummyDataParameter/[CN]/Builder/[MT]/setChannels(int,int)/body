@@ -1,6 +1,0 @@
-{
-  ensureChannelsIsMutable();
-  channels_.set(index,value);
-  onChanged();
-  return this;
-}

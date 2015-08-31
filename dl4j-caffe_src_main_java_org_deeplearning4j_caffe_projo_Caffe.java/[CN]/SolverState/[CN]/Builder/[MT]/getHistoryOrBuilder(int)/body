@@ -1,8 +1,0 @@
-{
-  if (historyBuilder_ == null) {
-    return history_.get(index);
-  }
- else {
-    return historyBuilder_.getMessageOrBuilder(index);
-  }
-}

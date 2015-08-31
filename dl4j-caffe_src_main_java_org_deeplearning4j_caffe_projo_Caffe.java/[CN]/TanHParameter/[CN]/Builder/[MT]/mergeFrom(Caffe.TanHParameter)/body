@@ -1,8 +1,0 @@
-{
-  if (other == Caffe.TanHParameter.getDefaultInstance())   return this;
-  if (other.hasEngine()) {
-    setEngine(other.getEngine());
-  }
-  this.mergeUnknownFields(other.getUnknownFields());
-  return this;
-}

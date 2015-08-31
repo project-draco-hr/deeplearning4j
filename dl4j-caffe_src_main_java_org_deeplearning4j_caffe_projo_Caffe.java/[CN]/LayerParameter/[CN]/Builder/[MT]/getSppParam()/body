@@ -1,8 +1,0 @@
-{
-  if (sppParamBuilder_ == null) {
-    return sppParam_;
-  }
- else {
-    return sppParamBuilder_.getMessage();
-  }
-}

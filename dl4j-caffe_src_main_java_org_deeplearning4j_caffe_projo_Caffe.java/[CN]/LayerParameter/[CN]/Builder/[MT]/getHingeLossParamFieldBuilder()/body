@@ -1,7 +1,0 @@
-{
-  if (hingeLossParamBuilder_ == null) {
-    hingeLossParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.HingeLossParameter,Caffe.HingeLossParameter.Builder,Caffe.HingeLossParameterOrBuilder>(getHingeLossParam(),getParentForChildren(),isClean());
-    hingeLossParam_=null;
-  }
-  return hingeLossParamBuilder_;
-}

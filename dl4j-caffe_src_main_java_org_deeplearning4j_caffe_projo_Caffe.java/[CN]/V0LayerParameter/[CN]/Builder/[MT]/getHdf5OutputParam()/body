@@ -1,8 +1,0 @@
-{
-  if (hdf5OutputParamBuilder_ == null) {
-    return hdf5OutputParam_;
-  }
- else {
-    return hdf5OutputParamBuilder_.getMessage();
-  }
-}

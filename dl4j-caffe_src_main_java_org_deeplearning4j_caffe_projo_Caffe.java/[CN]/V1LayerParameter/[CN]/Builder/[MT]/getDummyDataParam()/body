@@ -1,8 +1,0 @@
-{
-  if (dummyDataParamBuilder_ == null) {
-    return dummyDataParam_;
-  }
- else {
-    return dummyDataParamBuilder_.getMessage();
-  }
-}

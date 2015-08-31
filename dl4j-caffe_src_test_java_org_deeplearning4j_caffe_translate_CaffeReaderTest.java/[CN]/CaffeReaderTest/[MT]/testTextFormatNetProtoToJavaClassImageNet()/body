@@ -1,7 +1,0 @@
-{
-  NetParameter net=reader.readTextFormatNet(getImageNetTextFormatNetPath());
-  assertEquals(net.getName(),"nin_imagenet");
-  assertEquals(net.getLayersCount(),33);
-  assertEquals(net.getLayers(0).getName(),"data");
-  assertEquals(net.getLayers(32).getName(),"loss");
-}

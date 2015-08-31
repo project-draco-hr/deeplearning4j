@@ -1,6 +1,0 @@
-{
-  ensureDataIsMutable();
-  data_.set(index,value);
-  onChanged();
-  return this;
-}

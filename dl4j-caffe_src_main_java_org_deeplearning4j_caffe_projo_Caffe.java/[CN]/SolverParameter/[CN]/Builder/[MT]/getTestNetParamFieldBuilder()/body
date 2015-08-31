@@ -1,7 +1,0 @@
-{
-  if (testNetParamBuilder_ == null) {
-    testNetParamBuilder_=new com.google.protobuf.RepeatedFieldBuilder<Caffe.NetParameter,Caffe.NetParameter.Builder,Caffe.NetParameterOrBuilder>(testNetParam_,((bitField0_ & 0x00000020) == 0x00000020),getParentForChildren(),isClean());
-    testNetParam_=null;
-  }
-  return testNetParamBuilder_;
-}

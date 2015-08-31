@@ -1,8 +1,0 @@
-{
-  Graph graph=new Graph();
-  for (  Map<String,List<CaffeNode>> nodeMap : nodeMapList) {
-    addNodeMapToGraph(nodeMap,graph);
-  }
-  addStartEndNodesToGraph(graph);
-  return graph;
-}
