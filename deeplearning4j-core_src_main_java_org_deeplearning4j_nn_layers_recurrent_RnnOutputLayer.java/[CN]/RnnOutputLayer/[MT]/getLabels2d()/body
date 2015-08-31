@@ -1,0 +1,4 @@
+{
+  if (labels.rank() == 3)   return reshape3dTo2d(labels);
+  return labels;
+}
