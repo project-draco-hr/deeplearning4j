@@ -1,5 +1,5 @@
 {
-  INDArray[] activations=activateHelper(true);
+  INDArray[] activations=activateHelper(true,null);
   INDArray outputActivations=activations[0];
   INDArray rucZs=activations[1];
   INDArray rucAs=activations[2];

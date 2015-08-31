@@ -6,7 +6,6 @@
   int timeSeriesLength=(is2dInput ? 1 : input.size(2));
   int hiddenLayerSize=recurrentWeights.size(0);
   int miniBatchSize=input.size(0);
-  int nIn=inputWeights.size(0);
   if (conf.isUseDropConnect() && training) {
     if (conf.getLayer().getDropOut() > 0) {
       inputWeights=Dropout.applyDropConnect(this,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
@@ -31,10 +30,14 @@
   INDArray ifogZ=Nd4j.zeros(new int[]{miniBatchSize,4 * hiddenLayerSize,timeSeriesLength});
   INDArray ifogA=Nd4j.zeros(new int[]{miniBatchSize,4 * hiddenLayerSize,timeSeriesLength});
   INDArray memCellState=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
+  if (prevOutputActivations == null)   prevOutputActivations=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize});
+  if (prevMemCellState == null)   prevMemCellState=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize});
   for (int t=0; t < timeSeriesLength; t++) {
     INDArray miniBatchData=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
-    INDArray prevOutputActivations=(t == 0 ? Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize}) : outputActivations.tensorAlongDimension(t - 1,1,0));
-    INDArray prevMemCellState=(t == 0 ? Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize}) : memCellState.tensorAlongDimension(t - 1,1,0));
+    if (t > 0) {
+      prevOutputActivations=outputActivations.tensorAlongDimension(t - 1,1,0);
+      prevMemCellState=memCellState.tensorAlongDimension(t - 1,1,0);
+    }
     INDArray inputActivations=miniBatchData.mmul(wi).addi(prevOutputActivations.mmul(wI)).addiRowVector(bi);
     INDArrayIndex[] iIndexes=new INDArrayIndex[]{NDArrayIndex.all(),interval(0,hiddenLayerSize)};
     ifogZ.tensorAlongDimension(t,1,0).put(iIndexes,inputActivations);
