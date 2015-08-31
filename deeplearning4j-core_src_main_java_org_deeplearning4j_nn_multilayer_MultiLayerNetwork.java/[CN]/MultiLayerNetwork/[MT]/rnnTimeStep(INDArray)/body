@@ -1,4 +1,5 @@
 {
+  this.setInputMiniBatchSize(input.size(0));
   for (int i=0; i < layers.length; i++) {
     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     input=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,layers[i]);
     if (layers[i] instanceof BaseRecurrentLayer) {
