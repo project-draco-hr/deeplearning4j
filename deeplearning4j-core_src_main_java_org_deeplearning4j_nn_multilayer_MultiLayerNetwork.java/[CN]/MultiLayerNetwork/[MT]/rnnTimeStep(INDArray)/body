@@ -1,5 +1,6 @@
 {
   this.setInputMiniBatchSize(input.size(0));
+  boolean inputIs2d=input.rank() == 2;
   for (int i=0; i < layers.length; i++) {
     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     input=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,layers[i]);
     if (layers[i] instanceof BaseRecurrentLayer) {
@@ -8,6 +9,9 @@
  else {
       input=layers[i].activate(input,false);
     }
+  }
+  if (inputIs2d && input.rank() == 3 && layers[layers.length - 1].type() == Type.RECURRENT) {
+    return input.tensorAlongDimension(0,1,0);
   }
   return input;
 }
