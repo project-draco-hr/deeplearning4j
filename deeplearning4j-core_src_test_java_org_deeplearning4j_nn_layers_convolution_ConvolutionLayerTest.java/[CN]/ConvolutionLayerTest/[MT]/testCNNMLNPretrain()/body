@@ -1,0 +1,19 @@
+{
+  int numSamples=10;
+  int batchSize=10;
+  DataSetIterator mnistIter=new MnistDataSetIterator(batchSize,numSamples,true);
+  MultiLayerNetwork model=getCNNMLNConfig(false,true);
+  model.fit(mnistIter);
+  MultiLayerNetwork model2=getCNNMLNConfig(false,true);
+  model2.fit(mnistIter);
+  DataSet test=mnistIter.next();
+  Evaluation eval=new Evaluation();
+  INDArray output=model.output(test.getFeatureMatrix());
+  eval.eval(test.getLabels(),output);
+  double f1Score=eval.f1();
+  Evaluation eval2=new Evaluation();
+  INDArray output2=model2.output(test.getFeatureMatrix());
+  eval2.eval(test.getLabels(),output2);
+  double f1Score2=eval2.f1();
+  assertEquals(f1Score,f1Score2,1e-4);
+}

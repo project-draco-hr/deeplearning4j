@@ -1,0 +1,17 @@
+{
+  MultiLayerNetwork model=getDenseMLNConfig(false,true);
+  model.fit(iter);
+  MultiLayerNetwork model2=getDenseMLNConfig(false,true);
+  model2.fit(iter);
+  DataSet test=iter.next();
+  assertEquals(model.params(),model2.params());
+  Evaluation eval=new Evaluation();
+  INDArray output=model.output(test.getFeatureMatrix());
+  eval.eval(test.getLabels(),output);
+  double f1Score=eval.f1();
+  Evaluation eval2=new Evaluation();
+  INDArray output2=model2.output(test.getFeatureMatrix());
+  eval2.eval(test.getLabels(),output2);
+  double f1Score2=eval2.f1();
+  assertEquals(f1Score,f1Score2,1e-4);
+}

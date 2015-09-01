@@ -1,3 +1,5 @@
 {
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),input.mmul(params.get(RecursiveParamInitializer.DECODER_WEIGHT_KEY).addiRowVector(params.get(RecursiveParamInitializer.HIDDEN_BIAS_KEY)))));
+  INDArray U=getParam(RecursiveParamInitializer.DECODER_WEIGHT_KEY);
+  INDArray vb=getParam(RecursiveParamInitializer.VISIBLE_BIAS_KEY);
+  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),activation.mmul(U).addiRowVector(vb)));
 }
