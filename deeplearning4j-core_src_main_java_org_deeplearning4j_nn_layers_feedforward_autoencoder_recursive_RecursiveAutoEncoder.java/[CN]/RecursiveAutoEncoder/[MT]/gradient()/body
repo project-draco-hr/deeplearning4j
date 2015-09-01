@@ -23,7 +23,6 @@
  else     cLoss.addi(currCLoss);
     if (bLoss == null)     bLoss=currBLoss;
  else     bLoss.addi(currBLoss);
-    currInput=encoded;
     currScore+=scoreSnapShot();
   }
   return createGradient(hiddenLoss,visibleLoss,cLoss,bLoss);

@@ -1,6 +1,5 @@
 {
   INDArray w=getParam(RecursiveParamInitializer.ENCODER_WEIGHT_KEY);
-  INDArray c=getParam(RecursiveParamInitializer.DECODER_WEIGHT_KEY);
-  INDArray inputTimesW=data.mmul(w);
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),inputTimesW.addiRowVector(c)));
+  INDArray b=getParam(RecursiveParamInitializer.HIDDEN_BIAS_KEY);
+  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),input.mmul(w).addiRowVector(b)));
 }

@@ -1,5 +1,5 @@
 {
-  OutputLayer layerType=new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).nIn(10).nOut(3).build();
+  AutoEncoder layerType=new AutoEncoder.Builder().nIn(4).nOut(3).activation("sigmoid").build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(layerType).seed(123).build();
   Layer layer=LayerFactories.getFactory(conf).create(conf);
   layer.fit(data.getFeatureMatrix());

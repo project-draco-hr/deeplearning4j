@@ -1,8 +1,8 @@
 {
   String[] activFns={"sigmoid","tanh","relu"};
   boolean[] characteristic={false,true};
-  LossFunctions.LossFunction[] lossFunctions={LossFunctions.LossFunction.MSE,LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD};
-  String[] outputActivations={"softmax"};
+  LossFunctions.LossFunction[] lossFunctions={LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD,LossFunctions.LossFunction.MSE};
+  String[] outputActivations={"softmax","tanh"};
   DataSet ds=new IrisDataSetIterator(150,150).next();
   ds.normalizeZeroMeanZeroUnitVariance();
   INDArray input=ds.getFeatureMatrix();
