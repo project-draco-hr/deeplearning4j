@@ -1,4 +1,4 @@
 {
   setInput(input);
-  return activateHelper(true,null,null)[0];
+  return activateHelper(true,null,null,false).fwdPassOutput;
 }
