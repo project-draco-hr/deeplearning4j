@@ -1,0 +1,6 @@
+{
+  int[] shape=inp.shape();
+  int miniBatchSize=1;
+  INDArray reshaped=inp.reshape(miniBatchSize,shape[0] / miniBatchSize,shape[1]);
+  return reshaped.permute(0,2,1);
+}
