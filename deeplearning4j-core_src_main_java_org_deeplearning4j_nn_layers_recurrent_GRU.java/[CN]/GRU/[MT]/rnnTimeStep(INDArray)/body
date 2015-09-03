@@ -1,4 +1,5 @@
 {
+  setInput(input);
   INDArray[] activations=activateHelper(false,stateMap.get(STATE_KEY_PREV_ACTIVATION));
   INDArray outAct=activations[0];
   int tLength=outAct.size(2);

@@ -6,7 +6,7 @@
     log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
     return;
   }
-  BaseOutputLayer outputLayer=(BaseOutputLayer)getOutputLayer();
+  BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)getOutputLayer();
   if (labels == null)   throw new IllegalStateException("No labels found");
   if (outputLayer.conf().getLayer().getWeightInit() == WeightInit.ZERO) {
     throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");

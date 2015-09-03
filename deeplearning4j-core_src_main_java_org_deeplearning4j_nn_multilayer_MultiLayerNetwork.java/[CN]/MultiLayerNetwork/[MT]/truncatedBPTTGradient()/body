@@ -1,0 +1,19 @@
+{
+  String multiGradientKey;
+  gradient=new DefaultGradient();
+  Layer currLayer;
+  if (!(getOutputLayer() instanceof BaseOutputLayer)) {
+    log.warn("Warning: final layer isn't output layer. You cannot use backprop (truncated BPTT) without an output layer.");
+    return;
+  }
+  BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)getOutputLayer();
+  if (labels == null)   throw new IllegalStateException("No labels found");
+  if (outputLayer.conf().getLayer().getWeightInit() == WeightInit.ZERO) {
+    throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
+  }
+  outputLayer.setLabels(labels);
+  int numLayers=getnLayers();
+  LinkedList<Pair<String,INDArray>> gradientList=new LinkedList<>();
+  Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null);
+  throw new UnsupportedOperationException("Not yet implemented");
+}
