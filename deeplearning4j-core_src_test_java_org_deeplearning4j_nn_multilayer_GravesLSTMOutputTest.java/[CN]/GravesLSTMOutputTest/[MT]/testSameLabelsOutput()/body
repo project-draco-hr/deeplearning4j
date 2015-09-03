@@ -1,0 +1,8 @@
+{
+  MultiLayerNetwork network=new MultiLayerNetwork(getNetworkConf(40));
+  network.init();
+  network.setListeners(new ScoreIterationListener(1));
+  network.fit(reshapeInput(data),data);
+  Evaluation ev=eval(network);
+  Assert.assertTrue(ev.f1() > 0.90);
+}

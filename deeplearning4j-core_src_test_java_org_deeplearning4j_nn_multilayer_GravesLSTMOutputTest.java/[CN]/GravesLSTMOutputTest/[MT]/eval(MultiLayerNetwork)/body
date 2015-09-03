@@ -1,0 +1,7 @@
+{
+  Evaluation ev=new Evaluation(nIn);
+  INDArray predict=network.output(reshapeInput(data));
+  ev.eval(data,predict);
+  log.info(ev.stats());
+  return ev;
+}
