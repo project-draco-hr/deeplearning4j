@@ -42,7 +42,9 @@
   INDArray deltafNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
   INDArray deltaoNext=null;
   INDArray deltagNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
-  for (int t=timeSeriesLength - 1; t >= 0; t--) {
+  int endIdx=0;
+  if (truncatedBPTT)   endIdx=Math.max(0,timeSeriesLength - tbpttBackwardLength);
+  for (int t=timeSeriesLength - 1; t >= endIdx; t--) {
     INDArray prevMemCellState=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : fwdPass.memCellState[t - 1]);
     INDArray prevHiddenUnitActivation=(t == 0 ? null : fwdPass.fwdPassOutputAsArrays[t - 1]);
     INDArray currMemCellState=fwdPass.memCellState[t];

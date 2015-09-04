@@ -23,7 +23,7 @@
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
     if (currLayer instanceof BaseRecurrentLayer) {
-      currPair=((BaseRecurrentLayer<?>)currLayer).tbpttBackpropGradient(currPair.getSecond());
+      currPair=((BaseRecurrentLayer<?>)currLayer).tbpttBackpropGradient(currPair.getSecond(),layerWiseConfigurations.getTbpttBackLength());
     }
  else {
       currPair=currLayer.backpropGradient(currPair.getSecond());
