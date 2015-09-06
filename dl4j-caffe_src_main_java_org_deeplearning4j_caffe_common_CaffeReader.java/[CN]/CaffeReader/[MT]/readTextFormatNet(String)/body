@@ -1,8 +1,0 @@
-{
-  try (InputStream is=new FileInputStream(textFormatNetPath)){
-    InputStreamReader isReader=new InputStreamReader(is,"ASCII");
-    Caffe.NetParameter.Builder builder=Caffe.NetParameter.newBuilder();
-    TextFormat.merge(isReader,builder);
-    return builder.build();
-  }
- }

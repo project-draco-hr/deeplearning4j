@@ -1,8 +1,0 @@
-{
-  if (inputShapeBuilder_ == null) {
-    return inputShape_.get(index);
-  }
- else {
-    return inputShapeBuilder_.getMessageOrBuilder(index);
-  }
-}

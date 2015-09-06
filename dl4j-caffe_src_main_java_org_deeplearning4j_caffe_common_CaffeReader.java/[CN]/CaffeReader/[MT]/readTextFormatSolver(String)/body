@@ -1,8 +1,0 @@
-{
-  try (InputStream is=new FileInputStream(textFormatSolverPath)){
-    InputStreamReader isReader=new InputStreamReader(is,"ASCII");
-    Caffe.SolverParameter.Builder builder=Caffe.SolverParameter.newBuilder();
-    TextFormat.merge(isReader,builder);
-    return builder.build();
-  }
- }

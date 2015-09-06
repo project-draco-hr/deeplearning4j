@@ -1,8 +1,0 @@
-{
-  if (dataParamBuilder_ != null) {
-    return dataParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return dataParam_;
-  }
-}

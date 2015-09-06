@@ -1,8 +1,0 @@
-{
-  if (flattenParamBuilder_ != null) {
-    return flattenParamBuilder_.getMessageOrBuilder();
-  }
- else {
-    return flattenParam_;
-  }
-}

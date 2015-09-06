@@ -1,8 +1,0 @@
-{
-  if (preluParamBuilder_ == null) {
-    return preluParam_;
-  }
- else {
-    return preluParamBuilder_.getMessage();
-  }
-}

@@ -1,9 +1,0 @@
-{
-  if (other instanceof Caffe.HDF5OutputParameter) {
-    return mergeFrom((Caffe.HDF5OutputParameter)other);
-  }
- else {
-    super.mergeFrom(other);
-    return this;
-  }
-}

@@ -1,8 +1,0 @@
-{
-  if (mvnParamBuilder_ == null) {
-    return mvnParam_;
-  }
- else {
-    return mvnParamBuilder_.getMessage();
-  }
-}
