@@ -1,0 +1,14 @@
+{
+  if (dataFillerBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureDataFillerIsMutable();
+    dataFiller_.set(index,value);
+    onChanged();
+  }
+ else {
+    dataFillerBuilder_.setMessage(index,value);
+  }
+  return this;
+}

@@ -1,0 +1,8 @@
+{
+  if (stateBuilder_ == null) {
+    return state_;
+  }
+ else {
+    return stateBuilder_.getMessage();
+  }
+}

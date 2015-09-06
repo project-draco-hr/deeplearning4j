@@ -1,0 +1,7 @@
+{
+  if (lrnParamBuilder_ == null) {
+    lrnParamBuilder_=new com.google.protobuf.SingleFieldBuilder<Caffe.LRNParameter,Caffe.LRNParameter.Builder,Caffe.LRNParameterOrBuilder>(getLrnParam(),getParentForChildren(),isClean());
+    lrnParam_=null;
+  }
+  return lrnParamBuilder_;
+}

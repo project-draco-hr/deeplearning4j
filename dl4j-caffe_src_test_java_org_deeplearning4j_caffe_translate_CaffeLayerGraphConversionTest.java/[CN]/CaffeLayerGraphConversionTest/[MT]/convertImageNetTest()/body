@@ -1,0 +1,8 @@
+{
+  NetParameter net=CaffeTestUtil.getImageNetNet();
+  Graph graph=new CaffeLayerGraphConversion(net).convert();
+  System.out.println(graph);
+  assertTrue(graph != null);
+  System.out.println("Start Nodes: " + graph.getStartNodeSet());
+  System.out.println("End Nodes: " + graph.getEndNodeSet());
+}

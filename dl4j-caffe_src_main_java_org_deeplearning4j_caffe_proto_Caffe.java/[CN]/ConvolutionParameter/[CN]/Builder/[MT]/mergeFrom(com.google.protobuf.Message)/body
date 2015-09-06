@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.ConvolutionParameter) {
+    return mergeFrom((Caffe.ConvolutionParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

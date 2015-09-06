@@ -1,0 +1,16 @@
+{
+  if (trainStateBuilder_ == null) {
+    if (((bitField0_ & 0x00000040) == 0x00000040) && trainState_ != Caffe.NetState.getDefaultInstance()) {
+      trainState_=Caffe.NetState.newBuilder(trainState_).mergeFrom(value).buildPartial();
+    }
+ else {
+      trainState_=value;
+    }
+    onChanged();
+  }
+ else {
+    trainStateBuilder_.mergeFrom(value);
+  }
+  bitField0_|=0x00000040;
+  return this;
+}

@@ -1,0 +1,11 @@
+{
+  if (reshapeParamBuilder_ == null) {
+    reshapeParam_=Caffe.ReshapeParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    reshapeParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000100);
+  return this;
+}

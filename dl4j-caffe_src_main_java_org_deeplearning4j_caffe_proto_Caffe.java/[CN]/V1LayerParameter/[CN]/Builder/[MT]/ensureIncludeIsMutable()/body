@@ -1,0 +1,6 @@
+{
+  if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+    include_=new java.util.ArrayList<Caffe.NetStateRule>(include_);
+    bitField0_|=0x00000008;
+  }
+}

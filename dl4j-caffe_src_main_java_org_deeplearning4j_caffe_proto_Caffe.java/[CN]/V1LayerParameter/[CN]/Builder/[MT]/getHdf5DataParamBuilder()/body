@@ -1,0 +1,5 @@
+{
+  bitField0_|=0x00400000;
+  onChanged();
+  return getHdf5DataParamFieldBuilder().getBuilder();
+}

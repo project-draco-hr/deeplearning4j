@@ -1,0 +1,10 @@
+{
+  if (solverNet.getSolver() != null && solverNet.getNet() != null) {
+    this.solver=solverNet.getSolver();
+    this.net=solverNet.getNet();
+    this.nnCofigBuilderContainer=new NNCofigBuilderContainer();
+  }
+ else {
+    throw new IllegalArgumentException("SolverNetContainer must container SolverParameter (solver)" + " and NetParameter (net) ");
+  }
+}

@@ -1,0 +1,16 @@
+{
+  if (pythonParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000020) == 0x00000020) && pythonParam_ != Caffe.PythonParameter.getDefaultInstance()) {
+      pythonParam_=Caffe.PythonParameter.newBuilder(pythonParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      pythonParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    pythonParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000020;
+  return this;
+}

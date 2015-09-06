@@ -1,0 +1,8 @@
+{
+  if (accuracyParamBuilder_ != null) {
+    return accuracyParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return accuracyParam_;
+  }
+}

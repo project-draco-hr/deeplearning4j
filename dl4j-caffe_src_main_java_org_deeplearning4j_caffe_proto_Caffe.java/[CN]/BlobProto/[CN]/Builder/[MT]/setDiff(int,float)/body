@@ -1,0 +1,6 @@
+{
+  ensureDiffIsMutable();
+  diff_.set(index,value);
+  onChanged();
+  return this;
+}

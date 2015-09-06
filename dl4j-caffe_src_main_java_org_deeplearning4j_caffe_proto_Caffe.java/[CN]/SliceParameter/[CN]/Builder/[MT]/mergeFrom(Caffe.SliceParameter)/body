@@ -1,0 +1,22 @@
+{
+  if (other == Caffe.SliceParameter.getDefaultInstance())   return this;
+  if (other.hasAxis()) {
+    setAxis(other.getAxis());
+  }
+  if (!other.slicePoint_.isEmpty()) {
+    if (slicePoint_.isEmpty()) {
+      slicePoint_=other.slicePoint_;
+      bitField0_=(bitField0_ & ~0x00000002);
+    }
+ else {
+      ensureSlicePointIsMutable();
+      slicePoint_.addAll(other.slicePoint_);
+    }
+    onChanged();
+  }
+  if (other.hasSliceDim()) {
+    setSliceDim(other.getSliceDim());
+  }
+  this.mergeUnknownFields(other.getUnknownFields());
+  return this;
+}

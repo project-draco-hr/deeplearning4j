@@ -1,0 +1,8 @@
+{
+  if (sigmoidParamBuilder_ != null) {
+    return sigmoidParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return sigmoidParam_;
+  }
+}

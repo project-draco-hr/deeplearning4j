@@ -1,0 +1,11 @@
+{
+  if (preluParamBuilder_ == null) {
+    preluParam_=Caffe.PReLUParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    preluParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000010);
+  return this;
+}

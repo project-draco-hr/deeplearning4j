@@ -1,0 +1,5 @@
+{
+  SolverParameter solver=loadSolver();
+  NetParameter net=loadNet();
+  return new SolverNetContainer(solver,net);
+}

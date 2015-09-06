@@ -1,0 +1,11 @@
+{
+  if (excludeBuilder_ == null) {
+    ensureExcludeIsMutable();
+    exclude_.remove(index);
+    onChanged();
+  }
+ else {
+    excludeBuilder_.remove(index);
+  }
+  return this;
+}

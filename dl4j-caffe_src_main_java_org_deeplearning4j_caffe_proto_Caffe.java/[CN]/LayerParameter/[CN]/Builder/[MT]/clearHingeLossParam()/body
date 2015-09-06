@@ -1,0 +1,11 @@
+{
+  if (hingeLossParamBuilder_ == null) {
+    hingeLossParam_=Caffe.HingeLossParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    hingeLossParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x04000000);
+  return this;
+}

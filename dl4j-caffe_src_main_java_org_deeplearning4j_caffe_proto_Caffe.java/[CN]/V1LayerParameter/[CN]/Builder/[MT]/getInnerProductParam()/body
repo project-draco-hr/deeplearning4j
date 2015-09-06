@@ -1,0 +1,8 @@
+{
+  if (innerProductParamBuilder_ == null) {
+    return innerProductParam_;
+  }
+ else {
+    return innerProductParamBuilder_.getMessage();
+  }
+}

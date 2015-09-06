@@ -1,0 +1,8 @@
+{
+  if (netParamBuilder_ == null) {
+    return netParam_;
+  }
+ else {
+    return netParamBuilder_.getMessage();
+  }
+}

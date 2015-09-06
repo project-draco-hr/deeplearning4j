@@ -1,0 +1,16 @@
+{
+  if (softmaxParamBuilder_ == null) {
+    if (((bitField1_ & 0x00000400) == 0x00000400) && softmaxParam_ != Caffe.SoftmaxParameter.getDefaultInstance()) {
+      softmaxParam_=Caffe.SoftmaxParameter.newBuilder(softmaxParam_).mergeFrom(value).buildPartial();
+    }
+ else {
+      softmaxParam_=value;
+    }
+    onChanged();
+  }
+ else {
+    softmaxParamBuilder_.mergeFrom(value);
+  }
+  bitField1_|=0x00000400;
+  return this;
+}

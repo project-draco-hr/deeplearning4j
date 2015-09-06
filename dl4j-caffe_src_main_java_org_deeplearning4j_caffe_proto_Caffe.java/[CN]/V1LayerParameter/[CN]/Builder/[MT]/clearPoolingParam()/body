@@ -1,0 +1,11 @@
+{
+  if (poolingParamBuilder_ == null) {
+    poolingParam_=Caffe.PoolingParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    poolingParamBuilder_.clear();
+  }
+  bitField0_=(bitField0_ & ~0x80000000);
+  return this;
+}

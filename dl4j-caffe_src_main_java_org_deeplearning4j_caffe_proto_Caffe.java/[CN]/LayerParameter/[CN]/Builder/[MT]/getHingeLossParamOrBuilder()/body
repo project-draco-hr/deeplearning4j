@@ -1,0 +1,8 @@
+{
+  if (hingeLossParamBuilder_ != null) {
+    return hingeLossParamBuilder_.getMessageOrBuilder();
+  }
+ else {
+    return hingeLossParam_;
+  }
+}

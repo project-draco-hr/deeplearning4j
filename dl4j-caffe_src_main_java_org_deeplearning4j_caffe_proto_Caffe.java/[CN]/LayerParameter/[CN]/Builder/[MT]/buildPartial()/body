@@ -1,0 +1,416 @@
+{
+  Caffe.LayerParameter result=new Caffe.LayerParameter(this);
+  int from_bitField0_=bitField0_;
+  int from_bitField1_=bitField1_;
+  int to_bitField0_=0;
+  int to_bitField1_=0;
+  if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x00000001;
+  }
+  result.name_=name_;
+  if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x00000002;
+  }
+  result.type_=type_;
+  if (((bitField0_ & 0x00000004) == 0x00000004)) {
+    bottom_=bottom_.getUnmodifiableView();
+    bitField0_=(bitField0_ & ~0x00000004);
+  }
+  result.bottom_=bottom_;
+  if (((bitField0_ & 0x00000008) == 0x00000008)) {
+    top_=top_.getUnmodifiableView();
+    bitField0_=(bitField0_ & ~0x00000008);
+  }
+  result.top_=top_;
+  if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x00000004;
+  }
+  result.phase_=phase_;
+  if (((bitField0_ & 0x00000020) == 0x00000020)) {
+    lossWeight_=java.util.Collections.unmodifiableList(lossWeight_);
+    bitField0_=(bitField0_ & ~0x00000020);
+  }
+  result.lossWeight_=lossWeight_;
+  if (paramBuilder_ == null) {
+    if (((bitField0_ & 0x00000040) == 0x00000040)) {
+      param_=java.util.Collections.unmodifiableList(param_);
+      bitField0_=(bitField0_ & ~0x00000040);
+    }
+    result.param_=param_;
+  }
+ else {
+    result.param_=paramBuilder_.build();
+  }
+  if (blobsBuilder_ == null) {
+    if (((bitField0_ & 0x00000080) == 0x00000080)) {
+      blobs_=java.util.Collections.unmodifiableList(blobs_);
+      bitField0_=(bitField0_ & ~0x00000080);
+    }
+    result.blobs_=blobs_;
+  }
+ else {
+    result.blobs_=blobsBuilder_.build();
+  }
+  if (((bitField0_ & 0x00000100) == 0x00000100)) {
+    propagateDown_=java.util.Collections.unmodifiableList(propagateDown_);
+    bitField0_=(bitField0_ & ~0x00000100);
+  }
+  result.propagateDown_=propagateDown_;
+  if (includeBuilder_ == null) {
+    if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      include_=java.util.Collections.unmodifiableList(include_);
+      bitField0_=(bitField0_ & ~0x00000200);
+    }
+    result.include_=include_;
+  }
+ else {
+    result.include_=includeBuilder_.build();
+  }
+  if (excludeBuilder_ == null) {
+    if (((bitField0_ & 0x00000400) == 0x00000400)) {
+      exclude_=java.util.Collections.unmodifiableList(exclude_);
+      bitField0_=(bitField0_ & ~0x00000400);
+    }
+    result.exclude_=exclude_;
+  }
+ else {
+    result.exclude_=excludeBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+    to_bitField0_|=0x00000008;
+  }
+  if (transformParamBuilder_ == null) {
+    result.transformParam_=transformParam_;
+  }
+ else {
+    result.transformParam_=transformParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+    to_bitField0_|=0x00000010;
+  }
+  if (lossParamBuilder_ == null) {
+    result.lossParam_=lossParam_;
+  }
+ else {
+    result.lossParam_=lossParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+    to_bitField0_|=0x00000020;
+  }
+  if (accuracyParamBuilder_ == null) {
+    result.accuracyParam_=accuracyParam_;
+  }
+ else {
+    result.accuracyParam_=accuracyParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+    to_bitField0_|=0x00000040;
+  }
+  if (argmaxParamBuilder_ == null) {
+    result.argmaxParam_=argmaxParam_;
+  }
+ else {
+    result.argmaxParam_=argmaxParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+    to_bitField0_|=0x00000080;
+  }
+  if (concatParamBuilder_ == null) {
+    result.concatParam_=concatParam_;
+  }
+ else {
+    result.concatParam_=concatParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+    to_bitField0_|=0x00000100;
+  }
+  if (contrastiveLossParamBuilder_ == null) {
+    result.contrastiveLossParam_=contrastiveLossParam_;
+  }
+ else {
+    result.contrastiveLossParam_=contrastiveLossParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+    to_bitField0_|=0x00000200;
+  }
+  if (convolutionParamBuilder_ == null) {
+    result.convolutionParam_=convolutionParam_;
+  }
+ else {
+    result.convolutionParam_=convolutionParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+    to_bitField0_|=0x00000400;
+  }
+  if (dataParamBuilder_ == null) {
+    result.dataParam_=dataParam_;
+  }
+ else {
+    result.dataParam_=dataParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
+    to_bitField0_|=0x00000800;
+  }
+  if (dropoutParamBuilder_ == null) {
+    result.dropoutParam_=dropoutParam_;
+  }
+ else {
+    result.dropoutParam_=dropoutParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00100000) == 0x00100000)) {
+    to_bitField0_|=0x00001000;
+  }
+  if (dummyDataParamBuilder_ == null) {
+    result.dummyDataParam_=dummyDataParam_;
+  }
+ else {
+    result.dummyDataParam_=dummyDataParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00200000) == 0x00200000)) {
+    to_bitField0_|=0x00002000;
+  }
+  if (eltwiseParamBuilder_ == null) {
+    result.eltwiseParam_=eltwiseParam_;
+  }
+ else {
+    result.eltwiseParam_=eltwiseParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00400000) == 0x00400000)) {
+    to_bitField0_|=0x00004000;
+  }
+  if (expParamBuilder_ == null) {
+    result.expParam_=expParam_;
+  }
+ else {
+    result.expParam_=expParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x00800000) == 0x00800000)) {
+    to_bitField0_|=0x00008000;
+  }
+  if (flattenParamBuilder_ == null) {
+    result.flattenParam_=flattenParam_;
+  }
+ else {
+    result.flattenParam_=flattenParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x01000000) == 0x01000000)) {
+    to_bitField0_|=0x00010000;
+  }
+  if (hdf5DataParamBuilder_ == null) {
+    result.hdf5DataParam_=hdf5DataParam_;
+  }
+ else {
+    result.hdf5DataParam_=hdf5DataParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x02000000) == 0x02000000)) {
+    to_bitField0_|=0x00020000;
+  }
+  if (hdf5OutputParamBuilder_ == null) {
+    result.hdf5OutputParam_=hdf5OutputParam_;
+  }
+ else {
+    result.hdf5OutputParam_=hdf5OutputParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x04000000) == 0x04000000)) {
+    to_bitField0_|=0x00040000;
+  }
+  if (hingeLossParamBuilder_ == null) {
+    result.hingeLossParam_=hingeLossParam_;
+  }
+ else {
+    result.hingeLossParam_=hingeLossParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x08000000) == 0x08000000)) {
+    to_bitField0_|=0x00080000;
+  }
+  if (imageDataParamBuilder_ == null) {
+    result.imageDataParam_=imageDataParam_;
+  }
+ else {
+    result.imageDataParam_=imageDataParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x10000000) == 0x10000000)) {
+    to_bitField0_|=0x00100000;
+  }
+  if (infogainLossParamBuilder_ == null) {
+    result.infogainLossParam_=infogainLossParam_;
+  }
+ else {
+    result.infogainLossParam_=infogainLossParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x20000000) == 0x20000000)) {
+    to_bitField0_|=0x00200000;
+  }
+  if (innerProductParamBuilder_ == null) {
+    result.innerProductParam_=innerProductParam_;
+  }
+ else {
+    result.innerProductParam_=innerProductParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x40000000) == 0x40000000)) {
+    to_bitField0_|=0x00400000;
+  }
+  if (logParamBuilder_ == null) {
+    result.logParam_=logParam_;
+  }
+ else {
+    result.logParam_=logParamBuilder_.build();
+  }
+  if (((from_bitField0_ & 0x80000000) == 0x80000000)) {
+    to_bitField0_|=0x00800000;
+  }
+  if (lrnParamBuilder_ == null) {
+    result.lrnParam_=lrnParam_;
+  }
+ else {
+    result.lrnParam_=lrnParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000001) == 0x00000001)) {
+    to_bitField0_|=0x01000000;
+  }
+  if (memoryDataParamBuilder_ == null) {
+    result.memoryDataParam_=memoryDataParam_;
+  }
+ else {
+    result.memoryDataParam_=memoryDataParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000002) == 0x00000002)) {
+    to_bitField0_|=0x02000000;
+  }
+  if (mvnParamBuilder_ == null) {
+    result.mvnParam_=mvnParam_;
+  }
+ else {
+    result.mvnParam_=mvnParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000004) == 0x00000004)) {
+    to_bitField0_|=0x04000000;
+  }
+  if (poolingParamBuilder_ == null) {
+    result.poolingParam_=poolingParam_;
+  }
+ else {
+    result.poolingParam_=poolingParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000008) == 0x00000008)) {
+    to_bitField0_|=0x08000000;
+  }
+  if (powerParamBuilder_ == null) {
+    result.powerParam_=powerParam_;
+  }
+ else {
+    result.powerParam_=powerParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000010) == 0x00000010)) {
+    to_bitField0_|=0x10000000;
+  }
+  if (preluParamBuilder_ == null) {
+    result.preluParam_=preluParam_;
+  }
+ else {
+    result.preluParam_=preluParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000020) == 0x00000020)) {
+    to_bitField0_|=0x20000000;
+  }
+  if (pythonParamBuilder_ == null) {
+    result.pythonParam_=pythonParam_;
+  }
+ else {
+    result.pythonParam_=pythonParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000040) == 0x00000040)) {
+    to_bitField0_|=0x40000000;
+  }
+  if (reductionParamBuilder_ == null) {
+    result.reductionParam_=reductionParam_;
+  }
+ else {
+    result.reductionParam_=reductionParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000080) == 0x00000080)) {
+    to_bitField0_|=0x80000000;
+  }
+  if (reluParamBuilder_ == null) {
+    result.reluParam_=reluParam_;
+  }
+ else {
+    result.reluParam_=reluParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000100) == 0x00000100)) {
+    to_bitField1_|=0x00000001;
+  }
+  if (reshapeParamBuilder_ == null) {
+    result.reshapeParam_=reshapeParam_;
+  }
+ else {
+    result.reshapeParam_=reshapeParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000200) == 0x00000200)) {
+    to_bitField1_|=0x00000002;
+  }
+  if (sigmoidParamBuilder_ == null) {
+    result.sigmoidParam_=sigmoidParam_;
+  }
+ else {
+    result.sigmoidParam_=sigmoidParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000400) == 0x00000400)) {
+    to_bitField1_|=0x00000004;
+  }
+  if (softmaxParamBuilder_ == null) {
+    result.softmaxParam_=softmaxParam_;
+  }
+ else {
+    result.softmaxParam_=softmaxParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00000800) == 0x00000800)) {
+    to_bitField1_|=0x00000008;
+  }
+  if (sppParamBuilder_ == null) {
+    result.sppParam_=sppParam_;
+  }
+ else {
+    result.sppParam_=sppParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00001000) == 0x00001000)) {
+    to_bitField1_|=0x00000010;
+  }
+  if (sliceParamBuilder_ == null) {
+    result.sliceParam_=sliceParam_;
+  }
+ else {
+    result.sliceParam_=sliceParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00002000) == 0x00002000)) {
+    to_bitField1_|=0x00000020;
+  }
+  if (tanhParamBuilder_ == null) {
+    result.tanhParam_=tanhParam_;
+  }
+ else {
+    result.tanhParam_=tanhParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00004000) == 0x00004000)) {
+    to_bitField1_|=0x00000040;
+  }
+  if (thresholdParamBuilder_ == null) {
+    result.thresholdParam_=thresholdParam_;
+  }
+ else {
+    result.thresholdParam_=thresholdParamBuilder_.build();
+  }
+  if (((from_bitField1_ & 0x00008000) == 0x00008000)) {
+    to_bitField1_|=0x00000080;
+  }
+  if (windowDataParamBuilder_ == null) {
+    result.windowDataParam_=windowDataParam_;
+  }
+ else {
+    result.windowDataParam_=windowDataParamBuilder_.build();
+  }
+  result.bitField0_=to_bitField0_;
+  result.bitField1_=to_bitField1_;
+  onBuilt();
+  return result;
+}

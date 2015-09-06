@@ -1,0 +1,14 @@
+{
+  if (includeBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    ensureIncludeIsMutable();
+    include_.add(value);
+    onChanged();
+  }
+ else {
+    includeBuilder_.addMessage(value);
+  }
+  return this;
+}

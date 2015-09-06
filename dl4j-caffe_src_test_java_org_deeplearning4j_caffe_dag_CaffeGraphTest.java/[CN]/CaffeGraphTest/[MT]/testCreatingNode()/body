@@ -1,0 +1,7 @@
+{
+  CaffeNode connectorNode=new CaffeNode("connector",LayerType.CONNECTOR,LayerSubType.CONNECTOR);
+  System.out.println(connectorNode);
+  assertTrue(connectorNode.getName().equals("connector"));
+  assertTrue(connectorNode.getLayerType().equals(CaffeNode.LayerType.CONNECTOR));
+  assertTrue(connectorNode.getLayerSubType().equals(LayerSubType.CONNECTOR));
+}

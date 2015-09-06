@@ -1,0 +1,14 @@
+{
+switch (value) {
+case 1:
+    return SUM;
+case 2:
+  return ASUM;
+case 3:
+return SUMSQ;
+case 4:
+return MEAN;
+default :
+return null;
+}
+}

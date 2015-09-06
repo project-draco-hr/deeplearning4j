@@ -1,0 +1,14 @@
+{
+  if (trainStateBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    trainState_=value;
+    onChanged();
+  }
+ else {
+    trainStateBuilder_.setMessage(value);
+  }
+  bitField0_|=0x00000040;
+  return this;
+}

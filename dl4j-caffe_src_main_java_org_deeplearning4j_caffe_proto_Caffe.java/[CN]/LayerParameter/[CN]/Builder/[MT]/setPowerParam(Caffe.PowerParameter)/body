@@ -1,0 +1,14 @@
+{
+  if (powerParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    powerParam_=value;
+    onChanged();
+  }
+ else {
+    powerParamBuilder_.setMessage(value);
+  }
+  bitField1_|=0x00000008;
+  return this;
+}

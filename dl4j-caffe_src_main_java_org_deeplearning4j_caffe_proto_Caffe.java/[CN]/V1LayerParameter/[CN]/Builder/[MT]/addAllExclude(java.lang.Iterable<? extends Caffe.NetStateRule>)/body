@@ -1,0 +1,11 @@
+{
+  if (excludeBuilder_ == null) {
+    ensureExcludeIsMutable();
+    com.google.protobuf.AbstractMessageLite.Builder.addAll(values,exclude_);
+    onChanged();
+  }
+ else {
+    excludeBuilder_.addAllMessages(values);
+  }
+  return this;
+}

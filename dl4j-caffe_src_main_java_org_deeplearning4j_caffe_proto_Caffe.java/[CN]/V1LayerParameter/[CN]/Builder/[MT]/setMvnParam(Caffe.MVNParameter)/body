@@ -1,0 +1,14 @@
+{
+  if (mvnParamBuilder_ == null) {
+    if (value == null) {
+      throw new NullPointerException();
+    }
+    mvnParam_=value;
+    onChanged();
+  }
+ else {
+    mvnParamBuilder_.setMessage(value);
+  }
+  bitField0_|=0x40000000;
+  return this;
+}

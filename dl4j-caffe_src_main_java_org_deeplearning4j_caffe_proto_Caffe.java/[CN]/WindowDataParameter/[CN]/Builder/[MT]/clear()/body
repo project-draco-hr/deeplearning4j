@@ -1,0 +1,30 @@
+{
+  super.clear();
+  source_="";
+  bitField0_=(bitField0_ & ~0x00000001);
+  scale_=1F;
+  bitField0_=(bitField0_ & ~0x00000002);
+  meanFile_="";
+  bitField0_=(bitField0_ & ~0x00000004);
+  batchSize_=0;
+  bitField0_=(bitField0_ & ~0x00000008);
+  cropSize_=0;
+  bitField0_=(bitField0_ & ~0x00000010);
+  mirror_=false;
+  bitField0_=(bitField0_ & ~0x00000020);
+  fgThreshold_=0.5F;
+  bitField0_=(bitField0_ & ~0x00000040);
+  bgThreshold_=0.5F;
+  bitField0_=(bitField0_ & ~0x00000080);
+  fgFraction_=0.25F;
+  bitField0_=(bitField0_ & ~0x00000100);
+  contextPad_=0;
+  bitField0_=(bitField0_ & ~0x00000200);
+  cropMode_="warp";
+  bitField0_=(bitField0_ & ~0x00000400);
+  cacheImages_=false;
+  bitField0_=(bitField0_ & ~0x00000800);
+  rootFolder_="";
+  bitField0_=(bitField0_ & ~0x00001000);
+  return this;
+}

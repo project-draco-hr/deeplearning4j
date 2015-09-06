@@ -1,0 +1,11 @@
+{
+  if (sliceParamBuilder_ == null) {
+    sliceParam_=Caffe.SliceParameter.getDefaultInstance();
+    onChanged();
+  }
+ else {
+    sliceParamBuilder_.clear();
+  }
+  bitField1_=(bitField1_ & ~0x00000010);
+  return this;
+}

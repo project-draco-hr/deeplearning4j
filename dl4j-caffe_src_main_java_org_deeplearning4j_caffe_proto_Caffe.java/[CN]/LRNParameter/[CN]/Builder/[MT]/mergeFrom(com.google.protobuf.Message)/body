@@ -1,0 +1,9 @@
+{
+  if (other instanceof Caffe.LRNParameter) {
+    return mergeFrom((Caffe.LRNParameter)other);
+  }
+ else {
+    super.mergeFrom(other);
+    return this;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  List<? extends GeneratedMessage> layerList=convertNetToLayerList();
+  List<Map<String,List<CaffeNode>>> nodeMapList=new ArrayList<>();
+  for (  GeneratedMessage layer : layerList) {
+    Map<String,List<CaffeNode>> nodeMap=convertLayerToCaffeNodeMap(layer);
+    if (nodeMap != null) {
+      nodeMapList.add(nodeMap);
+    }
+  }
+  return nodeMapList;
+}
