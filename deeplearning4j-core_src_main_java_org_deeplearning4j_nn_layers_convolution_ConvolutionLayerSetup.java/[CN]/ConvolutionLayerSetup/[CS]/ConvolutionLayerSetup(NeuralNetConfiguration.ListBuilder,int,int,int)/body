@@ -45,14 +45,26 @@
       DenseLayer d=(DenseLayer)conf.getLayerwise().get(i).getLayer();
       Layer next=conf.getLayerwise().get(i + 1).getLayer();
       if (next instanceof ConvolutionLayer || next instanceof SubsamplingLayer) {
-        ConvolutionLayer convolutionLayer=(ConvolutionLayer)next;
-        int inputHeight=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
-        int inputWidth=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
-        if (d.getNOut() > 0) {
+        if (next instanceof ConvolutionLayer) {
+          ConvolutionLayer convolutionLayer=(ConvolutionLayer)next;
+          int inputHeight=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
+          int inputWidth=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
+          if (convolutionLayer.getKernelSize() != null) {
+            d.setNOut(inputHeight * inputWidth * convolutionLayer.getNOut());
+          }
+ else           throw new IllegalStateException("Unable to infer width and height without convolution layer kernel size");
+          conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,lastOutChannels));
         }
- else         if (convolutionLayer.getKernelSize() != null) {
+ else         if (next instanceof SubsamplingLayer) {
+          SubsamplingLayer convolutionLayer=(SubsamplingLayer)next;
+          int inputHeight=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
+          int inputWidth=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
+          if (convolutionLayer.getKernelSize() != null) {
+            d.setNOut(inputHeight * inputWidth * lastOutChannels);
+          }
+ else           throw new IllegalStateException("Unable to infer width and height without convolution layer kernel size");
+          conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,lastOutChannels));
         }
-        d.setNOut(inputHeight * inputWidth * convolutionLayer.getNOut());
       }
     }
     if (curr instanceof ConvolutionLayer) {
