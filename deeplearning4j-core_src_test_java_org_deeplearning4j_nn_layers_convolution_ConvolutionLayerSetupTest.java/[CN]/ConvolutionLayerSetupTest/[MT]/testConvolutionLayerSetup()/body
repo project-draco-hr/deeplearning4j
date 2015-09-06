@@ -1,0 +1,5 @@
+{
+  MultiLayerConfiguration.Builder builder=inComplete();
+  ConvolutionLayerSetup setup=new ConvolutionLayerSetup(builder,28,28,1);
+  assertEquals(complete(),builder);
+}
