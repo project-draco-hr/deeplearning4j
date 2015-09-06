@@ -15,17 +15,16 @@
   int miniBatchSize=epsilon.size(0);
   boolean is2dInput=epsilon.rank() < 3;
   int timeSeriesLength=(is2dInput ? 1 : epsilon.size(2));
-  for (int i=0; i < fwdPass.paramsZeroOffset.length; i++)   fwdPass.paramsZeroOffset[i]=Shape.toOffsetZero(fwdPass.paramsZeroOffset[i].transpose());
-  INDArray wiTranspose=fwdPass.paramsZeroOffset[0];
-  INDArray wITranspose=fwdPass.paramsZeroOffset[1];
-  INDArray wfTranspose=fwdPass.paramsZeroOffset[2];
-  INDArray wFTranspose=fwdPass.paramsZeroOffset[3];
+  INDArray wiTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[0].transpose());
+  INDArray wITranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[1].transpose());
+  INDArray wfTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[2].transpose());
+  INDArray wFTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[3].transpose());
   INDArray wFFTranspose=fwdPass.paramsZeroOffset[4];
-  INDArray woTranspose=fwdPass.paramsZeroOffset[5];
-  INDArray wOTranspose=fwdPass.paramsZeroOffset[6];
+  INDArray woTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[5].transpose());
+  INDArray wOTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[6].transpose());
   INDArray wOOTranspose=fwdPass.paramsZeroOffset[7];
-  INDArray wgTranspose=fwdPass.paramsZeroOffset[8];
-  INDArray wGTranspose=fwdPass.paramsZeroOffset[9];
+  INDArray wgTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[8].transpose());
+  INDArray wGTranspose=Shape.toOffsetZero(fwdPass.paramsZeroOffset[9].transpose());
   INDArray wGGTranspose=fwdPass.paramsZeroOffset[10];
   INDArray[] bGradients=new INDArray[4];
   INDArray[] iwGradients=new INDArray[4];
@@ -37,43 +36,46 @@
   }
   for (int i=0; i < 3; i++)   rwGradients[i + 4]=Nd4j.zeros(1,hiddenLayerSize);
   INDArray epsilonNext=Nd4j.zeros(miniBatchSize,prevLayerSize,timeSeriesLength);
-  INDArray nablaCellStateNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
+  INDArray nablaCellStateNext=null;
   INDArray deltaiNext=null;
-  INDArray deltafNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
+  INDArray deltafNext=null;
   INDArray deltaoNext=null;
-  INDArray deltagNext=Nd4j.zeros(miniBatchSize,hiddenLayerSize);
+  INDArray deltagNext=null;
   int endIdx=0;
   if (truncatedBPTT)   endIdx=Math.max(0,timeSeriesLength - tbpttBackwardLength);
   for (int t=timeSeriesLength - 1; t >= endIdx; t--) {
-    INDArray prevMemCellState=(t == 0 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : fwdPass.memCellState[t - 1]);
+    INDArray prevMemCellState=(t == 0 ? null : fwdPass.memCellState[t - 1]);
     INDArray prevHiddenUnitActivation=(t == 0 ? null : fwdPass.fwdPassOutputAsArrays[t - 1]);
     INDArray currMemCellState=fwdPass.memCellState[t];
     INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.tensorAlongDimension(t,1,0));
-    INDArray nablaOut=epsilonSlice;
+    INDArray nablaOut=Shape.toOffsetZeroCopy(epsilonSlice);
     if (t != timeSeriesLength - 1) {
-      nablaOut=nablaOut.dup();
       nablaOut.addi(deltaiNext.mmul(wITranspose)).addi(deltafNext.mmul(wFTranspose)).addi(deltaoNext.mmul(wOTranspose)).addi(deltagNext.mmul(wGTranspose));
     }
-    INDArray sigmahOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currMemCellState.dup()));
-    INDArray zo=fwdPass.oz[t];
-    INDArray sigmaoPrimeOfZo=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zo).derivative());
+    INDArray sigmahOfS=fwdPass.memCellActivations[t];
+    INDArray ao=fwdPass.oa[t];
+    INDArray sigmaoPrimeOfZo=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ao.dup()));
     INDArray deltao=nablaOut.mul(sigmahOfS).muli(sigmaoPrimeOfZo);
     INDArray sigmahPrimeOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currMemCellState.dup()).derivative());
-    INDArray ao=fwdPass.oa[t];
-    INDArray nextForgetGateAs=(t == timeSeriesLength - 1 ? Nd4j.zeros(miniBatchSize,hiddenLayerSize) : fwdPass.fa[t + 1]);
-    INDArray nablaCellState=nablaOut.mul(ao).muli(sigmahPrimeOfS).addi(nextForgetGateAs.mul(nablaCellStateNext)).addi(deltafNext.mulRowVector(wFFTranspose)).addi(deltao.mulRowVector(wOOTranspose)).addi(deltagNext.mulRowVector(wGGTranspose));
+    INDArray nablaCellState=ao.muli(nablaOut).muli(sigmahPrimeOfS).addi(deltao.mulRowVector(wOOTranspose));
+    if (t != timeSeriesLength - 1) {
+      INDArray nextForgetGateAs=fwdPass.fa[t + 1];
+      nablaCellState.addi(nextForgetGateAs.mul(nablaCellStateNext)).addi(deltafNext.mulRowVector(wFFTranspose)).addi(deltagNext.mulRowVector(wGGTranspose));
+    }
     nablaCellStateNext=nablaCellState;
-    INDArray zf=fwdPass.fz[t];
-    INDArray deltaf=nablaCellState.mul(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zf).derivative()));
-    INDArray zg=fwdPass.gz[t];
-    INDArray ai=fwdPass.ia[t];
-    INDArray deltag=nablaCellState.mul(ai).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",zg).derivative()));
-    INDArray zi=fwdPass.iz[t];
+    INDArray af=fwdPass.fa[t];
+    INDArray deltaf=null;
+    if (t > 0) {
+      deltaf=nablaCellState.mul(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",af.dup())));
+    }
     INDArray ag=fwdPass.ga[t];
-    INDArray deltai=nablaCellState.mul(ag).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zi).derivative()));
+    INDArray ai=fwdPass.ia[t];
+    INDArray deltag=ai.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ag.dup())));
+    INDArray zi=fwdPass.iz[t];
+    INDArray deltai=ag.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zi).derivative()));
     INDArray prevLayerActivationSliceTransposed=Shape.toOffsetZero(is2dInput ? input.transpose() : input.tensorAlongDimension(t,1,0).transpose());
     iwGradients[0].addi(prevLayerActivationSliceTransposed.mmul(deltai));
-    iwGradients[1].addi(prevLayerActivationSliceTransposed.mmul(deltaf));
+    if (t > 0)     iwGradients[1].addi(prevLayerActivationSliceTransposed.mmul(deltaf));
     iwGradients[2].addi(prevLayerActivationSliceTransposed.mmul(deltao));
     iwGradients[3].addi(prevLayerActivationSliceTransposed.mmul(deltag));
     if (t > 0) {
@@ -90,10 +92,11 @@
     INDArray dLdwOO=deltao.mul(currMemCellState).sum(0);
     rwGradients[5].addi(dLdwOO);
     bGradients[0].addi(deltai.sum(0));
-    bGradients[1].addi(deltaf.sum(0));
+    if (t > 0)     bGradients[1].addi(deltaf.sum(0));
     bGradients[2].addi(deltao.sum(0));
     bGradients[3].addi(deltag.sum(0));
-    INDArray epsilonNextSlice=deltai.mmul(wiTranspose).addi(deltaf.mmul(wfTranspose)).addi(deltao.mmul(woTranspose)).addi(deltag.mmul(wgTranspose));
+    INDArray epsilonNextSlice=deltai.mmul(wiTranspose).addi(deltao.mmul(woTranspose)).addi(deltag.mmul(wgTranspose));
+    if (t > 0)     epsilonNextSlice.addi(deltaf.mmul(wfTranspose));
     epsilonNext.tensorAlongDimension(t,1,0).assign(epsilonNextSlice);
     deltaiNext=deltai;
     deltafNext=deltaf;
