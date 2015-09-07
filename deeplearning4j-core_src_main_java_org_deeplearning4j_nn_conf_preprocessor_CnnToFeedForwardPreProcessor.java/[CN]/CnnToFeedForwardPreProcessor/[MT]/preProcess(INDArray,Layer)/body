@@ -1,12 +1,12 @@
 {
   int[] otherOutputs=null;
-  this.inputHeight=input.size(-2);
-  this.inputWidth=input.size(-1);
   if (input.shape().length == 2) {
     return input;
   }
  else   if (input.shape().length == 4) {
-    this.numChannels=input.size(-3);
+    if (input.size(-2) == 1 && input.size(-1) == 1) {
+      return input.reshape(input.size(0),input.size(1));
+    }
     otherOutputs=new int[3];
   }
  else   if (input.shape().length == 3) {
