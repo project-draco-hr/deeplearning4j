@@ -1,0 +1,7 @@
+{
+  MultiLayerConfiguration.Builder builder=inComplete();
+  new ConvolutionLayerSetup(builder,28,28,1);
+  MultiLayerConfiguration completed=complete().build();
+  MultiLayerConfiguration test=builder.build();
+  assertEquals(completed,test);
+}

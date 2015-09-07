@@ -1,7 +1,7 @@
 {
   List<INDArray> ret=new ArrayList<>();
   for (  String s : order) {
-    if (!gradientForVariable().containsKey(s))     throw new IllegalStateException("Illegal key " + s + " no gradient with key found");
+    if (!gradientForVariable().containsKey(s))     continue;
     ret.add(gradientForVariable().get(s));
   }
   return Nd4j.toFlattened(ret);
