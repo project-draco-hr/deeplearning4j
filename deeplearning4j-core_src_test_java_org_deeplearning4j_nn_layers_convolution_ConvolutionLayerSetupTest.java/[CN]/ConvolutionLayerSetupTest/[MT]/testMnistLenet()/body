@@ -1,0 +1,25 @@
+{
+  MultiLayerConfiguration mnistAssertion=mnistLenet();
+  ConvolutionLayer firstLayer=(ConvolutionLayer)mnistAssertion.getConf(0).getLayer();
+  assertEquals(1,firstLayer.getNIn());
+  assertEquals(6,firstLayer.getNOut());
+  assertArrayEquals(new int[]{5,5},firstLayer.getKernelSize());
+  assertArrayEquals(new int[]{0,0},firstLayer.getPadding());
+  assertArrayEquals(new int[]{1,1},firstLayer.getStride());
+  OutputLayer o=(OutputLayer)mnistAssertion.getConf(4).getLayer();
+  assertEquals(500,o.getNIn());
+  MultiLayerConfiguration.Builder incomplete=incompleteMnistLenet();
+  new ConvolutionLayerSetup(incomplete,28,28,1);
+  MultiLayerConfiguration testConf=incomplete.build();
+  ConvolutionLayer firstLayerConv=(ConvolutionLayer)testConf.getConf(0).getLayer();
+  assertEquals(1,firstLayerConv.getNIn());
+  assertEquals(6,firstLayerConv.getNOut());
+  assertArrayEquals(new int[]{1,1},firstLayerConv.getStride());
+  assertArrayEquals(new int[]{5,5},firstLayerConv.getKernelSize());
+  SubsamplingLayer firstSubSampling=(SubsamplingLayer)testConf.getConf(1).getLayer();
+  assertArrayEquals(new int[]{2,2},firstSubSampling.getStride());
+  ConvolutionLayer secondLayerConv=(ConvolutionLayer)testConf.getConf(2).getLayer();
+  assertEquals(6,secondLayerConv.getNIn());
+  OutputLayer finalLayer=(OutputLayer)testConf.getConf(4).getLayer();
+  assertEquals(150,finalLayer.getNIn());
+}

@@ -12,7 +12,7 @@
     if (i < numLayers - 1 && getLayer(i,conf) instanceof ConvolutionLayer) {
       ConvolutionLayer convolutionLayer=(ConvolutionLayer)getLayer(i,conf);
       Layer next=getLayer(i + 1,conf);
-      if (next instanceof FeedForwardLayer) {
+      if (next instanceof DenseLayer || next instanceof OutputLayer) {
         conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(convolutionLayer.getKernelSize()[0],convolutionLayer.getKernelSize()[1],convolutionLayer.getNOut()));
         FeedForwardLayer o=(FeedForwardLayer)next;
         int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
@@ -34,7 +34,7 @@
  else     if (i < numLayers - 1 && getLayer(i,conf) instanceof SubsamplingLayer) {
       SubsamplingLayer subsamplingLayer=(SubsamplingLayer)getLayer(i,conf);
       Layer next=getLayer(i + 1,conf);
-      if (next instanceof FeedForwardLayer) {
+      if (next instanceof DenseLayer || next instanceof OutputLayer) {
         conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(lastHeight,lastWidth,lastOutChannels));
         FeedForwardLayer o=(FeedForwardLayer)next;
         int[] outWidthAndHeight=getSubSamplingOutputSize(new int[]{lastHeight,lastWidth},subsamplingLayer.getKernelSize(),subsamplingLayer.getStride());
