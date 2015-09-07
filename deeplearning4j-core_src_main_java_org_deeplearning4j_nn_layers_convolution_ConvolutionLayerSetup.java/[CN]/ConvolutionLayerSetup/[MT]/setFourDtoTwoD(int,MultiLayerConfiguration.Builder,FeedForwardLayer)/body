@@ -1,24 +1,22 @@
 {
-  Layer next=conf instanceof NeuralNetConfiguration.ListBuilder ? ((NeuralNetConfiguration.ListBuilder)conf).getLayerwise().get(i + 1).getLayer() : conf.getConfs().get(i).getLayer();
-  if (next instanceof ConvolutionLayer || next instanceof SubsamplingLayer) {
-    if (next instanceof ConvolutionLayer) {
-      ConvolutionLayer convolutionLayer=(ConvolutionLayer)next;
-      int inputHeight=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
-      int inputWidth=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
+  Layer currFourdLayer=conf instanceof NeuralNetConfiguration.ListBuilder ? ((NeuralNetConfiguration.ListBuilder)conf).getLayerwise().get(i).getLayer() : conf.getConfs().get(i).getLayer();
+  if (currFourdLayer instanceof ConvolutionLayer || currFourdLayer instanceof SubsamplingLayer) {
+    if (currFourdLayer instanceof ConvolutionLayer) {
+      ConvolutionLayer convolutionLayer=(ConvolutionLayer)currFourdLayer;
+      int inputHeight=lastHeight;
+      int inputWidth=lastWidth;
       if (convolutionLayer.getKernelSize() != null) {
         d.setNOut(inputHeight * inputWidth * convolutionLayer.getNOut());
       }
  else       throw new IllegalStateException("Unable to infer width and height without convolution layer kernel size");
       conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,lastOutChannels));
     }
- else     if (next instanceof SubsamplingLayer) {
-      SubsamplingLayer convolutionLayer=(SubsamplingLayer)next;
-      int inputHeight=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
-      int inputWidth=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
-      if (convolutionLayer.getKernelSize() != null) {
+ else     if (currFourdLayer instanceof SubsamplingLayer) {
+      int inputHeight=lastHeight;
+      int inputWidth=lastWidth;
+      if (i < numLayers - 2) {
         d.setNOut(inputHeight * inputWidth * lastOutChannels);
       }
- else       throw new IllegalStateException("Unable to infer width and height without convolution layer kernel size");
       conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,lastOutChannels));
     }
   }

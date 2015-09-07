@@ -2,7 +2,6 @@
   lastHeight=height;
   lastWidth=width;
   lastOutChannels=channels;
-  int numLayers=-1;
   if (conf instanceof NeuralNetConfiguration.ListBuilder) {
     NeuralNetConfiguration.ListBuilder listBuilder=(NeuralNetConfiguration.ListBuilder)conf;
     numLayers=listBuilder.getLayerwise().size();
@@ -14,10 +13,11 @@
       ConvolutionLayer convolutionLayer=(ConvolutionLayer)getLayer(i,conf);
       Layer next=getLayer(i + 1,conf);
       if (next instanceof FeedForwardLayer) {
-        conf.inputPreProcessor(i,new CnnToFeedForwardPreProcessor(convolutionLayer.getKernelSize()[0],convolutionLayer.getKernelSize()[1],convolutionLayer.getNOut()));
+        conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(convolutionLayer.getKernelSize()[0],convolutionLayer.getKernelSize()[1],convolutionLayer.getNOut()));
         FeedForwardLayer o=(FeedForwardLayer)next;
-        int outRows=lastHeight - convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
-        int outCols=lastWidth - convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
+        int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
+        int outRows=outWidthAndHeight[0];
+        int outCols=outWidthAndHeight[1];
         int nIn=outCols * outRows * convolutionLayer.getNOut();
         o.setNIn(nIn);
       }
@@ -35,12 +35,14 @@
       SubsamplingLayer subsamplingLayer=(SubsamplingLayer)getLayer(i,conf);
       Layer next=getLayer(i + 1,conf);
       if (next instanceof FeedForwardLayer) {
-        conf.inputPreProcessor(i,new CnnToFeedForwardPreProcessor(subsamplingLayer.getKernelSize()[0],subsamplingLayer.getKernelSize()[1],lastOutChannels));
+        conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(lastHeight,lastWidth,lastOutChannels));
         FeedForwardLayer o=(FeedForwardLayer)next;
-        int outRows=lastHeight - subsamplingLayer.getKernelSize()[0] + subsamplingLayer.getPadding()[0];
-        int outCols=lastWidth - subsamplingLayer.getKernelSize()[1] + subsamplingLayer.getPadding()[1];
+        int[] outWidthAndHeight=getSubSamplingOutputSize(new int[]{lastHeight,lastWidth},subsamplingLayer.getKernelSize(),subsamplingLayer.getStride());
+        int outRows=outWidthAndHeight[0];
+        int outCols=outWidthAndHeight[1];
         int nIn=outCols * outRows * lastOutChannels;
         o.setNIn(nIn);
+        setFourDtoTwoD(i,conf,o);
       }
  else       if (next instanceof ConvolutionLayer) {
         ConvolutionLayer nextConv=(ConvolutionLayer)next;
@@ -53,14 +55,16 @@
     }
     if (curr instanceof ConvolutionLayer) {
       ConvolutionLayer convolutionLayer=(ConvolutionLayer)curr;
-      lastHeight-=convolutionLayer.getKernelSize()[0] + convolutionLayer.getPadding()[0];
-      lastWidth-=convolutionLayer.getKernelSize()[1] + convolutionLayer.getPadding()[1];
+      int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
+      lastHeight=outWidthAndHeight[0];
+      lastWidth=outWidthAndHeight[1];
       lastOutChannels=convolutionLayer.getNOut();
     }
  else     if (curr instanceof SubsamplingLayer) {
       SubsamplingLayer subsamplingLayer=(SubsamplingLayer)curr;
-      lastHeight/=subsamplingLayer.getStride()[0];
-      lastWidth/=subsamplingLayer.getStride()[1];
+      int[] outWidthAndHeight=getSubSamplingOutputSize(new int[]{lastHeight,lastWidth},subsamplingLayer.getKernelSize(),subsamplingLayer.getStride());
+      lastHeight=outWidthAndHeight[0];
+      lastWidth=outWidthAndHeight[1];
     }
   }
   if (conf instanceof NeuralNetConfiguration.ListBuilder) {
