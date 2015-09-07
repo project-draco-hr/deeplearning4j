@@ -28,7 +28,6 @@
       }
  else       if (next instanceof SubsamplingLayer) {
         SubsamplingLayer subsamplingLayer=(SubsamplingLayer)next;
-        if (subsamplingLayer.getKernelSize()[0] != 1 && subsamplingLayer.getKernelSize()[1] != 1)         throw new IllegalStateException("Current calculations don't factor in a subsampling layer kernel size that is not 1");
         if (subsamplingLayer.getPadding() == null)         subsamplingLayer.setPadding(convolutionLayer.getPadding());
       }
  else       if (next instanceof ConvolutionLayer) {
