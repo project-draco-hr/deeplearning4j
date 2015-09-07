@@ -7,7 +7,7 @@
   assertArrayEquals(new int[]{0,0},firstLayer.getPadding());
   assertArrayEquals(new int[]{1,1},firstLayer.getStride());
   OutputLayer o=(OutputLayer)mnistAssertion.getConf(4).getLayer();
-  assertEquals(500,o.getNIn());
+  assertEquals(150,o.getNIn());
   MultiLayerConfiguration.Builder incomplete=incompleteMnistLenet();
   new ConvolutionLayerSetup(incomplete,28,28,1);
   MultiLayerConfiguration testConf=incomplete.build();
