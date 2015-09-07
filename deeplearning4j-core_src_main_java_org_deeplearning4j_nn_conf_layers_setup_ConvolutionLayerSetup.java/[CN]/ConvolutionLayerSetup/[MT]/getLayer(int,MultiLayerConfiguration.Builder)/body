@@ -1,6 +1,7 @@
 {
   if (builder instanceof NeuralNetConfiguration.ListBuilder) {
     NeuralNetConfiguration.ListBuilder listBuilder=(NeuralNetConfiguration.ListBuilder)builder;
+    if (listBuilder.getLayerwise().get(i) == null)     throw new IllegalStateException("Undefined layer " + i);
     return listBuilder.getLayerwise().get(i).getLayer();
   }
   return builder.getConfs().get(i).getLayer();

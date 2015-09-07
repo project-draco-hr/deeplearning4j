@@ -1,7 +1,7 @@
 {
   int[] ret=new int[inputWidthAndHeight.length];
   for (int i=0; i < ret.length; i++) {
-    ret[i]=(inputWidthAndHeight[i]) / stride[i] + 1;
+    ret[i]=inputWidthAndHeight[i] / stride[i];
   }
   return ret;
 }
