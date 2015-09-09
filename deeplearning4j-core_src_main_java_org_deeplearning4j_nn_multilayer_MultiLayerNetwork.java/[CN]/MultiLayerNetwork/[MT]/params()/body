@@ -2,5 +2,5 @@
   if (params != null)   return params;
   List<INDArray> params=new ArrayList<>();
   for (  Layer layer : getLayers())   params.add(layer.params());
-  return Nd4j.toFlattened(params);
+  return Nd4j.toFlattened('f',params);
 }
