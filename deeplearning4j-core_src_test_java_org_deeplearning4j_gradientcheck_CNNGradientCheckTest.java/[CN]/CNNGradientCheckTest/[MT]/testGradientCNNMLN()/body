@@ -12,7 +12,9 @@
       for (int i=0; i < lossFunctions.length; i++) {
         LossFunctions.LossFunction lf=lossFunctions[i];
         String outputActivation=outputActivations[i];
-        MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).learningRate(1.0).seed(12345L).list(2).layer(0,new ConvolutionLayer.Builder(new int[]{1,1}).nIn(1).nOut(6).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).activation(afn).updater(Updater.SGD).build()).layer(1,new OutputLayer.Builder(lf).activation(outputActivation).nIn(6).nOut(3).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).updater(Updater.SGD).build()).pretrain(false).backprop(true).inputPreProcessor(0,new FeedForwardToCnnPreProcessor(2,2,1)).inputPreProcessor(1,new CnnToFeedForwardPreProcessor()).build();
+        MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).learningRate(1.0).seed(12345L).list(2).layer(0,new ConvolutionLayer.Builder(new int[]{1,1}).nOut(6).weightInit(WeightInit.XAVIER).activation(afn).updater(Updater.SGD).build()).layer(1,new OutputLayer.Builder(lf).activation(outputActivation).nOut(3).weightInit(WeightInit.XAVIER).updater(Updater.SGD).build()).pretrain(false).backprop(true);
+        ConvolutionLayerSetup setup=new ConvolutionLayerSetup(builder,2,2,1);
+        MultiLayerConfiguration conf=builder.build();
         MultiLayerNetwork mln=new MultiLayerNetwork(conf);
         mln.init();
         String name=new Object(){
@@ -26,7 +28,7 @@
           for (int j=0; j < 10; j++)           mln.fit(ds);
           mln.computeGradientAndScore();
           double scoreAfter=mln.score();
-          String msg=name + " - score did not (sufficiently) decrease during learning - activationFn=" + afn+ ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst+ " (before="+ scoreBefore+ ", scoreAfter="+ scoreAfter+ ")";
+          String msg=name + " - score did not (sufficiently) decrease during learning - activationFn=" + afn+ ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst= "+ doLearningFirst+ " (before="+ scoreBefore+ ", scoreAfter="+ scoreAfter+ ")";
           assertTrue(msg,scoreAfter < 0.8 * scoreBefore);
         }
         if (PRINT_RESULTS) {
