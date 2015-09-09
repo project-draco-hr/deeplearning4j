@@ -10,8 +10,8 @@
   for (  String s : initParams2.keySet()) {
     assertTrue("Params differ: " + s,initParams2.get(s).equals(initParams2After.get(s)));
   }
-  assertTrue(initParams.equals(initParamsAfter));
+  assertEquals(initParams,initParamsAfter);
   INDArray randomParams=Nd4j.rand(initParams.shape());
   net.setParams(randomParams.dup());
-  assertTrue(net.params().equals(randomParams));
+  assertEquals(net.params(),randomParams);
 }

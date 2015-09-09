@@ -4,7 +4,7 @@
     INDArray paramsForL=l.params();
     params.add(paramsForL);
   }
-  this.params=Nd4j.toFlattened(params);
+  this.params=Nd4j.toFlattened('f',params);
   int idx=0;
   for (  Layer l : layers) {
     INDArray paramsForL=l.params();
