@@ -9,7 +9,7 @@
     INDArray param=getParam(s);
     INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,idx + param.length()));
     if (param.length() != get.length())     throw new IllegalStateException("Parameter " + s + " should have been of length "+ param.length()+ " but was "+ get.length());
-    setParam(s,get.reshape(param.shape()));
+    setParam(s,get.reshape('f',param.shape()));
     idx+=param.length();
   }
 }

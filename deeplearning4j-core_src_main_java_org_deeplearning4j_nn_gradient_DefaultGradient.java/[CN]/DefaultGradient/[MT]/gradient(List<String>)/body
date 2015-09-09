@@ -4,5 +4,5 @@
     if (!gradientForVariable().containsKey(s))     continue;
     ret.add(gradientForVariable().get(s));
   }
-  return Nd4j.toFlattened(ret);
+  return Nd4j.toFlattened('f',ret);
 }
