@@ -1,0 +1,11 @@
+{
+  this.percentTrain=percentTrain;
+  this.rootDir=rootDir;
+  splitRootDir=new File(destinationRootDir,"split");
+  if (splitRootDir.exists())   throw new IllegalStateException("Train/test split already exists");
+  train=new File(splitRootDir,"train");
+  test=new File(splitRootDir,"test");
+  train.mkdirs();
+  test.mkdirs();
+  this.labelingType=labelingType;
+}

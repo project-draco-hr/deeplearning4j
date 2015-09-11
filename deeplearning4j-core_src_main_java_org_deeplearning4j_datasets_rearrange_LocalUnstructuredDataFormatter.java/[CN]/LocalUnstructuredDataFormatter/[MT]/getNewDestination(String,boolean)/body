@@ -1,0 +1,28 @@
+{
+  File file=new File(path);
+switch (labelingType) {
+case NAME:
+    if (train) {
+      File dir=new File(this.train,getNameLabel(path));
+      File name=new File(dir,file.getName());
+      return name.getAbsolutePath();
+    }
+ else {
+      File dir=new File(this.test,getNameLabel(path));
+      File name=new File(dir,file.getName());
+      return name.getAbsolutePath();
+    }
+case DIRECTORY:
+  if (train) {
+    File dir=new File(this.train,getPathLabel(path));
+    File name=new File(dir,file.getName());
+    return name.getAbsolutePath();
+  }
+ else {
+    File dir=new File(this.test,getPathLabel(path));
+    File name=new File(dir,file.getName());
+    return name.getAbsolutePath();
+  }
+}
+throw new IllegalStateException("Illegal labeling type ");
+}
