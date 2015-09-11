@@ -2,10 +2,9 @@
   for (int i=0; i < conf.getNumIterations(); i++) {
     Pair<Gradient,Double> pair=gradientAndScore();
     Gradient gradient=pair.getFirst();
-    stepFunction.step(model.params(),gradient.gradient());
-    for (    Map.Entry<String,INDArray> variables : model.paramTable().entrySet()) {
-      stepFunction.step(variables.getValue(),gradient.getGradientFor(variables.getKey()));
-    }
+    INDArray params=model.params();
+    stepFunction.step(params,gradient.gradient());
+    model.setParams(params);
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
   }
   return true;
