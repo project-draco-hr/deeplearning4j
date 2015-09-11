@@ -1,0 +1,23 @@
+{
+  Iterator<File> files=FileUtils.iterateFiles(rootDir,null,true);
+  while (files.hasNext()) {
+    allFiles.add(files.next().getAbsolutePath());
+  }
+  numExamplesTotal=allFiles.size();
+  int numExampleForTrain=(int)(percentTrain * (double)numExamplesTotal);
+  this.numExamplesToTrainOn=numExampleForTrain;
+  this.numTestExamples=numExamplesTotal - numExampleForTrain;
+  Collections.shuffle(allFiles);
+  for (int i=0; i < numExamplesTotal; i++) {
+    String dir=getNewDestination(allFiles.get(i),i < numExampleForTrain);
+    File origin=new File(allFiles.get(i));
+    File newDir=new File(dir);
+    newDir.getParentFile().mkdirs();
+    try {
+      Files.copy(origin,newDir);
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
+}
