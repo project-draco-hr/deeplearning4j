@@ -1,6 +1,7 @@
 {
   this.activationFunction=builder.activationFunction;
   this.weightInit=builder.weightInit;
+  this.biasInit=builder.biasInit;
   this.dist=builder.dist;
   this.dropOut=builder.dropOut;
   this.updater=builder.updater;
