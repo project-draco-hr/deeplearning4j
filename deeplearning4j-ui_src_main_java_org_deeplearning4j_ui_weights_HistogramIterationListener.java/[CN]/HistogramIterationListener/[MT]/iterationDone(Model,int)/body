@@ -3,12 +3,12 @@
     Map<String,INDArray> grad=model.gradient().gradientForVariable();
     Map<String,INDArray> newGrad=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : grad.entrySet()) {
-      newGrad.put("param_" + entry.getKey(),entry.getValue());
+      newGrad.put("param_" + entry.getKey(),entry.getValue().dup());
     }
     Map<String,INDArray> params=model.paramTable();
     Map<String,INDArray> newParams=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
-      newParams.put("param_" + entry.getKey(),entry.getValue());
+      newParams.put("param_" + entry.getKey(),entry.getValue().dup());
     }
     ModelAndGradient g=new ModelAndGradient();
     g.setGradients(newGrad);
