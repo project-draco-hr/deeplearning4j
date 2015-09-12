@@ -1,15 +1,5 @@
 {
-  if (this.params != null) {
-    this.params=params;
-    int idx=0;
-    for (int i=0; i < getLayers().length; i++) {
-      Layer layer=getLayer(i);
-      int range=layer.numParams();
-      INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,range + idx));
-      layer.setParams(get);
-      idx+=range;
-    }
-  }
+  if (this.params != null)   this.params=params;
   int idx=0;
   for (int i=0; i < getLayers().length; i++) {
     Layer layer=getLayer(i);
