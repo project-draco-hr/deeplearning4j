@@ -1,10 +1,10 @@
 {
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9f).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(100).learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.AutoEncoder.Builder().nIn(784).nOut(600).corruptionLevel(0.6).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().momentum(0.9f).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(100).learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.AutoEncoder.Builder().nIn(784).nOut(600).corruptionLevel(0.6).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).build();
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.<IterationListener>asList(new ScoreIterationListener(1),new UpdateActivationIterationListener(1)),0);
+  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.asList(new ScoreIterationListener(1),new UpdateActivationIterationListener(1)),0);
   da.setParams(da.params());
   da.fit(input);
 }
