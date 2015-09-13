@@ -2,7 +2,9 @@
   this.weightInit=builder.weightInit;
   this.biasInit=builder.biasInit;
   this.dist=builder.dist;
+  this.activationFunction=builder.activationFunction;
   this.lr=builder.lr;
+  this.momentum=momentum;
   this.l1=builder.l1;
   this.l2=builder.l2;
   this.dropOut=builder.dropOut;
