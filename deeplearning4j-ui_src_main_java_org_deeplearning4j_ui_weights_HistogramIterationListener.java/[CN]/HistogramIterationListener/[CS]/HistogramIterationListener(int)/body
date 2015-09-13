@@ -1,4 +1,10 @@
 {
+  try {
+    UiServer.getInstance();
+  }
+ catch (  Exception e) {
+    log.error("Error initializing UI server",e);
+  }
   this.iterations=iterations;
   target=client.target("http://localhost:8080").path("weights").path("update");
 }

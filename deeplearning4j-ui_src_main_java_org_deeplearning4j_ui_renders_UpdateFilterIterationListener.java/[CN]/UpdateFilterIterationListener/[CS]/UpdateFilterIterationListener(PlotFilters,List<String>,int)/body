@@ -1,4 +1,10 @@
 {
+  try {
+    UiServer.getInstance();
+  }
+ catch (  Exception e) {
+    log.error("Error initializing UI server",e);
+  }
   listener=new PlotFiltersIterationListener(filters,variables,0);
   this.iterations=iterations;
 }

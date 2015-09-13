@@ -1,4 +1,10 @@
 {
+  try {
+    UiServer.getInstance();
+  }
+ catch (  Exception e) {
+    log.error("Error initializing UI server",e);
+  }
   listener=new ActivationMeanIterationListener(iterations);
   this.iterations=iterations;
 }
