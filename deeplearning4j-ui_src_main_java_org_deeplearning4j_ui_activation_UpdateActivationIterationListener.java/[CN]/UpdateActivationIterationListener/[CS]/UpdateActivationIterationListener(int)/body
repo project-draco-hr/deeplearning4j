@@ -1,4 +1,3 @@
 {
-  listener=new ActivationMeanIterationListener(iterations);
-  this.iterations=iterations;
+  this(iterations,true,"activations");
 }
