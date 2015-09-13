@@ -10,11 +10,14 @@
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
       newParams.put("param_" + entry.getKey(),entry.getValue().dup());
     }
+    double score=model.score();
+    scoreHistory.add(score);
     ModelAndGradient g=new ModelAndGradient();
     g.setGradients(newGrad);
     g.setParameters(newParams);
-    g.setScore(model.score());
+    g.setScore(score);
+    g.setScores(scoreHistory);
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
-    System.out.println(resp);
+    log.debug("{}",resp);
   }
 }

@@ -1,5 +1,6 @@
 {
   org.deeplearning4j.nn.conf.layers.GravesLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesLSTM)conf.getLayer();
+  double forgetGateInit=layerConf.getForgetGateBiasInit();
   Distribution dist=Distributions.createDistribution(layerConf.getDist());
   int nL=layerConf.getNOut();
   int nLast=layerConf.getNIn();
@@ -9,7 +10,7 @@
   params.put(INPUT_WEIGHT_KEY,WeightInitUtil.initWeights(nLast,4 * nL,layerConf.getWeightInit(),dist));
   params.put(RECURRENT_WEIGHT_KEY,WeightInitUtil.initWeights(nL,4 * nL + 3,layerConf.getWeightInit(),dist));
   INDArray biases=Nd4j.zeros(1,4 * nL);
-  biases.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(5));
+  biases.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(forgetGateInit));
   params.put(BIAS_KEY,biases);
   params.get(INPUT_WEIGHT_KEY).data().persist();
   params.get(RECURRENT_WEIGHT_KEY).data().persist();
