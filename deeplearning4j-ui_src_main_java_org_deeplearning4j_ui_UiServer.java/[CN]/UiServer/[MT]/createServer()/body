@@ -8,5 +8,6 @@
   bos.close();
   is.close();
   tmpConfig.deleteOnExit();
-  new UiServer().run("server",tmpConfig.getAbsolutePath());
+  INSTANCE=new UiServer();
+  INSTANCE.run("server",tmpConfig.getAbsolutePath());
 }

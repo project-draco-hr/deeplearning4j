@@ -1,0 +1,16 @@
+{
+  int port=-1;
+  try {
+    UiServer server=UiServer.getInstance();
+    port=server.getPort();
+  }
+ catch (  Exception e) {
+    log.error("Error initializing UI server",e);
+    throw new RuntimeException(e);
+  }
+  target=client.target("http://localhost:" + port).path(subPath).path("update");
+  listener=new PlotFiltersIterationListener(filters,variables,0);
+  this.iterations=iterations;
+  this.openBrowser=openBrowser;
+  path="http://localhost:" + port + "/"+ subPath;
+}
