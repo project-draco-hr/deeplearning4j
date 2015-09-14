@@ -6,6 +6,9 @@
     if (layers[i] instanceof BaseRecurrentLayer) {
       input=((BaseRecurrentLayer<?>)layers[i]).rnnTimeStep(input);
     }
+ else     if (layers[i] instanceof MultiLayerNetwork) {
+      input=((MultiLayerNetwork)layers[i]).rnnTimeStep(input);
+    }
  else {
       input=layers[i].activate(input,false);
     }

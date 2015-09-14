@@ -1,5 +1,11 @@
 {
-  feedForward();
-  backprop();
-  score=((BaseOutputLayer)getOutputLayer()).computeScore(calcL1(),calcL2());
+  if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
+    rnnActivateUsingStoredState(getInput(),true,true);
+    truncatedBPTTGradient();
+  }
+ else {
+    feedForward();
+    backprop();
+  }
+  score=((BaseOutputLayer<?>)getOutputLayer()).computeScore(calcL1(),calcL2());
 }
