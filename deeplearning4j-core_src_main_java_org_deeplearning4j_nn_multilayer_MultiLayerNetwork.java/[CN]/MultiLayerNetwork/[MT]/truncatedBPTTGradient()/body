@@ -1,0 +1,40 @@
+{
+  String multiGradientKey;
+  gradient=new DefaultGradient();
+  Layer currLayer;
+  if (!(getOutputLayer() instanceof BaseOutputLayer)) {
+    log.warn("Warning: final layer isn't output layer. You cannot use backprop (truncated BPTT) without an output layer.");
+    return;
+  }
+  BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)getOutputLayer();
+  if (labels == null)   throw new IllegalStateException("No labels found");
+  if (outputLayer.conf().getLayer().getWeightInit() == WeightInit.ZERO) {
+    throw new IllegalStateException("Output layer weights cannot be initialized to zero when using backprop.");
+  }
+  outputLayer.setLabels(labels);
+  int numLayers=getnLayers();
+  LinkedList<Pair<String,INDArray>> gradientList=new LinkedList<>();
+  Pair<Gradient,INDArray> currPair=outputLayer.backpropGradient(null);
+  for (  Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
+    multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
+    gradientList.addLast(new Pair<>(multiGradientKey,entry.getValue()));
+  }
+  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond(),layers[numLayers - 1]));
+  for (int j=numLayers - 2; j >= 0; j--) {
+    currLayer=getLayer(j);
+    if (currLayer instanceof BaseRecurrentLayer) {
+      currPair=((BaseRecurrentLayer<?>)currLayer).tbpttBackpropGradient(currPair.getSecond(),layerWiseConfigurations.getTbpttBackLength());
+    }
+ else {
+      currPair=currLayer.backpropGradient(currPair.getSecond());
+    }
+    LinkedList<Pair<String,INDArray>> tempList=new LinkedList<>();
+    for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
+      multiGradientKey=String.valueOf(j) + "_" + entry.getKey();
+      tempList.addFirst(new Pair<>(multiGradientKey,entry.getValue()));
+    }
+    for (    Pair<String,INDArray> pair : tempList)     gradientList.addFirst(pair);
+    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),getLayerWiseConfigurations().getInputPreProcess(j).backprop(currPair.getSecond(),layers[j]));
+  }
+  for (  Pair<String,INDArray> pair : gradientList)   gradient.setGradientFor(pair.getFirst(),pair.getSecond());
+}

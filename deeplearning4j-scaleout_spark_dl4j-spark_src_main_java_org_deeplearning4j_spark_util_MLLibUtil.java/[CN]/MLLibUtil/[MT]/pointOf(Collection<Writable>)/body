@@ -1,10 +1,11 @@
 {
-  double[] ret=new double[writables.size()];
+  double[] ret=new double[writables.size() - 1];
   int count=0;
   double target=0;
   for (  Writable w : writables) {
     if (count < writables.size() - 1)     ret[count++]=Float.parseFloat(w.toString());
  else     target=Float.parseFloat(w.toString());
   }
+  if (target < 0)   throw new IllegalStateException("Target must be >= 0");
   return new LabeledPoint(target,Vectors.dense(ret));
 }

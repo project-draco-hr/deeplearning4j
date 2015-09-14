@@ -1,6 +1,31 @@
 {
   this.conf=uiConfiguration;
   this.env=environment;
+  int[] portsFromYml=getApplicationPortFromYml();
+  if (portsFromYml[0] != -1) {
+    ((HttpConnectorFactory)((DefaultServerFactory)uiConfiguration.getServerFactory()).getApplicationConnectors().get(0)).setPort(portsFromYml[0]);
+  }
+  if (portsFromYml[1] != -1) {
+    ((HttpConnectorFactory)((DefaultServerFactory)uiConfiguration.getServerFactory()).getAdminConnectors().get(0)).setPort(portsFromYml[1]);
+  }
+  environment.lifecycle().addServerLifecycleListener(new ServerLifecycleListener(){
+    @Override public void serverStarted(    Server server){
+      for (      Connector connector : server.getConnectors()) {
+        if (connector instanceof ServerConnector) {
+          ServerConnector serverConnector=(ServerConnector)connector;
+          if (!serverConnector.getName().toLowerCase().contains("application"))           continue;
+          int port=serverConnector.getLocalPort();
+          try {
+            UiServer.getInstance().port=port;
+          }
+ catch (          Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+  }
+);
   environment.jersey().register(MultiPartFeature.class);
   environment.jersey().register(new GenericExceptionMapper());
   environment.jersey().register(new JsonProcessingExceptionMapper());

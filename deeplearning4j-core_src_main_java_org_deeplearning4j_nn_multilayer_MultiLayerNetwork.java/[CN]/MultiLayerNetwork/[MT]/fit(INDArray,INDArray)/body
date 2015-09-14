@@ -6,9 +6,14 @@
     finetune();
   }
   if (layerWiseConfigurations.isBackprop()) {
-    if (solver == null) {
-      solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+    if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
+      doTruncatedBPTT(data,labels);
     }
-    solver.optimize();
+ else {
+      if (solver == null) {
+        solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+      }
+      solver.optimize();
+    }
   }
 }

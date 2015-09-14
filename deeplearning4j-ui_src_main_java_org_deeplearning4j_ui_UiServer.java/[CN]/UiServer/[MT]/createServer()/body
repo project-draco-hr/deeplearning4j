@@ -1,0 +1,13 @@
+{
+  ClassPathResource resource=new ClassPathResource("dropwizard.yml");
+  InputStream is=resource.getInputStream();
+  File tmpConfig=new File("dropwizard-render.yml");
+  BufferedOutputStream bos=new BufferedOutputStream(new FileOutputStream(tmpConfig));
+  IOUtils.copy(is,bos);
+  bos.flush();
+  bos.close();
+  is.close();
+  tmpConfig.deleteOnExit();
+  INSTANCE=new UiServer();
+  INSTANCE.run("server",tmpConfig.getAbsolutePath());
+}
