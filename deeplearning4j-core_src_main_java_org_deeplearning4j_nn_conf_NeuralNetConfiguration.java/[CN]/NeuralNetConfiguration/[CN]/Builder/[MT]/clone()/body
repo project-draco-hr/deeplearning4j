@@ -1,7 +1,6 @@
 {
   try {
     Builder clone=(Builder)super.clone();
-    if (clone.momentumAfter != null)     clone.momentumAfter=new HashMap<>(clone.momentumAfter);
     if (clone.layer != null)     clone.layer=clone.layer.clone();
     if (clone.stepFunction != null)     clone.stepFunction=clone.stepFunction.clone();
     return clone;
