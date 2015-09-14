@@ -1,0 +1,6 @@
+{
+  this.current=modelAndGrad;
+  this.path=modelAndGrad.getPath();
+  updated=true;
+  return Response.ok(Collections.singletonMap("status","ok")).build();
+}

@@ -1,0 +1,29 @@
+{
+  new LFWDataSetIterator(10,28,28).next();
+  File destinationDir=new File(System.getProperty("user.home"),"rearrangedlfw");
+  LocalUnstructuredDataFormatter formatter=new LocalUnstructuredDataFormatter(destinationDir,new File(System.getProperty("user.home"),"lfw"),LocalUnstructuredDataFormatter.LabelingType.DIRECTORY,0.8);
+  formatter.rearrange();
+  File splitRoot=new File(destinationDir,"split");
+  assertEquals(2,splitRoot.listFiles().length);
+  Iterator<File> files=FileUtils.iterateFiles(splitRoot,null,true);
+  int count=0;
+  while (files.hasNext()) {
+    files.next();
+    count++;
+  }
+  Iterator<File> trainFiles=FileUtils.iterateFiles(new File(splitRoot,"train"),null,true);
+  int trainFilesCount=0;
+  while (trainFiles.hasNext()) {
+    trainFiles.next();
+    trainFilesCount++;
+  }
+  assertEquals(formatter.getNumExamplesTotal(),count);
+  assertEquals(formatter.getNumExamplesToTrainOn(),trainFilesCount);
+  Iterator<File> testFiles=FileUtils.iterateFiles(new File(splitRoot,"test"),null,true);
+  int testFilesCount=0;
+  while (testFiles.hasNext()) {
+    testFiles.next();
+    testFilesCount++;
+  }
+  assertEquals(formatter.getNumTestExamples(),testFilesCount);
+}

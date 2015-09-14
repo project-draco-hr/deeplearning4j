@@ -1,0 +1,29 @@
+{
+  int[] toReturn={-1,-1};
+  InputStream in=this.getClass().getClassLoader().getResourceAsStream("dropwizard.yml");
+  if (in == null)   return toReturn;
+  String s;
+  try {
+    s=IOUtils.toString(in);
+  }
+ catch (  IOException e) {
+    return toReturn;
+  }
+  String[] split=s.split("\n");
+  int count=0;
+  for (  String str : split) {
+    if (!str.contains("port"))     continue;
+    System.out.println(str);
+    String[] line=str.split("\\s+");
+    for (    String token : line) {
+      try {
+        toReturn[count]=Integer.parseInt(token);
+        count++;
+      }
+ catch (      NumberFormatException e) {
+      }
+    }
+    if (count == 2)     return toReturn;
+  }
+  return toReturn;
+}
