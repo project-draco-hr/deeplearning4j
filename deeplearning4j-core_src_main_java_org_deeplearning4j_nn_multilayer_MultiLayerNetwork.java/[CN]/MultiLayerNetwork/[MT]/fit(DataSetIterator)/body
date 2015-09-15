@@ -15,12 +15,17 @@
     while (iter.hasNext()) {
       DataSet next=iter.next();
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
-      setInput(next.getFeatureMatrix());
-      setLabels(next.getLabels());
-      if (solver == null) {
-        solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+      if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
+        doTruncatedBPTT(next.getFeatureMatrix(),next.getLabels());
       }
-      solver.optimize();
+ else {
+        setInput(next.getFeatureMatrix());
+        setLabels(next.getLabels());
+        if (solver == null) {
+          solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+        }
+        solver.optimize();
+      }
     }
   }
 }

@@ -3,7 +3,7 @@
   gradient=new DefaultGradient();
   Layer currLayer;
   if (!(getOutputLayer() instanceof BaseOutputLayer)) {
-    log.warn("Warning: final layer isn't output layer. You cannot use backprop without an output layer.");
+    log.warn("Warning: final layer isn't output layer. You cannot use backprop (truncated BPTT) without an output layer.");
     return;
   }
   BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)getOutputLayer();
@@ -22,7 +22,12 @@
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond(),layers[numLayers - 1]));
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
-    currPair=currLayer.backpropGradient(currPair.getSecond());
+    if (currLayer instanceof BaseRecurrentLayer) {
+      currPair=((BaseRecurrentLayer<?>)currLayer).tbpttBackpropGradient(currPair.getSecond(),layerWiseConfigurations.getTbpttBackLength());
+    }
+ else {
+      currPair=currLayer.backpropGradient(currPair.getSecond());
+    }
     LinkedList<Pair<String,INDArray>> tempList=new LinkedList<>();
     for (    Map.Entry<String,INDArray> entry : currPair.getFirst().gradientForVariable().entrySet()) {
       multiGradientKey=String.valueOf(j) + "_" + entry.getKey();

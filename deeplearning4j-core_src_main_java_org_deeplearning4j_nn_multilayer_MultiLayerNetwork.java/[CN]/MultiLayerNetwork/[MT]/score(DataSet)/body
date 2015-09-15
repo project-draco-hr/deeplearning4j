@@ -2,7 +2,7 @@
   feedForward(data.getFeatureMatrix());
   setLabels(data.getLabels());
   if (getOutputLayer() instanceof BaseOutputLayer) {
-    BaseOutputLayer ol=(BaseOutputLayer)getOutputLayer();
+    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)getOutputLayer();
     ol.setLabels(data.getLabels());
     ol.computeScore(calcL1(),calcL2());
     this.score=ol.score();
