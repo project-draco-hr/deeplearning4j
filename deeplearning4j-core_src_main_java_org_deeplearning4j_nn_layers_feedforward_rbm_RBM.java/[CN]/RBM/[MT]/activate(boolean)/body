@@ -1,4 +1,9 @@
 {
-  INDArray propUp=propUp(input);
+  if (training && conf.getLayer().getDropOut() > 0.0) {
+    input=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
+  }
+  INDArray propUp=propUp(input,training);
+  if (training) {
+  }
   return propUp;
 }

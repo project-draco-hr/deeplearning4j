@@ -1,25 +1,3 @@
 {
-  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
-  if (conf.isUseDropConnect()) {
-    if (conf.getLayer().getDropOut() > 0) {
-      W=W.mul(Nd4j.getDistributions().createBinomial(1,conf.getLayer().getDropOut()).sample(W.shape()).divi(conf.getLayer().getDropOut()));
-    }
-  }
-  INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
-  if (layerConf().getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
-  INDArray preSig=v.mmul(W).addiRowVector(hBias);
-switch (layerConf().getHiddenUnit()) {
-case RECTIFIED:
-    preSig=max(preSig,0.0);
-  return preSig;
-case GAUSSIAN:
-preSig.addi(Nd4j.randn(preSig.rows(),preSig.columns(),rng));
-return preSig;
-case BINARY:
-return sigmoid(preSig);
-case SOFTMAX:
-return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
-default :
-throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
-}
+  return propUp(v,true);
 }
