@@ -17,10 +17,12 @@
   INDArray g=pack(grad);
   INDArray con=pack(preCon);
   INDArray theta=params();
-  if (mask == null)   initMask();
-  g.addi(theta.mul(defaultConfiguration.getL2()).muli(mask));
-  INDArray conAdd=Transforms.pow(mask.mul(defaultConfiguration.getL2()).add(Nd4j.valueArrayOf(g.slices(),g.columns(),layerWiseConfigurations.getDampingFactor())),3.0 / 4.0);
-  con.addi(conAdd);
+  if (getOutputLayer().conf().isUseDropConnect() || getOutputLayer().conf().getLayer().getDropOut() > 0.0) {
+    if (mask == null)     initMask();
+    g.addi(theta.mul(defaultConfiguration.getL2()).muli(mask));
+    INDArray conAdd=Transforms.pow(mask.mul(defaultConfiguration.getL2()).add(Nd4j.valueArrayOf(g.slices(),g.columns(),layerWiseConfigurations.getDampingFactor())),3.0 / 4.0);
+    con.addi(conAdd);
+  }
   List<Pair<INDArray,INDArray>> gUnpacked=unPack(g);
   List<Pair<INDArray,INDArray>> conUnpacked=unPack(con);
   for (int i=0; i < gUnpacked.size(); i++)   list.add(new Pair<>(gUnpacked.get(i),conUnpacked.get(i)));
