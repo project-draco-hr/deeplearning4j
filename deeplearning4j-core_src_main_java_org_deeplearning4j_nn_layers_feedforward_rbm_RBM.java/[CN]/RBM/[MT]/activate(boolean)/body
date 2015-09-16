@@ -3,7 +3,5 @@
     input=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
   }
   INDArray propUp=propUp(input,training);
-  if (training) {
-  }
   return propUp;
 }
