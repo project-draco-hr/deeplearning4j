@@ -97,7 +97,7 @@
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",outputGateActivations));
     if (forBackprop)     toReturn.oa[t]=outputGateActivations;
     INDArray currMemoryCellActivation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currentMemoryCellState.dup('f')));
-    INDArray currHiddenUnitActivations=currMemoryCellActivation.mul(outputGateActivations);
+    INDArray currHiddenUnitActivations=currMemoryCellActivation.dup('f').muli(outputGateActivations);
     if (forBackprop) {
       toReturn.fwdPassOutputAsArrays[t]=currHiddenUnitActivations;
       toReturn.memCellState[t]=currentMemoryCellState;
