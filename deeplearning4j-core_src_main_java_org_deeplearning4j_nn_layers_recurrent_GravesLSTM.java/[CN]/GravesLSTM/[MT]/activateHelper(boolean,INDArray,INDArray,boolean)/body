@@ -60,6 +60,7 @@
     outputActivations=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
     toReturn.fwdPassOutput=outputActivations;
   }
+  Level1 l1BLAS=Nd4j.getBlasWrapper().level1();
   if (prevOutputActivations == null)   prevOutputActivations=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize});
   if (prevMemCellState == null)   prevMemCellState=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize});
   for (int t=0; t < timeSeriesLength; t++) {
@@ -74,22 +75,24 @@
     INDArray forgetGateActivations=miniBatchData.mmul(wf);
     Nd4j.gemm(prevOutputActivations,wF,forgetGateActivations,false,false,1.0,1.0);
     INDArray pmcellWFF=prevMemCellState.dup('f').muliRowVector(wFFTranspose);
-    Nd4j.getBlasWrapper().level1().axpy(pmcellWFF.length(),1.0,pmcellWFF,forgetGateActivations);
+    l1BLAS.axpy(pmcellWFF.length(),1.0,pmcellWFF,forgetGateActivations);
     forgetGateActivations.addiRowVector(bf);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",forgetGateActivations));
     if (forBackprop)     toReturn.fa[t]=forgetGateActivations;
     INDArray inputModGateActivations=miniBatchData.mmul(wg);
     Nd4j.gemm(prevOutputActivations,wG,inputModGateActivations,false,false,1.0,1.0);
     INDArray pmcellWGG=prevMemCellState.dup('f').muliRowVector(wGGTranspose);
-    Nd4j.getBlasWrapper().level1().axpy(pmcellWGG.length(),1.0,pmcellWGG,inputModGateActivations);
+    l1BLAS.axpy(pmcellWGG.length(),1.0,pmcellWGG,inputModGateActivations);
     inputModGateActivations.addiRowVector(bg);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",inputModGateActivations));
     if (forBackprop)     toReturn.ga[t]=inputModGateActivations;
-    INDArray currentMemoryCellState=forgetGateActivations.mul(prevMemCellState).addi(inputModGateActivations.mul(inputActivations));
+    INDArray currentMemoryCellState=forgetGateActivations.dup('f').muli(prevMemCellState);
+    INDArray inputModMulInput=inputModGateActivations.dup('f').muli(inputActivations);
+    l1BLAS.axpy(currentMemoryCellState.length(),1.0,inputModMulInput,currentMemoryCellState);
     INDArray outputGateActivations=miniBatchData.mmul(wo);
     Nd4j.gemm(prevOutputActivations,wO,outputGateActivations,false,false,1.0,1.0);
-    INDArray pmcellWOO=prevMemCellState.dup('f').muliRowVector(wOOTranspose);
-    Nd4j.getBlasWrapper().level1().axpy(pmcellWOO.length(),1.0,pmcellWOO,outputGateActivations);
+    INDArray pmcellWOO=currentMemoryCellState.dup('f').muliRowVector(wOOTranspose);
+    l1BLAS.axpy(pmcellWOO.length(),1.0,pmcellWOO,outputGateActivations);
     outputGateActivations.addiRowVector(bo);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",outputGateActivations));
     if (forBackprop)     toReturn.oa[t]=outputGateActivations;
