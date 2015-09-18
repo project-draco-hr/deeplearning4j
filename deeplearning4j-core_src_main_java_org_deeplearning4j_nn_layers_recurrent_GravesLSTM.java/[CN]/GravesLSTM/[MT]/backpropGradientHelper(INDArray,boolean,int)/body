@@ -31,7 +31,7 @@
   INDArray[] iwGradients=new INDArray[4];
   INDArray[] rwGradients=new INDArray[7];
   for (int i=0; i < 4; i++) {
-    bGradients[i]=Nd4j.zeros(1,hiddenLayerSize);
+    bGradients[i]=Nd4j.create(new int[]{1,hiddenLayerSize});
     iwGradients[i]=Nd4j.create(new int[]{prevLayerSize,hiddenLayerSize},'f');
     rwGradients[i]=Nd4j.create(new int[]{hiddenLayerSize,hiddenLayerSize},'f');
   }
@@ -76,11 +76,11 @@
     INDArray af=fwdPass.fa[t];
     INDArray deltaf=null;
     if (t > 0) {
-      deltaf=nablaCellState.mul(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",af.dup())));
+      deltaf=nablaCellState.dup('f').muli(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",af.dup('f'))));
     }
     INDArray ag=fwdPass.ga[t];
     INDArray ai=fwdPass.ia[t];
-    INDArray deltag=ai.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ag.dup())));
+    INDArray deltag=ai.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ag.dup('f'))));
     INDArray zi=fwdPass.iz[t];
     INDArray deltai=ag.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zi).derivative()));
     INDArray prevLayerActivationSlice=Shape.toMmulCompatible(is2dInput ? input : input.tensorAlongDimension(t,1,0));
@@ -93,17 +93,17 @@
       Nd4j.gemm(prevHiddenUnitActivation,deltaf,rwGradients[1],true,false,1.0,1.0);
       Nd4j.gemm(prevHiddenUnitActivation,deltao,rwGradients[2],true,false,1.0,1.0);
       Nd4j.gemm(prevHiddenUnitActivation,deltag,rwGradients[3],true,false,1.0,1.0);
-      INDArray dLdwFF=deltaf.mul(prevMemCellState).sum(0);
-      rwGradients[4].addi(dLdwFF);
-      INDArray dLdwGG=deltag.mul(prevMemCellState).sum(0);
-      rwGradients[6].addi(dLdwGG);
+      INDArray dLdwFF=deltaf.dup('f').muli(prevMemCellState).sum(0);
+      l1BLAS.axpy(rwGradients[4].length(),1.0,dLdwFF,rwGradients[4]);
+      INDArray dLdwGG=deltag.dup('f').muli(prevMemCellState).sum(0);
+      l1BLAS.axpy(rwGradients[6].length(),1.0,dLdwGG,rwGradients[6]);
     }
-    INDArray dLdwOO=deltao.mul(currMemCellState).sum(0);
-    rwGradients[5].addi(dLdwOO);
-    bGradients[0].addi(deltai.sum(0));
-    if (t > 0)     bGradients[1].addi(deltaf.sum(0));
-    bGradients[2].addi(deltao.sum(0));
-    bGradients[3].addi(deltag.sum(0));
+    INDArray dLdwOO=deltao.dup('f').muli(currMemCellState).sum(0);
+    l1BLAS.axpy(rwGradients[5].length(),1.0,dLdwOO,rwGradients[5]);
+    l1BLAS.axpy(bGradients[0].length(),1.0,deltai.sum(0),bGradients[0]);
+    if (t > 0)     l1BLAS.axpy(bGradients[1].length(),1.0,deltaf.sum(0),bGradients[1]);
+    l1BLAS.axpy(bGradients[2].length(),1.0,deltao.sum(0),bGradients[2]);
+    l1BLAS.axpy(bGradients[3].length(),1.0,deltag.sum(0),bGradients[3]);
     INDArray epsilonNextSlice=deltai.mmul(wiTranspose);
     Nd4j.gemm(deltao,wo,epsilonNextSlice,false,true,1.0,1.0);
     Nd4j.gemm(deltag,wg,epsilonNextSlice,false,true,1.0,1.0);
