@@ -16,7 +16,10 @@
       if (i == 0)       convolutionLayer.setNIn(channels);
       Layer next=getLayer(i + 1,conf);
       if (next instanceof DenseLayer || next instanceof OutputLayer) {
-        if (i > 0)         conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(convolutionLayer.getKernelSize()[0],convolutionLayer.getKernelSize()[1],convolutionLayer.getNOut()));
+        if (i > 0) {
+          int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
+          conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(outWidthAndHeight[0],outWidthAndHeight[1],convolutionLayer.getNOut()));
+        }
  else         conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(height,width,convolutionLayer.getNOut()));
         FeedForwardLayer o=(FeedForwardLayer)next;
         int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
