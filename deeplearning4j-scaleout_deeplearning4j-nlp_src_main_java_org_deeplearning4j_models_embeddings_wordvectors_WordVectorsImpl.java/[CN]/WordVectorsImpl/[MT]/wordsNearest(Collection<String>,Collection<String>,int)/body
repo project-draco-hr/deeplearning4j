@@ -17,7 +17,8 @@
   if (lookupTable() instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable();
     INDArray syn0=l.getSyn0();
-    syn0.diviRowVector(syn0.norm2(1));
+    INDArray syn0Norm=syn0.norm2(0);
+    syn0.diviRowVector(syn0Norm);
     INDArray weights=Transforms.unitVec(mean);
     INDArray similarity=weights.mmul(syn0.transpose());
     List<Double> highToLowSimList=getTopN(similarity,top);
