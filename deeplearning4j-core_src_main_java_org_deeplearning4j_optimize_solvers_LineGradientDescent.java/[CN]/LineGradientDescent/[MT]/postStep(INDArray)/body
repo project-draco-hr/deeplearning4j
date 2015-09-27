@@ -1,5 +1,5 @@
 {
-  double norm2=gradient.norm2(Integer.MAX_VALUE).getDouble(0);
+  double norm2=Nd4j.getBlasWrapper().level1().nrm2(gradient);
   if (norm2 > stepMax)   searchState.put(SEARCH_DIR,gradient.dup().muli(stepMax / norm2));
  else   searchState.put(SEARCH_DIR,gradient.dup());
   searchState.put(GRADIENT_KEY,gradient.dup());
