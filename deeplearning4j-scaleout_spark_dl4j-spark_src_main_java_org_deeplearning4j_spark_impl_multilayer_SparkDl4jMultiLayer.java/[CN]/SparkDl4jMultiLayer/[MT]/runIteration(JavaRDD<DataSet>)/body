@@ -13,6 +13,8 @@
     GradientAdder a=new GradientAdder(params.length());
     results.foreach(a);
     INDArray accumulatedGradient=a.getAccumulator().value();
+    boolean divideGrad=sc.getConf().getBoolean(DIVIDE_ACCUM_GRADIENT,false);
+    if (divideGrad)     accumulatedGradient.divi(results.partitions().size());
     log.info("Accumulated parameters");
     log.info("Summed gradients.");
     network.setParameters(network.params().addi(accumulatedGradient));
