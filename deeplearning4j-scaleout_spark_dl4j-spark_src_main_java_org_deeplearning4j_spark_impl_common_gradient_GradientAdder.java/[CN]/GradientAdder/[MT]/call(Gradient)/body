@@ -1,0 +1,5 @@
+{
+  log.info("Invoking add operation ");
+  if (indArrayIterator != null && indArrayIterator.gradient() != null)   accumulator.add(indArrayIterator.gradient());
+  log.info("Invoked add operation ");
+}

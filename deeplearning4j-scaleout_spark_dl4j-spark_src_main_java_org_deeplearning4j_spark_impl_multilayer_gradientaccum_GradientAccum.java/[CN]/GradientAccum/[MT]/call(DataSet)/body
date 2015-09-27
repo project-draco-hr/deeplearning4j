@@ -1,0 +1,9 @@
+{
+  log.info("Training on " + dataSet.numExamples());
+  MultiLayerConfiguration conf=MultiLayerConfiguration.fromJson(json);
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  network.setParameters(params.value());
+  network.fit(dataSet);
+  return network.gradient();
+}
