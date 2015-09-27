@@ -1,4 +1,4 @@
 {
   INDArray gradient=(INDArray)otherParams[0];
-  return Transforms.abs(gradient).sum(Integer.MAX_VALUE).getDouble(0) == 0;
+  return Nd4j.getBlasWrapper().level1().asum(gradient) == 0.0;
 }
