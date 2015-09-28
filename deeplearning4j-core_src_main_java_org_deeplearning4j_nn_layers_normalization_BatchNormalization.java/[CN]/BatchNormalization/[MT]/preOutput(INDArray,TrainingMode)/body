@@ -1,3 +1,33 @@
 {
-  return null;
+  int[] activationShape=getShape(x);
+  org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=(org.deeplearning4j.nn.conf.layers.BatchNormalization)conf().getLayer();
+  INDArray mean, var;
+  if (training != TrainingMode.TEST && !layerConf.isUseBatchMean()) {
+    mean=x.mean(0,2);
+    var=x.var(0,2);
+    var.addi(layerConf.getEps());
+  }
+ else {
+    mean=getParam(BatchNormalizationParamInitializer.AVG_MEAN);
+    var=getParam(BatchNormalizationParamInitializer.AVG_VAR);
+  }
+  std=Transforms.sqrt(var);
+  INDArray xMu=x.sub(mean);
+  INDArray xHat=xMu.div(std);
+  INDArray out=getParam(BatchNormalizationParamInitializer.GAMMA).add(xHat).addi(getParam(BatchNormalizationParamInitializer.BETA));
+  double decay=0.0;
+  if (training != TrainingMode.TEST && !layerConf.isUseBatchMean()) {
+    if (layerConf.isFinetune()) {
+      layerConf.setN(layerConf.getN() + 1);
+      decay=1. / layerConf.getN();
+    }
+ else     decay=layerConf.getDecay();
+    int m=activationShape[0] * activationShape[2];
+    double adjust=m / Math.max(m - 1.,1.);
+    getParam(BatchNormalizationParamInitializer.AVG_MEAN).muli(decay);
+    getParam(BatchNormalizationParamInitializer.AVG_MEAN).addi(mean.mul((1 - decay)));
+    getParam(BatchNormalizationParamInitializer.AVG_VAR).muli(decay);
+    getParam(BatchNormalizationParamInitializer.AVG_VAR).addi(var.mul((1 - decay) * adjust));
+  }
+  return out.reshape(x.shape());
 }

@@ -22,7 +22,7 @@
     session.disconnect();
   }
  catch (  Exception e) {
-    log.info("Session was down...trying again");
+    log.info("Session was down...trying again",e);
     upload(f,remoteFile);
   }
 }
