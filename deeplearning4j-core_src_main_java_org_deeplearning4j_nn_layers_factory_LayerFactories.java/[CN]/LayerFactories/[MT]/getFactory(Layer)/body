@@ -7,5 +7,6 @@
  else   if (BasePretrainNetwork.class.isAssignableFrom(clazz))   return new PretrainLayerFactory(clazz);
  else   if (ConvolutionLayer.class.isAssignableFrom(clazz))   return new ConvolutionLayerFactory(clazz);
  else   if (SubsamplingLayer.class.isAssignableFrom(clazz))   return new SubsampleLayerFactory(clazz);
+ else   if (BatchNormalization.class.isAssignableFrom(clazz))   return new BatchNormalizationLayerFactory(clazz);
   return new DefaultLayerFactory(clazz);
 }
