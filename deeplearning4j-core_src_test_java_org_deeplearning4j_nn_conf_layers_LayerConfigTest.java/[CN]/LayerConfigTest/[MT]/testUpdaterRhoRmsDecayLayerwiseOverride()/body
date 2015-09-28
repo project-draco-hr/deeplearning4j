@@ -1,0 +1,17 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().updater(Updater.ADADELTA).rho(0.5).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).rho(0.01).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getUpdater().toString(),"ADADELTA");
+  assertEquals(conf.getConf(1).getLayer().getUpdater().toString(),"ADADELTA");
+  assertEquals(conf.getConf(0).getLayer().getRho(),0.5,0.0);
+  assertEquals(conf.getConf(1).getLayer().getRho(),0.01,0.0);
+  conf=new NeuralNetConfiguration.Builder().updater(Updater.RMSPROP).rmsDecay(2.0).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).rmsDecay(1.0).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).updater(Updater.ADADELTA).rho(0.5).build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getUpdater().toString(),"RMSPROP");
+  assertEquals(conf.getConf(1).getLayer().getUpdater().toString(),"ADADELTA");
+  assertEquals(conf.getConf(0).getLayer().getRmsDecay(),2.0,0.0);
+  assertEquals(conf.getConf(1).getLayer().getRho(),0.5,0.0);
+  assertEquals(conf.getConf(0).getLayer().getRmsDecay(),1.0,0.0);
+}
