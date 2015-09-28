@@ -9,10 +9,10 @@
   channel.connect();
   channel.start();
   InputStream input=channel.getInputStream();
-  byte[] tmp=new byte[1024];
+  byte[] tmp=new byte[60000];
   while (true) {
     while (input.available() > 0) {
-      int i=input.read(tmp,0,1024);
+      int i=input.read(tmp,0,tmp.length);
       if (i < 0)       break;
       log.info(new String(tmp,0,i));
     }
@@ -20,7 +20,6 @@
       log.info("exit-status: " + channel.getExitStatus());
       break;
     }
-    Thread.sleep(1000);
   }
   channel.disconnect();
   session.disconnect();

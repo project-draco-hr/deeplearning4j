@@ -1,0 +1,7 @@
+{
+  int leadDim=x.size(0);
+  int cDim=getParam(BatchNormalizationParamInitializer.GAMMA).length();
+  int rdim=x.length() / (leadDim * cDim);
+  if (leadDim * cDim * rdim != x.length())   throw new IllegalArgumentException("Illegal input for batch size");
+  return new int[]{leadDim,cDim,rdim};
+}
