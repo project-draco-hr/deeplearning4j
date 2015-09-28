@@ -1,6 +1,7 @@
 {
   int[] activationShape=getShape(x);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=(org.deeplearning4j.nn.conf.layers.BatchNormalization)conf().getLayer();
+  this.shape=activationShape;
   INDArray mean, var;
   if (training != TrainingMode.TEST && !layerConf.isUseBatchMean()) {
     mean=x.mean(0,2);
@@ -13,7 +14,7 @@
   }
   std=Transforms.sqrt(var);
   INDArray xMu=x.sub(mean);
-  INDArray xHat=xMu.div(std);
+  xHat=xMu.div(std);
   INDArray out=getParam(BatchNormalizationParamInitializer.GAMMA).add(xHat).addi(getParam(BatchNormalizationParamInitializer.BETA));
   double decay=0.0;
   if (training != TrainingMode.TEST && !layerConf.isUseBatchMean()) {

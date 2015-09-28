@@ -1,3 +1,18 @@
 {
-  return null;
+  epsilon=epsilon.reshape(shape);
+  int m=shape[0] * shape[2];
+  INDArray gBeta=epsilon.sum(0,2);
+  getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).addi(gBeta);
+  INDArray newGamma=epsilon.mul(xHat).sum(0,2);
+  getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).addi(newGamma);
+  INDArray coefficients=getParam(BatchNormalizationParamInitializer.GAMMA).div(std);
+  gBeta.divi(m);
+  getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).divi(m);
+  INDArray ret=coefficients.mul(epsilon.sub(xHat).muli(getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT)).subi(gBeta));
+  ret=ret.reshape(shape);
+  Gradient g=new DefaultGradient();
+  g.setGradientFor(BatchNormalizationParamInitializer.GAMMA_GRADIENT,getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT));
+  g.setGradientFor(BatchNormalizationParamInitializer.BETA_GRADIENT,getParam(BatchNormalizationParamInitializer.BETA_GRADIENT));
+  this.gradient=g;
+  return new Pair<>(g,ret);
 }
