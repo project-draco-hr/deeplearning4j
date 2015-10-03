@@ -1,5 +1,5 @@
 {
-  Word2Vec vec=WordVectorSerializer.loadGoogleModel(textFile,false);
+  WordVectors vec=WordVectorSerializer.loadGoogleModel(textFile,false);
   InMemoryLookupTable lookupTable=(InMemoryLookupTable)vec.lookupTable();
   InMemoryLookupCache lookupCache=(InMemoryLookupCache)vec.vocab();
   WordVectors wordVectors=WordVectorSerializer.fromTableAndVocab(lookupTable,lookupCache);
