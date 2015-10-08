@@ -1,10 +1,20 @@
 {
   StringBuilder builder=new StringBuilder().append("\n");
   List<Integer> classes=confusion.getClasses();
-  for (  Integer clazz : classes) {
-    for (    Integer clazz2 : classes) {
-      int count=confusion.getCount(clazz,clazz2);
-      if (count != 0)       builder.append("\nActual Class " + clazz + " was predicted with Predicted "+ clazz2+ " with count "+ count+ " times\n");
+  if (labelsMap.isEmpty()) {
+    for (    Integer clazz : classes) {
+      for (      Integer clazz2 : classes) {
+        int count=confusion.getCount(clazz,clazz2);
+        if (count != 0)         builder.append("\n Examples labeled as " + clazz + " classified by model as "+ clazz2+ ": "+ count+ " times\n");
+      }
+    }
+  }
+ else {
+    for (    Integer clazz : classes) {
+      for (      Integer clazz2 : classes) {
+        int count=confusion.getCount(clazz,clazz2);
+        if (count != 0)         builder.append("\n Examples labeled as " + labelsMap.get(clazz) + " classified by model as "+ labelsMap.get(clazz2)+ ": "+ count+ " times\n");
+      }
     }
   }
   DecimalFormat df=new DecimalFormat("#.####");

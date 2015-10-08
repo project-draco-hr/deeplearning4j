@@ -6,18 +6,18 @@
     labelIndex=record.size() - 1;
   }
   INDArray label=null;
-  INDArray featureVector=Nd4j.create(labelIndex > 0 ? currList.size() - 1 : currList.size());
+  INDArray featureVector=Nd4j.create(labelIndex >= 0 ? currList.size() - 1 : currList.size());
   for (int j=0; j < currList.size(); j++) {
+    Writable current=currList.get(j);
+    if (current.toString().isEmpty())     continue;
     if (labelIndex >= 0 && j == labelIndex) {
-      if (numPossibleLabels < 1)       throw new IllegalStateException("Number of possible labels invalid, must be >= 1");
-      Writable current=currList.get(j);
-      if (current.toString().isEmpty())       continue;
       if (converter != null)       try {
         current=converter.convert(current);
       }
  catch (      WritableConverterException e) {
         e.printStackTrace();
       }
+      if (numPossibleLabels < 1)       throw new IllegalStateException("Number of possible labels invalid, must be >= 1");
       if (regression) {
         label=Nd4j.scalar(Double.valueOf(current.toString()));
       }
@@ -28,8 +28,6 @@
       }
     }
  else {
-      Writable current=currList.get(j);
-      if (current.toString().isEmpty())       continue;
       featureVector.putScalar(j,Double.valueOf(current.toString()));
     }
   }
