@@ -1,5 +1,5 @@
 {
-  MultiLayerNetwork network=new MultiLayerNetwork(getNetworkConf(40));
+  MultiLayerNetwork network=new MultiLayerNetwork(getNetworkConf(40,false));
   network.init();
   network.setListeners(new ScoreIterationListener(1));
   network.fit(reshapeInput(data),data);

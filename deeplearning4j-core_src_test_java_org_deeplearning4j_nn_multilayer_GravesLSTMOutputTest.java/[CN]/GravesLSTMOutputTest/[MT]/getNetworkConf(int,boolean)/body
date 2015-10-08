@@ -1,0 +1,9 @@
+{
+  MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(0.1).regularization(true).l2(0.0025).iterations(iterations).stepFunction(new NegativeDefaultStepFunction()).list(2).layer(0,new GravesLSTM.Builder().weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0.0,0.01)).nIn(nIn).nOut(layerSize).updater(Updater.ADAGRAD).activation("tanh").build()).layer(1,new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD).updater(Updater.ADAGRAD).nIn(layerSize).nOut(nIn).activation("softmax").build()).inputPreProcessor(1,new RnnToFeedForwardPreProcessor()).backprop(true).pretrain(false);
+  if (useTBPTT) {
+    builder.backpropType(BackpropType.TruncatedBPTT);
+    builder.tBPTTBackwardLength(window / 3);
+    builder.tBPTTForwardLength(window / 3);
+  }
+  return builder.build();
+}
