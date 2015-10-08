@@ -1,3 +1,7 @@
 {
-  this.stringLabels=labels;
+  int i=0;
+  for (  String label : labels) {
+    this.labelsMap.put(i,label);
+    i++;
+  }
 }
