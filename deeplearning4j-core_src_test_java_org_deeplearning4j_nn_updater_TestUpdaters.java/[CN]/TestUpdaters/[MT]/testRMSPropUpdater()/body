@@ -1,0 +1,20 @@
+{
+  double lr=0.01;
+  double rmsDecay=0.25;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).rmsDecay(rmsDecay).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.RMSPROP).build()).build();
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  Updater updater=UpdaterCreator.getUpdater(layer);
+  updater.update(layer,gradient,-1);
+  INDArray lastGW, lastGB;
+  lastGW=Nd4j.zeros(weightGradient.shape());
+  lastGB=Nd4j.zeros(biasGradient.shape());
+  lastGW.muli(rmsDecay).addi(weightGradient.mul(weightGradient).muli(1 - rmsDecay));
+  INDArray weightGradExpected=weightGradient.mul(lr).div(Transforms.sqrt(lastGW.add(Nd4j.EPS_THRESHOLD)));
+  lastGB.muli(rmsDecay).addi(biasGradient.mul(biasGradient).muli(1 - rmsDecay));
+  INDArray biasGradExpected=biasGradient.mul(lr).div(Transforms.sqrt(lastGB.add(Nd4j.EPS_THRESHOLD)));
+  INDArray weightGradActual=gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray biasGradActual=gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
+  assertEquals(weightGradExpected,weightGradActual);
+  assertEquals(biasGradExpected,biasGradActual);
+  assertEquals(rmsDecay,layer.conf().getRmsDecay(),1e-4);
+}

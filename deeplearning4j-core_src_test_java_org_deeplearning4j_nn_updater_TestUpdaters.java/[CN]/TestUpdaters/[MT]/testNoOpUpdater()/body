@@ -1,21 +1,14 @@
 {
   Random r=new Random(12345L);
-  int nIn=3;
-  int nOut=5;
-  double lr=0.1;
+  double lr=0.5;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).build();
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
   Updater updater=UpdaterCreator.getUpdater(layer);
-  INDArray weightGradient=Nd4j.zeros(nIn,nOut);
-  INDArray biasGradient=Nd4j.zeros(1,nOut);
   for (int i=0; i < weightGradient.length(); i++)   weightGradient.putScalar(i,r.nextDouble());
   for (int i=0; i < biasGradient.length(); i++)   biasGradient.putScalar(i,r.nextDouble());
-  Gradient gradient=new DefaultGradient();
-  gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
-  gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
   updater.update(layer,gradient,-1);
   INDArray weightGradActual=gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
   INDArray biasGradActual=gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  assertTrue(weightGradient.equals(weightGradActual));
-  assertTrue(biasGradient.equals(biasGradActual));
+  assertEquals(weightGradient,weightGradActual);
+  assertEquals(biasGradient,biasGradActual);
 }
