@@ -13,8 +13,7 @@
   p.muli(4);
   if (useAdaGrad) {
     if (adaGrad == null) {
-      adaGrad=new AdaGrad(y.shape());
-      adaGrad.setMasterStepSize(learningRate);
+      adaGrad=new AdaGrad(learningRate);
     }
   }
   for (int i=0; i < maxIter; i++) {

@@ -21,5 +21,7 @@
   conf.useDropConnect=useDropConnect;
   conf.miniBatch=miniBatch;
   conf.rho=rho;
+  conf.meanDecay=meanDecay;
+  conf.varDecay=varDecay;
   return conf;
 }
