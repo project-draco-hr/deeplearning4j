@@ -1,0 +1,15 @@
+{
+  runnable.killRunnable=true;
+  if (runnable.isAlive)   thread.interrupt();
+  try {
+    runnable.runCompletedSemaphore.tryAcquire(5,TimeUnit.SECONDS);
+  }
+ catch (  InterruptedException e) {
+  }
+  blockingQueue.clear();
+  baseIterator.reset();
+  runnable=new IteratorRunnable();
+  thread=new Thread(runnable);
+  thread.setDaemon(true);
+  thread.start();
+}
