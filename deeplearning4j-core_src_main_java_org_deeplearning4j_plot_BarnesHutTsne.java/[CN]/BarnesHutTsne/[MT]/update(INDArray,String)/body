@@ -4,7 +4,7 @@
   BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
   INDArray gradChange=gains.mul(yGrads);
   if (useAdaGrad) {
-    if (adaGrad == null)     adaGrad=new AdaGrad(gradChange.shape());
+    if (adaGrad == null)     adaGrad=new AdaGrad();
     gradChange=adaGrad.getGradient(gradChange,0);
   }
  else   gradChange.muli(learningRate);

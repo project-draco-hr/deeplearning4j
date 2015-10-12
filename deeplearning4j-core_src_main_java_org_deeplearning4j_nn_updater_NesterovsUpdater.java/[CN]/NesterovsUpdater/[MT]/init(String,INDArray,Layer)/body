@@ -1,7 +1,7 @@
 {
   Nesterovs nesterovs=(Nesterovs)updaterForVariable.get(variable);
   if (nesterovs == null) {
-    nesterovs=new Nesterovs(layer.conf().getMomentum());
+    nesterovs=new Nesterovs(layer.conf().getMomentum(),layer.conf().getMomentumAfter(),layer.conf().getLr());
     updaterForVariable.put(variable,nesterovs);
   }
   return nesterovs;
