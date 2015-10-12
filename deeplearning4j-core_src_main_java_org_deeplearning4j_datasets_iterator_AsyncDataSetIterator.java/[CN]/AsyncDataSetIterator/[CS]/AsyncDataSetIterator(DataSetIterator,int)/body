@@ -1,0 +1,9 @@
+{
+  if (queueSize <= 0)   throw new IllegalArgumentException("Queue size must be > 0");
+  this.baseIterator=baseIterator;
+  blockingQueue=new LinkedBlockingDeque<>(queueSize);
+  runnable=new IteratorRunnable();
+  thread=new Thread(runnable);
+  thread.setDaemon(true);
+  thread.start();
+}

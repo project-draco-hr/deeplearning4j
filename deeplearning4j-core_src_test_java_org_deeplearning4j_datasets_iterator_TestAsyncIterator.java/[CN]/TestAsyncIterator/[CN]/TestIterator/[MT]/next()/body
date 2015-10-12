@@ -1,0 +1,14 @@
+{
+  if (delayMSOnNext > 0) {
+    try {
+      Thread.sleep(delayMSOnNext);
+    }
+ catch (    InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  INDArray features=Nd4j.scalar(cursor);
+  INDArray labels=Nd4j.scalar(cursor);
+  cursor++;
+  return new DataSet(features,labels);
+}
