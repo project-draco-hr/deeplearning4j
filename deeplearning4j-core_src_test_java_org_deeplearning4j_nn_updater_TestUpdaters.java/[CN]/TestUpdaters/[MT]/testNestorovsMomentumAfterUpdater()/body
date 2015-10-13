@@ -15,10 +15,11 @@
   for (int i=0; i < 2; i++) {
     updater.update(layer,gradient,i);
     for (    Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
+      if (momentumAfter != null)       mu=(momentumAfter.containsKey(i)) ? momentumAfter.get(i) : mu;
       key=entry.getKey();
       val=entry.getValue();
       INDArray vTmp=v.get(key);
-      if (v == null)       vTmp=Nd4j.zeros(val.shape());
+      if (vTmp == null)       vTmp=Nd4j.zeros(val.shape());
       vPrev=vTmp;
       vTmp=vPrev.mul(mu).subi(val.mul(lr));
       gradExpected=vPrev.muli(mu).addi(vTmp.mul(-mu - 1));
