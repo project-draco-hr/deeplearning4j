@@ -36,12 +36,7 @@
     postStep(pair.getFirst().gradient());
     score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
-    for (    TerminationCondition condition : terminationConditions) {
-      if (condition.terminate(score,oldScore,new Object[]{pair.getFirst().gradient()})) {
-        log.debug("Hit termination condition on iteration {}: score={}, oldScore={}, condition={}",i,score,oldScore,condition);
-        return true;
-      }
-    }
+    checkTerminalConditions(pair.getFirst().gradient(),oldScore,score,i);
     this.iteration++;
   }
   return true;

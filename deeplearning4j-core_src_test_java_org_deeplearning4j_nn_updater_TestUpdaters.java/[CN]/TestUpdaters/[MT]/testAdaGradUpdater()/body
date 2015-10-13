@@ -4,11 +4,13 @@
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
   Updater updater=UpdaterCreator.getUpdater(layer);
   updater.update(layer,gradient,-1);
-  INDArray weightGradExpected=Transforms.sqrt(weightGradient.mul(weightGradient).add(1e-8)).rdiv(lr).mul(weightGradient);
-  INDArray biasGradExpected=Transforms.sqrt(biasGradient.mul(biasGradient).add(1e-8)).rdiv(lr).mul(biasGradient);
-  INDArray weightGradActual=gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray biasGradActual=gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  assertEquals(weightGradExpected,weightGradActual);
-  assertEquals(biasGradExpected,biasGradActual);
+  Gradient gradientDup=new DefaultGradient();
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
+    val=entry.getValue();
+    gradExpected=Transforms.sqrt(val.mul(val).add(epsilon)).rdiv(lr).mul(val);
+    assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
+  }
   assertEquals(lr,layer.conf().getLr(),1e-4);
 }

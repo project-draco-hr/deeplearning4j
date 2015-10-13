@@ -5,16 +5,15 @@
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
   Updater updater=UpdaterCreator.getUpdater(layer);
   updater.update(layer,gradient,-1);
-  INDArray lastGW, lastGB;
-  lastGW=Nd4j.zeros(weightGradient.shape());
-  lastGB=Nd4j.zeros(biasGradient.shape());
-  lastGW.muli(rmsDecay).addi(weightGradient.mul(weightGradient).muli(1 - rmsDecay));
-  INDArray weightGradExpected=weightGradient.mul(lr).div(Transforms.sqrt(lastGW.add(Nd4j.EPS_THRESHOLD)));
-  lastGB.muli(rmsDecay).addi(biasGradient.mul(biasGradient).muli(1 - rmsDecay));
-  INDArray biasGradExpected=biasGradient.mul(lr).div(Transforms.sqrt(lastGB.add(Nd4j.EPS_THRESHOLD)));
-  INDArray weightGradActual=gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY);
-  INDArray biasGradActual=gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY);
-  assertEquals(weightGradExpected,weightGradActual);
-  assertEquals(biasGradExpected,biasGradActual);
+  Gradient gradientDup=new DefaultGradient();
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
+    val=entry.getValue();
+    INDArray lastG=Nd4j.zeros(val.shape());
+    lastG.muli(rmsDecay).addi(weightGradient.mul(weightGradient).muli(1 - rmsDecay));
+    gradExpected=val.mul(lr).div(Transforms.sqrt(lastG.add(Nd4j.EPS_THRESHOLD)));
+    assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
+  }
   assertEquals(rmsDecay,layer.conf().getRmsDecay(),1e-4);
 }
