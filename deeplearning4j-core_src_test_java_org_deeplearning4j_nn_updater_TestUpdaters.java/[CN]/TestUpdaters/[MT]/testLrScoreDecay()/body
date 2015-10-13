@@ -1,0 +1,14 @@
+{
+  double lr=0.1;
+  double lrScoreDecay=10;
+  int nLayers=2;
+  int iterations=1;
+  int[] nIns={2,3};
+  int[] nOuts={3,4};
+  INDArray input=Nd4j.ones(nIns[0],nOuts[0]);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateScoreDecay(lrScoreDecay).iterations(iterations).list(nLayers).layer(0,new DenseLayer.Builder().nIn(nIns[0]).nOut(nOuts[0]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new OutputLayer.Builder().nIn(nIns[1]).nOut(nOuts[1]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  net.setInput(input);
+  assertEquals(lrScoreDecay,net.getLayer(0).conf().getLrScoreDecay(),1e-4);
+}

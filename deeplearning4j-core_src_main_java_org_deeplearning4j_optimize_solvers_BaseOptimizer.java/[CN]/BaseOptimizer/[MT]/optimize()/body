@@ -39,6 +39,7 @@
     for (    TerminationCondition condition : terminationConditions) {
       if (condition.terminate(score,oldScore,new Object[]{pair.getFirst().gradient()})) {
         log.debug("Hit termination condition on iteration {}: score={}, oldScore={}, condition={}",i,score,oldScore,condition);
+        if (condition.equals(EpsTermination.class) && !Double.isNaN(conf.getLrScoreDecay()))         conf.setLr(conf.getLr() / (conf.getLrScoreDecay() + Nd4j.EPS_THRESHOLD));
         return true;
       }
     }
