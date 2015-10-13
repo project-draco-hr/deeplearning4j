@@ -1,14 +1,18 @@
 {
-  double lr=0.1;
+  double lr=0.01;
   double lrScoreDecay=10;
   int nLayers=2;
-  int iterations=1;
-  int[] nIns={2,3};
-  int[] nOuts={3,4};
-  INDArray input=Nd4j.ones(nIns[0],nOuts[0]);
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateScoreDecay(lrScoreDecay).iterations(iterations).list(nLayers).layer(0,new DenseLayer.Builder().nIn(nIns[0]).nOut(nOuts[0]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new OutputLayer.Builder().nIn(nIns[1]).nOut(nOuts[1]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).build();
+  int[] nIns={4,2};
+  int[] nOuts={2,3};
+  int oldScore=1;
+  int newScore=1;
+  int iteration=1;
+  INDArray gradient=Nd4j.ones(nIns[0],nOuts[0]);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateScoreBasedDecayRate(lrScoreDecay).list(nLayers).layer(0,new DenseLayer.Builder().nIn(nIns[0]).nOut(nOuts[0]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new OutputLayer.Builder().nIn(nIns[1]).nOut(nOuts[1]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).backprop(true).pretrain(false).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
-  net.setInput(input);
-  assertEquals(lrScoreDecay,net.getLayer(0).conf().getLrScoreDecay(),1e-4);
+  ConvexOptimizer opt=new StochasticGradientDescent(net.getDefaultConfiguration(),new NegativeDefaultStepFunction(),null,net);
+  opt.checkTerminalConditions(gradient,oldScore,newScore,iteration);
+  assertEquals(lrScoreDecay,net.getLayer(0).conf().getLrScoreBasedDecay(),1e-4);
+  assertEquals(lr / (lrScoreDecay + Nd4j.EPS_THRESHOLD),opt.getConf().getLr(),1e-4);
 }
