@@ -1,0 +1,6 @@
+{
+  stored=next();
+  useStored=true;
+  inputColumns=stored.getFeatureMatrix().size(1);
+  totalOutcomes=stored.getLabels().size(1);
+}

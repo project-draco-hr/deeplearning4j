@@ -8,6 +8,8 @@
   featureReader.initialize(new NumberedFileInputSplit(featuresPath,0,2));
   labelReader.initialize(new NumberedFileInputSplit(labelsPath,0,2));
   SequenceRecordReaderDataSetIterator iter=new SequenceRecordReaderDataSetIterator(featureReader,labelReader,1,4,false);
+  assertEquals(3,iter.inputColumns());
+  assertEquals(4,iter.totalOutcomes());
   List<DataSet> dsList=new ArrayList<>();
   while (iter.hasNext()) {
     dsList.add(iter.next());

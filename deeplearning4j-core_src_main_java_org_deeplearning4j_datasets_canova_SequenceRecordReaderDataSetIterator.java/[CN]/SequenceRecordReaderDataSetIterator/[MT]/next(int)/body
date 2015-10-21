@@ -1,4 +1,10 @@
 {
+  if (useStored) {
+    useStored=false;
+    DataSet temp=stored;
+    stored=null;
+    return temp;
+  }
   if (!hasNext())   throw new NoSuchElementException();
   List<INDArray> featureList=new ArrayList<>(num);
   List<INDArray> labelList=new ArrayList<>(num);
@@ -25,5 +31,7 @@
     labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
   }
   cursor+=featureList.size();
+  if (inputColumns == -1)   inputColumns=featuresOut.size(1);
+  if (totalOutcomes == -1)   totalOutcomes=labelsOut.size(1);
   return new DataSet(featuresOut,labelsOut);
 }

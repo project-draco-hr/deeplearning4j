@@ -1,3 +1,5 @@
 {
-  throw new UnsupportedOperationException("Not yet implemented");
+  if (totalOutcomes != -1)   return totalOutcomes;
+  preLoad();
+  return totalOutcomes;
 }
