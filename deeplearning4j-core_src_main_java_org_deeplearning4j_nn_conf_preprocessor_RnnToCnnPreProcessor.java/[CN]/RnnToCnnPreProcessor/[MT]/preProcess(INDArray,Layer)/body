@@ -1,0 +1,15 @@
+{
+  int[] shape=input.shape();
+  INDArray in2d;
+  if (shape[0] == 1) {
+    in2d=input.tensorAlongDimension(0,1,2);
+  }
+ else   if (shape[2] == 1) {
+    in2d=input.tensorAlongDimension(0,1,0);
+  }
+ else {
+    INDArray permuted=input.permute(0,2,1);
+    in2d=permuted.reshape(shape[0] * shape[2],shape[1]);
+  }
+  return in2d.reshape(shape[0] * shape[2],numChannels,inputHeight,inputWidth);
+}
