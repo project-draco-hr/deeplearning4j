@@ -1,4 +1,6 @@
 {
-  for (  InputPreProcessor inputPreProcessor : inputPreProcessors)   output=inputPreProcessor.backprop(output,layer);
+  for (int i=inputPreProcessors.length - 1; i >= 0; i--) {
+    output=inputPreProcessors[i].backprop(output,layer);
+  }
   return output;
 }

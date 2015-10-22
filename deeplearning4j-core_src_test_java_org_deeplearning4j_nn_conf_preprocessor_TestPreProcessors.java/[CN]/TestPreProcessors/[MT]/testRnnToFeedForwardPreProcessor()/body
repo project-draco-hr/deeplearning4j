@@ -3,15 +3,15 @@
   int[] timeSeriesLengths={9,9,1,1};
   for (int x=0; x < miniBatchSizes.length; x++) {
     int miniBatchSize=miniBatchSizes[x];
-    int hiddenLayerSize=7;
+    int layerSize=7;
     int timeSeriesLength=timeSeriesLengths[x];
     RnnToFeedForwardPreProcessor proc=new RnnToFeedForwardPreProcessor();
-    NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(hiddenLayerSize).build()).build();
+    NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(layerSize).nOut(layerSize).build()).build();
     DenseLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc);
     layer.setInputMiniBatchSize(miniBatchSize);
-    INDArray activations3d=Nd4j.rand(new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
+    INDArray activations3d=Nd4j.rand(new int[]{miniBatchSize,layerSize,timeSeriesLength});
     for (int i=0; i < miniBatchSize; i++) {
-      for (int j=0; j < hiddenLayerSize; j++) {
+      for (int j=0; j < layerSize; j++) {
         for (int k=0; k < timeSeriesLength; k++) {
           double value=100 * i + 10 * j + k;
           activations3d.putScalar(new int[]{i,j,k},value);
@@ -19,11 +19,11 @@
       }
     }
     INDArray activations2d=proc.preProcess(activations3d,layer);
-    assertArrayEquals(activations2d.shape(),new int[]{miniBatchSize * timeSeriesLength,hiddenLayerSize});
+    assertArrayEquals(activations2d.shape(),new int[]{miniBatchSize * timeSeriesLength,layerSize});
     int nRows=activations2d.rows();
     for (int i=0; i < nRows; i++) {
       INDArray row=activations2d.getRow(i);
-      assertArrayEquals(row.shape(),new int[]{1,hiddenLayerSize});
+      assertArrayEquals(row.shape(),new int[]{1,layerSize});
       int origExampleNum=i / timeSeriesLength;
       int time=i % timeSeriesLength;
       INDArray expectedRow=activations3d.tensorAlongDimension(time,1,0).getRow(origExampleNum);
