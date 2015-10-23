@@ -17,5 +17,5 @@
     gradExpected=vPrev.muli(mu).addi(v.mul(-mu - 1));
     assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
   }
-  assertEquals(mu,layer.conf().getMomentum(),1e-4);
+  assertEquals(mu,layer.conf().getLayer().getMomentum(),1e-4);
 }

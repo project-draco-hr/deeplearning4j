@@ -31,6 +31,6 @@
       msg.put(key,msgTmp);
       msdx.put(key,msdxTmp);
     }
-    assertEquals(rho,layer.conf().getRho(),1e-4);
+    assertEquals(rho,layer.conf().getLayer().getRho(),1e-4);
   }
 }

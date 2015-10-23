@@ -1,0 +1,20 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.SIZE).dist(new NormalDistribution(0,1.0)).biasInit(1).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getWeightInit(),WeightInit.SIZE);
+  assertEquals(conf.getConf(1).getLayer().getWeightInit(),WeightInit.SIZE);
+  assertEquals(conf.getConf(0).getLayer().getDist().toString(),"NormalDistribution{mean=0.0, std=1.0}");
+  assertEquals(conf.getConf(1).getLayer().getDist().toString(),"NormalDistribution{mean=0.0, std=1.0}");
+  assertEquals(conf.getConf(0).getLayer().getBiasInit(),1,0.0);
+  assertEquals(conf.getConf(1).getLayer().getBiasInit(),1,0.0);
+  conf=new NeuralNetConfiguration.Builder().weightInit(WeightInit.SIZE).dist(new NormalDistribution(0,1.0)).biasInit(1).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).weightInit(WeightInit.NORMALIZED).dist(new UniformDistribution(0,1)).biasInit(0).build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getWeightInit(),WeightInit.SIZE);
+  assertEquals(conf.getConf(1).getLayer().getWeightInit(),WeightInit.NORMALIZED);
+  assertEquals(conf.getConf(0).getLayer().getDist().toString(),"NormalDistribution{mean=0.0, std=1.0}");
+  assertEquals(conf.getConf(1).getLayer().getDist().toString(),"UniformDistribution{lower=0.0, upper=1.0}");
+  assertEquals(conf.getConf(0).getLayer().getBiasInit(),1,0.0);
+  assertEquals(conf.getConf(1).getLayer().getBiasInit(),0,0.0);
+}

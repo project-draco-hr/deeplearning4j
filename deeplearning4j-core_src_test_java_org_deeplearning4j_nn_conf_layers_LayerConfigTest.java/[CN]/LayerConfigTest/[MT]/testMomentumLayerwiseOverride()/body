@@ -1,0 +1,20 @@
+{
+  Map<Integer,Double> testMomentumAfter=new HashMap<>();
+  testMomentumAfter.put(0,0.1);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().momentum(1.0).momentumAfter(testMomentumAfter).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getMomentum(),1.0,0.0);
+  assertEquals(conf.getConf(1).getLayer().getMomentum(),1.0,0.0);
+  assertEquals(conf.getConf(0).getLayer().getMomentumAfter().get(0),0.1,0.0);
+  assertEquals(conf.getConf(1).getLayer().getMomentumAfter().get(0),0.1,0.0);
+  Map<Integer,Double> testMomentumAfter2=new HashMap<>();
+  testMomentumAfter2.put(0,0.2);
+  conf=new NeuralNetConfiguration.Builder().momentum(1.0).momentumAfter(testMomentumAfter).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).momentum(2.0).momentumAfter(testMomentumAfter2).build()).build();
+  net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(conf.getConf(0).getLayer().getMomentum(),1.0,0.0);
+  assertEquals(conf.getConf(1).getLayer().getMomentum(),2.0,0.0);
+  assertEquals(conf.getConf(0).getLayer().getMomentumAfter().get(0),0.1,0.0);
+  assertEquals(conf.getConf(1).getLayer().getMomentumAfter().get(0),0.2,0.0);
+}
