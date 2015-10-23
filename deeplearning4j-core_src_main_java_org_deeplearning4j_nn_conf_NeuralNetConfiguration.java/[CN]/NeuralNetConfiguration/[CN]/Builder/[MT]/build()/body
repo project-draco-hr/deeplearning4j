@@ -15,6 +15,7 @@
   conf.useDropConnect=useDropConnect;
   conf.miniBatch=miniBatch;
   if (Double.isNaN(layer.getLearningRate()))   layer.setLearningRate(learningRate);
+  if (Double.isNaN(layer.getLrScoreBasedDecay()))   layer.setLrScoreBasedDecay(lrScoreBasedDecay);
   if (Double.isNaN(layer.getL1()))   layer.setL1(l1);
   if (Double.isNaN(layer.getL2()))   layer.setL2(l2);
   if (layer.getActivationFunction() == null)   layer.setActivationFunction(activationFunction);
@@ -27,5 +28,7 @@
   if (layer.getMomentumAfter() == null)   layer.setMomentumAfter(momentumAfter);
   if (Double.isNaN(layer.getRho()))   layer.setRho(rho);
   if (Double.isNaN(layer.getRmsDecay()))   layer.setRmsDecay(rmsDecay);
+  if (Double.isNaN(layer.getAdamMeanDecay()))   layer.setAdamMeanDecay(adamMeanDecay);
+  if (Double.isNaN(layer.getAdamVarDecay()))   layer.setAdamVarDecay(adamVarDecay);
   return conf;
 }

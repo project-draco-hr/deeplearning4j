@@ -1,0 +1,23 @@
+{
+  int[] shape=new int[2];
+  shape[0]=features.size();
+  Iterator<Collection<Writable>> iter=features.iterator();
+  int i=0;
+  INDArray out=null;
+  while (iter.hasNext()) {
+    Collection<Writable> step=iter.next();
+    if (i == 0) {
+      shape[1]=step.size();
+      out=Nd4j.create(shape);
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int f=0;
+    while (timeStepIter.hasNext()) {
+      Writable current=timeStepIter.next();
+      double value=Double.valueOf(current.toString());
+      out.put(i,f++,value);
+    }
+    i++;
+  }
+  return out;
+}

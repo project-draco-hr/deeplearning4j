@@ -7,13 +7,13 @@
     ensureDirExists();
     if (this.indexWriter == null) {
       indexBeingCreated.set(true);
-      iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+      iwc=new IndexWriterConfig(analyzer);
       iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
       iwc.setWriteLockTimeout(1000);
       log.info("Creating new index writer");
       while ((writer=tryCreateWriter(iwc)) == null) {
         log.warn("Failed to create writer...trying again");
-        iwc=new IndexWriterConfig(Version.LATEST,analyzer);
+        iwc=new IndexWriterConfig(analyzer);
         iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         iwc.setWriteLockTimeout(1000);
         Thread.sleep(10000);

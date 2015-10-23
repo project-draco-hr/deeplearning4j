@@ -1,5 +1,5 @@
 {
-  if (adaGrad == null)   adaGrad=new AdaGrad(params.shape());
+  if (adaGrad == null)   adaGrad=new AdaGrad(conf.getLayer().getLearningRate());
   if (lastStep == null)   lastStep=Nd4j.ones((params.shape()));
   double momentum=conf.getLayer().getMomentum();
   if (conf.getLayer().getMomentumAfter() != null && !conf.getLayer().getMomentumAfter().isEmpty()) {

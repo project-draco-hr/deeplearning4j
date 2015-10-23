@@ -1,0 +1,40 @@
+{
+  if (useStored) {
+    useStored=false;
+    DataSet temp=stored;
+    stored=null;
+    if (preProcessor != null)     preProcessor.preProcess(temp);
+    return temp;
+  }
+  if (!hasNext())   throw new NoSuchElementException();
+  List<INDArray> featureList=new ArrayList<>(num);
+  List<INDArray> labelList=new ArrayList<>(num);
+  for (int i=0; i < num && hasNext(); i++) {
+    Collection<Collection<Writable>> featureSequence=recordReader.sequenceRecord();
+    Collection<Collection<Writable>> labelSequence=labelsReader.sequenceRecord();
+    INDArray features=getFeatures(featureSequence);
+    INDArray labels=getLabels(labelSequence);
+    featureList.add(features);
+    labelList.add(labels);
+  }
+  int[] featureShape=new int[3];
+  featureShape[0]=featureList.size();
+  featureShape[1]=featureList.get(0).size(1);
+  featureShape[2]=featureList.get(0).size(0);
+  int[] labelShape=new int[3];
+  labelShape[0]=labelList.size();
+  labelShape[1]=labelList.get(0).size(1);
+  labelShape[2]=labelList.get(0).size(0);
+  INDArray featuresOut=Nd4j.create(featureShape);
+  INDArray labelsOut=Nd4j.create(labelShape);
+  for (int i=0; i < featureList.size(); i++) {
+    featuresOut.tensorAlongDimension(i,1,2).assign(featureList.get(i));
+    labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
+  }
+  cursor+=featureList.size();
+  if (inputColumns == -1)   inputColumns=featuresOut.size(1);
+  if (totalOutcomes == -1)   totalOutcomes=labelsOut.size(1);
+  DataSet ds=new DataSet(featuresOut,labelsOut);
+  if (preProcessor != null)   preProcessor.preProcess(ds);
+  return ds;
+}

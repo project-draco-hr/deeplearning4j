@@ -1,9 +1,3 @@
 {
-  try {
-    if (lockFactory == null)     lockFactory=new NativeFSLockFactory(new File(indexPath));
-    IndexWriter.unlock(dir);
-  }
- catch (  IOException e) {
-    e.printStackTrace();
-  }
+  if (lockFactory == null)   lockFactory=NativeFSLockFactory.getDefault();
 }

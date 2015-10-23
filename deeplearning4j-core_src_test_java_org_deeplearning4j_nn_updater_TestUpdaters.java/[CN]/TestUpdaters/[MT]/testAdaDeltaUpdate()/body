@@ -1,0 +1,36 @@
+{
+  INDArray dxSquared;
+  Map<String,INDArray> msg=new HashMap<>();
+  Map<String,INDArray> msdx=new HashMap<>();
+  double rho=0.85;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().rho(rho).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADADELTA).build()).build();
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  Updater updater=UpdaterCreator.getUpdater(layer);
+  Gradient gradientDup=new DefaultGradient();
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (int i=0; i < 2; i++) {
+    updater.update(layer,gradient,i);
+    for (    Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
+      key=entry.getKey();
+      val=entry.getValue();
+      INDArray msgTmp=msg.get(key);
+      INDArray msdxTmp=msdx.get(key);
+      if (msgTmp == null) {
+        msgTmp=Nd4j.zeros(val.shape());
+        msdxTmp=Nd4j.zeros(val.shape());
+      }
+      msgTmp.muli(rho);
+      msgTmp.addi(1 - rho).muli(val.mul(val));
+      gradExpected=Transforms.sqrt(msdxTmp.add(Nd4j.EPS_THRESHOLD)).divi(Transforms.sqrt(msgTmp.add(Nd4j.EPS_THRESHOLD))).muli(val);
+      gradientDup.setGradientFor(key,gradExpected);
+      assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
+      msdxTmp.muli(rho);
+      dxSquared=gradExpected.mul(gradExpected);
+      msdxTmp.addi(dxSquared.muli(1 - rho));
+      msg.put(key,msgTmp);
+      msdx.put(key,msdxTmp);
+    }
+    assertEquals(rho,layer.conf().getLayer().getRho(),1e-4);
+  }
+}

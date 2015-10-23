@@ -1,5 +1,5 @@
 {
-  Word2Vec vec=WordVectorSerializer.loadGoogleModel(binaryFile,true);
+  WordVectors vec=WordVectorSerializer.loadGoogleModel(binaryFile,true);
   WordVectorSerializer.writeWordVectors(vec,pathToWriteto);
   WordVectors wordVectors=WordVectorSerializer.loadTxtVectors(new File(pathToWriteto));
   double[] wordVector1=wordVectors.getWordVector("Morgan_Freeman");

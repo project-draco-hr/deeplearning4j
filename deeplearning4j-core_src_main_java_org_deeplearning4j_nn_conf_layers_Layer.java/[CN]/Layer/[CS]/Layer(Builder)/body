@@ -4,6 +4,7 @@
   this.biasInit=builder.biasInit;
   this.dist=builder.dist;
   this.learningRate=builder.learningRate;
+  this.lrScoreBasedDecay=builder.lrScoreBasedDecay;
   this.momentum=builder.momentum;
   this.momentumAfter=builder.momentumAfter;
   this.l1=builder.l1;
@@ -12,4 +13,6 @@
   this.updater=builder.updater;
   this.rho=builder.rho;
   this.rmsDecay=builder.rmsDecay;
+  this.adamMeanDecay=builder.adamMeanDecay;
+  this.adamVarDecay=builder.adamVarDecay;
 }
