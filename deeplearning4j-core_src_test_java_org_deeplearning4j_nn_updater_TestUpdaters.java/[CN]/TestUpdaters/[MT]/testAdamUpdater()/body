@@ -23,6 +23,6 @@
     gradExpected=m.mul(alphat).divi(Transforms.sqrt(v).addi(epsilon));
     assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
   }
-  assertEquals(beta1,layer.conf().getMeanDecay(),1e-4);
-  assertEquals(beta2,layer.conf().getVarDecay(),1e-4);
+  assertEquals(beta1,layer.conf().getLayer().getAdamMeanDecay(),1e-4);
+  assertEquals(beta2,layer.conf().getLayer().getAdamVarDecay(),1e-4);
 }

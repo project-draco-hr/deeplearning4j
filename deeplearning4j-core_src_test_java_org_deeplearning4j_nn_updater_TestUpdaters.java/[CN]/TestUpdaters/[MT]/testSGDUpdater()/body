@@ -12,5 +12,5 @@
     gradExpected=val.mul(lr);
     assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
   }
-  assertEquals(lr,layer.conf().getLr(),1e-4);
+  assertEquals(lr,layer.conf().getLayer().getLearningRate(),1e-4);
 }

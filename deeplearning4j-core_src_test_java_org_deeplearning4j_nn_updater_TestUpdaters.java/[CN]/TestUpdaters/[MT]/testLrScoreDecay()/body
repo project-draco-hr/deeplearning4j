@@ -13,6 +13,6 @@
   net.init();
   ConvexOptimizer opt=new StochasticGradientDescent(net.getDefaultConfiguration(),new NegativeDefaultStepFunction(),null,net);
   opt.checkTerminalConditions(gradient,oldScore,newScore,iteration);
-  assertEquals(lrScoreDecay,net.getLayer(0).conf().getLrScoreBasedDecay(),1e-4);
-  assertEquals(lr / (lrScoreDecay + Nd4j.EPS_THRESHOLD),opt.getConf().getLr(),1e-4);
+  assertEquals(lrScoreDecay,net.getLayer(0).conf().getLayer().getLrScoreBasedDecay(),1e-4);
+  assertEquals(lr / (lrScoreDecay + Nd4j.EPS_THRESHOLD),opt.getConf().getLayer().getLearningRate(),1e-4);
 }

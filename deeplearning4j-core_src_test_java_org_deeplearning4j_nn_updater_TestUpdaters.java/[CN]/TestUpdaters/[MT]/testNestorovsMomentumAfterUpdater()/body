@@ -27,6 +27,6 @@
       assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
       v.put(key,vTmp);
     }
-    assertEquals(momentumAfter,layer.conf().getMomentumAfter());
+    assertEquals(momentumAfter,layer.conf().getLayer().getMomentumAfter());
   }
 }
