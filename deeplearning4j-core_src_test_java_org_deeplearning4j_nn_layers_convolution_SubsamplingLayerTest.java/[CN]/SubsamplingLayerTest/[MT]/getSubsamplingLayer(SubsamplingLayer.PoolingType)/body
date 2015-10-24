@@ -1,4 +1,4 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().constrainGradientToUnitNorm(true).seed(123).layer(new SubsamplingLayer.Builder(pooling).activation("relu").build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().constrainGradientToUnitNorm(true).seed(123).layer(new SubsamplingLayer.Builder(pooling,new int[]{2,2}).activation("relu").build()).build();
   return LayerFactories.getFactory(new SubsamplingLayer()).create(conf);
 }
