@@ -1,0 +1,18 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new DenseLayer.Builder().nIn(10).nOut(20).updater(org.deeplearning4j.nn.conf.Updater.NONE).gradientNormalization(GradientNormalization.RenormalizeL2PerParamType).build()).build();
+  Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf);
+  Updater updater=UpdaterCreator.getUpdater(layer);
+  INDArray weightGrad=Nd4j.rand(10,20);
+  INDArray biasGrad=Nd4j.rand(1,10);
+  INDArray weightGradCopy=weightGrad.dup();
+  INDArray biasGradCopy=biasGrad.dup();
+  Gradient gradient=new DefaultGradient();
+  gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGrad);
+  gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGrad);
+  updater.update(layer,gradient,0);
+  INDArray normWeightsExpected=weightGradCopy.div(weightGradCopy.norm2Number());
+  INDArray normBiasExpected=biasGradCopy.div(biasGradCopy.norm2Number());
+  assertEquals(normWeightsExpected,gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY));
+  assertEquals(normBiasExpected,gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY));
+}
