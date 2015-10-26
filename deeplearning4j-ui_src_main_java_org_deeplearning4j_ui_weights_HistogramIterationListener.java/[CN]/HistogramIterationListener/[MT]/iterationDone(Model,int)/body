@@ -1,14 +1,45 @@
 {
   if (iteration % iterations == 0) {
     Map<String,INDArray> grad=model.gradient().gradientForVariable();
+    if (meanMagHistoryParams.size() == 0) {
+      int maxLayerIdx=-1;
+      for (      String s : grad.keySet()) {
+        maxLayerIdx=Math.max(maxLayerIdx,indexFromString(s));
+      }
+      if (maxLayerIdx == -1)       maxLayerIdx=0;
+      for (int i=0; i <= maxLayerIdx; i++) {
+        meanMagHistoryParams.add(new LinkedHashMap<String,List<Double>>());
+        meanMagHistoryUpdates.add(new LinkedHashMap<String,List<Double>>());
+      }
+    }
     Map<String,INDArray> newGrad=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : grad.entrySet()) {
-      newGrad.put("param_" + entry.getKey(),entry.getValue().dup());
+      String param=entry.getKey();
+      String newName="param_" + param;
+      newGrad.put(newName,entry.getValue().dup());
+      Map<String,List<Double>> map=meanMagHistoryUpdates.get(indexFromString(param));
+      List<Double> list=map.get(newName);
+      if (list == null) {
+        list=new ArrayList<>();
+        map.put(newName,list);
+      }
+      double meanMag=entry.getValue().norm1Number().doubleValue() / entry.getValue().length();
+      list.add(meanMag);
     }
     Map<String,INDArray> params=model.paramTable();
     Map<String,INDArray> newParams=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
-      newParams.put("param_" + entry.getKey(),entry.getValue().dup());
+      String param=entry.getKey();
+      String newName="param_" + param;
+      newParams.put(newName,entry.getValue().dup());
+      Map<String,List<Double>> map=meanMagHistoryParams.get(indexFromString(param));
+      List<Double> list=map.get(newName);
+      if (list == null) {
+        list=new ArrayList<>();
+        map.put(newName,list);
+      }
+      double meanMag=entry.getValue().norm1Number().doubleValue() / entry.getValue().length();
+      list.add(meanMag);
     }
     double score=model.score();
     scoreHistory.add(score);
@@ -18,6 +49,9 @@
     g.setScore(score);
     g.setScores(scoreHistory);
     g.setPath(subPath);
+    g.setUpdateMagnitudes(meanMagHistoryUpdates);
+    g.setParamMagnitudes(meanMagHistoryParams);
+    g.setLastUpdateTime(System.currentTimeMillis());
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
     log.debug("{}",resp);
     if (openBrowser && firstIteration) {
