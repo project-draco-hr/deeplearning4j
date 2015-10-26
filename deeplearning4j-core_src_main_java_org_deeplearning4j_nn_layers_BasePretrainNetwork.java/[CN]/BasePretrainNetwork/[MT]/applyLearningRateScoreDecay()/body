@@ -1,3 +1,0 @@
-{
-  conf.getLayer().setLearningRate(conf.getLayer().getLearningRate() / (conf.getLayer().getLrScoreBasedDecay() + Nd4j.EPS_THRESHOLD));
-}
