@@ -15,4 +15,6 @@
   this.rmsDecay=builder.rmsDecay;
   this.adamMeanDecay=builder.adamMeanDecay;
   this.adamVarDecay=builder.adamVarDecay;
+  this.gradientNormalization=builder.gradientNormalization;
+  this.gradientNormalizationThreshold=builder.gradientNormalizationThreshold;
 }
