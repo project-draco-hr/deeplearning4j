@@ -1,4 +1,5 @@
 {
+  preApply(layer,gradient,iteration);
   for (  Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
     GradientUpdater updater=init(gradientPair.getKey(),gradientPair.getValue(),layer);
     INDArray gradient2=updater.getGradient(gradientPair.getValue(),iteration);

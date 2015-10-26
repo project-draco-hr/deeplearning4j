@@ -30,5 +30,7 @@
   if (Double.isNaN(layer.getRmsDecay()))   layer.setRmsDecay(rmsDecay);
   if (Double.isNaN(layer.getAdamMeanDecay()))   layer.setAdamMeanDecay(adamMeanDecay);
   if (Double.isNaN(layer.getAdamVarDecay()))   layer.setAdamVarDecay(adamVarDecay);
+  if (layer.getGradientNormalization() == null)   layer.setGradientNormalization(gradientNormalization);
+  if (Double.isNaN(layer.getGradientNormalizationThreshold()))   layer.setGradientNormalizationThreshold(gradientNormalizationThreshold);
   return conf;
 }

@@ -1,9 +1,11 @@
 {
-  RecursiveAutoEncoder layer=new RecursiveAutoEncoder.Builder().activation(act).weightInit(weight).dist(dist).dropOut(dropOut).updater(updater).build();
+  RecursiveAutoEncoder layer=new RecursiveAutoEncoder.Builder().activation(act).weightInit(weight).dist(dist).dropOut(dropOut).updater(updater).gradientNormalization(gradNorm).gradientNormalizationThreshold(gradNormThreshold).build();
   checkSerialization(layer);
   assertEquals(act,layer.getActivationFunction());
   assertEquals(weight,layer.getWeightInit());
   assertEquals(dist,layer.getDist());
   assertEquals(dropOut,layer.getDropOut(),DELTA);
   assertEquals(updater,layer.getUpdater());
+  assertEquals(gradNorm,layer.getGradientNormalization());
+  assertEquals(gradNormThreshold,layer.getGradientNormalizationThreshold(),0.0);
 }
