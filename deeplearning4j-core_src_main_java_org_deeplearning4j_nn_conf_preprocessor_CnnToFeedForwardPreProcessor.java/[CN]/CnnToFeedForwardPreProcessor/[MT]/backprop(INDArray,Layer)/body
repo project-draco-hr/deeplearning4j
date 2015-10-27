@@ -1,5 +1,6 @@
 {
   if (output.shape().length == 4)   return output;
   if (output.columns() != inputWidth * inputHeight * numChannels)   throw new IllegalArgumentException("Invalid input: expect output columns must be equal to rows " + inputHeight + " x columns "+ inputWidth+ " x depth "+ numChannels+ " but was instead "+ Arrays.toString(output.shape()));
+  if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
   return output.reshape(output.size(0),numChannels,inputHeight,inputWidth);
 }
