@@ -13,5 +13,6 @@
     System.arraycopy(output.shape(),1,otherOutputs,0,otherOutputs.length);
     shape=new int[]{output.shape()[0],ArrayUtil.prod(otherOutputs)};
   }
+  if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
   return output.reshape(shape);
 }
