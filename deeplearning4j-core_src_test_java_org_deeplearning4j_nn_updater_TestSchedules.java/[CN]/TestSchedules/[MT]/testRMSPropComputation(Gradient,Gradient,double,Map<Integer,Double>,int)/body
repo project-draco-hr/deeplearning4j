@@ -1,0 +1,16 @@
+{
+  double rmsDecay=0.95;
+  for (  Map.Entry<String,INDArray> entry : gradientExpected.gradientForVariable().entrySet()) {
+    if (learningRateAfter != null)     lr=(learningRateAfter.containsKey(i)) ? learningRateAfter.get(i) : lr;
+    key=entry.getKey();
+    val=entry.getValue();
+    INDArray lastGTmp=tmpStorage4.get(key);
+    if (lastGTmp == null)     lastGTmp=Nd4j.zeros(val.shape());
+    lastGTmp.muli(rmsDecay).addi(val.mul(val).muli(1 - rmsDecay));
+    gradExpected=val.mul(lr).div(Transforms.sqrt(lastGTmp.add(Nd4j.EPS_THRESHOLD)));
+    gradientExpected.setGradientFor(key,gradExpected);
+    assertEquals(gradExpected,gradientActual.getGradientFor(key));
+    tmpStorage4.put(key,lastGTmp);
+  }
+  return lr;
+}

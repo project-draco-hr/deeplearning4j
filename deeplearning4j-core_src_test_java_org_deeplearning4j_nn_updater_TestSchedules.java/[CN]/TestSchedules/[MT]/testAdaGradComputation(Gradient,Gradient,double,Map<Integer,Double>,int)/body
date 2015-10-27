@@ -1,0 +1,15 @@
+{
+  for (  Map.Entry<String,INDArray> entry : gradientExpected.gradientForVariable().entrySet()) {
+    if (learningRateAfter != null)     lr=(learningRateAfter.containsKey(i)) ? learningRateAfter.get(i) : lr;
+    key=entry.getKey();
+    val=entry.getValue();
+    INDArray historicalGradient=tmpStorage.get(key);
+    if (historicalGradient == null)     historicalGradient=val.mul(val);
+ else     historicalGradient.addi(val.mul(val));
+    gradExpected=Transforms.sqrt(historicalGradient.add(epsilon)).rdiv(lr).mul(val);
+    assertEquals(gradExpected,gradientActual.getGradientFor(key));
+    gradientExpected.setGradientFor(key,gradExpected);
+    tmpStorage.put(key,historicalGradient);
+  }
+  return lr;
+}
