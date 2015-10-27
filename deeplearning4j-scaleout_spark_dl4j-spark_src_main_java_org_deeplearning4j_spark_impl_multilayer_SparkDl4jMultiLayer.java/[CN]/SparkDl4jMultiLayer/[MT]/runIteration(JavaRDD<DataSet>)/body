@@ -22,7 +22,7 @@
     this.network=network;
   }
  else {
-    JavaRDD<INDArray> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params),true).cache();
+    JavaRDD<INDArray> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.best_score_acc),true).cache();
     log.info("Ran iterative reduce...averaging results now.");
     Adder a=new Adder(params.length());
     results.foreach(a);
