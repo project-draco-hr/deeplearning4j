@@ -6,7 +6,7 @@
   int iterations=2;
   Map<String,INDArray> v=new HashMap<>();
   INDArray vPrev;
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(mu).momentumAfter(momentumAfter).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(mu).momentumAfter(momentumAfter).schedules(true).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
   Updater updater=UpdaterCreator.getUpdater(layer);
   Gradient gradientDup=new DefaultGradient();

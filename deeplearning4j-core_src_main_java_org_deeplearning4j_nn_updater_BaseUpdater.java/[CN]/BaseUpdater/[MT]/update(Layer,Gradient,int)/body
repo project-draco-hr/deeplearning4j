@@ -1,6 +1,7 @@
 {
   preApply(layer,gradient,iteration);
   for (  Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+    if (layer.conf().isUseSchedules())     checkSchedules(layer,iteration,gradientPair.getKey());
     GradientUpdater updater=init(gradientPair.getKey(),gradientPair.getValue(),layer);
     INDArray gradient2=updater.getGradient(gradientPair.getValue(),iteration);
     postApply(layer,gradient2,gradientPair.getKey());

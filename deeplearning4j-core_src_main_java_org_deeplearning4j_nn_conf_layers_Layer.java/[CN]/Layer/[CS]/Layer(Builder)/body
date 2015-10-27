@@ -4,6 +4,7 @@
   this.biasInit=builder.biasInit;
   this.dist=builder.dist;
   this.learningRate=builder.learningRate;
+  this.learningRateAfter=builder.learningRateAfter;
   this.lrScoreBasedDecay=builder.lrScoreBasedDecay;
   this.momentum=builder.momentum;
   this.momentumAfter=builder.momentumAfter;

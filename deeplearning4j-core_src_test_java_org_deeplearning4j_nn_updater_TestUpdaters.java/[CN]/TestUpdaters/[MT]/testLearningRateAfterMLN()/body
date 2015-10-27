@@ -1,0 +1,40 @@
+{
+  double lr=1e-2;
+  Map<Integer,Double> learningRateAfter=new HashMap<>();
+  learningRateAfter.put(1,0.2);
+  int iterations=2;
+  int nLayers=2;
+  int[] nIns={4,2};
+  int[] nOuts={2,3};
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateAfter(learningRateAfter).schedules(true).iterations(iterations).list(nLayers).layer(0,new DenseLayer.Builder().nIn(nIns[0]).nOut(nOuts[0]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new OutputLayer.Builder().nIn(nIns[1]).nOut(nOuts[1]).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).backprop(true).pretrain(false).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  Updater updater=UpdaterCreator.getUpdater(net);
+  Gradient g=new DefaultGradient();
+  String wKey, bKey;
+  for (int j=0; j < nLayers; j++) {
+    wKey=String.valueOf(j) + "_" + DefaultParamInitializer.WEIGHT_KEY;
+    g.setGradientFor(wKey,weightGradient);
+    bKey=String.valueOf(j) + "_" + DefaultParamInitializer.BIAS_KEY;
+    g.setGradientFor(bKey,biasGradient);
+  }
+  Gradient gDup=new DefaultGradient();
+  for (int k=0; k < nLayers; k++) {
+    wKey=String.valueOf(k) + "_" + DefaultParamInitializer.WEIGHT_KEY;
+    gDup.setGradientFor(wKey,weightGradient);
+    bKey=String.valueOf(k) + "_" + DefaultParamInitializer.BIAS_KEY;
+    gDup.setGradientFor(bKey,biasGradient);
+  }
+  for (int i=0; i < 2; i++) {
+    updater.update(net,g,i);
+    for (    Map.Entry<String,INDArray> entry : gDup.gradientForVariable().entrySet()) {
+      if (learningRateAfter != null)       lr=(learningRateAfter.containsKey(i)) ? learningRateAfter.get(i) : lr;
+      key=entry.getKey();
+      val=entry.getValue();
+      gradExpected=val.mul(lr);
+      gDup.setGradientFor(key,gradExpected);
+      assertEquals(gradExpected,g.getGradientFor(key));
+    }
+    assertEquals(lr,net.getLayer(1).conf().getLayer().getLearningRate(),1e-4);
+  }
+}
