@@ -14,8 +14,7 @@
     int f=0;
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
-      double value=Double.valueOf(current.toString());
-      out.put(i,f++,value);
+      out.put(i,f++,current.toDouble());
     }
     i++;
   }
