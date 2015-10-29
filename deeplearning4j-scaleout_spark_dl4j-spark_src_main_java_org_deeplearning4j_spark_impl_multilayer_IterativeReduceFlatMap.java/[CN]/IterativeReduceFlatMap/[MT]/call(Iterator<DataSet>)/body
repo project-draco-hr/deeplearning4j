@@ -10,7 +10,7 @@
   log.debug("Training on " + data.labelCounts());
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
-  network.setListeners(new ScoreIterationListener(1));
+  network.setListeners(new ScoreIterationListener(1),new BestScoreIterationListener(best_score_acc));
   INDArray val=params.value();
   if (val.length() != network.numParams())   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
   network.setParameters(val);

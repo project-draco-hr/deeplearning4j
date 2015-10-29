@@ -5,4 +5,5 @@
   this.conf=this.network.getLayerWiseConfigurations().clone();
   sc=new JavaSparkContext(this.sparkContext);
   this.params=sc.broadcast(network.params());
+  this.best_score_acc=BestScoreAccumulator.create(sparkContext);
 }
