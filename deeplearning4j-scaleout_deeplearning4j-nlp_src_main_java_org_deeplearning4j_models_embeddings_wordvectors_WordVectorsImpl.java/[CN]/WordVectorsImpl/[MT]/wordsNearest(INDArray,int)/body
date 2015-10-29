@@ -10,13 +10,15 @@
     if (top > sort.length())     top=sort.length();
     int end=top;
     for (int i=0; i < end; i++) {
-      String add=vocab().wordAtIndex(sort.getInt(i));
+      VocabCache vocabCache=vocab();
+      int s=sort.getInt(0,i);
+      String add=vocabCache.wordAtIndex(s);
       if (add == null || add.equals("UNK") || add.equals("STOP")) {
         end++;
         if (end >= sort.length())         break;
         continue;
       }
-      ret.add(vocab().wordAtIndex(sort.getInt(i)));
+      ret.add(vocabCache.wordAtIndex(s));
     }
     return ret;
   }
