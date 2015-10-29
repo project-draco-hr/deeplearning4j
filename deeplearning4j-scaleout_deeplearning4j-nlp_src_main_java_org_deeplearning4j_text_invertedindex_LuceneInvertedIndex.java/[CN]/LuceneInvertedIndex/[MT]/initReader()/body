@@ -18,7 +18,7 @@
       numDocs=readerManager.acquire().numDocs();
       readerManager.release(reader);
     }
- catch (    Exception e) {
+ catch (    IOException|InterruptedException e) {
       throw new RuntimeException(e);
     }
   }

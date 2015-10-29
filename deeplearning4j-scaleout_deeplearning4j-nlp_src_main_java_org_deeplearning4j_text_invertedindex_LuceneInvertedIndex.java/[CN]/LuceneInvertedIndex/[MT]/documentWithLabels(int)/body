@@ -10,9 +10,7 @@
     for (    String s : values) {
       ret.add(vocabCache.wordFor(s));
     }
-    for (    String s : labels2) {
-      labels.add(s);
-    }
+    Collections.addAll(labels,labels2);
   }
  catch (  Exception e) {
     e.printStackTrace();

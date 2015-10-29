@@ -1,9 +1,11 @@
 {
   if (dir == null) {
-    log.info("Creating directory " + indexPath);
-    FileUtils.deleteDirectory(new File(indexPath));
-    dir=FSDirectory.open(Paths.get(URI.create(indexPath)));
-    File dir2=new File(indexPath);
-    if (!dir2.exists())     dir2.mkdir();
+    File directory=new File(indexPath);
+    log.info("Creating directory " + directory.getCanonicalPath());
+    FileUtils.deleteDirectory(directory);
+    dir=FSDirectory.open(Paths.get(URI.create("file:" + directory.getAbsolutePath())));
+    if (!directory.exists()) {
+      directory.mkdir();
+    }
   }
 }
