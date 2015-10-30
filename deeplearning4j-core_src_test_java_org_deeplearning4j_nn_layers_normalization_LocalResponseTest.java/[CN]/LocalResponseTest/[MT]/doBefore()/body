@@ -1,0 +1,5 @@
+{
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).seed(123).layer(new LocalResponseNormalization.Builder().k(2).build()).build();
+  layer=LayerFactories.getFactory(new LocalResponseNormalization()).create(conf);
+  yActual=layer.activate(x);
+}

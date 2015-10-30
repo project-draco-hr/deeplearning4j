@@ -1,21 +1,22 @@
 {
-  double k, alpha, beta, n;
   k=layerConf().getK();
+  n=layerConf().getN();
   alpha=layerConf().getAlpha();
   beta=layerConf().getBeta();
-  n=layerConf().getN();
-  int halfN=(int)n / 2;
+  halfN=(int)n / 2;
   int examples=input.shape()[0];
   int channels=input.shape()[1];
   int height=input.shape()[2];
   int width=input.shape()[3];
   INDArray activitySqr=input.mul(input);
   INDArray extraChannels=Nd4j.zeros(new int[]{examples,(channels + 2 * halfN),height,width});
-  INDArray scale=Nd4j.zeros(activitySqr.shape());
+  unitScale=Nd4j.zeros(activitySqr.shape());
   extraChannels.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(halfN,(halfN + channels)),NDArrayIndex.all(),NDArrayIndex.all()},activitySqr);
   for (int i=1; i < n; i++) {
-    scale.addi(extraChannels.get(NDArrayIndex.all(),interval(i,(i + channels)),NDArrayIndex.all(),NDArrayIndex.all()));
+    unitScale.addi(extraChannels.get(NDArrayIndex.all(),interval(i,(i + channels)),NDArrayIndex.all(),NDArrayIndex.all()));
   }
-  scale=Transforms.pow(scale.mul(alpha).add(k),beta);
-  return input.div(scale);
+  unitScale.muli(alpha).addi(k);
+  scale=Transforms.pow(unitScale,beta);
+  activations=input.div(scale);
+  return activations;
 }

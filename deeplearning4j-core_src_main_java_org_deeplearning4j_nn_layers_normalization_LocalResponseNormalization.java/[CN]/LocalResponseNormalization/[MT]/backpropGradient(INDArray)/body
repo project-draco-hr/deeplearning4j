@@ -1,5 +1,16 @@
 {
-  INDArray nextEpsilon=null;
+  int height=input.shape()[2];
   Gradient retGradient=new DefaultGradient();
+  INDArray reverse=activations.mul(epsilon).div(unitScale);
+  INDArray reverseCopy=reverse.dup();
+  for (int i=0; i < halfN + 1; i++) {
+    INDArray t=reverseCopy.get(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),interval(i,height),NDArrayIndex.all()});
+    INDArray v=reverse.get(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),interval(0,height - 1),NDArrayIndex.all()});
+    reverseCopy.assign(t.addi(v));
+    INDArray t2=reverseCopy.get(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),interval(0,height - 1),NDArrayIndex.all()});
+    INDArray v2=reverse.get(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),interval(i,height),NDArrayIndex.all()});
+    reverseCopy.assign(t2.addi(v2));
+  }
+  INDArray nextEpsilon=epsilon.mul(scale).sub(input.mul(2 * alpha * beta).mul(reverseCopy));
   return new Pair<>(retGradient,nextEpsilon);
 }

@@ -1,7 +1,4 @@
 {
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).seed(123).layer(new LocalResponseNormalization.Builder().k(2).build()).build();
-  Layer layer=LayerFactories.getFactory(new LocalResponseNormalization()).create(conf);
-  INDArray yActual=layer.activate(x);
   assertEquals(yExpected.getDouble(5),yActual.getDouble(5),1e-4);
   assertEquals(yExpected.getDouble(10),yActual.getDouble(10),1e-4);
 }

@@ -1,2 +1,6 @@
 {
+  Pair<Gradient,INDArray> containedOutput=layer.backpropGradient(epsilonExpected);
+  assertEquals(epsilonExpected,containedOutput.getSecond());
+  assertEquals(null,containedOutput.getFirst().getGradientFor("W"));
+  assertArrayEquals(epsilonExpected.shape(),containedOutput.getSecond().shape());
 }
