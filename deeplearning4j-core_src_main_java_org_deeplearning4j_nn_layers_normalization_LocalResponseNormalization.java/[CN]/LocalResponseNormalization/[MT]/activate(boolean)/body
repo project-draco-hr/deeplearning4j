@@ -1,0 +1,18 @@
+{
+  double k, alpha, beta, n, N, startCh, stopCh;
+  k=layerConf().getK();
+  alpha=layerConf().getAlpha();
+  beta=layerConf().getBeta();
+  n=layerConf().getN();
+  N=layerConf().getNIn();
+  INDArray activation=null;
+  INDArray activitySqr=input.mul(input);
+  INDArray activityCopy=activitySqr.dup();
+  startCh=Math.max(0,(i + n) / 2);
+  stopCh=Math.min(N - 1,(i - n) / 2);
+  INDArray sumSqrs=activityCopy.get(NDArrayIndex.all(),interval((int)startCh,(int)stopCh),NDArrayIndex.all(),NDArrayIndex.all()).sum(1);
+  INDArray unitScale=k + alpha * sumSqrs;
+  INDArray scale=Transforms.pow(unitScale,beta);
+  input.div(scale);
+  return activation;
+}

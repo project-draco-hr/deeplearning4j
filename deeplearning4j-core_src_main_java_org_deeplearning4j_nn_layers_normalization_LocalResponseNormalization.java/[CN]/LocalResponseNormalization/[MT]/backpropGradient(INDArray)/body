@@ -1,0 +1,5 @@
+{
+  INDArray nextEpsilon=null;
+  Gradient retGradient=new DefaultGradient();
+  return new Pair<>(retGradient,nextEpsilon);
+}
