@@ -1,0 +1,17 @@
+{
+  int channel=input.shape()[1];
+  INDArray tmp, addVal;
+  Gradient retGradient=new DefaultGradient();
+  INDArray reverse=activations.mul(epsilon);
+  INDArray sumPart=reverse.dup();
+  for (int i=1; i < halfN + 1; i++) {
+    tmp=sumPart.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()});
+    addVal=reverse.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()});
+    sumPart.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()},tmp.addi(addVal));
+    tmp=sumPart.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()});
+    addVal=reverse.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()});
+    sumPart.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()},tmp.addi(addVal));
+  }
+  INDArray nextEpsilon=epsilon.mul(scale).sub(input.mul(2 * alpha * beta).mul(sumPart.div(unitScale)));
+  return new Pair<>(retGradient,nextEpsilon);
+}
