@@ -1,4 +1,4 @@
 {
-  assertEquals(yExpected.getDouble(5),yActual.getDouble(5),1e-4);
-  assertEquals(yExpected.getDouble(10),yActual.getDouble(10),1e-4);
+  assertEquals(yExpected,yActual);
+  assertArrayEquals(yExpected.shape(),yActual.shape());
 }
