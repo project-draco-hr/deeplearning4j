@@ -1,0 +1,13 @@
+{
+  int underscore=str.indexOf("_");
+  if (underscore == -1)   return -1;
+ else {
+    String subStr=str.substring(0,underscore);
+    try {
+      return Integer.parseInt(subStr);
+    }
+ catch (    NumberFormatException e) {
+      return -1;
+    }
+  }
+}

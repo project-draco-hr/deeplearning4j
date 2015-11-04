@@ -1,0 +1,11 @@
+{
+  for (  Map.Entry<String,INDArray> entry : gradientExpected.gradientForVariable().entrySet()) {
+    if (learningRateAfter != null)     lr=(learningRateAfter.containsKey(i)) ? learningRateAfter.get(i) : lr;
+    key=entry.getKey();
+    val=entry.getValue();
+    gradExpected=val.mul(lr);
+    gradientExpected.setGradientFor(key,gradExpected);
+    assertEquals(gradExpected,gradientActual.getGradientFor(key));
+  }
+  return lr;
+}

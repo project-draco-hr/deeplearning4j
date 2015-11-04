@@ -1,0 +1,35 @@
+{
+  int[] shape=new int[2];
+  shape[0]=labels.size();
+  Iterator<Collection<Writable>> iter=labels.iterator();
+  int i=0;
+  INDArray out=null;
+  while (iter.hasNext()) {
+    Collection<Writable> step=iter.next();
+    if (i == 0) {
+      if (regression) {
+        shape[1]=step.size();
+      }
+ else {
+        shape[1]=numPossibleLabels;
+      }
+      out=Nd4j.create(shape);
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int f=0;
+    if (regression) {
+      while (timeStepIter.hasNext()) {
+        Writable current=timeStepIter.next();
+        out.put(f++,i,current.toDouble());
+      }
+    }
+ else {
+      Writable value=timeStepIter.next();
+      int idx=value.toInt();
+      INDArray line=FeatureUtil.toOutcomeVector(idx,numPossibleLabels);
+      out.getRow(i).assign(line);
+    }
+    i++;
+  }
+  return out;
+}

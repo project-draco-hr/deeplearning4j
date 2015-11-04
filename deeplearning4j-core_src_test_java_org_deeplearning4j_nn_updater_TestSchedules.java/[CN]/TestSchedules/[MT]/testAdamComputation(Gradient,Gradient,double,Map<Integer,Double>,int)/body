@@ -1,0 +1,24 @@
+{
+  double beta1=0.9;
+  double beta2=0.999;
+  for (  Map.Entry<String,INDArray> entry : gradientExpected.gradientForVariable().entrySet()) {
+    if (learningRateAfter != null)     lr=(learningRateAfter.containsKey(i)) ? learningRateAfter.get(i) : lr;
+    key=entry.getKey();
+    val=entry.getValue();
+    INDArray mTmp=tmpStorage2.get(key);
+    INDArray vTmp=tmpStorage3.get(key);
+    if (mTmp == null)     mTmp=Nd4j.zeros(val.shape());
+    if (vTmp == null)     vTmp=Nd4j.zeros(val.shape());
+    mTmp.muli(beta1).addi(val.mul(1.0 - beta1));
+    vTmp.muli(beta2).addi(val.mul(val).mul(1.0 - beta2));
+    double beta1t=FastMath.pow(beta1,i);
+    double beta2t=FastMath.pow(beta2,i);
+    double alphat=lr * FastMath.sqrt(1 - beta2t) / (1 - beta1t);
+    gradExpected=mTmp.mul(alphat).divi(Transforms.sqrt(vTmp).addi(epsilon));
+    gradientExpected.setGradientFor(key,gradExpected);
+    assertEquals(gradExpected,gradientActual.getGradientFor(key));
+    tmpStorage2.put(key,mTmp);
+    tmpStorage3.put(key,vTmp);
+  }
+  return lr;
+}

@@ -9,6 +9,6 @@
     if (deltaColumnSums.length() != layers[l].getParam(DefaultParamInitializer.BIAS_KEY).length())     throw new IllegalStateException("Bias change not equal to weight change");
     list.add(new Pair<>(gradientChange,deltaColumnSums));
   }
-  INDArray pack=pack(list).addi(mask.mul(defaultConfiguration.getL2()).muli(v)).addi(v.mul(layerWiseConfigurations.getDampingFactor()));
+  INDArray pack=pack(list).addi(mask.mul(defaultConfiguration.getLayer().getL2()).muli(v)).addi(v.mul(layerWiseConfigurations.getDampingFactor()));
   return unPack(pack);
 }

@@ -4,7 +4,6 @@
   INDArray parameters=null;
   model.validateInput();
   Pair<Gradient,Double> pair=gradientAndScore();
-  score=pair.getSecond();
   if (searchState.isEmpty()) {
     searchState.put(GRADIENT_KEY,pair.getFirst().gradient());
     setupSearchState(pair);
@@ -31,17 +30,10 @@
  else {
       log.debug("Step size returned by line search is 0.0.");
     }
-    oldScore=score;
     pair=gradientAndScore();
     postStep(pair.getFirst().gradient());
-    score=pair.getSecond();
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
-    for (    TerminationCondition condition : terminationConditions) {
-      if (condition.terminate(score,oldScore,new Object[]{pair.getFirst().gradient()})) {
-        log.debug("Hit termination condition on iteration {}: score={}, oldScore={}, condition={}",i,score,oldScore,condition);
-        return true;
-      }
-    }
+    checkTerminalConditions(pair.getFirst().gradient(),oldScore,score,i);
     this.iteration++;
   }
   return true;

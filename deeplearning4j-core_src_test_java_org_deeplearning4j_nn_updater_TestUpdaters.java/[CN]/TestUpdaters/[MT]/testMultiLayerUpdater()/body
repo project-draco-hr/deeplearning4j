@@ -2,7 +2,7 @@
   Nd4j.getRandom().setSeed(12345L);
   int nLayers=4;
   double lr=0.03;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(0.5).list(nLayers).layer(0,new DenseLayer.Builder().nIn(4).nOut(5).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new DenseLayer.Builder().nIn(5).nOut(6).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).layer(2,new DenseLayer.Builder().nIn(6).nOut(7).updater(org.deeplearning4j.nn.conf.Updater.ADAGRAD).build()).layer(3,new DenseLayer.Builder().nIn(7).nOut(8).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(0.6).list(nLayers).layer(0,new DenseLayer.Builder().nIn(4).nOut(5).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new DenseLayer.Builder().nIn(5).nOut(6).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).layer(2,new DenseLayer.Builder().nIn(6).nOut(7).updater(org.deeplearning4j.nn.conf.Updater.ADAGRAD).build()).layer(3,new DenseLayer.Builder().nIn(7).nOut(8).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   Updater updater=UpdaterCreator.getUpdater(net);

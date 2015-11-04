@@ -1,0 +1,10 @@
+{
+  if (!blockingQueue.isEmpty())   return true;
+  if (runnable.isAlive) {
+    return true;
+  }
+ else {
+    if (!runnable.killRunnable && runnable.exception != null)     throw runnable.exception;
+    return !blockingQueue.isEmpty();
+  }
+}

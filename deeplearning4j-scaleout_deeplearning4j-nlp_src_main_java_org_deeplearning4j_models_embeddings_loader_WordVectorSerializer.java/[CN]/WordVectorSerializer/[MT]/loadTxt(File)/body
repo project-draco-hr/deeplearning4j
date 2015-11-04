@@ -1,8 +1,15 @@
 {
-  BufferedReader write=new BufferedReader(new FileReader(vectorsFile));
+  BufferedReader reader=new BufferedReader(new FileReader(vectorsFile));
   VocabCache cache=new InMemoryLookupCache();
-  InMemoryLookupTable lookupTable;
-  LineIterator iter=IOUtils.lineIterator(write);
+  LineIterator iter=IOUtils.lineIterator(reader);
+  if (iter.hasNext()) {
+    if (HAS_HEADER) {
+      iter.next();
+    }
+  }
+ else {
+    log.warn("Empty input file '" + vectorsFile + "'.");
+  }
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
     String line=iter.nextLine();
@@ -23,7 +30,7 @@
   for (int i=0; i < syn.rows(); i++) {
     syn.putRow(i,arrays.get(i));
   }
-  lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(arrays.get(0).columns()).useAdaGrad(false).cache(cache).build();
+  InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(arrays.get(0).columns()).useAdaGrad(false).cache(cache).build();
   Nd4j.clearNans(syn);
   lookupTable.setSyn0(syn);
   iter.close();

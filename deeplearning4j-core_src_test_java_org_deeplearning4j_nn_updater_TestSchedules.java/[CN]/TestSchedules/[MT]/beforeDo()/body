@@ -1,0 +1,19 @@
+{
+  int nLayers=2;
+  String wKey, bKey;
+  gradientSingle.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientSingle.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (int j=0; j < nLayers; j++) {
+    wKey=String.valueOf(j) + "_" + DefaultParamInitializer.WEIGHT_KEY;
+    gradientMLN.setGradientFor(wKey,weightGradient);
+    bKey=String.valueOf(j) + "_" + DefaultParamInitializer.BIAS_KEY;
+    gradientMLN.setGradientFor(bKey,biasGradient);
+  }
+  val=null;
+  gradExpected=null;
+  vPrev=null;
+  tmpStorage=new HashMap<>();
+  tmpStorage2=new HashMap<>();
+  tmpStorage3=new HashMap<>();
+  tmpStorage4=new HashMap<>();
+}

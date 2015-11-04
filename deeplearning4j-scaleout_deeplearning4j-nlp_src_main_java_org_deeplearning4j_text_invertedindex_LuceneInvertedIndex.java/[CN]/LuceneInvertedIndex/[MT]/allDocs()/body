@@ -1,11 +1,11 @@
 {
-  DirectoryReader reader=null;
+  DirectoryReader reader;
   try {
     readerManager.maybeRefreshBlocking();
     reader=readerManager.acquire();
   }
  catch (  IOException e) {
-    e.printStackTrace();
+    throw new RuntimeException(e);
   }
   int[] docIds=new int[reader.maxDoc()];
   if (docIds.length < 1)   throw new IllegalStateException("No documents found");

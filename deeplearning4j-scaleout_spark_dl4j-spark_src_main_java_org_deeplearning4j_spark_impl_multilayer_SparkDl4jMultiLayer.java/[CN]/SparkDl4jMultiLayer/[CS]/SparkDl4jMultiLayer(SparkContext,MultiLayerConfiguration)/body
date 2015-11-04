@@ -3,4 +3,5 @@
   this.conf=conf.clone();
   this.averageEachIteration=sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
   sc=new JavaSparkContext(this.sparkContext);
+  this.best_score_acc=BestScoreAccumulator.create(sparkContext);
 }

@@ -1,5 +1,6 @@
 {
   if (output.rank() != 2)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 2 (i.e., epsilons from feed forward layer)");
+  if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
   int[] shape=output.shape();
   int miniBatchSize=layer.getInputMiniBatchSize();
   INDArray reshaped=output.reshape(miniBatchSize,shape[0] / miniBatchSize,shape[1]);

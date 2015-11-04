@@ -1,0 +1,28 @@
+{
+  INDArray m, v;
+  double lr=0.01;
+  int iteration=0;
+  double beta1=0.8;
+  double beta2=0.888;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).iterations(iteration).adamMeanDecay(beta1).adamVarDecay(beta2).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADAM).build()).build();
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  Updater updater=UpdaterCreator.getUpdater(layer);
+  updater.update(layer,gradient,iteration);
+  double beta1t=FastMath.pow(beta1,iteration);
+  double beta2t=FastMath.pow(beta2,iteration);
+  double alphat=lr * FastMath.sqrt(1 - beta2t) / (1 - beta1t);
+  Gradient gradientDup=new DefaultGradient();
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
+    val=entry.getValue();
+    m=Nd4j.zeros(val.shape());
+    v=Nd4j.zeros(val.shape());
+    m.muli(beta1).addi(val.mul(1.0 - beta1));
+    v.muli(beta2).addi(val.mul(val).mul(1.0 - beta2));
+    gradExpected=m.mul(alphat).divi(Transforms.sqrt(v).addi(epsilon));
+    assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
+  }
+  assertEquals(beta1,layer.conf().getLayer().getAdamMeanDecay(),1e-4);
+  assertEquals(beta2,layer.conf().getLayer().getAdamVarDecay(),1e-4);
+}

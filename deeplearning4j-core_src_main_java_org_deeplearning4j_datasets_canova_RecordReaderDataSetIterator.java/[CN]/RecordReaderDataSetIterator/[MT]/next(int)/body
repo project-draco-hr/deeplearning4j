@@ -1,6 +1,7 @@
 {
   if (useCurrent) {
     useCurrent=false;
+    if (preProcessor != null)     preProcessor.preProcess(last);
     return last;
   }
   List<DataSet> dataSets=new ArrayList<>();
@@ -31,5 +32,6 @@
   }
   DataSet ret=new DataSet(Nd4j.vstack(inputs.toArray(new INDArray[0])),Nd4j.vstack(labels.toArray(new INDArray[0])));
   last=ret;
+  if (preProcessor != null)   preProcessor.preProcess(ret);
   return ret;
 }

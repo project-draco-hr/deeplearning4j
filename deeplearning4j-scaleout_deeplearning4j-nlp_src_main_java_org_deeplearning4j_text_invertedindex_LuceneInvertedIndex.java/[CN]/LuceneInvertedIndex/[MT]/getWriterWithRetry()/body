@@ -1,7 +1,7 @@
 {
   if (this.indexWriter != null)   return this.indexWriter;
   IndexWriterConfig iwc;
-  IndexWriter writer=null;
+  IndexWriter writer;
   try {
     if (analyzer == null)     analyzer=new StandardAnalyzer(new InputStreamReader(new ByteArrayInputStream("".getBytes())));
     ensureDirExists();

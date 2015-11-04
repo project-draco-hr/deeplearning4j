@@ -1,0 +1,34 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  double threshold=3;
+  for (int t=0; t < 2; t++) {
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new DenseLayer.Builder().nIn(10).nOut(20).updater(org.deeplearning4j.nn.conf.Updater.NONE).gradientNormalization(GradientNormalization.ClipL2PerLayer).gradientNormalizationThreshold(threshold).build()).build();
+    Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf);
+    Updater updater=UpdaterCreator.getUpdater(layer);
+    INDArray weightGrad=Nd4j.rand(10,20).muli((t == 0 ? 0.05 : 10));
+    INDArray biasGrad=Nd4j.rand(1,10).muli((t == 0 ? 0.05 : 10));
+    INDArray weightGradCopy=weightGrad.dup();
+    INDArray biasGradCopy=biasGrad.dup();
+    Gradient gradient=new DefaultGradient();
+    gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGrad);
+    gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGrad);
+    double layerGradL2=gradient.gradient().norm2Number().doubleValue();
+    if (t == 0)     assertTrue(layerGradL2 < threshold);
+ else     assertTrue(layerGradL2 > threshold);
+    updater.update(layer,gradient,0);
+    if (t == 0) {
+      assertEquals(weightGradCopy,weightGrad);
+      assertEquals(biasGradCopy,biasGrad);
+      continue;
+    }
+ else {
+      assertNotEquals(weightGradCopy,weightGrad);
+      assertNotEquals(biasGradCopy,biasGrad);
+    }
+    double scalingFactor=threshold / layerGradL2;
+    INDArray expectedWeightGrad=weightGradCopy.mul(scalingFactor);
+    INDArray expectedBiasGrad=biasGradCopy.mul(scalingFactor);
+    assertEquals(expectedWeightGrad,gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY));
+    assertEquals(expectedBiasGrad,gradient.getGradientFor(DefaultParamInitializer.BIAS_KEY));
+  }
+}
