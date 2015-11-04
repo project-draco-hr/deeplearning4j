@@ -1,0 +1,95 @@
+{
+  totalIterationCount++;
+  if (iteration % iterations != 0)   return;
+  Map<String,INDArray> params=model.paramTable();
+  Map<String,INDArray> grads=model.gradient().gradientForVariable();
+  if (totalIterationCount == 1 && printHeader) {
+    StringBuilder sb=new StringBuilder();
+    sb.append("n");
+    sb.append(delimiter);
+    sb.append("score");
+    for (    String s : params.keySet()) {
+      if (printMean)       sb.append(delimiter).append(s).append("_mean");
+      if (printMinMax) {
+        sb.append(delimiter).append(s).append("_min").append(delimiter).append(s).append("_max");
+      }
+      if (printMeanAbsValue)       sb.append(delimiter).append(s).append("_meanAbsValue");
+      if (printMean)       sb.append(delimiter).append(s).append("_meanG");
+      if (printMinMax) {
+        sb.append(delimiter).append(s).append("_minG").append(delimiter).append(s).append("_maxG");
+      }
+      if (printMeanAbsValue)       sb.append(delimiter).append(s).append("_meanAbsValueG");
+    }
+    sb.append("\n");
+    if (outputToFile) {
+      try {
+        Files.write(filePath,sb.toString().getBytes(),StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
+      }
+ catch (      IOException e) {
+        if (writeFailureCount++ < MAX_WRITE_FAILURE_MESSAGES) {
+          logger.warn("Error writing to file: {}",e);
+        }
+        if (writeFailureCount == MAX_WRITE_FAILURE_MESSAGES) {
+          logger.warn("Max file write messages displayed. No more failure messages will be printed");
+        }
+      }
+    }
+    if (outputToLogger)     logger.info(sb.toString());
+    if (outputToConsole)     System.out.println(sb.toString());
+  }
+  StringBuilder sb=new StringBuilder();
+  sb.append(totalIterationCount);
+  sb.append(delimiter);
+  sb.append(model.score());
+  for (  String s : params.keySet()) {
+    INDArray currParams=params.get(s);
+    INDArray currGrad=grads.get(s);
+    if (printMean) {
+      sb.append(delimiter);
+      sb.append(currParams.meanNumber().doubleValue());
+    }
+    if (printMinMax) {
+      sb.append(delimiter);
+      sb.append(currParams.minNumber().doubleValue());
+      sb.append(delimiter);
+      sb.append(currParams.maxNumber().doubleValue());
+    }
+    if (printMeanAbsValue) {
+      sb.append(delimiter);
+      INDArray abs=Transforms.abs(currParams.dup());
+      sb.append(abs.meanNumber().doubleValue());
+    }
+    if (printMean) {
+      sb.append(delimiter);
+      sb.append(currGrad.meanNumber().doubleValue());
+    }
+    if (printMinMax) {
+      sb.append(delimiter);
+      sb.append(currGrad.minNumber().doubleValue());
+      sb.append(delimiter);
+      sb.append(currGrad.maxNumber().doubleValue());
+    }
+    if (printMeanAbsValue) {
+      sb.append(delimiter);
+      INDArray abs=Transforms.abs(currGrad.dup());
+      sb.append(abs.meanNumber().doubleValue());
+    }
+  }
+  sb.append("\n");
+  String out=sb.toString();
+  if (outputToLogger)   logger.info(out);
+  if (outputToConsole)   System.out.print(out);
+  if (outputToFile) {
+    try {
+      Files.write(filePath,out.getBytes(),StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+    }
+ catch (    IOException e) {
+      if (writeFailureCount++ < MAX_WRITE_FAILURE_MESSAGES) {
+        logger.warn("Error writing to file: {}",e);
+      }
+      if (writeFailureCount == MAX_WRITE_FAILURE_MESSAGES) {
+        logger.warn("Max file write messages displayed. No more failure messages will be printed");
+      }
+    }
+  }
+}
