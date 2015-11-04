@@ -1,0 +1,11 @@
+{
+  IrisDataSetIterator iter=new IrisDataSetIterator(30,150);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(1e-5).iterations(1).list(3).layer(0,new DenseLayer.Builder().nIn(4).nOut(20).build()).layer(1,new DenseLayer.Builder().nIn(20).nOut(30).build()).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(30).nOut(3).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  IterationListener listener=ParamAndGradientIterationListener.builder().outputToFile(true).file(new File(System.getProperty("java.io.tmpdir") + "/paramAndGradTest.txt")).outputToConsole(true).outputToLogger(false).iterations(1).printHeader(true).printMean(false).printMinMax(false).printMeanAbsValue(true).delimiter("\t").build();
+  net.setListeners(listener);
+  for (int i=0; i < 2; i++) {
+    net.fit(iter);
+  }
+}

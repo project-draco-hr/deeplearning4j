@@ -1,0 +1,13 @@
+{
+  this.printHeader=printHeader;
+  this.printMean=printMean;
+  this.printMinMax=printMinMax;
+  this.printMeanAbsValue=printMeanAbsValue;
+  this.iterations=iterations;
+  this.file=file;
+  this.filePath=file.toPath();
+  this.outputToConsole=outputToConsole;
+  this.outputToFile=outputToFile;
+  this.outputToLogger=outputToLogger;
+  this.delimiter=delimiter;
+}
