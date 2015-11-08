@@ -1,0 +1,7 @@
+int threadId
+long linesLimit
+int iteration
+AtomicLong wordsCounter
+long totalWordsCount
+AtomicLong linesCounter
+LinkedBlockingQueue<List<VocabWord>> buffer

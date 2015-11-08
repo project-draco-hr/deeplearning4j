@@ -1,56 +1,50 @@
 {
-  boolean loaded=buildVocab();
-  if (!loaded && saveVocab)   vocab().saveVocab();
-  if (stopWords == null)   readStopWords();
-  log.info("Training word2vec multithreaded");
-  if (sentenceIter != null)   sentenceIter.reset();
-  if (docIter != null)   docIter.reset();
-  int[] docs=vectorizer.index().allDocs();
-  if (docs.length < 1) {
-    vectorizer.fit();
+  final AtomicLong totalLines=new AtomicLong(0);
+  final LinkedBlockingQueue<List<VocabWord>> sentences=new LinkedBlockingQueue<>();
+  log.info("Building vocabulary...");
+  while (sentenceIter.hasNext()) {
+    Tokenizer tokenizer=tokenizerFactory.create(sentenceIter.nextSentence());
+    int wordsAdded=this.fillVocabulary(tokenizer.getTokens());
+    if (wordsAdded > 0)     totalLines.incrementAndGet();
+    if (totalLines.get() % 100000 == 0)     log.info("" + totalLines.get() + " lines parsed. Vocab size: "+ vocabularyHolder.numWords());
   }
-  docs=vectorizer.index().allDocs();
-  if (docs.length < 1) {
-    throw new IllegalStateException("No documents found");
-  }
-  totalWords=vectorizer.numWordsEncountered();
-  if (totalWords < 1)   throw new IllegalStateException("Unable to train, total words less than 1");
-  totalWords*=numIterations;
-  log.info("Processing sentences...");
-  AtomicLong numWordsSoFar=new AtomicLong(0);
-  final AtomicLong nextRandom=new AtomicLong(5);
-  ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
-    @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
+  log.info("" + totalLines.get() + " lines parsed. Vocab size: "+ vocabularyHolder.numWords());
+  vocabularyHolder.truncateVocabulary(minWordFrequency);
+  final long totalWordsCount=vocabularyHolder.totalWordsBeyondLimit() * numIterations;
+  log.info("Total truncated vocab size: " + vocabularyHolder.numWords());
+  vocabularyHolder.transferBackToVocabCache(vocab);
+  log.info("Building matrices & resetting weights...");
+  lookupTable.resetWeights();
+  int iteration=1;
+  final long maxLines=totalLines.get();
+  while (iteration <= numIterations) {
+    log.info("Starting async iterator...");
+    totalLines.set(0);
+    final AtomicLong wordsCounter=new AtomicLong(0);
+    AsyncIteratorDigitizer roller=new AsyncIteratorDigitizer(sentenceIter,sentences,totalLines);
+    roller.start();
+    log.info("Starting vectorization process...");
+    final VectorCalculationsThread[] threads=new VectorCalculationsThread[workers];
+    for (int x=0; x < workers; x++) {
+      threads[x]=new VectorCalculationsThread(x,maxLines,iteration,wordsCounter,totalWordsCount,totalLines,sentences);
+      threads[x].start();
+    }
+    try {
+      roller.join();
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+    for (int x=0; x < workers; x++) {
       try {
-        Thread.sleep(1000);
+        threads[x].join();
       }
  catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
+        e.printStackTrace();
       }
-      executor.submit(r);
     }
+    log.info("Iteration: " + iteration + "; Lines vectorized so far: "+ totalLines.get());
+    iteration++;
   }
-);
-  final Queue<List<VocabWord>> batch2=new ConcurrentLinkedDeque<>();
-  vectorizer.index().eachDoc(new Function<List<VocabWord>,Void>(){
-    @Override public Void apply(    List<VocabWord> input){
-      List<VocabWord> batch=new ArrayList<>();
-      addWords(input,nextRandom,batch);
-      if (!batch.isEmpty()) {
-        batch2.add(batch);
-      }
-      return null;
-    }
-  }
-,exec);
-  exec.shutdown();
-  try {
-    exec.awaitTermination(1,TimeUnit.DAYS);
-  }
- catch (  InterruptedException e) {
-    e.printStackTrace();
-  }
-  ActorSystem actorSystem=ActorSystem.create();
-  for (int i=0; i < numIterations; i++)   doIteration(batch2,numWordsSoFar,nextRandom,actorSystem);
-  actorSystem.shutdown();
+  log.info("Vectorization accomplished.");
 }

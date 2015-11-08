@@ -1,0 +1,10 @@
+{
+  Set<String> keyset=vocabulary.keySet();
+  for (  String word : keyset) {
+    if (vocabulary.get(word).getCount() < threshold) {
+      VocabularyWord vw=vocabulary.get(word);
+      vocabulary.remove(word);
+      if (vw.getHuffmanNode() != null)       idxMap.remove(vw.getHuffmanNode().getIdx());
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  this.iterator=iterator;
+  this.buffer=buffer;
+  this.linesCounter=linesCounter;
+  this.setName("AsyncIteratorReader thread");
+  this.iterator.reset();
+}

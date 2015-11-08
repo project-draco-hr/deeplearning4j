@@ -1,0 +1,6 @@
+{
+  if (vocabulary.containsKey(word)) {
+    vocabulary.get(word).incrementCount();
+  }
+ else   throw new IllegalStateException("No such word found");
+}
