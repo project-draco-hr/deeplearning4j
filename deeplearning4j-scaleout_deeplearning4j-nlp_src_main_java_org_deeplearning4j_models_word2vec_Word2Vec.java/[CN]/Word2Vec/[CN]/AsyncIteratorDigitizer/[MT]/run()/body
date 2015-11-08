@@ -1,0 +1,23 @@
+{
+  while (this.iterator.hasNext()) {
+    if (buffer.size() < limitLower) {
+      AtomicInteger linesLoaded=new AtomicInteger(0);
+      while (linesLoaded.getAndIncrement() < limitUpper && this.iterator.hasNext()) {
+        Tokenizer tokenizer=Word2Vec.this.tokenizerFactory.create(this.iterator.nextSentence());
+        List<VocabWord> list=Word2Vec.this.digitizeSentence(tokenizer.getTokens());
+        if (list != null && !list.isEmpty()) {
+          buffer.add(list);
+        }
+        linesLoaded.incrementAndGet();
+      }
+    }
+ else {
+      try {
+        Thread.sleep(50);
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}

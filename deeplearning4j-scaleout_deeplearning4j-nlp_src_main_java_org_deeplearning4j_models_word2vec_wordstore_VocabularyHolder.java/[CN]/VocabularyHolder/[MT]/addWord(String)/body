@@ -1,0 +1,7 @@
+{
+  if (!vocabulary.containsKey(word)) {
+    VocabularyWord vw=new VocabularyWord(word);
+    vocabulary.putIfAbsent(word,vw);
+    return;
+  }
+}

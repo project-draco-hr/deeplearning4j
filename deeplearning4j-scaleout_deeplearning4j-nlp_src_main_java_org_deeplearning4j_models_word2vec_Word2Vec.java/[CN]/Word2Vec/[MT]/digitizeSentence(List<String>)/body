@@ -1,0 +1,9 @@
+{
+  List<VocabWord> result=new ArrayList<>(tokens.size());
+  for (  String token : tokens) {
+    if (stopWords != null && stopWords.contains(token))     continue;
+    VocabWord word=vocab.wordFor(token);
+    if (word != null)     result.add(word);
+  }
+  return result;
+}

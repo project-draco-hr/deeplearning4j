@@ -1,0 +1,75 @@
+{
+  int min1i;
+  int min2i;
+  int b;
+  int i;
+  List<VocabularyWord> vocab=this.words();
+  int count[]=new int[vocab.size() * 2 + 1];
+  int parent_node[]=new int[vocab.size() * 2 + 1];
+  byte binary[]=new byte[vocab.size() * 2 + 1];
+  for (int a=0; a < vocab.size(); a++)   count[a]=vocab.get(a).getCount();
+  for (int a=vocab.size(); a < vocab.size() * 2; a++)   count[a]=Integer.MAX_VALUE;
+  int pos1=vocab.size() - 1;
+  int pos2=vocab.size();
+  for (int a=0; a < vocab.size(); a++) {
+    if (pos1 >= 0) {
+      if (count[pos1] < count[pos2]) {
+        min1i=pos1;
+        pos1--;
+      }
+ else {
+        min1i=pos2;
+        pos2++;
+      }
+    }
+ else {
+      min1i=pos2;
+      pos2++;
+    }
+    if (pos1 >= 0) {
+      if (count[pos1] < count[pos2]) {
+        min2i=pos1;
+        pos1--;
+      }
+ else {
+        min2i=pos2;
+        pos2++;
+      }
+    }
+ else {
+      min2i=pos2;
+      pos2++;
+    }
+    count[vocab.size() + a]=count[min1i] + count[min2i];
+    parent_node[min1i]=vocab.size() + a;
+    parent_node[min2i]=vocab.size() + a;
+    binary[min2i]=1;
+  }
+  byte[] code=new byte[MAX_CODE_LENGTH];
+  int[] point=new int[MAX_CODE_LENGTH];
+  for (int a=0; a < vocab.size(); a++) {
+    b=a;
+    i=0;
+    byte[] lcode=new byte[MAX_CODE_LENGTH];
+    int[] lpoint=new int[MAX_CODE_LENGTH];
+    while (true) {
+      code[i]=binary[b];
+      point[i]=b;
+      i++;
+      b=parent_node[b];
+      if (b == vocab.size() * 2 - 2)       break;
+    }
+    lpoint[0]=vocab.size() - 2;
+    for (b=0; b < i; b++) {
+      lcode[i - b - 1]=code[b];
+      lpoint[i - b]=point[b] - vocab.size();
+    }
+    vocab.get(a).setHuffmanNode(new HuffmanNode(lcode,lpoint,a,(byte)i));
+  }
+  idxMap.clear();
+  int a=0;
+  for (  VocabularyWord word : vocab) {
+    idxMap.putIfAbsent(word.getHuffmanNode().getIdx(),word);
+  }
+  return vocab;
+}
