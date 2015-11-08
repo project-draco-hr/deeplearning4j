@@ -1,16 +1,12 @@
 {
-  MultiLayerNetwork network=new MultiLayerNetwork(conf);
-  network.init();
-  final INDArray params=network.params();
-  this.params=sc.broadcast(params);
-  log.info("Broadcasting initial parameters of length " + params.length());
+  log.info("Broadcasting initial parameters of length " + network.numParams());
+  this.params=sc.broadcast(network.params());
   int paramsLength=network.numParams();
-  if (params.length() != paramsLength)   throw new IllegalStateException("Number of params " + paramsLength + " was not equal to "+ params.length());
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
     JavaRDD<Gradient> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params),true).cache();
     log.info("Ran iterative reduce...averaging results now.");
-    GradientAdder a=new GradientAdder(params.length());
+    GradientAdder a=new GradientAdder(paramsLength);
     results.foreach(a);
     INDArray accumulatedGradient=a.getAccumulator().value();
     boolean divideGrad=sc.getConf().getBoolean(DIVIDE_ACCUM_GRADIENT,false);
@@ -19,12 +15,11 @@
     log.info("Summed gradients.");
     network.setParameters(network.params().addi(accumulatedGradient));
     log.info("Set parameters");
-    this.network=network;
   }
  else {
     JavaRDD<INDArray> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.best_score_acc),true).cache();
-    log.info("Ran iterative reduce...averaging results now.");
-    Adder a=new Adder(params.length());
+    log.info("Ran iterative reduce... averaging parameters now.");
+    Adder a=new Adder(paramsLength);
     results.foreach(a);
     INDArray newParams=a.getAccumulator().value();
     log.info("Accumulated parameters");
@@ -32,6 +27,5 @@
     log.info("Divided by partitions");
     network.setParameters(newParams);
     log.info("Set parameters");
-    this.network=network;
   }
 }

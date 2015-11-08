@@ -1,14 +1,21 @@
 {
   int iterations=conf.getConf(0).getNumIterations();
-  log.info("Running distributed training averaging each iteration " + averageEachIteration + " and "+ rdd.partitions().size()+ " partitions");
-  if (!averageEachIteration)   runIteration(rdd);
+  log.info("Running distributed training:  (averaging each iteration = " + averageEachIteration + "), (iterations ="+ iterations+ "), (num partions = "+ rdd.partitions().size()+ ")");
+  if (!averageEachIteration) {
+    runIteration(rdd);
+  }
  else {
-    for (    NeuralNetConfiguration conf : this.conf.getConfs())     conf.setNumIterations(1);
-    MultiLayerNetwork network=new MultiLayerNetwork(conf);
-    network.init();
-    final INDArray params=network.params();
-    this.params=sc.broadcast(params);
-    for (int i=0; i < iterations; i++)     runIteration(rdd);
+    for (    NeuralNetConfiguration conf : this.conf.getConfs()) {
+      conf.setNumIterations(1);
+    }
+    for (int i=0; i < iterations; i++) {
+      runIteration(rdd);
+    }
+    if (iterations > 1) {
+      for (      NeuralNetConfiguration conf : this.conf.getConfs()) {
+        conf.setNumIterations(iterations);
+      }
+    }
   }
   return network;
 }

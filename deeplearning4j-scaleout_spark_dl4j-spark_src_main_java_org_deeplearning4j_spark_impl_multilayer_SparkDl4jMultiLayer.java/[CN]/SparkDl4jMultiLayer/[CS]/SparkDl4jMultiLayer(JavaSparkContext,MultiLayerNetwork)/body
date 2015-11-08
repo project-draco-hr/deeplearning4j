@@ -1,8 +1,8 @@
 {
-  this.sparkContext=sparkContext;
-  sc=new JavaSparkContext(this.sparkContext);
-  this.conf=conf.clone();
-  this.network=new MultiLayerNetwork(conf);
+  this.sparkContext=javaSparkContext.sc();
+  sc=javaSparkContext;
+  this.conf=this.network.getLayerWiseConfigurations().clone();
+  this.network=network;
   this.network.init();
   this.averageEachIteration=sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
   this.best_score_acc=BestScoreAccumulator.create(sparkContext);
