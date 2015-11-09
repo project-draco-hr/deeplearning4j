@@ -1,0 +1,8 @@
+{
+  try {
+    return buffer.size() > 0 || iterator.hasNext() || (currentReader != null && currentReader.ready());
+  }
+ catch (  IOException e) {
+    return false;
+  }
+}

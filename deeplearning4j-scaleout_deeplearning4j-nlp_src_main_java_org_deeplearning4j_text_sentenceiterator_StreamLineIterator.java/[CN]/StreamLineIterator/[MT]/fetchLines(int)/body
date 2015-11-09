@@ -1,0 +1,18 @@
+{
+  String line="";
+  int cnt=0;
+  try {
+    while (cnt < linesToFetch && (line=currentReader.readLine()) != null) {
+      buffer.add(line);
+      cnt++;
+    }
+    if (line == null) {
+      currentReader.close();
+      currentReader=null;
+    }
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+    throw new RuntimeException(e);
+  }
+}

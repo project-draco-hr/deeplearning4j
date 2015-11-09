@@ -1,0 +1,24 @@
+{
+  this(new DocumentIterator(){
+    private final InputStream onlyStream=stream;
+    private AtomicBoolean isConsumed=new AtomicBoolean(false);
+    @Override public boolean hasNext(){
+      return !isConsumed.get();
+    }
+    @Override public InputStream nextDocument(){
+      isConsumed.set(true);
+      return this.onlyStream;
+    }
+    @Override public void reset(){
+      isConsumed.set(false);
+      try {
+        this.onlyStream.reset();
+      }
+ catch (      IOException e) {
+        e.printStackTrace();
+        throw new RuntimeException(e);
+      }
+    }
+  }
+);
+}
