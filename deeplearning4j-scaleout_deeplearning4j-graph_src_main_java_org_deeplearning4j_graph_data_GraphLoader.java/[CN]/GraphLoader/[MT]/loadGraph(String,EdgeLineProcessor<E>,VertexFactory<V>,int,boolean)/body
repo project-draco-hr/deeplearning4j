@@ -1,0 +1,13 @@
+{
+  SimpleGraph<V,E> graph=new SimpleGraph<>(numVertices,allowMultipleEdges,vertexFactory);
+  try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
+    String line;
+    while ((line=br.readLine()) != null) {
+      Edge<E> edge=lineProcessor.processLine(line);
+      if (edge != null) {
+        graph.addEdge(edge);
+      }
+    }
+  }
+   return graph;
+}

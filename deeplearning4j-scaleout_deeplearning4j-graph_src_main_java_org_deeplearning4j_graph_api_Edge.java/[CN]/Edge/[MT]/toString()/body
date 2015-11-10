@@ -1,0 +1,3 @@
+{
+  return "edge(" + (directed ? "directod" : "undirected") + ","+ from+ (directed ? "->" : "--")+ to+ ","+ (value != null ? value : "")+ ")";
+}

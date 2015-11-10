@@ -1,0 +1,4 @@
+{
+  if (format != null)   return new Vertex<>(vertexIdx,String.format(format,vertexIdx));
+ else   return new Vertex<>(vertexIdx,String.valueOf(vertexIdx));
+}
