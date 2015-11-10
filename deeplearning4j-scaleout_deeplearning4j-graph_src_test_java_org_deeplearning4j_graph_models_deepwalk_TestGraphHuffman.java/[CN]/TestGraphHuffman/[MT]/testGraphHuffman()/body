@@ -1,0 +1,9 @@
+{
+  GraphHuffman gh=new GraphHuffman(7);
+  int[] vertexDegrees={10,15,12,3,4,13,1};
+  gh.buildTree(vertexDegrees);
+  int[] expectedLengths={3,2,2,5,4,2,5};
+  for (int i=0; i < vertexDegrees.length; i++) {
+    assertEquals(expectedLengths[i],gh.getCodeLengthForVertex(i));
+  }
+}

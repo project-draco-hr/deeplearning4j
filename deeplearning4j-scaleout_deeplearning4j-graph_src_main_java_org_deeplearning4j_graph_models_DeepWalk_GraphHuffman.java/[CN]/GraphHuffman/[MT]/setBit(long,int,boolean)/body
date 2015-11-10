@@ -1,0 +1,4 @@
+{
+  if (value)   return (in|=1L << bitNum);
+ else   return (in&=~(1 << bitNum));
+}
