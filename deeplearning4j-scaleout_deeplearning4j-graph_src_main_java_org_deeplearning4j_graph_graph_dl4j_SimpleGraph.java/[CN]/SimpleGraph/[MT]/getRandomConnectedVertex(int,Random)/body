@@ -1,0 +1,8 @@
+{
+  if (vertex < 0 || vertex >= vertices.size())   throw new IllegalArgumentException("Invalid vertex index: " + vertex);
+  if (edges[vertex] == null || edges[vertex].size() == 0)   throw new NoEdgesException("Cannot generate random connected vertex: vertex " + vertex + " has no outgoing/undirected edges");
+  int connectedVertexNum=rng.nextInt(edges[vertex].size());
+  Edge<E> edge=edges[vertex].get(connectedVertexNum);
+  if (edge.getFrom() == vertex)   return vertices.get(edge.getTo());
+ else   return vertices.get(edge.getFrom());
+}
