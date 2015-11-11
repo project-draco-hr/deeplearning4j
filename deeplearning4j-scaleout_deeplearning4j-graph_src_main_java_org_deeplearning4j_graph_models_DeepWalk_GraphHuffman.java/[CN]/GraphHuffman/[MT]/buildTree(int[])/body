@@ -8,5 +8,6 @@
     pq.add(newNode);
   }
   Node tree=pq.remove();
-  traverse(tree,0L,(byte)0);
+  int[] innerNodePath=new int[MAX_CODE_LENGTH];
+  traverse(tree,0L,(byte)0,-1,innerNodePath,0);
 }

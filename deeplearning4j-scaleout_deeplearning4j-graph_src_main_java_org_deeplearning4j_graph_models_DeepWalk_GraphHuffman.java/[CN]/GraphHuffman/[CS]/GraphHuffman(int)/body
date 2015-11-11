@@ -1,4 +1,5 @@
 {
   codes=new long[nVertices];
   codeLength=new byte[nVertices];
+  innerNodePathToLeaf=new int[nVertices][0];
 }

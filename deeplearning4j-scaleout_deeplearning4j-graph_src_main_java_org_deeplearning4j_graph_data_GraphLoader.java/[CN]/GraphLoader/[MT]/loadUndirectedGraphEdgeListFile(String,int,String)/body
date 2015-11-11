@@ -1,0 +1,14 @@
+{
+  SimpleGraph<String,String> graph=new SimpleGraph<>(numVertices,false,new StringVertexFactory());
+  EdgeLineProcessor<String> lineProcessor=new DelimitedEdgeLineProcessor(delim,false);
+  try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
+    String line;
+    while ((line=br.readLine()) != null) {
+      Edge<String> edge=lineProcessor.processLine(line);
+      if (edge != null) {
+        graph.addEdge(edge);
+      }
+    }
+  }
+   return graph;
+}

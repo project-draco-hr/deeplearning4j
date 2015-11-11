@@ -1,9 +1,11 @@
 {
+  if (!initCalled)   throw new UnsupportedOperationException("DeepWalk not initialized (call initialize before fit)");
   int walkLength=iterator.walkLength();
   while (iterator.hasNext()) {
     VertexSequence<V> sequence=iterator.next();
     int[] walk=new int[walkLength + 1];
     int i=0;
-    while (iterator.hasNext())     walk[i++]=sequence.next().vertexID();
+    while (sequence.hasNext())     walk[i++]=sequence.next().vertexID();
+    skipGram(walk);
   }
 }

@@ -1,0 +1,8 @@
+{
+  this.nVertices=nVertices;
+  this.vectorSize=vectorSize;
+  this.tree=tree;
+  this.learningRate=learningRate;
+  this.vertexVectors=Nd4j.rand(nVertices,vectorSize).subi(0.5).divi(vectorSize);
+  this.outWeights=Nd4j.rand(nVertices,vectorSize).subi(0.5).divi(vectorSize);
+}

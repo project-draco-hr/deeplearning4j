@@ -1,0 +1,7 @@
+{
+  GraphHuffman gh=new GraphHuffman(graphVertexDegrees.length);
+  gh.buildTree(graphVertexDegrees);
+  tree=gh;
+  lookupTable=new InMemoryGraphLookupTable(graphVertexDegrees.length,vectorSize,gh,learningRate);
+  initCalled=true;
+}
