@@ -1,9 +1,0 @@
-{
-  this.graph=graph;
-  this.walkLength=walkLength;
-  this.mode=mode;
-  rng=new Random(rngSeed);
-  order=new int[graph.numVertices()];
-  for (int i=0; i < order.length; i++)   order[i]=i;
-  reset();
-}

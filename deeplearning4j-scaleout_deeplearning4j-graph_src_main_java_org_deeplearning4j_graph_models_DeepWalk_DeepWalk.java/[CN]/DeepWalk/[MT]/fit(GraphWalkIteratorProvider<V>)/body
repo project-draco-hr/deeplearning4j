@@ -1,0 +1,32 @@
+{
+  if (!initCalled)   throw new UnsupportedOperationException("DeepWalk not initialized (call initialize before fit)");
+  List<GraphWalkIterator<V>> iteratorList=iteratorProvider.getGraphWalkIterators(nThreads);
+  executorService=Executors.newFixedThreadPool(nThreads,new ThreadFactory(){
+    @Override public Thread newThread(    Runnable r){
+      Thread t=new Thread(r);
+      t.setDaemon(true);
+      return t;
+    }
+  }
+);
+  List<Future<Void>> list=new ArrayList<>(iteratorList.size());
+  for (  GraphWalkIterator<V> iter : iteratorList) {
+    LearningCallable c=new LearningCallable(iter);
+    list.add(executorService.submit(c));
+  }
+  executorService.shutdown();
+  try {
+    executorService.awaitTermination(999,TimeUnit.DAYS);
+  }
+ catch (  InterruptedException e) {
+    throw new RuntimeException("ExecutorService interrupted",e);
+  }
+  for (  Future<Void> f : list) {
+    try {
+      f.get();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}
