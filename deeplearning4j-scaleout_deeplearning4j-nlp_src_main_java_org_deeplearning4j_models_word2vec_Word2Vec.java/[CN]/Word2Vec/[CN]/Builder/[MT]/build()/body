@@ -1,81 +1,45 @@
 {
-  if (iter == null) {
-    Word2Vec ret=new Word2Vec();
-    ret.window=window;
-    ret.alpha.set(lr);
-    ret.vectorizer=textVectorizer;
-    ret.stopWords=stopWords;
-    ret.setVocab(vocabCache);
-    ret.numIterations=iterations;
-    ret.minWordFrequency=minWordFrequency;
-    ret.seed=seed;
-    ret.saveVocab=saveVocab;
-    ret.batchSize=batchSize;
-    ret.useAdaGrad=useAdaGrad;
-    ret.minLearningRate=minLearningRate;
-    ret.sample=sampling;
-    ret.workers=workers;
-    ret.invertedIndex=index;
-    ret.lookupTable=lookupTable;
-    try {
-      if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
-    if (vocabCache == null) {
-      vocabCache=new InMemoryLookupCache();
-      ret.setVocab(vocabCache);
-    }
-    if (lookupTable == null) {
-      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
-    }
-    ret.docIter=docIter;
-    ret.lookupTable=lookupTable;
-    ret.tokenizerFactory=tokenizerFactory;
-    if (this.vocabCache != null)     ret.vocabularyHolder=new VocabularyHolder(this.vocabCache);
- else     ret.vocabularyHolder=new VocabularyHolder();
-    return ret;
+  if (iter == null && docIter == null)   throw new IllegalStateException("At least one iterator is needed for model building");
+  if (iter == null && docIter != null) {
+    this.iter=new StreamLineIterator.Builder(docIter).setFetchSize(100).build();
   }
- else {
-    Word2Vec ret=new Word2Vec();
-    ret.alpha.set(lr);
-    ret.sentenceIter=iter;
-    ret.window=window;
-    ret.useAdaGrad=useAdaGrad;
-    ret.minLearningRate=minLearningRate;
-    ret.vectorizer=textVectorizer;
-    ret.stopWords=stopWords;
-    ret.minWordFrequency=minWordFrequency;
-    ret.setVocab(vocabCache);
-    ret.docIter=docIter;
-    ret.minWordFrequency=minWordFrequency;
-    ret.numIterations=iterations;
-    ret.seed=seed;
-    ret.numIterations=iterations;
-    ret.saveVocab=saveVocab;
-    ret.batchSize=batchSize;
-    ret.sample=sampling;
-    ret.workers=workers;
-    ret.invertedIndex=index;
-    ret.lookupTable=lookupTable;
-    try {
-      if (tokenizerFactory == null)       tokenizerFactory=new UimaTokenizerFactory();
-    }
- catch (    Exception e) {
-      throw new RuntimeException(e);
-    }
-    if (vocabCache == null) {
-      vocabCache=new InMemoryLookupCache();
-      ret.setVocab(vocabCache);
-    }
-    if (lookupTable == null) {
-      lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
-    }
-    ret.lookupTable=lookupTable;
-    ret.tokenizerFactory=tokenizerFactory;
-    if (this.vocabCache != null)     ret.vocabularyHolder=new VocabularyHolder(this.vocabCache);
- else     ret.vocabularyHolder=new VocabularyHolder();
-    return ret;
+  Word2Vec ret=new Word2Vec();
+  ret.alpha.set(lr);
+  ret.sentenceIter=iter;
+  ret.window=window;
+  ret.useAdaGrad=useAdaGrad;
+  ret.minLearningRate=minLearningRate;
+  ret.vectorizer=textVectorizer;
+  ret.stopWords=stopWords;
+  ret.minWordFrequency=minWordFrequency;
+  ret.setVocab(vocabCache);
+  ret.docIter=docIter;
+  ret.minWordFrequency=minWordFrequency;
+  ret.numIterations=iterations;
+  ret.seed=seed;
+  ret.numIterations=iterations;
+  ret.saveVocab=saveVocab;
+  ret.batchSize=batchSize;
+  ret.sample=sampling;
+  ret.workers=workers;
+  ret.invertedIndex=index;
+  ret.lookupTable=lookupTable;
+  try {
+    if (tokenizerFactory == null)     tokenizerFactory=new UimaTokenizerFactory();
   }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  if (vocabCache == null) {
+    vocabCache=new InMemoryLookupCache();
+    ret.setVocab(vocabCache);
+  }
+  if (lookupTable == null) {
+    lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
+  }
+  ret.lookupTable=lookupTable;
+  ret.tokenizerFactory=tokenizerFactory;
+  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder(this.vocabCache);
+ else   ret.vocabularyHolder=new VocabularyHolder();
+  return ret;
 }
