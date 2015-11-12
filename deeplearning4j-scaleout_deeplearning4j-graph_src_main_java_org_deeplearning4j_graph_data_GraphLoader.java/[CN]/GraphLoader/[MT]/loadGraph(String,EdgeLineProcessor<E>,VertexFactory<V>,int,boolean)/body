@@ -1,5 +1,5 @@
 {
-  SimpleGraph<V,E> graph=new SimpleGraph<>(numVertices,allowMultipleEdges,vertexFactory);
+  Graph<V,E> graph=new Graph<>(numVertices,allowMultipleEdges,vertexFactory);
   try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
     String line;
     while ((line=br.readLine()) != null) {

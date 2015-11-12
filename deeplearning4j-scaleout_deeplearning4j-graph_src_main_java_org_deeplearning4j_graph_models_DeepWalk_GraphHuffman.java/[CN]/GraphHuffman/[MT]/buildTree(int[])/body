@@ -1,6 +1,6 @@
 {
   PriorityQueue<Node> pq=new PriorityQueue<>();
-  for (int i=0; i < nodeDegree.length; i++)   pq.add(new Node(i,nodeDegree[i],null,null));
+  for (int i=0; i < vertexDegree.length; i++)   pq.add(new Node(i,vertexDegree[i],null,null));
   while (pq.size() > 1) {
     Node left=pq.remove();
     Node right=pq.remove();

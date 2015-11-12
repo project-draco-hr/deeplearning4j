@@ -1,6 +1,6 @@
 {
   List<Vertex<V>> vertices=vertexLoader.loadVertices(vertexFilePath);
-  SimpleGraph<V,E> graph=new SimpleGraph<>(vertices,allowMultipleEdges);
+  Graph<V,E> graph=new Graph<>(vertices,allowMultipleEdges);
   try (BufferedReader br=new BufferedReader(new FileReader(new File(edgeFilePath)))){
     String line;
     while ((line=br.readLine()) != null) {

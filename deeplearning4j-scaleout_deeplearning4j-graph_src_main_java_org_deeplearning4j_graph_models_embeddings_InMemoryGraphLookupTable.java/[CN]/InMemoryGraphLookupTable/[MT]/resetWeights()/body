@@ -1,3 +1,4 @@
 {
-  vertexVectors=Nd4j.rand(nVertices,vectorSize);
+  this.vertexVectors=Nd4j.rand(nVertices,vectorSize).subi(0.5).divi(vectorSize);
+  this.outWeights=Nd4j.rand(nVertices - 1,vectorSize).subi(0.5).divi(vectorSize);
 }

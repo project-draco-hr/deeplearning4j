@@ -3,7 +3,7 @@
   ClassPathResource edgesCPR=new ClassPathResource("test_graph_edges.txt");
   EdgeLineProcessor<String> edgeLineProcessor=new DelimitedEdgeLineProcessor(",",false,"//");
   VertexLoader<String> vertexLoader=new DelimitedVertexLoader(":","//");
-  SimpleGraph<String,String> graph=GraphLoader.loadGraph(verticesCPR.getFile().getAbsolutePath(),edgesCPR.getFile().getAbsolutePath(),vertexLoader,edgeLineProcessor,false);
+  Graph<String,String> graph=GraphLoader.loadGraph(verticesCPR.getFile().getAbsolutePath(),edgesCPR.getFile().getAbsolutePath(),vertexLoader,edgeLineProcessor,false);
   System.out.println(graph);
   for (int i=0; i < 10; i++) {
     List<Edge<String>> edges=graph.getEdgesOut(i);

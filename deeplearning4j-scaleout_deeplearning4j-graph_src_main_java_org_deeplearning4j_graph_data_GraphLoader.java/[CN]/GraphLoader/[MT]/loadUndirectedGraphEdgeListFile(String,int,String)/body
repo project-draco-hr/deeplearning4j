@@ -1,5 +1,5 @@
 {
-  SimpleGraph<String,String> graph=new SimpleGraph<>(numVertices,false,new StringVertexFactory());
+  Graph<String,String> graph=new Graph<>(numVertices,false,new StringVertexFactory());
   EdgeLineProcessor<String> lineProcessor=new DelimitedEdgeLineProcessor(delim,false);
   try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
     String line;
