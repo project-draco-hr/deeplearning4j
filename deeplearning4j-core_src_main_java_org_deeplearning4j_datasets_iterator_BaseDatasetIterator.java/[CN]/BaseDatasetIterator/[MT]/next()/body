@@ -1,4 +1,8 @@
 {
   fetcher.fetch(batch);
-  return fetcher.next();
+  DataSet result=fetcher.next();
+  if (preProcessor != null) {
+    preProcessor.preProcess(result);
+  }
+  return result;
 }
