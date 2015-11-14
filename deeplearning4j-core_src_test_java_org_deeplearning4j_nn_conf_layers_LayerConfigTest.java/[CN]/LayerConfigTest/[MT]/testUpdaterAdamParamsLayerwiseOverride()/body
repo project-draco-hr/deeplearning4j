@@ -2,17 +2,17 @@
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().updater(Updater.ADAM).adamMeanDecay(0.5).adamVarDecay(0.5).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).adamMeanDecay(0.6).adamVarDecay(0.7).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
-  assertEquals(conf.getConf(0).getLayer().getUpdater().toString(),"ADAM");
-  assertEquals(conf.getConf(1).getLayer().getUpdater().toString(),"ADAM");
-  assertEquals(conf.getConf(0).getLayer().getAdamMeanDecay(),0.5,0.0);
-  assertEquals(conf.getConf(1).getLayer().getAdamMeanDecay(),0.6,0.0);
-  assertEquals(conf.getConf(0).getLayer().getAdamVarDecay(),0.5,0.0);
-  assertEquals(conf.getConf(1).getLayer().getAdamVarDecay(),0.7,0.0);
+  assertEquals("ADAM",conf.getConf(0).getLayer().getUpdater().toString());
+  assertEquals("ADAM",conf.getConf(1).getLayer().getUpdater().toString(),"ADAM");
+  assertEquals(0.5,conf.getConf(0).getLayer().getAdamMeanDecay(),0.0);
+  assertEquals(0.6,conf.getConf(1).getLayer().getAdamMeanDecay(),0.0);
+  assertEquals(0.5,conf.getConf(0).getLayer().getAdamVarDecay(),0.0);
+  assertEquals(0.7,conf.getConf(1).getLayer().getAdamVarDecay(),0.0);
   conf=new NeuralNetConfiguration.Builder().updater(Updater.ADAM).adamMeanDecay(0.5).adamVarDecay(0.5).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).adamMeanDecay(1.0).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).updater(Updater.ADADELTA).rho(0.5).build()).build();
   net=new MultiLayerNetwork(conf);
   net.init();
-  assertEquals(conf.getConf(0).getLayer().getUpdater().toString(),"ADAM");
-  assertEquals(conf.getConf(1).getLayer().getUpdater().toString(),"ADADELTA");
-  assertEquals(conf.getConf(0).getLayer().getAdamMeanDecay(),1.0,0.0);
-  assertEquals(conf.getConf(0).getLayer().getAdamVarDecay(),0.5,0.0);
+  assertEquals("ADAM",conf.getConf(0).getLayer().getUpdater().toString());
+  assertEquals("ADADELTA",conf.getConf(1).getLayer().getUpdater().toString());
+  assertEquals(1.0,conf.getConf(0).getLayer().getAdamMeanDecay(),0.0);
+  assertEquals(0.5,conf.getConf(0).getLayer().getAdamVarDecay(),0.0);
 }

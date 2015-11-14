@@ -7,7 +7,7 @@
     }
   }
   INDArray z=Nd4j.tensorMmul(col,Weights,new int[][]{{1,2,3},{1,2,3}});
-  VectorOp op=new VectorAddOp(z,bias,z,3);
+  BroadcastOp op=new BroadcastAddOp(z,bias,z,3);
   Nd4j.getExecutioner().exec(op);
   return Nd4j.rollAxis(z,3,1);
 }
