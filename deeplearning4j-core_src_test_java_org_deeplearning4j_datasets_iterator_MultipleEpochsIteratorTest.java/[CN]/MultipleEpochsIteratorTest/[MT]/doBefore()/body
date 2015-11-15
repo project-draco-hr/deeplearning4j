@@ -1,0 +1,8 @@
+{
+  newPath=new File(testPath);
+  newPath.mkdir();
+  file1=File.createTempFile("myfile_1",".jpg",newPath);
+  file2=File.createTempFile("myfile_2",".txt",newPath);
+  file3=File.createTempFile("myfile_3",".jpg",newPath);
+  file4=File.createTempFile("treehouse_4",".jpg",newPath);
+}
