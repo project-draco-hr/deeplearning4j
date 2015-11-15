@@ -4,7 +4,7 @@
     vw.setCount((int)word.getWordFrequency());
     if (word.getCodeLength() != 0 && !word.getCodes().isEmpty()) {
     }
-    vocabulary.putIfAbsent(vw.getWord(),vw);
+    vocabulary.put(vw.getWord(),vw);
   }
   if (numWords() > 1)   updateHuffmanCodes();
   logger.debug("Init from VocabCache is complete. " + numWords() + " word(s) were transferred.");

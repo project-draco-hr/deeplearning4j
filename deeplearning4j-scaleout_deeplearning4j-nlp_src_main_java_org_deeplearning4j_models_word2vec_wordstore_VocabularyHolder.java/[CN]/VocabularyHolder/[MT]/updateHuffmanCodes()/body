@@ -69,7 +69,7 @@
   idxMap.clear();
   int a=0;
   for (  VocabularyWord word : vocab) {
-    idxMap.putIfAbsent(word.getHuffmanNode().getIdx(),word);
+    idxMap.put(word.getHuffmanNode().getIdx(),word);
   }
   return vocab;
 }
