@@ -1,6 +1,8 @@
 {
+  log.info("Initializing: Creating Huffman tree and lookup table...");
   GraphHuffman gh=new GraphHuffman(graphVertexDegrees.length);
   gh.buildTree(graphVertexDegrees);
   lookupTable=new InMemoryGraphLookupTable(graphVertexDegrees.length,vectorSize,gh,learningRate);
   initCalled=true;
+  log.info("Initialization complete");
 }
