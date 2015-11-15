@@ -2,9 +2,9 @@
   N=d.rows();
   final int k=(int)(3 * u);
   if (u > k)   throw new IllegalStateException("Illegal k value " + k + "greater than "+ u);
-  rows=zeros(N + 1);
-  cols=zeros(N * k);
-  vals=zeros(N * k);
+  rows=zeros(1,N + 1);
+  cols=zeros(1,N * k);
+  vals=zeros(1,N * k);
   for (int n=0; n < N; n++)   rows.putScalar(n + 1,rows.getDouble(n) + k);
   final INDArray beta=ones(N,1);
   final double logU=FastMath.log(u);
@@ -42,7 +42,7 @@
       }
     }
     currP.divi(currP.sum(Integer.MAX_VALUE));
-    INDArray indices=Nd4j.create(k + 1);
+    INDArray indices=Nd4j.create(1,k + 1);
     for (int j=0; j < indices.length(); j++) {
       if (j >= results.size())       break;
       indices.putScalar(j,results.get(j).getIndex());

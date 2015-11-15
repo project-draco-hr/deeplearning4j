@@ -1,7 +1,19 @@
 {
-  int leadDim=x.size(0);
-  int cDim=getParam(BatchNormalizationParamInitializer.GAMMA).length();
-  int rdim=(int)((double)x.length() / ((double)leadDim * (double)cDim));
-  if (leadDim * cDim * rdim != x.length())   throw new IllegalArgumentException("Illegal input for batch size");
-  return new int[]{leadDim,cDim,rdim};
+  if (x.rank() == 3) {
+    int leadDim=x.size(0);
+    int cDim=getParam(BatchNormalizationParamInitializer.GAMMA).length();
+    int rdim=(int)Math.round(((double)x.length() / ((double)leadDim * (double)cDim)));
+    if (rdim < 1)     rdim=1;
+    if (leadDim * cDim * rdim != x.length())     throw new IllegalArgumentException("Illegal input for batch size");
+    return new int[]{leadDim,cDim,rdim};
+  }
+ else   if (x.rank() == 4) {
+    int leadDim=x.size(1);
+    int cDim=getParam(BatchNormalizationParamInitializer.GAMMA).length();
+    int rdim=(int)Math.round(((double)x.length() / ((double)leadDim * (double)cDim)));
+    if (rdim < 1)     rdim=1;
+    if (leadDim * cDim * rdim != x.length())     throw new IllegalArgumentException("Illegal input for batch size");
+    return new int[]{leadDim,cDim,rdim};
+  }
+ else   throw new IllegalStateException("Unable to process input of rank " + x.rank());
 }

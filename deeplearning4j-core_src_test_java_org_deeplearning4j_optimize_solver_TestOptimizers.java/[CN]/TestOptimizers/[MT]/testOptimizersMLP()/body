@@ -4,7 +4,7 @@
   DataSet ds=iter.next();
   ds.normalizeZeroMeanZeroUnitVariance();
   for (  OptimizationAlgorithm oa : toTest) {
-    int nIter=5;
+    int nIter=10;
     MultiLayerNetwork network=new MultiLayerNetwork(getMLPConfigIris(oa,nIter));
     network.init();
     double score=network.score(ds);
@@ -15,11 +15,10 @@
     scores[0]=score;
     for (int i=0; i < nCallsToOptimizer; i++) {
       network.fit(ds);
-      network.computeGradientAndScore();
-      double scoreAfter=network.score();
+      double scoreAfter=network.score(ds);
       scores[i + 1]=scoreAfter;
       assertTrue("Score is NaN after optimization",!Double.isNaN(scoreAfter));
-      assertTrue("OA= " + oa + ", before= "+ score+ ", after= "+ scoreAfter,scoreAfter < score);
+      assertTrue("OA= " + oa + ", before= "+ score+ ", after= "+ scoreAfter,scoreAfter <= score);
       score=scoreAfter;
     }
     if (PRINT_OPT_RESULTS)     System.out.println(oa + " - " + Arrays.toString(scores));

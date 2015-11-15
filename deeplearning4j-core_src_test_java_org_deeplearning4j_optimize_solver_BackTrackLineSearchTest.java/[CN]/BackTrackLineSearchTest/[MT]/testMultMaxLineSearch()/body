@@ -1,6 +1,7 @@
 {
+  double score1, score2;
   irisData.normalizeZeroMeanZeroUnitVariance();
-  OutputLayer layer=getIrisLogisticLayerConfig("softmax",5,LossFunctions.LossFunction.MCXENT);
+  OutputLayer layer=getIrisLogisticLayerConfig("softmax",100,LossFunctions.LossFunction.MCXENT);
   layer.setInput(irisData.getFeatureMatrix());
   layer.setLabels(irisData.getLabels());
   layer.computeGradientAndScore();

@@ -9,5 +9,5 @@
   layer.computeGradientAndScore();
   double score2=layer.score();
   assertEquals(parameters,layer.params());
-  assertEquals(score,score2,1e-4);
+  assertEquals(score,score2,1e-1);
 }
