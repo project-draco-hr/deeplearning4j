@@ -1,0 +1,6 @@
+{
+  int nIn=2;
+  int nOut=2;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).useExistingParams(true).params(paramTable).build()).build();
+  return LayerFactories.getFactory(conf).create(conf,null,0);
+}

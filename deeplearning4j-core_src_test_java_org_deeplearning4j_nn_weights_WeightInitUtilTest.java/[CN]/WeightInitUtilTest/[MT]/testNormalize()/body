@@ -1,0 +1,7 @@
+{
+  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.NORMALIZED,dist);
+  Nd4j.getRandom().setSeed(123);
+  INDArray weightsExpected=Nd4j.rand(shape,Nd4j.getRandom());
+  weightsExpected.subi(0.5).divi(shape[0]);
+  assertEquals(weightsExpected,weightsActual);
+}
