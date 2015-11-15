@@ -2,17 +2,19 @@
   epsilon=epsilon.reshape(shape);
   int m=shape[0] * shape[2];
   INDArray gBeta=epsilon.sum(0,2);
-  getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).addi(gBeta);
-  INDArray newGamma=epsilon.mul(xHat).sum(0,2);
-  getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).addi(newGamma);
+  INDArray gammGradient=getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT);
+  Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(gammGradient,gBeta,gammGradient,1));
+  INDArray newGamma=epsilon.reshape(xHat.shape()).mul(xHat).sum(0,2);
+  Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(gammGradient,newGamma,gammGradient,1));
   INDArray coefficients=getParam(BatchNormalizationParamInitializer.GAMMA).div(std);
   gBeta.divi(m);
   getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT).divi(m);
-  INDArray ret=coefficients.mul(epsilon.sub(xHat).muli(getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT)).subi(gBeta));
+  INDArray toMuli=epsilon.reshape(xHat.shape()).sub(xHat);
+  INDArray otherMuli=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(toMuli,gammGradient,toMuli,-1));
+  INDArray sub=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(otherMuli,gBeta,otherMuli,-1));
+  INDArray ret=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(sub,coefficients,sub,-1));
   ret=ret.reshape(shape);
   Gradient g=new DefaultGradient();
-  g.setGradientFor(BatchNormalizationParamInitializer.GAMMA_GRADIENT,getParam(BatchNormalizationParamInitializer.GAMMA_GRADIENT));
-  g.setGradientFor(BatchNormalizationParamInitializer.BETA_GRADIENT,getParam(BatchNormalizationParamInitializer.BETA_GRADIENT));
   this.gradient=g;
   return new Pair<>(g,ret);
 }
