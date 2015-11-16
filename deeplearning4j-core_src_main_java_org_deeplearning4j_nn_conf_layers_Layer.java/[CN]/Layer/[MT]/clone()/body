@@ -2,6 +2,7 @@
   try {
     Layer clone=(Layer)super.clone();
     if (clone.dist != null)     clone.dist=clone.dist.clone();
+    if (clone.learningRateAfter != null)     clone.learningRateAfter=new HashMap<>(clone.learningRateAfter);
     if (clone.momentumAfter != null)     clone.momentumAfter=new HashMap<>(clone.momentumAfter);
     return clone;
   }
