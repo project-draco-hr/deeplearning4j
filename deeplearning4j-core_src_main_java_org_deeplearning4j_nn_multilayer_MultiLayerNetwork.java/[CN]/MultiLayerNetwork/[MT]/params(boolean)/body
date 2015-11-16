@@ -1,0 +1,9 @@
+{
+  if (params != null)   return params;
+  List<INDArray> params=new ArrayList<>();
+  for (  Layer layer : getLayers()) {
+    if (layer instanceof BasePretrainNetwork && backwardOnly)     params.add(((BasePretrainNetwork)layer).paramsBackprop());
+ else     params.add(layer.params());
+  }
+  return Nd4j.toFlattened('f',params);
+}

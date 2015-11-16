@@ -1,11 +1,13 @@
 {
   OptimizationAlgorithm optimizer=OptimizationAlgorithm.CONJUGATE_GRADIENT;
   DataSet data=irisIter.next();
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",5,optimizer));
+  data.normalizeZeroMeanZeroUnitVariance();
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("relu",5,optimizer));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
   network.setListeners(Collections.singletonList(listener));
+  double firstScore=network.score(data);
   network.fit(data.getFeatureMatrix(),data.getLabels());
-  double score=network.getLayer(1).score();
-  assertTrue(score < 1);
+  double score=network.score();
+  assertTrue(score < firstScore);
 }

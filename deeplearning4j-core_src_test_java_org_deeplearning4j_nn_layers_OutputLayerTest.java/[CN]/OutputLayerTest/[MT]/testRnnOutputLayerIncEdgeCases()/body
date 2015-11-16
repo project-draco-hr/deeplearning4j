@@ -37,7 +37,6 @@
     INDArray outRnn=mlnRnn.feedForward(input).get(2);
     mln.setLabels(labels2d);
     mlnRnn.setLabels(labels3d);
-    assertTrue(out3d.equals(outRnn));
     mln.computeGradientAndScore();
     mlnRnn.computeGradientAndScore();
     double score=mln.score();

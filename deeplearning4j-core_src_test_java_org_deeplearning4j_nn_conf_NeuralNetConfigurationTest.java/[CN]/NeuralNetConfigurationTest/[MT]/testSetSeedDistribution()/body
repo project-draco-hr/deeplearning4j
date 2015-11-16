@@ -2,6 +2,7 @@
   Nd4j.getRandom().setSeed(123);
   Layer model=getRBMLayer(trainingSet.numInputs(),trainingSet.numOutcomes(),WeightInit.DISTRIBUTION);
   INDArray modelWeights=model.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  Nd4j.getRandom().setSeed(123);
   Layer model2=getRBMLayer(trainingSet.numInputs(),trainingSet.numOutcomes(),WeightInit.DISTRIBUTION);
   INDArray modelWeights2=model2.getParam(DefaultParamInitializer.WEIGHT_KEY);
   assertEquals(modelWeights,modelWeights2);

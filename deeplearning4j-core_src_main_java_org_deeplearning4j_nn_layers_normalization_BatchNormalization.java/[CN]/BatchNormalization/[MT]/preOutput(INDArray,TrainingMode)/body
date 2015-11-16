@@ -13,9 +13,12 @@
     var=getParam(BatchNormalizationParamInitializer.AVG_VAR);
   }
   std=Transforms.sqrt(var);
-  INDArray xMu=x.sub(mean);
-  xHat=xMu.div(std);
-  INDArray out=getParam(BatchNormalizationParamInitializer.GAMMA).add(xHat).addi(getParam(BatchNormalizationParamInitializer.BETA));
+  INDArray xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,x,-1));
+  xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
+  INDArray gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
+  INDArray beta=getParam(BatchNormalizationParamInitializer.BETA);
+  INDArray out=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(xHat,gamma,xHat.dup(),-1));
+  out=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(out,beta,out,-1));
   double decay=0.0;
   if (training != TrainingMode.TEST && !layerConf.isUseBatchMean()) {
     if (layerConf.isFinetune()) {

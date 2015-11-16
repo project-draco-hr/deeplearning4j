@@ -1,7 +1,7 @@
 {
   OptimizationAlgorithm optimizer=OptimizationAlgorithm.HESSIAN_FREE;
   DataSet data=irisIter.next();
-  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("sigmoid",1,optimizer));
+  MultiLayerNetwork network=new MultiLayerNetwork(getIrisMultiLayerConfig("relu",100,optimizer));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
   network.setListeners(Collections.singletonList(listener));

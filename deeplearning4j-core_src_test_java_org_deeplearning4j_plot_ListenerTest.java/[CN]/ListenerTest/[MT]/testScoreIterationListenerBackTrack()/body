@@ -2,7 +2,7 @@
   MultiLayerNetwork network=new MultiLayerNetwork(getIrisSimpleConfig("sigmoid",5));
   network.init();
   IterationListener listener=new ScoreIterationListener(1);
-  network.setListeners(Collections.singletonList(listener));
+  network.setListeners(listener);
   while (irisIter.hasNext())   network.fit(irisIter.next());
   assertEquals(listener.invoked(),true);
 }
