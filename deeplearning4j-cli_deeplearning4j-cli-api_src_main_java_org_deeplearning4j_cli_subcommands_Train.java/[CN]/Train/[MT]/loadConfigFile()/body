@@ -17,7 +17,7 @@
   if (this.configProps.get(EXECUTION_RUNTIME_MODE_KEY) != null)   this.runtime=(String)this.configProps.get(EXECUTION_RUNTIME_MODE_KEY);
  else   this.runtime=EXECUTION_RUNTIME_MODE_DEFAULT;
   if (null != this.configProps.get(OUTPUT_FILENAME_KEY))   this.outputDirectory=(String)this.configProps.get(OUTPUT_FILENAME_KEY);
- else   this.outputDirectory="/tmp/dl4_model_default.txt";
+ else   this.outputDirectory="/tmp/dl4j_model_default.txt";
   if (null != this.configProps.get(INPUT_DATA_FILENAME_KEY))   this.input=(String)this.configProps.get(INPUT_DATA_FILENAME_KEY);
  else   throw new RuntimeException("no input file to train on!");
 }

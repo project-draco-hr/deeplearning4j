@@ -1,5 +1,5 @@
 {
-  JavaSparkContext sc=new JavaSparkContext(conf);
+  JavaSparkContext sc=getContext();
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
   word2vec.setRemoveStop(false);
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
