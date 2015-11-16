@@ -1,9 +1,0 @@
-{
-  INDArray weight=Nd4j.create(new double[]{0.10,-0.20,-0.15,0.05},new int[]{2,2});
-  INDArray bias=Nd4j.create(new double[]{0.5,0.5},new int[]{1,2});
-  Map<String,INDArray> paramTable=new HashMap<>();
-  paramTable.put("W",weight);
-  paramTable.put("b",bias);
-  Layer layer=configureLayer(true,paramTable);
-  assertEquals(paramTable,layer.conf().getLayer().getParamTable());
-}
