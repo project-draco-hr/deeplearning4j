@@ -2,9 +2,19 @@
   BufferedReader reader=new BufferedReader(new FileReader(vectorsFile));
   VocabCache cache=new InMemoryLookupCache();
   LineIterator iter=IOUtils.lineIterator(reader);
+  String line=null;
+  boolean hasHeader=false;
+  if (iter.hasNext()) {
+    line=iter.next();
+    if (!line.contains(" "))     hasHeader=true;
+  }
+  if (hasHeader) {
+    iter.close();
+    iter=IOUtils.lineIterator(reader);
+    iter.nextLine();
+  }
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
-    String line=iter.nextLine();
     String[] split=line.split(" ");
     String word=split[0];
     VocabWord word1=new VocabWord(1.0,word);
