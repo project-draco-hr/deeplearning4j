@@ -1,4 +1,0 @@
-{
-  if (!initCalled)   throw new UnsupportedOperationException("DeepWalk has not been initialized");
-  return lookupTable.getNumVertices();
-}

@@ -1,8 +1,10 @@
 {
+  Random r=new Random(12345);
   Graph<String,String> graph=new Graph<String,String>(nVertices,new StringVertexFactory());
   for (int i=0; i < nVertices; i++) {
     for (int j=0; j < nEdgesPerVertex; j++) {
-      Edge<String> edge=new Edge<>(i,j,i + "--" + j,false);
+      int to=r.nextInt(nVertices);
+      Edge<String> edge=new Edge<>(i,to,i + "--" + to,false);
       graph.addEdge(edge);
     }
   }

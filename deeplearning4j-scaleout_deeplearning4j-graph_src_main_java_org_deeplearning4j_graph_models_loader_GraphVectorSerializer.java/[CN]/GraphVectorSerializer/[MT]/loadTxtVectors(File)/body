@@ -1,0 +1,28 @@
+{
+  List<double[]> vectorList=new ArrayList<>();
+  try (BufferedReader reader=new BufferedReader(new FileReader(file))){
+    LineIterator iter=IOUtils.lineIterator(reader);
+    while (iter.hasNext()) {
+      String line=iter.next();
+      String[] split=line.split(DELIM);
+      double[] vec=new double[split.length - 1];
+      for (int i=1; i < split.length; i++) {
+        vec[i - 1]=Double.parseDouble(split[i]);
+      }
+      vectorList.add(vec);
+    }
+  }
+   int vecSize=vectorList.get(0).length;
+  int nVertices=vectorList.size();
+  INDArray vectors=Nd4j.create(nVertices,vecSize);
+  for (int i=0; i < vectorList.size(); i++) {
+    double[] vec=vectorList.get(i);
+    for (int j=0; j < vec.length; j++) {
+      vectors.put(i,j,vec[j]);
+    }
+  }
+  InMemoryGraphLookupTable table=new InMemoryGraphLookupTable(nVertices,vecSize,null,0.01);
+  table.setVertexVectors(vectors);
+  GraphVectorsImpl<?,?> impl=new GraphVectorsImpl<>(null,table);
+  return impl;
+}
