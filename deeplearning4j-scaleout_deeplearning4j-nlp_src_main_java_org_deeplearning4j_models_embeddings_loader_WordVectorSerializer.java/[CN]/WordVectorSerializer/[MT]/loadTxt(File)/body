@@ -2,14 +2,6 @@
   BufferedReader reader=new BufferedReader(new FileReader(vectorsFile));
   VocabCache cache=new InMemoryLookupCache();
   LineIterator iter=IOUtils.lineIterator(reader);
-  if (iter.hasNext()) {
-    if (HAS_HEADER) {
-      iter.next();
-    }
-  }
- else {
-    log.warn("Empty input file '" + vectorsFile + "'.");
-  }
   List<INDArray> arrays=new ArrayList<>();
   while (iter.hasNext()) {
     String line=iter.nextLine();
