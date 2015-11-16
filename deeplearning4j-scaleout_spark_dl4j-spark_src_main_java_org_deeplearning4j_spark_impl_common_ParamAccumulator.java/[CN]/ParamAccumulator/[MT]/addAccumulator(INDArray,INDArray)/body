@@ -1,3 +1,4 @@
 {
+  if (indArray.length() != t1.length())   throw new IllegalStateException("Wrong accumulation of matrices");
   return indArray.add(t1);
 }
