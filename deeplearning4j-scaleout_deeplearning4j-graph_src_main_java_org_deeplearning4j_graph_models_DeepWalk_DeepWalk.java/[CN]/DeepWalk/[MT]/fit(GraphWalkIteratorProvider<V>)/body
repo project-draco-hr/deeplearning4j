@@ -10,7 +10,6 @@
   }
 );
   List<Future<Void>> list=new ArrayList<>(iteratorList.size());
-  log.info("Fitting Graph with {} threads",Math.max(nThreads,iteratorList.size()));
   for (  GraphWalkIterator<V> iter : iteratorList) {
     LearningCallable c=new LearningCallable(iter);
     list.add(executorService.submit(c));

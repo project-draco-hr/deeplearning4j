@@ -1,0 +1,6 @@
+{
+  this.nIn=nIn;
+  this.nOut=nOut;
+  this.net=TestRnnTimeStep.buildRecurrentNetwork(nIn,nOut);
+  this.mid=new AtomicLong();
+}

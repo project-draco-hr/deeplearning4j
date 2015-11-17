@@ -1,0 +1,7 @@
+{
+  int lstmLayerSize=100;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).learningRate(0.2).momentum(0.5).rmsDecay(0.95).seed(12345).regularization(true).l2(0.001).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(lstmLayerSize).updater(Updater.RMSPROP).activation("hardtanh").weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.08,0.08)).build()).layer(1,new GravesLSTM.Builder().nIn(lstmLayerSize).nOut(nOut).updater(Updater.RMSPROP).activation("hardtanh").weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.08,0.08)).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork net_=new MultiLayerNetwork(conf);
+  net_.init();
+  return net_;
+}
