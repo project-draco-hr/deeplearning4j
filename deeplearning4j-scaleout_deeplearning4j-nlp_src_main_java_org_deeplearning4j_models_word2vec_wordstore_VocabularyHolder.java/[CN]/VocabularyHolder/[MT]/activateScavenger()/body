@@ -1,0 +1,27 @@
+{
+  int initialSize=vocabulary.size();
+  List<VocabularyWord> words=new ArrayList<>(vocabulary.values());
+  for (  VocabularyWord word : words) {
+    if (word.isSpecial() || word.getCount() >= minWordFrequency || word.getFrequencyShift() == null) {
+      word.setFrequencyShift(null);
+      continue;
+    }
+    word.getFrequencyShift()[word.getRetentionStep()]=(byte)word.getCount();
+    int activation=Math.max(minWordFrequency / 5,2);
+    logger.debug("Current state> Activation: [" + activation + "], retention info: "+ Arrays.toString(word.getFrequencyShift()));
+    if (word.getCount() <= activation && word.getFrequencyShift()[this.retentionDelay - 1] > 0) {
+      if (word.getFrequencyShift()[this.retentionDelay - 1] <= activation && word.getFrequencyShift()[this.retentionDelay - 1] == word.getFrequencyShift()[0]) {
+        vocabulary.remove(word.getWord());
+      }
+    }
+    if (word.getRetentionStep() < retentionDelay - 1) {
+      word.incrementRetentionStep();
+    }
+ else {
+      for (int x=1; x < retentionDelay; x++) {
+        word.getFrequencyShift()[x - 1]=word.getFrequencyShift()[x];
+      }
+    }
+  }
+  logger.debug("Scavenger was activated. Vocab size before: [" + initialSize + "],  after: ["+ vocabulary.size()+ "]");
+}

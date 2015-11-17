@@ -12,7 +12,7 @@
         wordsCounter.addAndGet(sentence.size());
       }
       totalLines.incrementAndGet();
-      if (totalLines.get() % 10000 == 0)       log.info("Iteration: " + this.iterationId + "; Words vectorized so far: "+ wordsCounter.get()+ ";  Lines vectorized so far: "+ totalLines.get()+ "; learningRate: "+ alpha);
+      if (totalLines.get() % 100000 == 0)       log.info("Iteration: " + this.iterationId + "; Words vectorized so far: "+ wordsCounter.get()+ ";  Lines vectorized so far: "+ totalLines.get()+ "; learningRate: "+ alpha);
     }
  catch (    Exception e) {
       e.printStackTrace();

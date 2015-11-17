@@ -1,7 +1,9 @@
 {
   if (!vocabulary.containsKey(word)) {
     VocabularyWord vw=new VocabularyWord(word);
+    if (hugeModelExpected)     vw.setFrequencyShift(new byte[retentionDelay]);
     vocabulary.put(word,vw);
+    if (hugeModelExpected && minWordFrequency > 1 && vocabulary.size() % scavengerThreshold == 0)     activateScavenger();
     return;
   }
 }

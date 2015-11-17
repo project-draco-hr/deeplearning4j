@@ -39,7 +39,7 @@
   }
   ret.lookupTable=lookupTable;
   ret.tokenizerFactory=tokenizerFactory;
-  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder(this.vocabCache);
- else   ret.vocabularyHolder=new VocabularyHolder();
+  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder.Builder().externalCache(vocabCache).hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(1000000).scavengerRetentionDelay(3).build();
+ else   ret.vocabularyHolder=new VocabularyHolder.Builder().hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(1000000).scavengerRetentionDelay(3).build();
   return ret;
 }

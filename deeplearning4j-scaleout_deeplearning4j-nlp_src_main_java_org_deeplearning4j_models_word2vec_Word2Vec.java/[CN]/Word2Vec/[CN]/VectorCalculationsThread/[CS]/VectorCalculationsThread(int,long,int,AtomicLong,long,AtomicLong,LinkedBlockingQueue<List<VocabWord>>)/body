@@ -6,5 +6,5 @@
   this.totalWordsCount=totalWordsCount;
   this.totalLines=linesCounter;
   this.sentences=buffer;
-  this.setName("VectorCalculationsThread " + threadId);
+  this.setName("VectorCalculationsThread " + this.threadId);
 }
