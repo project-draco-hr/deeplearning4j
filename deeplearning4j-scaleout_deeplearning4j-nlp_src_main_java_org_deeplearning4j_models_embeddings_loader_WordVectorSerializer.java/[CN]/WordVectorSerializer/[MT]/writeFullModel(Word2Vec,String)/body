@@ -1,0 +1,7 @@
+{
+  WeightLookupTable lookupTable=vec.getLookupTable();
+  VocabCache vocabCache=vec.getVocab();
+  if (!(lookupTable instanceof InMemoryLookupTable))   throw new IllegalStateException("At this moment only InMemoryLookupTable is supported.");
+  if (!(vocabCache instanceof InMemoryLookupCache))   throw new IllegalStateException("At this moment only InMemoryLookupCache is supported.");
+  VocabularyHolder holder=new VocabularyHolder.Builder().externalCache(vocabCache).build();
+}

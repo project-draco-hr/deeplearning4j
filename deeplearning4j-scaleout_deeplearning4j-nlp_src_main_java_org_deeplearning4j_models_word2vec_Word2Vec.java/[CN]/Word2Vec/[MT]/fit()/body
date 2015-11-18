@@ -1,6 +1,7 @@
 {
   final AtomicLong totalLines=new AtomicLong(0);
   final LinkedBlockingQueue<List<VocabWord>> sentences=new LinkedBlockingQueue<>();
+  sentenceIter.reset();
   log.info("Building vocabulary...");
   while (sentenceIter.hasNext()) {
     Tokenizer tokenizer=tokenizerFactory.create(sentenceIter.nextSentence());

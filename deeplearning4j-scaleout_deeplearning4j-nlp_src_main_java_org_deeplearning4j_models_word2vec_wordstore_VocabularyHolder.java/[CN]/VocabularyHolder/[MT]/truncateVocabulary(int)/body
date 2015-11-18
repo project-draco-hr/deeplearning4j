@@ -1,8 +1,9 @@
 {
+  logger.debug("Truncating vocabulary to minWordFrequency: [" + threshold + "]");
   Set<String> keyset=vocabulary.keySet();
   for (  String word : keyset) {
-    if (vocabulary.get(word).getCount() < threshold) {
-      VocabularyWord vw=vocabulary.get(word);
+    VocabularyWord vw=vocabulary.get(word);
+    if (!vw.isSpecial() && vw.getCount() < threshold) {
       vocabulary.remove(word);
       if (vw.getHuffmanNode() != null)       idxMap.remove(vw.getHuffmanNode().getIdx());
     }

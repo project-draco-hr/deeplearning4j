@@ -1,0 +1,4 @@
+{
+  if (tokenizerFactory == null)   throw new IllegalStateException("TokenizerFactory should be declared before fit() is called!");
+  Tokenizer tokenizer=tokenizerFactory.create(sentence);
+}
