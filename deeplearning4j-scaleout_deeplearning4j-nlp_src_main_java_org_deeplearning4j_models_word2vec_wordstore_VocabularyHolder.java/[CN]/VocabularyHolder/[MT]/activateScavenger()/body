@@ -23,5 +23,5 @@
       }
     }
   }
-  logger.debug("Scavenger was activated. Vocab size before: [" + initialSize + "],  after: ["+ vocabulary.size()+ "]");
+  logger.info("Scavenger was activated. Vocab size before: [" + initialSize + "],  after: ["+ vocabulary.size()+ "]");
 }
