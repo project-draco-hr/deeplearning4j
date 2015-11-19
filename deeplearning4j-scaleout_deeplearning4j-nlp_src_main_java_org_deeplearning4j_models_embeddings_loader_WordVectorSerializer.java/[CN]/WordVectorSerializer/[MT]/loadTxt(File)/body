@@ -5,7 +5,7 @@
   String line=null;
   boolean hasHeader=false;
   if (iter.hasNext()) {
-    line=iter.next();
+    line=iter.nextLine();
     if (!line.contains(" "))     hasHeader=true;
   }
   if (hasHeader) {
