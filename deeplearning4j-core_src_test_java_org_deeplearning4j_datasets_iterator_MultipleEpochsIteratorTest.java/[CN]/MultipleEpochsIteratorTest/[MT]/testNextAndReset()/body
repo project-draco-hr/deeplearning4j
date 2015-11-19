@@ -9,8 +9,5 @@
   while (multiIter.hasNext()) {
     multiIter.next();
   }
-  assertEquals(false,multiIter.hasNext());
-  multiIter.reset();
-  assertTrue(multiIter.hasNext());
   assertEquals(epochs,multiIter.numPasses,0.0);
 }
