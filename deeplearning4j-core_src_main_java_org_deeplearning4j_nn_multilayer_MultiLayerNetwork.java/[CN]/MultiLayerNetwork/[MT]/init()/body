@@ -17,5 +17,5 @@
       defaultConfiguration.addVariable(i + "_" + s);
     }
   }
-  if (getLayerWiseConfigurations().isRedistributeParams())   reDistributeParams();
+  if (getLayerWiseConfigurations().isRedistributeParams())   reDistributeParams(false);
 }

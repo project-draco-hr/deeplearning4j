@@ -2,7 +2,7 @@
   if (layerConf().getLossFunction() == LossFunctions.LossFunction.CUSTOM) {
     LossFunction create=Nd4j.getOpFactory().createLossFunction(layerConf().getCustomLossFunction(),input,z);
     create.exec();
-    score=create.currentResult().doubleValue();
+    score=create.getFinalResult().doubleValue();
   }
  else {
     score=LossCalculation.builder().l1(fullNetworkL1).l2(fullNetworkL2).labels(getLabels2d()).z(z).preOut(preOut).activationFn(conf().getLayer().getActivationFunction()).lossFunction(layerConf().getLossFunction()).miniBatch(conf.isMiniBatch()).miniBatchSize(getInputMiniBatchSize()).useRegularization(conf.isUseRegularization()).build().score();

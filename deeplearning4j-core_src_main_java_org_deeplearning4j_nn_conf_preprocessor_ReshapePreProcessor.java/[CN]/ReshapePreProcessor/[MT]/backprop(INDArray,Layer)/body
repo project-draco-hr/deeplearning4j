@@ -1,4 +1,5 @@
 {
   if (fromShape == null || output.shape().length == fromShape.length)   return output;
+  if (output.length() != ArrayUtil.prod(fromShape))   throw new IllegalStateException("Illegal shape");
   return output.reshape(fromShape);
 }

@@ -3,7 +3,7 @@
   network.init();
   IterationListener listener=new GradientPlotterIterationListener(2);
   IterationListener listener2=new LossPlotterIterationListener(2);
-  network.setListeners(Arrays.asList(listener,listener2));
+  network.setListeners(listener,listener2);
   while (irisIter.hasNext())   network.fit(irisIter.next());
   assertNotNull(network.getListeners().remove(1));
   assertEquals(listener2.invoked(),true);

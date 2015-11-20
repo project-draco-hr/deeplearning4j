@@ -1,3 +1,6 @@
 {
+  if (labels.rank() > 2) {
+    return labels.reshape(labels.size(2),labels.size(1));
+  }
   return labels;
 }

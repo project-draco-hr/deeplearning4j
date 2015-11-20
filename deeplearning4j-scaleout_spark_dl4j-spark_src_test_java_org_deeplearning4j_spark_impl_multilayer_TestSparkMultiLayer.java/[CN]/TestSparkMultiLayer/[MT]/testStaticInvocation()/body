@@ -6,7 +6,7 @@
   JavaRDD<DataSet> data=sc.parallelize(list);
   JavaRDD<LabeledPoint> mllLibData=MLLibUtil.fromDataSet(sc,data);
   MultiLayerNetwork network=SparkDl4jMultiLayer.train(mllLibData,conf);
-  INDArray params=network.params();
+  INDArray params=network.params(true);
   File writeTo=new File(UUID.randomUUID().toString());
   Nd4j.writeTxt(params,writeTo.getAbsolutePath(),",");
   INDArray load=Nd4j.readTxt(writeTo.getAbsolutePath());
@@ -18,6 +18,6 @@
   MultiLayerNetwork network3=new MultiLayerNetwork(conf2);
   network3.init();
   network3.setParameters(params);
-  INDArray params4=network3.params();
+  INDArray params4=network3.params(true);
   assertEquals(params,params4);
 }

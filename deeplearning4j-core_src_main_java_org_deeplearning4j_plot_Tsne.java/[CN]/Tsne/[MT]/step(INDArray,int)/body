@@ -4,6 +4,6 @@
   log.info("Cost at iteration " + i + " was "+ costGradient.getFirst());
   y.addi(yIncs);
   y.addi(yIncs).subiRowVector(y.mean(0));
-  INDArray tiled=Nd4j.tile(y.mean(0),new int[]{y.rows(),y.columns()});
+  INDArray tiled=Nd4j.tile(y.mean(0),new int[]{y.rows(),1});
   y.subi(tiled);
 }

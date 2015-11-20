@@ -1,0 +1,10 @@
+{
+  for (  VocabWord word : cache.tokens()) {
+    VocabularyWord vw=new VocabularyWord(word.getWord());
+    vw.setCount((int)word.getWordFrequency());
+    vw.setSpecial(markAsSpecial);
+    vocabulary.put(vw.getWord(),vw);
+  }
+  if (numWords() > 1)   updateHuffmanCodes();
+  logger.debug("Init from VocabCache is complete. " + numWords() + " word(s) were transferred.");
+}

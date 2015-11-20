@@ -1,9 +1,9 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).constrainGradientToUnitNorm(true).iterations(5).learningRate(1e-3).list(4).layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(200).nOut(600).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1e-5)).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(600).nOut(250).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1e-5)).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(2,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(250).nOut(100).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1e-5)).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(3,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(100).nOut(50).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1e-5)).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).activation("tanh").build()).layer(1,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(3).nOut(2).build()).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
-  INDArray params=network.params();
-  network.reDistributeParams();
-  INDArray params2=network.params();
+  INDArray params=network.params(true);
+  network.reDistributeParams(true);
+  INDArray params2=network.params(true);
   assertEquals(params,params2);
 }

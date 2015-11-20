@@ -8,8 +8,8 @@
     vocabWord.setCodeLength(word.getHuffmanNode().getLength());
     vocabWord.setPoints(arrayToList(word.getHuffmanNode().getPoint(),word.getHuffmanNode().getLength()));
     vocabWord.setCodes(arrayToList(word.getHuffmanNode().getCode(),word.getHuffmanNode().getLength()));
-    ((InMemoryLookupCache)cache).getVocabs().putIfAbsent(word.getWord(),vocabWord);
-    ((InMemoryLookupCache)cache).getTokens().putIfAbsent(word.getWord(),vocabWord);
+    ((InMemoryLookupCache)cache).getVocabs().put(word.getWord(),vocabWord);
+    ((InMemoryLookupCache)cache).getTokens().put(word.getWord(),vocabWord);
     cache.addWordToIndex(word.getHuffmanNode().getIdx(),word.getWord());
     cache.incrementWordCount(word.getWord(),word.getCount() - 1);
   }

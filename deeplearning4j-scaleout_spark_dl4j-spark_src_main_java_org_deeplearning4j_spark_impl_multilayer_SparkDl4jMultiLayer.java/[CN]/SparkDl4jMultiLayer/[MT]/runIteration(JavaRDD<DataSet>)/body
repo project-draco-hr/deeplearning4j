@@ -1,7 +1,8 @@
 {
-  log.info("Broadcasting initial parameters of length " + network.numParams());
-  this.params=sc.broadcast(network.params());
-  int paramsLength=network.numParams();
+  log.info("Broadcasting initial parameters of length " + network.numParams(false));
+  INDArray valToBroadcast=network.params(false);
+  this.params=sc.broadcast(valToBroadcast);
+  int paramsLength=network.numParams(false);
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
     JavaRDD<Gradient> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params),true).cache();
@@ -13,7 +14,7 @@
     if (divideGrad)     accumulatedGradient.divi(results.partitions().size());
     log.info("Accumulated parameters");
     log.info("Summed gradients.");
-    network.setParameters(network.params().addi(accumulatedGradient));
+    network.setParameters(network.params(false).addi(accumulatedGradient));
     log.info("Set parameters");
   }
  else {
