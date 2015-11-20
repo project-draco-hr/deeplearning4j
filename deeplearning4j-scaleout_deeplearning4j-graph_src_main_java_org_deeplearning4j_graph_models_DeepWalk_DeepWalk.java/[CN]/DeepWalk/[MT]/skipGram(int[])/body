@@ -1,6 +1,6 @@
 {
   for (int mid=windowSize; mid < walk.length - windowSize; mid++) {
-    for (int pos=0; pos < 2 * windowSize; pos++) {
+    for (int pos=mid - windowSize; pos <= mid + windowSize; pos++) {
       if (pos == mid)       continue;
       lookupTable.iterate(walk[mid],walk[pos]);
     }
