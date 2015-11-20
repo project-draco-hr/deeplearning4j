@@ -1,4 +1,5 @@
 {
+  if (this.input == null || this.input.length() == 0)   throw new IllegalArgumentException("Invalid input: not set or 0 length");
   INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
   INDArray biases=getParam(GravesLSTMParamInitializer.BIAS_KEY);
