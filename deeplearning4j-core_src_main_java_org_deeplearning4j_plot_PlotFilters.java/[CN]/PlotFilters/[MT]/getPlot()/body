@@ -1,3 +1,6 @@
 {
+  if (plot == null) {
+    throw new IllegalStateException("Please call plot() first.");
+  }
   return plot;
 }
