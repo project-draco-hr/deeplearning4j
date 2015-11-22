@@ -1,3 +1,33 @@
 {
-  return null;
+  LineSentenceIterator iterator=new LineSentenceIterator(new File(path));
+  String confJson=iterator.nextSentence();
+  log.info("Word2Vec conf. JSON: " + confJson);
+  Word2VecConfiguration configuration=Word2VecConfiguration.fromJson(confJson);
+  String eTable=iterator.nextSentence();
+  double[] expTable;
+  String nTable=iterator.nextSentence();
+  if (configuration.getNegative() > 0) {
+  }
+  VocabularyHolder holder=new VocabularyHolder.Builder().minWordFrequency(configuration.getMinWordFrequency()).hugeModelExpected(configuration.isHugeModelExpected()).scavengerActivationThreshold(configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(configuration.getScavengerRetentionDelay()).build();
+  while (iterator.hasNext()) {
+    String wordJson=iterator.nextSentence();
+    VocabularyWord word=VocabularyWord.fromJson(wordJson);
+    word.setSpecial(true);
+    holder.addWord(word);
+  }
+  InMemoryLookupCache vocabCache=new InMemoryLookupCache(false);
+  holder.transferBackToVocabCache(vocabCache,false);
+  InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().negative(configuration.getNegative()).useAdaGrad(configuration.isUseAdaGrad()).lr(configuration.getLearningRate()).cache(vocabCache).vectorLength(configuration.getLayersSize()).build();
+  lookupTable.resetWeights(true);
+  for (  VocabularyWord word : holder.getVocabulary()) {
+    INDArray syn0=lookupTable.getSyn0().getRow(vocabCache.indexOf(word.getWord()));
+    syn0.assign(Nd4j.create(word.getSyn0()));
+    INDArray syn1=lookupTable.getSyn1().getRow(vocabCache.indexOf(word.getWord()));
+    syn1.assign(Nd4j.create(word.getSyn1()));
+    if (configuration.getNegative() > 0) {
+      INDArray syn1Neg=lookupTable.getSyn1Neg().getRow(vocabCache.indexOf(word.getWord()));
+      syn1Neg.assign(Nd4j.create(word.getSyn1Neg()));
+    }
+  }
+  return new Word2Vec.Builder(configuration).vocabCache(vocabCache).lookupTable(lookupTable).resetModel(false).build();
 }

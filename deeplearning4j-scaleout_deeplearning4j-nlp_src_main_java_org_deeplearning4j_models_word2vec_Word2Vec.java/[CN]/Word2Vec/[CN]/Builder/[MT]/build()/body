@@ -1,8 +1,4 @@
 {
-  if (iter == null && docIter == null)   throw new IllegalStateException("At least one iterator is needed for model building");
-  if (iter == null && docIter != null) {
-    this.iter=new StreamLineIterator.Builder(docIter).setFetchSize(100).build();
-  }
   Word2Vec ret=new Word2Vec();
   ret.alpha.set(lr);
   ret.sentenceIter=iter;
@@ -13,7 +9,6 @@
   ret.stopWords=stopWords;
   ret.minWordFrequency=minWordFrequency;
   ret.setVocab(vocabCache);
-  ret.docIter=docIter;
   ret.minWordFrequency=minWordFrequency;
   ret.numIterations=iterations;
   ret.seed=seed;
@@ -24,6 +19,8 @@
   ret.workers=workers;
   ret.invertedIndex=index;
   ret.lookupTable=lookupTable;
+  ret.epochs=this.numEpochs;
+  ret.resetModel=this.resetModel;
   try {
     if (tokenizerFactory == null)     tokenizerFactory=new UimaTokenizerFactory();
   }
@@ -39,7 +36,22 @@
   }
   ret.lookupTable=lookupTable;
   ret.tokenizerFactory=tokenizerFactory;
-  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder.Builder().externalCache(vocabCache).hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(2000000).scavengerRetentionDelay(3).build();
- else   ret.vocabularyHolder=new VocabularyHolder.Builder().hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(2000000).scavengerRetentionDelay(3).build();
+  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder.Builder().externalCache(vocabCache).hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
+ else   ret.vocabularyHolder=new VocabularyHolder.Builder().hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
+  this.configuration.setLearningRate(lr);
+  this.configuration.setLayersSize(layerSize);
+  this.configuration.setHugeModelExpected(hugeModelExpected);
+  this.configuration.setWindow(window);
+  this.configuration.setMinWordFrequency(minWordFrequency);
+  this.configuration.setIterations(iterations);
+  this.configuration.setSeed(seed);
+  this.configuration.setBatchSize(batchSize);
+  this.configuration.setLearningRateDecayWords(learningRateDecayWords);
+  this.configuration.setMinLearningRate(minLearningRate);
+  this.configuration.setSampling(this.sampling);
+  this.configuration.setUseAdaGrad(useAdaGrad);
+  this.configuration.setNegative(negative);
+  this.configuration.setEpochs(this.numEpochs);
+  ret.configuration=this.configuration;
   return ret;
 }

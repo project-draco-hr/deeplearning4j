@@ -7,6 +7,7 @@
   holder.incrementWordCounter("tests");
   holder.incrementWordCounter("testz");
   InMemoryLookupCache cache=new InMemoryLookupCache(false);
+  holder.updateHuffmanCodes();
   holder.transferBackToVocabCache(cache);
   assertEquals(3,cache.numWords());
   assertEquals(1,cache.wordFrequency("test"));

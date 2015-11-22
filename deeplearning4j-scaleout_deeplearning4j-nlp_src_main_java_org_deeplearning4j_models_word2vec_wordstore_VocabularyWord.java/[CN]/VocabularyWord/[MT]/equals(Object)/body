@@ -1,7 +1,6 @@
 {
   if (this == o)   return true;
   if (o == null || getClass() != o.getClass())   return false;
-  VocabularyWord that=(VocabularyWord)o;
-  if (count != that.count)   return false;
-  return word.equals(that.word);
+  VocabularyWord word1=(VocabularyWord)o;
+  return word != null ? word.equals(word1.word) : word1.word == null;
 }

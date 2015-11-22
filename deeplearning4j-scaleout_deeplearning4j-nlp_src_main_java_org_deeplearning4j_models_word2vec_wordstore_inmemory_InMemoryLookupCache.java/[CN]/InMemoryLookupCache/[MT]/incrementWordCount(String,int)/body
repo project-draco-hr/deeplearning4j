@@ -1,9 +1,9 @@
 {
   if (word == null || word.isEmpty())   throw new IllegalArgumentException("Word can't be empty or null");
   wordFrequencies.incrementCount(word,increment);
-  VocabWord token;
-  if (hasToken(word))   token=tokenFor(word);
- else   token=new VocabWord(increment,word);
-  token.increment(increment);
+  if (hasToken(word)) {
+    VocabWord token=tokenFor(word);
+    token.increment(increment);
+  }
   totalWordOccurrences.set(totalWordOccurrences.get() + increment);
 }
