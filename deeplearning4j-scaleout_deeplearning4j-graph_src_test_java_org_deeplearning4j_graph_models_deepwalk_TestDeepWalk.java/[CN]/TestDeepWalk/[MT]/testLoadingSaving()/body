@@ -1,5 +1,5 @@
 {
-  String out=System.getProperty("java.io.tmpdir") + "dl4jdwtestout.txt";
+  String out=FilenameUtils.concat(System.getProperty("java.io.tmpdir"),"dl4jdwtestout.txt");
   int nVertices=20;
   Graph<String,String> graph=generateRandomGraph(nVertices,8);
   int vectorSize=5;
