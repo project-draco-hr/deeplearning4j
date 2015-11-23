@@ -1,7 +1,0 @@
-{
-  if (in.rank() != 2)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 2");
-  int[] shape=in.shape();
-  int miniBatchSize=getInputMiniBatchSize();
-  INDArray reshaped=in.reshape(miniBatchSize,shape[0] / miniBatchSize,shape[1]);
-  return reshaped.permute(0,2,1);
-}

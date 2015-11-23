@@ -11,6 +11,12 @@
  else {
     searchState.put(GRADIENT_KEY,pair.getFirst().gradient());
   }
+  for (  TerminationCondition condition : terminationConditions) {
+    if (condition.terminate(0.0,0.0,new Object[]{pair.getFirst().gradient()})) {
+      log.info("Hit termination condition " + condition.getClass().getName());
+      return true;
+    }
+  }
   preProcessLine();
   for (int i=0; i < conf.getNumIterations(); i++) {
     gradient=(INDArray)searchState.get(GRADIENT_KEY);

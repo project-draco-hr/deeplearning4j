@@ -37,12 +37,12 @@
       Gradient layerGradient=new DefaultGradient();
       layerGradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,wGrad.dup());
       layerGradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,bGrad.dup());
-      uArr[j].update(net.getLayer(j),layerGradient,i);
+      uArr[j].update(net.getLayer(j),layerGradient,i,1);
       for (      String s : layerGradient.gradientForVariable().keySet()) {
         expectedGradient.put(j + "_" + s,layerGradient.getGradientFor(s));
       }
     }
-    updater.update(net,gradient,i);
+    updater.update(net,gradient,i,1);
     assertTrue(gradient.gradientForVariable().equals(expectedGradient));
   }
 }

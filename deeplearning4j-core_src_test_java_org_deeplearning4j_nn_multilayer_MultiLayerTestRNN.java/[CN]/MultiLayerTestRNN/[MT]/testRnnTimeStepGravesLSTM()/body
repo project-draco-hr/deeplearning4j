@@ -37,15 +37,15 @@
  else {
         expOutSubset=fullOutL3.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.interval(startTimeRange,endTimeRange));
       }
-      assertTrue(out.equals(expOutSubset));
+      assertEquals(expOutSubset,out);
       Map<String,INDArray> currL0State=mln.rnnGetPreviousState(0);
       Map<String,INDArray> currL1State=mln.rnnGetPreviousState(1);
       INDArray lastActL0=currL0State.get(GravesLSTM.STATE_KEY_PREV_ACTIVATION);
       INDArray lastActL1=currL1State.get(GravesLSTM.STATE_KEY_PREV_ACTIVATION);
       INDArray expLastActL0=fullOutL0.tensorAlongDimension(endTimeRange - 1,1,0);
       INDArray expLastActL1=fullOutL1.tensorAlongDimension(endTimeRange - 1,1,0);
-      assertTrue(lastActL0.equals(expLastActL0));
-      assertTrue(lastActL1.equals(expLastActL1));
+      assertEquals(expLastActL0,lastActL0);
+      assertEquals(expLastActL1,lastActL1);
     }
   }
 }

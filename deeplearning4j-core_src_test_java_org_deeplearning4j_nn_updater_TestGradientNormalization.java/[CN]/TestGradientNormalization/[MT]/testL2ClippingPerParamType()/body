@@ -15,7 +15,7 @@
   double biasL2=biasGrad.norm2Number().doubleValue();
   assertTrue(weightL2 < threshold);
   assertTrue(biasL2 > threshold);
-  updater.update(layer,gradient,0);
+  updater.update(layer,gradient,0,1);
   assertEquals(weightGradCopy,weightGrad);
   assertNotEquals(biasGradCopy,biasGrad);
   double biasScalingFactor=threshold / biasL2;

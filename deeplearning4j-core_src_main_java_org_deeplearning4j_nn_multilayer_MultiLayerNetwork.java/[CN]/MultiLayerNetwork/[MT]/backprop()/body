@@ -16,7 +16,7 @@
     multiGradientKey=String.valueOf(numLayers - 1) + "_" + entry.getKey();
     gradientList.addLast(new Pair<>(multiGradientKey,entry.getValue()));
   }
-  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond(),layers[numLayers - 1]));
+  if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond(),getInputMiniBatchSize()));
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
     currPair=currLayer.backpropGradient(currPair.getSecond());
@@ -26,7 +26,7 @@
       tempList.addFirst(new Pair<>(multiGradientKey,entry.getValue()));
     }
     for (    Pair<String,INDArray> pair : tempList)     gradientList.addFirst(pair);
-    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),getLayerWiseConfigurations().getInputPreProcess(j).backprop(currPair.getSecond(),layers[j]));
+    if (getLayerWiseConfigurations().getInputPreProcess(j) != null)     currPair=new Pair<>(currPair.getFirst(),getLayerWiseConfigurations().getInputPreProcess(j).backprop(currPair.getSecond(),getInputMiniBatchSize()));
   }
   for (  Pair<String,INDArray> pair : gradientList)   gradient.setGradientFor(pair.getFirst(),pair.getSecond());
 }

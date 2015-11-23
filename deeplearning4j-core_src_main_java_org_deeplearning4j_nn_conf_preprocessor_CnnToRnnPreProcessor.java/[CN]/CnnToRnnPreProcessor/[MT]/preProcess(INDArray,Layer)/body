@@ -1,7 +1,0 @@
-{
-  if (input.rank() != 4)   throw new IllegalArgumentException("Invalid input: expect CNN activations with rank 4 (received input with shape " + Arrays.toString(input.shape()) + ")");
-  int[] shape=input.shape();
-  int miniBatchSize=layer.getInputMiniBatchSize();
-  INDArray reshaped=input.reshape(miniBatchSize,shape[0] / miniBatchSize,product);
-  return reshaped.permute(0,2,1);
-}
