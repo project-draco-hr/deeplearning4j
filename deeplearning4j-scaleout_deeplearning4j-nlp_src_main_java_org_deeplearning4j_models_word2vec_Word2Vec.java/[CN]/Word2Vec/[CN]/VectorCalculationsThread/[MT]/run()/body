@@ -1,18 +1,20 @@
 {
   final AtomicLong nextRandom=new AtomicLong(5);
-  while (totalLines.get() < this.linesLimit || sentences.size() > 0) {
+  while (digitizer.hasMoreLines() || sentences.size() > 0) {
     try {
-      List<VocabWord> sentence=sentences.poll(1L,TimeUnit.SECONDS);
-      double alpha=Math.max(minLearningRate,Word2Vec.this.alpha.get() * (1 - (1.0 * wordsCounter.get() / (double)totalWordsCount)));
-      if (sentence != null && !sentence.isEmpty()) {
-        for (int i=0; i < sentence.size(); i++) {
-          nextRandom.set(nextRandom.get() * 25214903917L + 11);
-          Word2Vec.this.skipGram(i,sentence,(int)nextRandom.get() % window,nextRandom,alpha);
-        }
-        wordsCounter.addAndGet(sentence.size());
+      List<VocabWord> sentence=sentences.poll(2L,TimeUnit.SECONDS);
+      double alpha=0.025;
+      if (sentence == null || sentence.isEmpty()) {
+        log.warn("sentence is null");
+        continue;
+      }
+      for (int i=0; i < Word2Vec.this.numIterations; i++) {
+        alpha=Math.max(Word2Vec.this.minLearningRate,Word2Vec.this.alpha.get() * (1 - (1.0 * this.wordsCounter.get() / (double)this.totalWordsCount)));
+        Word2Vec.this.trainSentence(sentence,nextRandom,alpha);
+        this.wordsCounter.addAndGet(sentence.size());
       }
       totalLines.incrementAndGet();
-      if (totalLines.get() % 100000 == 0)       log.info("Iteration: " + this.iterationId + "; Words vectorized so far: "+ wordsCounter.get()+ ";  Lines vectorized so far: "+ totalLines.get()+ "; learningRate: "+ alpha);
+      if (totalLines.get() % 10000 == 0)       log.info("Epoch: " + this.epochNumber + "; Words vectorized so far: "+ this.wordsCounter.get()+ ";  Lines vectorized so far: "+ this.totalLines.get()+ "; learningRate: "+ alpha);
     }
  catch (    Exception e) {
       e.printStackTrace();

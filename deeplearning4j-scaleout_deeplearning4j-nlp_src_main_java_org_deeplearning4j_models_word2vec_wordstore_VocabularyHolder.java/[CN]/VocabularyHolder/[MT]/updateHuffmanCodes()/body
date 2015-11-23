@@ -67,7 +67,6 @@
     vocab.get(a).setHuffmanNode(new HuffmanNode(lcode,lpoint,a,(byte)i));
   }
   idxMap.clear();
-  int a=0;
   for (  VocabularyWord word : vocab) {
     idxMap.put(word.getHuffmanNode().getIdx(),word);
   }

@@ -1,0 +1,8 @@
+int threadId
+long linesLimit
+int epoch
+AtomicLong wordsCounter
+long totalWordsCount
+AtomicLong linesCounter
+LinkedBlockingQueue<List<VocabWord>> buffer
+AsyncIteratorDigitizer digitizer

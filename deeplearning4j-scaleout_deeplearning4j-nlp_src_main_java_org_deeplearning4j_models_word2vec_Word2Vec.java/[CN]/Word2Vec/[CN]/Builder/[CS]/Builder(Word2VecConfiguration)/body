@@ -1,0 +1,16 @@
+{
+  this.iterations=conf.getIterations();
+  this.hugeModelExpected=conf.isHugeModelExpected();
+  this.useAdaGrad=conf.isUseAdaGrad();
+  this.minWordFrequency=conf.getMinWordFrequency();
+  this.lr=conf.getLearningRate();
+  this.learningRateDecayWords=conf.getLearningRateDecayWords();
+  this.negative=conf.getNegative();
+  this.sampling=conf.getSampling();
+  this.minLearningRate=conf.getMinLearningRate();
+  this.window=conf.getWindow();
+  this.seed=conf.getSeed();
+  this.layerSize=conf.getLayersSize();
+  this.numEpochs=conf.getEpochs();
+  this.configuration=conf;
+}

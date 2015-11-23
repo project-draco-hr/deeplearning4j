@@ -1,4 +1,4 @@
 {
-  this.docIter=iter;
+  this.iter=new StreamLineIterator.Builder(iter).setFetchSize(100).build();
   return this;
 }

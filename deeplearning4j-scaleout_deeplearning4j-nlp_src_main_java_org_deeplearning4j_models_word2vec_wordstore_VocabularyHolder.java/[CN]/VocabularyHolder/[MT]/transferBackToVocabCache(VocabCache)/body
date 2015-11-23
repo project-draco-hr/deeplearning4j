@@ -1,18 +1,3 @@
 {
-  if (!(cache instanceof InMemoryLookupCache))   throw new IllegalStateException("Sorry, only InMemoryLookupCache use implemented.");
-  List<VocabularyWord> words=updateHuffmanCodes();
-  for (  VocabularyWord word : words) {
-    if (word.getWord().isEmpty())     continue;
-    VocabWord vocabWord=new VocabWord(word.getCount(),word.getWord());
-    vocabWord.setIndex(word.getHuffmanNode().getIdx());
-    vocabWord.setCodeLength(word.getHuffmanNode().getLength());
-    vocabWord.setPoints(arrayToList(word.getHuffmanNode().getPoint(),word.getHuffmanNode().getLength()));
-    vocabWord.setCodes(arrayToList(word.getHuffmanNode().getCode(),word.getHuffmanNode().getLength()));
-    ((InMemoryLookupCache)cache).getVocabs().put(word.getWord(),vocabWord);
-    ((InMemoryLookupCache)cache).getTokens().put(word.getWord(),vocabWord);
-    cache.addWordToIndex(word.getHuffmanNode().getIdx(),word.getWord());
-    cache.incrementWordCount(word.getWord(),word.getCount() - 1);
-  }
-  idxMap.clear();
-  vocabulary.clear();
+  transferBackToVocabCache(cache,true);
 }
