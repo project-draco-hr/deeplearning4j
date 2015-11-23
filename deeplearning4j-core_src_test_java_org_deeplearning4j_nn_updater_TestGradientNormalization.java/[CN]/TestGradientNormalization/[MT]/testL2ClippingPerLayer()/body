@@ -15,7 +15,7 @@
     double layerGradL2=gradient.gradient().norm2Number().doubleValue();
     if (t == 0)     assertTrue(layerGradL2 < threshold);
  else     assertTrue(layerGradL2 > threshold);
-    updater.update(layer,gradient,0);
+    updater.update(layer,gradient,0,1);
     if (t == 0) {
       assertEquals(weightGradCopy,weightGrad);
       assertEquals(biasGradCopy,biasGrad);

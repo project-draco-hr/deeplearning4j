@@ -1,0 +1,6 @@
+{
+  if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
+  int[] shape=output.shape();
+  INDArray reshaped=output.reshape(miniBatchSize,shape[0] / miniBatchSize,product);
+  return reshaped.permute(0,2,1);
+}

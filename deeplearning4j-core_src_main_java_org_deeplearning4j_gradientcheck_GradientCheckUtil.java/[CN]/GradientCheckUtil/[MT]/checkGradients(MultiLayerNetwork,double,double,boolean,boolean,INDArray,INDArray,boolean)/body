@@ -8,7 +8,7 @@
   Pair<Gradient,Double> gradAndScore=mln.gradientAndScore();
   if (useUpdater) {
     Updater updater=UpdaterCreator.getUpdater(mln);
-    updater.update(mln,gradAndScore.getFirst(),0);
+    updater.update(mln,gradAndScore.getFirst(),0,mln.batchSize());
   }
   INDArray gradientToCheck=gradAndScore.getFirst().gradient();
   INDArray originalParams=mln.params();

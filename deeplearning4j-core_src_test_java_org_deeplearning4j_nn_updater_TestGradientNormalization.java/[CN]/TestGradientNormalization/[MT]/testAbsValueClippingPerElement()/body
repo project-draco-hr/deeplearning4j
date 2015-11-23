@@ -11,7 +11,7 @@
   Gradient gradient=new DefaultGradient();
   gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGrad);
   gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGrad);
-  updater.update(layer,gradient,0);
+  updater.update(layer,gradient,0,1);
   assertNotEquals(weightGradCopy,weightGrad);
   assertNotEquals(biasGradCopy,biasGrad);
   INDArray expectedWeightGrad=weightGradCopy.dup();

@@ -1,4 +1,13 @@
 {
-  if (input.rank() == 3)   input=reshape3dTo2d(input);
-  return super.preOutput(input,training);
+  if (input.rank() == 3) {
+    INDArray inputTemp=input;
+    input=reshape3dTo2d(input);
+    INDArray out=super.preOutput(input,training);
+    this.input=inputTemp;
+    return out;
+  }
+ else {
+    INDArray out=super.preOutput(input,training);
+    return out;
+  }
 }

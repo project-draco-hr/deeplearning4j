@@ -18,17 +18,17 @@
             layer.setInputMiniBatchSize(miniBatchSize);
             INDArray activationsCnn=Nd4j.rand(new int[]{miniBatchSize * timeSeriesLength,nChannels,inputHeight,inputWidth});
             int prod=nChannels * inputHeight * inputWidth;
-            INDArray activationsRnn=proc.preProcess(activationsCnn,layer);
+            INDArray activationsRnn=proc.preProcess(activationsCnn,miniBatchSize);
             assertArrayEquals(new int[]{miniBatchSize,prod,timeSeriesLength},activationsRnn.shape());
-            INDArray twiceProcessed=proc.backprop(activationsRnn,layer);
+            INDArray twiceProcessed=proc.backprop(activationsRnn,miniBatchSize);
             assertArrayEquals(activationsCnn.shape(),twiceProcessed.shape());
             assertEquals(activationsCnn,twiceProcessed);
             InputPreProcessor compProc=new ComposableInputPreProcessor(new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,nChannels),new FeedForwardToRnnPreProcessor());
-            INDArray activationsRnnComp=compProc.preProcess(activationsCnn,layer);
+            INDArray activationsRnnComp=compProc.preProcess(activationsCnn,miniBatchSize);
             assertEquals(activationsRnnComp,activationsRnn);
             INDArray epsilonsRnn=Nd4j.rand(new int[]{miniBatchSize,nChannels * inputHeight * inputWidth,timeSeriesLength});
-            INDArray epsilonsCnnComp=compProc.backprop(epsilonsRnn,layer);
-            INDArray epsilonsCnn=proc.backprop(epsilonsRnn,layer);
+            INDArray epsilonsCnnComp=compProc.backprop(epsilonsRnn,miniBatchSize);
+            INDArray epsilonsCnn=proc.backprop(epsilonsRnn,miniBatchSize);
             if (!epsilonsCnn.equals(epsilonsCnnComp)) {
               System.out.println(miniBatchSize + "\t" + timeSeriesLength+ "\t"+ inputHeight+ "\t"+ inputWidth+ "\t"+ nChannels);
               System.out.println("expected - epsilonsCnnComp");

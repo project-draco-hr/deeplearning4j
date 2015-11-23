@@ -27,7 +27,7 @@
       gradientExpected.setGradientFor(bKey,biasGradient);
     }
     for (int i=0; i < 2; i++) {
-      updater.update(net,gradientActual,i);
+      updater.update(net,gradientActual,i,1);
       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.SGD))       lr=testSGDComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
  else       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.ADAGRAD))       lr=testAdaGradComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
  else       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.ADAM))       lr=testAdamComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);

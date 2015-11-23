@@ -15,8 +15,8 @@
           convInput_c.assign(rand);
           convInput_f.assign(rand);
           assertEquals(convInput_c,convInput_f);
-          INDArray ffAct_c=convProcessor.preProcess(convInput_c,null);
-          INDArray ffAct_f=convProcessor.preProcess(convInput_f,null);
+          INDArray ffAct_c=convProcessor.preProcess(convInput_c,-1);
+          INDArray ffAct_f=convProcessor.preProcess(convInput_f,-1);
           int[] ffActShape={miniBatch,d * rows * cols};
           assertArrayEquals(ffActShape,ffAct_c.shape());
           assertArrayEquals(ffActShape,ffAct_f.shape());
@@ -37,8 +37,8 @@
           INDArray epsilon2_f=Nd4j.create(ffActShape,'f');
           epsilon2_c.assign(ffAct_c);
           epsilon2_f.assign(ffAct_c);
-          INDArray epsilon4_c=convProcessor.backprop(epsilon2_c,null);
-          INDArray epsilon4_f=convProcessor.backprop(epsilon2_f,null);
+          INDArray epsilon4_c=convProcessor.backprop(epsilon2_c,-1);
+          INDArray epsilon4_f=convProcessor.backprop(epsilon2_f,-1);
           assertEquals(convInput_c,epsilon4_c);
           assertEquals(convInput_c,epsilon4_f);
         }
