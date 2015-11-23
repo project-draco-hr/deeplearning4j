@@ -6,7 +6,7 @@
     ret.update(this);
   }
  catch (  Exception e) {
-    throw new IllegalStateException("Unable to cloe network");
+    throw new IllegalStateException("Unable to clone network",e);
   }
   return ret;
 }
