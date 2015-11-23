@@ -1,0 +1,7 @@
+{
+  INDArray[][] vecAndGrads=vectorsAndGradients(first,second);
+  Level1 l1=Nd4j.getBlasWrapper().level1();
+  for (int i=0; i < vecAndGrads[0].length; i++) {
+    l1.axpy(vecAndGrads[0][i].length(),-learningRate,vecAndGrads[1][i],vecAndGrads[0][i]);
+  }
+}

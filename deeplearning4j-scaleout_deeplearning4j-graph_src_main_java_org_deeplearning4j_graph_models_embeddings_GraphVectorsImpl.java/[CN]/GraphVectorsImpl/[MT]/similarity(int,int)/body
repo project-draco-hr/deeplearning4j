@@ -1,0 +1,6 @@
+{
+  if (vertexIdx1 == vertexIdx2)   return 1.0;
+  INDArray vector=Transforms.unitVec(getVertexVector(vertexIdx1));
+  INDArray vector2=Transforms.unitVec(getVertexVector(vertexIdx2));
+  return Nd4j.getBlasWrapper().dot(vector,vector2);
+}

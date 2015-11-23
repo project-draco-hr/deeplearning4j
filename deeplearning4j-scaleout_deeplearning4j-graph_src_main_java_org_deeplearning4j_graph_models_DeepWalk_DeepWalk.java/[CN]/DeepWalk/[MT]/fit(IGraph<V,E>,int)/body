@@ -1,0 +1,5 @@
+{
+  if (!initCalled)   initialize(graph);
+  GraphWalkIteratorProvider<V> iteratorProvider=new RandomWalkGraphIteratorProvider<V>(graph,walkLength,seed,NoEdgeHandling.SELF_LOOP_ON_DISCONNECTED);
+  fit(iteratorProvider);
+}

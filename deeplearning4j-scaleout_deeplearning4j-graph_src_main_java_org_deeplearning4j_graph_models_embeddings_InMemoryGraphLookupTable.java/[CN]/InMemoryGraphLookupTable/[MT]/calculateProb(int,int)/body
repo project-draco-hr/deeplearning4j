@@ -1,0 +1,16 @@
+{
+  INDArray vec=vertexVectors.getRow(first);
+  int codeLength=tree.getCodeLength(second);
+  long code=tree.getCode(second);
+  int[] innerNodesForVertex=tree.getPathInnerNodes(second);
+  double prob=1.0;
+  for (int i=0; i < codeLength; i++) {
+    boolean path=getBit(code,i);
+    int innerNodeIdx=innerNodesForVertex[i];
+    INDArray nwi=outWeights.getRow(innerNodeIdx);
+    double dot=Nd4j.getBlasWrapper().dot(nwi,vec);
+    double innerProb=(path ? sigmoid(dot) : sigmoid(-dot));
+    prob*=innerProb;
+  }
+  return prob;
+}

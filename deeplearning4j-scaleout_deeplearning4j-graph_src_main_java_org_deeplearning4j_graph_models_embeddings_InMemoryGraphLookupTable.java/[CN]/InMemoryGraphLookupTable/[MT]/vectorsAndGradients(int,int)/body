@@ -1,0 +1,29 @@
+{
+  INDArray vec=vertexVectors.getRow(first);
+  int codeLength=tree.getCodeLength(second);
+  long code=tree.getCode(second);
+  int[] innerNodesForVertex=tree.getPathInnerNodes(second);
+  INDArray[][] out=new INDArray[2][innerNodesForVertex.length + 1];
+  Level1 l1=Nd4j.getBlasWrapper().level1();
+  INDArray accumError=Nd4j.create(vec.shape());
+  for (int i=0; i < codeLength; i++) {
+    int innerNodeIdx=innerNodesForVertex[i];
+    boolean path=getBit(code,i);
+    INDArray innerNodeVector=outWeights.getRow(innerNodeIdx);
+    double sigmoidDot=sigmoid(Nd4j.getBlasWrapper().dot(innerNodeVector,vec));
+    INDArray innerNodeGrad;
+    if (path) {
+      innerNodeGrad=vec.mul(sigmoidDot - 1);
+      l1.axpy(vec.length(),sigmoidDot - 1,innerNodeVector,accumError);
+    }
+ else {
+      innerNodeGrad=vec.mul(sigmoidDot);
+      l1.axpy(vec.length(),sigmoidDot,innerNodeVector,accumError);
+    }
+    out[0][i + 1]=innerNodeVector;
+    out[1][i + 1]=innerNodeGrad;
+  }
+  out[0][0]=vec;
+  out[1][0]=accumError;
+  return out;
+}
