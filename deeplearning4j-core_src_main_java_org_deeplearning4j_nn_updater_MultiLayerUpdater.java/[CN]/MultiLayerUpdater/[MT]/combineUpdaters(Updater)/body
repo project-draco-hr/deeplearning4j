@@ -1,0 +1,10 @@
+{
+  if (other == null || other.length == 0)   return;
+  for (int i=0; i < layerUpdaters.length; i++) {
+    Updater[] otherLayerUpdaters=new Updater[other.length];
+    for (int j=0; j < other.length; j++) {
+      otherLayerUpdaters[j]=((MultiLayerUpdater)other[j]).layerUpdaters[i];
+    }
+    layerUpdaters[i].combineUpdaters(otherLayerUpdaters);
+  }
+}
