@@ -3,12 +3,18 @@
   if (cache == null)   cache=new InMemoryLookupCache(false);
   VocabularyHolder topHolder=new VocabularyHolder.Builder().externalCache(cache).minWordFrequency(0).build();
   for (  VocabSource source : sources) {
-    SentenceIterator iterator=source.getIterator();
+    LabelAwareIterator iterator=source.getIterator();
     iterator.reset();
     VocabularyHolder tempHolder=new VocabularyHolder.Builder().minWordFrequency(source.getMinWordFrequency()).build();
-    while (iterator.hasNext()) {
-      String line=iterator.nextSentence();
-      Tokenizer tokenizer=tokenizerFactory.create(line);
+    while (iterator.hasNextDocument()) {
+      LabelledDocument document=iterator.nextDocument();
+      Tokenizer tokenizer=tokenizerFactory.create(document.getContent());
+      if (fetchLabels) {
+        VocabularyWord word=new VocabularyWord(document.getLabel());
+        word.setSpecial(true);
+        word.setCount(1);
+        tempHolder.addWord(word);
+      }
       List<String> tokens=tokenizer.getTokens();
       for (      String token : tokens) {
         if (stopWords != null && stopWords.contains(token))         continue;

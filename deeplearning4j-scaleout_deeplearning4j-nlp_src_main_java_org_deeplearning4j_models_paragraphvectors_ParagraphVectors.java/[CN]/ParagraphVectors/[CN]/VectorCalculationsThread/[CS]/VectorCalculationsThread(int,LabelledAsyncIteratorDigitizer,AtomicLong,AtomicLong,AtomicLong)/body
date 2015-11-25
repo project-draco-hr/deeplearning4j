@@ -1,0 +1,8 @@
+{
+  this.roller=roller;
+  this.epoch=epochId;
+  this.nextRandom=random;
+  this.documentCounter=documentCounter;
+  this.numWordsSoFar=wordsCounter;
+  this.setName("ParaVec calculations thread. Epoch id: " + epoch);
+}

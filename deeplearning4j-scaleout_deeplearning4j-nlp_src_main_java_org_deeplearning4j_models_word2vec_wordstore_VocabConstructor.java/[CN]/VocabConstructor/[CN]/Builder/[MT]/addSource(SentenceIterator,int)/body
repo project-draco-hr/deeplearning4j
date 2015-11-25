@@ -1,4 +1,4 @@
 {
-  sources.add(new VocabSource(iterator,minWordFrequency));
+  sources.add(new VocabSource(new SentenceIteratorConverter(iterator),minWordFrequency));
   return this;
 }

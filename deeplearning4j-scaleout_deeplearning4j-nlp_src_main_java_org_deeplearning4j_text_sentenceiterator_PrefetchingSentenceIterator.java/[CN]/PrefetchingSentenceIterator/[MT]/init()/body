@@ -1,0 +1,4 @@
+{
+  reader=new AsyncIteratorReader(sourceIterator,fetchSize,buffer,this.preProcessor);
+  reader.start();
+}

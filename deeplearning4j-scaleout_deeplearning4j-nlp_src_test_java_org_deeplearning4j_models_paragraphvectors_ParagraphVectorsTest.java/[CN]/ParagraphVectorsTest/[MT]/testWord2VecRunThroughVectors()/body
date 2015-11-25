@@ -1,11 +1,12 @@
 {
-  ClassPathResource resource=new ClassPathResource("/basic2/line2.txt");
+  ClassPathResource resource=new ClassPathResource("/big/raw_sentences.txt");
   File file=resource.getFile().getParentFile();
   LabelAwareSentenceIterator iter=LabelAwareUimaSentenceIterator.createWithPath(file.getAbsolutePath());
   TokenizerFactory t=new UimaTokenizerFactory();
   ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(5).labels(Arrays.asList("label1","deeple")).layerSize(100).stopWords(new ArrayList<String>()).windowSize(5).iterate(iter).tokenizerFactory(t).build();
   assertEquals(new ArrayList<String>(),vec.getStopWords());
   vec.fit();
-  double sim=vec.similarity("Adam","deeplearning4j");
+  double sim=vec.similarity("day","night");
+  log.info("day/night similarity: " + sim);
   new File("cache.ser").delete();
 }

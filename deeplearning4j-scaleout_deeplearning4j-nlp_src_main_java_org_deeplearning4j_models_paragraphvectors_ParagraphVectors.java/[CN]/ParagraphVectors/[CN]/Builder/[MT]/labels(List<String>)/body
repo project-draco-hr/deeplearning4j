@@ -1,4 +1,5 @@
 {
   this.labels=labels;
+  this.generator=new LabelsSource(labels);
   return this;
 }

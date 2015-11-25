@@ -3,5 +3,8 @@
     if (!this.containsWord(word.getWord())) {
       this.addWord(word);
     }
+ else {
+      holder.incrementWordCounter(word.getWord());
+    }
   }
 }
