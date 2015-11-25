@@ -5,7 +5,7 @@
   }
  else {
     if (ag.aggregatorMap == null)     return;
-    for (    String s : aggregatorMap.keySet()) {
+    for (    String s : ag.aggregatorMap.keySet()) {
       GradientUpdaterAggregator first=aggregatorMap.get(s);
       GradientUpdaterAggregator second=ag.aggregatorMap.get(s);
       first.combine(second);

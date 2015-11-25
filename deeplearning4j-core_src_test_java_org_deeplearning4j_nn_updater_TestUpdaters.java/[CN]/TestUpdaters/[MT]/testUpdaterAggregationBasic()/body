@@ -11,5 +11,11 @@
     System.out.println(i);
     assertNotNull(updater);
     assertTrue(updater instanceof MultiLayerUpdater);
+    UpdaterAggregator ag=updater.getAggregator(true);
+    Updater u2=ag.getUpdater();
+    assertEquals(u2,updater);
+    UpdaterAggregator ag2=updater.getAggregator(true);
+    ag2.aggregate(updater);
+    assertEquals(updater,ag2.getUpdater());
   }
 }
