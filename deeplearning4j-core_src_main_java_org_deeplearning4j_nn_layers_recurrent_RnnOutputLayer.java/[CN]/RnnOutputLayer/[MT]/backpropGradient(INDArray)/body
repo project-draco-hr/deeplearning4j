@@ -1,6 +1,10 @@
 {
+  if (input.rank() != 3)   throw new UnsupportedOperationException("Input is not rank 3");
+  INDArray inputTemp=input;
+  this.input=reshape3dTo2d(input);
   Pair<Gradient,INDArray> gradAndEpsilonNext=super.backpropGradient(epsilon);
+  this.input=inputTemp;
   INDArray epsilon2d=gradAndEpsilonNext.getSecond();
-  INDArray epsilon3d=reshape2dTo3d(epsilon2d);
+  INDArray epsilon3d=reshape2dTo3d(epsilon2d,input.size(0));
   return new Pair<>(gradAndEpsilonNext.getFirst(),epsilon3d);
 }

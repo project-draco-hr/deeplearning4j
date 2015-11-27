@@ -1,0 +1,7 @@
+{
+  for (  VocabularyWord word : holder.getVocabulary()) {
+    if (!this.containsWord(word.getWord())) {
+      this.addWord(word);
+    }
+  }
+}

@@ -20,7 +20,7 @@
     gradientExpected.setGradientFor(bKey,biasGradient);
   }
   for (int i=0; i < 2; i++) {
-    updater.update(net,gradientMLN,i);
+    updater.update(net,gradientMLN,i,1);
     mu=testNesterovsComputation(gradientMLN,gradientExpected,lr,mu,momentumAfter,i);
     assertEquals(mu,net.getLayer(1).conf().getLayer().getMomentum(),1e-4);
   }

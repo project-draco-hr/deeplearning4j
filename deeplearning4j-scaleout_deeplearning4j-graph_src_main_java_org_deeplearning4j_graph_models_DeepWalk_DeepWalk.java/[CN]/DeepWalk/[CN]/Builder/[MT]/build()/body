@@ -1,0 +1,8 @@
+{
+  DeepWalk<V,E> dw=new DeepWalk<>();
+  dw.vectorSize=vectorSize;
+  dw.windowSize=windowSize;
+  dw.learningRate=learningRate;
+  dw.seed=seed;
+  return dw;
+}

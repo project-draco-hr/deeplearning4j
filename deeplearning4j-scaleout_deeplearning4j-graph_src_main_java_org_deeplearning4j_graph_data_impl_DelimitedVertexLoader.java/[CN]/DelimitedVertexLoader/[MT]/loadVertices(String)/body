@@ -1,0 +1,26 @@
+{
+  List<Vertex<String>> vertices=new ArrayList<>();
+  int lineCount=0;
+  try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
+    String line;
+    while ((line=br.readLine()) != null) {
+      lineCount++;
+      if (ignoreLinesPrefix != null) {
+        boolean skipLine=false;
+        for (        String s : ignoreLinesPrefix) {
+          if (line.startsWith(s)) {
+            skipLine=true;
+            break;
+          }
+        }
+        if (skipLine)         continue;
+      }
+      int idx=line.indexOf(delimiter);
+      if (idx == -1)       throw new ParseException("Error parsing line (could not find delimiter): " + line);
+      String first=line.substring(0,idx);
+      String second=line.substring(idx + 1);
+      vertices.add(new Vertex<>(Integer.parseInt(first),second));
+    }
+  }
+   return vertices;
+}

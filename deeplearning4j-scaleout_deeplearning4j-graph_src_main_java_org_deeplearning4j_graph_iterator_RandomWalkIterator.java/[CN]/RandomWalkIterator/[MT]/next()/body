@@ -1,0 +1,30 @@
+{
+  if (!hasNext())   throw new NoSuchElementException();
+  int currVertexIdx=order[position++];
+  int[] indices=new int[walkLength + 1];
+  indices[0]=currVertexIdx;
+  if (walkLength == 0)   return new VertexSequence<>(graph,indices);
+  Vertex<V> next;
+  try {
+    next=graph.getRandomConnectedVertex(currVertexIdx,rng);
+  }
+ catch (  NoEdgesException e) {
+switch (mode) {
+case SELF_LOOP_ON_DISCONNECTED:
+      for (int i=1; i < walkLength; i++)       indices[i]=currVertexIdx;
+    return new VertexSequence<>(graph,indices);
+case EXCEPTION_ON_DISCONNECTED:
+  throw e;
+default :
+throw new RuntimeException("Unknown/not implemented NoEdgeHandling mode: " + mode);
+}
+}
+indices[1]=next.vertexID();
+currVertexIdx=indices[1];
+for (int i=2; i <= walkLength; i++) {
+next=graph.getRandomConnectedVertex(currVertexIdx,rng);
+currVertexIdx=next.vertexID();
+indices[i]=currVertexIdx;
+}
+return new VertexSequence<>(graph,indices);
+}

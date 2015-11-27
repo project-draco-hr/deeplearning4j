@@ -11,7 +11,7 @@
   gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
   gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
   for (int i=0; i < 2; i++) {
-    updater.update(layer,gradientSingle,i);
+    updater.update(layer,gradientSingle,i,1);
     mu=testNesterovsComputation(gradientSingle,gradientExpected,lr,mu,momentumAfter,i);
     assertEquals(mu,layer.conf().getLayer().getMomentum(),1e-4);
   }

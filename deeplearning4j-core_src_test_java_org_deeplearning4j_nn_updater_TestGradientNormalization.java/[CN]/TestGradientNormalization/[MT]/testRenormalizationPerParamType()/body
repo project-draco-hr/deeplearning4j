@@ -10,7 +10,7 @@
   Gradient gradient=new DefaultGradient();
   gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGrad);
   gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGrad);
-  updater.update(layer,gradient,0);
+  updater.update(layer,gradient,0,1);
   INDArray normWeightsExpected=weightGradCopy.div(weightGradCopy.norm2Number());
   INDArray normBiasExpected=biasGradCopy.div(biasGradCopy.norm2Number());
   assertEquals(normWeightsExpected,gradient.getGradientFor(DefaultParamInitializer.WEIGHT_KEY));

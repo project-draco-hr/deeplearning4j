@@ -1,0 +1,7 @@
+{
+  for (  VocabularyWord word : getVocabulary()) {
+    word.setHuffmanNode(null);
+    word.setFrequencyShift(null);
+    word.setCount(0);
+  }
+}

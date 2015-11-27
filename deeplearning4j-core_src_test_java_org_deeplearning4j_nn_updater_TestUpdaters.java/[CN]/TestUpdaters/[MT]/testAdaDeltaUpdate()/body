@@ -10,7 +10,7 @@
   gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
   gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
   for (int i=0; i < 2; i++) {
-    updater.update(layer,gradient,i);
+    updater.update(layer,gradient,i,1);
     for (    Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
       key=entry.getKey();
       val=entry.getValue();

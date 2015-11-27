@@ -1,0 +1,15 @@
+{
+  if (!initCalled)   throw new UnsupportedOperationException("DeepWalk not initialized (call initialize before fit)");
+  int walkLength=iterator.walkLength();
+  while (iterator.hasNext()) {
+    IVertexSequence<V> sequence=iterator.next();
+    int[] walk=new int[walkLength + 1];
+    int i=0;
+    while (sequence.hasNext())     walk[i++]=sequence.next().vertexID();
+    skipGram(walk);
+    long iter=walkCounter.incrementAndGet();
+    if (iter % STATUS_UPDATE_FREQUENCY == 0) {
+      log.info("Processed {} random walks on graph",iter);
+    }
+  }
+}
