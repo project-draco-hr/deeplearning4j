@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("Not yet implemented");
+  if (layers[layers.length - 1] instanceof BaseOutputLayer<?>)   throw new UnsupportedOperationException("Cannot calculate gradients based on epsilon with OutputLayer");
+  return calcBackpropGradients(epsilon,false);
 }

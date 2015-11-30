@@ -1,0 +1,18 @@
+{
+  int nVertices=deepWalk.numVertices();
+  int vectorSize=deepWalk.getVectorSize();
+  try (BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false))){
+    for (int i=0; i < nVertices; i++) {
+      StringBuilder sb=new StringBuilder();
+      sb.append(i);
+      INDArray vec=deepWalk.getVertexVector(i);
+      for (int j=0; j < vectorSize; j++) {
+        double d=vec.getDouble(j);
+        sb.append(DELIM).append(d);
+      }
+      sb.append("\n");
+      write.write(sb.toString());
+    }
+  }
+   log.info("Wrote {} vectors of length {} to: {}",nVertices,vectorSize,path);
+}

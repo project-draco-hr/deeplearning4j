@@ -1,24 +1,17 @@
 {
-  final AtomicLong totalLines=new AtomicLong(0);
+  if (sentenceIter == null && docIter == null)   throw new IllegalStateException("At least one iterator is needed for model fit()");
   final LinkedBlockingQueue<List<VocabWord>> sentences=new LinkedBlockingQueue<>();
-  sentenceIter.reset();
-  log.info("Building vocabulary...");
-  while (sentenceIter.hasNext()) {
-    Tokenizer tokenizer=tokenizerFactory.create(sentenceIter.nextSentence());
-    int wordsAdded=this.fillVocabulary(tokenizer.getTokens());
-    if (wordsAdded > 0)     totalLines.incrementAndGet();
-    if (totalLines.get() % 100000 == 0)     log.info("" + totalLines.get() + " lines parsed. Vocab size: "+ vocabularyHolder.numWords());
+  if (resetModel) {
+    log.info("Building matrices & resetting weights...");
+    buildVocab();
+    lookupTable.resetWeights(true);
+    resetModel=true;
   }
-  log.info("" + totalLines.get() + " lines parsed. Vocab size: "+ vocabularyHolder.numWords());
-  vocabularyHolder.truncateVocabulary(minWordFrequency);
-  final long totalWordsCount=vocabularyHolder.totalWordsBeyondLimit() * numIterations;
-  log.info("Total truncated vocab size: " + vocabularyHolder.numWords());
-  vocabularyHolder.transferBackToVocabCache(vocab);
-  log.info("Building matrices & resetting weights...");
-  lookupTable.resetWeights();
-  int iteration=1;
+  final long totalWordsCount=vocab.totalWordOccurrences() * numIterations * epochs;
+  log.info("Total number of words in vocab: [" + vocab.numWords() + "], word occurencies: ["+ vocab.totalWordOccurrences()+ "], buffed words count: ["+ totalWordsCount+ "], number of Epochs: ["+ epochs+ "],  number of Iterations:["+ numIterations+ "]");
+  int epoch=1;
   final long maxLines=totalLines.get();
-  while (iteration <= numIterations) {
+  while (epoch <= epochs) {
     log.info("Starting async iterator...");
     totalLines.set(0);
     final AtomicLong wordsCounter=new AtomicLong(0);
@@ -27,7 +20,7 @@
     log.info("Starting vectorization process...");
     final VectorCalculationsThread[] threads=new VectorCalculationsThread[workers];
     for (int x=0; x < workers; x++) {
-      threads[x]=new VectorCalculationsThread(x,maxLines,iteration,wordsCounter,totalWordsCount,totalLines,sentences);
+      threads[x]=new VectorCalculationsThread(x,maxLines,epoch,wordsCounter,totalWordsCount,totalLines,sentences,roller);
       threads[x].start();
     }
     try {
@@ -44,8 +37,8 @@
         e.printStackTrace();
       }
     }
-    log.info("Iteration: " + iteration + "; Lines vectorized so far: "+ totalLines.get());
-    iteration++;
+    log.info("Epoch: " + epoch + "; Lines vectorized so far: "+ totalLines.get());
+    epoch++;
   }
   log.info("Vectorization accomplished.");
 }

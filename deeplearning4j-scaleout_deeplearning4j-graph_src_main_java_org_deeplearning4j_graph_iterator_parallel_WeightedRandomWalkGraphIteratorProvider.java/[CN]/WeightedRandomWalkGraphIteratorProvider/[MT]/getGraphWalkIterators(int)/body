@@ -1,0 +1,16 @@
+{
+  int nVertices=graph.numVertices();
+  if (numIterators > nVertices)   numIterators=nVertices;
+  int verticesPerIter=nVertices / numIterators;
+  List<GraphWalkIterator<V>> list=new ArrayList<>(numIterators);
+  int last=0;
+  for (int i=0; i < numIterators; i++) {
+    int from=last;
+    int to=Math.min(nVertices,from + verticesPerIter);
+    if (i == numIterators - 1)     to=nVertices;
+    GraphWalkIterator<V> iter=new WeightedRandomWalkIterator<V>(graph,walkLength,rng.nextLong(),mode,from,to);
+    list.add(iter);
+    last=to;
+  }
+  return list;
+}

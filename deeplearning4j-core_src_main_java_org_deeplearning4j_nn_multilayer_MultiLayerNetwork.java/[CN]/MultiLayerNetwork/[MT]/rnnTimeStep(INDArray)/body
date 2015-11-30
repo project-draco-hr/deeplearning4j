@@ -2,7 +2,7 @@
   this.setInputMiniBatchSize(input.size(0));
   boolean inputIs2d=input.rank() == 2;
   for (int i=0; i < layers.length; i++) {
-    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     input=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,layers[i]);
+    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     input=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,getInputMiniBatchSize());
     if (layers[i] instanceof BaseRecurrentLayer) {
       input=((BaseRecurrentLayer<?>)layers[i]).rnnTimeStep(input);
     }

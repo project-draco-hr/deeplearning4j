@@ -4,7 +4,7 @@
   int nIn=5;
   int nOut=4;
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).list(3).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(7).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(7).nOut(8).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(2,new RnnOutputLayer.Builder(LossFunction.MCXENT).weightInit(WeightInit.DISTRIBUTION).nIn(8).nOut(nOut).activation("softmax").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).backprop(true).build();
-  assertTrue(conf.getBackpropType() == BackpropType.Standard);
+  assertEquals(BackpropType.Standard,conf.getBackpropType());
   MultiLayerConfiguration confTBPTT=new NeuralNetConfiguration.Builder().seed(12345).list(3).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(7).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(7).nOut(8).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(2,new RnnOutputLayer.Builder(LossFunction.MCXENT).weightInit(WeightInit.DISTRIBUTION).nIn(8).nOut(nOut).activation("softmax").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).backprop(true).backpropType(BackpropType.TruncatedBPTT).tBPTTBackwardLength(timeSeriesLength).tBPTTForwardLength(timeSeriesLength).build();
   Nd4j.getRandom().setSeed(12345);
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
@@ -25,8 +25,8 @@
   mlnTBPTT.computeGradientAndScore();
   Pair<Gradient,Double> mlnPair=mln.gradientAndScore();
   Pair<Gradient,Double> tbpttPair=mln.gradientAndScore();
-  assertTrue(mlnPair.getFirst().equals(tbpttPair.getFirst()));
-  assertTrue(mlnPair.getSecond().equals(tbpttPair.getSecond()));
+  assertEquals(mlnPair.getFirst(),tbpttPair.getFirst());
+  assertEquals(mlnPair.getSecond(),tbpttPair.getSecond());
   Map<String,INDArray> l0StateMLN=mln.rnnGetPreviousState(0);
   Map<String,INDArray> l0StateTBPTT=mlnTBPTT.rnnGetPreviousState(0);
   Map<String,INDArray> l1StateMLN=mln.rnnGetPreviousState(0);
@@ -50,6 +50,6 @@
   INDArray l1Act=activations.get(2);
   INDArray expL0Act=l0Act.tensorAlongDimension(timeSeriesLength - 1,1,0);
   INDArray expL1Act=l1Act.tensorAlongDimension(timeSeriesLength - 1,1,0);
-  assertTrue(tbpttActL0.equals(expL0Act));
-  assertTrue(tbpttActL1.equals(expL1Act));
+  assertEquals(tbpttActL0,expL0Act);
+  assertEquals(tbpttActL1,expL1Act);
 }

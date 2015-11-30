@@ -1,8 +1,9 @@
 {
   if (!layerWiseConfigurations.isPretrain())   return;
+  int miniBatchSize=input.size(0);
   INDArray layerInput=null;
   for (int i=0; i < getnLayers() - 1; i++) {
-    if (i == 0)     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,layers[i]);
+    if (i == 0)     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,miniBatchSize);
  else     layerInput=input;
  else     layerInput=activationFromPrevLayer(i - 1,layerInput,true);
     log.info("Training on layer " + (i + 1) + " with "+ layerInput.slices()+ " examples");

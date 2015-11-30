@@ -1,9 +1,9 @@
 {
   INDArray lastLayerActivation=x;
   for (int i=0; i < layers.length - 1; i++) {
-    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     lastLayerActivation=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(lastLayerActivation,layers[i]);
+    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     lastLayerActivation=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(lastLayerActivation,getInputMiniBatchSize());
     lastLayerActivation=layers[i].activate(lastLayerActivation);
   }
-  if (getLayerWiseConfigurations().getInputPreProcess(layers.length - 1) != null)   lastLayerActivation=getLayerWiseConfigurations().getInputPreProcess(layers.length - 1).preProcess(lastLayerActivation,layers[layers.length - 1]);
+  if (getLayerWiseConfigurations().getInputPreProcess(layers.length - 1) != null)   lastLayerActivation=getLayerWiseConfigurations().getInputPreProcess(layers.length - 1).preProcess(lastLayerActivation,getInputMiniBatchSize());
   return layers[layers.length - 1].preOutput(lastLayerActivation);
 }

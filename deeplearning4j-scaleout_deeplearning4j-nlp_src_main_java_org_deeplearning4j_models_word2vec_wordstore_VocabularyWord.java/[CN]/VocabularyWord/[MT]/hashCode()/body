@@ -1,5 +1,3 @@
 {
-  int result=word.hashCode();
-  result=31 * result + count;
-  return result;
+  return word != null ? word.hashCode() : 0;
 }

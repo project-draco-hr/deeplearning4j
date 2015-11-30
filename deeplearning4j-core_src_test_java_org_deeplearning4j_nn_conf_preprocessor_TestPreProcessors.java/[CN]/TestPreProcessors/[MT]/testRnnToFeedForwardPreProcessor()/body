@@ -21,8 +21,8 @@
       }
     }
     assertEquals(activations3dc,activations3df);
-    INDArray activations2dc=proc.preProcess(activations3dc,layer);
-    INDArray activations2df=proc.preProcess(activations3df,layer);
+    INDArray activations2dc=proc.preProcess(activations3dc,miniBatchSize);
+    INDArray activations2df=proc.preProcess(activations3df,miniBatchSize);
     assertArrayEquals(activations2dc.shape(),new int[]{miniBatchSize * timeSeriesLength,layerSize});
     assertArrayEquals(activations2df.shape(),new int[]{miniBatchSize * timeSeriesLength,layerSize});
     assertEquals(activations2dc,activations2df);
@@ -38,16 +38,16 @@
       assertTrue(rowc.equals(expectedRow));
       assertTrue(rowf.equals(expectedRow));
     }
-    INDArray outc=proc.backprop(activations2dc,layer);
-    INDArray outf=proc.backprop(activations2df,layer);
+    INDArray outc=proc.backprop(activations2dc,miniBatchSize);
+    INDArray outf=proc.backprop(activations2df,miniBatchSize);
     assertTrue(outc.equals(activations3dc));
     assertTrue(outf.equals(activations3df));
     INDArray eps2d_c=Nd4j.create(activations2dc.shape(),'c');
     INDArray eps2d_f=Nd4j.create(activations2dc.shape(),'f');
     eps2d_c.assign(activations2dc);
     eps2d_f.assign(activations2df);
-    INDArray eps3d_c=proc.backprop(eps2d_c,layer);
-    INDArray eps3d_f=proc.backprop(eps2d_f,layer);
+    INDArray eps3d_c=proc.backprop(eps2d_c,miniBatchSize);
+    INDArray eps3d_f=proc.backprop(eps2d_f,miniBatchSize);
     assertEquals(activations3dc,eps3d_c);
     assertEquals(activations3df,eps3d_f);
   }

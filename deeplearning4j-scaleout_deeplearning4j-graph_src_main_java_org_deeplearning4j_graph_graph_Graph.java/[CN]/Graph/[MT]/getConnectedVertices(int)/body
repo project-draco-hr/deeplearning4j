@@ -1,0 +1,9 @@
+{
+  if (vertex < 0 || vertex >= vertices.size())   throw new IllegalArgumentException("Invalid vertex index: " + vertex);
+  if (edges[vertex] == null)   return Collections.emptyList();
+  List<Vertex<V>> list=new ArrayList<>(edges[vertex].size());
+  for (  Edge<E> edge : edges[vertex]) {
+    list.add(vertices.get(edge.getTo()));
+  }
+  return list;
+}

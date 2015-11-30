@@ -3,13 +3,11 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration();
   conf.minimize=minimize;
   conf.maxNumLineSearchIterations=maxNumLineSearchIterations;
-  conf.batchSize=batchSize;
   conf.layer=layer;
   conf.numIterations=numIterations;
   conf.useRegularization=useRegularization;
   conf.useSchedules=useSchedules;
   conf.optimizationAlgo=optimizationAlgo;
-  conf.constrainGradientToUnitNorm=constrainGradientToUnitNorm;
   conf.seed=seed;
   conf.timeSeriesLength=timeSeriesLength;
   conf.stepFunction=stepFunction;

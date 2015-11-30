@@ -1,10 +1,9 @@
 {
-  this.setInputMiniBatchSize(input.size(0));
   INDArray currInput=input;
   List<INDArray> activations=new ArrayList<>();
   activations.add(currInput);
   for (int i=0; i < layers.length; i++) {
-    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     currInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(currInput,layers[i]);
+    if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     currInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(currInput,input.size(0));
     if (layers[i] instanceof BaseRecurrentLayer) {
       currInput=((BaseRecurrentLayer<?>)layers[i]).rnnActivateUsingStoredState(currInput,training,storeLastForTBPTT);
     }
