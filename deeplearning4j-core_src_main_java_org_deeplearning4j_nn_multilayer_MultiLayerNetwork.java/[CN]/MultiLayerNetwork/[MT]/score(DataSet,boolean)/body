@@ -1,0 +1,15 @@
+{
+  feedForward(data.getFeatureMatrix());
+  setLabels(data.getLabels());
+  if (getOutputLayer() instanceof BaseOutputLayer) {
+    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)getOutputLayer();
+    ol.setLabels(data.getLabels());
+    ol.computeScore(calcL1(),calcL2(),training);
+    this.score=ol.score();
+  }
+ else {
+    log.warn("Cannot calculate score wrt labels without an OutputLayer");
+    return 0.0;
+  }
+  return score();
+}
