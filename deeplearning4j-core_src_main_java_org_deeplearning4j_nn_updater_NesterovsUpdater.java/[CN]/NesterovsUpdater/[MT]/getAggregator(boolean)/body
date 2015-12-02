@@ -1,0 +1,5 @@
+{
+  NesterovsAggregator ag=new NesterovsAggregator();
+  if (addThis)   ag.aggregate(this);
+  return ag;
+}

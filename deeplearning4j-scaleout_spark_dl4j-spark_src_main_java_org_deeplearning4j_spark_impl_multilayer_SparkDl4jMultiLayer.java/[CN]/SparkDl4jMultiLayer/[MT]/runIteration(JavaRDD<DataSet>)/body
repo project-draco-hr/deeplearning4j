@@ -2,13 +2,16 @@
   log.info("Broadcasting initial parameters of length " + network.numParams(false));
   INDArray valToBroadcast=network.params(false);
   this.params=sc.broadcast(valToBroadcast);
+  Updater updater=network.getUpdater();
+  this.updater=sc.broadcast(updater);
   int paramsLength=network.numParams(false);
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
-    JavaRDD<Gradient> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params),true).cache();
+    JavaRDD<Tuple2<Gradient,Updater>> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params,this.updater),true).cache();
     log.info("Ran iterative reduce...averaging results now.");
+    JavaRDD<Gradient> resultsGradient=results.map(new GradientFromTupleFunction());
     GradientAdder a=new GradientAdder(paramsLength);
-    results.foreach(a);
+    resultsGradient.foreach(a);
     INDArray accumulatedGradient=a.getAccumulator().value();
     boolean divideGrad=sc.getConf().getBoolean(DIVIDE_ACCUM_GRADIENT,false);
     if (divideGrad)     accumulatedGradient.divi(results.partitions().size());
@@ -16,17 +19,30 @@
     log.info("Summed gradients.");
     network.setParameters(network.params(false).addi(accumulatedGradient));
     log.info("Set parameters");
+    log.info("Processing updaters");
+    JavaRDD<Updater> resultsUpdater=results.map(new UpdaterFromGradientTupleFunction());
+    UpdaterAggregator aggregator=resultsUpdater.aggregate(resultsUpdater.first().getAggregator(false),new UpdaterElementCombiner(),new UpdaterAggregatorCombiner());
+    Updater combinedUpdater=aggregator.getUpdater();
+    network.setUpdater(combinedUpdater);
+    log.info("Set updater");
   }
  else {
-    JavaRDD<INDArray> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.best_score_acc),true).cache();
+    JavaRDD<Tuple2<INDArray,Updater>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.best_score_acc),true).cache();
+    JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunction());
     log.info("Ran iterative reduce... averaging parameters now.");
     Adder a=new Adder(paramsLength);
-    results.foreach(a);
+    resultsParams.foreach(a);
     INDArray newParams=a.getAccumulator().value();
     log.info("Accumulated parameters");
     newParams.divi(rdd.partitions().size());
     log.info("Divided by partitions");
     network.setParameters(newParams);
     log.info("Set parameters");
+    log.info("Processing updaters");
+    JavaRDD<Updater> resultsUpdater=results.map(new UpdaterFromTupleFunction());
+    UpdaterAggregator aggregator=resultsUpdater.aggregate(resultsUpdater.first().getAggregator(false),new UpdaterElementCombiner(),new UpdaterAggregatorCombiner());
+    Updater combinedUpdater=aggregator.getUpdater();
+    network.setUpdater(combinedUpdater);
+    log.info("Set updater");
   }
 }

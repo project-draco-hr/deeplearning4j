@@ -1,0 +1,5 @@
+{
+  SgdAggregator ag=new SgdAggregator();
+  if (addThis)   ag.aggregate(this);
+  return ag;
+}

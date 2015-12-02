@@ -1,0 +1,14 @@
+{
+  MultiLayerUpdater mlu=(MultiLayerUpdater)updater;
+  if (aggregators == null) {
+    aggregators=new UpdaterAggregator[mlu.layerUpdaters.length];
+    for (int i=0; i < aggregators.length; i++) {
+      aggregators[i]=mlu.layerUpdaters[i].getAggregator(true);
+    }
+  }
+ else {
+    for (int i=0; i < aggregators.length; i++) {
+      aggregators[i].aggregate(mlu.layerUpdaters[i]);
+    }
+  }
+}
