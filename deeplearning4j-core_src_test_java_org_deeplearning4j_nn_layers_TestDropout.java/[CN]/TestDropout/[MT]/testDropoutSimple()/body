@@ -44,6 +44,18 @@
         }
       }
     }
+    INDArray in2=Nd4j.rand(1,nIn);
+    INDArray out2=Nd4j.rand(1,nOut);
+    INDArray outTest1=net.output(in2,false);
+    INDArray outTest2=net.output(in2,false);
+    INDArray outTest3=net.output(in2,false);
+    assertEquals(outTest1,outTest2);
+    assertEquals(outTest1,outTest3);
+    double score1=net.score(new DataSet(in2,out2),false);
+    double score2=net.score(new DataSet(in2,out2),false);
+    double score3=net.score(new DataSet(in2,out2),false);
+    assertEquals(score1,score2,0.0);
+    assertEquals(score1,score3,0.0);
   }
   if (noDropoutCount >= nTests / 3) {
     fail("Too many instances of dropout not being applied");
