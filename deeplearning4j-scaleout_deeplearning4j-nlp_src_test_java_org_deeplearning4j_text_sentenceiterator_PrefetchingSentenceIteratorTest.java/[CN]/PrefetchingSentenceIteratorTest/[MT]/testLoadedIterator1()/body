@@ -8,14 +8,6 @@
   while (fetcher.hasNext()) {
     String line=fetcher.nextSentence();
     cnt++;
+    if (cnt % 10000 == 0)     log.info("Line processed: " + cnt);
   }
-  assertEquals(97162,cnt);
-  log.info("Phase 2 starting");
-  fetcher.reset();
-  cnt=0;
-  while (fetcher.hasNext()) {
-    String line=fetcher.nextSentence();
-    cnt++;
-  }
-  assertEquals(97162,cnt);
 }
