@@ -1,0 +1,5 @@
+{
+  RmsPropAggregator ag=new RmsPropAggregator();
+  if (addThis)   ag.aggregate(this);
+  return ag;
+}

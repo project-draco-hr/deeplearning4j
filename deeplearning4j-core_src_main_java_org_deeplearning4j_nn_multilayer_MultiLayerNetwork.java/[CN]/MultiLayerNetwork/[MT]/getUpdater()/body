@@ -1,0 +1,4 @@
+{
+  if (solver == null)   return null;
+  return solver.getOptimizer().getUpdater();
+}
