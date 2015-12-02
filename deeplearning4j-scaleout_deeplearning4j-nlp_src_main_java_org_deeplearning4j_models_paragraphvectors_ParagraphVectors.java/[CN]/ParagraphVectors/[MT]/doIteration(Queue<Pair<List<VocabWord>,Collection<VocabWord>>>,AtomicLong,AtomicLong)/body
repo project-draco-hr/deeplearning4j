@@ -13,7 +13,6 @@
       double diff2=0.0;
       trainSentence(sentenceWithLabel,nextRandom,alpha);
       increment+=sentenceWithLabel.getFirst().size();
-      log.info("Train sentence avg took " + diff2 / (double)sentenceWithLabel.getFirst().size());
       numWordsSoFar.set(numWordsSoFar.get() + increment);
     }
   }

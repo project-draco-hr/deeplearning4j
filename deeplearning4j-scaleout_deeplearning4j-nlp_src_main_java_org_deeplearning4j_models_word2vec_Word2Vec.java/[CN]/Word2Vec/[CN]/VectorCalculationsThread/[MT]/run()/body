@@ -14,7 +14,7 @@
         this.wordsCounter.addAndGet(sentence.size());
       }
       totalLines.incrementAndGet();
-      if (totalLines.get() % 10000 == 0)       log.info("Epoch: " + this.epochNumber + "; Words vectorized so far: "+ this.wordsCounter.get()+ ";  Lines vectorized so far: "+ this.totalLines.get()+ "; learningRate: "+ alpha);
+      if (totalLines.get() % 100000 == 0)       log.info("Epoch: " + this.epochNumber + "; Words vectorized so far: "+ this.wordsCounter.get()+ ";  Lines vectorized so far: "+ this.totalLines.get()+ "; learningRate: "+ alpha);
     }
  catch (    Exception e) {
       e.printStackTrace();

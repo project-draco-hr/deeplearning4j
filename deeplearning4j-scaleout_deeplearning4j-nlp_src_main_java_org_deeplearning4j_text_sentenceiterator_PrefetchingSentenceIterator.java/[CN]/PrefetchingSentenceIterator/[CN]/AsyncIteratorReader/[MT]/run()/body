@@ -1,0 +1,22 @@
+{
+  while (!shouldTerminate.get()) {
+    while (!shouldTerminate.get() && iterator.hasNext()) {
+      int cnt=0;
+      if (buffer.size() < fetchSize)       try {
+        while (!shouldTerminate.get() && cnt < fetchSize && iterator.hasNext()) {
+          lock.writeLock().lock();
+          buffer.add((this.preProcessor == null) ? iterator.nextSentence() : this.preProcessor.preProcess(iterator.nextSentence()));
+          lock.writeLock().unlock();
+          cnt++;
+        }
+      }
+  finally {
+      }
+ else       try {
+        Thread.sleep(10);
+      }
+ catch (      Exception e) {
+      }
+    }
+  }
+}

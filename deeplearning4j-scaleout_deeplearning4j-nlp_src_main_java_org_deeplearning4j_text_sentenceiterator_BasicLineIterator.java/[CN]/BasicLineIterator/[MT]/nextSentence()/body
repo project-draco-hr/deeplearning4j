@@ -1,0 +1,8 @@
+{
+  try {
+    return (preProcessor != null) ? this.preProcessor.preProcess(reader.readLine()) : reader.readLine();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

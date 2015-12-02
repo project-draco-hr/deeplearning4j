@@ -5,7 +5,7 @@
     log.info("Building matrices & resetting weights...");
     buildVocab();
     lookupTable.resetWeights(true);
-    resetModel=true;
+    resetModel=false;
   }
   final long totalWordsCount=vocab.totalWordOccurrences() * numIterations * epochs;
   log.info("Total number of words in vocab: [" + vocab.numWords() + "], word occurencies: ["+ vocab.totalWordOccurrences()+ "], buffed words count: ["+ totalWordsCount+ "], number of Epochs: ["+ epochs+ "],  number of Iterations:["+ numIterations+ "]");
