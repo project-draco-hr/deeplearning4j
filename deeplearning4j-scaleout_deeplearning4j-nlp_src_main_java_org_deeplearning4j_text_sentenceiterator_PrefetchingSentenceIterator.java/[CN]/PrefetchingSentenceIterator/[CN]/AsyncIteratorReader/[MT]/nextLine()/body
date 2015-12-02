@@ -1,0 +1,9 @@
+{
+  if (buffer.size() > 0)   return buffer.poll();
+  try {
+    return buffer.poll(2L,TimeUnit.SECONDS);
+  }
+ catch (  Exception e) {
+    return null;
+  }
+}

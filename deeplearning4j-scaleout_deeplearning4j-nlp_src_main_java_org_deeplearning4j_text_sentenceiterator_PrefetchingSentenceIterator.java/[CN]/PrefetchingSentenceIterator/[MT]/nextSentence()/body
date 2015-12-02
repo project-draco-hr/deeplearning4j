@@ -1,15 +1,3 @@
 {
-  if (buffer.size() > 0) {
-    return buffer.poll();
-  }
- else   if (reader.hasMoreLines()) {
-    try {
-      return buffer.take();
-    }
- catch (    Exception e) {
-      e.printStackTrace();
-      throw new RuntimeException(e);
-    }
-  }
- else   return null;
+  return reader.nextLine();
 }
