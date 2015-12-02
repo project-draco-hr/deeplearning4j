@@ -1,0 +1,14 @@
+{
+  Graph<String,Double> graph=new Graph<>(numVertices,false,new StringVertexFactory());
+  EdgeLineProcessor<Double> lineProcessor=new WeightedEdgeLineProcessor(delim,directed,ignoreLinesStartingWith);
+  try (BufferedReader br=new BufferedReader(new FileReader(new File(path)))){
+    String line;
+    while ((line=br.readLine()) != null) {
+      Edge<Double> edge=lineProcessor.processLine(line);
+      if (edge != null) {
+        graph.addEdge(edge);
+      }
+    }
+  }
+   return graph;
+}

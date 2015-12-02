@@ -1,0 +1,32 @@
+{
+  while (!shouldTerminate.get()) {
+    if (iterator.hasNext())     isRunning.set(true);
+ else     try {
+      Thread.sleep(50);
+    }
+ catch (    Exception e) {
+    }
+    while (!shouldTerminate.get() && iterator.hasNext()) {
+      int cnt=0;
+      if (buffer.size() < fetchSize) {
+        while (!shouldTerminate.get() && cnt < fetchSize && iterator.hasNext()) {
+          try {
+            lock.writeLock().lock();
+            String line=iterator.nextSentence();
+            if (line != null)             buffer.add((this.preProcessor == null) ? line : this.preProcessor.preProcess(line));
+          }
+  finally {
+            lock.writeLock().unlock();
+          }
+          cnt++;
+        }
+      }
+ else       try {
+        Thread.sleep(10);
+      }
+ catch (      Exception e) {
+      }
+    }
+    isRunning.set(false);
+  }
+}

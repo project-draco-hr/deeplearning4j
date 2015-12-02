@@ -1,0 +1,13 @@
+{
+  try {
+    lock.writeLock().lock();
+    buffer.clear();
+    iterator.reset();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+ finally {
+    lock.writeLock().unlock();
+  }
+}

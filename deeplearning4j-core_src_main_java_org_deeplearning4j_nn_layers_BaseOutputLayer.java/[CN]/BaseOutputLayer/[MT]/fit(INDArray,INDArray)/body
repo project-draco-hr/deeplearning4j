@@ -1,7 +1,7 @@
 {
   setInput(input);
   setLabels(labels);
-  applyDropOutIfNecessary(this.input,true);
+  applyDropOutIfNecessary(true);
   if (solver == null) {
     solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
   }

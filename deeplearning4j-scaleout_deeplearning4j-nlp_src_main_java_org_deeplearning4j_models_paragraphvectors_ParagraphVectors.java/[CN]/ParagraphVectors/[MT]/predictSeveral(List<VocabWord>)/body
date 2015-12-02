@@ -5,7 +5,7 @@
   }
   INDArray docMean=arr.mean(0);
   Counter<String> distances=new Counter<>();
-  for (  String s : labels) {
+  for (  String s : labelsSource.getLabels()) {
     INDArray otherVec=getWordVectorMatrix(s);
     double sim=Transforms.cosineSim(docMean,otherVec);
     distances.incrementCount(s,sim);

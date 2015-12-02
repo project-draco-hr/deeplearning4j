@@ -1,0 +1,6 @@
+{
+  BasicLabelAwareIterator iterator=new BasicLabelAwareIterator();
+  iterator.generator=this.generator;
+  iterator.backendIterator=this.labelAwareIterator;
+  return iterator;
+}

@@ -1,23 +1,5 @@
 {
-  readStopWords();
-  if (vocab().vocabExists()) {
-    log.info("Loading vocab...");
-    vocab().loadVocab();
-    lookupTable.resetWeights();
-    return true;
-  }
-  if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(vocab()).stopWords(stopWords).build();
-  if (vectorizer == null) {
-    vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(vocab()).iterate(docIter).iterate(sentenceIter).batchSize(batchSize).minWords(minWordFrequency).stopWords(stopWords).tokenize(tokenizerFactory).build();
-    vectorizer.fit();
-  }
- else   if (vocab().numWords() < 2)   vectorizer.fit();
-  for (  String label : labels) {
-    VocabWord word=new VocabWord(vocab.numWords(),label);
-    word.setIndex(vocab.numWords());
-    vocab().addToken(word);
-    vocab().putVocabWord(label);
-  }
-  setup();
+  VocabConstructor constructor=new VocabConstructor.Builder().addSource(labelAwareIterator,minWordFrequency).setTokenizerFactory(this.tokenizerFactory).setStopWords(this.stopWords).setTargetVocabCache(vocab).fetchLabels(true).build();
+  constructor.buildJointVocabulary(false,true);
   return false;
 }

@@ -1,4 +1,0 @@
-{
-  if (conf.getLayer().getDropOut() > 0 && training)   this.dropoutMask=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
-  this.input=input;
-}

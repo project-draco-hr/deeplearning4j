@@ -1,0 +1,47 @@
+{
+  if (!hasNext())   throw new NoSuchElementException();
+  int currVertexIdx=order[position++];
+  int[] indices=new int[walkLength + 1];
+  indices[0]=currVertexIdx;
+  if (walkLength == 0)   return new VertexSequence<>(graph,indices);
+  for (int i=1; i <= walkLength; i++) {
+    List<? extends Edge<? extends Number>> edgeList=graph.getEdgesOut(currVertexIdx);
+    if (edgeList == null || edgeList.size() == 0) {
+switch (mode) {
+case SELF_LOOP_ON_DISCONNECTED:
+        for (int j=i; j < walkLength; j++)         indices[j]=currVertexIdx;
+      return new VertexSequence<>(graph,indices);
+case EXCEPTION_ON_DISCONNECTED:
+    throw new NoEdgesException("Cannot conduct random walk: vertex " + currVertexIdx + " has no outgoing edges. "+ " Set NoEdgeHandling mode to NoEdgeHandlingMode.SELF_LOOP_ON_DISCONNECTED to self loop instead of "+ "throwing an exception in this situation.");
+default :
+  throw new RuntimeException("Unknown/not implemented NoEdgeHandling mode: " + mode);
+}
+}
+double totalWeight=0.0;
+for (Edge<? extends Number> edge : edgeList) {
+totalWeight+=edge.getValue().doubleValue();
+}
+double d=rng.nextDouble();
+double threshold=d * totalWeight;
+double sumWeight=0.0;
+for (Edge<? extends Number> edge : edgeList) {
+sumWeight+=edge.getValue().doubleValue();
+if (sumWeight >= threshold) {
+if (edge.isDirected()) {
+  currVertexIdx=edge.getTo();
+}
+ else {
+  if (edge.getFrom() == currVertexIdx) {
+    currVertexIdx=edge.getTo();
+  }
+ else {
+    currVertexIdx=edge.getFrom();
+  }
+}
+indices[i]=currVertexIdx;
+break;
+}
+}
+}
+return new VertexSequence<>(graph,indices);
+}

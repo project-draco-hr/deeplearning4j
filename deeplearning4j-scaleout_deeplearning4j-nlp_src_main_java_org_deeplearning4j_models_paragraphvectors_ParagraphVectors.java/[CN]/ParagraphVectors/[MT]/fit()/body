@@ -1,54 +1,45 @@
 {
-  boolean loaded=buildVocab();
-  if (!loaded && saveVocab)   vocab().saveVocab();
-  if (stopWords == null)   readStopWords();
-  log.info("Training word2vec multithreaded");
-  if (sentenceIter != null)   sentenceIter.reset();
-  if (docIter != null)   docIter.reset();
-  totalWords=vectorizer.numWordsEncountered();
+  log.info("Building vocab");
+  if (existingModel == null) {
+    log.info("Building matrices & resetting weights...");
+    buildVocab();
+    lookupTable.resetWeights(true);
+  }
+ else {
+    log.info("Importing matrices from existing Word2Vec model");
+  }
+  log.info("Total number of documents: " + labelsSource.getLabels().size());
+  log.info("Training ParaVec multithreaded");
+  totalWords=vocab.totalWordOccurrences();
   totalWords*=numIterations;
   log.info("Processing sentences...");
-  final AtomicLong numWordsSoFar=new AtomicLong(0);
-  final AtomicLong nextRandom=new AtomicLong(5);
-  final AtomicInteger doc=new AtomicInteger(0);
-  ExecutorService exec=new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),Runtime.getRuntime().availableProcessors(),0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),new RejectedExecutionHandler(){
-    @Override public void rejectedExecution(    Runnable r,    ThreadPoolExecutor executor){
+  int epoch=1;
+  while (epoch <= epochs) {
+    final AtomicLong nextRandom=new AtomicLong(5);
+    final AtomicLong wordsCount=new AtomicLong(0);
+    LabelledAsyncIteratorDigitizer roller=new LabelledAsyncIteratorDigitizer(labelAwareIterator);
+    roller.start();
+    final AtomicLong documentCount=new AtomicLong(0);
+    final VectorCalculationsThread[] threads=new VectorCalculationsThread[workers];
+    for (int x=0; x < workers; x++) {
+      threads[x]=new VectorCalculationsThread(epoch,roller,nextRandom,documentCount,wordsCount);
+      threads[x].start();
+    }
+    try {
+      roller.join();
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+    for (int x=0; x < workers; x++) {
       try {
-        Thread.sleep(1000);
+        threads[x].join();
       }
  catch (      InterruptedException e) {
-        Thread.currentThread().interrupt();
+        e.printStackTrace();
       }
-      executor.submit(r);
     }
+    log.info("Epoch: " + epoch + "; Documents vectorized so far: "+ documentCount.get());
+    epoch++;
   }
-);
-  final Queue<Pair<List<VocabWord>,Collection<VocabWord>>> batch2=new ConcurrentLinkedDeque<>();
-  int[] docs=vectorizer.index().allDocs();
-  if (docs.length < 1)   throw new IllegalStateException("No documents found");
-  vectorizer.index().eachDocWithLabels(new Function<Pair<List<VocabWord>,Collection<String>>,Void>(){
-    @Override public Void apply(    @Nullable Pair<List<VocabWord>,Collection<String>> input){
-      List<VocabWord> batch=new ArrayList<>();
-      addWords(input.getFirst(),nextRandom,batch);
-      if (batch.isEmpty())       return null;
-      Collection<VocabWord> docLabels=new ArrayList<>();
-      for (      String s : input.getSecond())       docLabels.add(vocab().wordFor(s));
-      batch2.add(new Pair<>(batch,docLabels));
-      doc.incrementAndGet();
-      if (doc.get() > 0 && doc.get() % 10000 == 0)       log.info("Doc " + doc.get() + " done so far");
-      return null;
-    }
-  }
-,exec);
-  if (!batch2.isEmpty()) {
-    jobQueue.add(new LinkedList<>(batch2));
-  }
-  exec.shutdown();
-  try {
-    exec.awaitTermination(1,TimeUnit.DAYS);
-  }
- catch (  InterruptedException e) {
-    Thread.currentThread().interrupt();
-  }
-  for (int i=0; i < numIterations; i++)   doIteration(batch2,numWordsSoFar,nextRandom);
 }

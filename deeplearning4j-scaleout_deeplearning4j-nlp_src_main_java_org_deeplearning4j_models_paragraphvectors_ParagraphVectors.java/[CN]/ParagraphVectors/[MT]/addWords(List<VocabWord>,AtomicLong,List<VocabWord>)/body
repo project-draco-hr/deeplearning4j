@@ -2,9 +2,10 @@
   for (  VocabWord word : sentence) {
     if (word == null)     continue;
     if (sample > 0) {
-      double numDocs=vectorizer.index().numDocuments();
+      double numDocs=labelsSource.getNumberOfLabelsUsed();
       double ran=(Math.sqrt(word.getWordFrequency() / (sample * numDocs)) + 1) * (sample * numDocs) / word.getWordFrequency();
       if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
+        log.info("Skipping word: [" + ran + "], threshold:  ["+ ((nextRandom.get() & 0xFFFF) / (double)65536)+ "]");
         continue;
       }
       currMiniBatch.add(word);

@@ -1,3 +1,4 @@
 {
-  return reshape2dTo3d(preOutput2d(x,training),input.size(0));
+  setInput(x);
+  return reshape2dTo3d(preOutput2d(training),input.size(0));
 }
