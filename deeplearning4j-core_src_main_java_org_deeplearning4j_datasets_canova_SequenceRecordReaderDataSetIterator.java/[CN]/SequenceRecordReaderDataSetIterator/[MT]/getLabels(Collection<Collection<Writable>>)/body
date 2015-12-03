@@ -20,7 +20,7 @@
     if (regression) {
       while (timeStepIter.hasNext()) {
         Writable current=timeStepIter.next();
-        out.put(f++,i,current.toDouble());
+        out.put(i,f++,current.toDouble());
       }
     }
  else {
