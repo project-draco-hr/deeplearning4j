@@ -1,4 +1,7 @@
 {
   recordReader.reset();
   labelsReader.reset();
+  cursor=0;
+  stored=null;
+  useStored=false;
 }
