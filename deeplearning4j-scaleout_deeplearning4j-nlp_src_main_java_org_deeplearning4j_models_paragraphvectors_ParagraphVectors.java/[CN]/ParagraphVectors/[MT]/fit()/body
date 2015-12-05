@@ -15,14 +15,13 @@
   log.info("Processing sentences...");
   int epoch=1;
   while (epoch <= epochs) {
-    final AtomicLong nextRandom=new AtomicLong(5);
     final AtomicLong wordsCount=new AtomicLong(0);
     LabelledAsyncIteratorDigitizer roller=new LabelledAsyncIteratorDigitizer(labelAwareIterator);
     roller.start();
     final AtomicLong documentCount=new AtomicLong(0);
     final VectorCalculationsThread[] threads=new VectorCalculationsThread[workers];
     for (int x=0; x < workers; x++) {
-      threads[x]=new VectorCalculationsThread(epoch,roller,nextRandom,documentCount,wordsCount);
+      threads[x]=new VectorCalculationsThread(x,epoch,roller,documentCount,wordsCount);
       threads[x].start();
     }
     try {

@@ -1,11 +1,9 @@
 {
-  final AtomicLong nextRandom=new AtomicLong(5);
   while (digitizer.hasMoreLines() || sentences.size() > 0) {
     try {
       List<VocabWord> sentence=sentences.poll(2L,TimeUnit.SECONDS);
       double alpha=0.025;
       if (sentence == null || sentence.isEmpty()) {
-        log.warn("sentence is null");
         continue;
       }
       for (int i=0; i < Word2Vec.this.numIterations; i++) {

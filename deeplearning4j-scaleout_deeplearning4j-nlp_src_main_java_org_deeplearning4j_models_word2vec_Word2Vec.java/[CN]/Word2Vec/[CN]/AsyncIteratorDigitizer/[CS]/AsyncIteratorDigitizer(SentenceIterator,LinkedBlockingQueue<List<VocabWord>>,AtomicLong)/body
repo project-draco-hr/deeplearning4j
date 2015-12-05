@@ -3,5 +3,6 @@
   this.buffer=buffer;
   this.linesCounter=linesCounter;
   this.setName("AsyncIteratorReader thread");
+  this.nextRandom=new AtomicLong(workers + 1);
   this.iterator.reset();
 }

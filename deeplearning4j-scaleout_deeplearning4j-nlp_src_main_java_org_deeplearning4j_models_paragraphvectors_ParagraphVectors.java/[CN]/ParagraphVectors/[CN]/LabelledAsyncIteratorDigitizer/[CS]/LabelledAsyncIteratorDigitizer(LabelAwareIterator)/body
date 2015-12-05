@@ -1,4 +1,5 @@
 {
   this.backendIterator=iterator;
+  this.nextRandom=new AtomicLong(workers + 1);
   this.backendIterator.reset();
 }

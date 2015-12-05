@@ -2,8 +2,9 @@
   for (  VocabWord word : sentence) {
     if (word == null)     continue;
     if (sample > 0) {
-      double numDocs=vectorizer.index().numDocuments();
-      double ran=(Math.sqrt(word.getWordFrequency() / (sample * numDocs)) + 1) * (sample * numDocs) / word.getWordFrequency();
+      double numWords=vocab.totalWordOccurrences();
+      double ran=(Math.sqrt(word.getWordFrequency() / (sample * numWords)) + 1) * (sample * numWords) / word.getWordFrequency();
+      nextRandom.set(nextRandom.get() * 25214903917L + 11);
       if (ran < (nextRandom.get() & 0xFFFF) / (double)65536) {
         continue;
       }

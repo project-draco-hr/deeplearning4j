@@ -7,7 +7,7 @@
         String sentence=this.iterator.nextSentence();
         Tokenizer tokenizer=Word2Vec.this.tokenizerFactory.create(sentence);
         List<String> tokens=tokenizer.getTokens();
-        List<VocabWord> list=Word2Vec.this.digitizeSentence(tokens);
+        List<VocabWord> list=Word2Vec.this.digitizeSentence(tokens,nextRandom);
         if (list != null && !list.isEmpty()) {
           buffer.add(list);
         }

@@ -7,7 +7,7 @@
         LabelledDocument document=this.backendIterator.nextDocument();
         Tokenizer tokenizer=tokenizerFactory.create(document.getContent());
         List<String> tokens=tokenizer.getTokens();
-        List<VocabWord> words=ParagraphVectors.this.digitizeSentence(tokens);
+        List<VocabWord> words=ParagraphVectors.this.digitizeSentence(tokens,nextRandom);
         document.setReferencedContent(words);
         document.setContent(null);
         buffer.add(document);
@@ -22,5 +22,5 @@
     }
   }
   isRunning.set(false);
-  log.info("AsyncIterator finished");
+  log.debug("AsyncIterator finished");
 }

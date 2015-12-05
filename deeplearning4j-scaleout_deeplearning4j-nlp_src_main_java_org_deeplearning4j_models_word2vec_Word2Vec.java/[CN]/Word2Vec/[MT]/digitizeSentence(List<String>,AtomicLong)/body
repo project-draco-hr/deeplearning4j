@@ -6,5 +6,10 @@
     VocabWord word=vocab.wordFor(token);
     if (word != null)     result.add(word);
   }
-  return result;
+  if (this.sample > 0) {
+    List<VocabWord> realResult=new ArrayList<>();
+    addWords(result,nextRandom,realResult);
+    return realResult;
+  }
+ else   return result;
 }

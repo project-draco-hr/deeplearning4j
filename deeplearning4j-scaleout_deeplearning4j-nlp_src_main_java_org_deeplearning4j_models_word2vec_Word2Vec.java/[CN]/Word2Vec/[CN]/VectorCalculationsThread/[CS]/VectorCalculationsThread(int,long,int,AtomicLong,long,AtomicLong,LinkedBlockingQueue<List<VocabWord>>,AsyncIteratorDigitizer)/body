@@ -7,5 +7,6 @@
   this.totalLines=linesCounter;
   this.sentences=buffer;
   this.digitizer=digitizer;
+  this.nextRandom=new AtomicLong(this.threadId);
   this.setName("VectorCalculationsThread " + this.threadId);
 }

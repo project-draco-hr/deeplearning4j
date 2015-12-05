@@ -12,6 +12,7 @@
   int epoch=1;
   final long maxLines=totalLines.get();
   while (epoch <= epochs) {
+    final AtomicLong nextRandom=new AtomicLong(5);
     log.info("Starting async iterator...");
     totalLines.set(0);
     final AtomicLong wordsCounter=new AtomicLong(0);
