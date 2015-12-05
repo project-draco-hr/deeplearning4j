@@ -1,5 +1,9 @@
 {
+  if (lookupTable.getTableId() == null || lookupTable.getTableId().longValue() == 0)   lookupTable.setTableId(RandomUtils.nextLong());
   for (  VocabWord word : cache.vocabWords()) {
+    word.setVocabId(lookupTable.getTableId());
   }
+  mapTables.put(lookupTable.getTableId(),lookupTable);
+  mapVocabs.put(lookupTable.getTableId(),cache);
   return this;
 }
