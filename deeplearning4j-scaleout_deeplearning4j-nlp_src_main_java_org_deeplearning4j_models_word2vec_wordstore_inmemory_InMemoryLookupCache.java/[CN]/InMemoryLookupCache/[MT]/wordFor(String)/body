@@ -1,5 +1,5 @@
 {
   if (word == null)   return null;
-  VocabWord ret=vocabs.get(word);
+  SequenceElement ret=vocabs.get(word);
   return ret;
 }

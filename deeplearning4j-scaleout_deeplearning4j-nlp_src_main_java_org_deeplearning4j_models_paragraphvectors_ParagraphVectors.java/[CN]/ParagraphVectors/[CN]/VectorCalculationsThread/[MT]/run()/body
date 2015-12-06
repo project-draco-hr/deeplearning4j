@@ -1,5 +1,5 @@
 {
-  final Queue<Pair<List<VocabWord>,Collection<VocabWord>>> batch2=new ConcurrentLinkedDeque<>();
+  final Queue<Pair<List<SequenceElement>,Collection<SequenceElement>>> batch2=new ConcurrentLinkedDeque<>();
   while (roller.hasMoreDocuments()) {
     LabelledDocument document=roller.nextLabelledDocument();
     if (document != null && document.getReferencedContent() != null && !document.getReferencedContent().isEmpty()) {
@@ -9,7 +9,7 @@
         log.info("Empty batch!");
         continue;
       }
-      Collection<VocabWord> docLabels=new ArrayList<>();
+      Collection<SequenceElement> docLabels=new ArrayList<>();
       docLabels.add(vocab.wordFor(document.getLabel()));
       double alpha=0.025;
       for (int i=0; i < numIterations; i++) {
