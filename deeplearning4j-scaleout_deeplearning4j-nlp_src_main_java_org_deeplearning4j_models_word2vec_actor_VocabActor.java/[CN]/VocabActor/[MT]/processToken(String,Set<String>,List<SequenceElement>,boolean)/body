@@ -14,7 +14,7 @@ synchronized (stemmer) {
     cache.incrementDocCount(token,1);
     encountered.add(token);
   }
-  VocabWord token2;
+  SequenceElement token2;
   if (cache.hasToken(token))   token2=cache.tokenFor(token);
  else {
     token2=new VocabWord(1.0,token);

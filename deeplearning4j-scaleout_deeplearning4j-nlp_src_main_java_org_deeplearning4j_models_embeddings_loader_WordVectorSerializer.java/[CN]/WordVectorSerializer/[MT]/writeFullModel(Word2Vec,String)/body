@@ -28,25 +28,25 @@
     printWriter.println(builder.toString().trim());
   }
  else   printWriter.println("");
-  List<VocabWord> words=new ArrayList<>(((InMemoryLookupCache)vocabCache).getVocabs().values());
-  for (  VocabWord word : words) {
-    VocabularyWord vw=new VocabularyWord(word.getWord());
-    vw.setCount(vocabCache.wordFrequency(word.getWord()));
+  List<SequenceElement> words=new ArrayList<>(((InMemoryLookupCache)vocabCache).getVocabs().values());
+  for (  SequenceElement word : words) {
+    VocabularyWord vw=new VocabularyWord(word.getLabel());
+    vw.setCount(vocabCache.wordFrequency(word.getLabel()));
     vw.setHuffmanNode(VocabularyHolder.buildNode(word.getCodes(),word.getPoints(),word.getCodeLength(),word.getIndex()));
-    INDArray syn0=((InMemoryLookupTable)lookupTable).getSyn0().getRow(vocabCache.indexOf(word.getWord()));
+    INDArray syn0=((InMemoryLookupTable)lookupTable).getSyn0().getRow(vocabCache.indexOf(word.getLabel()));
     double[] dsyn0=new double[syn0.columns()];
     for (int x=0; x < conf.getLayersSize(); x++) {
       dsyn0[x]=syn0.getDouble(x);
     }
     vw.setSyn0(dsyn0);
-    INDArray syn1=((InMemoryLookupTable)lookupTable).getSyn1().getRow(vocabCache.indexOf(word.getWord()));
+    INDArray syn1=((InMemoryLookupTable)lookupTable).getSyn1().getRow(vocabCache.indexOf(word.getLabel()));
     double[] dsyn1=new double[syn1.columns()];
     for (int x=0; x < syn1.columns(); x++) {
       dsyn1[x]=syn1.getDouble(x);
     }
     vw.setSyn1(dsyn1);
     if (conf.getNegative() > 0) {
-      INDArray syn1Neg=((InMemoryLookupTable)lookupTable).getSyn1Neg().getRow(vocabCache.indexOf(word.getWord()));
+      INDArray syn1Neg=((InMemoryLookupTable)lookupTable).getSyn1Neg().getRow(vocabCache.indexOf(word.getLabel()));
       double[] dsyn1Neg=new double[syn1Neg.columns()];
       for (int x=0; x < syn1Neg.columns(); x++) {
         dsyn1Neg[x]=syn1Neg.getDouble(x);

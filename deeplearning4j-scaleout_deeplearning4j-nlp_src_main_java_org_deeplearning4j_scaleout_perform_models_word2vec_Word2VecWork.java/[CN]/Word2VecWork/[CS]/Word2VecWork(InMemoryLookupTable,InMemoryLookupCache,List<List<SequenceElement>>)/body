@@ -1,10 +1,10 @@
 {
   this.sentences=sentences;
-  for (  List<VocabWord> sentence : sentences)   for (  VocabWord word : sentence) {
+  for (  List<SequenceElement> sentence : sentences)   for (  SequenceElement word : sentence) {
     addWord(word,table);
     if (word.getPoints() != null) {
       for (int i=0; i < word.getCodeLength(); i++) {
-        VocabWord pointWord=cache.wordFor(cache.wordAtIndex(word.getPoints().get(i)));
+        SequenceElement pointWord=cache.wordFor(cache.wordAtIndex(word.getPoints().get(i)));
         addWord(pointWord,table);
       }
     }
