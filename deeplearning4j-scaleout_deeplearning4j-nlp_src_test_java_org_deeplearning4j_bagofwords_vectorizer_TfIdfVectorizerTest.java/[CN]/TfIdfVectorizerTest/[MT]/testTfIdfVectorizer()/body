@@ -15,7 +15,7 @@
  catch (  IllegalArgumentException e) {
     ;
   }
-  VocabWord word=vectorizer.vocab().wordFor("file");
+  VocabWord word=(VocabWord)vectorizer.vocab().wordFor("file");
   assumeNotNull(word);
   assertEquals(word,vectorizer.vocab().tokenFor("file"));
   int[] docs=vectorizer.index().allDocs();
