@@ -8,7 +8,7 @@
     INDArray[] sorted=Nd4j.sortWithIndices(distances,0,false);
     INDArray sort=sorted[0];
     List<String> ret=new ArrayList<>();
-    VocabWord word2=vocab().wordFor(word);
+    SequenceElement word2=vocab().wordFor(word);
     if (n > sort.length())     n=sort.length();
     for (int i=0; i < n + 1; i++) {
       if (sort.getInt(i) == word2.getIndex())       continue;

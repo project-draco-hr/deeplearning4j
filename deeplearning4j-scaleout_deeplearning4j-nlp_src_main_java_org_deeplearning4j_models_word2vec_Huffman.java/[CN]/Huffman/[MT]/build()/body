@@ -6,7 +6,7 @@
   int[] parentNode=new int[words.size() * 2 + 1];
   int a=0;
   while (a < words.size()) {
-    count[a]=(long)words.get(a).getWordFrequency();
+    count[a]=(long)words.get(a).getElementFrequency();
     a++;
   }
   a=words.size();

@@ -1,0 +1,4 @@
+{
+  if (this.getLabel() == null)   throw new IllegalStateException("Label should not be null");
+  return this.getLabel().hashCode();
+}

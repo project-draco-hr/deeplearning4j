@@ -1,0 +1,4 @@
+{
+  JointStorage jointTable=new JointStorage.Builder().addLookupPair(sampleTable1).addLookupPair(sampleTable2).layerSize(100).build();
+  assertEquals(3,jointTable.vocabWords().size());
+}

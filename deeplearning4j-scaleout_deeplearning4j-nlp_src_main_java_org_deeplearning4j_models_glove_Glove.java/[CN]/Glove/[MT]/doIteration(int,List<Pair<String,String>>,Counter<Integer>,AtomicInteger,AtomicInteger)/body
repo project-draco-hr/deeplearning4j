@@ -9,8 +9,8 @@
       for (      Pair<String,String> next : currentItem) {
         String w1=next.getFirst();
         String w2=next.getSecond();
-        VocabWord vocabWord=vocab().wordFor(w1);
-        VocabWord vocabWord1=vocab().wordFor(w2);
+        SequenceElement vocabWord=vocab().wordFor(w1);
+        SequenceElement vocabWord1=vocab().wordFor(w2);
         send.add(new Pair<>(vocabWord,vocabWord1));
       }
       jobQueue.add(new Pair<>(i,send));
