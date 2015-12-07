@@ -1,5 +1,5 @@
 {
-  JointStorage lookupTable=new JointStorage();
+  JointStorage<T> lookupTable=new JointStorage();
   lookupTable.mapTables=this.mapTables;
   lookupTable.mapVocabs=this.mapVocabs;
   lookupTable.layerSize=this.layerSize;

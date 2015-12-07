@@ -1,0 +1,13 @@
+{
+  Document d=new Document();
+  for (  T word : words)   d.add(new TextField(WORD_FIELD,word.getLabel(),Field.Store.YES));
+  d.add(new TextField(LABEL,label,Field.Store.YES));
+  totalWords.set(totalWords.get() + words.size());
+  addWords(words);
+  try {
+    getWriter().addDocument(d);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

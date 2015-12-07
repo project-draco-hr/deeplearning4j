@@ -1,5 +1,5 @@
 {
-  ArrayList<SequenceElement> words=new ArrayList<>();
+  ArrayList<T> words=new ArrayList<>();
   for (  VocabCache cache : mapVocabs.values()) {
     words.addAll(cache.vocabWords());
   }
