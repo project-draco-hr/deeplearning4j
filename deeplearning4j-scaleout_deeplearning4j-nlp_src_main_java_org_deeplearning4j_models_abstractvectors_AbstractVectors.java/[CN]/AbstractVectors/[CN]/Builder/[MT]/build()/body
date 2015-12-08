@@ -1,4 +1,30 @@
 {
   AbstractVectors<T> vectors=new AbstractVectors<>();
+  vectors.numEpochs=this.numEpochs;
+  vectors.numIterations=this.iterations;
+  vectors.vocab=this.vocabCache;
+  vectors.minWordFrequency=this.minWordFrequency;
+  vectors.learningRate.set(this.learningRate);
+  vectors.minLearningRate=this.minLearningRate;
+  vectors.sampling=this.sampling;
+  vectors.negative=this.negative;
+  vectors.layerSize=this.layerSize;
+  vectors.batchSize=this.batchSize;
+  vectors.learningRateDecayWords=this.learningRateDecayWords;
+  this.configuration.setLearningRate(this.learningRate);
+  this.configuration.setLayersSize(layerSize);
+  this.configuration.setHugeModelExpected(hugeModelExpected);
+  this.configuration.setWindow(window);
+  this.configuration.setMinWordFrequency(minWordFrequency);
+  this.configuration.setIterations(iterations);
+  this.configuration.setSeed(seed);
+  this.configuration.setBatchSize(batchSize);
+  this.configuration.setLearningRateDecayWords(learningRateDecayWords);
+  this.configuration.setMinLearningRate(minLearningRate);
+  this.configuration.setSampling(this.sampling);
+  this.configuration.setUseAdaGrad(useAdaGrad);
+  this.configuration.setNegative(negative);
+  this.configuration.setEpochs(this.numEpochs);
+  vectors.configuration=this.configuration;
   return vectors;
 }

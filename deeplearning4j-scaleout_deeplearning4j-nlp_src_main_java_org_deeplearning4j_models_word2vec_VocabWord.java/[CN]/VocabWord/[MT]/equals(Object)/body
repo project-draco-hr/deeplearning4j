@@ -7,5 +7,5 @@
   if (historicalGradient != null ? !historicalGradient.equals(vocabWord.historicalGradient) : vocabWord.historicalGradient != null)   return false;
   if (!points.equals(vocabWord.points))   return false;
   if (!word.equals(vocabWord.word))   return false;
-  return wordFrequency.get() == vocabWord.wordFrequency.get();
+  return this.elementFrequency.get() == vocabWord.elementFrequency.get();
 }

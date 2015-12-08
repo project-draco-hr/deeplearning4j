@@ -1,5 +1,5 @@
 {
-  this.wordFrequency.set(wordFrequency);
+  this.elementFrequency.set(wordFrequency);
   if (word == null || word.isEmpty())   throw new IllegalArgumentException("Word must not be null or empty");
   this.word=word;
 }

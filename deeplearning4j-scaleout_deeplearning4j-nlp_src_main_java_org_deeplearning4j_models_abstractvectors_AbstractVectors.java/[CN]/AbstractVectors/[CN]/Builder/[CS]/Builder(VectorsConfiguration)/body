@@ -1,2 +1,10 @@
 {
+  this.configuration=configuration;
+  this.iterations=configuration.getIterations();
+  this.numEpochs=configuration.getEpochs();
+  this.minLearningRate=configuration.getMinLearningRate();
+  this.learningRate=configuration.getLearningRate();
+  this.sampling=configuration.getSampling();
+  this.negative=configuration.getNegative();
+  this.minWordFrequency=configuration.getMinWordFrequency();
 }
