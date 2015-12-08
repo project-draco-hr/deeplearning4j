@@ -1,7 +1,7 @@
 {
   ObjectMapper mapper=mapper();
   try {
-    Word2VecConfiguration ret=mapper.readValue(json,Word2VecConfiguration.class);
+    VectorsConfiguration ret=mapper.readValue(json,VectorsConfiguration.class);
     return ret;
   }
  catch (  IOException e) {

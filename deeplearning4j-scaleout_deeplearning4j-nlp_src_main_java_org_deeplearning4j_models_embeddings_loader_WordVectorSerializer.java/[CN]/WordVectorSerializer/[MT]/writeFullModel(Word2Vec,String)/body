@@ -10,7 +10,7 @@
   VocabCache vocabCache=vec.getVocab();
   if (!(lookupTable instanceof InMemoryLookupTable))   throw new IllegalStateException("At this moment only InMemoryLookupTable is supported.");
   if (!(vocabCache instanceof InMemoryLookupCache))   throw new IllegalStateException("At this moment only InMemoryLookupCache is supported.");
-  Word2VecConfiguration conf=vec.getConfiguration();
+  VectorsConfiguration conf=vec.getConfiguration();
   conf.setVocabSize(vocabCache.numWords());
   VocabularyHolder holder=new VocabularyHolder.Builder().externalCache(vocabCache).build();
   printWriter.println(conf.toJson());

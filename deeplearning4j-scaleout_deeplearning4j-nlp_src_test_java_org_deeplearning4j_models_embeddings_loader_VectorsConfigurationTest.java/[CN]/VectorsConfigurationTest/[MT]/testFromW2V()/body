@@ -1,5 +1,5 @@
 {
-  Word2VecConfiguration configuration=new Word2VecConfiguration();
+  VectorsConfiguration configuration=new VectorsConfiguration();
   configuration.setHugeModelExpected(true);
   configuration.setWindow(5);
   configuration.setIterations(3);
@@ -11,6 +11,6 @@
   File inputFile=new ClassPathResource("/big/raw_sentences.txt").getFile();
   SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
   Word2Vec vec=new Word2Vec.Builder(configuration).iterate(iter).build();
-  Word2VecConfiguration configuration2=vec.getConfiguration();
+  VectorsConfiguration configuration2=vec.getConfiguration();
   assertEquals(configuration,configuration2);
 }
