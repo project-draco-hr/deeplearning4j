@@ -3,10 +3,15 @@
   TokenizerFactory t=new DefaultTokenizerFactory();
   Tokenizer tokenizer=t.create(toTokenize);
   Tokenizer tokenizer2=t.create(new ByteArrayInputStream(toTokenize.getBytes()));
-  while (tokenizer.hasMoreTokens()) {
-    assertEquals(tokenizer.nextToken(),tokenizer2.nextToken());
+  int position=1;
+  while (tokenizer2.hasMoreTokens()) {
+    String tok1=tokenizer.nextToken();
+    String tok2=tokenizer2.nextToken();
+    log.info("Position: [" + position + "], token1: '"+ tok1+ "', token 2: '"+ tok2+ "'");
+    position++;
+    assertEquals(tok1,tok2);
   }
-  ClassPathResource resource=new ClassPathResource("/reuters/5250");
+  ClassPathResource resource=new ClassPathResource("reuters/5250");
   String str=FileUtils.readFileToString(resource.getFile());
   int stringCount=t.create(str).countTokens();
   int stringCount2=t.create(resource.getInputStream()).countTokens();
