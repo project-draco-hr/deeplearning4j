@@ -11,6 +11,7 @@
   vectors.layerSize=this.layerSize;
   vectors.batchSize=this.batchSize;
   vectors.learningRateDecayWords=this.learningRateDecayWords;
+  vectors.window=this.window;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

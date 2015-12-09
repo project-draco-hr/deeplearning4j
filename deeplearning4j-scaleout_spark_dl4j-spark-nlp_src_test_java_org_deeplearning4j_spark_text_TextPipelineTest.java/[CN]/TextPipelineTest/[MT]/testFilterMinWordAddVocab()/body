@@ -7,7 +7,7 @@
   pipeline.updateAndReturnAccumulatorVal(tokenizedRDD);
   Counter<String> wordFreqCounter=pipeline.getWordFreqAcc().value();
   pipeline.filterMinWordAddVocab(wordFreqCounter);
-  VocabCache vocabCache=pipeline.getVocabCache();
+  VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   assertTrue(vocabCache != null);
   VocabWord redVocab=vocabCache.tokenFor("red");
   VocabWord flowerVocab=vocabCache.tokenFor("flowers");

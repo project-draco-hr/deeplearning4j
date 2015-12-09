@@ -1,0 +1,5 @@
+{
+  SentenceTransformer transformer=new SentenceTransformer(this.iterator);
+  transformer.iterator=this.iterator;
+  return transformer;
+}

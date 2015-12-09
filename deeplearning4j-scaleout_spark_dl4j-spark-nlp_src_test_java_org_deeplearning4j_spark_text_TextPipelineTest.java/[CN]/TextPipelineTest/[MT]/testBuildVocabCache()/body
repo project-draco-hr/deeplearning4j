@@ -4,7 +4,7 @@
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   pipeline.buildVocabCache();
-  VocabCache vocabCache=pipeline.getVocabCache();
+  VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   assertTrue(vocabCache != null);
   VocabWord redVocab=vocabCache.tokenFor("red");
   VocabWord flowerVocab=vocabCache.tokenFor("flowers");
