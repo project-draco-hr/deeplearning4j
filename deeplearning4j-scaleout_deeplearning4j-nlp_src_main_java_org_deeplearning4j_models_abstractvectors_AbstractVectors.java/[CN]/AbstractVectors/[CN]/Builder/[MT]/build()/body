@@ -12,6 +12,8 @@
   vectors.batchSize=this.batchSize;
   vectors.learningRateDecayWords=this.learningRateDecayWords;
   vectors.window=this.window;
+  vectors.resetModel=this.resetModel;
+  vectors.useAdeGrad=this.useAdaGrad;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
