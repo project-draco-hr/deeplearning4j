@@ -4,7 +4,7 @@
   BasicLineIterator underlyingIterator=new BasicLineIterator(file);
   SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(underlyingIterator).build();
   AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
-  AbstractVectors<VocabWord> vectors=new AbstractVectors.Builder<VocabWord>(new VectorsConfiguration()).iterate(sequenceIterator).build();
+  AbstractVectors<VocabWord> vectors=new AbstractVectors.Builder<VocabWord>(new VectorsConfiguration()).minWordFrequency(3).iterate(sequenceIterator).resetModel(true).build();
   vectors.fit();
   double sim=vectors.similarity("day","night");
   assertTrue(sim > 0.6d);
