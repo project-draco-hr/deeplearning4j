@@ -1,2 +1,3 @@
 {
+  if (!containsWord(word))   throw new IllegalStateException("Specified label is not present in vocabulary");
 }

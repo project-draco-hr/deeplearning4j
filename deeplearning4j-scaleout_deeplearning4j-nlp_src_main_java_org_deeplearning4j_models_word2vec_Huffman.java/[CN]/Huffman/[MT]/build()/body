@@ -1,4 +1,5 @@
 {
+  buildTrigger=true;
   long[] count=new long[words.size() * 2 + 1];
   int[] binary=new int[words.size() * 2 + 1];
   int[] code=new int[MAX_CODE_LENGTH];

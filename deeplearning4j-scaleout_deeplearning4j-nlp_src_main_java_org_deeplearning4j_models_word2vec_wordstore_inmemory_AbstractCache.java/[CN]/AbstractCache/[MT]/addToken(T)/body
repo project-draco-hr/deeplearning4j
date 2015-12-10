@@ -1,2 +1,4 @@
 {
+  vocabulary.put(element.getLabel(),element);
+  totalWordCount.addAndGet((long)element.getElementFrequency());
 }

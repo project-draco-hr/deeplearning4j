@@ -1,3 +1,6 @@
 {
-  return 0;
+  if (containsWord(label)) {
+    return tokenFor(label).getIndex();
+  }
+ else   return -2;
 }
