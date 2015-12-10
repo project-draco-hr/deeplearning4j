@@ -1,21 +1,20 @@
 {
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
-  if (cache == null)   cache=new InMemoryLookupCache(false);
+  if (cache == null)   cache=new AbstractCache.Builder<T>().build();
   VocabularyHolder topHolder=new VocabularyHolder.Builder().externalCache(cache).minWordFrequency(0).build();
   for (  VocabSource source : sources) {
-    LabelAwareIterator iterator=source.getIterator();
+    SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
     VocabularyHolder tempHolder=new VocabularyHolder.Builder().minWordFrequency(source.getMinWordFrequency()).build();
-    while (iterator.hasNextDocument()) {
-      LabelledDocument document=iterator.nextDocument();
-      Tokenizer tokenizer=tokenizerFactory.create(document.getContent());
+    while (iterator.hasMoreSequences()) {
+      Sequence<T> document=iterator.nextSequence();
       if (fetchLabels) {
         VocabularyWord word=new VocabularyWord(document.getLabel());
         word.setSpecial(true);
         word.setCount(1);
         tempHolder.addWord(word);
       }
-      List<String> tokens=tokenizer.getTokens();
+      List<String> tokens=document.asLabels();
       for (      String token : tokens) {
         if (stopWords != null && stopWords.contains(token))         continue;
         if (token == null || token.isEmpty())         continue;
