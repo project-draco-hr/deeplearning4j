@@ -5,24 +5,24 @@
   for (  VocabSource source : sources) {
     SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
-    VocabularyHolder tempHolder=new VocabularyHolder.Builder().minWordFrequency(source.getMinWordFrequency()).build();
+    AbstractCache<T> tempHolder=new AbstractCache.Builder<T>().build();
     while (iterator.hasMoreSequences()) {
       Sequence<T> document=iterator.nextSequence();
       if (fetchLabels) {
-        VocabularyWord word=new VocabularyWord(document.getLabel());
+        VocabularyWord word=new VocabularyWord(document.getSequenceLabel().getLabel());
         word.setSpecial(true);
         word.setCount(1);
-        tempHolder.addWord(word);
+        tempHolder.addToken();
       }
       List<String> tokens=document.asLabels();
       for (      String token : tokens) {
         if (stopWords != null && stopWords.contains(token))         continue;
         if (token == null || token.isEmpty())         continue;
         if (!tempHolder.containsWord(token)) {
-          tempHolder.addWord(token);
+          tempHolder.addToken(document.getElementByLabel(token));
         }
  else {
-          tempHolder.incrementWordCounter(token);
+          tempHolder.incrementWordCount(token);
         }
       }
     }

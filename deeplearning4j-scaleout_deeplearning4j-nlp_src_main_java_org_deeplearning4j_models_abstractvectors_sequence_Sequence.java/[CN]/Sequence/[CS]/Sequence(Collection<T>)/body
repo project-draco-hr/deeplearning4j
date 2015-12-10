@@ -1,5 +1,4 @@
 {
-  for (  T element : set) {
-    this.elements.put(element.getLabel(),element);
-  }
+  this();
+  addElements(set);
 }
