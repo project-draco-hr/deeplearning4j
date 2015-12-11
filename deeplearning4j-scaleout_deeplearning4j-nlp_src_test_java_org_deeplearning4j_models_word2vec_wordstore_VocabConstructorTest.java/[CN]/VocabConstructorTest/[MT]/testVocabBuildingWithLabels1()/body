@@ -4,7 +4,7 @@
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   LabelsSource generator=new LabelsSource("SNTX_");
-  VocabConstructor constructor=new VocabConstructor.Builder().setTokenizerFactory(t).addSource(new SentenceIteratorConverter(iter,generator),5).useAdaGrad(false).fetchLabels(true).build();
+  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(new SentenceIteratorConverter(iter,generator),5).useAdaGrad(false).fetchLabels(true).build();
   VocabCache cache=constructor.buildJointVocabulary(false,true);
   log.info("Total words in vocab: [" + cache.numWords() + "], Total word occurencies: ["+ cache.totalWordOccurrences()+ "]");
   assertEquals(97168,generator.getLabels().size());

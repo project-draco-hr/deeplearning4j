@@ -1,7 +1,7 @@
 {
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
   if (cache == null)   cache=new AbstractCache.Builder<T>().build();
-  VocabularyHolder topHolder=new VocabularyHolder.Builder().externalCache(cache).minWordFrequency(0).build();
+  AbstractCache<T> topHolder=new AbstractCache.Builder<T>().minElementFrequency(0).build();
   for (  VocabSource source : sources) {
     SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
@@ -9,10 +9,10 @@
     while (iterator.hasMoreSequences()) {
       Sequence<T> document=iterator.nextSequence();
       if (fetchLabels) {
-        VocabularyWord word=new VocabularyWord(document.getSequenceLabel().getLabel());
-        word.setSpecial(true);
-        word.setCount(1);
-        tempHolder.addToken();
+        T labelWord=createInstance();
+        labelWord.setSpecial(true);
+        labelWord.setElementFrequency(1);
+        tempHolder.addToken(labelWord);
       }
       List<String> tokens=document.asLabels();
       for (      String token : tokens) {
@@ -27,7 +27,6 @@
       }
     }
     log.info("Vocab size before truncation: " + tempHolder.numWords());
-    tempHolder.truncateVocabulary();
     log.info("Vocab size after truncation: " + tempHolder.numWords());
     topHolder.consumeVocabulary(tempHolder);
   }

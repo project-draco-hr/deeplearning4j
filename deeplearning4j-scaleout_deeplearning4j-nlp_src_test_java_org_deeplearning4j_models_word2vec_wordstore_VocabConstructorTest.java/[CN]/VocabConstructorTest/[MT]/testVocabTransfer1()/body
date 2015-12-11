@@ -7,7 +7,7 @@
   SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  VocabConstructor constructor=new VocabConstructor.Builder().setTokenizerFactory(t).addSource(iter,5).useAdaGrad(false).setTargetVocabCache(cache).build();
+  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(iter,5).useAdaGrad(false).setTargetVocabCache(cache).build();
   constructor.buildJointVocabulary(false,true);
   assertEquals(634061,cache.totalWordOccurrences());
   assertEquals(243,cache.numWords());
