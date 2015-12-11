@@ -5,5 +5,8 @@
     W=Dropout.applyDropConnect(this,DefaultParamInitializer.WEIGHT_KEY);
   }
   INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),input().mmul(W).addiRowVector(b)));
+  if (maskArray != null) {
+    ret.muliColumnVector(maskArray);
+  }
   return ret;
 }

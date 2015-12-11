@@ -12,5 +12,5 @@
   this.input=reshape3dTo2d(input);
   INDArray out=super.activate(true);
   this.input=origInput;
-  return out;
+  return reshape2dTo3d(out,input.size(0));
 }

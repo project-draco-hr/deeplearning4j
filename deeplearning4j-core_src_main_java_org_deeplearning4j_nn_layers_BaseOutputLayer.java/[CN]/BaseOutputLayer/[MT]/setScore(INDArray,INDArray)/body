@@ -5,6 +5,6 @@
     score=create.getFinalResult().doubleValue();
   }
  else {
-    score=LossCalculation.builder().l1(fullNetworkL1).l2(fullNetworkL2).labels(getLabels2d()).z(z).preOut(preOut).activationFn(conf().getLayer().getActivationFunction()).lossFunction(layerConf().getLossFunction()).miniBatch(conf.isMiniBatch()).miniBatchSize(getInputMiniBatchSize()).useRegularization(conf.isUseRegularization()).build().score();
+    score=LossCalculation.builder().l1(fullNetworkL1).l2(fullNetworkL2).labels(getLabels2d()).z(z).preOut(preOut).activationFn(conf().getLayer().getActivationFunction()).lossFunction(layerConf().getLossFunction()).miniBatch(conf.isMiniBatch()).miniBatchSize(getInputMiniBatchSize()).useRegularization(conf.isUseRegularization()).mask(maskArray).build().score();
   }
 }
