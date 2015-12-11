@@ -17,24 +17,119 @@
     featureList.add(features);
     labelList.add(labels);
   }
-  int[] featureShape=new int[3];
-  featureShape[0]=featureList.size();
-  featureShape[1]=featureList.get(0).size(1);
-  featureShape[2]=featureList.get(0).size(0);
-  int[] labelShape=new int[3];
-  labelShape[0]=labelList.size();
-  labelShape[1]=labelList.get(0).size(1);
-  labelShape[2]=labelList.get(0).size(0);
-  INDArray featuresOut=Nd4j.create(featureShape);
-  INDArray labelsOut=Nd4j.create(labelShape);
-  for (int i=0; i < featureList.size(); i++) {
-    featuresOut.tensorAlongDimension(i,1,2).assign(featureList.get(i));
-    labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
+  INDArray featuresOut;
+  INDArray labelsOut;
+  INDArray featuresMask=null;
+  INDArray labelsMask=null;
+  if (alignmentMode == AlignmentMode.EQUAL_LENGTH) {
+    int[] featureShape=new int[3];
+    featureShape[0]=featureList.size();
+    featureShape[1]=featureList.get(0).size(1);
+    featureShape[2]=featureList.get(0).size(0);
+    int[] labelShape=new int[3];
+    labelShape[0]=labelList.size();
+    labelShape[1]=labelList.get(0).size(1);
+    labelShape[2]=labelList.get(0).size(0);
+    featuresOut=Nd4j.create(featureShape);
+    labelsOut=Nd4j.create(labelShape);
+    for (int i=0; i < featureList.size(); i++) {
+      featuresOut.tensorAlongDimension(i,1,2).assign(featureList.get(i));
+      labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
+    }
+  }
+ else   if (alignmentMode == AlignmentMode.ALIGN_START) {
+    int longestTimeSeries=0;
+    for (    INDArray features : featureList) {
+      longestTimeSeries=Math.max(features.size(0),longestTimeSeries);
+    }
+    for (    INDArray labels : labelList) {
+      longestTimeSeries=Math.max(labels.size(0),longestTimeSeries);
+    }
+    int[] featuresShape=new int[]{featureList.size(),featureList.get(0).size(1),longestTimeSeries};
+    int[] labelsShape=new int[]{labelList.size(),labelList.get(0).size(1),longestTimeSeries};
+    featuresOut=Nd4j.create(featuresShape);
+    labelsOut=Nd4j.create(labelsShape);
+    featuresMask=Nd4j.ones(featureList.size(),longestTimeSeries);
+    labelsMask=Nd4j.ones(labelList.size(),longestTimeSeries);
+    int[] temp=new int[2];
+    for (int i=0; i < featureList.size(); i++) {
+      INDArray f=featureList.get(i);
+      INDArray l=labelList.get(i);
+      featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,f.size(0)),NDArrayIndex.all()},f);
+      labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,l.size(0)),NDArrayIndex.all()},l);
+      temp[0]=i;
+      for (int j=f.size(0); j < longestTimeSeries; j++) {
+        temp[1]=j;
+        featuresMask.putScalar(temp,0.0);
+      }
+      for (int j=l.size(0); j < longestTimeSeries; j++) {
+        temp[1]=j;
+        labelsMask.putScalar(temp,0.0);
+      }
+    }
+  }
+ else   if (alignmentMode == AlignmentMode.ALIGN_END) {
+    int longestTimeSeries=0;
+    for (    INDArray features : featureList) {
+      longestTimeSeries=Math.max(features.size(0),longestTimeSeries);
+    }
+    for (    INDArray labels : labelList) {
+      longestTimeSeries=Math.max(labels.size(0),longestTimeSeries);
+    }
+    int[] featuresShape=new int[]{featureList.size(),featureList.get(0).size(1),longestTimeSeries};
+    int[] labelsShape=new int[]{labelList.size(),labelList.get(0).size(1),longestTimeSeries};
+    featuresOut=Nd4j.create(featuresShape);
+    labelsOut=Nd4j.create(labelsShape);
+    featuresMask=Nd4j.ones(featureList.size(),longestTimeSeries);
+    labelsMask=Nd4j.ones(labelList.size(),longestTimeSeries);
+    int[] temp=new int[2];
+    for (int i=0; i < featureList.size(); i++) {
+      INDArray f=featureList.get(i);
+      INDArray l=labelList.get(i);
+      int fLen=f.size(0);
+      int lLen=l.size(0);
+      temp[0]=i;
+      if (fLen >= lLen) {
+        featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,fLen),NDArrayIndex.all()},f);
+        labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(fLen - lLen,fLen),NDArrayIndex.all()},l);
+        for (int j=fLen; j < longestTimeSeries; j++) {
+          temp[1]=j;
+          featuresMask.putScalar(temp,0.0);
+        }
+        for (int j=0; j < fLen - lLen; j++) {
+          temp[1]=j;
+          labelsMask.putScalar(temp,0.0);
+        }
+        for (int j=fLen; j < longestTimeSeries; j++) {
+          temp[1]=j;
+          labelsMask.putScalar(temp,0.0);
+        }
+      }
+ else {
+        featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(lLen - fLen,lLen),NDArrayIndex.all()},f);
+        labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,lLen),NDArrayIndex.all()},l);
+        for (int j=0; j < lLen - fLen; j++) {
+          temp[1]=j;
+          featuresMask.putScalar(temp,0.0);
+        }
+        for (int j=lLen; j < longestTimeSeries; j++) {
+          temp[1]=j;
+          featuresMask.putScalar(temp,0.0);
+        }
+        for (int j=lLen; j < longestTimeSeries; j++) {
+          temp[1]=j;
+          labelsMask.putScalar(temp,0.0);
+        }
+      }
+    }
+  }
+ else {
+    throw new UnsupportedOperationException("Unknown alignment mode: " + alignmentMode);
   }
   cursor+=featureList.size();
   if (inputColumns == -1)   inputColumns=featuresOut.size(1);
   if (totalOutcomes == -1)   totalOutcomes=labelsOut.size(1);
-  DataSet ds=new DataSet(featuresOut,labelsOut);
+  DataSet ds=new DataSet(featuresOut,labelsOut,featuresMask,labelsMask);
   if (preProcessor != null)   preProcessor.preProcess(ds);
   return ds;
 }

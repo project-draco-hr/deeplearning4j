@@ -1,0 +1,8 @@
+{
+  this.recordReader=featuresReader;
+  this.labelsReader=labels;
+  this.miniBatchSize=miniBatchSize;
+  this.numPossibleLabels=numPossibleLabels;
+  this.regression=regression;
+  this.alignmentMode=alignmentMode;
+}
