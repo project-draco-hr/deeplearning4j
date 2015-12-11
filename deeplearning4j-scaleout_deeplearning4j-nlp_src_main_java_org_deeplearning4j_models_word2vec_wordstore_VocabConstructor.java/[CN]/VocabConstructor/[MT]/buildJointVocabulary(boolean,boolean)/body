@@ -1,12 +1,15 @@
 {
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
+  if (cache == null)   throw new IllegalStateException("Cache is null, building fresh one");
   if (cache == null)   cache=new AbstractCache.Builder<T>().build();
+  log.info("Target vocab size before building: [" + cache.numWords() + "]");
   AbstractCache<T> topHolder=new AbstractCache.Builder<T>().minElementFrequency(0).build();
   int cnt=0;
   for (  VocabSource<T> source : sources) {
     SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
     log.info("Trying source iterator: [" + cnt + "]");
+    log.info("Target vocab size before building: [" + cache.numWords() + "]");
     cnt++;
     AbstractCache<T> tempHolder=new AbstractCache.Builder<T>().build();
     while (iterator.hasMoreSequences()) {
@@ -30,21 +33,37 @@
       }
     }
     log.info("Vocab size before truncation: " + tempHolder.numWords());
+    if (source.getMinWordFrequency() > 0) {
+      LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
+      for (      T element : tempHolder.vocabWords()) {
+        if (element.getElementFrequency() < source.getMinWordFrequency())         labelsToRemove.add(element.getLabel());
+      }
+      for (      String label : labelsToRemove) {
+        log.info("Removing label: '" + label + "'");
+        tempHolder.removeElement(label);
+      }
+    }
     log.info("Vocab size after truncation: " + tempHolder.numWords());
     topHolder.importVocabulary(tempHolder);
-  }
-  if (resetCounters) {
-    for (    T element : topHolder.vocabWords()) {
-      element.setElementFrequency(0);
-    }
-    topHolder.updateWordsOccurencies();
-    ;
+    log.info("Top holder size: [" + topHolder.numWords() + "]");
+    log.info("Target vocab size before building: [" + cache.numWords() + "]");
   }
   if (buildHuffmanTree) {
     Huffman huffman=new Huffman(topHolder.vocabWords());
     huffman.build();
     huffman.applyIndexes(topHolder);
   }
+  log.info("Joint vocabulary size BEFORE: [" + cache.numWords() + "]");
+  log.info("Top holder size: [" + topHolder.numWords() + "]");
   cache.importVocabulary(topHolder);
+  log.info("Joint vocabulary size: [" + cache.numWords() + "]");
+  for (  T element : cache.vocabWords()) {
+  }
+  if (resetCounters) {
+    for (    T element : cache.vocabWords()) {
+      element.setElementFrequency(0);
+    }
+    cache.updateWordsOccurencies();
+  }
   return cache;
 }

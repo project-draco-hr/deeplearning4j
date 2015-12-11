@@ -6,7 +6,7 @@
       return SentenceTransformer.this.iterator.hasNextDocument();
     }
     @Override public Sequence<VocabWord> next(){
-      return SentenceTransformer.this.transformToSequence(iterator.nextDocument().getContent(),true);
+      return SentenceTransformer.this.transformToSequence(vocabCache,iterator.nextDocument().getContent(),true);
     }
   }
 ;

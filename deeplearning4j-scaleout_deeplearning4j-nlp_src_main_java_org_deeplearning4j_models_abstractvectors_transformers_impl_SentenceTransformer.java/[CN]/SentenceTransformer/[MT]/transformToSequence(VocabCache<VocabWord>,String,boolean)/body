@@ -8,7 +8,11 @@
       sequence.addElement(vocabCache.wordFor(token));
     }
  else {
-      if (addUnkownElements)       vocabCache.addToken(new VocabWord(1.0,token));
+      if (addUnkownElements) {
+        VocabWord word=new VocabWord(1.0,token);
+        vocabCache.addToken(word);
+        sequence.addElement(word);
+      }
     }
   }
   return sequence;

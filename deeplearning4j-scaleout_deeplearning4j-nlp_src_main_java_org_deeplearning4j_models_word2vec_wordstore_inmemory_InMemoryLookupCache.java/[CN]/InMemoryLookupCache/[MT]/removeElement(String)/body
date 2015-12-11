@@ -1,0 +1,6 @@
+{
+  if (vocabs.containsKey(label)) {
+    vocabs.remove(label);
+    tokens.remove(label);
+  }
+}

@@ -1,5 +1,6 @@
 {
   for (  T element : vocabCache.vocabWords()) {
-    addToken(element);
+    if (element.getLabel().equals("percent"))     logger.info("!!!!!!!!!!!!!!!!!!!!Importing 'percent'!!!!!!!!!!!!!");
+    this.addToken(element);
   }
 }
