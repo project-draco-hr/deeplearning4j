@@ -1,0 +1,3 @@
+{
+  return new SentenceTransformer.Builder().readOnly(true).tokenizerFactory(tokenizerFactory).build();
+}

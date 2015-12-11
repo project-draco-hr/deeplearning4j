@@ -1,5 +1,6 @@
 {
   SentenceTransformer transformer=new SentenceTransformer(this.iterator);
   transformer.tokenizerFactory=this.tokenizerFactory;
+  transformer.readOnly=this.readOnly;
   return transformer;
 }
