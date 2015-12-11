@@ -1,3 +1,13 @@
 {
-  return null;
+  log.info("Producing iterator.");
+  iterator.reset();
+  return new Iterator<Sequence<VocabWord>>(){
+    @Override public boolean hasNext(){
+      return SentenceTransformer.this.iterator.hasNextDocument();
+    }
+    @Override public Sequence<VocabWord> next(){
+      return SentenceTransformer.this.transformToSequence(iterator.nextDocument().getContent(),true);
+    }
+  }
+;
 }

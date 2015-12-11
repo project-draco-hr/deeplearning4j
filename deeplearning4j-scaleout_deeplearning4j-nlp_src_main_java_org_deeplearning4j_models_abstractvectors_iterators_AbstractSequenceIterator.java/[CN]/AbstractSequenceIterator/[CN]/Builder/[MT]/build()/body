@@ -1,4 +1,4 @@
 {
-  AbstractSequenceIterator<T> iterator=new AbstractSequenceIterator<T>();
+  AbstractSequenceIterator<T> iterator=new AbstractSequenceIterator<T>(underlyingIterable);
   return iterator;
 }

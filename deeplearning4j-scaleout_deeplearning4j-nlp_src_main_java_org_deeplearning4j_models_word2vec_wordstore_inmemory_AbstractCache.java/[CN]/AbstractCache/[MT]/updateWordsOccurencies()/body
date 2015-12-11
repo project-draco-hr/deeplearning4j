@@ -1,0 +1,6 @@
+{
+  totalWordCount.set(0);
+  for (  T element : vocabulary.values()) {
+    totalWordCount.addAndGet((long)element.getElementFrequency());
+  }
+}

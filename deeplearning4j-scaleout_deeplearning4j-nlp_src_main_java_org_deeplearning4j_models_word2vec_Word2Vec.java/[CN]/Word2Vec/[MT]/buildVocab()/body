@@ -1,6 +1,4 @@
 {
   if (sentenceIter == null && docIter == null)   throw new IllegalStateException("At least one iterator is needed for model fit()");
-  VocabConstructor constructor=new VocabConstructor.Builder().addSource(sentenceIter,minWordFrequency).setTokenizerFactory(this.tokenizerFactory).setStopWords(this.stopWords).setTargetVocabCache(vocab).build();
-  constructor.buildJointVocabulary(false,true);
   return false;
 }

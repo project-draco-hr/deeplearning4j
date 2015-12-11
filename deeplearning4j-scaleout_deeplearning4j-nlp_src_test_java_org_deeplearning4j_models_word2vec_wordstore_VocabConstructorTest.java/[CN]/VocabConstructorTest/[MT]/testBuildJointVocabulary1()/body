@@ -3,8 +3,11 @@
   SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  VocabConstructor constructor=new VocabConstructor.Builder().setTokenizerFactory(t).addSource(iter,0).useAdaGrad(false).build();
-  VocabCache cache=constructor.buildJointVocabulary(true,false);
+  VocabCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
+  SentenceTransformer transformer=new SentenceTransformer.Builder(cache).iterator(iter).tokenizerFactory(t).build();
+  AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,0).useAdaGrad(false).build();
+  constructor.buildJointVocabulary(true,false);
   assertEquals(0,cache.totalWordOccurrences());
   assertEquals(244,cache.numWords());
 }

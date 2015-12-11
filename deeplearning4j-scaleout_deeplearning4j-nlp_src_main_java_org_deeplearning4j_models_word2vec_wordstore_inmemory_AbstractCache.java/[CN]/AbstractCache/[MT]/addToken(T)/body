@@ -1,4 +1,7 @@
 {
-  vocabulary.put(element.getLabel(),element);
+  if (!vocabulary.containsKey(element.getLabel())) {
+    vocabulary.put(element.getLabel(),element);
+  }
+ else   vocabulary.get(element.getLabel()).increaseElementFrequency((int)element.getElementFrequency());
   totalWordCount.addAndGet((long)element.getElementFrequency());
 }

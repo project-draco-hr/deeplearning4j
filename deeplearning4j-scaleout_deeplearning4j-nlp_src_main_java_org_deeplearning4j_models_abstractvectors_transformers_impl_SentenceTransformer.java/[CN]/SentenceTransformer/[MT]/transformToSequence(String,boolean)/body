@@ -1,3 +1,15 @@
 {
-  return null;
+  Sequence<VocabWord> sequence=new Sequence<>();
+  Tokenizer tokenizer=tokenizerFactory.create(object);
+  List<String> list=tokenizer.getTokens();
+  for (  String token : list) {
+    if (token == null || token.isEmpty())     continue;
+    if (vocabCache.containsWord(token)) {
+      sequence.addElement(vocabCache.wordFor(token));
+    }
+ else {
+      if (addUnkownElements)       vocabCache.addToken(new VocabWord(1.0,token));
+    }
+  }
+  return sequence;
 }
