@@ -1,0 +1,22 @@
+{
+  while (digitizer.hasMoreLines()) {
+    try {
+      Sequence<T> sequence=digitizer.nextSentence();
+      double alpha=0.025;
+      if (sequence == null || sequence.getElements().size() == 0) {
+        continue;
+      }
+      for (int i=0; i < AbstractVectors.this.numIterations; i++) {
+        alpha=Math.max(AbstractVectors.this.minLearningRate,AbstractVectors.this.learningRate.get() * (1 - (1.0 * this.wordsCounter.get() / (double)this.totalWordsCount)));
+        AbstractVectors.this.trainSequence(sequence,nextRandom,alpha);
+        this.wordsCounter.addAndGet(sequence.getElements().size());
+      }
+      totalLines.incrementAndGet();
+      if (totalLines.get() % 100000 == 0)       log.info("Epoch: " + this.epochNumber + "; Words vectorized so far: "+ this.wordsCounter.get()+ ";  Lines vectorized so far: "+ this.totalLines.get()+ "; learningRate: "+ alpha);
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+  }
+}

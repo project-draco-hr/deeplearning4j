@@ -1,2 +1,31 @@
 {
+  if (iterator == null)   throw new IllegalStateException("You can't fit() data without SequenceIterator defined");
+  if (resetModel) {
+  }
+  log.info("Starting learning process...");
+  for (int currentEpoch=0; currentEpoch < numEpochs; currentEpoch++) {
+    AtomicLong linesCounter=new AtomicLong(0);
+    AtomicLong wordsCounter=new AtomicLong(0);
+    AsyncSequencer sequencer=new AsyncSequencer(this.iterator);
+    sequencer.start();
+    final List<VectorCalculationsThread> threads=new ArrayList<>();
+    for (int x=0; x < workers; x++) {
+      threads.add(x,new VectorCalculationsThread(x,currentEpoch,wordsCounter,vocab.totalWordOccurrences(),linesCounter,sequencer));
+      threads.get(x).start();
+    }
+    try {
+      sequencer.join();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+    for (int x=0; x < workers; x++) {
+      try {
+        threads.get(x).join();
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
 }

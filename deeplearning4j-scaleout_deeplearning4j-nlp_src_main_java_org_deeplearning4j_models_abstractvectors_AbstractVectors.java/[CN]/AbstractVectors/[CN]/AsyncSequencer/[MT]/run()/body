@@ -1,0 +1,26 @@
+{
+  isRunning.set(true);
+  while (this.iterator.hasMoreSequences()) {
+    if (buffer.size() < limitLower) {
+      AtomicInteger linesLoaded=new AtomicInteger(0);
+      while (linesLoaded.getAndIncrement() < limitUpper && this.iterator.hasMoreSequences()) {
+        Sequence<T> document=this.iterator.nextSequence();
+        Sequence<T> newSequence=new Sequence<>();
+        for (        T element : document.getElements()) {
+          newSequence.addElement(vocab.wordFor(element.getLabel()));
+        }
+        buffer.add(newSequence);
+        linesLoaded.incrementAndGet();
+      }
+    }
+ else {
+      try {
+        Thread.sleep(50);
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  isRunning.set(false);
+}
