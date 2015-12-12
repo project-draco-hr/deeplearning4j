@@ -1,6 +1,6 @@
 {
   File inputFile=new ClassPathResource("big/raw_sentences.txt").getFile();
-  SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
+  SentenceIterator iter=new BasicLineIterator(inputFile);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   VocabCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
@@ -8,8 +8,8 @@
   AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
   VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,5).useAdaGrad(false).setTargetVocabCache(cache).build();
   constructor.buildJointVocabulary(false,true);
-  assertEquals(241,cache.numWords());
+  assertEquals(242,cache.numWords());
   assertEquals("i",cache.wordAtIndex(1));
   assertEquals("it",cache.wordAtIndex(0));
-  assertEquals(634061,cache.totalWordOccurrences());
+  assertEquals(634303,cache.totalWordOccurrences());
 }

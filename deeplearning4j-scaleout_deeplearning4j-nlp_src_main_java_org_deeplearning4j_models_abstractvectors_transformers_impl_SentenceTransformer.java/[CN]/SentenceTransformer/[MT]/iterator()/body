@@ -1,5 +1,4 @@
 {
-  log.info("Producing iterator.");
   iterator.reset();
   return new Iterator<Sequence<VocabWord>>(){
     @Override public boolean hasNext(){

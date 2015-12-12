@@ -1,6 +1,6 @@
 {
   File inputFile=new ClassPathResource("big/raw_sentences.txt").getFile();
-  SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
+  SentenceIterator iter=new BasicLineIterator(inputFile);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   VocabCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
