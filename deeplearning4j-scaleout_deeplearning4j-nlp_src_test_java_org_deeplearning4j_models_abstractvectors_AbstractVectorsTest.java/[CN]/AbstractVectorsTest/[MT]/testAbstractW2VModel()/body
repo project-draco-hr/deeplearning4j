@@ -13,9 +13,11 @@
   assertEquals(634303,vocabCache.totalWordOccurrences());
   WeightLookupTable<VocabWord> lookupTable=new InMemoryLookupTable.Builder<VocabWord>().lr(0.025).vectorLength(150).useAdaGrad(false).cache(vocabCache).build();
   lookupTable.resetWeights(true);
-  AbstractVectors<VocabWord> vectors=new AbstractVectors.Builder<VocabWord>(new VectorsConfiguration()).minWordFrequency(3).setLookupTable(lookupTable).iterate(sequenceIterator).setVocabCache(vocabCache).resetModel(false).build();
+  AbstractVectors<VocabWord> vectors=new AbstractVectors.Builder<VocabWord>(new VectorsConfiguration()).minWordFrequency(5).lookupTable(lookupTable).iterate(sequenceIterator).vocabCache(vocabCache).batchSize(250).iterations(1).epochs(1).resetModel(false).trainElementsRepresentation(true).trainSequencesRepresentation(false).build();
   vectors.fit();
   double sim=vectors.similarity("day","night");
   logger.info("Day/night similarity: " + sim);
   assertTrue(sim > 0.6d);
+  Collection<String> labels=vectors.wordsNearest("day",10);
+  logger.info("Nearest labels to 'day': " + labels);
 }

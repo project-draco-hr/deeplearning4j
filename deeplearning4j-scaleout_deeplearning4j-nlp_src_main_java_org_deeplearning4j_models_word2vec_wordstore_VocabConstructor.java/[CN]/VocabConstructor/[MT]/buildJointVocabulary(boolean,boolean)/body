@@ -2,20 +2,23 @@
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
   if (cache == null)   throw new IllegalStateException("Cache is null, building fresh one");
   if (cache == null)   cache=new AbstractCache.Builder<T>().build();
-  log.info("Target vocab size before building: [" + cache.numWords() + "]");
+  log.debug("Target vocab size before building: [" + cache.numWords() + "]");
+  final AtomicLong sequenceCounter=new AtomicLong(0);
+  final AtomicLong elementsCounter=new AtomicLong(0);
   AbstractCache<T> topHolder=new AbstractCache.Builder<T>().minElementFrequency(0).build();
   int cnt=0;
   for (  VocabSource<T> source : sources) {
     SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
-    log.info("Trying source iterator: [" + cnt + "]");
-    log.info("Target vocab size before building: [" + cache.numWords() + "]");
+    log.debug("Trying source iterator: [" + cnt + "]");
+    log.debug("Target vocab size before building: [" + cache.numWords() + "]");
     cnt++;
     AbstractCache<T> tempHolder=new AbstractCache.Builder<T>().build();
     int sequences=0;
     long counter=0;
     while (iterator.hasMoreSequences()) {
       Sequence<T> document=iterator.nextSequence();
+      sequenceCounter.incrementAndGet();
       if (fetchLabels) {
         T labelWord=createInstance();
         labelWord.setSpecial(true);
@@ -28,6 +31,7 @@
         if (token == null || token.isEmpty())         continue;
         if (!tempHolder.containsWord(token)) {
           tempHolder.addToken(document.getElementByLabel(token));
+          elementsCounter.incrementAndGet();
           counter++;
         }
  else {
@@ -36,6 +40,7 @@
         }
       }
       sequences++;
+      if (sequenceCounter.get() % 100000 == 0)       log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ elementsCounter.get()+ "]");
     }
     log.debug("Vocab size before truncation: [" + tempHolder.numWords() + "],  NumWords: ["+ tempHolder.totalWordOccurrences()+ "], sequences parsed: ["+ sequences+ "], counter: ["+ counter+ "]");
     if (source.getMinWordFrequency() > 0) {
@@ -53,10 +58,7 @@
     log.debug("Top holder size: [" + topHolder.numWords() + "]");
     log.debug("Target vocab size before building: [" + cache.numWords() + "]");
   }
-  log.info("Joint vocabulary size BEFORE: [" + cache.numWords() + "]");
-  log.info("Top holder size: [" + topHolder.numWords() + "]");
   cache.importVocabulary(topHolder);
-  log.info("Joint vocabulary size: [" + cache.numWords() + "]");
   for (  T element : cache.vocabWords()) {
   }
   if (resetCounters) {
@@ -70,5 +72,6 @@
     huffman.build();
     huffman.applyIndexes(cache);
   }
+  log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ cache.numWords()+ "]");
   return cache;
 }

@@ -1,11 +1,12 @@
 {
+  if (!trainElementsVectors && !trainSequenceVectors)   throw new IllegalStateException("You should define at least one training goal 'trainElementsRepresentation' or 'trainSequenceRepresentation'");
   if (iterator == null)   throw new IllegalStateException("You can't fit() data without SequenceIterator defined");
   if (resetModel) {
   }
   log.info("Starting learning process...");
-  for (int currentEpoch=0; currentEpoch < numEpochs; currentEpoch++) {
-    AtomicLong linesCounter=new AtomicLong(0);
-    AtomicLong wordsCounter=new AtomicLong(0);
+  for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
+    final AtomicLong linesCounter=new AtomicLong(0);
+    final AtomicLong wordsCounter=new AtomicLong(0);
     AsyncSequencer sequencer=new AsyncSequencer(this.iterator);
     sequencer.start();
     final List<VectorCalculationsThread> threads=new ArrayList<>();
@@ -27,5 +28,6 @@
         throw new RuntimeException(e);
       }
     }
+    log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");
   }
 }
