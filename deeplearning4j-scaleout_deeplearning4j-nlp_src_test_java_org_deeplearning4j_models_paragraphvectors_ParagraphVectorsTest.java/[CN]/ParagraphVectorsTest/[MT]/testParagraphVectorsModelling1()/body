@@ -18,6 +18,10 @@
   assertTrue(vec.hasWord("DOC_3720"));
   double similarityD=vec.similarity("day","night");
   log.info("day/night similarity: " + similarityD);
+  if (similarityD < 0.0) {
+    log.info("Day: " + Arrays.toString(vec.getWordVectorMatrix("day").dup().data().asDouble()));
+    log.info("Night: " + Arrays.toString(vec.getWordVectorMatrix("night").dup().data().asDouble()));
+  }
   double similarityW=vec.similarity("way","work");
   log.info("way/work similarity: " + similarityW);
   double similarityH=vec.similarity("house","world");
