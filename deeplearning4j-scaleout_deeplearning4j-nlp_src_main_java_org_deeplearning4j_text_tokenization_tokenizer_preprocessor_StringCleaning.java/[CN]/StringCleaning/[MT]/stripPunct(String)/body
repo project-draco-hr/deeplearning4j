@@ -1,3 +1,3 @@
 {
-  return base.replaceAll("[\\d\\.:,\"\'\\(\\)\\[\\]|/?!;]+","");
+  return punctPattern.matcher(base).replaceAll("");
 }
