@@ -17,6 +17,6 @@
   assertEquals(worldVocab.getWord(),"world");
   assertEquals(worldVocab.getWordFrequency(),1,0);
   assertEquals(strangeVocab.getWord(),"strange");
-  assertEquals(strangeVocab.getWordFrequency(),2,0);
+  assertEquals(strangeVocab.getElementFrequency(),2,0);
   sc.stop();
 }
