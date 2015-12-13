@@ -6,7 +6,7 @@
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   LabelsSource source=new LabelsSource("DOC_");
-  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsGenerator(source).windowSize(5).iterate(iter).trainWordVectors(false).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
+  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsSource(source).windowSize(5).iterate(iter).trainWordVectors(false).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
   vec.fit();
   int cnt1=cache.wordFrequency("day");
   int cnt2=cache.wordFrequency("me");
