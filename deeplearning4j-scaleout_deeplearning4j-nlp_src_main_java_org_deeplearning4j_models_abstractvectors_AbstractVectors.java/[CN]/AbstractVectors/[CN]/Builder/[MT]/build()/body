@@ -1,4 +1,5 @@
 {
+  presetTables();
   AbstractVectors<T> vectors=new AbstractVectors<>();
   vectors.numEpochs=this.numEpochs;
   vectors.numIterations=this.iterations;

@@ -1,5 +1,5 @@
 {
-  SentenceIterator iter=UimaSentenceIterator.createWithPath(inputFile.getAbsolutePath());
+  SentenceIterator iter=new BasicLineIterator(inputFile.getAbsolutePath());
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   InMemoryLookupCache cache=new InMemoryLookupCache();

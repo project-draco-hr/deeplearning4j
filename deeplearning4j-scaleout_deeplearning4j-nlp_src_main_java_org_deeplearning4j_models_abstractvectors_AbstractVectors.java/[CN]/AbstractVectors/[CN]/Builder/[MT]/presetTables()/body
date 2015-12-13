@@ -1,0 +1,8 @@
+{
+  if (lookupTable == null) {
+    if (vocabCache == null) {
+      vocabCache=new AbstractCache.Builder<T>().hugeModelExpected(hugeModelExpected).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).scavengerThreshold(this.configuration.getScavengerActivationThreshold()).minElementFrequency(minWordFrequency).build();
+    }
+    lookupTable=new InMemoryLookupTable.Builder<T>().useAdaGrad(this.useAdaGrad).cache(vocabCache).negative(negative).vectorLength(layerSize).lr(learningRate).seed(seed).build();
+  }
+}

@@ -1,5 +1,0 @@
-{
-  SentenceTransformerFactory factory=new SentenceTransformerFactory();
-  factory.tokenizerFactory=this.tokenizerFactory;
-  return factory;
-}
