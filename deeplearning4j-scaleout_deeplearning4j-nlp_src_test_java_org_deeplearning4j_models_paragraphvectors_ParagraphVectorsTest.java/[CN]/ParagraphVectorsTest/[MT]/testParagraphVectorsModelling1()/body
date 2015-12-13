@@ -13,6 +13,9 @@
   assertNotEquals(1,cnt1);
   assertNotEquals(1,cnt2);
   assertNotEquals(cnt1,cnt2);
+  assertEquals(97406,cache.numWords());
+  assertTrue(vec.hasWord("DOC_16392"));
+  assertTrue(vec.hasWord("DOC_3720"));
   double similarityD=vec.similarity("day","night");
   log.info("day/night similarity: " + similarityD);
   double similarityW=vec.similarity("way","work");

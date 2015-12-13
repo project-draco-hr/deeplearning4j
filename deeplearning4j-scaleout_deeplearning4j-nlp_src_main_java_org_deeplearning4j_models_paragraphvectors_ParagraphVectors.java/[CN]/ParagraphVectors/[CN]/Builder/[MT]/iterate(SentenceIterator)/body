@@ -1,4 +1,4 @@
 {
-  super.iterate(iterator);
+  this.sentenceIterator=iterator;
   return this;
 }

@@ -1,4 +1,5 @@
 {
-  VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).useAdaGrad(false).setTargetVocabCache(vocab).build();
+  log.info("Starting vocabulary building...");
+  VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).useAdaGrad(false).setTargetVocabCache(vocab).fetchLabels(trainSequenceVectors).build();
   constructor.buildJointVocabulary(false,true);
 }

@@ -20,7 +20,7 @@
       Sequence<T> document=iterator.nextSequence();
       sequenceCounter.incrementAndGet();
       if (fetchLabels) {
-        T labelWord=createInstance();
+        T labelWord=document.getSequenceLabel();
         labelWord.setSpecial(true);
         labelWord.setElementFrequency(1);
         tempHolder.addToken(labelWord);
@@ -46,7 +46,7 @@
     if (source.getMinWordFrequency() > 0) {
       LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
       for (      T element : tempHolder.vocabWords()) {
-        if (element.getElementFrequency() < source.getMinWordFrequency())         labelsToRemove.add(element.getLabel());
+        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial())         labelsToRemove.add(element.getLabel());
       }
       for (      String label : labelsToRemove) {
         log.debug("Removing label: '" + label + "'");

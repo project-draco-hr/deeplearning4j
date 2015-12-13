@@ -6,6 +6,10 @@
       while (linesLoaded.getAndIncrement() < limitUpper && this.iterator.hasMoreSequences()) {
         Sequence<T> document=this.iterator.nextSequence();
         Sequence<T> newSequence=new Sequence<>();
+        if (document.getSequenceLabel() != null) {
+          T newLabel=vocab.wordFor(document.getSequenceLabel().getLabel());
+          newSequence.setSequenceLabel(newLabel);
+        }
         for (        T element : document.getElements()) {
           T realElement=vocab.wordFor(element.getLabel());
           if (realElement != null)           newSequence.addElement(realElement);

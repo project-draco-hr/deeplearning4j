@@ -1,4 +1,4 @@
 {
-  super.iterate(iterator);
+  this.docIter=iterator;
   return this;
 }
