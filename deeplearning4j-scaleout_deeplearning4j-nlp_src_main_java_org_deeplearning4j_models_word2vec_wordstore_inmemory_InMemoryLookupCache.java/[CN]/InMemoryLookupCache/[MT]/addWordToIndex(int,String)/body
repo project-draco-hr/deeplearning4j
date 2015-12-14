@@ -1,10 +1,10 @@
 {
   if (word == null || word.isEmpty())   throw new IllegalArgumentException("Word can't be empty or null");
+  if (!tokens.containsKey(word))   throw new IllegalStateException("You can't add word to index, if it's not in tokens");
   if (!vocabs.containsKey(word)) {
-    VocabWord vw=new VocabWord(1.0,word);
+    VocabWord vw=tokenFor(word);
     vw.setIndex(index);
     vocabs.put(word,vw);
-    tokens.put(word,vw);
   }
   if (!wordFrequencies.containsKey(word))   wordFrequencies.incrementCount(word,1);
   wordIndex.add(word,index);

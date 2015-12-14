@@ -4,6 +4,7 @@
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   JavaRDD<List<String>> tokenizedRDD=pipeline.tokenize();
-  assertEquals(tokenizedRDD.first(),Arrays.asList("this","is","a","strange","strange","world"));
+  assertEquals(2,tokenizedRDD.count());
+  assertEquals(Arrays.asList("this","is","a","strange","strange","world"),tokenizedRDD.first());
   sc.stop();
 }

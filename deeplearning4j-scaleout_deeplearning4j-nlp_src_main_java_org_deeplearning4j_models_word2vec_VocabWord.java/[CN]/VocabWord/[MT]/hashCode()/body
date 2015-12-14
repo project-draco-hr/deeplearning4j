@@ -1,10 +1,4 @@
 {
-  int result=this.elementFrequency.hashCode();
-  result=31 * result + index;
-  result=31 * result + codes.hashCode();
-  result=31 * result + word.hashCode();
-  result=31 * result + (historicalGradient != null ? historicalGradient.hashCode() : 0);
-  result=31 * result + points.hashCode();
-  result=31 * result + codeLength;
+  int result=this.word.hashCode();
   return result;
 }

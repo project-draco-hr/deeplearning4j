@@ -2,7 +2,7 @@
   VocabWord actualToken;
   if (vocabCache.hasToken(stringToken)) {
     actualToken=vocabCache.tokenFor(stringToken);
-    actualToken.increment(tokenCount.intValue());
+    actualToken.increaseElementFrequency(tokenCount.intValue());
   }
  else {
     actualToken=new VocabWord(tokenCount,stringToken);
