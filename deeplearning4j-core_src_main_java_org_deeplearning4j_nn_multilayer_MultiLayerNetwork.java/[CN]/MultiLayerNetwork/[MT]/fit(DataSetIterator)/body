@@ -15,6 +15,8 @@
     while (iter.hasNext()) {
       DataSet next=iter.next();
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      boolean hasMaskArrays=next.hasMaskArrays();
+      if (hasMaskArrays)       setLayerMaskArrays(next.getFeaturesMaskArray(),next.getLabelsMaskArray());
       if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
         doTruncatedBPTT(next.getFeatureMatrix(),next.getLabels());
       }
@@ -26,6 +28,7 @@
         }
         solver.optimize();
       }
+      if (hasMaskArrays)       clearLayerMaskArrays();
     }
   }
 }
