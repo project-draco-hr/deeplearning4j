@@ -1,3 +1,13 @@
 {
-  test(new Double[0][0]);
+  DataSetIterator irisIter=new IrisDataSetIterator(150,150);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).weightInit(WeightInit.XAVIER).list(1).layer(0,new OutputLayer.Builder().nIn(4).nOut(3).lossFunction(LossFunctions.LossFunction.MCXENT).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.setListeners(new ScoreIterationListener(1));
+  EarlyStoppingModelSaver saver=new InMemoryModelSaver();
+  EarlyStoppingConfiguration esConf=new EarlyStoppingConfiguration.Builder().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).modelSaver(saver).build();
+  IEarlyStoppingTrainer trainer=new EarlyStoppingTrainer(esConf,net,irisIter,irisIter);
+  trainer.fit();
+  EarlyStoppingResult result=trainer.fit();
+  System.out.println(result);
+  MultiLayerNetwork out=result.getBestModel();
 }

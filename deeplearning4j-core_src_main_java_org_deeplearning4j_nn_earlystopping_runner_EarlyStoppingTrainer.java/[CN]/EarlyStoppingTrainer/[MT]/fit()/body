@@ -1,6 +1,16 @@
 {
   log.info("Starting early stopping training");
-  MultiLayerNetwork net=new MultiLayerNetwork(configuration);
+  if (esConfig.getIterationTerminationConditions() != null) {
+    for (    IterationTerminationCondition c : esConfig.getIterationTerminationConditions()) {
+      c.initialize();
+    }
+  }
+  if (esConfig.getEpochTerminationConditions() != null) {
+    for (    EpochTerminationCondition c : esConfig.getEpochTerminationConditions()) {
+      c.initialize();
+    }
+  }
+  if (net == null)   net=new MultiLayerNetwork(configuration);
   net.init();
   Map<Integer,Double> scoreVsEpoch=new LinkedHashMap<>();
   int epochCount=0;

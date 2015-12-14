@@ -1,5 +1,5 @@
 {
   epochTerminationConditions.clear();
-  for (  EpochTerminationCondition c : terminationConditions)   epochTerminationConditions.add(c);
+  Collections.addAll(epochTerminationConditions,terminationConditions);
   return this;
 }
