@@ -1,0 +1,7 @@
+{
+  this.modelSaver=builder.modelSaver;
+  this.epochTerminationConditions=builder.epochTerminationConditions;
+  this.iterationTerminationConditions=builder.iterationTerminationConditions;
+  this.saveLastModel=builder.saveLastModel;
+  this.evaluateEveryNEpochs=builder.evaluateEveryNEpochs;
+}
