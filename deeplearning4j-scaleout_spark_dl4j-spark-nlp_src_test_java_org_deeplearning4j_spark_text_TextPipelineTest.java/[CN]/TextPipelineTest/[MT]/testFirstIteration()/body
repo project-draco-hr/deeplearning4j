@@ -9,6 +9,7 @@
   VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   Huffman huffman=new Huffman(vocabCache.vocabWords());
   huffman.build();
+  huffman.applyIndexes(vocabCache);
   Map<String,Object> word2vecVarMap=word2vec.getWord2vecVarMap();
   word2vecVarMap.put("totalWordCount",pipeline.getTotalWordCount());
   double[] expTable=word2vec.getExpTable();
