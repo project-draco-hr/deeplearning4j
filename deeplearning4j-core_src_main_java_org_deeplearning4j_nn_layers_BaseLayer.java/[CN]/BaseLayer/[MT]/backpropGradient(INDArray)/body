@@ -2,6 +2,9 @@
   INDArray z=preOutput(input);
   INDArray activationDerivative=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),z).derivative());
   INDArray delta=epsilon.muli(activationDerivative);
+  if (maskArray != null) {
+    delta.muliColumnVector(maskArray);
+  }
   Gradient ret=new DefaultGradient();
   ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,delta.transpose().mmul(input).transpose());
   ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,delta.sum(0));
