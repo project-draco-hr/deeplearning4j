@@ -1,5 +1,6 @@
 {
   Word2Vec ret=new Word2Vec();
+  if (tokenizerFactory == null)   tokenizerFactory=new DefaultTokenizerFactory();
   if (sentenceIterator != null) {
     SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenizerFactory).build();
     this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
@@ -21,6 +22,7 @@
   ret.stopWords=this.stopWords;
   ret.iterator=this.iterator;
   ret.lookupTable=this.lookupTable;
+  ret.tokenizerFactory=this.tokenizerFactory;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
