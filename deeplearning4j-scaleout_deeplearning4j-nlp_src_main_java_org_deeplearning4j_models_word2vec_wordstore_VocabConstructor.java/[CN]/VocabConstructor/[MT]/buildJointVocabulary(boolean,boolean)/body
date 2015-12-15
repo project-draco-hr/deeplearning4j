@@ -59,8 +59,6 @@
     log.debug("Target vocab size before building: [" + cache.numWords() + "]");
   }
   cache.importVocabulary(topHolder);
-  for (  T element : cache.vocabWords()) {
-  }
   if (resetCounters) {
     for (    T element : cache.vocabWords()) {
       element.setElementFrequency(0);

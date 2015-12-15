@@ -1,8 +1,0 @@
-{
-  try {
-    return (T)((Class)((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}
