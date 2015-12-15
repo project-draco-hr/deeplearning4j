@@ -1,5 +1,5 @@
 {
-  if (codeLengthSoFar >= 64)   throw new RuntimeException("Cannot generate code: code length exceeds 64 bits");
+  if (codeLengthSoFar >= MAX_CODE_LENGTH)   throw new RuntimeException("Cannot generate code: code length exceeds " + MAX_CODE_LENGTH + " bits");
   if (node.left == null && node.right == null) {
     codes[node.vertexIdx]=codeSoFar;
     codeLength[node.vertexIdx]=codeLengthSoFar;
