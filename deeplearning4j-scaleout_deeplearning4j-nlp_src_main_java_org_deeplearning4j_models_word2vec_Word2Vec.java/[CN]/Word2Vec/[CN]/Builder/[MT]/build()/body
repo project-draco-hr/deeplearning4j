@@ -20,6 +20,7 @@
   ret.resetModel=this.resetModel;
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
+  ret.workers=this.workers;
   ret.iterator=this.iterator;
   ret.lookupTable=this.lookupTable;
   ret.tokenizerFactory=this.tokenizerFactory;

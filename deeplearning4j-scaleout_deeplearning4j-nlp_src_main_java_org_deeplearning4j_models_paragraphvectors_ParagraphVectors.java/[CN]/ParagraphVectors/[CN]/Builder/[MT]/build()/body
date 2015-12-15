@@ -37,6 +37,7 @@
   ret.resetModel=this.resetModel;
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
+  ret.workers=this.workers;
   ret.lookupTable=this.lookupTable;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
