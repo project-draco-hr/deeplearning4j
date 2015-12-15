@@ -5,7 +5,12 @@
     buildVocab();
   }
   if (vocab == null || lookupTable == null || vocab.numWords() == 0)   throw new IllegalStateException("You can't fit() model with empty Vocabulary or WeightLookupTable");
-  if (!resetModel)   lookupTable.resetWeights(false);
+  if (!resetModel) {
+    lookupTable.resetWeights(false);
+  }
+ else {
+    lookupTable.resetWeights(true);
+  }
   log.info("Starting learning process...");
   for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
     final AtomicLong linesCounter=new AtomicLong(0);

@@ -7,7 +7,7 @@
   t.setTokenPreProcessor(new CommonPreprocessor());
   SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(underlyingIterator).tokenizerFactory(t).build();
   AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
-  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,5).useAdaGrad(false).setTargetVocabCache(vocabCache).build();
+  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,5).setTargetVocabCache(vocabCache).build();
   constructor.buildJointVocabulary(false,true);
   assertEquals(242,vocabCache.numWords());
   assertEquals(634303,vocabCache.totalWordOccurrences());

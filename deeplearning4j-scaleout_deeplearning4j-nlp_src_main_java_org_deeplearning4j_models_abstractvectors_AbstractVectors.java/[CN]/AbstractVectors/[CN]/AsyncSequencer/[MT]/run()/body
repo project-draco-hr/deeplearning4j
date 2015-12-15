@@ -12,9 +12,11 @@
         }
         for (        T element : document.getElements()) {
           T realElement=vocab.wordFor(element.getLabel());
-          if (realElement != null)           newSequence.addElement(realElement);
+          if (realElement != null) {
+            newSequence.addElement(realElement);
+          }
         }
-        buffer.add(newSequence);
+        if (newSequence.getElements().size() > 0)         buffer.add(newSequence);
         linesLoaded.incrementAndGet();
       }
     }
