@@ -1,0 +1,8 @@
+{
+  if (vocabulary.containsKey(label)) {
+    totalWordCount.getAndAdd((long)vocabulary.get(label).getElementFrequency() * -1);
+    idxMap.remove(label);
+    vocabulary.remove(label);
+  }
+ else   throw new IllegalStateException("Can't get label: '" + label + "'");
+}

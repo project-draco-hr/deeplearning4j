@@ -28,9 +28,9 @@
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
   Long totalWordCount=pipeline.getTotalWordCount();
-  VocabCache vocabCache=pipeline.getVocabCache();
+  VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   JavaRDD<Pair<List<String>,AtomicLong>> sentenceWordsCountRDD=pipeline.getSentenceWordsCountRDD();
-  final Pair<VocabCache,Long> vocabAndNumWords=new Pair<>(vocabCache,totalWordCount);
+  final Pair<VocabCache<VocabWord>,Long> vocabAndNumWords=new Pair<>(vocabCache,totalWordCount);
   vocabCacheBroadcast=sc.broadcast(vocabAndNumWords.getFirst());
   final GloveWeightLookupTable gloveWeightLookupTable=new GloveWeightLookupTable.Builder().cache(vocabAndNumWords.getFirst()).lr(conf.getDouble(GlovePerformer.ALPHA,0.01)).maxCount(conf.getDouble(GlovePerformer.MAX_COUNT,100)).vectorLength(conf.getInt(GlovePerformer.VECTOR_LENGTH,300)).xMax(conf.getDouble(GlovePerformer.X_MAX,0.75)).build();
   gloveWeightLookupTable.resetWeights();

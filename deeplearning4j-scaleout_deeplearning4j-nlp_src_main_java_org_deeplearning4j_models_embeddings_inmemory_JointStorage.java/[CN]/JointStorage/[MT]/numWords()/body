@@ -1,0 +1,7 @@
+{
+  AtomicLong counter=new AtomicLong(0);
+  for (  VocabCache cache : mapVocabs.values()) {
+    counter.addAndGet(cache.numWords());
+  }
+  return counter.intValue();
+}

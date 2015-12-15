@@ -1,7 +1,9 @@
 {
-  List<String> tokens=new ArrayList<>();
-  while (hasMoreTokens()) {
-    tokens.add(nextToken());
+  if (tokens.size() > 0)   return tokens;
+  log.info("Starting prebuffering...");
+  while (streamHasMoreTokens()) {
+    tokens.add(nextTokenFromStream());
   }
+  log.info("Tokens prefetch finished. Tokens size: [" + tokens.size() + "]");
   return tokens;
 }

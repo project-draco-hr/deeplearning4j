@@ -3,5 +3,8 @@
   sentenceWordsCountRDD=updateAndReturnAccumulatorVal(tokenizedRDD).cache();
   Counter<String> wordFreqCounter=wordFreqAcc.value();
   filterMinWordAddVocab(wordFreqCounter);
+  Huffman huffman=new Huffman(vocabCache.vocabWords());
+  huffman.build();
+  huffman.applyIndexes(vocabCache);
   vocabCacheBroadcast=sc.broadcast(vocabCache);
 }

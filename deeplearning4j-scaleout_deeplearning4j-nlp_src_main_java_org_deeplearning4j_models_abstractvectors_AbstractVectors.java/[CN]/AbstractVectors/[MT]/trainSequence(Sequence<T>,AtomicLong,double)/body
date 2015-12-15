@@ -1,0 +1,11 @@
+{
+  if (sequence.getElements().size() == 0)   return;
+  if (trainElementsVectors)   for (int i=0; i < sequence.getElements().size(); i++) {
+    nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    skipGram(i,sequence.getElements(),(int)nextRandom.get() % window,nextRandom,alpha);
+  }
+  if (trainSequenceVectors)   for (int i=0; i < sequence.getElements().size(); i++) {
+    nextRandom.set(nextRandom.get() * 25214903917L + 11);
+    dbow(i,sequence,(int)nextRandom.get() % window,nextRandom,alpha);
+  }
+}

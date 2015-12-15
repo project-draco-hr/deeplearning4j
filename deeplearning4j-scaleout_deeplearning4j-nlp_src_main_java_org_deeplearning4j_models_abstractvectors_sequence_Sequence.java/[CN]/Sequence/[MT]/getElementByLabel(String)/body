@@ -1,0 +1,6 @@
+{
+  for (  T element : elements) {
+    if (element.getLabel().equals(label))     return element;
+  }
+  return null;
+}

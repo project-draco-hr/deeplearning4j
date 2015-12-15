@@ -6,15 +6,22 @@
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   LabelsSource source=new LabelsSource("DOC_");
-  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsGenerator(source).windowSize(5).iterate(iter).trainWordVectors(false).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
+  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsSource(source).windowSize(5).iterate(iter).trainWordVectors(false).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
   vec.fit();
   int cnt1=cache.wordFrequency("day");
   int cnt2=cache.wordFrequency("me");
   assertNotEquals(1,cnt1);
   assertNotEquals(1,cnt2);
   assertNotEquals(cnt1,cnt2);
+  assertEquals(97406,cache.numWords());
+  assertTrue(vec.hasWord("DOC_16392"));
+  assertTrue(vec.hasWord("DOC_3720"));
   double similarityD=vec.similarity("day","night");
   log.info("day/night similarity: " + similarityD);
+  if (similarityD < 0.0) {
+    log.info("Day: " + Arrays.toString(vec.getWordVectorMatrix("day").dup().data().asDouble()));
+    log.info("Night: " + Arrays.toString(vec.getWordVectorMatrix("night").dup().data().asDouble()));
+  }
   double similarityW=vec.similarity("way","work");
   log.info("way/work similarity: " + similarityW);
   double similarityH=vec.similarity("house","world");

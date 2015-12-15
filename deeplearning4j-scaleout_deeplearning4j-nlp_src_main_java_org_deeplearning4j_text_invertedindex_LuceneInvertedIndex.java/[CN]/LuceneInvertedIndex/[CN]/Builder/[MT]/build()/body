@@ -1,9 +1,9 @@
 {
-  LuceneInvertedIndex ret;
+  LuceneInvertedIndex<T> ret;
   if (indexDir != null) {
-    ret=new LuceneInvertedIndex(vocabCache,cache,indexDir.getAbsolutePath());
+    ret=new LuceneInvertedIndex<T>(vocabCache,cache,indexDir.getAbsolutePath());
   }
- else   ret=new LuceneInvertedIndex(vocabCache);
+ else   ret=new LuceneInvertedIndex<T>(vocabCache);
   try {
     ret.batchSize=batchSize;
     if (dir != null)     ret.dir=dir;

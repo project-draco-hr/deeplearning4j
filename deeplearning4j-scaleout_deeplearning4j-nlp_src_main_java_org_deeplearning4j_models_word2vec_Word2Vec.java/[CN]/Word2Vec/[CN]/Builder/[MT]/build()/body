@@ -1,44 +1,29 @@
 {
   Word2Vec ret=new Word2Vec();
-  ret.alpha.set(lr);
-  ret.sentenceIter=iter;
-  ret.window=window;
-  ret.useAdaGrad=useAdaGrad;
-  ret.minLearningRate=minLearningRate;
-  ret.vectorizer=textVectorizer;
-  ret.stopWords=stopWords;
-  ret.minWordFrequency=minWordFrequency;
-  ret.setVocab(vocabCache);
-  ret.minWordFrequency=minWordFrequency;
-  ret.numIterations=iterations;
-  ret.seed=seed;
-  ret.numIterations=iterations;
-  ret.saveVocab=saveVocab;
-  ret.batchSize=batchSize;
-  ret.sample=sampling;
-  ret.workers=workers;
-  ret.invertedIndex=index;
-  ret.lookupTable=lookupTable;
-  ret.epochs=this.numEpochs;
+  if (tokenizerFactory == null)   tokenizerFactory=new DefaultTokenizerFactory();
+  if (sentenceIterator != null) {
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenizerFactory).build();
+    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  }
+  ret.numEpochs=this.numEpochs;
+  ret.numIterations=this.iterations;
+  ret.vocab=this.vocabCache;
+  ret.minWordFrequency=this.minWordFrequency;
+  ret.learningRate.set(this.learningRate);
+  ret.minLearningRate=this.minLearningRate;
+  ret.sampling=this.sampling;
+  ret.negative=this.negative;
+  ret.layerSize=this.layerSize;
+  ret.batchSize=this.batchSize;
+  ret.learningRateDecayWords=this.learningRateDecayWords;
+  ret.window=this.window;
   ret.resetModel=this.resetModel;
-  try {
-    if (tokenizerFactory == null)     tokenizerFactory=new UimaTokenizerFactory();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-  if (vocabCache == null) {
-    vocabCache=new InMemoryLookupCache();
-    ret.setVocab(vocabCache);
-  }
-  if (lookupTable == null) {
-    lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
-  }
-  ret.lookupTable=lookupTable;
-  ret.tokenizerFactory=tokenizerFactory;
-  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder.Builder().externalCache(vocabCache).hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
- else   ret.vocabularyHolder=new VocabularyHolder.Builder().hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
-  this.configuration.setLearningRate(lr);
+  ret.useAdeGrad=this.useAdaGrad;
+  ret.stopWords=this.stopWords;
+  ret.iterator=this.iterator;
+  ret.lookupTable=this.lookupTable;
+  ret.tokenizerFactory=this.tokenizerFactory;
+  this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
   this.configuration.setWindow(window);
@@ -53,5 +38,7 @@
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
   ret.configuration=this.configuration;
+  ret.trainSequenceVectors=false;
+  ret.trainElementsVectors=true;
   return ret;
 }

@@ -1,39 +1,75 @@
 {
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
-  if (cache == null)   cache=new InMemoryLookupCache(false);
-  VocabularyHolder topHolder=new VocabularyHolder.Builder().externalCache(cache).minWordFrequency(0).build();
-  for (  VocabSource source : sources) {
-    LabelAwareIterator iterator=source.getIterator();
+  if (cache == null)   throw new IllegalStateException("Cache is null, building fresh one");
+  if (cache == null)   cache=new AbstractCache.Builder<T>().build();
+  log.debug("Target vocab size before building: [" + cache.numWords() + "]");
+  final AtomicLong sequenceCounter=new AtomicLong(0);
+  final AtomicLong elementsCounter=new AtomicLong(0);
+  AbstractCache<T> topHolder=new AbstractCache.Builder<T>().minElementFrequency(0).build();
+  int cnt=0;
+  for (  VocabSource<T> source : sources) {
+    SequenceIterator<T> iterator=source.getIterator();
     iterator.reset();
-    VocabularyHolder tempHolder=new VocabularyHolder.Builder().minWordFrequency(source.getMinWordFrequency()).build();
-    while (iterator.hasNextDocument()) {
-      LabelledDocument document=iterator.nextDocument();
-      Tokenizer tokenizer=tokenizerFactory.create(document.getContent());
+    log.debug("Trying source iterator: [" + cnt + "]");
+    log.debug("Target vocab size before building: [" + cache.numWords() + "]");
+    cnt++;
+    AbstractCache<T> tempHolder=new AbstractCache.Builder<T>().build();
+    int sequences=0;
+    long counter=0;
+    while (iterator.hasMoreSequences()) {
+      Sequence<T> document=iterator.nextSequence();
+      sequenceCounter.incrementAndGet();
       if (fetchLabels) {
-        VocabularyWord word=new VocabularyWord(document.getLabel());
-        word.setSpecial(true);
-        word.setCount(1);
-        tempHolder.addWord(word);
+        T labelWord=document.getSequenceLabel();
+        labelWord.setSpecial(true);
+        labelWord.setElementFrequency(1);
+        tempHolder.addToken(labelWord);
       }
-      List<String> tokens=tokenizer.getTokens();
+      List<String> tokens=document.asLabels();
       for (      String token : tokens) {
         if (stopWords != null && stopWords.contains(token))         continue;
         if (token == null || token.isEmpty())         continue;
         if (!tempHolder.containsWord(token)) {
-          tempHolder.addWord(token);
+          tempHolder.addToken(document.getElementByLabel(token));
+          elementsCounter.incrementAndGet();
+          counter++;
         }
  else {
-          tempHolder.incrementWordCounter(token);
+          counter++;
+          tempHolder.incrementWordCount(token);
         }
       }
+      sequences++;
+      if (sequenceCounter.get() % 100000 == 0)       log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ elementsCounter.get()+ "]");
     }
-    log.info("Vocab size before truncation: " + tempHolder.numWords());
-    tempHolder.truncateVocabulary();
-    log.info("Vocab size after truncation: " + tempHolder.numWords());
-    topHolder.consumeVocabulary(tempHolder);
+    log.debug("Vocab size before truncation: [" + tempHolder.numWords() + "],  NumWords: ["+ tempHolder.totalWordOccurrences()+ "], sequences parsed: ["+ sequences+ "], counter: ["+ counter+ "]");
+    if (source.getMinWordFrequency() > 0) {
+      LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
+      for (      T element : tempHolder.vocabWords()) {
+        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial())         labelsToRemove.add(element.getLabel());
+      }
+      for (      String label : labelsToRemove) {
+        log.debug("Removing label: '" + label + "'");
+        tempHolder.removeElement(label);
+      }
+    }
+    log.debug("Vocab size after truncation: [" + tempHolder.numWords() + "],  NumWords: ["+ tempHolder.totalWordOccurrences()+ "], sequences parsed: ["+ sequences+ "], counter: ["+ counter+ "]");
+    topHolder.importVocabulary(tempHolder);
+    log.debug("Top holder size: [" + topHolder.numWords() + "]");
+    log.debug("Target vocab size before building: [" + cache.numWords() + "]");
   }
-  if (resetCounters)   topHolder.resetWordCounters();
-  if (buildHuffmanTree)   topHolder.updateHuffmanCodes();
-  topHolder.transferBackToVocabCache(cache);
+  cache.importVocabulary(topHolder);
+  if (resetCounters) {
+    for (    T element : cache.vocabWords()) {
+      element.setElementFrequency(0);
+    }
+    cache.updateWordsOccurencies();
+  }
+  if (buildHuffmanTree) {
+    Huffman huffman=new Huffman(cache.vocabWords());
+    huffman.build();
+    huffman.applyIndexes(cache);
+  }
+  log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ cache.numWords()+ "]");
   return cache;
 }

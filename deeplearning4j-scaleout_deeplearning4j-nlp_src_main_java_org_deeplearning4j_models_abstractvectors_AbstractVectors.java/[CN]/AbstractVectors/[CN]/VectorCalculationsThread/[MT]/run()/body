@@ -1,0 +1,32 @@
+{
+  while (digitizer.hasMoreLines()) {
+    try {
+      List<Sequence<T>> sequences=new ArrayList<>();
+      for (int x=0; x < batchSize; x++) {
+        if (digitizer.hasMoreLines()) {
+          Sequence<T> sequence=digitizer.nextSentence();
+          if (sequence != null) {
+            sequences.add(sequence);
+          }
+        }
+      }
+      double alpha=0.025;
+      if (sequences.size() == 0) {
+        continue;
+      }
+      for (int i=0; i < numIterations; i++) {
+        for (int x=0; x < sequences.size(); x++) {
+          Sequence<T> sequence=sequences.get(x);
+          alpha=Math.max(minLearningRate,learningRate.get() * (1 - (1.0 * this.wordsCounter.get() / (double)this.totalWordsCount)));
+          trainSequence(sequence,nextRandom,alpha);
+          totalLines.incrementAndGet();
+          this.wordsCounter.addAndGet(sequence.getElements().size());
+          if (totalLines.get() % 100000 == 0)           log.info("Epoch: [" + this.epochNumber + "]; Words vectorized so far: ["+ this.wordsCounter.get()+ "];  Lines vectorized so far: ["+ this.totalLines.get()+ "]; learningRate: ["+ alpha+ "]");
+        }
+      }
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}
