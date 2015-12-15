@@ -18,6 +18,7 @@
   vectors.stopWords=this.stopWords;
   vectors.iterator=this.iterator;
   vectors.lookupTable=this.lookupTable;
+  vectors.trainingAlgorithm=this.algorithm;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
@@ -32,6 +33,7 @@
   this.configuration.setUseAdaGrad(useAdaGrad);
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
+  this.configuration.setTrainingAlgorithm(this.algorithm);
   vectors.configuration=this.configuration;
   return vectors;
 }

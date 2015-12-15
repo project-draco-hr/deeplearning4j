@@ -14,4 +14,5 @@
   this.learningRateDecayWords=configuration.getLearningRateDecayWords();
   this.useAdaGrad=configuration.isUseAdaGrad();
   this.window=configuration.getWindow();
+  this.algorithm=configuration.getTrainingAlgorithm();
 }

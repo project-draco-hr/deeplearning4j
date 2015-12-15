@@ -1,6 +1,6 @@
 {
   LineIterator iter=IOUtils.lineIterator(is,"UTF-8");
-  Glove glove=new Glove();
+  LegacyGlove glove=new LegacyGlove();
   Map<String,float[]> wordVectors=new HashMap<>();
   int count=0;
   while (iter.hasNext()) {

@@ -1,0 +1,5 @@
+{
+  if (!(lookupTable instanceof GloveWeightLookupTable))   throw new IllegalStateException("You need to use GloveWeightLookupTable for Glove implementation");
+  super.lookupTable(lookupTable);
+  return this;
+}
