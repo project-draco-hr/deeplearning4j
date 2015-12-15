@@ -16,6 +16,7 @@
   vectors.resetModel=this.resetModel;
   vectors.useAdeGrad=this.useAdaGrad;
   vectors.stopWords=this.stopWords;
+  vectors.workers=this.workers;
   vectors.iterator=this.iterator;
   vectors.lookupTable=this.lookupTable;
   this.configuration.setLearningRate(this.learningRate);
