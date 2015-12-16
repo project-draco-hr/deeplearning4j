@@ -1,18 +1,3 @@
 {
-  if (!new File(MNIST_ROOT).exists()) {
-    new MnistFetcher().downloadAndUntar();
-  }
-  try {
-    man=new MnistManager(MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped,MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped);
-  }
- catch (  Exception e) {
-    FileUtils.deleteDirectory(new File(MNIST_ROOT));
-    new MnistFetcher().downloadAndUntar();
-    man=new MnistManager(MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped,MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped);
-  }
-  numOutcomes=10;
-  this.binarize=binarize;
-  totalExamples=NUM_EXAMPLES;
-  cursor=0;
-  inputColumns=man.getImages().getEntryLength();
+  this(binarize,true,true,System.currentTimeMillis());
 }
