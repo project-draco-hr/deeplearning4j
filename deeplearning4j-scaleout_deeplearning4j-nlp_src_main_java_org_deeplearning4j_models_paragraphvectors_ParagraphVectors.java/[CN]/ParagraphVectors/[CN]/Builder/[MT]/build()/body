@@ -1,62 +1,45 @@
 {
+  presetTables();
   ParagraphVectors ret=new ParagraphVectors();
-  if (this.generator == null)   this.generator=new LabelsSource();
+  if (this.labelsSource == null)   this.labelsSource=new LabelsSource();
   if (docIter != null) {
-    if (docIter instanceof LabelAwareDocumentIterator)     this.labelAwareIterator=new DocumentIteratorConverter((LabelAwareDocumentIterator)docIter,generator);
- else     this.labelAwareIterator=new DocumentIteratorConverter(docIter,generator);
+    if (docIter instanceof LabelAwareDocumentIterator)     this.labelAwareIterator=new DocumentIteratorConverter((LabelAwareDocumentIterator)docIter,labelsSource);
+ else     this.labelAwareIterator=new DocumentIteratorConverter(docIter,labelsSource);
   }
- else   if (iter != null) {
-    if (iter instanceof LabelAwareSentenceIterator)     this.labelAwareIterator=new SentenceIteratorConverter((LabelAwareSentenceIterator)iter,generator);
- else     this.labelAwareIterator=new SentenceIteratorConverter(iter,generator);
+ else   if (sentenceIterator != null) {
+    if (sentenceIterator instanceof LabelAwareSentenceIterator)     this.labelAwareIterator=new SentenceIteratorConverter((LabelAwareSentenceIterator)sentenceIterator,labelsSource);
+ else     this.labelAwareIterator=new SentenceIteratorConverter(sentenceIterator,labelsSource);
   }
  else   if (labelAwareIterator != null) {
-    this.generator=labelAwareIterator.getLabelsSource();
+    this.labelsSource=labelAwareIterator.getLabelsSource();
   }
  else {
+    log.warn("Unexpected path taken");
+    throw new RuntimeException("Unexpected path taken");
   }
-  ret.labelAwareIterator=this.labelAwareIterator;
-  ret.alpha.set(lr);
-  ret.window=window;
-  ret.useAdaGrad=useAdaGrad;
-  ret.minLearningRate=minLearningRate;
-  ret.vectorizer=textVectorizer;
-  ret.stopWords=stopWords;
-  ret.minWordFrequency=minWordFrequency;
-  ret.setVocab(vocabCache);
-  ret.minWordFrequency=minWordFrequency;
-  ret.numIterations=iterations;
-  ret.seed=seed;
-  ret.numIterations=iterations;
-  ret.saveVocab=saveVocab;
-  ret.batchSize=batchSize;
-  ret.sample=sampling;
-  ret.workers=workers;
-  ret.invertedIndex=index;
-  ret.lookupTable=lookupTable;
-  ret.epochs=this.numEpochs;
-  ret.resetModel=true;
-  ret.existingModel=this.existingW2V;
-  ret.trainWordVectors=this.trainWordVectors;
-  ret.labelsSource=this.generator;
-  try {
-    if (tokenizerFactory == null)     tokenizerFactory=new UimaTokenizerFactory();
+  if (labelAwareIterator != null) {
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(labelAwareIterator).tokenizerFactory(tokenizerFactory).build();
+    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
   }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-  if (vocabCache == null) {
-    vocabCache=new InMemoryLookupCache();
-    ret.setVocab(vocabCache);
-  }
-  if (lookupTable == null) {
-    lookupTable=new InMemoryLookupTable.Builder().negative(negative).useAdaGrad(useAdaGrad).lr(lr).cache(vocabCache).vectorLength(layerSize).build();
-  }
-  ret.lookupTable=lookupTable;
-  ret.tokenizerFactory=tokenizerFactory;
-  if (this.vocabCache != null)   ret.vocabularyHolder=new VocabularyHolder.Builder().externalCache(vocabCache).hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
- else   ret.vocabularyHolder=new VocabularyHolder.Builder().hugeModelExpected(hugeModelExpected).minWordFrequency(minWordFrequency).scavengerActivationThreshold(this.configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(this.configuration.getScavengerRetentionDelay()).build();
-  ret.labelsSource=this.generator;
-  this.configuration.setLearningRate(lr);
+ else   throw new IllegalStateException("LabelAwareIterator is NULL");
+  ret.numEpochs=this.numEpochs;
+  ret.numIterations=this.iterations;
+  ret.vocab=this.vocabCache;
+  ret.minWordFrequency=this.minWordFrequency;
+  ret.learningRate.set(this.learningRate);
+  ret.minLearningRate=this.minLearningRate;
+  ret.sampling=this.sampling;
+  ret.negative=this.negative;
+  ret.layerSize=this.layerSize;
+  ret.batchSize=this.batchSize;
+  ret.learningRateDecayWords=this.learningRateDecayWords;
+  ret.window=this.window;
+  ret.resetModel=this.resetModel;
+  ret.useAdeGrad=this.useAdaGrad;
+  ret.stopWords=this.stopWords;
+  ret.workers=this.workers;
+  ret.lookupTable=this.lookupTable;
+  this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
   this.configuration.setWindow(window);
@@ -71,5 +54,10 @@
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
   ret.configuration=this.configuration;
+  ret.trainElementsVectors=this.trainElementsVectors;
+  ret.trainSequenceVectors=true;
+  ret.labelsSource=this.labelsSource;
+  ret.labelAwareIterator=this.labelAwareIterator;
+  ret.iterator=this.iterator;
   return ret;
 }

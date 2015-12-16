@@ -1,4 +1,4 @@
 {
-  this.stopWords=stopWords;
+  super.stopWords(stopList);
   return this;
 }

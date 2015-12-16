@@ -1,0 +1,7 @@
+{
+  if (!buildTrigger)   build();
+  for (int a=0; a < words.size(); a++) {
+    cache.addWordToIndex(a,words.get(a).getLabel());
+    words.get(a).setIndex(a);
+  }
+}

@@ -6,13 +6,14 @@
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   LabelsSource source=new LabelsSource("DOC_");
-  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsGenerator(source).windowSize(5).iterate(iter).trainWordVectors(true).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
+  ParagraphVectors vec=new ParagraphVectors.Builder().minWordFrequency(1).iterations(3).epochs(1).layerSize(100).learningRate(0.025).labelsSource(source).windowSize(5).iterate(iter).trainWordVectors(true).vocabCache(cache).tokenizerFactory(t).sampling(0).build();
   vec.fit();
   int cnt1=cache.wordFrequency("day");
   int cnt2=cache.wordFrequency("me");
   assertNotEquals(1,cnt1);
   assertNotEquals(1,cnt2);
   assertNotEquals(cnt1,cnt2);
+  assertTrue(vec.hasWord("DOC_3720"));
   double similarityD=vec.similarity("day","night");
   log.info("day/night similarity: " + similarityD);
   double similarityW=vec.similarity("way","work");

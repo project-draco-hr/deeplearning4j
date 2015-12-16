@@ -1,13 +1,13 @@
 {
-  List<VocabWord> ret=new CopyOnWriteArrayList<>();
+  List<T> ret=new CopyOnWriteArrayList<>();
   try {
     DirectoryReader reader=readerManager.acquire();
     Document doc=reader.document(index);
     reader.close();
     String[] values=doc.getValues(WORD_FIELD);
     for (    String s : values) {
-      VocabWord word=vocabCache.wordFor(s);
-      if (word != null)       ret.add(vocabCache.wordFor(s));
+      T word=vocabCache.wordFor(s);
+      if (word != null)       ret.add(word);
     }
   }
  catch (  Exception e) {

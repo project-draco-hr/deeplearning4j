@@ -6,7 +6,7 @@
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
-  VocabCache vocabCache=pipeline.getVocabCache();
+  VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   Huffman huffman=new Huffman(vocabCache.vocabWords());
   huffman.build();
   Map<String,Object> word2vecVarMap=word2vec.getWord2vecVarMap();

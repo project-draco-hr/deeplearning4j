@@ -6,9 +6,11 @@
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
-  VocabCache vocabCache=pipeline.getVocabCache();
-  Huffman huffman=new Huffman(vocabCache.vocabWords());
-  huffman.build();
+  VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
+  VocabWord token=vocabCache.tokenFor("strange");
+  VocabWord word=vocabCache.wordFor("strange");
+  log.info("Strange token: " + token);
+  log.info("Strange word: " + word);
   Map<String,Object> word2vecVarMap=word2vec.getWord2vecVarMap();
   word2vecVarMap.put("totalWordCount",pipeline.getTotalWordCount());
   double[] expTable=word2vec.getExpTable();

@@ -1,0 +1,14 @@
+{
+  this.vocabCache=cache;
+  for (  SequenceElement word : cache.tokens()) {
+    VocabularyWord vw=new VocabularyWord(word.getLabel());
+    vw.setCount((int)word.getElementFrequency());
+    vw.setSpecial(markAsSpecial);
+    if (word.getPoints() != null && !word.getPoints().isEmpty()) {
+      vw.setHuffmanNode(buildNode(word.getCodes(),word.getPoints(),word.getCodeLength(),word.getIndex()));
+    }
+    vocabulary.put(vw.getWord(),vw);
+  }
+  if (numWords() > 1)   updateHuffmanCodes();
+  logger.info("Init from VocabCache is complete. " + numWords() + " word(s) were transferred.");
+}

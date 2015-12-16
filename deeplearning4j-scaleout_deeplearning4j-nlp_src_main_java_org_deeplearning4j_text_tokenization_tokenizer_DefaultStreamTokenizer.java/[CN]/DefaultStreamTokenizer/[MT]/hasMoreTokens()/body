@@ -1,11 +1,5 @@
 {
-  if (streamTokenizer.ttype != StreamTokenizer.TT_EOF) {
-    try {
-      streamTokenizer.nextToken();
-    }
- catch (    IOException e1) {
-      throw new RuntimeException(e1);
-    }
-  }
-  return streamTokenizer.ttype != StreamTokenizer.TT_EOF && streamTokenizer.ttype != -1;
+  log.info("Tokens size: [" + tokens.size() + "], position: ["+ position.get()+ "]");
+  if (tokens.size() > 0)   return position.get() < tokens.size();
+ else   return streamHasMoreTokens();
 }

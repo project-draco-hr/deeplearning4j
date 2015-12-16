@@ -1,5 +1,0 @@
-{
-  VocabConstructor constructor=new VocabConstructor.Builder().addSource(labelAwareIterator,minWordFrequency).setTokenizerFactory(this.tokenizerFactory).setStopWords(this.stopWords).setTargetVocabCache(vocab).fetchLabels(true).build();
-  constructor.buildJointVocabulary(false,true);
-  return false;
-}

@@ -1,7 +1,6 @@
 {
-  VocabConstructor constructor=new VocabConstructor();
+  VocabConstructor<T> constructor=new VocabConstructor<T>();
   constructor.sources=this.sources;
-  constructor.tokenizerFactory=this.tokenizerFactory;
   constructor.cache=this.cache;
   constructor.stopWords=this.stopWords;
   constructor.useAdaGrad=this.useAdaGrad;

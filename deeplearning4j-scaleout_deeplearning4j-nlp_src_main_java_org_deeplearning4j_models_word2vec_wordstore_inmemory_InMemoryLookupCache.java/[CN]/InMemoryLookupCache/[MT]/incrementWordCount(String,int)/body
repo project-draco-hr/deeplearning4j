@@ -3,7 +3,7 @@
   wordFrequencies.incrementCount(word,increment);
   if (hasToken(word)) {
     VocabWord token=tokenFor(word);
-    token.increment(increment);
+    token.increaseElementFrequency(increment);
   }
   totalWordOccurrences.set(totalWordOccurrences.get() + increment);
 }

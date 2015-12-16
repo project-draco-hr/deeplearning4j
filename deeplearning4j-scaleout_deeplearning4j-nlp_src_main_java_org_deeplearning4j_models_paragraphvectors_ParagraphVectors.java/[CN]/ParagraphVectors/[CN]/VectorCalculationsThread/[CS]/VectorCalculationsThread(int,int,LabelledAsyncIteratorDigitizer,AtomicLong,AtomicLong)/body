@@ -1,8 +1,0 @@
-{
-  this.roller=roller;
-  this.epoch=epochId;
-  this.nextRandom=new AtomicLong(threadId);
-  this.documentCounter=documentCounter;
-  this.numWordsSoFar=wordsCounter;
-  this.setName("ParaVec calculations thread. Thread id: " + threadId);
-}

@@ -1,0 +1,9 @@
+{
+  sampleCache1=new InMemoryLookupCache(false);
+  sampleCache2=new InMemoryLookupCache(false);
+  sampleTable1=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(sampleCache1).build();
+  sampleTable2=(InMemoryLookupTable)new InMemoryLookupTable.Builder().cache(sampleCache2).build();
+  sampleCache1.vocabs.put("test1_0",new VocabWord(1.0,"test1_0"));
+  sampleCache2.vocabs.put("test2_0",new VocabWord(2.0,"test2_0"));
+  sampleCache2.vocabs.put("test2_1",new VocabWord(3.0,"test2_1"));
+}

@@ -1,8 +1,0 @@
-{
-  try {
-    return buffer.poll(3L,TimeUnit.SECONDS);
-  }
- catch (  Exception e) {
-    return null;
-  }
-}
