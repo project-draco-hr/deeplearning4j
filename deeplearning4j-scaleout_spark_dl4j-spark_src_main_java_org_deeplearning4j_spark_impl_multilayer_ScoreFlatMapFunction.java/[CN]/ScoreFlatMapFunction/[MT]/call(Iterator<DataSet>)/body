@@ -1,6 +1,6 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList(new Tuple3<INDArray,Updater,Double>(Nd4j.zeros(params.value().shape()),null,0.0));
+    return Collections.singletonList(0.0);
   }
   List<DataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
@@ -8,16 +8,14 @@
   }
   DataSet data=DataSet.merge(collect,false);
   if (log.isDebugEnabled()) {
-    log.debug("Training on {} examples with data {}",data.numExamples(),data.labelCounts());
+    log.debug("Scoring {} examples with data {}",data.numExamples(),data.labelCounts());
   }
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
-  network.setListeners(new ScoreIterationListener(1),new BestScoreIterationListener(best_score_acc));
   INDArray val=params.value();
-  Updater upd=updater.getValue();
   if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
   network.setParameters(val);
-  network.setUpdater(upd);
-  network.fit(data);
-  return Collections.singletonList(new Tuple3<>(network.params(false),network.getUpdater(),network.score()));
+  double score=network.score(data,false);
+  if (network.conf().isMiniBatch())   score*=data.getFeatureMatrix().size(0);
+  return Collections.singletonList(score);
 }
