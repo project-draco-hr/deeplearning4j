@@ -1,5 +1,5 @@
 {
   cursor=0;
   curr=null;
-  MathUtils.shuffleArray(order,rng);
+  if (shuffle)   MathUtils.shuffleArray(order,rng);
 }

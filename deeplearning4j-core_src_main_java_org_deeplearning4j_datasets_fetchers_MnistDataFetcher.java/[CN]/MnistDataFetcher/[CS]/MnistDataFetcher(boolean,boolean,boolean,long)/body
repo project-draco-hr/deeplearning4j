@@ -27,6 +27,7 @@
   cursor=0;
   inputColumns=man.getImages().getEntryLength();
   this.train=train;
+  this.shuffle=shuffle;
   if (train) {
     order=new int[NUM_EXAMPLES];
   }
