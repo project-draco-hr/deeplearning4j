@@ -1,4 +1,5 @@
 {
   Glove ret=new Glove();
+  ret.trainingAlgorithm=TrainingAlgorithm.GLOVE;
   return ret;
 }
