@@ -1,0 +1,39 @@
+{
+  if (!mnistExists()) {
+    new MnistFetcher().downloadAndUntar();
+  }
+  String images;
+  String labels;
+  if (train) {
+    images=MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped;
+    labels=MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped;
+    totalExamples=NUM_EXAMPLES;
+  }
+ else {
+    images=MNIST_ROOT + MnistFetcher.testFilesFilename_unzipped;
+    labels=MNIST_ROOT + MnistFetcher.testFileLabelsFilename_unzipped;
+    totalExamples=NUM_EXAMPLES_TEST;
+  }
+  try {
+    man=new MnistManager(images,labels,train);
+  }
+ catch (  Exception e) {
+    FileUtils.deleteDirectory(new File(MNIST_ROOT));
+    new MnistFetcher().downloadAndUntar();
+    man=new MnistManager(images,labels,train);
+  }
+  numOutcomes=10;
+  this.binarize=binarize;
+  cursor=0;
+  inputColumns=man.getImages().getEntryLength();
+  this.train=train;
+  if (train) {
+    order=new int[NUM_EXAMPLES];
+  }
+ else {
+    order=new int[NUM_EXAMPLES_TEST];
+  }
+  for (int i=0; i < order.length; i++)   order[i]=i;
+  rng=new Random(rngSeed);
+  reset();
+}

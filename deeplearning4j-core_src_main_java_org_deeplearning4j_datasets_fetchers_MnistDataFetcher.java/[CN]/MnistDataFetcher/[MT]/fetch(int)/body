@@ -2,51 +2,18 @@
   if (!hasMore()) {
     throw new IllegalStateException("Unable to getFromOrigin more; there are no more images");
   }
-  List<DataSet> toConvert=new ArrayList<>();
+  List<DataSet> toConvert=new ArrayList<>(numExamples);
   for (int i=0; i < numExamples; i++, cursor++) {
     if (!hasMore()) {
       break;
     }
-    if (man == null) {
-      try {
-        man=new MnistManager(MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped,MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped);
-      }
- catch (      IOException e) {
-        throw new RuntimeException(e);
-      }
+    byte[] img=man.readImageUnsafe(order[i]);
+    INDArray in=Nd4j.create(1,img.length);
+    for (int j=0; j < img.length; j++) {
+      in.putScalar(j,((int)img[j]) & 0xFF);
     }
-    man.setCurrent(cursor);
-    try {
-      INDArray in=ArrayUtil.toNDArray(ArrayUtil.flatten(man.readImage()));
-      if (binarize) {
-        for (int d=0; d < in.length(); d++) {
-          if (in.getDouble(d) > 30) {
-            in.putScalar(d,1);
-          }
- else {
-            in.putScalar(d,0);
-          }
-        }
-      }
- else {
-        in.divi(255);
-      }
-      INDArray out=createOutputVector(man.readLabel());
-      boolean found=false;
-      for (int col=0; col < out.length(); col++) {
-        if (out.getDouble(col) > 0) {
-          found=true;
-          break;
-        }
-      }
-      if (!found) {
-        throw new IllegalStateException("Found a matrix without an outcome");
-      }
-      toConvert.add(new DataSet(in,out));
-    }
- catch (    IOException e) {
-      throw new IllegalStateException("Unable to read image");
-    }
+    INDArray out=createOutputVector(man.readLabel(i));
+    toConvert.add(new DataSet(in,out));
   }
   initializeCurrFromList(toConvert);
 }

@@ -1,0 +1,3 @@
+{
+  this(batchSize,(train ? MnistDataFetcher.NUM_EXAMPLES : MnistDataFetcher.NUM_EXAMPLES_TEST),false,train,true,System.currentTimeMillis());
+}
