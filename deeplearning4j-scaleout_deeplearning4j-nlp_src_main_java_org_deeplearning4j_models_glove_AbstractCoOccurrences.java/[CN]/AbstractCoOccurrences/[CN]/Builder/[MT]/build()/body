@@ -1,0 +1,9 @@
+{
+  AbstractCoOccurrences<T> ret=new AbstractCoOccurrences<>();
+  ret.sequenceIterator=this.sequenceIterator;
+  ret.windowSize=this.windowSize;
+  ret.vocabCache=this.vocabCache;
+  ret.symmetric=this.symmetric;
+  ret.workers=this.workers;
+  return ret;
+}
