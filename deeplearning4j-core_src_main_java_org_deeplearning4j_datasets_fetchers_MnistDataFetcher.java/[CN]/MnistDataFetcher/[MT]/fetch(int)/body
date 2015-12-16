@@ -25,7 +25,7 @@
  else {
       in.divi(255);
     }
-    INDArray out=createOutputVector(man.readLabel(cursor));
+    INDArray out=createOutputVector(man.readLabel(order[cursor]));
     toConvert.add(new DataSet(in,out));
   }
   initializeCurrFromList(toConvert);
