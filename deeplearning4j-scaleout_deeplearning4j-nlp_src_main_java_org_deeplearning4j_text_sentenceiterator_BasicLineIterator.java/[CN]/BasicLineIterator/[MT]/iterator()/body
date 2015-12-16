@@ -7,6 +7,9 @@
     @Override public String next(){
       return BasicLineIterator.this.nextSentence();
     }
+    @Override public void remove(){
+      throw new UnsupportedOperationException();
+    }
   }
 ;
   return ret;

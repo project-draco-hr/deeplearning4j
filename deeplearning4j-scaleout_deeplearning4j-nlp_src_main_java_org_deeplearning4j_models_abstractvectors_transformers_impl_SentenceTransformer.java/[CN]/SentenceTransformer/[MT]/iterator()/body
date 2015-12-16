@@ -12,6 +12,9 @@
       }
       return sequence;
     }
+    @Override public void remove(){
+      throw new UnsupportedOperationException();
+    }
   }
 ;
 }
