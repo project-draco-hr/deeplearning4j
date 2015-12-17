@@ -11,7 +11,7 @@
       int c=i - window + a;
       if (c >= 0 && c < labels.size()) {
         T lastWord=labels.get(c);
-        iterate(word,lastWord,nextRandom,alpha);
+        skipGram.iterateSample(word,lastWord,nextRandom,alpha);
       }
     }
   }

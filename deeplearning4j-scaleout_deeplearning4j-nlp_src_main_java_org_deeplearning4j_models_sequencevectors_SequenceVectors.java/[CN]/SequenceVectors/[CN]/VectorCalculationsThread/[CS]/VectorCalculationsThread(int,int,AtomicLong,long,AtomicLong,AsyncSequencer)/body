@@ -7,4 +7,5 @@
   this.digitizer=digitizer;
   this.nextRandom=new AtomicLong(this.threadId);
   this.setName("VectorCalculationsThread " + this.threadId);
+  elementsLearningAlgorithm.configure(vocab,lookupTable,configuration);
 }

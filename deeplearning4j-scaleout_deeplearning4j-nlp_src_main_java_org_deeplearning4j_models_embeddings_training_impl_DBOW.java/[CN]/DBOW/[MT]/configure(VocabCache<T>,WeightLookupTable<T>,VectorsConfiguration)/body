@@ -1,0 +1,6 @@
+{
+  this.window=configuration.getWindow();
+  this.useAdaGrad=configuration.isUseAdaGrad();
+  this.negative=configuration.getNegative();
+  skipGram.configure(vocabCache,lookupTable,configuration);
+}
