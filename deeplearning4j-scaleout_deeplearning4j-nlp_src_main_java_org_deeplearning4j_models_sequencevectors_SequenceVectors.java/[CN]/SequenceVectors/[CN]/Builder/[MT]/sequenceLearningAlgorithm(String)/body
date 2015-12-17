@@ -1,3 +1,10 @@
 {
+  try {
+    Class clazz=Class.forName(algoName);
+    sequenceLearningAlgorithm=(SequenceLearningAlgorithm<T>)clazz.newInstance();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
   return this;
 }
