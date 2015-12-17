@@ -1,0 +1,15 @@
+{
+  List<CoOccurrencesCalculatorThread> threads=new ArrayList<>();
+  for (int x=0; x < workers; x++) {
+    threads.add(x,new CoOccurrencesCalculatorThread<T>(x,new FilteredSequenceIterator<T>(sequenceIterator,vocabCache),processedSequences));
+    threads.get(x).start();
+  }
+  for (int x=0; x < workers; x++) {
+    try {
+      threads.get(x).join();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

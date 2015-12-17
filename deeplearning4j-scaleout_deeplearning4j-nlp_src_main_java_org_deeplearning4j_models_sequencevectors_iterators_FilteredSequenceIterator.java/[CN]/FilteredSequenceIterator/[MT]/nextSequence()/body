@@ -1,0 +1,10 @@
+{
+  Sequence<T> originalSequence=underlyingIterator.nextSequence();
+  Sequence<T> newSequence=new Sequence<>();
+  for (  T element : originalSequence.getElements()) {
+    if (vocabCache.hasToken(element.getLabel())) {
+      newSequence.addElement(vocabCache.wordFor(element.getLabel()));
+    }
+  }
+  return newSequence;
+}

@@ -33,7 +33,6 @@
             processed.decrementAndGet();
             continue;
           }
-          errorPerIteration.incrementCount(work.getFirst(),lookupTable().iterateSample(w1,w2,weight));
           countUp.incrementAndGet();
           if (countUp.get() % 10000 == 0)           log.info("Processed " + countUp.get() + " co occurrences");
           processed.decrementAndGet();
