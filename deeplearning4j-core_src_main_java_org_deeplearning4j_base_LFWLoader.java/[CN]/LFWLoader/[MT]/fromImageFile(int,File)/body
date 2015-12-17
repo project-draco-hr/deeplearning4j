@@ -1,5 +1,0 @@
-{
-  INDArray outcome=FeatureUtil.toOutcomeVector(label,numNames);
-  INDArray image2=ArrayUtil.toNDArray(loader.flattenedImageFromFile(image));
-  return new DataSet(image2,outcome);
-}

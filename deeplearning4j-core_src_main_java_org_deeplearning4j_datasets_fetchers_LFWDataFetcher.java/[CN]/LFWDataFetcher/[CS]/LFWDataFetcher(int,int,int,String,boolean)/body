@@ -1,0 +1,12 @@
+{
+  this.width=imageWidth;
+  this.height=imageHeight;
+  this.channels=channels;
+  this.fileDir=fileDir;
+  this.isSubset=isSubset;
+  totalExamples=NUM_IMAGES;
+  inputColumns=width * height * channels;
+  LFWFetcher lFetch=new LFWFetcher(fileDir,isSubset);
+  if (!lFetch.lfwExists())   lFetch.fetch();
+  getImgOutLists();
+}

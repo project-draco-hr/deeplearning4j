@@ -1,0 +1,21 @@
+{
+  try {
+    File imgFile=new File(imageList.get(i));
+    ByteArrayOutputStream tmpBOS=new ByteArrayOutputStream();
+    ImageOutputStream stream=new MemoryCacheImageOutputStream(tmpBOS);
+    BufferedImage tmpBImg=ImageIO.read(imgFile);
+    ImageIO.write(tmpBImg,"jpg",stream);
+    byte[] imageInByte=tmpBOS.toByteArray();
+    stream.close();
+    tmpBOS.close();
+    INDArray in=Nd4j.create(1,imageInByte.length);
+    for (int j=0; j < imageInByte.length; j++) {
+      in.putScalar(j,((int)imageInByte[j]));
+    }
+    return new DataSet(in,FeatureUtil.toOutcomeVector(labels.indexOf(outcomeList.get(i)),numOutcomes));
+  }
+ catch (  IOException e) {
+    log.debug(e.getMessage());
+    throw new IllegalStateException("Unable to getFromOrigin data for image " + i + " for path "+ imageList.get(i));
+  }
+}

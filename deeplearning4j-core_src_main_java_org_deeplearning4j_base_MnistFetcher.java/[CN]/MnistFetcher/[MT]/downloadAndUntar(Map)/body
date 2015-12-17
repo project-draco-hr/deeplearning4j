@@ -1,0 +1,7 @@
+{
+  File tarFile=new File(FILE_DIR,urlMap.get("filesFilename").toString());
+  if (!tarFile.isFile()) {
+    FileUtils.copyURLToFile(new URL(urlMap.get("filesURL").toString()),tarFile);
+  }
+  ArchiveUtils.unzipFileTo(tarFile.getAbsolutePath(),FILE_DIR.getAbsolutePath());
+}

@@ -1,0 +1,8 @@
+{
+  String subDir="lfw-a";
+  String path=FilenameUtils.concat(System.getProperty("user.home"),subDir);
+  LFWDataFetcher lf=new LFWDataFetcher(250,250,3,path,true);
+  lf.fetch(10);
+  assertEquals("Aaron_Eckhart",lf.getLabelName(0));
+  assertEquals(432,lf.getNumNames());
+}

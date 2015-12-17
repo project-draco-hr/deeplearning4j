@@ -1,26 +1,28 @@
 {
   if (!mnistExists()) {
-    new MnistFetcher().downloadAndUntar();
+    new MnistFetcher().fetchMnist();
   }
   String images;
   String labels;
   if (train) {
-    images=MNIST_ROOT + MnistFetcher.trainingFilesFilename_unzipped;
-    labels=MNIST_ROOT + MnistFetcher.trainingFileLabelsFilename_unzipped;
+    images=FilenameUtils.concat(MNIST_ROOT,MnistFetcher.mnistTrainData.get("filesFilenameUnzipped"));
+    labels=FilenameUtils.concat(MNIST_ROOT,MnistFetcher.mnistTrainLabel.get("filesFilenameUnzipped"));
     totalExamples=NUM_EXAMPLES;
   }
  else {
-    images=MNIST_ROOT + MnistFetcher.testFilesFilename_unzipped;
-    labels=MNIST_ROOT + MnistFetcher.testFileLabelsFilename_unzipped;
+    images=FilenameUtils.concat(MNIST_ROOT,MnistFetcher.mnistTestData.get("filesFilenameUnzipped"));
+    labels=FilenameUtils.concat(MNIST_ROOT,MnistFetcher.mnistTestLabel.get("filesFilenameUnzipped"));
     totalExamples=NUM_EXAMPLES_TEST;
   }
   try {
-    man=new MnistManager(images,labels,train);
+    if (train)     man=new MnistManager(images,labels,NUM_EXAMPLES);
+ else     man=new MnistManager(images,labels,NUM_EXAMPLES_TEST);
   }
  catch (  Exception e) {
     FileUtils.deleteDirectory(new File(MNIST_ROOT));
-    new MnistFetcher().downloadAndUntar();
-    man=new MnistManager(images,labels,train);
+    new MnistFetcher().fetchMnist();
+    if (train)     man=new MnistManager(images,labels,NUM_EXAMPLES);
+ else     man=new MnistManager(images,labels,NUM_EXAMPLES_TEST);
   }
   numOutcomes=10;
   this.binarize=binarize;

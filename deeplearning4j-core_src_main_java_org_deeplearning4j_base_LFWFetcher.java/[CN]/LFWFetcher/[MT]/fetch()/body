@@ -1,0 +1,14 @@
+{
+  if (!fileDir.exists()) {
+    fileDir.mkdir();
+    if (isSubset) {
+      log.info("Downloading lfw subset...");
+      downloadAndUntar(lfwSubsetData);
+    }
+ else {
+      log.info("Downloading lfw...");
+      downloadAndUntar(lfwData);
+      downloadAndUntar(lfwLabel);
+    }
+  }
+}

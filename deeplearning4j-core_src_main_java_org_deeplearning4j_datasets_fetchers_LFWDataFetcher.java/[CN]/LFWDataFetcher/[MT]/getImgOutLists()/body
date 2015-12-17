@@ -1,0 +1,14 @@
+{
+  String name, label;
+  Collection<File> subFiles=FileUtils.listFiles(new File(fileDir),allowedFormats,true);
+  for (  File file : subFiles) {
+    name=FilenameUtils.getBaseName(file.getName());
+    label=name.split(".[0-9]+")[0];
+    imageList.add(file.toString());
+    outcomeList.add(label);
+    fileNameMap.put(name,label);
+  }
+  totalExamples=imageList.size();
+  order=new int[totalExamples];
+  defineLabels();
+}

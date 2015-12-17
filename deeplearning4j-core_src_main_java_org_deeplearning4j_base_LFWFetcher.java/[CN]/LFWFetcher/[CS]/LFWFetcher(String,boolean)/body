@@ -1,0 +1,6 @@
+{
+  this.localDir=path;
+  this.fileDir=new File(BASE_DIR,localDir);
+  this.isSubset=isSubset;
+  generateLfwMaps();
+}

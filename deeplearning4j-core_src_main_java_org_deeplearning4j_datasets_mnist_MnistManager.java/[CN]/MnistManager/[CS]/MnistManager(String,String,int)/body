@@ -1,0 +1,11 @@
+{
+  if (imagesFile != null) {
+    images=new MnistImageFile(imagesFile,"r");
+    imagesArr=images.readImagesUnsafe(numExamples);
+  }
+  if (labelsFile != null) {
+    labels=new MnistLabelFile(labelsFile,"r");
+    labelsArr=labels.readLabels(numExamples);
+  }
+  System.out.println();
+}

@@ -1,11 +1,11 @@
 {
-  File f=new File(MNIST_ROOT,MnistFetcher.trainingFilesFilename_unzipped);
+  File f=new File(MNIST_ROOT,MnistFetcher.mnistTrainData.get("filesFilenameUnzipped"));
   if (!f.exists())   return false;
-  f=new File(MNIST_ROOT,MnistFetcher.trainingFileLabelsFilename_unzipped);
+  f=new File(MNIST_ROOT,MnistFetcher.mnistTrainLabel.get("filesFilenameUnzipped"));
   if (!f.exists())   return false;
-  f=new File(MNIST_ROOT,MnistFetcher.testFilesFilename_unzipped);
+  f=new File(MNIST_ROOT,MnistFetcher.mnistTestData.get("filesFilenameUnzipped"));
   if (!f.exists())   return false;
-  f=new File(MNIST_ROOT,MnistFetcher.testFileLabelsFilename_unzipped);
+  f=new File(MNIST_ROOT,MnistFetcher.mnistTestLabel.get("filesFilenameUnzipped"));
   if (!f.exists())   return false;
   return true;
 }
