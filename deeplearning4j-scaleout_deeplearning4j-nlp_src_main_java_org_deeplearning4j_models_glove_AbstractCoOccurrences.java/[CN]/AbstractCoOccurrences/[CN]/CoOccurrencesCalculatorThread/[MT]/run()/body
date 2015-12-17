@@ -1,17 +1,20 @@
 {
   while (iterator.hasMoreSequences()) {
     Sequence<T> sequence=iterator.nextSequence();
-    List<String> tokens=new ArrayList<>(vocabCache.words());
+    List<String> tokens=new ArrayList<>(sequence.asLabels());
+    logger.info("Tokens size: " + tokens.size());
     for (int x=0; x < sequence.getElements().size(); x++) {
       int wordIdx=vocabCache.indexOf(tokens.get(x));
       if (wordIdx < 0)       continue;
       String w1=vocabCache.wordFor(tokens.get(x)).getLabel();
       int windowStop=Math.min(x + windowSize + 1,tokens.size());
       for (int j=x; j < windowStop; j++) {
-        int otherWord=tokens.indexOf(tokens.get(j));
+        int otherWord=vocabCache.indexOf(tokens.get(j));
         if (otherWord < 0)         continue;
         String w2=vocabCache.wordFor(tokens.get(j)).getLabel();
-        if (w2.equals(Glove.UNK) || otherWord == wordIdx)         continue;
+        if (w2.equals(Glove.UNK) || otherWord == wordIdx) {
+          continue;
+        }
         if (wordIdx < otherWord) {
           coOCurreneCounts.incrementCount(tokens.get(x),tokens.get(j),1.0 / (j - x + Nd4j.EPS_THRESHOLD));
           occurrenceAllocations.incrementCount(sequence.getSequenceId(),1.0);

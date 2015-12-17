@@ -1,7 +1,8 @@
 {
+  sequenceIterator.reset();
   List<CoOccurrencesCalculatorThread> threads=new ArrayList<>();
   for (int x=0; x < workers; x++) {
-    threads.add(x,new CoOccurrencesCalculatorThread<T>(x,new FilteredSequenceIterator<T>(sequenceIterator,vocabCache),processedSequences));
+    threads.add(x,new CoOccurrencesCalculatorThread<T>(x,new FilteredSequenceIterator<T>(new SynchronizedSequenceIterator<T>(sequenceIterator),vocabCache),processedSequences));
     threads.get(x).start();
   }
   for (int x=0; x < workers; x++) {
@@ -12,4 +13,5 @@
       throw new RuntimeException(e);
     }
   }
+  logger.info("CoOccurrences map was built: [" + coOCurreneCounts.size() + "]");
 }

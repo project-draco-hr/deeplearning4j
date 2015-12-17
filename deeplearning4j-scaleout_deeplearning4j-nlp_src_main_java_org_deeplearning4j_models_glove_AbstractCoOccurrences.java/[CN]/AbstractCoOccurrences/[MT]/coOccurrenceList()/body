@@ -1,5 +1,16 @@
 {
   if (coOccurrences != null)   return coOccurrences;
   coOccurrences=new ArrayList<>();
-  return null;
+  Iterator<Pair<String,String>> iterator=coOCurreneCounts.getPairIterator();
+  while (iterator.hasNext()) {
+    Pair<String,String> pair=iterator.next();
+    if (pair.getFirst().equals(pair.getSecond()))     continue;
+    if (!vocabCache.hasToken(pair.getFirst()) || !vocabCache.hasToken(pair.getSecond())) {
+      logger.debug("Skipping pair: '" + pair.getFirst() + "', '"+ pair.getSecond()+ "'");
+      continue;
+    }
+ else     logger.debug("Adding pair: '" + pair.getFirst() + "', '"+ pair.getSecond()+ "'");
+    coOccurrences.add(new Pair<String,String>(pair.getFirst(),pair.getSecond()));
+  }
+  return coOccurrences;
 }
