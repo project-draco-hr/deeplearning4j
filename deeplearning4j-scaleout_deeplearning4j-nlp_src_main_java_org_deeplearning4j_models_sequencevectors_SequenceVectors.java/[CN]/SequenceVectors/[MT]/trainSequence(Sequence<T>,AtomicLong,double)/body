@@ -4,7 +4,7 @@
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
     elementsLearningAlgorithm.learnSequence(sequence,nextRandom,alpha);
   }
-  if (trainSequenceVectors)   for (int i=0; i < sequence.getElements().size(); i++) {
+  if (trainSequenceVectors) {
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
     sequenceLearningAlgorithm.learnSequence(sequence,nextRandom,alpha);
   }

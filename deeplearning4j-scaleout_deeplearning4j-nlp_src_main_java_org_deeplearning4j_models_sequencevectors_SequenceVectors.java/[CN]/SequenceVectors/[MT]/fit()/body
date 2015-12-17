@@ -11,6 +11,15 @@
  else {
     lookupTable.resetWeights(true);
   }
+  log.info("Building learning algorithms:");
+  if (trainElementsVectors && elementsLearningAlgorithm != null) {
+    log.info("          building ElementsLearningAlgorithm: [" + elementsLearningAlgorithm.getCodeName() + "]");
+    elementsLearningAlgorithm.configure(vocab,lookupTable,configuration);
+  }
+  if (trainSequenceVectors && sequenceLearningAlgorithm != null) {
+    log.info("          building SequenceLearningAlgorithm: [" + sequenceLearningAlgorithm.getCodeName() + "]");
+    sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
+  }
   log.info("Starting learning process...");
   for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
     final AtomicLong linesCounter=new AtomicLong(0);

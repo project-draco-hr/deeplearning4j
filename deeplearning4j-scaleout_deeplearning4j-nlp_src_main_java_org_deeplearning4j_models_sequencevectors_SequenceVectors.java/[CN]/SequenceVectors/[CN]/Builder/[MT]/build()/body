@@ -19,6 +19,8 @@
   vectors.workers=this.workers;
   vectors.iterator=this.iterator;
   vectors.lookupTable=this.lookupTable;
+  vectors.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
+  vectors.sequenceLearningAlgorithm=this.sequenceLearningAlgorithm;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

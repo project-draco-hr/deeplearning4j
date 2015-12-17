@@ -1,4 +1,6 @@
 {
+  this.vocabCache=vocabCache;
+  this.lookupTable=lookupTable;
   this.window=configuration.getWindow();
   this.useAdaGrad=configuration.isUseAdaGrad();
   this.negative=configuration.getNegative();
