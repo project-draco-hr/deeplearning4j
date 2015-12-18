@@ -1,0 +1,7 @@
+{
+  List<Pair<T,T>> coList=coOccurrences.coOccurrenceList();
+  for (int x=0; x < threadId; x++) {
+    T element1=coList.get(x).getFirst();
+    T element2=coList.get(x).getFirst();
+  }
+}

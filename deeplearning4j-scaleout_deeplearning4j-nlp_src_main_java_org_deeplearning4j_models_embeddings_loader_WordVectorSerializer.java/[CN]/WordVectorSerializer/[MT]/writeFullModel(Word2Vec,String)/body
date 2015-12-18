@@ -20,7 +20,7 @@
     builder.append(((InMemoryLookupTable)lookupTable).getExpTable()[x]).append(" ");
   }
   printWriter.println(builder.toString().trim());
-  if (conf.getNegative() > 0) {
+  if (conf.getNegative() > 0 && ((InMemoryLookupTable)lookupTable).getTable() != null) {
     builder=new StringBuilder();
     for (int x=0; x < ((InMemoryLookupTable)lookupTable).getTable().columns(); x++) {
       builder.append(((InMemoryLookupTable)lookupTable).getTable().getDouble(x)).append(" ");
@@ -45,7 +45,7 @@
       dsyn1[x]=syn1.getDouble(x);
     }
     vw.setSyn1(dsyn1);
-    if (conf.getNegative() > 0) {
+    if (conf.getNegative() > 0 && ((InMemoryLookupTable)lookupTable).getSyn1Neg() != null) {
       INDArray syn1Neg=((InMemoryLookupTable)lookupTable).getSyn1Neg().getRow(vocabCache.indexOf(word.getLabel()));
       double[] dsyn1Neg=new double[syn1Neg.columns()];
       for (int x=0; x < syn1Neg.columns(); x++) {
