@@ -1,0 +1,6 @@
+int epochId
+int threadId
+AbstractCoOccurrences<T> coOccurrences
+List<Pair<T,T>> pairs
+AtomicInteger pairsCounter
+Counter<Integer> errorCounter

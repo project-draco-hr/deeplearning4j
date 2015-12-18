@@ -1,2 +1,24 @@
 {
+  if (isTerminate.get())   return;
+  final AtomicInteger pairsCount=new AtomicInteger(0);
+  final Counter<Integer> errorCounter=new Counter<>();
+  List<Pair<T,T>> coList=coOccurrences.coOccurrenceList();
+  for (int i=0; i < configuration.getEpochs(); i++) {
+    if (shuffle)     Collections.shuffle(coList);
+    List<GloveCalculationsThread> threads=new ArrayList<>();
+    for (int x=0; x < workers; x++) {
+      threads.add(x,new GloveCalculationsThread(i,x,coOccurrences,coList,pairsCount,errorCounter));
+      threads.get(x).start();
+    }
+    for (int x=0; x < workers; x++) {
+      try {
+        threads.get(x).join();
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+    log.info("Processed [" + pairsCount.get() + "] pairs, out of ["+ (coList.size() * configuration.getEpochs())+ "]; Error was ["+ errorCounter.getCount(i)+ "]");
+  }
+  isTerminate.set(true);
 }

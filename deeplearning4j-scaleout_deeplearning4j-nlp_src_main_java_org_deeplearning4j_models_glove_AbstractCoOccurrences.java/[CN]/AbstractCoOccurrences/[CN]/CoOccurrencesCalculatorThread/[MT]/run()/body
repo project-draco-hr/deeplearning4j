@@ -2,7 +2,6 @@
   while (iterator.hasMoreSequences()) {
     Sequence<T> sequence=iterator.nextSequence();
     List<String> tokens=new ArrayList<>(sequence.asLabels());
-    logger.info("Tokens size: " + tokens.size());
     for (int x=0; x < sequence.getElements().size(); x++) {
       int wordIdx=vocabCache.indexOf(tokens.get(x));
       if (wordIdx < 0)       continue;

@@ -1,5 +1,9 @@
 {
+  this.epochId=epochId;
   this.threadId=threadId;
   this.coOccurrences=coOccurrences;
+  this.pairsCounter=pairsCounter;
+  this.errorCounter=errorCounter;
+  coList=pairs;
   this.setName("GloVe ElementsLearningAlgorithm thread " + this.threadId);
 }

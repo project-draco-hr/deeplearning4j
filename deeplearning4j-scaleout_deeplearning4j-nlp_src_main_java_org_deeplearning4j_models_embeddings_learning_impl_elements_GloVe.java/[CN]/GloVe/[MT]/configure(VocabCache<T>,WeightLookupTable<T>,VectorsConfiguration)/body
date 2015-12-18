@@ -2,4 +2,13 @@
   this.vocabCache=vocabCache;
   this.lookupTable=lookupTable;
   this.configuration=configuration;
+  this.syn0=((InMemoryLookupTable<T>)lookupTable).getSyn0();
+  this.xMax=configuration.getXMax();
+  this.symmetric=configuration.isSymmetric();
+  this.shuffle=configuration.isShuffle();
+  this.maxCount=configuration.getMaxCount();
+  this.vectorLength=configuration.getLayersSize();
+  weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},this.configuration.getLearningRate());
+  bias=Nd4j.create(syn0.rows());
+  biasAdaGrad=new AdaGrad(bias.shape(),this.configuration.getLearningRate());
 }

@@ -1,7 +1,15 @@
 {
-  List<Pair<T,T>> coList=coOccurrences.coOccurrenceList();
   for (int x=0; x < threadId; x++) {
     T element1=coList.get(x).getFirst();
     T element2=coList.get(x).getFirst();
+    double weight=coOccurrences.getCoOccurrenceCount(element1,element2);
+    if (weight <= 0) {
+      pairsCounter.incrementAndGet();
+      continue;
+    }
+    errorCounter.incrementCount(epochId,iterateSample(element1,element2,weight));
+    if (pairsCounter.get() % 10000 == 0) {
+      log.info("Processed [" + pairsCounter.get() + "] word pairs so far...");
+    }
   }
 }
