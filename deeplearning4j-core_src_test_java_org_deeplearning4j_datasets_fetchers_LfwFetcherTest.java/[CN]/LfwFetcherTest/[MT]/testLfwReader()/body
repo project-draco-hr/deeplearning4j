@@ -1,9 +1,8 @@
 {
   String subDir="lfw-a/lfw";
   String path=FilenameUtils.concat(System.getProperty("user.home"),subDir);
-  RecordReader rr=new ImageRecordReader(250,250,3,true,null,".[0-9]+");
+  RecordReader rr=new ImageRecordReader(250,250,3,true,".[0-9]+");
   rr.initialize(new LimitFileSplit(new File(path),null,10,5,".[0-9]+",new Random(123)));
   RecordReaderDataSetIterator rrd=new RecordReaderDataSetIterator(rr,10,250 * 250 * 3,8);
-  DataSet d=rrd.next(1);
-  assertEquals("Aaron_Eckhart",d.get(0).toString());
+  assertEquals("Aaron_Sorkin",rr.getLabels().get(0));
 }
