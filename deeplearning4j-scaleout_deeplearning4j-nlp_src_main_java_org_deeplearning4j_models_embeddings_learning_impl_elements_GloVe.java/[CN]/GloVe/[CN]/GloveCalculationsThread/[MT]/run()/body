@@ -1,15 +1,16 @@
 {
-  for (int x=0; x < threadId; x++) {
+  int startPosition=threadId * (coList.size() / workers);
+  int stopPosition=(threadId + 1) * (coList.size() / workers);
+  for (int x=startPosition; x < stopPosition; x++) {
     T element1=coList.get(x).getFirst();
-    T element2=coList.get(x).getFirst();
+    T element2=coList.get(x).getSecond();
     double weight=coOccurrences.getCoOccurrenceCount(element1,element2);
     if (weight <= 0) {
       pairsCounter.incrementAndGet();
       continue;
     }
     errorCounter.incrementCount(epochId,iterateSample(element1,element2,weight));
-    if (pairsCounter.get() % 10000 == 0) {
-      log.info("Processed [" + pairsCounter.get() + "] word pairs so far...");
+    if (pairsCounter.getAndIncrement() % 10000 == 0) {
     }
   }
 }

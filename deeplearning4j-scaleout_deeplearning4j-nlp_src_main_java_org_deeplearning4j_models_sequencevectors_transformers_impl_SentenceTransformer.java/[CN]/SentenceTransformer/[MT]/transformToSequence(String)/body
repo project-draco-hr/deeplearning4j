@@ -7,5 +7,6 @@
     VocabWord word=new VocabWord(1.0,token);
     sequence.addElement(word);
   }
+  sequence.setSequenceId(sentenceCounter.getAndIncrement());
   return sequence;
 }

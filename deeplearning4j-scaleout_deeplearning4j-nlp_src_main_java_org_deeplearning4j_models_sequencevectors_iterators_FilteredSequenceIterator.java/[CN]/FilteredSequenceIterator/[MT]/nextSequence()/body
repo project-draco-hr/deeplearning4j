@@ -6,5 +6,6 @@
       newSequence.addElement(vocabCache.wordFor(element.getLabel()));
     }
   }
+  newSequence.setSequenceId(originalSequence.getSequenceId());
   return newSequence;
 }

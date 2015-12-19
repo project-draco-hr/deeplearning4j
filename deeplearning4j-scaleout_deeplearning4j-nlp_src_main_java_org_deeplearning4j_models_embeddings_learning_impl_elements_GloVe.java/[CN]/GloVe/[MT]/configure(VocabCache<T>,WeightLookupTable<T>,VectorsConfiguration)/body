@@ -8,6 +8,7 @@
   this.shuffle=configuration.isShuffle();
   this.maxCount=configuration.getMaxCount();
   this.vectorLength=configuration.getLayersSize();
+  log.info("Vectors configuration: " + configuration.toJson());
   weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},this.configuration.getLearningRate());
   bias=Nd4j.create(syn0.rows());
   biasAdaGrad=new AdaGrad(bias.shape(),this.configuration.getLearningRate());
