@@ -3,10 +3,11 @@
   INDArray mean=getWordVectorMatrix(word);
   Counter<String> distances=new Counter<>();
   for (  String s : vocab().words()) {
+    if (s.equals(word))     continue;
     INDArray otherVec=getWordVectorMatrix(s);
     double sim=Transforms.cosineSim(mean,otherVec);
     distances.incrementCount(s,sim);
   }
-  distances.keepTopNKeys(n);
+  distances.keepTopNKeys(n - 1);
   return distances.keySet();
 }
