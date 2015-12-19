@@ -3,13 +3,10 @@
   this.lookupTable=lookupTable;
   this.configuration=configuration;
   this.syn0=((InMemoryLookupTable<T>)lookupTable).getSyn0();
-  this.xMax=configuration.getXMax();
-  this.symmetric=configuration.isSymmetric();
-  this.shuffle=configuration.isShuffle();
-  this.maxCount=configuration.getMaxCount();
   this.vectorLength=configuration.getLayersSize();
-  log.info("Vectors configuration: " + configuration.toJson());
-  weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},this.configuration.getLearningRate());
+  if (this.learningRate == 0.0d)   this.learningRate=configuration.getLearningRate();
+  log.info("Learning rate: [" + this.learningRate + "], Vectors configuration: "+ configuration.toJson());
+  weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},learningRate);
   bias=Nd4j.create(syn0.rows());
-  biasAdaGrad=new AdaGrad(bias.shape(),this.configuration.getLearningRate());
+  biasAdaGrad=new AdaGrad(bias.shape(),this.learningRate);
 }
