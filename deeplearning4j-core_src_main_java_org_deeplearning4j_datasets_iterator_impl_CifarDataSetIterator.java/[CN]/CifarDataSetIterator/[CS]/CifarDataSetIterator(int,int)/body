@@ -1,0 +1,3 @@
+{
+  super(new CifarLoader().getRecordReader(numExamples),batchSize,width * height * channels,CifarLoader.NUM_LABELS);
+}
