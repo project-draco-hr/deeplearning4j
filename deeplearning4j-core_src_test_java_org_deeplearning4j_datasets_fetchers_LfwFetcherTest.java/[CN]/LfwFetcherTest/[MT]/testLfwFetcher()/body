@@ -1,5 +1,0 @@
-{
-  File dir=new File(FilenameUtils.concat(System.getProperty("user.home"),"lfw-a"));
-  new LFWFetcher("lfw-a",true).fetch();
-  assertTrue(dir.exists());
-}

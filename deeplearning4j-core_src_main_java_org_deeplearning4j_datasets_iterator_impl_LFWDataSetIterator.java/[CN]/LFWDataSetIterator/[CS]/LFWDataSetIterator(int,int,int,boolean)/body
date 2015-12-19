@@ -1,0 +1,3 @@
+{
+  super(new LFWLoader(useSubset).getRecordReader(numExamples,numCategories),batchSize,width * height * channels,numCategories);
+}
