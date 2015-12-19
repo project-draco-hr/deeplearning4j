@@ -1,4 +1,0 @@
-{
-  List<DataSet> images=getImagesAsList().subList(0,numRows);
-  return convertListPairs(images);
-}

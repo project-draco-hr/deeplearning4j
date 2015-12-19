@@ -1,4 +1,0 @@
-{
-  log.info("Untaring File: " + tarFile.toString());
-  ArchiveUtils.unzipFileTo(tarFile.getAbsolutePath(),baseDir.getAbsolutePath());
-}
