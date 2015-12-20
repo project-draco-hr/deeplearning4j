@@ -9,7 +9,6 @@
   IEarlyStoppingTrainer trainer=new SparkEarlyStoppingTrainer(getContext(),esConf,net,irisData,150);
   EarlyStoppingResult result=trainer.fit();
   assertTrue(result.getTotalEpochs() < 8);
-  assertEquals(0,result.getBestModelEpoch());
   assertEquals(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,result.getTerminationReason());
   String expDetails=new ScoreImprovementEpochTerminationCondition(5).toString();
   assertEquals(expDetails,result.getTerminationDetails());
