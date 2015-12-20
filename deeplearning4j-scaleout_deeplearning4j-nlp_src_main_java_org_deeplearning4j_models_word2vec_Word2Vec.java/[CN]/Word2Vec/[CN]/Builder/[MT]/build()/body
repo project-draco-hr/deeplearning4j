@@ -1,4 +1,5 @@
 {
+  presetTables();
   Word2Vec ret=new Word2Vec();
   if (tokenizerFactory == null)   tokenizerFactory=new DefaultTokenizerFactory();
   if (sentenceIterator != null) {

@@ -1,4 +1,38 @@
 {
+  presetTables();
   Glove ret=new Glove();
+  if (sentenceIterator != null) {
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenizerFactory).build();
+    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  }
+  ret.trainElementsVectors=true;
+  ret.trainSequenceVectors=false;
+  ret.useAdeGrad=true;
+  this.useAdaGrad=true;
+  ret.learningRate.set(this.learningRate);
+  ret.resetModel=this.resetModel;
+  ret.batchSize=this.batchSize;
+  ret.iterator=this.iterator;
+  ret.numEpochs=this.numEpochs;
+  ret.numIterations=this.iterations;
+  ret.layerSize=this.layerSize;
+  this.configuration.setLearningRate(this.learningRate);
+  this.configuration.setLayersSize(layerSize);
+  this.configuration.setHugeModelExpected(hugeModelExpected);
+  this.configuration.setWindow(window);
+  this.configuration.setMinWordFrequency(minWordFrequency);
+  this.configuration.setIterations(iterations);
+  this.configuration.setSeed(seed);
+  this.configuration.setBatchSize(batchSize);
+  this.configuration.setLearningRateDecayWords(learningRateDecayWords);
+  this.configuration.setMinLearningRate(minLearningRate);
+  this.configuration.setSampling(this.sampling);
+  this.configuration.setUseAdaGrad(useAdaGrad);
+  this.configuration.setNegative(negative);
+  this.configuration.setEpochs(this.numEpochs);
+  ret.configuration=this.configuration;
+  ret.lookupTable=this.lookupTable;
+  ret.vocab=this.vocabCache;
+  ret.elementsLearningAlgorithm=new GloVe.Builder<VocabWord>().learningRate(this.learningRate).shuffle(this.shuffle).symmetric(this.symmetric).xMax(this.xMax).alpha(this.alpha).build();
   return ret;
 }
