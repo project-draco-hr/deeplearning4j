@@ -1,0 +1,5 @@
+{
+  iterationTerminationConditions.clear();
+  Collections.addAll(iterationTerminationConditions,terminationConditions);
+  return this;
+}

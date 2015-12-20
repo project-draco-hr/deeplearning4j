@@ -1,0 +1,17 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(1.0).weightInit(WeightInit.XAVIER).list(1).layer(0,new OutputLayer.Builder().nIn(4).nOut(3).lossFunction(LossFunctions.LossFunction.MCXENT).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.setListeners(new ScoreIterationListener(1));
+  DataSetIterator irisIter=new IrisDataSetIterator(150,150);
+  EarlyStoppingModelSaver saver=new InMemoryModelSaver();
+  EarlyStoppingConfiguration esConf=new EarlyStoppingConfiguration.Builder().epochTerminationConditions(new MaxEpochsTerminationCondition(5000)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES),new MaxScoreIterationTerminationCondition(7.5)).scoreCalculator(new DataSetLossCalculator(irisIter,true)).modelSaver(saver).build();
+  IEarlyStoppingTrainer trainer=new EarlyStoppingTrainer(esConf,net,irisIter);
+  EarlyStoppingResult result=trainer.fit();
+  assertTrue(result.getTotalEpochs() < 5);
+  assertEquals(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,result.getTerminationReason());
+  String expDetails=new MaxScoreIterationTerminationCondition(7.5).toString();
+  assertEquals(expDetails,result.getTerminationDetails());
+  assertEquals(0,result.getBestModelEpoch());
+  assertNotNull(result.getBestModel());
+}
