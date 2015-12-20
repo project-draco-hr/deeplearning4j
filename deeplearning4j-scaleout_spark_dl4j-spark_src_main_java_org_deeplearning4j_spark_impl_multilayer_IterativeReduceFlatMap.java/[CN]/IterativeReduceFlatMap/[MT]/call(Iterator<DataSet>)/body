@@ -1,6 +1,6 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList(new Tuple2<INDArray,Updater>(Nd4j.zeros(params.value().shape()),null));
+    return Collections.singletonList(new Tuple3<INDArray,Updater,Double>(Nd4j.zeros(params.value().shape()),null,0.0));
   }
   List<DataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
@@ -19,5 +19,5 @@
   network.setParameters(val);
   network.setUpdater(upd);
   network.fit(data);
-  return Collections.singletonList(new Tuple2<>(network.params(false),network.getUpdater()));
+  return Collections.singletonList(new Tuple3<>(network.params(false),network.getUpdater(),network.score()));
 }

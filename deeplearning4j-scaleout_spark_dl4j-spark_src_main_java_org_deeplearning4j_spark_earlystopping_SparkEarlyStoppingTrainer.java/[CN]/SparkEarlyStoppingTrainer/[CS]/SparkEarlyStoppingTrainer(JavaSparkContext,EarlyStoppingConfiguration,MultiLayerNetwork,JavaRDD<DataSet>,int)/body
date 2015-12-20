@@ -1,0 +1,10 @@
+{
+  if ((esConfig.getEpochTerminationConditions() == null || esConfig.getEpochTerminationConditions().size() == 0) && (esConfig.getIterationTerminationConditions() == null || esConfig.getIterationTerminationConditions().size() == 0)) {
+    throw new IllegalArgumentException("Cannot conduct early stopping without a termination condition (both Iteration " + "and Epoch termination conditions are null/empty)");
+  }
+  this.sc=sc;
+  this.esConfig=esConfig;
+  this.net=net;
+  this.train=train;
+  this.examplesPerFit=examplesPerFit;
+}

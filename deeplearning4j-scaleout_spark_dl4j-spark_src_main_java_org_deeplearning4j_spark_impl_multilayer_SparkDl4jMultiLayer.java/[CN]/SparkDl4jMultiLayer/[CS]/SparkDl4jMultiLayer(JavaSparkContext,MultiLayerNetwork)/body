@@ -1,7 +1,7 @@
 {
   this.sparkContext=javaSparkContext.sc();
   sc=javaSparkContext;
-  this.conf=this.network.getLayerWiseConfigurations().clone();
+  this.conf=network.getLayerWiseConfigurations().clone();
   this.network=network;
   this.network.init();
   this.averageEachIteration=sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
