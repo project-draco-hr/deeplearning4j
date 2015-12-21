@@ -1,0 +1,7 @@
+{
+  String label=labelsMap.get(clazz);
+  if (label == null || label.isEmpty()) {
+    label=clazz.toString();
+  }
+  return label;
+}
