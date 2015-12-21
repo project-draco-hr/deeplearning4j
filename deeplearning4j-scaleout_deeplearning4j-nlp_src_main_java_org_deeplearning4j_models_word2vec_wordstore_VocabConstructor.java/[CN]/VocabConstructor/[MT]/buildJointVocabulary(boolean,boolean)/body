@@ -49,14 +49,11 @@
         if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial())         labelsToRemove.add(element.getLabel());
       }
       for (      String label : labelsToRemove) {
-        log.debug("Removing label: '" + label + "'");
         tempHolder.removeElement(label);
       }
     }
     log.debug("Vocab size after truncation: [" + tempHolder.numWords() + "],  NumWords: ["+ tempHolder.totalWordOccurrences()+ "], sequences parsed: ["+ sequences+ "], counter: ["+ counter+ "]");
     topHolder.importVocabulary(tempHolder);
-    log.debug("Top holder size: [" + topHolder.numWords() + "]");
-    log.debug("Target vocab size before building: [" + cache.numWords() + "]");
   }
   cache.importVocabulary(topHolder);
   if (resetCounters) {
