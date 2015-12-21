@@ -1,0 +1,16 @@
+{
+  return new Iterator<Pair<T,T>>(){
+    private Iterator<CountMap.MapEntry<T>> iterator=backingMap.keySet().iterator();
+    @Override public boolean hasNext(){
+      return iterator.hasNext();
+    }
+    @Override public Pair<T,T> next(){
+      MapEntry<T> entry=iterator.next();
+      return new Pair<>(entry.getElement1(),entry.getElement2());
+    }
+    @Override public void remove(){
+      throw new UnsupportedOperationException("remove() isn't supported here");
+    }
+  }
+;
+}
