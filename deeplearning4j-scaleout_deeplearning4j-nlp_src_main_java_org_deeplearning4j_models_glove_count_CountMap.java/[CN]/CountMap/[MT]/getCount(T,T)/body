@@ -1,0 +1,7 @@
+{
+  MapEntry<T> tempEntry=new MapEntry<>(element1,element2);
+  if (backingMap.containsKey(tempEntry)) {
+    return backingMap.get(tempEntry).get();
+  }
+ else   return 0;
+}

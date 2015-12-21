@@ -1,0 +1,7 @@
+{
+  if (this == o)   return true;
+  if (o == null || getClass() != o.getClass())   return false;
+  MapEntry<?> mapEntry=(MapEntry<?>)o;
+  if (element1 != null ? !element1.equals(mapEntry.element1) : mapEntry.element1 != null)   return false;
+  return element2 != null ? element2.equals(mapEntry.element2) : mapEntry.element2 == null;
+}

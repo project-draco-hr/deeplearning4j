@@ -1,0 +1,9 @@
+{
+  MapEntry<T> tempEntry=new MapEntry<>(element1,element2);
+  if (backingMap.containsKey(tempEntry)) {
+    backingMap.get(tempEntry).addAndGet(weight);
+  }
+ else {
+    backingMap.put(tempEntry,new AtomicDouble(weight));
+  }
+}
