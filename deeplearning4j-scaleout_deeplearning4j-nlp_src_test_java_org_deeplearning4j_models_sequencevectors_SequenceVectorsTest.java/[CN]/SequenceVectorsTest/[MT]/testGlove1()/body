@@ -1,4 +1,5 @@
 {
+  logger.info("Max available memory: " + Runtime.getRuntime().maxMemory());
   ClassPathResource resource=new ClassPathResource("big/raw_sentences.txt");
   File file=resource.getFile();
   BasicLineIterator underlyingIterator=new BasicLineIterator(file);

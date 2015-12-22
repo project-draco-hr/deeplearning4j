@@ -16,18 +16,14 @@
         }
         if (wordIdx < otherWord) {
           coOCurreneCounts.incrementCount(vocabCache.wordFor(tokens.get(x)),vocabCache.wordFor(tokens.get(j)),1.0 / (j - x + Nd4j.EPS_THRESHOLD));
-          occurrenceAllocations.incrementCount(sequence.getSequenceId(),1.0);
           if (symmetric) {
             coOCurreneCounts.incrementCount(vocabCache.wordFor(tokens.get(j)),vocabCache.wordFor(tokens.get(x)),1.0 / (j - x + Nd4j.EPS_THRESHOLD));
-            occurrenceAllocations.incrementCount(sequence.getSequenceId(),1.0);
           }
         }
  else {
           coOCurreneCounts.incrementCount(vocabCache.wordFor(tokens.get(j)),vocabCache.wordFor(tokens.get(x)),1.0 / (j - x + Nd4j.EPS_THRESHOLD));
-          occurrenceAllocations.incrementCount(sequence.getSequenceId(),1.0);
           if (symmetric) {
             coOCurreneCounts.incrementCount(vocabCache.wordFor(tokens.get(x)),vocabCache.wordFor(tokens.get(j)),1.0 / (j - x + Nd4j.EPS_THRESHOLD));
-            occurrenceAllocations.incrementCount(sequence.getSequenceId(),1.0);
           }
         }
       }
