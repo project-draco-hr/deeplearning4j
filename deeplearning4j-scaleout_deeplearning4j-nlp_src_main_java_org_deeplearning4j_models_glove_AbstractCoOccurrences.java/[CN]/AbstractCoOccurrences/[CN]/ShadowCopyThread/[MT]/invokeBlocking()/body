@@ -1,0 +1,30 @@
+{
+  isInvoked.set(true);
+  File currentFile=null;
+  try {
+    File file=File.createTempFile("aco","tmp");
+    file.deleteOnExit();
+    InputSplit split=new FileSplit(currentFile);
+    Configuration canovaConf=new Configuration(true);
+    CSVRecordReader reader=new CSVRecordReader();
+    reader.initialize(canovaConf,split);
+    while (reader.hasNext()) {
+      List<Writable> list=new ArrayList<>(reader.next());
+      T element1=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(0).toInt()));
+      T element2=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(1).toInt()));
+      double sWeight=list.get(2).toDouble();
+synchronized (element1) {
+        double mWeight=coOCurreneCounts.getCount(element1,element2);
+        if (mWeight <= 0) {
+        }
+ else {
+          sWeight+=mWeight;
+          coOCurreneCounts.removePair(element1,element2);
+        }
+      }
+    }
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
