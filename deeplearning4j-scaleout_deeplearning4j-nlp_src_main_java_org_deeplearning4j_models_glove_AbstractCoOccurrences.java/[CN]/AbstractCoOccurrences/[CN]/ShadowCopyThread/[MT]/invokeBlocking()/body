@@ -1,9 +1,22 @@
 {
   isInvoked.set(true);
   File currentFile=null;
+  CountMap<T> localMap;
+  try {
+    lock.writeLock().lock();
+    localMap=coOCurreneCounts;
+    coOCurreneCounts=new CountMap<T>();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+ finally {
+    lock.writeLock().unlock();
+  }
   try {
     File file=File.createTempFile("aco","tmp");
     file.deleteOnExit();
+    PrintWriter pw=new PrintWriter(file);
     InputSplit split=new FileSplit(currentFile);
     Configuration canovaConf=new Configuration(true);
     CSVRecordReader reader=new CSVRecordReader();
@@ -13,16 +26,26 @@
       T element1=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(0).toInt()));
       T element2=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(1).toInt()));
       double sWeight=list.get(2).toDouble();
-synchronized (element1) {
-        double mWeight=coOCurreneCounts.getCount(element1,element2);
-        if (mWeight <= 0) {
-        }
- else {
-          sWeight+=mWeight;
-          coOCurreneCounts.removePair(element1,element2);
-        }
+      double mWeight=localMap.getCount(element1,element2);
+      if (mWeight <= 0) {
       }
+ else {
+        sWeight+=mWeight;
+        localMap.removePair(element1,element2);
+      }
+      StringBuilder builder=new StringBuilder().append(element1.getIndex()).append(" ").append(element2.getIndex()).append(" ").append(sWeight);
+      pw.println(builder.toString());
     }
+    Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
+    while (iterator.hasNext()) {
+      Pair<T,T> pair=iterator.next();
+      double mWeight=localMap.getCount(pair);
+      StringBuilder builder=new StringBuilder().append(pair.getFirst().getIndex()).append(" ").append(pair.getFirst().getIndex()).append(" ").append(mWeight);
+      pw.println(builder.toString());
+    }
+    pw.flush();
+    pw.close();
+    localMap=null;
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

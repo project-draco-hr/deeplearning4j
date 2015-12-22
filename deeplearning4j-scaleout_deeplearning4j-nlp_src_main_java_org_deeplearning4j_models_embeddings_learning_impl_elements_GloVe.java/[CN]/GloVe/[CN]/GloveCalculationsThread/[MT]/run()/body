@@ -1,10 +1,9 @@
 {
-  int startPosition=threadId * (coList.size() / workers);
-  int stopPosition=(threadId + 1) * (coList.size() / workers);
-  for (int x=startPosition; x < stopPosition; x++) {
-    T element1=coList.get(x).getFirst();
-    T element2=coList.get(x).getSecond();
-    double weight=coOccurrences.getCoOccurrenceCount(element1,element2);
+  while (coList.hasNext()) {
+    Pair<Pair<T,T>,Double> pairDoublePair=coList.next();
+    T element1=pairDoublePair.getFirst().getFirst();
+    T element2=pairDoublePair.getFirst().getSecond();
+    double weight=pairDoublePair.getSecond();
     if (weight <= 0) {
       pairsCounter.incrementAndGet();
       continue;

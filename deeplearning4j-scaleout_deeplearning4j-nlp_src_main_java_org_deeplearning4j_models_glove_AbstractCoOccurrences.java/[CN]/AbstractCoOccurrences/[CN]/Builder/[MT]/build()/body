@@ -5,5 +5,14 @@
   ret.vocabCache=this.vocabCache;
   ret.symmetric=this.symmetric;
   ret.workers=this.workers;
+  ret.memory_threshold=this.maxmemory;
+  try {
+    if (this.target == null)     this.target=File.createTempFile("cooccurrence","map");
+    this.target.deleteOnExit();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  ret.targetFile=this.target;
   return ret;
 }

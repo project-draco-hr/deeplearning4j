@@ -1,6 +1,5 @@
 int epochId
 int threadId
-AbstractCoOccurrences<T> coOccurrences
-List<Pair<T,T>> pairs
+Iterator<Pair<Pair<T,T>,Double>> pairs
 AtomicInteger pairsCounter
 Counter<Integer> errorCounter

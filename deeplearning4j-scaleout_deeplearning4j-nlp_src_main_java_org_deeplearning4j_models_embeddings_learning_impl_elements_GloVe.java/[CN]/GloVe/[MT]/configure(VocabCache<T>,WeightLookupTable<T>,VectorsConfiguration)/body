@@ -8,6 +8,5 @@
   weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},learningRate);
   bias=Nd4j.create(syn0.rows());
   biasAdaGrad=new AdaGrad(bias.shape(),this.learningRate);
-  maxmemory=Runtime.getRuntime().maxMemory() - (vocabCache.numWords() * vectorLength * 2* 8);
   log.info("GloVe params: {Max Memory: [" + maxmemory + "], Learning rate: ["+ this.learningRate+ "], Alpha: ["+ alpha+ "], xMax: ["+ xMax+ "], Symmetric: ["+ symmetric+ "], Shuffle: ["+ shuffle+ "]}");
 }
