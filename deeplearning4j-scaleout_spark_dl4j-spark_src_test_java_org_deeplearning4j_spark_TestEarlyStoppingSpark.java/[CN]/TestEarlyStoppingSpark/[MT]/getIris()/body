@@ -1,0 +1,7 @@
+{
+  JavaSparkContext sc=getContext();
+  IrisDataSetIterator iter=new IrisDataSetIterator(1,150);
+  List<DataSet> list=new ArrayList<>(150);
+  while (iter.hasNext())   list.add(iter.next());
+  return sc.parallelize(list);
+}

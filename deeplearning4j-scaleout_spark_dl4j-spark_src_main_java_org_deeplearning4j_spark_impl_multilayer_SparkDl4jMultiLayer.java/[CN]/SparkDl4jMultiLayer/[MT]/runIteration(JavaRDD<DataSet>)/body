@@ -27,7 +27,7 @@
     log.info("Set updater");
   }
  else {
-    JavaRDD<Tuple2<INDArray,Updater>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.best_score_acc),true).cache();
+    JavaRDD<Tuple3<INDArray,Updater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.best_score_acc),true).cache();
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunction());
     log.info("Ran iterative reduce... averaging parameters now.");
     Adder a=new Adder(paramsLength);
@@ -40,6 +40,13 @@
     log.info("Set parameters");
     log.info("Processing updaters");
     JavaRDD<Updater> resultsUpdater=results.map(new UpdaterFromTupleFunction());
+    JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple3<INDArray,Updater,Double>>(){
+      @Override public double call(      Tuple3<INDArray,Updater,Double> t3) throws Exception {
+        return t3._3();
+      }
+    }
+);
+    lastScore=scores.mean();
     UpdaterAggregator aggregator=resultsUpdater.aggregate(resultsUpdater.first().getAggregator(false),new UpdaterElementCombiner(),new UpdaterAggregatorCombiner());
     Updater combinedUpdater=aggregator.getUpdater();
     network.setUpdater(combinedUpdater);

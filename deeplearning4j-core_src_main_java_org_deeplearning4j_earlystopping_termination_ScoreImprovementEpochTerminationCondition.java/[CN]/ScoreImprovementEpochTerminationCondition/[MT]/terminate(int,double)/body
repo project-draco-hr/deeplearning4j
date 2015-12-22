@@ -1,0 +1,15 @@
+{
+  if (bestEpoch == -1) {
+    bestEpoch=epochNum;
+    bestScore=score;
+    return false;
+  }
+ else {
+    if (score < bestScore) {
+      bestScore=score;
+      bestEpoch=epochNum;
+      return false;
+    }
+    return epochNum >= bestEpoch + maxEpochsWithNoImprovement;
+  }
+}

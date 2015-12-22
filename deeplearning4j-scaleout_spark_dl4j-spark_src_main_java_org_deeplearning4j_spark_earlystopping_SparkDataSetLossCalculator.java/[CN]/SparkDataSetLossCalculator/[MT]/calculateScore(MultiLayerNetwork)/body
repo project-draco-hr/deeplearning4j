@@ -1,0 +1,4 @@
+{
+  SparkDl4jMultiLayer net=new SparkDl4jMultiLayer(sc,network);
+  return net.calculateScore(data,true);
+}
