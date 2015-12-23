@@ -3,6 +3,7 @@
   int numberOfLinesSaved=0;
   isInvoked.set(true);
   logger.info("invokeBlocking() started.");
+  counter.tick();
   CountMap<T> localMap;
   try {
     lock.writeLock().lock();
@@ -16,26 +17,17 @@
     lock.writeLock().unlock();
   }
   try {
-    File currentFile=null;
-    if (latestFile == null) {
-      logger.info("Creating new temp currentFile");
-      currentFile=File.createTempFile("acod","tmp");
-      currentFile.deleteOnExit();
-    }
- else {
-      currentFile=latestFile;
-    }
+    Configuration configuration=null;
     File file=null;
     if (!isFinished.get()) {
-      file=File.createTempFile("aco","tmp");
-      file.deleteOnExit();
+      file=tempFiles[counter.previous()];
     }
  else     file=targetFile;
     PrintWriter pw=new PrintWriter(file);
-    InputSplit split=new FileSplit(currentFile);
-    Configuration canovaConf=new Configuration(true);
-    CSVRecordReader reader=new CSVRecordReader();
-    reader.initialize(canovaConf,split);
+    InputSplit split=new FileSplit(tempFiles[counter.get()]);
+    CSVRecordReader reader=new CSVRecordReader(0," ");
+    reader.initialize(split);
+    int linesRead=0;
     while (reader.hasNext()) {
       List<Writable> list=new ArrayList<>(reader.next());
       T element1=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(0).toInt()));
@@ -51,7 +43,9 @@
       StringBuilder builder=new StringBuilder().append(element1.getIndex()).append(" ").append(element2.getIndex()).append(" ").append(sWeight);
       pw.println(builder.toString());
       numberOfLinesSaved++;
+      linesRead++;
     }
+    logger.info("Lines read: [" + linesRead + "]");
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
     while (iterator.hasNext()) {
       Pair<T,T> pair=iterator.next();
@@ -62,7 +56,6 @@
     }
     pw.flush();
     pw.close();
-    latestFile=currentFile;
     localMap=null;
   }
  catch (  Exception e) {

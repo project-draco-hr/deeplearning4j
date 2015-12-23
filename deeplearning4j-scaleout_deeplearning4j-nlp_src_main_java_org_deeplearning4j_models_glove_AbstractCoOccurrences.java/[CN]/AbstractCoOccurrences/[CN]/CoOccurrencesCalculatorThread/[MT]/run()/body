@@ -22,8 +22,8 @@
             lock.readLock().lock();
             int size=coOccurrenceCounts.size();
             lock.readLock().unlock();
-            if (threadId == 0)             logger.info("Memory consuimption > threshold: { size: [" + size + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
-            Thread.sleep(2000);
+            if (threadId == 0)             logger.debug("Memory consuimption > threshold: { size: [" + size + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
+            Thread.sleep(5000);
           }
  catch (          Exception e) {
             throw new RuntimeException(e);
