@@ -1,4 +1,4 @@
 {
-  this.maxmemory=gbytes * 1024 * 1024* 1024;
+  this.maxmemory=Math.max(gbytes - 1,1) * 1024 * 1024* 1024L;
   return this;
 }

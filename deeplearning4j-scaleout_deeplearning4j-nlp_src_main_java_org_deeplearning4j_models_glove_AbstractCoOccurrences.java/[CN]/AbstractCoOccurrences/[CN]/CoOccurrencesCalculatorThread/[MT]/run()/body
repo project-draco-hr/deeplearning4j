@@ -19,11 +19,9 @@
         double nWeight=1.0 / (j - x + Nd4j.EPS_THRESHOLD);
         while (getMemoryFootprint() >= getMemoryThreshold()) {
           try {
-            lock.readLock().lock();
-            int size=coOccurrenceCounts.size();
-            lock.readLock().unlock();
-            if (threadId == 0)             logger.debug("Memory consuimption > threshold: { size: [" + size + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
-            Thread.sleep(5000);
+            shadowThread.invoke();
+            if (threadId == 0)             logger.debug("Memory consuimption > threshold: { size: [" + Double.NaN + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
+            Thread.sleep(10000);
           }
  catch (          Exception e) {
             throw new RuntimeException(e);

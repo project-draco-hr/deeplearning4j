@@ -17,22 +17,21 @@
     lock.writeLock().unlock();
   }
   try {
-    Configuration configuration=null;
     File file=null;
     if (!isFinished.get()) {
       file=tempFiles[counter.previous()];
     }
  else     file=targetFile;
     PrintWriter pw=new PrintWriter(file);
-    InputSplit split=new FileSplit(tempFiles[counter.get()]);
-    CSVRecordReader reader=new CSVRecordReader(0," ");
-    reader.initialize(split);
+    SentenceIterator sIterator=new BasicLineIterator(tempFiles[counter.get()]);
     int linesRead=0;
-    while (reader.hasNext()) {
-      List<Writable> list=new ArrayList<>(reader.next());
-      T element1=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(0).toInt()));
-      T element2=vocabCache.wordFor(vocabCache.wordAtIndex(list.get(1).toInt()));
-      double sWeight=list.get(2).toDouble();
+    while (sIterator.hasNext()) {
+      String sentence=sIterator.nextSentence();
+      if (sentence == null || sentence.isEmpty())       continue;
+      String[] strings=sentence.split(" ");
+      T element1=vocabCache.elementAtIndex(Integer.valueOf(strings[0]));
+      T element2=vocabCache.elementAtIndex(Integer.valueOf(strings[1]));
+      double sWeight=Double.valueOf(strings[2]);
       double mWeight=localMap.getCount(element1,element2);
       if (mWeight <= 0) {
       }
@@ -44,6 +43,8 @@
       pw.println(builder.toString());
       numberOfLinesSaved++;
       linesRead++;
+      if (numberOfLinesSaved % 100000 == 0)       logger.info("Lines saved: [" + numberOfLinesSaved + "]");
+      if (linesRead % 100000 == 0)       logger.info("Lines read: [" + linesRead + "]");
     }
     logger.info("Lines read: [" + linesRead + "]");
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
@@ -53,10 +54,12 @@
       StringBuilder builder=new StringBuilder().append(pair.getFirst().getIndex()).append(" ").append(pair.getFirst().getIndex()).append(" ").append(mWeight);
       pw.println(builder.toString());
       numberOfLinesSaved++;
+      if (numberOfLinesSaved % 100000 == 0)       logger.info("Lines saved: [" + numberOfLinesSaved + "]");
     }
     pw.flush();
     pw.close();
     localMap=null;
+    sIterator.finish();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

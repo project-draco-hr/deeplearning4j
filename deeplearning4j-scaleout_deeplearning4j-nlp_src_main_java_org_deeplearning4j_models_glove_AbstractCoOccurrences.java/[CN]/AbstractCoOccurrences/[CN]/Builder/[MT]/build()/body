@@ -5,6 +5,7 @@
   ret.vocabCache=this.vocabCache;
   ret.symmetric=this.symmetric;
   ret.workers=this.workers;
+  if (this.maxmemory < 1)   this.maxmemory=Runtime.getRuntime().maxMemory();
   ret.memory_threshold=this.maxmemory;
   logger.info("Memory limit: [" + this.maxmemory + "]");
   try {
