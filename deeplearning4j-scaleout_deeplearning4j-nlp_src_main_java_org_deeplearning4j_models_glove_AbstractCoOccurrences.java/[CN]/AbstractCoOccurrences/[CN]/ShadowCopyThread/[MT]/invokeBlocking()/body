@@ -43,8 +43,6 @@
       pw.println(builder.toString());
       numberOfLinesSaved++;
       linesRead++;
-      if (numberOfLinesSaved % 100000 == 0)       logger.info("Lines saved: [" + numberOfLinesSaved + "]");
-      if (linesRead % 100000 == 0)       logger.info("Lines read: [" + linesRead + "]");
     }
     logger.info("Lines read: [" + linesRead + "]");
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
@@ -54,7 +52,6 @@
       StringBuilder builder=new StringBuilder().append(pair.getFirst().getIndex()).append(" ").append(pair.getFirst().getIndex()).append(" ").append(mWeight);
       pw.println(builder.toString());
       numberOfLinesSaved++;
-      if (numberOfLinesSaved % 100000 == 0)       logger.info("Lines saved: [" + numberOfLinesSaved + "]");
     }
     pw.flush();
     pw.close();
