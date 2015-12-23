@@ -2,7 +2,7 @@
   presetTables();
   Glove ret=new Glove();
   if (sentenceIterator != null) {
-    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenizerFactory).build();
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenFactory).build();
     this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
   }
   ret.trainElementsVectors=true;

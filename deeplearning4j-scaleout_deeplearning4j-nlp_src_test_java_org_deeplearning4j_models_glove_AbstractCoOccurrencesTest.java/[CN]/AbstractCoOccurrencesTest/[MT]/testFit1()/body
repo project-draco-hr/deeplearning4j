@@ -11,8 +11,16 @@
   constructor.buildJointVocabulary(false,true);
   AbstractCoOccurrences<VocabWord> coOccurrences=new AbstractCoOccurrences.Builder<VocabWord>().iterate(sequenceIterator).vocabCache(vocabCache).symmetric(false).windowSize(15).build();
   coOccurrences.fit();
-  List<Pair<VocabWord,VocabWord>> list=coOccurrences.coOccurrenceList();
-  assertNotEquals(null,list);
+  Iterator<Pair<Pair<VocabWord,VocabWord>,Double>> iterator=coOccurrences.iterator();
+  assertNotEquals(null,iterator);
+  int cnt=0;
+  List<Pair<VocabWord,VocabWord>> list=new ArrayList<>();
+  while (iterator.hasNext()) {
+    Pair<Pair<VocabWord,VocabWord>,Double> pair=iterator.next();
+    list.add(pair.getFirst());
+    cnt++;
+  }
   log.info("CoOccurrences: " + list);
   assertEquals(16,list.size());
+  assertEquals(16,cnt);
 }

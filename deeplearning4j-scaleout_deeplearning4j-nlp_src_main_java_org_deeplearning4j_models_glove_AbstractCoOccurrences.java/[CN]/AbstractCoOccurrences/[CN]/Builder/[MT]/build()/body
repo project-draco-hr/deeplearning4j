@@ -6,6 +6,7 @@
   ret.symmetric=this.symmetric;
   ret.workers=this.workers;
   ret.memory_threshold=this.maxmemory;
+  logger.info("Memory limit: [" + this.maxmemory + "]");
   try {
     if (this.target == null)     this.target=File.createTempFile("cooccurrence","map");
     this.target.deleteOnExit();

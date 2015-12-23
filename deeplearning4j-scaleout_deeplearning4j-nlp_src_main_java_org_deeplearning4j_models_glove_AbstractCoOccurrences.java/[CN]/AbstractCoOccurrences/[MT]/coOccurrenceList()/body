@@ -1,15 +1,3 @@
 {
-  if (coOccurrences != null)   return coOccurrences;
-  coOccurrences=new ArrayList<>();
-  Iterator<Pair<T,T>> iterator=coOCurreneCounts.getPairIterator();
-  while (iterator.hasNext()) {
-    Pair<T,T> pair=iterator.next();
-    if (pair.getFirst().equals(pair.getSecond()))     continue;
-    if (!vocabCache.hasToken(pair.getFirst().getLabel()) || !vocabCache.hasToken(pair.getSecond().getLabel())) {
-      continue;
-    }
-    coOccurrences.add(new Pair<T,T>(pair.getFirst(),pair.getSecond()));
-    if (coOccurrences.size() % 100000 == 0)     logger.info("Cooccurrences gathered: " + coOccurrences.size());
-  }
-  return coOccurrences;
+  return null;
 }

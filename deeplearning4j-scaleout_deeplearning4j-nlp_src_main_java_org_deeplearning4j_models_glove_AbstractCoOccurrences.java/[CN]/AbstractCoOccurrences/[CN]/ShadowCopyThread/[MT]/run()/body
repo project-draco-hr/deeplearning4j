@@ -1,10 +1,13 @@
 {
   while (!isFinished.get() && !isTerminate.get()) {
-    if (getMemoryFootprint() > memory_threshold || (shouldInvoke.get() && !isInvoked.get())) {
+    if (getMemoryFootprint() > getMemoryThreshold() || (shouldInvoke.get() && !isInvoked.get())) {
       invokeBlocking();
     }
  else {
       try {
+        lock.readLock().lock();
+        int size=coOccurrenceCounts.size();
+        lock.readLock().unlock();
         Thread.sleep(100);
       }
  catch (      Exception e) {

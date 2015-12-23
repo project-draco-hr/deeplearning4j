@@ -1,3 +1,9 @@
 {
-  return 0;
+  try {
+    lock.readLock().lock();
+    return ((long)coOccurrenceCounts.size()) * 24L * 5L;
+  }
+  finally {
+    lock.readLock().unlock();
+  }
 }

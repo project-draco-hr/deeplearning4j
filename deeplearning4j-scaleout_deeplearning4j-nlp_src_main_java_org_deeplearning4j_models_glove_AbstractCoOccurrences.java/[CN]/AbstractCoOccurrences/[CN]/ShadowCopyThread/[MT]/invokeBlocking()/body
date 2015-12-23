@@ -1,11 +1,13 @@
 {
+  if (getMemoryFootprint() < getMemoryThreshold() && !isFinished.get())   return;
+  int numberOfLinesSaved=0;
   isInvoked.set(true);
-  File currentFile=null;
+  logger.info("invokeBlocking() started.");
   CountMap<T> localMap;
   try {
     lock.writeLock().lock();
-    localMap=coOCurreneCounts;
-    coOCurreneCounts=new CountMap<T>();
+    localMap=coOccurrenceCounts;
+    coOccurrenceCounts=new CountMap<T>();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
@@ -14,8 +16,21 @@
     lock.writeLock().unlock();
   }
   try {
-    File file=File.createTempFile("aco","tmp");
-    file.deleteOnExit();
+    File currentFile=null;
+    if (latestFile == null) {
+      logger.info("Creating new temp currentFile");
+      currentFile=File.createTempFile("acod","tmp");
+      currentFile.deleteOnExit();
+    }
+ else {
+      currentFile=latestFile;
+    }
+    File file=null;
+    if (!isFinished.get()) {
+      file=File.createTempFile("aco","tmp");
+      file.deleteOnExit();
+    }
+ else     file=targetFile;
     PrintWriter pw=new PrintWriter(file);
     InputSplit split=new FileSplit(currentFile);
     Configuration canovaConf=new Configuration(true);
@@ -35,6 +50,7 @@
       }
       StringBuilder builder=new StringBuilder().append(element1.getIndex()).append(" ").append(element2.getIndex()).append(" ").append(sWeight);
       pw.println(builder.toString());
+      numberOfLinesSaved++;
     }
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
     while (iterator.hasNext()) {
@@ -42,12 +58,16 @@
       double mWeight=localMap.getCount(pair);
       StringBuilder builder=new StringBuilder().append(pair.getFirst().getIndex()).append(" ").append(pair.getFirst().getIndex()).append(" ").append(mWeight);
       pw.println(builder.toString());
+      numberOfLinesSaved++;
     }
     pw.flush();
     pw.close();
+    latestFile=currentFile;
     localMap=null;
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
+  logger.info("invokeBlocking() finished. Number of lines saved: [" + numberOfLinesSaved + "]");
+  isInvoked.set(false);
 }
