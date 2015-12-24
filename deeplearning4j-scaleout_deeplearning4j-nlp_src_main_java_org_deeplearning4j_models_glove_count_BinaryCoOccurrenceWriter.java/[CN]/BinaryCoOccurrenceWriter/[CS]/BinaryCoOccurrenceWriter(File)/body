@@ -1,0 +1,9 @@
+{
+  this.file=file;
+  try {
+    outputStream=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

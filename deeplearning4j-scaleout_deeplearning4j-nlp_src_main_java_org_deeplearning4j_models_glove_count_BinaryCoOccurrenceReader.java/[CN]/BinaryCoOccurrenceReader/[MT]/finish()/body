@@ -1,0 +1,12 @@
+{
+  try {
+    if (inputStream != null)     inputStream.close();
+  }
+ catch (  Exception e) {
+  }
+  try {
+    if (outputStream != null)     outputStream.close();
+  }
+ catch (  Exception e) {
+  }
+}

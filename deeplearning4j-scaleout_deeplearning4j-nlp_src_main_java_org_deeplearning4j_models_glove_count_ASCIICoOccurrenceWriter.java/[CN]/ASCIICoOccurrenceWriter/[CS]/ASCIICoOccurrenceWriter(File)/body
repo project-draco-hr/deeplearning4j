@@ -1,0 +1,9 @@
+{
+  this.file=file;
+  try {
+    this.writer=new PrintWriter(new BufferedOutputStream(new FileOutputStream(file),65536));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

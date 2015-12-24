@@ -22,41 +22,32 @@
       file=tempFiles[counter.previous()];
     }
  else     file=targetFile;
-    PrintWriter pw=new PrintWriter(file);
-    SentenceIterator sIterator=new PrefetchingSentenceIterator.Builder(new BasicLineIterator(tempFiles[counter.get()])).setFetchSize(500000).build();
     int linesRead=0;
-    while (sIterator.hasNext()) {
-      String sentence=sIterator.nextSentence();
-      if (sentence == null || sentence.isEmpty())       continue;
-      String[] strings=sentence.split(" ");
-      T element1=vocabCache.elementAtIndex(Integer.valueOf(strings[0]));
-      T element2=vocabCache.elementAtIndex(Integer.valueOf(strings[1]));
-      double sWeight=Double.valueOf(strings[2]);
-      double mWeight=localMap.getCount(element1,element2);
-      if (mWeight <= 0) {
+    CoOccurenceReader<T> reader=new BinaryCoOccurrenceReader<>(tempFiles[counter.previous()],vocabCache);
+    CoOccurrenceWriter<T> writer=(isFinished.get()) ? new ASCIICoOccurrenceWriter<T>(targetFile) : new BinaryCoOccurrenceWriter<T>(tempFiles[counter.get()]);
+    while (reader.hasMoreObjects()) {
+      CoOccurrenceWeight<T> line=reader.nextObject();
+      double mWeight=localMap.getCount(line.getElement1(),line.getElement2());
+      if (mWeight > 0) {
+        line.setWeight(line.getWeight() + mWeight);
       }
- else {
-        sWeight+=mWeight;
-        localMap.removePair(element1,element2);
-      }
-      StringBuilder builder=new StringBuilder().append(element1.getIndex()).append(" ").append(element2.getIndex()).append(" ").append(sWeight);
-      pw.println(builder.toString());
-      numberOfLinesSaved++;
-      linesRead++;
+      writer.writeObject(line);
     }
+    reader.finish();
     logger.info("Lines read: [" + linesRead + "]");
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
     while (iterator.hasNext()) {
       Pair<T,T> pair=iterator.next();
       double mWeight=localMap.getCount(pair);
-      StringBuilder builder=new StringBuilder().append(pair.getFirst().getIndex()).append(" ").append(pair.getFirst().getIndex()).append(" ").append(mWeight);
-      pw.println(builder.toString());
+      CoOccurrenceWeight<T> object=new CoOccurrenceWeight<>();
+      object.setElement1(pair.getFirst());
+      object.setElement2(pair.getSecond());
+      object.setWeight(mWeight);
+      writer.writeObject(object);
       numberOfLinesSaved++;
     }
-    pw.flush();
-    pw.close();
+    writer.finish();
     localMap=null;
-    sIterator.finish();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

@@ -1,0 +1,12 @@
+{
+  try {
+    CoOccurrenceWeight<T> ret=new CoOccurrenceWeight<>();
+    ret.setElement1(vocabCache.elementAtIndex(inputStream.readInt()));
+    ret.setElement2(vocabCache.elementAtIndex(inputStream.readInt()));
+    ret.setWeight(inputStream.readDouble());
+    return ret;
+  }
+ catch (  Exception e) {
+    return null;
+  }
+}
