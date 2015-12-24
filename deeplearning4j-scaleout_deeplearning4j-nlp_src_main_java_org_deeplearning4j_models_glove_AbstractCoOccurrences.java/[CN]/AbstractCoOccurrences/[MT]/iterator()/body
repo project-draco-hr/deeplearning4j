@@ -1,7 +1,7 @@
 {
   final SentenceIterator iterator;
   try {
-    iterator=new PrefetchingSentenceIterator.Builder(new BasicLineIterator(targetFile)).setFetchSize(100000).build();
+    iterator=new PrefetchingSentenceIterator.Builder(new BasicLineIterator(targetFile)).setFetchSize(500000).build();
   }
  catch (  Exception e) {
     logger.error("Target file was not found on last stage!");
