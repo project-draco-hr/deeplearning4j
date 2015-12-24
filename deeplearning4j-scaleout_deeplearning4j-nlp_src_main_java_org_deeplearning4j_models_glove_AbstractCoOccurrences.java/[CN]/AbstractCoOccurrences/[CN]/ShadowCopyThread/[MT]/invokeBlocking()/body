@@ -23,7 +23,7 @@
     }
  else     file=targetFile;
     PrintWriter pw=new PrintWriter(file);
-    SentenceIterator sIterator=new BasicLineIterator(tempFiles[counter.get()]);
+    SentenceIterator sIterator=new PrefetchingSentenceIterator.Builder(new BasicLineIterator(tempFiles[counter.get()])).setFetchSize(100000).build();
     int linesRead=0;
     while (sIterator.hasNext()) {
       String sentence=sIterator.nextSentence();

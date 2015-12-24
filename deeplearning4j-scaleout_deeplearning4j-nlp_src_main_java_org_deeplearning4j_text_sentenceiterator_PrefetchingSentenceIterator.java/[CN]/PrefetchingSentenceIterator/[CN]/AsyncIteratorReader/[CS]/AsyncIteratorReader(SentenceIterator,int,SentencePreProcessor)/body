@@ -2,5 +2,6 @@
   this.iterator=iterator;
   this.fetchSize=fetchSize;
   this.preProcessor=preProcessor;
+  buffer=new ArrayBlockingQueue<>(fetchSize * 3);
   this.setName("AsyncIteratorReader thread");
 }
