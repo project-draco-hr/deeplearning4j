@@ -1,2 +1,10 @@
 {
+  this.vocabCache=vocabCache;
+  this.file=file;
+  try {
+    iterator=new PrefetchingSentenceIterator.Builder(new BasicLineIterator(file)).build();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }

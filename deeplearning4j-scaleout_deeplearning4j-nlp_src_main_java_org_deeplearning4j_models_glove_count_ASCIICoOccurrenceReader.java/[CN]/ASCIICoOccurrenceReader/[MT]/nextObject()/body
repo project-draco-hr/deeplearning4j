@@ -1,3 +1,10 @@
 {
-  throw new UnsupportedOperationException("Not supported right now");
+  String line=iterator.nextSentence();
+  if (line == null || line.isEmpty())   return null;
+  String[] strings=line.split(" ");
+  CoOccurrenceWeight<T> object=new CoOccurrenceWeight<>();
+  object.setElement1(vocabCache.elementAtIndex(Integer.valueOf(strings[0])));
+  object.setElement2(vocabCache.elementAtIndex(Integer.valueOf(strings[1])));
+  object.setWeight(Double.parseDouble(strings[2]));
+  return object;
 }

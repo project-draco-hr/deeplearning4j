@@ -1,7 +1,7 @@
 {
   this.file=file;
   try {
-    this.writer=new PrintWriter(new BufferedOutputStream(new FileOutputStream(file),65536));
+    this.writer=new PrintWriter(new BufferedOutputStream(new FileOutputStream(file),10 * 1024 * 1024));
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

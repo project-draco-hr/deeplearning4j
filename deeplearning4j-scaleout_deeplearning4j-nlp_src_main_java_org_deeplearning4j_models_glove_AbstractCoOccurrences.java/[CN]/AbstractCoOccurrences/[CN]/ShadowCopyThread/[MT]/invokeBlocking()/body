@@ -23,6 +23,7 @@
     }
  else     file=targetFile;
     int linesRead=0;
+    logger.info("Saving to: [" + counter.get() + "], Reading from: ["+ counter.previous()+ "]");
     CoOccurenceReader<T> reader=new BinaryCoOccurrenceReader<>(tempFiles[counter.previous()],vocabCache);
     CoOccurrenceWriter<T> writer=(isFinished.get()) ? new ASCIICoOccurrenceWriter<T>(targetFile) : new BinaryCoOccurrenceWriter<T>(tempFiles[counter.get()]);
     while (reader.hasMoreObjects()) {
@@ -30,8 +31,11 @@
       double mWeight=localMap.getCount(line.getElement1(),line.getElement2());
       if (mWeight > 0) {
         line.setWeight(line.getWeight() + mWeight);
+        localMap.removePair(line.getElement1(),line.getElement2());
       }
       writer.writeObject(line);
+      numberOfLinesSaved++;
+      linesRead++;
     }
     reader.finish();
     logger.info("Lines read: [" + linesRead + "]");
