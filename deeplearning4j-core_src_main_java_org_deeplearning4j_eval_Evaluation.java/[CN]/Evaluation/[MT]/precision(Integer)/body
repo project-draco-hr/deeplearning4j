@@ -1,6 +1,3 @@
 {
-  double tpCount=truePositives.getCount(classLabel);
-  double fpCount=falsePositives.getCount(classLabel);
-  if (tpCount == 0)   return 0;
-  return tpCount / (tpCount + fpCount);
+  return precision(classLabel,DEFAULT_EDGE_VALUE);
 }
