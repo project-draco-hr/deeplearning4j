@@ -1,0 +1,18 @@
+{
+  while (pointer.get() < arrayReference.length) {
+    int position=pointer.getAndAdd(16);
+    int e1idx=ByteBuffer.wrap(arrayReference).getInt(position);
+    int e2idx=ByteBuffer.wrap(arrayReference).getInt(position + 4);
+    double eW=ByteBuffer.wrap(arrayReference).getDouble(position + 8);
+    CoOccurrenceWeight<T> object=new CoOccurrenceWeight<T>();
+    object.setElement1(vocabCache.elementAtIndex(e1idx));
+    object.setElement2(vocabCache.elementAtIndex(e2idx));
+    object.setWeight(eW);
+    try {
+      targetBuffer.put(object);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+}

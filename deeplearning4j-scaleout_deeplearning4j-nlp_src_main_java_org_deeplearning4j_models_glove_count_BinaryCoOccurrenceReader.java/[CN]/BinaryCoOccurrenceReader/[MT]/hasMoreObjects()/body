@@ -1,6 +1,6 @@
 {
   try {
-    return inputStream.available() > 0;
+    return buffer.size() > 0 || inputStream.available() > 0;
   }
  catch (  Exception e) {
     return false;

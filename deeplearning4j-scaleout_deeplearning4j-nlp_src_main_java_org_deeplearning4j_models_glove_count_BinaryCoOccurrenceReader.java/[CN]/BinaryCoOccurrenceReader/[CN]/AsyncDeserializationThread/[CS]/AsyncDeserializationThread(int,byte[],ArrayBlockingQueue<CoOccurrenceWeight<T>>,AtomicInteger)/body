@@ -1,0 +1,7 @@
+{
+  this.threadId=threadId;
+  this.arrayReference=array;
+  this.targetBuffer=targetBuffer;
+  this.pointer=sharedPointer;
+  setName("AsynDeserialization thread " + threadId);
+}
