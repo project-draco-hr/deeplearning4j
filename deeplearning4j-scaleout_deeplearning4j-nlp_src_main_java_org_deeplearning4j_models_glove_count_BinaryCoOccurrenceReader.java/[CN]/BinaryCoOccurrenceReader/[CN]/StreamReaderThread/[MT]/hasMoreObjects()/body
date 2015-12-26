@@ -1,6 +1,6 @@
 {
   try {
-    return buffer.size() > 0 || readerThread.hasMoreObjects();
+    return isReading.get();
   }
  catch (  Exception e) {
     return false;

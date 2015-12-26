@@ -1,12 +1,20 @@
 {
   while (pointer.get() < arrayReference.length) {
     int position=pointer.getAndAdd(16);
+    if (position >= arrayReference.length)     continue;
     int e1idx=ByteBuffer.wrap(arrayReference).getInt(position);
     int e2idx=ByteBuffer.wrap(arrayReference).getInt(position + 4);
     double eW=ByteBuffer.wrap(arrayReference).getDouble(position + 8);
     CoOccurrenceWeight<T> object=new CoOccurrenceWeight<T>();
     object.setElement1(vocabCache.elementAtIndex(e1idx));
     object.setElement2(vocabCache.elementAtIndex(e2idx));
+    if (countMap != null) {
+      double mW=countMap.getCount(object.getElement1(),object.getElement2());
+      if (mW > 0) {
+        eW+=mW;
+        countMap.removePair(object.getElement1(),object.getElement2());
+      }
+    }
     object.setWeight(eW);
     try {
       targetBuffer.put(object);

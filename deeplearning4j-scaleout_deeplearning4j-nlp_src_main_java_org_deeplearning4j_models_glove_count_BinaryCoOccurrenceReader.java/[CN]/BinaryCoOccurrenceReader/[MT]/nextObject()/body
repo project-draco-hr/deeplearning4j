@@ -3,6 +3,19 @@
     return buffer.poll();
   }
  else {
+    if (readerThread.hasMoreObjects()) {
+      try {
+        return buffer.poll(3,TimeUnit.SECONDS);
+      }
+ catch (      Exception e) {
+        return null;
+      }
+    }
   }
-  return null;
+  try {
+    return buffer.poll(5,TimeUnit.SECONDS);
+  }
+ catch (  Exception e) {
+    return null;
+  }
 }

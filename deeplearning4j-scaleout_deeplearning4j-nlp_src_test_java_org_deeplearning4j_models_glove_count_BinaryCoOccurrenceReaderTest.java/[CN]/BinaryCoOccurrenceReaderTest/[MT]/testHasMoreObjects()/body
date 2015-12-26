@@ -23,7 +23,7 @@
   object2.setWeight(0.197);
   writer.writeObject(object2);
   writer.finish();
-  BinaryCoOccurrenceReader<VocabWord> reader=new BinaryCoOccurrenceReader<>(tempFile,vocabCache);
+  BinaryCoOccurrenceReader<VocabWord> reader=new BinaryCoOccurrenceReader<>(tempFile,vocabCache,null);
   int cnt=0;
   while (reader.hasMoreObjects()) {
     CoOccurrenceWeight<VocabWord> r1=reader.nextObject();
