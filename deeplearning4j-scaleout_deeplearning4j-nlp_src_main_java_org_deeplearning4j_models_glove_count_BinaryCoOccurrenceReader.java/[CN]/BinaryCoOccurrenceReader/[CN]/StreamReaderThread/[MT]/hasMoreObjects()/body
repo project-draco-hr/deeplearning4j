@@ -1,8 +1,11 @@
 {
   try {
-    return isReading.get();
+    return stream.available() > 0 || isReading.get();
   }
  catch (  Exception e) {
     return false;
+  }
+ finally {
+    ;
   }
 }

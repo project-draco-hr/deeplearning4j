@@ -7,7 +7,7 @@
   ret.workers=this.workers;
   if (this.maxmemory < 1)   this.maxmemory=Runtime.getRuntime().maxMemory();
   ret.memory_threshold=this.maxmemory;
-  logger.info("Memory limit: [" + this.maxmemory + "]");
+  logger.info("Actual memory limit: [" + this.maxmemory + "]");
   try {
     if (this.target == null)     this.target=File.createTempFile("cooccurrence","map");
     this.target.deleteOnExit();

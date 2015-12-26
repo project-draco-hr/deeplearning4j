@@ -1,8 +1,9 @@
 {
+  if (buffer.size() > 0)   return true;
   try {
-    return buffer.size() > 0 || readerThread.hasMoreObjects();
+    return readerThread.hasMoreObjects() || buffer.size() > 0;
   }
  catch (  Exception e) {
-    return false;
+    throw new RuntimeException(e);
   }
 }

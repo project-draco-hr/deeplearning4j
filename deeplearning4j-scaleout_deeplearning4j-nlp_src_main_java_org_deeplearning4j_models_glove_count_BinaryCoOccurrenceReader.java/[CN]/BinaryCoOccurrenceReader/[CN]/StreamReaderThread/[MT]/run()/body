@@ -1,12 +1,14 @@
 {
   try {
-    isReading.set(true);
-    byte[] array=new byte[16 * 100000];
-    for (int count=stream.read(array); count >= 0; count=stream.read(array)) {
+    byte[] array=new byte[16 * 500000];
+    while (true) {
+      int count=stream.read(array);
+      isReading.set(true);
+      if (count == 0)       break;
       List<AsyncDeserializationThread> threads=new ArrayList<>();
       AtomicInteger internalPosition=new AtomicInteger(0);
       for (int t=0; t < workers; t++) {
-        threads.add(t,new AsyncDeserializationThread(t,array,buffer,internalPosition));
+        threads.add(t,new AsyncDeserializationThread(t,array,buffer,internalPosition,count));
         threads.get(t).start();
       }
       for (int t=0; t < workers; t++) {
@@ -17,8 +19,9 @@
           throw new RuntimeException(e);
         }
       }
+      isReading.set(false);
+      if (count < array.length)       break;
     }
-    isReading.set(false);
   }
  catch (  Exception e) {
     isReading.set(false);

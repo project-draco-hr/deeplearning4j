@@ -2,7 +2,7 @@
   if (getMemoryFootprint() < getMemoryThreshold() && !isFinished.get())   return;
   int numberOfLinesSaved=0;
   isInvoked.set(true);
-  logger.info("invokeBlocking() started.");
+  logger.debug("Memory purge started.");
   counter.tick();
   CountMap<T> localMap;
   try {
@@ -23,7 +23,7 @@
     }
  else     file=targetFile;
     int linesRead=0;
-    logger.info("Saving to: [" + counter.get() + "], Reading from: ["+ counter.previous()+ "]");
+    logger.debug("Saving to: [" + counter.get() + "], Reading from: ["+ counter.previous()+ "]");
     CoOccurenceReader<T> reader=new BinaryCoOccurrenceReader<>(tempFiles[counter.previous()],vocabCache,localMap);
     CoOccurrenceWriter<T> writer=(isFinished.get()) ? new ASCIICoOccurrenceWriter<T>(targetFile) : new BinaryCoOccurrenceWriter<T>(tempFiles[counter.get()]);
     while (reader.hasMoreObjects()) {
@@ -35,7 +35,7 @@
       }
     }
     reader.finish();
-    logger.info("Lines read: [" + linesRead + "]");
+    logger.debug("Lines read: [" + linesRead + "]");
     Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
     while (iterator.hasNext()) {
       Pair<T,T> pair=iterator.next();
@@ -53,6 +53,6 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  logger.info("invokeBlocking() finished. Number of lines saved: [" + numberOfLinesSaved + "]");
+  logger.debug("Memory purge finished. Number of word pairs saved so far: [" + numberOfLinesSaved + "]");
   isInvoked.set(false);
 }

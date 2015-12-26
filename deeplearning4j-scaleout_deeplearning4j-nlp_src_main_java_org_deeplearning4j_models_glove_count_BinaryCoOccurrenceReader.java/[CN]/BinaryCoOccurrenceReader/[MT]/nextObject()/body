@@ -12,10 +12,5 @@
       }
     }
   }
-  try {
-    return buffer.poll(5,TimeUnit.SECONDS);
-  }
- catch (  Exception e) {
-    return null;
-  }
+  return null;
 }
