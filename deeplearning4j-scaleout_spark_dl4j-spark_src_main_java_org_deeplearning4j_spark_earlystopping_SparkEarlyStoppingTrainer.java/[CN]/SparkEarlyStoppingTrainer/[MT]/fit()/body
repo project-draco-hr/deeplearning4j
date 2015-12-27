@@ -11,6 +11,7 @@
       c.initialize();
     }
   }
+  if (listener != null)   listener.onStart(esConfig,net);
   Map<Integer,Double> scoreVsEpoch=new LinkedHashMap<>();
   SparkDl4jMultiLayer sparkNetwork=new SparkDl4jMultiLayer(sc,net);
   int epochCount=0;
@@ -82,7 +83,9 @@
  catch (      IOException e2) {
         throw new RuntimeException(e2);
       }
-      return new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,terminationReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+      EarlyStoppingResult result=new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,terminationReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+      if (listener != null)       listener.onCompletion(result);
+      return result;
     }
     log.info("Completed training epoch {}",epochCount);
     if ((epochCount == 0 && esConfig.getEvaluateEveryNEpochs() == 1) || epochCount % esConfig.getEvaluateEveryNEpochs() == 0) {
@@ -113,6 +116,7 @@
           throw new RuntimeException("Error saving most recent model",e);
         }
       }
+      if (listener != null)       listener.onEpoch(epochCount,score,esConfig,net);
       boolean epochTerminate=false;
       EpochTerminationCondition termReason=null;
       for (      EpochTerminationCondition c : esConfig.getEpochTerminationConditions()) {
@@ -131,7 +135,9 @@
  catch (        IOException e2) {
           throw new RuntimeException(e2);
         }
-        return new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,termReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount + 1,bestModel);
+        EarlyStoppingResult result=new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,termReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount + 1,bestModel);
+        if (listener != null)         listener.onCompletion(result);
+        return result;
       }
       epochCount++;
     }
