@@ -6,5 +6,6 @@
   ret.alpha=this.alpha;
   ret.learningRate=this.learningRate;
   ret.maxmemory=this.maxmemory;
+  ret.batchSize=this.batchSize;
   return ret;
 }

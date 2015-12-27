@@ -53,6 +53,6 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  logger.debug("Memory purge finished. Number of word pairs saved so far: [" + numberOfLinesSaved + "]");
+  logger.info("Number of word pairs saved so far: [" + numberOfLinesSaved + "]");
   isInvoked.set(false);
 }
