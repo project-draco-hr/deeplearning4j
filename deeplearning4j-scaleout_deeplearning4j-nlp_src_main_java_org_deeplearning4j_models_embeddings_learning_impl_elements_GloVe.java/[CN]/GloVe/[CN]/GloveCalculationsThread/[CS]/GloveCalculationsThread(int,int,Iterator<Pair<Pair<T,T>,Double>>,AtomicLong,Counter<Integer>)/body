@@ -1,0 +1,8 @@
+{
+  this.epochId=epochId;
+  this.threadId=threadId;
+  this.pairsCounter=pairsCounter;
+  this.errorCounter=errorCounter;
+  coList=pairs;
+  this.setName("GloVe ELA t." + this.threadId);
+}

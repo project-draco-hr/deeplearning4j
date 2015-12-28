@@ -1,0 +1,11 @@
+{
+  Sequence<T> originalSequence=underlyingIterator.nextSequence();
+  Sequence<T> newSequence=new Sequence<>();
+  for (  T element : originalSequence.getElements()) {
+    if (vocabCache.hasToken(element.getLabel())) {
+      newSequence.addElement(vocabCache.wordFor(element.getLabel()));
+    }
+  }
+  newSequence.setSequenceId(originalSequence.getSequenceId());
+  return newSequence;
+}

@@ -1,0 +1,6 @@
+{
+  coOccurrences.fit();
+  List<Pair<String,String>> list=coOccurrences.coOccurrenceList();
+  log.info("Number of CoOccurrences: [" + list.size() + "]");
+  log.info("CoOccurences: " + list);
+}

@@ -1,0 +1,14 @@
+{
+  try {
+    counter=new RoundCount(1);
+    tempFiles=new File[2];
+    tempFiles[0]=File.createTempFile("aco","tmp");
+    tempFiles[1]=File.createTempFile("aco","tmp");
+    tempFiles[0].deleteOnExit();
+    tempFiles[1].deleteOnExit();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  this.setName("ACO ShadowCopy thread");
+}

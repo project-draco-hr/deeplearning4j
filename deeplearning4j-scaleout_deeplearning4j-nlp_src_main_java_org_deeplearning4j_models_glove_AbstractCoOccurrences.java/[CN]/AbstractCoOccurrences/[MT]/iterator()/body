@@ -1,0 +1,27 @@
+{
+  final SentenceIterator iterator;
+  try {
+    iterator=new SynchronizedSentenceIterator(new PrefetchingSentenceIterator.Builder(new BasicLineIterator(targetFile)).setFetchSize(500000).build());
+  }
+ catch (  Exception e) {
+    logger.error("Target file was not found on last stage!");
+    throw new RuntimeException(e);
+  }
+  return new Iterator<Pair<Pair<T,T>,Double>>(){
+    @Override public boolean hasNext(){
+      return iterator.hasNext();
+    }
+    @Override public Pair<Pair<T,T>,Double> next(){
+      String line=iterator.nextSentence();
+      String[] strings=line.split(" ");
+      T element1=vocabCache.elementAtIndex(Integer.valueOf(strings[0]));
+      T element2=vocabCache.elementAtIndex(Integer.valueOf(strings[1]));
+      Double weight=Double.valueOf(strings[2]);
+      return new Pair<>(new Pair<T,T>(element1,element2),weight);
+    }
+    @Override public void remove(){
+      throw new UnsupportedOperationException("remove() method can't be supported on read-only interface");
+    }
+  }
+;
+}

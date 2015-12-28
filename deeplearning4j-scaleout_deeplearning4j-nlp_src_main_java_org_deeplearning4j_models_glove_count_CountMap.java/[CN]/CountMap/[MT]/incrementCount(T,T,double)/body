@@ -1,0 +1,9 @@
+{
+  Pair<T,T> tempEntry=new Pair<>(element1,element2);
+  if (backingMap.containsKey(tempEntry)) {
+    backingMap.get(tempEntry).addAndGet(weight);
+  }
+ else {
+    backingMap.put(tempEntry,new AtomicDouble(weight));
+  }
+}

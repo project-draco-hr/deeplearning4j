@@ -5,4 +5,14 @@
     }
     lookupTable=new InMemoryLookupTable.Builder<T>().useAdaGrad(this.useAdaGrad).cache(vocabCache).negative(negative).vectorLength(layerSize).lr(learningRate).seed(seed).build();
   }
+  if (trainElementsVectors) {
+    if (elementsLearningAlgorithm == null) {
+      elementsLearningAlgorithm=new SkipGram<>();
+    }
+  }
+  if (trainSequenceVectors) {
+    if (sequenceLearningAlgorithm == null) {
+      sequenceLearningAlgorithm=new DBOW<>();
+    }
+  }
 }

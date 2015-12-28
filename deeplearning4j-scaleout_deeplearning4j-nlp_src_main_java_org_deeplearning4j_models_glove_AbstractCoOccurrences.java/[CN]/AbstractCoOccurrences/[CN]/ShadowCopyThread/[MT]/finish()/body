@@ -1,0 +1,5 @@
+{
+  if (this.isFinished.get())   return;
+  this.isFinished.set(true);
+  invokeBlocking();
+}

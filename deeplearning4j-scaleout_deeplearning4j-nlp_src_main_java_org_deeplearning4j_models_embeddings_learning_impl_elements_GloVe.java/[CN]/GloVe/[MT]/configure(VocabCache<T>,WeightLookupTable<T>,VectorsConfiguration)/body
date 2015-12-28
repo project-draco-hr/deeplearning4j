@@ -1,0 +1,12 @@
+{
+  this.vocabCache=vocabCache;
+  this.lookupTable=lookupTable;
+  this.configuration=configuration;
+  this.syn0=((InMemoryLookupTable<T>)lookupTable).getSyn0();
+  this.vectorLength=configuration.getLayersSize();
+  if (this.learningRate == 0.0d)   this.learningRate=configuration.getLearningRate();
+  weightAdaGrad=new AdaGrad(new int[]{this.vocabCache.numWords() + 1,vectorLength},learningRate);
+  bias=Nd4j.create(syn0.rows());
+  biasAdaGrad=new AdaGrad(bias.shape(),this.learningRate);
+  log.info("GloVe params: {Max Memory: [" + maxmemory + "], Learning rate: ["+ this.learningRate+ "], Alpha: ["+ alpha+ "], xMax: ["+ xMax+ "], Symmetric: ["+ symmetric+ "], Shuffle: ["+ shuffle+ "]}");
+}

@@ -11,6 +11,17 @@
  else {
     lookupTable.resetWeights(true);
   }
+  log.info("Building learning algorithms:");
+  if (trainElementsVectors && elementsLearningAlgorithm != null) {
+    log.info("          building ElementsLearningAlgorithm: [" + elementsLearningAlgorithm.getCodeName() + "]");
+    elementsLearningAlgorithm.configure(vocab,lookupTable,configuration);
+    elementsLearningAlgorithm.pretrain(iterator);
+  }
+  if (trainSequenceVectors && sequenceLearningAlgorithm != null) {
+    log.info("          building SequenceLearningAlgorithm: [" + sequenceLearningAlgorithm.getCodeName() + "]");
+    sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
+    sequenceLearningAlgorithm.pretrain(this.iterator);
+  }
   log.info("Starting learning process...");
   for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
     final AtomicLong linesCounter=new AtomicLong(0);
@@ -34,6 +45,16 @@
       }
  catch (      Exception e) {
         throw new RuntimeException(e);
+      }
+    }
+    if (trainElementsVectors && elementsLearningAlgorithm != null) {
+      if (!trainSequenceVectors || sequenceLearningAlgorithm == null) {
+        if (elementsLearningAlgorithm.isEarlyTerminationHit())         break;
+      }
+    }
+    if (trainSequenceVectors && sequenceLearningAlgorithm != null) {
+      if (!trainElementsVectors || elementsLearningAlgorithm == null) {
+        if (sequenceLearningAlgorithm.isEarlyTerminationHit())         break;
       }
     }
     log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");

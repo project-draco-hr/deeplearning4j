@@ -14,4 +14,10 @@
   this.learningRateDecayWords=configuration.getLearningRateDecayWords();
   this.useAdaGrad=configuration.isUseAdaGrad();
   this.window=configuration.getWindow();
+  if (configuration.getElementsLearningAlgorithm() != null && !configuration.getElementsLearningAlgorithm().isEmpty()) {
+    this.elementsLearningAlgorithm(configuration.getElementsLearningAlgorithm());
+  }
+  if (configuration.getSequenceLearningAlgorithm() != null && !configuration.getSequenceLearningAlgorithm().isEmpty()) {
+    this.sequenceLearningAlgorithm(configuration.getSequenceLearningAlgorithm());
+  }
 }
