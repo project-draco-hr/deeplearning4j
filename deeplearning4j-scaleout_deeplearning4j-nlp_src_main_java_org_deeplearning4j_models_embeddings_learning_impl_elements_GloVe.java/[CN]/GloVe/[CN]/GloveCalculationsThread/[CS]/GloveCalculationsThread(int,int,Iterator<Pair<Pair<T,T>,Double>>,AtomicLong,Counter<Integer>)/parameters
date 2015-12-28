@@ -1,5 +1,5 @@
 int epochId
 int threadId
 Iterator<Pair<Pair<T,T>,Double>> pairs
-AtomicInteger pairsCounter
+AtomicLong pairsCounter
 Counter<Integer> errorCounter

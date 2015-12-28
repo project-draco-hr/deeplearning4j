@@ -1,6 +1,6 @@
 {
   if (isTerminate.get())   return;
-  final AtomicInteger pairsCount=new AtomicInteger(0);
+  final AtomicLong pairsCount=new AtomicLong(0);
   final Counter<Integer> errorCounter=new Counter<>();
   for (int i=0; i < configuration.getEpochs(); i++) {
     Iterator<Pair<Pair<T,T>,Double>> pairs=coOccurrences.iterator();
