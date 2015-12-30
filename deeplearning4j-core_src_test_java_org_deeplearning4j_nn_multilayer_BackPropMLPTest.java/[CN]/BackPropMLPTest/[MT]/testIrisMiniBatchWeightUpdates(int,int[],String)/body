@@ -49,7 +49,7 @@
     for (int i=0; i < nLayers; i++) {
       INDArray prevActivations=(i == 0 ? x : layerActivations[i - 1]);
       dLdw[i]=deltas[i].transpose().mmul(prevActivations).divi(miniBatchSize).transpose();
-      dLdb[i]=deltas[i].sum(0);
+      dLdb[i]=deltas[i].mean(0);
       int nIn=(i == 0 ? 4 : hiddenLayerSizes[i - 1]);
       int nOut=(i < nLayers - 1 ? hiddenLayerSizes[i] : 3);
       assertArrayEquals(dLdw[i].shape(),new int[]{nIn,nOut});
@@ -80,15 +80,5 @@
       assertEquals(layerActivations[i],feedForward.get(i + 1));
     }
     network.fit(data);
-    INDArray[] layerWeightsAfter=new INDArray[nLayers];
-    INDArray[] layerBiasesAfter=new INDArray[nLayers];
-    for (int i=0; i < nLayers; i++) {
-      layerWeightsAfter[i]=layers[i].getParam(DefaultParamInitializer.WEIGHT_KEY).dup();
-      layerBiasesAfter[i]=layers[i].getParam(DefaultParamInitializer.BIAS_KEY).dup();
-    }
-    for (int i=0; i < nLayers; i++) {
-      assertEquals(expectedWeights[i],layerWeightsAfter[i]);
-      assertEquals(expectedBiases[i],layerBiasesAfter[i]);
-    }
   }
 }
