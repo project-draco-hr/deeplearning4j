@@ -1,0 +1,18 @@
+{
+  try {
+    DirectoryReader reader=readerManager.acquire();
+    Document doc2=reader.document(doc);
+    for (    T s : label)     doc2.add(new TextField(LABEL,s.getLabel(),Field.Store.YES));
+    readerManager.release(reader);
+    TrackingIndexWriter writer=getWriter();
+    List<Term> terms=new ArrayList<>();
+    for (    T s : label) {
+      Term term=new Term(LABEL,s.getLabel());
+      terms.add(term);
+    }
+    writer.addDocument(doc2);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

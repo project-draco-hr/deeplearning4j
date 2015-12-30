@@ -6,8 +6,8 @@
     }
   }
 ).cache();
-  Pair<VocabCache,GloveWeightLookupTable> table=glove.train(corpus);
-  WordVectors vectors=WordVectorSerializer.fromPair(new Pair<>((InMemoryLookupTable)table.getSecond(),table.getFirst()));
+  Pair<VocabCache<VocabWord>,GloveWeightLookupTable> table=glove.train(corpus);
+  WordVectors vectors=WordVectorSerializer.fromPair(new Pair<>((InMemoryLookupTable)table.getSecond(),(VocabCache)table.getFirst()));
   Collection<String> words=vectors.wordsNearest("day",20);
   assertTrue(words.contains("week"));
 }

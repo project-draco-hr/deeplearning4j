@@ -1,0 +1,6 @@
+{
+  if (backingMap.containsKey(pair)) {
+    return backingMap.get(pair).get();
+  }
+ else   return 0;
+}

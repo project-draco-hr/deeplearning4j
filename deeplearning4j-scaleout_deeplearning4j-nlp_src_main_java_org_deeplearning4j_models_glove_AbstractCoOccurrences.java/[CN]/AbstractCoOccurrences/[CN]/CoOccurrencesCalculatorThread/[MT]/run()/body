@@ -1,0 +1,54 @@
+{
+  while (iterator.hasMoreSequences()) {
+    Sequence<T> sequence=iterator.nextSequence();
+    List<String> tokens=new ArrayList<>(sequence.asLabels());
+    for (int x=0; x < sequence.getElements().size(); x++) {
+      int wordIdx=vocabCache.indexOf(tokens.get(x));
+      if (wordIdx < 0)       continue;
+      String w1=vocabCache.wordFor(tokens.get(x)).getLabel();
+      int windowStop=Math.min(x + windowSize + 1,tokens.size());
+      for (int j=x; j < windowStop; j++) {
+        int otherWord=vocabCache.indexOf(tokens.get(j));
+        if (otherWord < 0)         continue;
+        String w2=vocabCache.wordFor(tokens.get(j)).getLabel();
+        if (w2.equals(Glove.UNK) || otherWord == wordIdx) {
+          continue;
+        }
+        T tokenX=vocabCache.wordFor(tokens.get(x));
+        T tokenJ=vocabCache.wordFor(tokens.get(j));
+        double nWeight=1.0 / (j - x + Nd4j.EPS_THRESHOLD);
+        while (getMemoryFootprint() >= getMemoryThreshold()) {
+          try {
+            shadowThread.invoke();
+            if (threadId == 0)             logger.debug("Memory consuimption > threshold: { size: [" + Double.NaN + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
+            Thread.sleep(10000);
+          }
+ catch (          Exception e) {
+            throw new RuntimeException(e);
+          }
+ finally {
+          }
+        }
+        try {
+          lock.readLock().lock();
+          if (wordIdx < otherWord) {
+            coOccurrenceCounts.incrementCount(tokenX,tokenJ,nWeight);
+            if (symmetric) {
+              coOccurrenceCounts.incrementCount(tokenJ,tokenX,nWeight);
+            }
+          }
+ else {
+            coOccurrenceCounts.incrementCount(tokenJ,tokenX,nWeight);
+            if (symmetric) {
+              coOccurrenceCounts.incrementCount(tokenX,tokenJ,nWeight);
+            }
+          }
+        }
+  finally {
+          lock.readLock().unlock();
+        }
+      }
+    }
+    sequenceCounter.incrementAndGet();
+  }
+}

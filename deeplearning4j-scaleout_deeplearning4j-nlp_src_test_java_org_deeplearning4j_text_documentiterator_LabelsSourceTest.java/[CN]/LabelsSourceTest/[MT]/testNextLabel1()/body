@@ -1,0 +1,4 @@
+{
+  LabelsSource generator=new LabelsSource("SENTENCE_");
+  assertEquals("SENTENCE_0",generator.nextLabel());
+}

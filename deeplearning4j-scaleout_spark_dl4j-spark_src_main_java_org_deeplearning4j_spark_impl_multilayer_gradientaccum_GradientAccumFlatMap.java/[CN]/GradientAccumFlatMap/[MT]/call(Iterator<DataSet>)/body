@@ -1,18 +1,21 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList((Gradient)new DefaultGradient());
+    return Collections.singletonList(new Tuple2<Gradient,Updater>(new DefaultGradient(),null));
   }
   List<DataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
     collect.add(dataSetIterator.next());
   }
   DataSet data=DataSet.merge(collect,false);
-  log.debug("Training on " + data.labelCounts());
+  if (log.isDebugEnabled()) {
+    log.debug("Training on {} examples with data {}",data.numExamples(),data.labelCounts());
+  }
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
   INDArray val=params.value();
   if (val.length() != network.numParams())   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
   network.setParameters(val);
+  network.setUpdater(updater.getValue());
   network.fit(data);
-  return Collections.singletonList(network.gradient());
+  return Collections.singletonList(new Tuple2<>(network.gradient(),network.getUpdater()));
 }

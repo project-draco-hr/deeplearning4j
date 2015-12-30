@@ -1,0 +1,44 @@
+{
+  log.info("Iteration " + i);
+  if (shuffle)   Collections.shuffle(pairList,new java.util.Random());
+  List<List<Pair<String,String>>> miniBatches=Lists.partition(pairList,batchSize);
+  ActorSystem actor=ActorSystem.create();
+  Parallelization.iterateInParallel(miniBatches,new Parallelization.RunnableWithParams<List<Pair<String,String>>>(){
+    @Override public void run(    List<Pair<String,String>> currentItem,    Object[] args){
+      List<Pair<VocabWord,VocabWord>> send=new ArrayList<>();
+      for (      Pair<String,String> next : currentItem) {
+        String w1=next.getFirst();
+        String w2=next.getSecond();
+        VocabWord vocabWord=vocab().wordFor(w1);
+        VocabWord vocabWord1=vocab().wordFor(w2);
+        send.add(new Pair<>(vocabWord,vocabWord1));
+      }
+      jobQueue.add(new Pair<>(i,send));
+    }
+  }
+,actor);
+  actor.shutdown();
+  Parallelization.runInParallel(numWorkers,new Runnable(){
+    @Override public void run(){
+      while (processed.get() > 0 || !jobQueue.isEmpty()) {
+        Pair<Integer,List<Pair<VocabWord,VocabWord>>> work=jobQueue.poll();
+        if (work == null)         continue;
+        List<Pair<VocabWord,VocabWord>> batch=work.getSecond();
+        for (        Pair<VocabWord,VocabWord> pair : batch) {
+          VocabWord w1=pair.getFirst();
+          VocabWord w2=pair.getSecond();
+          double weight=getCount(w1.getWord(),w2.getWord());
+          if (weight <= 0) {
+            countUp.incrementAndGet();
+            processed.decrementAndGet();
+            continue;
+          }
+          countUp.incrementAndGet();
+          if (countUp.get() % 10000 == 0)           log.info("Processed " + countUp.get() + " co occurrences");
+          processed.decrementAndGet();
+        }
+      }
+    }
+  }
+,true);
+}

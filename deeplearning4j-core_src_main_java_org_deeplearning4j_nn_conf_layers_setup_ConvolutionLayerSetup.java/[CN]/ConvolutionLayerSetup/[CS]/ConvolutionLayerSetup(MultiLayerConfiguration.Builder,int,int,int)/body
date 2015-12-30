@@ -15,12 +15,24 @@
       ConvolutionLayer convolutionLayer=(ConvolutionLayer)getLayer(i,conf);
       if (i == 0)       convolutionLayer.setNIn(channels);
       Layer next=getLayer(i + 1,conf);
-      if (next instanceof DenseLayer || next instanceof OutputLayer) {
+      if (next instanceof DenseLayer || next instanceof OutputLayer || next instanceof BaseRecurrentLayer|| next instanceof RnnOutputLayer) {
         if (i > 0) {
           int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
-          conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(outWidthAndHeight[0],outWidthAndHeight[1],convolutionLayer.getNOut()));
+          if (next instanceof DenseLayer || next instanceof OutputLayer) {
+            conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(outWidthAndHeight[0],outWidthAndHeight[1],convolutionLayer.getNOut()));
+          }
+ else {
+            conf.inputPreProcessor(i + 1,new CnnToRnnPreProcessor(outWidthAndHeight[0],outWidthAndHeight[1],convolutionLayer.getNOut()));
+          }
         }
- else         conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(height,width,convolutionLayer.getNOut()));
+ else {
+          if (next instanceof DenseLayer || next instanceof OutputLayer) {
+            conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(height,width,convolutionLayer.getNOut()));
+          }
+ else {
+            conf.inputPreProcessor(i + 1,new CnnToRnnPreProcessor(height,width,convolutionLayer.getNOut()));
+          }
+        }
         FeedForwardLayer o=(FeedForwardLayer)next;
         int[] outWidthAndHeight=getConvolutionOutputSize(new int[]{lastHeight,lastWidth},convolutionLayer.getKernelSize(),convolutionLayer.getPadding(),convolutionLayer.getStride());
         outSizesEachLayer.put(i,outWidthAndHeight);
@@ -46,14 +58,19 @@
  else     if (i < numLayers - 1 && getLayer(i,conf) instanceof SubsamplingLayer) {
       SubsamplingLayer subsamplingLayer=(SubsamplingLayer)getLayer(i,conf);
       Layer next=getLayer(i + 1,conf);
-      if (next instanceof DenseLayer || next instanceof OutputLayer) {
+      if (next instanceof DenseLayer || next instanceof OutputLayer || next instanceof BaseRecurrentLayer|| next instanceof RnnOutputLayer) {
         int[] outWidthAndHeight=getSubSamplingOutputSize(new int[]{lastHeight,lastWidth},subsamplingLayer.getKernelSize(),subsamplingLayer.getStride());
         outSizesEachLayer.put(i,outWidthAndHeight);
         int outRows=outWidthAndHeight[0];
         int outCols=outWidthAndHeight[1];
         lastHeight=outWidthAndHeight[0];
         lastWidth=outWidthAndHeight[1];
-        conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(outRows,outCols,lastOutChannels));
+        if (next instanceof DenseLayer || next instanceof OutputLayer) {
+          conf.inputPreProcessor(i + 1,new CnnToFeedForwardPreProcessor(outRows,outCols,lastOutChannels));
+        }
+ else {
+          conf.inputPreProcessor(i + 1,new CnnToRnnPreProcessor(outRows,outCols,lastOutChannels));
+        }
         FeedForwardLayer o=(FeedForwardLayer)next;
         int nIn=outCols * outRows * lastOutChannels;
         o.setNIn(nIn);
@@ -66,7 +83,7 @@
         nextConv.setNIn(lastOutChannels);
       }
     }
- else     if (i < numLayers - 1 && (getLayer(i,conf) instanceof DenseLayer || getLayer(i,conf) instanceof OutputLayer)) {
+ else     if (i < numLayers - 1 && (getLayer(i,conf) instanceof DenseLayer || getLayer(i,conf) instanceof OutputLayer || getLayer(i,conf) instanceof BaseRecurrentLayer|| getLayer(i,conf) instanceof RnnOutputLayer)) {
       FeedForwardLayer forwardLayer=(FeedForwardLayer)getLayer(i,conf);
       if (getLayer(i + 1,conf) instanceof ConvolutionLayer) {
         ConvolutionLayer convolutionLayer=(ConvolutionLayer)getLayer(i + 1,conf);

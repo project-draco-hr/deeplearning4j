@@ -1,0 +1,26 @@
+{
+  while (coList.hasNext()) {
+    List<Pair<Pair<T,T>,Double>> pairs=new ArrayList<>();
+    int cnt=0;
+    while (coList.hasNext() && cnt < batchSize) {
+      pairs.add(coList.next());
+      cnt++;
+    }
+    if (shuffle)     Collections.shuffle(pairs);
+    Iterator<Pair<Pair<T,T>,Double>> iterator=pairs.iterator();
+    while (iterator.hasNext()) {
+      Pair<Pair<T,T>,Double> pairDoublePair=iterator.next();
+      T element1=pairDoublePair.getFirst().getFirst();
+      T element2=pairDoublePair.getFirst().getSecond();
+      double weight=pairDoublePair.getSecond();
+      if (weight <= 0) {
+        pairsCounter.incrementAndGet();
+        continue;
+      }
+      errorCounter.incrementCount(epochId,iterateSample(element1,element2,weight));
+      if (pairsCounter.incrementAndGet() % 100000 == 0) {
+        log.info("Processed [" + pairsCounter.get() + "] word pairs so far...");
+      }
+    }
+  }
+}

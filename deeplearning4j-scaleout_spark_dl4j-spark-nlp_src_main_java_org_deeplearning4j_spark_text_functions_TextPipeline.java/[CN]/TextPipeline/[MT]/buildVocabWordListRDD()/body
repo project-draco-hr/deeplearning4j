@@ -4,5 +4,6 @@
   sentenceCountRDD=sentenceWordsCountRDD.map(new GetSentenceCountFunction()).setName("sentenceCountRDD").cache();
   vocabWordListRDD.count();
   totalWordCount=sentenceCountRDD.reduce(new ReduceSentenceCount()).get();
+  System.out.println("RDD: " + vocabWordListRDD.first());
   sentenceWordsCountRDD.unpersist();
 }

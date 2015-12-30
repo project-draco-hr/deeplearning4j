@@ -1,0 +1,5 @@
+{
+  JavaRDD<String> lines=sc.textFile(path);
+  FeedForwardLayer outputLayer=(FeedForwardLayer)conf.getConf(conf.getConfs().size() - 1).getLayer();
+  return lines.map(new RecordReaderFunction(recordReader,labelIndex,outputLayer.getNOut()));
+}

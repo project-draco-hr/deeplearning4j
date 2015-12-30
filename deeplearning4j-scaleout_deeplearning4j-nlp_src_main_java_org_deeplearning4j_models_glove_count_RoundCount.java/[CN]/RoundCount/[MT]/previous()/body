@@ -1,0 +1,10 @@
+{
+  try {
+    lock.readLock().lock();
+    if (value == lower)     return limit;
+ else     return value - 1;
+  }
+  finally {
+    lock.readLock().unlock();
+  }
+}

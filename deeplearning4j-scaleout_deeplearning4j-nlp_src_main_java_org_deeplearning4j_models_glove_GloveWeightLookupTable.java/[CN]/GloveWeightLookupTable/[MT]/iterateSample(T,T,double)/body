@@ -1,0 +1,15 @@
+{
+  INDArray w1Vector=syn0.slice(w1.getIndex());
+  INDArray w2Vector=syn0.slice(w2.getIndex());
+  if (w1.getIndex() < 0 || w1.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + w1.getLabel());
+  if (w2.getIndex() < 0 || w2.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + w2.getLabel());
+  double prediction=Nd4j.getBlasWrapper().dot(w1Vector,w2Vector);
+  prediction+=bias.getDouble(w1.getIndex()) + bias.getDouble(w2.getIndex());
+  double weight=Math.pow(Math.min(1.0,(score / maxCount)),xMax);
+  double fDiff=score > xMax ? prediction : weight * (prediction - Math.log(score));
+  if (Double.isNaN(fDiff))   fDiff=Nd4j.EPS_THRESHOLD;
+  double gradient=fDiff;
+  update(w1,w1Vector,w2Vector,gradient);
+  update(w2,w2Vector,w1Vector,gradient);
+  return fDiff;
+}

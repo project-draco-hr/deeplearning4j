@@ -1,11 +1,12 @@
 {
   double recallAcc=0.0;
-  double classCount=0.0;
+  int classCount=0;
   for (  Integer classLabel : confusion.getClasses()) {
-    recallAcc+=recall(classLabel);
-    if (truePositives.getCount(classLabel) > 0) {
-      classCount+=1.0;
+    double recall=recall(classLabel,-1.0);
+    if (recall != -1.0) {
+      recallAcc+=recall(classLabel);
+      classCount++;
     }
   }
-  return recallAcc / classCount;
+  return recallAcc / (double)classCount;
 }

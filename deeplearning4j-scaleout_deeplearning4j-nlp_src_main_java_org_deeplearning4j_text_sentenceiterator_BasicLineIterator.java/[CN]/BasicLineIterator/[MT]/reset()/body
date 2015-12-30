@@ -1,0 +1,12 @@
+{
+  try {
+    if (backendStream instanceof FileInputStream) {
+      ((FileInputStream)backendStream).getChannel().position(0);
+    }
+ else     backendStream.reset();
+    reader=new BufferedReader(new InputStreamReader(new BufferedInputStream(backendStream,8192)));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

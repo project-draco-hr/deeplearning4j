@@ -1,0 +1,20 @@
+{
+  shadowThread=new ShadowCopyThread();
+  shadowThread.start();
+  sequenceIterator.reset();
+  List<CoOccurrencesCalculatorThread> threads=new ArrayList<>();
+  for (int x=0; x < workers; x++) {
+    threads.add(x,new CoOccurrencesCalculatorThread(x,new FilteredSequenceIterator<T>(new SynchronizedSequenceIterator<T>(sequenceIterator),vocabCache),processedSequences));
+    threads.get(x).start();
+  }
+  for (int x=0; x < workers; x++) {
+    try {
+      threads.get(x).join();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  shadowThread.finish();
+  logger.info("CoOccurrences map was built.");
+}

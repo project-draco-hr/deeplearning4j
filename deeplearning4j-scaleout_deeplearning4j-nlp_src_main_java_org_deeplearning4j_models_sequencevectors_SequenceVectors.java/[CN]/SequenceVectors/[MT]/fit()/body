@@ -1,0 +1,62 @@
+{
+  if (!trainElementsVectors && !trainSequenceVectors)   throw new IllegalStateException("You should define at least one training goal 'trainElementsRepresentation' or 'trainSequenceRepresentation'");
+  if (iterator == null)   throw new IllegalStateException("You can't fit() data without SequenceIterator defined");
+  if (resetModel || (lookupTable != null && vocab != null && vocab.numWords() == 0)) {
+    buildVocab();
+  }
+  if (vocab == null || lookupTable == null || vocab.numWords() == 0)   throw new IllegalStateException("You can't fit() model with empty Vocabulary or WeightLookupTable");
+  if (!resetModel) {
+    lookupTable.resetWeights(false);
+  }
+ else {
+    lookupTable.resetWeights(true);
+  }
+  log.info("Building learning algorithms:");
+  if (trainElementsVectors && elementsLearningAlgorithm != null) {
+    log.info("          building ElementsLearningAlgorithm: [" + elementsLearningAlgorithm.getCodeName() + "]");
+    elementsLearningAlgorithm.configure(vocab,lookupTable,configuration);
+    elementsLearningAlgorithm.pretrain(iterator);
+  }
+  if (trainSequenceVectors && sequenceLearningAlgorithm != null) {
+    log.info("          building SequenceLearningAlgorithm: [" + sequenceLearningAlgorithm.getCodeName() + "]");
+    sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
+    sequenceLearningAlgorithm.pretrain(this.iterator);
+  }
+  log.info("Starting learning process...");
+  for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
+    final AtomicLong linesCounter=new AtomicLong(0);
+    final AtomicLong wordsCounter=new AtomicLong(0);
+    AsyncSequencer sequencer=new AsyncSequencer(this.iterator);
+    sequencer.start();
+    final List<VectorCalculationsThread> threads=new ArrayList<>();
+    for (int x=0; x < workers; x++) {
+      threads.add(x,new VectorCalculationsThread(x,currentEpoch,wordsCounter,vocab.totalWordOccurrences(),linesCounter,sequencer));
+      threads.get(x).start();
+    }
+    try {
+      sequencer.join();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+    for (int x=0; x < workers; x++) {
+      try {
+        threads.get(x).join();
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+    if (trainElementsVectors && elementsLearningAlgorithm != null) {
+      if (!trainSequenceVectors || sequenceLearningAlgorithm == null) {
+        if (elementsLearningAlgorithm.isEarlyTerminationHit())         break;
+      }
+    }
+    if (trainSequenceVectors && sequenceLearningAlgorithm != null) {
+      if (!trainElementsVectors || elementsLearningAlgorithm == null) {
+        if (sequenceLearningAlgorithm.isEarlyTerminationHit())         break;
+      }
+    }
+    log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");
+  }
+}

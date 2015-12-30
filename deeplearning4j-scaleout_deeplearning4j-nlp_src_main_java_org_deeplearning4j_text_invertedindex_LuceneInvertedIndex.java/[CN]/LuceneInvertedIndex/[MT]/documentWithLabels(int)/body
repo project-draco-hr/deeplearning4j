@@ -1,5 +1,5 @@
 {
-  List<VocabWord> ret=new CopyOnWriteArrayList<>();
+  List<T> ret=new CopyOnWriteArrayList<>();
   Collection<String> labels=new ArrayList<>();
   try {
     DirectoryReader reader=readerManager.acquire();
@@ -8,7 +8,8 @@
     String[] values=doc.getValues(WORD_FIELD);
     String[] labels2=doc.getValues(LABEL);
     for (    String s : values) {
-      ret.add(vocabCache.wordFor(s));
+      T tok=vocabCache.wordFor(s);
+      if (tok != null)       ret.add(tok);
     }
     Collections.addAll(labels,labels2);
   }

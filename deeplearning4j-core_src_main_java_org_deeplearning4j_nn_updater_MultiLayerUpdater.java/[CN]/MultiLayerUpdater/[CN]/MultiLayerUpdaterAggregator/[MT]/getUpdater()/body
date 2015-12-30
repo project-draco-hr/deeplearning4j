@@ -1,0 +1,7 @@
+{
+  MultiLayerUpdater multiLayerUpdater=new MultiLayerUpdater(aggregators.length);
+  for (int i=0; i < aggregators.length; i++) {
+    multiLayerUpdater.layerUpdaters[i]=aggregators[i].getUpdater();
+  }
+  return multiLayerUpdater;
+}

@@ -1,7 +1,7 @@
 {
   final Set<String> encountered=new HashSet<>();
   if (message instanceof VocabWork) {
-    final List<VocabWord> document=new ArrayList<>();
+    final List<SequenceElement> document=new ArrayList<>();
     final VocabWork work=(VocabWork)message;
     if (work.getWork() == null || work.getWork().isEmpty())     return;
     final String sentence=work.getWork();
@@ -41,7 +41,7 @@
   }
  else   if (message instanceof StreamWork) {
     StreamWork work=(StreamWork)message;
-    List<VocabWord> document=new ArrayList<>();
+    List<SequenceElement> document=new ArrayList<>();
     InputStream is=work.getIs();
     if (is == null)     return;
     boolean tryRead=false;

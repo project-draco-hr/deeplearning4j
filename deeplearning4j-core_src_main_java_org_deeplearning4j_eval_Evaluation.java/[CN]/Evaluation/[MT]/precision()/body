@@ -1,11 +1,12 @@
 {
   double precisionAcc=0.0;
-  double classCount=0.0;
+  int classCount=0;
   for (  Integer classLabel : confusion.getClasses()) {
-    precisionAcc+=precision(classLabel);
-    if (truePositives.getCount(classLabel) > 0) {
-      classCount+=1.0;
+    double precision=precision(classLabel,-1);
+    if (precision != -1) {
+      precisionAcc+=precision(classLabel);
+      classCount++;
     }
   }
-  return precisionAcc / classCount;
+  return precisionAcc / (double)classCount;
 }

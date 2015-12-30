@@ -1,0 +1,14 @@
+{
+  MultiLayerUpdaterAggregator mlua=(MultiLayerUpdaterAggregator)aggregator;
+  if (aggregators == null) {
+    aggregators=mlua.aggregators;
+  }
+ else {
+    if (mlua.aggregators == null)     return;
+ else {
+      for (int i=0; i < aggregators.length; i++) {
+        aggregators[i].merge(mlua.aggregators[i]);
+      }
+    }
+  }
+}

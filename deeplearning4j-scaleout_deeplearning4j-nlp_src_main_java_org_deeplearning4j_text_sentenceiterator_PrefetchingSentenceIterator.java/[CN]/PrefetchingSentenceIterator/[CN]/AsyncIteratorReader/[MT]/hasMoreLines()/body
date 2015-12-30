@@ -1,0 +1,10 @@
+{
+  if (buffer.size() > 0)   return true;
+  try {
+    this.lock.readLock().lock();
+    return iterator.hasNext() || buffer.size() > 0;
+  }
+  finally {
+    this.lock.readLock().unlock();
+  }
+}

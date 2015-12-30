@@ -2,7 +2,7 @@
   LineSentenceIterator iterator=new LineSentenceIterator(new File(path));
   String confJson=iterator.nextSentence();
   log.info("Word2Vec conf. JSON: " + confJson);
-  Word2VecConfiguration configuration=Word2VecConfiguration.fromJson(confJson);
+  VectorsConfiguration configuration=VectorsConfiguration.fromJson(confJson);
   String eTable=iterator.nextSentence();
   double[] expTable;
   String nTable=iterator.nextSentence();

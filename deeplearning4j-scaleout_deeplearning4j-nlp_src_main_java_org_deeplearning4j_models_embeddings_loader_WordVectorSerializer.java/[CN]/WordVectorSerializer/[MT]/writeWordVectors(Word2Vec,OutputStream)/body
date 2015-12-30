@@ -1,0 +1,6 @@
+{
+  BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(outputStream));
+  writeWordVectors(vec,writer);
+  writer.flush();
+  writer.close();
+}

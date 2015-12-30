@@ -1,3 +1,7 @@
 {
-  throw new UnsupportedOperationException("Reset not supported for this iterator");
+  recordReader.reset();
+  labelsReader.reset();
+  cursor=0;
+  stored=null;
+  useStored=false;
 }

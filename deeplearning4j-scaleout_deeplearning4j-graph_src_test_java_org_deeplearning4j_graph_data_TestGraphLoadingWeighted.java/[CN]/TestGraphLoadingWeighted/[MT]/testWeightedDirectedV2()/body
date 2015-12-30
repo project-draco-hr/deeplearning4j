@@ -1,0 +1,13 @@
+{
+  String path=new ClassPathResource("WeightedGraph.txt").getFile().getAbsolutePath();
+  int numVertices=9;
+  String delim=",";
+  boolean directed=true;
+  String[] ignoreLinesStartingWith=new String[]{"//"};
+  IGraph<String,Double> graph=GraphLoader.loadWeightedEdgeListFile(path,numVertices,delim,directed,ignoreLinesStartingWith);
+  assertEquals(numVertices,graph.numVertices());
+  EdgeLineProcessor<Double> edgeLineProcessor=new WeightedEdgeLineProcessor(delim,directed,ignoreLinesStartingWith);
+  VertexFactory<String> vertexFactory=new StringVertexFactory();
+  Graph<String,Double> graph2=GraphLoader.loadGraph(path,edgeLineProcessor,vertexFactory,numVertices,false);
+  assertEquals(graph,graph2);
+}

@@ -1,8 +1,3 @@
 {
-  if (imagesFile != null) {
-    images=new MnistImageFile(imagesFile,"r");
-  }
-  if (labelsFile != null) {
-    labels=new MnistLabelFile(labelsFile,"r");
-  }
+  this(imagesFile,labelsFile,true);
 }

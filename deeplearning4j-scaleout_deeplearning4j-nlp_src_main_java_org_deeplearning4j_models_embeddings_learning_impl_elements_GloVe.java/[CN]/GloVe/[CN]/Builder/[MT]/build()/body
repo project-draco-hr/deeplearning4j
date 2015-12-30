@@ -1,0 +1,11 @@
+{
+  GloVe<T> ret=new GloVe<T>();
+  ret.symmetric=this.symmetric;
+  ret.shuffle=this.shuffle;
+  ret.xMax=this.xMax;
+  ret.alpha=this.alpha;
+  ret.learningRate=this.learningRate;
+  ret.maxmemory=this.maxmemory;
+  ret.batchSize=this.batchSize;
+  return ret;
+}

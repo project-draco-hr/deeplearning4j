@@ -1,7 +1,3 @@
 {
-  this.recordReader=featuresReader;
-  this.labelsReader=labels;
-  this.miniBatchSize=miniBatchSize;
-  this.numPossibleLabels=numPossibleLabels;
-  this.regression=regression;
+  this(featuresReader,labels,miniBatchSize,numPossibleLabels,regression,AlignmentMode.EQUAL_LENGTH);
 }

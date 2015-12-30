@@ -1,0 +1,6 @@
+{
+  setLayerMaskArrays(featuresMask,labelsMask);
+  INDArray out=output(input,train);
+  clearLayerMaskArrays();
+  return out;
+}

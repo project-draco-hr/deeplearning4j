@@ -1,0 +1,6 @@
+{
+  BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
+  writeWordVectors(vec,write);
+  write.flush();
+  write.close();
+}

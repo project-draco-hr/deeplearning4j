@@ -1,5 +1,5 @@
 {
-  List<List<VocabWord>> ret=new ArrayList<>();
+  List<List<T>> ret=new ArrayList<>();
   for (int i=0; i < batchSize; i++) {
     if (!docIter.hasNext())     break;
     ret.add(docIter.next());

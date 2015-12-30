@@ -1,0 +1,6 @@
+JavaSparkContext sc
+EarlyStoppingConfiguration esConfig
+MultiLayerNetwork net
+JavaRDD<DataSet> train
+int examplesPerFit
+EarlyStoppingListener listener

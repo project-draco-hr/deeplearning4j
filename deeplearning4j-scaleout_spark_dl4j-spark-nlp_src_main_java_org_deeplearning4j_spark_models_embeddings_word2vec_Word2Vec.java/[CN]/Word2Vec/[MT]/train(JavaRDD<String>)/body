@@ -6,7 +6,7 @@
   final JavaRDD<AtomicLong> sentenceWordsCountRDD;
   final JavaRDD<List<VocabWord>> vocabWordListRDD;
   final JavaPairRDD<List<VocabWord>,Long> vocabWordListSentenceCumSumRDD;
-  final VocabCache vocabCache;
+  final VocabCache<VocabWord> vocabCache;
   final JavaRDD<Long> sentenceCumSumCountRDD;
   log.info("Tokenization and building VocabCache ...");
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
@@ -16,7 +16,7 @@
   word2vecVarMap.put("totalWordCount",pipeline.getTotalWordCount());
   sentenceWordsCountRDD=pipeline.getSentenceCountRDD();
   vocabWordListRDD=pipeline.getVocabWordListRDD();
-  Broadcast<VocabCache> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
+  Broadcast<VocabCache<VocabWord>> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
   vocabCache=vocabCacheBroadcast.getValue();
   log.info("Building Huffman Tree ...");
   Huffman huffman=new Huffman(vocabCache.vocabWords());
@@ -37,7 +37,7 @@
     syn0.getRow(syn0UpdateEntry.getFirst()).addi(syn0UpdateEntry.getSecond());
   }
   vocab=vocabCache;
-  InMemoryLookupTable inMemoryLookupTable=new InMemoryLookupTable();
+  InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
   inMemoryLookupTable.setVocab(vocabCache);
   inMemoryLookupTable.setVectorLength(vectorLength);
   inMemoryLookupTable.setSyn0(syn0);

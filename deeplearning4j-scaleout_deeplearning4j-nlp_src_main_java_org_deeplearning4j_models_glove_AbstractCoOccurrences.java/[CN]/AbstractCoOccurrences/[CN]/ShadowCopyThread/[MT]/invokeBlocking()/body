@@ -1,0 +1,58 @@
+{
+  if (getMemoryFootprint() < getMemoryThreshold() && !isFinished.get())   return;
+  int numberOfLinesSaved=0;
+  isInvoked.set(true);
+  logger.debug("Memory purge started.");
+  counter.tick();
+  CountMap<T> localMap;
+  try {
+    lock.writeLock().lock();
+    localMap=coOccurrenceCounts;
+    coOccurrenceCounts=new CountMap<T>();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+ finally {
+    lock.writeLock().unlock();
+  }
+  try {
+    File file=null;
+    if (!isFinished.get()) {
+      file=tempFiles[counter.previous()];
+    }
+ else     file=targetFile;
+    int linesRead=0;
+    logger.debug("Saving to: [" + counter.get() + "], Reading from: ["+ counter.previous()+ "]");
+    CoOccurenceReader<T> reader=new BinaryCoOccurrenceReader<>(tempFiles[counter.previous()],vocabCache,localMap);
+    CoOccurrenceWriter<T> writer=(isFinished.get()) ? new ASCIICoOccurrenceWriter<T>(targetFile) : new BinaryCoOccurrenceWriter<T>(tempFiles[counter.get()]);
+    while (reader.hasMoreObjects()) {
+      CoOccurrenceWeight<T> line=reader.nextObject();
+      if (line != null) {
+        writer.writeObject(line);
+        numberOfLinesSaved++;
+        linesRead++;
+      }
+    }
+    reader.finish();
+    logger.debug("Lines read: [" + linesRead + "]");
+    Iterator<Pair<T,T>> iterator=localMap.getPairIterator();
+    while (iterator.hasNext()) {
+      Pair<T,T> pair=iterator.next();
+      double mWeight=localMap.getCount(pair);
+      CoOccurrenceWeight<T> object=new CoOccurrenceWeight<>();
+      object.setElement1(pair.getFirst());
+      object.setElement2(pair.getSecond());
+      object.setWeight(mWeight);
+      writer.writeObject(object);
+      numberOfLinesSaved++;
+    }
+    writer.finish();
+    localMap=null;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  logger.info("Number of word pairs saved so far: [" + numberOfLinesSaved + "]");
+  isInvoked.set(false);
+}
