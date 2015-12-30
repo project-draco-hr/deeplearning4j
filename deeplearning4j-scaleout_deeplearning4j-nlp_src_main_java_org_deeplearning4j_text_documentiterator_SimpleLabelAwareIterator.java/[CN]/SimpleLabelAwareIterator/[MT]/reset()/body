@@ -1,0 +1,4 @@
+{
+  if (underlyingIterable != null)   this.currentIterator=this.underlyingIterable.iterator();
+ else   throw new UnsupportedOperationException("You can't use reset() method for Iterator<> based instance, please provide Iterable<> instead, or avoid reset()");
+}
