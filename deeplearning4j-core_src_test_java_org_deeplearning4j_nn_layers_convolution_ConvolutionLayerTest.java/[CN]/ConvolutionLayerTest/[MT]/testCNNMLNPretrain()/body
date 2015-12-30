@@ -4,8 +4,10 @@
   DataSetIterator mnistIter=new MnistDataSetIterator(batchSize,numSamples,true);
   MultiLayerNetwork model=getCNNMLNConfig(false,true);
   model.fit(mnistIter);
+  mnistIter.reset();
   MultiLayerNetwork model2=getCNNMLNConfig(false,true);
   model2.fit(mnistIter);
+  mnistIter.reset();
   DataSet test=mnistIter.next();
   Evaluation eval=new Evaluation();
   INDArray output=model.output(test.getFeatureMatrix());
