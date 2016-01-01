@@ -1,7 +1,0 @@
-{
-  File outputfile=new File(imageName);
-  File parentDir=outputfile.getParentFile();
-  if (!parentDir.exists())   parentDir.mkdirs();
-  if (!outputfile.exists())   outputfile.createNewFile();
-  ImageIO.write(img,"png",outputfile);
-}

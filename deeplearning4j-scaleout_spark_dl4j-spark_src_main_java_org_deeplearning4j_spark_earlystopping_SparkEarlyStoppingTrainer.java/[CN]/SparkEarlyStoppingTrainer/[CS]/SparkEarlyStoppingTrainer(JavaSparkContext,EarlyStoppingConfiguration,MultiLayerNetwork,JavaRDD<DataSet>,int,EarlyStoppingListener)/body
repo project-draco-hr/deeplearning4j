@@ -5,6 +5,7 @@
   this.sc=sc;
   this.esConfig=esConfig;
   this.net=net;
+  this.net.init();
   this.train=train;
   this.examplesPerFit=examplesPerFit;
   this.listener=listener;

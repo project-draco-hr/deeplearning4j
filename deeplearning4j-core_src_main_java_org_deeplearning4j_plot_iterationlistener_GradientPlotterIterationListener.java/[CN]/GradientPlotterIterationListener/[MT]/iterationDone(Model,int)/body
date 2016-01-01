@@ -1,8 +1,0 @@
-{
-  if (iteration == 0 && renderFirst || iteration > 0 && iteration % this.iterations == 0) {
-    this.invoke();
-    Layer layer=(Layer)model;
-    plotter.updateGraphDirectory(layer);
-    plotter.plotNetworkGradient(layer,layer.gradient());
-  }
-}

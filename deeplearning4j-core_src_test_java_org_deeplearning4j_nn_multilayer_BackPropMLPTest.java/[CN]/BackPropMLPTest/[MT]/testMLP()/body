@@ -3,7 +3,6 @@
   System.out.println(conf);
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
-  network.setListeners(Arrays.asList(new NeuralNetPlotterIterationListener(10),new LossPlotterIterationListener(10)));
   DataSetIterator iter=new IrisDataSetIterator(10,100);
   while (iter.hasNext())   network.fit(iter.next());
 }

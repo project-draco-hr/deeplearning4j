@@ -5,5 +5,6 @@
   this.network=new MultiLayerNetwork(conf);
   this.network.init();
   this.averageEachIteration=sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
-  this.best_score_acc=BestScoreAccumulator.create(sparkContext);
+  this.bestScoreAcc=BestScoreAccumulator.create(sparkContext);
+  this.updater=sc.broadcast(network.getUpdater());
 }
