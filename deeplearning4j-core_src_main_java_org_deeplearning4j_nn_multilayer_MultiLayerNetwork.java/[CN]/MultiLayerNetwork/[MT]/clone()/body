@@ -4,6 +4,7 @@
     Constructor<MultiLayerNetwork> constructor=(Constructor<MultiLayerNetwork>)getClass().getDeclaredConstructor(MultiLayerConfiguration.class);
     ret=constructor.newInstance(getLayerWiseConfigurations());
     ret.update(this);
+    ret.setParameters(params());
   }
  catch (  Exception e) {
     throw new IllegalStateException("Unable to clone network",e);

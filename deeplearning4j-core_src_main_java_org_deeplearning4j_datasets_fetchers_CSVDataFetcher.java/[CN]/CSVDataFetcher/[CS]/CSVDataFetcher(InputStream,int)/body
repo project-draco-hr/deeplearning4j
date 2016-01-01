@@ -1,6 +1,0 @@
-{
-  this.is=is;
-  this.labelColumn=labelColumn;
-  csv=CSV.skipLines(0).separator(',').quote('"').create();
-  init();
-}

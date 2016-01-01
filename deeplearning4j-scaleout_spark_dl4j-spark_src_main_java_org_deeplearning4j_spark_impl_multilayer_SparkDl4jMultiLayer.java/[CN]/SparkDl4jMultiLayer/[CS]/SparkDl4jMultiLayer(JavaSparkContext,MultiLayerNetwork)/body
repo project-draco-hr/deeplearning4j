@@ -4,6 +4,7 @@
   this.conf=network.getLayerWiseConfigurations().clone();
   this.network=network;
   this.network.init();
+  this.updater=sc.broadcast(network.getUpdater());
   this.averageEachIteration=sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
-  this.best_score_acc=BestScoreAccumulator.create(sparkContext);
+  this.bestScoreAcc=BestScoreAccumulator.create(sparkContext);
 }

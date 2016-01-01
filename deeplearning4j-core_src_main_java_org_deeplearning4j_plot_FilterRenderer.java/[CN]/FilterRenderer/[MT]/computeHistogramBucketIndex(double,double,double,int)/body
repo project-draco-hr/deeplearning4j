@@ -1,9 +1,0 @@
-{
-  for (int x=0; x < numberBins; x++) {
-    double tmp=(x * stepSize) + min;
-    if (value >= tmp && value <= (tmp + stepSize)) {
-      return x;
-    }
-  }
-  return -10;
-}

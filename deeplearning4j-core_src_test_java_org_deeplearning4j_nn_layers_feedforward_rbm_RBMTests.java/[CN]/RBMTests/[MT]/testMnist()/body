@@ -8,6 +8,6 @@
   org.nd4j.linalg.api.rng.distribution.Distribution dist=Nd4j.getDistributions().createNormal(1,1e-5);
   System.out.println(dist.sample(new int[]{layerConf.getNIn(),layerConf.getNOut()}));
   INDArray input=d2.getFeatureMatrix();
-  RBM rbm=LayerFactories.getFactory(conf).create(conf,Arrays.<IterationListener>asList(new ComposableIterationListener(new NeuralNetPlotterIterationListener(10),new ScoreIterationListener(5)),new LossPlotterIterationListener(10)),0);
+  RBM rbm=LayerFactories.getFactory(conf).create(conf);
   rbm.fit(input);
 }

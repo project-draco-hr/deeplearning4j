@@ -1,6 +1,0 @@
-{
-  Evaluation eval=new Evaluation();
-  INDArray output=network.output(input);
-  eval.eval(labels,output);
-  return eval.accuracy();
-}
