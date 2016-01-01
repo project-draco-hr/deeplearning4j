@@ -1,3 +1,6 @@
 {
-  return solver.getOptimizer().getUpdater();
+  if (solver == null)   return null;
+  ConvexOptimizer optimizer=solver.getOptimizer();
+  if (optimizer == null)   return null;
+  return optimizer.getUpdater();
 }
