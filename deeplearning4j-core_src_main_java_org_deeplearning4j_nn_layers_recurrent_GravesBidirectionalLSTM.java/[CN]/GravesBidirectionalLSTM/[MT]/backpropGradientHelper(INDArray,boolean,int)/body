@@ -1,0 +1,30 @@
+{
+  FwdPassReturn fwdPass;
+  if (truncatedBPTT) {
+    fwdPass=activateHelperDirectional(true,stateMap.get(STATE_KEY_PREV_ACTIVATION_FORWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_FORWARDS),true,true);
+    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_FORWARDS,fwdPass.lastAct);
+    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_FORWARDS,fwdPass.lastMemCell);
+  }
+ else {
+    fwdPass=activateHelperDirectional(true,null,null,true,true);
+  }
+  final Pair<Gradient,INDArray> forwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS);
+  FwdPassReturn backPass;
+  if (truncatedBPTT) {
+    backPass=activateHelperDirectional(true,stateMap.get(STATE_KEY_PREV_ACTIVATION_BACKWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_BACKWARDS),true,false);
+    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_BACKWARDS,fwdPass.lastAct);
+    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_BACKWARDS,fwdPass.lastMemCell);
+  }
+ else {
+    backPass=activateHelperDirectional(true,null,null,true,false);
+  }
+  final Pair<Gradient,INDArray> backwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
+  final Gradient combinedGradient=new DefaultGradient();
+  for (  Map.Entry<String,INDArray> entry : forwardsGradient.getFirst().gradientForVariable().entrySet()) {
+    combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
+  }
+  for (  Map.Entry<String,INDArray> entry : backwardsGradient.getFirst().gradientForVariable().entrySet()) {
+    combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
+  }
+  return new Pair<>(combinedGradient,forwardsGradient.getSecond().add(backwardsGradient.getSecond()));
+}

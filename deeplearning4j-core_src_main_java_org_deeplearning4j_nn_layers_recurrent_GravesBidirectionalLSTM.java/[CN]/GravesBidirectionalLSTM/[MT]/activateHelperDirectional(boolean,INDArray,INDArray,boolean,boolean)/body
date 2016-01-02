@@ -1,0 +1,8 @@
+{
+  if (forwards) {
+    return LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS),training,prevOutputActivations,prevMemCellState,forBackprop,forwards,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS);
+  }
+ else {
+    return LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS),training,prevOutputActivations,prevMemCellState,forBackprop,forwards,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS);
+  }
+}
