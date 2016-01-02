@@ -1,3 +1,7 @@
 {
+  if (solver == null) {
+    solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+    solver.getOptimizer().setUpdater(UpdaterCreator.getUpdater(this));
+  }
   return solver.getOptimizer().getUpdater();
 }
