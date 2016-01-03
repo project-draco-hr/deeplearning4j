@@ -4,5 +4,5 @@
   int neighbours=1;
   Collection<String> nearestWords=word2vec.wordsNearest(word,neighbours);
   System.out.println(nearestWords);
-  assertEquals(nearestWords.iterator().next(),expectedNeighbour);
+  assertEquals(expectedNeighbour,nearestWords.iterator().next());
 }
