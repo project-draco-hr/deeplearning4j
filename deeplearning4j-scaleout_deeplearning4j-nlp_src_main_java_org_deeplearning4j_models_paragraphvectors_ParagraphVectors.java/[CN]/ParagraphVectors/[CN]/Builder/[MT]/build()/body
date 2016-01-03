@@ -41,6 +41,7 @@
   ret.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
   ret.sequenceLearningAlgorithm=this.sequenceLearningAlgorithm;
   ret.lookupTable=this.lookupTable;
+  ret.modelUtils=this.modelUtils;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

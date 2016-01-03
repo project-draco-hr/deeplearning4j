@@ -15,4 +15,5 @@
       sequenceLearningAlgorithm=new DBOW<>();
     }
   }
+  this.modelUtils.init(lookupTable);
 }

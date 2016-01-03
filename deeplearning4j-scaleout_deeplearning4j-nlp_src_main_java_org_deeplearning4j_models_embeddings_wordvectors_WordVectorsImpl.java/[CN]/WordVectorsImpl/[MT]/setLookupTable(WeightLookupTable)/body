@@ -1,3 +1,5 @@
 {
   this.lookupTable=lookupTable;
+  if (modelUtils == null)   this.modelUtils=new BasicModelUtils<T>();
+  this.modelUtils.init(lookupTable);
 }

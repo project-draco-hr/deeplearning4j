@@ -4,7 +4,7 @@
   t.setTokenPreProcessor(new CommonPreprocessor());
   InMemoryLookupCache cache=new InMemoryLookupCache();
   WeightLookupTable table=new InMemoryLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
-  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(5).iterations(1).layerSize(100).lookupTable(table).stopWords(new ArrayList<String>()).vocabCache(cache).seed(42).sampling(0).windowSize(5).iterate(iter).tokenizerFactory(t).build();
+  Word2Vec vec=new Word2Vec.Builder().minWordFrequency(5).iterations(1).layerSize(100).lookupTable(table).stopWords(new ArrayList<String>()).vocabCache(cache).seed(42).sampling(0).windowSize(5).modelUtils(new BasicModelUtils<VocabWord>()).iterate(iter).tokenizerFactory(t).build();
   assertEquals(new ArrayList<String>(),vec.getStopWords());
   vec.fit();
   WordVectorSerializer.writeWordVectors(vec,pathToWriteto);
@@ -19,5 +19,10 @@
   assertTrue(lst.contains("night"));
   assertTrue(lst.contains("year"));
   assertFalse(lst.contains(null));
+  lst=vec.wordsNearestSum("day",10);
+  log.info(Arrays.toString(lst.toArray()));
+  assertTrue(lst.contains("week"));
+  assertTrue(lst.contains("night"));
+  assertTrue(lst.contains("year"));
   new File("cache.ser").delete();
 }

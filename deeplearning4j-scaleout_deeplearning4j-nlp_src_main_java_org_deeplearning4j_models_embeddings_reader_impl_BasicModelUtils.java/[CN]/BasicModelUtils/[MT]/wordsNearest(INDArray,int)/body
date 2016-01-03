@@ -1,0 +1,28 @@
+{
+  if (lookupTable instanceof InMemoryLookupTable) {
+    InMemoryLookupTable l=(InMemoryLookupTable)lookupTable;
+    INDArray syn0=l.getSyn0();
+    syn0.diviRowVector(syn0.norm2(0));
+    INDArray similarity=Transforms.unitVec(words).mmul(syn0.transpose());
+    List<Double> highToLowSimList=getTopN(similarity,top);
+    List<String> ret=new ArrayList<>();
+    for (int i=0; i < highToLowSimList.size(); i++) {
+      String word=vocabCache.wordAtIndex(highToLowSimList.get(i).intValue());
+      if (word != null && !word.equals("UNK") && !word.equals("STOP")) {
+        ret.add(word);
+        if (ret.size() >= top) {
+          break;
+        }
+      }
+    }
+    return ret;
+  }
+  Counter<String> distances=new Counter<>();
+  for (  String s : vocabCache.words()) {
+    INDArray otherVec=lookupTable.vector(s);
+    double sim=Transforms.cosineSim(words,otherVec);
+    distances.incrementCount(s,sim);
+  }
+  distances.keepTopNKeys(top);
+  return distances.keySet();
+}

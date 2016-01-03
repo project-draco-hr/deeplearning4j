@@ -1,0 +1,17 @@
+{
+  for (  String p : SetUtils.union(new HashSet<>(positive),new HashSet<>(negative))) {
+    if (!vocabCache.containsWord(p)) {
+      return new ArrayList<>();
+    }
+  }
+  INDArray words=Nd4j.create(positive.size() + negative.size(),lookupTable.layerSize());
+  int row=0;
+  for (  String s : positive) {
+    words.putRow(row++,lookupTable.vector(s));
+  }
+  for (  String s : negative) {
+    words.putRow(row++,lookupTable.vector(s).mul(-1));
+  }
+  INDArray mean=words.isMatrix() ? words.mean(0) : words;
+  return wordsNearest(mean,top);
+}
