@@ -1,0 +1,41 @@
+{
+  if (!dataSetIterator.hasNext()) {
+    return Collections.singletonList(new Evaluation());
+  }
+  MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
+  network.init();
+  INDArray val=params.value();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
+  network.setParameters(val);
+  Evaluation evaluation=new Evaluation();
+  List<DataSet> collect=new ArrayList<>();
+  while (dataSetIterator.hasNext()) {
+    collect.clear();
+    while (dataSetIterator.hasNext() && collect.size() < examplesPerEvaluation) {
+      collect.add(dataSetIterator.next());
+    }
+    DataSet data=DataSet.merge(collect,false);
+    if (log.isDebugEnabled()) {
+      log.debug("Evaluating {} examples ",data.numExamples());
+    }
+    INDArray out;
+    if (data.hasMaskArrays()) {
+      out=network.output(data.getFeatureMatrix(),false,data.getFeaturesMaskArray(),data.getLabelsMaskArray());
+    }
+ else {
+      out=network.output(data.getFeatureMatrix(),false);
+    }
+    if (data.getLabels().rank() == 3) {
+      if (data.getLabelsMaskArray() == null) {
+        evaluation.evalTimeSeries(data.getLabels(),out);
+      }
+ else {
+        evaluation.evalTimeSeries(data.getLabels(),out,data.getLabelsMaskArray());
+      }
+    }
+ else {
+      evaluation.eval(data.getLabels(),out);
+    }
+  }
+  return Collections.singletonList(evaluation);
+}
