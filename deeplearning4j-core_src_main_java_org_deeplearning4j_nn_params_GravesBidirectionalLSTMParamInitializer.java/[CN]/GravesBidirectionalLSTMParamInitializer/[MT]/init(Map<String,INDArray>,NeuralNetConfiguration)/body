@@ -1,5 +1,5 @@
 {
-  org.deeplearning4j.nn.conf.layers.GravesLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesLSTM)conf.getLayer();
+  org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM)conf.getLayer();
   double forgetGateInit=layerConf.getForgetGateBiasInit();
   Distribution dist=Distributions.createDistribution(layerConf.getDist());
   int nL=layerConf.getNOut();
