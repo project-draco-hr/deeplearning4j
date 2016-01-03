@@ -1,4 +1,5 @@
 {
+  log.info("INDArray: " + Arrays.toString(words.dup().data().asDouble()));
   if (lookupTable instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable;
     INDArray syn0=l.getSyn0();
