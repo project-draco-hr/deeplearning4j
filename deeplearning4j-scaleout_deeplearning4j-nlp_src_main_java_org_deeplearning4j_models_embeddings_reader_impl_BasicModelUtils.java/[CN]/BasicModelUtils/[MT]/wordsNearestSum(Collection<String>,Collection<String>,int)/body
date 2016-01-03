@@ -1,0 +1,7 @@
+{
+  INDArray words=Nd4j.create(lookupTable.layerSize());
+  Set<String> union=SetUtils.union(new HashSet<>(positive),new HashSet<>(negative));
+  for (  String s : positive)   words.addi(lookupTable.vector(s));
+  for (  String s : negative)   words.addi(lookupTable.vector(s).mul(-1));
+  return wordsNearest(words,top);
+}

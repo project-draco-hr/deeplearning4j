@@ -1,0 +1,36 @@
+{
+  Map<String,Double> accuracy=new HashMap<>();
+  Counter<String> right=new Counter<>();
+  String analogyType="";
+  for (  String s : questions) {
+    if (s.startsWith(":")) {
+      double correct=right.getCount("correct");
+      double wrong=right.getCount("wrong");
+      if (analogyType.isEmpty()) {
+        analogyType=s;
+        continue;
+      }
+      double accuracyRet=100.0 * correct / (correct + wrong);
+      accuracy.put(analogyType,accuracyRet);
+      analogyType=s;
+      right.clear();
+    }
+ else {
+      String[] split=s.split(" ");
+      String word=split[0];
+      List<String> positive=Arrays.asList(word);
+      List<String> negative=Arrays.asList(split[1],split[2]);
+      String predicted=split[3];
+      String w=wordsNearest(positive,negative,1).iterator().next();
+      if (predicted.equals(w))       right.incrementCount("right",1.0);
+ else       right.incrementCount("wrong",1.0);
+    }
+  }
+  if (!analogyType.isEmpty()) {
+    double correct=right.getCount("correct");
+    double wrong=right.getCount("wrong");
+    double accuracyRet=100.0 * correct / (correct + wrong);
+    accuracy.put(analogyType,accuracyRet);
+  }
+  return accuracy;
+}

@@ -1,0 +1,4 @@
+{
+  INDArray vec=this.lookupTable.vector(word);
+  return wordsNearestSum(vec,n);
+}

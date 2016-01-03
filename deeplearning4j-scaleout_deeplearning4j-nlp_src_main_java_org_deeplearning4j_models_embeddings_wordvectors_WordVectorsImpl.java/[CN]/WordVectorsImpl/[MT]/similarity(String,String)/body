@@ -1,5 +1,3 @@
 {
-  if (word.equals(word2))   return 1.0;
-  if (getWordVectorMatrix(word) == null || getWordVectorMatrix(word2) == null)   return -1;
-  return Transforms.cosineSim(getWordVectorMatrix(word),getWordVectorMatrix(word2));
+  return modelUtils.similarity(word,word2);
 }
