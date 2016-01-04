@@ -2,8 +2,8 @@
   Nd4j.getRandom().setSeed(12345);
   final int state1Len=100;
   final int state2Len=30;
-  final INDArray sig1=Nd4j.randn(new int[]{1,2,state1Len}).mul(0.001);
-  final INDArray sig2=Nd4j.randn(new int[]{1,2,state2Len}).mul(0.001).add(Nd4j.ones(new int[]{1,2,state2Len}).mul(10.0));
+  final INDArray sig1=Nd4j.randn(new int[]{1,2,state1Len}).mul(0.1);
+  final INDArray sig2=Nd4j.randn(new int[]{1,2,state2Len}).mul(0.1).add(Nd4j.ones(new int[]{1,2,state2Len}).mul(1.0));
   INDArray sig=Nd4j.concat(2,sig1,sig2);
   INDArray labels=Nd4j.zeros(new int[]{1,2,state1Len + state2Len});
   for (int t=0; t < state1Len; t++) {
@@ -17,12 +17,28 @@
     labels=Nd4j.concat(2,labels,labels);
   }
   final DataSet ds=new DataSet(sig,labels);
-  final MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(5).learningRate(0.1).rmsDecay(0.95).regularization(true).l2(0.001).updater(Updater.ADAGRAD).seed(12345).list(3).pretrain(false).layer(0,new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().activation("tanh").nIn(2).nOut(2).weightInit(WeightInit.UNIFORM).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().activation("tanh").nIn(2).nOut(2).weightInit(WeightInit.UNIFORM).build()).layer(2,new org.deeplearning4j.nn.conf.layers.RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).nIn(2).nOut(2).activation("tanh").build()).backprop(true).build();
+  final MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(5).learningRate(0.1).rmsDecay(0.95).regularization(true).l2(0.001).updater(Updater.ADAGRAD).seed(12345).list(3).pretrain(false).layer(0,new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().activation("tanh").nIn(2).nOut(2).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.05,0.05)).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().activation("tanh").nIn(2).nOut(2).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.05,0.05)).build()).layer(2,new org.deeplearning4j.nn.conf.layers.RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MCXENT).nIn(2).nOut(2).activation("tanh").build()).backprop(true).build();
   final MultiLayerNetwork net=new MultiLayerNetwork(conf);
-  net.setListeners(new ScoreIterationListener(1));
+  final IterationListener scoreSaver=new IterationListener(){
+    @Override public boolean invoked(){
+      return false;
+    }
+    @Override public void invoke(){
+    }
+    @Override public void iterationDone(    Model model,    int iteration){
+      score=model.score();
+    }
+  }
+;
+  net.setListeners(scoreSaver,new ScoreIterationListener(1));
+  double oldScore=Double.POSITIVE_INFINITY;
   net.init();
   for (int iEpoch=0; iEpoch < 3; iEpoch++) {
     net.fit(ds);
+    System.out.print(String.format("score is %f\n",score));
+    TestCase.assertTrue(!Double.isNaN(score));
+    TestCase.assertTrue(oldScore * 1.5 > score);
+    oldScore=score;
     final INDArray output=net.output(ds.getFeatureMatrix());
     Evaluation evaluation=new Evaluation();
     evaluation.evalTimeSeries(ds.getLabels(),output);

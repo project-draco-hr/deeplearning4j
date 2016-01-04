@@ -1,0 +1,66 @@
+{
+  final int nIn=2;
+  final int layerSize=3;
+  final int miniBatchSize=1;
+  Nd4j.getRandom().setSeed(12345);
+  final NeuralNetConfiguration confBidirectional=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.1,0.1)).activation("tanh").build()).build();
+  final NeuralNetConfiguration confForwards=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.ZERO).activation("tanh").build()).build();
+  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional);
+  final GravesLSTM forwardsLSTM=LayerFactories.getFactory(confForwards.getLayer()).create(confForwards);
+  final double[] rawsig=new double[]{-1.0,0.0,1.0,2.0,-1.0,0.0,1.0,2.0};
+  final double[] backwardsrawsig=new double[rawsig.length];
+  int j=0;
+  for (int i=rawsig.length - 1; i >= 0; i--) {
+    backwardsrawsig[j]=rawsig[i];
+    j++;
+  }
+  final int timeSeriesLength=rawsig.length / nIn;
+  final INDArray sig=Nd4j.create(rawsig,new int[]{miniBatchSize,nIn,timeSeriesLength});
+  final INDArray sigb=Nd4j.create(backwardsrawsig,new int[]{miniBatchSize,nIn,timeSeriesLength});
+  final INDArray recurrentWeightsF=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS);
+  final INDArray inputWeightsF=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS);
+  final INDArray biasWeightsF=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS);
+  final INDArray recurrentWeightsF2=forwardsLSTM.getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  final INDArray inputWeightsF2=forwardsLSTM.getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  final INDArray biasWeightsF2=forwardsLSTM.getParam(GravesLSTMParamInitializer.BIAS_KEY);
+  assertArrayEquals(recurrentWeightsF2.shape(),recurrentWeightsF.shape());
+  assertArrayEquals(inputWeightsF2.shape(),inputWeightsF.shape());
+  assertArrayEquals(biasWeightsF2.shape(),biasWeightsF.shape());
+  forwardsLSTM.setParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY,recurrentWeightsF);
+  forwardsLSTM.setParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY,inputWeightsF);
+  forwardsLSTM.setParam(GravesLSTMParamInitializer.BIAS_KEY,biasWeightsF);
+  final INDArray recurrentWeightsB=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS);
+  final INDArray inputWeightsB=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS);
+  final INDArray biasWeightsB=bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
+  assertArrayEquals(recurrentWeightsF.shape(),recurrentWeightsB.shape());
+  assertArrayEquals(inputWeightsF.shape(),inputWeightsB.shape());
+  assertArrayEquals(biasWeightsF.shape(),biasWeightsB.shape());
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,Nd4j.zeros(recurrentWeightsB.shape()));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,Nd4j.zeros(inputWeightsB.shape()));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS,Nd4j.zeros(biasWeightsB.shape()));
+  forwardsLSTM.setInput(sig);
+  final INDArray activation1=forwardsLSTM.activate(sig).slice(0);
+  final INDArray activation2=bidirectionalLSTM.activate(sig).slice(0);
+  assertArrayEquals(activation1.data().asFloat(),activation2.data().asFloat(),1e-5f);
+  final INDArray ones=Nd4j.ones(new int[]{1,layerSize,timeSeriesLength});
+  final Pair<Gradient,INDArray> backprop1=forwardsLSTM.backpropGradient(ones);
+  final Pair<Gradient,INDArray> backprop2=bidirectionalLSTM.backpropGradient(ones);
+  assertArrayEquals(backprop1.getFirst().getGradientFor(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY).data().asFloat(),backprop2.getFirst().getGradientFor(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS).data().asFloat(),1e-5f);
+  assertArrayEquals(backprop1.getFirst().getGradientFor(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY).data().asFloat(),backprop2.getFirst().getGradientFor(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS).data().asFloat(),1e-5f);
+  assertArrayEquals(backprop1.getFirst().getGradientFor(GravesLSTMParamInitializer.BIAS_KEY).data().asFloat(),backprop2.getFirst().getGradientFor(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS).data().asFloat(),1e-5f);
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS,bidirectionalLSTM.getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS,Nd4j.zeros(recurrentWeightsB.shape()));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS,Nd4j.zeros(inputWeightsB.shape()));
+  bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS,Nd4j.zeros(biasWeightsB.shape()));
+  final INDArray activation3=bidirectionalLSTM.activate(sigb).slice(0);
+  final INDArray activation3Reverse=Nd4j.zeros(activation3.shape());
+  final int N=activation3.size(0);
+  for (int idx0=0; idx0 < N; idx0++) {
+    activation3Reverse.putRow(N - idx0 - 1,activation3.getRow(idx0));
+  }
+  assertArrayEquals(activation3Reverse.data().asFloat(),activation1.data().asFloat(),1e-5f);
+  int foo=3;
+  foo++;
+}
