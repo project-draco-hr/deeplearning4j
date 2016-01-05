@@ -1,3 +1,6 @@
 {
-  if (index >= 0 && hasToken(label))   idxMap.put(index,tokenFor(label));
+  if (index >= 0 && hasToken(label)) {
+    idxMap.put(index,tokenFor(label));
+    tokenFor(label).setIndex(index);
+  }
 }
