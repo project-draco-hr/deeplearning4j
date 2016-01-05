@@ -56,10 +56,13 @@
   bidirectionalLSTM.setParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS,Nd4j.zeros(biasWeightsB.shape()));
   final INDArray activation3=bidirectionalLSTM.activate(sigb).slice(0);
   final INDArray activation3Reverse=Nd4j.zeros(activation3.shape());
-  final int N=activation3.size(0);
-  for (int idx0=0; idx0 < N; idx0++) {
-    activation3Reverse.putRow(N - idx0 - 1,activation3.getRow(idx0));
+  final int T=activation3.size(1);
+  for (int t=0; t < T; t++) {
+    activation3Reverse.putColumn(T - t - 1,activation3.getColumn(t));
   }
+  LOGGER.info("{}",activation3);
+  LOGGER.info("{}",activation3Reverse);
+  LOGGER.info("{}",activation1);
   assertArrayEquals(activation3Reverse.data().asFloat(),activation1.data().asFloat(),1e-5f);
   int foo=3;
   foo++;
