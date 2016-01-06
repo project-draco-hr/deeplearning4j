@@ -1,0 +1,87 @@
+{
+  Collection<Collection<Writable>> featuresSeq=input._1();
+  Collection<Collection<Writable>> labelsSeq=input._2();
+  int featuresLength=featuresSeq.size();
+  int labelsLength=labelsSeq.size();
+  Iterator<Collection<Writable>> fIter=featuresSeq.iterator();
+  Iterator<Collection<Writable>> lIter=labelsSeq.iterator();
+  INDArray inputArr=null;
+  INDArray outputArr=null;
+  int[] idx=new int[3];
+  int i=0;
+  while (fIter.hasNext()) {
+    Collection<Writable> step=fIter.next();
+    if (i == 0) {
+      int[] inShape=new int[]{1,step.size(),featuresLength};
+      inputArr=Nd4j.create(inShape);
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int f=0;
+    while (timeStepIter.hasNext()) {
+      Writable current=timeStepIter.next();
+      if (converter != null)       current=converter.convert(current);
+      idx[1]=f++;
+      inputArr.putScalar(idx,current.toDouble());
+    }
+    idx[2]=i++;
+  }
+  idx=new int[3];
+  i=0;
+  while (lIter.hasNext()) {
+    Collection<Writable> step=lIter.next();
+    if (i == 0) {
+      int[] outShape=new int[]{1,(regression ? step.size() : numPossibleLabels),labelsLength};
+      outputArr=Nd4j.create(outShape);
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int f=0;
+    while (timeStepIter.hasNext()) {
+      Writable current=timeStepIter.next();
+      if (converter != null)       current=converter.convert(current);
+      idx[1]=f++;
+      outputArr.putScalar(idx,current.toDouble());
+    }
+    idx[2]=i++;
+  }
+  DataSet ds;
+  if (alignmentMode == AlignmentMode.EQUAL_LENGTH || featuresLength == labelsLength) {
+    ds=new org.nd4j.linalg.dataset.DataSet(inputArr,outputArr);
+  }
+ else   if (alignmentMode == AlignmentMode.ALIGN_END) {
+    if (featuresLength > labelsLength) {
+      INDArray newOutput=Nd4j.create(1,outputArr.size(1),featuresLength);
+      newOutput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(featuresLength - labelsLength,featuresLength)).assign(outputArr);
+      INDArray outputMask=Nd4j.create(1,featuresLength);
+      for (int j=featuresLength - labelsLength; j < featuresLength; j++)       outputMask.putScalar(j,1.0);
+      ds=new org.nd4j.linalg.dataset.DataSet(inputArr,newOutput,null,outputMask);
+    }
+ else {
+      INDArray newInput=Nd4j.create(1,inputArr.size(1),labelsLength);
+      newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(labelsLength - featuresLength,labelsLength)).assign(inputArr);
+      INDArray inputMask=Nd4j.create(1,labelsLength);
+      for (int j=labelsLength - featuresLength; j < labelsLength; j++)       inputMask.putScalar(j,1.0);
+      ds=new org.nd4j.linalg.dataset.DataSet(newInput,outputArr,inputMask,null);
+    }
+  }
+ else   if (alignmentMode == AlignmentMode.ALIGN_START) {
+    if (featuresLength > labelsLength) {
+      INDArray newOutput=Nd4j.create(1,outputArr.size(1),featuresLength);
+      newOutput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(0,labelsLength)).assign(outputArr);
+      INDArray outputMask=Nd4j.create(1,featuresLength);
+      for (int j=0; j < labelsLength; j++)       outputMask.putScalar(j,1.0);
+      ds=new org.nd4j.linalg.dataset.DataSet(inputArr,newOutput,null,outputMask);
+    }
+ else {
+      INDArray newInput=Nd4j.create(1,inputArr.size(1),labelsLength);
+      newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(0,featuresLength)).assign(inputArr);
+      INDArray inputMask=Nd4j.create(1,labelsLength);
+      for (int j=0; j < featuresLength; j++)       inputMask.putScalar(j,1.0);
+      ds=new org.nd4j.linalg.dataset.DataSet(newInput,outputArr,inputMask,null);
+    }
+  }
+ else {
+    throw new UnsupportedOperationException("Invalid alignment mode: " + alignmentMode);
+  }
+  if (preProcessor != null)   preProcessor.preProcess(ds);
+  return ds;
+}

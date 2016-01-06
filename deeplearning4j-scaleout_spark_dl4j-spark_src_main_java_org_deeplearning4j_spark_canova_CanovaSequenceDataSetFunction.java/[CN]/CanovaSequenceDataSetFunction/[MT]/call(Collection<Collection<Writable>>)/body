@@ -15,6 +15,7 @@
     int countFeatures=0;
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
+      if (converter != null)       current=converter.convert(current);
       if (countIn++ == labelIndex) {
         if (regression) {
           lIdx[2]=i;
