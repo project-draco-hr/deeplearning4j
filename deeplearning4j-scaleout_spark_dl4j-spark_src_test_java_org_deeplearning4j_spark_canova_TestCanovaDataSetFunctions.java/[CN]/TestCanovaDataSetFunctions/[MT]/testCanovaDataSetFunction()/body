@@ -1,0 +1,41 @@
+{
+  JavaSparkContext sc=getContext();
+  ClassPathResource cpr=new ClassPathResource("/imagetest/0/a.bmp");
+  List<String> labelsList=Arrays.asList("0","1");
+  String path=cpr.getFile().getAbsolutePath();
+  String folder=path.substring(0,path.length() - 7);
+  path=folder + "*";
+  JavaPairRDD<String,PortableDataStream> origData=sc.binaryFiles(path);
+  assertEquals(4,origData.count());
+  RecordReader rr=new ImageRecordReader(28,28,1,true,labelsList);
+  org.canova.spark.functions.RecordReaderFunction rrf=new org.canova.spark.functions.RecordReaderFunction(rr);
+  JavaRDD<Collection<Writable>> rdd=origData.map(rrf);
+  JavaRDD<DataSet> data=rdd.map(new CanovaDataSetFunction(28 * 28,2,false));
+  List<DataSet> collected=data.collect();
+  InputSplit is=new FileSplit(new File(folder),new String[]{"bmp"},true);
+  ImageRecordReader irr=new ImageRecordReader(28,28,1,true);
+  irr.initialize(is);
+  RecordReaderDataSetIterator iter=new RecordReaderDataSetIterator(irr,1,28 * 28,2);
+  List<DataSet> listLocal=new ArrayList<>(4);
+  while (iter.hasNext()) {
+    listLocal.add(iter.next());
+  }
+  assertEquals(4,collected.size());
+  assertEquals(4,listLocal.size());
+  boolean[] found=new boolean[4];
+  for (int i=0; i < 4; i++) {
+    int foundIndex=-1;
+    DataSet ds=collected.get(i);
+    for (int j=0; j < 4; j++) {
+      if (ds.equals(listLocal.get(j))) {
+        if (foundIndex != -1)         fail();
+        foundIndex=j;
+        if (found[foundIndex])         fail();
+        found[foundIndex]=true;
+      }
+    }
+  }
+  int count=0;
+  for (  boolean b : found)   if (b)   count++;
+  assertEquals(4,count);
+}
