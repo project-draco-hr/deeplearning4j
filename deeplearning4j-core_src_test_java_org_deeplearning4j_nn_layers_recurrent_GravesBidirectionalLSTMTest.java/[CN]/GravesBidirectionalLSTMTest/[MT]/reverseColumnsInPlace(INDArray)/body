@@ -1,0 +1,8 @@
+{
+  final int N=x.size(1);
+  final INDArray x2=x.dup();
+  for (int t=0; t < N; t++) {
+    final int b=N - t - 1;
+    x.putColumn(t,x2.getColumn(b));
+  }
+}
