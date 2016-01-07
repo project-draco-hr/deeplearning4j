@@ -17,13 +17,14 @@
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int f=0;
+    idx[1]=0;
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
       if (converter != null)       current=converter.convert(current);
-      idx[1]=f++;
       inputArr.putScalar(idx,current.toDouble());
+      idx[1]=++f;
     }
-    idx[2]=i++;
+    idx[2]=++i;
   }
   idx=new int[3];
   i=0;
@@ -35,13 +36,22 @@
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int f=0;
-    while (timeStepIter.hasNext()) {
-      Writable current=timeStepIter.next();
-      if (converter != null)       current=converter.convert(current);
-      idx[1]=f++;
-      outputArr.putScalar(idx,current.toDouble());
+    idx[1]=0;
+    if (regression) {
+      while (timeStepIter.hasNext()) {
+        Writable current=timeStepIter.next();
+        if (converter != null)         current=converter.convert(current);
+        outputArr.putScalar(idx,current.toDouble());
+        idx[1]=++f;
+      }
     }
-    idx[2]=i++;
+ else {
+      Writable value=timeStepIter.next();
+      int labelClassIdx=value.toInt();
+      INDArray line=FeatureUtil.toOutcomeVector(labelClassIdx,numPossibleLabels);
+      outputArr.tensorAlongDimension(i,1).assign(line);
+    }
+    idx[2]=++i;
   }
   DataSet ds;
   if (alignmentMode == AlignmentMode.EQUAL_LENGTH || featuresLength == labelsLength) {
@@ -53,14 +63,14 @@
       newOutput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(featuresLength - labelsLength,featuresLength)).assign(outputArr);
       INDArray outputMask=Nd4j.create(1,featuresLength);
       for (int j=featuresLength - labelsLength; j < featuresLength; j++)       outputMask.putScalar(j,1.0);
-      ds=new org.nd4j.linalg.dataset.DataSet(inputArr,newOutput,null,outputMask);
+      ds=new DataSet(inputArr,newOutput,null,outputMask);
     }
  else {
       INDArray newInput=Nd4j.create(1,inputArr.size(1),labelsLength);
       newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(labelsLength - featuresLength,labelsLength)).assign(inputArr);
       INDArray inputMask=Nd4j.create(1,labelsLength);
       for (int j=labelsLength - featuresLength; j < labelsLength; j++)       inputMask.putScalar(j,1.0);
-      ds=new org.nd4j.linalg.dataset.DataSet(newInput,outputArr,inputMask,null);
+      ds=new DataSet(newInput,outputArr,inputMask,null);
     }
   }
  else   if (alignmentMode == AlignmentMode.ALIGN_START) {
@@ -76,7 +86,7 @@
       newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(0,featuresLength)).assign(inputArr);
       INDArray inputMask=Nd4j.create(1,labelsLength);
       for (int j=0; j < featuresLength; j++)       inputMask.putScalar(j,1.0);
-      ds=new org.nd4j.linalg.dataset.DataSet(newInput,outputArr,inputMask,null);
+      ds=new DataSet(newInput,outputArr,inputMask,null);
     }
   }
  else {

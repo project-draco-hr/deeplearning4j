@@ -1,10 +1,10 @@
 {
   Iterator<Collection<Writable>> iter=input.iterator();
-  int i=0;
   INDArray features=null;
   INDArray labels=Nd4j.zeros(1,(regression ? 1 : numPossibleLabels),input.size());
   int[] fIdx=new int[3];
   int[] lIdx=new int[3];
+  int i=0;
   while (iter.hasNext()) {
     Collection<Writable> step=iter.next();
     if (i == 0) {
@@ -34,7 +34,7 @@
     }
     i++;
   }
-  DataSet ds=new org.nd4j.linalg.dataset.DataSet(features,labels);
+  DataSet ds=new DataSet(features,labels);
   if (preProcessor != null)   preProcessor.preProcess(ds);
   return ds;
 }
