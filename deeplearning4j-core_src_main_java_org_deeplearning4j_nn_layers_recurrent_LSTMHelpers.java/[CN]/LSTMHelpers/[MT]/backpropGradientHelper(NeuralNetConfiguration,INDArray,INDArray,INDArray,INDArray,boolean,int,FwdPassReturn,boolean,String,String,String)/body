@@ -36,14 +36,16 @@
     endIdx=Math.max(0,timeSeriesLength - tbpttBackwardLength);
   }
   for (int iTimeIndex=timeSeriesLength - 1; iTimeIndex >= endIdx; iTimeIndex--) {
-    int t=iTimeIndex;
+    int time=iTimeIndex;
+    int inext=1;
     if (!forwards) {
-      t=timeSeriesLength - iTimeIndex - 1;
+      time=timeSeriesLength - iTimeIndex - 1;
+      inext=-1;
     }
-    INDArray prevMemCellState=(iTimeIndex == 0 ? null : fwdPass.memCellState[t - 1]);
-    INDArray prevHiddenUnitActivation=(iTimeIndex == 0 ? null : fwdPass.fwdPassOutputAsArrays[t - 1]);
-    INDArray currMemCellState=fwdPass.memCellState[t];
-    INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.tensorAlongDimension(t,1,0));
+    INDArray prevMemCellState=(iTimeIndex == 0 ? null : fwdPass.memCellState[time - inext]);
+    INDArray prevHiddenUnitActivation=(iTimeIndex == 0 ? null : fwdPass.fwdPassOutputAsArrays[time - inext]);
+    INDArray currMemCellState=fwdPass.memCellState[time];
+    INDArray epsilonSlice=(is2dInput ? epsilon : epsilon.tensorAlongDimension(time,1,0));
     INDArray nablaOut=Shape.toOffsetZeroCopy(epsilonSlice,'f');
     if (iTimeIndex != timeSeriesLength - 1) {
       Nd4j.gemm(deltaiNext,wI,nablaOut,false,true,1.0,1.0);
@@ -51,8 +53,8 @@
       Nd4j.gemm(deltaoNext,wO,nablaOut,false,true,1.0,1.0);
       Nd4j.gemm(deltagNext,wG,nablaOut,false,true,1.0,1.0);
     }
-    INDArray sigmahOfS=fwdPass.memCellActivations[t];
-    INDArray ao=fwdPass.oa[t];
+    INDArray sigmahOfS=fwdPass.memCellActivations[time];
+    INDArray ao=fwdPass.oa[time];
     INDArray sigmaoPrimeOfZo=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ao.dup('f')));
     INDArray deltao=nablaOut.dup('f').muli(sigmahOfS).muli(sigmaoPrimeOfZo);
     INDArray sigmahPrimeOfS=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currMemCellState.dup('f')).derivative());
@@ -60,24 +62,24 @@
     INDArray deltaMulRowWOO=deltao.dup('f').muliRowVector(wOOTranspose);
     l1BLAS.axpy(nablaCellState.length(),1.0,deltaMulRowWOO,nablaCellState);
     if (iTimeIndex != timeSeriesLength - 1) {
-      INDArray nextForgetGateAs=fwdPass.fa[t + 1];
+      INDArray nextForgetGateAs=fwdPass.fa[time + inext];
       int length=nablaCellState.length();
       l1BLAS.axpy(length,1.0,nextForgetGateAs.muli(nablaCellStateNext),nablaCellState);
       l1BLAS.axpy(length,1.0,deltafNext.dup('f').muliRowVector(wFFTranspose),nablaCellState);
       l1BLAS.axpy(length,1.0,deltagNext.dup('f').muliRowVector(wGGTranspose),nablaCellState);
     }
     nablaCellStateNext=nablaCellState;
-    INDArray af=fwdPass.fa[t];
+    INDArray af=fwdPass.fa[time];
     INDArray deltaf=null;
     if (iTimeIndex > 0) {
       deltaf=nablaCellState.dup('f').muli(prevMemCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",af.dup('f'))));
     }
-    INDArray ag=fwdPass.ga[t];
-    INDArray ai=fwdPass.ia[t];
+    INDArray ag=fwdPass.ga[time];
+    INDArray ai=fwdPass.ia[time];
     INDArray deltag=ai.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("timesoneminus",ag.dup('f'))));
-    INDArray zi=fwdPass.iz[t];
+    INDArray zi=fwdPass.iz[time];
     INDArray deltai=ag.muli(nablaCellState).muli(Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),zi).derivative()));
-    INDArray prevLayerActivationSlice=Shape.toMmulCompatible(is2dInput ? input : input.tensorAlongDimension(t,1,0));
+    INDArray prevLayerActivationSlice=Shape.toMmulCompatible(is2dInput ? input : input.tensorAlongDimension(time,1,0));
     Nd4j.gemm(prevLayerActivationSlice,deltai,iwGradients[0],true,false,1.0,1.0);
     if (iTimeIndex > 0) {
       Nd4j.gemm(prevLayerActivationSlice,deltaf,iwGradients[1],true,false,1.0,1.0);
@@ -108,7 +110,7 @@
     if (iTimeIndex > 0) {
       Nd4j.gemm(deltaf,wf,epsilonNextSlice,false,true,1.0,1.0);
     }
-    epsilonNext.tensorAlongDimension(t,1,0).assign(epsilonNextSlice);
+    epsilonNext.tensorAlongDimension(time,1,0).assign(epsilonNextSlice);
     deltaiNext=deltai;
     deltafNext=deltaf;
     deltaoNext=deltao;

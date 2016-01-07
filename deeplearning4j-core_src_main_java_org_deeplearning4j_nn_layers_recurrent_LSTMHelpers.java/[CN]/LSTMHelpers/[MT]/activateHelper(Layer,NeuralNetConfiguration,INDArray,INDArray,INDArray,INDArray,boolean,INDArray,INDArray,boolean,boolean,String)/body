@@ -69,32 +69,32 @@
     prevMemCellState=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize});
   }
   for (int iTimeIndex=0; iTimeIndex < timeSeriesLength; iTimeIndex++) {
-    int t=iTimeIndex;
+    int time=iTimeIndex;
     if (!forwards) {
-      t=timeSeriesLength - iTimeIndex - 1;
+      time=timeSeriesLength - iTimeIndex - 1;
     }
-    INDArray miniBatchData=(is2dInput ? input : input.tensorAlongDimension(t,1,0));
+    INDArray miniBatchData=(is2dInput ? input : input.tensorAlongDimension(time,1,0));
     miniBatchData=Shape.toMmulCompatible(miniBatchData);
     INDArray inputActivations=miniBatchData.mmul(wi);
     Nd4j.gemm(prevOutputActivations,wI,inputActivations,false,false,1.0,1.0);
     inputActivations.addiRowVector(bi);
-    if (forBackprop)     toReturn.iz[t]=inputActivations.dup('f');
+    if (forBackprop)     toReturn.iz[time]=inputActivations.dup('f');
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),inputActivations));
-    if (forBackprop)     toReturn.ia[t]=inputActivations;
+    if (forBackprop)     toReturn.ia[time]=inputActivations;
     INDArray forgetGateActivations=miniBatchData.mmul(wf);
     Nd4j.gemm(prevOutputActivations,wF,forgetGateActivations,false,false,1.0,1.0);
     INDArray pmcellWFF=prevMemCellState.dup('f').muliRowVector(wFFTranspose);
     l1BLAS.axpy(pmcellWFF.length(),1.0,pmcellWFF,forgetGateActivations);
     forgetGateActivations.addiRowVector(bf);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",forgetGateActivations));
-    if (forBackprop)     toReturn.fa[t]=forgetGateActivations;
+    if (forBackprop)     toReturn.fa[time]=forgetGateActivations;
     INDArray inputModGateActivations=miniBatchData.mmul(wg);
     Nd4j.gemm(prevOutputActivations,wG,inputModGateActivations,false,false,1.0,1.0);
     INDArray pmcellWGG=prevMemCellState.dup('f').muliRowVector(wGGTranspose);
     l1BLAS.axpy(pmcellWGG.length(),1.0,pmcellWGG,inputModGateActivations);
     inputModGateActivations.addiRowVector(bg);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",inputModGateActivations));
-    if (forBackprop)     toReturn.ga[t]=inputModGateActivations;
+    if (forBackprop)     toReturn.ga[time]=inputModGateActivations;
     INDArray currentMemoryCellState=forgetGateActivations.dup('f').muli(prevMemCellState);
     INDArray inputModMulInput=inputModGateActivations.dup('f').muli(inputActivations);
     l1BLAS.axpy(currentMemoryCellState.length(),1.0,inputModMulInput,currentMemoryCellState);
@@ -104,16 +104,16 @@
     l1BLAS.axpy(pmcellWOO.length(),1.0,pmcellWOO,outputGateActivations);
     outputGateActivations.addiRowVector(bo);
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",outputGateActivations));
-    if (forBackprop)     toReturn.oa[t]=outputGateActivations;
+    if (forBackprop)     toReturn.oa[time]=outputGateActivations;
     INDArray currMemoryCellActivation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currentMemoryCellState.dup('f')));
     INDArray currHiddenUnitActivations=currMemoryCellActivation.dup('f').muli(outputGateActivations);
     if (forBackprop) {
-      toReturn.fwdPassOutputAsArrays[t]=currHiddenUnitActivations;
-      toReturn.memCellState[t]=currentMemoryCellState;
-      toReturn.memCellActivations[t]=currMemoryCellActivation;
+      toReturn.fwdPassOutputAsArrays[time]=currHiddenUnitActivations;
+      toReturn.memCellState[time]=currentMemoryCellState;
+      toReturn.memCellActivations[time]=currMemoryCellActivation;
     }
  else {
-      outputActivations.tensorAlongDimension(t,1,0).assign(currHiddenUnitActivations);
+      outputActivations.tensorAlongDimension(time,1,0).assign(currHiddenUnitActivations);
     }
     prevOutputActivations=currHiddenUnitActivations;
     prevMemCellState=currentMemoryCellState;

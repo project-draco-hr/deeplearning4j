@@ -18,7 +18,7 @@
  else {
     backPass=activateHelperDirectional(true,null,null,true,false);
   }
-  final Pair<Gradient,INDArray> backwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
+  final Pair<Gradient,INDArray> backwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,backPass,false,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
   final Gradient combinedGradient=new DefaultGradient();
   for (  Map.Entry<String,INDArray> entry : forwardsGradient.getFirst().gradientForVariable().entrySet()) {
     combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
