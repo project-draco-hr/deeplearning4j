@@ -1,0 +1,41 @@
+{
+  List<Writable> list;
+  if (writables instanceof List)   list=(List<Writable>)writables;
+ else   list=new ArrayList<>(writables);
+  int labelIndex=this.labelIndex;
+  if (numPossibleLabels >= 1 && labelIndex < 0) {
+    labelIndex=list.size() - 1;
+  }
+  INDArray label=null;
+  INDArray featureVector=Nd4j.create(labelIndex >= 0 ? list.size() - 1 : list.size());
+  int featureCount=0;
+  for (int j=0; j < list.size(); j++) {
+    Writable current=list.get(j);
+    if (converter != null)     current=converter.convert(current);
+    if (labelIndex >= 0 && j == labelIndex) {
+      if (converter != null) {
+        try {
+          current=converter.convert(current);
+        }
+ catch (        WritableConverterException e) {
+          e.printStackTrace();
+        }
+      }
+      if (numPossibleLabels < 1)       throw new IllegalStateException("Number of possible labels invalid, must be >= 1");
+      if (regression) {
+        label=Nd4j.scalar(current.toDouble());
+      }
+ else {
+        int curr=current.toInt();
+        if (curr >= numPossibleLabels)         throw new IllegalStateException("Invalid input: class label is " + curr + " with numPossibleLables = "+ numPossibleLabels+ " (class label must be 0 <= labelIdx < numPossibleLabels)");
+        label=FeatureUtil.toOutcomeVector(curr,numPossibleLabels);
+      }
+    }
+ else {
+      featureVector.putScalar(featureCount++,current.toDouble());
+    }
+  }
+  DataSet ds=new DataSet(featureVector,(labelIndex >= 0 ? label : featureVector));
+  if (preProcessor != null)   preProcessor.preProcess(ds);
+  return ds;
+}

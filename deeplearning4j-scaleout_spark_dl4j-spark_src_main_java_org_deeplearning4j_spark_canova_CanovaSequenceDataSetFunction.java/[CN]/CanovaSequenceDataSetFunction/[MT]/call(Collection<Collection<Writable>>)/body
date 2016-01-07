@@ -1,0 +1,40 @@
+{
+  Iterator<Collection<Writable>> iter=input.iterator();
+  INDArray features=null;
+  INDArray labels=Nd4j.zeros(1,(regression ? 1 : numPossibleLabels),input.size());
+  int[] fIdx=new int[3];
+  int[] lIdx=new int[3];
+  int i=0;
+  while (iter.hasNext()) {
+    Collection<Writable> step=iter.next();
+    if (i == 0) {
+      features=Nd4j.zeros(1,step.size() - 1,input.size());
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int countIn=0;
+    int countFeatures=0;
+    while (timeStepIter.hasNext()) {
+      Writable current=timeStepIter.next();
+      if (converter != null)       current=converter.convert(current);
+      if (countIn++ == labelIndex) {
+        if (regression) {
+          lIdx[2]=i;
+          labels.putScalar(lIdx,current.toDouble());
+        }
+ else {
+          INDArray line=FeatureUtil.toOutcomeVector(current.toInt(),numPossibleLabels);
+          labels.tensorAlongDimension(i,1).assign(line);
+        }
+      }
+ else {
+        fIdx[1]=countFeatures++;
+        fIdx[2]=i;
+        features.putScalar(fIdx,current.toDouble());
+      }
+    }
+    i++;
+  }
+  DataSet ds=new DataSet(features,labels);
+  if (preProcessor != null)   preProcessor.preProcess(ds);
+  return ds;
+}
