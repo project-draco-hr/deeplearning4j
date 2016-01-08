@@ -11,4 +11,10 @@
  else {
     this.layers=null;
   }
+  if (network.solver != null) {
+    this.setUpdater(network.getUpdater().clone());
+  }
+ else {
+    this.solver=null;
+  }
 }
