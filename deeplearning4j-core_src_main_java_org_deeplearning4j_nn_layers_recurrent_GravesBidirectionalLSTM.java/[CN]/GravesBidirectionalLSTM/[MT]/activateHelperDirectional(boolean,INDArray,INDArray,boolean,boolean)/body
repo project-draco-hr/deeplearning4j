@@ -1,8 +1,11 @@
 {
-  if (forwards) {
-    return LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS),training,prevOutputActivations,prevMemCellState,forBackprop,forwards,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS);
+  String recurrentKey=GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS;
+  String inputKey=GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS;
+  String biasKey=GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS;
+  if (!forwards) {
+    recurrentKey=GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS;
+    inputKey=GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS;
+    biasKey=GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS;
   }
- else {
-    return LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS),training,prevOutputActivations,prevMemCellState,forBackprop,forwards,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS);
-  }
+  return LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(recurrentKey),getParam(inputKey),getParam(biasKey),training,prevOutputActivations,prevMemCellState,forBackprop,forwards,inputKey);
 }

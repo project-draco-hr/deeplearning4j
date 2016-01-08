@@ -1,13 +1,13 @@
 {
   setInput(input);
-  FwdPassReturn fwdPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_FORWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_FORWARDS),false,true);
-  INDArray outActForwards=fwdPass.fwdPassOutput;
+  final FwdPassReturn fwdPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_FORWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_FORWARDS),false,true);
+  final INDArray outActForwards=fwdPass.fwdPassOutput;
   if (storeLastForTBPTT) {
     tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_FORWARDS,fwdPass.lastAct);
     tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_FORWARDS,fwdPass.lastMemCell);
   }
-  FwdPassReturn backPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_BACKWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_BACKWARDS),false,true);
-  INDArray outActBackwards=backPass.fwdPassOutput;
+  final FwdPassReturn backPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_BACKWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_BACKWARDS),false,false);
+  final INDArray outActBackwards=backPass.fwdPassOutput;
   if (storeLastForTBPTT) {
     tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_BACKWARDS,backPass.lastAct);
     tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_BACKWARDS,backPass.lastMemCell);

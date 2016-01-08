@@ -26,5 +26,8 @@
   for (  Map.Entry<String,INDArray> entry : backwardsGradient.getFirst().gradientForVariable().entrySet()) {
     combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
   }
-  return new Pair<>(combinedGradient,forwardsGradient.getSecond().add(backwardsGradient.getSecond()));
+  final INDArray forwardEpsilon=forwardsGradient.getSecond();
+  final INDArray backwardsEpsilon=backwardsGradient.getSecond();
+  final INDArray combinedEpsilon=forwardEpsilon.add(backwardsEpsilon);
+  return new Pair<>(combinedGradient,combinedEpsilon);
 }
