@@ -1,0 +1,11 @@
+{
+  int nIn=4;
+  int nOut=3;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().updater(Updater.RMSPROP).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).list(2).layer(0,new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(nIn).nOut(3).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MSE).nIn(3).nOut(nOut).activation("softmax").build()).build();
+  SparkDl4jMultiLayer sparkNet=new SparkDl4jMultiLayer(sc,conf);
+  Nd4j.getRandom().setSeed(12345);
+  DataSet d1=new DataSet(Nd4j.rand(1,nIn),Nd4j.rand(1,nOut));
+  DataSet d2=new DataSet(Nd4j.rand(1,nIn),Nd4j.rand(1,nOut));
+  JavaRDD<DataSet> rddData=sc.parallelize(Arrays.asList(d1,d2));
+  sparkNet.fitDataSet(rddData);
+}
