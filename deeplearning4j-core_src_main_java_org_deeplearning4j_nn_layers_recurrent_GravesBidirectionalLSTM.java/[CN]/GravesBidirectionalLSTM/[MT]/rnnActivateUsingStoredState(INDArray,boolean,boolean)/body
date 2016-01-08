@@ -1,16 +1,3 @@
 {
-  setInput(input);
-  final FwdPassReturn fwdPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_FORWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_FORWARDS),false,true);
-  final INDArray outActForwards=fwdPass.fwdPassOutput;
-  if (storeLastForTBPTT) {
-    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_FORWARDS,fwdPass.lastAct);
-    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_FORWARDS,fwdPass.lastMemCell);
-  }
-  final FwdPassReturn backPass=activateHelperDirectional(training,stateMap.get(STATE_KEY_PREV_ACTIVATION_BACKWARDS),stateMap.get(STATE_KEY_PREV_MEMCELL_BACKWARDS),false,false);
-  final INDArray outActBackwards=backPass.fwdPassOutput;
-  if (storeLastForTBPTT) {
-    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION_BACKWARDS,backPass.lastAct);
-    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL_BACKWARDS,backPass.lastMemCell);
-  }
-  return outActForwards.add(outActBackwards);
+  throw new UnsupportedOperationException("no such thing as stored state for bidirectional RNN");
 }
