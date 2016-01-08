@@ -14,14 +14,11 @@
     this.labelsSource=labelAwareIterator.getLabelsSource();
   }
  else {
-    log.warn("Unexpected path taken");
-    throw new RuntimeException("Unexpected path taken");
   }
   if (labelAwareIterator != null) {
     SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(labelAwareIterator).tokenizerFactory(tokenizerFactory).build();
     this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
   }
- else   throw new IllegalStateException("LabelAwareIterator is NULL");
   ret.numEpochs=this.numEpochs;
   ret.numIterations=this.iterations;
   ret.vocab=this.vocabCache;
