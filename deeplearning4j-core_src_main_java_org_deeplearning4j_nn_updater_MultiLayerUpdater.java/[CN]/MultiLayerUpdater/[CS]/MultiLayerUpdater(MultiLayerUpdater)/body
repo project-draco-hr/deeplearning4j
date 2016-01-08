@@ -1,0 +1,6 @@
+{
+  layerUpdaters=new Updater[updater.layerUpdaters.length];
+  for (int i=0; i < updater.layerUpdaters.length; i++) {
+    layerUpdaters[i]=updater.layerUpdaters[i].clone();
+  }
+}
