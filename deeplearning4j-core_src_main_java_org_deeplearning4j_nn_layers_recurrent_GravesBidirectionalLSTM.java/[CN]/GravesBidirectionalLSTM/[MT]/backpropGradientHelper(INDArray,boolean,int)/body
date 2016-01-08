@@ -1,0 +1,24 @@
+{
+  if (truncatedBPTT) {
+    throw new UnsupportedOperationException("you can not time step a bidirectional RNN, it has to run on a batch of data all at once");
+  }
+  final FwdPassReturn fwdPass=activateHelperDirectional(true,null,null,true,true);
+  final Pair<Gradient,INDArray> forwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS);
+  final FwdPassReturn backPass=activateHelperDirectional(true,null,null,true,false);
+  final Pair<Gradient,INDArray> backwardsGradient=LSTMHelpers.backpropGradientHelper(this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),epsilon,truncatedBPTT,tbpttBackwardLength,backPass,false,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS,GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
+  final Gradient combinedGradient=new DefaultGradient();
+  for (  Map.Entry<String,INDArray> entry : forwardsGradient.getFirst().gradientForVariable().entrySet()) {
+    combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
+  }
+  for (  Map.Entry<String,INDArray> entry : backwardsGradient.getFirst().gradientForVariable().entrySet()) {
+    combinedGradient.setGradientFor(entry.getKey(),entry.getValue());
+  }
+  final Gradient correctOrderedGradient=new DefaultGradient();
+  for (  final String key : params.keySet()) {
+    correctOrderedGradient.setGradientFor(key,combinedGradient.getGradientFor(key));
+  }
+  final INDArray forwardEpsilon=forwardsGradient.getSecond();
+  final INDArray backwardsEpsilon=backwardsGradient.getSecond();
+  final INDArray combinedEpsilon=forwardEpsilon.addi(backwardsEpsilon);
+  return new Pair<>(correctOrderedGradient,combinedEpsilon);
+}

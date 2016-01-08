@@ -1,0 +1,34 @@
+{
+  INDArray inputData=Nd4j.ones(miniBatchSize,nIn,timeSeriesLength);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(lstmNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").build()).build();
+  GravesBidirectionalLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf);
+  lstm.activate(inputData);
+  assertNotNull(lstm.input());
+  INDArray epsilon=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,timeSeriesLength);
+  Pair<Gradient,INDArray> out=lstm.backpropGradient(epsilon);
+  Gradient outGradient=out.getFirst();
+  INDArray nextEpsilon=out.getSecond();
+  INDArray biasGradientF=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS);
+  INDArray inWeightGradientF=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS);
+  INDArray recurrentWeightGradientF=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS);
+  assertNotNull(biasGradientF);
+  assertNotNull(inWeightGradientF);
+  assertNotNull(recurrentWeightGradientF);
+  INDArray biasGradientB=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS);
+  INDArray inWeightGradientB=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS);
+  INDArray recurrentWeightGradientB=outGradient.getGradientFor(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS);
+  assertNotNull(biasGradientB);
+  assertNotNull(inWeightGradientB);
+  assertNotNull(recurrentWeightGradientB);
+  assertArrayEquals(biasGradientF.shape(),new int[]{1,4 * lstmNHiddenUnits});
+  assertArrayEquals(inWeightGradientF.shape(),new int[]{nIn,4 * lstmNHiddenUnits});
+  assertArrayEquals(recurrentWeightGradientF.shape(),new int[]{lstmNHiddenUnits,4 * lstmNHiddenUnits + 3});
+  assertArrayEquals(biasGradientB.shape(),new int[]{1,4 * lstmNHiddenUnits});
+  assertArrayEquals(inWeightGradientB.shape(),new int[]{nIn,4 * lstmNHiddenUnits});
+  assertArrayEquals(recurrentWeightGradientB.shape(),new int[]{lstmNHiddenUnits,4 * lstmNHiddenUnits + 3});
+  assertNotNull(nextEpsilon);
+  assertArrayEquals(nextEpsilon.shape(),new int[]{miniBatchSize,nIn,timeSeriesLength});
+  for (  String s : outGradient.gradientForVariable().keySet()) {
+    lstm.update(outGradient.getGradientFor(s),s);
+  }
+}

@@ -10,7 +10,7 @@
   lstm.setInput(input);
   Method actHelper=GravesLSTM.class.getDeclaredMethod("activateHelper",boolean.class,INDArray.class,INDArray.class,boolean.class);
   actHelper.setAccessible(true);
-  Class<?> innerClass=Class.forName("org.deeplearning4j.nn.layers.recurrent.GravesLSTM$FwdPassReturn");
+  Class<?> innerClass=Class.forName("org.deeplearning4j.nn.layers.recurrent.FwdPassReturn");
   Object oFalse=actHelper.invoke(lstm,false,null,null,false);
   Object oTrue=actHelper.invoke(lstm,false,null,null,true);
   Field fwdPassOutput=innerClass.getDeclaredField("fwdPassOutput");
