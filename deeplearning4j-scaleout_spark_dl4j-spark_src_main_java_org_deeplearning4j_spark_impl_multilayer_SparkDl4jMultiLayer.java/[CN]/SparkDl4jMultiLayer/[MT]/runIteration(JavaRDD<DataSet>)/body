@@ -13,8 +13,8 @@
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
     JavaRDD<Tuple2<Gradient,Updater>> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params,this.updater),true).cache();
-    log.info("Ran iterative reduce...averaging results now.");
     JavaRDD<Gradient> resultsGradient=results.map(new GradientFromTupleFunction());
+    log.info("Ran iterative reduce... averaging results now.");
     GradientAdder a=new GradientAdder(paramsLength);
     resultsGradient.foreach(a);
     INDArray accumulatedGradient=a.getAccumulator().value();
@@ -34,7 +34,7 @@
  else {
     JavaRDD<Tuple3<INDArray,Updater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.bestScoreAcc),true).cache();
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunction());
-    log.info("Ran iterative reduce... averaging parameters now.");
+    log.info("Running iterative reduce and averaging parameters");
     Adder a=new Adder(paramsLength);
     resultsParams.foreach(a);
     INDArray newParams=a.getAccumulator().value();
