@@ -1,0 +1,9 @@
+{
+  try {
+    return exampleCount < numExamples;
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  return false;
+}
