@@ -1,6 +1,6 @@
 {
-  super(null,batchSize,imgDim[0] * imgDim[1] * imgDim[2],numCategories);
-  this.loader=new CifarLoader();
+  super(null,batchSize,width * height * channels,CifarLoader.NUM_LABELS);
+  this.loader=new CifarLoader(version);
   this.inputStream=loader.getInputStream();
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
 }

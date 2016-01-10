@@ -1,3 +1,6 @@
 {
-  super(new CifarLoader().getRecordReader(numExamples,numCategories),batchSize,width * height * channels,numCategories);
+  super(null,batchSize,width * height * channels,numCategories);
+  this.loader=new CifarLoader();
+  this.inputStream=loader.getInputStream();
+  this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
 }
