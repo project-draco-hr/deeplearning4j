@@ -1,8 +1,8 @@
 {
   if (!iter.hasNext()) {
+    passes++;
     log.info("Epoch " + passes + ", number of batches completed "+ batch);
     if (passes < numPasses) {
-      passes++;
       batch=0;
       iter.reset();
     }
