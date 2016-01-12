@@ -1,0 +1,4 @@
+{
+  if (adaGrad == null)   adaGrad=new AdaGrad(1,getCodeLength(),lr);
+  return adaGrad.getGradient(g,index,new int[]{1,getCodeLength()});
+}

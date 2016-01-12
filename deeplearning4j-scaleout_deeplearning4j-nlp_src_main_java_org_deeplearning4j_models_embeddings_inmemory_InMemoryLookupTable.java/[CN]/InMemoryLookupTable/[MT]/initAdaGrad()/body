@@ -1,3 +1,3 @@
 {
-  adaGrad=new AdaGrad(vocab.numWords(),vectorLength);
+  adaGrad=new AdaGrad(new int[]{vocab.numWords() + 1,vectorLength},lr.get());
 }

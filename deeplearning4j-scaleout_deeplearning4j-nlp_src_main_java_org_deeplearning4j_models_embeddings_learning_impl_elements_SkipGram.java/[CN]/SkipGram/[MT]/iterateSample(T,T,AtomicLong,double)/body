@@ -12,7 +12,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     double f=expTable[idx];
-    double g=useAdaGrad ? lookupTable.getGradient(i,(1 - code - f)) : (1 - code - f) * alpha;
+    double g=useAdaGrad ? w1.getGradient(i,(1 - code - f),alpha) : (1 - code - f) * alpha;
     if (neu1e.data().dataType() == DataBuffer.Type.FLOAT) {
       Nd4j.getBlasWrapper().level1().axpy(syn1.length(),g,syn1,neu1e);
       Nd4j.getBlasWrapper().level1().axpy(syn1.length(),g,l1,syn1);
