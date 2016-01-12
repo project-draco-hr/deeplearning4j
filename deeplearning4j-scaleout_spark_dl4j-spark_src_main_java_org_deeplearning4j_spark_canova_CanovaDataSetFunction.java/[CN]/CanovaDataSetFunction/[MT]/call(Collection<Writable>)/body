@@ -9,7 +9,8 @@
   INDArray label=null;
   INDArray featureVector=Nd4j.create(labelIndex >= 0 ? list.size() - 1 : list.size());
   int featureCount=0;
-  for (int j=0; j < list.size(); j++) {
+  numExamples=numExamples == -1 ? list.size() : numExamples;
+  for (int j=0; j < numExamples; j++) {
     Writable current=list.get(j);
     if (converter != null)     current=converter.convert(current);
     if (labelIndex >= 0 && j == labelIndex) {

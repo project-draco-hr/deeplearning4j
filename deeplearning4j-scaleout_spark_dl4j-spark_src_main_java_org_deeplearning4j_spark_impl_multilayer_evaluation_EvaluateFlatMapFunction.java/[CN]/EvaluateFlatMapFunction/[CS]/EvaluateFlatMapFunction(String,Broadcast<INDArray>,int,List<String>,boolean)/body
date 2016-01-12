@@ -1,0 +1,8 @@
+{
+  this.json=json;
+  this.params=params;
+  this.examplesPerEvaluation=examplesPerEvaluation;
+  List<String> tmp=new ArrayList<>();
+  this.labels=labels == null ? tmp : labels;
+  this.warnNotClassified=warnNotClassified;
+}
