@@ -1,5 +1,3 @@
 {
-  this.json=json;
-  this.params=params;
-  this.examplesPerEvaluation=examplesPerEvaluation;
+  this(json,params,examplesPerEvaluation,labels,false);
 }

@@ -12,7 +12,7 @@
         builder.append(String.format("Examples labeled as %s classified by model as %s: %d times\n",actual,expected,count));
       }
     }
-    if (truePositives.getCount(clazz) == 0) {
+    if (warnNotClassified && truePositives.getCount(clazz) == 0) {
       if (falsePositives.getCount(clazz) == 0) {
         warnings.append(String.format("Warning: class %s was never predicted by the model. This class was excluded from the average precision\n",actual));
       }

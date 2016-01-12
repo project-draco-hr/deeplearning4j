@@ -1,0 +1,10 @@
+{
+  JavaRDD<Evaluation> evaluation=data.mapPartitions(new EvaluateFlatMapFunction(conf.toJson(),sc.broadcast(network.params(false)),maxExamplesPerEvaluation,labelsList,warnNotClassified));
+  List<Evaluation> evaluationList=evaluation.collect();
+  Iterator<Evaluation> evaluationIterator=evaluationList.iterator();
+  Evaluation eval=evaluationIterator.next();
+  while (evaluationIterator.hasNext()) {
+    eval.merge(evaluationIterator.next());
+  }
+  return eval;
+}
