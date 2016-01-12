@@ -20,7 +20,7 @@
     sb.append("\n");
     write.write(sb.toString());
   }
-  log.info("Wrote " + words + " with size of "+ vec.lookupTable().getVectorLength());
+  log.info("Wrote " + words + " with size of "+ vec.lookupTable().layerSize());
   write.flush();
   write.close();
 }

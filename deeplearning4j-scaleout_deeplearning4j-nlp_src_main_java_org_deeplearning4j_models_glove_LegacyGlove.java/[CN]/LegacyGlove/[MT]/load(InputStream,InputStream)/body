@@ -13,7 +13,7 @@
       glove.lookupTable=new GloveWeightLookupTable.Builder().cache(glove.vocab()).vectorLength(split.length - 1).build();
     }
     if (word.isEmpty())     continue;
-    float[] read=read(split,glove.lookupTable().getVectorLength());
+    float[] read=read(split,glove.lookupTable().layerSize());
     if (read.length < 1)     continue;
     VocabWord w1=new VocabWord(1,word);
     w1.setIndex(count);

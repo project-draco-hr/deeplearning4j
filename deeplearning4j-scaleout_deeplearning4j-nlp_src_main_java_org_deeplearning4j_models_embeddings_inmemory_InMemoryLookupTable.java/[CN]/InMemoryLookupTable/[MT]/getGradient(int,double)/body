@@ -1,0 +1,4 @@
+{
+  if (adaGrad == null)   initAdaGrad();
+  return adaGrad.getGradient(gradient,column,syn0.shape());
+}

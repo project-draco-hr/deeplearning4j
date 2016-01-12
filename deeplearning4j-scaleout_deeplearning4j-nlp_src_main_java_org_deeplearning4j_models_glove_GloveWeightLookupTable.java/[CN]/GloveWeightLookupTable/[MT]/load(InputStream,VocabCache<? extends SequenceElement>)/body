@@ -9,7 +9,7 @@
     String word=split[0];
     if (glove == null)     glove=new GloveWeightLookupTable.Builder().cache(vocab).vectorLength(split.length - 1).build();
     if (word.isEmpty())     continue;
-    float[] read=read(split,glove.getVectorLength());
+    float[] read=read(split,glove.layerSize());
     if (read.length < 1)     continue;
     wordVectors.put(word,read);
   }

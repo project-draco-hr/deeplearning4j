@@ -6,4 +6,7 @@
   this.rng=gen;
   this.negative=negative;
   initExpTable();
+  if (useAdaGrad) {
+    initAdaGrad();
+  }
 }
