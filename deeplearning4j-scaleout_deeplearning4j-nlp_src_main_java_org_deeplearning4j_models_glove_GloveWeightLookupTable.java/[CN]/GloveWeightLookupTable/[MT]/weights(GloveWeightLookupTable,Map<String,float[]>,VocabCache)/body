@@ -1,8 +1,8 @@
 {
-  INDArray ret=Nd4j.create(data.size(),glove.getVectorLength());
+  INDArray ret=Nd4j.create(data.size(),glove.layerSize());
   for (  String key : data.keySet()) {
     INDArray row=Nd4j.create(Nd4j.createBuffer(data.get(key)));
-    if (row.length() != glove.getVectorLength())     continue;
+    if (row.length() != glove.layerSize())     continue;
     if (vocab.indexOf(key) >= data.size())     continue;
     if (vocab.indexOf(key) < 0)     continue;
     ret.putRow(vocab.indexOf(key),row);

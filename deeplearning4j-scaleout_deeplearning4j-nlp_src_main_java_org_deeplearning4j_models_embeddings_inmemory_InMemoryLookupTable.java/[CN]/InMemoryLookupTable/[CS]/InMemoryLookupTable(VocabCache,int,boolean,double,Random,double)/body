@@ -7,5 +7,6 @@
   this.negative=negative;
   initExpTable();
   if (useAdaGrad) {
+    initAdaGrad();
   }
 }
