@@ -6,9 +6,12 @@
       batch=0;
       iter.reset();
     }
+ else {
+      return null;
+    }
   }
   batch++;
-  DataSet next=iter.next(num);
+  DataSet next=num == -1 ? iter.next() : iter.next(num);
   if (preProcessor != null)   preProcessor.preProcess(next);
   return next;
 }
