@@ -1,0 +1,10 @@
+{
+  for (  File file : foldersToScan) {
+    if (!file.isDirectory())     continue;
+    scanFolder(file);
+  }
+  LabelsSource source=new LabelsSource(labels);
+  FilenamesLabelAwareIterator iterator=new FilenamesLabelAwareIterator(fileList,source);
+  iterator.absPath=this.absPath;
+  return iterator;
+}
