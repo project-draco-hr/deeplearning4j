@@ -1,6 +1,6 @@
 {
   if (negative > 0) {
     syn1Neg=Nd4j.zeros(syn0.shape());
-    makeTable(expTable.length,0.75);
+    makeTable(Math.max(expTable.length,100000),0.75);
   }
 }
