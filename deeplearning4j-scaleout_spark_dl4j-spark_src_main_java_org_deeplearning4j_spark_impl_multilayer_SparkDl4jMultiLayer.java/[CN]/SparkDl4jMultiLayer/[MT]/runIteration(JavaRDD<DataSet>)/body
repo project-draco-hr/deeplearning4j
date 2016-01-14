@@ -32,7 +32,7 @@
     log.info("Set updater");
   }
  else {
-    JavaRDD<Tuple3<INDArray,Updater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.bestScoreAcc),true).cache();
+    JavaRDD<Tuple3<INDArray,Updater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.bestScoreAcc),true).persist(org.apache.spark.storage.StorageLevel.MEMORY_ONLY_SER());
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunction());
     log.info("Ran iterative reduce... averaging parameters now.");
     Adder a=new Adder(paramsLength);
