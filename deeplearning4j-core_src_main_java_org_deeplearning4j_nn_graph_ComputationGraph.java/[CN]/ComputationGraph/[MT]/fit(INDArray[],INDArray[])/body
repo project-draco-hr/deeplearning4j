@@ -1,0 +1,16 @@
+{
+  if (configuration.isPretrain()) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
+  if (configuration.isBackprop()) {
+    if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+      throw new UnsupportedOperationException("Not implemented");
+    }
+ else {
+      if (solver == null) {
+        solver=new Solver.Builder().configure(conf()).model(this).build();
+      }
+      solver.optimize();
+    }
+  }
+}

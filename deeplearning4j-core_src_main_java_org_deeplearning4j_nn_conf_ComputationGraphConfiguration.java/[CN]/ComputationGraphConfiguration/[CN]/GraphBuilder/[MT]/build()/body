@@ -1,0 +1,12 @@
+{
+  ComputationGraphConfiguration conf=new ComputationGraphConfiguration();
+  conf.backprop=backprop;
+  conf.pretrain=pretrain;
+  conf.backpropType=backpropType;
+  conf.tbpttBackLength=tbpttBackLength;
+  conf.tbpttFwdLength=tbpttFwdLength;
+  if (!conf.validate()) {
+    throw new IllegalStateException("Invalid configuration");
+  }
+  return conf;
+}

@@ -1,0 +1,12 @@
+{
+  if (!canDoForward())   throw new IllegalStateException("Cannot do forward pass: all inputs not set");
+  if (layer != null) {
+    INDArray activations=layer.activate(inputs[0],training);
+    INDArray[] ret=new INDArray[outputIndices.length];
+    for (int i=0; i < ret.length; i++)     ret[i]=activations;
+    return ret;
+  }
+ else {
+    return node.forward(inputs);
+  }
+}

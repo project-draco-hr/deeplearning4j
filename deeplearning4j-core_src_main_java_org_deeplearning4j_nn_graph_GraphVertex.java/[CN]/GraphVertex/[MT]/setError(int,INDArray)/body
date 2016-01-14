@@ -1,0 +1,4 @@
+{
+  if (errorNumber >= getNumOutputArrays())   throw new IllegalArgumentException("Invalid error number");
+  epsilons[errorNumber]=error;
+}
