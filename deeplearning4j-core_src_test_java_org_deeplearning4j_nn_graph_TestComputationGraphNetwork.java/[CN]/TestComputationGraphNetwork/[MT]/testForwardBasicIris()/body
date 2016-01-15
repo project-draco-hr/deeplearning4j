@@ -14,7 +14,7 @@
   assertTrue(activations.containsKey("firstLayer"));
   assertTrue(activations.containsKey("outputLayer"));
   Nd4j.getRandom().setSeed(12345);
-  int nParams=(4 * 5 + 5) + (5 * 3 + 3);
+  int nParams=getNumParams();
   INDArray params=Nd4j.rand(1,nParams);
   graph.setParams(params.dup());
   net.setParams(params.dup());

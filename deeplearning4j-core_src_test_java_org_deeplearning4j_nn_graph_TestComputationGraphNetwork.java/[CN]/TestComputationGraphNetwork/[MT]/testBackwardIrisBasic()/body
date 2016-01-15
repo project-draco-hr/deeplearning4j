@@ -22,9 +22,13 @@
   Pair<Gradient,Double> netGradScore=net.gradientAndScore();
   graph.computeGradientAndScore();
   Pair<Gradient,Double> graphGradScore=graph.gradientAndScore();
-  assertEquals(netGradScore.getSecond(),graphGradScore.getSecond(),1e-2);
+  assertEquals(netGradScore.getSecond(),graphGradScore.getSecond(),1e-3);
   Gradient netGrad=netGradScore.getFirst();
   Gradient graphGrad=graphGradScore.getFirst();
   assertNotNull(graphGrad);
   assertEquals(netGrad.gradientForVariable().size(),graphGrad.gradientForVariable().size());
+  assertEquals(netGrad.getGradientFor("0_W"),graphGrad.getGradientFor("firstLayer_W"));
+  assertEquals(netGrad.getGradientFor("0_b"),graphGrad.getGradientFor("firstLayer_b"));
+  assertEquals(netGrad.getGradientFor("1_W"),graphGrad.getGradientFor("outputLayer_W"));
+  assertEquals(netGrad.getGradientFor("1_b"),graphGrad.getGradientFor("outputLayer_b"));
 }

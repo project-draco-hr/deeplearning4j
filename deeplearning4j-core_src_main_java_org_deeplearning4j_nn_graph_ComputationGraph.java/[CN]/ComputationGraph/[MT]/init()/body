@@ -21,15 +21,20 @@
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
   }
+  numLayers=0;
+  List<Layer> tempLayerList=new ArrayList<>();
   for (  Map.Entry<String,Layer> layerEntry : layerMap.entrySet()) {
     Layer l=layerEntry.getValue();
+    tempLayerList.add(l);
     InputPreProcessor preProcessor=configuration.getInputPreProcessors().get(layerEntry.getKey());
     String name=layerEntry.getKey();
     GraphVertex gv=new GraphVertex(name,i,null,null,l,preProcessor);
     allNames.put(i,name);
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
+    numLayers++;
   }
+  layers=tempLayerList.toArray(new Layer[numLayers]);
   for (  Map.Entry<String,GraphNode> nodeEntry : nodeMap.entrySet()) {
     GraphNode n=nodeEntry.getValue();
     String name=nodeEntry.getKey();
@@ -83,6 +88,10 @@
   }
   for (  GraphVertex gv : vertices) {
     System.out.println(gv);
+  }
+  verticesMap=new HashMap<>();
+  for (  GraphVertex gv : vertices) {
+    verticesMap.put(gv.getVertexName(),gv);
   }
   topologicalOrder=topologicalSortOrder();
 }

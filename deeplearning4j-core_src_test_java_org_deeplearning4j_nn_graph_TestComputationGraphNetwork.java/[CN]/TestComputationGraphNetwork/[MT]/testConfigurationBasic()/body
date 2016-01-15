@@ -7,7 +7,7 @@
   assertArrayEquals(expOrder,order);
   INDArray params=graph.params();
   assertNotNull(params);
-  int nParams=(4 * 5 + 5) + (5 * 3 + 3);
+  int nParams=getNumParams();
   assertEquals(nParams,params.length());
   INDArray arr=Nd4j.linspace(0,nParams,nParams);
   assertEquals(nParams,arr.length());
