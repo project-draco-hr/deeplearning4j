@@ -1,0 +1,12 @@
+{
+  List<DataSet> list=new ArrayList<>();
+  for (int i=0; i < nRows; i++) {
+    INDArray inRow=input.getRow(i).dup();
+    INDArray outRow=labels.getRow(i).dup();
+    DataSet ds=new DataSet(inRow,outRow);
+    list.add(ds);
+  }
+  list.iterator();
+  data=new DataSet().merge(list);
+  return sc.parallelize(list);
+}

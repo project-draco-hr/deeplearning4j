@@ -1,7 +1,7 @@
 {
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(2).layer(0,new org.deeplearning4j.nn.conf.layers.RBM.Builder().nIn(4).nOut(3).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).activation("softmax").build()).build();
-  DataSet dataSet=new IrisDataSetIterator(150,150).next();
+  DataSet dataSet=new IrisDataSetIterator(5,5).next();
   List<DataSet> list=dataSet.asList();
   JavaRDD<DataSet> data=sc.parallelize(list);
   JavaRDD<LabeledPoint> mllLibData=MLLibUtil.fromDataSet(sc,data);
