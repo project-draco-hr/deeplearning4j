@@ -1,3 +1,10 @@
 {
-  throw new UnsupportedOperationException("Not implemnted");
+  if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+    throw new UnsupportedOperationException();
+  }
+ else {
+    feedForward(true);
+    backprop();
+  }
+  throw new UnsupportedOperationException("Score calculation not implemented");
 }

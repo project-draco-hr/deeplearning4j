@@ -1,5 +1,42 @@
 {
   int[] out=new int[vertices.length];
   int outCounter=0;
-  throw new UnsupportedOperationException("Not implemented");
+  boolean[] processed=new boolean[vertices.length];
+  Map<Integer,Set<Integer>> inputEdges=new HashMap<>();
+  for (  GraphVertex gv : vertices) {
+    int[] vertexInputsFrom=gv.getInputVertexIndices();
+    if (vertexInputsFrom == null || vertexInputsFrom.length == 0) {
+      inputEdges.put(gv.getIndex(),null);
+      continue;
+    }
+    Set<Integer> set=new HashSet<>();
+    for (    int i : vertexInputsFrom) {
+      set.add(i);
+    }
+    inputEdges.put(gv.getVertexIndex(),set);
+  }
+  LinkedList<Integer> noIncomingEdges=new LinkedList<>();
+  for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
+    Set<Integer> inputsFrom=entry.getValue();
+    if (inputsFrom == null || inputsFrom.size() == 0) {
+      noIncomingEdges.add(entry.getKey());
+    }
+  }
+  while (noIncomingEdges.size() > 0) {
+    int next=noIncomingEdges.removeFirst();
+    out[outCounter++]=next;
+    int[] vertexOutputsTo=vertices[next].getOutputVertexIndices();
+    if (vertexOutputsTo != null) {
+      for (      int i : vertexOutputsTo) {
+        Set<Integer> set=inputEdges.get(i);
+        set.remove(next);
+        if (set.size() == 0) {
+          noIncomingEdges.add(i);
+        }
+      }
+    }
+  }
+  System.out.println("Topological sort order:");
+  System.out.println(Arrays.toString(out));
+  return out;
 }

@@ -1,4 +1,30 @@
 {
   if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSetIterator");
-  throw new UnsupportedOperationException("Not implemented");
+  if (configuration.isPretrain()) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
+  if (configuration.isBackprop()) {
+    while (dataSetIterator.hasNext()) {
+      DataSet next=dataSetIterator.next();
+      if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      boolean hasMaskArrays=next.hasMaskArrays();
+      if (hasMaskArrays) {
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+      if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+ else {
+        setInput(0,next.getFeatureMatrix());
+        setLabel(0,next.getLabels());
+        if (solver == null) {
+          solver=new Solver.Builder().configure(defaultConfiguration).model(this).build();
+        }
+        solver.optimize();
+      }
+      if (hasMaskArrays) {
+        throw new UnsupportedOperationException();
+      }
+    }
+  }
 }

@@ -1,0 +1,5 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("GraphVertex(id=").append(vertexIndex).append(",name=").append(vertexName).append(",inputs=").append(Arrays.toString(inputIndices)).append(",outputs=").append(Arrays.toString(outputIndices)).append(")");
+  return sb.toString();
+}

@@ -1,0 +1,12 @@
+{
+  for (int i=0; i < topologicalOrder.length; i++) {
+    GraphVertex current=vertices[topologicalOrder[i]];
+    if (current.isInputVertex()) {
+      int[] outIndices=current.getOutputVertexIndices();
+      for (      int v : outIndices) {
+      }
+    }
+ else {
+    }
+  }
+}
