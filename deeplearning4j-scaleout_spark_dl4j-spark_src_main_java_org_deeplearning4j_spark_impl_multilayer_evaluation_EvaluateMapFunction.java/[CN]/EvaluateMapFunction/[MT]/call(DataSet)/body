@@ -1,0 +1,22 @@
+{
+  Evaluation evaluation=new Evaluation<>(labels,warnNotClassified);
+  INDArray out;
+  if (data.hasMaskArrays()) {
+    out=network.output(data.getFeatureMatrix(),false,data.getFeaturesMaskArray(),data.getLabelsMaskArray());
+  }
+ else {
+    out=network.output(data.getFeatureMatrix(),false);
+  }
+  if (data.getLabels().rank() == 3) {
+    if (data.getLabelsMaskArray() == null) {
+      evaluation.evalTimeSeries(data.getLabels(),out);
+    }
+ else {
+      evaluation.evalTimeSeries(data.getLabels(),out,data.getLabelsMaskArray());
+    }
+  }
+ else {
+    evaluation.eval(data.getLabels(),out);
+  }
+  return evaluation;
+}

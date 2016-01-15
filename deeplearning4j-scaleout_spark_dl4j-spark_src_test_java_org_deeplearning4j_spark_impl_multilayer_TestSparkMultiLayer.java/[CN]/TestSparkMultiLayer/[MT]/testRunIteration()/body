@@ -1,0 +1,12 @@
+{
+  DataSet dataSet=new IrisDataSetIterator(5,5).next();
+  List<DataSet> list=dataSet.asList();
+  JavaRDD<DataSet> data=sc.parallelize(list);
+  SparkDl4jMultiLayer sparkNetCopy=new SparkDl4jMultiLayer(sc,getBasicConf());
+  MultiLayerNetwork networkCopy=sparkNetCopy.fitDataSet(data);
+  INDArray expectedParams=networkCopy.params();
+  SparkDl4jMultiLayer sparkNet=getBasicNetwork();
+  MultiLayerNetwork network=sparkNet.fitDataSet(data);
+  INDArray actualParams=network.params();
+  assertEquals(expectedParams.size(1),actualParams.size(1));
+}

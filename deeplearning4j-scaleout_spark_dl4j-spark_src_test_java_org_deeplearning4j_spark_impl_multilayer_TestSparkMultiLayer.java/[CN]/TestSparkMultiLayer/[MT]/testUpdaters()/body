@@ -1,0 +1,15 @@
+{
+  SparkDl4jMultiLayer sparkNet=getBasicNetwork();
+  MultiLayerNetwork netCopy=sparkNet.getNetwork().clone();
+  netCopy.fit(data);
+  Updater expectedUpdater=netCopy.conf().getLayer().getUpdater();
+  double expectedLR=netCopy.conf().getLayer().getLearningRate();
+  double expectedMomentum=netCopy.conf().getLayer().getMomentum();
+  Updater actualUpdater=sparkNet.getNetwork().conf().getLayer().getUpdater();
+  sparkNet.runIteration(sparkData);
+  double actualLR=sparkNet.getNetwork().conf().getLayer().getLearningRate();
+  double actualMomentum=sparkNet.getNetwork().conf().getLayer().getMomentum();
+  assertEquals(expectedUpdater,actualUpdater);
+  assertEquals(expectedLR,actualLR,0.01);
+  assertEquals(expectedMomentum,actualMomentum,0.01);
+}
