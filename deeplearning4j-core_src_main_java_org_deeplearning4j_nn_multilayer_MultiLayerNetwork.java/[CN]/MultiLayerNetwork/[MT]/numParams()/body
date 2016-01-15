@@ -1,5 +1,3 @@
 {
-  int length=0;
-  for (int i=0; i < layers.length; i++)   length+=layers[i].numParams();
-  return length;
+  return numParams(false);
 }

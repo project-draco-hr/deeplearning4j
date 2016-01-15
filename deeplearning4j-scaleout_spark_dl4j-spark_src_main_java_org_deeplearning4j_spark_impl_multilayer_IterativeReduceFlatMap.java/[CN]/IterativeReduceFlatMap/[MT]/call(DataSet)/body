@@ -1,5 +1,0 @@
-{
-  network.setListeners(new ScoreIterationListener(1),new BestScoreIterationListener(best_score_acc));
-  network.fit(dataSet);
-  return new Tuple2<>(network,network.score());
-}

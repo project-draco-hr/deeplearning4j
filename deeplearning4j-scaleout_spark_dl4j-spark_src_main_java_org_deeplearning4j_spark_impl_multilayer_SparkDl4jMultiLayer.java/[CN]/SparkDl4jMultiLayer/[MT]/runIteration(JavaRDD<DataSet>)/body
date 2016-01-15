@@ -1,6 +1,16 @@
 {
   log.info("Broadcasting initial parameters of length " + network.numParams(false));
-  int paramsLength=network.numParams(false);
+  log.info("Broadcasting initial parameters of length " + network.numParams(false));
+  INDArray valToBroadcast=network.params(false);
+  this.params=sc.broadcast(valToBroadcast);
+  Updater updater=network.getUpdater();
+  if (updater == null) {
+    network.setUpdater(UpdaterCreator.getUpdater(network));
+    log.warn("Unable to propagate null updater");
+    updater=network.getUpdater();
+  }
+  this.updater=sc.broadcast(updater);
+  int paramsLength=network.numParams(true);
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
     JavaRDD<Tuple2<Gradient,Updater>> results=rdd.mapPartitions(new GradientAccumFlatMap(conf.toJson(),this.params,this.updater),true).cache();
@@ -23,22 +33,23 @@
     log.info("Set updater");
   }
  else {
-    JavaRDD<Tuple2<MultiLayerNetwork,Double>> results=rdd.map(new IterativeReduceFlatMap(network,bestScoreAcc)).persist(org.apache.spark.storage.StorageLevel.MEMORY_AND_DISK_SER());
+    JavaRDD<Tuple3<INDArray,Updater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater,this.bestScoreAcc),true).cache();
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunction());
     log.info("Ran iterative reduce... averaging parameters now.");
     Adder a=new Adder(paramsLength);
     resultsParams.foreach(a);
     INDArray newParams=a.getAccumulator().value();
     log.info("Accumulated parameters");
+    int v=rdd.partitions().size();
     newParams.divi(rdd.partitions().size());
     log.info("Divided by partitions");
     network.setParameters(newParams);
     log.info("Set parameters");
     log.info("Processing updaters");
     JavaRDD<Updater> resultsUpdater=results.map(new UpdaterFromTupleFunction());
-    JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple2<MultiLayerNetwork,Double>>(){
-      @Override public double call(      Tuple2<MultiLayerNetwork,Double> t2) throws Exception {
-        return t2._2();
+    JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple3<INDArray,Updater,Double>>(){
+      @Override public double call(      Tuple3<INDArray,Updater,Double> t3) throws Exception {
+        return t3._3();
       }
     }
 );

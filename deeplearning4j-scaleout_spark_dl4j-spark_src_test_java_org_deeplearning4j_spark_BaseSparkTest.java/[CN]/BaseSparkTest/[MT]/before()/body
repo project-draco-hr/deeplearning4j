@@ -1,3 +1,13 @@
 {
   sc=getContext();
+  Random r=new Random(12345);
+  labels=Nd4j.create(nRows,nOut);
+  input=Nd4j.rand(nRows,nIn);
+  rowSums=input.sum(1);
+  input.diviColumnVector(rowSums);
+  for (int i=0; i < nRows; i++) {
+    int x1=r.nextInt(nOut);
+    labels.putScalar(new int[]{i,x1},1.0);
+  }
+  sparkData=getBasicSparkDataSet(nRows,input,labels);
 }
