@@ -8,6 +8,7 @@
   conf.layerNamesMap=layerNamesMap;
   conf.layerNumbersMap=layerNumbersMap;
   conf.layerInputs=layerInputs;
+  conf.inputPreProcessors=inputPreProcessors;
   conf.networkInputs=networkInputs;
   conf.networkOutputs=networkOutputs;
   Map<String,NeuralNetConfiguration> layers=new HashMap<>();

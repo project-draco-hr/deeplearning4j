@@ -4,14 +4,14 @@
   boolean[] processed=new boolean[vertices.length];
   Map<Integer,Set<Integer>> inputEdges=new HashMap<>();
   for (  GraphVertex gv : vertices) {
-    int[] vertexInputsFrom=gv.getInputVertexIndices();
+    VertexIndices[] vertexInputsFrom=gv.getInputVertices();
     if (vertexInputsFrom == null || vertexInputsFrom.length == 0) {
       inputEdges.put(gv.getIndex(),null);
       continue;
     }
     Set<Integer> set=new HashSet<>();
-    for (    int i : vertexInputsFrom) {
-      set.add(i);
+    for (    VertexIndices v : vertexInputsFrom) {
+      set.add(v.getVertexIndex());
     }
     inputEdges.put(gv.getVertexIndex(),set);
   }
@@ -25,13 +25,13 @@
   while (noIncomingEdges.size() > 0) {
     int next=noIncomingEdges.removeFirst();
     out[outCounter++]=next;
-    int[] vertexOutputsTo=vertices[next].getOutputVertexIndices();
+    VertexIndices[] vertexOutputsTo=vertices[next].getOutputVertices();
     if (vertexOutputsTo != null) {
-      for (      int i : vertexOutputsTo) {
-        Set<Integer> set=inputEdges.get(i);
+      for (      VertexIndices v : vertexOutputsTo) {
+        Set<Integer> set=inputEdges.get(v.getVertexIndex());
         set.remove(next);
         if (set.size() == 0) {
-          noIncomingEdges.add(i);
+          noIncomingEdges.add(v.getVertexIndex());
         }
       }
     }

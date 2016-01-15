@@ -16,28 +16,24 @@
   Map<String,Integer> allNamesReverse=new HashMap<>();
   int i=0;
   for (  String name : networkInputNames) {
-    int[] outVertices=null;
-    GraphVertex gv=new GraphVertex(name,i,outVertices);
+    GraphVertex gv=new GraphVertex(name,i,null);
     allNames.put(i,name);
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
   }
   for (  Map.Entry<String,Layer> layerEntry : layerMap.entrySet()) {
-    int[] inputIndices=null;
-    int[] outputIndices=null;
     Layer l=layerEntry.getValue();
+    InputPreProcessor preProcessor=configuration.getInputPreProcessors().get(layerEntry.getKey());
     String name=layerEntry.getKey();
-    GraphVertex gv=new GraphVertex(name,i,inputIndices,outputIndices,l);
+    GraphVertex gv=new GraphVertex(name,i,null,null,l,preProcessor);
     allNames.put(i,name);
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
   }
   for (  Map.Entry<String,GraphNode> nodeEntry : nodeMap.entrySet()) {
-    int[] inputIndices=null;
-    int[] outputIndices=null;
     GraphNode n=nodeEntry.getValue();
     String name=nodeEntry.getKey();
-    GraphVertex gv=new GraphVertex(name,i,inputIndices,outputIndices,n);
+    GraphVertex gv=new GraphVertex(name,i,null,null,n);
     allNames.put(i,name);
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
@@ -56,11 +52,12 @@
       vertexInputNames=null;
     }
     if (vertexInputNames == null)     continue;
-    int[] indices=new int[vertexInputNames.length];
+    VertexIndices[] inputIndices=new VertexIndices[vertexInputNames.length];
     for (int j=0; j < vertexInputNames.length; j++) {
-      indices[j]=allNamesReverse.get(vertexInputNames[j]);
+      int inputVertexIndex=allNamesReverse.get(vertexInputNames[j]);
+      inputIndices[j]=new VertexIndices(inputVertexIndex,j);
     }
-    gv.setInputIndices(indices);
+    gv.setInputVertices(inputIndices);
     for (    String s : vertexInputNames) {
       List<String> list=verticesOutputTo.get(s);
       if (list == null) {
@@ -73,13 +70,16 @@
   for (  GraphVertex gv : vertices) {
     String vertexName=gv.getVertexName();
     List<String> thisVertexOutputsTo=verticesOutputTo.get(vertexName);
-    if (thisVertexOutputsTo == null)     continue;
-    int[] indices=new int[thisVertexOutputsTo.size()];
+    if (thisVertexOutputsTo == null || thisVertexOutputsTo.size() == 0)     continue;
+    VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
     int j=0;
     for (    String s : thisVertexOutputsTo) {
-      indices[j++]=allNamesReverse.get(s);
+      String[] nextVertexInputNames=layerInputs.get(s);
+      int outputVertexInputNumber=ArrayUtils.indexOf(nextVertexInputNames,vertexName);
+      int outputVertexIndex=allNamesReverse.get(s);
+      outputIndices[j++]=new VertexIndices(outputVertexIndex,outputVertexInputNumber);
     }
-    gv.setOutputIndices(indices);
+    gv.setOutputVertices(outputIndices);
   }
   for (  GraphVertex gv : vertices) {
     System.out.println(gv);

@@ -1,7 +1,0 @@
-{
-  ComputationGraphConfiguration configuration=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("input").addLayer("firstLayer",new DenseLayer.Builder().nIn(4).nOut(5).build(),"input").addLayer("outputLayer",new OutputLayer.Builder().nIn(5).nOut(3).build(),"firstLayer").setOutputs("outputLayer").pretrain(false).backprop(true).build();
-  ComputationGraph graph=new ComputationGraph(configuration);
-  graph.init();
-  DataSetIterator iris=new IrisDataSetIterator(150,150);
-  graph.fit(iris);
-}

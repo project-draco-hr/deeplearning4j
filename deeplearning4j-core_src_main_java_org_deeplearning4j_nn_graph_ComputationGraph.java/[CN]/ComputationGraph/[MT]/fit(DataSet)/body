@@ -1,4 +1,4 @@
 {
   if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSet");
-  throw new UnsupportedOperationException("Not implemnted");
+  throw new UnsupportedOperationException("Not implemented");
 }

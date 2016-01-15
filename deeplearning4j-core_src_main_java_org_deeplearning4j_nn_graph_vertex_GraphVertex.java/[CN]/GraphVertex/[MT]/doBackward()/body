@@ -1,0 +1,24 @@
+{
+  if (!canDoBackward())   throw new IllegalStateException("Cannot do backward pass: all epsilons not set");
+  if (layer != null) {
+    INDArray epsTotal=null;
+    if (epsilons != null && epsilons.length == 1)     epsTotal=epsilons[0];
+ else     if (epsilons != null && epsilons.length > 1) {
+      epsTotal=epsilons[0].dup();
+      for (int i=1; i < epsilons.length; i++) {
+        epsTotal.addi(epsilons[i]);
+      }
+    }
+    Pair<Gradient,INDArray> pair=layer.backpropGradient(epsTotal);
+    if (layerPreProcessor != null) {
+      INDArray eps=pair.getSecond();
+      eps=layerPreProcessor.backprop(eps,-1);
+      pair.setSecond(eps);
+      throw new UnsupportedOperationException("Not implemented");
+    }
+    return new Pair<Gradient,INDArray[]>(pair.getFirst(),new INDArray[]{pair.getSecond()});
+  }
+ else {
+    return new Pair<>(null,node.backward(epsilons));
+  }
+}
