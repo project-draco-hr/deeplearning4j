@@ -1,0 +1,7 @@
+{
+  NeuralNetConfiguration.Builder builder=globalConfiguration.clone();
+  builder.layer(layer);
+  layers.put(layerName,builder);
+  this.layerInputs.put(layerName,layerInputs);
+  return this;
+}

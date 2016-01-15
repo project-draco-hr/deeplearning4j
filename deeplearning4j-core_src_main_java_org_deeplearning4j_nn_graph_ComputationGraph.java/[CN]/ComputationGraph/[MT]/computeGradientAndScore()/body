@@ -1,0 +1,18 @@
+{
+  if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+    throw new UnsupportedOperationException();
+  }
+ else {
+    feedForward(true);
+    backprop();
+  }
+  double l1=calcL1();
+  double l2=calcL2();
+  score=0.0;
+  for (  String s : configuration.getNetworkOutputs()) {
+    GraphVertex gv=verticesMap.get(s);
+    score+=((BaseOutputLayer<?>)gv.getLayer()).computeScore(l1,l2,true);
+    l1=0.0;
+    l2=0.0;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  if (!canDoForward())   throw new IllegalStateException("Cannot do forward pass: all inputs not set");
+  if (layer != null) {
+    if (inputs.length > 1)     throw new UnsupportedOperationException("Not implemented");
+    INDArray input=inputs[0];
+    if (layerPreProcessor != null) {
+      input=layerPreProcessor.preProcess(input,-1);
+      throw new UnsupportedOperationException("Not implemented");
+    }
+    return layer.activate(inputs[0],training);
+  }
+ else {
+    return node.forward(inputs);
+  }
+}

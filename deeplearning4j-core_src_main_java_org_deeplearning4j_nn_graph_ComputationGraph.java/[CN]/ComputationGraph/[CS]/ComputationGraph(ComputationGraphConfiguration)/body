@@ -1,0 +1,9 @@
+{
+  this.configuration=configuration;
+  this.numInputArrays=configuration.getNetworkInputs().size();
+  this.numOutputArrays=configuration.getNetworkOutputs().size();
+  this.layerCount=configuration.getLayers().size();
+  this.inputs=new INDArray[numInputArrays];
+  this.labels=new INDArray[numOutputArrays];
+  this.defaultConfiguration=configuration.getLayers().get(configuration.getLayers().keySet().iterator().next());
+}

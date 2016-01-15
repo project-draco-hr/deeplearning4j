@@ -1,0 +1,11 @@
+{
+  this.vertexName=name;
+  this.vertexIndex=vertexIndex;
+  this.inputVertices=inputVertices;
+  this.outputVertices=outputVertices;
+  this.layer=layer;
+  this.layerPreProcessor=layerPreProcessor;
+  this.node=graphNode;
+  this.inputs=new INDArray[(inputVertices != null ? inputVertices.length : 0)];
+  this.epsilons=new INDArray[(outputVertices != null ? outputVertices.length : 0)];
+}

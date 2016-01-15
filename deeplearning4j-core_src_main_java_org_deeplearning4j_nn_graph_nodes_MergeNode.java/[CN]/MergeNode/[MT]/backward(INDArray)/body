@@ -1,0 +1,23 @@
+{
+  if (epsilons == null || epsilons.length != 1)   throw new IllegalArgumentException("Invalid input: expect one epsilon during forward pass");
+  if (forwardPassShapes.length == 1) {
+    return new INDArray[]{epsilons[0]};
+  }
+  INDArray[] out=new INDArray[forwardPassShapes.length];
+  for (int i=0; i < out.length; i++)   out[i]=Nd4j.create(forwardPassShapes[i]);
+  if (fwdPassRank == 2) {
+    int cumulative=0;
+    for (int i=0; i < forwardPassShapes.length; i++) {
+      out[i].assign(epsilons[0].get(NDArrayIndex.all(),NDArrayIndex.interval(cumulative,cumulative + forwardPassShapes[i][1])));
+      cumulative+=forwardPassShapes[i][1];
+    }
+  }
+ else {
+    int cumulative=0;
+    for (int i=0; i < forwardPassShapes.length; i++) {
+      out[i].assign(epsilons[0].get(NDArrayIndex.all(),NDArrayIndex.interval(cumulative,cumulative + forwardPassShapes[i][1]),NDArrayIndex.all()));
+      cumulative+=forwardPassShapes[i][1];
+    }
+  }
+  return out;
+}
