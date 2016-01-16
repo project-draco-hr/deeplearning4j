@@ -1,0 +1,39 @@
+{
+  int lenFeatureVector=0;
+  int exampleCount=0;
+  if (numPossibleLabels >= 1) {
+    lenFeatureVector=byteFileLen - 1;
+    if (labelIndex < 0)     labelIndex=byteFileLen - 1;
+  }
+  InputStream inputStream=new DataInputStream(new ByteArrayInputStream(inputTuple._2().getBytes()));
+  int batchNumCount=0;
+  byte[] byteFeature=new byte[byteFileLen];
+  List<DataSet> dataSets=new ArrayList<>();
+  INDArray label;
+  int featureCount;
+  try {
+    INDArray featureVector=Nd4j.create(lenFeatureVector);
+    while ((inputStream.read(byteFeature)) != -1 && batchNumCount != batchSize && exampleCount < numExamples) {
+      featureCount=0;
+      label=FeatureUtil.toOutcomeVector(byteFeature[labelIndex],numPossibleLabels);
+      for (int j=1; j <= featureVector.length(); j++)       featureVector.putScalar(featureCount++,byteFeature[j]);
+      dataSets.add(new DataSet(featureVector,label));
+      batchNumCount++;
+      byteFeature=new byte[byteFileLen];
+      featureVector=Nd4j.create(lenFeatureVector);
+    }
+    exampleCount+=batchSize;
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  List<INDArray> inputs=new ArrayList<>();
+  List<INDArray> labels=new ArrayList<>();
+  for (  DataSet data : dataSets) {
+    inputs.add(data.getFeatureMatrix());
+    labels.add(data.getLabels());
+  }
+  DataSet ds=new DataSet(Nd4j.vstack(inputs.toArray(new INDArray[0])),Nd4j.vstack(labels.toArray(new INDArray[0])));
+  if (preProcessor != null)   preProcessor.preProcess(ds);
+  return ds;
+}
