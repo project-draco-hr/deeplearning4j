@@ -1,0 +1,9 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  INDArray input=ds.getFeatureMatrix();
+  INDArray labels=ds.getLabels();
+  graph.setInput(0,input.dup());
+  graph.setLabel(0,labels.dup());
+  graph.computeGradientAndScore();
+  Pair<Gradient,Double> graphGradScore=graph.gradientAndScore();
+}
