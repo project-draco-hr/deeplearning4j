@@ -1,3 +1,9 @@
 {
-  throw new UnsupportedOperationException("Not implemented");
+  ObjectMapper mapper=NeuralNetConfiguration.mapper();
+  try {
+    return mapper.writeValueAsString(this);
+  }
+ catch (  com.fasterxml.jackson.core.JsonProcessingException e) {
+    throw new RuntimeException(e);
+  }
 }

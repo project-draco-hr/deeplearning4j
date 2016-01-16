@@ -1,4 +1,6 @@
 {
-  if (errorNumber >= getNumOutputArrays())   throw new IllegalArgumentException("Invalid error number");
+  if (errorNumber >= getNumOutputConnections()) {
+    throw new IllegalArgumentException("Invalid error number: " + errorNumber + ", numOutputEdges = "+ outputVertices.length);
+  }
   epsilons[errorNumber]=error;
 }

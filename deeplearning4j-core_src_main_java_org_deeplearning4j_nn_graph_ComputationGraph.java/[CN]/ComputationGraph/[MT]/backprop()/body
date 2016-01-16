@@ -16,7 +16,11 @@
       int j=0;
       for (      VertexIndices v : inputVertices) {
         GraphVertex gv=vertices[v.getVertexIndex()];
-        gv.setError(v.getVertexEdgeNumber(),epsilons[j++]);
+        int outputNumberOfInputVertex=v.getVertexEdgeNumber();
+        if (outputNumberOfInputVertex >= gv.getNumOutputConnections()) {
+          System.out.println(":(");
+        }
+        gv.setError(outputNumberOfInputVertex,epsilons[j++]);
       }
     }
     if (pair.getFirst() != null) {
