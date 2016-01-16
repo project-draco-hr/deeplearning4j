@@ -1,0 +1,13 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  GraphNode mergeNode=new MergeNode();
+  INDArray first=Nd4j.linspace(0,59,60).reshape(3,4,5);
+  INDArray second=Nd4j.linspace(0,89,90).reshape(3,6,5).addi(100);
+  INDArray out=mergeNode.forward(first,second);
+  assertArrayEquals(new int[]{3,10,5},out.shape());
+  assertEquals(first,out.get(NDArrayIndex.all(),NDArrayIndex.interval(0,4),NDArrayIndex.all()));
+  assertEquals(second,out.get(NDArrayIndex.all(),NDArrayIndex.interval(4,10),NDArrayIndex.all()));
+  INDArray[] backward=mergeNode.backward(out);
+  assertEquals(first,backward[0]);
+  assertEquals(second,backward[1]);
+}

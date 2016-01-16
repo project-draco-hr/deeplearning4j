@@ -1,0 +1,32 @@
+{
+  Nd4j.getRandom().setSeed(12345);
+  GraphNode mergeNode=new MergeNode();
+  INDArray first=Nd4j.linspace(0,3,4).reshape(1,1,2,2);
+  INDArray second=Nd4j.linspace(0,3,4).reshape(1,1,2,2).addi(10);
+  INDArray out=mergeNode.forward(first,second);
+  assertArrayEquals(new int[]{1,2,2,2},out.shape());
+  for (int i=0; i < 2; i++) {
+    for (int j=0; j < 2; j++) {
+      assertEquals(first.getDouble(0,0,i,j),out.getDouble(0,0,i,j),1e-6);
+      assertEquals(second.getDouble(0,0,i,j),out.getDouble(0,1,i,j),1e-6);
+    }
+  }
+  INDArray[] backward=mergeNode.backward(out);
+  assertEquals(first,backward[0]);
+  assertEquals(second,backward[1]);
+  first=Nd4j.linspace(0,17,18).reshape(1,2,3,3);
+  second=Nd4j.linspace(0,17,18).reshape(1,2,3,3).addi(100);
+  out=mergeNode.forward(first,second);
+  assertArrayEquals(new int[]{1,4,3,3},out.shape());
+  for (int i=0; i < 3; i++) {
+    for (int j=0; j < 3; j++) {
+      assertEquals(first.getDouble(0,0,i,j),out.getDouble(0,0,i,j),1e-6);
+      assertEquals(first.getDouble(0,1,i,j),out.getDouble(0,1,i,j),1e-6);
+      assertEquals(second.getDouble(0,0,i,j),out.getDouble(0,2,i,j),1e-6);
+      assertEquals(second.getDouble(0,1,i,j),out.getDouble(0,3,i,j),1e-6);
+    }
+  }
+  backward=mergeNode.backward(out);
+  assertEquals(first,backward[0]);
+  assertEquals(second,backward[1]);
+}

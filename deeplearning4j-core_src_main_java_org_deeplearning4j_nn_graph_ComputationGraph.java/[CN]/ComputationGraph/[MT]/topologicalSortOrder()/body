@@ -1,7 +1,6 @@
 {
   int[] out=new int[vertices.length];
   int outCounter=0;
-  boolean[] processed=new boolean[vertices.length];
   Map<Integer,Set<Integer>> inputEdges=new HashMap<>();
   for (  GraphVertex gv : vertices) {
     VertexIndices[] vertexInputsFrom=gv.getInputVertices();
