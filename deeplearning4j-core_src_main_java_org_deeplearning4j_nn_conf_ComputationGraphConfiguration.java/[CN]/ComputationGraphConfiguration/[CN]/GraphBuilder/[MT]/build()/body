@@ -18,8 +18,6 @@
   conf.layers=layers;
   conf.graphNodes=this.graphNodes;
   conf.graphNodeInputs=this.graphNodeInputs;
-  if (!conf.validate()) {
-    throw new IllegalStateException("Invalid configuration");
-  }
+  conf.validate();
   return conf;
 }

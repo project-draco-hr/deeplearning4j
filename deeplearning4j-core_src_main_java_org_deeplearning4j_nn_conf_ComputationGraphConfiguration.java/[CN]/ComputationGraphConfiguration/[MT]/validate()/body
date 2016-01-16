@@ -1,4 +1,43 @@
 {
-  System.out.println("WARNING: ComputationGraphConfiguration.validate() NOT YET IMPLEMENTED");
-  return true;
+  if (networkInputs == null || networkInputs.size() < 1) {
+    throw new IllegalStateException("Invalid configuration: network has no inputs");
+  }
+  if (networkOutputs == null || networkOutputs.size() < 1) {
+    throw new IllegalStateException("Invalid configuration: network has no outputs");
+  }
+  for (  String s : networkInputs) {
+    if (layers.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: name \"" + s + "\" is present in both network inputs and layer names");
+    }
+    if (graphNodes.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: name \"" + s + "\" is present in both network inputs and graph nodes");
+    }
+  }
+  for (  Map.Entry<String,List<String>> e : layerInputs.entrySet()) {
+    String layerName=e.getKey();
+    if (e.getValue() == null || e.getValue().size() == 0) {
+      throw new IllegalStateException("Invalid configuration: layer \"" + layerName + "\" has no inputs");
+    }
+    for (    String inputName : e.getValue()) {
+      if (!layers.containsKey(inputName) && !graphNodes.containsKey(inputName) && !networkInputs.contains(inputName)) {
+        throw new IllegalStateException("Invalid configuration: layer \"" + layerName + "\" has input \""+ inputName+ "\" that does not exist");
+      }
+    }
+  }
+  for (  Map.Entry<String,List<String>> e : graphNodeInputs.entrySet()) {
+    String nodeName=e.getKey();
+    if (e.getValue() == null || e.getValue().size() == 0) {
+      throw new IllegalStateException("Invalid configuration: graph node \"" + nodeName + "\" has no inputs");
+    }
+    for (    String inputName : e.getValue()) {
+      if (!layers.containsKey(inputName) && !graphNodes.containsKey(inputName) && !networkInputs.contains(inputName)) {
+        throw new IllegalStateException("Invalid configuration: GraphNode \"" + nodeName + "\" has input \""+ inputName+ "\" that does not exist");
+      }
+    }
+  }
+  for (  String s : inputPreProcessors.keySet()) {
+    if (!layers.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: InputPreProcessor listed for layer \"" + s + "\" but layer \""+ s+ "\" does not exist");
+    }
+  }
 }

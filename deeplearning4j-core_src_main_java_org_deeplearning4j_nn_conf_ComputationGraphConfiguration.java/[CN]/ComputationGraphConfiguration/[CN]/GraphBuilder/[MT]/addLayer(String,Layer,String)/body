@@ -3,5 +3,6 @@
   builder.layer(layer);
   layers.put(layerName,builder);
   this.layerInputs.put(layerName,Arrays.asList(layerInputs));
+  layer.setLayerName(layerName);
   return this;
 }
