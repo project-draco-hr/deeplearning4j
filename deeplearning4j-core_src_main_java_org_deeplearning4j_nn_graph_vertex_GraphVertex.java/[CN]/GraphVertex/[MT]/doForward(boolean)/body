@@ -4,7 +4,7 @@
     if (inputs.length > 1)     throw new UnsupportedOperationException("Not implemented");
     INDArray currInput=inputs[0];
     if (layerPreProcessor != null) {
-      currInput=layerPreProcessor.preProcess(currInput,currInput.size(0));
+      currInput=layerPreProcessor.preProcess(currInput,graph.batchSize());
     }
     return layer.activate(currInput,training);
   }

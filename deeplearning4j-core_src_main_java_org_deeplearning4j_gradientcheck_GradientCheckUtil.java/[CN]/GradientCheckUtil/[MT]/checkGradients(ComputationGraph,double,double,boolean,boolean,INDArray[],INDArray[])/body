@@ -2,7 +2,7 @@
   if (epsilon <= 0.0 || epsilon > 0.1)   throw new IllegalArgumentException("Invalid epsilon: expect epsilon in range (0,0.1], usually 1e-4 or so");
   if (maxRelError <= 0.0 || maxRelError > 0.25)   throw new IllegalArgumentException("Invalid maxRelativeError: " + maxRelError);
   if (graph.getNumInputArrays() != inputs.length)   throw new IllegalArgumentException("Invalid input arrays: expect " + graph.getNumInputArrays() + " inputs");
-  if (graph.getNumOutputArrays() != labels.length)   throw new IllegalArgumentException("Invalid labels arrays: expect " + graph.getNumOutputArrays() + "outputs");
+  if (graph.getNumOutputArrays() != labels.length)   throw new IllegalArgumentException("Invalid labels arrays: expect " + graph.getNumOutputArrays() + " outputs");
   for (int i=0; i < inputs.length; i++)   graph.setInput(i,inputs[i]);
   for (int i=0; i < labels.length; i++)   graph.setLabel(i,labels[i]);
   graph.computeGradientAndScore();

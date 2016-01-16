@@ -1,0 +1,5 @@
+{
+  if (!(o instanceof SubsetNode))   return false;
+  SubsetNode s=(SubsetNode)o;
+  return from == s.from && to == s.to;
+}

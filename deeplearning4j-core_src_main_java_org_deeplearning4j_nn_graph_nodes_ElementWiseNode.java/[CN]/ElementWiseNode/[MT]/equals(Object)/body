@@ -1,0 +1,5 @@
+{
+  if (!(o instanceof ElementWiseNode))   return false;
+  ElementWiseNode e=(ElementWiseNode)o;
+  return op == e.op;
+}
