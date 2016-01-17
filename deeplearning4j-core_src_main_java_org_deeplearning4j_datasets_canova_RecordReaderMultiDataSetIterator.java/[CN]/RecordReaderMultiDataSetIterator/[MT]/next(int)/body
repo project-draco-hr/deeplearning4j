@@ -1,0 +1,25 @@
+{
+  if (!hasNext())   throw new NoSuchElementException("No next elements");
+  Map<String,List<Collection<Writable>>> nextRRVals=new HashMap<>();
+  Map<String,List<Collection<Collection<Writable>>>> nextSeqRRVals=new HashMap<>();
+  int minValues=0;
+  for (  Map.Entry<String,RecordReader> entry : recordReaders.entrySet()) {
+    RecordReader rr=entry.getValue();
+    List<Collection<Writable>> writables=new ArrayList<>(num);
+    for (int i=0; i < num && rr.hasNext(); i++) {
+      writables.add(rr.next());
+    }
+    minValues=Math.min(minValues,writables.size());
+    nextRRVals.put(entry.getKey(),writables);
+  }
+  for (  Map.Entry<String,SequenceRecordReader> entry : sequenceRecordReaders.entrySet()) {
+    SequenceRecordReader rr=entry.getValue();
+    List<Collection<Collection<Writable>>> writables=new ArrayList<>(num);
+    for (int i=0; i < num && rr.hasNext(); i++) {
+      writables.add(rr.sequenceRecord());
+    }
+    minValues=Math.min(minValues,writables.size());
+    nextSeqRRVals.put(entry.getKey(),writables);
+  }
+  throw new UnsupportedOperationException("Not yet implemented");
+}
