@@ -1,0 +1,4 @@
+{
+  log.info("Flat scan against '" + label + "' word...");
+  return wordsNearest(lookupTable.vector(label),n);
+}

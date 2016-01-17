@@ -1,0 +1,5 @@
+{
+  vec.setModelUtils(new FlatModelUtils<VocabWord>());
+  Collection<String> list=vec.wordsNearest("energy",10);
+  System.out.println("energy: " + list);
+}
