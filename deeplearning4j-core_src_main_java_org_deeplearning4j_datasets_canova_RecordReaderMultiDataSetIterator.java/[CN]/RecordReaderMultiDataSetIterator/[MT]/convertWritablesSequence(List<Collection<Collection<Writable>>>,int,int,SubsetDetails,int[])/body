@@ -1,0 +1,75 @@
+{
+  if (maxTSLength == -1)   maxTSLength=list.size();
+  INDArray arr;
+  if (details.entireReader)   arr=Nd4j.create(minValues,list.get(0).size(),maxTSLength);
+ else   if (details.oneHot)   arr=Nd4j.create(minValues,details.oneHotNumClasses,maxTSLength);
+ else   arr=Nd4j.create(minValues,details.subsetEndInclusive - details.subsetStart + 1,maxTSLength);
+  boolean needMaskArray=false;
+  for (  Collection<Collection<Writable>> c : list) {
+    if (c.size() < maxTSLength)     needMaskArray=true;
+  }
+  INDArray maskArray;
+  if (needMaskArray)   maskArray=Nd4j.ones(minValues,maxTSLength);
+ else   maskArray=null;
+  int[] idx=new int[3];
+  int[] maskIdx=new int[2];
+  for (int i=0; i < minValues; i++) {
+    idx[0]=i;
+    Collection<Collection<Writable>> sequence=list.get(i);
+    int startOffset;
+    if (alignmentMode == AlignmentMode.ALIGN_START || alignmentMode == AlignmentMode.EQUAL_LENGTH) {
+      startOffset=0;
+    }
+ else {
+      startOffset=longestSequence[i] - sequence.size();
+    }
+    int t=0;
+    for (    Collection<Writable> timeStep : sequence) {
+      idx[2]=startOffset + t++;
+      if (details.entireReader) {
+        Iterator<Writable> iter=timeStep.iterator();
+        int j=0;
+        while (iter.hasNext()) {
+          idx[1]=j++;
+          arr.putScalar(idx,iter.next().toDouble());
+        }
+      }
+ else       if (details.oneHot) {
+        Writable w=null;
+        if (timeStep instanceof List)         w=((List<Writable>)timeStep).get(details.subsetStart);
+ else {
+          Iterator<Writable> iter=timeStep.iterator();
+          for (int k=0; k <= details.subsetStart; k++)           w=iter.next();
+        }
+        int classIdx=w.toInt();
+        idx[1]=classIdx;
+        arr.putScalar(idx,1.0);
+      }
+ else {
+        Iterator<Writable> iter=timeStep.iterator();
+        for (int j=0; j < details.subsetStart; j++)         iter.next();
+        int k=0;
+        for (int j=details.subsetStart; j <= details.subsetEndInclusive; j++) {
+          idx[1]=k++;
+          arr.putScalar(idx,iter.next().toDouble());
+        }
+      }
+    }
+    if (needMaskArray) {
+      maskIdx[0]=i;
+      if (alignmentMode == AlignmentMode.ALIGN_END) {
+        for (int t2=0; t2 < startOffset; t2++) {
+          maskIdx[1]=t2;
+          maskArray.putScalar(maskIdx,0.0);
+        }
+      }
+      if (alignmentMode == AlignmentMode.ALIGN_START) {
+        for (int t2=t; t2 < maxTSLength; t2++) {
+          maskIdx[1]=t2;
+          maskArray.putScalar(maskIdx,0.0);
+        }
+      }
+    }
+  }
+  return new Pair<>(arr,maskArray);
+}

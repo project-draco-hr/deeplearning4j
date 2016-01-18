@@ -2,24 +2,80 @@
   if (!hasNext())   throw new NoSuchElementException("No next elements");
   Map<String,List<Collection<Writable>>> nextRRVals=new HashMap<>();
   Map<String,List<Collection<Collection<Writable>>>> nextSeqRRVals=new HashMap<>();
-  int minValues=0;
+  int minExamples=0;
   for (  Map.Entry<String,RecordReader> entry : recordReaders.entrySet()) {
     RecordReader rr=entry.getValue();
     List<Collection<Writable>> writables=new ArrayList<>(num);
     for (int i=0; i < num && rr.hasNext(); i++) {
       writables.add(rr.next());
     }
-    minValues=Math.min(minValues,writables.size());
+    minExamples=Math.min(minExamples,writables.size());
     nextRRVals.put(entry.getKey(),writables);
   }
   for (  Map.Entry<String,SequenceRecordReader> entry : sequenceRecordReaders.entrySet()) {
     SequenceRecordReader rr=entry.getValue();
     List<Collection<Collection<Writable>>> writables=new ArrayList<>(num);
     for (int i=0; i < num && rr.hasNext(); i++) {
-      writables.add(rr.sequenceRecord());
+      Collection<Collection<Writable>> next=rr.sequenceRecord();
+      writables.add(next);
     }
-    minValues=Math.min(minValues,writables.size());
+    minExamples=Math.min(minExamples,writables.size());
     nextSeqRRVals.put(entry.getKey(),writables);
   }
-  throw new UnsupportedOperationException("Not yet implemented");
+  int[] longestSequence=null;
+  if (alignmentMode == AlignmentMode.ALIGN_END) {
+    longestSequence=new int[minExamples];
+    for (    Map.Entry<String,List<Collection<Collection<Writable>>>> entry : nextSeqRRVals.entrySet()) {
+      List<Collection<Collection<Writable>>> list=entry.getValue();
+      for (int i=0; i < list.size() && i < minExamples; i++) {
+        longestSequence[i]=Math.max(longestSequence[i],list.get(i).size());
+      }
+    }
+  }
+  int longestTS=-1;
+  if (alignmentMode != AlignmentMode.EQUAL_LENGTH) {
+    for (    Map.Entry<String,List<Collection<Collection<Writable>>>> entry : nextSeqRRVals.entrySet()) {
+      List<Collection<Collection<Writable>>> list=entry.getValue();
+      for (      Collection<Collection<Writable>> c : list) {
+        longestTS=Math.max(longestTS,c.size());
+      }
+    }
+  }
+  INDArray[] inputArrs=new INDArray[inputs.size()];
+  INDArray[] inputArrMasks=new INDArray[inputs.size()];
+  boolean inputMasks=false;
+  int i=0;
+  for (  SubsetDetails d : inputs) {
+    if (nextRRVals.containsKey(d.readerName)) {
+      List<Collection<Writable>> list=nextRRVals.get(d.readerName);
+      inputArrs[i]=convertWritables(list,minExamples,d);
+    }
+ else {
+      List<Collection<Collection<Writable>>> list=nextSeqRRVals.get(d.readerName);
+      Pair<INDArray,INDArray> p=convertWritablesSequence(list,minExamples,longestTS,d,longestSequence);
+      inputArrs[i]=p.getFirst();
+      inputArrMasks[i]=p.getSecond();
+      if (inputArrMasks[i] != null)       inputMasks=true;
+    }
+  }
+  if (!inputMasks)   inputArrMasks=null;
+  INDArray[] outputArrs=new INDArray[outputs.size()];
+  INDArray[] outputArrMasks=new INDArray[outputs.size()];
+  boolean outputMasks=false;
+  i=0;
+  for (  SubsetDetails d : outputs) {
+    if (nextRRVals.containsKey(d.readerName)) {
+      List<Collection<Writable>> list=nextRRVals.get(d.readerName);
+      outputArrs[i]=convertWritables(list,minExamples,d);
+    }
+ else {
+      List<Collection<Collection<Writable>>> list=nextSeqRRVals.get(d.readerName);
+      Pair<INDArray,INDArray> p=convertWritablesSequence(list,minExamples,longestTS,d,longestSequence);
+      outputArrs[i]=p.getFirst();
+      outputArrMasks[i]=p.getSecond();
+      if (outputArrMasks[i] != null)       outputMasks=true;
+    }
+  }
+  if (!outputMasks)   outputArrMasks=null;
+  return new org.nd4j.linalg.dataset.MultiDataSet(inputArrs,outputArrs,inputArrMasks,outputArrMasks);
 }
