@@ -2,6 +2,7 @@
   log.info("Starting vocabulary building...");
   VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).setTargetVocabCache(vocab).fetchLabels(trainSequenceVectors).build();
   if (existingModel != null) {
+    constructor.buildMergedVocabulary(existingModel,false);
   }
  else {
     constructor.buildJointVocabulary(false,true);
