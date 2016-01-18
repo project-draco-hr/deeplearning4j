@@ -1,4 +1,5 @@
 {
-  log.info("Flat scan against '" + label + "' word...");
-  return wordsNearest(lookupTable.vector(label),n);
+  Collection<String> collection=wordsNearest(lookupTable.vector(label),n);
+  if (collection.contains(label))   collection.remove(label);
+  return collection;
 }

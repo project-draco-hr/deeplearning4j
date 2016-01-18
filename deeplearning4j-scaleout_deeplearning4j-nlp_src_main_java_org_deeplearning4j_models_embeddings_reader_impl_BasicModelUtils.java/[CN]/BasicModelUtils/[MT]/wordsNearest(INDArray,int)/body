@@ -2,22 +2,18 @@
   if (lookupTable instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable;
     INDArray syn0=l.getSyn0();
-    INDArray weights=syn0.norm2(0).rdivi(1).muli(words);
-    INDArray distances=syn0.mulRowVector(weights).mean(1);
-    INDArray[] sorted=Nd4j.sortWithIndices(distances,0,false);
-    INDArray sort=sorted[0];
+    syn0.diviColumnVector(syn0.norm2(1));
+    INDArray similarity=Transforms.unitVec(words).mmul(syn0.transpose());
+    List<Double> highToLowSimList=getTopN(similarity,top + 20);
     List<String> ret=new ArrayList<>();
-    if (top > sort.length())     top=sort.length();
-    int end=top;
-    for (int i=0; i < end; i++) {
-      int s=sort.getInt(i);
-      String add=vocabCache.wordAtIndex(s);
-      if (add == null || add.equals("UNK") || add.equals("STOP")) {
-        end++;
-        if (end >= sort.length())         break;
-        continue;
+    for (int i=0; i < highToLowSimList.size(); i++) {
+      String word=vocabCache.wordAtIndex(highToLowSimList.get(i).intValue());
+      if (word != null && !word.equals("UNK") && !word.equals("STOP")) {
+        ret.add(word);
+        if (ret.size() >= top) {
+          break;
+        }
       }
-      ret.add(vocabCache.wordAtIndex(s));
     }
     return ret;
   }
@@ -28,5 +24,5 @@
     distances.incrementCount(s,sim);
   }
   distances.keepTopNKeys(top);
-  return null;
+  return distances.keySet();
 }
