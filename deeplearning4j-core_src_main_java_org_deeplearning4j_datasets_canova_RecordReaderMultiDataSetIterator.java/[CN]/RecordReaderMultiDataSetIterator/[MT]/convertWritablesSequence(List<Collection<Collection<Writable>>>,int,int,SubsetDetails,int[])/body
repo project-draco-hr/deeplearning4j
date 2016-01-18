@@ -1,7 +1,10 @@
 {
-  if (maxTSLength == -1)   maxTSLength=list.size();
+  if (maxTSLength == -1)   maxTSLength=list.get(0).size();
   INDArray arr;
-  if (details.entireReader)   arr=Nd4j.create(minValues,list.get(0).size(),maxTSLength);
+  if (details.entireReader) {
+    int size=list.get(0).iterator().next().size();
+    arr=Nd4j.create(minValues,size,maxTSLength);
+  }
  else   if (details.oneHot)   arr=Nd4j.create(minValues,details.oneHotNumClasses,maxTSLength);
  else   arr=Nd4j.create(minValues,details.subsetEndInclusive - details.subsetStart + 1,maxTSLength);
   boolean needMaskArray=false;

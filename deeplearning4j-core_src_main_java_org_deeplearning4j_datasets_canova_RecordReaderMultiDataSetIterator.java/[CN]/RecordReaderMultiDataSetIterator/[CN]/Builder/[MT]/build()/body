@@ -1,3 +1,20 @@
 {
+  if (recordReaders.size() == 0 && sequenceRecordReaders.size() == 0) {
+    throw new IllegalStateException("Cannot construct RecordReaderMultiDataSetIterator with no readers");
+  }
+  if (batchSize <= 0)   throw new IllegalStateException("Cannot construct RecordReaderMultiDataSetIterator with batch size <= 0");
+  if (inputs.size() == 0 && outputs.size() == 0) {
+    throw new IllegalStateException("Cannot construct RecordReaderMultiDataSetIterator with no inputs/outputs");
+  }
+  for (  SubsetDetails ssd : inputs) {
+    if (!recordReaders.containsKey(ssd.readerName) && !sequenceRecordReaders.containsKey(ssd.readerName)) {
+      throw new IllegalStateException("Invalid input name: \"" + ssd.readerName + "\" - no reader found with this name");
+    }
+  }
+  for (  SubsetDetails ssd : outputs) {
+    if (!recordReaders.containsKey(ssd.readerName) && !sequenceRecordReaders.containsKey(ssd.readerName)) {
+      throw new IllegalStateException("Invalid output name: \"" + ssd.readerName + "\" - no reader found with this name");
+    }
+  }
   return new RecordReaderMultiDataSetIterator(this);
 }

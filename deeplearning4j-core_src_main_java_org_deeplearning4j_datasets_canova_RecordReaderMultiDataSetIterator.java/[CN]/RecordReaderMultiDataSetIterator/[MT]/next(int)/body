@@ -2,7 +2,7 @@
   if (!hasNext())   throw new NoSuchElementException("No next elements");
   Map<String,List<Collection<Writable>>> nextRRVals=new HashMap<>();
   Map<String,List<Collection<Collection<Writable>>>> nextSeqRRVals=new HashMap<>();
-  int minExamples=0;
+  int minExamples=Integer.MAX_VALUE;
   for (  Map.Entry<String,RecordReader> entry : recordReaders.entrySet()) {
     RecordReader rr=entry.getValue();
     List<Collection<Writable>> writables=new ArrayList<>(num);
@@ -22,6 +22,7 @@
     minExamples=Math.min(minExamples,writables.size());
     nextSeqRRVals.put(entry.getKey(),writables);
   }
+  if (minExamples == Integer.MAX_VALUE)   throw new RuntimeException("Error occurred during data set generation: no readers?");
   int[] longestSequence=null;
   if (alignmentMode == AlignmentMode.ALIGN_END) {
     longestSequence=new int[minExamples];
@@ -57,6 +58,7 @@
       inputArrMasks[i]=p.getSecond();
       if (inputArrMasks[i] != null)       inputMasks=true;
     }
+    i++;
   }
   if (!inputMasks)   inputArrMasks=null;
   INDArray[] outputArrs=new INDArray[outputs.size()];
@@ -75,6 +77,7 @@
       outputArrMasks[i]=p.getSecond();
       if (outputArrMasks[i] != null)       outputMasks=true;
     }
+    i++;
   }
   if (!outputMasks)   outputArrMasks=null;
   return new org.nd4j.linalg.dataset.MultiDataSet(inputArrs,outputArrs,inputArrMasks,outputArrMasks);
