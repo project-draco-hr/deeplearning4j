@@ -1,4 +1,5 @@
 {
+  if (document.isEmpty())   throw new IllegalStateException("Document has no words inside");
   INDArray arr=Nd4j.create(document.size(),this.layerSize);
   for (int i=0; i < document.size(); i++) {
     arr.putRow(i,getWordVectorMatrix(document.get(i).getWord()));
