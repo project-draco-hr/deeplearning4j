@@ -2,7 +2,14 @@
   NeuralNetConfiguration.Builder builder=globalConfiguration.clone();
   builder.layer(layer);
   layers.put(layerName,builder);
-  this.layerInputs.put(layerName,Arrays.asList(layerInputs));
-  layer.setLayerName(layerName);
+  if (layerInputs != null && layerInputs.length > 1) {
+    String mergeName=layerName + "-merge";
+    addNode(mergeName,new MergeNode(),layerInputs);
+    this.layerInputs.put(layerName,Collections.singletonList(mergeName));
+  }
+ else   if (layerInputs != null) {
+    this.layerInputs.put(layerName,Arrays.asList(layerInputs));
+    layer.setLayerName(layerName);
+  }
   return this;
 }

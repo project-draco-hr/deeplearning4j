@@ -8,7 +8,7 @@
     }
  else {
       if (solver == null) {
-        solver=new Solver.Builder().configure(conf()).model(this).build();
+        solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
       }
       solver.optimize();
     }

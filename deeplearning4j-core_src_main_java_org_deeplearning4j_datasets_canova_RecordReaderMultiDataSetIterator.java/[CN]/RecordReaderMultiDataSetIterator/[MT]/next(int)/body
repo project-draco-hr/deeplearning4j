@@ -80,5 +80,7 @@
     i++;
   }
   if (!outputMasks)   outputArrMasks=null;
-  return new org.nd4j.linalg.dataset.MultiDataSet(inputArrs,outputArrs,inputArrMasks,outputArrMasks);
+  MultiDataSet mds=new org.nd4j.linalg.dataset.MultiDataSet(inputArrs,outputArrs,inputArrMasks,outputArrMasks);
+  if (preProcessor != null)   preProcessor.preProcess(mds);
+  return mds;
 }

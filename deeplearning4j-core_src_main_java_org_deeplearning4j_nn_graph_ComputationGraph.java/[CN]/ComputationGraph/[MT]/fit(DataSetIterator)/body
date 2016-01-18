@@ -18,7 +18,7 @@
         setInput(0,next.getFeatureMatrix());
         setLabel(0,next.getLabels());
         if (solver == null) {
-          solver=new Solver.Builder().configure(defaultConfiguration).model(this).build();
+          solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
         }
         solver.optimize();
       }
