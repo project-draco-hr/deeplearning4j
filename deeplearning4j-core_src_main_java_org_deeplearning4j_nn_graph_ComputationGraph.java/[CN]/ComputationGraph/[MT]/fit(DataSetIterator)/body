@@ -9,7 +9,7 @@
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       boolean hasMaskArrays=next.hasMaskArrays();
       if (hasMaskArrays) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Training with mask arrays: not yet implemented");
       }
       if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
         throw new UnsupportedOperationException("Not yet implemented");

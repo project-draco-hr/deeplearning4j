@@ -1,4 +1,6 @@
 {
+  setInputs(inputs);
+  setLabels(labels);
   if (configuration.isPretrain()) {
     throw new UnsupportedOperationException("Not implemented");
   }

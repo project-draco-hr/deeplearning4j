@@ -1,0 +1,29 @@
+{
+  if (configuration.isPretrain()) {
+    throw new UnsupportedOperationException("Pretraining not yet implemented");
+  }
+  if (configuration.isBackprop()) {
+    while (multiDataSetIterator.hasNext()) {
+      MultiDataSet next=multiDataSetIterator.next();
+      if (next.getFeatures() == null || next.getLabels() == null)       break;
+      boolean hasMaskArrays=next.hasMaskArrays();
+      if (hasMaskArrays) {
+        throw new UnsupportedOperationException("Not yet implemented");
+      }
+      if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+        throw new UnsupportedOperationException("Truncated BPTT not yet implemented");
+      }
+ else {
+        setInputs(next.getFeatures());
+        setLabels(next.getLabels());
+        if (solver == null) {
+          solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
+        }
+        solver.optimize();
+      }
+      if (hasMaskArrays) {
+        throw new UnsupportedOperationException();
+      }
+    }
+  }
+}
