@@ -1,11 +1,10 @@
 {
-  log.info("Flat scan against vector...");
   Counter<String> distances=new Counter<>();
   for (  String s : vocabCache.words()) {
     INDArray otherVec=lookupTable.vector(s);
-    double sim=Transforms.cosineSim(words,otherVec);
+    double sim=Transforms.cosineSim(words.dup(),otherVec.dup());
     distances.incrementCount(s,sim);
   }
   distances.keepTopNKeys(top);
-  return distances.keySet();
+  return distances.getSortedKeys();
 }

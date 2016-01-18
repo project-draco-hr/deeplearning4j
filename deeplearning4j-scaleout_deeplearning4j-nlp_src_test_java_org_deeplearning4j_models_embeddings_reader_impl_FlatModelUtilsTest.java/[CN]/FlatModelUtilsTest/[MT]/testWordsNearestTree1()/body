@@ -1,5 +1,6 @@
 {
   vec.setModelUtils(new TreeModelUtils<VocabWord>());
   Collection<String> list=vec.wordsNearest("energy",10);
-  System.out.println("energy: " + list);
+  log.info("Tree model results:");
+  printWords("energy",list,vec);
 }
