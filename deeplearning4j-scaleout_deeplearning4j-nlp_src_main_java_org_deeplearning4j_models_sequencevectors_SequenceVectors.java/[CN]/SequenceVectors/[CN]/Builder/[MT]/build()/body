@@ -1,6 +1,10 @@
 {
   presetTables();
   SequenceVectors<T> vectors=new SequenceVectors<>();
+  if (this.existingVectors != null) {
+    this.trainElementsVectors=false;
+    this.elementsLearningAlgorithm=null;
+  }
   vectors.numEpochs=this.numEpochs;
   vectors.numIterations=this.iterations;
   vectors.vocab=this.vocabCache;
@@ -20,8 +24,11 @@
   vectors.iterator=this.iterator;
   vectors.lookupTable=this.lookupTable;
   vectors.modelUtils=this.modelUtils;
+  vectors.trainElementsVectors=this.trainElementsVectors;
+  vectors.trainSequenceVectors=this.trainSequenceVectors;
   vectors.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
   vectors.sequenceLearningAlgorithm=this.sequenceLearningAlgorithm;
+  vectors.existingModel=this.existingVectors;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

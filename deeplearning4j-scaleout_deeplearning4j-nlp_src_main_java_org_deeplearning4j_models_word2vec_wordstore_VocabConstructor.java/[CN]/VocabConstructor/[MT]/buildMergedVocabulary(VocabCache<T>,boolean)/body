@@ -1,0 +1,4 @@
+{
+  if (cache == null)   cache=new AbstractCache.Builder<T>().build();
+  return cache;
+}
