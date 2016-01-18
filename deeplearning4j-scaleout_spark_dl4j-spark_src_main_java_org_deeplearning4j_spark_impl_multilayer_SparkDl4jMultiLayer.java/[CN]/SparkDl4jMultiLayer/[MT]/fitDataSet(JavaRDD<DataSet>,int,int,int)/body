@@ -1,13 +1,12 @@
 {
   int nSplits;
-  if (examplesPerFit == Integer.MAX_VALUE)   nSplits=1;
+  if (examplesPerFit == Integer.MAX_VALUE || examplesPerFit >= totalExamples)   nSplits=1;
  else {
-    long nExamples=rdd.count();
-    if (nExamples % examplesPerFit == 0) {
-      nSplits=(int)(nExamples / examplesPerFit);
+    if (totalExamples % examplesPerFit == 0) {
+      nSplits=(totalExamples / examplesPerFit);
     }
  else {
-      nSplits=(int)(nExamples / examplesPerFit) + 1;
+      nSplits=(totalExamples / examplesPerFit) + 1;
     }
   }
   if (nSplits == 1) {
@@ -19,7 +18,8 @@
     JavaRDD<DataSet>[] subsets=rdd.randomSplit(splitWeights);
     for (int i=0; i < subsets.length; i++) {
       log.info("Initiating distributed training of subset {} of {}",(i + 1),subsets.length);
-      fitDataSet(subsets[i]);
+      JavaRDD<DataSet> next=subsets[i].repartition(numPartitions);
+      fitDataSet(next);
     }
   }
   return network;
