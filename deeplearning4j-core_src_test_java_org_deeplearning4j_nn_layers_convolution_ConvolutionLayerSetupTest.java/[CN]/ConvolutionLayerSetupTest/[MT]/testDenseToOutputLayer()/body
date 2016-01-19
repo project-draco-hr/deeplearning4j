@@ -10,5 +10,6 @@
   new ConvolutionLayerSetup(builder,numRows,numColumns,nChannels);
   DataSet d=new DataSet(Nd4j.rand(10,3,75,75).reshape(10,3 * 75 * 75),FeatureUtil.toOutcomeMatrix(new int[]{1,1,1,1,1,1,1,1,1,1},6));
   MultiLayerNetwork network=new MultiLayerNetwork(builder.build());
+  network.init();
   network.fit(d);
 }

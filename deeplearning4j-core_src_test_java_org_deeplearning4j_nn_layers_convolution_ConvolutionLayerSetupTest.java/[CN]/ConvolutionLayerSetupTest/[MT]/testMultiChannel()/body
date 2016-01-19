@@ -12,5 +12,6 @@
   DataSet next=recordReader.next();
   MultiLayerConfiguration conf=builder.build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
   network.fit(next);
 }
