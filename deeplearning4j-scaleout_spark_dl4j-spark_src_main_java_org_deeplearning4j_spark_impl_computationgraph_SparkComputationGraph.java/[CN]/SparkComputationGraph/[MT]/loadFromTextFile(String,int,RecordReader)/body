@@ -1,0 +1,5 @@
+{
+  JavaRDD<String> lines=sc.textFile(path);
+  int nOut=((FeedForwardLayer)network.getOutputLayer(0)).getNOut();
+  return lines.map(new RecordReaderFunction(recordReader,labelIndex,nOut));
+}

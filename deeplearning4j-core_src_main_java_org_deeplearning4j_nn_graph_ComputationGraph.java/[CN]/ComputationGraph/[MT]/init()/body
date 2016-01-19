@@ -109,8 +109,5 @@
     }
     gv.setOutputVertices(outputIndices);
   }
-  for (  GraphVertex gv : vertices) {
-    System.out.println(gv);
-  }
   topologicalOrder=topologicalSortOrder();
 }

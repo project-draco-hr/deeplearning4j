@@ -9,7 +9,7 @@
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       boolean hasMaskArrays=next.hasMaskArrays();
       if (hasMaskArrays) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Training with mask arrays: not yet implemented");
       }
       if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -18,7 +18,7 @@
         setInput(0,next.getFeatureMatrix());
         setLabel(0,next.getLabels());
         if (solver == null) {
-          solver=new Solver.Builder().configure(defaultConfiguration).model(this).build();
+          solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
         }
         solver.optimize();
       }

@@ -1,0 +1,4 @@
+{
+  if (inputLayerIdx >= numInputArrays)   throw new IllegalArgumentException("Invalid index: cannot get input layer " + inputLayerIdx + ", total number of network inputs = "+ numInputArrays);
+  return getLayer(configuration.getNetworkInputs().get(inputLayerIdx));
+}
