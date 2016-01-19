@@ -25,7 +25,7 @@
       for (int i=2; i < split.length; i++) {
         row.putScalar(i - 2,Float.parseFloat(split[i]));
       }
-      arrays.add(Transforms.unitVec(row));
+      arrays.add(row);
     }
     INDArray syn=Nd4j.create(new int[]{arrays.size(),arrays.get(0).columns()});
     for (int i=0; i < syn.rows(); i++) {
