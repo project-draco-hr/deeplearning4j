@@ -29,5 +29,7 @@
       syn1Neg.assign(Nd4j.create(word.getSyn1Neg()));
     }
   }
-  return new Word2Vec.Builder(configuration).vocabCache(vocabCache).lookupTable(lookupTable).resetModel(false).build();
+  Word2Vec vec=new Word2Vec.Builder(configuration).vocabCache(vocabCache).lookupTable(lookupTable).resetModel(false).build();
+  vec.setModelUtils(new BasicModelUtils());
+  return vec;
 }

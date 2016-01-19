@@ -1,8 +1,8 @@
 {
   if (label1 == null || label2 == null)   return Double.NaN;
-  if (label1.equals(label2))   return 1.0;
   INDArray vec1=lookupTable.vector(label1);
   INDArray vec2=lookupTable.vector(label2);
   if (vec1 == null || vec2 == null)   return Double.NaN;
+  if (label1.equals(label2))   return 1.0;
   return Transforms.cosineSim(vec1,vec2);
 }

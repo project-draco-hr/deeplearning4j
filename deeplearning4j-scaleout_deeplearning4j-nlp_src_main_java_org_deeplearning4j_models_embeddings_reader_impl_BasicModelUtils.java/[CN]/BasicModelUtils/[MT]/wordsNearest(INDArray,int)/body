@@ -2,9 +2,12 @@
   if (lookupTable instanceof InMemoryLookupTable) {
     InMemoryLookupTable l=(InMemoryLookupTable)lookupTable;
     INDArray syn0=l.getSyn0();
-    syn0.diviRowVector(syn0.norm2(0));
+    if (!normalized) {
+      syn0.diviColumnVector(syn0.norm2(1));
+      normalized=true;
+    }
     INDArray similarity=Transforms.unitVec(words).mmul(syn0.transpose());
-    List<Double> highToLowSimList=getTopN(similarity,top);
+    List<Double> highToLowSimList=getTopN(similarity,top + 20);
     List<String> ret=new ArrayList<>();
     for (int i=0; i < highToLowSimList.size(); i++) {
       String word=vocabCache.wordAtIndex(highToLowSimList.get(i).intValue());

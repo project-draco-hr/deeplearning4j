@@ -1,0 +1,5 @@
+{
+  if (vectors == null) {
+    vectors=WordVectorSerializer.loadFullModel("/ext/Temp/Models/raw_sentences.dat");
+  }
+}

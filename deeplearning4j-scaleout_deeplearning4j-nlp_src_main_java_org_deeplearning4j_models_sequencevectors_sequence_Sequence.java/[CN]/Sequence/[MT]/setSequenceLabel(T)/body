@@ -1,3 +1,4 @@
 {
   this.label=label;
+  if (!labels.contains(label))   labels.add(label);
 }

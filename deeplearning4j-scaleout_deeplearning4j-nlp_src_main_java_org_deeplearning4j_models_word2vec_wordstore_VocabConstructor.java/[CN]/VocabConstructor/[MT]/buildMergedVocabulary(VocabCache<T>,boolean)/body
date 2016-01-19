@@ -1,0 +1,30 @@
+{
+  if (cache == null)   cache=new AbstractCache.Builder<T>().build();
+  for (int t=0; t < vocabCache.numWords(); t++) {
+    String label=vocabCache.wordAtIndex(t);
+    if (label == null)     continue;
+    T element=vocabCache.wordFor(label);
+    if (!fetchLabels && element.isLabel())     continue;
+    cache.addToken(element);
+    cache.addWordToIndex(cache.numWords() - 1,element.getLabel());
+    cache.putVocabWord(element.getLabel());
+  }
+  if (cache.numWords() == 0)   throw new IllegalStateException("Source VocabCache has no indexes available, transfer is impossible");
+  if (fetchLabels) {
+    for (    VocabSource<T> source : sources) {
+      SequenceIterator<T> iterator=source.getIterator();
+      iterator.reset();
+      while (iterator.hasMoreSequences()) {
+        Sequence<T> sequence=iterator.nextSequence();
+        for (        T label : sequence.getSequenceLabels()) {
+          if (!cache.containsWord(label.getLabel())) {
+            cache.addToken(label);
+            cache.addWordToIndex(cache.numWords() - 1,label.getLabel());
+            cache.putVocabWord(label.getLabel());
+          }
+        }
+      }
+    }
+  }
+  return cache;
+}
