@@ -7,6 +7,7 @@
     }
   }
  else {
+    if (mlu.layerUpdaters == null)     return;
     for (int i=0; i < aggregators.length; i++) {
       aggregators[i].aggregate(mlu.layerUpdaters[i]);
     }

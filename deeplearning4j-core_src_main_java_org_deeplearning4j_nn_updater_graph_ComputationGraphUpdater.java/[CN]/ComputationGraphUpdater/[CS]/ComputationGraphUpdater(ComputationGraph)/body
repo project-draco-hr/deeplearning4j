@@ -7,7 +7,8 @@
     if (!vertex.hasLayer())     continue;
     Layer layer=vertex.getLayer();
     Updater u=UpdaterCreator.getUpdater(layer);
-    layerUpdaters[i++]=u;
-    layerUpdatersMap.put(vertex.getVertexName(),u);
+    layerUpdaters[i]=u;
+    layerUpdatersMap.put(vertex.getVertexName(),i);
+    i++;
   }
 }

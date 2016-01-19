@@ -1,0 +1,21 @@
+{
+  int iterations=conf.getLayers().get(conf.getNetworkInputs().get(0)).getNumIterations();
+  log.info("Running distributed training: (averaging each iteration = " + averageEachIteration + "), (iterations = "+ iterations+ "), (num partions = "+ rdd.partitions().size()+ ")");
+  if (!averageEachIteration) {
+    runIteration(rdd);
+  }
+ else {
+    for (    NeuralNetConfiguration nnc : conf.getLayers().values()) {
+      nnc.setNumIterations(1);
+    }
+    for (int i=0; i < iterations; i++) {
+      runIteration(rdd);
+    }
+    if (iterations > 1) {
+      for (      NeuralNetConfiguration nnc : conf.getLayers().values()) {
+        nnc.setNumIterations(iterations);
+      }
+    }
+  }
+  return network;
+}

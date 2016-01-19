@@ -1,9 +1,3 @@
 {
-  List<INDArray> list=new ArrayList<>(layerCount);
-  for (int i=0; i < topologicalOrder.length; i++) {
-    if (!vertices[topologicalOrder[i]].hasLayer())     continue;
-    Layer l=vertices[topologicalOrder[i]].getLayer();
-    list.add(l.params());
-  }
-  return Nd4j.toFlattened('f',list);
+  return params(false);
 }
