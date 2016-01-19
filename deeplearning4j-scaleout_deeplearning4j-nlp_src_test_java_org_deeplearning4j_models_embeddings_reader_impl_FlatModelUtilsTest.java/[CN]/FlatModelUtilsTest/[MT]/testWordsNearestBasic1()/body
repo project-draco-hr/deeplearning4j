@@ -1,5 +1,4 @@
 {
-  WordVectors vec=WordVectorSerializer.loadTxtVectors(new File("/ext/Temp/Models/model.dat_trans"));
   vec.setModelUtils(new BasicModelUtils<VocabWord>());
   String target="energy";
   INDArray arr1=vec.getWordVectorMatrix(target).dup();
