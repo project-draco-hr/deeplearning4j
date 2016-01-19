@@ -1,0 +1,23 @@
+{
+  try (BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(stream))){
+    VocabCache<VocabWord> vocabCache=vectors.getVocab();
+    for (    VocabWord word : vocabCache.vocabWords()) {
+      StringBuilder builder=new StringBuilder();
+      builder.append(word.isLabel() ? "L" : "E").append(" ");
+      builder.append(word.getLabel().replaceAll(" ","_")).append(" ");
+      INDArray vector=vectors.getWordVectorMatrix(word.getLabel());
+      for (int j=0; j < vector.length(); j++) {
+        builder.append(vector.getDouble(j));
+        if (j < vector.length() - 1) {
+          builder.append(" ");
+        }
+      }
+      writer.write(builder.append("\n").toString());
+    }
+    writer.flush();
+    writer.close();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

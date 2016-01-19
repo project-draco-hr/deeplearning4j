@@ -1,6 +1,10 @@
 {
   presetTables();
   ParagraphVectors ret=new ParagraphVectors();
+  if (this.existingVectors != null) {
+    this.trainElementsVectors=false;
+    this.elementsLearningAlgorithm=null;
+  }
   if (this.labelsSource == null)   this.labelsSource=new LabelsSource();
   if (docIter != null) {
     if (docIter instanceof LabelAwareDocumentIterator)     this.labelAwareIterator=new DocumentIteratorConverter((LabelAwareDocumentIterator)docIter,labelsSource);
@@ -35,8 +39,11 @@
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
   ret.workers=this.workers;
+  ret.trainElementsVectors=this.trainElementsVectors;
+  ret.trainSequenceVectors=this.trainSequenceVectors;
   ret.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
   ret.sequenceLearningAlgorithm=this.sequenceLearningAlgorithm;
+  ret.existingModel=this.existingVectors;
   ret.lookupTable=this.lookupTable;
   ret.modelUtils=this.modelUtils;
   this.configuration.setLearningRate(this.learningRate);

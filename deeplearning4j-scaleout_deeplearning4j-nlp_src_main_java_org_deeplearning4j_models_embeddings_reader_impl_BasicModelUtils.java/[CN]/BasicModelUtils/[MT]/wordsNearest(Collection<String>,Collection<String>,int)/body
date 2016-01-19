@@ -4,14 +4,13 @@
       return new ArrayList<>();
     }
   }
-  WeightLookupTable weightLookupTable=lookupTable;
-  INDArray words=Nd4j.create(positive.size() + negative.size(),weightLookupTable.layerSize());
+  INDArray words=Nd4j.create(positive.size() + negative.size(),lookupTable.layerSize());
   int row=0;
   for (  String s : positive) {
-    words.putRow(row++,weightLookupTable.vector(s));
+    words.putRow(row++,lookupTable.vector(s));
   }
   for (  String s : negative) {
-    words.putRow(row++,weightLookupTable.vector(s).mul(-1));
+    words.putRow(row++,lookupTable.vector(s).mul(-1));
   }
   INDArray mean=words.isMatrix() ? words.mean(0) : words;
   return wordsNearest(mean,top);

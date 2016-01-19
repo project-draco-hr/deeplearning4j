@@ -2,5 +2,6 @@
   WordVectorsImpl vectors=new WordVectorsImpl();
   vectors.setLookupTable(table);
   vectors.setVocab(vocab);
+  vectors.setModelUtils(new BasicModelUtils());
   return vectors;
 }
