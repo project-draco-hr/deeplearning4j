@@ -1,0 +1,11 @@
+{
+  if (tokenizerFactory == null)   throw new IllegalStateException("TokenizerFactory should be defined, prior to predict() call");
+  List<String> tokens=tokenizerFactory.create(rawText).getTokens();
+  List<VocabWord> document=new ArrayList<>();
+  for (  String token : tokens) {
+    if (vocab.containsWord(token)) {
+      document.add(vocab.wordFor(token));
+    }
+  }
+  return predictSeveral(document);
+}

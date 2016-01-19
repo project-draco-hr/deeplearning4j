@@ -5,7 +5,7 @@
     buildVocab();
   }
   if (vocab == null || lookupTable == null || vocab.numWords() == 0)   throw new IllegalStateException("You can't fit() model with empty Vocabulary or WeightLookupTable");
-  if (!resetModel) {
+  if (!resetModel || existingModel != null) {
     lookupTable.resetWeights(false);
   }
  else {

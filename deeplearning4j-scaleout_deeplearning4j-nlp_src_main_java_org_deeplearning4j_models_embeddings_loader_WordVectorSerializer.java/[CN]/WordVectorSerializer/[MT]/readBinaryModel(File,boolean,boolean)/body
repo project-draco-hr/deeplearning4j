@@ -17,7 +17,7 @@
       for (int j=0; j < size; j++) {
         vector[j]=readFloat(dis);
       }
-      syn0.putRow(i,Transforms.unitVec(Nd4j.create(vector)));
+      syn0.putRow(i,normalize ? Transforms.unitVec(Nd4j.create(vector)) : Nd4j.create(vector));
       cache.addToken(new VocabWord(1,word));
       cache.addWordToIndex(cache.numWords(),word);
       cache.putVocabWord(word);

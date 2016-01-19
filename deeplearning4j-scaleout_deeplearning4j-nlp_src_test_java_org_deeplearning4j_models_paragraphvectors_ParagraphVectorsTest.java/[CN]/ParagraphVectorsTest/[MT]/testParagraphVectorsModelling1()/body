@@ -39,10 +39,16 @@
   assertTrue(similarityX < 0.5d);
   File tempFile=File.createTempFile("paravec","ser");
   tempFile.deleteOnExit();
-  INDArray day=vec.getWordVectorMatrix("day");
+  INDArray day=vec.getWordVectorMatrix("day").dup();
   SerializationUtils.saveObject(vec,tempFile);
   ParagraphVectors vec2=(ParagraphVectors)SerializationUtils.readObject(tempFile);
-  INDArray day2=vec2.getWordVectorMatrix("day");
-  tempFile.delete();
+  INDArray day2=vec2.getWordVectorMatrix("day").dup();
   assertEquals(day,day2);
+  tempFile.delete();
+  File tempFile2=File.createTempFile("paravec","ser");
+  tempFile2.deleteOnExit();
+  WordVectorSerializer.writeWordVectors(vec,tempFile2);
+  ParagraphVectors vec3=WordVectorSerializer.readParagraphVectorsFromText(tempFile2);
+  INDArray day3=vec3.getWordVectorMatrix("day").dup();
+  assertEquals(day,day3);
 }

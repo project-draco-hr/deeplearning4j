@@ -1,8 +1,6 @@
 {
   File inputFile=new ClassPathResource("big/raw_sentences.txt").getFile();
   SentenceIterator iter=new BasicLineIterator(inputFile);
-  TokenizerFactory t=new DefaultTokenizerFactory();
-  t.setTokenPreProcessor(new CommonPreprocessor());
   Set<String> set=new HashSet<>();
   int lines=0;
   int cnt=0;

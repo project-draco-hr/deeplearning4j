@@ -1,6 +1,5 @@
 {
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
-  if (cache == null)   throw new IllegalStateException("Cache is null, building fresh one");
   if (cache == null)   cache=new AbstractCache.Builder<T>().build();
   log.debug("Target vocab size before building: [" + cache.numWords() + "]");
   final AtomicLong sequenceCounter=new AtomicLong(0);
@@ -22,6 +21,7 @@
       if (fetchLabels) {
         T labelWord=document.getSequenceLabel();
         labelWord.setSpecial(true);
+        labelWord.markAsLabel(true);
         labelWord.setElementFrequency(1);
         tempHolder.addToken(labelWord);
       }
