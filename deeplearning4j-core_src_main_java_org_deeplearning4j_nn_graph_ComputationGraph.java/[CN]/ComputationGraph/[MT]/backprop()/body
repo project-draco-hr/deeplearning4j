@@ -17,9 +17,6 @@
       for (      VertexIndices v : inputVertices) {
         GraphVertex gv=vertices[v.getVertexIndex()];
         int outputNumberOfInputVertex=v.getVertexEdgeNumber();
-        if (outputNumberOfInputVertex >= gv.getNumOutputConnections()) {
-          System.out.println(":(");
-        }
         gv.setError(outputNumberOfInputVertex,epsilons[j++]);
       }
     }

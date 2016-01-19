@@ -1,0 +1,6 @@
+{
+  if (computationGraphUpdater == null && model instanceof ComputationGraph) {
+    computationGraphUpdater=new ComputationGraphUpdater((ComputationGraph)model);
+  }
+  return computationGraphUpdater;
+}

@@ -39,7 +39,7 @@
     log.info("Set updater");
   }
  else {
-    JavaRDD<Tuple3<INDArray,ComputationGraphUpdater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params,this.updater),true).cache();
+    JavaRDD<Tuple3<INDArray,ComputationGraphUpdater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMapCG(conf.toJson(),this.params,this.updater),true).cache();
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunctionCG());
     log.info("Running iterative reduce and averaging parameters");
     Adder a=new Adder(paramsLength);
