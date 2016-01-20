@@ -1,13 +1,4 @@
 {
   Tsne tsne=new Tsne.Builder().normalize(false).setFinalMomentum(0.8f).setMaxIter(1000).build();
-  try {
-    List<String> plot=new ArrayList<>();
-    for (    String s : vocab.words()) {
-      plot.add(s);
-    }
-    tsne.plot(syn0,2,plot);
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
+  plotVocab(tsne);
 }

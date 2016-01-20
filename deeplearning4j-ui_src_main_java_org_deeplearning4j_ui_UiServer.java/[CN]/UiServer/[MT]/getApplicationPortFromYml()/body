@@ -1,7 +1,14 @@
 {
   int[] toReturn={-1,-1};
-  InputStream in=this.getClass().getClassLoader().getResourceAsStream("dropwizard.yml");
-  if (in == null)   return toReturn;
+  ClassPathResource resource=new ClassPathResource("dropwizard.yml");
+  InputStream in=null;
+  try {
+    in=resource.getInputStream();
+    if (in == null)     return toReturn;
+  }
+ catch (  FileNotFoundException e) {
+    return toReturn;
+  }
   String s;
   try {
     s=IOUtils.toString(in);
