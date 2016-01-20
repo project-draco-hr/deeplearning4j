@@ -1,10 +1,11 @@
 {
   if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
-    throw new UnsupportedOperationException();
+    rnnActivateUsingStoredState(inputs,true,true);
+    backprop(true);
   }
  else {
     feedForward(true);
-    backprop();
+    backprop(false);
   }
   double l1=calcL1();
   double l2=calcL2();

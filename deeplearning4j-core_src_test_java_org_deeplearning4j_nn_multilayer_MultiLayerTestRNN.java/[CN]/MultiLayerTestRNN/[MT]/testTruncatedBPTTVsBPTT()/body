@@ -24,8 +24,8 @@
   mln.computeGradientAndScore();
   mlnTBPTT.computeGradientAndScore();
   Pair<Gradient,Double> mlnPair=mln.gradientAndScore();
-  Pair<Gradient,Double> tbpttPair=mln.gradientAndScore();
-  assertEquals(mlnPair.getFirst(),tbpttPair.getFirst());
+  Pair<Gradient,Double> tbpttPair=mlnTBPTT.gradientAndScore();
+  assertEquals(mlnPair.getFirst().gradientForVariable(),tbpttPair.getFirst().gradientForVariable());
   assertEquals(mlnPair.getSecond(),tbpttPair.getSecond());
   Map<String,INDArray> l0StateMLN=mln.rnnGetPreviousState(0);
   Map<String,INDArray> l0StateTBPTT=mlnTBPTT.rnnGetPreviousState(0);

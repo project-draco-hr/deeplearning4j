@@ -9,7 +9,13 @@
     }
   }
   if (layer != null) {
-    Pair<Gradient,INDArray> pair=layer.backpropGradient(epsTotal);
+    Pair<Gradient,INDArray> pair;
+    if (tbptt && layer instanceof BaseRecurrentLayer<?>) {
+      pair=((BaseRecurrentLayer<?>)layer).tbpttBackpropGradient(epsTotal,tbpttBackwardLength);
+    }
+ else {
+      pair=layer.backpropGradient(epsTotal);
+    }
     if (layerPreProcessor != null) {
       INDArray eps=pair.getSecond();
       eps=layerPreProcessor.backprop(eps,graph.batchSize());

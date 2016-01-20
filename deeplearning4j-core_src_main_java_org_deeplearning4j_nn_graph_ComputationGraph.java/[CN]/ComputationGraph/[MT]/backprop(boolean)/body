@@ -9,7 +9,7 @@
       INDArray currLabels=labels[thisOutputNumber];
       outputLayer.setLabels(currLabels);
     }
-    Pair<Gradient,INDArray[]> pair=current.doBackward();
+    Pair<Gradient,INDArray[]> pair=current.doBackward(truncatedBPTT,(truncatedBPTT ? configuration.getTbpttBackLength() : 0));
     INDArray[] epsilons=pair.getSecond();
     VertexIndices[] inputVertices=current.getInputVertices();
     if (inputVertices != null) {

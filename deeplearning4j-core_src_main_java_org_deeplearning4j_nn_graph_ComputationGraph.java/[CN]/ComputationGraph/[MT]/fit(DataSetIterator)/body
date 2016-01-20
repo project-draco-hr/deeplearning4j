@@ -12,7 +12,7 @@
         throw new UnsupportedOperationException("Training with mask arrays: not yet implemented");
       }
       if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        doTruncatedBPTT(new INDArray[]{next.getFeatures()},new INDArray[]{next.getLabels()},(hasMaskArrays ? new INDArray[]{next.getFeaturesMaskArray()} : null),(hasMaskArrays ? new INDArray[]{next.getLabelsMaskArray()} : null));
       }
  else {
         setInput(0,next.getFeatureMatrix());

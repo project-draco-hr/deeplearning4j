@@ -1,17 +1,11 @@
 {
-  boolean inputIs2d=true;
-  for (  INDArray i : inputs) {
-    if (i.rank() != 2) {
-      inputIs2d=false;
-      break;
-    }
-  }
-  INDArray[] outputs=new INDArray[this.numOutputArrays];
+  Map<String,INDArray> layerActivations=new HashMap<>();
   for (  int currVertexIdx : topologicalOrder) {
     GraphVertex current=vertices[currVertexIdx];
     if (current.isInputVertex()) {
       VertexIndices[] inputsTo=current.getOutputVertices();
       INDArray input=inputs[current.getIndex()];
+      layerActivations.put(current.getVertexName(),input);
       for (      VertexIndices v : inputsTo) {
         int vIdx=v.getVertexIndex();
         int vIdxInputNum=v.getVertexEdgeNumber();
@@ -23,21 +17,19 @@
       if (current.hasLayer()) {
         Layer l=current.getLayer();
         if (l instanceof BaseRecurrentLayer<?>) {
-          out=((BaseRecurrentLayer<?>)l).rnnTimeStep(current.getInputs()[0]);
+          out=((BaseRecurrentLayer<?>)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
         }
  else         if (l instanceof MultiLayerNetwork) {
-          out=((MultiLayerNetwork)l).rnnTimeStep(current.getInputs()[0]);
+          List<INDArray> temp=((MultiLayerNetwork)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
+          out=temp.get(temp.size() - 1);
         }
  else {
-          out=current.doForward(false);
+          out=current.doForward(training);
         }
+        layerActivations.put(current.getVertexName(),out);
       }
  else {
-        out=current.doForward(false);
-      }
-      if (current.isOutputVertex()) {
-        int idx=configuration.getNetworkOutputs().indexOf(current.getVertexName());
-        outputs[idx]=out;
+        out=current.doForward(training);
       }
       VertexIndices[] outputsTo=current.getOutputVertices();
       if (outputsTo != null) {
@@ -49,12 +41,5 @@
       }
     }
   }
-  if (inputIs2d) {
-    for (int i=0; i < outputs.length; i++) {
-      if (outputs[i].rank() == 3 && outputs[i].size(2) == 1) {
-        outputs[i]=outputs[i].tensorAlongDimension(0,1,0);
-      }
-    }
-  }
-  return outputs;
+  return layerActivations;
 }

@@ -11,7 +11,7 @@
         throw new UnsupportedOperationException("Not yet implemented");
       }
       if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
-        throw new UnsupportedOperationException("Truncated BPTT not yet implemented");
+        doTruncatedBPTT(next.getFeatures(),next.getLabels(),next.getFeaturesMaskArrays(),next.getLabelsMaskArrays());
       }
  else {
         setInputs(next.getFeatures());
