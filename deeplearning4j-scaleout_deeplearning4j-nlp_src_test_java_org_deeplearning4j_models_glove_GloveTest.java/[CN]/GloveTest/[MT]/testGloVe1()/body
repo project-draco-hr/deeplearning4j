@@ -7,7 +7,6 @@
   glove.fit();
   double simD=glove.similarity("day","night");
   double simP=glove.similarity("best","police");
-  INDArray day1=glove.getWordVectorMatrix("day").dup();
   log.info("Day/night similarity: " + simD);
   log.info("Best/police similarity: " + simP);
   Collection<String> words=glove.wordsNearest("day",10);
@@ -19,6 +18,7 @@
   assertTrue(words.contains("week"));
   File tempFile=File.createTempFile("glove","temp");
   tempFile.deleteOnExit();
+  INDArray day1=glove.getWordVectorMatrix("day").dup();
   WordVectorSerializer.writeWordVectors(glove,tempFile);
   WordVectors vectors=WordVectorSerializer.loadTxtVectors(tempFile);
   INDArray day2=vectors.getWordVectorMatrix("day").dup();
