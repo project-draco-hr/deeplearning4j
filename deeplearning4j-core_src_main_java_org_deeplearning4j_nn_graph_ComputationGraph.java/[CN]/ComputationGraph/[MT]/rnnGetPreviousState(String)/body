@@ -1,0 +1,5 @@
+{
+  Layer l=verticesMap.get(layerName).getLayer();
+  if (l == null || !(l instanceof BaseRecurrentLayer<?>))   return null;
+  return ((BaseRecurrentLayer<?>)l).rnnGetPreviousState();
+}

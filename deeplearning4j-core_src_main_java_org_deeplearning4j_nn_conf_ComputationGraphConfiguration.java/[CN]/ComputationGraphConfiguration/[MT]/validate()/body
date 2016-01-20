@@ -40,4 +40,9 @@
       throw new IllegalStateException("Invalid configuration: InputPreProcessor listed for layer \"" + s + "\" but layer \""+ s+ "\" does not exist");
     }
   }
+  for (  String s : networkOutputs) {
+    if (!layers.containsKey(s) && !graphNodes.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: Output name \"" + s + "\" is not a Layer or GraphNode");
+    }
+  }
 }

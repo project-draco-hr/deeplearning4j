@@ -1,3 +1,6 @@
 {
-  throw new UnsupportedOperationException("Not implemented");
+  ComputationGraph cg=new ComputationGraph(configuration.clone());
+  cg.init();
+  cg.setParams(params().dup());
+  return cg;
 }
