@@ -6,7 +6,7 @@
   }
   if (configuration.isBackprop()) {
     if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
-      throw new UnsupportedOperationException("Not implemented");
+      doTruncatedBPTT(inputs,labels,null,null);
     }
  else {
       if (solver == null) {

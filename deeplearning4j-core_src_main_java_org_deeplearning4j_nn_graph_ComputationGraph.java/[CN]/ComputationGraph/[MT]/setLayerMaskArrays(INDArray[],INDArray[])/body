@@ -1,3 +1,22 @@
 {
+  if (featureMaskArrays != null) {
+    if (featureMaskArrays.length != numInputArrays) {
+      throw new IllegalArgumentException("Invalid number of feature mask arrays");
+    }
+    for (int i=0; i < featureMaskArrays.length; i++) {
+      String inputName=configuration.getNetworkInputs().get(i);
+    }
+  }
+  if (labelMaskArrays != null) {
+    if (labelMaskArrays.length != numInputArrays) {
+      throw new IllegalArgumentException("Invalid number of label mask arrays");
+    }
+    for (int i=0; i < labelMaskArrays.length; i++) {
+      String outputName=configuration.getNetworkOutputs().get(i);
+      GraphVertex v=verticesMap.get(outputName);
+      Layer ol=v.getLayer();
+      ol.setMaskArray(labelMaskArrays[i]);
+    }
+  }
   throw new UnsupportedOperationException("Not yet implemented");
 }
