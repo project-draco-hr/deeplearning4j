@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("Not yet implemented");
+  if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot score ComputationGraph network with " + " DataSet: network does not have 1 input and 1 output arrays");
+  return score(ComputationGraphUtil.toMultiDataSet(dataSet),training);
 }

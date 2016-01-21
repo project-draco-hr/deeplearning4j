@@ -4,8 +4,8 @@
   Random r=new Random(12345);
   for (  int nExamples : miniBatchSizes) {
     Nd4j.getRandom().setSeed(12345);
-    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(0.1).seed(12345).list(4).layer(0,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(2,new GravesLSTM.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(3,new RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nIn(2).nOut(1).build()).inputPreProcessor(0,new RnnToFeedForwardPreProcessor()).inputPreProcessor(2,new FeedForwardToRnnPreProcessor()).build();
-    MultiLayerNetwork net=new MultiLayerNetwork(conf);
+    ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(0.1).seed(12345).graphBuilder().addInputs("in").addLayer("0",new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build(),"in").addLayer("1",new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build(),"0").addLayer("2",new GravesLSTM.Builder().activation("tanh").nIn(2).nOut(2).build(),"1").addLayer("3",new RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nIn(2).nOut(1).build(),"2").setOutputs("3").inputPreProcessor("0",new RnnToFeedForwardPreProcessor()).inputPreProcessor("2",new FeedForwardToRnnPreProcessor()).build();
+    ComputationGraph net=new ComputationGraph(conf);
     net.init();
     INDArray in1=Nd4j.rand(new int[]{nExamples,2,4});
     INDArray in2=Nd4j.rand(new int[]{nExamples,2,5});
@@ -19,18 +19,18 @@
     for (int j=0; j < nExamples; j++) {
       inputMask.putScalar(new int[]{j,4},0);
     }
-    net.setInput(in1);
-    net.setLabels(labels1);
+    net.setInput(0,in1);
+    net.setLabel(0,labels1);
     net.computeGradientAndScore();
     double score1=net.score();
     Gradient g1=net.gradient();
-    net.setInput(in2);
-    net.setLabels(labels2);
-    net.setLayerMaskArrays(inputMask,null);
+    net.setInput(0,in2);
+    net.setLabel(0,labels2);
+    net.setLayerMaskArrays(new INDArray[]{inputMask},null);
     net.computeGradientAndScore();
     double score2=net.score();
     Gradient g2=net.gradient();
-    List<INDArray> activations2=net.feedForward();
+    Map<String,INDArray> activations2=net.feedForward();
     assertNotEquals(score1,score2,0.01);
     Map<String,INDArray> g1map=g1.gradientForVariable();
     Map<String,INDArray> g2map=g2.gradientForVariable();
@@ -43,7 +43,7 @@
       for (int k=0; k < nIn; k++) {
         in2.putScalar(new int[]{j,k,4},r.nextDouble());
       }
-      net.setInput(in2);
+      net.setInput(0,in2);
       net.computeGradientAndScore();
       double score2a=net.score();
       Gradient g2a=net.gradient();
@@ -51,14 +51,14 @@
       for (      String s : g2.gradientForVariable().keySet()) {
         assertEquals(g2.getGradientFor(s),g2a.getGradientFor(s));
       }
-      List<INDArray> activations2a=net.feedForward();
-      for (int k=1; k < activations2.size(); k++) {
-        assertEquals(activations2.get(k),activations2a.get(k));
+      Map<String,INDArray> activations2a=net.feedForward();
+      for (      String s : activations2.keySet()) {
+        assertEquals(activations2.get(s),activations2a.get(s));
       }
     }
     FeedForwardToRnnPreProcessor temp=new FeedForwardToRnnPreProcessor();
-    INDArray l0Before=activations2.get(1);
-    INDArray l1Before=activations2.get(2);
+    INDArray l0Before=activations2.get("0");
+    INDArray l1Before=activations2.get("1");
     INDArray l0After=temp.preProcess(l0Before,nExamples);
     INDArray l1After=temp.preProcess(l1Before,nExamples);
     for (int j=0; j < nExamples; j++) {

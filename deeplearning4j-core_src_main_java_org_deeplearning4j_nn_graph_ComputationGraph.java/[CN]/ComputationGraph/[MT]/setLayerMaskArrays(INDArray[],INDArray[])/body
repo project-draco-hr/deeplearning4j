@@ -5,6 +5,30 @@
     }
     for (int i=0; i < featureMaskArrays.length; i++) {
       String inputName=configuration.getNetworkInputs().get(i);
+      INDArray reshapedFeaturesMask=TimeSeriesUtils.reshapeTimeSeriesMaskToVector(featureMaskArrays[i]);
+      LinkedList<String> stack=new LinkedList<>();
+      GraphVertex gv=verticesMap.get(inputName);
+      VertexIndices[] outputsFromThisInput=gv.getOutputVertices();
+      for (      VertexIndices v : outputsFromThisInput) {
+        stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+      }
+      while (!stack.isEmpty()) {
+        String nextVertexName=stack.removeLast();
+        GraphVertex nextVertex=verticesMap.get(nextVertexName);
+        if (nextVertex.hasLayer()) {
+          Layer l=nextVertex.getLayer();
+          if (l instanceof BaseRecurrentLayer<?>) {
+            continue;
+          }
+ else           if (l.type() == Layer.Type.FEED_FORWARD || l.type() == Layer.Type.CONVOLUTIONAL) {
+            l.setMaskArray(reshapedFeaturesMask);
+          }
+        }
+        outputsFromThisInput=nextVertex.getOutputVertices();
+        for (        VertexIndices v : outputsFromThisInput) {
+          stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+        }
+      }
     }
   }
   if (labelMaskArrays != null) {
@@ -18,5 +42,4 @@
       ol.setMaskArray(labelMaskArrays[i]);
     }
   }
-  throw new UnsupportedOperationException("Not yet implemented");
 }
