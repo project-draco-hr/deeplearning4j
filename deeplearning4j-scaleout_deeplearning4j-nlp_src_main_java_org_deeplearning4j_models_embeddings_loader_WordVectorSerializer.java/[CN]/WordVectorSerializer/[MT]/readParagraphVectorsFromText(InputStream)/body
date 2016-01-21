@@ -18,8 +18,9 @@
         labels.add(word.getLabel());
       }
  else       throw new IllegalStateException("Source stream doesn't looks like ParagraphVectors serialized model");
+      word.setIndex(vocabCache.numWords());
       vocabCache.addToken(word);
-      vocabCache.addWordToIndex(vocabCache.numWords() - 1,word.getLabel());
+      vocabCache.addWordToIndex(word.getIndex(),word.getLabel());
       vocabCache.putVocabWord(word.getLabel());
       INDArray row=Nd4j.create(Nd4j.createBuffer(split.length - 2));
       for (int i=2; i < split.length; i++) {

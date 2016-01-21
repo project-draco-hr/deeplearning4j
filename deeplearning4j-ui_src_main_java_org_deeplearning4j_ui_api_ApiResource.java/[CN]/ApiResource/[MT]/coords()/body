@@ -1,4 +1,3 @@
 {
-  if (coords.isEmpty())   throw new IllegalStateException("Unable to get coordinates; empty list");
   return Response.ok(coords).build();
 }

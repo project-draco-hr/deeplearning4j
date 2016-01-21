@@ -10,8 +10,6 @@
     throw new RuntimeException(e);
   }
   try {
-    UiServer server=UiServer.getInstance();
-    System.out.println("Please open your browser and navigate to: http://localhost:" + server.getPort() + "/");
   }
  catch (  Exception e) {
     e.printStackTrace();
