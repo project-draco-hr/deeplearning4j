@@ -1,0 +1,4 @@
+{
+  JavaRDD<Evaluation> evaluations=data.map(new EvaluateMapFunction(network,labelsList));
+  return evaluations.reduce(new EvaluationReduceFunction());
+}

@@ -1,5 +1,5 @@
 {
-  Evaluation evaluation=new Evaluation<>(labels,warnNotClassified);
+  Evaluation evaluation=new Evaluation(labels);
   INDArray out;
   if (data.hasMaskArrays()) {
     out=network.output(data.getFeatureMatrix(),false,data.getFeaturesMaskArray(),data.getLabelsMaskArray());
