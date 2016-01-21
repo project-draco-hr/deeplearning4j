@@ -2,6 +2,7 @@
   List<Writable> list;
   if (writables instanceof List)   list=(List<Writable>)writables;
  else   list=new ArrayList<>(writables);
+  int numExamplesToLoad=(batchSize == -1) ? list.size() : batchSize;
   int labelIndex=this.labelIndex;
   if (numPossibleLabels >= 1 && labelIndex < 0) {
     labelIndex=list.size() - 1;
@@ -9,7 +10,7 @@
   INDArray label=null;
   INDArray featureVector=Nd4j.create(labelIndex >= 0 ? list.size() - 1 : list.size());
   int featureCount=0;
-  for (int j=0; j < list.size(); j++) {
+  for (int j=0; j < numExamplesToLoad; j++) {
     Writable current=list.get(j);
     if (converter != null)     current=converter.convert(current);
     if (labelIndex >= 0 && j == labelIndex) {

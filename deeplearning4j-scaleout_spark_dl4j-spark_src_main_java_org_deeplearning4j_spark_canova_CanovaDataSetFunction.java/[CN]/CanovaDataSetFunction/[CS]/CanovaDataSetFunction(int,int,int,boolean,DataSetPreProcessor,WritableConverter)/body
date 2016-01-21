@@ -1,6 +1,7 @@
 {
   this.labelIndex=labelIndex;
   this.numPossibleLabels=numPossibleLabels;
+  this.batchSize=batchSize;
   this.regression=regression;
   this.preProcessor=preProcessor;
   this.converter=converter;
