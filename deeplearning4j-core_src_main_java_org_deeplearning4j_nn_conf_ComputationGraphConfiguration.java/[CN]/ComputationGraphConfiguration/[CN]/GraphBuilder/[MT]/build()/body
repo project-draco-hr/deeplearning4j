@@ -19,5 +19,6 @@
   conf.graphNodes=this.graphNodes;
   conf.graphNodeInputs=this.graphNodeInputs;
   conf.validate();
+  if (addPreProcessors)   conf.addPreProcessors();
   return conf;
 }
