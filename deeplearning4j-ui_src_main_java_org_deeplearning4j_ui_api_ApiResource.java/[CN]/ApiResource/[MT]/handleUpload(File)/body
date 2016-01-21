@@ -3,7 +3,7 @@
   List<String> testLines=null;
   try {
     testLines=FileUtils.readLines(path);
-    storage.put("TSNE",new Long(1),testLines);
+    storage.put("TSNE",Pair.makePair(1,0),testLines);
   }
  catch (  IOException e) {
     e.printStackTrace();

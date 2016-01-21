@@ -1,6 +1,6 @@
 {
   String content=client.target(resource.getUrl()).request(MediaType.TEXT_PLAIN_TYPE).get(String.class);
   List<String> testLines=IOUtils.readLines(new ByteArrayInputStream(content.getBytes()));
-  HistoryStorage.getInstance().put("TSNE",new Long(1),testLines);
+  HistoryStorage.getInstance().put("TSNE",Pair.makePair(1,0),testLines);
   return Response.ok(testLines).build();
 }

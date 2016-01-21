@@ -1,9 +1,0 @@
-{
-  if (version.equals(TargetVersion.LATEST)) {
-    Map<Long,Object> map=historyTable.row(key);
-    if (map.size() == 1) {
-      return map.values().iterator().next();
-    }
-  }
-  return null;
-}

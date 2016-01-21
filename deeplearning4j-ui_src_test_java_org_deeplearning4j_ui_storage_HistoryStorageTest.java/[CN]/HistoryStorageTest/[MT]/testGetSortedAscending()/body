@@ -1,0 +1,16 @@
+{
+  VocabWord word1=new VocabWord(1.0,"word1");
+  VocabWord word2=new VocabWord(2.0,"word2");
+  VocabWord word3=new VocabWord(3.0,"word3");
+  VocabWord word4=new VocabWord(4.0,"word4");
+  storage.put("ABSTRACT",Pair.makePair(1,0),word1);
+  storage.put("ABSTRACT",Pair.makePair(1,2),word3);
+  storage.put("ABSTRACT",Pair.makePair(1,3),word4);
+  storage.put("ABSTRACT",Pair.makePair(1,1),word2);
+  List<Object> list=storage.getSorted("ABSTRACT",HistoryStorage.SortOutput.ASCENDING);
+  assertEquals(4,list.size());
+  assertEquals(word1,(VocabWord)list.get(0));
+  assertEquals(word2,(VocabWord)list.get(1));
+  assertEquals(word3,(VocabWord)list.get(2));
+  assertEquals(word4,(VocabWord)list.get(3));
+}

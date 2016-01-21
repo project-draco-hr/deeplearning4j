@@ -1,0 +1,12 @@
+{
+  Map<Pair<Integer,Integer>,Object> map=historyTable.row(key);
+  if (map.size() == 1) {
+    return map.values().iterator().next();
+  }
+ else {
+    List<Object> objects=getSorted(key,SortOutput.DESCENDING);
+    if (version.equals(TargetVersion.OLDEST))     return objects.get(objects.size() - 1);
+ else     if (version.equals(TargetVersion.LATEST))     return objects.get(0);
+  }
+  return null;
+}
