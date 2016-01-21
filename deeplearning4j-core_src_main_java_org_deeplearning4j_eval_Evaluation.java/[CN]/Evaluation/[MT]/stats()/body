@@ -1,34 +1,3 @@
 {
-  String actual, expected;
-  StringBuilder builder=new StringBuilder().append("\n");
-  StringBuilder warnings=new StringBuilder();
-  List<Integer> classes=confusion.getClasses();
-  for (  Integer clazz : classes) {
-    actual=resolveLabelForClass(clazz);
-    for (    Integer clazz2 : classes) {
-      int count=confusion.getCount(clazz,clazz2);
-      if (count != 0) {
-        expected=resolveLabelForClass(clazz2);
-        builder.append(String.format("Examples labeled as %s classified by model as %s: %d times\n",actual,expected,count));
-      }
-    }
-    if (warnNotClassified && truePositives.getCount(clazz) == 0) {
-      if (falsePositives.getCount(clazz) == 0) {
-        warnings.append(String.format("Warning: class %s was never predicted by the model. This class was excluded from the average precision\n",actual));
-      }
-      if (falseNegatives.getCount(clazz) == 0) {
-        warnings.append(String.format("Warning: class %s has never appeared as a true label. This class was excluded from the average recall\n",actual));
-      }
-    }
-  }
-  builder.append("\n");
-  builder.append(warnings);
-  DecimalFormat df=new DecimalFormat("#.####");
-  builder.append("\n==========================Scores========================================");
-  builder.append("\n Accuracy:  ").append(df.format(accuracy()));
-  builder.append("\n Precision: ").append(df.format(precision()));
-  builder.append("\n Recall:    ").append(df.format(recall()));
-  builder.append("\n F1 Score:  ").append(df.format(f1()));
-  builder.append("\n========================================================================");
-  return builder.toString();
+  return stats(true);
 }
