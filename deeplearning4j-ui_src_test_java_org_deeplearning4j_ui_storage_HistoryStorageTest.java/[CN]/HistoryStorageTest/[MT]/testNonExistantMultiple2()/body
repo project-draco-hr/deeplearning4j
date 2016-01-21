@@ -1,0 +1,5 @@
+{
+  List<Object> list=storage.getSorted("NOTHINGAVAILABLE",HistoryStorage.SortOutput.DESCENDING);
+  assertNotEquals(null,list);
+  assertEquals(0,list.size());
+}
