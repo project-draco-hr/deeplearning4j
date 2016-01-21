@@ -7,7 +7,7 @@
     conf.layers.put(entry.getKey(),entry.getValue().clone());
   }
   conf.graphNodes=new HashMap<>();
-  for (  Map.Entry<String,GraphNode> entry : this.graphNodes.entrySet()) {
+  for (  Map.Entry<String,GraphVertex> entry : this.graphNodes.entrySet()) {
     conf.graphNodes.put(entry.getKey(),entry.getValue().clone());
   }
   conf.layerInputs=new HashMap<>();

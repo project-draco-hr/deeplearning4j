@@ -1,0 +1,20 @@
+{
+  if (!canDoForward())   throw new IllegalStateException("Cannot do forward pass: inputs not set");
+  nInForwardPass=inputs.length;
+  if (inputs.length == 1)   return inputs[0];
+switch (op) {
+case Add:
+    INDArray sum=inputs[0].dup();
+  for (int i=1; i < inputs.length; i++) {
+    sum.addi(inputs[i]);
+  }
+return sum;
+case Subtract:
+if (inputs.length != 2) throw new IllegalArgumentException("ElementWise subtraction only supports 2 inputs");
+return inputs[0].sub(inputs[1]);
+case Product:
+throw new UnsupportedOperationException("Not yet implemented");
+default :
+throw new UnsupportedOperationException("Unknown op: " + op);
+}
+}

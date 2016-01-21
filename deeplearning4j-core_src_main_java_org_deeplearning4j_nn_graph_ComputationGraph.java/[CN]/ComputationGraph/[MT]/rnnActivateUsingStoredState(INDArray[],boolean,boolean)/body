@@ -4,7 +4,7 @@
     GraphVertex current=vertices[currVertexIdx];
     if (current.isInputVertex()) {
       VertexIndices[] inputsTo=current.getOutputVertices();
-      INDArray input=inputs[current.getIndex()];
+      INDArray input=inputs[current.getVertexIndex()];
       layerActivations.put(current.getVertexName(),input);
       for (      VertexIndices v : inputsTo) {
         int vIdx=v.getVertexIndex();

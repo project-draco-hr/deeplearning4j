@@ -11,7 +11,7 @@
     GraphVertex current=vertices[currVertexIdx];
     if (current.isInputVertex()) {
       VertexIndices[] inputsTo=current.getOutputVertices();
-      INDArray input=inputs[current.getIndex()];
+      INDArray input=inputs[current.getVertexIndex()];
       for (      VertexIndices v : inputsTo) {
         int vIdx=v.getVertexIndex();
         int vIdxInputNum=v.getVertexEdgeNumber();
