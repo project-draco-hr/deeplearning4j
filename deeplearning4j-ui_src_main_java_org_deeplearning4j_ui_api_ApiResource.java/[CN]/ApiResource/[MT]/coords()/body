@@ -1,3 +1,5 @@
 {
-  return Response.ok(coords).build();
+  HistoryStorage storage=HistoryStorage.getInstance();
+  List<String> something=(List<String>)storage.getLatest("TSNE");
+  return Response.ok(something).build();
 }
