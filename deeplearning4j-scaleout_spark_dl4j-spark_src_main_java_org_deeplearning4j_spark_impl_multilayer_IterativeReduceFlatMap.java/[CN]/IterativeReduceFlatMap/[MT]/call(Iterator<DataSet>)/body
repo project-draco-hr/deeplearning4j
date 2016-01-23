@@ -10,7 +10,7 @@
   if (log.isDebugEnabled()) {
     log.debug("Training on {} examples with data {}",data.numExamples(),data.labelCounts());
   }
-  INDArray val=this.params.getValue();
+  INDArray val=params.getValue();
   Updater upd=updater.getValue();
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
