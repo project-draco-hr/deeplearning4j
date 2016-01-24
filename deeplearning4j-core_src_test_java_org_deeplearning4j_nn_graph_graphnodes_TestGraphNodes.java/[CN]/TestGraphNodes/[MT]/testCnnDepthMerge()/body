@@ -13,7 +13,7 @@
     }
   }
   mergeNode.setErrors(out);
-  INDArray[] backward=mergeNode.doBackward(false,-1).getSecond();
+  INDArray[] backward=mergeNode.doBackward(false).getSecond();
   assertEquals(first,backward[0]);
   assertEquals(second,backward[1]);
   first=Nd4j.linspace(0,17,18).reshape(1,2,3,3);
@@ -30,7 +30,7 @@
     }
   }
   mergeNode.setErrors(out);
-  backward=mergeNode.doBackward(false,-1).getSecond();
+  backward=mergeNode.doBackward(false).getSecond();
   assertEquals(first,backward[0]);
   assertEquals(second,backward[1]);
 }

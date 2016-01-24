@@ -21,17 +21,6 @@
       }
     }
   }
-  for (  String s : inputPreProcessors.keySet()) {
-    if (!vertices.containsKey(s)) {
-      throw new IllegalStateException("Invalid configuration: InputPreProcessor listed for layer \"" + s + "\" but layer \""+ s+ "\" does not exist");
-    }
- else {
-      GraphVertex gv=vertices.get(s);
-      if (!(gv instanceof LayerVertex)) {
-        throw new IllegalStateException("Invalid configuration: InputPreprocessor listed for vertex \"" + s + "\" but vertex \""+ s+ "\" is not a Layer");
-      }
-    }
-  }
   for (  String s : networkOutputs) {
     if (!vertices.containsKey(s)) {
       throw new IllegalStateException("Invalid configuration: Output name \"" + s + "\" is not a valid vertex");

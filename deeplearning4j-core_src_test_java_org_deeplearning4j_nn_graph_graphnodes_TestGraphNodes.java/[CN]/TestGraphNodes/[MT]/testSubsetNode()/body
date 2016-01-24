@@ -6,7 +6,7 @@
   INDArray out=subset.doForward(false);
   assertEquals(in.get(NDArrayIndex.all(),NDArrayIndex.interval(4,7,true)),out);
   subset.setErrors(out);
-  INDArray backward=subset.doBackward(false,-1).getSecond()[0];
+  INDArray backward=subset.doBackward(false).getSecond()[0];
   assertEquals(Nd4j.zeros(5,4),backward.get(NDArrayIndex.all(),NDArrayIndex.interval(0,3,true)));
   assertEquals(out,backward.get(NDArrayIndex.all(),NDArrayIndex.interval(4,7,true)));
   assertEquals(Nd4j.zeros(5,2),backward.get(NDArrayIndex.all(),NDArrayIndex.interval(8,9,true)));
@@ -15,7 +15,7 @@
   out=subset.doForward(false);
   assertEquals(in.get(NDArrayIndex.all(),NDArrayIndex.interval(4,7,true),NDArrayIndex.all(),NDArrayIndex.all()),out);
   subset.setErrors(out);
-  backward=subset.doBackward(false,-1).getSecond()[0];
+  backward=subset.doBackward(false).getSecond()[0];
   assertEquals(Nd4j.zeros(5,4,3,3),backward.get(NDArrayIndex.all(),NDArrayIndex.interval(0,3,true),NDArrayIndex.all(),NDArrayIndex.all()));
   assertEquals(out,backward.get(NDArrayIndex.all(),NDArrayIndex.interval(4,7,true),NDArrayIndex.all(),NDArrayIndex.all()));
   assertEquals(Nd4j.zeros(5,2,3,3),backward.get(NDArrayIndex.all(),NDArrayIndex.interval(8,9,true),NDArrayIndex.all(),NDArrayIndex.all()));

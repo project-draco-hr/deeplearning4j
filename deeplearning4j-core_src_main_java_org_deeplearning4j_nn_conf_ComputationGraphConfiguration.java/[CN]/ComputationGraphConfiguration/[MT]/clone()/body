@@ -12,10 +12,6 @@
   conf.networkOutputs=new ArrayList<>(this.networkOutputs);
   conf.pretrain=pretrain;
   conf.backprop=backprop;
-  conf.inputPreProcessors=new HashMap<>();
-  for (  Map.Entry<String,InputPreProcessor> entry : inputPreProcessors.entrySet()) {
-    conf.inputPreProcessors.put(entry.getKey(),entry.getValue().clone());
-  }
   conf.backpropType=backpropType;
   conf.tbpttFwdLength=tbpttFwdLength;
   conf.tbpttBackLength=tbpttBackLength;

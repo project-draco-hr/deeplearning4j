@@ -2,7 +2,7 @@
   setInputs(inputs);
   setLabels(labels);
   if (configuration.isPretrain()) {
-    throw new UnsupportedOperationException("Not implemented");
+    throw new UnsupportedOperationException("Pretraining: Not yet implemented");
   }
   if (configuration.isBackprop()) {
     if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {

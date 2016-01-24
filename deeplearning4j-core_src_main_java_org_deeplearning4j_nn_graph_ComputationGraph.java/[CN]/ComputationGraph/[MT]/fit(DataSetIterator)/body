@@ -1,7 +1,7 @@
 {
   if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSetIterator");
   if (configuration.isPretrain()) {
-    throw new UnsupportedOperationException("Not implemented");
+    throw new UnsupportedOperationException("Pretraining: Not yet implemented");
   }
   if (configuration.isBackprop()) {
     while (dataSetIterator.hasNext()) {
@@ -25,7 +25,7 @@
         solver.optimize();
       }
       if (hasMaskArrays) {
-        throw new UnsupportedOperationException();
+        clearLayerMaskArrays();
       }
     }
   }
