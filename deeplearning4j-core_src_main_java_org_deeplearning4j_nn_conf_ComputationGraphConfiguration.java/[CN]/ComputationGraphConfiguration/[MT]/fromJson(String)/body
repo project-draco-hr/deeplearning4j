@@ -4,6 +4,34 @@
     return mapper.readValue(json,ComputationGraphConfiguration.class);
   }
  catch (  IOException e) {
+  }
+  AnnotatedClass ac=AnnotatedClass.construct(GraphVertex.class,mapper.getSerializationConfig().getAnnotationIntrospector(),null);
+  Collection<NamedType> types=mapper.getSubtypeResolver().collectAndResolveSubtypes(ac,mapper.getSerializationConfig(),mapper.getSerializationConfig().getAnnotationIntrospector());
+  Set<Class<?>> registeredSubtypes=new HashSet<>();
+  for (  NamedType nt : types) {
+    registeredSubtypes.add(nt.getType());
+  }
+  Reflections reflections=new Reflections();
+  Set<Class<? extends GraphVertex>> subTypes=reflections.getSubTypesOf(GraphVertex.class);
+  List<NamedType> toRegister=new ArrayList<>();
+  for (  Class<? extends GraphVertex> c : subTypes) {
+    if (!registeredSubtypes.contains(c)) {
+      String name;
+      if (ClassUtils.isInnerClass(c)) {
+        Class<?> c2=c.getDeclaringClass();
+        name=c2.getSimpleName() + "$" + c.getSimpleName();
+      }
+ else {
+        name=c.getSimpleName();
+      }
+      toRegister.add(new NamedType(c,name));
+    }
+  }
+  mapper=NeuralNetConfiguration.reinitMapperWithSubtypes(toRegister);
+  try {
+    return mapper.readValue(json,ComputationGraphConfiguration.class);
+  }
+ catch (  IOException e) {
     throw new RuntimeException(e);
   }
 }
