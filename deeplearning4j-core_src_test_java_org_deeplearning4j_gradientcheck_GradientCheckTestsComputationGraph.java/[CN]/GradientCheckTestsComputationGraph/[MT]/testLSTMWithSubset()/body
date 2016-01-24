@@ -1,6 +1,6 @@
 {
   Nd4j.getRandom().setSeed(12345);
-  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).learningRate(1.0).graphBuilder().addInputs("input").setOutputs("out").addLayer("lstm1",new GravesLSTM.Builder().nIn(3).nOut(8).activation("tanh").build(),"input").addNode("subset",new SubsetVertex(0,3),"lstm1").addLayer("out",new RnnOutputLayer.Builder().nIn(4).nOut(3).activation("softmax").lossFunction(LossFunctions.LossFunction.MCXENT).build(),"subset").pretrain(false).backprop(true).build();
+  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).learningRate(1.0).graphBuilder().addInputs("input").setOutputs("out").addLayer("lstm1",new GravesLSTM.Builder().nIn(3).nOut(8).activation("tanh").build(),"input").addVertex("subset",new SubsetVertex(0,3),"lstm1").addLayer("out",new RnnOutputLayer.Builder().nIn(4).nOut(3).activation("softmax").lossFunction(LossFunctions.LossFunction.MCXENT).build(),"subset").pretrain(false).backprop(true).build();
   ComputationGraph graph=new ComputationGraph(conf);
   graph.init();
   Random r=new Random(12345);

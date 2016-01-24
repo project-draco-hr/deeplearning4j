@@ -1,0 +1,15 @@
+{
+  NeuralNetConfiguration.Builder builder=globalConfiguration.clone();
+  builder.layer(layer);
+  vertices.put(layerName,new LayerVertex(builder.build(),preProcessor));
+  if (layerInputs != null && layerInputs.length > 1) {
+    String mergeName=layerName + "-merge";
+    addVertex(mergeName,new MergeVertex(),layerInputs);
+    this.vertexInputs.put(layerName,Collections.singletonList(mergeName));
+  }
+ else   if (layerInputs != null) {
+    this.vertexInputs.put(layerName,Arrays.asList(layerInputs));
+    layer.setLayerName(layerName);
+  }
+  return this;
+}

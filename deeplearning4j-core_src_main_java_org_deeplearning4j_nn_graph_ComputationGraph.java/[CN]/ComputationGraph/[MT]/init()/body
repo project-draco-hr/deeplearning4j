@@ -1,17 +1,8 @@
 {
-  Map<String,Layer> layerMap=new HashMap<>();
-  for (  Map.Entry<String,NeuralNetConfiguration> entry : configuration.getLayers().entrySet()) {
-    String layerName=entry.getKey();
-    NeuralNetConfiguration layerConf=entry.getValue();
-    Layer layer=LayerFactories.getFactory(layerConf).create(layerConf,null,-1);
-    layerMap.put(layerName,layer);
-  }
-  Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeMap=configuration.getGraphNodes();
+  Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeMap=configuration.getVertices();
   List<String> networkInputNames=configuration.getNetworkInputs();
-  Map<String,List<String>> layerInputs=configuration.getLayerInputs();
-  Map<String,List<String>> graphNodeInputs=configuration.getGraphNodeInputs();
-  int nVertices=layerMap.size() + nodeMap.size() + networkInputNames.size();
-  this.vertices=new GraphVertex[nVertices];
+  Map<String,List<String>> vertexInputs=configuration.getVertexInputs();
+  this.vertices=new GraphVertex[networkInputNames.size() + configuration.getVertices().size()];
   Map<String,Integer> allNamesReverse=new HashMap<>();
   int i=0;
   for (  String name : networkInputNames) {
@@ -21,120 +12,70 @@
   }
   numLayers=0;
   List<Layer> tempLayerList=new ArrayList<>();
-  for (  Map.Entry<String,Layer> layerEntry : layerMap.entrySet()) {
-    Layer l=layerEntry.getValue();
-    tempLayerList.add(l);
-    InputPreProcessor preProcessor=configuration.getInputPreProcessors().get(layerEntry.getKey());
-    String name=layerEntry.getKey();
-    GraphVertex gv=new LayerVertex(this,name,i,null,null,l,preProcessor);
-    allNamesReverse.put(name,i);
-    vertices[i++]=gv;
-    numLayers++;
-  }
-  layers=tempLayerList.toArray(new Layer[numLayers]);
   for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeEntry : nodeMap.entrySet()) {
     org.deeplearning4j.nn.conf.graph.GraphVertex n=nodeEntry.getValue();
     String name=nodeEntry.getKey();
-    GraphVertex gv;
-    if (n instanceof org.deeplearning4j.nn.conf.graph.ElementWiseVertex) {
-      ElementWiseVertex.Op op;
-switch (((org.deeplearning4j.nn.conf.graph.ElementWiseVertex)n).getOp()) {
-case Add:
-        op=ElementWiseVertex.Op.Add;
-      break;
-case Subtract:
-    op=ElementWiseVertex.Op.Subtract;
-  break;
-case Product:
-op=ElementWiseVertex.Op.Product;
-break;
-default :
-throw new RuntimeException();
-}
-gv=new ElementWiseVertex(this,name,i,op);
-}
- else if (n instanceof org.deeplearning4j.nn.conf.graph.MergeVertex) {
-gv=new MergeVertex(this,name,i);
-}
- else if (n instanceof org.deeplearning4j.nn.conf.graph.SubsetVertex) {
-org.deeplearning4j.nn.conf.graph.SubsetVertex ssv=(org.deeplearning4j.nn.conf.graph.SubsetVertex)n;
-gv=new SubsetVertex(this,name,i,ssv.getFrom(),ssv.getTo());
-}
- else {
-throw new RuntimeException(":(");
-}
-allNamesReverse.put(name,i);
-vertices[i++]=gv;
-}
-verticesMap=new HashMap<>();
-for (GraphVertex gv : vertices) {
-verticesMap.put(gv.getVertexName(),gv);
-}
-Map<String,List<String>> verticesOutputTo=new HashMap<>();
-for (GraphVertex gv : vertices) {
-String vertexName=gv.getVertexName();
-List<String> vertexInputNames;
-if (gv.hasLayer()) {
-vertexInputNames=layerInputs.get(vertexName);
-}
- else if (gv instanceof InputVertex) {
-vertexInputNames=null;
-}
- else {
-vertexInputNames=graphNodeInputs.get(vertexName);
-}
-if (vertexInputNames == null) continue;
-for (String s : vertexInputNames) {
-List<String> list=verticesOutputTo.get(s);
-if (list == null) {
-list=new ArrayList<>();
-verticesOutputTo.put(s,list);
-}
-list.add(vertexName);
-}
-}
-for (GraphVertex gv : vertices) {
-String vertexName=gv.getVertexName();
-int vertexIndex=gv.getVertexIndex();
-List<String> vertexInputNames;
-if (gv.hasLayer()) {
-vertexInputNames=layerInputs.get(vertexName);
-}
- else if (gv instanceof InputVertex) {
-vertexInputNames=null;
-}
- else {
-vertexInputNames=graphNodeInputs.get(vertexName);
-}
-if (vertexInputNames == null) continue;
-VertexIndices[] inputIndices=new VertexIndices[vertexInputNames.size()];
-for (int j=0; j < vertexInputNames.size(); j++) {
-String inName=vertexInputNames.get(j);
-int inputVertexIndex=allNamesReverse.get(inName);
-GraphVertex inputVertex=vertices[inputVertexIndex];
-List<String> inputVertexOutputsTo=verticesOutputTo.get(inName);
-int outputNumberOfInput=inputVertexOutputsTo.indexOf(vertexName);
-if (outputNumberOfInput == -1) throw new IllegalStateException("Could not find vertex " + vertexIndex + " in the list of outputs "+ "for vertex "+ inputVertex+ "; error in graph structure?");
-inputIndices[j]=new VertexIndices(inputVertexIndex,outputNumberOfInput);
-}
-gv.setInputVertices(inputIndices);
-}
-for (GraphVertex gv : vertices) {
-String vertexName=gv.getVertexName();
-List<String> thisVertexOutputsTo=verticesOutputTo.get(vertexName);
-if (thisVertexOutputsTo == null || thisVertexOutputsTo.size() == 0) continue;
-VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
-int j=0;
-for (String s : thisVertexOutputsTo) {
-GraphVertex next=verticesMap.get(s);
-List<String> nextVertexInputNames;
-if (next.hasLayer()) nextVertexInputNames=layerInputs.get(s);
- else nextVertexInputNames=graphNodeInputs.get(s);
-int outputVertexInputNumber=nextVertexInputNames.indexOf(vertexName);
-int outputVertexIndex=allNamesReverse.get(s);
-outputIndices[j++]=new VertexIndices(outputVertexIndex,outputVertexInputNumber);
-}
-gv.setOutputVertices(outputIndices);
-}
-topologicalOrder=topologicalSortOrder();
+    GraphVertex gv=n.instantiate(this,name,i);
+    if (gv.hasLayer()) {
+      numLayers++;
+      tempLayerList.add(gv.getLayer());
+    }
+    allNamesReverse.put(name,i);
+    vertices[i++]=gv;
+  }
+  layers=tempLayerList.toArray(new Layer[numLayers]);
+  verticesMap=new HashMap<>();
+  for (  GraphVertex gv : vertices) {
+    verticesMap.put(gv.getVertexName(),gv);
+  }
+  Map<String,List<String>> verticesOutputTo=new HashMap<>();
+  for (  GraphVertex gv : vertices) {
+    String vertexName=gv.getVertexName();
+    List<String> vertexInputNames;
+    vertexInputNames=vertexInputs.get(vertexName);
+    if (vertexInputNames == null)     continue;
+    for (    String s : vertexInputNames) {
+      List<String> list=verticesOutputTo.get(s);
+      if (list == null) {
+        list=new ArrayList<>();
+        verticesOutputTo.put(s,list);
+      }
+      list.add(vertexName);
+    }
+  }
+  for (  GraphVertex gv : vertices) {
+    String vertexName=gv.getVertexName();
+    int vertexIndex=gv.getVertexIndex();
+    List<String> vertexInputNames;
+    vertexInputNames=vertexInputs.get(vertexName);
+    if (vertexInputNames == null)     continue;
+    VertexIndices[] inputIndices=new VertexIndices[vertexInputNames.size()];
+    for (int j=0; j < vertexInputNames.size(); j++) {
+      String inName=vertexInputNames.get(j);
+      int inputVertexIndex=allNamesReverse.get(inName);
+      GraphVertex inputVertex=vertices[inputVertexIndex];
+      List<String> inputVertexOutputsTo=verticesOutputTo.get(inName);
+      int outputNumberOfInput=inputVertexOutputsTo.indexOf(vertexName);
+      if (outputNumberOfInput == -1)       throw new IllegalStateException("Could not find vertex " + vertexIndex + " in the list of outputs "+ "for vertex "+ inputVertex+ "; error in graph structure?");
+      inputIndices[j]=new VertexIndices(inputVertexIndex,outputNumberOfInput);
+    }
+    gv.setInputVertices(inputIndices);
+  }
+  for (  GraphVertex gv : vertices) {
+    String vertexName=gv.getVertexName();
+    List<String> thisVertexOutputsTo=verticesOutputTo.get(vertexName);
+    if (thisVertexOutputsTo == null || thisVertexOutputsTo.size() == 0)     continue;
+    VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
+    int j=0;
+    for (    String s : thisVertexOutputsTo) {
+      GraphVertex next=verticesMap.get(s);
+      List<String> nextVertexInputNames;
+      nextVertexInputNames=vertexInputs.get(s);
+      int outputVertexInputNumber=nextVertexInputNames.indexOf(vertexName);
+      int outputVertexIndex=allNamesReverse.get(s);
+      outputIndices[j++]=new VertexIndices(outputVertexIndex,outputVertexInputNumber);
+    }
+    gv.setOutputVertices(outputIndices);
+  }
+  topologicalOrder=topologicalSortOrder();
 }
