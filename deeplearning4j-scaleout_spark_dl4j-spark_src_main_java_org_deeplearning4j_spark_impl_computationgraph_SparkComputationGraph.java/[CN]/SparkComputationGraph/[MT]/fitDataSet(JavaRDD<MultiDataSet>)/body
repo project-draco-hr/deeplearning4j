@@ -5,15 +5,19 @@
     runIteration(rdd);
   }
  else {
-    for (    NeuralNetConfiguration nnc : conf.getLayers().values()) {
-      nnc.setNumIterations(1);
+    for (    GraphVertex gv : conf.getVertices().values()) {
+      if (gv instanceof LayerVertex) {
+        ((LayerVertex)gv).getLayerConf().setNumIterations(1);
+      }
     }
     for (int i=0; i < iterations; i++) {
       runIteration(rdd);
     }
     if (iterations > 1) {
-      for (      NeuralNetConfiguration nnc : conf.getLayers().values()) {
-        nnc.setNumIterations(iterations);
+      for (      GraphVertex gv : conf.getVertices().values()) {
+        if (gv instanceof LayerVertex) {
+          ((LayerVertex)gv).getLayerConf().setNumIterations(iterations);
+        }
       }
     }
   }
