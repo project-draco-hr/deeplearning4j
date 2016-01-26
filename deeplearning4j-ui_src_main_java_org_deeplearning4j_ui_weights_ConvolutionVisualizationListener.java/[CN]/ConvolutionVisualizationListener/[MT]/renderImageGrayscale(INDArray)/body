@@ -1,0 +1,9 @@
+{
+  BufferedImage imageToRender=new BufferedImage(array.columns(),array.rows(),BufferedImage.TYPE_BYTE_GRAY);
+  for (int x=0; x < array.columns(); x++) {
+    for (int y=0; y < array.rows(); y++) {
+      imageToRender.getRaster().setSample(x,y,0,(int)(255 * array.getRow(y).getDouble(x)));
+    }
+  }
+  return imageToRender;
+}

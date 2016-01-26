@@ -1,0 +1,18 @@
+{
+  log.info("Array.rank(): " + array.rank());
+  log.info("Size(-1): " + array.size(-1));
+  log.info("Size(-2): " + array.size(-2));
+  BufferedImage imageToRender=new BufferedImage(array.columns(),array.rows(),BufferedImage.TYPE_BYTE_GRAY);
+  for (int x=0; x < array.columns(); x++) {
+    for (int y=0; y < array.rows(); y++) {
+      log.info("x: " + (x) + " y: "+ y);
+      imageToRender.getRaster().setSample(x,y,0,(int)(255 * array.getRow(y).getDouble(x)));
+    }
+  }
+  try {
+    ImageIO.write(imageToRender,"png",file);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

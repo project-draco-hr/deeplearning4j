@@ -3,10 +3,10 @@
   final int numColumns=40;
   int nChannels=3;
   int outputNum=LFWLoader.NUM_LABELS;
-  int numSamples=1000;
+  int numSamples=LFWLoader.NUM_IMAGES;
   boolean useSubset=false;
   int batchSize=200;
-  int iterations=6;
+  int iterations=5;
   int splitTrainNum=(int)(batchSize * .8);
   int seed=123;
   int listenerFreq=iterations / 5;
@@ -23,7 +23,7 @@
   MultiLayerNetwork model=new MultiLayerNetwork(builder.build());
   model.init();
   log.info("Train model....");
-  model.setListeners(Arrays.asList(new ScoreIterationListener(listenerFreq),new WeightsVisualizationListener(listenerFreq),new HistogramIterationListener(listenerFreq)));
+  model.setListeners(Arrays.asList(new ScoreIterationListener(listenerFreq),new ConvolutionVisualizationListener(listenerFreq)));
   while (lfw.hasNext()) {
     lfwNext=lfw.next();
     lfwNext.scale();
