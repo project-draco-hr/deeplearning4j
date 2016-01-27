@@ -2,13 +2,12 @@
   if (iteration % freq == 0) {
     List<INDArray> tensors=new ArrayList<>();
     int cnt=0;
+    Random rnd=new Random();
     MultiLayerNetwork l=(MultiLayerNetwork)model;
     for (    Layer layer : l.getLayers()) {
       if (layer.type() == Layer.Type.CONVOLUTIONAL) {
         INDArray output=layer.activate();
-        log.info("Layer output shape: " + Arrays.toString(output.shape()));
-        INDArray tad=output.tensorAlongDimension(21,3,2,1);
-        log.info("TAD(3,2,1) shape: " + Arrays.toString(tad.shape()));
+        INDArray tad=output.tensorAlongDimension(rnd.nextInt(output.shape()[0] - 1) + 1,3,2,1);
         tensors.add(tad);
         cnt++;
       }

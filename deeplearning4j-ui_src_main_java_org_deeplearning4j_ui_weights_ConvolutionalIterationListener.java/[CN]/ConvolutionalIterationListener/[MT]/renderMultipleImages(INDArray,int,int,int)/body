@@ -9,6 +9,8 @@
   List<Pair<Pair<Integer,Integer>,BufferedImage>> coords=new ArrayList<>();
   BufferedImage outputImage=new BufferedImage(width,maxHeight,BufferedImage.TYPE_BYTE_GRAY);
   Graphics2D graphics2D=outputImage.createGraphics();
+  graphics2D.setPaint(bgColor);
+  graphics2D.fillRect(0,0,outputImage.getWidth(),outputImage.getHeight());
   int columnOffset=0;
   int rowOffset=0;
   int numZoomed=0;
@@ -27,6 +29,7 @@
     }
     graphics2D.drawImage(currentImage,columnOffset + 1,rowOffset + 1,null);
     coords.add(Pair.makePair(Pair.makePair(columnOffset,rowOffset),currentImage));
+    graphics2D.setPaint(borderColor);
     graphics2D.drawRect(columnOffset,rowOffset,tad2D.shape()[0],tad2D.shape()[1]);
     if (z % 5 == 0 && z != 0 && numZoomed < limZoomed && (rHeight != zoomHeight && rWidth != zoomWidth)) {
       int cY=(zoomSpan * numZoomed) + (zoomHeight);

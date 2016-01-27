@@ -21,8 +21,10 @@
     images.add(image);
   }
   totalWidth+=padding_col * 2;
-  BufferedImage output=new BufferedImage(totalWidth,maxHeight,BufferedImage.TYPE_INT_RGB);
+  BufferedImage output=new BufferedImage(totalWidth,maxHeight,BufferedImage.TYPE_BYTE_GRAY);
   Graphics2D graphics2D=output.createGraphics();
+  graphics2D.setPaint(bgColor);
+  graphics2D.fillRect(0,0,output.getWidth(),output.getHeight());
   BufferedImage singleArrow=null;
   BufferedImage multipleArrows=null;
   try {
