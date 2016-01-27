@@ -1,0 +1,8 @@
+{
+  if (o2.getVersion().getFirst().equals(o1.getVersion().getFirst())) {
+    return Integer.compare(o2.getVersion().getSecond(),o1.getVersion().getSecond());
+  }
+ else {
+    return Integer.compare(o2.getVersion().getFirst(),o1.getVersion().getFirst());
+  }
+}

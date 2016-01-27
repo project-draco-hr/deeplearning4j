@@ -10,7 +10,6 @@
     throw new RuntimeException(e);
   }
   try {
-    RenderApplication.main(null);
   }
  catch (  Exception e) {
     e.printStackTrace();

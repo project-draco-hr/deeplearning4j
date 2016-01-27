@@ -1,0 +1,10 @@
+{
+  List<String> list=new ArrayList<>();
+  list.add("some string 1");
+  list.add("some string 2");
+  list.add("some string 3");
+  storage.put("TSNE",Pair.makePair(1,0),list);
+  List<String> list2=(List<String>)storage.getLatest("TSNE");
+  assertEquals(list,list2);
+  assertEquals(list.size(),list2.size());
+}

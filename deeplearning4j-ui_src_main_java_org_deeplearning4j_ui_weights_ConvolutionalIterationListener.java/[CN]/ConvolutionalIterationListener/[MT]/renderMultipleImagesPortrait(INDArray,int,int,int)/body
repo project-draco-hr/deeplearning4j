@@ -1,0 +1,43 @@
+{
+  int border=1;
+  int padding_row=2;
+  int padding_col=2;
+  int zoomPadding=20;
+  int[] tShape=tensor3D.shape();
+  int numRows=tShape[0] / tShape[2];
+  int height=(numRows * (tShape[1] + border + padding_col)) + padding_col + zoomPadding+ zoomWidth;
+  BufferedImage outputImage=new BufferedImage(maxWidth,height,BufferedImage.TYPE_BYTE_GRAY);
+  Graphics2D graphics2D=outputImage.createGraphics();
+  graphics2D.setPaint(bgColor);
+  graphics2D.fillRect(0,0,outputImage.getWidth(),outputImage.getHeight());
+  int columnOffset=0;
+  int rowOffset=0;
+  int numZoomed=0;
+  int limZoomed=5;
+  int zoomSpan=maxWidth / limZoomed;
+  for (int z=0; z < tensor3D.shape()[0]; z++) {
+    INDArray tad2D=tensor3D.tensorAlongDimension(z,2,1);
+    int rWidth=tad2D.shape()[0];
+    int rHeight=tad2D.shape()[1];
+    int loc_height=(rHeight) + (border * 2) + padding_row;
+    int loc_width=(rWidth) + (border * 2) + padding_col;
+    BufferedImage currentImage=renderImageGrayscale(tad2D);
+    if (columnOffset + loc_width > maxWidth) {
+      rowOffset+=loc_height;
+      columnOffset=0;
+    }
+    graphics2D.drawImage(currentImage,columnOffset + 1,rowOffset + 1,null);
+    graphics2D.setPaint(borderColor);
+    graphics2D.drawRect(columnOffset,rowOffset,tad2D.shape()[0],tad2D.shape()[1]);
+    if (z % 7 == 0 && z != 0 && numZoomed < limZoomed && (rHeight != zoomHeight && rWidth != zoomWidth)) {
+      int cY=(zoomSpan * numZoomed) + (zoomHeight);
+      int cX=(zoomSpan * numZoomed) + (zoomWidth);
+      graphics2D.drawImage(currentImage,cX - 1,height - zoomWidth - 1,zoomWidth,zoomHeight,null);
+      graphics2D.drawRect(cX - 2,height - zoomWidth - 2,zoomWidth,zoomHeight);
+      graphics2D.drawLine(columnOffset + rWidth,rowOffset + rHeight,cX - 2,height - zoomWidth - 2);
+      numZoomed++;
+    }
+    columnOffset+=loc_width;
+  }
+  return outputImage;
+}

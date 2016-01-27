@@ -1,0 +1,13 @@
+{
+  try {
+    PrintWriter writer=new PrintWriter(file);
+    for (int x=0; x < array.rows(); x++) {
+      writer.println("Row [" + x + "]: "+ array.getRow(x));
+    }
+    writer.flush();
+    writer.close();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

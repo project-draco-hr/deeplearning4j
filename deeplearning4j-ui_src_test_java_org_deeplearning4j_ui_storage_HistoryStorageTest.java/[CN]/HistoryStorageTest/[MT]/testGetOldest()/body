@@ -1,0 +1,12 @@
+{
+  VocabWord word1=new VocabWord(1.0,"word1");
+  VocabWord word2=new VocabWord(2.0,"word2");
+  VocabWord word3=new VocabWord(3.0,"word3");
+  VocabWord word4=new VocabWord(4.0,"word4");
+  storage.put("ABSTRACT",Pair.makePair(1,0),word1);
+  storage.put("ABSTRACT",Pair.makePair(1,2),word3);
+  storage.put("ABSTRACT",Pair.makePair(1,3),word4);
+  storage.put("ABSTRACT",Pair.makePair(1,1),word2);
+  VocabWord xWord=(VocabWord)storage.getOldest("ABSTRACT");
+  assertEquals(word1,xWord);
+}

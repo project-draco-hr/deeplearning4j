@@ -1,0 +1,102 @@
+{
+  int width=0;
+  int height=0;
+  int border=1;
+  int padding_row=2;
+  int padding_col=80;
+  int[] shape=tensors3D.get(0).shape();
+  int numImages=shape[0];
+  height=(shape[2]);
+  width=(shape[1]);
+  int maxHeight=0;
+  int totalWidth=0;
+  int iOffset=1;
+  Orientation orientation=Orientation.LANDSCAPE;
+  if (tensors3D.size() > 3) {
+    orientation=Orientation.PORTRAIT;
+  }
+  List<BufferedImage> images=new ArrayList<>();
+  for (int layer=0; layer < tensors3D.size(); layer++) {
+    INDArray tad=tensors3D.get(layer);
+    int zoomed=0;
+    BufferedImage image=null;
+    if (orientation == Orientation.LANDSCAPE) {
+      maxHeight=(height + (border * 2) + padding_row) * numImages;
+      image=renderMultipleImagesLandscape(tad,maxHeight,width,height);
+      totalWidth+=image.getWidth() + padding_col;
+    }
+ else     if (orientation == Orientation.PORTRAIT) {
+      totalWidth=(width + (border * 2) + padding_row) * numImages;
+      image=renderMultipleImagesPortrait(tad,totalWidth,width,height);
+      maxHeight+=image.getHeight() + padding_col;
+    }
+    images.add(image);
+  }
+  if (orientation == Orientation.LANDSCAPE) {
+    totalWidth+=padding_col * 2;
+  }
+ else   if (orientation == Orientation.PORTRAIT) {
+    maxHeight+=padding_col * 2;
+    maxHeight+=sourceImage.getHeight() + (padding_col * 2);
+  }
+  BufferedImage output=new BufferedImage(totalWidth,maxHeight,BufferedImage.TYPE_INT_RGB);
+  Graphics2D graphics2D=output.createGraphics();
+  graphics2D.setPaint(bgColor);
+  graphics2D.fillRect(0,0,output.getWidth(),output.getHeight());
+  BufferedImage singleArrow=null;
+  BufferedImage multipleArrows=null;
+  try {
+    if (orientation == Orientation.LANDSCAPE) {
+      ClassPathResource resource=new ClassPathResource("/arrow_sing.PNG");
+      ClassPathResource resource2=new ClassPathResource("/arrow_mul.PNG");
+      singleArrow=ImageIO.read(resource.getInputStream());
+      multipleArrows=ImageIO.read(resource2.getInputStream());
+      graphics2D.drawImage(sourceImage,(padding_col / 2) - (sourceImage.getWidth() / 2),(maxHeight / 2) - (sourceImage.getHeight() / 2),null);
+      graphics2D.setPaint(borderColor);
+      graphics2D.drawRect((padding_col / 2) - (sourceImage.getWidth() / 2),(maxHeight / 2) - (sourceImage.getHeight() / 2),sourceImage.getWidth(),sourceImage.getHeight());
+      iOffset+=sourceImage.getWidth();
+      graphics2D.drawImage(singleArrow,iOffset + (padding_col / 2) - (singleArrow.getWidth() / 2),(maxHeight / 2) - (singleArrow.getHeight() / 2),null);
+    }
+ else {
+      ClassPathResource resource=new ClassPathResource("/arrow_singi.PNG");
+      ClassPathResource resource2=new ClassPathResource("/arrow_muli.PNG");
+      singleArrow=ImageIO.read(resource.getInputStream());
+      multipleArrows=ImageIO.read(resource2.getInputStream());
+      graphics2D.drawImage(sourceImage,(totalWidth / 2) - (sourceImage.getWidth() / 2),(padding_col / 2) - (sourceImage.getHeight() / 2),null);
+      graphics2D.setPaint(borderColor);
+      graphics2D.drawRect((totalWidth / 2) - (sourceImage.getWidth() / 2),(padding_col / 2) - (sourceImage.getHeight() / 2),sourceImage.getWidth(),sourceImage.getHeight());
+      iOffset+=sourceImage.getHeight();
+      graphics2D.drawImage(singleArrow,(totalWidth / 2) - (singleArrow.getWidth() / 2),iOffset + (padding_col / 2) - (singleArrow.getHeight() / 2),null);
+    }
+    iOffset+=padding_col;
+  }
+ catch (  Exception e) {
+    ;
+  }
+  for (int i=0; i < images.size(); i++) {
+    BufferedImage curImage=images.get(i);
+    if (orientation == Orientation.LANDSCAPE) {
+      graphics2D.drawImage(curImage,iOffset,1,null);
+      iOffset+=curImage.getWidth() + padding_col;
+      if (singleArrow != null && multipleArrows != null) {
+        if (i < images.size() - 1) {
+          graphics2D.drawImage(multipleArrows,iOffset - (padding_col / 2) - (multipleArrows.getWidth() / 2),(maxHeight / 2) - (multipleArrows.getHeight() / 2),null);
+        }
+ else {
+        }
+      }
+    }
+ else     if (orientation == Orientation.PORTRAIT) {
+      graphics2D.drawImage(curImage,1,iOffset,null);
+      iOffset+=curImage.getHeight() + padding_col;
+      if (singleArrow != null && multipleArrows != null) {
+        if (i < images.size() - 1) {
+          graphics2D.drawImage(multipleArrows,(totalWidth / 2) - (multipleArrows.getWidth() / 2),iOffset - (padding_col / 2) - (multipleArrows.getHeight() / 2),null);
+        }
+ else {
+        }
+      }
+    }
+  }
+  return output;
+}
