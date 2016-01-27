@@ -4,15 +4,27 @@
     int cnt=0;
     Random rnd=new Random();
     MultiLayerNetwork l=(MultiLayerNetwork)model;
+    BufferedImage sourceImage=null;
     for (    Layer layer : l.getLayers()) {
       if (layer.type() == Layer.Type.CONVOLUTIONAL) {
         INDArray output=layer.activate();
-        INDArray tad=output.tensorAlongDimension(rnd.nextInt(output.shape()[0] - 1) + 1,3,2,1);
+        int sampleDim=rnd.nextInt(output.shape()[0] - 1) + 1;
+        if (cnt == 0) {
+          INDArray inputs=((ConvolutionLayer)layer).input();
+          try {
+            sourceImage=restoreRGBImage(inputs.tensorAlongDimension(sampleDim,3,2,1));
+            ImageIO.write(sourceImage,"png",new File("tmp/input_" + minibatchNum + ".png"));
+          }
+ catch (          Exception e) {
+            throw new RuntimeException(e);
+          }
+        }
+        INDArray tad=output.tensorAlongDimension(sampleDim,3,2,1);
         tensors.add(tad);
         cnt++;
       }
     }
-    BufferedImage render=rasterizeConvoLayers(tensors);
+    BufferedImage render=rasterizeConvoLayers(tensors,sourceImage);
     try {
       File tempFile=File.createTempFile("cnn_activations",".png");
       tempFile.deleteOnExit();

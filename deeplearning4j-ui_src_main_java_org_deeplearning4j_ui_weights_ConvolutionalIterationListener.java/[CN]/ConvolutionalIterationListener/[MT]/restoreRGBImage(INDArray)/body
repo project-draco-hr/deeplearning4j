@@ -1,0 +1,14 @@
+{
+  INDArray arrayR=tensor3D.tensorAlongDimension(2,2,1);
+  INDArray arrayG=tensor3D.tensorAlongDimension(1,2,1);
+  INDArray arrayB=tensor3D.tensorAlongDimension(0,2,1);
+  BufferedImage imageToRender=new BufferedImage(arrayR.columns(),arrayR.rows(),BufferedImage.TYPE_INT_RGB);
+  for (int x=0; x < arrayR.columns(); x++) {
+    for (int y=0; y < arrayR.rows(); y++) {
+      Color pix=new Color((int)(255 * arrayR.getRow(y).getDouble(x)),(int)(255 * arrayG.getRow(y).getDouble(x)),(int)(255 * arrayB.getRow(y).getDouble(x)));
+      int rgb=pix.getRGB();
+      imageToRender.setRGB(x,y,rgb);
+    }
+  }
+  return imageToRender;
+}
