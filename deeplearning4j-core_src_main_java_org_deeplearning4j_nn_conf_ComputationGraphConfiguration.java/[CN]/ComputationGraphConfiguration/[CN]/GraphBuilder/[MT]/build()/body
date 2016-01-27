@@ -21,6 +21,8 @@
     }
   }
   conf.validate();
-  if (addPreProcessors)   conf.addPreProcessors();
+  if (networkInputTypes.size() > 0) {
+    conf.addPreProcessors(networkInputTypes.toArray(new InputType[networkInputs.size()]));
+  }
   return conf;
 }
