@@ -1,0 +1,53 @@
+{
+  int width=0;
+  int height=0;
+  int border=1;
+  int padding_row=2;
+  int padding_col=80;
+  int[] shape=tensors3D.get(0).shape();
+  int numImages=shape[0];
+  height=(shape[2]);
+  width=(shape[1]);
+  log.info("Output image dimensions: {height: " + height + ", width: "+ width+ "}");
+  int maxHeight=(height + (border * 2) + padding_row) * numImages;
+  int totalWidth=0;
+  int iOffset=1;
+  List<BufferedImage> images=new ArrayList<>();
+  for (int layer=0; layer < tensors3D.size(); layer++) {
+    INDArray tad=tensors3D.get(layer);
+    int zoomed=0;
+    BufferedImage image=renderMultipleImages(tad,maxHeight,width,height);
+    totalWidth+=image.getWidth() + padding_col;
+    images.add(image);
+  }
+  totalWidth+=padding_col * 2;
+  BufferedImage output=new BufferedImage(totalWidth,maxHeight,BufferedImage.TYPE_INT_RGB);
+  Graphics2D graphics2D=output.createGraphics();
+  BufferedImage singleArrow=null;
+  BufferedImage multipleArrows=null;
+  try {
+    ClassPathResource resource=new ClassPathResource("/arrow_sing.PNG");
+    ClassPathResource resource2=new ClassPathResource("/arrow_mul.PNG");
+    singleArrow=ImageIO.read(resource.getInputStream());
+    multipleArrows=ImageIO.read(resource2.getInputStream());
+    graphics2D.drawImage(singleArrow,(padding_col / 2) - (singleArrow.getWidth() / 2),(maxHeight / 2) - (singleArrow.getHeight() / 2),null);
+    iOffset+=padding_col;
+  }
+ catch (  Exception e) {
+    ;
+  }
+  for (int i=0; i < images.size(); i++) {
+    BufferedImage curImage=images.get(i);
+    graphics2D.drawImage(curImage,iOffset,1,null);
+    iOffset+=curImage.getWidth() + padding_col;
+    if (singleArrow != null && multipleArrows != null) {
+      if (i < images.size() - 1) {
+        graphics2D.drawImage(multipleArrows,iOffset - (padding_col / 2) - (multipleArrows.getWidth() / 2),(maxHeight / 2) - (multipleArrows.getHeight() / 2),null);
+      }
+ else {
+        graphics2D.drawImage(singleArrow,iOffset - (padding_col / 2) - (singleArrow.getWidth() / 2),(maxHeight / 2) - (singleArrow.getHeight() / 2),null);
+      }
+    }
+  }
+  return output;
+}

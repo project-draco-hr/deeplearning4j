@@ -1,5 +1,5 @@
 {
-  if (iteration == 0) {
+  if (iteration % freq == 0) {
     List<INDArray> tensors=new ArrayList<>();
     int cnt=0;
     MultiLayerNetwork l=(MultiLayerNetwork)model;
@@ -15,10 +15,19 @@
     }
     BufferedImage render=rasterizeConvoLayers(tensors);
     try {
-      ImageIO.write(render,"png",new File("render_" + minibatchNum + ".png"));
+      File tempFile=File.createTempFile("cnn_activations",".png");
+      tempFile.deleteOnExit();
+      ImageIO.write(render,"png",tempFile);
+      PathUpdate update=new PathUpdate();
+      update.setPath(tempFile.getPath());
+      target.request(MediaType.APPLICATION_JSON).post(Entity.entity(update,MediaType.APPLICATION_JSON));
+      if (openBrowser && firstIteration) {
+        UiUtils.tryOpenBrowser(path,log);
+        firstIteration=false;
+      }
     }
- catch (    IOException e) {
-      e.printStackTrace();
+ catch (    Exception e) {
+      throw new RuntimeException(e);
     }
     minibatchNum++;
   }
