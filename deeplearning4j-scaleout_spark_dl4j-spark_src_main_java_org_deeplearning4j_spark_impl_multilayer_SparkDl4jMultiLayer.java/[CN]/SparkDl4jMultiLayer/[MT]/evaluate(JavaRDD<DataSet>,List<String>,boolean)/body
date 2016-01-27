@@ -1,5 +1,0 @@
-{
-  JavaRDD<Evaluation> evaluations=data.map(new EvaluateMapFunction(network,labelsList,warnNotClassified));
-  Evaluation evaluation=evaluations.reduce(new EvaluationReduceFunction());
-  return evaluation;
-}
