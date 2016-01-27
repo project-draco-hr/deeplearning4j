@@ -19,7 +19,6 @@
       }
       VertexIndices[] outputsTo=current.getOutputVertices();
       if (outputsTo != null) {
-        int j=0;
         for (        VertexIndices v : outputsTo) {
           int vIdx=v.getVertexIndex();
           int inputNum=v.getVertexEdgeNumber();

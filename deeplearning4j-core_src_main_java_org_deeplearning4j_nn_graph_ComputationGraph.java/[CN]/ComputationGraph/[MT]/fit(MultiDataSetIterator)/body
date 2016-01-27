@@ -1,6 +1,6 @@
 {
   if (configuration.isPretrain()) {
-    throw new UnsupportedOperationException("Pretraining: not yet implemented");
+    pretrain(multiDataSetIterator);
   }
   if (configuration.isBackprop()) {
     while (multiDataSetIterator.hasNext()) {

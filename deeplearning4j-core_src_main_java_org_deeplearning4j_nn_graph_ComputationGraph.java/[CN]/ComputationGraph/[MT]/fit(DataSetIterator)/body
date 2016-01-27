@@ -1,7 +1,7 @@
 {
   if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSetIterator");
   if (configuration.isPretrain()) {
-    throw new UnsupportedOperationException("Pretraining: Not yet implemented");
+    pretrain(dataSetIterator);
   }
   if (configuration.isBackprop()) {
     while (dataSetIterator.hasNext()) {
