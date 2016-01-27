@@ -42,4 +42,5 @@
   inMemoryLookupTable.setVectorLength(vectorLength);
   inMemoryLookupTable.setSyn0(syn0);
   lookupTable=inMemoryLookupTable;
+  modelUtils.init(lookupTable);
 }
