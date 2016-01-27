@@ -1,11 +1,18 @@
 {
   if (imagePath == null) {
-    throw new WebApplicationException(404);
+    imagePath="activations.png";
   }
-  final File f=new File(imagePath);
-  if (!f.exists()) {
-    throw new WebApplicationException(404);
+  File fx=new File(imagePath);
+  if (!fx.exists()) {
+    try {
+      ClassPathResource resource=new ClassPathResource("/404.PNG");
+      fx=resource.getFile();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
   }
+  final File f=fx;
   return Response.ok().entity(new StreamingOutput(){
     @Override public void write(    OutputStream output) throws IOException, WebApplicationException {
       FileInputStream fis=new FileInputStream(f);
