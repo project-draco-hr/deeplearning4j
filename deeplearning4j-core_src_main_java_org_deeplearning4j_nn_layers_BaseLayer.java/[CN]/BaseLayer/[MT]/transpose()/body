@@ -1,16 +1,18 @@
 {
   if (!(conf.getLayer() instanceof org.deeplearning4j.nn.conf.layers.FeedForwardLayer))   throw new UnsupportedOperationException("unsupported layer type: " + conf.getLayer().getClass().getName());
-  INDArray W=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray w=getParam(DefaultParamInitializer.WEIGHT_KEY);
   INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
   Layer layer;
   try {
-    Constructor c=getClass().getConstructor(NeuralNetConfiguration.class,INDArray.class,INDArray.class,INDArray.class);
     NeuralNetConfiguration clone=conf.clone();
     org.deeplearning4j.nn.conf.layers.FeedForwardLayer clonedLayerConf=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)clone.getLayer();
-    int nIn=clonedLayerConf.getNOut(), nOut=clonedLayerConf.getNIn();
+    int nIn=clonedLayerConf.getNOut();
+    int nOut=clonedLayerConf.getNIn();
     clonedLayerConf.setNIn(nIn);
     clonedLayerConf.setNOut(nOut);
-    layer=(Layer)c.newInstance(conf,W.transpose(),b.transpose(),input != null ? input.transpose() : null);
+    layer=LayerFactories.getFactory(clone).create(clone,iterationListeners,this.index);
+    layer.setParam(DefaultParamInitializer.WEIGHT_KEY,w.transpose().dup());
+    layer.setParam(DefaultParamInitializer.BIAS_KEY,b.dup());
   }
  catch (  Exception e) {
     throw new RuntimeException("unable to construct transposed layer",e);

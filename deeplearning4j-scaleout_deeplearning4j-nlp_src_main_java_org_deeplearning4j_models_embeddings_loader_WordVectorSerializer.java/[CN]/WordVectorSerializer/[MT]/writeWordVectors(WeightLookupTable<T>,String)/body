@@ -1,17 +1,8 @@
 {
-  VocabCache<T> vocabCache=lookupTable.getVocabCache();
-  PrintWriter writer=new PrintWriter(new File(path));
-  for (int x=0; x < vocabCache.numWords(); x++) {
-    T element=vocabCache.elementAtIndex(x);
-    StringBuilder builder=new StringBuilder();
-    builder.append(element.getLabel().replaceAll(" ","_")).append(" ");
-    INDArray vec=lookupTable.vector(element.getLabel());
-    for (int i=0; i < vec.length(); i++) {
-      builder.append(vec.getDouble(i));
-      if (i < vec.length() - 1)       builder.append(" ");
-    }
-    writer.println(builder.toString());
+  try {
+    writeWordVectors(lookupTable,new FileOutputStream(path));
   }
-  writer.flush();
-  writer.close();
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
 }

@@ -16,4 +16,12 @@
   assertTrue(words.contains("night"));
   assertTrue(words.contains("year"));
   assertTrue(words.contains("week"));
+  File tempFile=File.createTempFile("glove","temp");
+  tempFile.deleteOnExit();
+  INDArray day1=glove.getWordVectorMatrix("day").dup();
+  WordVectorSerializer.writeWordVectors(glove,tempFile);
+  WordVectors vectors=WordVectorSerializer.loadTxtVectors(tempFile);
+  INDArray day2=vectors.getWordVectorMatrix("day").dup();
+  assertEquals(day1,day2);
+  tempFile.delete();
 }

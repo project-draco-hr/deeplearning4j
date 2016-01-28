@@ -4,6 +4,7 @@
  else {
       vectors=WordVectorSerializer.fromPair(WordVectorSerializer.loadTxt(path));
     }
+    vectors.setModelUtils(new BasicModelUtils());
   }
  catch (  Exception e) {
     e.printStackTrace();

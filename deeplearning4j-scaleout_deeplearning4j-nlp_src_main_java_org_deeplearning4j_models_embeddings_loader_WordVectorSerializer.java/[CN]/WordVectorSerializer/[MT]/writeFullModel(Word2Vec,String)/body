@@ -6,12 +6,11 @@
  catch (  Exception e) {
     throw new RuntimeException(e);
   }
-  WeightLookupTable lookupTable=vec.getLookupTable();
-  VocabCache vocabCache=vec.getVocab();
+  WeightLookupTable<VocabWord> lookupTable=vec.getLookupTable();
+  VocabCache<VocabWord> vocabCache=vec.getVocab();
   if (!(lookupTable instanceof InMemoryLookupTable))   throw new IllegalStateException("At this moment only InMemoryLookupTable is supported.");
   VectorsConfiguration conf=vec.getConfiguration();
   conf.setVocabSize(vocabCache.numWords());
-  VocabularyHolder holder=new VocabularyHolder.Builder().externalCache(vocabCache).build();
   printWriter.println(conf.toJson());
   log.info("Word2Vec conf. JSON: " + conf.toJson());
   StringBuilder builder=new StringBuilder();

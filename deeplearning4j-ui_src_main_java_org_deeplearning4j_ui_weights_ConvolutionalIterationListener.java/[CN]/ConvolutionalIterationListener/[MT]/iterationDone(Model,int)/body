@@ -1,0 +1,45 @@
+{
+  if (iteration % freq == 0) {
+    List<INDArray> tensors=new ArrayList<>();
+    int cnt=0;
+    Random rnd=new Random();
+    MultiLayerNetwork l=(MultiLayerNetwork)model;
+    BufferedImage sourceImage=null;
+    for (    Layer layer : l.getLayers()) {
+      if (layer.type() == Layer.Type.CONVOLUTIONAL) {
+        INDArray output=layer.activate();
+        int sampleDim=rnd.nextInt(output.shape()[0] - 1) + 1;
+        if (cnt == 0) {
+          INDArray inputs=((ConvolutionLayer)layer).input();
+          try {
+            sourceImage=restoreRGBImage(inputs.tensorAlongDimension(sampleDim,3,2,1));
+            ImageIO.write(sourceImage,"png",new File("tmp/input_" + minibatchNum + ".png"));
+          }
+ catch (          Exception e) {
+            throw new RuntimeException(e);
+          }
+        }
+        INDArray tad=output.tensorAlongDimension(sampleDim,3,2,1);
+        tensors.add(tad);
+        cnt++;
+      }
+    }
+    BufferedImage render=rasterizeConvoLayers(tensors,sourceImage);
+    try {
+      File tempFile=File.createTempFile("cnn_activations",".png");
+      tempFile.deleteOnExit();
+      ImageIO.write(render,"png",tempFile);
+      PathUpdate update=new PathUpdate();
+      update.setPath(tempFile.getPath());
+      target.request(MediaType.APPLICATION_JSON).post(Entity.entity(update,MediaType.APPLICATION_JSON));
+      if (openBrowser && firstIteration) {
+        UiUtils.tryOpenBrowser(path,log);
+        firstIteration=false;
+      }
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+    minibatchNum++;
+  }
+}

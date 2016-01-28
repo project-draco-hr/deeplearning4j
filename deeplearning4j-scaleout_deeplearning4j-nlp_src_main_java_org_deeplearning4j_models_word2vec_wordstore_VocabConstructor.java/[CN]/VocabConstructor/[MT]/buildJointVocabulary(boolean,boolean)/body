@@ -48,7 +48,7 @@
     if (source.getMinWordFrequency() > 0) {
       LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
       for (      T element : tempHolder.vocabWords()) {
-        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial())         labelsToRemove.add(element.getLabel());
+        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial() && !element.isLabel())         labelsToRemove.add(element.getLabel());
       }
       for (      String label : labelsToRemove) {
         tempHolder.removeElement(label);
@@ -68,6 +68,15 @@
     Huffman huffman=new Huffman(cache.vocabWords());
     huffman.build();
     huffman.applyIndexes(cache);
+    if (limit > 0) {
+      LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
+      for (      T element : cache.vocabWords()) {
+        if (element.getIndex() > limit && !element.isSpecial() && !element.isLabel())         labelsToRemove.add(element.getLabel());
+      }
+      for (      String label : labelsToRemove) {
+        cache.removeElement(label);
+      }
+    }
   }
   log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ cache.numWords()+ "]");
   return cache;
