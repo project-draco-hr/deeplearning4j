@@ -4,6 +4,12 @@
   org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit v=RBMUtil.inverse(layerConf().getHiddenUnit());
   if (h == null)   h=layerConf().getHiddenUnit();
   if (v == null)   v=layerConf().getVisibleUnit();
+  r.layerConf().setHiddenUnit(h);
+  r.layerConf().setVisibleUnit(v);
+  INDArray vb=getParam(DefaultParamInitializer.BIAS_KEY).dup();
+  INDArray b=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY).dup();
+  r.setParam(PretrainParamInitializer.VISIBLE_BIAS_KEY,vb);
+  r.setParam(DefaultParamInitializer.BIAS_KEY,b);
   r.sigma=sigma;
   r.hiddenSigma=hiddenSigma;
   return r;

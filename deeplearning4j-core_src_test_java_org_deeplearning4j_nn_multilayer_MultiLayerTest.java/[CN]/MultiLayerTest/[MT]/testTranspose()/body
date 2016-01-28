@@ -1,0 +1,20 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).momentum(0.9).regularization(true).l2(2e-4).list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  Layer layer=net.getLayer(0);
+  Layer transposed=layer.transpose();
+  assertArrayEquals(new int[]{4,3},layer.getParam(DefaultParamInitializer.WEIGHT_KEY).shape());
+  assertArrayEquals(new int[]{1,3},layer.getParam(DefaultParamInitializer.BIAS_KEY).shape());
+  assertArrayEquals(new int[]{1,4},layer.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY).shape());
+  assertArrayEquals(new int[]{3,4},transposed.getParam(DefaultParamInitializer.WEIGHT_KEY).shape());
+  assertArrayEquals(new int[]{1,4},transposed.getParam(DefaultParamInitializer.BIAS_KEY).shape());
+  assertArrayEquals(new int[]{1,3},transposed.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY).shape());
+  INDArray origWeights=layer.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray transposedWeights=transposed.getParam(DefaultParamInitializer.WEIGHT_KEY);
+  assertEquals(origWeights.transpose(),transposedWeights);
+  assertEquals(layer.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY),transposed.getParam(DefaultParamInitializer.BIAS_KEY));
+  assertEquals(layer.getParam(DefaultParamInitializer.BIAS_KEY),transposed.getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY));
+  assertEquals(3,((FeedForwardLayer)transposed.conf().getLayer()).getNIn());
+  assertEquals(4,((FeedForwardLayer)transposed.conf().getLayer()).getNOut());
+}
