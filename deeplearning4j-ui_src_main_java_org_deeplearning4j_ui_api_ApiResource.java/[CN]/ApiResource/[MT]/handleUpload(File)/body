@@ -1,8 +1,9 @@
 {
+  HistoryStorage storage=HistoryStorage.getInstance();
   List<String> testLines=null;
   try {
     testLines=FileUtils.readLines(path);
-    this.coords=testLines;
+    storage.put("TSNE",Pair.makePair(1,0),testLines);
   }
  catch (  IOException e) {
     e.printStackTrace();

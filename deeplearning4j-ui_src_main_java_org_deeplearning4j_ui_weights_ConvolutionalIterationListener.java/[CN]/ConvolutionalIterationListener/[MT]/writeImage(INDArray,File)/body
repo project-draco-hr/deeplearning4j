@@ -1,0 +1,9 @@
+{
+  BufferedImage image=ImageLoader.toImage(array);
+  try {
+    ImageIO.write(image,"png",file);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

@@ -1,4 +1,5 @@
 {
+  if (fileDetail == null)   throw new RuntimeException("fileDetails is null");
   String uploadedFileLocation=new File(filePath,fileDetail.getFileName()).getAbsolutePath();
   LOGGER.info(uploadedFileLocation);
   writeToFile(uploadedInputStream,uploadedFileLocation);

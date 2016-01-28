@@ -1,0 +1,6 @@
+{
+  UiServer server=UiServer.getInstance();
+  System.out.println("http://localhost:" + server.getPort() + "/");
+  Thread.sleep(10000000000L);
+  new ScoreIterationListener(100);
+}

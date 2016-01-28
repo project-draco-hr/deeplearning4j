@@ -20,7 +20,7 @@
         while (getMemoryFootprint() >= getMemoryThreshold()) {
           try {
             shadowThread.invoke();
-            if (threadId == 0)             logger.debug("Memory consuimption > threshold: { size: [" + Double.NaN + "], footrpint: ["+ getMemoryFootprint()+ "], threshold: ["+ getMemoryThreshold()+ "] }");
+            if (threadId == 0)             logger.debug("Memory consuimption > threshold: {footrpint: [" + getMemoryFootprint() + "], threshold: ["+ getMemoryThreshold()+ "] }");
             Thread.sleep(10000);
           }
  catch (          Exception e) {

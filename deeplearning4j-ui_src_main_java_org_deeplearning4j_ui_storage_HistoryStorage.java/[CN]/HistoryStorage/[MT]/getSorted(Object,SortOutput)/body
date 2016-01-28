@@ -1,0 +1,31 @@
+{
+  List<Object> results=new ArrayList<>();
+switch (sortOutput) {
+case ASCENDING:
+{
+      Map<Pair<Integer,Integer>,Object> map=historyTable.row(key);
+      List<SortableObject> list=new ArrayList<>();
+      for (      Map.Entry<Pair<Integer,Integer>,Object> entry : map.entrySet()) {
+        list.add(new SortableObject(entry.getKey(),entry.getValue()));
+      }
+      Collections.sort(list,new AscendingComparator());
+      results=stripVersions(list);
+      break;
+    }
+case DESCENDING:
+{
+    Map<Pair<Integer,Integer>,Object> map=historyTable.row(key);
+    List<SortableObject> list=new ArrayList<>();
+    for (    Map.Entry<Pair<Integer,Integer>,Object> entry : map.entrySet()) {
+      list.add(new SortableObject(entry.getKey(),entry.getValue()));
+    }
+    Collections.sort(list,new DescendingComparator());
+    results=stripVersions(list);
+    break;
+  }
+default :
+results.addAll(historyTable.row(key).values());
+break;
+}
+return results;
+}
