@@ -1,4 +1,6 @@
 {
+  this.inputMaskArrays=featureMaskArrays;
+  this.labelMaskArrays=labelMaskArrays;
   if (featureMaskArrays != null) {
     if (featureMaskArrays.length != numInputArrays) {
       throw new IllegalArgumentException("Invalid number of feature mask arrays");
@@ -25,8 +27,10 @@
           }
         }
         outputsFromThisInput=nextVertex.getOutputVertices();
-        for (        VertexIndices v : outputsFromThisInput) {
-          stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+        if (outputsFromThisInput != null) {
+          for (          VertexIndices v : outputsFromThisInput) {
+            stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+          }
         }
       }
     }

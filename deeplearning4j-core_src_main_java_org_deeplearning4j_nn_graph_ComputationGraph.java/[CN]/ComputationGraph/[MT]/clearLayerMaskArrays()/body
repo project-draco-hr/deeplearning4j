@@ -2,4 +2,6 @@
   for (  Layer layer : layers) {
     layer.setMaskArray(null);
   }
+  this.inputMaskArrays=null;
+  this.labelMaskArrays=null;
 }
