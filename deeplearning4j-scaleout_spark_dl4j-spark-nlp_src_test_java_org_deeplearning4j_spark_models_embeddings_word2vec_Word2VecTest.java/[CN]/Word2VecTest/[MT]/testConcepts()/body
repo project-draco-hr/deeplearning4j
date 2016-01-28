@@ -1,5 +1,5 @@
 {
-  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest");
+  SparkConf sparkConf=new SparkConf().setMaster("spark://192.168.1.35:7077").setAppName("sparktest");
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
   String dataPath=new ClassPathResource("raw_sentences.txt").getFile().getAbsolutePath();
   JavaRDD<String> corpus=sc.textFile(dataPath);
