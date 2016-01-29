@@ -19,8 +19,6 @@
   Broadcast<VocabCache<VocabWord>> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
   vocabCache=vocabCacheBroadcast.getValue();
   log.info("Building Huffman Tree ...");
-  Huffman huffman=new Huffman(vocabCache.vocabWords());
-  huffman.build();
   log.info("Calculating cumulative sum of sentence counts ...");
   sentenceCumSumCountRDD=new CountCumSum(sentenceWordsCountRDD).buildCumSum();
   log.info("Mapping to RDD(vocabWordList, cumulative sentence count) ...");
@@ -32,15 +30,37 @@
   FlatMapFunction firstIterFunc=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast);
   @SuppressWarnings("unchecked") JavaRDD<Pair<Integer,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
   List<Pair<Integer,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
-  INDArray syn0=Nd4j.create(vocabCache.numWords(),vectorLength);
+  INDArray syn0=Nd4j.zeros(vocabCache.numWords(),vectorLength);
+  int cnt=0;
+  Map<Integer,AtomicInteger> updates=new HashMap<>();
   for (  Pair<Integer,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
+    if (syn0UpdateEntry.getFirst().equals(new Integer(126))) {
+      log.info("Two before transfer: " + syn0UpdateEntry.getSecond());
+    }
     syn0.getRow(syn0UpdateEntry.getFirst()).addi(syn0UpdateEntry.getSecond());
+    if (syn0UpdateEntry.getFirst().equals(new Integer(126))) {
+      log.info("Two after transfer: " + syn0.getRow(syn0UpdateEntry.getFirst()));
+    }
+    cnt++;
+    if (updates.containsKey(syn0UpdateEntry.getFirst())) {
+      updates.get(syn0UpdateEntry.getFirst()).incrementAndGet();
+    }
+ else     updates.put(syn0UpdateEntry.getFirst(),new AtomicInteger(1));
   }
+  log.info("Total entries transferred: " + cnt);
+  cnt=0;
+  for (  Map.Entry<Integer,AtomicInteger> entry : updates.entrySet()) {
+    if (entry.getValue().get() > 1) {
+      syn0.getRow(entry.getKey()).divi(entry.getValue().get());
+      cnt++;
+    }
+  }
+  log.info("Total entries merged: " + cnt);
   vocab=vocabCache;
   InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
   inMemoryLookupTable.setVocab(vocabCache);
   inMemoryLookupTable.setVectorLength(vectorLength);
   inMemoryLookupTable.setSyn0(syn0);
   lookupTable=inMemoryLookupTable;
-  modelUtils.init(lookupTable());
+  modelUtils.init(lookupTable);
 }

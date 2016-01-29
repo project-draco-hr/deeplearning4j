@@ -1,6 +1,5 @@
 {
   Map<String,Object> word2vecVarMap=word2vecVarMapBroadcast.getValue();
-  this.expTable=expTableBroadcast.getValue();
   this.vectorLength=(int)word2vecVarMap.get("vectorLength");
   this.useAdaGrad=(boolean)word2vecVarMap.get("useAdaGrad");
   this.negative=(int)word2vecVarMap.get("negative");
@@ -9,7 +8,12 @@
   this.minAlpha=(double)word2vecVarMap.get("minAlpha");
   this.totalWordCount=(long)word2vecVarMap.get("totalWordCount");
   this.seed=(long)word2vecVarMap.get("seed");
-  this.maxExp=(int)word2vecVarMap.get("maxExp");
+  this.maxExp=(int)6;
   this.indexSyn0VecMap=new HashMap<>();
   this.pointSyn1VecMap=new HashMap<>();
+  this.expTable=new double[100000];
+  for (int i=0; i < expTable.length; i++) {
+    double tmp=FastMath.exp((i / (double)expTable.length * 2 - 1) * maxExp);
+    expTable[i]=tmp / (tmp + 1.0);
+  }
 }
