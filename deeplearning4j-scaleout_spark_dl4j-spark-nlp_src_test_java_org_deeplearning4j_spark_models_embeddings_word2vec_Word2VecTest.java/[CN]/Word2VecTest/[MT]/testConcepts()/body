@@ -1,23 +1,24 @@
 {
-  SparkConf sparkConf=new SparkConf().setMaster("local").setAppName("sparktest");
+  SparkConf sparkConf=new SparkConf().setMaster("local[4]").setAppName("sparktest");
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
   String dataPath=new ClassPathResource("/big/raw_sentences.txt").getFile().getAbsolutePath();
   JavaRDD<String> corpus=sc.textFile(dataPath);
   Word2Vec word2Vec=new Word2Vec().setnGrams(1).setTokenizer("org.deeplearning4j.text.tokenization.tokenizerfactory.DefaultTokenizerFactory").setTokenPreprocessor("org.deeplearning4j.text.tokenization.tokenizer.preprocessor.CommonPreprocessor").setRemoveStop(false).setSeed(42L).setNegative(0).setUseAdaGrad(false).setVectorLength(150).setWindow(5).setAlpha(0.025).setMinAlpha(0.0001).setIterations(1).setNumWords(5);
   word2Vec.train(corpus);
-  System.out.println("two idx: " + word2Vec.getVocab().wordFor("two").getIndex());
-  System.out.println("four idx: " + word2Vec.getVocab().wordFor("four").getIndex());
   InMemoryLookupTable<VocabWord> table=(InMemoryLookupTable<VocabWord>)word2Vec.lookupTable();
-  System.out.println("Two by idx: " + table.getSyn0().getRow(126));
-  System.out.println("Two by lookup: " + table.vector("two"));
-  System.out.println("Two external: " + word2Vec.getWordVectorMatrix("two"));
   double sim=word2Vec.similarity("day","night");
   System.out.println("day/night similarity: " + sim);
   Collection<String> words=word2Vec.wordsNearest("day",10);
   printWords("day",words,word2Vec);
+  assertTrue(words.contains("night"));
+  assertTrue(words.contains("week"));
+  assertTrue(words.contains("year"));
   sim=word2Vec.similarity("two","four");
   System.out.println("two/four similarity: " + sim);
   words=word2Vec.wordsNearest("two",10);
   printWords("two",words,word2Vec);
+  assertTrue(words.contains("three"));
+  assertTrue(words.contains("five"));
+  assertTrue(words.contains("four"));
   sc.stop();
 }
