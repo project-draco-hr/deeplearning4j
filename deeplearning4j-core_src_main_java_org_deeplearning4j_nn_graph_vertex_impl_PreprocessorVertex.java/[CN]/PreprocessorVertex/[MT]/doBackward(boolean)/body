@@ -1,0 +1,3 @@
+{
+  return new Pair<>(null,new INDArray[]{preProcessor.backprop(epsilons[0],graph.batchSize())});
+}

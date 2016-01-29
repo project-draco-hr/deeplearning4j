@@ -1,0 +1,4 @@
+{
+  if (!(o instanceof PreprocessorVertex))   return false;
+  return ((PreprocessorVertex)o).preProcessor.equals(preProcessor);
+}
