@@ -5,7 +5,7 @@
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(0).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(1).minWordFrequency(5).build();
+  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(0).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(5).batchSize(100).minWordFrequency(5).build();
   word2Vec.train(corpus);
   InMemoryLookupTable<VocabWord> table=(InMemoryLookupTable<VocabWord>)word2Vec.lookupTable();
   double sim=word2Vec.similarity("day","night");
