@@ -47,26 +47,36 @@
   BufferedImage multipleArrows=null;
   try {
     if (orientation == Orientation.LANDSCAPE) {
-      ClassPathResource resource=new ClassPathResource("/arrow_sing.PNG");
-      ClassPathResource resource2=new ClassPathResource("/arrow_mul.PNG");
-      singleArrow=ImageIO.read(resource.getInputStream());
-      multipleArrows=ImageIO.read(resource2.getInputStream());
+      try {
+        ClassPathResource resource=new ClassPathResource("arrow_sing.PNG");
+        ClassPathResource resource2=new ClassPathResource("arrow_mul.PNG");
+        singleArrow=ImageIO.read(resource.getInputStream());
+        multipleArrows=ImageIO.read(resource2.getInputStream());
+      }
+ catch (      Exception e) {
+        ;
+      }
       graphics2D.drawImage(sourceImage,(padding_col / 2) - (sourceImage.getWidth() / 2),(maxHeight / 2) - (sourceImage.getHeight() / 2),null);
       graphics2D.setPaint(borderColor);
       graphics2D.drawRect((padding_col / 2) - (sourceImage.getWidth() / 2),(maxHeight / 2) - (sourceImage.getHeight() / 2),sourceImage.getWidth(),sourceImage.getHeight());
       iOffset+=sourceImage.getWidth();
-      graphics2D.drawImage(singleArrow,iOffset + (padding_col / 2) - (singleArrow.getWidth() / 2),(maxHeight / 2) - (singleArrow.getHeight() / 2),null);
+      if (singleArrow != null)       graphics2D.drawImage(singleArrow,iOffset + (padding_col / 2) - (singleArrow.getWidth() / 2),(maxHeight / 2) - (singleArrow.getHeight() / 2),null);
     }
  else {
-      ClassPathResource resource=new ClassPathResource("/arrow_singi.PNG");
-      ClassPathResource resource2=new ClassPathResource("/arrow_muli.PNG");
-      singleArrow=ImageIO.read(resource.getInputStream());
-      multipleArrows=ImageIO.read(resource2.getInputStream());
+      try {
+        ClassPathResource resource=new ClassPathResource("arrow_singi.PNG");
+        ClassPathResource resource2=new ClassPathResource("arrow_muli.PNG");
+        singleArrow=ImageIO.read(resource.getInputStream());
+        multipleArrows=ImageIO.read(resource2.getInputStream());
+      }
+ catch (      Exception e) {
+        ;
+      }
       graphics2D.drawImage(sourceImage,(totalWidth / 2) - (sourceImage.getWidth() / 2),(padding_col / 2) - (sourceImage.getHeight() / 2),null);
       graphics2D.setPaint(borderColor);
       graphics2D.drawRect((totalWidth / 2) - (sourceImage.getWidth() / 2),(padding_col / 2) - (sourceImage.getHeight() / 2),sourceImage.getWidth(),sourceImage.getHeight());
       iOffset+=sourceImage.getHeight();
-      graphics2D.drawImage(singleArrow,(totalWidth / 2) - (singleArrow.getWidth() / 2),iOffset + (padding_col / 2) - (singleArrow.getHeight() / 2),null);
+      if (singleArrow != null)       graphics2D.drawImage(singleArrow,(totalWidth / 2) - (singleArrow.getWidth() / 2),iOffset + (padding_col / 2) - (singleArrow.getHeight() / 2),null);
     }
     iOffset+=padding_col;
   }
@@ -80,7 +90,7 @@
       iOffset+=curImage.getWidth() + padding_col;
       if (singleArrow != null && multipleArrows != null) {
         if (i < images.size() - 1) {
-          graphics2D.drawImage(multipleArrows,iOffset - (padding_col / 2) - (multipleArrows.getWidth() / 2),(maxHeight / 2) - (multipleArrows.getHeight() / 2),null);
+          if (multipleArrows != null)           graphics2D.drawImage(multipleArrows,iOffset - (padding_col / 2) - (multipleArrows.getWidth() / 2),(maxHeight / 2) - (multipleArrows.getHeight() / 2),null);
         }
  else {
         }
@@ -91,7 +101,7 @@
       iOffset+=curImage.getHeight() + padding_col;
       if (singleArrow != null && multipleArrows != null) {
         if (i < images.size() - 1) {
-          graphics2D.drawImage(multipleArrows,(totalWidth / 2) - (multipleArrows.getWidth() / 2),iOffset - (padding_col / 2) - (multipleArrows.getHeight() / 2),null);
+          if (multipleArrows != null)           graphics2D.drawImage(multipleArrows,(totalWidth / 2) - (multipleArrows.getWidth() / 2),iOffset - (padding_col / 2) - (multipleArrows.getHeight() / 2),null);
         }
  else {
         }
