@@ -1,7 +1,0 @@
-{
-  INDArray arr1=Nd4j.rand(123L,1,20);
-  INDArray arr2=Nd4j.rand(123L,1,20);
-  INDArray arr3=Nd4j.rand(124L,1,20);
-  assertEquals(arr1,arr2);
-  assertNotEquals(arr3,arr2);
-}

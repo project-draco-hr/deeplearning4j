@@ -5,7 +5,7 @@
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(0).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(5).batchSize(100).minWordFrequency(5).build();
+  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(0).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(1).batchSize(100).minWordFrequency(5).build();
   word2Vec.train(corpus);
   InMemoryLookupTable<VocabWord> table=(InMemoryLookupTable<VocabWord>)word2Vec.lookupTable();
   double sim=word2Vec.similarity("day","night");
@@ -23,4 +23,20 @@
   assertTrue(words.contains("five"));
   assertTrue(words.contains("four"));
   sc.stop();
+  File tempFile=File.createTempFile("temp","tmp");
+  tempFile.deleteOnExit();
+  int idx1=word2Vec.vocab().wordFor("day").getIndex();
+  INDArray array1=word2Vec.getWordVectorMatrix("day").dup();
+  VocabWord word1=word2Vec.vocab().elementAtIndex(0);
+  WordVectorSerializer.writeWordVectors(word2Vec.getLookupTable(),"/home/raver119/temp.txt");
+  WordVectors vectors=WordVectorSerializer.loadTxtVectors(new File("/home/raver119/temp.txt"));
+  VocabWord word2=((VocabCache<VocabWord>)vectors.vocab()).elementAtIndex(0);
+  VocabWord wordIT=((VocabCache<VocabWord>)vectors.vocab()).wordFor("it");
+  int idx2=vectors.vocab().wordFor("day").getIndex();
+  INDArray array2=vectors.getWordVectorMatrix("day").dup();
+  System.out.println("word 'i': " + word2);
+  System.out.println("word 'it': " + wordIT);
+  assertEquals(idx1,idx2);
+  assertEquals(word1,word2);
+  assertEquals(array1,array2);
 }
