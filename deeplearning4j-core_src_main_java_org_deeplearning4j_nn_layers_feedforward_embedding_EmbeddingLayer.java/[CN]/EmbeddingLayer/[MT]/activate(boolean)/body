@@ -1,0 +1,8 @@
+{
+  INDArray rows=preOutput(training);
+  INDArray ret=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),rows));
+  if (maskArray != null) {
+    ret.muliColumnVector(maskArray);
+  }
+  return ret;
+}

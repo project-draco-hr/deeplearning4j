@@ -8,5 +8,8 @@
     }
   }
   INDArray ret=input.mmul(W).addiRowVector(b);
+  if (maskArray != null) {
+    ret.muliColumnVector(maskArray);
+  }
   return ret;
 }

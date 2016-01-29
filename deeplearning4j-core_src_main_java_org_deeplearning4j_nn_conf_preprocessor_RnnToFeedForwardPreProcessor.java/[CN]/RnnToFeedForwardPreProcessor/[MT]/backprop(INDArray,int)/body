@@ -1,4 +1,5 @@
 {
+  if (output == null)   return null;
   if (output.rank() != 2)   throw new IllegalArgumentException("Invalid input: expect NDArray with rank 2 (i.e., epsilons from feed forward layer)");
   if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
   int[] shape=output.shape();
