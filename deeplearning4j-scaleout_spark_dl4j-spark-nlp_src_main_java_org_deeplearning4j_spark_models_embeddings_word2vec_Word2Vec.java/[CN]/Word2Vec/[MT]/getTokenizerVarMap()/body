@@ -1,7 +1,6 @@
 {
   return new HashMap<String,Object>(){
 {
-      put("numWords",numWords);
       put("nGrams",nGrams);
       put("tokenizer",tokenizer);
       put("tokenPreprocessor",tokenPreprocessor);

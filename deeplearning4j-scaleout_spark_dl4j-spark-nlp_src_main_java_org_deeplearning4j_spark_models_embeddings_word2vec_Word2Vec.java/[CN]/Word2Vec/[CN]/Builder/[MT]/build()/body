@@ -1,0 +1,36 @@
+{
+  Word2Vec ret=new Word2Vec();
+  this.configuration.setLearningRate(this.learningRate);
+  this.configuration.setLayersSize(layerSize);
+  this.configuration.setWindow(windowSize);
+  this.configuration.setMinWordFrequency(minWordFrequency);
+  this.configuration.setIterations(numIterations);
+  this.configuration.setSeed(seed);
+  this.configuration.setMinLearningRate(minLearningRate);
+  this.configuration.setSampling(this.sampling);
+  this.configuration.setUseAdaGrad(useAdaGrad);
+  this.configuration.setNegative(negative);
+  this.configuration.setEpochs(this.numEpochs);
+  this.configuration.setBatchSize(this.batchSize);
+  ret.configuration=this.configuration;
+  ret.numEpochs=this.numEpochs;
+  ret.numIterations=this.numIterations;
+  ret.minWordFrequency=this.minWordFrequency;
+  ret.learningRate.set(this.learningRate);
+  ret.minLearningRate=this.minLearningRate;
+  ret.sampling=this.sampling;
+  ret.negative=this.negative;
+  ret.layerSize=this.layerSize;
+  ret.window=this.windowSize;
+  ret.useAdeGrad=this.useAdaGrad;
+  ret.stopWords=this.stopWords;
+  ret.batchSize=this.batchSize;
+  if (this.tokenizerFactory != null) {
+    ret.tokenizer=this.tokenizerFactory.getClass().getCanonicalName();
+    if (tokenizerFactory.getTokenPreProcessor() != null) {
+      ret.tokenPreprocessor=this.tokenizerFactory.getTokenPreProcessor().getClass().getCanonicalName();
+    }
+ else     ret.tokenPreprocessor="";
+  }
+  return ret;
+}

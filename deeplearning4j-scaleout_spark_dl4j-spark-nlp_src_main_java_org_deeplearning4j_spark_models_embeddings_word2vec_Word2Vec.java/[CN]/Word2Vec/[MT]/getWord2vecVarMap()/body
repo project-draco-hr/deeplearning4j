@@ -1,13 +1,13 @@
 {
   return new HashMap<String,Object>(){
 {
-      put("vectorLength",vectorLength);
-      put("useAdaGrad",useAdaGrad);
+      put("vectorLength",layerSize);
+      put("useAdaGrad",useAdeGrad);
       put("negative",negative);
       put("window",window);
-      put("alpha",alpha);
-      put("minAlpha",minAlpha);
-      put("iterations",iterations);
+      put("alpha",learningRate.get());
+      put("minAlpha",minLearningRate);
+      put("iterations",numIterations);
       put("seed",seed);
       put("maxExp",MAX_EXP);
     }

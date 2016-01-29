@@ -1,6 +1,5 @@
 {
   JavaSparkContext sc=getContext();
-  word2vec.setRemoveStop(false);
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
