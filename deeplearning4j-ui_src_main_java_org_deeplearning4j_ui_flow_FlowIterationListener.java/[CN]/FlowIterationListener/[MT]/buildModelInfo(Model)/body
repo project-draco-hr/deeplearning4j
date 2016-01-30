@@ -6,13 +6,15 @@
  else   if (model instanceof MultiLayerNetwork) {
     MultiLayerNetwork network=(MultiLayerNetwork)model;
     int y=1;
-    final int x=1;
+    final int x=0;
     for (    Layer layer : network.getLayers()) {
       LayerInfo layerInfo=getLayerInfo(layer,x,y,y);
       layerInfo.addConnection(x,y + 1);
       modelInfo.addLayer(layerInfo);
       y++;
     }
+    LayerInfo layerInfo=modelInfo.getLayerInfoByCoords(x,y - 1);
+    layerInfo.dropConnections();
   }
  else   throw new IllegalStateException("Model [" + model.getClass().getCanonicalName() + "] doesn't looks like supported one.");
   return modelInfo;
