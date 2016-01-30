@@ -1,2 +1,7 @@
 {
+  if (model instanceof ComputationGraph) {
+  }
+ else   if (model instanceof MultiLayerNetwork) {
+  }
+ else   throw new IllegalStateException("");
 }
