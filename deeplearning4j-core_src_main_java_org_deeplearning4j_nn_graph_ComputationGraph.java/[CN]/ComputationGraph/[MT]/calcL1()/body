@@ -1,9 +1,7 @@
 {
   double l1=0.0;
-  for (  GraphVertex gv : vertices) {
-    if (gv.hasLayer()) {
-      l1+=gv.getLayer().calcL1();
-    }
+  for (  Layer l : layers) {
+    l1+=l.calcL1();
   }
   return l1;
 }

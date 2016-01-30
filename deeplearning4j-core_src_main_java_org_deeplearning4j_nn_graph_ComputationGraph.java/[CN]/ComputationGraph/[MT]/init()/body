@@ -10,7 +10,7 @@
     allNamesReverse.put(name,i);
     vertices[i++]=gv;
   }
-  numLayers=0;
+  int numLayers=0;
   List<Layer> tempLayerList=new ArrayList<>();
   for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeEntry : nodeMap.entrySet()) {
     org.deeplearning4j.nn.conf.graph.GraphVertex n=nodeEntry.getValue();

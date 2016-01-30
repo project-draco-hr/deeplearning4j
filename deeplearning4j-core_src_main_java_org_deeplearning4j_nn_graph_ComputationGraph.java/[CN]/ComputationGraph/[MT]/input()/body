@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("Not implemented");
+  if (numInputArrays == 1)   return (inputs != null ? inputs[0] : null);
+ else   throw new UnsupportedOperationException("Cannot return single input: ComputationGraph  has multiple inputs");
 }

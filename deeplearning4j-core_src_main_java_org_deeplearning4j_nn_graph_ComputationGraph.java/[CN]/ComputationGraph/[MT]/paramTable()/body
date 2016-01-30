@@ -1,9 +1,9 @@
 {
   Map<String,INDArray> allParams=new LinkedHashMap<>();
-  for (int i=0; i < layers.length; i++) {
-    Map<String,INDArray> paramMap=layers[i].paramTable();
+  for (  Layer layer : layers) {
+    Map<String,INDArray> paramMap=layer.paramTable();
     for (    Map.Entry<String,INDArray> entry : paramMap.entrySet()) {
-      String newKey=layers[i].conf().getLayer().getLayerName() + "_" + entry.getKey();
+      String newKey=layer.conf().getLayer().getLayerName() + "_" + entry.getKey();
       allParams.put(newKey,entry.getValue());
     }
   }

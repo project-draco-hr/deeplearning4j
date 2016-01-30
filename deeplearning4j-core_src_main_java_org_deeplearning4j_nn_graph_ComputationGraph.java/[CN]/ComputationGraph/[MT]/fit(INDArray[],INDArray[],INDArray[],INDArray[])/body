@@ -1,0 +1,19 @@
+{
+  setInputs(inputs);
+  setLabels(labels);
+  setLayerMaskArrays(featureMaskArrays,labelMaskArrays);
+  if (configuration.isPretrain()) {
+    throw new UnsupportedOperationException("Pretraining: Not yet implemented");
+  }
+  if (configuration.isBackprop()) {
+    if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+      doTruncatedBPTT(inputs,labels,null,null);
+    }
+ else {
+      if (solver == null) {
+        solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+      }
+      solver.optimize();
+    }
+  }
+}

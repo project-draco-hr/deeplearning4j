@@ -1,7 +1,7 @@
 {
   int nParams=0;
-  for (int i=0; i < layers.length; i++) {
-    nParams+=layers[i].numParams(backwards);
+  for (  Layer layer : layers) {
+    nParams+=layer.numParams(backwards);
   }
   return nParams;
 }

@@ -3,12 +3,10 @@
   layerUpdatersMap=new HashMap<>();
   GraphVertex[] vertices=graph.getVertices();
   int i=0;
-  for (  GraphVertex vertex : vertices) {
-    if (!vertex.hasLayer())     continue;
-    Layer layer=vertex.getLayer();
+  for (  Layer layer : graph.getLayers()) {
     Updater u=UpdaterCreator.getUpdater(layer);
     layerUpdaters[i]=u;
-    layerUpdatersMap.put(vertex.getVertexName(),i);
+    layerUpdatersMap.put(layer.conf().getLayer().getLayerName(),i);
     i++;
   }
 }
