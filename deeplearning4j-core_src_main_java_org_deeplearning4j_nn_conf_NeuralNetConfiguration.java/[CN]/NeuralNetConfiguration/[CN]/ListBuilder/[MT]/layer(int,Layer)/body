@@ -1,11 +1,9 @@
 {
-  if (layerwise.get(0) == null && ind != 0) {
-    throw new IllegalArgumentException("LayerZeroIndexError: Layer index must start from 0");
+  if (layerwise.containsKey(ind)) {
+    layerwise.get(ind).layer(layer);
   }
-  if (layerwise.size() < ind + 1) {
-    throw new IllegalArgumentException("IndexOutOfBoundsError: Layer index exceeds listed size");
+ else {
+    layerwise.put(ind,globalConfig.clone().layer(layer));
   }
-  Builder builderWithLayer=layerwise.get(ind).layer(layer);
-  layerwise.put(ind,builderWithLayer);
   return this;
 }

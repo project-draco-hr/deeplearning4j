@@ -1,0 +1,10 @@
+{
+  if (layers == null || layers.length == 0)   throw new IllegalArgumentException("Cannot create network with no layers");
+  Map<Integer,Builder> layerMap=new HashMap<>();
+  for (int i=0; i < layers.length; i++) {
+    NeuralNetConfiguration.Builder b=this.clone();
+    b.layer(layers[i]);
+    layerMap.put(i,b);
+  }
+  return new ListBuilder(this,layerMap);
+}
