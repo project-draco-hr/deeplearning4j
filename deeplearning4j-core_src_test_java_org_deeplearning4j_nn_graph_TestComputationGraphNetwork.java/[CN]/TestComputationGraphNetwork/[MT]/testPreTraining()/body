@@ -1,0 +1,8 @@
+{
+  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(1e-6).regularization(true).l2(2e-4).graphBuilder().addInputs("in").addLayer("layer0",new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build(),"in").addLayer("layer1",new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build(),"in").addLayer("layer2",new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build(),"layer1").addLayer("out",new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3 + 3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build(),"layer0","layer2").setOutputs("out").pretrain(true).backprop(false).build();
+  ComputationGraph net=new ComputationGraph(conf);
+  net.init();
+  net.setListeners(new ScoreIterationListener(1));
+  DataSetIterator iter=new IrisDataSetIterator(10,150);
+  net.fit(iter);
+}

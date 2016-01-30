@@ -1,0 +1,20 @@
+{
+  if (!dataSetIterator.hasNext()) {
+    return Collections.singletonList(new Tuple3<INDArray,ComputationGraphUpdater,Double>(Nd4j.zeros(params.value().shape()),null,0.0));
+  }
+  List<MultiDataSet> collect=new ArrayList<>();
+  while (dataSetIterator.hasNext()) {
+    collect.add(dataSetIterator.next());
+  }
+  MultiDataSet data=org.nd4j.linalg.dataset.MultiDataSet.merge(collect);
+  ComputationGraph network=new ComputationGraph(ComputationGraphConfiguration.fromJson(json));
+  network.init();
+  network.setListeners(new ScoreIterationListener(1));
+  INDArray val=params.value();
+  ComputationGraphUpdater upd=updater.getValue();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcast parameters");
+  network.setParams(val);
+  network.setUpdater(upd);
+  network.fit(data);
+  return Collections.singletonList(new Tuple3<>(network.params(false),network.getUpdater(),network.score()));
+}

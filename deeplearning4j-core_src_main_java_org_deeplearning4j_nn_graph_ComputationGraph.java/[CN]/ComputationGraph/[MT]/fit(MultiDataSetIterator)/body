@@ -1,0 +1,29 @@
+{
+  if (configuration.isPretrain()) {
+    pretrain(multiDataSetIterator);
+  }
+  if (configuration.isBackprop()) {
+    while (multiDataSetIterator.hasNext()) {
+      MultiDataSet next=multiDataSetIterator.next();
+      if (next.getFeatures() == null || next.getLabels() == null)       break;
+      if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+        doTruncatedBPTT(next.getFeatures(),next.getLabels(),next.getFeaturesMaskArrays(),next.getLabelsMaskArrays());
+      }
+ else {
+        boolean hasMaskArrays=next.hasMaskArrays();
+        if (hasMaskArrays) {
+          setLayerMaskArrays(next.getFeaturesMaskArrays(),next.getLabelsMaskArrays());
+        }
+        setInputs(next.getFeatures());
+        setLabels(next.getLabels());
+        if (solver == null) {
+          solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
+        }
+        solver.optimize();
+        if (hasMaskArrays) {
+          clearLayerMaskArrays();
+        }
+      }
+    }
+  }
+}

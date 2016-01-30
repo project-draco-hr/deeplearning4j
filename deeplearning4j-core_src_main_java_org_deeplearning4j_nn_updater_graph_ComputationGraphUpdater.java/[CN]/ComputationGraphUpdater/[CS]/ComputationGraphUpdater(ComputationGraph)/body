@@ -1,0 +1,11 @@
+{
+  layerUpdaters=new Updater[graph.getNumLayers()];
+  layerUpdatersMap=new HashMap<>();
+  int i=0;
+  for (  Layer layer : graph.getLayers()) {
+    Updater u=UpdaterCreator.getUpdater(layer);
+    layerUpdaters[i]=u;
+    layerUpdatersMap.put(layer.conf().getLayer().getLayerName(),i);
+    i++;
+  }
+}

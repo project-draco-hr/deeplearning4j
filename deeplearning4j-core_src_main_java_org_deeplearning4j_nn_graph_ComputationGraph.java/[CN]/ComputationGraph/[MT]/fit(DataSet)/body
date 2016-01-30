@@ -1,0 +1,11 @@
+{
+  if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSet");
+  boolean hasMaskArrays=dataSet.hasMaskArrays();
+  if (hasMaskArrays) {
+    INDArray[] fMask=(dataSet.getFeaturesMaskArray() != null ? new INDArray[]{dataSet.getFeaturesMaskArray()} : null);
+    INDArray[] lMask=(dataSet.getLabelsMaskArray() != null ? new INDArray[]{dataSet.getLabelsMaskArray()} : null);
+    setLayerMaskArrays(fMask,lMask);
+  }
+  fit(new INDArray[]{dataSet.getFeatureMatrix()},new INDArray[]{dataSet.getLabels()});
+  if (hasMaskArrays)   clearLayerMaskArrays();
+}

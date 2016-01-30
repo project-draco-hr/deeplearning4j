@@ -1,0 +1,45 @@
+{
+  if (topologicalOrder != null)   return topologicalOrder;
+  int[] out=new int[vertices.length];
+  int outCounter=0;
+  Map<Integer,Set<Integer>> inputEdges=new HashMap<>();
+  for (  GraphVertex gv : vertices) {
+    VertexIndices[] vertexInputsFrom=gv.getInputVertices();
+    if (vertexInputsFrom == null || vertexInputsFrom.length == 0) {
+      inputEdges.put(gv.getVertexIndex(),null);
+      continue;
+    }
+    Set<Integer> set=new HashSet<>();
+    for (    VertexIndices v : vertexInputsFrom) {
+      set.add(v.getVertexIndex());
+    }
+    inputEdges.put(gv.getVertexIndex(),set);
+  }
+  LinkedList<Integer> noIncomingEdges=new LinkedList<>();
+  for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
+    Set<Integer> inputsFrom=entry.getValue();
+    if (inputsFrom == null || inputsFrom.size() == 0) {
+      noIncomingEdges.add(entry.getKey());
+    }
+  }
+  while (noIncomingEdges.size() > 0) {
+    int next=noIncomingEdges.removeFirst();
+    out[outCounter++]=next;
+    VertexIndices[] vertexOutputsTo=vertices[next].getOutputVertices();
+    if (vertexOutputsTo != null) {
+      for (      VertexIndices v : vertexOutputsTo) {
+        Set<Integer> set=inputEdges.get(v.getVertexIndex());
+        set.remove(next);
+        if (set.size() == 0) {
+          noIncomingEdges.add(v.getVertexIndex());
+        }
+      }
+    }
+  }
+  for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
+    Set<Integer> set=entry.getValue();
+    if (set == null)     continue;
+    if (set.size() > 0)     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + vertices[entry.getKey()].getVertexName() + "\")");
+  }
+  return out;
+}

@@ -1,0 +1,45 @@
+{
+  Map<String,INDArray> layerActivations=new HashMap<>();
+  for (  int currVertexIdx : topologicalOrder) {
+    GraphVertex current=vertices[currVertexIdx];
+    if (current.isInputVertex()) {
+      VertexIndices[] inputsTo=current.getOutputVertices();
+      INDArray input=inputs[current.getVertexIndex()];
+      layerActivations.put(current.getVertexName(),input);
+      for (      VertexIndices v : inputsTo) {
+        int vIdx=v.getVertexIndex();
+        int vIdxInputNum=v.getVertexEdgeNumber();
+        vertices[vIdx].setInput(vIdxInputNum,input.dup());
+      }
+    }
+ else {
+      INDArray out;
+      if (current.hasLayer()) {
+        Layer l=current.getLayer();
+        if (l instanceof BaseRecurrentLayer<?>) {
+          out=((BaseRecurrentLayer<?>)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
+        }
+ else         if (l instanceof MultiLayerNetwork) {
+          List<INDArray> temp=((MultiLayerNetwork)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
+          out=temp.get(temp.size() - 1);
+        }
+ else {
+          out=current.doForward(training);
+        }
+        layerActivations.put(current.getVertexName(),out);
+      }
+ else {
+        out=current.doForward(training);
+      }
+      VertexIndices[] outputsTo=current.getOutputVertices();
+      if (outputsTo != null) {
+        for (        VertexIndices v : outputsTo) {
+          int vIdx=v.getVertexIndex();
+          int inputNum=v.getVertexEdgeNumber();
+          vertices[vIdx].setInput(inputNum,out);
+        }
+      }
+    }
+  }
+  return layerActivations;
+}

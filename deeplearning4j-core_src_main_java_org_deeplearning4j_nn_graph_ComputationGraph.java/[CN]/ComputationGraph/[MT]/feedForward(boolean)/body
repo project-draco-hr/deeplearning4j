@@ -1,0 +1,31 @@
+{
+  Map<String,INDArray> layerActivations=new HashMap<>();
+  for (int i=0; i < topologicalOrder.length; i++) {
+    GraphVertex current=vertices[topologicalOrder[i]];
+    if (current.isInputVertex()) {
+      VertexIndices[] inputsTo=current.getOutputVertices();
+      INDArray input=inputs[current.getVertexIndex()];
+      layerActivations.put(current.getVertexName(),input);
+      for (      VertexIndices v : inputsTo) {
+        int vIdx=v.getVertexIndex();
+        int vIdxInputNum=v.getVertexEdgeNumber();
+        vertices[vIdx].setInput(vIdxInputNum,input.dup());
+      }
+    }
+ else {
+      INDArray out=current.doForward(train);
+      if (current.hasLayer()) {
+        layerActivations.put(current.getVertexName(),out);
+      }
+      VertexIndices[] outputsTo=current.getOutputVertices();
+      if (outputsTo != null) {
+        for (        VertexIndices v : outputsTo) {
+          int vIdx=v.getVertexIndex();
+          int inputNum=v.getVertexEdgeNumber();
+          vertices[vIdx].setInput(inputNum,out);
+        }
+      }
+    }
+  }
+  return layerActivations;
+}

@@ -1,0 +1,7 @@
+{
+  if (network.getNumInputArrays() != 1 || network.getNumOutputArrays() != 1) {
+    throw new UnsupportedOperationException("Cannot train ComputationGraph with multiple inputs/outputs from text file + record reader");
+  }
+  JavaRDD<MultiDataSet> points=loadFromTextFile(path,labelIndex,recordReader).map(new DataSetToMultiDataSetFn());
+  return fitMultiDataSet(points,examplesPerFit,totalExamples,numPartitions);
+}
