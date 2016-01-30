@@ -1,0 +1,29 @@
+{
+  if (networkInputs == null || networkInputs.size() < 1) {
+    throw new IllegalStateException("Invalid configuration: network has no inputs");
+  }
+  if (networkOutputs == null || networkOutputs.size() < 1) {
+    throw new IllegalStateException("Invalid configuration: network has no outputs");
+  }
+  for (  String s : networkInputs) {
+    if (vertices.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: name \"" + s + "\" is present in both network inputs and graph vertices/layers");
+    }
+  }
+  for (  Map.Entry<String,List<String>> e : vertexInputs.entrySet()) {
+    String nodeName=e.getKey();
+    if (e.getValue() == null || e.getValue().size() == 0) {
+      throw new IllegalStateException("Invalid configuration: vertex \"" + nodeName + "\" has no inputs");
+    }
+    for (    String inputName : e.getValue()) {
+      if (!vertices.containsKey(inputName) && !networkInputs.contains(inputName)) {
+        throw new IllegalStateException("Invalid configuration: Vertex \"" + nodeName + "\" has input \""+ inputName+ "\" that does not exist");
+      }
+    }
+  }
+  for (  String s : networkOutputs) {
+    if (!vertices.containsKey(s)) {
+      throw new IllegalStateException("Invalid configuration: Output name \"" + s + "\" is not a valid vertex");
+    }
+  }
+}

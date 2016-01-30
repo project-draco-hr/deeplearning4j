@@ -1,0 +1,7 @@
+{
+  ComputationGraphUpdater updater=new ComputationGraphUpdater(aggregators.length,layerNamesMap);
+  for (int i=0; i < aggregators.length; i++) {
+    updater.layerUpdaters[i]=aggregators[i].getUpdater();
+  }
+  return updater;
+}

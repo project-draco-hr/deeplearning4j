@@ -1,0 +1,12 @@
+{
+  if (aggregators == null) {
+    aggregators=aggregator.aggregators;
+  }
+ else {
+    if (aggregator.aggregators != null) {
+      for (int i=0; i < aggregators.length; i++) {
+        aggregators[i].merge(aggregator.aggregators[i]);
+      }
+    }
+  }
+}

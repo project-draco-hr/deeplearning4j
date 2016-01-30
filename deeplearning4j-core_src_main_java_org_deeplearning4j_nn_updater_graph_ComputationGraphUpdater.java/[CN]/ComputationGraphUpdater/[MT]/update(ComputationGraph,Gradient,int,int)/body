@@ -1,0 +1,24 @@
+{
+  Map<String,Gradient> layerGradients=new HashMap<>();
+  for (  Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+    String key=gradientPair.getKey();
+    int idx=key.lastIndexOf("_");
+    if (idx == -1)     throw new IllegalStateException("Invalid key: ComputationGraph Gradient key does not have layer separator: \"" + key + "\"");
+    String layerName=key.substring(0,idx);
+    Gradient g=layerGradients.get(layerName);
+    if (g == null) {
+      g=new DefaultGradient();
+      layerGradients.put(layerName,g);
+    }
+    String newKey=key.substring(idx + 1);
+    g.setGradientFor(newKey,gradientPair.getValue());
+  }
+  for (  Map.Entry<String,Gradient> entry : layerGradients.entrySet()) {
+    String layerName=entry.getKey();
+    int updaterIdx=layerUpdatersMap.get(layerName);
+    layerUpdaters[updaterIdx].update(graph.getLayer(layerName),entry.getValue(),iteration,batchSize);
+    for (    Map.Entry<String,INDArray> entry2 : layerGradients.get(layerName).gradientForVariable().entrySet()) {
+      gradient.setGradientFor(entry.getKey() + "_" + entry2.getKey(),entry2.getValue());
+    }
+  }
+}

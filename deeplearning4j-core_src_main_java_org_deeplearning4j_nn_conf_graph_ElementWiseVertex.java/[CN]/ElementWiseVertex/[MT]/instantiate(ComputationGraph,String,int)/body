@@ -1,0 +1,17 @@
+{
+  org.deeplearning4j.nn.graph.vertex.impl.ElementWiseVertex.Op op;
+switch (this.op) {
+case Add:
+    op=org.deeplearning4j.nn.graph.vertex.impl.ElementWiseVertex.Op.Add;
+  break;
+case Subtract:
+op=org.deeplearning4j.nn.graph.vertex.impl.ElementWiseVertex.Op.Subtract;
+break;
+case Product:
+op=org.deeplearning4j.nn.graph.vertex.impl.ElementWiseVertex.Op.Product;
+break;
+default :
+throw new RuntimeException();
+}
+return new org.deeplearning4j.nn.graph.vertex.impl.ElementWiseVertex(graph,name,idx,op);
+}

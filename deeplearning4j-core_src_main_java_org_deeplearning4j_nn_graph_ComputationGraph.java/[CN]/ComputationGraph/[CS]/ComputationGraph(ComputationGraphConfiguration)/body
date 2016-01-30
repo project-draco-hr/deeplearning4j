@@ -1,0 +1,8 @@
+{
+  this.configuration=configuration;
+  this.numInputArrays=configuration.getNetworkInputs().size();
+  this.numOutputArrays=configuration.getNetworkOutputs().size();
+  this.inputs=new INDArray[numInputArrays];
+  this.labels=new INDArray[numOutputArrays];
+  this.defaultConfiguration=configuration.getDefaultConfiguration();
+}

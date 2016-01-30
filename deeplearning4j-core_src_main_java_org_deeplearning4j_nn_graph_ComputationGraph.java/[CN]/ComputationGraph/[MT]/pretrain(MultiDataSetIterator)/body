@@ -1,0 +1,62 @@
+{
+  for (int i=0; i < topologicalOrder.length; i++) {
+    if (!vertices[i].hasLayer())     continue;
+    if (vertices[i].getLayer() instanceof BaseOutputLayer<?>)     continue;
+    LinkedList<Integer> partialTopoSort=new LinkedList<>();
+    Set<Integer> seenSoFar=new HashSet<>();
+    partialTopoSort.add(topologicalOrder[i]);
+    seenSoFar.add(topologicalOrder[i]);
+    for (int j=i - 1; j >= 0; j--) {
+      VertexIndices[] outputsTo=vertices[topologicalOrder[j]].getOutputVertices();
+      boolean needed=false;
+      for (      VertexIndices vi : outputsTo) {
+        if (seenSoFar.contains(vi.getVertexIndex())) {
+          needed=true;
+          break;
+        }
+      }
+      if (needed) {
+        partialTopoSort.addFirst(topologicalOrder[j]);
+        seenSoFar.add(topologicalOrder[j]);
+      }
+    }
+    int[] fwdPassOrder=new int[partialTopoSort.size()];
+    int k=0;
+    for (    Integer g : partialTopoSort)     fwdPassOrder[k++]=g;
+    GraphVertex gv=vertices[fwdPassOrder[fwdPassOrder.length - 1]];
+    Layer layer=gv.getLayer();
+    if (!(layer instanceof BasePretrainNetwork))     throw new IllegalStateException("Cannot pretrain network with layer that is not pretrainable");
+    log.info("Pretraining on layer \"{}\"",vertices[i].getVertexName());
+    BasePretrainNetwork<?> toPretrain=(BasePretrainNetwork<?>)layer;
+    if (listeners != null)     toPretrain.setListeners(listeners);
+    while (iter.hasNext()) {
+      MultiDataSet multiDataSet=iter.next();
+      setInputs(multiDataSet.getFeatures());
+      for (int j=0; j < fwdPassOrder.length - 1; j++) {
+        GraphVertex current=vertices[fwdPassOrder[j]];
+        if (current.isInputVertex()) {
+          VertexIndices[] inputsTo=current.getOutputVertices();
+          INDArray input=inputs[current.getVertexIndex()];
+          for (          VertexIndices v : inputsTo) {
+            int vIdx=v.getVertexIndex();
+            int vIdxInputNum=v.getVertexEdgeNumber();
+            vertices[vIdx].setInput(vIdxInputNum,input.dup());
+          }
+        }
+ else {
+          INDArray out=current.doForward(true);
+          VertexIndices[] outputsTo=current.getOutputVertices();
+          if (outputsTo != null) {
+            for (            VertexIndices v : outputsTo) {
+              int vIdx=v.getVertexIndex();
+              int inputNum=v.getVertexEdgeNumber();
+              vertices[vIdx].setInput(inputNum,out);
+            }
+          }
+        }
+      }
+      toPretrain.fit(gv.getInputs()[0]);
+    }
+    iter.reset();
+  }
+}

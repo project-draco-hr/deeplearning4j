@@ -1,0 +1,27 @@
+{
+  boolean hasMaskArrays=dataSet.hasMaskArrays();
+  if (hasMaskArrays) {
+    setLayerMaskArrays(dataSet.getFeaturesMaskArrays(),dataSet.getLabelsMaskArrays());
+  }
+  feedForward(dataSet.getFeatures(),training);
+  INDArray[] labels=dataSet.getLabels();
+  setLabels(labels);
+  double l1=calcL1();
+  double l2=calcL2();
+  double score=0.0;
+  int i=0;
+  for (  String s : configuration.getNetworkOutputs()) {
+    Layer outLayer=verticesMap.get(s).getLayer();
+    if (outLayer == null || !(outLayer instanceof BaseOutputLayer<?>)) {
+      log.warn("Cannot calculate score: vertex \"" + s + "\" is not an output layer");
+      return 0.0;
+    }
+    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)outLayer;
+    ol.setLabels(labels[i++]);
+    score+=ol.computeScore(l1,l2,true);
+    l1=0.0;
+    l2=0.0;
+  }
+  if (hasMaskArrays)   clearLayerMaskArrays();
+  return score;
+}

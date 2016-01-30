@@ -1,0 +1,25 @@
+{
+  int iterations=network.getLayer(0).conf().getNumIterations();
+  log.info("Running distributed training: (averaging each iteration = " + averageEachIteration + "), (iterations = "+ iterations+ "), (num partions = "+ rdd.partitions().size()+ ")");
+  if (!averageEachIteration) {
+    runIteration(rdd);
+  }
+ else {
+    for (    GraphVertex gv : conf.getVertices().values()) {
+      if (gv instanceof LayerVertex) {
+        ((LayerVertex)gv).getLayerConf().setNumIterations(1);
+      }
+    }
+    for (int i=0; i < iterations; i++) {
+      runIteration(rdd);
+    }
+    if (iterations > 1) {
+      for (      GraphVertex gv : conf.getVertices().values()) {
+        if (gv instanceof LayerVertex) {
+          ((LayerVertex)gv).getLayerConf().setNumIterations(iterations);
+        }
+      }
+    }
+  }
+  return network;
+}

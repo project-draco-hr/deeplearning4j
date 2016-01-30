@@ -1,0 +1,5 @@
+{
+  for (  Map.Entry<String,Map<String,INDArray>> entry : previousStates.entrySet()) {
+    rnnSetPreviousState(entry.getKey(),entry.getValue());
+  }
+}

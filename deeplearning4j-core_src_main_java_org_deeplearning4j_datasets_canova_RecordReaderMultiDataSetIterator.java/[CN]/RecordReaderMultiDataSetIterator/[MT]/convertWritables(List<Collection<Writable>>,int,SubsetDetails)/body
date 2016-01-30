@@ -1,0 +1,38 @@
+{
+  INDArray arr;
+  if (details.entireReader)   arr=Nd4j.create(minValues,list.get(0).size());
+ else   if (details.oneHot)   arr=Nd4j.zeros(minValues,details.oneHotNumClasses);
+ else   arr=Nd4j.create(minValues,details.subsetEndInclusive - details.subsetStart + 1);
+  int[] idx=new int[2];
+  for (int i=0; i < minValues; i++) {
+    idx[0]=i;
+    Collection<Writable> c=list.get(i);
+    if (details.entireReader) {
+      int j=0;
+      for (      Writable w : c) {
+        idx[1]=j++;
+        arr.putScalar(idx,w.toDouble());
+      }
+    }
+ else     if (details.oneHot) {
+      Writable w=null;
+      if (c instanceof List)       w=((List<Writable>)c).get(details.subsetStart);
+ else {
+        Iterator<Writable> iter=c.iterator();
+        for (int k=0; k <= details.subsetStart; k++)         w=iter.next();
+      }
+      idx[1]=w.toInt();
+      arr.putScalar(idx,1.0);
+    }
+ else {
+      Iterator<Writable> iter=c.iterator();
+      for (int j=0; j < details.subsetStart; j++)       iter.next();
+      int k=0;
+      for (int j=details.subsetStart; j <= details.subsetEndInclusive; j++) {
+        idx[1]=k++;
+        arr.putScalar(idx,iter.next().toDouble());
+      }
+    }
+  }
+  return arr;
+}

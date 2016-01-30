@@ -1,0 +1,7 @@
+{
+  int nParams=0;
+  for (  Layer layer : layers) {
+    nParams+=layer.numParams(backwards);
+  }
+  return nParams;
+}
