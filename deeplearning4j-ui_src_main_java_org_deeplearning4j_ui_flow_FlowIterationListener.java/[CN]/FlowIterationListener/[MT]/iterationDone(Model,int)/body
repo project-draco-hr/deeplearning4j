@@ -1,7 +1,15 @@
 {
+  ModelInfo modelInfo=new ModelInfo();
   if (model instanceof ComputationGraph) {
+    ComputationGraph graph=(ComputationGraph)model;
   }
  else   if (model instanceof MultiLayerNetwork) {
+    MultiLayerNetwork network=(MultiLayerNetwork)model;
+    int cnt=1;
+    for (    Layer layer : network.getLayers()) {
+      modelInfo.addLayer(getLayerInfo(layer,1,cnt,cnt));
+      cnt++;
+    }
   }
  else   throw new IllegalStateException("Model [" + model.getClass().getCanonicalName() + "] doesn't looks like supported one.");
 }

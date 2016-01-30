@@ -1,0 +1,11 @@
+{
+  LayerInfo info=new LayerInfo();
+  info.setX(x);
+  info.setY(y);
+  info.setName(layer.conf().getLayer().getLayerName());
+  info.setId(order);
+  info.setLayerType(layer.type());
+  Description description=new Description();
+  info.setDescription(description);
+  return info;
+}
