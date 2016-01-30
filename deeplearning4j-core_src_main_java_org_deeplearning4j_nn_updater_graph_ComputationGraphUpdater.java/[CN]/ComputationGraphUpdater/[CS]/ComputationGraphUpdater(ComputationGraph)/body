@@ -1,7 +1,6 @@
 {
   layerUpdaters=new Updater[graph.getNumLayers()];
   layerUpdatersMap=new HashMap<>();
-  GraphVertex[] vertices=graph.getVertices();
   int i=0;
   for (  Layer layer : graph.getLayers()) {
     Updater u=UpdaterCreator.getUpdater(layer);
