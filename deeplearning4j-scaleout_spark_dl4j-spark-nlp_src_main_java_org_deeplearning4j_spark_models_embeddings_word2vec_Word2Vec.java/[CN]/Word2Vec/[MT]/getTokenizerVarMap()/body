@@ -6,6 +6,8 @@
       put("tokenizer",tokenizer);
       put("tokenPreprocessor",tokenPreprocessor);
       put("removeStop",removeStop);
+      put("stopWords",stopWords);
+      put("useUnk",useUnknown);
     }
   }
 ;

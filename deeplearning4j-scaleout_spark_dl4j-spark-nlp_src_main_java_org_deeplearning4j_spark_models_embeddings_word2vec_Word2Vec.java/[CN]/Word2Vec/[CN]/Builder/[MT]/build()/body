@@ -25,6 +25,7 @@
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
   ret.batchSize=this.batchSize;
+  ret.useUnknown=this.useUnk;
   if (this.tokenizerFactory != null) {
     ret.tokenizer=this.tokenizerFactory.getClass().getCanonicalName();
     if (tokenizerFactory.getTokenPreProcessor() != null) {
