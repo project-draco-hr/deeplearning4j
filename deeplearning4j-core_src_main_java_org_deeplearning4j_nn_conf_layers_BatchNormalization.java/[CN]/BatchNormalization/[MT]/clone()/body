@@ -1,0 +1,5 @@
+{
+  BatchNormalization clone=(BatchNormalization)super.clone();
+  if (clone.shape != null)   clone.shape=clone.shape.clone();
+  return clone;
+}

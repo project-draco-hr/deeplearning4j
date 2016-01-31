@@ -1,0 +1,10 @@
+{
+  BatchNormalization bN=new BatchNormalization.Builder().build();
+  NeuralNetConfiguration layerConf=new NeuralNetConfiguration.Builder().iterations(1).layer(bN).build();
+  Layer layer=LayerFactories.getFactory(layerConf).create(layerConf);
+  INDArray data=Nd4j.create(new double[]{4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8.,4.,4.,4.,4.,8.,8.,8.,8,2.,2.,2.,2.,4.,4.,4.,4.,2.,2.,2.,2.,4.,4.,4.,4.,2.,2.,2.,2.,4.,4.,4.,4.,2.,2.,2.,2.,4.,4.,4.,4.},new int[]{2,2,4,4});
+  INDArray t=data.var(0);
+  INDArray actualActivation=layer.preOutput(data);
+  DataSetIterator iter=new MnistDataSetIterator(5,5);
+  DataSet next=iter.next();
+}
