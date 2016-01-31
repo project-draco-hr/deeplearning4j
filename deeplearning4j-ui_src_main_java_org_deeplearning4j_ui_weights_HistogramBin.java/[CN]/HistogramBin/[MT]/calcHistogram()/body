@@ -1,0 +1,28 @@
+{
+  max=sourceArray.maxNumber().doubleValue();
+  min=sourceArray.minNumber().doubleValue();
+  bins=Nd4j.create(numberOfBins);
+  final double binSize=(max - min) / numberOfBins;
+  for (int x=0; x < sourceArray.length(); x++) {
+    double d=sourceArray.getDouble(x);
+    int bin=(int)((d - min) / binSize);
+    if (bin < 0) {
+      bins.putScalar(0,bins.getDouble(0) + 1);
+      BigDecimal pos=new BigDecimal(round(min,rounds));
+      if (!data.containsKey(pos))       data.put(pos,new AtomicInteger(0));
+      data.get(pos).incrementAndGet();
+    }
+ else     if (bin >= numberOfBins) {
+      bins.putScalar(numberOfBins - 1,bins.getDouble(numberOfBins - 1) + 1);
+      BigDecimal pos=new BigDecimal(round(max,rounds));
+      if (!data.containsKey(pos))       data.put(pos,new AtomicInteger(0));
+      data.get(pos).incrementAndGet();
+    }
+ else {
+      BigDecimal pos=new BigDecimal(round((bin + 1) * binSize,rounds));
+      bins.putScalar(bin,bins.getDouble(bin) + 1);
+      if (!data.containsKey(pos))       data.put(pos,new AtomicInteger(0));
+      data.get(pos).incrementAndGet();
+    }
+  }
+}
