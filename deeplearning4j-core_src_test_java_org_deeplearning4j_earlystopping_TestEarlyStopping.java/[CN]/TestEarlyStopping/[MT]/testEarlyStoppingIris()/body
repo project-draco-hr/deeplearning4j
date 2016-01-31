@@ -3,10 +3,10 @@
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.setListeners(new ScoreIterationListener(1));
   DataSetIterator irisIter=new IrisDataSetIterator(150,150);
-  EarlyStoppingModelSaver saver=new InMemoryModelSaver();
-  EarlyStoppingConfiguration esConf=new EarlyStoppingConfiguration.Builder().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new DataSetLossCalculator(irisIter,true)).modelSaver(saver).build();
-  IEarlyStoppingTrainer trainer=new EarlyStoppingTrainer(esConf,net,irisIter);
-  EarlyStoppingResult result=trainer.fit();
+  EarlyStoppingModelSaver<MultiLayerNetwork> saver=new InMemoryModelSaver<>();
+  EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new DataSetLossCalculator(irisIter,true)).modelSaver(saver).build();
+  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new EarlyStoppingTrainer(esConf,net,irisIter);
+  EarlyStoppingResult<MultiLayerNetwork> result=trainer.fit();
   System.out.println(result);
   assertEquals(5,result.getTotalEpochs());
   assertEquals(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,result.getTerminationReason());
