@@ -18,7 +18,7 @@
       String newName;
       if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
  else       newName=param;
-      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).build();
+      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
       newGrad.put(newName,histogram.getData());
       Map<String,List<Double>> map=meanMagHistoryUpdates.get(indexFromString(param));
       List<Double> list=map.get(newName);
@@ -36,7 +36,7 @@
       String newName;
       if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
  else       newName=param;
-      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).build();
+      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
       newParams.put(newName,histogram.getData());
       Map<String,List<Double>> map=meanMagHistoryParams.get(indexFromString(param));
       List<Double> list=map.get(newName);
@@ -49,7 +49,7 @@
     }
     double score=model.score();
     scoreHistory.add(score);
-    ModelAndGradient g=new ModelAndGradient();
+    CompactModelAndGradient g=new CompactModelAndGradient();
     g.setGradients(newGrad);
     g.setParameters(newParams);
     g.setScore(score);
