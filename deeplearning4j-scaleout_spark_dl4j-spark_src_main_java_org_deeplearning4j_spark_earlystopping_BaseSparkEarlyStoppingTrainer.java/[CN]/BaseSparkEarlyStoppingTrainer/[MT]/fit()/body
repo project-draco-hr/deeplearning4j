@@ -13,7 +13,8 @@
   }
   if (listener != null)   listener.onStart(esConfig,net);
   Map<Integer,Double> scoreVsEpoch=new LinkedHashMap<>();
-  SparkDl4jMultiLayer sparkNetwork=new SparkDl4jMultiLayer(sc,net);
+  if (train != null)   train.cache();
+ else   trainMulti.cache();
   int epochCount=0;
   while (true) {
     double lastScore;
@@ -21,41 +22,55 @@
     IterationTerminationCondition terminationReason=null;
     int iterCount=0;
     int nSplits;
-    long nExamples=train.count();
-    if (nExamples % examplesPerFit == 0) {
-      nSplits=(int)(nExamples / examplesPerFit);
+    if (totalExamples % examplesPerFit == 0) {
+      nSplits=(totalExamples / examplesPerFit);
     }
  else {
-      nSplits=(int)(nExamples / examplesPerFit) + 1;
+      nSplits=(totalExamples / examplesPerFit) + 1;
     }
-    JavaRDD<DataSet>[] subsets;
-    if (nSplits == 1) {
-      sparkNetwork.fitDataSet(train);
-      subsets=(JavaRDD<DataSet>[])Array.newInstance(JavaRDD.class,1);
-      subsets[0]=train;
+    JavaRDD<DataSet>[] subsets=null;
+    JavaRDD<MultiDataSet>[] subsetsMulti=null;
+    if (train != null) {
+      if (nSplits == 1) {
+        subsets=(JavaRDD<DataSet>[])Array.newInstance(JavaRDD.class,1);
+        subsets[0]=train;
+      }
+ else {
+        double[] splitWeights=new double[nSplits];
+        for (int i=0; i < nSplits; i++)         splitWeights[i]=1.0 / nSplits;
+        subsets=train.randomSplit(splitWeights);
+      }
     }
  else {
-      double[] splitWeights=new double[nSplits];
-      for (int i=0; i < nSplits; i++)       splitWeights[i]=1.0 / nSplits;
-      subsets=train.randomSplit(splitWeights);
+      if (nSplits == 1) {
+        subsetsMulti=(JavaRDD<MultiDataSet>[])Array.newInstance(JavaRDD.class,1);
+        subsetsMulti[0]=trainMulti;
+      }
+ else {
+        double[] splitWeights=new double[nSplits];
+        for (int i=0; i < nSplits; i++)         splitWeights[i]=1.0 / nSplits;
+        subsetsMulti=trainMulti.randomSplit(splitWeights);
+      }
     }
-    for (int i=0; i < subsets.length; i++) {
-      log.info("Initiating distributed training of subset {} of {}",(i + 1),subsets.length);
+    int nSubsets=(subsets != null ? subsets.length : subsetsMulti.length);
+    for (int i=0; i < nSubsets; i++) {
+      log.info("Initiating distributed training of subset {} of {}",(i + 1),nSubsets);
       try {
-        sparkNetwork.fitDataSet(subsets[i]);
+        if (subsets != null)         fit(subsets[i]);
+ else         fitMulti(subsetsMulti[i]);
       }
  catch (      Exception e) {
         log.warn("Early stopping training terminated due to exception at epoch {}, iteration {}",epochCount,iterCount,e);
-        MultiLayerNetwork bestModel;
+        T bestModel;
         try {
           bestModel=esConfig.getModelSaver().getBestModel();
         }
  catch (        IOException e2) {
           throw new RuntimeException(e2);
         }
-        return new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+        return new EarlyStoppingResult<T>(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
       }
-      lastScore=sparkNetwork.getScore();
+      lastScore=getScore();
       for (      IterationTerminationCondition c : esConfig.getIterationTerminationConditions()) {
         if (c.terminate(lastScore)) {
           terminate=true;
@@ -76,14 +91,14 @@
           throw new RuntimeException("Error saving most recent model",e);
         }
       }
-      MultiLayerNetwork bestModel;
+      T bestModel;
       try {
         bestModel=esConfig.getModelSaver().getBestModel();
       }
  catch (      IOException e2) {
         throw new RuntimeException(e2);
       }
-      EarlyStoppingResult result=new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,terminationReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+      EarlyStoppingResult<T> result=new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,terminationReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
       if (listener != null)       listener.onCompletion(result);
       return result;
     }
@@ -128,14 +143,14 @@
       }
       if (epochTerminate) {
         log.info("Hit epoch termination condition at epoch {}. Details: {}",epochCount,termReason.toString());
-        MultiLayerNetwork bestModel;
+        T bestModel;
         try {
           bestModel=esConfig.getModelSaver().getBestModel();
         }
  catch (        IOException e2) {
           throw new RuntimeException(e2);
         }
-        EarlyStoppingResult result=new EarlyStoppingResult(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,termReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount + 1,bestModel);
+        EarlyStoppingResult<T> result=new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,termReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount + 1,bestModel);
         if (listener != null)         listener.onCompletion(result);
         return result;
       }

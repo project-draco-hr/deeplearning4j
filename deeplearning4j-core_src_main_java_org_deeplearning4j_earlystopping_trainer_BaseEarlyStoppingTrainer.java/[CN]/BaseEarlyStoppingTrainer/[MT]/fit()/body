@@ -21,7 +21,6 @@
     IterationTerminationCondition terminationReason=null;
     int iterCount=0;
     while (iterator.hasNext()) {
-      DataSet ds=train.next();
       try {
         if (train != null)         fit(train.next());
  else         fit(trainMulti.next());

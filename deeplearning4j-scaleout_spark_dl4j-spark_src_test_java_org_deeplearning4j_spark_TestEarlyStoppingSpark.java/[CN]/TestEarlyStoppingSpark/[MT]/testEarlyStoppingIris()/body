@@ -3,10 +3,10 @@
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.setListeners(new ScoreIterationListener(1));
   JavaRDD<DataSet> irisData=getIris();
-  EarlyStoppingModelSaver saver=new InMemoryModelSaver();
-  EarlyStoppingConfiguration esConf=new EarlyStoppingConfiguration.Builder().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc)).modelSaver(saver).build();
-  IEarlyStoppingTrainer trainer=new SparkEarlyStoppingTrainer(getContext(),esConf,net,irisData,150);
-  EarlyStoppingResult result=trainer.fit();
+  EarlyStoppingModelSaver<MultiLayerNetwork> saver=new InMemoryModelSaver<>();
+  EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc)).modelSaver(saver).build();
+  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),esConf,net,irisData,50,150,5);
+  EarlyStoppingResult<MultiLayerNetwork> result=trainer.fit();
   System.out.println(result);
   assertEquals(5,result.getTotalEpochs());
   assertEquals(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,result.getTerminationReason());
