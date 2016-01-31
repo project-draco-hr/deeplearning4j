@@ -1,10 +1,10 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).weightInit(WeightInit.XAVIER).list(1).layer(0,new OutputLayer.Builder().nIn(4).nOut(3).lossFunction(LossFunctions.LossFunction.MCXENT).build()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).weightInit(WeightInit.XAVIER).list().layer(0,new OutputLayer.Builder().nIn(4).nOut(3).lossFunction(LossFunctions.LossFunction.MCXENT).build()).pretrain(false).backprop(true).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.setListeners(new ScoreIterationListener(1));
   JavaRDD<DataSet> irisData=getIris();
   EarlyStoppingModelSaver<MultiLayerNetwork> saver=new InMemoryModelSaver<>();
-  EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc)).modelSaver(saver).build();
+  EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc.sc())).modelSaver(saver).build();
   IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),esConf,net,irisData,50,150,5);
   EarlyStoppingResult<MultiLayerNetwork> result=trainer.fit();
   System.out.println(result);

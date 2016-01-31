@@ -1,0 +1,4 @@
+{
+  SparkComputationGraph net=new SparkComputationGraph(sc,network);
+  return net.calculateScore(data,true);
+}
