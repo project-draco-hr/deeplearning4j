@@ -1,2 +1,14 @@
 {
+  this.remoteAddr=address;
+  this.remotePort=port;
+  this.frequency=frequency;
+  if (address.equals("localhost") || address.equals("127.0.0.1")) {
+    try {
+      this.remotePort=UiServer.getInstance().getPort();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  setup();
 }

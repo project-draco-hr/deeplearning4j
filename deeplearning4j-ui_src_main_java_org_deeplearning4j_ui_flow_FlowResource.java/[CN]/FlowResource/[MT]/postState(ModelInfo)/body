@@ -1,0 +1,10 @@
+{
+  try {
+    lock.writeLock().lock();
+    this.modelInfo=info;
+    return Response.ok().build();
+  }
+  finally {
+    lock.writeLock().unlock();
+  }
+}

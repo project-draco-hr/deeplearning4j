@@ -1,0 +1,9 @@
+{
+  try {
+    lock.readLock().lock();
+    return Response.ok(modelInfo).build();
+  }
+  finally {
+    lock.readLock().unlock();
+  }
+}

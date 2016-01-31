@@ -23,7 +23,7 @@
   MultiLayerNetwork model=new MultiLayerNetwork(builder.build());
   model.init();
   log.info("Train model....");
-  model.setListeners(Arrays.asList(new ScoreIterationListener(listenerFreq),new ConvolutionalIterationListener(listenerFreq)));
+  model.setListeners(Arrays.asList(new ScoreIterationListener(listenerFreq),new FlowIterationListener(listenerFreq)));
   while (lfw.hasNext()) {
     lfwNext=lfw.next();
     lfwNext.scale();
