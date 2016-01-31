@@ -1,6 +1,6 @@
 {
   try {
-    bestModel=(T)(Object.class.getMethod("clone")).invoke(net);
+    bestModel=(T)(net.getClass().getDeclaredMethod("clone")).invoke(net);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
