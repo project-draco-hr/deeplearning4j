@@ -1,6 +1,8 @@
 {
+  java.util.logging.Logger logger=java.util.logging.Logger.getGlobal();
   login=null;
   password=null;
+  client.register(new LoggingFilter(logger,true));
   if (login == null || password == null)   target=client.target("http://" + remoteAddr + ":"+ remotePort).path("flow").path("state");
   this.path="http://" + remoteAddr + ":"+ remotePort+ "/flow";
   log.info("Flow UI: " + this.path);
