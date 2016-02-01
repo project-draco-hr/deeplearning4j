@@ -3,6 +3,7 @@
   info.setX(x);
   info.setY(y);
   info.setName(layer.conf().getLayer().getLayerName());
+  if (info.getName() == null || info.getName().isEmpty())   info.setName("unnamed");
   info.setId(order);
   info.setLayerType(layer.type());
   Description description=new Description();
@@ -11,7 +12,7 @@ switch (info.getLayerType()) {
 case CONVOLUTIONAL:
 {
       org.deeplearning4j.nn.conf.layers.ConvolutionLayer layer1=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)layer.conf().getLayer();
-      description.setMainLine("Kernel: " + Arrays.toString(layer1.getKernelSize()) + " Stride: "+ Arrays.toString(layer1.getStride())+ " Padding:"+ Arrays.toString(layer1.getPadding()));
+      description.setMainLine("K: " + Arrays.toString(layer1.getKernelSize()) + " S: "+ Arrays.toString(layer1.getStride())+ " P: "+ Arrays.toString(layer1.getPadding()));
     }
 default :
 {
