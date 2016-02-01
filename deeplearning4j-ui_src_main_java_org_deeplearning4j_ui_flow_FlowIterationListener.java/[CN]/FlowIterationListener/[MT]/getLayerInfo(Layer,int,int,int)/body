@@ -16,6 +16,7 @@
     info.setLayerType(layer.type().toString());
   }
  catch (  Exception e) {
+    info.setLayerType("n/a");
     return info;
   }
   description.setSubLine(layer.conf().getLayer().getActivationFunction());

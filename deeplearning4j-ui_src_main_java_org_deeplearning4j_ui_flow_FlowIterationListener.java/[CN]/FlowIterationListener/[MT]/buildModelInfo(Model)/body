@@ -52,6 +52,9 @@
     layerInfo.dropConnections();
   }
  else   throw new IllegalStateException("Model [" + model.getClass().getCanonicalName() + "] doesn't looks like supported one.");
+  for (  LayerInfo layerInfo : modelInfo.getLayers()) {
+    if (layerInfo.getConnections().size() == 0)     layerInfo.setLayerType("OUTPUT");
+  }
   AtomicInteger cnt=new AtomicInteger(0);
   for (  String layerType : modelInfo.getLayerTypes()) {
     String curColor=colors.get(cnt.getAndIncrement());
@@ -59,6 +62,9 @@
     for (    LayerInfo layerInfo : modelInfo.getLayersByType(layerType)) {
       if (layerType.equals("INPUT")) {
         layerInfo.setColor("#99ff66");
+      }
+ else       if (layerType.equals("OUTPUT")) {
+        layerInfo.setColor("#e6e6e6");
       }
  else {
         layerInfo.setColor(curColor);
