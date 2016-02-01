@@ -4,8 +4,15 @@
   for (  LayerInfo layerInfo : info.getLayers()) {
     log.info("Layer: " + layerInfo);
   }
-  assertEquals(4,info.size());
-  assertNotEquals(null,info.getLayerInfoByName("first"));
-  assertNotEquals(null,info.getLayerInfoByName("second"));
-  assertNotEquals(null,info.getLayerInfoByName("outputLayer"));
+  assertEquals(11,info.size());
+  assertNotEquals(null,info.getLayerInfoByName("inEn"));
+  assertNotEquals(null,info.getLayerInfoByName("inFr"));
+  assertNotEquals(null,info.getLayerInfoByName("embeddingEn"));
+  assertNotEquals(null,info.getLayerInfoByName("embeddingFr"));
+  assertNotEquals(null,info.getLayerInfoByName("encoder"));
+  assertNotEquals(null,info.getLayerInfoByName("embeddingFrSeq"));
+  assertNotEquals(null,info.getLayerInfoByName("lastTimeStep"));
+  assertNotEquals(null,info.getLayerInfoByName("duplicateTimeStep"));
+  assertNotEquals(null,info.getLayerInfoByName("decoder"));
+  assertNotEquals(null,info.getLayerInfoByName("output"));
 }
