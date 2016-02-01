@@ -2,25 +2,31 @@
   LayerInfo info=new LayerInfo();
   info.setX(x);
   info.setY(y);
-  info.setName(layer.conf().getLayer().getLayerName());
+  try {
+    info.setName(layer.conf().getLayer().getLayerName());
+  }
+ catch (  Exception e) {
+    ;
+  }
   if (info.getName() == null || info.getName().isEmpty())   info.setName("unnamed");
   info.setId(order);
-  info.setLayerType(layer.type());
   Description description=new Description();
+  info.setDescription(description);
+  try {
+    info.setLayerType(layer.type().toString());
+  }
+ catch (  Exception e) {
+    return info;
+  }
   description.setSubLine(layer.conf().getLayer().getActivationFunction());
-switch (info.getLayerType()) {
-case CONVOLUTIONAL:
-{
-      org.deeplearning4j.nn.conf.layers.ConvolutionLayer layer1=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)layer.conf().getLayer();
-      description.setMainLine("K: " + Arrays.toString(layer1.getKernelSize()) + " S: "+ Arrays.toString(layer1.getStride())+ " P: "+ Arrays.toString(layer1.getPadding()));
-    }
-default :
-{
-    if (layer instanceof OutputLayer) {
-      description.setMainLine("Outputs: [" + ((org.deeplearning4j.nn.conf.layers.OutputLayer)layer.conf().getLayer()).getNOut() + "]");
+  if (info.getLayerType().equals("CONVOLUTIONAL")) {
+    org.deeplearning4j.nn.conf.layers.ConvolutionLayer layer1=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)layer.conf().getLayer();
+    description.setMainLine("K: " + Arrays.toString(layer1.getKernelSize()) + " S: "+ Arrays.toString(layer1.getStride())+ " P: "+ Arrays.toString(layer1.getPadding()));
+  }
+ else {
+    if (layer instanceof BaseOutputLayer) {
+      description.setMainLine("Outputs: [" + ((org.deeplearning4j.nn.conf.layers.BaseOutputLayer)layer.conf().getLayer()).getNOut() + "]");
     }
   }
-}
-info.setDescription(description);
-return info;
+  return info;
 }

@@ -1,0 +1,11 @@
+{
+  FlowIterationListener listener=new FlowIterationListener();
+  ModelInfo info=listener.buildModelInfo(graph);
+  for (  LayerInfo layerInfo : info.getLayers()) {
+    log.info("Layer: " + layerInfo);
+  }
+  assertEquals(4,info.size());
+  assertNotEquals(null,info.getLayerInfoByName("first"));
+  assertNotEquals(null,info.getLayerInfoByName("second"));
+  assertNotEquals(null,info.getLayerInfoByName("outputLayer"));
+}

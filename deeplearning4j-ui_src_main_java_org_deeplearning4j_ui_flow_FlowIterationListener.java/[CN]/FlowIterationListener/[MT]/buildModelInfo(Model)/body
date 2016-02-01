@@ -2,6 +2,19 @@
   ModelInfo modelInfo=new ModelInfo();
   if (model instanceof ComputationGraph) {
     ComputationGraph graph=(ComputationGraph)model;
+    List<String> inputs=graph.getConfiguration().getNetworkInputs();
+    GraphVertex[] vertices=graph.getVertices();
+    String input=inputs.get(0);
+    List<String> needle=new ArrayList<>();
+    for (int y=1; y < vertices.length; y++) {
+      if (needle.isEmpty())       needle.add(input);
+      List<LayerInfo> layersForGridY=flattenToY(modelInfo,vertices,needle,y);
+      needle.clear();
+      for (      LayerInfo layerInfo : layersForGridY) {
+        needle.add(layerInfo.getName());
+      }
+      if (needle.isEmpty())       break;
+    }
   }
  else   if (model instanceof MultiLayerNetwork) {
     MultiLayerNetwork network=(MultiLayerNetwork)model;
