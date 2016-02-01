@@ -1,3 +1,6 @@
 {
-  return layers.get(Pair.makePair(y,x));
+  for (  LayerInfo layerInfo : layers) {
+    if (layerInfo.getX() == x && layerInfo.getY() == y)     return layerInfo;
+  }
+  return null;
 }
