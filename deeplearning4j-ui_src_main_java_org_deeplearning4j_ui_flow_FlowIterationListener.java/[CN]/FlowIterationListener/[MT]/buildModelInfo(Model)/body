@@ -12,7 +12,7 @@
       info.setX(x);
       info.setLayerType("INPUT");
       info.setDescription(new Description());
-      info.getDescription().setMainLine("Input layer");
+      info.getDescription().setMainLine("Model input");
       modelInfo.addLayer(info);
       x++;
     }
@@ -30,6 +30,16 @@
   }
  else   if (model instanceof MultiLayerNetwork) {
     MultiLayerNetwork network=(MultiLayerNetwork)model;
+    LayerInfo info=new LayerInfo();
+    info.setId(0);
+    info.setName("Input");
+    info.setY(0);
+    info.setX(0);
+    info.setLayerType("INPUT");
+    info.setDescription(new Description());
+    info.getDescription().setMainLine("Model input");
+    info.addConnection(0,1);
+    modelInfo.addLayer(info);
     int y=1;
     final int x=0;
     for (    Layer layer : network.getLayers()) {
@@ -42,5 +52,18 @@
     layerInfo.dropConnections();
   }
  else   throw new IllegalStateException("Model [" + model.getClass().getCanonicalName() + "] doesn't looks like supported one.");
+  AtomicInteger cnt=new AtomicInteger(0);
+  for (  String layerType : modelInfo.getLayerTypes()) {
+    String curColor=colors.get(cnt.getAndIncrement());
+    if (cnt.get() >= colors.size())     cnt.set(0);
+    for (    LayerInfo layerInfo : modelInfo.getLayersByType(layerType)) {
+      if (layerType.equals("INPUT")) {
+        layerInfo.setColor("#99ff66");
+      }
+ else {
+        layerInfo.setColor(curColor);
+      }
+    }
+  }
   return modelInfo;
 }
