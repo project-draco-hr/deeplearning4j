@@ -1,4 +1,6 @@
 {
-  if (indArray.length() != t1.length())   throw new IllegalStateException("Wrong accumulation of matrices");
+  if (indArray == null)   return t1;
+ else   if (t1 == null)   return indArray;
+  if (indArray.length() != t1.length())   throw new IllegalStateException("Invalid accumulation of parameters: first length = " + indArray.length() + ", second = "+ t1.length());
   return indArray.add(t1);
 }

@@ -1,0 +1,4 @@
+{
+  log.info("EarlyStopping: onEpoch called (epochNum={}, score={}}",epochNum,score);
+  onEpochCallCount++;
+}

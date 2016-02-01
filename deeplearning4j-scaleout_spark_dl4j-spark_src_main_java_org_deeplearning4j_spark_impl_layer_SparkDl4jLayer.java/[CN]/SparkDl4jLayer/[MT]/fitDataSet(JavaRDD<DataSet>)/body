@@ -28,7 +28,7 @@
       INDArray newParams=results.fold(Nd4j.zeros(results.first().shape()),new Add());
       newParams.divi(rdd.partitions().size());
     }
-    layer.setParams(this.params.value());
+    layer.setParams(this.params.value().dup());
     this.layer=layer;
   }
   return layer;
