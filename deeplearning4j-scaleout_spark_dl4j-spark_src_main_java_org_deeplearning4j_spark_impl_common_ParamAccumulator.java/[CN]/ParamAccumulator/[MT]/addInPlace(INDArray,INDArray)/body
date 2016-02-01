@@ -1,3 +1,5 @@
 {
+  if (indArray == null)   return r1;
+ else   if (r1 == null)   return indArray;
   return indArray.addi(r1);
 }

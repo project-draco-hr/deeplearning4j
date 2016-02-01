@@ -1,4 +1,5 @@
 {
+  if (initCalled)   return;
   Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeMap=configuration.getVertices();
   List<String> networkInputNames=configuration.getNetworkInputs();
   Map<String,List<String>> vertexInputs=configuration.getVertexInputs();
@@ -78,4 +79,5 @@
     gv.setOutputVertices(outputIndices);
   }
   topologicalOrder=topologicalSortOrder();
+  initCalled=true;
 }

@@ -1,5 +1,7 @@
 {
-  log.info("Invoking add operation ");
-  accumulator.add(indArrayIterator);
+  if (indArrayIterator != null) {
+    accumulator.add(indArrayIterator);
+    counter.add(1);
+  }
   log.info("Invoked add operation ");
 }

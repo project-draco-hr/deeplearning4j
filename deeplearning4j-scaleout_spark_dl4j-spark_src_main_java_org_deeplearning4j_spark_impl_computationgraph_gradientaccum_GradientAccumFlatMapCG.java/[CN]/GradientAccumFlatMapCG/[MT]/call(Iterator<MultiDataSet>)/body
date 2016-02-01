@@ -9,10 +9,11 @@
   MultiDataSet data=org.nd4j.linalg.dataset.MultiDataSet.merge(collect);
   ComputationGraph network=new ComputationGraph(ComputationGraphConfiguration.fromJson(json));
   network.init();
-  INDArray val=params.value();
+  INDArray val=params.value().dup();
+  ComputationGraphUpdater upd=updater.getValue().clone();
   if (val.length() != network.numParams())   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
   network.setParams(val);
-  network.setUpdater(updater.getValue());
+  network.setUpdater(upd);
   network.fit(data);
   return Collections.singletonList(new Tuple3<>(network.gradient(),network.getUpdater(),network.score()));
 }
