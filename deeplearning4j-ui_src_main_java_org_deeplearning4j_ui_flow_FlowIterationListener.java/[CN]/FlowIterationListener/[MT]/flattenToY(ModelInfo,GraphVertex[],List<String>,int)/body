@@ -11,7 +11,8 @@
         if (inputName.equals(input)) {
           log.info("Vertex: " + vertex.getVertexName() + " has Input: "+ input);
           try {
-            LayerInfo info=getLayerInfo(vertex.getLayer(),x,currentY,121);
+            LayerInfo info=model.getLayerInfoByName(vertex.getVertexName());
+            if (info == null)             info=getLayerInfo(vertex.getLayer(),x,currentY,121);
             info.setName(vertex.getVertexName());
             if (info.getName().endsWith("-merge"))             info.setLayerType("MERGE");
             if (model.getLayerInfoByName(vertex.getVertexName()) == null) {
@@ -21,10 +22,10 @@
             }
             LayerInfo connection=model.getLayerInfoByName(input);
             if (connection != null) {
-              info.addConnection(connection);
+              connection.addConnection(info);
+              log.info("Adding connection [" + connection.getName() + "] -> ["+ info.getName()+ "]");
             }
  else {
-              info.addConnection(0,0);
             }
           }
  catch (          Exception e) {

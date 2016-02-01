@@ -12,6 +12,7 @@
       info.setX(x);
       info.setLayerType("INPUT");
       info.setDescription(new Description());
+      info.getDescription().setMainLine("Input layer");
       modelInfo.addLayer(info);
       x++;
     }
