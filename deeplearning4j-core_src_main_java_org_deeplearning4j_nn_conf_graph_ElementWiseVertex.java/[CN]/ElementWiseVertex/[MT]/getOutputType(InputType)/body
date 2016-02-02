@@ -2,6 +2,7 @@
   if (vertexInputs.length == 1)   return vertexInputs[0];
   InputType first=vertexInputs[0];
   if (first.getType() != InputType.Type.CNN) {
+    int size=0;
     for (int i=1; i < vertexInputs.length; i++) {
       if (vertexInputs[i].getType() != first.getType()) {
         throw new InvalidInputTypeException("Invalid input: ElementWise vertex cannot process activations of different types:" + " first type = " + first.getType() + ", input type "+ (i + 1)+ " = "+ vertexInputs[i].getType());
