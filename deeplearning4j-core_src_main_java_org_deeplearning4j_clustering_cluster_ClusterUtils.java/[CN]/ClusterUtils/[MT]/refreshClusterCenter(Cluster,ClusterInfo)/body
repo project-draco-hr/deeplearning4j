@@ -2,7 +2,10 @@
   int pointsCount=cluster.getPoints().size();
   if (pointsCount == 0)   return;
   Point center=new Point(Nd4j.create(cluster.getPoints().get(0).getArray().length()));
-  for (  Point point : cluster.getPoints())   center.getArray().addi(point.getArray());
+  for (  Point point : cluster.getPoints()) {
+    INDArray arr=point.getArray();
+    center.getArray().addi(arr);
+  }
   center.getArray().divi(pointsCount);
   cluster.setCenter(center);
 }
