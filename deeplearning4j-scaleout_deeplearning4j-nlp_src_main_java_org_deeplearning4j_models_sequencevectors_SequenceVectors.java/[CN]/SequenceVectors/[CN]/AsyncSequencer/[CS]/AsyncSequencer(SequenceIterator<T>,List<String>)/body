@@ -4,4 +4,5 @@
   this.setName("AsyncSequencer thread");
   this.nextRandom=new AtomicLong(workers + 1);
   this.iterator.reset();
+  this.stopList=stopList;
 }
