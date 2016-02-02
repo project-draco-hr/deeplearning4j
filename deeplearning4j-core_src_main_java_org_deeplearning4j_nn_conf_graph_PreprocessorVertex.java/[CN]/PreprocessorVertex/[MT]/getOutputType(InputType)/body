@@ -1,0 +1,44 @@
+{
+  if (vertexInputs.length != 1)   throw new InvalidInputTypeException("Invalid input: Preprocessor vertex expects " + "exactly one input");
+  if (outputType != null)   return outputType;
+switch (vertexInputs[0].getType()) {
+case FF:
+    if (preProcessor instanceof FeedForwardToCnnPreProcessor) {
+      FeedForwardToCnnPreProcessor ffcnn=(FeedForwardToCnnPreProcessor)preProcessor;
+      return InputType.convolutional(ffcnn.getNumChannels(),ffcnn.getInputWidth(),ffcnn.getInputHeight());
+    }
+ else     if (preProcessor instanceof FeedForwardToRnnPreProcessor) {
+      return InputType.recurrent(((InputType.InputTypeFeedForward)vertexInputs[0]).getSize());
+    }
+ else {
+      return InputType.feedForward(((InputType.InputTypeFeedForward)vertexInputs[0]).getSize());
+    }
+case RNN:
+  if (preProcessor instanceof RnnToCnnPreProcessor) {
+    RnnToCnnPreProcessor ffcnn=(RnnToCnnPreProcessor)preProcessor;
+    return InputType.convolutional(ffcnn.getNumChannels(),ffcnn.getInputWidth(),ffcnn.getInputHeight());
+  }
+ else   if (preProcessor instanceof RnnToFeedForwardPreProcessor) {
+    return InputType.feedForward(((InputType.InputTypeRecurrent)vertexInputs[0]).getSize());
+  }
+ else {
+    return InputType.recurrent(((InputType.InputTypeRecurrent)vertexInputs[0]).getSize());
+  }
+case CNN:
+if (preProcessor instanceof CnnToFeedForwardPreProcessor) {
+  CnnToFeedForwardPreProcessor p=(CnnToFeedForwardPreProcessor)preProcessor;
+  int outSize=p.getInputHeight() * p.getInputWidth() * p.getNumChannels();
+  return InputType.feedForward(outSize);
+}
+ else if (preProcessor instanceof CnnToRnnPreProcessor) {
+  CnnToRnnPreProcessor p=(CnnToRnnPreProcessor)preProcessor;
+  int outSize=p.getInputHeight() * p.getInputWidth() * p.getNumChannels();
+  return InputType.recurrent(outSize);
+}
+ else {
+  return vertexInputs[0];
+}
+default :
+throw new RuntimeException("Unknown InputType: " + vertexInputs[0]);
+}
+}

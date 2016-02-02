@@ -1,0 +1,40 @@
+{
+  List<LayerInfo> results=new ArrayList<>();
+  int x=0;
+  for (int v=0; v < vertices.length; v++) {
+    GraphVertex vertex=vertices[v];
+    VertexIndices[] indices=vertex.getInputVertices();
+    if (indices != null)     for (int i=0; i < indices.length; i++) {
+      GraphVertex cv=vertices[indices[i].getVertexIndex()];
+      String inputName=cv.getVertexName();
+      for (      String input : currentInput) {
+        if (inputName.equals(input)) {
+          try {
+            LayerInfo info=model.getLayerInfoByName(vertex.getVertexName());
+            if (info == null)             info=getLayerInfo(vertex.getLayer(),x,currentY,121);
+            info.setName(vertex.getVertexName());
+            if (vertex.getLayer() == null) {
+              info.setLayerType(vertex.getClass().getSimpleName());
+            }
+            if (info.getName().endsWith("-merge"))             info.setLayerType("MERGE");
+            if (model.getLayerInfoByName(vertex.getVertexName()) == null) {
+              x++;
+              model.addLayer(info);
+              results.add(info);
+            }
+            LayerInfo connection=model.getLayerInfoByName(input);
+            if (connection != null) {
+              connection.addConnection(info);
+            }
+ else {
+            }
+          }
+ catch (          Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+  }
+  return results;
+}

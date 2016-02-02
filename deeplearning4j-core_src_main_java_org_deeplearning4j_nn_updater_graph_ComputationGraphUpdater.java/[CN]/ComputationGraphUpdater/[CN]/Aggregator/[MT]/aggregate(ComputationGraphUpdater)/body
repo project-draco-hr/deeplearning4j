@@ -1,0 +1,15 @@
+{
+  if (aggregators == null) {
+    aggregators=new UpdaterAggregator[updater.layerUpdaters.length];
+    for (int i=0; i < updater.layerUpdaters.length; i++) {
+      aggregators[i]=updater.layerUpdaters[i].getAggregator(true);
+    }
+    layerNamesMap=new HashMap<>(updater.layerUpdatersMap);
+  }
+ else {
+    if (updater.layerUpdaters == null)     return;
+    for (int i=0; i < aggregators.length; i++) {
+      aggregators[i].aggregate(updater.layerUpdaters[i]);
+    }
+  }
+}

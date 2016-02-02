@@ -2,7 +2,6 @@
   if (resetCounters && buildHuffmanTree)   throw new IllegalStateException("You can't reset counters and build Huffman tree at the same time!");
   if (cache == null)   cache=new AbstractCache.Builder<T>().build();
   log.debug("Target vocab size before building: [" + cache.numWords() + "]");
-  final AtomicLong sequenceCounter=new AtomicLong(0);
   final AtomicLong elementsCounter=new AtomicLong(0);
   AbstractCache<T> topHolder=new AbstractCache.Builder<T>().minElementFrequency(0).build();
   int cnt=0;
@@ -17,7 +16,7 @@
     long counter=0;
     while (iterator.hasMoreSequences()) {
       Sequence<T> document=iterator.nextSequence();
-      sequenceCounter.incrementAndGet();
+      seqCount.incrementAndGet();
       if (fetchLabels) {
         T labelWord=document.getSequenceLabel();
         labelWord.setSpecial(true);
@@ -42,13 +41,13 @@
         }
       }
       sequences++;
-      if (sequenceCounter.get() % 100000 == 0)       log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ elementsCounter.get()+ "]");
+      if (seqCount.get() % 100000 == 0)       log.info("Sequences checked: [" + seqCount.get() + "], Current vocabulary size: ["+ elementsCounter.get()+ "]");
     }
     log.debug("Vocab size before truncation: [" + tempHolder.numWords() + "],  NumWords: ["+ tempHolder.totalWordOccurrences()+ "], sequences parsed: ["+ sequences+ "], counter: ["+ counter+ "]");
     if (source.getMinWordFrequency() > 0) {
       LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
       for (      T element : tempHolder.vocabWords()) {
-        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial())         labelsToRemove.add(element.getLabel());
+        if (element.getElementFrequency() < source.getMinWordFrequency() && !element.isSpecial() && !element.isLabel())         labelsToRemove.add(element.getLabel());
       }
       for (      String label : labelsToRemove) {
         tempHolder.removeElement(label);
@@ -68,7 +67,16 @@
     Huffman huffman=new Huffman(cache.vocabWords());
     huffman.build();
     huffman.applyIndexes(cache);
+    if (limit > 0) {
+      LinkedBlockingQueue<String> labelsToRemove=new LinkedBlockingQueue<>();
+      for (      T element : cache.vocabWords()) {
+        if (element.getIndex() > limit && !element.isSpecial() && !element.isLabel())         labelsToRemove.add(element.getLabel());
+      }
+      for (      String label : labelsToRemove) {
+        cache.removeElement(label);
+      }
+    }
   }
-  log.info("Sequences checked: [" + sequenceCounter.get() + "], Current vocabulary size: ["+ cache.numWords()+ "]");
+  log.info("Sequences checked: [" + seqCount.get() + "], Current vocabulary size: ["+ cache.numWords()+ "]");
   return cache;
 }

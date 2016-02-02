@@ -1,0 +1,6 @@
+{
+  for (  LayerInfo layerInfo : layers) {
+    if (layerInfo.getName().equalsIgnoreCase(name))     return layerInfo;
+  }
+  return null;
+}

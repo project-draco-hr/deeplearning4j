@@ -1,0 +1,5 @@
+{
+  if (!connections.contains(Coords.makeCoors(layerInfo.getX(),layerInfo.getY()))) {
+    connections.add(Coords.makeCoors(layerInfo.getX(),layerInfo.getY()));
+  }
+}

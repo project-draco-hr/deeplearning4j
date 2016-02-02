@@ -1,0 +1,8 @@
+{
+  HistogramBin histogram=new HistogramBin();
+  histogram.sourceArray=this.source;
+  histogram.numberOfBins=this.binCount;
+  histogram.rounds=this.rounds;
+  histogram.calcHistogram();
+  return histogram;
+}

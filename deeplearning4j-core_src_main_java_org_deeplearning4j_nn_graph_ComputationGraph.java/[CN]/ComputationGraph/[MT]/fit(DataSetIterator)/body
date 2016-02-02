@@ -1,0 +1,32 @@
+{
+  if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSetIterator");
+  if (configuration.isPretrain()) {
+    pretrain(dataSetIterator);
+  }
+  if (configuration.isBackprop()) {
+    while (dataSetIterator.hasNext()) {
+      DataSet next=dataSetIterator.next();
+      if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      boolean hasMaskArrays=next.hasMaskArrays();
+      if (hasMaskArrays) {
+        INDArray[] lMask=(next.getFeaturesMaskArray() != null ? new INDArray[]{next.getFeaturesMaskArray()} : null);
+        INDArray[] fMask=(next.getLabelsMaskArray() != null ? new INDArray[]{next.getLabelsMaskArray()} : null);
+        setLayerMaskArrays(fMask,lMask);
+      }
+      if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
+        doTruncatedBPTT(new INDArray[]{next.getFeatures()},new INDArray[]{next.getLabels()},(hasMaskArrays ? new INDArray[]{next.getFeaturesMaskArray()} : null),(hasMaskArrays ? new INDArray[]{next.getLabelsMaskArray()} : null));
+      }
+ else {
+        setInput(0,next.getFeatureMatrix());
+        setLabel(0,next.getLabels());
+        if (solver == null) {
+          solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
+        }
+        solver.optimize();
+      }
+      if (hasMaskArrays) {
+        clearLayerMaskArrays();
+      }
+    }
+  }
+}

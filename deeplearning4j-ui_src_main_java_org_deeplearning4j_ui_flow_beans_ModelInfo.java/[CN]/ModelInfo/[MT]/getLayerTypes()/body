@@ -1,0 +1,7 @@
+{
+  Set<String> set=new LinkedHashSet<>();
+  for (  LayerInfo layerInfo : layers) {
+    set.add(layerInfo.getLayerType());
+  }
+  return set;
+}

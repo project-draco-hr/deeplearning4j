@@ -1,0 +1,12 @@
+{
+  String confJSON=net.getConfiguration().toJson();
+  INDArray params=net.params();
+  ComputationGraphUpdater updater=net.getUpdater();
+  FileUtils.writeStringToFile(new File(confOut),confJSON,encoding);
+  try (DataOutputStream dos=new DataOutputStream(Files.newOutputStream(Paths.get(paramOut)))){
+    Nd4j.write(params,dos);
+  }
+   try (ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(new File(updaterOut)))){
+    oos.writeObject(updater);
+  }
+ }

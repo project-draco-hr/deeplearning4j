@@ -1,0 +1,4 @@
+{
+  super(sc,esConfig,net,null,train,examplesPerFit,totalExamples,numPartitions,listener);
+  this.sparkNet=new SparkComputationGraph(sc,net);
+}

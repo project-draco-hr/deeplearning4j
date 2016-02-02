@@ -1,0 +1,14 @@
+{
+  RecordReader rr=new CSVRecordReader(0,",");
+  rr.initialize(new FileSplit(new ClassPathResource("iris.txt").getFile()));
+  MultiDataSetIterator iter=new RecordReaderMultiDataSetIterator.Builder(10).addReader("iris",rr).addInput("iris",0,3).addOutputOneHot("iris",4,3).build();
+  ComputationGraphConfiguration config=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(0.1).graphBuilder().addInputs("in").addLayer("dense",new DenseLayer.Builder().nIn(4).nOut(2).build(),"in").addLayer("out",new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(2).nOut(3).build(),"dense").setOutputs("out").pretrain(false).backprop(true).build();
+  ComputationGraph cg=new ComputationGraph(config);
+  cg.init();
+  cg.fit(iter);
+  rr.reset();
+  iter=new RecordReaderMultiDataSetIterator.Builder(10).addReader("iris",rr).addInput("iris",0,3).addOutputOneHot("iris",4,3).build();
+  while (iter.hasNext()) {
+    cg.fit(iter.next());
+  }
+}

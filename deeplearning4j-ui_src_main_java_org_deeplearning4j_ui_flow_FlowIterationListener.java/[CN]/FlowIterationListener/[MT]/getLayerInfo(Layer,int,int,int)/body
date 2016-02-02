@@ -1,0 +1,43 @@
+{
+  LayerInfo info=new LayerInfo();
+  info.setX(x);
+  info.setY(y);
+  try {
+    info.setName(layer.conf().getLayer().getLayerName());
+  }
+ catch (  Exception e) {
+    ;
+  }
+  if (info.getName() == null || info.getName().isEmpty())   info.setName("unnamed");
+  info.setId(order);
+  Description description=new Description();
+  info.setDescription(description);
+  try {
+    info.setLayerType(layer.getClass().getSimpleName());
+  }
+ catch (  Exception e) {
+    info.setLayerType("n/a");
+    return info;
+  }
+  StringBuilder mainLine=new StringBuilder();
+  StringBuilder subLine=new StringBuilder();
+  if (layer.type().equals(Layer.Type.CONVOLUTIONAL)) {
+    org.deeplearning4j.nn.conf.layers.ConvolutionLayer layer1=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)layer.conf().getLayer();
+    mainLine.append("K: " + Arrays.toString(layer1.getKernelSize()) + " S: "+ Arrays.toString(layer1.getStride())+ " P: "+ Arrays.toString(layer1.getPadding()));
+    subLine.append("nIn/nOut: [" + layer1.getNIn() + "/"+ layer1.getNOut()+ "]");
+  }
+ else   if (layer.conf().getLayer() instanceof FeedForwardLayer) {
+    org.deeplearning4j.nn.conf.layers.FeedForwardLayer layer1=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)layer.conf().getLayer();
+    mainLine.append("nIn/nOut: [" + layer1.getNIn() + "/"+ layer1.getNOut()+ "]");
+    subLine.append(info.getLayerType());
+  }
+ else {
+    if (layer instanceof BaseOutputLayer) {
+      mainLine.append("Outputs: [" + ((org.deeplearning4j.nn.conf.layers.BaseOutputLayer)layer.conf().getLayer()).getNOut() + "]");
+    }
+  }
+  subLine.append(" A: [").append(layer.conf().getLayer().getActivationFunction()).append("]");
+  description.setMainLine(mainLine.toString());
+  description.setSubLine(subLine.toString());
+  return info;
+}

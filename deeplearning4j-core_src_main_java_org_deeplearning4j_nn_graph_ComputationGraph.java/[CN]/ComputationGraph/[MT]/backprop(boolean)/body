@@ -1,0 +1,39 @@
+{
+  LinkedList<Pair<String,INDArray>> gradients=new LinkedList<>();
+  for (int i=topologicalOrder.length - 1; i >= 0; i--) {
+    GraphVertex current=vertices[topologicalOrder[i]];
+    if (current.isInputVertex())     continue;
+    if (current.isOutputVertex()) {
+      BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)current.getLayer();
+      int thisOutputNumber=configuration.getNetworkOutputs().indexOf(current.getVertexName());
+      INDArray currLabels=labels[thisOutputNumber];
+      outputLayer.setLabels(currLabels);
+    }
+    Pair<Gradient,INDArray[]> pair=current.doBackward(truncatedBPTT);
+    INDArray[] epsilons=pair.getSecond();
+    VertexIndices[] inputVertices=current.getInputVertices();
+    if (inputVertices != null) {
+      int j=0;
+      for (      VertexIndices v : inputVertices) {
+        GraphVertex gv=vertices[v.getVertexIndex()];
+        int outputNumberOfInputVertex=v.getVertexEdgeNumber();
+        gv.setError(outputNumberOfInputVertex,epsilons[j++]);
+      }
+    }
+    if (pair.getFirst() != null) {
+      Gradient g=pair.getFirst();
+      Map<String,INDArray> map=g.gradientForVariable();
+      LinkedList<Pair<String,INDArray>> tempList=new LinkedList<>();
+      for (      Map.Entry<String,INDArray> entry : map.entrySet()) {
+        String newName=current.getVertexName() + "_" + entry.getKey();
+        tempList.addFirst(new Pair<>(newName,entry.getValue()));
+      }
+      for (      Pair<String,INDArray> p : tempList)       gradients.addFirst(p);
+    }
+  }
+  Gradient gradient=new DefaultGradient();
+  for (  Pair<String,INDArray> p : gradients) {
+    gradient.setGradientFor(p.getFirst(),p.getSecond());
+  }
+  this.gradient=gradient;
+}

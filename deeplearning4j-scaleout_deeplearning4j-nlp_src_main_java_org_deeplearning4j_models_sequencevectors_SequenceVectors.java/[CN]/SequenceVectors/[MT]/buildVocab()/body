@@ -9,4 +9,11 @@
     log.info("Starting vocabulary building...");
     constructor.buildJointVocabulary(false,true);
   }
+  if (vocab.numWords() / constructor.getNumberOfSequences() > 1000) {
+    log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    log.warn("!                                                                                      !");
+    log.warn("! Your input looks malformed: number of sentences is too low, model accuracy may suffer!");
+    log.warn("!                                                                                      !");
+    log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  }
 }

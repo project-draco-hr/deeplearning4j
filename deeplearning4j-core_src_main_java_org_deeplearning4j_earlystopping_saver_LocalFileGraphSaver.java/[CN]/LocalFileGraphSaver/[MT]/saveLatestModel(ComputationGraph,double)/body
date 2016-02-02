@@ -1,0 +1,6 @@
+{
+  String confOut=FilenameUtils.concat(directory,latestFileNameConf);
+  String paramOut=FilenameUtils.concat(directory,latestFileNameParam);
+  String updaterOut=FilenameUtils.concat(directory,latestFileNameUpdater);
+  save(net,confOut,paramOut,updaterOut);
+}

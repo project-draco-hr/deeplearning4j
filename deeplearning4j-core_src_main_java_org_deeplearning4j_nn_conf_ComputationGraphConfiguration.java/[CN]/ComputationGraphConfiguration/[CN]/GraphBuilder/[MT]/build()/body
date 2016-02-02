@@ -1,0 +1,28 @@
+{
+  ComputationGraphConfiguration conf=new ComputationGraphConfiguration();
+  conf.backprop=backprop;
+  conf.pretrain=pretrain;
+  conf.backpropType=backpropType;
+  conf.tbpttBackLength=tbpttBackLength;
+  conf.tbpttFwdLength=tbpttFwdLength;
+  conf.networkInputs=networkInputs;
+  conf.networkOutputs=networkOutputs;
+  conf.vertices=this.vertices;
+  conf.vertexInputs=this.vertexInputs;
+  conf.defaultConfiguration=globalConfiguration.build();
+  for (  Map.Entry<String,InputPreProcessor> entry : inputPreProcessors.entrySet()) {
+    GraphVertex gv=vertices.get(entry.getKey());
+    if (gv instanceof LayerVertex) {
+      LayerVertex lv=(LayerVertex)gv;
+      lv.setPreProcessor(entry.getValue());
+    }
+ else {
+      throw new IllegalStateException("Invalid configuration: InputPreProcessor defined for GraphVertex \"" + entry.getKey() + "\", but this vertex is not a LayerVertex");
+    }
+  }
+  conf.validate();
+  if (networkInputTypes.size() > 0) {
+    conf.addPreProcessors(networkInputTypes.toArray(new InputType[networkInputs.size()]));
+  }
+  return conf;
+}

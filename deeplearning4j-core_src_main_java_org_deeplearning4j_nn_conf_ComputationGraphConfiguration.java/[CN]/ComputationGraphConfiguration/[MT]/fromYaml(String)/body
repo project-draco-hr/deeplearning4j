@@ -1,0 +1,9 @@
+{
+  ObjectMapper mapper=NeuralNetConfiguration.mapperYaml();
+  try {
+    return mapper.readValue(json,ComputationGraphConfiguration.class);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}
