@@ -5,8 +5,15 @@
     final int taskIdx=i;
     executorService.execute(new Runnable(){
       public void run(){
-        tasks.get(taskIdx).run();
-        latch.countDown();
+        try {
+          tasks.get(taskIdx).run();
+        }
+ catch (        Throwable e) {
+          log.info("Unchecked exception thrown by task",e);
+        }
+ finally {
+          latch.countDown();
+        }
       }
     }
 );
