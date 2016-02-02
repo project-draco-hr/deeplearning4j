@@ -13,6 +13,9 @@
             LayerInfo info=model.getLayerInfoByName(vertex.getVertexName());
             if (info == null)             info=getLayerInfo(vertex.getLayer(),x,currentY,121);
             info.setName(vertex.getVertexName());
+            if (vertex.getLayer() == null) {
+              info.setLayerType(vertex.getClass().getSimpleName());
+            }
             if (info.getName().endsWith("-merge"))             info.setLayerType("MERGE");
             if (model.getLayerInfoByName(vertex.getVertexName()) == null) {
               x++;

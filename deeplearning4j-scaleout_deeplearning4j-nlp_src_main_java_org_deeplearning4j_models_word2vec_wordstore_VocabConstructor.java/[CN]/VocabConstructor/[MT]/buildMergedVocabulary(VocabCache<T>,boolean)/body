@@ -16,6 +16,7 @@
       iterator.reset();
       while (iterator.hasMoreSequences()) {
         Sequence<T> sequence=iterator.nextSequence();
+        seqCount.incrementAndGet();
         for (        T label : sequence.getSequenceLabels()) {
           if (!cache.containsWord(label.getLabel())) {
             cache.addToken(label);
