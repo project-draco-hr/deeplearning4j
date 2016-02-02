@@ -26,12 +26,7 @@
   ret.stopWords=this.stopWords;
   ret.batchSize=this.batchSize;
   ret.useUnknown=this.useUnk;
-  if (this.tokenizerFactory != null) {
-    ret.tokenizer=this.tokenizerFactory.getClass().getCanonicalName();
-    if (tokenizerFactory.getTokenPreProcessor() != null) {
-      ret.tokenPreprocessor=this.tokenizerFactory.getTokenPreProcessor().getClass().getCanonicalName();
-    }
- else     ret.tokenPreprocessor="";
-  }
+  ret.tokenizer=this.tokenizer;
+  ret.tokenPreprocessor=this.tokenPreprocessor;
   return ret;
 }

@@ -10,9 +10,23 @@
       log.info("Skipping first line");
       hasHeader=true;
     }
+ else {
+      String[] split=line.split(" ");
+      try {
+        for (int x=1; x < split.length; x++) {
+          double val=Double.parseDouble(split[x]);
+        }
+        if (split.length < 4)         hasHeader=true;
+      }
+ catch (      Exception e) {
+        hasHeader=true;
+      }
+    }
   }
   if (hasHeader) {
+    line="";
     iter.close();
+    reader=new BufferedReader(new FileReader(vectorsFile));
     iter=IOUtils.lineIterator(reader);
     iter.nextLine();
   }

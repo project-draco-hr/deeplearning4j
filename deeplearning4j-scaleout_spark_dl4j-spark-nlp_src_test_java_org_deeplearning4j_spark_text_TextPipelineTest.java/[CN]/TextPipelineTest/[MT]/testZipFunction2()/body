@@ -1,7 +1,7 @@
 {
   JavaSparkContext sc=getContext();
   JavaRDD<String> corpusRDD=getCorpusRDD(sc);
-  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vec.getTokenizerVarMap());
+  Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(word2vecNoStop.getTokenizerVarMap());
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
   pipeline.buildVocabCache();
   pipeline.buildVocabWordListRDD();
@@ -13,7 +13,7 @@
   List<Tuple2<List<VocabWord>,Long>> lst=vocabWordListSentenceCumSumRDD.collect();
   List<VocabWord> vocabWordsList1=lst.get(0)._1();
   Long cumSumSize1=lst.get(0)._2();
-  assertEquals(vocabWordsList1.size(),6);
+  assertEquals(6,vocabWordsList1.size());
   assertEquals(vocabWordsList1.get(0).getWord(),"this");
   assertEquals(vocabWordsList1.get(1).getWord(),"is");
   assertEquals(vocabWordsList1.get(2).getWord(),"a");
