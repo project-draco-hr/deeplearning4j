@@ -4,5 +4,5 @@
   password=null;
   if (login == null || password == null)   target=client.target("http://" + remoteAddr + ":"+ remotePort).path("flow").path("state");
   this.path="http://" + remoteAddr + ":"+ remotePort+ "/flow";
-  log.info("Flow UI: " + this.path);
+  log.info("Flow UI address: " + this.path);
 }
