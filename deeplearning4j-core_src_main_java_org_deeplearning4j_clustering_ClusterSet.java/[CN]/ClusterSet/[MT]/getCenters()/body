@@ -1,7 +1,0 @@
-{
-  INDArray centers=Nd4j.create(clusters.size(),clusters.get(0).getCenter().columns());
-  for (Integer idx=0, count=clusters.size(); idx < count; idx++) {
-    centers.putRow(idx,clusters.get(idx).getCenter());
-  }
-  return centers;
-}
