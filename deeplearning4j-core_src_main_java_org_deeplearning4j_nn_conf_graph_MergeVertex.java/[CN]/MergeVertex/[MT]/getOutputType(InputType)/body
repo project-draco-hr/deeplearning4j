@@ -26,8 +26,8 @@
  else       return InputType.recurrent(size);
     }
  else {
-      if (ff)       return InputType.feedForward();
- else       return InputType.recurrent();
+      if (ff)       return InputType.feedForward(-1);
+ else       return InputType.recurrent(-1);
     }
   }
  else {

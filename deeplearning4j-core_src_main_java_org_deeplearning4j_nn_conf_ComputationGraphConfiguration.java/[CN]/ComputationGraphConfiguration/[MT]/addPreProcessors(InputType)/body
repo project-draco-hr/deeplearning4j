@@ -77,8 +77,10 @@ break;
 switch (layerInput.getType()) {
 case FF:
 lv.setPreProcessor(new FeedForwardToRnnPreProcessor());
+setNInIfNecessary(lv,layerInput);
 break;
 case RNN:
+setNInIfNecessary(lv,layerInput);
 break;
 case CNN:
 InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
@@ -91,9 +93,11 @@ break;
  else {
 switch (layerInput.getType()) {
 case FF:
+setNInIfNecessary(lv,layerInput);
 break;
 case RNN:
 lv.setPreProcessor(new RnnToFeedForwardPreProcessor());
+setNInIfNecessary(lv,layerInput);
 break;
 case CNN:
 InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;

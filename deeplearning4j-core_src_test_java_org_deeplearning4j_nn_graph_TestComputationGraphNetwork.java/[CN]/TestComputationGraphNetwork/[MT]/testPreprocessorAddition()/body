@@ -1,10 +1,14 @@
 {
-  ComputationGraphConfiguration conf1=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("in").setInputTypes(InputType.feedForward()).addLayer("rnn",new GravesLSTM.Builder().nIn(5).nOut(5).build(),"in").addLayer("out",new RnnOutputLayer.Builder().nIn(5).nOut(5).build(),"rnn").setOutputs("out").build();
+  ComputationGraphConfiguration conf1=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("in").setInputTypes(InputType.feedForward(5)).addLayer("rnn",new GravesLSTM.Builder().nOut(5).build(),"in").addLayer("out",new RnnOutputLayer.Builder().nOut(5).build(),"rnn").setOutputs("out").build();
+  assertEquals(5,((FeedForwardLayer)((LayerVertex)conf1.getVertices().get("rnn")).getLayerConf().getLayer()).getNIn());
+  assertEquals(5,((FeedForwardLayer)((LayerVertex)conf1.getVertices().get("out")).getLayerConf().getLayer()).getNIn());
   LayerVertex lv1=(LayerVertex)conf1.getVertices().get("rnn");
   assertTrue(lv1.getPreProcessor() instanceof FeedForwardToRnnPreProcessor);
   LayerVertex lv2=(LayerVertex)conf1.getVertices().get("out");
   assertNull(lv2.getPreProcessor());
-  ComputationGraphConfiguration conf2=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("in").setInputTypes(InputType.recurrent()).addLayer("ff",new DenseLayer.Builder().nIn(5).nOut(5).build(),"in").addLayer("out",new RnnOutputLayer.Builder().nIn(5).nOut(5).build(),"ff").setOutputs("out").build();
+  ComputationGraphConfiguration conf2=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("in").setInputTypes(InputType.recurrent(5)).addLayer("ff",new DenseLayer.Builder().nOut(5).build(),"in").addLayer("out",new RnnOutputLayer.Builder().nOut(5).build(),"ff").setOutputs("out").build();
+  assertEquals(5,((FeedForwardLayer)((LayerVertex)conf2.getVertices().get("ff")).getLayerConf().getLayer()).getNIn());
+  assertEquals(5,((FeedForwardLayer)((LayerVertex)conf2.getVertices().get("out")).getLayerConf().getLayer()).getNIn());
   lv1=(LayerVertex)conf2.getVertices().get("ff");
   assertTrue(lv1.getPreProcessor() instanceof RnnToFeedForwardPreProcessor);
   lv2=(LayerVertex)conf2.getVertices().get("out");
@@ -27,7 +31,7 @@
   LayerVertex lv4=(LayerVertex)conf3.getVertices().get("out");
   assertNull(lv4.getPreProcessor());
   assertEquals(7 * 7 * 3,((FeedForwardLayer)lv3.getLayerConf().getLayer()).getNIn());
-  ComputationGraphConfiguration conf4=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("inCNN","inRNN").setInputTypes(InputType.convolutional(1,28,28),InputType.recurrent()).addLayer("cnn",new ConvolutionLayer.Builder().kernelSize(2,2).padding(0,0).stride(2,2).nOut(3).build(),"inCNN").addLayer("pool",new SubsamplingLayer.Builder().kernelSize(2,2).padding(0,0).stride(2,2).build(),"cnn").addLayer("dense",new DenseLayer.Builder().nOut(10).build(),"pool").addLayer("dense2",new DenseLayer.Builder().nIn(5).nOut(10).build(),"inRNN").addVertex("merge",new MergeVertex(),"dense","dense2").addLayer("out",new RnnOutputLayer.Builder().nIn(10).nOut(5).build(),"merge").setOutputs("out").build();
+  ComputationGraphConfiguration conf4=new NeuralNetConfiguration.Builder().graphBuilder().addInputs("inCNN","inRNN").setInputTypes(InputType.convolutional(1,28,28),InputType.recurrent(5)).addLayer("cnn",new ConvolutionLayer.Builder().kernelSize(2,2).padding(0,0).stride(2,2).nOut(3).build(),"inCNN").addLayer("pool",new SubsamplingLayer.Builder().kernelSize(2,2).padding(0,0).stride(2,2).build(),"cnn").addLayer("dense",new DenseLayer.Builder().nOut(10).build(),"pool").addLayer("dense2",new DenseLayer.Builder().nOut(10).build(),"inRNN").addVertex("merge",new MergeVertex(),"dense","dense2").addLayer("out",new RnnOutputLayer.Builder().nOut(5).build(),"merge").setOutputs("out").build();
   lv1=(LayerVertex)conf4.getVertices().get("cnn");
   assertNotNull(lv1.getPreProcessor());
   ffcnn=(FeedForwardToCnnPreProcessor)lv1.getPreProcessor();
@@ -47,6 +51,8 @@
   LayerVertex lv5=(LayerVertex)conf4.getVertices().get("out");
   assertTrue(lv5.getPreProcessor() instanceof FeedForwardToRnnPreProcessor);
   assertEquals(7 * 7 * 3,((FeedForwardLayer)lv3.getLayerConf().getLayer()).getNIn());
+  assertEquals(5,((FeedForwardLayer)lv4.getLayerConf().getLayer()).getNIn());
+  assertEquals(10,((FeedForwardLayer)lv5.getLayerConf().getLayer()).getNIn());
   ComputationGraphConfiguration conf5=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).graphBuilder().addInputs("input").setInputTypes(InputType.convolutional(1,28,28)).addLayer("cnn_1",new ConvolutionLayer.Builder(2,2).stride(2,2).nIn(1).nOut(3).build(),"input").addLayer("cnn_2",new ConvolutionLayer.Builder(4,4).stride(2,2).padding(1,1).nIn(1).nOut(3).build(),"input").addLayer("max_1",new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX).kernelSize(2,2).build(),"cnn_1","cnn_2").addLayer("output",new OutputLayer.Builder().nOut(10).build(),"max_1").setOutputs("output").pretrain(false).backprop(true).build();
   lv1=(LayerVertex)conf5.getVertices().get("cnn_1");
   assertTrue(lv1.getPreProcessor() instanceof FeedForwardToCnnPreProcessor);
