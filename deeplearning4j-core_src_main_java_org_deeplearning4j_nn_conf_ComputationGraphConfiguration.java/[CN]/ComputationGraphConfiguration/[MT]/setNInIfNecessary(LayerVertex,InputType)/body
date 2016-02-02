@@ -1,0 +1,14 @@
+{
+  FeedForwardLayer ffl=(FeedForwardLayer)lv.getLayerConf().getLayer();
+  if (ffl.getNIn() == 0) {
+    int size;
+    if (inputType instanceof InputType.InputTypeFeedForward) {
+      size=((InputType.InputTypeFeedForward)inputType).getSize();
+    }
+ else     if (inputType instanceof InputType.InputTypeRecurrent) {
+      size=((InputType.InputTypeRecurrent)inputType).getSize();
+    }
+ else     throw new UnsupportedOperationException("Invalid input type");
+    if (size > 0)     ffl.setNIn(size);
+  }
+}
