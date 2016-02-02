@@ -1,0 +1,18 @@
+{
+  FlowIterationListener listener=new FlowIterationListener();
+  ModelInfo info=listener.buildModelInfo(network);
+  for (  LayerInfo layerInfo : info.getLayers()) {
+    log.info("Layer: " + layerInfo);
+  }
+  assertEquals(9,info.size());
+  assertNotEquals(null,info.getLayerInfoByName("cnn1"));
+  assertNotEquals(null,info.getLayerInfoByName("cnn2"));
+  assertNotEquals(null,info.getLayerInfoByName("cnn3"));
+  assertNotEquals(null,info.getLayerInfoByName("cnn4"));
+  assertNotEquals(null,info.getLayerInfoByName("pool1"));
+  assertNotEquals(null,info.getLayerInfoByName("pool2"));
+  assertNotEquals(null,info.getLayerInfoByName("pool3"));
+  assertNotEquals(null,info.getLayerInfoByName("ffn1"));
+  assertEquals(0,info.getLayerInfoByCoords(0,9).getConnections().size());
+  assertNotEquals(null,info.getLayerInfoByName("cnn1").getDescription().getMainLine());
+}

@@ -1,0 +1,10 @@
+{
+  if (iteration % frequency == 0) {
+    ModelInfo info=buildModelInfo(model);
+    Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(info,MediaType.APPLICATION_JSON));
+    if (firstIteration) {
+      UiUtils.tryOpenBrowser(path,log);
+      firstIteration=false;
+    }
+  }
+}
