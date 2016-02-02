@@ -1,0 +1,49 @@
+{
+  this.inputMaskArrays=featureMaskArrays;
+  this.labelMaskArrays=labelMaskArrays;
+  if (featureMaskArrays != null) {
+    if (featureMaskArrays.length != numInputArrays) {
+      throw new IllegalArgumentException("Invalid number of feature mask arrays");
+    }
+    for (int i=0; i < featureMaskArrays.length; i++) {
+      String inputName=configuration.getNetworkInputs().get(i);
+      INDArray reshapedFeaturesMask=TimeSeriesUtils.reshapeTimeSeriesMaskToVector(featureMaskArrays[i]);
+      LinkedList<String> stack=new LinkedList<>();
+      GraphVertex gv=verticesMap.get(inputName);
+      VertexIndices[] outputsFromThisInput=gv.getOutputVertices();
+      for (      VertexIndices v : outputsFromThisInput) {
+        stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+      }
+      while (!stack.isEmpty()) {
+        String nextVertexName=stack.removeLast();
+        GraphVertex nextVertex=verticesMap.get(nextVertexName);
+        if (nextVertex.hasLayer()) {
+          Layer l=nextVertex.getLayer();
+          if (l instanceof BaseRecurrentLayer<?>) {
+            continue;
+          }
+ else           if (l.type() == Layer.Type.FEED_FORWARD || l.type() == Layer.Type.CONVOLUTIONAL) {
+            l.setMaskArray(reshapedFeaturesMask);
+          }
+        }
+        outputsFromThisInput=nextVertex.getOutputVertices();
+        if (outputsFromThisInput != null) {
+          for (          VertexIndices v : outputsFromThisInput) {
+            stack.addLast(vertices[v.getVertexIndex()].getVertexName());
+          }
+        }
+      }
+    }
+  }
+  if (labelMaskArrays != null) {
+    if (labelMaskArrays.length != numOutputArrays) {
+      throw new IllegalArgumentException("Invalid number of label mask arrays");
+    }
+    for (int i=0; i < labelMaskArrays.length; i++) {
+      String outputName=configuration.getNetworkOutputs().get(i);
+      GraphVertex v=verticesMap.get(outputName);
+      Layer ol=v.getLayer();
+      ol.setMaskArray(labelMaskArrays[i]);
+    }
+  }
+}

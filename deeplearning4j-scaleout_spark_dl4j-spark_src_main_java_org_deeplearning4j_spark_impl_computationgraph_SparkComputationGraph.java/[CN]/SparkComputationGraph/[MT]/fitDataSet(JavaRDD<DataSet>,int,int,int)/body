@@ -1,0 +1,7 @@
+{
+  if (network.getNumInputArrays() != 1 || network.getNumOutputArrays() != 1) {
+    throw new UnsupportedOperationException("Cannot train ComputationGraph with multiple inputs/outputs from DataSet");
+  }
+  JavaRDD<MultiDataSet> mds=rdd.map(new DataSetToMultiDataSetFn());
+  return fitMultiDataSet(mds,examplesPerFit,totalExamples,numPartitions);
+}

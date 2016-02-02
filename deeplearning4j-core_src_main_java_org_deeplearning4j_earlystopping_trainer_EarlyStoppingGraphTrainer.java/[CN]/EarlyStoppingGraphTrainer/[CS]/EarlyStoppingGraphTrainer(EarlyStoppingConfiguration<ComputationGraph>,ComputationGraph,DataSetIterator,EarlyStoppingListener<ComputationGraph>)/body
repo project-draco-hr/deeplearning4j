@@ -1,0 +1,5 @@
+{
+  super(esConfig,net,train,null,listener);
+  if (net.getNumInputArrays() != 1 || net.getNumOutputArrays() != 1)   throw new IllegalStateException("Cannot do early stopping training on ComputationGraph with DataSetIterator: graph does not have 1 input and 1 output array");
+  this.net=net;
+}

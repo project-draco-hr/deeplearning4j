@@ -1,6 +1,6 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList(new Tuple2<Gradient,Updater>(new DefaultGradient(),null));
+    return Collections.emptyList();
   }
   List<DataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
@@ -12,10 +12,10 @@
   }
   MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(json));
   network.init();
-  INDArray val=params.value();
+  INDArray val=params.value().dup();
   if (val.length() != network.numParams())   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
   network.setParameters(val);
-  network.setUpdater(updater.getValue());
+  network.setUpdater(updater.getValue().clone());
   network.fit(data);
   return Collections.singletonList(new Tuple2<>(network.gradient(),network.getUpdater()));
 }

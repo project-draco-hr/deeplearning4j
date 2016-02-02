@@ -1,0 +1,6 @@
+{
+  if (multiDataSet.hasMaskArrays()) {
+    throw new UnsupportedOperationException("Training with masking arrays: not yet implemented");
+  }
+  fit(multiDataSet.getFeatures(),multiDataSet.getLabels());
+}

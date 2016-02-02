@@ -1,5 +1,14 @@
 {
-  if (updater == null)   updater=UpdaterCreator.getUpdater(model);
-  Layer layer=(Layer)model;
-  updater.update(layer,gradient,iteration,batchSize);
+  if (model instanceof ComputationGraph) {
+    ComputationGraph graph=(ComputationGraph)model;
+    if (computationGraphUpdater == null) {
+      computationGraphUpdater=new ComputationGraphUpdater(graph);
+    }
+    computationGraphUpdater.update(graph,gradient,iteration,batchSize);
+  }
+ else {
+    if (updater == null)     updater=UpdaterCreator.getUpdater(model);
+    Layer layer=(Layer)model;
+    updater.update(layer,gradient,iteration,batchSize);
+  }
 }

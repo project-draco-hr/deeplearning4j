@@ -15,7 +15,9 @@
     Map<String,INDArray> newGrad=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : grad.entrySet()) {
       String param=entry.getKey();
-      String newName="param_" + param;
+      String newName;
+      if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
+ else       newName=param;
       newGrad.put(newName,entry.getValue().dup());
       Map<String,List<Double>> map=meanMagHistoryUpdates.get(indexFromString(param));
       List<Double> list=map.get(newName);
@@ -30,7 +32,9 @@
     Map<String,INDArray> newParams=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
       String param=entry.getKey();
-      String newName="param_" + param;
+      String newName;
+      if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
+ else       newName=param;
       newParams.put(newName,entry.getValue().dup());
       Map<String,List<Double>> map=meanMagHistoryParams.get(indexFromString(param));
       List<Double> list=map.get(newName);
@@ -51,6 +55,7 @@
     g.setPath(subPath);
     g.setUpdateMagnitudes(meanMagHistoryUpdates);
     g.setParamMagnitudes(meanMagHistoryParams);
+    g.setLayerNames(layerNames);
     g.setLastUpdateTime(System.currentTimeMillis());
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
     log.debug("{}",resp);

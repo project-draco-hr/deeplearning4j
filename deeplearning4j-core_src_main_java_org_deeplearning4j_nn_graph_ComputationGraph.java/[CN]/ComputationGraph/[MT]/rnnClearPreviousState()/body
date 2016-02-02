@@ -1,0 +1,9 @@
+{
+  if (layers == null)   return;
+  for (  Layer layer : layers) {
+    if (layer instanceof BaseRecurrentLayer)     ((BaseRecurrentLayer<?>)layer).rnnClearPreviousState();
+ else     if (layer instanceof MultiLayerNetwork) {
+      ((MultiLayerNetwork)layer).rnnClearPreviousState();
+    }
+  }
+}
