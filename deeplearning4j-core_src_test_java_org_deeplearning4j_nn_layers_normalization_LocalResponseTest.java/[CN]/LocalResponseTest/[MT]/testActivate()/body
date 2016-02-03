@@ -1,4 +1,4 @@
 {
-  assertEquals(yExpected,yActual);
-  assertArrayEquals(yExpected.shape(),yActual.shape());
+  assertEquals(activationsExpected,activationsActual);
+  assertArrayEquals(activationsExpected.shape(),activationsActual.shape());
 }

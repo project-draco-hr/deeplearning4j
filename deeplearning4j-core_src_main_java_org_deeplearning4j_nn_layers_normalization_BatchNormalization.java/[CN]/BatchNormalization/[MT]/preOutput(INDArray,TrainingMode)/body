@@ -22,9 +22,9 @@
   INDArray gamma=this.gamma == null ? Nd4j.onesLike(mean) : this.gamma;
   INDArray beta=this.beta == null ? Nd4j.zerosLike(mean) : this.beta;
   INDArray tmp;
-  INDArray shiftedScaledX=x.dup();
+  INDArray activations=x.dup();
   for (int i=0; i < x.size(0); i++) {
-    tmp=shiftedScaledX.get(NDArrayIndex.interval(i,i + 1));
+    tmp=activations.get(NDArrayIndex.interval(i,i + 1));
     xHat=tmp.subi(mean).divi(std);
     tmp.muli(gamma).addi(beta);
   }
@@ -42,5 +42,5 @@
     this.gamma=gamma;
     this.beta=beta;
   }
-  return shiftedScaledX;
+  return activations;
 }
