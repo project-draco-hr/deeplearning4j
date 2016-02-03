@@ -1,0 +1,29 @@
+{
+  max=sourceArray.maxNumber().doubleValue();
+  min=sourceArray.minNumber().doubleValue();
+  bins=Nd4j.create(numberOfBins);
+  final double binSize=(max - min) / (numberOfBins - 1);
+  data=new LinkedHashMap<>();
+  BigDecimal[] keys=new BigDecimal[numberOfBins];
+  for (int x=0; x < numberOfBins; x++) {
+    BigDecimal pos=new BigDecimal((min + (x * binSize))).setScale(rounds,BigDecimal.ROUND_CEILING);
+    data.put(pos,new AtomicInteger(0));
+    keys[x]=pos;
+  }
+  for (int x=0; x < sourceArray.length(); x++) {
+    double d=sourceArray.getDouble(x);
+    int bin=(int)((d - min) / binSize);
+    if (bin < 0) {
+      bins.putScalar(0,bins.getDouble(0) + 1);
+      data.get(keys[0]).incrementAndGet();
+    }
+ else     if (bin >= numberOfBins) {
+      bins.putScalar(numberOfBins - 1,bins.getDouble(numberOfBins - 1) + 1);
+      data.get(keys[numberOfBins - 1]).incrementAndGet();
+    }
+ else {
+      bins.putScalar(bin,bins.getDouble(bin) + 1);
+      data.get(keys[bin]).incrementAndGet();
+    }
+  }
+}

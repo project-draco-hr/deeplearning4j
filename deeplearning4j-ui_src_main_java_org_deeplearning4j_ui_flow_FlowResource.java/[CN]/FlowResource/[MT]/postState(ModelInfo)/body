@@ -1,0 +1,10 @@
+{
+  try {
+    lock.writeLock().lock();
+    this.modelInfo=info;
+    return Response.ok(Collections.singletonMap("status","ok")).build();
+  }
+  finally {
+    lock.writeLock().unlock();
+  }
+}

@@ -8,10 +8,10 @@ case FF:
       return InputType.convolutional(ffcnn.getNumChannels(),ffcnn.getInputWidth(),ffcnn.getInputHeight());
     }
  else     if (preProcessor instanceof FeedForwardToRnnPreProcessor) {
-      return InputType.recurrent();
+      return InputType.recurrent(((InputType.InputTypeFeedForward)vertexInputs[0]).getSize());
     }
  else {
-      return InputType.feedForward();
+      return InputType.feedForward(((InputType.InputTypeFeedForward)vertexInputs[0]).getSize());
     }
 case RNN:
   if (preProcessor instanceof RnnToCnnPreProcessor) {
@@ -19,17 +19,21 @@ case RNN:
     return InputType.convolutional(ffcnn.getNumChannels(),ffcnn.getInputWidth(),ffcnn.getInputHeight());
   }
  else   if (preProcessor instanceof RnnToFeedForwardPreProcessor) {
-    return InputType.feedForward();
+    return InputType.feedForward(((InputType.InputTypeRecurrent)vertexInputs[0]).getSize());
   }
  else {
-    return InputType.recurrent();
+    return InputType.recurrent(((InputType.InputTypeRecurrent)vertexInputs[0]).getSize());
   }
 case CNN:
 if (preProcessor instanceof CnnToFeedForwardPreProcessor) {
-  return InputType.feedForward();
+  CnnToFeedForwardPreProcessor p=(CnnToFeedForwardPreProcessor)preProcessor;
+  int outSize=p.getInputHeight() * p.getInputWidth() * p.getNumChannels();
+  return InputType.feedForward(outSize);
 }
  else if (preProcessor instanceof CnnToRnnPreProcessor) {
-  return InputType.recurrent();
+  CnnToRnnPreProcessor p=(CnnToRnnPreProcessor)preProcessor;
+  int outSize=p.getInputHeight() * p.getInputWidth() * p.getNumChannels();
+  return InputType.recurrent(outSize);
 }
  else {
   return vertexInputs[0];

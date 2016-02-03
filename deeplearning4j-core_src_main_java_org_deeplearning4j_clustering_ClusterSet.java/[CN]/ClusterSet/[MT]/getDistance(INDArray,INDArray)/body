@@ -1,3 +1,0 @@
-{
-  return Nd4j.getExecutioner().execAndReturn(new EuclideanDistance(m1,m2)).currentResult().doubleValue();
-}

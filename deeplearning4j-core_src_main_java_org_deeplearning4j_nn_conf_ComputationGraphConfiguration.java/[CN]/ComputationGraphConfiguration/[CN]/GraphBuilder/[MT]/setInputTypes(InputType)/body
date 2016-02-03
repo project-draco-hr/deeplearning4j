@@ -1,4 +1,4 @@
 {
-  Collections.addAll(networkInputTypes,inputTypes);
+  if (inputTypes != null && inputTypes.length > 0)   Collections.addAll(networkInputTypes,inputTypes);
   return this;
 }

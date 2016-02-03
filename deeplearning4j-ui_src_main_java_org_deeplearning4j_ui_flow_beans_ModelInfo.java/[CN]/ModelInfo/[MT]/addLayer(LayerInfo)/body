@@ -1,0 +1,7 @@
+{
+  if (!layers.contains(layer)) {
+    layer.setId(counter);
+    this.layers.add(layer);
+    counter++;
+  }
+}

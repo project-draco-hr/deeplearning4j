@@ -1,5 +1,0 @@
-{
-  for (Integer idx=0, count=centers.rows(); idx < count; idx++) {
-    clusters.add(new Cluster(centers.getRow(idx)));
-  }
-}

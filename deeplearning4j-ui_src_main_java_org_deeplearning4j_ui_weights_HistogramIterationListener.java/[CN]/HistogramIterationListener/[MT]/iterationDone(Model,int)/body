@@ -12,13 +12,14 @@
         meanMagHistoryUpdates.add(new LinkedHashMap<String,List<Double>>());
       }
     }
-    Map<String,INDArray> newGrad=new LinkedHashMap<>();
+    Map<String,Map> newGrad=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : grad.entrySet()) {
       String param=entry.getKey();
       String newName;
       if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
  else       newName=param;
-      newGrad.put(newName,entry.getValue().dup());
+      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
+      newGrad.put(newName,histogram.getData());
       Map<String,List<Double>> map=meanMagHistoryUpdates.get(indexFromString(param));
       List<Double> list=map.get(newName);
       if (list == null) {
@@ -29,13 +30,14 @@
       list.add(meanMag);
     }
     Map<String,INDArray> params=model.paramTable();
-    Map<String,INDArray> newParams=new LinkedHashMap<>();
+    Map<String,Map> newParams=new LinkedHashMap<>();
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
       String param=entry.getKey();
       String newName;
       if (Character.isDigit(param.charAt(0)))       newName="param_" + param;
  else       newName=param;
-      newParams.put(newName,entry.getValue().dup());
+      HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
+      newParams.put(newName,histogram.getData());
       Map<String,List<Double>> map=meanMagHistoryParams.get(indexFromString(param));
       List<Double> list=map.get(newName);
       if (list == null) {
@@ -47,7 +49,7 @@
     }
     double score=model.score();
     scoreHistory.add(score);
-    ModelAndGradient g=new ModelAndGradient();
+    CompactModelAndGradient g=new CompactModelAndGradient();
     g.setGradients(newGrad);
     g.setParameters(newParams);
     g.setScore(score);
