@@ -1,2 +1,46 @@
 {
+  shape=getShape(x);
+  trainingMode=training;
+  org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
+  if (setMeanVar) {
+    this.mean=this.mean == null ? Nd4j.zeros(shape) : this.mean;
+    this.var=this.var == null ? Nd4j.valueArrayOf(shape,layerConf.getEps()) : this.var;
+    gGamma=gGamma == null ? Nd4j.zeros(shape) : gGamma;
+    setMeanVar=false;
+  }
+  INDArray mean, var;
+  if (trainingMode == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
+    mean=x.mean(0).reshape(shape);
+    var=x.var(false,0).reshape(shape);
+    var.addi(layerConf.getEps());
+  }
+ else {
+    mean=this.mean;
+    var=this.var;
+  }
+  std=Transforms.sqrt(var);
+  INDArray gamma=this.gamma == null ? Nd4j.onesLike(mean) : this.gamma;
+  INDArray beta=this.beta == null ? Nd4j.zerosLike(mean) : this.beta;
+  INDArray tmp;
+  INDArray shiftedScaledX=x.dup();
+  for (int i=0; i < x.size(0); i++) {
+    tmp=shiftedScaledX.get(NDArrayIndex.interval(i,i + 1));
+    xHat=tmp.subi(mean).divi(std);
+    tmp.muli(gamma).addi(beta);
+  }
+  double decay;
+  if (training == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
+    if (layerConf.isFinetune()) {
+      layerConf.setN(layerConf.getN() + 1);
+      decay=1. / layerConf.getN();
+    }
+ else     decay=layerConf.getDecay();
+    int m=x.size(0);
+    double adjust=m / Math.max(m - 1.,1.);
+    this.mean=mean.mul(decay).add(this.mean.mul(1 - decay));
+    this.var=var.mul(decay).add(this.var.mul((1 - decay) * adjust));
+    this.gamma=gamma;
+    this.beta=beta;
+  }
+  return shiftedScaledX;
 }

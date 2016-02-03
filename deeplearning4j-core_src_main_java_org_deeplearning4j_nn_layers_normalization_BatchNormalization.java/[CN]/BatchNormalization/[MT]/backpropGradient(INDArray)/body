@@ -1,2 +1,21 @@
 {
+  int m=epsilon.size(0);
+  org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
+  INDArray gBeta=epsilon.sum(0).reshape(shape);
+  INDArray tmp;
+  if (trainingMode == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
+    for (int i=0; i < epsilon.size(0); i++) {
+      tmp=epsilon.get(NDArrayIndex.interval(i,i + 1)).mul(xHat);
+      gGamma.add(tmp);
+    }
+  }
+  INDArray coefficients=gamma.div(std);
+  INDArray gXHat=(xHat.mul(gGamma).add(gBeta)).divi(m);
+  INDArray nextEpsilon=Nd4j.zerosLike(epsilon);
+  for (int i=0; i < epsilon.size(0); i++) {
+    nextEpsilon.putRow(i,coefficients.mul(epsilon.get(NDArrayIndex.interval(i,i + 1)).sub(gXHat)));
+  }
+  Gradient g=new DefaultGradient();
+  this.gradient=g;
+  return new Pair<>(g,nextEpsilon);
 }
