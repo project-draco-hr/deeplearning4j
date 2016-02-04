@@ -1,11 +1,13 @@
 {
   return new HashMap<String,Object>(){
 {
-      put("numWords",numWords);
+      put("numWords",minWordFrequency);
       put("nGrams",nGrams);
       put("tokenizer",tokenizer);
       put("tokenPreprocessor",tokenPreprocessor);
       put("removeStop",removeStop);
+      put("stopWords",stopWords);
+      put("useUnk",useUnknown);
     }
   }
 ;

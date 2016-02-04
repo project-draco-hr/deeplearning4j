@@ -1,0 +1,8 @@
+{
+  this.tokenizer=this.tokenizerFactory.getClass().getCanonicalName();
+  if (tokenizerFactory.getTokenPreProcessor() != null) {
+    this.tokenPreprocessor=this.tokenizerFactory.getTokenPreProcessor().getClass().getCanonicalName();
+  }
+ else   this.tokenPreprocessor="";
+  return this;
+}

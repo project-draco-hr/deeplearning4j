@@ -23,10 +23,11 @@
     sequenceLearningAlgorithm.pretrain(this.iterator);
   }
   log.info("Starting learning process...");
+  if (this.stopWords == null)   this.stopWords=new ArrayList<>();
   for (int currentEpoch=1; currentEpoch <= numEpochs; currentEpoch++) {
     final AtomicLong linesCounter=new AtomicLong(0);
     final AtomicLong wordsCounter=new AtomicLong(0);
-    AsyncSequencer sequencer=new AsyncSequencer(this.iterator);
+    AsyncSequencer sequencer=new AsyncSequencer(this.iterator,this.stopWords);
     sequencer.start();
     final List<VectorCalculationsThread> threads=new ArrayList<>();
     for (int x=0; x < workers; x++) {

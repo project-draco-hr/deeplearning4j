@@ -1,3 +1,6 @@
 {
-  return wordIndex.indexOf(word);
+  if (containsWord(word)) {
+    return wordFor(word).getIndex();
+  }
+  return -1;
 }

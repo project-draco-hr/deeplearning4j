@@ -11,6 +11,7 @@
           if (newLabel != null)           newSequence.setSequenceLabel(newLabel);
         }
         for (        T element : document.getElements()) {
+          if (stopList.contains(element.getLabel()))           continue;
           T realElement=vocab.wordFor(element.getLabel());
           if (realElement != null) {
             newSequence.addElement(realElement);
