@@ -1,5 +1,6 @@
 {
-  if (tokenizerFactory == null)   throw new IllegalStateException("Please call setTokenizerFactory() prior to setSentenceIter() call.");
-  SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(iterator).tokenizerFactory(tokenizerFactory).build();
-  this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  if (tokenizerFactory != null) {
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(iterator).tokenizerFactory(tokenizerFactory).build();
+    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  }
 }
