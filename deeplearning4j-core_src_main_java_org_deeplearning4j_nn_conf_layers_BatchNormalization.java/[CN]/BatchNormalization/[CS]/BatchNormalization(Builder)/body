@@ -1,8 +1,8 @@
 {
   super(builder);
-  if (builder.shape.length != 2)   throw new IllegalArgumentException("Kernel size of should be rows x columns (a 2d array)");
   this.decay=builder.decay;
-  this.finetune=builder.finetune;
   this.useBatchMean=builder.useBatchMean;
-  this.N=builder.N;
+  this.gamma=builder.gamma;
+  this.beta=builder.beta;
+  this.lockGammaBeta=builder.lockGammaBeta;
 }

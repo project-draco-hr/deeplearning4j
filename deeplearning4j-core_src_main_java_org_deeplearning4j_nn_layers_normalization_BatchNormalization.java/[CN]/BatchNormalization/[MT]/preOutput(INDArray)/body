@@ -1,3 +1,4 @@
 {
-  return preOutput(x,TrainingMode.TRAIN);
+  shape=getShape(x);
+  return preOutput(x,TrainingMode.TRAIN,shape);
 }

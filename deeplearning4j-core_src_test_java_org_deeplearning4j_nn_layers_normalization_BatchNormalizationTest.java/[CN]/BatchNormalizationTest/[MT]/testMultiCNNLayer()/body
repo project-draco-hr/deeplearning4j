@@ -4,5 +4,12 @@
   network.init();
   DataSetIterator iter=new MnistDataSetIterator(2,2);
   DataSet next=iter.next();
+  network.setInput(next.getFeatureMatrix());
+  INDArray activationsActual=network.preOutput(next.getFeatureMatrix());
+  assertEquals(10,activationsActual.shape()[1],1e-2);
   network.fit(next);
+  INDArray actualGammaParam=network.getLayer(1).getParam(BatchNormalizationParamInitializer.GAMMA);
+  INDArray actualBetaParam=network.getLayer(1).getParam(BatchNormalizationParamInitializer.BETA);
+  assertTrue(actualGammaParam != null);
+  assertTrue(actualBetaParam != null);
 }
