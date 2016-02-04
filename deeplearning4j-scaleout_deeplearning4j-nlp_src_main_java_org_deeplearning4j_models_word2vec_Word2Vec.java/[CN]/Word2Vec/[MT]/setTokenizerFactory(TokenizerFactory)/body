@@ -1,0 +1,7 @@
+{
+  this.tokenizerFactory=tokenizerFactory;
+  if (sentenceIter != null) {
+    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIter).tokenizerFactory(this.tokenizerFactory).build();
+    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  }
+}

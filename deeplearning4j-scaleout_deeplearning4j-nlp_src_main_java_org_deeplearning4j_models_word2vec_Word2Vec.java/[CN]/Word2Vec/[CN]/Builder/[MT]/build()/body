@@ -1,8 +1,8 @@
 {
   presetTables();
   Word2Vec ret=new Word2Vec();
-  if (tokenizerFactory == null)   tokenizerFactory=new DefaultTokenizerFactory();
   if (sentenceIterator != null) {
+    if (tokenizerFactory == null)     tokenizerFactory=new DefaultTokenizerFactory();
     SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(sentenceIterator).tokenizerFactory(tokenizerFactory).build();
     this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
   }
