@@ -1,0 +1,8 @@
+{
+  System.out.println("Words close to [" + target + "]:");
+  for (  String word : list) {
+    double sim=vec.similarity(target,word);
+    System.out.print("'" + word + "': ["+ sim+ "], ");
+  }
+  System.out.print("\n");
+}

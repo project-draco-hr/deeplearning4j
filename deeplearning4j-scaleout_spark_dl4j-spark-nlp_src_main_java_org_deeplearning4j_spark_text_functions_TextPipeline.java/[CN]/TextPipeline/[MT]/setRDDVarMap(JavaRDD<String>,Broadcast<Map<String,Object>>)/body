@@ -5,7 +5,6 @@
   this.nGrams=(int)tokenizerVarMap.get("nGrams");
   this.tokenizer=(String)tokenizerVarMap.get("tokenizer");
   this.tokenizerPreprocessor=(String)tokenizerVarMap.get("tokenPreprocessor");
-  if ((boolean)tokenizerVarMap.get("removeStop")) {
-    stopWords=StopWords.getStopWords();
-  }
+  this.useUnk=(boolean)tokenizerVarMap.get("useUnk");
+  stopWords=(List<String>)tokenizerVarMap.get("stopWords");
 }

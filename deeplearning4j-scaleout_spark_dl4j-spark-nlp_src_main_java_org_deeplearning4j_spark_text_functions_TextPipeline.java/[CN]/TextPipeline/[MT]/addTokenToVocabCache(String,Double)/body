@@ -9,8 +9,8 @@
   }
   boolean vocabContainsWord=vocabCache.containsWord(stringToken);
   if (!vocabContainsWord) {
-    vocabCache.addToken(actualToken);
     int idx=vocabCache.numWords();
+    vocabCache.addToken(actualToken);
     actualToken.setIndex(idx);
     vocabCache.putVocabWord(stringToken);
   }

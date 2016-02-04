@@ -6,7 +6,8 @@
   pipeline.buildVocabCache();
   VocabCache<VocabWord> vocabCache=pipeline.getVocabCache();
   assertTrue(vocabCache != null);
-  assertEquals(4,vocabCache.numWords());
+  log.info("VocabWords: " + vocabCache.words());
+  assertEquals(5,vocabCache.numWords());
   VocabWord redVocab=vocabCache.tokenFor("red");
   VocabWord flowerVocab=vocabCache.tokenFor("flowers");
   VocabWord worldVocab=vocabCache.tokenFor("world");

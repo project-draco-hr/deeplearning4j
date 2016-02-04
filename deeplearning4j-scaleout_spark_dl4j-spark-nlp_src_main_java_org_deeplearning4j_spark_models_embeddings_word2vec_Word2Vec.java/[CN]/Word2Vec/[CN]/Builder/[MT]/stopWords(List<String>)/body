@@ -1,0 +1,6 @@
+{
+  for (  String word : stopWords) {
+    if (!this.stopWords.contains(word))     this.stopWords.add(word);
+  }
+  return this;
+}
