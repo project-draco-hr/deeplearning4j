@@ -1,6 +1,8 @@
 {
-  for (int i=0; i < sequence.getElements().size(); i++) {
+  Sequence<T> tempSequence=sequence;
+  if (sampling > 0)   tempSequence=applySubsampling(sequence,nextRandom);
+  for (int i=0; i < tempSequence.getElements().size(); i++) {
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
-    skipGram(i,sequence.getElements(),(int)nextRandom.get() % window,nextRandom,learningRate);
+    skipGram(i,tempSequence.getElements(),(int)nextRandom.get() % window,nextRandom,learningRate);
   }
 }
