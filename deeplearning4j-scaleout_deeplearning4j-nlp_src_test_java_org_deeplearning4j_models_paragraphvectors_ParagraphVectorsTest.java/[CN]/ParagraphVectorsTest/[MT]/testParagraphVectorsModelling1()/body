@@ -41,12 +41,6 @@
   File tempFile=File.createTempFile("paravec","ser");
   tempFile.deleteOnExit();
   INDArray day=vec.getWordVectorMatrix("day").dup();
-  SerializationUtils.saveObject(vec,tempFile);
-  ParagraphVectors vec2=(ParagraphVectors)SerializationUtils.readObject(tempFile);
-  INDArray day2=vec2.getWordVectorMatrix("day").dup();
-  List<String> labelsBinary=vec2.labelsSource.getLabels();
-  assertEquals(day,day2);
-  tempFile.delete();
   File tempFile2=File.createTempFile("paravec","ser");
   tempFile2.deleteOnExit();
   WordVectorSerializer.writeWordVectors(vec,tempFile2);
@@ -55,5 +49,11 @@
   List<String> labelsRestored=vec3.labelsSource.getLabels();
   assertEquals(day,day3);
   assertEquals(labelsOriginal.size(),labelsRestored.size());
+  SerializationUtils.saveObject(vec,tempFile);
+  ParagraphVectors vec2=(ParagraphVectors)SerializationUtils.readObject(tempFile);
+  INDArray day2=vec2.getWordVectorMatrix("day").dup();
+  List<String> labelsBinary=vec2.labelsSource.getLabels();
+  assertEquals(day,day2);
+  tempFile.delete();
   assertEquals(labelsOriginal.size(),labelsBinary.size());
 }
