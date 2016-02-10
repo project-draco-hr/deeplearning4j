@@ -2,18 +2,18 @@
   VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).setTargetVocabCache(vocab).fetchLabels(trainSequenceVectors).build();
   if (existingModel != null && lookupTable instanceof InMemoryLookupTable && existingModel.lookupTable() instanceof InMemoryLookupTable) {
     log.info("Merging existing vocabulary into the current one...");
-    constructor.buildMergedVocabulary(existingModel,false);
+    constructor.buildMergedVocabulary(existingModel,true);
     ((InMemoryLookupTable<VocabWord>)lookupTable).consume((InMemoryLookupTable<VocabWord>)existingModel.lookupTable());
   }
  else {
     log.info("Starting vocabulary building...");
     constructor.buildJointVocabulary(false,true);
-  }
-  if (vocab.numWords() / constructor.getNumberOfSequences() > 1000) {
-    log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    log.warn("!                                                                                      !");
-    log.warn("! Your input looks malformed: number of sentences is too low, model accuracy may suffer!");
-    log.warn("!                                                                                      !");
-    log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    if (vocab.numWords() / constructor.getNumberOfSequences() > 1000) {
+      log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      log.warn("!                                                                                      !");
+      log.warn("! Your input looks malformed: number of sentences is too low, model accuracy may suffer!");
+      log.warn("!                                                                                      !");
+      log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
   }
 }

@@ -7,5 +7,5 @@
       document.add(vocab.wordFor(token));
     }
   }
-  return predictSeveral(document);
+  return predictSeveral(document,limit);
 }

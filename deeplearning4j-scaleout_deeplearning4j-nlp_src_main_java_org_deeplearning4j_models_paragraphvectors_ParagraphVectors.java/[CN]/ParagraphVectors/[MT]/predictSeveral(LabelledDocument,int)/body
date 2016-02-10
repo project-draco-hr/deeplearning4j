@@ -1,0 +1,6 @@
+{
+  if (document.getReferencedContent() != null) {
+    return predictSeveral(document.getReferencedContent(),limit);
+  }
+ else   return predictSeveral(document.getContent(),limit);
+}
