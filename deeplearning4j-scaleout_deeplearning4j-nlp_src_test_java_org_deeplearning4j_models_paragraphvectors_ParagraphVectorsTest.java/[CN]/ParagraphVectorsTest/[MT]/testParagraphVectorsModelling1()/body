@@ -22,6 +22,7 @@
     log.info("Day: " + Arrays.toString(vec.getWordVectorMatrix("day").dup().data().asDouble()));
     log.info("Night: " + Arrays.toString(vec.getWordVectorMatrix("night").dup().data().asDouble()));
   }
+  List<String> labelsOriginal=vec.labelsSource.getLabels();
   double similarityW=vec.similarity("way","work");
   log.info("way/work similarity: " + similarityW);
   double similarityH=vec.similarity("house","world");
@@ -40,15 +41,19 @@
   File tempFile=File.createTempFile("paravec","ser");
   tempFile.deleteOnExit();
   INDArray day=vec.getWordVectorMatrix("day").dup();
-  SerializationUtils.saveObject(vec,tempFile);
-  ParagraphVectors vec2=(ParagraphVectors)SerializationUtils.readObject(tempFile);
-  INDArray day2=vec2.getWordVectorMatrix("day").dup();
-  assertEquals(day,day2);
-  tempFile.delete();
   File tempFile2=File.createTempFile("paravec","ser");
   tempFile2.deleteOnExit();
   WordVectorSerializer.writeWordVectors(vec,tempFile2);
   ParagraphVectors vec3=WordVectorSerializer.readParagraphVectorsFromText(tempFile2);
   INDArray day3=vec3.getWordVectorMatrix("day").dup();
+  List<String> labelsRestored=vec3.labelsSource.getLabels();
   assertEquals(day,day3);
+  assertEquals(labelsOriginal.size(),labelsRestored.size());
+  SerializationUtils.saveObject(vec,tempFile);
+  ParagraphVectors vec2=(ParagraphVectors)SerializationUtils.readObject(tempFile);
+  INDArray day2=vec2.getWordVectorMatrix("day").dup();
+  List<String> labelsBinary=vec2.labelsSource.getLabels();
+  assertEquals(day,day2);
+  tempFile.delete();
+  assertEquals(labelsOriginal.size(),labelsBinary.size());
 }
