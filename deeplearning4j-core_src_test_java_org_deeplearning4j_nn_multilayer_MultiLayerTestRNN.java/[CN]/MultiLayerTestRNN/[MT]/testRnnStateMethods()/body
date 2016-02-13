@@ -1,7 +1,7 @@
 {
   Nd4j.getRandom().setSeed(12345);
   int timeSeriesLength=6;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(3).layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(5).nOut(7).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(7).nOut(8).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(2,new RnnOutputLayer.Builder(LossFunction.MCXENT).weightInit(WeightInit.DISTRIBUTION).nIn(8).nOut(4).activation("softmax").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(5).nOut(7).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(1,new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(7).nOut(8).activation("tanh").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).layer(2,new RnnOutputLayer.Builder(LossFunction.MCXENT).weightInit(WeightInit.DISTRIBUTION).nIn(8).nOut(4).activation("softmax").weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,0.5)).build()).build();
   MultiLayerNetwork mln=new MultiLayerNetwork(conf);
   INDArray input=Nd4j.rand(new int[]{3,5,timeSeriesLength});
   List<INDArray> allOutputActivations=mln.feedForward(input,true);
