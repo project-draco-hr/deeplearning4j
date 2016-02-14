@@ -1,0 +1,25 @@
+{
+  boolean hasMaskArray=data.hasMaskArrays();
+  if (hasMaskArray)   setLayerMaskArrays(data.getFeaturesMaskArrays(),data.getLabelsMaskArrays());
+  feedForward(data.getFeatures(),false);
+  setLabels(data.getLabels());
+  INDArray out=null;
+  double l1=(addRegularizationTerms ? calcL1() : 0.0);
+  double l2=(addRegularizationTerms ? calcL2() : 0.0);
+  int i=0;
+  for (  String s : configuration.getNetworkOutputs()) {
+    Layer outLayer=verticesMap.get(s).getLayer();
+    if (outLayer == null || !(outLayer instanceof BaseOutputLayer<?>)) {
+      throw new UnsupportedOperationException("Cannot calculate score: vertex \"" + s + "\" is not an output layer");
+    }
+    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)outLayer;
+    ol.setLabels(labels[i++]);
+    INDArray scoreCurrLayer=ol.computeScoreForExamples(l1,l2);
+    if (out == null)     out=scoreCurrLayer;
+ else     out.addi(scoreCurrLayer);
+    l1=0.0;
+    l2=0.0;
+  }
+  if (hasMaskArray)   clearLayerMaskArrays();
+  return out;
+}
