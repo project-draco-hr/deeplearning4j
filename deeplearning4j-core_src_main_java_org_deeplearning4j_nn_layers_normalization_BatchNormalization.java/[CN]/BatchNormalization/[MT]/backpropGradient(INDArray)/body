@@ -2,19 +2,17 @@
   int numExamples=epsilon.size(0);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   INDArray gBeta=epsilon.sum(0).reshape(shape);
-  INDArray tmp;
   if (trainingMode == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
-    for (int i=0; i < epsilon.size(0); i++) {
-      tmp=epsilon.get(NDArrayIndex.interval(i,i + 1)).reshape(shape).mul(xHat);
-      gGamma.addi(tmp);
-    }
+    gGamma=epsilon.mul(xHat).sum(0).reshape(shape);
   }
   INDArray gamma=(layerConf.isLockGammaBeta()) ? Nd4j.onesLike(gBeta) : getParam(BatchNormalizationParamInitializer.GAMMA);
   INDArray coefficients=gamma.div(std);
-  INDArray gXHat=(xHat.mul(gGamma).add(gBeta)).divi(numExamples);
+  INDArray gXHat, tmpEp;
   INDArray nextEpsilon=Nd4j.zerosLike(epsilon);
   for (int i=0; i < epsilon.size(0); i++) {
-    nextEpsilon.putRow(i,coefficients.mul(epsilon.get(NDArrayIndex.interval(i,i + 1)).reshape(shape)).sub(gXHat));
+    gXHat=(xHat.get(NDArrayIndex.interval(i,i + 1)).reshape(shape).mul(gGamma).add(gBeta)).divi(numExamples);
+    tmpEp=epsilon.get(NDArrayIndex.interval(i,i + 1)).reshape(shape).mul(coefficients).sub(gXHat);
+    nextEpsilon.putRow(i,tmpEp);
   }
   Gradient retGradient=new DefaultGradient();
   retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,gGamma);

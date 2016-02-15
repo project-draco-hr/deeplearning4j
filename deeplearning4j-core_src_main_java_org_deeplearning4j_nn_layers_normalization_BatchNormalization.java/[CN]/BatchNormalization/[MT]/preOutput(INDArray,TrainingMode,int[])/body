@@ -7,7 +7,6 @@
   if (setMeanVar) {
     this.mean=this.mean == null ? Nd4j.zeros(shape) : this.mean;
     this.var=this.var == null ? Nd4j.valueArrayOf(shape,layerConf.getEps()) : this.var;
-    gGamma=gGamma == null ? Nd4j.zeros(shape) : gGamma;
     setMeanVar=false;
   }
   INDArray mean, var;
@@ -29,12 +28,14 @@
     gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
     beta=getParam(BatchNormalizationParamInitializer.BETA);
   }
-  INDArray tmp;
+  INDArray tmpX, tmpXhat;
   INDArray activations=x.dup();
+  xHat=Nd4j.zerosLike(x);
   for (int i=0; i < x.size(0); i++) {
-    tmp=activations.get(NDArrayIndex.interval(i,i + 1)).reshape(shape);
-    xHat=tmp.subi(mean).divi(std);
-    tmp.muli(gamma).addi(beta);
+    tmpX=activations.get(NDArrayIndex.interval(i,i + 1)).reshape(shape);
+    tmpXhat=tmpX.subi(mean).divi(std);
+    xHat.putRow(i,tmpXhat);
+    tmpX.muli(gamma).addi(beta);
   }
   double decay;
   if (training == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
