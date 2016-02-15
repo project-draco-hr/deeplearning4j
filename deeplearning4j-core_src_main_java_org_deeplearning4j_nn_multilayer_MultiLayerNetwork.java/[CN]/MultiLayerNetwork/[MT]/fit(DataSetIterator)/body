@@ -16,11 +16,11 @@
       DataSet next=iter.next();
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       boolean hasMaskArrays=next.hasMaskArrays();
-      if (hasMaskArrays)       setLayerMaskArrays(next.getFeaturesMaskArray(),next.getLabelsMaskArray());
       if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
-        doTruncatedBPTT(next.getFeatureMatrix(),next.getLabels());
+        doTruncatedBPTT(next.getFeatureMatrix(),next.getLabels(),next.getFeaturesMaskArray(),next.getLabelsMaskArray());
       }
  else {
+        if (hasMaskArrays)         setLayerMaskArrays(next.getFeaturesMaskArray(),next.getLabelsMaskArray());
         setInput(next.getFeatureMatrix());
         setLabels(next.getLabels());
         if (solver == null) {

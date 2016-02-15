@@ -2,7 +2,7 @@
   int nIn=8;
   int nOut=25;
   int nHiddenUnits=17;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(2).layer(0,new org.deeplearning4j.nn.conf.layers.GRU.Builder().nIn(nIn).nOut(nHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(nHiddenUnits).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new org.deeplearning4j.nn.conf.layers.GRU.Builder().nIn(nIn).nOut(nHiddenUnits).weightInit(WeightInit.DISTRIBUTION).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS).nIn(nHiddenUnits).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).build()).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   Layer layer=network.getLayer(0);
