@@ -1,0 +1,5 @@
+{
+  Broadcast<List<String>> listBroadcast=(labelsList == null ? null : sc.broadcast(labelsList));
+  JavaRDD<Evaluation> evaluations=data.mapPartitions(new EvaluateFlatMapFunction(sc.broadcast(conf.toJson()),sc.broadcast(network.params()),evalBatchSize,listBroadcast));
+  return evaluations.reduce(new EvaluationReduceFunction());
+}
