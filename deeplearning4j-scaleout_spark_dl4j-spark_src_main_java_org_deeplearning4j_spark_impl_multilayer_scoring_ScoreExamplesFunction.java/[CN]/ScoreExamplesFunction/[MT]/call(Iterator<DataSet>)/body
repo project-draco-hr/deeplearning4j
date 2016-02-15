@@ -1,0 +1,34 @@
+{
+  if (!iterator.hasNext()) {
+    return Collections.emptyList();
+  }
+  MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(jsonConfig.getValue()));
+  network.init();
+  INDArray val=params.value();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
+  network.setParameters(val);
+  List<Double> ret=new ArrayList<>();
+  List<DataSet> collect=new ArrayList<>(batchSize);
+  int totalCount=0;
+  while (iterator.hasNext()) {
+    collect.clear();
+    int nExamples=0;
+    while (iterator.hasNext() && nExamples < batchSize) {
+      DataSet ds=iterator.next();
+      int n=ds.numExamples();
+      collect.add(ds);
+      nExamples+=n;
+    }
+    totalCount+=nExamples;
+    DataSet data=DataSet.merge(collect,false);
+    INDArray scores=network.scoreExamples(data,addRegularization);
+    double[] doubleScores=scores.data().asDouble();
+    for (    double doubleScore : doubleScores) {
+      ret.add(doubleScore);
+    }
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Scored {} examples ",totalCount);
+  }
+  return ret;
+}
