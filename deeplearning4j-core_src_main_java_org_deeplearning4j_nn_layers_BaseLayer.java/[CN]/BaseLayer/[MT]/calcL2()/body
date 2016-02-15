@@ -1,4 +1,5 @@
 {
   if (!conf.isUseRegularization() || conf.getLayer().getL2() <= 0.0)   return 0.0;
-  return 0.5 * conf.getLayer().getL2() * Transforms.pow(getParam(DefaultParamInitializer.WEIGHT_KEY),2).sum(Integer.MAX_VALUE).getDouble(0);
+  double l2Norm=getParam(DefaultParamInitializer.WEIGHT_KEY).norm2Number().doubleValue();
+  return 0.5 * conf.getLayer().getL2() * l2Norm* l2Norm;
 }

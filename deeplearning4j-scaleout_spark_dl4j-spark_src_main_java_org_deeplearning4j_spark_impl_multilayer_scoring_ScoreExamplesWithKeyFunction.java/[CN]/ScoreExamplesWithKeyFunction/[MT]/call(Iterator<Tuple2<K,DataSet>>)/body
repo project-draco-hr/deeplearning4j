@@ -1,0 +1,39 @@
+{
+  if (!iterator.hasNext()) {
+    return Collections.emptyList();
+  }
+  MultiLayerNetwork network=new MultiLayerNetwork(MultiLayerConfiguration.fromJson(jsonConfig.getValue()));
+  network.init();
+  INDArray val=params.value();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcasted set parameters");
+  network.setParameters(val);
+  List<Tuple2<K,Double>> ret=new ArrayList<>();
+  List<DataSet> collect=new ArrayList<>(batchSize);
+  List<K> collectKey=new ArrayList<>(batchSize);
+  int totalCount=0;
+  while (iterator.hasNext()) {
+    collect.clear();
+    collectKey.clear();
+    int nExamples=0;
+    while (iterator.hasNext() && nExamples < batchSize) {
+      Tuple2<K,DataSet> t2=iterator.next();
+      DataSet ds=t2._2();
+      int n=ds.numExamples();
+      if (n != 1)       throw new IllegalStateException("Cannot score examples with one key per data set if " + "data set contains more than 1 example (numExamples: " + n + ")");
+      collect.add(ds);
+      collectKey.add(t2._1());
+      nExamples+=n;
+    }
+    totalCount+=nExamples;
+    DataSet data=DataSet.merge(collect,false);
+    INDArray scores=network.scoreExamples(data,addRegularization);
+    double[] doubleScores=scores.data().asDouble();
+    for (int i=0; i < doubleScores.length; i++) {
+      ret.add(new Tuple2<>(collectKey.get(i),doubleScores[i]));
+    }
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Scored {} examples ",totalCount);
+  }
+  return ret;
+}
