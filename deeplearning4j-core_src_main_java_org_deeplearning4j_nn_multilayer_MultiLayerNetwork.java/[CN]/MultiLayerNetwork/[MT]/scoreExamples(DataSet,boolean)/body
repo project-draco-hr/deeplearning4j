@@ -1,0 +1,19 @@
+{
+  boolean hasMaskArray=data.hasMaskArrays();
+  if (hasMaskArray)   setLayerMaskArrays(data.getFeaturesMaskArray(),data.getLabelsMaskArray());
+  feedForward(data.getFeatureMatrix(),false);
+  setLabels(data.getLabels());
+  INDArray out;
+  if (getOutputLayer() instanceof BaseOutputLayer) {
+    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)getOutputLayer();
+    ol.setLabels(data.getLabels());
+    double l1=(addRegularizationTerms ? calcL1() : 0.0);
+    double l2=(addRegularizationTerms ? calcL2() : 0.0);
+    out=ol.computeScoreForExamples(l1,l2);
+  }
+ else {
+    throw new UnsupportedOperationException("Cannot calculate score wrt labels without an OutputLayer");
+  }
+  if (hasMaskArray)   clearLayerMaskArrays();
+  return out;
+}

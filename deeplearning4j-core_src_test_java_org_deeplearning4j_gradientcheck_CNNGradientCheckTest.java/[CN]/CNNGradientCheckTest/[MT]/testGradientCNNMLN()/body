@@ -12,7 +12,7 @@
       for (int i=0; i < lossFunctions.length; i++) {
         LossFunctions.LossFunction lf=lossFunctions[i];
         String outputActivation=outputActivations[i];
-        MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).learningRate(1e-1).seed(12345L).list(2).layer(0,new ConvolutionLayer.Builder(new int[]{1,1}).nOut(6).weightInit(WeightInit.XAVIER).activation(afn).updater(Updater.NONE).build()).layer(1,new OutputLayer.Builder(lf).activation(outputActivation).nOut(3).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).cnnInputSize(2,2,1).pretrain(false).backprop(true);
+        MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).learningRate(1e-1).seed(12345L).list().layer(0,new ConvolutionLayer.Builder(new int[]{1,1}).nOut(6).weightInit(WeightInit.XAVIER).activation(afn).updater(Updater.NONE).build()).layer(1,new OutputLayer.Builder(lf).activation(outputActivation).nOut(3).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).cnnInputSize(2,2,1).pretrain(false).backprop(true);
         MultiLayerConfiguration conf=builder.build();
         MultiLayerNetwork mln=new MultiLayerNetwork(conf);
         mln.init();

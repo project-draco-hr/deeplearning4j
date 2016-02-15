@@ -1,0 +1,8 @@
+{
+  sc=sparkContext;
+  this.conf=conf.clone();
+  this.network=new ComputationGraph(conf);
+  this.network.init();
+  this.averageEachIteration=sparkContext.sc().conf().getBoolean(AVERAGE_EACH_ITERATION,false);
+  this.updater=sc.broadcast(network.getUpdater());
+}

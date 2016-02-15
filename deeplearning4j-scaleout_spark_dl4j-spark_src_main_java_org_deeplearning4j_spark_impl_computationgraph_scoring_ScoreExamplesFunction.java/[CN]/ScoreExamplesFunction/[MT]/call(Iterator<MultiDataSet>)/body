@@ -1,0 +1,34 @@
+{
+  if (!iterator.hasNext()) {
+    return Collections.emptyList();
+  }
+  ComputationGraph network=new ComputationGraph(ComputationGraphConfiguration.fromJson(jsonConfig.getValue()));
+  network.init();
+  INDArray val=params.value();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcast set parameters");
+  network.setParams(val);
+  List<Double> ret=new ArrayList<>();
+  List<MultiDataSet> collect=new ArrayList<>(batchSize);
+  int totalCount=0;
+  while (iterator.hasNext()) {
+    collect.clear();
+    int nExamples=0;
+    while (iterator.hasNext() && nExamples < batchSize) {
+      MultiDataSet ds=iterator.next();
+      int n=ds.getFeatures(0).size(0);
+      collect.add(ds);
+      nExamples+=n;
+    }
+    totalCount+=nExamples;
+    MultiDataSet data=org.nd4j.linalg.dataset.MultiDataSet.merge(collect);
+    INDArray scores=network.scoreExamples(data,addRegularization);
+    double[] doubleScores=scores.data().asDouble();
+    for (    double doubleScore : doubleScores) {
+      ret.add(doubleScore);
+    }
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Scored {} examples ",totalCount);
+  }
+  return ret;
+}

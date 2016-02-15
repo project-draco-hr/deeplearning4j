@@ -1,0 +1,3 @@
+{
+  return data.mapPartitionsToPair(new ScoreExamplesWithKeyFunction<K>(sc.broadcast(network.params()),sc.broadcast(conf.toJson()),includeRegularizationTerms,batchSize));
+}

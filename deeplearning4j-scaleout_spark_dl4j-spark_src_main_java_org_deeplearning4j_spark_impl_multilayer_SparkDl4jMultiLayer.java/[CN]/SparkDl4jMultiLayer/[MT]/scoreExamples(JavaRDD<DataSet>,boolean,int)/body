@@ -1,0 +1,3 @@
+{
+  return data.mapPartitionsToDouble(new ScoreExamplesFunction(sc.broadcast(network.params()),sc.broadcast(conf.toJson()),includeRegularizationTerms,batchSize));
+}
