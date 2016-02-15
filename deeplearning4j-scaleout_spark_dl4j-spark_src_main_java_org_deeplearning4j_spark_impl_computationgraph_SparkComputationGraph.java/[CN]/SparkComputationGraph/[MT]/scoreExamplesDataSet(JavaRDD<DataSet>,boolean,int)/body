@@ -1,0 +1,3 @@
+{
+  return scoreExamples(data.map(new DataSetToMultiDataSetFn()),includeRegularizationTerms,batchSize);
+}
