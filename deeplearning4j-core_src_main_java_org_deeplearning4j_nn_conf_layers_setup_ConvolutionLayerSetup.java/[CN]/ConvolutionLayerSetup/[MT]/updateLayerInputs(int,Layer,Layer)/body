@@ -151,6 +151,8 @@ storeNInAndNOut(outLayerName,lastnOut);
 feedForwardLayer.setNIn(lastnOut);
 conf.inputPreProcessor(i + 1,new CnnToRnnPreProcessor(lastHeight,lastWidth,lastOutChannels));
 break;
+case "BatchNormalization":
+throw new UnsupportedOperationException("BaseNormalization should not follow a LocalResponse layer.");
 }
 break;
 }

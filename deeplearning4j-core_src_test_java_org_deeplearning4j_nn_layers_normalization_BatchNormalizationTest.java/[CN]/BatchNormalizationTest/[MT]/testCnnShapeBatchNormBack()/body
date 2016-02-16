@@ -1,0 +1,11 @@
+{
+  Layer layer=setupActivations(2,2 * 4 * 4);
+  layer.preOutput(cnnInput);
+  Pair<Gradient,INDArray> actualOut=layer.backpropGradient(cnnEpsilon);
+  INDArray expectedEpsilonOut=Nd4j.create(new double[]{0.,0.,0.,0.,-0.5,-0.5,-0.5,-0.5,0.,0.,0.,0.,-0.5,-0.5,-0.5,-0.5,0.,0.,0.,0.,-0.5,-0.5,-0.5,-0.5,0.,0.,0.,0.,-0.5,-0.5,-0.5,-0.5,-2.,-2.,-2.,-2.,-1.5,-1.5,-1.5,-1.5,-2.,-2.,-2.,-2.,-1.5,-1.5,-1.5,-1.5,-2.,-2.,-2.,-2.,-1.5,-1.5,-1.5,-1.5,-2.,-2.,-2.,-2.,-1.5,-1.5,-1.5,-1.5},new int[]{2,2,4,4});
+  INDArray expectedGGamma=Nd4j.create(new double[]{2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.},new int[]{1,32});
+  INDArray expectedBeta=Nd4j.create(new double[]{0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.},new int[]{1,32});
+  assertEquals(expectedEpsilonOut,actualOut.getSecond());
+  assertEquals(expectedGGamma,actualOut.getFirst().getGradientFor("gamma"));
+  assertEquals(expectedBeta,actualOut.getFirst().getGradientFor("beta"));
+}

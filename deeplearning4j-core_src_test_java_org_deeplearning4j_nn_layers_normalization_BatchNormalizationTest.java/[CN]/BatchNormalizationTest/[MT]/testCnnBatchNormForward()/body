@@ -1,7 +1,0 @@
-{
-  Layer layer=setupActivations(2 * 4 * 4,2);
-  INDArray cnnActivationsActual=layer.preOutput(cnnInput);
-  INDArray activationsExpected=cnnEpsilon;
-  assertEquals(activationsExpected,cnnActivationsActual);
-  assertArrayEquals(activationsExpected.shape(),cnnActivationsActual.shape());
-}

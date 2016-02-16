@@ -3,7 +3,7 @@
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   int batchSize=x.size(0);
   shape=getShape(x);
-  INDArray reshapeX=x.dup().reshape(batchSize,shape[1]);
+  INDArray reshapeX=(x.rank() > 2) ? x.dup().reshape(batchSize,shape[1]) : x;
   trainingMode=training;
   if (setMeanVar) {
     this.mean=this.mean == null ? Nd4j.zeros(shape) : this.mean;
@@ -22,8 +22,8 @@
   }
   std=Transforms.sqrt(var);
   if (layerConf.isLockGammaBeta()) {
-    gamma=Nd4j.onesLike(reshapeX);
-    beta=Nd4j.zeros(new int[]{batchSize,1});
+    gamma=Nd4j.onesLike(mean);
+    beta=Nd4j.zerosLike(mean);
   }
  else {
     gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
@@ -31,7 +31,8 @@
   }
   INDArray xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(reshapeX,mean,reshapeX,-1));
   xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
-  INDArray activations=xHat.dup().mul(gamma).addiRowVector(beta);
+  INDArray activations=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gamma,xHat.dup(),-1));
+  activations.addiColumnVector(beta);
   double decay;
   if (training == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
     decay=layerConf.getDecay();

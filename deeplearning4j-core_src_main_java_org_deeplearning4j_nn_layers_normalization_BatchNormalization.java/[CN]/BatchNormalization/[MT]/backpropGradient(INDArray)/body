@@ -9,8 +9,11 @@
   INDArray gamma=(layerConf.isLockGammaBeta()) ? Nd4j.onesLike(reshapeEp) : getParam(BatchNormalizationParamInitializer.GAMMA);
   INDArray coefficients=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(gamma,std,gamma,-1));
   INDArray tmp=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gGamma,xHat.dup(),-1));
-  INDArray gXHat=coefficients.sub(tmp.addRowVector(gBeta).div(batchSize));
+  tmp.addiColumnVector(gBeta).divi(batchSize);
+  INDArray gXHat=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(tmp,coefficients,tmp,-1));
   INDArray nextEpsilon=reshapeEp.mul(gXHat).reshape(epsilon.shape());
   Gradient retGradient=new DefaultGradient();
+  retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,gGamma);
+  retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,gBeta);
   return new Pair<>(retGradient,nextEpsilon);
 }
