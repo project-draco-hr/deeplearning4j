@@ -1,6 +1,6 @@
 {
   BatchNormalization layer=(BatchNormalization)conf.getLayer();
-  INDArray ret=Nd4j.valueArrayOf(layer.getNOut(),layer.getBeta());
+  INDArray ret=Nd4j.valueArrayOf(layer.getNOut(),1,layer.getBeta());
   ret.data().persist();
   return ret;
 }

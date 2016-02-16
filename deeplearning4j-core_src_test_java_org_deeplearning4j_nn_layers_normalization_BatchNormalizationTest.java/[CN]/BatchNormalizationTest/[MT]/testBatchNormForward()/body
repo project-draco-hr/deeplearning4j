@@ -1,5 +1,0 @@
-{
-  INDArray activationsExpected=epsilon;
-  assertEquals(activationsExpected,activationsActual);
-  assertArrayEquals(activationsExpected.shape(),activationsActual.shape());
-}
