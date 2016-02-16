@@ -1,0 +1,14 @@
+{
+  if (input == null)   throw new IllegalArgumentException("No null input allowed");
+  applyDropOutIfNecessary(training);
+  col=Convolution.im2col(input,layerConf().getKernelSize(),layerConf().getStride(),layerConf().getPadding());
+  INDArray z=preOutput(training);
+  int num=1;
+  for (  int dim : z.sum(0).shape())   num*=dim;
+  BatchNormalization bn=new BatchNormalization.Builder().nOut(num).build();
+  NeuralNetConfiguration layerConf=new NeuralNetConfiguration.Builder().iterations(1).layer(bn).build();
+  bNLayer=LayerFactories.getFactory(layerConf).create(layerConf);
+  INDArray normZ=bNLayer.preOutput(z);
+  INDArray activation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),normZ));
+  return activation;
+}
