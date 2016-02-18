@@ -4,7 +4,7 @@
   this.fullNetworkL2=fullNetworkL2;
   INDArray preOut=preOutput2d(training);
   if (layerConf().getActivationFunction().equals("softmax")) {
-    setScoreWithZ(preOut);
+    setScore(null,preOut);
   }
  else {
     INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),preOut));
