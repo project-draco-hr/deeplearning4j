@@ -1,0 +1,7 @@
+{
+  ActivationLayer activationLayer=new ActivationLayer.Builder().nIn(numIn).nOut(numOut).activation(act).build();
+  checkSerialization(activationLayer);
+  assertEquals(numIn,activationLayer.nIn);
+  assertEquals(numOut,activationLayer.nOut);
+  assertEquals(act,activationLayer.activationFunction);
+}
