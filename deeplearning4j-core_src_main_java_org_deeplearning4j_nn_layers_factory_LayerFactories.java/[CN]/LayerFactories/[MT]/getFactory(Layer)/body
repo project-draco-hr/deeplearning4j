@@ -9,6 +9,7 @@
  else   if (ConvolutionLayer.class.isAssignableFrom(clazz))   return new ConvolutionLayerFactory(clazz);
  else   if (SubsamplingLayer.class.isAssignableFrom(clazz))   return new SubsampleLayerFactory(clazz);
  else   if (BatchNormalization.class.isAssignableFrom(clazz))   return new BatchNormalizationLayerFactory(clazz);
- else   if (LocalResponseNormalization.class.isAssignableFrom(clazz))   return new LocalResponseNormalizationFactory(clazz);
+ else   if (LocalResponseNormalization.class.isAssignableFrom(clazz))   return new EmptyFactory(clazz);
+ else   if (ActivationLayer.class.isAssignableFrom(clazz))   return new EmptyFactory(clazz);
   return new DefaultLayerFactory(clazz);
 }
