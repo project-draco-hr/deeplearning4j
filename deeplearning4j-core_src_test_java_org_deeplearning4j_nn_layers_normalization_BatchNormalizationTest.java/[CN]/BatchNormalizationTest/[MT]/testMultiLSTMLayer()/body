@@ -1,0 +1,30 @@
+{
+  int inputSize=10 * 10;
+  int miniBatchSize=4;
+  int timeSeriesLength=10;
+  int nClasses=3;
+  Nd4j.getRandom().setSeed(12345);
+  INDArray input=Nd4j.rand(new int[]{miniBatchSize,inputSize,timeSeriesLength});
+  INDArray labels=Nd4j.zeros(miniBatchSize,nClasses,timeSeriesLength);
+  Random r=new Random(12345);
+  for (int i=0; i < miniBatchSize; i++) {
+    for (int j=0; j < timeSeriesLength; j++) {
+      int idx=r.nextInt(nClasses);
+      labels.putScalar(new int[]{i,idx,j},1.0);
+    }
+  }
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).list().layer(0,new GravesLSTM.Builder().nIn(100).nOut(3).activation("tanh").updater(Updater.NONE).weightInit(WeightInit.XAVIER).build()).layer(1,new RnnOutputLayer.Builder().nIn(3).nOut(nClasses).activation("softmax").lossFunction(LossFunctions.LossFunction.MCXENT).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork mln=new MultiLayerNetwork(conf);
+  mln.init();
+  mln.setInput(input);
+  mln.setLabels(labels);
+  mln.fit();
+  MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().seed(12345).list().layer(0,new GravesLSTM.Builder().nIn(100).nOut(3).activation("identity").updater(Updater.NONE).weightInit(WeightInit.XAVIER).build()).layer(1,new ActivationLayer.Builder().activation("tanh").build()).layer(2,new RnnOutputLayer.Builder().nIn(3).nOut(nClasses).activation("softmax").lossFunction(LossFunctions.LossFunction.MCXENT).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+  conf2.getInputPreProcessors().put(1,new RnnToFeedForwardPreProcessor());
+  conf2.getInputPreProcessors().put(2,new FeedForwardToRnnPreProcessor());
+  MultiLayerNetwork mln2=new MultiLayerNetwork(conf2);
+  mln2.init();
+  mln2.setInput(input);
+  mln2.setLabels(labels);
+  mln2.fit();
+}
