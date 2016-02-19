@@ -1,5 +1,5 @@
 {
-  VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).setTargetVocabCache(vocab).fetchLabels(trainSequenceVectors).build();
+  VocabConstructor<T> constructor=new VocabConstructor.Builder<T>().addSource(iterator,minWordFrequency).setTargetVocabCache(vocab).fetchLabels(trainSequenceVectors).setStopWords(stopWords).build();
   if (existingModel != null && lookupTable instanceof InMemoryLookupTable && existingModel.lookupTable() instanceof InMemoryLookupTable) {
     log.info("Merging existing vocabulary into the current one...");
     constructor.buildMergedVocabulary(existingModel,true);
