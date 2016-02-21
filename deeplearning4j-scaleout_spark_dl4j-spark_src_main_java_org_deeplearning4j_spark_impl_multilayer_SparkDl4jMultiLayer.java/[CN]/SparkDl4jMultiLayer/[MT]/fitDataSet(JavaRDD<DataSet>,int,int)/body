@@ -1,0 +1,5 @@
+{
+  rdd.cache();
+  int count=(int)rdd.count();
+  return fitDataSet(rdd,examplesPerFit,count,numPartitions);
+}
