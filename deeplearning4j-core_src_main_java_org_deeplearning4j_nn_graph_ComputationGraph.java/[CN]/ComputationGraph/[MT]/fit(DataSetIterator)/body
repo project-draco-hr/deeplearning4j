@@ -4,6 +4,7 @@
     pretrain(dataSetIterator);
   }
   if (configuration.isBackprop()) {
+    update(TaskUtils.buildTask(dataSetIterator));
     while (dataSetIterator.hasNext()) {
       DataSet next=dataSetIterator.next();
       if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
