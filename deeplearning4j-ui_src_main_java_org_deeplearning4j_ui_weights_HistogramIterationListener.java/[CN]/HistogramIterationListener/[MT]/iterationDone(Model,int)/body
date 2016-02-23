@@ -20,7 +20,12 @@
  else       newName=param;
       HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
       newGrad.put(newName,histogram.getData());
-      Map<String,List<Double>> map=meanMagHistoryUpdates.get(indexFromString(param));
+      int idx=indexFromString(newName);
+      if (idx >= meanMagHistoryUpdates.size()) {
+        meanMagHistoryUpdates.add(new LinkedHashMap<String,List<Double>>());
+        idx=indexFromString(newName);
+      }
+      Map<String,List<Double>> map=meanMagHistoryUpdates.get(idx);
       List<Double> list=map.get(newName);
       if (list == null) {
         list=new ArrayList<>();
@@ -38,7 +43,12 @@
  else       newName=param;
       HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
       newParams.put(newName,histogram.getData());
-      Map<String,List<Double>> map=meanMagHistoryParams.get(indexFromString(param));
+      int idx=indexFromString(newName);
+      if (idx >= meanMagHistoryParams.size()) {
+        meanMagHistoryParams.add(new LinkedHashMap<String,List<Double>>());
+        idx=indexFromString(newName);
+      }
+      Map<String,List<Double>> map=meanMagHistoryParams.get(idx);
       List<Double> list=map.get(newName);
       if (list == null) {
         list=new ArrayList<>();
