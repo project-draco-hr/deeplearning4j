@@ -1,17 +1,4 @@
 {
   String modelId=UUID.randomUUID().toString();
-  S3Uploader uploader=new S3Uploader();
-  String tmpDir=System.getProperty("java.io.tmpdir");
-  try {
-    File tmpFile=new File(new File(tmpDir),modelId);
-    ObjectOutputStream os=new ObjectOutputStream(new FileOutputStream(tmpFile));
-    os.writeObject(ser);
-    os.flush();
-    os.close();
-    ObjectInputStream ois=new ObjectInputStream(new FileInputStream(tmpFile));
-    uploader.upload(ois,modelId,bucketName);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  save(ser,modelId);
 }
