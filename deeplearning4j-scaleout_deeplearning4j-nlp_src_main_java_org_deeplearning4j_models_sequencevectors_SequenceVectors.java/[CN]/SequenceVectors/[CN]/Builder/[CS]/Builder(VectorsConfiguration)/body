@@ -20,4 +20,5 @@
   if (configuration.getSequenceLearningAlgorithm() != null && !configuration.getSequenceLearningAlgorithm().isEmpty()) {
     this.sequenceLearningAlgorithm(configuration.getSequenceLearningAlgorithm());
   }
+  if (configuration.getStopList() != null)   this.stopWords.addAll(configuration.getStopList());
 }
