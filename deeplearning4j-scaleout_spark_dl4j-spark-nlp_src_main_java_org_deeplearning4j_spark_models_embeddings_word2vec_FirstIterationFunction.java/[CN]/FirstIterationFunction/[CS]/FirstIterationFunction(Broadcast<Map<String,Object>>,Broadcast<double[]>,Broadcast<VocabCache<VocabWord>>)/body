@@ -14,4 +14,10 @@
   this.batchSize=(int)word2vecVarMap.get("batchSize");
   this.indexSyn0VecMap=new HashMap<>();
   this.pointSyn1VecMap=new HashMap<>();
+  this.vocab=vocabCacheBroadcast.getValue();
+  if (this.vocab == null)   throw new RuntimeException("VocabCache is null");
+  if (negative > 0) {
+    negativeHolder=NegativeHolder.getInstance();
+    negativeHolder.initHolder(vocab,expTable,this.vectorLength);
+  }
 }

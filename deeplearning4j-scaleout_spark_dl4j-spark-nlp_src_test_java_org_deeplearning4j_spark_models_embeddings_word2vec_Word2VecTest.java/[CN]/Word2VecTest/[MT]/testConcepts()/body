@@ -5,7 +5,7 @@
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(0).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(1).batchSize(100).minWordFrequency(5).stopWords(Arrays.asList("three")).useUnknown(true).build();
+  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(10).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(1).batchSize(100).minWordFrequency(5).stopWords(Arrays.asList("three")).useUnknown(true).build();
   word2Vec.train(corpus);
   System.out.println("UNK: " + word2Vec.getWordVectorMatrix("UNK"));
   InMemoryLookupTable<VocabWord> table=(InMemoryLookupTable<VocabWord>)word2Vec.lookupTable();

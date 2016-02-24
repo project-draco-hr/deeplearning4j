@@ -1,0 +1,8 @@
+{
+  if (!wasInit.get()) {
+    this.vocab=vocabCache;
+    this.syn1Neg=Nd4j.zeros(vocabCache.numWords(),layerSize);
+    makeTable(Math.max(expTable.length,100000),0.75);
+    wasInit.set(true);
+  }
+}
