@@ -1,2 +1,39 @@
 {
+  if (usePca) {
+  }
+  if (normalize) {
+  }
+  int n=X.rows();
+  Y=Nd4j.rand(new int[]{n,targetDimensions},new NormalDistribution());
+  INDArray dY=Nd4j.zeros(n,targetDimensions);
+  INDArray iY=Nd4j.zeros(n,targetDimensions);
+  INDArray gains=Nd4j.ones(n,targetDimensions);
+  boolean stopLying=false;
+  System.out.println("Y:Shape is = " + Arrays.toString(Y.shape()));
+  INDArray P=x2p(X,tolerance,perplexity);
+  for (int i=0; i < maxIter; i++) {
+    INDArray sumY=pow(Y,2).sum(1);
+    INDArray qu=Y.mmul(Y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY).addi(1).rdivi(1);
+    INDArray Q=qu.div(qu.sumNumber().doubleValue());
+    BooleanIndexing.applyWhere(Q,Conditions.lessThan(1e-12),new Value(1e-12));
+    INDArray PQ=P.sub(Q);
+    for (int y=0; y < n; y++) {
+      INDArray sum1=Nd4j.tile(PQ.getRow(i).mul(qu.getRow(i)),new int[]{Y.columns(),1}).transpose().mul(Y.getRow(i).broadcast(Y.shape()).sub(y)).sum(0);
+      dY.putRow(i,sum1);
+    }
+    gains=gains.add(.2).muli(dY.cond(Conditions.greaterThan(0)).neqi(iY.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8).muli(dY.cond(Conditions.greaterThan(0)).eqi(iY.cond(Conditions.greaterThan(0)))));
+    BooleanIndexing.applyWhere(gains,Conditions.lessThan(1e-12),new Value(1e-12));
+    INDArray gradChange=gains.mul(dY);
+    gradChange.muli(learningRate);
+    iY.muli(momentum).subi(gradChange);
+    double cost=P.mul(log(P.div(Q),false)).sumNumber().doubleValue();
+    logger.info("Iteration [" + i + "] error is: ["+ cost+ "]");
+    Y.addi(iY);
+    INDArray tiled=Nd4j.tile(Y.mean(0),new int[]{Y.rows(),1});
+    Y.subi(tiled);
+    if (!stopLying && (i > maxIter / 2 || i >= stopLyingIteration)) {
+      P.divi(4);
+      stopLying=true;
+    }
+  }
 }

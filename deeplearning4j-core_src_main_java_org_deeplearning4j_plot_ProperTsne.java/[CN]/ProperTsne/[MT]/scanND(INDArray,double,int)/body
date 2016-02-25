@@ -1,0 +1,8 @@
+{
+  for (int y=0; y < array.rows(); y++) {
+    INDArray slice=array.slice(y);
+    for (int x=0; x < array.columns(); x++) {
+      if (slice.getDouble(x) > 0)       logger.info("position [" + y + ","+ x+ "] is ["+ slice.getDouble(x)+ "]");
+    }
+  }
+}

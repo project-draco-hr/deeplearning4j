@@ -1,0 +1,10 @@
+{
+  INDArray F=X.dup();
+  for (int y=0; y < F.rows(); y++) {
+    INDArray slice=F.slice(y);
+    for (int x=0; x < F.columns(); x++) {
+      slice.putScalar(x,Math.pow(slice.getDouble(x),2));
+    }
+  }
+  return F;
+}
