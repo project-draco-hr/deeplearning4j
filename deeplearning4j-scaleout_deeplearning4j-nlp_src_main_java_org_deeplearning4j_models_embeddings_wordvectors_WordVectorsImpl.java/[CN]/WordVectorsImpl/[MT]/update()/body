@@ -1,13 +1,3 @@
 {
-  if (!initDone) {
-    initDone=true;
-    Heartbeat heartbeat=Heartbeat.getInstance();
-    Task task=new Task();
-    task.setNumFeatures(layerSize);
-    if (vocab != null)     task.setNumSamples(vocab.numWords());
-    task.setNetworkType(Task.NetworkType.DenseNetwork);
-    task.setArchitectureType(Task.ArchitectureType.WORDVECTORS);
-    Environment env=EnvironmentUtils.buildEnvironment();
-    heartbeat.reportEvent(Event.STANDALONE,env,task);
-  }
+  update(EnvironmentUtils.buildEnvironment(),Event.STANDALONE);
 }

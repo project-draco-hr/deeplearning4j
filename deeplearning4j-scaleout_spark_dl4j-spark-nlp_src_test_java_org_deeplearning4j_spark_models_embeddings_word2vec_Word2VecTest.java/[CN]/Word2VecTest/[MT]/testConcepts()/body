@@ -2,6 +2,7 @@
   SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest");
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
   String dataPath=new ClassPathResource("/big/raw_sentences.txt").getFile().getAbsolutePath();
+  dataPath="/ext/Temp/part-00000";
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
