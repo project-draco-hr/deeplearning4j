@@ -42,6 +42,7 @@
   this.configuration.setUseAdaGrad(useAdaGrad);
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
+  this.configuration.setStopList(this.stopWords);
   ret.configuration=this.configuration;
   ret.trainSequenceVectors=false;
   ret.trainElementsVectors=true;

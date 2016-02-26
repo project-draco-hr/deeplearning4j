@@ -6,10 +6,11 @@
     T element=vocabCache.wordFor(label);
     if (!fetchLabels && element.isLabel())     continue;
     cache.addToken(element);
-    cache.addWordToIndex(cache.numWords() - 1,element.getLabel());
+    cache.addWordToIndex(element.getIndex(),element.getLabel());
     cache.putVocabWord(element.getLabel());
   }
   if (cache.numWords() == 0)   throw new IllegalStateException("Source VocabCache has no indexes available, transfer is impossible");
+  log.info("Vocab size before labels: " + cache.numWords());
   if (fetchLabels) {
     for (    VocabSource<T> source : sources) {
       SequenceIterator<T> iterator=source.getIterator();
@@ -19,13 +20,19 @@
         seqCount.incrementAndGet();
         for (        T label : sequence.getSequenceLabels()) {
           if (!cache.containsWord(label.getLabel())) {
+            label.markAsLabel(true);
+            label.setSpecial(true);
+            label.setIndex(cache.numWords());
             cache.addToken(label);
-            cache.addWordToIndex(cache.numWords() - 1,label.getLabel());
+            cache.addWordToIndex(label.getIndex(),label.getLabel());
             cache.putVocabWord(label.getLabel());
+            log.info("Adding label [" + label.getLabel() + "]: "+ cache.wordFor(label.getLabel()));
           }
+ else           log.info("Label [" + label.getLabel() + "] already exists: "+ cache.wordFor(label.getLabel()));
         }
       }
     }
   }
+  log.info("Vocab size after labels: " + cache.numWords());
   return cache;
 }

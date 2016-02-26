@@ -18,6 +18,6 @@
   JavaPairRDD<List<VocabWord>,Long> vocabWordListSentenceCumSumRDD=vocabWordListRDD.zip(sentenceCountCumSumRDD);
   Broadcast<Map<String,Object>> word2vecVarMapBroadcast=sc.broadcast(word2vecVarMap);
   Broadcast<double[]> expTableBroadcast=sc.broadcast(expTable);
-  FirstIterationFunction firstIterationFunction=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast);
+  FirstIterationFunction firstIterationFunction=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,pipeline.getBroadCastVocabCache());
   JavaRDD<Pair<Integer,INDArray>> pointSyn0Vec=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterationFunction).map(new MapToPairFunction());
 }

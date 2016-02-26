@@ -1,8 +1,14 @@
 {
-  if (current == null) {
+  try {
+    lock.readLock().lock();
+    if (current == null) {
+      updated=false;
+      return Response.ok(new HashMap<>()).build();
+    }
     updated=false;
-    return Response.ok(new HashMap<>()).build();
+    return Response.ok(current).build();
   }
-  updated=false;
-  return Response.ok(current).build();
+  finally {
+    lock.readLock().unlock();
+  }
 }

@@ -1,8 +1,10 @@
 {
-  this.tokenizer=this.tokenizerFactory.getClass().getCanonicalName();
-  if (tokenizerFactory.getTokenPreProcessor() != null) {
-    this.tokenPreprocessor=this.tokenizerFactory.getTokenPreProcessor().getClass().getCanonicalName();
+  this.tokenizer=factory.getClass().getCanonicalName();
+  if (factory.getTokenPreProcessor() != null) {
+    this.tokenPreprocessor=factory.getTokenPreProcessor().getClass().getCanonicalName();
   }
- else   this.tokenPreprocessor="";
+ else {
+    this.tokenPreprocessor="";
+  }
   return this;
 }

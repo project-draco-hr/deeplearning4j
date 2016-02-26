@@ -1,0 +1,8 @@
+{
+  INDArray P=exp(d.neg().muli(beta));
+  double sum=P.sumNumber().doubleValue();
+  double logSum=FastMath.log(sum);
+  Double H=logSum + beta * (d.mul(P).sumNumber().doubleValue()) / sum;
+  P.divi(sum + 1e-6);
+  return new Pair<>(H,P);
+}

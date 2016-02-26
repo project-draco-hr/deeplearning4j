@@ -4,21 +4,25 @@
   SentenceIterator iter=new AggregatingSentenceIterator.Builder().addSentenceIterator(new BasicLineIterator(resource_sentences.getFile())).addSentenceIterator(new FileSentenceIterator(resource_mixed.getFile())).build();
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
-  Word2Vec wordVectors=new Word2Vec.Builder().minWordFrequency(1).batchSize(250).iterations(1).epochs(2).learningRate(0.025).minLearningRate(0.001).iterate(iter).tokenizerFactory(t).build();
+  Word2Vec wordVectors=new Word2Vec.Builder().minWordFrequency(1).batchSize(250).iterations(3).epochs(1).learningRate(0.025).layerSize(150).minLearningRate(0.001).windowSize(5).iterate(iter).tokenizerFactory(t).build();
   wordVectors.fit();
   INDArray vector_day1=wordVectors.getWordVectorMatrix("day").dup();
-  double similarityD=wordVectors.similarity("day","night");
-  log.info("day/night similarity: " + similarityD);
-  assertTrue(similarityD > 0.5d);
   FileLabelAwareIterator labelAwareIterator=new FileLabelAwareIterator.Builder().addSourceFolder(new ClassPathResource("/paravec/labeled").getFile()).build();
   FileLabelAwareIterator unlabeledIterator=new FileLabelAwareIterator.Builder().addSourceFolder(new ClassPathResource("/paravec/unlabeled").getFile()).build();
-  ParagraphVectors paragraphVectors=new ParagraphVectors.Builder().iterate(labelAwareIterator).iterations(1).epochs(10).tokenizerFactory(t).trainWordVectors(false).useExistingWordVectors(wordVectors).build();
+  ParagraphVectors paragraphVectors=new ParagraphVectors.Builder().iterate(labelAwareIterator).learningRate(0.025).minLearningRate(0.001).iterations(1).epochs(10).layerSize(150).tokenizerFactory(t).trainWordVectors(true).useExistingWordVectors(wordVectors).build();
   paragraphVectors.fit();
   INDArray vector_day2=paragraphVectors.getWordVectorMatrix("day").dup();
   double crossDay=arraysSimilarity(vector_day1,vector_day2);
-  log.info("Day1: " + vector_day1);
-  log.info("Day2: " + vector_day2);
-  log.info("Cross-Day similarity: " + crossDay);
-  log.info("Cross-Day similiarity 2: " + Transforms.cosineSim(vector_day1,vector_day2));
-  assertTrue(crossDay > 0.9d);
+  log.info("Zfinance: " + paragraphVectors.getWordVectorMatrix("Zfinance"));
+  log.info("Zhealth: " + paragraphVectors.getWordVectorMatrix("Zhealth"));
+  log.info("Zscience: " + paragraphVectors.getWordVectorMatrix("Zscience"));
+  LabelledDocument document=unlabeledIterator.nextDocument();
+  log.info("Results for document '" + document.getLabel() + "'");
+  List<String> results=new ArrayList<>(paragraphVectors.predictSeveral(document,3));
+  for (  String result : results) {
+    double sim=paragraphVectors.similarityToLabel(document,result);
+    log.info("Similarity to [" + result + "] is ["+ sim+ "]");
+  }
+  String topPrediction=paragraphVectors.predict(document);
+  assertEquals("Zhealth",topPrediction);
 }

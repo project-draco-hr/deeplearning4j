@@ -1,8 +1,8 @@
 {
   if (this.rng == null)   this.rng=Nd4j.getRandom();
+  this.rng.setSeed(seed);
   if (syn0 == null || reset) {
-    syn0=Nd4j.rand(new int[]{vocab.numWords() + 1,vectorLength},rng).subi(0.5).divi(vectorLength);
-    INDArray randUnk=Nd4j.rand(1,vectorLength,rng).subi(0.5).divi(vectorLength);
+    syn0=Nd4j.rand(new int[]{vocab.numWords(),vectorLength},rng).subi(0.5).divi(vectorLength);
   }
   if (syn1 == null || reset)   syn1=Nd4j.create(syn0.shape());
   initNegative();
