@@ -14,6 +14,7 @@
   conf.miniBatch=miniBatch;
   if (layer != null) {
     if (Double.isNaN(layer.getLearningRate()))     layer.setLearningRate(learningRate);
+    if (Double.isNaN(layer.getBiasLearningRate()))     layer.setBiasLearningRate(learningRate);
     if (layer.getLearningRateAfter() == null)     layer.setLearningRateAfter(learningRateAfter);
     if (Double.isNaN(layer.getLrScoreBasedDecay()))     layer.setLrScoreBasedDecay(lrScoreBasedDecay);
     if (Double.isNaN(layer.getL1()))     layer.setL1(l1);

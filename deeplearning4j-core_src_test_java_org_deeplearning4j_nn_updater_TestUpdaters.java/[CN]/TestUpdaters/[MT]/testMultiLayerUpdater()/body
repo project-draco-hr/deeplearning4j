@@ -1,8 +1,7 @@
 {
   Nd4j.getRandom().setSeed(12345L);
-  int nLayers=4;
   double lr=0.03;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(0.6).list(nLayers).layer(0,new DenseLayer.Builder().nIn(4).nOut(5).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new DenseLayer.Builder().nIn(5).nOut(6).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).layer(2,new DenseLayer.Builder().nIn(6).nOut(7).updater(org.deeplearning4j.nn.conf.Updater.ADAGRAD).build()).layer(3,new DenseLayer.Builder().nIn(7).nOut(8).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(0.6).list().layer(0,new DenseLayer.Builder().nIn(4).nOut(5).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).layer(1,new DenseLayer.Builder().nIn(5).nOut(6).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).layer(2,new DenseLayer.Builder().nIn(6).nOut(7).updater(org.deeplearning4j.nn.conf.Updater.ADAGRAD).build()).layer(3,new DenseLayer.Builder().nIn(7).nOut(8).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   Updater updater=UpdaterCreator.getUpdater(net);
@@ -12,7 +11,7 @@
   f.setAccessible(true);
   Updater[] updaters=(Updater[])f.get(updater);
   assertNotNull(updaters);
-  assertTrue(updaters.length == nLayers);
+  assertTrue(updaters.length == net.getnLayers());
   assertTrue(updaters[0] instanceof SgdUpdater);
   assertTrue(updaters[1] instanceof NoOpUpdater);
   assertTrue(updaters[2] instanceof AdaGradUpdater);
@@ -27,7 +26,7 @@
   for (int i=0; i < 5; i++) {
     Gradient gradient=new DefaultGradient();
     Map<String,INDArray> expectedGradient=new HashMap<>();
-    for (int j=0; j < nLayers; j++) {
+    for (int j=0; j < net.getnLayers(); j++) {
       INDArray wGrad=Nd4j.rand(nIns[j],nOuts[j]);
       INDArray bGrad=Nd4j.rand(1,nOuts[j]);
       String wKey=j + "_" + DefaultParamInitializer.WEIGHT_KEY;

@@ -1,7 +1,7 @@
 {
   for (  Layer layer : layers) {
-    if (!(layer instanceof SubsamplingLayer)) {
-      layer.conf().getLayer().setLearningRate(layer.conf().getLayer().getLearningRate() * (layer.conf().getLayer().getLrScoreBasedDecay() + Nd4j.EPS_THRESHOLD));
+    if (!layer.conf().getLearningRateByParam().isEmpty()) {
+      for (      Map.Entry<String,Double> lrPair : layer.conf().getLearningRateByParam().entrySet())       layer.conf().setLearningRateByParam(lrPair.getKey(),lrPair.getValue() * (layer.conf().getLayer().getLrScoreBasedDecay() + Nd4j.EPS_THRESHOLD));
     }
   }
 }
