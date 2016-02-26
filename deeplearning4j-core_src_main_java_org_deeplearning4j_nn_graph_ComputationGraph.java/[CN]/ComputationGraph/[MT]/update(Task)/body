@@ -2,30 +2,7 @@
   if (!initDone) {
     initDone=true;
     Heartbeat heartbeat=Heartbeat.getInstance();
-    task.setNetworkType(Task.NetworkType.ComputationalGraph);
-    task.setArchitectureType(Task.ArchitectureType.RECURRENT);
-    try {
-      if (this.getLayers() != null && this.getLayers().length > 0) {
-        for (        Layer layer : this.getLayers()) {
-          if (layer instanceof RBM || layer instanceof org.deeplearning4j.nn.layers.feedforward.rbm.RBM) {
-            task.setArchitectureType(Task.ArchitectureType.RBM);
-            break;
-          }
-          if (layer.type().equals(Layer.Type.CONVOLUTIONAL)) {
-            task.setArchitectureType(Task.ArchitectureType.CONVOLUTION);
-            break;
-          }
- else           if (layer.type().equals(Layer.Type.RECURRENT) || layer.type().equals(Layer.Type.RECURSIVE)) {
-            task.setArchitectureType(Task.ArchitectureType.RECURRENT);
-            break;
-          }
-        }
-      }
- else       task.setArchitectureType(Task.ArchitectureType.UNKNOWN);
-    }
- catch (    Exception e) {
-      ;
-    }
+    task=ModelSerializer.taskByModel(this);
     Environment env=EnvironmentUtils.buildEnvironment();
     heartbeat.reportEvent(Event.STANDALONE,env,task);
   }
