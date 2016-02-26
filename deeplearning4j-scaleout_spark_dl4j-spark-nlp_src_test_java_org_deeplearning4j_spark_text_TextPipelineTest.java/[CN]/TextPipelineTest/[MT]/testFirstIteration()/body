@@ -22,6 +22,6 @@
   Broadcast<double[]> expTableBroadcast=sc.broadcast(expTable);
   Iterator<Tuple2<List<VocabWord>,Long>> iterator=vocabWordListSentenceCumSumRDD.collect().iterator();
   FirstIterationFunction firstIterationFunction=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,pipeline.getBroadCastVocabCache());
-  Iterable<Map.Entry<Integer,INDArray>> ret=firstIterationFunction.call(iterator);
+  Iterable<Map.Entry<VocabWord,INDArray>> ret=firstIterationFunction.call(iterator);
   assertTrue(ret.iterator().hasNext());
 }
