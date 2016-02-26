@@ -8,6 +8,7 @@
   final JavaPairRDD<List<VocabWord>,Long> vocabWordListSentenceCumSumRDD;
   final VocabCache<VocabWord> vocabCache;
   final JavaRDD<Long> sentenceCumSumCountRDD;
+  int maxRep=1;
   log.info("Tokenization and building VocabCache ...");
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
@@ -41,6 +42,7 @@
   }
   for (  Map.Entry<Integer,AtomicInteger> entry : updates.entrySet()) {
     if (entry.getValue().get() > 1) {
+      if (entry.getValue().get() > maxRep)       maxRep=entry.getValue().get();
       syn0.getRow(entry.getKey()).divi(entry.getValue().get());
     }
   }
