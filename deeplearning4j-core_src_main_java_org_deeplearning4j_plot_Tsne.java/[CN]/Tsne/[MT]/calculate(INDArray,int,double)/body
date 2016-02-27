@@ -1,26 +1,42 @@
 {
-  if (usePca)   X=PCA.pca(X,Math.min(50,X.columns()),normalize);
-  if (normalize) {
-    X.subi(X.min(Integer.MAX_VALUE));
-    X=X.divi(X.max(Integer.MAX_VALUE));
-    X=X.subiRowVector(X.mean(0));
+  if (usePca) {
   }
-  if (nDims > X.columns())   nDims=X.columns();
-  INDArray sumX=pow(X,2).sum(1);
-  INDArray D=X.mmul(X.transpose()).muli(-2).addRowVector(sumX).transpose().addRowVector(sumX);
-  if (y == null)   y=randn(X.rows(),nDims,Nd4j.getRandom()).muli(1e-3f);
-  INDArray p=computeGaussianPerplexity(D,perplexity);
-  p.muli(4);
-  if (useAdaGrad) {
-    if (adaGrad == null) {
-      adaGrad=new AdaGrad(learningRate);
+  if (normalize) {
+  }
+  int n=X.rows();
+  Y=randn(X.rows(),targetDimensions,Nd4j.getRandom());
+  INDArray dY=Nd4j.zeros(n,targetDimensions);
+  INDArray iY=Nd4j.zeros(n,targetDimensions);
+  INDArray gains=Nd4j.ones(n,targetDimensions);
+  boolean stopLying=false;
+  System.out.println("Y:Shape is = " + Arrays.toString(Y.shape()));
+  INDArray P=x2p(X,tolerance,perplexity);
+  for (int i=0; i < maxIter; i++) {
+    INDArray sumY=pow(Y,2).sum(1).transpose();
+    INDArray qu=Y.mmul(Y.transpose()).muli(-2).addiRowVector(sumY).transpose().addiRowVector(sumY).addi(1).rdivi(1);
+    INDArray Q=qu.div(qu.sumNumber().doubleValue());
+    BooleanIndexing.applyWhere(Q,Conditions.lessThan(1e-12),new Value(1e-12));
+    INDArray PQ=P.sub(Q).muli(qu);
+    dY=diag(PQ.sum(1)).subi(PQ).mmul(Y).muli(4);
+    if (i < switchMomentumIteration) {
+      momentum=initialMomentum;
+    }
+ else {
+      momentum=finalMomentum;
+    }
+    gains=gains.add(.2).muli(dY.cond(Conditions.greaterThan(0)).neqi(iY.cond(Conditions.greaterThan(0)))).addi(gains.mul(0.8).muli(dY.cond(Conditions.greaterThan(0)).eqi(iY.cond(Conditions.greaterThan(0)))));
+    BooleanIndexing.applyWhere(gains,Conditions.lessThan(minGain),new Value(minGain));
+    INDArray gradChange=gains.mul(dY);
+    gradChange.muli(learningRate);
+    iY.muli(momentum).subi(gradChange);
+    double cost=P.mul(log(P.div(Q),false)).sumNumber().doubleValue();
+    logger.info("Iteration [" + i + "] error is: ["+ cost+ "]");
+    Y.addi(iY);
+    INDArray tiled=Nd4j.tile(Y.mean(0),new int[]{Y.rows(),1});
+    Y.subi(tiled);
+    if (!stopLying && (i > maxIter / 2 || i >= stopLyingIteration)) {
+      P.divi(4);
+      stopLying=true;
     }
   }
-  for (int i=0; i < maxIter; i++) {
-    step(p,i);
-    if (i == switchMomentumIteration)     momentum=finalMomentum;
-    if (i == stopLyingIteration)     p.divi(4);
-    if (iterationListener != null)     iterationListener.iterationDone(null,i);
-  }
-  return y;
 }

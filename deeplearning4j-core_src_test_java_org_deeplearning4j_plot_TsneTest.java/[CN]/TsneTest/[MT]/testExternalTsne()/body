@@ -1,5 +1,5 @@
 {
-  ProperTsne calculation=new ProperTsne.Builder().setMaxIter(20).usePca(false).setSwitchMomentumIteration(20).normalize(false).useAdaGrad(false).learningRate(500).perplexity(20).minGain(1e-1f).perplexity(20).build();
+  Tsne calculation=new Tsne.Builder().setMaxIter(500).usePca(false).setSwitchMomentumIteration(20).normalize(false).useAdaGrad(false).learningRate(500).perplexity(20).minGain(1e-1f).perplexity(20).build();
   File f=new File("/ext/mnist2500_X.txt");
   INDArray data=Nd4j.readNumpy(f.getAbsolutePath(),"   ");
   ClassPathResource labels=new ClassPathResource("mnist2500_labels.txt");
