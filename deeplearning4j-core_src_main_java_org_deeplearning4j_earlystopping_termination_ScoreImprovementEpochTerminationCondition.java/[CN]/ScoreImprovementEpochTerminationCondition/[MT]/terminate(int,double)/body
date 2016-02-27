@@ -5,7 +5,11 @@
     return false;
   }
  else {
-    if (score < bestScore) {
+    double improvement=bestScore - score;
+    if (improvement > minImprovement) {
+      if (minImprovement > 0) {
+        log.info("Epoch with score greater than threshold * * *");
+      }
       bestScore=score;
       bestEpoch=epochNum;
       return false;
