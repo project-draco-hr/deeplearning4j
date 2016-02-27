@@ -1,0 +1,5 @@
+{
+  if (port <= 0)   throw new IllegalStateException("UiServer port can't be <= 0");
+  info.setPort(port);
+  return this;
+}
