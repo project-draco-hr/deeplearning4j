@@ -4,16 +4,16 @@
   final INDArray beta=ones(n,1);
   final double logU=Math.log(perplexity);
   INDArray sumX=pow(X,2).sum(1);
-  logger.info("sumX shape: " + Arrays.toString(sumX.shape()));
+  logger.debug("sumX shape: " + Arrays.toString(sumX.shape()));
   INDArray times=X.mmul(X.transpose()).muli(-2);
-  logger.info("times shape: " + Arrays.toString(times.shape()));
+  logger.debug("times shape: " + Arrays.toString(times.shape()));
   INDArray prodSum=times.transpose().addiColumnVector(sumX);
-  logger.info("prodSum shape: " + Arrays.toString(prodSum.shape()));
+  logger.debug("prodSum shape: " + Arrays.toString(prodSum.shape()));
   INDArray D=X.mmul(X.transpose()).mul(-2).transpose().addColumnVector(sumX).addRowVector(sumX.transpose());
   logger.info("Calculating probabilities of data similarities...");
-  logger.info("Tolerance: " + tolerance);
+  logger.debug("Tolerance: " + tolerance);
   for (int i=0; i < n; i++) {
-    if (i % 500 == 0 && i > 0)     logger.info("Handled " + i + " records");
+    if (i % 500 == 0 && i > 0)     logger.info("Handled [" + i + "] records out of ["+ n+ "]");
     double betaMin=Double.NEGATIVE_INFINITY;
     double betaMax=Double.POSITIVE_INFINITY;
     int[] vals=Ints.concat(ArrayUtil.range(0,i),ArrayUtil.range(i + 1,n));

@@ -1,7 +1,11 @@
 {
   if (usePca) {
+    X=PCA.pca(X,Math.min(50,X.columns()),normalize);
   }
-  if (normalize) {
+ else   if (normalize) {
+    X.subi(X.min(Integer.MAX_VALUE));
+    X=X.divi(X.max(Integer.MAX_VALUE));
+    X=X.subiRowVector(X.mean(0));
   }
   int n=X.rows();
   Y=randn(X.rows(),targetDimensions,Nd4j.getRandom());
@@ -9,7 +13,7 @@
   INDArray iY=Nd4j.zeros(n,targetDimensions);
   INDArray gains=Nd4j.ones(n,targetDimensions);
   boolean stopLying=false;
-  System.out.println("Y:Shape is = " + Arrays.toString(Y.shape()));
+  logger.debug("Y:Shape is = " + Arrays.toString(Y.shape()));
   INDArray P=x2p(X,tolerance,perplexity);
   for (int i=0; i < maxIter; i++) {
     INDArray sumY=pow(Y,2).sum(1).transpose();
@@ -17,6 +21,8 @@
     INDArray Q=qu.div(qu.sumNumber().doubleValue());
     BooleanIndexing.applyWhere(Q,Conditions.lessThan(1e-12),new Value(1e-12));
     INDArray PQ=P.sub(Q).muli(qu);
+    logger.debug("PQ shape is: " + Arrays.toString(PQ.shape()));
+    logger.debug("PQ.sum(1) shape is: " + Arrays.toString(PQ.sum(1).shape()));
     dY=diag(PQ.sum(1)).subi(PQ).mmul(Y).muli(4);
     if (i < switchMomentumIteration) {
       momentum=initialMomentum;
