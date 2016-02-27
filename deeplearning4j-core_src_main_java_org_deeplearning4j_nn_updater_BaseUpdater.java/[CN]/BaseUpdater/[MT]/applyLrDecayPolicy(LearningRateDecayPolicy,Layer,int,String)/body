@@ -1,0 +1,20 @@
+{
+  NeuralNetConfiguration conf=layer.conf();
+  double decayRate=layer.conf().getLrDecayRate();
+  double lr=conf.getLearningRateByParam(variable);
+switch (decay) {
+case Exponential:
+    conf.setLearningRateByParam(variable,lr * Math.pow(decayRate,conf.getLrDecayNumBatches()));
+  break;
+case Inverse:
+conf.setLearningRateByParam(variable,lr / Math.pow((1 + decayRate * conf.getLrDecayNumBatches()),conf.getLrDecayPower()));
+break;
+case Step:
+conf.setLearningRateByParam(variable,lr * Math.pow(decayRate,Math.floor(conf.getLrDecayNumBatches() / conf.getLrDecayNumSteps())));
+break;
+case Schedule:
+if (conf.getLayer().getLearningRateAfter().containsKey(iteration)) conf.getLayer().setLearningRate(conf.getLayer().getLearningRateAfter().get(iteration));
+break;
+}
+if (updaterForVariable.get(variable) != null) updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable));
+}

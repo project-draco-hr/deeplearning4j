@@ -12,6 +12,11 @@
   conf.stepFunction=stepFunction;
   conf.useDropConnect=useDropConnect;
   conf.miniBatch=miniBatch;
+  conf.learningRateDecayPolicy=learningRateDecayPolicy;
+  conf.lrDecayRate=lrDecayRate;
+  conf.lrDecayNumBatches=lrDecayNumBatches;
+  conf.lrDecayNumSteps=lrDecayNumSteps;
+  conf.lrDecayPower=lrDecayPower;
   if (layer != null) {
     if (Double.isNaN(layer.getLearningRate()))     layer.setLearningRate(learningRate);
     if (Double.isNaN(layer.getBiasLearningRate()))     layer.setBiasLearningRate(learningRate);
