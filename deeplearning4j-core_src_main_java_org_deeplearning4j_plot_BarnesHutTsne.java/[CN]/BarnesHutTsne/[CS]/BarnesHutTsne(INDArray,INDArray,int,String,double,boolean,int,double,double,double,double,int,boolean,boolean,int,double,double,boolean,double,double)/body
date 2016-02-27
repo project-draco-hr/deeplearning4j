@@ -1,6 +1,20 @@
 {
-  super(maxIter,realMin,initialMomentum,finalMomentum,momentum,switchMomentumIteration,normalize,usePca,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity,minGain);
-  this.y=y;
+  super();
+  this.maxIter=maxIter;
+  this.realMin=realMin;
+  this.initialMomentum=initialMomentum;
+  this.finalMomentum=finalMomentum;
+  this.momentum=momentum;
+  this.normalize=normalize;
+  this.useAdaGrad=useAdaGrad;
+  this.usePca=usePca;
+  this.stopLyingIteration=stopLyingIteration;
+  this.learningRate=learningRate;
+  this.switchMomentumIteration=switchMomentumIteration;
+  this.tolerance=tolerance;
+  this.perplexity=perplexity;
+  this.minGain=minGain;
+  this.Y=y;
   this.x=x;
   this.numDimensions=numDimensions;
   this.simiarlityFunction=simiarlityFunction;

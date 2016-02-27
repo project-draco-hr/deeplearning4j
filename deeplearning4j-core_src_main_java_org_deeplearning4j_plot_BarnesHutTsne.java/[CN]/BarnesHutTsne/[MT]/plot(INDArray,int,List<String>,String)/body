@@ -1,12 +1,12 @@
 {
   fit(matrix,nDims);
   BufferedWriter write=new BufferedWriter(new FileWriter(new File(path)));
-  for (int i=0; i < y.rows(); i++) {
+  for (int i=0; i < Y.rows(); i++) {
     if (i >= labels.size())     break;
     String word=labels.get(i);
     if (word == null)     continue;
     StringBuffer sb=new StringBuffer();
-    INDArray wordVector=y.getRow(i);
+    INDArray wordVector=Y.getRow(i);
     for (int j=0; j < wordVector.length(); j++) {
       sb.append(wordVector.getDouble(j));
       if (j < wordVector.length() - 1)       sb.append(",");
