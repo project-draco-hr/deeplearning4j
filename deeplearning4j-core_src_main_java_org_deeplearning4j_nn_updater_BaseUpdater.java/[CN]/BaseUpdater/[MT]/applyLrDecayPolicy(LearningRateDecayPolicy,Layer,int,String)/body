@@ -16,5 +16,6 @@ case Schedule:
 if (conf.getLayer().getLearningRateAfter().containsKey(iteration)) conf.getLayer().setLearningRate(conf.getLayer().getLearningRateAfter().get(iteration));
 break;
 }
-if (updaterForVariable.get(variable) != null) updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable));
+if (layer.conf().getLayer().getUpdater() == org.deeplearning4j.nn.conf.Updater.NESTEROVS) applyMomentumDecayPolicy(layer,iteration,variable);
+ else if (updaterForVariable.get(variable) != null) updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable));
 }
