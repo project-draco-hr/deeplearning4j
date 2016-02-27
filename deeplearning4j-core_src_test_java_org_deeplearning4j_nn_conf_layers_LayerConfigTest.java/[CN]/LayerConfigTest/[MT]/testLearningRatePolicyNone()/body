@@ -1,0 +1,8 @@
+{
+  double lr=2;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateDecayPolicy(LearningRateDecayPolicy.None).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(LearningRateDecayPolicy.None,conf.getConf(0).getLearningRateDecayPolicy());
+  assertEquals(LearningRateDecayPolicy.None,conf.getConf(1).getLearningRateDecayPolicy());
+}

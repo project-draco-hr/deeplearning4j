@@ -1,0 +1,17 @@
+{
+  double lr=2;
+  double lrDecayRate=5;
+  double numBatches=10;
+  double steps=4;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateDecayPolicy(LearningRateDecayPolicy.Step).lrPolicyDecayRate(lrDecayRate).lrPolicyDecayNumBatches(numBatches).lrDecayNumSteps(steps).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(LearningRateDecayPolicy.Step,conf.getConf(0).getLearningRateDecayPolicy());
+  assertEquals(LearningRateDecayPolicy.Step,conf.getConf(1).getLearningRateDecayPolicy());
+  assertEquals(lrDecayRate,conf.getConf(0).getLrDecayRate(),0.0);
+  assertEquals(lrDecayRate,conf.getConf(1).getLrDecayRate(),0.0);
+  assertEquals(numBatches,conf.getConf(0).getLrDecayNumBatches(),0.0);
+  assertEquals(numBatches,conf.getConf(1).getLrDecayNumBatches(),0.0);
+  assertEquals(steps,conf.getConf(0).getLrDecayNumSteps(),0.0);
+  assertEquals(steps,conf.getConf(1).getLrDecayNumSteps(),0.0);
+}
