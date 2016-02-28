@@ -1,0 +1,20 @@
+{
+  Map<Integer,List<ObjectType>> result=new ConcurrentHashMap<>();
+  try {
+    singleLock.readLock().lock();
+    Set<Integer> sessions=storage.rowKeySet();
+    for (    Integer session : sessions) {
+      Map<ObjectType,Object> map=storage.row(session);
+      for (      ObjectType type : map.keySet()) {
+        if (!result.containsKey(session)) {
+          result.put(session,new ArrayList<ObjectType>());
+        }
+        result.get(session).add(type);
+      }
+    }
+    return result;
+  }
+  finally {
+    singleLock.readLock().unlock();
+  }
+}
