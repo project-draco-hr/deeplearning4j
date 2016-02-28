@@ -6,7 +6,7 @@
   this.dist=builder.dist;
   this.learningRate=builder.learningRate;
   this.biasLearningRate=builder.biasLearningRate;
-  this.learningRateSchedule=builder.learningRateAfter;
+  this.learningRateSchedule=builder.learningRateSchedule;
   this.lrScoreBasedDecay=builder.lrScoreBasedDecay;
   this.momentum=builder.momentum;
   this.momentumSchedule=builder.momentumAfter;

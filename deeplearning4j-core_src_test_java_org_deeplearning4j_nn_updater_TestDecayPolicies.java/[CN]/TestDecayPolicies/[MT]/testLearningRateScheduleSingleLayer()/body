@@ -4,7 +4,7 @@
   int iterations=2;
   for (  org.deeplearning4j.nn.conf.Updater updaterFunc : updaters) {
     double lr=1e-2;
-    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateAfter(learningRateAfter).learningRateDecayPolicy(LearningRatePolicy.Schedule).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(updaterFunc).build()).build();
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateSchedule(learningRateAfter).learningRateDecayPolicy(LearningRatePolicy.Schedule).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(updaterFunc).build()).build();
     Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
     Updater updater=UpdaterCreator.getUpdater(layer);
     Gradient gradientActual=new DefaultGradient();
