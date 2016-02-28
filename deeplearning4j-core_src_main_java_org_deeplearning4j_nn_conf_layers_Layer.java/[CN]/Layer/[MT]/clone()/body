@@ -2,8 +2,8 @@
   try {
     Layer clone=(Layer)super.clone();
     if (clone.dist != null)     clone.dist=clone.dist.clone();
-    if (clone.learningRateAfter != null)     clone.learningRateAfter=new HashMap<>(clone.learningRateAfter);
-    if (clone.momentumAfter != null)     clone.momentumAfter=new HashMap<>(clone.momentumAfter);
+    if (clone.learningRateSchedule != null)     clone.learningRateSchedule=new HashMap<>(clone.learningRateSchedule);
+    if (clone.momentumSchedule != null)     clone.momentumSchedule=new HashMap<>(clone.momentumSchedule);
     return clone;
   }
  catch (  CloneNotSupportedException e) {

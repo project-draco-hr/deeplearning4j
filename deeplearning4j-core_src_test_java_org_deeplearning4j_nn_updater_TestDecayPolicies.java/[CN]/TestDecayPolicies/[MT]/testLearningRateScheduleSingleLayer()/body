@@ -1,0 +1,25 @@
+{
+  Map<Integer,Double> learningRateAfter=new HashMap<>();
+  learningRateAfter.put(1,0.2);
+  int iterations=2;
+  for (  org.deeplearning4j.nn.conf.Updater updaterFunc : updaters) {
+    double lr=1e-2;
+    NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateAfter(learningRateAfter).learningRateDecayPolicy(LearningRatePolicy.Schedule).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(updaterFunc).build()).build();
+    Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+    Updater updater=UpdaterCreator.getUpdater(layer);
+    Gradient gradientActual=new DefaultGradient();
+    gradientActual.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+    gradientActual.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+    Gradient gradientExpected=new DefaultGradient();
+    gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+    gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+    for (int i=0; i < 2; i++) {
+      updater.update(layer,gradientActual,i,1);
+      if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.SGD))       lr=testSGDComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
+ else       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.ADAGRAD))       lr=testAdaGradComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
+ else       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.ADAM))       lr=testAdamComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
+ else       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.RMSPROP))       lr=testRMSPropComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);
+      assertEquals(lr,layer.conf().getLearningRateByParam("W"),1e-4);
+    }
+  }
+}

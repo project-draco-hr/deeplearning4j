@@ -12,15 +12,14 @@
   conf.stepFunction=stepFunction;
   conf.useDropConnect=useDropConnect;
   conf.miniBatch=miniBatch;
-  conf.learningRateDecayPolicy=learningRateDecayPolicy;
-  conf.lrDecayRate=lrDecayRate;
-  conf.lrDecayNumBatches=lrDecayNumBatches;
-  conf.lrDecayNumSteps=lrDecayNumSteps;
-  conf.lrDecayPower=lrDecayPower;
+  conf.learningRatePolicy=learningRatePolicy;
+  conf.lrPolicyDecayRate=lrPolicyDecayRate;
+  conf.lrPolicySteps=lrPolicySteps;
+  conf.lrPolicyPower=lrPolicyPower;
   if (layer != null) {
     if (Double.isNaN(layer.getLearningRate()))     layer.setLearningRate(learningRate);
     if (Double.isNaN(layer.getBiasLearningRate()))     layer.setBiasLearningRate(learningRate);
-    if (layer.getLearningRateAfter() == null)     layer.setLearningRateAfter(learningRateAfter);
+    if (layer.getLearningRateSchedule() == null)     layer.setLearningRateSchedule(learningRateAfter);
     if (Double.isNaN(layer.getLrScoreBasedDecay()))     layer.setLrScoreBasedDecay(lrScoreBasedDecay);
     if (Double.isNaN(layer.getL1()))     layer.setL1(l1);
     if (Double.isNaN(layer.getL2()))     layer.setL2(l2);
@@ -31,7 +30,7 @@
     if (Double.isNaN(layer.getDropOut()))     layer.setDropOut(dropOut);
     if (layer.getUpdater() == null)     layer.setUpdater(updater);
     if (Double.isNaN(layer.getMomentum()))     layer.setMomentum(momentum);
-    if (layer.getMomentumAfter() == null)     layer.setMomentumAfter(momentumAfter);
+    if (layer.getMomentumSchedule() == null)     layer.setMomentumSchedule(momentumAfter);
     if (Double.isNaN(layer.getRho()))     layer.setRho(rho);
     if (Double.isNaN(layer.getRmsDecay()))     layer.setRmsDecay(rmsDecay);
     if (Double.isNaN(layer.getAdamMeanDecay()))     layer.setAdamMeanDecay(adamMeanDecay);

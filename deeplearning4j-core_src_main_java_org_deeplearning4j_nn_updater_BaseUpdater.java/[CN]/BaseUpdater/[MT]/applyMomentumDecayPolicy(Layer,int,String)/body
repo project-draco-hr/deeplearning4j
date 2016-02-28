@@ -1,7 +1,7 @@
 {
   NeuralNetConfiguration conf=layer.conf();
-  if (conf.getLayer().getMomentumAfter().containsKey(iteration)) {
-    conf.getLayer().setMomentum(conf.getLayer().getMomentumAfter().get(iteration));
-    if (updaterForVariable.get(variable) != null)     updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable),conf.getLayer().getMomentumAfter().get(iteration));
+  if (conf.getLayer().getMomentumSchedule().containsKey(iteration)) {
+    conf.getLayer().setMomentum(conf.getLayer().getMomentumSchedule().get(iteration));
+    if (updaterForVariable.get(variable) != null)     updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable),conf.getLayer().getMomentumSchedule().get(iteration));
   }
 }

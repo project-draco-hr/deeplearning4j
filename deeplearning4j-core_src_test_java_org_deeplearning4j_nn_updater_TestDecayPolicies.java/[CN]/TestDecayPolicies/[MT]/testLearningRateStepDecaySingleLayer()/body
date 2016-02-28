@@ -1,0 +1,18 @@
+{
+  int iterations=2;
+  double lr=1e-2;
+  double decayRate=2;
+  double steps=3;
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateDecayPolicy(LearningRatePolicy.Step).lrPolicyDecayRate(decayRate).lrPolicySteps(steps).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.SGD).build()).build();
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  Updater updater=UpdaterCreator.getUpdater(layer);
+  Gradient gradientActual=new DefaultGradient();
+  gradientActual.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
+  gradientActual.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  for (int i=0; i < iterations; i++) {
+    updater.update(layer,gradientActual,i,1);
+    double expectedLr=calcStepDecay(lr,decayRate,i,steps);
+    assertEquals(expectedLr,layer.conf().getLearningRateByParam("W"),1e-4);
+    assertEquals(expectedLr,layer.conf().getLearningRateByParam("b"),1e-4);
+  }
+}
