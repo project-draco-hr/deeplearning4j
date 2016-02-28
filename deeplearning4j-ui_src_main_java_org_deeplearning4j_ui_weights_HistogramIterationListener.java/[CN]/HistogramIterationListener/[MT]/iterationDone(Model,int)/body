@@ -72,7 +72,9 @@
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(g,MediaType.APPLICATION_JSON));
     log.info("{}",resp);
     if (openBrowser && firstIteration) {
-      UiUtils.tryOpenBrowser(path,log);
+      StringBuilder builder=new StringBuilder(connectionInfo.getFullAddress());
+      builder.append(subPath).append("?sid=").append(connectionInfo.getSessionId());
+      UiUtils.tryOpenBrowser(builder.toString(),log);
       firstIteration=false;
     }
   }

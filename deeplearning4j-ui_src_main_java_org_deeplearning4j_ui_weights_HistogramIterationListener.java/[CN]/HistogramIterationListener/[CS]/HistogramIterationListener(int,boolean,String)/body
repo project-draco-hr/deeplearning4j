@@ -11,9 +11,10 @@
   this.iterations=iterations;
   if (this.iterations < 1)   this.iterations=1;
   UiConnectionInfo connectionInfo=new UiConnectionInfo.Builder().enableHttps(false).setAddress("localhost").setPort(port).build();
+  this.connectionInfo=connectionInfo;
   target=client.target(connectionInfo.getFirstPart()).path(subPath).path("update").queryParam("sid",connectionInfo.getSessionId());
   this.openBrowser=openBrowser;
   this.path="http://localhost:" + port + "/"+ subPath;
   this.subPath=subPath;
-  System.out.println("UI Histogram URL: " + this.path);
+  System.out.println("UI Histogram URL: " + this.path + "?sid="+ connectionInfo.getSessionId());
 }
