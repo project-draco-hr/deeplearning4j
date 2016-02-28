@@ -4,6 +4,9 @@
     if (clone.layer != null)     clone.layer=clone.layer.clone();
     if (clone.stepFunction != null)     clone.stepFunction=clone.stepFunction.clone();
     if (clone.variables != null)     clone.variables=new ArrayList<>(clone.variables);
+    if (clone.learningRateByParam != null)     clone.learningRateByParam=new HashMap<>(clone.learningRateByParam);
+    if (clone.l1ByParam != null)     clone.l1ByParam=new HashMap<>(clone.l1ByParam);
+    if (clone.l2ByParam != null)     clone.l2ByParam=new HashMap<>(clone.l2ByParam);
     return clone;
   }
  catch (  CloneNotSupportedException e) {
