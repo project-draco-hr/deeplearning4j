@@ -1,0 +1,7 @@
+{
+  CompactModelAndGradient model=(CompactModelAndGradient)storage.getObject(sessionId,ObjectType.HISTOGRAM);
+  if (model == null) {
+    return Response.noContent().build();
+  }
+ else   return Response.ok(Collections.singletonMap("status",true)).build();
+}

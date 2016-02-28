@@ -1,0 +1,14 @@
+{
+  try {
+    singleLock.writeLock().lock();
+    if (!accessTime.containsKey(sessionId)) {
+      accessTime.put(sessionId,new AtomicLong(System.currentTimeMillis()));
+    }
+    accessTime.get(sessionId).set(System.currentTimeMillis());
+    truncateUnused();
+    storage.put(sessionId,type,object);
+  }
+  finally {
+    singleLock.writeLock().unlock();
+  }
+}
