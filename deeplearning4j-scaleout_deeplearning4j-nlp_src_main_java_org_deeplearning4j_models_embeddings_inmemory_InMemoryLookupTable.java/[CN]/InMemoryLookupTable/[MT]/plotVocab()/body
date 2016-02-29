@@ -1,4 +1,0 @@
-{
-  Tsne tsne=new Tsne.Builder().normalize(false).setFinalMomentum(0.8f).setMaxIter(1000).build();
-  plotVocab(tsne);
-}

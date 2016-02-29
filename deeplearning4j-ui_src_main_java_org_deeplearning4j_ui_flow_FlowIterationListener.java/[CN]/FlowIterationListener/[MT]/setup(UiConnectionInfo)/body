@@ -1,0 +1,9 @@
+{
+  this.connectionInfo=connectionInfo;
+  java.util.logging.Logger logger=java.util.logging.Logger.getGlobal();
+  login=null;
+  password=null;
+  if (login == null || password == null)   target=client.target(connectionInfo.getFirstPart()).path(connectionInfo.getSecondPart("flow")).path("state").queryParam("sid",connectionInfo.getSessionId());
+  this.path=connectionInfo.getFullAddress("flow");
+  log.info("Flow UI address: " + this.path);
+}
