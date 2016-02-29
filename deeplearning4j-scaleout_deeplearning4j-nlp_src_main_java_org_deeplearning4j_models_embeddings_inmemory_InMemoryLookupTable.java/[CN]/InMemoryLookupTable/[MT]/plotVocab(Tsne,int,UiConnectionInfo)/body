@@ -7,7 +7,7 @@
     Client client=ClientBuilder.newClient().register(JacksonJsonProvider.class).register(new ObjectMapperProvider());
     WebTarget target=client.target(connectionInfo.getFirstPart()).path(connectionInfo.getSecondPart("api")).path("coords").queryParam("sid",connectionInfo.getSessionId());
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(list,MediaType.APPLICATION_JSON));
-    log.info("{}",resp);
+    log.debug("{}",resp);
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
