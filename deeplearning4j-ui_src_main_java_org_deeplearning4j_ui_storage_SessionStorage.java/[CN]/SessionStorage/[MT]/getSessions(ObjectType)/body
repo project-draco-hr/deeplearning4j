@@ -1,9 +1,9 @@
 {
-  List<Integer> results=new ArrayList<>();
+  List<String> results=new ArrayList<>();
   try {
     singleLock.readLock().lock();
-    Map<Integer,Object> map=storage.column(type);
-    for (    Integer session : map.keySet()) {
+    Map<String,Object> map=storage.column(type);
+    for (    String session : map.keySet()) {
       results.add(session);
     }
   }
