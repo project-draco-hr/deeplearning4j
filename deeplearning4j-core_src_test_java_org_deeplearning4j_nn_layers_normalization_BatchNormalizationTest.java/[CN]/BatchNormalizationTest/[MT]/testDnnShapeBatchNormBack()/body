@@ -1,0 +1,11 @@
+{
+  Layer layer=setupActivations(2,16);
+  layer.preOutput(dnnInput);
+  Pair<Gradient,INDArray> actualOut=layer.backpropGradient(dnnEpsilon);
+  INDArray dnnExpectedEpsilonOut=Nd4j.create(new double[]{-0.00,-0.00,-0.00,-0.00,0.50,0.50,0.50,0.50,-0.00,-0.00,-0.00,-0.00,0.50,0.50,0.50,0.50,2.00,2.00,2.00,2.00,1.50,1.50,1.50,1.50,2.00,2.00,2.00,2.00,1.50,1.50,1.50,1.50},new int[]{2,16});
+  INDArray expectedGGamma=Nd4j.create(new double[]{2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.,2.},new int[]{1,16});
+  INDArray expectedBeta=Nd4j.create(new double[]{0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.},new int[]{1,16});
+  assertEquals(dnnExpectedEpsilonOut,actualOut.getSecond());
+  assertEquals(expectedGGamma,actualOut.getFirst().getGradientFor("gamma"));
+  assertEquals(expectedBeta,actualOut.getFirst().getGradientFor("beta"));
+}

@@ -1,0 +1,42 @@
+{
+  if (input.rank() != 3 || labels.rank() != 3) {
+    log.warn("Cannot do truncated BPTT with non-3d inputs or labels. Expect input with shape [miniBatchSize,nIn,timeSeriesLength], got " + Arrays.toString(input.shape()) + "\t"+ Arrays.toString(labels.shape()));
+    return;
+  }
+  if (input.size(2) != labels.size(2)) {
+    log.warn("Input and label time series have different lengths: {} input length, {} label length",input.size(2),labels.size(2));
+    return;
+  }
+  int fwdLen=layerWiseConfigurations.getTbpttFwdLength();
+  int timeSeriesLength=input.size(2);
+  int nSubsets=timeSeriesLength / fwdLen;
+  if (fwdLen > timeSeriesLength) {
+    log.warn("Cannot do TBPTT: Truncated BPTT forward length (" + fwdLen + ") > input time series length ("+ timeSeriesLength+ ")");
+    return;
+  }
+  rnnClearPreviousState();
+  for (int i=0; i < nSubsets; i++) {
+    int startTimeIdx=i * fwdLen;
+    int endTimeIdx=startTimeIdx + fwdLen;
+    INDArray inputSubset=input.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.interval(startTimeIdx,endTimeIdx));
+    INDArray labelSubset=labels.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.interval(startTimeIdx,endTimeIdx));
+    setInput(inputSubset);
+    setLabels(labelSubset);
+    INDArray featuresMaskSubset=null;
+    INDArray labelsMaskSubset=null;
+    if (featuresMaskArray != null) {
+      featuresMaskSubset=featuresMaskArray.get(NDArrayIndex.all(),NDArrayIndex.interval(startTimeIdx,endTimeIdx));
+    }
+    if (labelsMaskArray != null) {
+      labelsMaskSubset=labelsMaskArray.get(NDArrayIndex.all(),NDArrayIndex.interval(startTimeIdx,endTimeIdx));
+    }
+    if (featuresMaskSubset != null || labelsMaskSubset != null)     setLayerMaskArrays(featuresMaskSubset,labelsMaskSubset);
+    if (solver == null) {
+      solver=new Solver.Builder().configure(conf()).listeners(getListeners()).model(this).build();
+    }
+    solver.optimize();
+    updateRnnStateWithTBPTTState();
+  }
+  rnnClearPreviousState();
+  if (featuresMaskArray != null || labelsMaskArray != null)   clearLayerMaskArrays();
+}

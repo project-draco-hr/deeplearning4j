@@ -7,7 +7,7 @@
   }
   if (layerWiseConfigurations.isBackprop()) {
     if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
-      doTruncatedBPTT(data,labels);
+      doTruncatedBPTT(data,labels,null,null);
     }
  else {
       if (solver == null) {

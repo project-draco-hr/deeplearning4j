@@ -6,7 +6,7 @@
   }
 ).cache();
   DataSet d=new IrisDataSetIterator(150,150).next();
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(123).optimizationAlgo(OptimizationAlgorithm.LINE_GRADIENT_DESCENT).iterations(100).miniBatch(true).maxNumLineSearchIterations(10).list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(100).weightInit(WeightInit.XAVIER).activation("relu").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(100).nOut(3).activation("softmax").weightInit(WeightInit.XAVIER).build()).backprop(false).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(123).optimizationAlgo(OptimizationAlgorithm.LINE_GRADIENT_DESCENT).iterations(100).miniBatch(true).maxNumLineSearchIterations(10).list().layer(0,new RBM.Builder(RBM.HiddenUnit.RECTIFIED,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(100).weightInit(WeightInit.XAVIER).activation("relu").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(100).nOut(3).activation("softmax").weightInit(WeightInit.XAVIER).build()).backprop(false).build();
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   System.out.println("Initializing network");

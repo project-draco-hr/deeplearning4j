@@ -1,3 +1,6 @@
 {
-  if (!variables.contains(variable))   variables.add(variable);
+  if (!variables.contains(variable)) {
+    variables.add(variable);
+    setLayerParamLR(variable);
+  }
 }

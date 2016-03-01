@@ -4,7 +4,7 @@
   String delim=",";
   boolean directed=true;
   String[] ignoreLinesStartingWith=new String[]{"//"};
-  IGraph<String,Double> graph=GraphLoader.loadWeightedEdgeListFile(path,numVertices,delim,directed,ignoreLinesStartingWith);
+  IGraph<String,Double> graph=GraphLoader.loadWeightedEdgeListFile(path,numVertices,delim,directed,false,ignoreLinesStartingWith);
   assertEquals(numVertices,graph.numVertices());
   EdgeLineProcessor<Double> edgeLineProcessor=new WeightedEdgeLineProcessor(delim,directed,ignoreLinesStartingWith);
   VertexFactory<String> vertexFactory=new StringVertexFactory();

@@ -6,6 +6,7 @@
   }
  catch (  CmdLineException e) {
     System.err.println(e.getMessage());
+    printUsage();
     return;
   }
 }

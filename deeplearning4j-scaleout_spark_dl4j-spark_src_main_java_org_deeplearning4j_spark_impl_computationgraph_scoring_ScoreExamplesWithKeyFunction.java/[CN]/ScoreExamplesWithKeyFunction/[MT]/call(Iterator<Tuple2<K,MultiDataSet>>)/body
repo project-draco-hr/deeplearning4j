@@ -1,0 +1,39 @@
+{
+  if (!iterator.hasNext()) {
+    return Collections.emptyList();
+  }
+  ComputationGraph network=new ComputationGraph(ComputationGraphConfiguration.fromJson(jsonConfig.getValue()));
+  network.init();
+  INDArray val=params.value();
+  if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcast set parameters");
+  network.setParams(val);
+  List<Tuple2<K,Double>> ret=new ArrayList<>();
+  List<MultiDataSet> collect=new ArrayList<>(batchSize);
+  List<K> collectKey=new ArrayList<>(batchSize);
+  int totalCount=0;
+  while (iterator.hasNext()) {
+    collect.clear();
+    collectKey.clear();
+    int nExamples=0;
+    while (iterator.hasNext() && nExamples < batchSize) {
+      Tuple2<K,MultiDataSet> t2=iterator.next();
+      MultiDataSet ds=t2._2();
+      int n=ds.getFeatures(0).size(0);
+      if (n != 1)       throw new IllegalStateException("Cannot score examples with one key per data set if " + "data set contains more than 1 example (numExamples: " + n + ")");
+      collect.add(ds);
+      collectKey.add(t2._1());
+      nExamples+=n;
+    }
+    totalCount+=nExamples;
+    MultiDataSet data=org.nd4j.linalg.dataset.MultiDataSet.merge(collect);
+    INDArray scores=network.scoreExamples(data,addRegularization);
+    double[] doubleScores=scores.data().asDouble();
+    for (int i=0; i < doubleScores.length; i++) {
+      ret.add(new Tuple2<>(collectKey.get(i),doubleScores[i]));
+    }
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Scored {} examples ",totalCount);
+  }
+  return ret;
+}

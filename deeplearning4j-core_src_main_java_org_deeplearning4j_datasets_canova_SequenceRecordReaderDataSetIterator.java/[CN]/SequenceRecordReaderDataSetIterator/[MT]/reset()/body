@@ -1,6 +1,6 @@
 {
   recordReader.reset();
-  labelsReader.reset();
+  if (labelsReader != null)   labelsReader.reset();
   cursor=0;
   stored=null;
   useStored=false;

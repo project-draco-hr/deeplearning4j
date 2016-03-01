@@ -1,0 +1,15 @@
+{
+  double lr=2;
+  double lrDecayRate=5;
+  double steps=4;
+  int iterations=1;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(iterations).learningRate(lr).learningRateDecayPolicy(LearningRatePolicy.Sigmoid).lrPolicyDecayRate(lrDecayRate).lrPolicySteps(steps).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  assertEquals(LearningRatePolicy.Sigmoid,conf.getConf(0).getLearningRatePolicy());
+  assertEquals(LearningRatePolicy.Sigmoid,conf.getConf(1).getLearningRatePolicy());
+  assertEquals(lrDecayRate,conf.getConf(0).getLrPolicyDecayRate(),0.0);
+  assertEquals(lrDecayRate,conf.getConf(1).getLrPolicyDecayRate(),0.0);
+  assertEquals(steps,conf.getConf(0).getLrPolicySteps(),0.0);
+  assertEquals(steps,conf.getConf(1).getLrPolicySteps(),0.0);
+}

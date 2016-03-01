@@ -1,0 +1,27 @@
+{
+  NeuralNetConfiguration conf=layer.conf();
+  double decayRate=layer.conf().getLrPolicyDecayRate();
+  double lr=conf.getLearningRateByParam(variable);
+switch (decay) {
+case Exponential:
+    conf.setLearningRateByParam(variable,lr * Math.pow(decayRate,iteration));
+  break;
+case Inverse:
+conf.setLearningRateByParam(variable,lr / Math.pow((1 + decayRate * iteration),conf.getLrPolicyPower()));
+break;
+case Step:
+conf.setLearningRateByParam(variable,lr * Math.pow(decayRate,Math.floor(iteration / conf.getLrPolicySteps())));
+break;
+case Poly:
+conf.setLearningRateByParam(variable,lr * Math.pow((1 - (iteration * 1.0) / conf.getNumIterations()),conf.getLrPolicyPower()));
+break;
+case Sigmoid:
+conf.setLearningRateByParam(variable,lr / (1 + Math.exp(-decayRate * (iteration - conf.getLrPolicySteps()))));
+break;
+case Schedule:
+if (conf.getLayer().getLearningRateSchedule().containsKey(iteration)) conf.setLearningRateByParam(variable,conf.getLayer().getLearningRateSchedule().get(iteration));
+break;
+}
+if (layer.conf().getLayer().getUpdater() == org.deeplearning4j.nn.conf.Updater.NESTEROVS) applyMomentumDecayPolicy(layer,iteration,variable);
+ else if (updaterForVariable.get(variable) != null) updaterForVariable.get(variable).update(conf.getLearningRateByParam(variable));
+}

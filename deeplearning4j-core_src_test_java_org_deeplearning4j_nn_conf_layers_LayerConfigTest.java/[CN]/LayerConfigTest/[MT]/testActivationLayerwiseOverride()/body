@@ -1,10 +1,10 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activation("relu").list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activation("relu").list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   assertEquals("relu",conf.getConf(0).getLayer().getActivationFunction().toString());
   assertEquals("relu",conf.getConf(1).getLayer().getActivationFunction().toString());
-  conf=new NeuralNetConfiguration.Builder().activation("relu").list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).activation("tanh").build()).build();
+  conf=new NeuralNetConfiguration.Builder().activation("relu").list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).activation("tanh").build()).build();
   net=new MultiLayerNetwork(conf);
   net.init();
   assertEquals("relu",conf.getConf(0).getLayer().getActivationFunction().toString());

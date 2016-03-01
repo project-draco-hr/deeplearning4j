@@ -1,4 +1,4 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(123).updater(Updater.NESTEROVS).learningRate(0.1).momentum(0.9).list(2).layer(0,new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(nIn).nOut(3).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(nOut).activation("softmax").build()).backprop(true).pretrain(false).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(123).updater(Updater.NESTEROVS).learningRate(0.1).momentum(0.9).list().layer(0,new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(nIn).nOut(3).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(nOut).activation("softmax").build()).backprop(true).pretrain(false).build();
   return conf;
 }
