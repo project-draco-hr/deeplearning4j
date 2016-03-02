@@ -1,6 +1,7 @@
 {
   if (fileDetail == null)   throw new RuntimeException("fileDetails is null");
-  String uploadedFileLocation=new File(filePath,fileDetail.getFileName()).getAbsolutePath();
+  String tFile=System.getProperty("java.io.tmpdir");
+  String uploadedFileLocation=new File(tFile,fileDetail.getFileName()).getAbsolutePath();
   LOGGER.info(uploadedFileLocation);
   writeToFile(uploadedInputStream,uploadedFileLocation);
   String output="{\"name\": \"" + fileDetail.getFileName() + "\"}";

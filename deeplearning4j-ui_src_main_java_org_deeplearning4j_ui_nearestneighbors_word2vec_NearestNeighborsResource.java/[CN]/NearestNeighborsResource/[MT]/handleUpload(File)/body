@@ -1,10 +1,13 @@
 {
+  logger.info("handleUpload: " + path.getAbsolutePath());
+  WordVectors vectors;
   try {
     if (path.getAbsolutePath().endsWith(".ser"))     vectors=SerializationUtils.readObject(path);
  else {
       vectors=WordVectorSerializer.fromPair(WordVectorSerializer.loadTxt(path));
     }
     vectors.setModelUtils(new BasicModelUtils());
+    storage.putObject("UploadedFile",ObjectType.WORD2VEC,vectors);
   }
  catch (  Exception e) {
     e.printStackTrace();
