@@ -1,0 +1,28 @@
+{
+  if (layers == null || !(layers[layers.length - 1] instanceof BaseOutputLayer)) {
+    throw new IllegalStateException("Cannot evaluate network with no output layer");
+  }
+  Evaluation e=new Evaluation();
+  while (iterator.hasNext()) {
+    DataSet ds=iterator.next();
+    INDArray features=ds.getFeatures();
+    INDArray labels=ds.getLabels();
+    INDArray out;
+    if (ds.hasMaskArrays()) {
+      INDArray fMask=ds.getFeaturesMaskArray();
+      INDArray lMask=ds.getLabelsMaskArray();
+      out=this.output(features,false,fMask,lMask);
+      if (lMask != null) {
+        e.evalTimeSeries(labels,out,lMask);
+      }
+ else {
+        e.evalTimeSeries(labels,out);
+      }
+    }
+ else {
+      out=this.output(features,false);
+      e.eval(labels,out);
+    }
+  }
+  return e;
+}
