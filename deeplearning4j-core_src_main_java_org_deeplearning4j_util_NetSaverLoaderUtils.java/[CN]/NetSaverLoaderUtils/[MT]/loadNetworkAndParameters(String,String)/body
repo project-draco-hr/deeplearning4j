@@ -1,0 +1,17 @@
+{
+  log.info("Loading saved model and parameters...");
+  MultiLayerNetwork savedNetwork=null;
+  try {
+    MultiLayerConfiguration confFromJson=MultiLayerConfiguration.fromJson(confPath);
+    DataInputStream dis=new DataInputStream(new FileInputStream(paramPath));
+    INDArray newParams=Nd4j.read(dis);
+    dis.close();
+    savedNetwork=new MultiLayerNetwork(confFromJson);
+    savedNetwork.init();
+    savedNetwork.setParams(newParams);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  return savedNetwork;
+}
