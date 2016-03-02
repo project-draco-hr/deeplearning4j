@@ -1,4 +1,6 @@
 {
   if (vocabCache == null)   throw new IllegalStateException("Vocab cache must be specified");
-  return new InMemoryLookupTable(vocabCache,vectorLength,useAdaGrad,lr,gen,negative);
+  InMemoryLookupTable table=new InMemoryLookupTable(vocabCache,vectorLength,useAdaGrad,lr,gen,negative);
+  table.seed=seed;
+  return table;
 }
