@@ -8,6 +8,13 @@
  else {
     log.info("Starting vocabulary building...");
     constructor.buildJointVocabulary(false,true);
+    if (useUnknown && unknownElement != null && !vocab.containsWord(unknownElement.getLabel())) {
+      log.info("Adding UNK element...");
+      unknownElement.setSpecial(true);
+      unknownElement.markAsLabel(false);
+      unknownElement.setIndex(vocab.numWords());
+      vocab.addToken(unknownElement);
+    }
     if (vocab.numWords() / constructor.getNumberOfSequences() > 1000) {
       log.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       log.warn("!                                                                                      !");

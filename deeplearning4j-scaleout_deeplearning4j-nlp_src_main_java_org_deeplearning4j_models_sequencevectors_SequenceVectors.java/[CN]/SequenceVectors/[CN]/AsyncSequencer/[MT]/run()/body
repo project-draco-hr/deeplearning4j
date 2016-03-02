@@ -16,6 +16,9 @@
           if (realElement != null) {
             newSequence.addElement(realElement);
           }
+ else           if (useUnknown && unknownElement != null) {
+            newSequence.addElement(unknownElement);
+          }
         }
         if (newSequence.getElements().size() > 0)         buffer.add(newSequence);
         linesLoaded.incrementAndGet();

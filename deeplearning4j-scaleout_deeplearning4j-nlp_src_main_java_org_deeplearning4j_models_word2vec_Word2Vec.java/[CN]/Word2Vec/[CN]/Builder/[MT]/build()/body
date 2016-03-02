@@ -22,6 +22,8 @@
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
   ret.workers=this.workers;
+  ret.useUnknown=this.useUnknown;
+  ret.unknownElement=this.unknownElement;
   ret.iterator=this.iterator;
   ret.lookupTable=this.lookupTable;
   ret.tokenizerFactory=this.tokenizerFactory;

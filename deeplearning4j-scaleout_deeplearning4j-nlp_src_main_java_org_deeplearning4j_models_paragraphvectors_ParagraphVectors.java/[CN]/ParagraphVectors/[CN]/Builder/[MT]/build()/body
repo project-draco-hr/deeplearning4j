@@ -39,6 +39,8 @@
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
   ret.workers=this.workers;
+  ret.useUnknown=this.useUnknown;
+  ret.unknownElement=this.unknownElement;
   ret.trainElementsVectors=this.trainElementsVectors;
   ret.trainSequenceVectors=this.trainSequenceVectors;
   ret.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
