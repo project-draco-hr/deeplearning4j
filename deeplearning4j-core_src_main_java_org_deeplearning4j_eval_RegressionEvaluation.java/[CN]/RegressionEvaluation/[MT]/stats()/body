@@ -1,0 +1,21 @@
+{
+  int maxLabelLength=0;
+  for (  String s : columnNames)   maxLabelLength=Math.max(maxLabelLength,s.length());
+  int labelWidth=maxLabelLength + 5;
+  int columnWidth=precision + 10;
+  String format="%-" + labelWidth + "s"+ "%-"+ columnWidth+ "."+ precision+ "e"+ "%-"+ columnWidth+ "."+ precision+ "e"+ "%-"+ columnWidth+ "."+ precision+ "e"+ "%-"+ columnWidth+ "."+ precision+ "e"+ "%-"+ columnWidth+ "."+ precision+ "e";
+  StringBuilder sb=new StringBuilder();
+  String headerFormat="%-" + labelWidth + "s"+ "%-"+ columnWidth+ "s"+ "%-"+ columnWidth+ "s"+ "%-"+ columnWidth+ "s"+ "%-"+ columnWidth+ "s"+ "%-"+ columnWidth+ "s";
+  sb.append(String.format(headerFormat,"Column","MSE","MAE","RMSE","RSE","R^2"));
+  sb.append("\n");
+  for (int i=0; i < columnNames.size(); i++) {
+    double mse=meanSquaredError(i);
+    double mae=meanAbsoluteError(i);
+    double rmse=rootMeanSquaredError(i);
+    double rse=relativeSquaredError(i);
+    double corr=correlationR2(i);
+    sb.append(String.format(format,columnNames.get(i),mse,mae,rmse,rse,corr));
+    sb.append("\n");
+  }
+  return sb.toString();
+}

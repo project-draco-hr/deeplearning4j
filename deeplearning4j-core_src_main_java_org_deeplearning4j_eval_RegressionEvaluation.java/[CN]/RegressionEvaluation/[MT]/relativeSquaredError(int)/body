@@ -1,0 +1,4 @@
+{
+  double m2a=m2Actual.getDouble(column);
+  return sumSquaredErrorsPerColumn.getDouble(column) / m2a;
+}

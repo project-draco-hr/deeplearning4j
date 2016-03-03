@@ -1,0 +1,14 @@
+{
+  this.columnNames=columnNames;
+  this.precision=precision;
+  int n=columnNames.size();
+  labelsSumPerColumn=Nd4j.zeros(n);
+  sumSquaredErrorsPerColumn=Nd4j.zeros(n);
+  sumAbsErrorsPerColumn=Nd4j.zeros(n);
+  currentMean=Nd4j.zeros(n);
+  m2Actual=Nd4j.zeros(n);
+  currentPredictionMean=Nd4j.zeros(n);
+  sumOfProducts=Nd4j.zeros(n);
+  sumSquaredLabels=Nd4j.zeros(n);
+  sumSquaredPredicted=Nd4j.zeros(n);
+}
