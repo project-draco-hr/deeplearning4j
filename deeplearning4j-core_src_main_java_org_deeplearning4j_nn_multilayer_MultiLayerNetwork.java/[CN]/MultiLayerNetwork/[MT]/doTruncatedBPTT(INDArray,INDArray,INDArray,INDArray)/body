@@ -8,6 +8,7 @@
     return;
   }
   int fwdLen=layerWiseConfigurations.getTbpttFwdLength();
+  update(TaskUtils.buildTask(input,labels));
   int timeSeriesLength=input.size(2);
   int nSubsets=timeSeriesLength / fwdLen;
   if (fwdLen > timeSeriesLength) {
