@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(2).layer(0,new RBM.Builder().build()).layer(1,new OutputLayer.Builder().build()).inputPreProcessor(1,new ReshapePreProcessor(new int[]{1,2},new int[]{3,4})).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new RBM.Builder().build()).layer(1,new OutputLayer.Builder().build()).inputPreProcessor(1,new ReshapePreProcessor(new int[]{1,2},new int[]{3,4})).build();
   MultiLayerConfiguration conf2=conf.clone();
   assertEquals(conf,conf2);
   assertNotSame(conf,conf2);
