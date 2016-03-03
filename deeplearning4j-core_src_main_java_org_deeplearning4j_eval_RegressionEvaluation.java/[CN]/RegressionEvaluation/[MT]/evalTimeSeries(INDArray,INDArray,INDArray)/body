@@ -1,0 +1,16 @@
+{
+  int totalOutputExamples=outputMask.sumNumber().intValue();
+  int outSize=labels.size(1);
+  INDArray labels2d=Nd4j.create(totalOutputExamples,outSize);
+  INDArray predicted2d=Nd4j.create(totalOutputExamples,outSize);
+  int rowCount=0;
+  for (int ex=0; ex < outputMask.size(0); ex++) {
+    for (int t=0; t < outputMask.size(1); t++) {
+      if (outputMask.getDouble(ex,t) == 0.0)       continue;
+      labels2d.putRow(rowCount,labels.get(NDArrayIndex.point(ex),NDArrayIndex.all(),NDArrayIndex.point(t)));
+      predicted2d.putRow(rowCount,predictions.get(NDArrayIndex.point(ex),NDArrayIndex.all(),NDArrayIndex.point(t)));
+      rowCount++;
+    }
+  }
+  eval(labels2d,predicted2d);
+}

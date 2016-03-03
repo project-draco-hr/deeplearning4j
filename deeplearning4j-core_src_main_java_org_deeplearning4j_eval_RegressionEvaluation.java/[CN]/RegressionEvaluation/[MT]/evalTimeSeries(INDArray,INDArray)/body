@@ -1,0 +1,15 @@
+{
+  if (labels.rank() == 2 && predictions.rank() == 2)   eval(labels,predictions);
+  if (labels.rank() != 3)   throw new IllegalArgumentException("Invalid input: labels are not rank 3 (rank=" + labels.rank() + ")");
+  if (!Arrays.equals(labels.shape(),predictions.shape())) {
+    throw new IllegalArgumentException("Labels and predicted have different shapes: labels=" + Arrays.toString(labels.shape()) + ", predictions="+ Arrays.toString(predictions.shape()));
+  }
+  if (labels.ordering() == 'f')   labels=Shape.toOffsetZeroCopy(labels,'c');
+  if (predictions.ordering() == 'f')   predictions=Shape.toOffsetZeroCopy(predictions,'c');
+  int[] shape=labels.shape();
+  labels=labels.permute(0,2,1);
+  labels=labels.reshape(shape[0] * shape[2],shape[1]);
+  predictions=predictions.permute(0,2,1);
+  predictions=predictions.reshape(shape[0] * shape[2],shape[1]);
+  eval(labels,predictions);
+}
