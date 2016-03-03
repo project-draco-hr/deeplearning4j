@@ -1,7 +1,7 @@
 {
   int nClassesIn=10;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activation("tanh").list(2).layer(0,new EmbeddingLayer.Builder().nIn(nClassesIn).nOut(5).build()).layer(1,new OutputLayer.Builder().nIn(5).nOut(4).build()).pretrain(false).backprop(true).build();
-  MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().activation("tanh").list(2).layer(0,new DenseLayer.Builder().nIn(nClassesIn).nOut(5).build()).layer(1,new OutputLayer.Builder().nIn(5).nOut(4).build()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().activation("tanh").list().layer(0,new EmbeddingLayer.Builder().nIn(nClassesIn).nOut(5).build()).layer(1,new OutputLayer.Builder().nIn(5).nOut(4).build()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().activation("tanh").list().layer(0,new DenseLayer.Builder().nIn(nClassesIn).nOut(5).build()).layer(1,new OutputLayer.Builder().nIn(5).nOut(4).build()).pretrain(false).backprop(true).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   MultiLayerNetwork net2=new MultiLayerNetwork(conf2);
   net.init();

@@ -5,10 +5,8 @@
   conf.layer=layer;
   conf.numIterations=numIterations;
   conf.useRegularization=useRegularization;
-  conf.useSchedules=useSchedules;
   conf.optimizationAlgo=optimizationAlgo;
   conf.seed=seed;
-  conf.timeSeriesLength=timeSeriesLength;
   conf.stepFunction=stepFunction;
   conf.useDropConnect=useDropConnect;
   conf.miniBatch=miniBatch;
@@ -20,7 +18,6 @@
     if (Double.isNaN(layer.getLearningRate()))     layer.setLearningRate(learningRate);
     if (Double.isNaN(layer.getBiasLearningRate()))     layer.setBiasLearningRate(learningRate);
     if (layer.getLearningRateSchedule() == null)     layer.setLearningRateSchedule(learningRateSchedule);
-    if (Double.isNaN(layer.getLrScoreBasedDecay()))     layer.setLrScoreBasedDecay(lrScoreBasedDecay);
     if (Double.isNaN(layer.getL1()))     layer.setL1(l1);
     if (Double.isNaN(layer.getL2()))     layer.setL2(l2);
     if (layer.getActivationFunction() == null)     layer.setActivationFunction(activationFunction);

@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).momentum(0.9).regularization(true).l2(2e-4).list(2).layer(0,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(100).momentum(0.9).regularization(true).l2(2e-4).list().layer(0,new RBM.Builder(RBM.HiddenUnit.GAUSSIAN,RBM.VisibleUnit.GAUSSIAN).nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("softmax").build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   Layer layer=net.getLayer(0);

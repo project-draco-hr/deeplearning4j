@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).list(2).layer(0,new DenseLayer.Builder().nIn(3).nOut(4).build()).layer(1,new OutputLayer.Builder().nIn(4).nOut(5).build()).pretrain(false).backprop(true).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).list().layer(0,new DenseLayer.Builder().nIn(3).nOut(4).build()).layer(1,new OutputLayer.Builder().nIn(4).nOut(5).build()).pretrain(false).backprop(true).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   DenseLayer dl=(DenseLayer)conf.getConf(0).getLayer();

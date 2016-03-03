@@ -1,7 +1,7 @@
 {
   int nIn=2;
   int nOut=2;
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list(2).layer(0,new DenseLayer.Builder().nIn(nIn).nOut(nOut).build()).layer(1,new OutputLayer.Builder().nIn(nIn).nOut(nOut).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new DenseLayer.Builder().nIn(nIn).nOut(nOut).build()).layer(1,new OutputLayer.Builder().nIn(nIn).nOut(nOut).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   return net;

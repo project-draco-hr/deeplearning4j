@@ -1,7 +1,0 @@
-{
-  if (random instanceof DefaultRandom) {
-    DefaultRandom dr=(DefaultRandom)random;
-    return new org.nd4j.linalg.api.rng.DefaultRandom(dr.getSeed());
-  }
-  throw new RuntimeException("unknown random type: " + random.getClass());
-}

@@ -19,10 +19,10 @@
             }
           }
           INDArray input=Nd4j.rand(new int[]{miniBatch,nIn,tsLength});
-          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE).activation("identity").nIn(5).nOut(nOut).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list().layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE).activation("identity").nIn(5).nOut(nOut).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
           MultiLayerNetwork mln=new MultiLayerNetwork(conf);
           mln.init();
-          MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(5).nOut(nOut).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+          MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list().layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(5).nOut(nOut).weightInit(WeightInit.XAVIER).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
           MultiLayerNetwork mln2=new MultiLayerNetwork(conf2);
           mln2.init();
           mln.setLayerMaskArrays(null,labelMaskArray);

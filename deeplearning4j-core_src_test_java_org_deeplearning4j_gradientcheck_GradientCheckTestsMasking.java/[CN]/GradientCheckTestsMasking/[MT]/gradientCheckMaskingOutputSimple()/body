@@ -30,7 +30,7 @@
     for (int j=0; j < mask[i].length; j++) {
       maskArr.putScalar(new int[]{0,j},mask[i][j] ? 1.0 : 0.0);
     }
-    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list(2).layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
+    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list().layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(layerSize).nOut(nOut).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
     MultiLayerNetwork mln=new MultiLayerNetwork(conf);
     mln.init();
     mln.setLayerMaskArrays(null,maskArr);

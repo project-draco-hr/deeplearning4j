@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().gradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue).gradientNormalizationThreshold(10).list(2).layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().gradientNormalization(GradientNormalization.ClipElementWiseAbsoluteValue).gradientNormalizationThreshold(10).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   assertEquals(GradientNormalization.ClipElementWiseAbsoluteValue,conf.getConf(0).getLayer().getGradientNormalization());
