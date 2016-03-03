@@ -61,7 +61,10 @@
     network.setUpdater(combinedUpdater);
     log.info("Processed and set updater");
   }
-  if (listeners.size() > 0)   invokeListeners(network,iterationsCount.incrementAndGet());
+  if (listeners.size() > 0) {
+    network.setScore(lastScore);
+    invokeListeners(network,iterationsCount.incrementAndGet());
+  }
   if (!initDone) {
     initDone=true;
     update(maxRep,0);
