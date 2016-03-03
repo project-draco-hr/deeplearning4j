@@ -46,12 +46,7 @@
     newParams.divi(maxRep);
     network.setParameters(newParams);
     log.info("Accumulated and set parameters");
-    JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple3<INDArray,Updater,Double>>(){
-      @Override public double call(      Tuple3<INDArray,Updater,Double> t3) throws Exception {
-        return t3._3();
-      }
-    }
-);
+    JavaDoubleRDD scores=results.mapToDouble(new ScoreMapping());
     lastScore=scores.mean();
     JavaRDD<Updater> resultsUpdater=results.map(new UpdaterFromTupleFunction());
     UpdaterAggregator aggregator=resultsUpdater.aggregate(null,new UpdaterElementCombiner(),new UpdaterAggregatorCombiner());
@@ -59,8 +54,12 @@
     network.setUpdater(combinedUpdater);
     log.info("Processed and set updater");
   }
-  if (listeners.size() > 0)   invokeListeners(network,iterationsCount.incrementAndGet());
+  if (listeners.size() > 0) {
+    log.info("Invoking IterationListeners");
+    invokeListeners(network,iterationsCount.incrementAndGet());
+  }
   if (!initDone) {
+    log.info("Invoking Update");
     initDone=true;
     update(maxRep,0);
   }
