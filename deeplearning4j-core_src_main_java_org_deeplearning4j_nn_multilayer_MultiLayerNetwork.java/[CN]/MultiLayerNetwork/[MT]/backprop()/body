@@ -1,5 +1,4 @@
 {
   Pair<Gradient,INDArray> pair=calcBackpropGradients(null,true);
   this.gradient=(pair == null ? null : pair.getFirst());
-  this.epsilon=(pair == null ? null : pair.getSecond());
 }

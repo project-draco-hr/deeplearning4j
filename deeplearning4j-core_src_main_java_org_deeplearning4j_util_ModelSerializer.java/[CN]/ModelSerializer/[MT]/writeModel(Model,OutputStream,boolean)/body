@@ -1,0 +1,40 @@
+{
+  ZipOutputStream zipfile=new ZipOutputStream(stream);
+  String json="";
+  if (model instanceof MultiLayerNetwork) {
+    json=((MultiLayerNetwork)model).getLayerWiseConfigurations().toJson();
+  }
+ else   if (model instanceof ComputationGraph) {
+    json=((ComputationGraph)model).getConfiguration().toJson();
+  }
+  ZipEntry config=new ZipEntry("configuration.json");
+  zipfile.putNextEntry(config);
+  writeEntry(new ByteArrayInputStream(json.getBytes()),zipfile);
+  ZipEntry coefficients=new ZipEntry("coefficients.bin");
+  zipfile.putNextEntry(coefficients);
+  ByteArrayOutputStream bos=new ByteArrayOutputStream();
+  DataOutputStream dos=new DataOutputStream(bos);
+  Nd4j.write(model.params(),dos);
+  dos.flush();
+  dos.close();
+  InputStream inputStream=new ByteArrayInputStream(bos.toByteArray());
+  writeEntry(inputStream,zipfile);
+  if (saveUpdater) {
+    ZipEntry updater=new ZipEntry("updater.bin");
+    zipfile.putNextEntry(updater);
+    bos=new ByteArrayOutputStream();
+    ObjectOutputStream oos=new ObjectOutputStream(bos);
+    if (model instanceof MultiLayerNetwork) {
+      oos.writeObject(((MultiLayerNetwork)model).getUpdater());
+    }
+ else     if (model instanceof ComputationGraph) {
+      oos.writeObject(((ComputationGraph)model).getUpdater());
+    }
+    oos.flush();
+    oos.close();
+    inputStream=new ByteArrayInputStream(bos.toByteArray());
+    writeEntry(inputStream,zipfile);
+  }
+  zipfile.flush();
+  zipfile.close();
+}

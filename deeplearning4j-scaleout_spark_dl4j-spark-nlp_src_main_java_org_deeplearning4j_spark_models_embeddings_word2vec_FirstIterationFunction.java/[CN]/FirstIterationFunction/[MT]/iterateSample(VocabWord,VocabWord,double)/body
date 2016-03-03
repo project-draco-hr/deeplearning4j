@@ -3,8 +3,8 @@
   final int currentWordIndex=w2.getIndex();
   INDArray neu1e=Nd4j.create(vectorLength);
   INDArray l1=null;
-  if (indexSyn0VecMap.containsKey(currentWordIndex)) {
-    l1=indexSyn0VecMap.get(currentWordIndex);
+  if (indexSyn0VecMap.containsKey(vocab.elementAtIndex(currentWordIndex))) {
+    l1=indexSyn0VecMap.get(vocab.elementAtIndex(currentWordIndex));
   }
  else {
     l1=getRandomSyn0Vec(vectorLength,(long)currentWordIndex);
@@ -56,5 +56,14 @@
     Nd4j.getBlasWrapper().axpy((float)g,l1,negativeHolder.getSyn1Neg().slice(target));
   }
   Nd4j.getBlasWrapper().level1().axpy(vectorLength,1.0f,neu1e,l1);
-  indexSyn0VecMap.put(currentWordIndex,l1);
+  if (aff.get() == 0) {
+synchronized (this) {
+      cid.set(EnvironmentUtils.buildCId());
+      aff.set(EnvironmentUtils.buildEnvironment().getAvailableMemory());
+    }
+  }
+  VocabWord word=vocab.elementAtIndex(currentWordIndex);
+  word.setVocabId(cid.get());
+  word.setAffinityId(aff.get());
+  indexSyn0VecMap.put(word,l1);
 }

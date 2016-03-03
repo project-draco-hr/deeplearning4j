@@ -1,4 +1,5 @@
 {
+  int maxRep=0;
   int paramsLength=network.numParams(false);
   log.info("Broadcasting initial parameters of length " + paramsLength);
   INDArray valToBroadcast=network.params(false);
@@ -19,7 +20,10 @@
     resultsGradient.foreach(a);
     INDArray accumulatedGradient=a.getAccumulator().value();
     boolean divideGrad=sc.getConf().getBoolean(DIVIDE_ACCUM_GRADIENT,false);
-    if (divideGrad)     accumulatedGradient.divi(results.partitions().size());
+    if (divideGrad) {
+      maxRep=results.partitions().size();
+      accumulatedGradient.divi(maxRep);
+    }
     log.info("Accumulated parameters");
     log.info("Summed gradients.");
     network.setParameters(network.params(false).addi(accumulatedGradient));
@@ -38,7 +42,8 @@
     Adder a=new Adder(paramsLength,sc.accumulator(0));
     resultsParams.foreach(a);
     INDArray newParams=a.getAccumulator().value();
-    newParams.divi(a.getCounter().value());
+    maxRep=a.getCounter().value();
+    newParams.divi(maxRep);
     network.setParameters(newParams);
     log.info("Accumulated and set parameters");
     JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple3<INDArray,Updater,Double>>(){
@@ -53,5 +58,9 @@
     Updater combinedUpdater=aggregator.getUpdater();
     network.setUpdater(combinedUpdater);
     log.info("Processed and set updater");
+  }
+  if (!initDone) {
+    initDone=true;
+    update(maxRep,0);
   }
 }

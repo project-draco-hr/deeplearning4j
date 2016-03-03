@@ -2,6 +2,7 @@
   isRunning.set(true);
   while (this.iterator.hasMoreSequences()) {
     if (buffer.size() < limitLower) {
+      update();
       AtomicInteger linesLoaded=new AtomicInteger(0);
       while (linesLoaded.getAndIncrement() < limitUpper && this.iterator.hasMoreSequences()) {
         Sequence<T> document=this.iterator.nextSequence();
