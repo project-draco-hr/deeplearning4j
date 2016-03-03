@@ -1,6 +1,0 @@
-{
-  if (!(model instanceof MultiLayerNetwork))   return;
-  network=(MultiLayerNetwork)model;
-  xi=network.pack();
-  ch=Nd4j.zeros(1,xi.length());
-}

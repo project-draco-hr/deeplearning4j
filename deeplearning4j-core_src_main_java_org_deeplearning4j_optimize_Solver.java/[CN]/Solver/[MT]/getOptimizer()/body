@@ -7,9 +7,6 @@ case LBFGS:
 case LINE_GRADIENT_DESCENT:
 optimizer=new LineGradientDescent(conf,stepFunction,listeners,model);
 break;
-case HESSIAN_FREE:
-optimizer=new StochasticHessianFree(conf,stepFunction,listeners,model);
-break;
 case CONJUGATE_GRADIENT:
 optimizer=new ConjugateGradient(conf,stepFunction,listeners,model);
 break;

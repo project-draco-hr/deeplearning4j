@@ -23,7 +23,6 @@
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
   conf.confs=this.confs;
   conf.pretrain=pretrain;
-  conf.dampingFactor=dampingFactor;
   conf.backprop=backprop;
   conf.inputPreProcessors=inputPreProcessors;
   conf.backpropType=backpropType;

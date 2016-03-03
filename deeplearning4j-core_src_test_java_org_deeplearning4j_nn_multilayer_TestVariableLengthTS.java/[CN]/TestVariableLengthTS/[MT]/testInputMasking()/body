@@ -4,7 +4,7 @@
   Random r=new Random(12345);
   for (  int nExamples : miniBatchSizes) {
     Nd4j.getRandom().setSeed(12345);
-    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(0.1).seed(12345).list(4).layer(0,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(2,new GravesLSTM.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(3,new RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nIn(2).nOut(1).build()).inputPreProcessor(0,new RnnToFeedForwardPreProcessor()).inputPreProcessor(2,new FeedForwardToRnnPreProcessor()).build();
+    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.SGD).learningRate(0.1).seed(12345).list().layer(0,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(2,new GravesLSTM.Builder().activation("tanh").nIn(2).nOut(2).build()).layer(3,new RnnOutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nIn(2).nOut(1).build()).inputPreProcessor(0,new RnnToFeedForwardPreProcessor()).inputPreProcessor(2,new FeedForwardToRnnPreProcessor()).build();
     MultiLayerNetwork net=new MultiLayerNetwork(conf);
     net.init();
     INDArray in1=Nd4j.rand(new int[]{nExamples,2,4});

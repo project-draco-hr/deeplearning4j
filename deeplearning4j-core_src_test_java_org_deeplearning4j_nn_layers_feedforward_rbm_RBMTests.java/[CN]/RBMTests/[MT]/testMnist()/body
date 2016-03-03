@@ -1,7 +1,7 @@
 {
   MnistDataFetcher fetcher=new MnistDataFetcher(true);
   Nd4j.ENFORCE_NUMERICAL_STABILITY=true;
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(30).constrainGradientToUnitNorm(true).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.RBM.Builder().nIn(784).nOut(600).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).build()).build();
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(30).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.RBM.Builder().nIn(784).nOut(600).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(1,1e-5)).lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).build()).build();
   org.deeplearning4j.nn.conf.layers.RBM layerConf=(org.deeplearning4j.nn.conf.layers.RBM)conf.getLayer();
   fetcher.fetch(10);
   DataSet d2=fetcher.next();

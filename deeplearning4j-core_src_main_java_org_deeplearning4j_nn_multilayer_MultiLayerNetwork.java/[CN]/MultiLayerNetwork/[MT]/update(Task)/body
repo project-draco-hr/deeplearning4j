@@ -1,9 +1,0 @@
-{
-  if (!initDone) {
-    initDone=true;
-    Heartbeat heartbeat=Heartbeat.getInstance();
-    task=ModelSerializer.taskByModel(this);
-    Environment env=EnvironmentUtils.buildEnvironment();
-    heartbeat.reportEvent(Event.STANDALONE,env,task);
-  }
-}

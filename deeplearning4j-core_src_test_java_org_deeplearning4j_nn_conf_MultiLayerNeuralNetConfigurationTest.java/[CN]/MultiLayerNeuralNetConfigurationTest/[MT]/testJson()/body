@@ -1,5 +1,5 @@
 {
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM.Builder().dist(new NormalDistribution(1,1e-1)).build()).list(2).inputPreProcessor(1,new ReshapePreProcessor()).build();
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().layer(new RBM.Builder().dist(new NormalDistribution(1,1e-1)).build()).list().inputPreProcessor(1,new ReshapePreProcessor()).build();
   String json=conf.toJson();
   MultiLayerConfiguration from=MultiLayerConfiguration.fromJson(json);
   assertEquals(conf.getConf(1),from.getConf(1));

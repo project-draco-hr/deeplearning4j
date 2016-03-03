@@ -1,0 +1,7 @@
+{
+  Map<Integer,String> paramPaths=new HashMap<>();
+  for (  int id : layerIds) {
+    paramPaths.put(id,FilenameUtils.concat(basePath,id + ".bin"));
+  }
+  return paramPaths;
+}

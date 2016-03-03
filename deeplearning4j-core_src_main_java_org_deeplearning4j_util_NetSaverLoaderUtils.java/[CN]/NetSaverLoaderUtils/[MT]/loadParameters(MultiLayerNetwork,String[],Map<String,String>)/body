@@ -1,0 +1,8 @@
+{
+  Layer layer;
+  for (  String layerId : layerIds) {
+    layer=net.getLayer(layerId);
+    loadLayerParameters(layer,paramPaths.get(layerId));
+  }
+  return net;
+}

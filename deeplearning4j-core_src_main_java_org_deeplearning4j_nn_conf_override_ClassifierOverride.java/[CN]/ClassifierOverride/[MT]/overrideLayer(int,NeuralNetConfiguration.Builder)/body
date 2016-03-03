@@ -1,3 +1,0 @@
-{
-  builder.layer(new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.ZERO).activation("softmax").build());
-}
