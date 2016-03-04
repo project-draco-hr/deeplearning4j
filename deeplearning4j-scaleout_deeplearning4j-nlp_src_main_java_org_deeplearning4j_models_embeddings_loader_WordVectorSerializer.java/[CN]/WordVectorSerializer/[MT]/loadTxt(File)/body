@@ -20,12 +20,10 @@
       }
  catch (      Exception e) {
         hasHeader=true;
-      }
- finally {
         try {
           reader.close();
         }
- catch (        Exception e) {
+ catch (        Exception ex) {
           ;
         }
       }
