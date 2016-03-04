@@ -38,6 +38,12 @@
     lookupTable.setSyn0(syn);
     LabelsSource source=new LabelsSource(labels);
     ParagraphVectors vectors=new ParagraphVectors.Builder().labelsSource(source).vocabCache(vocabCache).lookupTable(lookupTable).modelUtils(new BasicModelUtils<VocabWord>()).build();
+    try {
+      reader.close();
+    }
+ catch (    Exception e) {
+      ;
+    }
     return vectors;
   }
  catch (  Exception e) {
