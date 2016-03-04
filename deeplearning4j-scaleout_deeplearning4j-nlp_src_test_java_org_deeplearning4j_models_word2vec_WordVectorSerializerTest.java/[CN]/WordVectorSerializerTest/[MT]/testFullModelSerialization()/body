@@ -14,6 +14,7 @@
   System.out.println(lst);
   WordVectorSerializer.writeFullModel(vec,"tempModel.txt");
   File modelFile=new File("tempModel.txt");
+  modelFile.deleteOnExit();
   assertTrue(modelFile.exists());
   assertTrue(modelFile.length() > 0);
   Word2Vec vec2=WordVectorSerializer.loadFullModel("tempModel.txt");
