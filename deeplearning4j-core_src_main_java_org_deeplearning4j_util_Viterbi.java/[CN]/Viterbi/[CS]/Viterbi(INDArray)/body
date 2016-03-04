@@ -1,6 +1,8 @@
 {
   this.possibleLabels=possibleLabels;
   this.states=possibleLabels.length();
+  this.logPCorrect=FastMath.log(pCorrect);
+  this.logPIncorrect=FastMath.log(1 - pCorrect / states - 1);
   logOfDiangnalTProb=FastMath.log(1 - metaStability / states - 1);
   this.logStates=FastMath.log(states);
 }
