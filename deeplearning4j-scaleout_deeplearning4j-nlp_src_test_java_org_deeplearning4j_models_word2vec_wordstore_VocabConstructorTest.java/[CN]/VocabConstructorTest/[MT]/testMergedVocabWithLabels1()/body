@@ -18,7 +18,7 @@
   assertEquals(cacheSource.wordAtIndex(17),cacheTarget.wordAtIndex(17));
   assertEquals(cacheSource.wordAtIndex(45),cacheTarget.wordAtIndex(45));
   assertEquals(cacheSource.wordAtIndex(89),cacheTarget.wordAtIndex(89));
-  assertTrue(cacheTarget.indexOf("finance") > sourceSize - 1);
-  assertTrue(cacheTarget.indexOf("science") > sourceSize - 1);
-  assertTrue(cacheTarget.indexOf("health") > sourceSize - 1);
+  assertTrue(cacheTarget.indexOf("Zfinance") > sourceSize - 1);
+  assertTrue(cacheTarget.indexOf("Zscience") > sourceSize - 1);
+  assertTrue(cacheTarget.indexOf("Zhealth") > sourceSize - 1);
 }

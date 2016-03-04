@@ -1,0 +1,14 @@
+{
+  INDArray array=Nd4j.create(numWords,vectorLength);
+  try {
+    List<String> plot=new ArrayList<>();
+    for (int i=0; i < numWords && i < vocab.numWords(); i++) {
+      plot.add(vocab.wordAtIndex(i));
+      array.putRow(i,syn0.slice(i));
+    }
+    tsne.plot(array,2,plot,file.getAbsolutePath());
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

@@ -1,5 +1,5 @@
 {
-  LineSentenceIterator iterator=new LineSentenceIterator(new File(path));
+  BasicLineIterator iterator=new BasicLineIterator(new File(path));
   String confJson=iterator.nextSentence();
   log.info("Word2Vec conf. JSON: " + confJson);
   VectorsConfiguration configuration=VectorsConfiguration.fromJson(confJson);
@@ -9,17 +9,31 @@
   if (configuration.getNegative() > 0) {
   }
   VocabularyHolder holder=new VocabularyHolder.Builder().minWordFrequency(configuration.getMinWordFrequency()).hugeModelExpected(configuration.isHugeModelExpected()).scavengerActivationThreshold(configuration.getScavengerActivationThreshold()).scavengerRetentionDelay(configuration.getScavengerRetentionDelay()).build();
+  AtomicInteger counter=new AtomicInteger(0);
+  AbstractCache<VocabWord> vocabCache=new AbstractCache.Builder<VocabWord>().build();
   while (iterator.hasNext()) {
     String wordJson=iterator.nextSentence();
     VocabularyWord word=VocabularyWord.fromJson(wordJson);
     word.setSpecial(true);
-    holder.addWord(word);
+    VocabWord vw=new VocabWord(word.getCount(),word.getWord());
+    vw.setIndex(counter.getAndIncrement());
+    vw.setIndex(word.getHuffmanNode().getIdx());
+    vw.setCodeLength(word.getHuffmanNode().getLength());
+    vw.setPoints(arrayToList(word.getHuffmanNode().getPoint(),word.getHuffmanNode().getLength()));
+    vw.setCodes(arrayToList(word.getHuffmanNode().getCode(),word.getHuffmanNode().getLength()));
+    vocabCache.addToken(vw);
+    vocabCache.addWordToIndex(vw.getIndex(),vw.getLabel());
+    vocabCache.putVocabWord(vw.getWord());
   }
-  InMemoryLookupCache vocabCache=new InMemoryLookupCache(false);
-  holder.transferBackToVocabCache(vocabCache,false);
   InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().negative(configuration.getNegative()).useAdaGrad(configuration.isUseAdaGrad()).lr(configuration.getLearningRate()).cache(vocabCache).vectorLength(configuration.getLayersSize()).build();
   lookupTable.resetWeights(true);
-  for (  VocabularyWord word : holder.getVocabulary()) {
+  iterator.reset();
+  iterator.nextSentence();
+  iterator.nextSentence();
+  iterator.nextSentence();
+  while (iterator.hasNext()) {
+    String wordJson=iterator.nextSentence();
+    VocabularyWord word=VocabularyWord.fromJson(wordJson);
     INDArray syn0=lookupTable.getSyn0().getRow(vocabCache.indexOf(word.getWord()));
     syn0.assign(Nd4j.create(word.getSyn0()));
     INDArray syn1=lookupTable.getSyn1().getRow(vocabCache.indexOf(word.getWord()));

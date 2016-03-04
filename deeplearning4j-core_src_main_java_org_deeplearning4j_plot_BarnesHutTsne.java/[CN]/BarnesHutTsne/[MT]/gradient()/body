@@ -1,10 +1,10 @@
 {
-  if (yIncs == null)   yIncs=zeros(y.shape());
-  if (gains == null)   gains=ones(y.shape());
+  if (yIncs == null)   yIncs=zeros(Y.shape());
+  if (gains == null)   gains=ones(Y.shape());
   AtomicDouble sumQ=new AtomicDouble(0);
-  INDArray posF=Nd4j.create(y.shape());
-  INDArray negF=Nd4j.create(y.shape());
-  if (tree == null)   tree=new SpTree(y);
+  INDArray posF=Nd4j.create(Y.shape());
+  INDArray negF=Nd4j.create(Y.shape());
+  if (tree == null)   tree=new SpTree(Y);
   tree.computeEdgeForces(rows,cols,vals,N,posF);
   for (int n=0; n < N; n++)   tree.computeNonEdgeForces(n,theta,negF.slice(n),sumQ);
   INDArray dC=posF.subi(negF.divi(sumQ));

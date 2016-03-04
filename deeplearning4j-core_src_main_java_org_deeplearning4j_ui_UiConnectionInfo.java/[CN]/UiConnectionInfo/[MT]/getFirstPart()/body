@@ -1,0 +1,5 @@
+{
+  StringBuilder builder=new StringBuilder();
+  builder.append(useHttps ? "https" : "http").append("://").append(address).append(":").append(port).append("");
+  return builder.toString();
+}

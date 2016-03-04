@@ -1,0 +1,4 @@
+{
+  UiConnectionInfo info=new UiConnectionInfo.Builder().setPort(getPort()).setAddress("localhost").enableHttps(false).build();
+  return info;
+}

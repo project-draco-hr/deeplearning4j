@@ -2,6 +2,7 @@
   isRunning.set(true);
   while (this.iterator.hasMoreSequences()) {
     if (buffer.size() < limitLower) {
+      update();
       AtomicInteger linesLoaded=new AtomicInteger(0);
       while (linesLoaded.getAndIncrement() < limitUpper && this.iterator.hasMoreSequences()) {
         Sequence<T> document=this.iterator.nextSequence();
@@ -15,6 +16,9 @@
           T realElement=vocab.wordFor(element.getLabel());
           if (realElement != null) {
             newSequence.addElement(realElement);
+          }
+ else           if (useUnknown && unknownElement != null) {
+            newSequence.addElement(unknownElement);
           }
         }
         if (newSequence.getElements().size() > 0)         buffer.add(newSequence);

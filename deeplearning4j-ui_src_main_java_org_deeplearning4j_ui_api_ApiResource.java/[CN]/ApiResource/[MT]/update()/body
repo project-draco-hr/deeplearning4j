@@ -1,0 +1,4 @@
+{
+  List<String> testLines=(List<String>)storage.getObject("UploadedFile",ObjectType.TSNE);
+  return Response.ok(testLines).build();
+}

@@ -1,0 +1,14 @@
+{
+  List<String> results=new ArrayList<>();
+  try {
+    singleLock.readLock().lock();
+    Map<String,Object> map=storage.column(type);
+    for (    String session : map.keySet()) {
+      results.add(session);
+    }
+  }
+  finally {
+    singleLock.readLock().unlock();
+  }
+  return results;
+}

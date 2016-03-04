@@ -1,0 +1,7 @@
+{
+  int[] array=new int[points.size()];
+  for (int x=0; x < points.size(); x++) {
+    array[x]=points.get(x).intValue();
+  }
+  return array;
+}

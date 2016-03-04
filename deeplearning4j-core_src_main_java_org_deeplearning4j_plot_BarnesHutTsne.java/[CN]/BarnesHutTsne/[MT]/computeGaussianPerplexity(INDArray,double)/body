@@ -9,9 +9,9 @@
   final INDArray beta=ones(N,1);
   final double logU=FastMath.log(u);
   VPTree tree=new VPTree(d,simiarlityFunction,invert);
-  log.info("Calculating probabilities of data similarities...");
+  logger.info("Calculating probabilities of data similarities...");
   for (int i=0; i < N; i++) {
-    if (i % 500 == 0)     log.info("Handled " + i + " records");
+    if (i % 500 == 0)     logger.info("Handled " + i + " records");
     double betaMin=-Double.MAX_VALUE;
     double betaMax=Double.MAX_VALUE;
     List<DataPoint> results=new ArrayList<>();

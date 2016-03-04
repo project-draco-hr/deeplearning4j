@@ -51,7 +51,6 @@
     LayerInfo layerInfo=modelInfo.getLayerInfoByCoords(x,y - 1);
     layerInfo.dropConnections();
   }
- else   throw new IllegalStateException("Model [" + model.getClass().getCanonicalName() + "] doesn't looks like supported one.");
   for (  LayerInfo layerInfo : modelInfo.getLayers()) {
     if (layerInfo.getConnections().size() == 0)     layerInfo.setLayerType("OUTPUT");
   }

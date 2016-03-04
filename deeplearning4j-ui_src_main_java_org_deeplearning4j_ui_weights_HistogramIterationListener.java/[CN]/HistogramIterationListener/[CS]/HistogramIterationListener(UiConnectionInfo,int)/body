@@ -1,0 +1,5 @@
+{
+  target=client.target(connection.getFirstPart()).path(connection.getSecondPart(subPath)).path("update").queryParam("sid",connection.getSessionId());
+  this.connectionInfo=connection;
+  System.out.println("UI Histogram URL: " + connection.getFullAddress());
+}

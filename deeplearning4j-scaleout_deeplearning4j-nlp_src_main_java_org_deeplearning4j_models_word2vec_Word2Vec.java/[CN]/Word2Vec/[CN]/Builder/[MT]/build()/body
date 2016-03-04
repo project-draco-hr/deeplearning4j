@@ -22,6 +22,8 @@
   ret.useAdeGrad=this.useAdaGrad;
   ret.stopWords=this.stopWords;
   ret.workers=this.workers;
+  ret.useUnknown=this.useUnknown;
+  ret.unknownElement=this.unknownElement;
   ret.iterator=this.iterator;
   ret.lookupTable=this.lookupTable;
   ret.tokenizerFactory=this.tokenizerFactory;
@@ -42,6 +44,7 @@
   this.configuration.setUseAdaGrad(useAdaGrad);
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
+  this.configuration.setStopList(this.stopWords);
   ret.configuration=this.configuration;
   ret.trainSequenceVectors=false;
   ret.trainElementsVectors=true;

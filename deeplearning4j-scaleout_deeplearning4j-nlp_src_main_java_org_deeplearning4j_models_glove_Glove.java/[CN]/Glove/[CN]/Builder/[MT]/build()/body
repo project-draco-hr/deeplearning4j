@@ -16,6 +16,8 @@
   ret.numEpochs=this.numEpochs;
   ret.numIterations=this.iterations;
   ret.layerSize=this.layerSize;
+  ret.useUnknown=this.useUnknown;
+  ret.unknownElement=this.unknownElement;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

@@ -1,12 +1,12 @@
 {
-  BufferedWriter write=new BufferedWriter(new FileWriter(new File(path),false));
+  BufferedWriter write=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path),false),"UTF-8"));
   for (int i=0; i < lookupTable.getSyn0().rows(); i++) {
     String word=cache.wordAtIndex(i);
     if (word == null) {
       continue;
     }
     StringBuilder sb=new StringBuilder();
-    sb.append(word.replaceAll(" ","_"));
+    sb.append(word.replaceAll(" ",whitespaceReplacement));
     sb.append(" ");
     INDArray wordVector=lookupTable.vector(word);
     for (int j=0; j < wordVector.length(); j++) {

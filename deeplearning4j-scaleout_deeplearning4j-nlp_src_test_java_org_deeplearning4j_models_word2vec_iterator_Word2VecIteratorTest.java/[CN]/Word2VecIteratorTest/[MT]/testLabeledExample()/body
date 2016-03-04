@@ -1,4 +1,8 @@
 {
+  INDArray unk=vec.getWordVectorMatrix(Word2Vec.UNK);
+  assertNotEquals(null,unk);
+  unk=vec.getWordVectorMatrix("2131241sdasdas");
+  assertNotEquals(null,unk);
   Word2VecDataSetIterator iter=new Word2VecDataSetIterator(vec,new LabelAwareFileSentenceIterator(null,new ClassPathResource("labeled/").getFile()),Arrays.asList("negative","positive","neutral"));
   DataSet next=iter.next();
 }

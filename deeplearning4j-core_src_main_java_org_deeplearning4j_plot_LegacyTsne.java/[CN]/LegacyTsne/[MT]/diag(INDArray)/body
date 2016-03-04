@@ -1,0 +1,17 @@
+{
+  boolean isLong=ds.rows() > ds.columns();
+  INDArray sliceZero=ds.slice(0);
+  int dim=Math.max(ds.columns(),ds.rows());
+  INDArray result=Nd4j.create(dim,dim);
+  for (int i=0; i < dim; i++) {
+    INDArray sliceSrc=ds.slice(i);
+    INDArray sliceDst=result.slice(i);
+    for (int j=0; j < dim; j++) {
+      if (i == j) {
+        if (isLong)         sliceDst.putScalar(j,sliceSrc.getDouble(0));
+ else         sliceDst.putScalar(j,sliceZero.getDouble(i));
+      }
+    }
+  }
+  return result;
+}

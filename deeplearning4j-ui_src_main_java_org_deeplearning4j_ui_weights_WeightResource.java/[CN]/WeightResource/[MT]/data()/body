@@ -1,8 +1,0 @@
-{
-  if (current == null) {
-    updated=false;
-    return Response.ok(new HashMap<>()).build();
-  }
-  updated=false;
-  return Response.ok(current).build();
-}

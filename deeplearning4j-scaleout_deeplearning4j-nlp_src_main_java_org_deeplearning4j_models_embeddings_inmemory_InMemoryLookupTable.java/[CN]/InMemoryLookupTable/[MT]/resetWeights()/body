@@ -1,6 +1,3 @@
 {
-  this.rng=Nd4j.getRandom();
-  syn0=Nd4j.rand(new int[]{vocab.numWords() + 1,vectorLength},rng).subi(0.5).divi(vectorLength);
-  syn1=Nd4j.create(syn0.shape());
-  initNegative();
+  resetWeights(true);
 }

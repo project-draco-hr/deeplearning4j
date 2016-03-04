@@ -1,8 +1,8 @@
 {
   boolean exact=theta == 0.0;
-  if (exact)   y=super.calculate(x,numDimensions,perplexity);
+  if (exact)   Y=super.calculate(x,numDimensions,perplexity);
  else {
-    if (y == null)     y=randn(x.rows(),numDimensions,Nd4j.getRandom()).muli(1e-3f);
+    if (Y == null)     Y=randn(x.rows(),numDimensions,Nd4j.getRandom()).muli(1e-3f);
     computeGaussianPerplexity(x,perplexity);
     vals=symmetrized(rows,cols,vals).divi(vals.sum(Integer.MAX_VALUE));
     vals.muli(12);
@@ -11,7 +11,7 @@
       if (i == switchMomentumIteration)       momentum=finalMomentum;
       if (i == stopLyingIteration)       vals.divi(12);
       if (iterationListener != null)       iterationListener.iterationDone(this,i);
-      log.info("Error at iteration " + i + " is "+ score());
+      logger.info("Error at iteration " + i + " is "+ score());
     }
   }
 }

@@ -1,0 +1,15 @@
+{
+  S3Uploader uploader=new S3Uploader();
+  try {
+    File tmpFile=File.createTempFile("temp","upload");
+    tmpFile.deleteOnExit();
+    ObjectOutputStream os=new ObjectOutputStream(new FileOutputStream(tmpFile));
+    os.writeObject(ser);
+    os.flush();
+    os.close();
+    uploader.upload(tmpFile,name,bucketName);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

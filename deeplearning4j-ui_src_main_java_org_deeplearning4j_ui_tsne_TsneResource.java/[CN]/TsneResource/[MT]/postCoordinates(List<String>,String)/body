@@ -1,0 +1,4 @@
+{
+  storage.putObject(sessionId,ObjectType.TSNE,list);
+  return Response.ok().build();
+}

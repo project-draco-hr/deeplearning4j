@@ -1,0 +1,5 @@
+{
+  ObjectType type=ObjectType.valueOf(event);
+  if (type == null)   return Response.noContent().build();
+  return Response.ok(storage.getSessions(type)).build();
+}

@@ -1,0 +1,4 @@
+{
+  WordVectors vec=WordVectorSerializer.loadTxtVectors(new File("/home/raver119/Downloads/_vectors.txt"));
+  logger.info("Rewinding: " + Arrays.toString(vec.getWordVector("rewinding")));
+}

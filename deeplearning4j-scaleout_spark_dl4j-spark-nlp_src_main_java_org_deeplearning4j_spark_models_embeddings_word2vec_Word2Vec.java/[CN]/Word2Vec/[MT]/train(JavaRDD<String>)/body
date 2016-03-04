@@ -8,6 +8,7 @@
   final JavaPairRDD<List<VocabWord>,Long> vocabWordListSentenceCumSumRDD;
   final VocabCache<VocabWord> vocabCache;
   final JavaRDD<Long> sentenceCumSumCountRDD;
+  int maxRep=1;
   log.info("Tokenization and building VocabCache ...");
   Broadcast<Map<String,Object>> broadcastTokenizerVarMap=sc.broadcast(tokenizerVarMap);
   TextPipeline pipeline=new TextPipeline(corpusRDD,broadcastTokenizerVarMap);
@@ -27,25 +28,38 @@
   Broadcast<Map<String,Object>> word2vecVarMapBroadcast=sc.broadcast(word2vecVarMap);
   Broadcast<double[]> expTableBroadcast=sc.broadcast(expTable);
   log.info("Training word2vec sentences ...");
-  FlatMapFunction firstIterFunc=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast);
-  @SuppressWarnings("unchecked") JavaRDD<Pair<Integer,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
-  List<Pair<Integer,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
+  FlatMapFunction firstIterFunc=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,vocabCacheBroadcast);
+  @SuppressWarnings("unchecked") JavaRDD<Pair<VocabWord,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
+  List<Pair<VocabWord,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
   INDArray syn0=Nd4j.zeros(vocabCache.numWords(),layerSize);
-  Map<Integer,AtomicInteger> updates=new HashMap<>();
-  for (  Pair<Integer,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
-    syn0.getRow(syn0UpdateEntry.getFirst()).addi(syn0UpdateEntry.getSecond());
+  Map<VocabWord,AtomicInteger> updates=new HashMap<>();
+  Map<Long,Long> updaters=new HashMap<>();
+  for (  Pair<VocabWord,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
+    syn0.getRow(syn0UpdateEntry.getFirst().getIndex()).addi(syn0UpdateEntry.getSecond());
     if (updates.containsKey(syn0UpdateEntry.getFirst())) {
       updates.get(syn0UpdateEntry.getFirst()).incrementAndGet();
     }
  else     updates.put(syn0UpdateEntry.getFirst(),new AtomicInteger(1));
-  }
-  for (  Map.Entry<Integer,AtomicInteger> entry : updates.entrySet()) {
-    if (entry.getValue().get() > 1) {
-      syn0.getRow(entry.getKey()).divi(entry.getValue().get());
+    if (!updaters.containsKey(syn0UpdateEntry.getFirst().getVocabId())) {
+      updaters.put(syn0UpdateEntry.getFirst().getVocabId(),syn0UpdateEntry.getFirst().getAffinityId());
     }
+  }
+  for (  Map.Entry<VocabWord,AtomicInteger> entry : updates.entrySet()) {
+    if (entry.getValue().get() > 1) {
+      if (entry.getValue().get() > maxRep)       maxRep=entry.getValue().get();
+      syn0.getRow(entry.getKey().getIndex()).divi(entry.getValue().get());
+    }
+  }
+  long totals=0;
+  for (  Long up : updaters.values()) {
+    totals+=up;
   }
   vocab=vocabCache;
   InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
+  Environment env=EnvironmentUtils.buildEnvironment();
+  env.setNumCores(maxRep);
+  env.setAvailableMemory(totals);
+  update(env,Event.SPARK);
   inMemoryLookupTable.setVocab(vocabCache);
   inMemoryLookupTable.setVectorLength(layerSize);
   inMemoryLookupTable.setSyn0(syn0);

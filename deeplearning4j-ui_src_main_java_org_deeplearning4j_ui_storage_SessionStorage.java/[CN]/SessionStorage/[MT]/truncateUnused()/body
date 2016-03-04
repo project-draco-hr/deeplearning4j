@@ -1,0 +1,29 @@
+{
+  List<String> sessions=Collections.list(accessTime.keys());
+  List<Pair<String,ObjectType>> removals=new ArrayList<>();
+  for (  String session : sessions) {
+    long time=accessTime.get(session).get();
+    if (time < System.currentTimeMillis() - (30 * 60 * 1000L)) {
+      accessTime.remove(session);
+      try {
+        singleLock.readLock().lock();
+        Map<ObjectType,Object> map=storage.row(session);
+        for (        ObjectType type : map.keySet()) {
+          removals.add(Pair.makePair(session,type));
+        }
+      }
+  finally {
+        singleLock.readLock().unlock();
+      }
+    }
+  }
+  try {
+    singleLock.writeLock().lock();
+    for (    Pair<String,ObjectType> objects : removals) {
+      storage.remove(objects.getFirst(),objects.getSecond());
+    }
+  }
+  finally {
+    singleLock.writeLock().unlock();
+  }
+}

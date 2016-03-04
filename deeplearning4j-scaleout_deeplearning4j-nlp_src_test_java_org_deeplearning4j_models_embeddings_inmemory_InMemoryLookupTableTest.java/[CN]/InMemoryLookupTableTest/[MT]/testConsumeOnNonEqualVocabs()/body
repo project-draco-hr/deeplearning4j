@@ -18,7 +18,7 @@
   VocabConstructor<VocabWord> vocabTransfer=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,1).setTargetVocabCache(cacheTarget).build();
   vocabTransfer.buildMergedVocabulary(cacheSource,true);
   assertEquals(cacheSource.numWords() + 3,cacheTarget.numWords());
-  InMemoryLookupTable<VocabWord> mem2=(InMemoryLookupTable<VocabWord>)new InMemoryLookupTable.Builder<VocabWord>().vectorLength(100).cache(cacheTarget).build();
+  InMemoryLookupTable<VocabWord> mem2=(InMemoryLookupTable<VocabWord>)new InMemoryLookupTable.Builder<VocabWord>().vectorLength(100).cache(cacheTarget).seed(18).build();
   mem2.resetWeights(true);
   assertNotEquals(mem1.vector("day"),mem2.vector("day"));
   mem2.consume(mem1);

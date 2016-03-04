@@ -1,6 +1,7 @@
 {
   this(address,port,frequency);
+  this.connectionInfo.setLogin(login);
+  this.connectionInfo.setPassword(password);
   this.login=login;
   this.password=password;
-  setup();
 }

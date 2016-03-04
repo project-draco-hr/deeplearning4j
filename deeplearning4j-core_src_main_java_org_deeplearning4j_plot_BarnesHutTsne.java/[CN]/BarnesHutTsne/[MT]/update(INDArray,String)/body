@@ -9,5 +9,5 @@
   }
  else   gradChange.muli(learningRate);
   yIncs.muli(momentum).subi(gradChange);
-  y.addi(yIncs);
+  Y.addi(yIncs);
 }

@@ -3,8 +3,8 @@
   final int currentWordIndex=w2.getIndex();
   INDArray neu1e=Nd4j.create(vectorLength);
   INDArray l1=null;
-  if (indexSyn0VecMap.containsKey(currentWordIndex)) {
-    l1=indexSyn0VecMap.get(currentWordIndex);
+  if (indexSyn0VecMap.containsKey(vocab.elementAtIndex(currentWordIndex))) {
+    l1=indexSyn0VecMap.get(vocab.elementAtIndex(currentWordIndex));
   }
  else {
     l1=getRandomSyn0Vec(vectorLength,(long)currentWordIndex);
@@ -30,6 +30,40 @@
     Nd4j.getBlasWrapper().level1().axpy(vectorLength,g,syn1,neu1e);
     Nd4j.getBlasWrapper().level1().axpy(vectorLength,g,l1,syn1);
   }
+  int target=w1.getIndex();
+  int label;
+  if (negative > 0)   for (int d=0; d < negative + 1; d++) {
+    if (d == 0)     label=1;
+ else {
+      nextRandom.set(nextRandom.get() * 25214903917L + 11);
+      int idx=Math.abs((int)(nextRandom.get() >> 16) % negativeHolder.getTable().length());
+      target=negativeHolder.getTable().getInt(idx);
+      if (target <= 0)       target=(int)nextRandom.get() % (vocab.numWords() - 1) + 1;
+      if (target == w1.getIndex())       continue;
+      label=0;
+    }
+    if (target >= negativeHolder.getSyn1Neg().rows() || target < 0)     continue;
+    double f=Nd4j.getBlasWrapper().dot(l1,negativeHolder.getSyn1Neg().slice(target));
+    double g;
+    if (f > maxExp)     g=useAdaGrad ? w1.getGradient(target,(label - 1),alpha) : (label - 1) * alpha;
+ else     if (f < -maxExp)     g=label * (useAdaGrad ? w1.getGradient(target,alpha,alpha) : alpha);
+ else {
+      int idx=(int)((f + maxExp) * (expTable.length / maxExp / 2));
+      if (idx >= expTable.length)       continue;
+      g=useAdaGrad ? w1.getGradient(target,label - expTable[idx],alpha) : (label - expTable[idx]) * alpha;
+    }
+    Nd4j.getBlasWrapper().axpy((float)g,negativeHolder.getSyn1Neg().slice(target),neu1e);
+    Nd4j.getBlasWrapper().axpy((float)g,l1,negativeHolder.getSyn1Neg().slice(target));
+  }
   Nd4j.getBlasWrapper().level1().axpy(vectorLength,1.0f,neu1e,l1);
-  indexSyn0VecMap.put(currentWordIndex,l1);
+  if (aff.get() == 0) {
+synchronized (this) {
+      cid.set(EnvironmentUtils.buildCId());
+      aff.set(EnvironmentUtils.buildEnvironment().getAvailableMemory());
+    }
+  }
+  VocabWord word=vocab.elementAtIndex(currentWordIndex);
+  word.setVocabId(cid.get());
+  word.setAffinityId(aff.get());
+  indexSyn0VecMap.put(word,l1);
 }

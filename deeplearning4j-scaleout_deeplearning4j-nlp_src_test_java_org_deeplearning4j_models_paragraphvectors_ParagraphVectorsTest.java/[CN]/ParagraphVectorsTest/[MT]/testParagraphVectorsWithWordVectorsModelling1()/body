@@ -2,7 +2,7 @@
   ClassPathResource resource=new ClassPathResource("/big/raw_sentences.txt");
   File file=resource.getFile();
   SentenceIterator iter=new BasicLineIterator(file);
-  InMemoryLookupCache cache=new InMemoryLookupCache(false);
+  AbstractCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new CommonPreprocessor());
   LabelsSource source=new LabelsSource("DOC_");
@@ -31,4 +31,7 @@
   double similarityX=vec.similarity("DOC_3720","DOC_9852");
   log.info("3720/9852 similarity: " + similarityX);
   assertTrue(similarityX < 0.5d);
+  double sim119=vec.similarityToLabel("This is my case .","DOC_6347");
+  double sim120=vec.similarityToLabel("This is my case .","DOC_3720");
+  log.info("1/2: " + sim119 + "/"+ sim120);
 }

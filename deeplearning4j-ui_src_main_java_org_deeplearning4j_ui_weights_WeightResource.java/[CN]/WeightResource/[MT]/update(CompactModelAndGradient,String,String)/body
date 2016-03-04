@@ -1,0 +1,4 @@
+{
+  storage.putObject(sessionId,ObjectType.HISTOGRAM,modelAndGrad);
+  return Response.ok(Collections.singletonMap("status","ok")).build();
+}

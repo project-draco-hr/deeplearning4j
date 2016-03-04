@@ -1,12 +1,13 @@
 {
   try {
-    BufferedReader reader=new BufferedReader(new InputStreamReader(stream));
+    BufferedReader reader=new BufferedReader(new InputStreamReader(stream,"UTF-8"));
     ArrayList<String> labels=new ArrayList<>();
     ArrayList<INDArray> arrays=new ArrayList<>();
     VocabCache<VocabWord> vocabCache=new AbstractCache.Builder<VocabWord>().build();
     String line="";
     while ((line=reader.readLine()) != null) {
       String[] split=line.split(" ");
+      split[1]=split[1].replaceAll(whitespaceReplacement," ");
       VocabWord word=new VocabWord(1.0,split[1]);
       if (split[0].equals("L")) {
         word.setSpecial(true);
@@ -37,6 +38,12 @@
     lookupTable.setSyn0(syn);
     LabelsSource source=new LabelsSource(labels);
     ParagraphVectors vectors=new ParagraphVectors.Builder().labelsSource(source).vocabCache(vocabCache).lookupTable(lookupTable).modelUtils(new BasicModelUtils<VocabWord>()).build();
+    try {
+      reader.close();
+    }
+ catch (    Exception e) {
+      ;
+    }
     return vectors;
   }
  catch (  Exception e) {

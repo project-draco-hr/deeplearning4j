@@ -3,7 +3,7 @@
   AtomicDouble sum_Q=new AtomicDouble(0.0);
   for (int n=0; n < N; n++)   tree.computeNonEdgeForces(n,theta,buff,sum_Q);
   double C=.0;
-  INDArray linear=y;
+  INDArray linear=Y;
   for (int n=0; n < N; n++) {
     int begin=rows.getInt(n);
     int end=rows.getInt(n + 1);
