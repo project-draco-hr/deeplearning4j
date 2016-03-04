@@ -9,7 +9,7 @@
   INDArray biasGradients=Nd4j.sum(delta,0);
   INDArray dHout=inputWeights.mul(delta);
   dHout=Nd4j.vstack(Nd4j.zeros(dHout.columns()),dHout);
-  if (conf.isUseDropConnect() & conf.getLayer().getDropOut() > 0)   dHout.muli(u2);
+  if (conf.isUseDropConnect() && conf.getLayer().getDropOut() > 0)   dHout.muli(u2);
   INDArray dIFogZ=Nd4j.zeros(iFogZ.shape());
   INDArray dIFogA=Nd4j.zeros(iFogA.shape());
   INDArray recurrentWeightGradients=Nd4j.zeros(recurrentWeights.shape());
