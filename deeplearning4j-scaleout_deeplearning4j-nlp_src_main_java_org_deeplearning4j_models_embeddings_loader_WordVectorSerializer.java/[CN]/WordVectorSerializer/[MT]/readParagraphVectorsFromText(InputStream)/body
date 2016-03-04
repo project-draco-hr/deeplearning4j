@@ -1,6 +1,6 @@
 {
   try {
-    BufferedReader reader=new BufferedReader(new InputStreamReader(stream));
+    BufferedReader reader=new BufferedReader(new InputStreamReader(stream,"UTF-8"));
     ArrayList<String> labels=new ArrayList<>();
     ArrayList<INDArray> arrays=new ArrayList<>();
     VocabCache<VocabWord> vocabCache=new AbstractCache.Builder<VocabWord>().build();

@@ -1,5 +1,5 @@
 {
-  BufferedWriter write=new BufferedWriter(new FileWriter(file));
+  BufferedWriter write=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
   writeWordVectors(vec,write);
   write.flush();
   write.close();

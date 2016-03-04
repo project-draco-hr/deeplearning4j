@@ -1,7 +1,7 @@
 {
   PrintWriter printWriter=null;
   try {
-    printWriter=new PrintWriter(path);
+    printWriter=new PrintWriter(new OutputStreamWriter(new FileOutputStream(path),"UTF-8"));
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

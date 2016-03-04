@@ -1,6 +1,6 @@
 {
   VocabCache<T> vocabCache=lookupTable.getVocabCache();
-  PrintWriter writer=new PrintWriter(stream);
+  PrintWriter writer=new PrintWriter(new OutputStreamWriter(stream,"UTF-8"));
   for (int x=0; x < vocabCache.numWords(); x++) {
     T element=vocabCache.elementAtIndex(x);
     StringBuilder builder=new StringBuilder();

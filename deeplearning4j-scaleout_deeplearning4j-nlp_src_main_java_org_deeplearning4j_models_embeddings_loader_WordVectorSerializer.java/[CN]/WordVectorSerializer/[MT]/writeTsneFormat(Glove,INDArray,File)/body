@@ -1,5 +1,5 @@
 {
-  BufferedWriter write=new BufferedWriter(new FileWriter(csv));
+  BufferedWriter write=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csv),"UTF-8"));
   int words=0;
   InMemoryLookupCache l=(InMemoryLookupCache)vec.vocab();
   for (  String word : vec.vocab().words()) {

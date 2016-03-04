@@ -1,5 +1,5 @@
 {
-  BufferedReader reader=new BufferedReader(new FileReader(vectorsFile));
+  BufferedReader reader=new BufferedReader(new InputStreamReader(new FileInputStream(vectorsFile),"UTF-8"));
   VocabCache cache=new AbstractCache<>();
   LineIterator iter=IOUtils.lineIterator(reader);
   String line=null;
@@ -36,6 +36,9 @@
     String[] split=line.split(" ");
     String word=split[0].replaceAll(whitespaceReplacement," ");
     VocabWord word1=new VocabWord(1.0,word);
+    if (cache.containsWord(word)) {
+      log.info("Word already exists: " + word);
+    }
     word1.setIndex(cache.numWords());
     cache.addToken(word1);
     cache.addWordToIndex(word1.getIndex(),word);

@@ -1,5 +1,5 @@
 {
-  try (BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(stream))){
+  try (BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(stream,"UTF-8"))){
     VocabCache<VocabWord> vocabCache=vectors.getVocab();
     for (    VocabWord word : vocabCache.vocabWords()) {
       StringBuilder builder=new StringBuilder();
