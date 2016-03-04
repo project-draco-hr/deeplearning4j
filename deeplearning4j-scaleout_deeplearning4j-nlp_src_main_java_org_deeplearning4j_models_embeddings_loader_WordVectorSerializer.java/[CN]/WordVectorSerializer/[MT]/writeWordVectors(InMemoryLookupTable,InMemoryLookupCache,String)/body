@@ -6,7 +6,7 @@
       continue;
     }
     StringBuilder sb=new StringBuilder();
-    sb.append(word.replaceAll(" ","_"));
+    sb.append(word.replaceAll(" ",whitespaceReplacement));
     sb.append(" ");
     INDArray wordVector=lookupTable.vector(word);
     for (int j=0; j < wordVector.length(); j++) {

@@ -34,7 +34,7 @@
   while (iter.hasNext()) {
     if (line.isEmpty())     line=iter.nextLine();
     String[] split=line.split(" ");
-    String word=split[0];
+    String word=split[0].replaceAll(whitespaceReplacement," ");
     VocabWord word1=new VocabWord(1.0,word);
     word1.setIndex(cache.numWords());
     cache.addToken(word1);

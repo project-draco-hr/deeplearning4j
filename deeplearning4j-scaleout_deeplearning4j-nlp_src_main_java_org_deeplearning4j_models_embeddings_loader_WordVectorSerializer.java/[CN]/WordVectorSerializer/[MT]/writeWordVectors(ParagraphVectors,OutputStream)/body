@@ -4,7 +4,7 @@
     for (    VocabWord word : vocabCache.vocabWords()) {
       StringBuilder builder=new StringBuilder();
       builder.append(word.isLabel() ? "L" : "E").append(" ");
-      builder.append(word.getLabel().replaceAll(" ","_")).append(" ");
+      builder.append(word.getLabel().replaceAll(" ",whitespaceReplacement)).append(" ");
       INDArray vector=vectors.getWordVectorMatrix(word.getLabel());
       for (int j=0; j < vector.length(); j++) {
         builder.append(vector.getDouble(j));

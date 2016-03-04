@@ -15,7 +15,7 @@
       }
     }
     sb.append(",");
-    sb.append(word);
+    sb.append(word.replaceAll(" ",whitespaceReplacement));
     sb.append(" ");
     sb.append("\n");
     write.write(sb.toString());

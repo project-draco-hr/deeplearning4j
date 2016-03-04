@@ -4,7 +4,7 @@
   for (int x=0; x < vocabCache.numWords(); x++) {
     T element=vocabCache.elementAtIndex(x);
     StringBuilder builder=new StringBuilder();
-    builder.append(element.getLabel().replaceAll(" ","_")).append(" ");
+    builder.append(element.getLabel().replaceAll(" ",whitespaceReplacement)).append(" ");
     INDArray vec=lookupTable.vector(element.getLabel());
     for (int i=0; i < vec.length(); i++) {
       builder.append(vec.getDouble(i));
