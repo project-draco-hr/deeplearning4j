@@ -4,9 +4,10 @@
   transformer.sourceGraph=this.sourceGraph;
   transformer.walkLength=this.walkLength;
   transformer.walkMode=this.walkMode;
+  transformer.walkDirection=this.walkDirection;
 switch (this.walkMode) {
 case RANDOM:
-    transformer.walker=new RandomWalker.Builder<T>().setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).build();
+    transformer.walker=new RandomWalker.Builder<T>(this.sourceGraph).setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).setWalkDirection(this.walkDirection).build();
   break;
 case WEIGHTED:
 default :

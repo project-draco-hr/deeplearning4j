@@ -1,4 +1,10 @@
 {
-  RandomWalker walker=new RandomWalker(this.walkLength,this.noEdgeHandling);
+  RandomWalker<T> walker=new RandomWalker<T>();
+  walker.noEdgeHandling=this.noEdgeHandling;
+  walker.sourceGraph=this.sourceGraph;
+  walker.walkLength=this.walkLength;
+  walker.seed=this.seed;
+  walker.walkDirection=this.walkDirection;
+  if (this.seed != 0)   walker.rng=new Random(this.seed);
   return walker;
 }

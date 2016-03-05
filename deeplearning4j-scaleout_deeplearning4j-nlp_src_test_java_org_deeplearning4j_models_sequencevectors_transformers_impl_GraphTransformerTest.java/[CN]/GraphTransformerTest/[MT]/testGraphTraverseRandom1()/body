@@ -1,0 +1,14 @@
+{
+  RandomWalker<VocabWord> walker=new RandomWalker.Builder<VocabWord>(graph).setNoEdgeHandling(NoEdgeHandling.EXCEPTION_ON_DISCONNECTED).setWalkLength(3).build();
+  int cnt=0;
+  while (walker.hasNext()) {
+    Sequence<VocabWord> sequence=walker.next();
+    assertEquals(3,sequence.getElements().size());
+    assertNotEquals(null,sequence);
+    for (    VocabWord word : sequence.getElements()) {
+      assertNotEquals(null,word);
+    }
+    cnt++;
+  }
+  assertEquals(10,cnt);
+}
