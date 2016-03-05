@@ -1,0 +1,7 @@
+{
+  Graph<VocabWord,Void> graph=new Graph<VocabWord,Void>(10,false,new AbstractVertexFactory<VocabWord>());
+  assertEquals(10,graph.numVertices());
+  for (int i=0; i < 10; i++) {
+  }
+  assertEquals(10,graph.numVertices());
+}

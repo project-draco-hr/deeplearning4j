@@ -1,0 +1,6 @@
+{
+  if (to < from || from < 0 || to >= vertices.size())   throw new IllegalArgumentException("Invalid range: from=" + from + ", to="+ to);
+  List<Vertex<V>> out=new ArrayList<>(to - from + 1);
+  for (int i=from; i <= to; i++)   out.add(getVertex(i));
+  return out;
+}
