@@ -5,13 +5,17 @@
   transformer.walkLength=this.walkLength;
   transformer.walkMode=this.walkMode;
   transformer.walkDirection=this.walkDirection;
-switch (this.walkMode) {
+  transformer.labelsProvider=this.labelsProvider;
+  transformer.shuffle=this.shuffle;
+  if (this.walker == null) switch (this.walkMode) {
 case RANDOM:
     transformer.walker=new RandomWalker.Builder<T>(this.sourceGraph).setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).setWalkDirection(this.walkDirection).build();
   break;
-case WEIGHTED:
+case WEIGHTED_MAX:
+case WEIGHTED_MIN:
 default :
 throw new UnsupportedOperationException("WalkMode [" + this.walkMode + "] isn't supported at this moment?");
 }
+ else transformer.walker=this.walker;
 return transformer;
 }
