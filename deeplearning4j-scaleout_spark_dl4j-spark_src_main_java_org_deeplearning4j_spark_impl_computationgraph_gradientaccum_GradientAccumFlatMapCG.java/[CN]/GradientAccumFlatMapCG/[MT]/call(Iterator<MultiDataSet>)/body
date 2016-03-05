@@ -1,6 +1,9 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList(new Tuple3<Gradient,ComputationGraphUpdater,Double>(new DefaultGradient(),null,0.0));
+    ScoreReport report=new ScoreReport();
+    report.setS(0.0);
+    report.setM(Runtime.getRuntime().maxMemory());
+    return Collections.singletonList(new Tuple3<Gradient,ComputationGraphUpdater,ScoreReport>(new DefaultGradient(),null,report));
   }
   List<MultiDataSet> collect=new ArrayList<>();
   while (dataSetIterator.hasNext()) {
@@ -15,5 +18,8 @@
   network.setParams(val);
   network.setUpdater(upd);
   network.fit(data);
-  return Collections.singletonList(new Tuple3<>(network.gradient(),network.getUpdater(),network.score()));
+  ScoreReport report=new ScoreReport();
+  report.setS(network.score());
+  report.setM(Runtime.getRuntime().maxMemory());
+  return Collections.singletonList(new Tuple3<>(network.gradient(),network.getUpdater(),report));
 }
