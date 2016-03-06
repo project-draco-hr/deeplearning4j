@@ -1,0 +1,18 @@
+{
+  log.info("Building Huffman tree for source graph...");
+  int nVertices=sourceGraph.numVertices();
+  int[] degrees=new int[nVertices];
+  for (int i=0; i < nVertices; i++)   degrees[i]=sourceGraph.getVertexDegree(i);
+  GraphHuffman huffman=new GraphHuffman(nVertices);
+  huffman.buildTree(degrees);
+  log.info("Transferring Huffman tree info to nodes...");
+  for (int i=0; i < nVertices; i++) {
+    int codeLen=huffman.getCodeLength(i);
+    int[] path=huffman.getPathInnerNodes(i);
+    List<Integer> codes=huffman.getCodeList(i);
+    T element=sourceGraph.getVertex(i).getValue();
+    element.setCodeLength(codeLen);
+    element.setPoints(path);
+    element.setCodes(codes);
+  }
+}

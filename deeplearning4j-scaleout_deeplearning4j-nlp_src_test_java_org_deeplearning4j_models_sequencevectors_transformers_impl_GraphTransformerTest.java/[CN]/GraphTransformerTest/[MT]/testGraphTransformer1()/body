@@ -1,0 +1,10 @@
+{
+  GraphTransformer<VocabWord> transformer=new GraphTransformer.Builder<VocabWord>(graph).setWalkLength(5).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkMode(WalkMode.RANDOM).build();
+  Iterator<Sequence<VocabWord>> iterator=transformer.iterator();
+  int cnt=0;
+  while (iterator.hasNext()) {
+    Sequence<VocabWord> sequence=iterator.next();
+    cnt++;
+  }
+  assertEquals(10,cnt);
+}

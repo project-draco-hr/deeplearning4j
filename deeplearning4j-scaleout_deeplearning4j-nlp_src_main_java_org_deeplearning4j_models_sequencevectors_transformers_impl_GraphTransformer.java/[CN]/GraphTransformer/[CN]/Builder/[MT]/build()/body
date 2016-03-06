@@ -17,5 +17,6 @@ default :
 throw new UnsupportedOperationException("WalkMode [" + this.walkMode + "] isn't supported at this moment?");
 }
  else transformer.walker=this.walker;
+transformer.initialize();
 return transformer;
 }
