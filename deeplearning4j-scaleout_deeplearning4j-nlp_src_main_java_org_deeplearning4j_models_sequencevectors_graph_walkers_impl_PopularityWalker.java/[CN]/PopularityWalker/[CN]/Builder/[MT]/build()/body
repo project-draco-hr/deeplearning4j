@@ -7,6 +7,7 @@
   walker.walkDirection=this.walkDirection;
   walker.popularityMode=this.popularityMode;
   walker.spread=this.spread;
+  walker.spectrum=this.spectrum;
   walker.order=new int[sourceGraph.numVertices()];
   for (int i=0; i < walker.order.length; i++) {
     walker.order[i]=i;
