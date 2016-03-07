@@ -1,0 +1,107 @@
+{
+  int[] visitedHops=new int[walkLength];
+  Arrays.fill(visitedHops,-1);
+  Sequence<T> sequence=new Sequence<T>();
+  int startPosition=position.getAndIncrement();
+  int lastId=-1;
+  int startPoint=order[startPosition];
+  if (startPosition == 0)   System.out.print("Walk: ");
+  for (int i=0; i < walkLength; i++) {
+    int currentPosition=startPosition;
+    Vertex<T> vertex=sourceGraph.getVertex(order[currentPosition]);
+    sequence.addElement(vertex.getValue());
+    visitedHops[i]=vertex.vertexID();
+    if (startPoint == 0)     System.out.print("" + vertex.vertexID() + " -> ");
+switch (walkDirection) {
+case RANDOM:
+{
+        int[] nextHops=sourceGraph.getConnectedVertexIndices(order[currentPosition]);
+        startPosition=nextHops[rng.nextInt(nextHops.length)];
+      }
+    ;
+  break;
+case FORWARD_ONLY:
+{
+  int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),lastId);
+  if (nextHops.length > 0) {
+    startPosition=nextHops[rng.nextInt(nextHops.length)];
+  }
+ else {
+switch (noEdgeHandling) {
+case CUTOFF_ON_DISCONNECTED:
+{
+        i=walkLength + 10;
+      }
+    break;
+case EXCEPTION_ON_DISCONNECTED:
+{
+    throw new NoEdgesException("No more edges at vertex [" + currentPosition + "]");
+  }
+case SELF_LOOP_ON_DISCONNECTED:
+{
+  startPosition=currentPosition;
+}
+break;
+case PADDING_ON_DISCONNECTED:
+{
+throw new UnsupportedOperationException("PADDING not implemented yet");
+}
+default :
+throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling + "] not implemented yet.");
+}
+}
+}
+;
+break;
+case FORWARD_UNIQUE:
+{
+int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),visitedHops);
+if (nextHops.length > 0) {
+startPosition=nextHops[rng.nextInt(nextHops.length)];
+}
+ else {
+switch (noEdgeHandling) {
+case CUTOFF_ON_DISCONNECTED:
+{
+i=walkLength + 10;
+}
+break;
+case EXCEPTION_ON_DISCONNECTED:
+{
+throw new NoEdgesException("No more edges at vertex [" + currentPosition + "]");
+}
+case SELF_LOOP_ON_DISCONNECTED:
+{
+startPosition=currentPosition;
+}
+break;
+case PADDING_ON_DISCONNECTED:
+{
+throw new UnsupportedOperationException("PADDING not implemented yet");
+}
+default :
+throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling + "] not implemented yet.");
+}
+}
+}
+;
+break;
+case FORWARD_PREFERRED:
+{
+int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),visitedHops);
+if (nextHops.length == 0) {
+nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),lastId);
+if (nextHops.length == 0) {
+}
+ else startPosition=nextHops[rng.nextInt(nextHops.length)];
+}
+}
+break;
+default :
+throw new UnsupportedOperationException("Unknown WalkDirection [" + walkDirection + "]");
+}
+lastId=vertex.vertexID();
+}
+if (startPoint == 0) System.out.println("");
+return sequence;
+}

@@ -12,8 +12,8 @@
 case RANDOM:
     transformer.walker=new RandomWalker.Builder<T>(this.sourceGraph).setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).setWalkDirection(this.walkDirection).build();
   break;
-case WEIGHTED_MAX:
-case WEIGHTED_MIN:
+case WEIGHTED:
+case POPULARITY:
 default :
 throw new UnsupportedOperationException("WalkMode [" + this.walkMode + "] isn't supported at this moment?");
 }

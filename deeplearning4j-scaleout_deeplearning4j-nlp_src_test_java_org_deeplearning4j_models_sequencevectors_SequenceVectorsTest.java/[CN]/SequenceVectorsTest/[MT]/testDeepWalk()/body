@@ -1,13 +1,14 @@
 {
+  Heartbeat.getInstance().disableHeartbeat();
   AbstractCache<Blogger> vocabCache=new AbstractCache.Builder<Blogger>().build();
-  Graph<Blogger,Void> graph=buildGraph();
-  GraphTransformer<Blogger> graphTransformer=new GraphTransformer.Builder<Blogger>(graph).setWalkMode(WalkMode.RANDOM).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(10).setWalkDirection(WalkDirection.FORWARD_ONLY).shuffleOnReset(true).setVocabCache(vocabCache).build();
+  Graph<Blogger,Double> graph=buildGraph();
+  GraphTransformer<Blogger> graphTransformer=new GraphTransformer.Builder<Blogger>(graph).setWalkMode(WalkMode.RANDOM).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(40).setWalkDirection(WalkDirection.FORWARD_UNIQUE).shuffleOnReset(true).setVocabCache(vocabCache).build();
   AbstractSequenceIterator<Blogger> sequenceIterator=new AbstractSequenceIterator.Builder<Blogger>(graphTransformer).build();
   WeightLookupTable<Blogger> lookupTable=new InMemoryLookupTable.Builder<Blogger>().lr(0.025).vectorLength(150).useAdaGrad(false).cache(vocabCache).build();
   lookupTable.resetWeights(true);
-  SequenceVectors<Blogger> vectors=new SequenceVectors.Builder<Blogger>(new VectorsConfiguration()).lookupTable(lookupTable).iterate(sequenceIterator).vocabCache(vocabCache).batchSize(250).iterations(1).epochs(5).resetModel(false).trainElementsRepresentation(true).trainSequencesRepresentation(false).elementsLearningAlgorithm(new SkipGram<Blogger>()).windowSize(10).build();
+  SequenceVectors<Blogger> vectors=new SequenceVectors.Builder<Blogger>(new VectorsConfiguration()).lookupTable(lookupTable).iterate(sequenceIterator).vocabCache(vocabCache).batchSize(1000).iterations(2).epochs(10).resetModel(false).trainElementsRepresentation(true).trainSequencesRepresentation(false).elementsLearningAlgorithm(new SkipGram<Blogger>()).learningRate(0.025).layerSize(150).sampling(0).negativeSample(0).windowSize(10).workers(6).build();
   vectors.fit();
-  vectors.setModelUtils(new BasicModelUtils());
+  vectors.setModelUtils(new FlatModelUtils());
   double sim=vectors.similarity("12","72");
   Collection<String> list=vectors.wordsNearest("12",10);
   logger.info("12->72: " + sim);

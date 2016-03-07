@@ -1,0 +1,38 @@
+{
+  Sequence<T> sequence=new Sequence<>();
+  int[] visitedHops=new int[walkLength];
+  Arrays.fill(visitedHops,-1);
+  int startPosition=position.getAndIncrement();
+  int lastId=-1;
+  int startPoint=order[startPosition];
+  for (int i=0; i < walkLength; i++) {
+    int currentPosition=startPosition;
+    Vertex<T> vertex=sourceGraph.getVertex(order[currentPosition]);
+    sequence.addElement(vertex.getValue());
+    visitedHops[i]=vertex.vertexID();
+switch (walkDirection) {
+case RANDOM:
+case FORWARD_ONLY:
+case FORWARD_PREFERRED:
+{
+        PriorityQueue<Node<T>> queue=new PriorityQueue<Node<T>>();
+        int[] connections=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(vertex.vertexID()),visitedHops);
+        if (connections.length > 0) {
+          for (          int connected : connections) {
+            queue.add(new Node<T>(connected,sourceGraph.getConnectedVertices(connected).size()),sourceGraph.getConnectedVertices(connected).size());
+          }
+          logger.info("Queue: " + queue);
+          Vertex<T> nV=sourceGraph.getVertex(queue.peek().getVertexId());
+          startPosition=nV.vertexID();
+        }
+ else {
+          i+=100;
+        }
+      }
+    break;
+default :
+  throw new UnsupportedOperationException("Unknown WalkDirection [" + walkDirection + "]");
+}
+}
+return sequence;
+}

@@ -7,5 +7,9 @@
       if (x >= 10)       x=0;
       graph.addEdge(i,x,1.0,false);
     }
+    graph.addEdge(0,4,1.0,false);
+    graph.addEdge(0,4,1.0,false);
+    graph.addEdge(0,4,1.0,false);
+    graph.addEdge(4,5,1.0,false);
   }
 }
