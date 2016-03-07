@@ -1,5 +1,3 @@
 {
-  for (int i=0; i < sequence.getElements().size(); i++) {
-    dbow(i,sequence,(int)nextRandom.get() % window,nextRandom,learningRate);
-  }
+  dbow(0,sequence,(int)nextRandom.get() % window,nextRandom,learningRate);
 }
