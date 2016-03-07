@@ -27,4 +27,7 @@
   gv.setInputs(in);
   outFwd=gv.doForward(true);
   assertEquals(expOut,outFwd);
+  String json=conf.toJson();
+  ComputationGraphConfiguration conf2=ComputationGraphConfiguration.fromJson(json);
+  assertEquals(conf,conf2);
 }
