@@ -7,6 +7,7 @@
   transformer.walkDirection=this.walkDirection;
   transformer.labelsProvider=this.labelsProvider;
   transformer.shuffle=this.shuffle;
+  transformer.vocabCache=this.vocabCache;
   if (this.walker == null) switch (this.walkMode) {
 case RANDOM:
     transformer.walker=new RandomWalker.Builder<T>(this.sourceGraph).setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).setWalkDirection(this.walkDirection).build();

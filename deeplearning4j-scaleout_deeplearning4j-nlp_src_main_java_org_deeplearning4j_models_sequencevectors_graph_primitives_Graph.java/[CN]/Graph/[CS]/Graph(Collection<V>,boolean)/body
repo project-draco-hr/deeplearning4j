@@ -1,0 +1,11 @@
+{
+  this.vertices=new ArrayList<Vertex<V>>();
+  this.allowMultipleEdges=allowMultipleEdges;
+  int idx=0;
+  for (  V element : elements) {
+    Vertex<V> vertex=new Vertex<>(idx,element);
+    vertices.add(vertex);
+    idx++;
+  }
+  edges=(List<Edge<E>>[])Array.newInstance(List.class,vertices.size());
+}

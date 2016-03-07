@@ -1,6 +1,6 @@
 {
   this.counter.set(0);
-  this.walker.reset();
+  this.walker.reset(shuffle);
   return new Iterator<Sequence<T>>(){
     private GraphWalker<T> walker=GraphTransformer.this.walker;
     @Override public boolean hasNext(){
