@@ -42,9 +42,6 @@
     String[] split=line.split(" ");
     String word=split[0].replaceAll(whitespaceReplacement," ");
     VocabWord word1=new VocabWord(1.0,word);
-    if (cache.containsWord(word)) {
-      log.info("Word already exists: " + word);
-    }
     word1.setIndex(cache.numWords());
     cache.addToken(word1);
     cache.addWordToIndex(word1.getIndex(),word);
