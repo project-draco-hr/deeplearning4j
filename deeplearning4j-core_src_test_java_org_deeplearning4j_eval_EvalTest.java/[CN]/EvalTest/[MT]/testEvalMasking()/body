@@ -32,9 +32,9 @@
   System.out.println(evaluation2.stats());
   assertEquals(evaluation.accuracy(),evaluation2.accuracy(),1e-12);
   assertEquals(evaluation.f1(),evaluation2.f1(),1e-12);
-  assertEquals(evaluation.falsePositives(),evaluation2.falsePositives(),1e-12);
-  assertEquals(evaluation.falseNegatives(),evaluation2.falseNegatives(),1e-12);
-  assertEquals(evaluation.truePositives(),evaluation2.truePositives(),1e-12);
-  assertEquals(evaluation.trueNegatives(),evaluation2.trueNegatives(),1e-12);
+  assertMapEquals(evaluation.falsePositives(),evaluation2.falsePositives());
+  assertMapEquals(evaluation.falseNegatives(),evaluation2.falseNegatives());
+  assertMapEquals(evaluation.truePositives(),evaluation2.truePositives());
+  assertMapEquals(evaluation.trueNegatives(),evaluation2.trueNegatives());
   for (int i=0; i < nOut; i++)   assertEquals(evaluation.classCount(i),evaluation2.classCount(i));
 }

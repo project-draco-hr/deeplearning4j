@@ -1,0 +1,6 @@
+{
+  assertEquals(first.keySet(),second.keySet());
+  for (  Integer i : first.keySet()) {
+    assertEquals(first.get(i),second.get(i));
+  }
+}

@@ -12,7 +12,12 @@
   assertEquals(eval.f1(),0.6,1e-1);
   assertEquals(1,eval.classCount(0));
   assertEquals(1,eval.classCount(1));
-  assertEquals(2,eval.positive(),0);
-  assertEquals(8,eval.negative(),0);
+  assertEquals(1,eval.positive().get(0),0);
+  assertEquals(1,eval.negative().get(0),0);
+  assertEquals(1,eval.truePositives().get(0),0);
+  assertEquals(1,eval.falsePositives().get(0),0);
+  assertEquals(0,eval.trueNegatives().get(0),0);
+  assertEquals(0,eval.falseNegatives().get(0),0);
+  assertEquals(1,eval.negative().get(0),0);
   assertEquals(eval.accuracy(),0.5,0);
 }

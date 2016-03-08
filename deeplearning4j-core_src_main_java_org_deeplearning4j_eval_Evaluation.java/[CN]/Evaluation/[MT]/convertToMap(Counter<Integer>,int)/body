@@ -1,0 +1,7 @@
+{
+  Map<Integer,Integer> map=new HashMap<>();
+  for (int i=0; i < maxCount; i++) {
+    map.put(i,(int)counter.getCount(i));
+  }
+  return map;
+}
