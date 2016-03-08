@@ -11,6 +11,10 @@
     sequence.addElement(vertex.getValue());
     visitedHops[i]=vertex.vertexID();
     int cSpread=0;
+    if (alpha > 0 && alpha < rng.nextDouble()) {
+      startPosition=startPoint;
+      continue;
+    }
 switch (walkDirection) {
 case RANDOM:
 case FORWARD_ONLY:
@@ -42,10 +46,7 @@ start=mid - (cSpread / 2);
 stop=mid + (cSpread / 2);
 break;
 }
-logger.info("Spread: [" + cSpread + "], Connections: ["+ connections.length+ "], Start: ["+ start+ "], Stop: ["+ stop+ "]");
 cnt=0;
-logger.info("Queue: " + queue);
-logger.info("Queue size: " + queue.size());
 List<Node<T>> list=new ArrayList<Node<T>>();
 double[] weights=new double[cSpread];
 int fcnt=0;
@@ -64,7 +65,6 @@ switch (spectrum) {
 case PLAIN:
 {
 con=RandomUtils.nextInt(start,stop + 1);
-logger.info("Picked selection: " + con);
 Vertex<T> nV=sourceGraph.getVertex(connections[con]);
 startPosition=nV.vertexID();
 }
@@ -96,6 +96,9 @@ i+=walkLength;
 break;
 case SELF_LOOP_ON_DISCONNECTED:
 startPosition=currentPosition;
+break;
+case RESTART_ON_DISCONNECTED:
+startPosition=startPoint;
 break;
 default :
 throw new UnsupportedOperationException("Unsupported noEdgeHandling: [" + noEdgeHandling + "]");

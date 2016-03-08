@@ -2,7 +2,8 @@
   Heartbeat.getInstance().disableHeartbeat();
   AbstractCache<Blogger> vocabCache=new AbstractCache.Builder<Blogger>().build();
   Graph<Blogger,Double> graph=buildGraph();
-  GraphTransformer<Blogger> graphTransformer=new GraphTransformer.Builder<Blogger>(graph).setWalkMode(WalkMode.RANDOM).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(40).setWalkDirection(WalkDirection.FORWARD_UNIQUE).shuffleOnReset(true).setVocabCache(vocabCache).build();
+  GraphWalker<Blogger> walker=new RandomWalker.Builder<Blogger>(graph).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(40).setWalkDirection(WalkDirection.FORWARD_UNIQUE).build();
+  GraphTransformer<Blogger> graphTransformer=new GraphTransformer.Builder<Blogger>(graph).setGraphWalker(walker).shuffleOnReset(true).setVocabCache(vocabCache).build();
   AbstractSequenceIterator<Blogger> sequenceIterator=new AbstractSequenceIterator.Builder<Blogger>(graphTransformer).build();
   WeightLookupTable<Blogger> lookupTable=new InMemoryLookupTable.Builder<Blogger>().lr(0.025).vectorLength(150).useAdaGrad(false).cache(vocabCache).build();
   lookupTable.resetWeights(true);

@@ -1,23 +1,11 @@
 {
   GraphTransformer<T> transformer=new GraphTransformer<T>();
-  transformer.noEdgeHandling=this.noEdgeHandling;
   transformer.sourceGraph=this.sourceGraph;
-  transformer.walkLength=this.walkLength;
-  transformer.walkMode=this.walkMode;
-  transformer.walkDirection=this.walkDirection;
   transformer.labelsProvider=this.labelsProvider;
   transformer.shuffle=this.shuffle;
   transformer.vocabCache=this.vocabCache;
-  if (this.walker == null) switch (this.walkMode) {
-case RANDOM:
-    transformer.walker=new RandomWalker.Builder<T>(this.sourceGraph).setNoEdgeHandling(this.noEdgeHandling).setWalkLength(this.walkLength).setWalkDirection(this.walkDirection).build();
-  break;
-case WEIGHTED:
-case POPULARITY:
-default :
-throw new UnsupportedOperationException("WalkMode [" + this.walkMode + "] isn't supported at this moment?");
-}
- else transformer.walker=this.walker;
-transformer.initialize();
-return transformer;
+  if (this.walker == null)   throw new IllegalStateException("Please provide GraphWalker instance.");
+ else   transformer.walker=this.walker;
+  transformer.initialize();
+  return transformer;
 }
