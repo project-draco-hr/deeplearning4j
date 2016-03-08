@@ -26,4 +26,8 @@
   assertTrue(eval1F1 == eval2F1 && eval1Acc == eval2Acc);
   Evaluation evalViaMethod=model.evaluate(new ListDataSetIterator(Collections.singletonList(test)));
   checkEvaluationEquality(eval,evalViaMethod);
+  System.out.println(eval.getConfusionMatrix().toString());
+  System.out.println(eval.getConfusionMatrix().toCSV());
+  System.out.println(eval.getConfusionMatrix().toHTML());
+  System.out.println(eval.confusionToString());
 }

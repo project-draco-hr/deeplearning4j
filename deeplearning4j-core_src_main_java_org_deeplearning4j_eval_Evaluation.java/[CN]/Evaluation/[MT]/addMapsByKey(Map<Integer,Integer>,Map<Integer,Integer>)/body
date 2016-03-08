@@ -1,0 +1,13 @@
+{
+  Map<Integer,Integer> out=new HashMap<>();
+  Set<Integer> keys=new HashSet<>(first.keySet());
+  keys.addAll(second.keySet());
+  for (  Integer i : keys) {
+    Integer f=first.get(i);
+    Integer s=second.get(i);
+    if (f == null)     f=0;
+    if (s == null)     s=0;
+    out.put(i,f + s);
+  }
+  return out;
+}

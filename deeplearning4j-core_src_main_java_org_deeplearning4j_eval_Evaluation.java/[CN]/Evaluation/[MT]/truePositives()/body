@@ -1,3 +1,3 @@
 {
-  return truePositives.totalCount();
+  return convertToMap(truePositives,confusion.getClasses().size());
 }
