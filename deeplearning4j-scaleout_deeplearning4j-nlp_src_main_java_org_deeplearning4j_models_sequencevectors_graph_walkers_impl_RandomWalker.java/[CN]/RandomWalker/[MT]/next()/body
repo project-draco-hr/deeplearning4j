@@ -5,26 +5,27 @@
   int startPosition=position.getAndIncrement();
   int lastId=-1;
   int startPoint=order[startPosition];
+  startPosition=startPoint;
   for (int i=0; i < walkLength; i++) {
+    Vertex<T> vertex=sourceGraph.getVertex(startPosition);
     int currentPosition=startPosition;
-    Vertex<T> vertex=sourceGraph.getVertex(order[currentPosition]);
     sequence.addElement(vertex.getValue());
     visitedHops[i]=vertex.vertexID();
-    if (alpha > 0 && alpha < rng.nextDouble()) {
+    if (alpha > 0 && lastId != startPoint && lastId != -1 && alpha > rng.nextDouble()) {
       startPosition=startPoint;
       continue;
     }
 switch (walkDirection) {
 case RANDOM:
 {
-        int[] nextHops=sourceGraph.getConnectedVertexIndices(order[currentPosition]);
+        int[] nextHops=sourceGraph.getConnectedVertexIndices(currentPosition);
         startPosition=nextHops[rng.nextInt(nextHops.length)];
       }
     ;
   break;
 case FORWARD_ONLY:
 {
-  int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),lastId);
+  int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),lastId);
   if (nextHops.length > 0) {
     startPosition=nextHops[rng.nextInt(nextHops.length)];
   }
@@ -62,7 +63,7 @@ throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling
 break;
 case FORWARD_UNIQUE:
 {
-int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),visitedHops);
+int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),visitedHops);
 if (nextHops.length > 0) {
 startPosition=nextHops[rng.nextInt(nextHops.length)];
 }
@@ -100,9 +101,9 @@ throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling
 break;
 case FORWARD_PREFERRED:
 {
-int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),visitedHops);
+int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),visitedHops);
 if (nextHops.length == 0) {
-nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(order[currentPosition]),lastId);
+nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),lastId);
 if (nextHops.length == 0) {
 switch (noEdgeHandling) {
 case CUTOFF_ON_DISCONNECTED:
@@ -141,6 +142,5 @@ throw new UnsupportedOperationException("Unknown WalkDirection [" + walkDirectio
 }
 lastId=vertex.vertexID();
 }
-if (startPoint == 0) System.out.println("");
 return sequence;
 }

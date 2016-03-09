@@ -7,7 +7,6 @@
   while (reader.hasNext()) {
     List<Writable> lines=new ArrayList<>(reader.next());
     Blogger blogger=new Blogger(lines.get(0).toInt());
-    blogger.setIndex(cnt);
     bloggers.add(blogger);
     cnt++;
   }
@@ -22,5 +21,11 @@
     int to=lines.get(1).toInt();
     graph.addEdge(from - 1,to - 1,1.0,false);
   }
+  logger.info("Connected on 0: [" + graph.getConnectedVertices(0).size() + "]");
+  logger.info("Connected on 1: [" + graph.getConnectedVertices(1).size() + "]");
+  logger.info("Connected on 3: [" + graph.getConnectedVertices(3).size() + "]");
+  assertEquals(119,graph.getConnectedVertices(0).size());
+  assertEquals(9,graph.getConnectedVertices(1).size());
+  assertEquals(6,graph.getConnectedVertices(3).size());
   return graph;
 }
