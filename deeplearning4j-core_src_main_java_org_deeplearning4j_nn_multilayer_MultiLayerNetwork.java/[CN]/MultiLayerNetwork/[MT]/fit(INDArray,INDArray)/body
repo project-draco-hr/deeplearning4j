@@ -1,7 +1,6 @@
 {
   setInput(data.dup());
   setLabels(labels.dup());
-  update(TaskUtils.buildTask(data,labels));
   if (layerWiseConfigurations.isPretrain()) {
     pretrain(data);
     finetune();
