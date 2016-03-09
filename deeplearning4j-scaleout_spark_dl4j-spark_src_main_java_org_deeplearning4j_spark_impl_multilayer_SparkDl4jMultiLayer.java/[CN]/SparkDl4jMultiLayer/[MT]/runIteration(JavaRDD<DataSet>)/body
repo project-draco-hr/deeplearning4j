@@ -62,5 +62,6 @@
   if (!initDone) {
     log.info("Invoking Update");
     initDone=true;
+    update(maxRep,0);
   }
 }
