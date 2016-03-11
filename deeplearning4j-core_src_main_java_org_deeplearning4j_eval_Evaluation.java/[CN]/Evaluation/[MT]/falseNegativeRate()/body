@@ -1,0 +1,12 @@
+{
+  double fnrAlloc=0.0;
+  int classCount=0;
+  for (  Integer classLabel : confusion.getClasses()) {
+    double fnr=falseNegativeRate(classLabel,-1.0);
+    if (fnr != -1.0) {
+      fnrAlloc+=falseNegativeRate(classLabel);
+      classCount++;
+    }
+  }
+  return fnrAlloc / (double)classCount;
+}
