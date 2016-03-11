@@ -3,6 +3,9 @@
   this.walker.reset(shuffle);
   return new Iterator<Sequence<T>>(){
     private GraphWalker<T> walker=GraphTransformer.this.walker;
+    @Override public void remove(){
+      throw new UnsupportedOperationException("This is not supported on read-only iterator");
+    }
     @Override public boolean hasNext(){
       return walker.hasNext();
     }
