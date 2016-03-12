@@ -6,5 +6,6 @@
   this.tokenizer=(String)tokenizerVarMap.get("tokenizer");
   this.tokenizerPreprocessor=(String)tokenizerVarMap.get("tokenPreprocessor");
   this.useUnk=(boolean)tokenizerVarMap.get("useUnk");
+  this.configuration=(VectorsConfiguration)tokenizerVarMap.get("vectorsConfiguration");
   stopWords=(List<String>)tokenizerVarMap.get("stopWords");
 }
