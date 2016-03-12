@@ -6,4 +6,7 @@
   for (  Layer layer : layers) {
     layer.setListeners(listeners);
   }
+  if (solver != null) {
+    solver.setListeners(listeners);
+  }
 }

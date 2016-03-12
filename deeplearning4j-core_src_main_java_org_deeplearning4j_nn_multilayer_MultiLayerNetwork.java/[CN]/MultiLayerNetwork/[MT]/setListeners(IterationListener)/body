@@ -1,5 +1,5 @@
 {
   Collection<IterationListener> cListeners=new ArrayList<>();
-  for (  IterationListener listener : listeners)   cListeners.add(listener);
+  Collections.addAll(cListeners,listeners);
   setListeners(cListeners);
 }
