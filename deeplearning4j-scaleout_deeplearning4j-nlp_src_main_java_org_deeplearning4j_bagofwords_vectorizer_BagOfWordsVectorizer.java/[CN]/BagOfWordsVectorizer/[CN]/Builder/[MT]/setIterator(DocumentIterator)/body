@@ -1,0 +1,4 @@
+{
+  this.iterator=new StreamLineIterator.Builder(iterator).setFetchSize(100).build();
+  return this;
+}

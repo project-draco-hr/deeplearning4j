@@ -1,11 +1,5 @@
 {
-  Tokenizer tokenizer=tokenizerFactory.create(text);
-  List<String> tokens=tokenizer.getTokens();
-  INDArray input=Nd4j.create(1,cache.numWords());
-  for (  String token : tokens) {
-    int idx=cache.indexOf(token);
-    if (cache.indexOf(token) >= 0)     input.putScalar(idx,cache.wordFrequency(token));
-  }
-  INDArray labelMatrix=FeatureUtil.toOutcomeVector(labels.indexOf(label),labels.size());
+  INDArray input=transform(text);
+  INDArray labelMatrix=FeatureUtil.toOutcomeVector(labelsSource.indexOf(label),labelsSource.size());
   return new DataSet(input,labelMatrix);
 }
