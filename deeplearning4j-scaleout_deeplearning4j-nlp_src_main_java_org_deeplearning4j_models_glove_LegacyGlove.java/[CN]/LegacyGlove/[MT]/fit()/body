@@ -6,7 +6,7 @@
   }
   if (textVectorizer == null && cacheFresh) {
     InvertedIndex index=new LuceneInvertedIndex(vocab(),false,"glove-index");
-    textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).index(index).cache(vocab()).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
+    textVectorizer=new LegacyTfidfVectorizer.Builder().tokenize(tokenizerFactory).index(index).cache(vocab()).iterate(sentenceIterator).minWords(minWordFrequency).stopWords(stopWords).stem(stem).build();
     textVectorizer.fit();
   }
   if (sentenceIterator != null)   sentenceIterator.reset();
