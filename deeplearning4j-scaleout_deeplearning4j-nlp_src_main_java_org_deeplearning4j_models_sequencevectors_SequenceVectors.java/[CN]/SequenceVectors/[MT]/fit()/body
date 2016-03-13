@@ -64,5 +64,8 @@
       }
     }
     log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");
+    if (epochListener != null) {
+      epochListener.epochCompleted(currentEpoch,this);
+    }
   }
 }
