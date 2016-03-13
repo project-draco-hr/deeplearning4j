@@ -1,4 +1,4 @@
 {
-  this.iterator=iterator;
+  this.iterator=new SentenceIteratorConverter(iterator);
   return this;
 }

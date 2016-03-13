@@ -1,4 +1,4 @@
 {
-  this.iterator=new StreamLineIterator.Builder(iterator).setFetchSize(100).build();
+  this.iterator=new DocumentIteratorConverter(iterator,labelsSource);
   return this;
 }
