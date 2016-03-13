@@ -1,0 +1,23 @@
+{
+  BufferedReader reader=new BufferedReader(new InputStreamReader(stream,"UTF-8"));
+  String line=reader.readLine();
+  VectorsConfiguration configuration=VectorsConfiguration.fromJson(new String(Base64.decodeBase64(line),"UTF-8"));
+  AbstractCache<T> vocabCache=new AbstractCache.Builder<T>().build();
+  List<INDArray> rows=new ArrayList<>();
+  while ((line=reader.readLine()) != null) {
+    ElementPair pair=ElementPair.fromEncodedJson(line);
+    T element=factory.deserialize(pair.getObject());
+    rows.add(Nd4j.create(pair.getVector()));
+    vocabCache.addToken(element);
+    vocabCache.addWordToIndex(element.getIndex(),element.getLabel());
+  }
+  reader.close();
+  InMemoryLookupTable<T> lookupTable=(InMemoryLookupTable<T>)new InMemoryLookupTable.Builder<T>().vectorLength(rows.get(0).columns()).build();
+  INDArray syn0=Nd4j.create(rows.size(),rows.get(0).columns());
+  for (int x=0; x < rows.size(); x++) {
+    syn0.putRow(x,rows.get(x));
+  }
+  lookupTable.setSyn0(syn0);
+  SequenceVectors<T> vectors=new SequenceVectors.Builder<T>(configuration).vocabCache(vocabCache).lookupTable(lookupTable).resetModel(false).build();
+  return vectors;
+}

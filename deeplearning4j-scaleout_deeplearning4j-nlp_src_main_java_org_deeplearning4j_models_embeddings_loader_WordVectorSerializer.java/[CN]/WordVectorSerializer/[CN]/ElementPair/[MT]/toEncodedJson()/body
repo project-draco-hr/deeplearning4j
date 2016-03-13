@@ -1,0 +1,11 @@
+{
+  ObjectMapper mapper=SequenceElement.mapper();
+  try {
+    String json=mapper.writeValueAsString(this);
+    String output=Base64.encodeBase64String(json.getBytes("UTF-8"));
+    return output;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}
