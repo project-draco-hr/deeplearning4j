@@ -2,8 +2,12 @@
   if (params != null)   return params;
   List<INDArray> params=new ArrayList<>();
   for (  Layer layer : getLayers()) {
-    if (layer instanceof BasePretrainNetwork)     params.add(((BasePretrainNetwork)layer).paramsBackprop());
- else     params.add(layer.params());
+    INDArray layerParams;
+    if (layer instanceof BasePretrainNetwork) {
+      layerParams=((BasePretrainNetwork)layer).paramsBackprop();
+    }
+ else     layerParams=layer.params();
+    if (layerParams != null)     params.add(layerParams);
   }
   return Nd4j.toFlattened('f',params);
 }

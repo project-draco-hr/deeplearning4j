@@ -1,0 +1,4 @@
+{
+  TransferManager transfer=new TransferManager(getClient());
+  return transfer.downloadDirectory(bucketName,keyPrefix,folderPath);
+}

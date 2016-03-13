@@ -4,6 +4,7 @@
     if (!vertices[topologicalOrder[i]].hasLayer())     continue;
     Layer layer=vertices[topologicalOrder[i]].getLayer();
     int range=(layer instanceof BasePretrainNetwork ? ((BasePretrainNetwork<?>)layer).numParamsBackprop() : layer.numParams());
+    if (range <= 0)     continue;
     INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,range + idx));
     layer.setParams(get);
     idx+=range;

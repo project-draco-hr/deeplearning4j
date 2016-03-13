@@ -3,12 +3,14 @@
   for (int i=0; i < topologicalOrder.length; i++) {
     if (!vertices[topologicalOrder[i]].hasLayer())     continue;
     Layer l=vertices[topologicalOrder[i]].getLayer();
+    INDArray layerParams;
     if (backwardOnly && l instanceof BasePretrainNetwork) {
-      list.add(((BasePretrainNetwork)l).paramsBackprop());
+      layerParams=((BasePretrainNetwork)l).paramsBackprop();
     }
  else {
-      list.add(l.params());
+      layerParams=l.params();
     }
+    if (layerParams != null)     list.add(layerParams);
   }
   return Nd4j.toFlattened('f',list);
 }

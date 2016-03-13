@@ -1,0 +1,50 @@
+{
+  int nClasses=confusion.getClasses().size();
+  List<String> labels=new ArrayList<>();
+  boolean hasLabels=false;
+  if (labelsMap != null && labelsMap.size() == nClasses) {
+    for (int i=0; i < nClasses; i++) {
+      labels.add(labelsMap.get(i));
+    }
+    hasLabels=true;
+  }
+ else {
+    for (int i=0; i < nClasses; i++) {
+      labels.add(String.valueOf(i));
+    }
+  }
+  int maxLabelSize=0;
+  for (  String s : labels) {
+    maxLabelSize=Math.max(maxLabelSize,s.length());
+  }
+  int labelSize=Math.max(maxLabelSize + 5,10);
+  StringBuilder sb=new StringBuilder();
+  sb.append("%-3d");
+  sb.append("%-");
+  sb.append(labelSize);
+  sb.append("s | ");
+  StringBuilder headerFormat=new StringBuilder();
+  headerFormat.append("   %-").append(labelSize).append("s   ");
+  for (int i=0; i < nClasses; i++) {
+    sb.append("%7d");
+    headerFormat.append("%7d");
+  }
+  String rowFormat=sb.toString();
+  StringBuilder out=new StringBuilder();
+  Object[] headerArgs=new Object[nClasses + 1];
+  headerArgs[0]="Predicted:";
+  for (int i=0; i < nClasses; i++)   headerArgs[i + 1]=i;
+  out.append(String.format(headerFormat.toString(),headerArgs)).append("\n");
+  out.append("   Actual:\n");
+  for (int i=0; i < nClasses; i++) {
+    Object[] args=new Object[nClasses + 2];
+    args[0]=i;
+    args[1]=labels.get(i);
+    for (int j=0; j < nClasses; j++) {
+      args[j + 2]=confusion.getCount(i,j);
+    }
+    out.append(String.format(rowFormat,args));
+    out.append("\n");
+  }
+  return out.toString();
+}
