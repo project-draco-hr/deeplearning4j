@@ -1,5 +1,5 @@
 {
-  if (this.engine == null)   PosUimaTokenizer.engine=engine;
+  if (PosUimaTokenizer.engine == null)   PosUimaTokenizer.engine=engine;
   this.allowedPosTags=allowedPosTags;
   this.tokens=new ArrayList<String>();
   this.stripNones=stripNones;
