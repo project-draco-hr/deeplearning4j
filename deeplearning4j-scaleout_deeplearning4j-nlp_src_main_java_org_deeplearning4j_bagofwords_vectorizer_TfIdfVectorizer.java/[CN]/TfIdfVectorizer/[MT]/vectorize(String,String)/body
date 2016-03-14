@@ -1,3 +1,5 @@
 {
-  return null;
+  INDArray input=transform(text);
+  INDArray labelMatrix=FeatureUtil.toOutcomeVector(labelsSource.indexOf(label),labelsSource.size());
+  return new DataSet(input,labelMatrix);
 }
