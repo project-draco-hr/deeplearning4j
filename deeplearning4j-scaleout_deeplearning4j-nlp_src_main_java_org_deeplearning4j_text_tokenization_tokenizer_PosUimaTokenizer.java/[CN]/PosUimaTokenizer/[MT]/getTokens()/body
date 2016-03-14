@@ -1,7 +1,9 @@
 {
   List<String> tokens=new ArrayList<String>();
   while (hasMoreTokens()) {
-    tokens.add(nextToken());
+    String nextT=nextToken();
+    if (stripNones && nextT.equals("NONE"))     continue;
+    tokens.add(preProcessor != null ? preProcessor.preProcess(nextT) : nextT);
   }
   return tokens;
 }
