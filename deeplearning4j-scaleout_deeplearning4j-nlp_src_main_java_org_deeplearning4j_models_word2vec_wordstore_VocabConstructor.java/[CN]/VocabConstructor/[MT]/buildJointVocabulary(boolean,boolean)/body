@@ -47,6 +47,14 @@
             T element=tempHolder.wordFor(token);
             element.incrementSequencesCount();
           }
+          if (index != null) {
+            if (document.getSequenceLabel() != null) {
+              index.addWordsToDoc(index.numDocuments(),document.getElements(),document.getSequenceLabel());
+            }
+ else {
+              index.addWordsToDoc(index.numDocuments(),document.getElements());
+            }
+          }
         }
       }
       sequences++;

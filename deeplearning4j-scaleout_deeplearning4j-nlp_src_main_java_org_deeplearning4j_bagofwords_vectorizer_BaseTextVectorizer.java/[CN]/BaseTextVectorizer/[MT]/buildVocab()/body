@@ -1,7 +1,7 @@
 {
   if (vocabCache == null)   vocabCache=new AbstractCache.Builder<VocabWord>().build();
-  SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(this.iterator).build();
+  SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(this.iterator).tokenizerFactory(tokenizerFactory).build();
   AbstractSequenceIterator<VocabWord> iterator=new AbstractSequenceIterator.Builder<>(transformer).build();
-  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(iterator,1).setTargetVocabCache(vocabCache).build();
-  constructor.buildJointVocabulary(false,false);
+  VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(iterator,minWordFrequency).setTargetVocabCache(vocabCache).build();
+  constructor.buildJointVocabulary(false,true);
 }

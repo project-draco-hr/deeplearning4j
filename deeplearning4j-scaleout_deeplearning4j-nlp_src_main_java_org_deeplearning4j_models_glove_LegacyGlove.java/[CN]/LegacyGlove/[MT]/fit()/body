@@ -15,7 +15,7 @@
     coOccurrences.fit();
   }
   if (lookupTable == null) {
-    lookupTable=new GloveWeightLookupTable.Builder().cache(textVectorizer.vocab()).lr(learningRate).vectorLength(layerSize).maxCount(maxCount).build();
+    lookupTable=new GloveWeightLookupTable.Builder().cache(textVectorizer.getVocabCache()).lr(learningRate).vectorLength(layerSize).maxCount(maxCount).build();
   }
   if (lookupTable().getSyn0() == null)   lookupTable().resetWeights();
   final List<Pair<String,String>> pairList=coOccurrences.coOccurrenceList();

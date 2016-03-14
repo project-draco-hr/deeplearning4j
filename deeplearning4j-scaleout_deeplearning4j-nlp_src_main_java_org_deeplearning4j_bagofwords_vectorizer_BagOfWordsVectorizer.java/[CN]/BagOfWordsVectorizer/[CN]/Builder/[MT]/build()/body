@@ -3,6 +3,7 @@
   vectorizer.tokenizerFactory=this.tokenizerFactory;
   vectorizer.iterator=this.iterator;
   vectorizer.minWordFrequency=this.minWordFrequency;
+  vectorizer.labelsSource=this.labelsSource;
   if (this.vocabCache == null) {
     this.vocabCache=new AbstractCache.Builder<VocabWord>().build();
   }

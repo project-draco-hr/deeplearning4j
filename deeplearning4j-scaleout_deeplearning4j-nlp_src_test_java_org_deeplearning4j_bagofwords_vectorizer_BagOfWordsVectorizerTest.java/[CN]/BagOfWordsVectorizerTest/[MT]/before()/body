@@ -1,4 +1,0 @@
-{
-  cache=new InMemoryLookupCache();
-  index=new LuceneInvertedIndex.Builder().indexDir(new File("bagofwords")).cache(cache).batchSize(5).cacheInRam(false).build();
-}
