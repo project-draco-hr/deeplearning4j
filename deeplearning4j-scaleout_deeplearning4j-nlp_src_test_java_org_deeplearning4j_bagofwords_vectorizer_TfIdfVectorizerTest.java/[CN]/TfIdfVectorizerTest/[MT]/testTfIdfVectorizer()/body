@@ -30,4 +30,11 @@
   assertEquals(0.0,dataSet.getLabels().getDouble(0),0.1);
   assertEquals(0.0,dataSet.getLabels().getDouble(1),0.1);
   assertEquals(1.0,dataSet.getLabels().getDouble(2),0.1);
+  File tempFile=File.createTempFile("somefile","Dsdas");
+  tempFile.deleteOnExit();
+  SerializationUtils.saveObject(vectorizer,tempFile);
+  TfIdfVectorizer vectorizer2=SerializationUtils.readObject(tempFile);
+  vectorizer2.setTokenizerFactory(tokenizerFactory);
+  dataSet=vectorizer2.vectorize("This is 3 file.","label2");
+  assertEquals(vector,dataSet.getFeatureMatrix());
 }
