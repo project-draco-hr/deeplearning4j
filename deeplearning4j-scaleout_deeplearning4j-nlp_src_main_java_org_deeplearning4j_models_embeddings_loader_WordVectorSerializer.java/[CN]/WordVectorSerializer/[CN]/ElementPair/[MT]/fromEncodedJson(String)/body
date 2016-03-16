@@ -1,3 +1,10 @@
 {
-  return null;
+  ObjectMapper mapper=SequenceElement.mapper();
+  try {
+    String decoded=new String(Base64.decodeBase64(encoded),"UTF-8");
+    return mapper.readValue(decoded,ElementPair.class);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
 }
