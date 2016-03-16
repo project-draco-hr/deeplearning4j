@@ -22,6 +22,11 @@
           totalLines.incrementAndGet();
           this.wordsCounter.addAndGet(sequence.getElements().size());
           if (totalLines.get() % 100000 == 0)           log.info("Epoch: [" + this.epochNumber + "]; Words vectorized so far: ["+ this.wordsCounter.get()+ "];  Lines vectorized so far: ["+ this.totalLines.get()+ "]; learningRate: ["+ alpha+ "]");
+          if (eventListeners != null && eventListeners.size() > 0) {
+            for (            VectorsListener listener : eventListeners) {
+              if (listener.validateEvent(ListenerEvent.LINE,totalLines.get()))               listener.processEvent(ListenerEvent.LINE,SequenceVectors.this,totalLines.get());
+            }
+          }
         }
       }
     }
