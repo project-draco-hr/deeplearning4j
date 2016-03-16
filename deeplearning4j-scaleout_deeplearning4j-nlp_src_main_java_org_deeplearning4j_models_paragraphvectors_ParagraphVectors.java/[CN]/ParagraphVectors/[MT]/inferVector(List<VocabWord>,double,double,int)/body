@@ -1,3 +1,13 @@
 {
+  if (sequenceLearningAlgorithm == null) {
+    sequenceLearningAlgorithm=new DBOW<VocabWord>();
+    sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
+  }
+  Sequence<VocabWord> sequence=new Sequence<VocabWord>();
+  sequence.addElements(document);
+  sequence.setSequenceLabel(new VocabWord(1.0,String.valueOf(new Random().nextInt())));
+  for (int i=0; i < iterations; i++) {
+    sequenceLearningAlgorithm.learnSequence(sequence,new AtomicLong(0),learningRate);
+  }
   return null;
 }
