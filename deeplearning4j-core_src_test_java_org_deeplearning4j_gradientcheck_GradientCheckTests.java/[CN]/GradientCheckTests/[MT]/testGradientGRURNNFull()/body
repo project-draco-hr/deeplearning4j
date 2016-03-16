@@ -1,5 +1,5 @@
 {
-  String[] activFns={"tanh","relu"};
+  String[] activFns={"tanh"};
   LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
   String[] outputActivations={"softmax","tanh"};
   int timeSeriesLength=6;
