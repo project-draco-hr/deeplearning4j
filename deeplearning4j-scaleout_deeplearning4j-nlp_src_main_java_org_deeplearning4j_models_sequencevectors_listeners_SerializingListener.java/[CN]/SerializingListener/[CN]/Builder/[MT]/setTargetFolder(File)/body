@@ -1,0 +1,5 @@
+{
+  if (!folder.exists() || !folder.isDirectory())   throw new IllegalStateException("Target folder must exist!");
+  this.targetFolder=folder;
+  return this;
+}

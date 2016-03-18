@@ -1,0 +1,9 @@
+{
+  SerializingListener<T> listener=new SerializingListener<T>();
+  listener.modelPrefix=this.modelPrefix;
+  listener.targetFolder=this.targetFolder;
+  listener.useBinarySerialization=this.useBinarySerialization;
+  listener.targetEvent=this.targetEvent;
+  listener.targetFrequency=this.targetFrequency;
+  return listener;
+}

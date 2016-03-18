@@ -48,5 +48,6 @@
   ret.configuration=this.configuration;
   ret.trainSequenceVectors=false;
   ret.trainElementsVectors=true;
+  ret.eventListeners=this.vectorsListeners;
   return ret;
 }

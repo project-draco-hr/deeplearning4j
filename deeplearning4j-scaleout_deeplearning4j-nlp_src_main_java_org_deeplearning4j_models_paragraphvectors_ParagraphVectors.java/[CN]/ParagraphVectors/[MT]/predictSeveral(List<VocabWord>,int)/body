@@ -9,7 +9,7 @@
   for (  String s : labelsSource.getLabels()) {
     INDArray otherVec=getWordVectorMatrix(s);
     double sim=Transforms.cosineSim(docMean,otherVec);
-    log.info("Similarity inside: [" + s + "] -> "+ sim);
+    log.debug("Similarity inside: [" + s + "] -> "+ sim);
     distances.incrementCount(s,sim);
   }
   return distances.getSortedKeys().subList(0,limit);

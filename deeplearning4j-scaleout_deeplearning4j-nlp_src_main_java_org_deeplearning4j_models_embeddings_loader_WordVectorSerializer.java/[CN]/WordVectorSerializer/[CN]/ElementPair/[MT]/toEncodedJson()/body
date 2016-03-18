@@ -1,8 +1,9 @@
 {
   ObjectMapper mapper=SequenceElement.mapper();
+  Base64 base64=new Base64(Integer.MAX_VALUE);
   try {
     String json=mapper.writeValueAsString(this);
-    String output=Base64.encodeBase64String(json.getBytes("UTF-8"));
+    String output=base64.encodeAsString(json.getBytes("UTF-8"));
     return output;
   }
  catch (  Exception e) {

@@ -61,7 +61,7 @@
     log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");
     if (eventListeners != null && eventListeners.size() > 0) {
       for (      VectorsListener listener : eventListeners) {
-        listener.processEvent(currentEpoch,null);
+        if (listener.validateEvent(ListenerEvent.EPOCH,currentEpoch))         listener.processEvent(ListenerEvent.EPOCH,this,currentEpoch);
       }
     }
   }

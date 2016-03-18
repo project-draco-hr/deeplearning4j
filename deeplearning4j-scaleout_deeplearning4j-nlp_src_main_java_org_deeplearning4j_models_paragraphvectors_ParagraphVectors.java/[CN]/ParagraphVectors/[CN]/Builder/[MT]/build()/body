@@ -49,6 +49,7 @@
   ret.existingModel=this.existingVectors;
   ret.lookupTable=this.lookupTable;
   ret.modelUtils=this.modelUtils;
+  ret.eventListeners=this.vectorsListeners;
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);

@@ -1,0 +1,6 @@
+{
+  if (document.getReferencedContent() != null) {
+    return nearestLabels(document.getReferencedContent(),topN);
+  }
+ else   return nearestLabels(document.getContent(),topN);
+}
