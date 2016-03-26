@@ -12,5 +12,4 @@
   }
   numRowCounter+=other.numRowCounter;
   if (labelsList.isEmpty())   labelsList.addAll(other.labelsList);
-  if (labelsMap.isEmpty())   labelsMap.putAll(other.labelsMap);
 }

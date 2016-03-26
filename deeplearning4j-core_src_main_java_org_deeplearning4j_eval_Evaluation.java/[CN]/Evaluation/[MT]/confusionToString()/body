@@ -1,20 +1,7 @@
 {
   int nClasses=confusion.getClasses().size();
-  List<String> labels=new ArrayList<>();
-  boolean hasLabels=false;
-  if (labelsMap != null && labelsMap.size() == nClasses) {
-    for (int i=0; i < nClasses; i++) {
-      labels.add(labelsMap.get(i));
-    }
-    hasLabels=true;
-  }
- else {
-    for (int i=0; i < nClasses; i++) {
-      labels.add(String.valueOf(i));
-    }
-  }
   int maxLabelSize=0;
-  for (  String s : labels) {
+  for (  String s : labelsList) {
     maxLabelSize=Math.max(maxLabelSize,s.length());
   }
   int labelSize=Math.max(maxLabelSize + 5,10);
@@ -39,7 +26,7 @@
   for (int i=0; i < nClasses; i++) {
     Object[] args=new Object[nClasses + 2];
     args[0]=i;
-    args[1]=labels.get(i);
+    args[1]=labelsList.get(i);
     for (int j=0; j < nClasses; j++) {
       args[j + 2]=confusion.getCount(i,j);
     }
