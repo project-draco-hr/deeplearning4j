@@ -1,4 +1,3 @@
 {
-  for (int i=0; i < numClasses; i++)   labelsList.add(i);
-  confusion=new ConfusionMatrix<>(labelsList);
+  this(createLabels(numClasses));
 }
