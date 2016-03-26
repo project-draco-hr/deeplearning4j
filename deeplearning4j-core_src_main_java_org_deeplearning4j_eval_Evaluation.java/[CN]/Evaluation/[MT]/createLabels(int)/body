@@ -1,4 +1,5 @@
 {
+  if (numClasses == 1)   numClasses=2;
   List<String> list=new ArrayList<>(numClasses);
   for (int i=0; i < numClasses; i++) {
     list.add(String.valueOf(i));

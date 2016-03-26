@@ -2,35 +2,27 @@
   numRowCounter+=realOutcomes.shape()[0];
   if (confusion == null) {
     int nClasses=realOutcomes.columns();
+    if (nClasses == 1)     nClasses=2;
     labelsList=new ArrayList<>(nClasses);
     for (int i=0; i < nClasses; i++)     labelsList.add(String.valueOf(i));
     createConfusion(nClasses);
   }
   if (realOutcomes.length() != guesses.length())   throw new IllegalArgumentException("Unable to evaluate. Outcome matrices not same length");
+  int nCols=realOutcomes.columns();
   for (int i=0; i < realOutcomes.rows(); i++) {
     INDArray currRow=realOutcomes.getRow(i);
     INDArray guessRow=guesses.getRow(i);
     int currMax;
-{
-      double max=currRow.getDouble(0);
-      currMax=0;
-      for (int col=1; col < currRow.columns(); col++) {
-        if (currRow.getDouble(col) > max) {
-          max=currRow.getDouble(col);
-          currMax=col;
-        }
-      }
-    }
     int guessMax;
-{
-      double max=guessRow.getDouble(0);
-      guessMax=0;
-      for (int col=1; col < guessRow.columns(); col++) {
-        if (guessRow.getDouble(col) > max) {
-          max=guessRow.getDouble(col);
-          guessMax=col;
-        }
-      }
+    if (nCols == 1) {
+      if (currRow.getDouble(i) == 0.0)       currMax=0;
+ else       currMax=1;
+      if (guessRow.getDouble(i) <= 0.5)       guessMax=0;
+ else       guessMax=1;
+    }
+ else {
+      currMax=(int)Nd4j.argMax(currRow,1).getDouble(0);
+      guessMax=(int)Nd4j.argMax(guessRow,1).getDouble(0);
     }
     addToConfusion(currMax,guessMax);
     if (currMax == guessMax) {
