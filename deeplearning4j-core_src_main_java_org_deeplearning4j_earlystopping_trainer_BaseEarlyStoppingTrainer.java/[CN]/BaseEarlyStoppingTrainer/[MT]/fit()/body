@@ -22,7 +22,10 @@
     int iterCount=0;
     while (iterator.hasNext()) {
       try {
-        if (train != null)         fit(train.next());
+        if (train != null) {
+          DataSet ds=(DataSet)iterator.next();
+          if (ds != null)           fit(ds);
+        }
  else         fit(trainMulti.next());
       }
  catch (      Exception e) {
