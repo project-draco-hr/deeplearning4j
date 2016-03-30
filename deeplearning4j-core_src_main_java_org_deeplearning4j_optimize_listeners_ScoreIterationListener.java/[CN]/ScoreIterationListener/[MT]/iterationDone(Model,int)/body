@@ -1,8 +1,9 @@
 {
   if (printIterations <= 0)   printIterations=1;
-  if (iteration % printIterations == 0) {
+  if (iterCount % printIterations == 0) {
     invoke();
     double result=model.score();
-    log.info("Score at iteration " + iteration + " is "+ result);
+    log.info("Score at iteration " + iterCount + " is "+ result);
   }
+  iterCount++;
 }
