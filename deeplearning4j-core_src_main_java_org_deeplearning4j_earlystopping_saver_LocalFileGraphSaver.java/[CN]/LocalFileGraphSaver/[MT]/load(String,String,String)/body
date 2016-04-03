@@ -2,10 +2,10 @@
   String confJSON=FileUtils.readFileToString(new File(confOut),encoding);
   INDArray params;
   ComputationGraphUpdater updater;
-  try (DataInputStream dis=new DataInputStream(Files.newInputStream(Paths.get(paramOut)))){
+  try (DataInputStream dis=new DataInputStream(new BufferedInputStream(Files.newInputStream(Paths.get(paramOut))))){
     params=Nd4j.read(dis);
   }
-   try (ObjectInputStream ois=new ObjectInputStream(new FileInputStream(new File(updaterOut)))){
+   try (ObjectInputStream ois=new ObjectInputStream(new BufferedInputStream(new FileInputStream(new File(updaterOut))))){
     updater=(ComputationGraphUpdater)ois.readObject();
   }
  catch (  ClassNotFoundException e) {

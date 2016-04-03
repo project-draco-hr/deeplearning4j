@@ -1,3 +1,5 @@
 {
-  writeModel(model,new FileOutputStream(path),saveUpdater);
-}
+  try (BufferedOutputStream stream=new BufferedOutputStream(new FileOutputStream(path))){
+    writeModel(model,stream,saveUpdater);
+  }
+ }
