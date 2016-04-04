@@ -12,7 +12,7 @@ return vMean;
 case BINARY:
 return sigmoid(vMean);
 case SOFTMAX:
-return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean),0);
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean));
 default :
 throw new IllegalStateException("Visible unit type should either be binary or gaussian");
 }
