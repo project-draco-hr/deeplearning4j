@@ -1,10 +1,16 @@
 {
   boolean hasMaskArray=data.hasMaskArrays();
   if (hasMaskArray)   setLayerMaskArrays(data.getFeaturesMaskArray(),data.getLabelsMaskArray());
-  feedForwardToLayer(layers.length - 2,data.getFeatureMatrix(),training);
+  List<INDArray> activations=feedForwardToLayer(layers.length - 2,data.getFeatureMatrix(),training);
+  int n=activations.size();
   setLabels(data.getLabels());
   if (getOutputLayer() instanceof BaseOutputLayer) {
     BaseOutputLayer<?> ol=(BaseOutputLayer<?>)getOutputLayer();
+    INDArray olInput=activations.get(n - 1);
+    if (getLayerWiseConfigurations().getInputPreProcess(n - 1) != null) {
+      olInput=getLayerWiseConfigurations().getInputPreProcess(n - 1).preProcess(olInput,input.size(0));
+    }
+    ol.setInput(olInput);
     ol.setLabels(data.getLabels());
     ol.computeScore(calcL1(),calcL2(),training);
     this.score=ol.score();

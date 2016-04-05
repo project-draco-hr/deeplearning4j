@@ -19,5 +19,5 @@
   assertEquals(0,eval.trueNegatives().get(0),0);
   assertEquals(0,eval.falseNegatives().get(0),0);
   assertEquals(1,eval.negative().get(0),0);
-  assertEquals(eval.accuracy(),0.5,0);
+  assertEquals(0.5,eval.accuracy(),0);
 }

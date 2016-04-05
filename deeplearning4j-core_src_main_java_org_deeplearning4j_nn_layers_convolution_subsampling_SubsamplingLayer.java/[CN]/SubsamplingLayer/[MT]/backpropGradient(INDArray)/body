@@ -14,21 +14,15 @@ reshaped=retE.reshape(n,c,-1,outH,outW);
 reshapeEpsilon=Nd4j.rollAxis(reshaped,2);
 final INDArray finalEps=epsilon;
 final INDArray reshapedEps=reshapeEpsilon;
-Shape.iterate(0,4,new int[]{n,c,outH,outW},new int[4],new CoordinateFunction(){
-@Override public void process(int[]... coord){
-try {
-int[] i=coord[0];
-double epsGet=finalEps.getDouble(i);
+NdIndexIterator iter=new NdIndexIterator(maxIndexes.shape());
+while (iter.hasNext()) {
+int[] i=iter.next();
 int idx=maxIndexes.getInt(i);
+double epsGet=finalEps.getDouble(i);
+INDArrayIndex t=NDArrayIndex.point(idx);
 INDArray sliceToGetFrom=reshapedEps.get(NDArrayIndex.point(idx));
 sliceToGetFrom.putScalar(i,epsGet);
 }
- catch (Exception e) {
-throw new IllegalStateException("Iterated to " + Arrays.toString(coord[0]) + " out of shape for indexes "+ Arrays.toString(maxIndexes.shape())+ " and final eps shape "+ Arrays.toString(finalEps.shape()));
-}
-}
-}
-);
 reshapeEpsilon=Convolution.col2im(retE,layerConf().getStride(),layerConf().getPadding(),inputHeight,inputWidth);
 return new Pair<>(retGradient,reshapeEpsilon);
 case AVG:

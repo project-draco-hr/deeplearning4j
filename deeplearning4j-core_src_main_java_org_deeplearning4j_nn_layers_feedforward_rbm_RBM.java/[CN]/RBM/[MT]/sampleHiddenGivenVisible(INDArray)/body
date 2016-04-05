@@ -19,7 +19,7 @@ case GAUSSIAN:
   }
 case SOFTMAX:
 {
-  h1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",h1Mean),0);
+  h1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",h1Mean));
   break;
 }
 case BINARY:

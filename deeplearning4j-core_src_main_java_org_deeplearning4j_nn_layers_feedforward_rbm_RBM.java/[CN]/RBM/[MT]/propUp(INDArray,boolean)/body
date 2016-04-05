@@ -20,7 +20,7 @@ return preSig;
 case BINARY:
 return sigmoid(preSig);
 case SOFTMAX:
-return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig),0);
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",preSig));
 default :
 throw new IllegalStateException("Hidden unit type should either be binary, gaussian, or rectified linear");
 }

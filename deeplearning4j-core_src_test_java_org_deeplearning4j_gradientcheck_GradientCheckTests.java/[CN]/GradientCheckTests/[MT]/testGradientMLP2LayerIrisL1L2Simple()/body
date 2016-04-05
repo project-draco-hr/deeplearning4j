@@ -1,5 +1,5 @@
 {
-  String[] activFns={"sigmoid","tanh","relu"};
+  String[] activFns={"sigmoid","tanh"};
   boolean[] characteristic={false,true};
   LossFunction[] lossFunctions={LossFunction.MCXENT,LossFunction.MSE};
   String[] outputActivations={"softmax","tanh"};
@@ -17,7 +17,7 @@
           String outputActivation=outputActivations[i];
           double l2=l2vals[k];
           double l1=l1vals[k];
-          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(l2).l1(l1).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).seed(12345L).list().layer(0,new DenseLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(afn).build()).layer(1,new OutputLayer.Builder(lf).nIn(3).nOut(3).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(outputActivation).build()).pretrain(false).backprop(true).build();
+          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(l2).l1(l1).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).seed(12345L).list().layer(0,new DenseLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(afn).build()).layer(1,new OutputLayer.Builder(lf).nIn(3).nOut(3).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(outputActivation).build()).pretrain(false).backprop(true).build();
           MultiLayerNetwork mln=new MultiLayerNetwork(conf);
           mln.init();
           if (doLearningFirst) {

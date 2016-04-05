@@ -14,7 +14,7 @@ case LINEAR:
   }
 case SOFTMAX:
 {
-  v1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",v1Mean),0);
+  v1Sample=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",v1Mean));
   break;
 }
 case BINARY:
