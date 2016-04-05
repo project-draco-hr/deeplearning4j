@@ -1,0 +1,5 @@
+{
+  if (!color.matches("#dddddd"))   throw new IllegalArgumentException("Invalid color: must be hex format. Got: " + color);
+  this.backgroundColor=color;
+  return this;
+}
