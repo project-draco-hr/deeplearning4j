@@ -1,5 +1,5 @@
 {
-  super(null,batchSize,width * height * channels,numCategories);
+  super(null,batchSize,height * width * channels,numCategories);
   this.loader=new CifarLoader();
   this.inputStream=loader.getInputStream();
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
