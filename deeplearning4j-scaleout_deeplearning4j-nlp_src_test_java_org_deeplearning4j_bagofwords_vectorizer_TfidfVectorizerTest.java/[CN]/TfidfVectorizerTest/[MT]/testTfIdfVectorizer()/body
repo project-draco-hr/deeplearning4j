@@ -2,7 +2,7 @@
   File rootDir=new ClassPathResource("tripledir").getFile();
   LabelAwareSentenceIterator iter=new LabelAwareFileSentenceIterator(rootDir);
   TokenizerFactory tokenizerFactory=new DefaultTokenizerFactory();
-  TfIdfVectorizer vectorizer=new TfIdfVectorizer.Builder().setMinWordFrequency(1).setStopWords(new ArrayList<String>()).setTokenizerFactory(tokenizerFactory).setIterator(iter).build();
+  TfidfVectorizer vectorizer=new TfidfVectorizer.Builder().setMinWordFrequency(1).setStopWords(new ArrayList<String>()).setTokenizerFactory(tokenizerFactory).setIterator(iter).build();
   vectorizer.fit();
   VocabWord word=vectorizer.getVocabCache().wordFor("file.");
   assumeNotNull(word);
@@ -33,7 +33,7 @@
   File tempFile=File.createTempFile("somefile","Dsdas");
   tempFile.deleteOnExit();
   SerializationUtils.saveObject(vectorizer,tempFile);
-  TfIdfVectorizer vectorizer2=SerializationUtils.readObject(tempFile);
+  TfidfVectorizer vectorizer2=SerializationUtils.readObject(tempFile);
   vectorizer2.setTokenizerFactory(tokenizerFactory);
   dataSet=vectorizer2.vectorize("This is 3 file.","label2");
   assertEquals(vector,dataSet.getFeatureMatrix());

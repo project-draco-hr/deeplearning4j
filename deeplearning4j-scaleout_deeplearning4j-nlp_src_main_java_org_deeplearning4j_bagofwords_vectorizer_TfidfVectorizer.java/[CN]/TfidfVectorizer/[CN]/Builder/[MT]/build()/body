@@ -1,5 +1,5 @@
 {
-  TfIdfVectorizer vectorizer=new TfIdfVectorizer();
+  TfidfVectorizer vectorizer=new TfidfVectorizer();
   vectorizer.tokenizerFactory=this.tokenizerFactory;
   vectorizer.iterator=this.iterator;
   vectorizer.minWordFrequency=this.minWordFrequency;
