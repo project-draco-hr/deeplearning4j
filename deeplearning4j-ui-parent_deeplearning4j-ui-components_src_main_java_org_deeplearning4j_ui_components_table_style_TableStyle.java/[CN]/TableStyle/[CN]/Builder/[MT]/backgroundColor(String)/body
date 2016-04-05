@@ -1,5 +1,5 @@
 {
-  if (!color.matches("#dddddd"))   throw new IllegalArgumentException("Invalid color: must be hex format. Got: " + color);
+  if (!color.matches("#[a-f0-9]{6}"))   throw new IllegalArgumentException("Invalid color: must be hex format. Got: " + color);
   this.backgroundColor=color;
   return this;
 }
