@@ -1,0 +1,9 @@
+{
+  int[] out=new int[(edges[vertex] == null ? 0 : edges[vertex].size())];
+  if (out.length == 0)   return out;
+  for (int i=0; i < out.length; i++) {
+    Edge<E> e=edges[vertex].get(i);
+    out[i]=(e.getFrom() == vertex ? e.getTo() : e.getFrom());
+  }
+  return out;
+}

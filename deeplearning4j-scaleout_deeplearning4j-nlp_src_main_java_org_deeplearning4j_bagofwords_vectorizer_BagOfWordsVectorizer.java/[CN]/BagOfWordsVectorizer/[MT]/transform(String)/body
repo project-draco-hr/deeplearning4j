@@ -1,10 +1,10 @@
 {
   Tokenizer tokenizer=tokenizerFactory.create(text);
   List<String> tokens=tokenizer.getTokens();
-  INDArray input=Nd4j.create(1,cache.numWords());
+  INDArray input=Nd4j.create(1,vocabCache.numWords());
   for (  String token : tokens) {
-    int idx=cache.indexOf(token);
-    if (cache.indexOf(token) >= 0)     input.putScalar(idx,cache.wordFrequency(token));
+    int idx=vocabCache.indexOf(token);
+    if (vocabCache.indexOf(token) >= 0)     input.putScalar(idx,vocabCache.wordFrequency(token));
   }
   return input;
 }

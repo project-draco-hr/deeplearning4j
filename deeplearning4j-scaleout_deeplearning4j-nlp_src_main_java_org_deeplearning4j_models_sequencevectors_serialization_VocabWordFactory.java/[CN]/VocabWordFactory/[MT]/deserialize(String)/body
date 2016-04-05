@@ -1,0 +1,10 @@
+{
+  ObjectMapper mapper=SequenceElement.mapper();
+  try {
+    VocabWord ret=mapper.readValue(json,VocabWord.class);
+    return ret;
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

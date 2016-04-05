@@ -1,18 +1,13 @@
 {
-  final T word=sequence.getElements().get(i);
   List<T> sentence=sequence.getElements();
   List<T> labels=new ArrayList<>();
   labels.addAll(sequence.getSequenceLabels());
   if (sequence.getSequenceLabel() == null)   throw new IllegalStateException("Label is NULL");
-  if (word == null || sentence.isEmpty())   return;
-  int end=window * 2 + 1 - b;
-  for (int a=b; a < end; a++) {
-    if (a != window) {
-      int c=i - window + a;
-      if (c >= 0 && c < labels.size()) {
-        T lastWord=labels.get(c);
-        skipGram.iterateSample(word,lastWord,nextRandom,alpha);
-      }
+  if (sentence.isEmpty() || labels.isEmpty())   return;
+  for (  T lastWord : labels) {
+    for (    T word : sentence) {
+      if (word == null)       continue;
+      skipGram.iterateSample(word,lastWord,nextRandom,alpha);
     }
   }
 }

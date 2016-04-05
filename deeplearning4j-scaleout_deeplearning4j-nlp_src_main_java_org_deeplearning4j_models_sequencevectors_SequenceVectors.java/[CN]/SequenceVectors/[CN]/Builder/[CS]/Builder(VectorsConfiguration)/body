@@ -14,6 +14,8 @@
   this.learningRateDecayWords=configuration.getLearningRateDecayWords();
   this.useAdaGrad=configuration.isUseAdaGrad();
   this.window=configuration.getWindow();
+  this.UNK=configuration.getUNK();
+  this.STOP=configuration.getSTOP();
   if (configuration.getElementsLearningAlgorithm() != null && !configuration.getElementsLearningAlgorithm().isEmpty()) {
     this.elementsLearningAlgorithm(configuration.getElementsLearningAlgorithm());
   }

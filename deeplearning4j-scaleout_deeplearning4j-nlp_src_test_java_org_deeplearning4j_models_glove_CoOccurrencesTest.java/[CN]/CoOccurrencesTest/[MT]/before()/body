@@ -10,7 +10,7 @@
   }
 );
   vocabCache=new InMemoryLookupCache();
-  textVectorizer=new TfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).stopWords(new ArrayList<String>()).build();
+  textVectorizer=new LegacyTfidfVectorizer.Builder().tokenize(tokenizerFactory).cache(vocabCache).iterate(iter).minWords(1).stopWords(new ArrayList<String>()).build();
   textVectorizer.fit();
   coOccurrences=new CoOccurrences.Builder().cache(vocabCache).iterate(iter).symmetric(false).tokenizer(tokenizerFactory).windowSize(15).build();
 }

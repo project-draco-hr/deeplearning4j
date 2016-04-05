@@ -17,6 +17,8 @@
     while (iterator.hasMoreSequences()) {
       Sequence<T> document=iterator.nextSequence();
       seqCount.incrementAndGet();
+      tempHolder.incrementTotalDocCount();
+      Map<String,AtomicLong> seqMap=new HashMap<>();
       if (fetchLabels) {
         T labelWord=document.getSequenceLabel();
         labelWord.setSpecial(true);
@@ -34,10 +36,25 @@
           tempHolder.addToken(element);
           elementsCounter.incrementAndGet();
           counter++;
+          element.setSequencesCount(1);
+          seqMap.put(token,new AtomicLong(0));
         }
  else {
           counter++;
           tempHolder.incrementWordCount(token);
+          if (!seqMap.containsKey(token)) {
+            seqMap.put(token,new AtomicLong(1));
+            T element=tempHolder.wordFor(token);
+            element.incrementSequencesCount();
+          }
+          if (index != null) {
+            if (document.getSequenceLabel() != null) {
+              index.addWordsToDoc(index.numDocuments(),document.getElements(),document.getSequenceLabel());
+            }
+ else {
+              index.addWordsToDoc(index.numDocuments(),document.getElements());
+            }
+          }
         }
       }
       sequences++;

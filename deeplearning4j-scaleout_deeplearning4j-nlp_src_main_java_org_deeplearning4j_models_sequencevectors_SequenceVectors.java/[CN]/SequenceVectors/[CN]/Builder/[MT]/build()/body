@@ -31,6 +31,7 @@
   vectors.elementsLearningAlgorithm=this.elementsLearningAlgorithm;
   vectors.sequenceLearningAlgorithm=this.sequenceLearningAlgorithm;
   vectors.existingModel=this.existingVectors;
+  vectors.setUNK(this.UNK);
   this.configuration.setLearningRate(this.learningRate);
   this.configuration.setLayersSize(layerSize);
   this.configuration.setHugeModelExpected(hugeModelExpected);
@@ -46,6 +47,7 @@
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
   this.configuration.setStopList(this.stopWords);
+  this.configuration.setUNK(this.UNK);
   vectors.configuration=this.configuration;
   return vectors;
 }

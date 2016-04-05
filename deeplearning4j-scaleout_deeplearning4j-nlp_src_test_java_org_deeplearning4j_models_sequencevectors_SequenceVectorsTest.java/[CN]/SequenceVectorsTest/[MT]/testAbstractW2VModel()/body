@@ -11,6 +11,8 @@
   constructor.buildJointVocabulary(false,true);
   assertEquals(242,vocabCache.numWords());
   assertEquals(634303,vocabCache.totalWordOccurrences());
+  VocabWord wordz=vocabCache.wordFor("day");
+  logger.info("Wordz: " + wordz);
   WeightLookupTable<VocabWord> lookupTable=new InMemoryLookupTable.Builder<VocabWord>().lr(0.025).vectorLength(150).useAdaGrad(false).cache(vocabCache).build();
   lookupTable.resetWeights(true);
   SequenceVectors<VocabWord> vectors=new SequenceVectors.Builder<VocabWord>(new VectorsConfiguration()).minWordFrequency(5).lookupTable(lookupTable).iterate(sequenceIterator).vocabCache(vocabCache).batchSize(250).iterations(1).epochs(1).resetModel(false).trainElementsRepresentation(true).trainSequencesRepresentation(false).build();

@@ -1,0 +1,9 @@
+{
+  PrintWriter writer=new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream,"UTF-8")));
+  for (int x=0; x < vocabCache.numWords(); x++) {
+    VocabWord word=vocabCache.elementAtIndex(x);
+    writer.println(word.toJSON());
+  }
+  writer.flush();
+  writer.close();
+}

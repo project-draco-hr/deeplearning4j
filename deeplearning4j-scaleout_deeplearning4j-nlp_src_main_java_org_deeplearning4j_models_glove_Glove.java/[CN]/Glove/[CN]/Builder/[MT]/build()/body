@@ -36,6 +36,7 @@
   ret.lookupTable=this.lookupTable;
   ret.vocab=this.vocabCache;
   ret.modelUtils=this.modelUtils;
+  ret.eventListeners=this.vectorsListeners;
   ret.elementsLearningAlgorithm=new GloVe.Builder<VocabWord>().learningRate(this.learningRate).shuffle(this.shuffle).symmetric(this.symmetric).xMax(this.xMax).alpha(this.alpha).maxMemory(maxmemory).build();
   return ret;
 }

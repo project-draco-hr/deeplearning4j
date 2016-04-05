@@ -5,12 +5,12 @@
   for (int i=0; i < sentence.size(); i++) {
     int wordIdx=vocab.indexOf(sentence.get(i));
     String w1=((VocabWord)vocab.wordFor(sentence.get(i))).getWord();
-    if (wordIdx < 0 || w1.equals(Glove.UNK))     continue;
+    if (wordIdx < 0)     continue;
     int windowStop=Math.min(i + windowSize + 1,sentence.size());
     for (int j=i; j < windowStop; j++) {
       int otherWord=vocab.indexOf(sentence.get(j));
       String w2=((VocabWord)vocab.wordFor(sentence.get(j))).getWord();
-      if (vocab.indexOf(sentence.get(j)) < 0 || w2.equals(Glove.UNK))       continue;
+      if (vocab.indexOf(sentence.get(j)) < 0)       continue;
       if (otherWord == wordIdx)       continue;
       if (wordIdx < otherWord) {
         coOCurreneCounts.incrementCount(sentence.get(i),sentence.get(j),1.0 / (j - i + Nd4j.EPS_THRESHOLD));

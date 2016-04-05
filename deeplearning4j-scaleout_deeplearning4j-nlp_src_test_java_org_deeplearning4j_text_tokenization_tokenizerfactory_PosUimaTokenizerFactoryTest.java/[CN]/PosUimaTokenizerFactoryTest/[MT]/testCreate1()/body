@@ -1,0 +1,11 @@
+{
+  String[] posTags=new String[]{"NN"};
+  PosUimaTokenizerFactory factory=new PosUimaTokenizerFactory(Arrays.asList(posTags));
+  Tokenizer tokenizer=factory.create("some test string");
+  List<String> tokens=tokenizer.getTokens();
+  System.out.println("Tokens: " + tokens);
+  assertEquals(3,tokens.size());
+  assertEquals("NONE",tokens.get(0));
+  assertEquals("test",tokens.get(1));
+  assertEquals("string",tokens.get(2));
+}

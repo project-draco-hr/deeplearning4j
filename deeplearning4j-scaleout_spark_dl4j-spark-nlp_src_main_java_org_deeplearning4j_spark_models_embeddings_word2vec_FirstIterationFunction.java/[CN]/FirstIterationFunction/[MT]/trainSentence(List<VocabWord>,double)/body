@@ -1,7 +1,7 @@
 {
   if (vocabWordsList != null && !vocabWordsList.isEmpty()) {
     for (int ithWordInSentence=0; ithWordInSentence < vocabWordsList.size(); ithWordInSentence++) {
-      nextRandom.set(nextRandom.get() * 25214903917L + 11);
+      nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
       int b=(int)(long)this.nextRandom.get() % window;
       VocabWord currentWord=vocabWordsList.get(ithWordInSentence);
       if (currentWord != null) {

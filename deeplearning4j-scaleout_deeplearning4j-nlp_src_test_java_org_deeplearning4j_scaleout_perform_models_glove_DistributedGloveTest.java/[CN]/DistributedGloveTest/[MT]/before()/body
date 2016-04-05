@@ -7,7 +7,7 @@
   TokenizerFactory t=new UimaTokenizerFactory();
   table=new GloveWeightLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
   if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).build();
-  vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).minWords(1).tokenize(t).build();
+  vectorizer=new LegacyTfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).minWords(1).tokenize(t).build();
   vectorizer.fit();
   iter.reset();
   coOccurrences=new CoOccurrences.Builder().cache(cache).iterate(iter).tokenizer(t).build();
