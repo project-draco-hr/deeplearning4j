@@ -1,0 +1,6 @@
+{
+  super(COMPONENT_TYPE,builder.style);
+  this.title=builder.title;
+  this.defaultCollapsed=builder.defaultCollapsed;
+  this.innerComponents=builder.innerComponents.toArray(new Component[builder.innerComponents.size()]);
+}
