@@ -1,0 +1,13 @@
+{
+  Updater updater=null;
+  try (ObjectInputStream oos=new ObjectInputStream(new FileInputStream(new File(updatorPath)))){
+    updater=(Updater)oos.readObject();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+catch (  ClassNotFoundException e) {
+    e.printStackTrace();
+  }
+  return updater;
+}
