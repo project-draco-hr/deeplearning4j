@@ -1,6 +1,7 @@
 {
   log.info("Broadcasting initial parameters of length " + network.numParams(false));
   int maxRep=0;
+  long maxSm=0;
   INDArray valToBroadcast=network.params(false);
   this.params=sc.broadcast(valToBroadcast);
   ComputationGraphUpdater updater=network.getUpdater();
@@ -13,7 +14,7 @@
   int paramsLength=network.numParams(true);
   boolean accumGrad=sc.getConf().getBoolean(ACCUM_GRADIENT,false);
   if (accumGrad) {
-    JavaRDD<Tuple3<Gradient,ComputationGraphUpdater,Double>> results=rdd.mapPartitions(new GradientAccumFlatMapCG(conf.toJson(),this.params,this.updater),true).cache();
+    JavaRDD<Tuple3<Gradient,ComputationGraphUpdater,ScoreReport>> results=rdd.mapPartitions(new GradientAccumFlatMapCG(conf.toJson(),this.params,this.updater),true).cache();
     JavaRDD<Gradient> resultsGradient=results.map(new GradientFromTupleFunctionCG());
     log.info("Ran iterative reduce... averaging gradients now.");
     GradientAdder a=new GradientAdder(paramsLength);
@@ -30,12 +31,11 @@
     log.info("Set parameters");
     log.info("Processing updaters");
     JavaRDD<ComputationGraphUpdater> resultsUpdater=results.map(new UpdaterFromGradientTupleFunctionCG());
-    JavaDoubleRDD scores=results.mapToDouble(new DoubleFunction<Tuple3<Gradient,ComputationGraphUpdater,Double>>(){
-      @Override public double call(      Tuple3<Gradient,ComputationGraphUpdater,Double> t3) throws Exception {
-        return t3._3();
-      }
+    JavaDoubleRDD scores=results.mapToDouble(new ScoreMappingG());
+    if (!initDone) {
+      JavaDoubleRDD sm=results.mapToDouble(new SMappingG());
+      maxSm=sm.mean().longValue();
     }
-);
     lastScore=scores.mean();
     ComputationGraphUpdater.Aggregator aggregator=resultsUpdater.aggregate(null,new UpdaterElementCombinerCG(),new UpdaterAggregatorCombinerCG());
     ComputationGraphUpdater combinedUpdater=aggregator.getUpdater();
@@ -43,7 +43,7 @@
     log.info("Set updater");
   }
  else {
-    JavaRDD<Tuple3<INDArray,ComputationGraphUpdater,Double>> results=rdd.mapPartitions(new IterativeReduceFlatMapCG(conf.toJson(),this.params,this.updater),true).cache();
+    JavaRDD<Tuple3<INDArray,ComputationGraphUpdater,ScoreReport>> results=rdd.mapPartitions(new IterativeReduceFlatMapCG(conf.toJson(),this.params,this.updater),true).cache();
     JavaRDD<INDArray> resultsParams=results.map(new INDArrayFromTupleFunctionCG());
     log.info("Running iterative reduce and averaging parameters");
     Adder a=new Adder(paramsLength,sc.accumulator(0));
@@ -55,6 +55,10 @@
     log.info("Accumulated and set parameters");
     JavaRDD<ComputationGraphUpdater> resultsUpdater=results.map(new UpdaterFromTupleFunctionCG());
     JavaDoubleRDD scores=results.mapToDouble(new ScoreMapping());
+    if (!initDone) {
+      JavaDoubleRDD sm=results.mapToDouble(new SMapping());
+      maxSm=sm.mean().longValue();
+    }
     lastScore=scores.mean();
     ComputationGraphUpdater.Aggregator aggregator=resultsUpdater.aggregate(null,new UpdaterElementCombinerCG(),new UpdaterAggregatorCombinerCG());
     ComputationGraphUpdater combinedUpdater=aggregator.getUpdater();
@@ -67,6 +71,6 @@
   }
   if (!initDone) {
     initDone=true;
-    update(maxRep,0);
+    update(maxRep,maxSm);
   }
 }

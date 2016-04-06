@@ -1,0 +1,11 @@
+{
+  GraphTransformer<T> transformer=new GraphTransformer<T>();
+  transformer.sourceGraph=this.sourceGraph;
+  transformer.labelsProvider=this.labelsProvider;
+  transformer.shuffle=this.shuffle;
+  transformer.vocabCache=this.vocabCache;
+  if (this.walker == null)   throw new IllegalStateException("Please provide GraphWalker instance.");
+ else   transformer.walker=this.walker;
+  transformer.initialize();
+  return transformer;
+}

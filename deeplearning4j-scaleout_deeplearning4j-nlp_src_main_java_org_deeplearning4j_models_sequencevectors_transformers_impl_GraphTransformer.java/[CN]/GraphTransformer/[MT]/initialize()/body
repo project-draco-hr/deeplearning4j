@@ -1,0 +1,15 @@
+{
+  log.info("Building Huffman tree for source graph...");
+  int nVertices=sourceGraph.numVertices();
+  log.info("Transferring Huffman tree info to nodes...");
+  for (int i=0; i < nVertices; i++) {
+    T element=sourceGraph.getVertex(i).getValue();
+    element.setElementFrequency(sourceGraph.getConnectedVertices(i).size());
+    if (vocabCache != null)     vocabCache.addToken(element);
+  }
+  if (vocabCache != null) {
+    Huffman huffman=new Huffman(vocabCache.vocabWords());
+    huffman.build();
+    huffman.applyIndexes(vocabCache);
+  }
+}

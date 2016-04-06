@@ -1,3 +1,12 @@
 {
-  return new BagOfWordsVectorizer(cache,tokenizerFactory,stopWords,minWordFrequency,docIter,sentenceIterator,labels,index,batchSize,sample,stem,cleanup);
+  BagOfWordsVectorizer vectorizer=new BagOfWordsVectorizer();
+  vectorizer.tokenizerFactory=this.tokenizerFactory;
+  vectorizer.iterator=this.iterator;
+  vectorizer.minWordFrequency=this.minWordFrequency;
+  vectorizer.labelsSource=this.labelsSource;
+  if (this.vocabCache == null) {
+    this.vocabCache=new AbstractCache.Builder<VocabWord>().build();
+  }
+  vectorizer.vocabCache=this.vocabCache;
+  return vectorizer;
 }

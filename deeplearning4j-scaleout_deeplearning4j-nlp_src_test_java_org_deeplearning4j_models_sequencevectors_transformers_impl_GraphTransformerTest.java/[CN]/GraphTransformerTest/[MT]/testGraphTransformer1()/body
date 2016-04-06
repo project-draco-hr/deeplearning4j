@@ -1,0 +1,12 @@
+{
+  GraphWalker<VocabWord> walker=new RandomWalker.Builder<VocabWord>(graph).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).build();
+  GraphTransformer<VocabWord> transformer=new GraphTransformer.Builder<VocabWord>(graph).setGraphWalker(walker).build();
+  Iterator<Sequence<VocabWord>> iterator=transformer.iterator();
+  int cnt=0;
+  while (iterator.hasNext()) {
+    Sequence<VocabWord> sequence=iterator.next();
+    System.out.println(sequence);
+    cnt++;
+  }
+  assertEquals(10,cnt);
+}

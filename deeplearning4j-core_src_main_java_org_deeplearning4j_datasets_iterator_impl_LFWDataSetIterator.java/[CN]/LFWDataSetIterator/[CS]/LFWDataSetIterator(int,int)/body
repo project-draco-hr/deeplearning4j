@@ -1,3 +1,3 @@
 {
-  super(new LFWLoader().getRecordReader(numExamples),batchSize,width * height * channels,LFWLoader.NUM_LABELS);
+  super(new LFWLoader().getRecordReader(numExamples),batchSize,height * width * channels,LFWLoader.NUM_LABELS);
 }

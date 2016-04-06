@@ -1,22 +1,3 @@
 {
-  if (engine == null)   PosUimaTokenizer.engine=engine;
-  this.allowedPosTags=allowedPosTags;
-  this.tokens=new ArrayList<String>();
-  try {
-    if (cas == null)     cas=engine.newCAS();
-    cas.reset();
-    cas.setDocumentText(tokens);
-    PosUimaTokenizer.engine.process(cas);
-    for (    Sentence s : JCasUtil.select(cas.getJCas(),Sentence.class)) {
-      for (      Token t : JCasUtil.selectCovered(Token.class,s)) {
-        if (valid(t))         if (t.getLemma() != null)         this.tokens.add(t.getLemma());
- else         if (t.getStem() != null)         this.tokens.add(t.getStem());
- else         this.tokens.add(t.getCoveredText());
- else         this.tokens.add("NONE");
-      }
-    }
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
+  this(tokens,engine,allowedPosTags,false);
 }

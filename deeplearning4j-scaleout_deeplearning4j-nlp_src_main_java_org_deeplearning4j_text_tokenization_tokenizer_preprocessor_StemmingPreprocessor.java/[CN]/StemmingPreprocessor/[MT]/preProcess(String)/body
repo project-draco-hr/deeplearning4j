@@ -1,0 +1,7 @@
+{
+  String prep=super.preProcess(token);
+  PorterStemmer stemmer=new PorterStemmer();
+  stemmer.setCurrent(prep);
+  stemmer.stem();
+  return stemmer.getCurrent();
+}

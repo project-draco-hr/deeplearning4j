@@ -1,0 +1,6 @@
+{
+  WordVectors vec=WordVectorSerializer.loadTxtVectors(new FileInputStream(textFile),true);
+  assertEquals(vec.vocab().numWords(),30);
+  assertTrue(vec.vocab().hasToken("Morgan_Freeman"));
+  assertTrue(vec.vocab().hasToken("JA_Montalbano"));
+}

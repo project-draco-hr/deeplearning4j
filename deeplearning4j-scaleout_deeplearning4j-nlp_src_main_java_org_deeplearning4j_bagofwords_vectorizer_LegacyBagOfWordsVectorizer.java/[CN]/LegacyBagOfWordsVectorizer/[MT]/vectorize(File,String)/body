@@ -1,0 +1,9 @@
+{
+  try {
+    String text=FileUtils.file2String(input);
+    return vectorize(text,label);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

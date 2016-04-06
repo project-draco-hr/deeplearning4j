@@ -5,4 +5,5 @@
   this.nextRandom=new AtomicLong(workers + 1);
   this.iterator.reset();
   this.stopList=stopList;
+  this.setDaemon(true);
 }

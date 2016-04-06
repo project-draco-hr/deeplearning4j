@@ -17,5 +17,8 @@
   network.setParameters(val);
   network.setUpdater(updater.getValue().clone());
   network.fit(data);
-  return Collections.singletonList(new Tuple2<>(network.gradient(),network.getUpdater()));
+  ScoreReport report=new ScoreReport();
+  report.setS(network.score());
+  report.setM(Runtime.getRuntime().maxMemory());
+  return Collections.singletonList(new Tuple3<>(network.gradient(),network.getUpdater(),report));
 }

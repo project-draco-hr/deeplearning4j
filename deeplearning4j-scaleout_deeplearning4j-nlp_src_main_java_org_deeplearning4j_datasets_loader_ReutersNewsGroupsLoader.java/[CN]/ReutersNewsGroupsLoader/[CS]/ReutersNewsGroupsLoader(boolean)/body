@@ -6,7 +6,7 @@
     if (f.isDirectory())     labels.add(f.getName());
   }
   TokenizerFactory tokenizerFactory=new UimaTokenizerFactory();
-  if (tfidf)   this.textVectorizer=new TfidfVectorizer.Builder().iterate(iter).labels(labels).tokenize(tokenizerFactory).build();
- else   this.textVectorizer=new BagOfWordsVectorizer.Builder().iterate(iter).labels(labels).tokenize(tokenizerFactory).build();
+  if (tfidf)   this.textVectorizer=new LegacyTfidfVectorizer.Builder().iterate(iter).labels(labels).tokenize(tokenizerFactory).build();
+ else   this.textVectorizer=new LegacyBagOfWordsVectorizer.Builder().iterate(iter).labels(labels).tokenize(tokenizerFactory).build();
   load=this.textVectorizer.vectorize();
 }

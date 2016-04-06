@@ -2,4 +2,5 @@
   for (  T element : vocabCache.vocabWords()) {
     this.addToken(element);
   }
+  this.documentsCounter.addAndGet(vocabCache.totalNumberOfDocs());
 }

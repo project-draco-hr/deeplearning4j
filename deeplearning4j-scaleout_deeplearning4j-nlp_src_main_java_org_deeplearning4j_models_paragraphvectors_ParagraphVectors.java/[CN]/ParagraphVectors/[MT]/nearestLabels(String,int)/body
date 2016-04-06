@@ -1,0 +1,10 @@
+{
+  List<String> tokens=tokenizerFactory.create(rawText).getTokens();
+  List<VocabWord> document=new ArrayList<>();
+  for (  String token : tokens) {
+    if (vocab.containsWord(token)) {
+      document.add(vocab.wordFor(token));
+    }
+  }
+  return nearestLabels(document,topN);
+}

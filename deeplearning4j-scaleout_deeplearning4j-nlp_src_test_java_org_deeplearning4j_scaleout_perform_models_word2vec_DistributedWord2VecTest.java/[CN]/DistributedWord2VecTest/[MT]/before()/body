@@ -7,7 +7,7 @@
   TokenizerFactory t=new UimaTokenizerFactory();
   table=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(100).useAdaGrad(false).cache(cache).lr(0.025f).build();
   if (invertedIndex == null)   invertedIndex=new LuceneInvertedIndex.Builder().cache(cache).build();
-  vectorizer=new TfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).tokenize(t).build();
+  vectorizer=new LegacyTfidfVectorizer.Builder().index(invertedIndex).cache(cache).iterate(iter).tokenize(t).build();
   vectorizer.fit();
   Huffman huffman=new Huffman(cache.vocabWords());
   huffman.build();

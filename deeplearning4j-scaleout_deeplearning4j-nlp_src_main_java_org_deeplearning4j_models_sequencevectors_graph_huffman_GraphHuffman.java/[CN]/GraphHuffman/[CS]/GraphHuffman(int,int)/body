@@ -1,0 +1,6 @@
+{
+  this.codes=new long[nVertices];
+  this.codeLength=new byte[nVertices];
+  this.innerNodePathToLeaf=new int[nVertices][0];
+  this.MAX_CODE_LENGTH=maxCodeLength;
+}
