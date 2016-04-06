@@ -5,7 +5,7 @@
   try (DataOutputStream dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(paramPath)))){
     Nd4j.write(net.params(),dos);
     dos.flush();
-    FileUtils.write(new File(confPath),net.conf().toJson());
+    FileUtils.write(new File(confPath),net.getLayerWiseConfigurations().toJson());
   }
  catch (  IOException e) {
     e.printStackTrace();
