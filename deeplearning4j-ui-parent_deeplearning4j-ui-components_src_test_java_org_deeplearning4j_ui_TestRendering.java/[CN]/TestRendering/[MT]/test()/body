@@ -15,8 +15,10 @@
   StyleAccordion ac=new StyleAccordion.Builder().height(480,LengthUnit.Px).width(640,LengthUnit.Px).build();
   Component c6=new DecoratorAccordion.Builder(ac).title("Accordion - Collapsed By Default!").setDefaultCollapsed(true).addComponents(c5).build();
   list.add(c6);
-  Component c7=new ComponentText.Builder("Here's some text!",new StyleText.Builder().font("courier").fontSize(30).underline(true).color(Color.BLUE).build()).build();
-  list.add(c7);
+  Component c7=new ComponentText.Builder("Here's some blue text in a green div!",new StyleText.Builder().font("courier").fontSize(30).underline(true).color(Color.BLUE).build()).build();
+  Style divStyle=new StyleDiv.Builder().width(30,LengthUnit.Percent).height(200,LengthUnit.Px).backgroundColor(Color.GREEN).floatValue(StyleDiv.FloatValue.right).build();
+  Component c8=new ComponentDiv(divStyle,c7,new ComponentText("(Also: it's float right, 30% width, 200 px high )",null));
+  list.add(c8);
   StringBuilder sb=new StringBuilder();
   sb.append("<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "<head>\n"+ "    <meta charset=\"UTF-8\">\n"+ "    <title>Title</title>\n"+ "</head>\n"+ "<body>\n"+ "\n"+ "    <div id=\"maindiv\">\n"+ "\n"+ "    </div>\n"+ "\n"+ "\n"+ "    <script src=\"//code.jquery.com/jquery-1.10.2.js\"></script>\n"+ "    <script src=\"https://code.jquery.com/ui/1.11.4/jquery-ui.min.js\"></script>\n"+ "    <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css\">\n"+ "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js\"></script>\n"+ "    <script src=\"src/main/resources/assets/dl4j-ui.js\"></script>\n"+ "\n"+ "    <script>\n");
   ObjectMapper om=new ObjectMapper();
