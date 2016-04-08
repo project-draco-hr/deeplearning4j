@@ -1,0 +1,6 @@
+{
+  super(COMPONENT_TYPE,builder);
+  this.x=builder.x;
+  this.y=builder.y;
+  this.labels=builder.seriesNames;
+}

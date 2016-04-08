@@ -1,0 +1,12 @@
+{
+  super(componentType,builder.getStyle());
+  this.title=builder.title;
+  this.suppressAxisHorizontal=builder.suppressAxisHorizontal;
+  this.suppressAxisVertical=builder.suppressAxisVertical;
+  this.setXMin=builder.setXMin;
+  this.setXMax=builder.setXMax;
+  this.setYMin=builder.setYMin;
+  this.setYMax=builder.setYMax;
+  this.gridVerticalStrokeWidth=builder.gridVerticalStrokeWidth;
+  this.gridHorizontalStrokeWidth=builder.gridHorizontalStrokeWidth;
+}
