@@ -7,7 +7,7 @@
   int kernelHeight=3;
   int kernelWidth=3;
   DataSet trainInput;
-  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).seed(123).graphBuilder().addInputs("input").setInputTypes(InputType.convolutional(nChannels,imageWidth,imageHeight)).addLayer("conv1",new ConvolutionLayer.Builder().kernelSize(kernelHeight,kernelWidth).stride(1,1).nIn(nChannels).nOut(2).weightInit(WeightInit.XAVIER).activation("relu").build(),"input").addLayer("pool1",new SubsamplingLayer.Builder().poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(imageHeight - kernelHeight + 1,1).stride(1,1).build(),"conv1").addLayer("output",new OutputLayer.Builder().nOut(classes).build(),"pool1").setOutputs("output").backprop(true).pretrain(false).build();
+  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).seed(123).graphBuilder().addInputs("input").setInputTypes(InputType.convolutional(imageHeight,imageWidth,nChannels)).addLayer("conv1",new ConvolutionLayer.Builder().kernelSize(kernelHeight,kernelWidth).stride(1,1).nIn(nChannels).nOut(2).weightInit(WeightInit.XAVIER).activation("relu").build(),"input").addLayer("pool1",new SubsamplingLayer.Builder().poolingType(SubsamplingLayer.PoolingType.MAX).kernelSize(imageHeight - kernelHeight + 1,1).stride(1,1).build(),"conv1").addLayer("output",new OutputLayer.Builder().nOut(classes).build(),"pool1").setOutputs("output").backprop(true).pretrain(false).build();
   ComputationGraph model=new ComputationGraph(conf);
   model.init();
   INDArray emptyFeatures=Nd4j.zeros(numSamples,imageWidth * imageHeight * nChannels);

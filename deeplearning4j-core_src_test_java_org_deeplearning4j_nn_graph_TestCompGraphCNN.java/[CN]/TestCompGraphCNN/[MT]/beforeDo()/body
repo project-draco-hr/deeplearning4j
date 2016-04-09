@@ -2,6 +2,6 @@
   conf=getMultiInputGraphConfig();
   graph=new ComputationGraph(conf);
   graph.init();
-  cifar=getDS();
-  ds=cifar.next();
+  dataSetIterator=getDS();
+  ds=dataSetIterator.next();
 }
