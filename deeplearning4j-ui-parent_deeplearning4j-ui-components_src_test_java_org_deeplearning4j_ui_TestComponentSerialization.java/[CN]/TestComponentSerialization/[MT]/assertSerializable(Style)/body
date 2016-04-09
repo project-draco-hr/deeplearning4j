@@ -1,0 +1,6 @@
+{
+  ObjectMapper om=new ObjectMapper();
+  String json=om.writeValueAsString(style);
+  Style fromJson=om.readValue(json,Style.class);
+  assertEquals(style.toString(),fromJson.toString());
+}
