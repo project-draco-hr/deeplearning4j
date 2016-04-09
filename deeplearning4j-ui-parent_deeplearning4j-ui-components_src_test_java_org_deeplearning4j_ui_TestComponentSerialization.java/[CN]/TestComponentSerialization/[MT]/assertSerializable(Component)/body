@@ -1,0 +1,6 @@
+{
+  ObjectMapper om=new ObjectMapper();
+  String json=om.writeValueAsString(component);
+  Component fromJson=om.readValue(json,Component.class);
+  assertEquals(component.toString(),fromJson.toString());
+}
