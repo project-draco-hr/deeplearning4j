@@ -1,3 +1,10 @@
 {
-  return new CifarDataSetIterator(5,5);
+  List<DataSet> list=new ArrayList<>(5);
+  for (int i=0; i < 5; i++) {
+    INDArray f=Nd4j.create(1,32 * 32 * 3);
+    INDArray l=Nd4j.create(1,10);
+    l.putScalar(i,1.0);
+    list.add(new DataSet(f,l));
+  }
+  return new ListDataSetIterator(list,5);
 }

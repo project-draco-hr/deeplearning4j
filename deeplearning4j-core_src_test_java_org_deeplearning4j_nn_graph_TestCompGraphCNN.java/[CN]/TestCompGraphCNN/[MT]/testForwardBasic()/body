@@ -1,8 +1,8 @@
 {
   graph.setInput(0,ds.getFeatureMatrix());
   Map<String,INDArray> activations=graph.feedForward(true);
-  assertEquals(7,activations.size());
+  assertEquals(6,activations.size());
   assertTrue(activations.containsKey("input"));
   assertTrue(activations.containsKey("cnn1"));
-  assertTrue(activations.containsKey("outputLayer"));
+  assertTrue(activations.containsKey("output"));
 }

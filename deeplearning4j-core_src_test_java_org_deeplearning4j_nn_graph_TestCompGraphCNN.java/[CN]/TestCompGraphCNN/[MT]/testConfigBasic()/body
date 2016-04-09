@@ -1,7 +1,9 @@
 {
   int[] order=graph.topologicalSortOrder();
-  int[] expOrder=new int[]{0,1,2,4,3,5,6,8,7};
-  assertArrayEquals(expOrder,order);
+  int[] expOrder1=new int[]{0,1,2,4,3,5,6};
+  int[] expOrder2=new int[]{0,2,1,4,3,5,6};
+  boolean orderOK=Arrays.equals(expOrder1,order) || Arrays.equals(expOrder2,order);
+  assertTrue(orderOK);
   INDArray params=graph.params();
   assertNotNull(params);
   int nParams=getNumParams();
