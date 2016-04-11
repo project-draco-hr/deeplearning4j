@@ -5,26 +5,13 @@
   Gradient retGradient=new DefaultGradient();
 switch (layerConf().getPoolingType()) {
 case MAX:
-    int n=epsilon.size(0);
-  int c=epsilon.size(1);
-int outH=epsilon.size(2);
-int outW=epsilon.size(3);
-retE=Nd4j.zeros(n,c,layerConf().getKernelSize()[0],layerConf().getKernelSize()[1],outH,outW);
-reshaped=retE.reshape(n,c,-1,outH,outW);
-reshapeEpsilon=Nd4j.rollAxis(reshaped,2);
-final INDArray finalEps=epsilon;
-final INDArray reshapedEps=reshapeEpsilon;
-NdIndexIterator iter=new NdIndexIterator(maxIndexes.shape());
-while (iter.hasNext()) {
-int[] i=iter.next();
-int idx=maxIndexes.getInt(i);
-double epsGet=finalEps.getDouble(i);
-INDArrayIndex t=NDArrayIndex.point(idx);
-INDArray sliceToGetFrom=reshapedEps.get(NDArrayIndex.point(idx));
-sliceToGetFrom.putScalar(i,epsGet);
-}
-reshapeEpsilon=Convolution.col2im(retE,layerConf().getStride(),layerConf().getPadding(),inputHeight,inputWidth);
-return new Pair<>(retGradient,reshapeEpsilon);
+    INDArray im2col=Convolution.im2col(input,layerConf().getKernelSize(),layerConf().getStride(),layerConf().getPadding());
+  int[] s6d=im2col.shape();
+INDArray im2col5d=im2col.reshape(im2col.ordering(),s6d[0],s6d[1],s6d[2] * s6d[3],s6d[4],s6d[5]);
+Nd4j.getExecutioner().exec(new IsMax(im2col5d,2));
+Nd4j.getExecutioner().exec(new BroadcastMulOp(im2col5d,epsilon,im2col5d,0,1,3,4));
+INDArray outEpsilon=Convolution.col2im(im2col,layerConf().getStride(),layerConf().getPadding(),inputHeight,inputWidth);
+return new Pair<>(retGradient,outEpsilon);
 case AVG:
 retE=epsilon.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
 reshapeEpsilon=Nd4j.tile(retE,1,1,layerConf().getKernelSize()[0],layerConf().getKernelSize()[1],1,1);
@@ -34,6 +21,6 @@ return new Pair<>(retGradient,reshapeEpsilon);
 case NONE:
 return new Pair<>(retGradient,epsilon);
 default :
-throw new IllegalStateException("Un supported pooling type");
+throw new IllegalStateException("Unsupported pooling type");
 }
 }
