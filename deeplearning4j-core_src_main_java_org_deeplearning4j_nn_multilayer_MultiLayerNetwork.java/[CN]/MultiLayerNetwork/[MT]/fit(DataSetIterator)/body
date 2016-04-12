@@ -4,7 +4,7 @@
     iter.reset();
     while (iter.hasNext()) {
       DataSet next=iter.next();
-      if (next == null || next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       setInput(next.getFeatureMatrix());
       setLabels(next.getLabels());
       finetune();
@@ -16,7 +16,7 @@
     iter.reset();
     while (iter.hasNext()) {
       DataSet next=iter.next();
-      if (next == null || next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
       boolean hasMaskArrays=next.hasMaskArrays();
       if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
         doTruncatedBPTT(next.getFeatureMatrix(),next.getLabels(),next.getFeaturesMaskArray(),next.getLabelsMaskArray());
