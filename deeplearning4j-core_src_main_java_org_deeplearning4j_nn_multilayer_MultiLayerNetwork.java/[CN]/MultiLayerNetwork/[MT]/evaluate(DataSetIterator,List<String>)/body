@@ -5,7 +5,7 @@
   Evaluation e=(labelsList == null) ? new Evaluation() : new Evaluation(labelsList);
   while (iterator.hasNext()) {
     DataSet next=iterator.next();
-    if (next == null || next.getFeatureMatrix() == null || next.getLabels() == null)     break;
+    if (next.getFeatureMatrix() == null || next.getLabels() == null)     break;
     INDArray features=next.getFeatures();
     INDArray labels=next.getLabels();
     INDArray out;
