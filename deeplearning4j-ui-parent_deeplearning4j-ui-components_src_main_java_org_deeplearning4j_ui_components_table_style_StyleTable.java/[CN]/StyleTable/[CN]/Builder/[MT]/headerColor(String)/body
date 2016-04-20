@@ -1,5 +1,5 @@
 {
-  if (!color.matches("#[a-f0-9]{6}"))   throw new IllegalArgumentException("Invalid color: must be hex format. Got: " + color);
+  if (!color.toLowerCase().matches("#[a-f0-9]{6}"))   throw new IllegalArgumentException("Invalid color: must be hex format. Got: " + color);
   this.headerColor=color;
   return this;
 }
