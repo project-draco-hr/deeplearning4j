@@ -1,4 +1,5 @@
 {
+  if (dist == null)   return null;
   if (dist instanceof NormalDistribution) {
     NormalDistribution nd=(NormalDistribution)dist;
     return Nd4j.getDistributions().createNormal(nd.getMean(),nd.getStd());
