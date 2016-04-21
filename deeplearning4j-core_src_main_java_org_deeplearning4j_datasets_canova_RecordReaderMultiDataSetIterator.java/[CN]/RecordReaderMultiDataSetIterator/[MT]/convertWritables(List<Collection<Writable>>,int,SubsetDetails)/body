@@ -11,7 +11,17 @@
       int j=0;
       for (      Writable w : c) {
         idx[1]=j++;
-        arr.putScalar(idx,w.toDouble());
+        try {
+          arr.putScalar(idx,w.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (w instanceof NDArrayWritable) {
+            arr.putRow(idx[0],((NDArrayWritable)w).get());
+          }
+ else {
+            throw e;
+          }
+        }
       }
     }
  else     if (details.oneHot) {
@@ -30,7 +40,18 @@
       int k=0;
       for (int j=details.subsetStart; j <= details.subsetEndInclusive; j++) {
         idx[1]=k++;
-        arr.putScalar(idx,iter.next().toDouble());
+        Writable w=iter.next();
+        try {
+          arr.putScalar(idx,w.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (w instanceof NDArrayWritable) {
+            arr.putRow(idx[0],((NDArrayWritable)w).get().get(NDArrayIndex.all(),NDArrayIndex.interval(details.subsetStart,details.subsetEndInclusive + 1)));
+          }
+ else {
+            throw e;
+          }
+        }
       }
     }
   }

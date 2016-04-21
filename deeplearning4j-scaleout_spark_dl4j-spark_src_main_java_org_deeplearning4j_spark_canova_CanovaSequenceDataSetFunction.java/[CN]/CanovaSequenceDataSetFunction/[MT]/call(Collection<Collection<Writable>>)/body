@@ -29,7 +29,17 @@
  else {
         fIdx[1]=countFeatures++;
         fIdx[2]=i;
-        features.putScalar(fIdx,current.toDouble());
+        try {
+          features.putScalar(fIdx,current.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (current instanceof NDArrayWritable) {
+            features.get(NDArrayIndex.point(fIdx[0]),NDArrayIndex.all(),NDArrayIndex.point(fIdx[2])).putRow(0,((NDArrayWritable)current).get());
+          }
+ else {
+            throw e;
+          }
+        }
       }
     }
     i++;

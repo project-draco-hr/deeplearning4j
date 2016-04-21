@@ -14,7 +14,17 @@
     int f=0;
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
-      out.put(i,f++,current.toDouble());
+      try {
+        out.put(i,f++,current.toDouble());
+      }
+ catch (      UnsupportedOperationException e) {
+        if (current instanceof NDArrayWritable) {
+          out.putRow(i,((NDArrayWritable)current).get());
+        }
+ else {
+          throw e;
+        }
+      }
     }
     i++;
   }
