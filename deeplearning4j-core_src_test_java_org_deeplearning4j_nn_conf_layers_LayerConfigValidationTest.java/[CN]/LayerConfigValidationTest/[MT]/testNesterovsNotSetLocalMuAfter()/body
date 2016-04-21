@@ -1,0 +1,7 @@
+{
+  Map<Integer,Double> testMomentumAfter=new HashMap<>();
+  testMomentumAfter.put(0,0.1);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).momentumAfter(testMomentumAfter).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+}

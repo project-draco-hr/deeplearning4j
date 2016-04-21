@@ -1,0 +1,5 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().adamMeanDecay(0.5).adamVarDecay(0.5).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).adamMeanDecay(0.6).adamVarDecay(0.7).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+}

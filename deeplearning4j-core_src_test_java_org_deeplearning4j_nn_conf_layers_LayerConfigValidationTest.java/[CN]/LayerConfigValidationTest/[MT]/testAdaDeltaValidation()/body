@@ -1,0 +1,5 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().rho(0.5).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).rho(0.01).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+}
