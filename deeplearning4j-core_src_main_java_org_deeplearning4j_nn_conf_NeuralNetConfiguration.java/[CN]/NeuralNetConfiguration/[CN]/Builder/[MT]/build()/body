@@ -14,7 +14,8 @@
   conf.lrPolicyDecayRate=lrPolicyDecayRate;
   conf.lrPolicySteps=lrPolicySteps;
   conf.lrPolicyPower=lrPolicyPower;
-  learningRateValidation();
+  String layerName=layer.getLayerName() == null ? "Layer " + layer.getLayerName() : "Layer not named";
+  learningRateValidation(layerName);
   if (layer != null) {
     if (Double.isNaN(layer.getLearningRate()))     layer.setLearningRate(learningRate);
     if (Double.isNaN(layer.getBiasLearningRate()))     layer.setBiasLearningRate(layer.getLearningRate());
@@ -26,10 +27,10 @@
     if (Double.isNaN(layer.getBiasInit()))     layer.setBiasInit(biasInit);
     if (Double.isNaN(layer.getDropOut()))     layer.setDropOut(dropOut);
     if (layer.getUpdater() == null)     layer.setUpdater(updater);
-    updaterValidation();
+    updaterValidation(layerName);
     if (layer.getGradientNormalization() == null)     layer.setGradientNormalization(gradientNormalization);
     if (Double.isNaN(layer.getGradientNormalizationThreshold()))     layer.setGradientNormalizationThreshold(gradientNormalizationThreshold);
   }
-  generalValidation();
+  generalValidation(layerName);
   return conf;
 }
