@@ -1,0 +1,8 @@
+{
+  double lr=2;
+  double lrDecayRate=5;
+  int iterations=1;
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().iterations(iterations).learningRate(lr).learningRateDecayPolicy(LearningRatePolicy.Schedule).lrPolicyDecayRate(lrDecayRate).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+}

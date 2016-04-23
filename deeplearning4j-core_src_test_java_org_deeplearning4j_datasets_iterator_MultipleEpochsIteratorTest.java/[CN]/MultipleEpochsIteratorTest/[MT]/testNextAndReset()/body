@@ -7,7 +7,8 @@
   MultipleEpochsIterator multiIter=new MultipleEpochsIterator(epochs,iter);
   assertTrue(multiIter.hasNext());
   while (multiIter.hasNext()) {
-    multiIter.next();
+    DataSet path=multiIter.next();
+    assertFalse(path == null);
   }
   assertEquals(epochs,multiIter.numPasses,0.0);
 }
