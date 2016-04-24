@@ -58,7 +58,7 @@
     toReturn.ga=new INDArray[timeSeriesLength];
   }
  else {
-    outputActivations=Nd4j.zeros(new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength});
+    outputActivations=Nd4j.create(new int[]{miniBatchSize,hiddenLayerSize,timeSeriesLength},'f');
     toReturn.fwdPassOutput=outputActivations;
   }
   Level1 l1BLAS=Nd4j.getBlasWrapper().level1();
