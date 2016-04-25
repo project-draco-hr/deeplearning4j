@@ -13,42 +13,17 @@
       inputWeights=Dropout.applyDropConnect(layer,inputWeightKey);
     }
   }
-  INDArray wi=inputWeights.get(NDArrayIndex.all(),interval(0,hiddenLayerSize));
-  INDArray wI=recurrentWeights.get(NDArrayIndex.all(),interval(0,hiddenLayerSize));
-  INDArray bi=biases.get(NDArrayIndex.point(0),interval(0,hiddenLayerSize));
-  INDArray wf=inputWeights.get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
-  INDArray wF=recurrentWeights.get(NDArrayIndex.all(),interval(hiddenLayerSize,2 * hiddenLayerSize));
   INDArray wFFTranspose=recurrentWeights.get(NDArrayIndex.all(),interval(4 * hiddenLayerSize,4 * hiddenLayerSize + 1)).transpose();
-  INDArray bf=biases.get(NDArrayIndex.point(0),interval(hiddenLayerSize,2 * hiddenLayerSize));
-  INDArray wo=inputWeights.get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
-  INDArray wO=recurrentWeights.get(NDArrayIndex.all(),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
   INDArray wOOTranspose=recurrentWeights.get(NDArrayIndex.all(),interval(4 * hiddenLayerSize + 1,4 * hiddenLayerSize + 2)).transpose();
-  INDArray bo=biases.get(NDArrayIndex.point(0),interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
-  INDArray wg=inputWeights.get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
-  INDArray wG=recurrentWeights.get(NDArrayIndex.all(),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
   INDArray wGGTranspose=recurrentWeights.get(NDArrayIndex.all(),interval(4 * hiddenLayerSize + 2,4 * hiddenLayerSize + 3)).transpose();
-  INDArray bg=biases.get(NDArrayIndex.point(0),interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
   if (timeSeriesLength > 1 || forBackprop) {
-    wi=Shape.toMmulCompatible(wi);
-    wI=Shape.toMmulCompatible(wI);
-    wf=Shape.toMmulCompatible(wf);
-    wF=Shape.toMmulCompatible(wF);
     wFFTranspose=Shape.toMmulCompatible(wFFTranspose);
-    wo=Shape.toMmulCompatible(wo);
-    wO=Shape.toMmulCompatible(wO);
     wOOTranspose=Shape.toMmulCompatible(wOOTranspose);
-    wg=Shape.toMmulCompatible(wg);
-    wG=Shape.toMmulCompatible(wG);
     wGGTranspose=Shape.toMmulCompatible(wGGTranspose);
-    bi=Shape.toMmulCompatible(bi);
-    bf=Shape.toMmulCompatible(bf);
-    bo=Shape.toMmulCompatible(bo);
-    bg=Shape.toMmulCompatible(bg);
   }
   INDArray outputActivations=null;
   FwdPassReturn toReturn=new FwdPassReturn();
   if (forBackprop) {
-    toReturn.paramsMmulCompatible=new INDArray[]{wi,wI,wf,wF,wFFTranspose,wo,wO,wOOTranspose,wg,wG,wGGTranspose};
     toReturn.fwdPassOutputAsArrays=new INDArray[timeSeriesLength];
     toReturn.memCellState=new INDArray[timeSeriesLength];
     toReturn.memCellActivations=new INDArray[timeSeriesLength];
