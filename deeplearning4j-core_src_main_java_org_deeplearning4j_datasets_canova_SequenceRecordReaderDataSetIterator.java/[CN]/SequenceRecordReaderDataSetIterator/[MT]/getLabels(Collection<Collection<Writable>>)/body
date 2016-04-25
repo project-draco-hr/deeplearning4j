@@ -13,7 +13,7 @@
  else {
         shape[1]=numPossibleLabels;
       }
-      out=Nd4j.create(shape);
+      out=Nd4j.create(shape,'f');
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int f=0;

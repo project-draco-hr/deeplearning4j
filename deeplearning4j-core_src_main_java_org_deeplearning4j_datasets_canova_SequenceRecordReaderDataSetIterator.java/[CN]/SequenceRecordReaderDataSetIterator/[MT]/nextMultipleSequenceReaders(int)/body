@@ -22,8 +22,8 @@
     labelShape[0]=labelList.size();
     labelShape[1]=labelList.get(0).size(1);
     labelShape[2]=labelList.get(0).size(0);
-    featuresOut=Nd4j.create(featureShape);
-    labelsOut=Nd4j.create(labelShape);
+    featuresOut=Nd4j.create(featureShape,'f');
+    labelsOut=Nd4j.create(labelShape,'f');
     for (int i=0; i < featureList.size(); i++) {
       featuresOut.tensorAlongDimension(i,1,2).assign(featureList.get(i));
       labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
@@ -39,8 +39,8 @@
     }
     int[] featuresShape=new int[]{featureList.size(),featureList.get(0).size(1),longestTimeSeries};
     int[] labelsShape=new int[]{labelList.size(),labelList.get(0).size(1),longestTimeSeries};
-    featuresOut=Nd4j.create(featuresShape);
-    labelsOut=Nd4j.create(labelsShape);
+    featuresOut=Nd4j.create(featuresShape,'f');
+    labelsOut=Nd4j.create(labelsShape,'f');
     featuresMask=Nd4j.ones(featureList.size(),longestTimeSeries);
     labelsMask=Nd4j.ones(labelList.size(),longestTimeSeries);
     int[] temp=new int[2];
@@ -70,8 +70,8 @@
     }
     int[] featuresShape=new int[]{featureList.size(),featureList.get(0).size(1),longestTimeSeries};
     int[] labelsShape=new int[]{labelList.size(),labelList.get(0).size(1),longestTimeSeries};
-    featuresOut=Nd4j.create(featuresShape);
-    labelsOut=Nd4j.create(labelsShape);
+    featuresOut=Nd4j.create(featuresShape,'f');
+    labelsOut=Nd4j.create(labelsShape,'f');
     featuresMask=Nd4j.ones(featureList.size(),longestTimeSeries);
     labelsMask=Nd4j.ones(labelList.size(),longestTimeSeries);
     int[] temp=new int[2];
