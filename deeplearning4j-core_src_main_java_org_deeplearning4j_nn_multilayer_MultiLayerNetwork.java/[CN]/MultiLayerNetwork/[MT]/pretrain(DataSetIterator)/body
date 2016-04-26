@@ -13,7 +13,7 @@
         setInput(layerInput);
         if (this.getInput() == null || this.getLayers() == null)         initializeLayers(input());
         getLayers()[i].fit(input());
-        log.info("Training on layer " + (i + 1) + " with "+ input().slices()+ " examples");
+        log.info("Training on layer " + (i + 1) + " with "+ input().size(0)+ " examples");
       }
     }
  else {
@@ -21,7 +21,7 @@
         DataSet next=iter.next();
         layerInput=next.getFeatureMatrix();
         for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j - 1,layerInput,true);
-        log.info("Training on layer " + (i + 1) + " with "+ layerInput.slices()+ " examples");
+        log.info("Training on layer " + (i + 1) + " with "+ layerInput.size(0)+ " examples");
         getLayer(i).fit(layerInput);
       }
     }

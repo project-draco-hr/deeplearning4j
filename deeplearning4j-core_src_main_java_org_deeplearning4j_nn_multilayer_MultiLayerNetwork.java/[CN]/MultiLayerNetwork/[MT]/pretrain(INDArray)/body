@@ -6,7 +6,7 @@
     if (i == 0)     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,miniBatchSize);
  else     layerInput=input;
  else     layerInput=activationFromPrevLayer(i - 1,layerInput,true);
-    log.info("Training on layer " + (i + 1) + " with "+ layerInput.slices()+ " examples");
+    log.info("Training on layer " + (i + 1) + " with "+ layerInput.size(0)+ " examples");
     getLayers()[i].fit(layerInput);
   }
 }
