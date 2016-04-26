@@ -8,7 +8,7 @@
     Collection<Writable> step=iter.next();
     if (i == 0) {
       shape[1]=step.size();
-      out=Nd4j.create(shape);
+      out=Nd4j.create(shape,'f');
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int f=0;
