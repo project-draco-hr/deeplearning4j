@@ -1,6 +1,6 @@
 {
   List<INDArray> R=new ArrayList<>();
-  R.add(Nd4j.zeros(input.slices(),input.columns()));
+  R.add(Nd4j.zeros(input.size(0),input.columns()));
   List<Pair<INDArray,INDArray>> vWvB=unPack(v);
   List<INDArray> W=MultiLayerUtil.weightMatrices(this);
   for (int i=0; i < layers.length; i++) {
