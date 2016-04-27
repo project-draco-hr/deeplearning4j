@@ -1,3 +1,0 @@
-{
-  return new DataSet(tfidfForInput(is),FeatureUtil.toOutcomeVector(labels.indexOf(label),labels.size()));
-}

@@ -1,7 +1,0 @@
-{
-  if (coOccurrences != null)   return coOccurrences;
-  Iterator<Pair<String,String>> pairIter=coOccurrenceIterator();
-  final List<Pair<String,String>> pairList=new ArrayList<>();
-  while (pairIter.hasNext())   pairList.add(pairIter.next());
-  return pairList;
-}

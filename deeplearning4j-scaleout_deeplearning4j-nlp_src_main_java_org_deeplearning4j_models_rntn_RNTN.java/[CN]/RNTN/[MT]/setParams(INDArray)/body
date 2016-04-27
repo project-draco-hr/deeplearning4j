@@ -1,5 +1,0 @@
-{
-  if (params.length() != getNumParameters())   throw new IllegalStateException("Unable to set parameters of length " + params.length() + " must be of length "+ numParameters);
-  Nd4j.setParams(params,binaryTransform.values().iterator(),binaryClassification.values().iterator(),binaryTensors.values().iterator(),unaryClassification.values().iterator(),featureVectors.vectors());
-  computeGradientAndScore();
-}

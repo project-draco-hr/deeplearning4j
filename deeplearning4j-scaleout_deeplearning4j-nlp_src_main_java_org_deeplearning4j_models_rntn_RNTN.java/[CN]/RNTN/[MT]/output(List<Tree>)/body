@@ -1,8 +1,0 @@
-{
-  List<INDArray> ret=new ArrayList<>();
-  for (  Tree t : trees) {
-    forwardPropagateTree(t);
-    ret.add(t.prediction());
-  }
-  return ret;
-}

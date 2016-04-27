@@ -1,9 +1,0 @@
-{
-  if (lowerCasefeatureNames) {
-    word=word.toLowerCase();
-  }
-  if (vocabCache.containsWord(word)) {
-    return word;
-  }
-  return Word2Vec.DEFAULT_UNK;
-}

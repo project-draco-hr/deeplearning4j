@@ -1,5 +1,0 @@
-{
-  Pair<String,String> next=iter.next();
-  Pair<VocabWord,VocabWord> ret=new Pair<>((VocabWord)cache.wordFor(next.getFirst()),(VocabWord)cache.wordFor(next.getSecond()));
-  return ret;
-}

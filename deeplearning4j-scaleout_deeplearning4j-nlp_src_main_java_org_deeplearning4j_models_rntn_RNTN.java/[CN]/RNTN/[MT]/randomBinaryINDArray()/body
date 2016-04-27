@@ -1,5 +1,0 @@
-{
-  double range=1.0f / (4.0f * numHidden);
-  INDArray ret=Nd4j.rand(new int[]{numHidden,numHidden * 2,numHidden * 2},-range,range,rng);
-  return ret.muli(scalingForInit);
-}

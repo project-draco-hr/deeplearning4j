@@ -1,7 +1,0 @@
-{
-  if (this == o)   return true;
-  if (!(o instanceof SentenceWork))   return false;
-  SentenceWork that=(SentenceWork)o;
-  if (id != that.id)   return false;
-  return !(sentence != null ? !sentence.equals(that.sentence) : that.sentence != null);
-}

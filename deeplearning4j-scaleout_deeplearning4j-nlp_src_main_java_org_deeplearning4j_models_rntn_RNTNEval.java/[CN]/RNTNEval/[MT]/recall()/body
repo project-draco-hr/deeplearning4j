@@ -1,7 +1,0 @@
-{
-  double r=0.0;
-  for (  Integer i : confusionMatrix.getClasses()) {
-    r+=recall(i);
-  }
-  return r / (double)confusionMatrix.getClasses().size();
-}

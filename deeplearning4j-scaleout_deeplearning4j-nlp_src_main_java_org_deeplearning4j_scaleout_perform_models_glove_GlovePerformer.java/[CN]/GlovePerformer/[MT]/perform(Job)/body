@@ -1,9 +1,0 @@
-{
-  if (job.getWork() instanceof GloveWork) {
-    GloveWork work=(GloveWork)job.getWork();
-    if (work == null)     return;
-    List<Pair<VocabWord,VocabWord>> sentences=work.getCoOccurrences();
-    for (    Pair<VocabWord,VocabWord> coc : sentences)     iterateSample(work,coc.getFirst(),coc.getSecond(),coOccurrences.count(coc.getFirst().getWord(),coc.getSecond().getWord()));
-    job.setResult((Serializable)Arrays.asList(work.addDeltas()));
-  }
-}
