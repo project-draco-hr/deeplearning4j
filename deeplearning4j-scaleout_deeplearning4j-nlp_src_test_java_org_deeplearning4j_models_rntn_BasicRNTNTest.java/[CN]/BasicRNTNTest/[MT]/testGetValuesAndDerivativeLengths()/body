@@ -1,7 +1,0 @@
-{
-  RNTN rntn=new RNTN.Builder().setActivationFunction("tanh").setAdagradResetFrequency(1).setCombineClassification(true).setFeatureVectors(vec).setRandomFeatureVectors(false).setUseTensors(false).build();
-  INDArray params=rntn.getParameters();
-  INDArray gradient=rntn.getValueGradient(trees);
-  rntn.setParams(params);
-  assertEquals(params.length(),gradient.length());
-}
