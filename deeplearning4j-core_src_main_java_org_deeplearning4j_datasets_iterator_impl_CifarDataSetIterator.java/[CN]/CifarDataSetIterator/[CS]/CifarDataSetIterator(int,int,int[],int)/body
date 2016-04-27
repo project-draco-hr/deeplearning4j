@@ -1,5 +1,5 @@
 {
-  super(null,batchSize,imgDim[0] * imgDim[1] * imgDim[2],numCategories);
+  super(null,batchSize,1,numCategories);
   this.loader=new CifarLoader();
   this.inputStream=loader.getInputStream();
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;

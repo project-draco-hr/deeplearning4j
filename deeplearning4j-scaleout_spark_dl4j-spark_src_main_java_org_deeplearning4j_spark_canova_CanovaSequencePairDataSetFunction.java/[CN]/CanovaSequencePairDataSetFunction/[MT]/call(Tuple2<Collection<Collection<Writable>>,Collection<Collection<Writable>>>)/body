@@ -21,7 +21,17 @@
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
       if (converter != null)       current=converter.convert(current);
-      inputArr.putScalar(idx,current.toDouble());
+      try {
+        inputArr.putScalar(idx,current.toDouble());
+      }
+ catch (      UnsupportedOperationException e) {
+        if (current instanceof NDArrayWritable) {
+          inputArr.get(NDArrayIndex.point(idx[0]),NDArrayIndex.all(),NDArrayIndex.point(idx[2])).putRow(0,((NDArrayWritable)current).get());
+        }
+ else {
+          throw e;
+        }
+      }
       idx[1]=++f;
     }
     idx[2]=++i;

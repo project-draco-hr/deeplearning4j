@@ -1,5 +1,5 @@
 {
-  super(null,batchSize,imgDim[0] * imgDim[1] * imgDim[2],CifarLoader.NUM_LABELS);
+  super(null,batchSize,1,CifarLoader.NUM_LABELS);
   this.loader=new CifarLoader();
   this.inputStream=loader.getInputStream();
 }

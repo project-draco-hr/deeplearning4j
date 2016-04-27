@@ -23,7 +23,17 @@
         }
       }
  else {
-        features.put(i,countFeatures++,current.toDouble());
+        try {
+          features.put(i,countFeatures++,current.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (current instanceof NDArrayWritable) {
+            features.putRow(i,((NDArrayWritable)current).get());
+          }
+ else {
+            throw e;
+          }
+        }
       }
     }
     i++;
