@@ -1,9 +1,0 @@
-{
-  RNTN rntn=new RNTN.Builder().setActivationFunction("tanh").setAdagradResetFrequency(1).setCombineClassification(true).setFeatureVectors(vec).setRandomFeatureVectors(false).setUseTensors(false).build();
-  rntn.fit(trees);
-  RNTNEval eval=new RNTNEval();
-  List<Tree> treeTest=vectorizer.getTreesWithLabels(sentence,Arrays.asList("LABEL"));
-  eval.eval(rntn,treeTest);
-  System.out.print(eval.stats());
-  assertNotEquals(0,eval.f1(),1e-4);
-}

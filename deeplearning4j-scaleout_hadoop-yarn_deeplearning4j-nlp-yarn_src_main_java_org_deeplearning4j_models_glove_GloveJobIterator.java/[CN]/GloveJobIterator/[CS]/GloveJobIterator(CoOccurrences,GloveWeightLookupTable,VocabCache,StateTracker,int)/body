@@ -1,8 +1,0 @@
-{
-  this.sentenceIterator=coc.coOccurrenceIteratorVocabBatch(batchSize);
-  this.table=table;
-  this.cache=cache;
-  addListener(stateTracker);
-  this.batchSize=batchSize;
-  stateTracker.define(CO_OCCURRENCES,coc);
-}

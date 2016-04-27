@@ -1,5 +1,0 @@
-{
-  Configuration conf=super.createConfiguration();
-  Word2VecPerformer.configure(table,invertedIndex,conf);
-  return conf;
-}
