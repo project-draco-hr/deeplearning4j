@@ -14,10 +14,7 @@
   INDArray maskArray;
   if (needMaskArray)   maskArray=Nd4j.ones(minValues,maxTSLength);
  else   maskArray=null;
-  int[] idx=new int[3];
-  int[] maskIdx=new int[2];
   for (int i=0; i < minValues; i++) {
-    idx[0]=i;
     Collection<Collection<Writable>> sequence=list.get(i);
     int startOffset;
     if (alignmentMode == AlignmentMode.ALIGN_START || alignmentMode == AlignmentMode.EQUAL_LENGTH) {
@@ -27,25 +24,26 @@
       startOffset=longestSequence[i] - sequence.size();
     }
     int t=0;
+    int k;
     for (    Collection<Writable> timeStep : sequence) {
-      idx[2]=startOffset + t++;
+      k=startOffset + t++;
       if (details.entireReader) {
         Iterator<Writable> iter=timeStep.iterator();
         int j=0;
         while (iter.hasNext()) {
-          idx[1]=j++;
           Writable w=iter.next();
           try {
-            arr.putScalar(idx,w.toDouble());
+            arr.putScalar(i,j,k,w.toDouble());
           }
  catch (          UnsupportedOperationException e) {
             if (w instanceof NDArrayWritable) {
-              arr.get(NDArrayIndex.point(idx[0]),NDArrayIndex.all(),NDArrayIndex.point(idx[2])).putRow(0,((NDArrayWritable)w).get());
+              arr.get(NDArrayIndex.point(i),NDArrayIndex.all(),NDArrayIndex.point(k)).putRow(0,((NDArrayWritable)w).get());
             }
  else {
               throw e;
             }
           }
+          j++;
         }
       }
  else       if (details.oneHot) {
@@ -53,25 +51,23 @@
         if (timeStep instanceof List)         w=((List<Writable>)timeStep).get(details.subsetStart);
  else {
           Iterator<Writable> iter=timeStep.iterator();
-          for (int k=0; k <= details.subsetStart; k++)           w=iter.next();
+          for (int x=0; x <= details.subsetStart; x++)           w=iter.next();
         }
         int classIdx=w.toInt();
-        idx[1]=classIdx;
-        arr.putScalar(idx,1.0);
+        arr.putScalar(i,classIdx,k,1.0);
       }
  else {
         Iterator<Writable> iter=timeStep.iterator();
         for (int j=0; j < details.subsetStart; j++)         iter.next();
-        int k=0;
+        int l=0;
         for (int j=details.subsetStart; j <= details.subsetEndInclusive; j++) {
-          idx[1]=k++;
           Writable w=iter.next();
           try {
-            arr.putScalar(idx,w.toDouble());
+            arr.putScalar(i,l++,k,w.toDouble());
           }
  catch (          UnsupportedOperationException e) {
             if (w instanceof NDArrayWritable) {
-              arr.get(NDArrayIndex.point(idx[0]),NDArrayIndex.all(),NDArrayIndex.point(idx[2])).putRow(0,((NDArrayWritable)w).get().get(NDArrayIndex.all(),NDArrayIndex.interval(details.subsetStart,details.subsetEndInclusive + 1)));
+              arr.get(NDArrayIndex.point(i),NDArrayIndex.all(),NDArrayIndex.point(k)).putRow(0,((NDArrayWritable)w).get().get(NDArrayIndex.all(),NDArrayIndex.interval(details.subsetStart,details.subsetEndInclusive + 1)));
             }
  else {
               throw e;
@@ -81,17 +77,14 @@
       }
     }
     if (needMaskArray) {
-      maskIdx[0]=i;
       if (alignmentMode == AlignmentMode.ALIGN_END) {
         for (int t2=0; t2 < startOffset; t2++) {
-          maskIdx[1]=t2;
-          maskArray.putScalar(maskIdx,0.0);
+          maskArray.putScalar(i,t2,0.0);
         }
       }
       if (alignmentMode == AlignmentMode.ALIGN_START) {
         for (int t2=t; t2 < maxTSLength; t2++) {
-          maskIdx[1]=t2;
-          maskArray.putScalar(maskIdx,0.0);
+          maskArray.putScalar(i,t2,0.0);
         }
       }
     }
