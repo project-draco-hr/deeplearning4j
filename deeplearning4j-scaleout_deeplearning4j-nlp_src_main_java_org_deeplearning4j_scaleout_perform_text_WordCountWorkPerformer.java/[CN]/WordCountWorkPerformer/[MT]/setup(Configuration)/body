@@ -1,9 +1,0 @@
-{
-  try {
-    Class<? extends TokenizerFactory> clazz=(Class<? extends TokenizerFactory>)Class.forName(conf.get(TOKENIZER_CLASS,DefaultTokenizerFactory.class.getName()));
-    tokenizerFactory=clazz.newInstance();
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-  }
-}

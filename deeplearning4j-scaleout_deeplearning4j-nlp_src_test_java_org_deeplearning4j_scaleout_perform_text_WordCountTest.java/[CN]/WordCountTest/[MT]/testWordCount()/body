@@ -1,9 +1,0 @@
-{
-  WorkerPerformer performer=new WordCountWorkPerformer();
-  Configuration conf=new Configuration();
-  performer.setup(conf);
-  Job j=new Job("This is one sentence.","");
-  performer.perform(j);
-  Counter<String> result=(Counter<String>)j.getResult();
-  assertEquals(1.0,result.getCount("This"),1e-1);
-}
