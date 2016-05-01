@@ -6,6 +6,7 @@
     int miniBatchSize=miniBatchSizes[x];
     int layerSize=7;
     int timeSeriesLength=timeSeriesLengths[x];
+    String msg="minibatch=" + miniBatchSize;
     FeedForwardToRnnPreProcessor proc=new FeedForwardToRnnPreProcessor();
     NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(layerSize).nOut(layerSize).build()).build();
     DenseLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc);
@@ -28,18 +29,18 @@
       INDArray row2d=activations2dc.getRow(i);
       INDArray row3dc=activations3dc.tensorAlongDimension(time,1,0).getRow(example);
       INDArray row3df=activations3df.tensorAlongDimension(time,1,0).getRow(example);
-      assertTrue(row2d.equals(row3dc));
-      assertTrue(row2d.equals(row3df));
+      assertEquals(row2d,row3dc);
+      assertEquals(row2d,row3df);
     }
     INDArray epsilon2d1=proc.backprop(activations3dc,miniBatchSize);
     INDArray epsilon2d2=proc.backprop(activations3df,miniBatchSize);
-    assertTrue(epsilon2d1.equals(activations2dc));
-    assertTrue(epsilon2d2.equals(activations2dc));
+    assertEquals(msg,activations2dc,epsilon2d1);
+    assertEquals(msg,activations2dc,epsilon2d2);
     INDArray act3d_c=Nd4j.create(activations3dc.shape(),'c');
     act3d_c.assign(activations3dc);
     INDArray act3d_f=Nd4j.create(activations3dc.shape(),'f');
     act3d_f.assign(activations3dc);
-    assertEquals(activations2dc,proc.backprop(act3d_c,miniBatchSize));
-    assertEquals(activations2dc,proc.backprop(act3d_f,miniBatchSize));
+    assertEquals(msg,activations2dc,proc.backprop(act3d_c,miniBatchSize));
+    assertEquals(msg,activations2dc,proc.backprop(act3d_f,miniBatchSize));
   }
 }
