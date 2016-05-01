@@ -1,6 +1,6 @@
 {
   if (learningRatePolicy != LearningRatePolicy.None && Double.isNaN(lrPolicyDecayRate)) {
-    throw new IllegalStateException(layerName + " learning rate policy decay rate (lrPolicyDecayRate) must be set to use learningRatePolicy.");
+    if (!(learningRatePolicy == LearningRatePolicy.Schedule && learningRateSchedule != null) && !(learningRatePolicy == LearningRatePolicy.Poly && !Double.isNaN(lrPolicyPower)))     throw new IllegalStateException(layerName + " learning rate policy decay rate (lrPolicyDecayRate) must be set to use learningRatePolicy.");
   }
 switch (learningRatePolicy) {
 case Inverse:
