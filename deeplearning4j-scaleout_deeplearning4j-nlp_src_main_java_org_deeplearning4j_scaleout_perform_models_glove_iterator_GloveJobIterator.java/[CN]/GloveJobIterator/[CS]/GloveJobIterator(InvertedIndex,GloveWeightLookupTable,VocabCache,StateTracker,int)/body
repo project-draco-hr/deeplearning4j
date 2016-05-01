@@ -1,7 +1,0 @@
-{
-  this.sentenceIterator=invertedIndex.batchIter(batchSize);
-  this.cache=cache;
-  this.table=table;
-  this.batchSize=batchSize;
-  addListener(stateTracker);
-}

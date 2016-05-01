@@ -1,7 +1,0 @@
-{
-  String sentence=(String)job.getWork();
-  Counter<String> result=new Counter<>();
-  Tokenizer tokenizer=tokenizerFactory.create(sentence);
-  while (tokenizer.hasMoreTokens())   result.incrementCount(tokenizer.nextToken(),1.0);
-  job.setResult(result);
-}
