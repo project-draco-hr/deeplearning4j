@@ -25,8 +25,8 @@
     featuresOut=Nd4j.create(featureShape,'f');
     labelsOut=Nd4j.create(labelShape,'f');
     for (int i=0; i < featureList.size(); i++) {
-      featuresOut.tensorAlongDimension(i,1,2).assign(featureList.get(i));
-      labelsOut.tensorAlongDimension(i,1,2).assign(labelList.get(i));
+      featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).assign(featureList.get(i));
+      labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).assign(labelList.get(i));
     }
   }
  else   if (alignmentMode == AlignmentMode.ALIGN_START) {
@@ -46,8 +46,8 @@
     for (int i=0; i < featureList.size(); i++) {
       INDArray f=featureList.get(i);
       INDArray l=labelList.get(i);
-      featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,f.size(0)),NDArrayIndex.all()},f);
-      labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,l.size(0)),NDArrayIndex.all()},l);
+      featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,f.size(0)),NDArrayIndex.all()},f);
+      labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,l.size(0)),NDArrayIndex.all()},l);
       for (int j=f.size(0); j < longestTimeSeries; j++) {
         featuresMask.putScalar(i,j,0.0);
       }
@@ -76,8 +76,8 @@
       int fLen=f.size(0);
       int lLen=l.size(0);
       if (fLen >= lLen) {
-        featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,fLen),NDArrayIndex.all()},f);
-        labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(fLen - lLen,fLen),NDArrayIndex.all()},l);
+        featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,fLen),NDArrayIndex.all()},f);
+        labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(fLen - lLen,fLen),NDArrayIndex.all()},l);
         for (int j=fLen; j < longestTimeSeries; j++) {
           featuresMask.putScalar(i,j,0.0);
         }
@@ -89,8 +89,8 @@
         }
       }
  else {
-        featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(lLen - fLen,lLen),NDArrayIndex.all()},f);
-        labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,lLen),NDArrayIndex.all()},l);
+        featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(lLen - fLen,lLen),NDArrayIndex.all()},f);
+        labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,lLen),NDArrayIndex.all()},l);
         for (int j=0; j < lLen - fLen; j++) {
           featuresMask.putScalar(i,j,0.0);
         }

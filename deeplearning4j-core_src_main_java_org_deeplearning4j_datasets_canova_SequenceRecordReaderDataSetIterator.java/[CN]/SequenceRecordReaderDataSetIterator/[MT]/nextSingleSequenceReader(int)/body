@@ -23,8 +23,8 @@
   INDArray labelsMask=null;
   if (minLength == maxLength) {
     for (int i=0; i < listFeatures.size(); i++) {
-      featuresOut.tensorAlongDimension(i,1,2).assign(listFeatures.get(i));
-      labelsOut.tensorAlongDimension(i,1,2).assign(listLabels.get(i));
+      featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).assign(listFeatures.get(i));
+      labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).assign(listLabels.get(i));
     }
   }
  else {
@@ -33,8 +33,8 @@
     for (int i=0; i < listFeatures.size(); i++) {
       INDArray f=listFeatures.get(i);
       int tsLength=f.size(0);
-      featuresOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,tsLength),NDArrayIndex.all()},f);
-      labelsOut.tensorAlongDimension(i,1,2).put(new INDArrayIndex[]{NDArrayIndex.interval(0,tsLength),NDArrayIndex.all()},listLabels.get(i));
+      featuresOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,tsLength),NDArrayIndex.all()},f);
+      labelsOut.tensorAlongDimension(i,1,2).permutei(1,0).put(new INDArrayIndex[]{NDArrayIndex.interval(0,tsLength),NDArrayIndex.all()},listLabels.get(i));
       for (int j=tsLength; j < maxLength; j++) {
         featuresMask.put(i,j,0.0);
         labelsMask.put(i,j,0.0);
