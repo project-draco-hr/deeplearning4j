@@ -53,7 +53,7 @@
   final INDArray activation3=bidirectionalLSTM.activate(sigb).slice(0);
   final INDArray activation3Reverse=activation3.dup();
   reverseColumnsInPlace(activation3Reverse);
-  assertArrayEquals(activation3Reverse.data().asFloat(),activation1.data().asFloat(),1e-5f);
+  assertEquals(activation3Reverse,activation1);
   assertArrayEquals(activation3Reverse.shape(),activation1.shape());
   final INDArray refBackGradientReccurrent=backprop1.getFirst().getGradientFor(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
   final INDArray refBackGradientInput=backprop1.getFirst().getGradientFor(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
