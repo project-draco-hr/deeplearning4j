@@ -1,6 +1,6 @@
 {
-  setInput(data.dup());
-  setLabels(labels.dup());
+  setInput(data);
+  setLabels(labels);
   update(TaskUtils.buildTask(data,labels));
   if (layerWiseConfigurations.isPretrain()) {
     pretrain(data);

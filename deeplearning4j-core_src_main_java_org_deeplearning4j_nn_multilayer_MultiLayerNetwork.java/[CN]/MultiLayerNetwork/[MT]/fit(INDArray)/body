@@ -1,5 +1,5 @@
 {
-  setInput(data.dup());
+  setInput(data);
   update(TaskUtils.buildTask(data));
   pretrain(data);
 }
