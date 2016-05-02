@@ -1,5 +1,5 @@
 {
-  RecursiveAutoEncoder layer=new RecursiveAutoEncoder.Builder().activation(act).weightInit(weight).dist(dist).dropOut(dropOut).updater(updater).gradientNormalization(gradNorm).gradientNormalizationThreshold(gradNormThreshold).build();
+  DenseLayer layer=new DenseLayer.Builder().activation(act).weightInit(weight).dist(dist).dropOut(dropOut).updater(updater).gradientNormalization(gradNorm).gradientNormalizationThreshold(gradNormThreshold).build();
   checkSerialization(layer);
   assertEquals(act,layer.getActivationFunction());
   assertEquals(weight,layer.getWeightInit());
