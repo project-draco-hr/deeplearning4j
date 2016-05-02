@@ -15,7 +15,7 @@
   assertEquals(0.5,layerConf.getL2(),1e-3);
   Layer layerConf1=net.getLayer(1).conf().getLayer();
   assertEquals(0.4,layerConf1.getMomentum(),1e-3);
-  conf=new NeuralNetConfiguration.Builder().learningRate(0.3).updater(Updater.ADAM).weightInit(WeightInit.DISTRIBUTION).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).l2(0.5).l1(0.3).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
+  conf=new NeuralNetConfiguration.Builder().learningRate(0.3).updater(Updater.ADAM).regularization(true).weightInit(WeightInit.DISTRIBUTION).list().layer(0,new DenseLayer.Builder().nIn(2).nOut(2).l2(0.5).l1(0.3).build()).layer(1,new DenseLayer.Builder().nIn(2).nOut(2).build()).build();
   net=new MultiLayerNetwork(conf);
   net.init();
   layerConf=net.getLayer(0).conf().getLayer();

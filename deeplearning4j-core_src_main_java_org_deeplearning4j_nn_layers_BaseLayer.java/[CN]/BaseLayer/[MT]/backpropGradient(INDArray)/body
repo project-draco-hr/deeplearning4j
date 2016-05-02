@@ -1,5 +1,5 @@
 {
-  INDArray z=preOutput(input);
+  INDArray z=preOutput(true);
   INDArray activationDerivative=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),z).derivative());
   INDArray delta=epsilon.muli(activationDerivative);
   if (maskArray != null) {

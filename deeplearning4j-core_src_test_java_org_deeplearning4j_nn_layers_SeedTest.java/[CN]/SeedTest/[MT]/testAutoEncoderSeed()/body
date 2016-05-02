@@ -3,6 +3,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(layerType).seed(123).build();
   Layer layer=LayerFactories.getFactory(conf).create(conf);
   layer.fit(data.getFeatureMatrix());
+  layer.computeGradientAndScore();
   double score=layer.score();
   INDArray parameters=layer.params();
   layer.setParams(parameters);
