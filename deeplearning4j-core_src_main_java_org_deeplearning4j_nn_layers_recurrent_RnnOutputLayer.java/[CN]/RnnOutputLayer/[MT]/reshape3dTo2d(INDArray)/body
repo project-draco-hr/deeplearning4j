@@ -4,5 +4,5 @@
   if (shape[0] == 1)   return in.tensorAlongDimension(0,1,2).permutei(1,0);
   if (shape[2] == 1)   return in.tensorAlongDimension(0,1,0);
   INDArray permuted=in.permute(0,2,1);
-  return permuted.reshape(shape[0] * shape[2],shape[1]);
+  return permuted.reshape('f',shape[0] * shape[2],shape[1]);
 }
