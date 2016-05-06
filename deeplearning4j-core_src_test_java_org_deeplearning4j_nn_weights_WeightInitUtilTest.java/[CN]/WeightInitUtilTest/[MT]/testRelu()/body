@@ -1,6 +1,6 @@
 {
   INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.RELU,dist);
   Nd4j.getRandom().setSeed(123);
-  INDArray weightsExpected=Nd4j.randn(shape).muli(FastMath.sqrt(2.0 / shape[0]));
+  INDArray weightsExpected=Nd4j.randn('f',shape).muli(FastMath.sqrt(2.0 / shape[0]));
   assertEquals(weightsExpected,weightsActual);
 }
