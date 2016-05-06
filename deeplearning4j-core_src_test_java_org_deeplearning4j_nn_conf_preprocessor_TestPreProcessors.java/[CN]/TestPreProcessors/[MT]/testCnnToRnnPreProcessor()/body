@@ -12,6 +12,7 @@
       for (      int inputHeight : inputHeights) {
         for (        int inputWidth : inputWidths) {
           for (          int nChannels : numChannels) {
+            String msg="miniBatch=" + miniBatchSize + ", tsLength="+ timeSeriesLength+ ", h="+ inputHeight+ ", w="+ inputWidth+ ", ch="+ nChannels;
             InputPreProcessor proc=new CnnToRnnPreProcessor(inputHeight,inputWidth,nChannels);
             NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.ConvolutionLayer.Builder(inputWidth,inputHeight).nIn(cnnNChannelsIn).nOut(nChannels).build()).build();
             ConvolutionLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc);
@@ -19,13 +20,13 @@
             INDArray activationsCnn=Nd4j.rand(new int[]{miniBatchSize * timeSeriesLength,nChannels,inputHeight,inputWidth});
             int prod=nChannels * inputHeight * inputWidth;
             INDArray activationsRnn=proc.preProcess(activationsCnn,miniBatchSize);
-            assertArrayEquals(new int[]{miniBatchSize,prod,timeSeriesLength},activationsRnn.shape());
+            assertArrayEquals(msg,new int[]{miniBatchSize,prod,timeSeriesLength},activationsRnn.shape());
             INDArray twiceProcessed=proc.backprop(activationsRnn,miniBatchSize);
-            assertArrayEquals(activationsCnn.shape(),twiceProcessed.shape());
-            assertEquals(activationsCnn,twiceProcessed);
+            assertArrayEquals(msg,activationsCnn.shape(),twiceProcessed.shape());
+            assertEquals(msg,activationsCnn,twiceProcessed);
             InputPreProcessor compProc=new ComposableInputPreProcessor(new CnnToFeedForwardPreProcessor(inputHeight,inputWidth,nChannels),new FeedForwardToRnnPreProcessor());
             INDArray activationsRnnComp=compProc.preProcess(activationsCnn,miniBatchSize);
-            assertEquals(activationsRnnComp,activationsRnn);
+            assertEquals(msg,activationsRnnComp,activationsRnn);
             INDArray epsilonsRnn=Nd4j.rand(new int[]{miniBatchSize,nChannels * inputHeight * inputWidth,timeSeriesLength});
             INDArray epsilonsCnnComp=compProc.backprop(epsilonsRnn,miniBatchSize);
             INDArray epsilonsCnn=proc.backprop(epsilonsRnn,miniBatchSize);
@@ -38,7 +39,7 @@
               System.out.println(Arrays.toString(epsilonsCnn.shape()));
               System.out.println(epsilonsCnn);
             }
-            assertEquals(epsilonsCnnComp,epsilonsCnn);
+            assertEquals(msg,epsilonsCnnComp,epsilonsCnn);
           }
         }
       }

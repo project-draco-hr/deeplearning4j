@@ -1,4 +1,5 @@
 {
+  if (input.ordering() == 'c')   input=input.dup('f');
   int[] shape=input.shape();
   INDArray in2d;
   if (shape[0] == 1) {
@@ -9,7 +10,7 @@
   }
  else {
     INDArray permuted=input.permute(0,2,1);
-    in2d=permuted.reshape(shape[0] * shape[2],shape[1]);
+    in2d=permuted.reshape('f',shape[0] * shape[2],shape[1]);
   }
-  return in2d.reshape(shape[0] * shape[2],numChannels,inputHeight,inputWidth);
+  return in2d.dup('c').reshape('c',shape[0] * shape[2],numChannels,inputHeight,inputWidth);
 }

@@ -1,6 +1,8 @@
 {
   if (input.rank() != 4)   throw new IllegalArgumentException("Invalid input: expect CNN activations with rank 4 (received input with shape " + Arrays.toString(input.shape()) + ")");
+  if (input.ordering() != 'c')   input=input.dup('c');
   int[] shape=input.shape();
-  INDArray reshaped=input.reshape(miniBatchSize,shape[0] / miniBatchSize,product);
+  INDArray twod=input.reshape('c',input.size(0),ArrayUtil.prod(input.shape()) / input.size(0));
+  INDArray reshaped=twod.dup('f').reshape('f',miniBatchSize,shape[0] / miniBatchSize,product);
   return reshaped.permute(0,2,1);
 }

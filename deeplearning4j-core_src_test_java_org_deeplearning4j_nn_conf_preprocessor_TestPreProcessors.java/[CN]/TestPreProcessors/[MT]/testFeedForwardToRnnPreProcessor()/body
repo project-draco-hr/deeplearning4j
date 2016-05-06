@@ -24,11 +24,11 @@
     assertEquals(activations3dc,activations3df);
     int nRows2D=miniBatchSize * timeSeriesLength;
     for (int i=0; i < nRows2D; i++) {
-      int time=i % timeSeriesLength;
-      int example=i / timeSeriesLength;
+      int time=i / miniBatchSize;
+      int example=i % miniBatchSize;
       INDArray row2d=activations2dc.getRow(i);
-      INDArray row3dc=activations3dc.tensorAlongDimension(time,1,0).getRow(example);
-      INDArray row3df=activations3df.tensorAlongDimension(time,1,0).getRow(example);
+      INDArray row3dc=activations3dc.tensorAlongDimension(time,0,1).getRow(example);
+      INDArray row3df=activations3df.tensorAlongDimension(time,0,1).getRow(example);
       assertEquals(row2d,row3dc);
       assertEquals(row2d,row3df);
     }

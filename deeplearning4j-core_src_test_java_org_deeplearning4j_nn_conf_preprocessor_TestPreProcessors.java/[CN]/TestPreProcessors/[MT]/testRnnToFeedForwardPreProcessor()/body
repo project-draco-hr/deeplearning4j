@@ -32,16 +32,16 @@
       INDArray rowf=activations2df.getRow(i);
       assertArrayEquals(rowc.shape(),new int[]{1,layerSize});
       assertEquals(rowc,rowf);
-      int origExampleNum=i / timeSeriesLength;
-      int time=i % timeSeriesLength;
+      int time=i / miniBatchSize;
+      int origExampleNum=i % miniBatchSize;
       INDArray expectedRow=activations3dc.tensorAlongDimension(time,1,0).getRow(origExampleNum);
-      assertTrue(rowc.equals(expectedRow));
-      assertTrue(rowf.equals(expectedRow));
+      assertEquals(expectedRow,rowc);
+      assertEquals(expectedRow,rowf);
     }
     INDArray outc=proc.backprop(activations2dc,miniBatchSize);
     INDArray outf=proc.backprop(activations2df,miniBatchSize);
-    assertTrue(outc.equals(activations3dc));
-    assertTrue(outf.equals(activations3df));
+    assertEquals(activations3dc,outc);
+    assertEquals(activations3df,outf);
     INDArray eps2d_c=Nd4j.create(activations2dc.shape(),'c');
     INDArray eps2d_f=Nd4j.create(activations2dc.shape(),'f');
     eps2d_c.assign(activations2dc);
