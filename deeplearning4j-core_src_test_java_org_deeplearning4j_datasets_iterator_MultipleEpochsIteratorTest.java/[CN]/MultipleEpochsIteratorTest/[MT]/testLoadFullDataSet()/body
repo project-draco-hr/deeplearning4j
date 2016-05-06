@@ -3,11 +3,13 @@
   RecordReader rr=new CSVRecordReader();
   rr.initialize(new FileSplit(new ClassPathResource("iris.txt").getFile()));
   DataSetIterator iter=new RecordReaderDataSetIterator(rr,150);
-  MultipleEpochsIterator multiIter=new MultipleEpochsIterator(epochs,iter);
+  DataSet ds=iter.next(50);
+  MultipleEpochsIterator multiIter=new MultipleEpochsIterator(epochs,ds);
   assertTrue(multiIter.hasNext());
   int actualEpochs=0;
   while (multiIter.hasNext()) {
     DataSet path=multiIter.next();
+    assertEquals(path.numExamples(),50,0.0);
     assertFalse(path == null);
     actualEpochs++;
   }
