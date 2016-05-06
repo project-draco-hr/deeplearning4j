@@ -36,14 +36,12 @@
   for (int iEpoch=0; iEpoch < 3; iEpoch++) {
     net.fit(ds);
     System.out.print(String.format("score is %f\n",score));
-    TestCase.assertTrue(!Double.isNaN(score));
-    TestCase.assertTrue(oldScore * 1.5 > score);
+    assertTrue(!Double.isNaN(score));
+    assertTrue(oldScore * 1.5 > score);
     oldScore=score;
     final INDArray output=net.output(ds.getFeatureMatrix());
     Evaluation evaluation=new Evaluation();
     evaluation.evalTimeSeries(ds.getLabels(),output);
     System.out.print(evaluation.stats() + "\n");
   }
-  int foo=3;
-  foo++;
 }

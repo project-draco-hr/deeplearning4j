@@ -14,7 +14,6 @@
     INDArray out=Nd4j.rand(1,nOut);
     INDArray inCopy=in.dup();
     net.fit(new DataSet(in,out));
-    assertEquals(inCopy,in);
     INDArray dropoutMask=(INDArray)dropoutMaskField.get(net.getLayer(0));
     assertNotNull(dropoutMask);
     INDArray l0Input=net.getLayer(0).input();
