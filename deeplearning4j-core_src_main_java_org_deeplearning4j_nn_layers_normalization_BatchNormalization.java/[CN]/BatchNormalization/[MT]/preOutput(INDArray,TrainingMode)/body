@@ -31,8 +31,7 @@
   }
   INDArray xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(reshapeX,mean,reshapeX,-1));
   xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
-  INDArray activations=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gamma,xHat.dup(),-1));
-  activations.addiColumnVector(beta);
+  INDArray activations=xHat.dup().mmul(gamma).addRowVector(beta);
   double decay;
   if (training == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
     decay=layerConf.getDecay();
