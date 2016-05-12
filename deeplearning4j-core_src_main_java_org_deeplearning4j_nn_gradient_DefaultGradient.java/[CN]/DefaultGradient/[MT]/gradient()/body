@@ -1,3 +1,17 @@
 {
-  return Nd4j.toFlattened('f',gradients.values());
+  if (flatteningOrders != null) {
+    List<INDArray> toFlatten=new ArrayList<>();
+    for (    Map.Entry<String,INDArray> entry : gradients.entrySet()) {
+      if (flatteningOrders.containsKey(entry.getKey()) && flatteningOrders.get(entry.getKey()) != DEFAULT_FLATTENING_ORDER) {
+        toFlatten.add(Nd4j.toFlattened(flatteningOrders.get(entry.getKey()),entry.getValue()));
+      }
+ else {
+        toFlatten.add(entry.getValue());
+      }
+    }
+    return Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,toFlatten);
+  }
+ else {
+    return Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,gradients.values());
+  }
 }

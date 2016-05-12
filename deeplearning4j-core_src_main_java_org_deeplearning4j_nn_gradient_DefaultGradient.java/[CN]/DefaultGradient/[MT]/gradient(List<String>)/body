@@ -1,8 +1,21 @@
 {
-  List<INDArray> ret=new ArrayList<>();
-  for (  String s : order) {
-    if (!gradientForVariable().containsKey(s))     continue;
-    ret.add(gradientForVariable().get(s));
+  List<INDArray> toFlatten=new ArrayList<>();
+  if (flatteningOrders == null) {
+    for (    String s : order) {
+      if (!gradients.containsKey(s))       continue;
+      toFlatten.add(gradients.get(s));
+    }
   }
-  return Nd4j.toFlattened('f',ret);
+ else {
+    for (    String s : order) {
+      if (!gradients.containsKey(s))       continue;
+      if (flatteningOrders != null && flatteningOrders.containsKey(s) && flatteningOrders.get(s) != DEFAULT_FLATTENING_ORDER) {
+        toFlatten.add(Nd4j.toFlattened(flatteningOrders.get(s),gradients.get(s)));
+      }
+ else {
+        toFlatten.add(gradients.get(s));
+      }
+    }
+  }
+  return Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,toFlatten);
 }
