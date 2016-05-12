@@ -9,28 +9,35 @@
   int miniBatch=input.size(0);
   int inH=input.size(2);
   int inW=input.size(3);
-  int outH=col.size(4);
-  int outW=col.size(5);
   int outDepth=weights.size(0);
-  int inDepth=input.size(1);
+  int inDepth=weights.size(1);
   int kH=weights.size(2);
   int kW=weights.size(3);
+  int[] kernel=layerConf().getKernelSize();
   int[] strides=layerConf().getStride();
   int[] pad=layerConf().getPadding();
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
   INDArray col=Nd4j.create(new int[]{outW,outH,miniBatch,inDepth,kH,kW},'c');
   INDArray col2=col.permute(2,3,4,5,0,1);
   Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
   INDArray reshapedCol=Shape.newShapeNoCopy(col,new int[]{miniBatch * outH * outW,inDepth * kH * kW},false);
   if (reshapedCol == null)   throw new RuntimeException("Could not reshape without copy");
-  INDArray permutedW=weights.permute(1,2,3,0).dup('c');
-  INDArray reshapedW=permutedW.reshape('c',inDepth * kH * kW,outDepth);
-  INDArray z=Nd4j.gemm(reshapedW,reshapedCol,true,true).transpose();
-  if (z.ordering() != 'c')   throw new RuntimeException();
+  if (weights.ordering() != 'c')   throw new RuntimeException("Weights not c order");
+  INDArray permutedW=weights.permute(3,2,1,0);
+  if (permutedW.ordering() != 'f')   throw new RuntimeException("Not 'f' order after reshaping");
+  INDArray reshapedW=Shape.newShapeNoCopy(permutedW,new int[]{kW * kH * inDepth,outDepth},true);
+  if (reshapedW == null) {
+    throw new RuntimeException("Could not reshape weights");
+  }
+  if (reshapedW.ordering() != 'f')   throw new RuntimeException("Not 'f' order after reshaping");
+  INDArray z=Nd4j.gemm(reshapedCol,reshapedW,false,false);
+  if (z.ordering() != 'f')   throw new RuntimeException();
   if (z.rows() != miniBatch * outH * outW)   throw new RuntimeException();
   if (z.columns() != outDepth)   throw new RuntimeException();
-  z=z.reshape('c',miniBatch,outH,outW,outDepth);
+  z=z.reshape('f',outW,outH,miniBatch,outDepth);
   BroadcastOp op=new BroadcastAddOp(z,bias,z,3);
   Nd4j.getExecutioner().exec(op);
-  INDArray out=z.permute(0,3,1,2);
+  INDArray out=z.permute(2,3,1,0);
   return out;
 }

@@ -5,6 +5,7 @@
   INDArray delta=calculateDelta(epsilon);
   Gradient retGradient=new DefaultGradient();
   retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,delta.sum(0,2,3));
+  INDArray col=null;
   INDArray weightGradient=Nd4j.tensorMmul(delta,col,new int[][]{{0,2,3},{0,4,5}});
   retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGradient,'c');
   INDArray nextEpsilon=Nd4j.tensorMmul(weights,delta,new int[][]{{0},{1}});
