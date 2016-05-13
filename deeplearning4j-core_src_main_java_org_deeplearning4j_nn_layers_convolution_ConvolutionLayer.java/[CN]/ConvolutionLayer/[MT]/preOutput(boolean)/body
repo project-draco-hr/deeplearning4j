@@ -18,8 +18,8 @@
   int[] pad=layerConf().getPadding();
   int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
-  INDArray col=Nd4j.create(new int[]{outW,outH,miniBatch,inDepth,kH,kW},'c');
-  INDArray col2=col.permute(2,3,4,5,0,1);
+  INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
+  INDArray col2=col.permute(0,3,4,5,1,2);
   Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
   INDArray reshapedCol=Shape.newShapeNoCopy(col,new int[]{miniBatch * outH * outW,inDepth * kH * kW},false);
   if (reshapedCol == null)   throw new RuntimeException("Could not reshape without copy");
@@ -35,9 +35,19 @@
   if (z.ordering() != 'f')   throw new RuntimeException();
   if (z.rows() != miniBatch * outH * outW)   throw new RuntimeException();
   if (z.columns() != outDepth)   throw new RuntimeException();
-  z=z.reshape('f',outW,outH,miniBatch,outDepth);
+  z=Shape.newShapeNoCopy(z,new int[]{outW,outH,miniBatch,outDepth},true);
+  if (z == null)   throw new RuntimeException();
+  INDArray temp=z.dup('f');
+  INDArray temp2=temp.permute(2,3,1,0);
+  for (int i=0; i < temp2.size(0); i++) {
+    for (int j=0; j < temp2.size(1); j++) {
+      System.out.println("mb=" + i + ", depth="+ j);
+      System.out.println(temp2.get(NDArrayIndex.point(i),NDArrayIndex.point(j),NDArrayIndex.all(),NDArrayIndex.all()));
+    }
+  }
   BroadcastOp op=new BroadcastAddOp(z,bias,z,3);
   Nd4j.getExecutioner().exec(op);
   INDArray out=z.permute(2,3,1,0);
+  out=out.dup('c');
   return out;
 }

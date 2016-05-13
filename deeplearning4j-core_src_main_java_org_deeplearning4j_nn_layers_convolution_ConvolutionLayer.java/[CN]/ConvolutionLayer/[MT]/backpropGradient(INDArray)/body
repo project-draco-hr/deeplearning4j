@@ -25,6 +25,7 @@
   if (!Arrays.equals(delta.shape(),new int[]{outDepth,miniBatch,outH,outW})) {
     throw new RuntimeException("Shape different than expected");
   }
+  delta=delta.permute(0,3,2,1).dup('c');
   INDArray delta2d=Shape.newShapeNoCopy(delta,new int[]{outDepth,miniBatch * outH * outW},false);
   if (delta2d == null)   throw new RuntimeException("Could not execute reshape on delta");
   INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
@@ -40,6 +41,8 @@
   if (weightGrads.columns() != inDepth * kH * kW) {
     throw new RuntimeException();
   }
+  INDArray wGrads4d=Shape.newShapeNoCopy(weightGrads,new int[]{outDepth,inDepth,kH,kW},false);
+  if (wGrads4d == null)   throw new RuntimeException();
   INDArray wPermuted=weights.permute(3,2,1,0);
   if (wPermuted.ordering() != 'f')   throw new RuntimeException();
   INDArray w2d=Shape.newShapeNoCopy(wPermuted,new int[]{inDepth * kH * kW,outDepth},true);
@@ -61,6 +64,6 @@
   }
   Gradient retGradient=new DefaultGradient();
   retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,delta2d.sum(1));
-  retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGrads.dup('c'),'c');
+  retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,wGrads4d.dup('c'),'c');
   return new Pair<>(retGradient,epsNext);
 }
