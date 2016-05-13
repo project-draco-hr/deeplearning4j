@@ -21,6 +21,7 @@
         MultiLayerNetwork net=new MultiLayerNetwork(conf);
         net.init();
         String msg="PoolingType=" + poolingType + ", minibatch="+ minibatchSize+ ", activationFn="+ afn;
+        System.out.println(msg);
         boolean gradOK=GradientCheckUtil.checkGradients(net,DEFAULT_EPS,DEFAULT_MAX_REL_ERROR,PRINT_RESULTS,RETURN_ON_FIRST_FAILURE,input,labels,true);
         assertTrue(msg,gradOK);
       }

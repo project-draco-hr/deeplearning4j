@@ -39,6 +39,5 @@
   z=Shape.newShapeNoCopy(z,new int[]{outW,outH,miniBatch,outDepth},true);
   if (z == null)   throw new RuntimeException();
   INDArray out=z.permute(2,3,1,0);
-  out=out.dup('c');
   return out;
 }
