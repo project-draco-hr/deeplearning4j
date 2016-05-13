@@ -25,7 +25,6 @@
   if (!Arrays.equals(delta.shape(),new int[]{outDepth,miniBatch,outH,outW})) {
     throw new RuntimeException("Shape different than expected");
   }
-  delta=delta.permute(0,3,2,1).dup('c');
   INDArray delta2d=Shape.newShapeNoCopy(delta,new int[]{outDepth,miniBatch * outH * outW},false);
   if (delta2d == null)   throw new RuntimeException("Could not execute reshape on delta");
   INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');

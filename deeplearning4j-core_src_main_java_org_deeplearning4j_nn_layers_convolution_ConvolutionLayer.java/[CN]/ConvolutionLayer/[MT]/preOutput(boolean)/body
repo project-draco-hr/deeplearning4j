@@ -35,18 +35,9 @@
   if (z.ordering() != 'f')   throw new RuntimeException();
   if (z.rows() != miniBatch * outH * outW)   throw new RuntimeException();
   if (z.columns() != outDepth)   throw new RuntimeException();
+  z.addiRowVector(bias);
   z=Shape.newShapeNoCopy(z,new int[]{outW,outH,miniBatch,outDepth},true);
   if (z == null)   throw new RuntimeException();
-  INDArray temp=z.dup('f');
-  INDArray temp2=temp.permute(2,3,1,0);
-  for (int i=0; i < temp2.size(0); i++) {
-    for (int j=0; j < temp2.size(1); j++) {
-      System.out.println("mb=" + i + ", depth="+ j);
-      System.out.println(temp2.get(NDArrayIndex.point(i),NDArrayIndex.point(j),NDArrayIndex.all(),NDArrayIndex.all()));
-    }
-  }
-  BroadcastOp op=new BroadcastAddOp(z,bias,z,3);
-  Nd4j.getExecutioner().exec(op);
   INDArray out=z.permute(2,3,1,0);
   out=out.dup('c');
   return out;
