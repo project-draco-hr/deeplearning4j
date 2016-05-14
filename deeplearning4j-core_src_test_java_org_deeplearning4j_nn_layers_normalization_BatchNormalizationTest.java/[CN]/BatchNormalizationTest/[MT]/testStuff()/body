@@ -1,8 +1,0 @@
-{
-  INDArray a=Nd4j.rand(2,2);
-  INDArray d=Nd4j.rand(2,1);
-  INDArray b=a.mul(2);
-  INDArray c=a.mul(4);
-  a.addiColumnVector(d);
-  a.add(b);
-}
