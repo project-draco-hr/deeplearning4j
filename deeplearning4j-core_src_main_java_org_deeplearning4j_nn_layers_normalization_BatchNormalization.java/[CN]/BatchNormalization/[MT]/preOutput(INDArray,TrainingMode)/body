@@ -1,19 +1,14 @@
 {
   INDArray gamma, beta;
+  INDArray activations=null;
+  trainingMode=training;
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   int batchSize=x.size(0);
   shape=getShape(x);
-  INDArray reshapeX=(x.rank() > 2) ? x.dup().reshape(batchSize,shape[1]) : x;
-  trainingMode=training;
-  if (setMeanVar) {
-    this.mean=this.mean == null ? Nd4j.zeros(shape) : this.mean;
-    this.var=this.var == null ? Nd4j.valueArrayOf(shape,layerConf.getEps()) : this.var;
-    setMeanVar=false;
-  }
   INDArray mean, var;
   if (trainingMode == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
-    mean=x.mean(0).reshape(shape);
-    var=x.var(false,0).reshape(shape);
+    mean=x.mean(0);
+    var=x.var(false,0);
     var.addi(layerConf.getEps());
   }
  else {
@@ -22,23 +17,38 @@
   }
   std=Transforms.sqrt(var);
   if (layerConf.isLockGammaBeta()) {
-    gamma=Nd4j.onesLike(mean);
-    beta=Nd4j.zerosLike(mean);
+    gamma=Nd4j.ones(shape);
+    beta=Nd4j.zeros(shape);
   }
  else {
     gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
     beta=getParam(BatchNormalizationParamInitializer.BETA);
   }
-  INDArray xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(reshapeX,mean,reshapeX,-1));
-  xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
-  INDArray activations=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gamma,xHat.dup(),-1));
-  activations.addiColumnVector(beta);
+  if (x.rank() == 2) {
+    xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,x.dup(),-1));
+    xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
+    activations=xHat.dup().mulRowVector(gamma).addRowVector(beta);
+  }
+ else   if (x.rank() == 4) {
+    xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,x.dup(),new int[]{1,2,3}));
+    xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),new int[]{1,2,3}));
+    activations=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gamma,xHat.dup(),1));
+    activations=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(activations,beta,activations,1));
+  }
+ else {
+    throw new IllegalStateException("The layer prior to BatchNorm in the configuration is not currently supported.");
+  }
   double decay;
   if (training == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
+    if (setMeanVar) {
+      this.mean=this.mean == null ? Nd4j.zeros(mean.shape()) : this.mean;
+      this.var=this.var == null ? Nd4j.valueArrayOf(var.shape(),layerConf.getEps()) : this.var;
+      setMeanVar=false;
+    }
     decay=layerConf.getDecay();
     double adjust=batchSize / Math.max(batchSize - 1.,1.);
     this.mean=mean.mul(decay).add(this.mean.mul(1 - decay));
     this.var=var.mul(decay).add(this.var.mul((1 - decay) * adjust));
   }
-  return activations.reshape(x.shape());
+  return activations;
 }

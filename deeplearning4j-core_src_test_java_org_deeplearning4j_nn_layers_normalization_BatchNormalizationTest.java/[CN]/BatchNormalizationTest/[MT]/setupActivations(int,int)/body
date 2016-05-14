@@ -1,5 +1,6 @@
 {
   BatchNormalization bN=new BatchNormalization.Builder().nIn(nIn).nOut(nOut).build();
   NeuralNetConfiguration layerConf=new NeuralNetConfiguration.Builder().iterations(1).layer(bN).build();
-  return LayerFactories.getFactory(layerConf).create(layerConf);
+  Layer layer=LayerFactories.getFactory(layerConf).create(layerConf);
+  return layer;
 }

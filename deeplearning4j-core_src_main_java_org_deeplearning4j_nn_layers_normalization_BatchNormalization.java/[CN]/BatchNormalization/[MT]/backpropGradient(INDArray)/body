@@ -1,19 +1,42 @@
 {
+  INDArray nextEpsilon;
+  shape=getShape(epsilon);
   int batchSize=epsilon.size(0);
-  INDArray reshapeEp=epsilon.dup().reshape(batchSize,shape[1]);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
-  INDArray gBeta=reshapeEp.sum(0);
-  if (trainingMode == TrainingMode.TRAIN && layerConf.isUseBatchMean()) {
-    gGamma=reshapeEp.mul(xHat).sum(0);
-  }
-  INDArray gamma=(layerConf.isLockGammaBeta()) ? Nd4j.onesLike(reshapeEp) : getParam(BatchNormalizationParamInitializer.GAMMA);
-  INDArray coefficients=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(gamma,std,gamma,-1));
-  INDArray tmp=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gGamma,xHat.dup(),-1));
-  tmp.addiColumnVector(gBeta).divi(batchSize);
-  INDArray gXHat=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(tmp,coefficients,tmp,-1));
-  INDArray nextEpsilon=reshapeEp.mul(gXHat).reshape(epsilon.shape());
+  INDArray gamma=(layerConf.isLockGammaBeta()) ? Nd4j.ones(shape) : getParam(BatchNormalizationParamInitializer.GAMMA);
   Gradient retGradient=new DefaultGradient();
-  retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,gGamma);
-  retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,gBeta);
+  if (epsilon.rank() == 2) {
+    INDArray dGamma=epsilon.mul(xHat).sum(0);
+    INDArray dBeta=epsilon.sum(0);
+    INDArray dxhat=epsilon.mulRowVector(gamma);
+    INDArray dsq=dxhat.mul(xMu).sum(0).mul(0.5).div(Transforms.pow(std,3)).neg().div(batchSize);
+    INDArray dxmu1=dxhat.divRowVector(std);
+    INDArray dxmu2=xMu.mul(2).mulRowVector(dsq);
+    INDArray dx1=dxmu1.add(dxmu2);
+    INDArray dmu=dx1.sum(0).neg();
+    INDArray dx2=dmu.div(batchSize);
+    nextEpsilon=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dx1,dx2,dx1.dup(),-1));
+    INDArray r=xMu.divRowVector(Transforms.pow(std,2)).mulRowVector(epsilon.mul(xMu).sum(0));
+    INDArray otherEp=epsilon.mul(2).subRowVector(dBeta).mulRowVector(gamma.div(std.mul(2))).sub(r);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGamma);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,dBeta);
+  }
+ else   if (epsilon.rank() == 4) {
+    INDArray dGamma=epsilon.mul(xHat).sum(0,2,3);
+    INDArray dBeta=epsilon.sum(0,2,3);
+    INDArray dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,epsilon.dup(),1));
+    INDArray dsq=dxhat.mul(xMu).sum(0).mul(0.5).div(Transforms.pow(std,3)).neg().div(batchSize);
+    INDArray dxmu1=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(dxhat,std,dxhat,new int[]{1,2,3}));
+    INDArray dxmu2=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xMu.mul(2),dsq,xMu.mul(2),new int[]{1,2,3}));
+    INDArray dx1=dxmu1.add(dxmu2);
+    INDArray dmu=dx1.sum(0).neg();
+    INDArray dx2=dmu.div(batchSize);
+    nextEpsilon=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dx1,dx2,dx1.dup(),new int[]{1,2,3}));
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGamma);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,dBeta);
+  }
+ else {
+    throw new IllegalStateException("The layer prior to BatchNorm in the configuration is not currently supported.");
+  }
   return new Pair<>(retGradient,nextEpsilon);
 }
