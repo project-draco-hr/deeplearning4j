@@ -1,14 +1,45 @@
 {
-  int inputHeight=input().size(-2);
-  int inputWidth=input().size(-1);
   INDArray weights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
-  INDArray delta=calculateDelta(epsilon);
+  int miniBatch=input.size(0);
+  int inH=input.size(2);
+  int inW=input.size(3);
+  int outDepth=weights.size(0);
+  int inDepth=weights.size(1);
+  int kH=weights.size(2);
+  int kW=weights.size(3);
+  int[] kernel=layerConf().getKernelSize();
+  int[] strides=layerConf().getStride();
+  int[] pad=layerConf().getPadding();
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  INDArray delta;
+  String afn=conf.getLayer().getActivationFunction();
+  if ("identity".equals(afn)) {
+    delta=epsilon;
+  }
+ else {
+    INDArray sigmaPrimeZ=preOutput(true);
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(afn,sigmaPrimeZ,conf.getExtraArgs()).derivative());
+    delta=sigmaPrimeZ.muli(epsilon);
+  }
+  delta=delta.permute(1,0,2,3);
+  INDArray delta2d=delta.reshape('c',new int[]{outDepth,miniBatch * outH * outW});
+  INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
+  INDArray col2=col.permute(0,3,4,5,1,2);
+  Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
+  INDArray im2col2d=col.reshape('c',miniBatch * outH * outW,inDepth * kH * kW);
+  INDArray weightGrads2d=Nd4j.gemm(im2col2d,delta2d,true,true).transpose();
+  INDArray weightGrads=Shape.newShapeNoCopy(weightGrads2d,new int[]{outDepth,inDepth,kH,kW},false);
+  INDArray wPermuted=weights.permute(3,2,1,0);
+  INDArray w2d=wPermuted.reshape('f',inDepth * kH * kW,outDepth);
+  INDArray epsNext2d=w2d.mmul(delta2d);
+  INDArray eps6d=Shape.newShapeNoCopy(epsNext2d,new int[]{kW,kH,inDepth,outW,outH,miniBatch},true);
+  eps6d=eps6d.permute(5,2,1,0,4,3);
+  INDArray epsNextOrig=Nd4j.create(new int[]{inDepth,miniBatch,inH,inW},'c');
+  INDArray epsNext=epsNextOrig.permute(1,0,2,3);
+  Convolution.col2im(eps6d,epsNext,strides[0],strides[1],pad[0],pad[1],inH,inW);
   Gradient retGradient=new DefaultGradient();
-  retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,delta.sum(0,2,3));
-  INDArray weightGradient=Nd4j.tensorMmul(delta,col,new int[][]{{0,2,3},{0,4,5}});
-  retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGradient);
-  INDArray nextEpsilon=Nd4j.tensorMmul(weights,delta,new int[][]{{0},{1}});
-  nextEpsilon=Nd4j.rollAxis(nextEpsilon,3);
-  nextEpsilon=Convolution.col2im(nextEpsilon,layerConf().getStride(),layerConf().getPadding(),inputHeight,inputWidth);
-  return new Pair<>(retGradient,nextEpsilon);
+  retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,delta2d.sum(1));
+  retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGrads,'c');
+  return new Pair<>(retGradient,epsNext);
 }

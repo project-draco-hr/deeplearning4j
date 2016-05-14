@@ -1,13 +1,31 @@
 {
-  INDArray Weights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
+  INDArray weights=getParam(ConvolutionParamInitializer.WEIGHT_KEY);
   INDArray bias=getParam(ConvolutionParamInitializer.BIAS_KEY);
   if (conf.isUseDropConnect() && training) {
     if (conf.getLayer().getDropOut() > 0) {
-      Weights=Dropout.applyDropConnect(this,ConvolutionParamInitializer.WEIGHT_KEY);
+      weights=Dropout.applyDropConnect(this,ConvolutionParamInitializer.WEIGHT_KEY);
     }
   }
-  INDArray z=Nd4j.tensorMmul(col,Weights,new int[][]{{1,2,3},{1,2,3}});
-  BroadcastOp op=new BroadcastAddOp(z,bias,z,3);
-  Nd4j.getExecutioner().exec(op);
-  return Nd4j.rollAxis(z,3,1);
+  int miniBatch=input.size(0);
+  int inH=input.size(2);
+  int inW=input.size(3);
+  int outDepth=weights.size(0);
+  int inDepth=weights.size(1);
+  int kH=weights.size(2);
+  int kW=weights.size(3);
+  int[] kernel=layerConf().getKernelSize();
+  int[] strides=layerConf().getStride();
+  int[] pad=layerConf().getPadding();
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
+  INDArray col2=col.permute(0,3,4,5,1,2);
+  Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
+  INDArray reshapedCol=Shape.newShapeNoCopy(col,new int[]{miniBatch * outH * outW,inDepth * kH * kW},false);
+  INDArray permutedW=weights.permute(3,2,1,0);
+  INDArray reshapedW=permutedW.reshape('f',kW * kH * inDepth,outDepth);
+  INDArray z=reshapedCol.mmul(reshapedW);
+  z.addiRowVector(bias);
+  z=Shape.newShapeNoCopy(z,new int[]{outW,outH,miniBatch,outDepth},true);
+  return z.permute(2,3,1,0);
 }

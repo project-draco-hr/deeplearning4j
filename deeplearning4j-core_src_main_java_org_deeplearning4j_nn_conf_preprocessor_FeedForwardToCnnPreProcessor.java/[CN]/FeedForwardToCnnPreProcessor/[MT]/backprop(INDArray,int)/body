@@ -1,18 +1,8 @@
 {
-  if (shape == null || ArrayUtil.prod(shape) != output.length()) {
-    int[] otherOutputs=null;
-    if (output.shape().length == 2) {
-      return output;
-    }
- else     if (output.shape().length == 4) {
-      otherOutputs=new int[3];
-    }
- else     if (output.shape().length == 3) {
-      otherOutputs=new int[2];
-    }
-    System.arraycopy(output.shape(),1,otherOutputs,0,otherOutputs.length);
-    shape=new int[]{output.shape()[0],ArrayUtil.prod(otherOutputs)};
+  if (epsilons.ordering() != 'c' || !Shape.strideDescendingCAscendingF(epsilons))   epsilons=epsilons.dup('c');
+  if (shape == null || ArrayUtil.prod(shape) != epsilons.length()) {
+    if (epsilons.rank() == 2)     return epsilons;
+    return epsilons.reshape('c',epsilons.size(0),numChannels,inputHeight,inputWidth);
   }
-  if (output.ordering() == 'f')   output=Shape.toOffsetZeroCopy(output,'c');
-  return output.reshape(shape);
+  return epsilons.reshape('c',shape);
 }

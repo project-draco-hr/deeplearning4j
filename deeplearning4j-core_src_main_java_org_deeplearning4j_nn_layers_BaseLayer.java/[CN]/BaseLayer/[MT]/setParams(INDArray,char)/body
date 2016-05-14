@@ -1,0 +1,15 @@
+{
+  List<String> parameterList=conf.variables();
+  int length=0;
+  for (  String s : parameterList)   length+=getParam(s).length();
+  if (params.length() != length)   throw new IllegalArgumentException("Unable to set parameters: must be of length " + length);
+  int idx=0;
+  Set<String> paramKeySet=this.params.keySet();
+  for (  String s : paramKeySet) {
+    INDArray param=getParam(s);
+    INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,idx + param.length()));
+    if (param.length() != get.length())     throw new IllegalStateException("Parameter " + s + " should have been of length "+ param.length()+ " but was "+ get.length());
+    setParam(s,get.reshape(order,param.shape()));
+    idx+=param.length();
+  }
+}
