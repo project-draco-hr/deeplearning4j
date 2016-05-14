@@ -1,19 +1,7 @@
 {
-  int[] otherOutputs=null;
-  if (input.shape().length == 2) {
-    return input;
-  }
- else   if (input.shape().length == 4) {
-    if (input.size(-2) == 1 && input.size(-1) == 1) {
-      return input.reshape(input.size(0),input.size(1));
-    }
-    otherOutputs=new int[3];
-  }
- else   if (input.shape().length == 3) {
-    otherOutputs=new int[2];
-  }
-  System.arraycopy(input.shape(),1,otherOutputs,0,otherOutputs.length);
-  int[] shape=new int[]{input.size(0),ArrayUtil.prod(otherOutputs)};
-  if (input.ordering() == 'f')   input=Shape.toOffsetZeroCopy(input,'c');
-  return input.reshape(shape);
+  if (input.rank() == 2)   return input;
+  if (input.ordering() != 'c' || !Shape.strideDescendingCAscendingF(input))   input=input.dup('c');
+  int[] inShape=input.shape();
+  int[] outShape=new int[]{inShape[0],inShape[1] * inShape[2] * inShape[3]};
+  return input.reshape('c',outShape);
 }
