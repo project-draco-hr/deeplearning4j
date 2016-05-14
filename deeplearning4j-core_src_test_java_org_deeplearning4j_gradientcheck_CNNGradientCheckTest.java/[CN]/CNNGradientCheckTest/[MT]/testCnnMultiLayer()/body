@@ -16,7 +16,7 @@
           for (int i=0; i < minibatchSize; i++) {
             labels.putScalar(new int[]{i,i % nOut},1.0);
           }
-          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).learningRate(1.0).updater(Updater.SGD).activation(afn).list().layer(0,new ConvolutionLayer.Builder().kernelSize(2,2).stride(1,1).padding(0,0).nIn(inputDepth).nOut(2).build()).layer(1,new ConvolutionLayer.Builder().nIn(2).nOut(2).kernelSize(2,2).stride(1,1).padding(0,0).build()).layer(2,new ConvolutionLayer.Builder().nIn(2).nOut(2).kernelSize(2,2).stride(1,1).padding(0,0).build()).layer(3,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(2 * 2 * 2).nOut(nOut).build()).cnnInputSize(height,width,inputDepth).build();
+          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).regularization(false).learningRate(1.0).updater(Updater.SGD).activation(afn).list().layer(0,new ConvolutionLayer.Builder().kernelSize(2,2).stride(1,1).padding(0,0).nIn(inputDepth).nOut(2).build()).layer(1,new ConvolutionLayer.Builder().nIn(2).nOut(2).kernelSize(2,2).stride(1,1).padding(0,0).build()).layer(2,new ConvolutionLayer.Builder().nIn(2).nOut(2).kernelSize(2,2).stride(1,1).padding(0,0).build()).layer(3,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(2 * 2 * 2).nOut(nOut).build()).cnnInputSize(height,width,inputDepth).build();
           MultiLayerNetwork net=new MultiLayerNetwork(conf);
           net.init();
           for (int i=0; i < 4; i++) {
