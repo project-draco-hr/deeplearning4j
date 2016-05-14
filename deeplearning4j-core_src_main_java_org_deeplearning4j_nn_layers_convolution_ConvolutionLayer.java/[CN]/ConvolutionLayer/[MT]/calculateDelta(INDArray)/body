@@ -1,6 +1,0 @@
-{
-  INDArray z=preOutput(true);
-  INDArray activationDerivative=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),z).derivative());
-  if (!Arrays.equals(z.shape(),activationDerivative.shape()))   throw new IllegalStateException("Shapes must be same");
-  return epsilon.muli(activationDerivative);
-}

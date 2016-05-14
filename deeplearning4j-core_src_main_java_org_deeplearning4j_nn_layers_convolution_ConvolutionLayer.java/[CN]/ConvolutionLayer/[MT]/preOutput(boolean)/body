@@ -22,22 +22,10 @@
   INDArray col2=col.permute(0,3,4,5,1,2);
   Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
   INDArray reshapedCol=Shape.newShapeNoCopy(col,new int[]{miniBatch * outH * outW,inDepth * kH * kW},false);
-  if (reshapedCol == null)   throw new RuntimeException("Could not reshape without copy");
-  if (weights.ordering() != 'c')   throw new RuntimeException("Weights not c order");
   INDArray permutedW=weights.permute(3,2,1,0);
-  if (permutedW.ordering() != 'f')   throw new RuntimeException("Not 'f' order after reshaping");
-  INDArray reshapedW=Shape.newShapeNoCopy(permutedW,new int[]{kW * kH * inDepth,outDepth},true);
-  if (reshapedW == null) {
-    throw new RuntimeException("Could not reshape weights");
-  }
-  if (reshapedW.ordering() != 'f')   throw new RuntimeException("Not 'f' order after reshaping");
-  INDArray z=Nd4j.gemm(reshapedCol,reshapedW,false,false);
-  if (z.ordering() != 'f')   throw new RuntimeException();
-  if (z.rows() != miniBatch * outH * outW)   throw new RuntimeException();
-  if (z.columns() != outDepth)   throw new RuntimeException();
+  INDArray reshapedW=permutedW.reshape('f',kW * kH * inDepth,outDepth);
+  INDArray z=reshapedCol.mmul(reshapedW);
   z.addiRowVector(bias);
   z=Shape.newShapeNoCopy(z,new int[]{outW,outH,miniBatch,outDepth},true);
-  if (z == null)   throw new RuntimeException();
-  INDArray out=z.permute(2,3,1,0);
-  return out;
+  return z.permute(2,3,1,0);
 }
