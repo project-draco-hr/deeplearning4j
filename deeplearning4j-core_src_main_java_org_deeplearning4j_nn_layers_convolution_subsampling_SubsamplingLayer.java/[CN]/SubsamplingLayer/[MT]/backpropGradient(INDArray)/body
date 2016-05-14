@@ -12,51 +12,50 @@
   int inputWidth=input().size(-1);
   INDArray reshapeEpsilon, retE;
   Gradient retGradient=new DefaultGradient();
-switch (layerConf().getPoolingType()) {
-case MAX:
-    boolean cOrderStrides=false;
+  boolean cOrderStrides=false;
   if (epsilon.ordering() != 'c') {
     epsilon=epsilon.dup('c');
     cOrderStrides=true;
   }
-if (!cOrderStrides && Shape.strideDescendingCAscendingF(epsilon)) {
-  cOrderStrides=true;
-}
- else if (!Arrays.equals(new int[]{outH * outW,depth * outH * outW,outW,1},epsilon.stride())) {
-  epsilon=epsilon.dup('c');
-  cOrderStrides=true;
-}
-INDArray col;
-INDArray col2;
-INDArray epsilon1d;
-if (cOrderStrides) {
-col=Nd4j.create(new int[]{miniBatch,depth,outH,outW,kernel[0],kernel[1]},'c');
-col2=col.permute(0,1,4,5,2,3);
-epsilon1d=epsilon.reshape('c',ArrayUtil.prod(epsilon.length()),1);
-}
+  if (!cOrderStrides && Shape.strideDescendingCAscendingF(epsilon)) {
+    cOrderStrides=true;
+  }
+ else   if (!Arrays.equals(new int[]{outH * outW,depth * outH * outW,outW,1},epsilon.stride())) {
+    epsilon=epsilon.dup('c');
+    cOrderStrides=true;
+  }
+  INDArray col6d;
+  INDArray col6dPermuted;
+  INDArray epsilon1d;
+  if (cOrderStrides) {
+    col6d=Nd4j.create(new int[]{miniBatch,depth,outH,outW,kernel[0],kernel[1]},'c');
+    col6dPermuted=col6d.permute(0,1,4,5,2,3);
+    epsilon1d=epsilon.reshape('c',ArrayUtil.prod(epsilon.length()),1);
+  }
  else {
-col=Nd4j.create(new int[]{depth,miniBatch,outH,outW,kernel[0],kernel[1]},'c');
-col2=col.permute(1,0,4,5,2,3);
-INDArray epsilonTemp=epsilon.permute(1,0,2,3);
-epsilon1d=epsilonTemp.reshape('c',new int[]{ArrayUtil.prod(epsilon.length()),1});
-}
-Convolution.im2col(input,kernel[0],kernel[1],strides[0],strides[1],pad[0],pad[1],false,col2);
-INDArray col2d=col.reshape('c',miniBatch * depth * outH* outW,kernel[0] * kernel[1]);
-INDArray isMax=Nd4j.getExecutioner().execAndReturn(new IsMax(col2d,1));
+    col6d=Nd4j.create(new int[]{depth,miniBatch,outH,outW,kernel[0],kernel[1]},'c');
+    col6dPermuted=col6d.permute(1,0,4,5,2,3);
+    INDArray epsilonTemp=epsilon.permute(1,0,2,3);
+    epsilon1d=epsilonTemp.reshape('c',new int[]{ArrayUtil.prod(epsilon.length()),1});
+  }
+  INDArray col2d=col6d.reshape('c',miniBatch * depth * outH* outW,kernel[0] * kernel[1]);
+switch (layerConf().getPoolingType()) {
+case MAX:
+    Convolution.im2col(input,kernel[0],kernel[1],strides[0],strides[1],pad[0],pad[1],false,col6dPermuted);
+  INDArray isMax=Nd4j.getExecutioner().execAndReturn(new IsMax(col2d,1));
 isMax.muliColumnVector(epsilon1d);
-INDArray tempEpsilon=Nd4j.create(new int[]{depth,miniBatch,inH,inW},'c');
-INDArray outEpsilon=tempEpsilon.permute(1,0,2,3);
-Convolution.col2im(col2,outEpsilon,strides[0],strides[1],pad[0],pad[1],inputHeight,inputWidth);
-return new Pair<>(retGradient,outEpsilon);
+break;
 case AVG:
-retE=epsilon.get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.newAxis(),NDArrayIndex.newAxis());
-reshapeEpsilon=Nd4j.tile(retE,1,1,layerConf().getKernelSize()[0],layerConf().getKernelSize()[1],1,1);
-reshapeEpsilon=Convolution.col2im(reshapeEpsilon,layerConf().getStride(),layerConf().getPadding(),inputHeight,inputWidth);
-reshapeEpsilon.divi(ArrayUtil.prod(layerConf().getKernelSize()));
-return new Pair<>(retGradient,reshapeEpsilon);
+col2d.addiRowVector(epsilon1d);
+break;
 case NONE:
 return new Pair<>(retGradient,epsilon);
 default :
 throw new IllegalStateException("Unsupported pooling type");
 }
+INDArray tempEpsilon=Nd4j.create(new int[]{depth,miniBatch,inH,inW},'c');
+INDArray outEpsilon=tempEpsilon.permute(1,0,2,3);
+Convolution.col2im(col6dPermuted,outEpsilon,strides[0],strides[1],pad[0],pad[1],inputHeight,inputWidth);
+if (layerConf().getPoolingType() == org.deeplearning4j.nn.conf.layers.SubsamplingLayer.PoolingType.AVG) outEpsilon.divi(ArrayUtil.prod(layerConf().getKernelSize()));
+return new Pair<>(retGradient,outEpsilon);
 }
