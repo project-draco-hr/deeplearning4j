@@ -1,26 +1,28 @@
 {
-  INDArray pooled, ret;
-  int n, c, kh, kw, outWidth, outHeight;
   if (training && conf.getLayer().getDropOut() > 0) {
     this.dropoutMask=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
   }
-  pooled=Convolution.im2col(input,layerConf().getKernelSize(),layerConf().getStride(),layerConf().getPadding());
+  int miniBatch=input.size(0);
+  int inDepth=input.size(1);
+  int inH=input.size(2);
+  int inW=input.size(3);
+  int[] kernel=layerConf().getKernelSize();
+  int[] strides=layerConf().getStride();
+  int[] pad=layerConf().getPadding();
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  INDArray col=Nd4j.create(new int[]{miniBatch,inDepth,outH,outW,kernel[0],kernel[1]},'c');
+  INDArray col2=col.permute(0,1,4,5,2,3);
+  Convolution.im2col(input,kernel[0],kernel[1],strides[0],strides[1],pad[0],pad[1],false,col2);
+  INDArray col5d=col.reshape('c',miniBatch,inDepth,outH,outW,kernel[0] * kernel[1]);
 switch (layerConf().getPoolingType()) {
 case AVG:
-    return pooled.mean(2,3);
+    return col5d.mean(4);
 case MAX:
-  n=pooled.size(0);
-c=pooled.size(1);
-kh=pooled.size(2);
-kw=pooled.size(3);
-outHeight=pooled.size(4);
-outWidth=pooled.size(5);
-ret=pooled.reshape(n,c,kh * kw,outHeight,outWidth);
-maxIndexes=Nd4j.argMax(ret,2);
-return ret.max(2);
+  return col5d.max(4);
 case NONE:
 return input;
 default :
-throw new IllegalStateException("Pooling type not supported!");
+throw new IllegalStateException("Unknown/not supported pooling type: " + layerConf().getPoolingType());
 }
 }
