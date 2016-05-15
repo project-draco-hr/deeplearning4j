@@ -1,6 +1,0 @@
-{
-  if (clientResourceManager == null)   throw new IllegalStateException("Cannot query for a report without first connecting!");
-  GetApplicationReportRequest req=Records.newRecord(GetApplicationReportRequest.class);
-  req.setApplicationId(appId);
-  return clientResourceManager.getApplicationReport(req).getApplicationReport();
-}

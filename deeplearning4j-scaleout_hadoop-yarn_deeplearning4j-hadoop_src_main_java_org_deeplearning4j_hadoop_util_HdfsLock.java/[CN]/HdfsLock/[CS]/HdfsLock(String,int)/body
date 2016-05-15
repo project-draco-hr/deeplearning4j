@@ -1,5 +1,0 @@
-{
-  this.host=host;
-  this.port=port;
-  zk=new ZookeeperBuilder().setHost(host).setPort(port).build();
-}

@@ -1,8 +1,0 @@
-{
-  try {
-    return recordReader.getProgress() < 1;
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

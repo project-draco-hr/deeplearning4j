@@ -1,9 +1,0 @@
-{
-  if (containerManager != null)   return containerManager;
-  YarnConfiguration yarnConf=new YarnConfiguration(conf);
-  YarnRPC rpc=YarnRPC.create(yarnConf);
-  InetSocketAddress cmAddr=NetUtils.createSocketAddr(container.getNodeId().getHost(),container.getNodeId().getPort());
-  LOG.info("Connecting to container manager at " + cmAddr);
-  containerManager=((ContainerManager)rpc.getProxy(ContainerManager.class,cmAddr,conf));
-  return containerManager;
-}

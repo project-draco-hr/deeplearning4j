@@ -1,7 +1,0 @@
-{
-  conf.set("fs.default.name","file:///");
-  conf.set("mapred.job.tracker","local");
-  conf.set("mapred.system.dir","/tmp/mapred/system");
-  conf.set("mapred.local.dir","/tmp/mapred");
-  conf.set("hadoop.tmp.dir","/tmp");
-}

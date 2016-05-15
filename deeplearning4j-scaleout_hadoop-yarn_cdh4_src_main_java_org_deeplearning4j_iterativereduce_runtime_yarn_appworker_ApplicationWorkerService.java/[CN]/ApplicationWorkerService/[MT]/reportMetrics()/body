@@ -1,9 +1,0 @@
-{
-  Map<CharSequence,Long> report=new HashMap<>();
-  report.put("ComputableWorkerTime",mWorkerTime);
-  report.put("ComputableWorkerExecutions",mWorkerExecutions);
-  report.put("WaitCount",mWaits);
-  report.put("WaitTime",mWaitTime);
-  report.put("UpdatesSent",mUpdates);
-  masterService.metricsReport(workerId,report);
-}

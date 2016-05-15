@@ -1,9 +1,0 @@
-{
-  LOG.info("Received a fetch request" + ", workerId=" + Utils.getWorkerId(workerId) + ", requestedUpdateId="+ updateId);
-synchronized (workersState) {
-    workersState.put(workerId,WorkerState.RUNNING);
-  }
-  ByteBuffer bytes=masterUpdates.get(updateId).toBytes();
-  bytes.rewind();
-  return bytes;
-}

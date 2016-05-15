@@ -1,0 +1,13 @@
+{
+  if (confInput != null && modelInput != null)   throw new IllegalArgumentException("Conf and model input both can't be defined");
+  ComputationGraph graph=null;
+  if (confInput != null) {
+    ComputationGraphConfiguration conf=ComputationGraphConfiguration.fromJson(confInput);
+    graph=new ComputationGraph(conf);
+    graph.init();
+  }
+ else   if (modelInput != null) {
+    graph=ModelSerializer.restoreComputationGraph(modelInput);
+  }
+  return graph;
+}

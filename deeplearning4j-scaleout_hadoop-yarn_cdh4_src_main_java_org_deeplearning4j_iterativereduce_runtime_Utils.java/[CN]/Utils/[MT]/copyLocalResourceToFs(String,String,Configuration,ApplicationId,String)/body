@@ -1,5 +1,0 @@
-{
-  String tempDir=getAppTempDirectory(appId,appName);
-  LOG.debug("Using temporary directory: " + tempDir);
-  copyToFs(conf,src,tempDir + "/" + dst);
-}
