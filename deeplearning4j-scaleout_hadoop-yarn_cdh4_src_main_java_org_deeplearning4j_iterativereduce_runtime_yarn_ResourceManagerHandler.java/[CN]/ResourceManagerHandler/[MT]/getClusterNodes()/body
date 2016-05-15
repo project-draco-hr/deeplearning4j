@@ -1,6 +1,0 @@
-{
-  if (clientResourceManager == null)   throw new IllegalArgumentException("Can't get report without connecting first!");
-  GetClusterNodesRequest req=Records.newRecord(GetClusterNodesRequest.class);
-  GetClusterNodesResponse res=clientResourceManager.getClusterNodes(req);
-  return res.getNodeReports();
-}

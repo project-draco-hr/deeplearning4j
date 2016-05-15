@@ -1,8 +1,0 @@
-{
-  final int randomKey=jobConf.getInt("terrier.tempfile.id",random.nextInt());
-  jobConf.setInt("terrier.tempfile.id",randomKey);
-  FileSystem defFS=FileSystem.get(jobConf);
-  final Path tempFile=new Path("/tmp/" + (randomKey) + "-"+ filename);
-  defFS.deleteOnExit(tempFile);
-  return tempFile;
-}

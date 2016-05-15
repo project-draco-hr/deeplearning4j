@@ -1,8 +1,0 @@
-{
-synchronized (workersState) {
-    workersState.put(workerId,WorkerState.WAITING);
-    LOG.info("Got waiting message" + ", workerId=" + Utils.getWorkerId(workerId) + ", workerState="+ workersState.get(workerId)+ ", lastUpdate="+ lastUpdate+ ", currentUpdateId="+ currentUpdateId+ ", waitingFor="+ waiting);
-  }
-  if (MasterState.UPDATING == masterState && lastUpdate == currentUpdateId)   return -1;
-  return currentUpdateId;
-}

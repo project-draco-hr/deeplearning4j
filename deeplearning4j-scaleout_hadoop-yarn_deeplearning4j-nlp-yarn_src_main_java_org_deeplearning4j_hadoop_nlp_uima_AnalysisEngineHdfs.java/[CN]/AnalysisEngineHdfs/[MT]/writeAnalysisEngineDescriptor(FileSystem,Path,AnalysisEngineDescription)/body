@@ -1,6 +1,0 @@
-{
-  OutputStream create=fs.create(to,true);
-  toWrite.toXML(create);
-  create.flush();
-  create.close();
-}

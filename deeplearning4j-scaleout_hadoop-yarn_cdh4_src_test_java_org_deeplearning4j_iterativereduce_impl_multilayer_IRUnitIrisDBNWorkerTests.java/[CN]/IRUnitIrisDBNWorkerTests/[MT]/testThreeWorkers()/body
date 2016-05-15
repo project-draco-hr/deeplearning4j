@@ -1,5 +1,0 @@
-{
-  IRUnitDriver polr_ir=new IRUnitDriver(new ClassPathResource("/yarn/configurations/svmLightIris_ThreeWorkers_IRUnitTest.properties").getFile().getAbsolutePath());
-  polr_ir.setup();
-  polr_ir.simulateRun();
-}

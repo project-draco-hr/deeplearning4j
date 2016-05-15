@@ -1,4 +1,0 @@
-{
-  Path path=new Path((String)split.getPath());
-  return new FileSplit(path,split.getOffset(),split.getLength(),new String[]{"localhost"});
-}

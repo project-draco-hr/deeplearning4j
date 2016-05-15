@@ -1,7 +1,0 @@
-{
-  TestConfigurableSentenceIterator iter=new TestConfigurableSentenceIterator(conf);
-  assertEquals(true,iter.hasNext());
-  String next=iter.nextSentence();
-  assertEquals("hello",next);
-  assertFalse(iter.hasNext());
-}

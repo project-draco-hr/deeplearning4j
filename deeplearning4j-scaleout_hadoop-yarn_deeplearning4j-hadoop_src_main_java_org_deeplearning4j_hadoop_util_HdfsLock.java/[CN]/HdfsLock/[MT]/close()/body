@@ -1,9 +1,0 @@
-{
-  try {
-    zk.close();
-  }
- catch (  InterruptedException e) {
-    log.info("Error closing lock",e);
-    Thread.currentThread().interrupt();
-  }
-}

@@ -1,8 +1,0 @@
-{
-  InputStream is=openInputStream(path);
-  StringWriter writer=new StringWriter();
-  IOUtils.copy(is,writer,"UTF-8");
-  String theString=writer.toString();
-  is.close();
-  return theString;
-}

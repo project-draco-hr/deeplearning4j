@@ -1,8 +1,0 @@
-{
-  List<String> commands=new ArrayList<String>();
-  String command=props.getProperty(ConfigFields.YARN_MASTER);
-  String args=props.getProperty(ConfigFields.YARN_MASTER_ARGS);
-  StringBuffer cmd=getCommandsBase(conf,props,command,args);
-  commands.add(cmd.toString());
-  return commands;
-}
