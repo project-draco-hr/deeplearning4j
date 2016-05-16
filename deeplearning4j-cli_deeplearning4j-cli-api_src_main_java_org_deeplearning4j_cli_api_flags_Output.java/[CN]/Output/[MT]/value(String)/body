@@ -1,6 +1,4 @@
 {
   URI uri=URI.create(value);
-  String path=uri.getPath();
-  String extension=path.substring(path.lastIndexOf(".") + 1);
   return (E)createWriter(uri);
 }

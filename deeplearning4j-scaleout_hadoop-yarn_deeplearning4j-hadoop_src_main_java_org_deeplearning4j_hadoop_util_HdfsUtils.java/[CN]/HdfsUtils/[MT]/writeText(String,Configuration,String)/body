@@ -1,9 +1,0 @@
-{
-  FileSystem fs=getFileSystem(conf);
-  if (pathExists(conf,file))   deletePath(file,conf,false);
-  ensureParentDirectoriesExist(file,conf);
-  FSDataOutputStream fdos=fs.create(new Path(file),true);
-  fdos.writeBytes(text);
-  fdos.flush();
-  fdos.close();
-}

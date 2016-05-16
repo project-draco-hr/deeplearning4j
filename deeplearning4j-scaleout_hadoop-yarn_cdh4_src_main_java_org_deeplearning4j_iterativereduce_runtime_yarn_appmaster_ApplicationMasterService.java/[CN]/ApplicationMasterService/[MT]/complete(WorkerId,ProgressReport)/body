@@ -1,6 +1,0 @@
-{
-  handleProgress(workerId,finalReport);
-  workersState.put(workerId,WorkerState.COMPLETE);
-  LOG.info("Received complete message, workerId=" + Utils.getWorkerId(workerId));
-  workersCompleted.countDown();
-}

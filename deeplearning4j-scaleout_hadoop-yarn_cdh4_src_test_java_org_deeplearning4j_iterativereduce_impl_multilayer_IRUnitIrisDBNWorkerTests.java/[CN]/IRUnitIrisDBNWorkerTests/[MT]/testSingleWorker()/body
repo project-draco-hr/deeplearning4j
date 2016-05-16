@@ -1,5 +1,0 @@
-{
-  IRUnitDriver polr_ir=new IRUnitDriver(new ClassPathResource("yarn/configurations/svmLightWorkerIRUnitTest.properties").getFile().getAbsolutePath());
-  polr_ir.setup();
-  polr_ir.simulateRun();
-}

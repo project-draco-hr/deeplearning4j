@@ -1,17 +1,10 @@
 {
-  if (x.rank() == 2)   return new int[]{1,x.size(1)};
+  if (x.rank() == 2 || x.rank() == 4)   return new int[]{1,x.size(1)};
   if (x.rank() == 3) {
     int wDim=x.size(1);
     int hdim=x.size(2);
     if (x.size(0) > 1 && wDim * hdim == x.length())     throw new IllegalArgumentException("Illegal input for batch size");
     return new int[]{1,wDim * hdim};
-  }
- else   if (x.rank() == 4) {
-    int cDim=x.size(1);
-    int wDim=x.size(2);
-    int hdim=x.size(3);
-    if (x.size(0) > 1 && cDim * wDim * hdim == x.length())     throw new IllegalArgumentException("Illegal input for batch size");
-    return new int[]{1,cDim * wDim * hdim};
   }
  else   throw new IllegalStateException("Unable to process input of rank " + x.rank());
 }

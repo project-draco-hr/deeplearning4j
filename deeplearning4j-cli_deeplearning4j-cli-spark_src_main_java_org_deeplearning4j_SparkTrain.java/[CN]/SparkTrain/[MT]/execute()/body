@@ -1,0 +1,13 @@
+{
+  ComputationGraph graph;
+  try {
+    graph=getComputationGraph();
+    SparkComputationGraph multiLayer=new SparkComputationGraph(getContext(),graph);
+    JavaRDD<DataSet> dataSet=getDataSet();
+    ComputationGraph newGraph=multiLayer.fitDataSet(dataSet,examplesPerFit,totalExamples,numPartitions);
+    saveGraph(newGraph);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

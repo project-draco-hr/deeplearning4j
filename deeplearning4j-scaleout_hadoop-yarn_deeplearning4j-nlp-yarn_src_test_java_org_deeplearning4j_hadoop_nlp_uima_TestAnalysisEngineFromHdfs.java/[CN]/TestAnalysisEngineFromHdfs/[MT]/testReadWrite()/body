@@ -1,7 +1,0 @@
-{
-  AnalysisEngine a=UimaSentenceIterator.segmenter();
-  Path descriptor=new Path(new File("parent").toURI().toString(),"descriptor.xml");
-  AnalysisEngineDescription desc=SentenceAnnotator.getDescription();
-  AnalysisEngineHdfs.writeAnalysisEngineDescriptor(fs,descriptor,desc);
-  AnalysisEngine a2=AnalysisEngineHdfs.readConfFrom(fs,descriptor);
-}

@@ -1,0 +1,9 @@
+{
+  SparkContext sc=getContext();
+  if (inputType.equals("binary")) {
+  }
+ else   if (inputType.equals("text")) {
+  }
+ else   throw new IllegalArgumentException("Input type must be either binary or text.");
+  return null;
+}

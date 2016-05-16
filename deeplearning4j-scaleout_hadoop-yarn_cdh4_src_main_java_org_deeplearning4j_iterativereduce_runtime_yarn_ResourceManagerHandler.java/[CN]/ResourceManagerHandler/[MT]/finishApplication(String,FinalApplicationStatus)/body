@@ -1,9 +1,0 @@
-{
-  if (amResourceManager == null)   throw new IllegalStateException("Cannot finish an application without connecting to resource manager!");
-  FinishApplicationMasterRequest request=Records.newRecord(FinishApplicationMasterRequest.class);
-  request.setAppAttemptId(appAttemptId);
-  request.setDiagnostics(diagnostics);
-  request.setFinishApplicationStatus(finishState);
-  LOG.info("Sending finish application notification " + ", state=" + request.getFinalApplicationStatus() + ", diagnostics="+ request.getDiagnostics());
-  amResourceManager.finishApplicationMaster(request);
-}
