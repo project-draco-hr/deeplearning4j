@@ -1,0 +1,6 @@
+SparkContext sc
+EarlyStoppingConfiguration<MultiLayerNetwork> esConfig
+MultiLayerNetwork net
+JavaRDD<DataSet> train
+int examplesPerFit
+int totalExamples
