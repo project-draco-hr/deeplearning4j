@@ -18,7 +18,7 @@
     listLabels.add(fl[1]);
   }
   INDArray featuresOut=Nd4j.create(new int[]{listFeatures.size(),listFeatures.get(0).size(1),maxLength},'f');
-  INDArray labelsOut=Nd4j.create(new int[]{listFeatures.size(),(regression ? 1 : numPossibleLabels),maxLength},'f');
+  INDArray labelsOut=Nd4j.create(new int[]{listLabels.size(),listLabels.get(0).size(1),maxLength},'f');
   INDArray featuresMask=null;
   INDArray labelsMask=null;
   if (minLength == maxLength) {

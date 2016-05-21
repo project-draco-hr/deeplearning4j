@@ -7,23 +7,27 @@
   while (iter.hasNext()) {
     Collection<Writable> step=iter.next();
     if (i == 0) {
-      shape[1]=step.size();
+      for (      Writable w : step) {
+        if (w instanceof NDArrayWritable) {
+          shape[1]+=((NDArrayWritable)w).get().length();
+        }
+ else {
+          shape[1]++;
+        }
+      }
       out=Nd4j.create(shape,'f');
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int f=0;
     while (timeStepIter.hasNext()) {
       Writable current=timeStepIter.next();
-      try {
-        out.put(i,f++,current.toDouble());
+      if (current instanceof NDArrayWritable) {
+        INDArray arr=((NDArrayWritable)current).get();
+        out.put(new INDArrayIndex[]{NDArrayIndex.point(i),NDArrayIndex.interval(f,f + arr.length())},arr);
+        f+=arr.length();
       }
- catch (      UnsupportedOperationException e) {
-        if (current instanceof NDArrayWritable) {
-          out.putRow(i,((NDArrayWritable)current).get());
-        }
  else {
-          throw e;
-        }
+        out.put(i,f++,current.toDouble());
       }
     }
     i++;
