@@ -8,16 +8,18 @@
   byte[] byteFeature=new byte[numPixels];
   List<DataSet> dataSets=new ArrayList<>();
   INDArray label=null;
-  INDArray featureVector=Nd4j.create(numPixels - 1);
+  Mat image=new Mat(height,width,CV_8UC(channels));
+  ByteBuffer imageData=image.createBuffer();
   try {
     while ((inputStream.read(byteFeature)) != -1 && batchNumCount != num) {
-      int featureCount=0;
       label=FeatureUtil.toOutcomeVector(byteFeature[0],numPossibleLabels);
-      for (int j=1; j <= featureVector.length(); j++)       featureVector.putScalar(featureCount++,byteFeature[j]);
-      dataSets.add(new DataSet(featureVector,label));
+      for (int i=0; i < height * width; i++) {
+        imageData.put(3 * i,byteFeature[i + 1 + 2 * height * width]);
+        imageData.put(3 * i + 1,byteFeature[i + 1 + height * width]);
+        imageData.put(3 * i + 2,byteFeature[i + 1]);
+      }
+      dataSets.add(new DataSet(loader.asRowVector(image),label));
       batchNumCount++;
-      byteFeature=new byte[numPixels];
-      featureVector=Nd4j.create(numPixels - 1);
     }
     exampleCount+=batchSize;
   }
