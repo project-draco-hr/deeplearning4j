@@ -1,6 +1,6 @@
 {
   super(null,batchSize,1,CifarLoader.NUM_LABELS);
-  this.loader=new CifarLoader();
+  this.loader=new CifarLoader(imgDim[0],imgDim[1],imgDim[2]);
   this.inputStream=loader.getInputStream();
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
 }

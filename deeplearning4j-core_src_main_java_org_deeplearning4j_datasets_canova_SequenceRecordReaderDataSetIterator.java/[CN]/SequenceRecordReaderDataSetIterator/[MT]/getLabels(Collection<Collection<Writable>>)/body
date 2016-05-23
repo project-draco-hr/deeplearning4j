@@ -5,10 +5,18 @@
   int i=0;
   INDArray out=null;
   while (iter.hasNext()) {
-    Collection<Writable> step=iter.next();
+    Collection<Writable> stepCollection=iter.next();
+    List<Writable> step=(stepCollection instanceof List ? (List<Writable>)stepCollection : new ArrayList<>(stepCollection));
     if (i == 0) {
       if (regression) {
-        shape[1]=step.size();
+        for (        Writable w : step) {
+          if (w instanceof NDArrayWritable) {
+            shape[1]+=((NDArrayWritable)w).get().length();
+          }
+ else {
+            shape[1]++;
+          }
+        }
       }
  else {
         shape[1]=numPossibleLabels;
@@ -20,7 +28,14 @@
     if (regression) {
       while (timeStepIter.hasNext()) {
         Writable current=timeStepIter.next();
-        out.put(i,f++,current.toDouble());
+        if (current instanceof NDArrayWritable) {
+          INDArray w=((NDArrayWritable)current).get();
+          out.put(new INDArrayIndex[]{NDArrayIndex.point(i),NDArrayIndex.interval(f,f + w.length())},w);
+          f+=w.length();
+        }
+ else {
+          out.put(i,f++,current.toDouble());
+        }
       }
     }
  else {

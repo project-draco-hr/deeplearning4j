@@ -2,11 +2,37 @@
   Iterator<Collection<Writable>> iter=input.iterator();
   int i=0;
   INDArray features=null;
-  INDArray labels=Nd4j.zeros(input.size(),regression ? 1 : numPossibleLabels);
+  INDArray labels=null;
+  int featureSize=0;
   while (iter.hasNext()) {
-    Collection<Writable> step=iter.next();
+    Collection<Writable> stepCollection=iter.next();
+    List<Writable> step=(stepCollection instanceof List ? (List<Writable>)stepCollection : new ArrayList<>(stepCollection));
     if (i == 0) {
-      features=Nd4j.zeros(input.size(),step.size() - 1);
+      int j=0;
+      for (      Writable w : step) {
+        if (j++ != labelIndex) {
+          if (w instanceof NDArrayWritable) {
+            featureSize+=((NDArrayWritable)w).get().length();
+          }
+ else {
+            featureSize+=1;
+          }
+        }
+      }
+      features=Nd4j.zeros(input.size(),featureSize);
+      int labelSize;
+      if (regression) {
+        if (step.get(labelIndex) instanceof NDArrayWritable) {
+          labelSize=((NDArrayWritable)step.get(labelIndex)).get().length();
+        }
+ else {
+          labelSize=1;
+        }
+      }
+ else {
+        labelSize=numPossibleLabels;
+      }
+      labels=Nd4j.zeros(input.size(),labelSize);
     }
     Iterator<Writable> timeStepIter=step.iterator();
     int countIn=0;
@@ -15,24 +41,26 @@
       Writable current=timeStepIter.next();
       if (countIn++ == labelIndex) {
         if (regression) {
-          labels.put(i,0,current.toDouble());
+          if (current instanceof NDArrayWritable) {
+            labels.putRow(i,((NDArrayWritable)current).get());
+          }
+ else {
+            labels.put(i,0,current.toDouble());
+          }
         }
  else {
-          INDArray line=FeatureUtil.toOutcomeVector(current.toInt(),numPossibleLabels);
-          labels.putRow(i,line);
+          labels.putScalar(i,current.toInt(),1.0);
         }
       }
  else {
-        try {
-          features.put(i,countFeatures++,current.toDouble());
+        if (current instanceof NDArrayWritable) {
+          INDArray w=((NDArrayWritable)current).get();
+          int length=w.length();
+          features.put(new INDArrayIndex[]{NDArrayIndex.point(i),NDArrayIndex.interval(countFeatures,countFeatures + length)},w);
+          countFeatures+=length;
         }
- catch (        UnsupportedOperationException e) {
-          if (current instanceof NDArrayWritable) {
-            features.putRow(i,((NDArrayWritable)current).get());
-          }
  else {
-            throw e;
-          }
+          features.put(i,countFeatures++,current.toDouble());
         }
       }
     }
