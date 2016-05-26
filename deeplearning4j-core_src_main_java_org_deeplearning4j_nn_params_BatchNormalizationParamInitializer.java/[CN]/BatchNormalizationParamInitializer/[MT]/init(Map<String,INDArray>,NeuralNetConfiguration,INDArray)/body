@@ -1,0 +1,10 @@
+{
+  BatchNormalization layer=(BatchNormalization)conf.getLayer();
+  int nOut=layer.getNOut();
+  INDArray gammaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
+  INDArray betaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
+  params.put(GAMMA,createGamma(conf,gammaView));
+  conf.addVariable(GAMMA);
+  params.put(BETA,createBeta(conf,betaView));
+  conf.addVariable(BETA);
+}

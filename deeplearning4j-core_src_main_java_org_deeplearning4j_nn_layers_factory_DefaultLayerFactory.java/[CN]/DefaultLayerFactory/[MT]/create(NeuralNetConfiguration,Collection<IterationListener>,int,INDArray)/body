@@ -1,0 +1,8 @@
+{
+  Layer ret=getInstance(conf);
+  ret.setListeners(iterationListeners);
+  ret.setIndex(index);
+  ret.setParamsViewArray(layerParamsView);
+  ret.setConf(conf);
+  return (E)ret;
+}

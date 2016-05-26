@@ -1,10 +1,17 @@
 {
   if (layerWiseConfigurations == null || layers == null)   intializeConfigurations();
   if (initCalled)   return;
-  if (getnLayers() < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
+  int nLayers=getnLayers();
+  if (nLayers < 1)   throw new IllegalStateException("Unable to createComplex network neuralNets; number specified is less than 1");
   if (this.layers == null || this.layers[0] == null) {
-    if (this.layers == null)     this.layers=new Layer[getnLayers()];
-    for (int i=0; i < getnLayers(); i++) {
+    if (this.layers == null)     this.layers=new Layer[nLayers];
+    int backpropParamLength=0;
+    for (int i=0; i < nLayers; i++) {
+      NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
+      backpropParamLength+=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+    }
+    params=Nd4j.create(1,backpropParamLength);
+    for (int i=0; i < nLayers; i++) {
       NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
       layers[i]=LayerFactories.getFactory(conf).create(conf,listeners,i);
       layerMap.put(conf.getLayer().getLayerName(),layers[i]);

@@ -1,0 +1,6 @@
+{
+  org.deeplearning4j.nn.conf.layers.FeedForwardLayer layerConf=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)conf.getLayer();
+  int nIn=layerConf.getNIn();
+  int nOut=layerConf.getNOut();
+  return nIn * nOut + nOut;
+}
