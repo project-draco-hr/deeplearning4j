@@ -1,4 +1,4 @@
 {
-  if (this.params == null)   this.params=params;
- else   this.params.assign(params);
+  if (this.flattenedParams == null)   this.flattenedParams=params;
+ else   this.flattenedParams.assign(params);
 }

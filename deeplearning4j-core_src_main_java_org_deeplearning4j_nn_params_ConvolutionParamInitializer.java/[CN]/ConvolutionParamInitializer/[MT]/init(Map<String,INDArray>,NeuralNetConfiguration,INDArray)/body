@@ -1,5 +1,5 @@
 {
-  if (((org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer()).getKernelSize().length < 2)   throw new IllegalArgumentException("Filter size must be == 2");
+  if (((org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer()).getKernelSize().length != 2)   throw new IllegalArgumentException("Filter size must be == 2");
   org.deeplearning4j.nn.conf.layers.ConvolutionLayer layerConf=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer();
   int[] kernel=layerConf.getKernelSize();
   int nIn=layerConf.getNIn();

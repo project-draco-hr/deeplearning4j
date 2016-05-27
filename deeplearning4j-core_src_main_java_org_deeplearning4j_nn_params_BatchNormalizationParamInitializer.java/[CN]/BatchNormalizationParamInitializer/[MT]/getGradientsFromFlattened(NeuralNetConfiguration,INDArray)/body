@@ -1,0 +1,10 @@
+{
+  BatchNormalization layer=(BatchNormalization)conf.getLayer();
+  int nOut=layer.getNOut();
+  INDArray gammaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
+  INDArray betaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
+  Map<String,INDArray> out=new LinkedHashMap<>();
+  out.put(GAMMA,gammaView);
+  out.put(BETA,betaView);
+  return out;
+}

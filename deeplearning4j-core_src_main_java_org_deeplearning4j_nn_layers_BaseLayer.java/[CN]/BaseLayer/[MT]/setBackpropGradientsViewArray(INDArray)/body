@@ -1,0 +1,5 @@
+{
+  if (this.params != null && gradients.length() != numParams(true))   throw new IllegalArgumentException("Invalid input: expect gradients array of length " + numParams(true) + ", got params of length "+ gradients.length());
+  this.gradientsFlattened=gradients;
+  this.gradientViews=paramInitializer.getGradientsFromFlattened(conf,gradients);
+}

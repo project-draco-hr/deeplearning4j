@@ -8,7 +8,7 @@
   conf.addVariable(RECURRENT_WEIGHT_KEY);
   conf.addVariable(BIAS_KEY);
   int length=numParams(conf,true);
-  if (paramsView.length() != length)   throw new IllegalStateException("Expected params view of length " + length + ", got length "+ paramsView);
+  if (paramsView.length() != length)   throw new IllegalStateException("Expected params view of length " + length + ", got length "+ paramsView.length());
   int nParamsIn=nLast * (4 * nL);
   int nParamsRecurrent=nL * (4 * nL + 3);
   int nBias=4 * nL;
