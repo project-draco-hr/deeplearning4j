@@ -10,3 +10,4 @@ boolean forwards
 String inputWeightKey
 String recurrentWeightKey
 String biasWeightKey
+Map<String,INDArray> gradientViews

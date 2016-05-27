@@ -11,7 +11,6 @@
     }
   }
   if (layerWiseConfigurations.isBackprop()) {
-    if (flattenedGradients == null)     initGradientsView();
     if (layerWiseConfigurations.isPretrain())     iter.reset();
     update(TaskUtils.buildTask(iter));
     iter.reset();

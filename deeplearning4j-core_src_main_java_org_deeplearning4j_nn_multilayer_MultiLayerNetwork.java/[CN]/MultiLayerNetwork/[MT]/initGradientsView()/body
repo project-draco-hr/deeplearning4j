@@ -9,5 +9,10 @@
     backpropParamLength+=nParamsPerLayer[i];
   }
   flattenedGradients=Nd4j.createUninitialized(new int[]{1,backpropParamLength},'f');
-  throw new UnsupportedOperationException("Not implemented");
+  int backpropParamsSoFar=0;
+  for (int i=0; i < layers.length; i++) {
+    INDArray thisLayerGradView=flattenedGradients.get(NDArrayIndex.point(0),NDArrayIndex.interval(backpropParamsSoFar,backpropParamsSoFar + nParamsPerLayer[i]));
+    layers[i].setBackpropGradientsViewArray(thisLayerGradView);
+    backpropParamsSoFar+=nParamsPerLayer[i];
+  }
 }

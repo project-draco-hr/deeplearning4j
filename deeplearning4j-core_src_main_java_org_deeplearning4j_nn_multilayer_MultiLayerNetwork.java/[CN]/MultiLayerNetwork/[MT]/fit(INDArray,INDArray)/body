@@ -7,7 +7,6 @@
     finetune();
   }
   if (layerWiseConfigurations.isBackprop()) {
-    if (flattenedGradients == null)     initGradientsView();
     if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
       doTruncatedBPTT(data,labels,null,null);
     }
