@@ -1,5 +1,5 @@
 {
-  if (backwards == true) {
+  if (backwards) {
     int ret=0;
     for (    Map.Entry<String,INDArray> entry : params.entrySet()) {
       if (this instanceof BasePretrainNetwork && PretrainParamInitializer.VISIBLE_BIAS_KEY.equals(entry.getKey()))       continue;
