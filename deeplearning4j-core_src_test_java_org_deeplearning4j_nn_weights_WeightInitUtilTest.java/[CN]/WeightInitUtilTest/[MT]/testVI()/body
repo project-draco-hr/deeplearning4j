@@ -1,5 +1,6 @@
 {
-  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.VI,dist);
+  INDArray params=Nd4j.create(shape);
+  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.VI,dist,params);
   Nd4j.getRandom().setSeed(123);
   INDArray weightsExpected=Nd4j.rand('f',shape);
   int numValues=shape[0] + shape[1];

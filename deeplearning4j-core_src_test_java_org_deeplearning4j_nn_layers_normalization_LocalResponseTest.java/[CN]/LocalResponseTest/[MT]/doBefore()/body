@@ -1,5 +1,7 @@
 {
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).seed(123).layer(new LocalResponseNormalization.Builder().k(2).n(5).alpha(1e-4).beta(0.75).build()).build();
-  layer=LayerFactories.getFactory(new LocalResponseNormalization()).create(conf);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  layer=LayerFactories.getFactory(new LocalResponseNormalization()).create(conf,null,0,params);
   activationsActual=layer.activate(x);
 }

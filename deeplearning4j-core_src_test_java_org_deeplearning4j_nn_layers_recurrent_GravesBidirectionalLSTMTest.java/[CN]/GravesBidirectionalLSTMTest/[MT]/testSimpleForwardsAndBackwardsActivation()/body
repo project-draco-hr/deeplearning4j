@@ -6,8 +6,12 @@
   Nd4j.getRandom().setSeed(12345);
   final NeuralNetConfiguration confBidirectional=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.1,0.1)).activation("tanh").updater(Updater.NONE).build()).build();
   final NeuralNetConfiguration confForwards=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.ZERO).activation("tanh").build()).build();
-  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional);
-  final GravesLSTM forwardsLSTM=LayerFactories.getFactory(confForwards.getLayer()).create(confForwards);
+  int numParams=LayerFactories.getFactory(confForwards).initializer().numParams(confForwards,true);
+  INDArray params=Nd4j.create(1,numParams);
+  int numParamsBD=LayerFactories.getFactory(confBidirectional).initializer().numParams(confBidirectional,true);
+  INDArray paramsBD=Nd4j.create(1,numParamsBD);
+  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional,null,0,paramsBD);
+  final GravesLSTM forwardsLSTM=LayerFactories.getFactory(confForwards.getLayer()).create(confForwards,null,0,params);
   final INDArray sig=Nd4j.rand(new int[]{miniBatchSize,nIn,timeSeriesLength});
   final INDArray sigb=sig.dup();
   reverseColumnsInPlace(sigb.slice(0));

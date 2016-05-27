@@ -14,7 +14,9 @@
           for (          int nChannels : numChannels) {
             InputPreProcessor proc=new RnnToCnnPreProcessor(inputHeight,inputWidth,nChannels);
             NeuralNetConfiguration nnc=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.ConvolutionLayer.Builder(inputWidth,inputHeight).nIn(cnnNChannelsIn).nOut(nChannels).build()).build();
-            ConvolutionLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc);
+            int numParams=LayerFactories.getFactory(nnc).initializer().numParams(nnc,true);
+            INDArray params=Nd4j.create(1,numParams);
+            ConvolutionLayer layer=LayerFactories.getFactory(nnc.getLayer()).create(nnc,null,0,params);
             layer.setInputMiniBatchSize(miniBatchSize);
             int[] shape_rnn=new int[]{miniBatchSize,nChannels * inputHeight * inputWidth,timeSeriesLength};
             INDArray rand=Nd4j.rand(shape_rnn);

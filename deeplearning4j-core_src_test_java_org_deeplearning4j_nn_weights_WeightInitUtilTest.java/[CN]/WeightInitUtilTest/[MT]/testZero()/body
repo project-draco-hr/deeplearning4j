@@ -1,5 +1,6 @@
 {
-  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.ZERO,dist);
+  INDArray params=Nd4j.create(shape);
+  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.ZERO,dist,params);
   INDArray weightsExpected=Nd4j.create(shape);
   assertEquals(weightsExpected,weightsActual);
 }

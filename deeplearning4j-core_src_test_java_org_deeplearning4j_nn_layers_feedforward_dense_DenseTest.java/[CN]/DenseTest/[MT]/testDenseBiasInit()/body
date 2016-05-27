@@ -1,6 +1,8 @@
 {
   DenseLayer build=new DenseLayer.Builder().nIn(1).nOut(3).biasInit(1).build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(build).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   assertEquals(1,layer.getParam("b").size(0));
 }

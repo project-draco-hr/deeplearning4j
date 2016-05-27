@@ -6,14 +6,19 @@
   if (this.layers == null || this.layers[0] == null) {
     if (this.layers == null)     this.layers=new Layer[nLayers];
     int backpropParamLength=0;
+    int[] nParamsPerLayer=new int[nLayers];
     for (int i=0; i < nLayers; i++) {
       NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
-      backpropParamLength+=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+      nParamsPerLayer[i]=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+      backpropParamLength+=nParamsPerLayer[i];
     }
     params=Nd4j.create(1,backpropParamLength);
+    int paramCountSoFar=0;
     for (int i=0; i < nLayers; i++) {
+      INDArray paramsView=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramCountSoFar,paramCountSoFar + nParamsPerLayer[i]));
+      paramCountSoFar+=nParamsPerLayer[i];
       NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
-      layers[i]=LayerFactories.getFactory(conf).create(conf,listeners,i);
+      layers[i]=LayerFactories.getFactory(conf).create(conf,listeners,i,paramsView);
       layerMap.put(conf.getLayer().getLayerName(),layers[i]);
     }
     initCalled=true;
@@ -25,5 +30,4 @@
       defaultConfiguration.addVariable(i + "_" + s);
     }
   }
-  if (getLayerWiseConfigurations().isRedistributeParams())   reDistributeParams(false);
 }

@@ -10,7 +10,7 @@
     int nOut=clonedLayerConf.getNIn();
     clonedLayerConf.setNIn(nIn);
     clonedLayerConf.setNOut(nOut);
-    layer=LayerFactories.getFactory(clone).create(clone,iterationListeners,this.index);
+    layer=LayerFactories.getFactory(clone).create(clone,iterationListeners,this.index,paramsFlattened.dup());
     layer.setParam(DefaultParamInitializer.WEIGHT_KEY,w.transpose().dup());
     layer.setParam(DefaultParamInitializer.BIAS_KEY,b.dup());
   }

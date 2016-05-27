@@ -5,7 +5,9 @@
   momentumAfter.put(1,0.2);
   int iterations=2;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(mu).momentumAfter(momentumAfter).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   Gradient gradientExpected=new DefaultGradient();
   gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
