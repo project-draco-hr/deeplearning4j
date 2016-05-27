@@ -11,6 +11,7 @@
   flattenedGradients=Nd4j.createUninitialized(new int[]{1,backpropParamLength},'f');
   int backpropParamsSoFar=0;
   for (int i=0; i < layers.length; i++) {
+    if (nParamsPerLayer[i] == 0)     continue;
     INDArray thisLayerGradView=flattenedGradients.get(NDArrayIndex.point(0),NDArrayIndex.interval(backpropParamsSoFar,backpropParamsSoFar + nParamsPerLayer[i]));
     layers[i].setBackpropGradientsViewArray(thisLayerGradView);
     backpropParamsSoFar+=nParamsPerLayer[i];
