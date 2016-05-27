@@ -24,12 +24,12 @@
   INDArray iwR=paramsView.get(NDArrayIndex.point(0),NDArrayIndex.interval(iwROffset,rwROffset));
   INDArray rwR=paramsView.get(NDArrayIndex.point(0),NDArrayIndex.interval(rwROffset,bROffset));
   INDArray bR=paramsView.get(NDArrayIndex.point(0),NDArrayIndex.interval(bROffset,bROffset + nBias));
-  params.put(INPUT_WEIGHT_KEY_FORWARDS,WeightInitUtil.initWeights(nLast,4 * nL,layerConf.getWeightInit(),dist,iwF));
-  params.put(RECURRENT_WEIGHT_KEY_FORWARDS,WeightInitUtil.initWeights(nL,4 * nL + 3,layerConf.getWeightInit(),dist,rwF));
-  params.put(INPUT_WEIGHT_KEY_BACKWARDS,WeightInitUtil.initWeights(nLast,4 * nL,layerConf.getWeightInit(),dist,iwR));
-  params.put(RECURRENT_WEIGHT_KEY_BACKWARDS,WeightInitUtil.initWeights(nL,4 * nL + 3,layerConf.getWeightInit(),dist,rwR));
   bF.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(forgetGateInit));
   bR.put(new INDArrayIndex[]{new NDArrayIndex(0),NDArrayIndex.interval(nL,2 * nL)},Nd4j.ones(1,nL).muli(forgetGateInit));
+  params.put(INPUT_WEIGHT_KEY_FORWARDS,WeightInitUtil.initWeights(nLast,4 * nL,layerConf.getWeightInit(),dist,iwF));
+  params.put(RECURRENT_WEIGHT_KEY_FORWARDS,WeightInitUtil.initWeights(nL,4 * nL + 3,layerConf.getWeightInit(),dist,rwF));
   params.put(BIAS_KEY_FORWARDS,bF);
+  params.put(INPUT_WEIGHT_KEY_BACKWARDS,WeightInitUtil.initWeights(nLast,4 * nL,layerConf.getWeightInit(),dist,iwR));
+  params.put(RECURRENT_WEIGHT_KEY_BACKWARDS,WeightInitUtil.initWeights(nL,4 * nL + 3,layerConf.getWeightInit(),dist,rwR));
   params.put(BIAS_KEY_BACKWARDS,bR);
 }
