@@ -11,7 +11,7 @@
     updater.update(mln,gradAndScore.getFirst(),0,mln.batchSize());
   }
   INDArray gradientToCheck=gradAndScore.getFirst().gradient();
-  INDArray originalParams=mln.params();
+  INDArray originalParams=mln.params().dup();
   int nParams=originalParams.length();
   int totalNFailures=0;
   double maxError=0.0;

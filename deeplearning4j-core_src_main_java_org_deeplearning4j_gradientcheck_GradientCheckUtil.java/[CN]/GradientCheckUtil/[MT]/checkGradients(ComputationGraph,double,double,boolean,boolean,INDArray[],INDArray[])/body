@@ -10,7 +10,7 @@
   ComputationGraphUpdater updater=new ComputationGraphUpdater(graph);
   updater.update(graph,gradAndScore.getFirst(),0,graph.batchSize());
   INDArray gradientToCheck=gradAndScore.getFirst().gradient();
-  INDArray originalParams=graph.params();
+  INDArray originalParams=graph.params().dup();
   int nParams=originalParams.length();
   int totalNFailures=0;
   double maxError=0.0;
