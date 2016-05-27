@@ -1,5 +1,5 @@
 {
-  org.deeplearning4j.nn.conf.layers.GravesLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesLSTM)conf.getLayer();
+  org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM)conf.getLayer();
   int nL=layerConf.getNOut();
   int nLast=layerConf.getNIn();
   int nParamsForward=nLast * (4 * nL) + nL * (4 * nL + 3) + 4 * nL;
