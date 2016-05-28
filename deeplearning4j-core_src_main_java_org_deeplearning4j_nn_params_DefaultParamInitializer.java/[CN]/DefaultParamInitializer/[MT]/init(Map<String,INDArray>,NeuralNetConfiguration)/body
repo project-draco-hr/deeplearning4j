@@ -1,7 +1,0 @@
-{
-  if (!(conf.getLayer() instanceof org.deeplearning4j.nn.conf.layers.FeedForwardLayer))   throw new IllegalArgumentException("unsupported layer type: " + conf.getLayer().getClass().getName());
-  params.put(WEIGHT_KEY,createWeightMatrix(conf));
-  params.put(BIAS_KEY,createBias(conf));
-  conf.addVariable(WEIGHT_KEY);
-  conf.addVariable(BIAS_KEY);
-}

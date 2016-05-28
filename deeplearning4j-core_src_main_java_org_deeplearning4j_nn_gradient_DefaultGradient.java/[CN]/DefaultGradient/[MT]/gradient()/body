@@ -1,4 +1,5 @@
 {
+  if (flattenedGradient != null)   return flattenedGradient;
   if (flatteningOrders != null) {
     List<INDArray> toFlatten=new ArrayList<>();
     for (    Map.Entry<String,INDArray> entry : gradients.entrySet()) {
@@ -9,9 +10,10 @@
         toFlatten.add(entry.getValue());
       }
     }
-    return Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,toFlatten);
+    flattenedGradient=Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,toFlatten);
   }
  else {
-    return Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,gradients.values());
+    flattenedGradient=Nd4j.toFlattened(DEFAULT_FLATTENING_ORDER,gradients.values());
   }
+  return flattenedGradient;
 }

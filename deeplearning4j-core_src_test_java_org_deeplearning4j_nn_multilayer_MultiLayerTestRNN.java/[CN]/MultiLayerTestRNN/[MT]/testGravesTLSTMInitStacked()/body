@@ -17,8 +17,8 @@
     assertArrayEquals(inputWeights.shape(),new int[]{layerNIn,4 * nHiddenUnits[i]});
     INDArray biases=paramTable.get(GravesLSTMParamInitializer.BIAS_KEY);
     assertArrayEquals(biases.shape(),new int[]{1,4 * nHiddenUnits[i]});
-    INDArray forgetGateBiases=biases.get(new INDArrayIndex[]{NDArrayIndex.interval(nHiddenUnits[i],2 * nHiddenUnits[i])});
-    assertTrue(forgetGateBiases.gt(0).sum(Integer.MAX_VALUE).getDouble(0) == nHiddenUnits[i]);
+    INDArray forgetGateBiases=biases.get(NDArrayIndex.point(0),NDArrayIndex.interval(nHiddenUnits[i],2 * nHiddenUnits[i]));
+    assertEquals(nHiddenUnits[i],(int)forgetGateBiases.gt(0).sum(Integer.MAX_VALUE).getDouble(0));
     int nParams=recurrentWeights.length() + inputWeights.length() + biases.length();
     assertTrue(nParams == layer.numParams());
   }

@@ -2,7 +2,9 @@
   Nd4j.getRandom().setSeed(12345);
   double threshold=3;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new DenseLayer.Builder().nIn(10).nOut(20).updater(org.deeplearning4j.nn.conf.Updater.NONE).gradientNormalization(GradientNormalization.ClipL2PerParamType).gradientNormalizationThreshold(threshold).build()).build();
-  Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   INDArray weightGrad=Nd4j.rand(10,20).muli(0.05);
   INDArray biasGrad=Nd4j.rand(1,10).muli(10);

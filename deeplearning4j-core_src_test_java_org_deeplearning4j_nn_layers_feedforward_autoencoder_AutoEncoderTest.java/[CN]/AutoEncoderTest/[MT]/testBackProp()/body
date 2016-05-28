@@ -5,7 +5,9 @@
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  AutoEncoder da=layerFactory.create(conf);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  AutoEncoder da=layerFactory.create(conf,null,0,params);
   Gradient g=new DefaultGradient();
   g.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,da.decode(da.activate(input)).sub(input));
 }

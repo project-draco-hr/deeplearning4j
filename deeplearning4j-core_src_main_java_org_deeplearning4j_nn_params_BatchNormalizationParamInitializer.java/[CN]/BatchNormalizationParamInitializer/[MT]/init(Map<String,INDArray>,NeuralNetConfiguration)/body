@@ -1,6 +1,0 @@
-{
-  params.put(GAMMA,createGamma(conf));
-  conf.addVariable(GAMMA);
-  params.put(BETA,createBeta(conf));
-  conf.addVariable(BETA);
-}

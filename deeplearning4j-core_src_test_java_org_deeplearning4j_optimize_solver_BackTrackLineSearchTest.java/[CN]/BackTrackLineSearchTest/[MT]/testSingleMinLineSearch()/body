@@ -1,5 +1,7 @@
 {
   OutputLayer layer=getIrisLogisticLayerConfig("softmax",100,LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD);
+  int nParams=layer.numParams();
+  layer.setBackpropGradientsViewArray(Nd4j.create(1,nParams));
   layer.setInput(irisData.getFeatureMatrix());
   layer.setLabels(irisData.getLabels());
   layer.computeGradientAndScore();

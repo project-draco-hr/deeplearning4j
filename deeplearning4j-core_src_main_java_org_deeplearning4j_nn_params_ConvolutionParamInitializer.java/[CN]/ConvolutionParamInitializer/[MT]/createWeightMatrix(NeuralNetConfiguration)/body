@@ -1,6 +1,0 @@
-{
-  org.deeplearning4j.nn.conf.layers.ConvolutionLayer layerConf=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer();
-  Distribution dist=Distributions.createDistribution(conf.getLayer().getDist());
-  int[] kernel=layerConf.getKernelSize();
-  return WeightInitUtil.initWeights(new int[]{layerConf.getNOut(),layerConf.getNIn(),kernel[0],kernel[1]},layerConf.getWeightInit(),dist,'c');
-}

@@ -5,7 +5,9 @@
   double beta1=0.8;
   double beta2=0.888;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).iterations(iteration).adamMeanDecay(beta1).adamVarDecay(beta2).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADAM).build()).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   updater.update(layer,gradient,iteration,1);
   double beta1t=FastMath.pow(beta1,iteration);

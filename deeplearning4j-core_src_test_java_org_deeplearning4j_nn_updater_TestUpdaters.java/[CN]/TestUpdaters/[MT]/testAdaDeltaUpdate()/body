@@ -4,11 +4,13 @@
   Map<String,INDArray> msdx=new HashMap<>();
   double rho=0.85;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().rho(rho).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADADELTA).build()).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   Gradient gradientDup=new DefaultGradient();
-  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
   for (int i=0; i < 2; i++) {
     updater.update(layer,gradient,i,1);
     for (    Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {

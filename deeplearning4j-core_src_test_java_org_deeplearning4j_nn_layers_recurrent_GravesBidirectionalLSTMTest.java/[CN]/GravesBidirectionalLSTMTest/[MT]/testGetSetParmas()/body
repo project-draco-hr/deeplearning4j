@@ -5,10 +5,12 @@
   final int timeSeriesLength=10;
   Nd4j.getRandom().setSeed(12345);
   final NeuralNetConfiguration confBidirectional=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.1,0.1)).activation("tanh").build()).build();
-  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional);
+  int numParams=LayerFactories.getFactory(confBidirectional).initializer().numParams(confBidirectional,true);
+  INDArray params=Nd4j.create(1,numParams);
+  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional,null,0,params);
   final INDArray sig=Nd4j.rand(new int[]{miniBatchSize,nIn,timeSeriesLength});
   final INDArray act1=bidirectionalLSTM.activate(sig);
-  final INDArray params=bidirectionalLSTM.params();
+  params=bidirectionalLSTM.params();
   bidirectionalLSTM.setParams(params);
   final INDArray act2=bidirectionalLSTM.activate(sig);
   assertArrayEquals(act2.data().asDouble(),act1.data().asDouble(),1e-8);

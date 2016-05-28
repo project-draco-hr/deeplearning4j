@@ -1,5 +1,6 @@
 {
-  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.NORMALIZED,dist);
+  INDArray params=Nd4j.create(shape,'f');
+  INDArray weightsActual=WeightInitUtil.initWeights(shape,WeightInit.NORMALIZED,dist,params);
   Nd4j.getRandom().setSeed(123);
   INDArray weightsExpected=Nd4j.rand('f',shape);
   weightsExpected.subi(0.5).divi(shape[0]);

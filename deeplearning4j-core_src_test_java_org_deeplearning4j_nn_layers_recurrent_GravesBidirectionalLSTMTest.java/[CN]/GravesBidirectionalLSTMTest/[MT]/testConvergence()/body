@@ -37,7 +37,7 @@
     net.fit(ds);
     System.out.print(String.format("score is %f\n",score));
     assertTrue(!Double.isNaN(score));
-    assertTrue(oldScore * 1.5 > score);
+    assertTrue(score < 0.9 * oldScore);
     oldScore=score;
     final INDArray output=net.output(ds.getFeatureMatrix());
     Evaluation evaluation=new Evaluation();

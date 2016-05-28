@@ -1,7 +1,9 @@
 {
   AutoEncoder layerType=new AutoEncoder.Builder().nIn(4).nOut(3).corruptionLevel(0.0).activation("sigmoid").build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(layerType).seed(123).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   layer.fit(data.getFeatureMatrix());
   layer.computeGradientAndScore();
   double score=layer.score();

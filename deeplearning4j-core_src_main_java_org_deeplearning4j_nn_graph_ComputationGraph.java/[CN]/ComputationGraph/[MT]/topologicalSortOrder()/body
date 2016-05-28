@@ -1,19 +1,53 @@
 {
   if (topologicalOrder != null)   return topologicalOrder;
-  int[] out=new int[vertices.length];
+  Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeMap=configuration.getVertices();
+  List<String> networkInputNames=configuration.getNetworkInputs();
+  int numVertices=networkInputNames.size() + configuration.getVertices().size();
+  int[] out=new int[numVertices];
   int outCounter=0;
+  Map<Integer,String> vertexNamesMap=new HashMap<>();
+  Map<String,Integer> vertexNamesMap2=new HashMap<>();
+  int i=0;
+  for (  String inputName : configuration.getNetworkInputs()) {
+    vertexNamesMap.put(i,inputName);
+    vertexNamesMap2.put(inputName,i);
+    i++;
+  }
+  for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> entry : nodeMap.entrySet()) {
+    String name=entry.getKey();
+    vertexNamesMap.put(i,name);
+    vertexNamesMap2.put(name,i);
+    i++;
+  }
   Map<Integer,Set<Integer>> inputEdges=new HashMap<>();
-  for (  GraphVertex gv : vertices) {
-    VertexIndices[] vertexInputsFrom=gv.getInputVertices();
-    if (vertexInputsFrom == null || vertexInputsFrom.length == 0) {
-      inputEdges.put(gv.getVertexIndex(),null);
+  Map<Integer,Set<Integer>> outputEdges=new HashMap<>();
+  for (  String s : configuration.getNetworkInputs()) {
+    int idx=vertexNamesMap2.get(s);
+    inputEdges.put(idx,null);
+  }
+  for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> entry : nodeMap.entrySet()) {
+    String thisVertexName=entry.getKey();
+    int idx=vertexNamesMap2.get(thisVertexName);
+    List<String> inputsToThisVertex=configuration.getVertexInputs().get(thisVertexName);
+    if (inputsToThisVertex == null || inputsToThisVertex.size() == 0) {
+      inputEdges.put(idx,null);
       continue;
     }
-    Set<Integer> set=new HashSet<>();
-    for (    VertexIndices v : vertexInputsFrom) {
-      set.add(v.getVertexIndex());
+    Set<Integer> inputSet=new HashSet<>();
+    for (    String s : inputsToThisVertex) {
+      Integer inputIdx=vertexNamesMap2.get(s);
+      if (inputIdx == null) {
+        System.out.println();
+      }
+      inputSet.add(inputIdx);
+      Set<Integer> outputSetForInputIdx=outputEdges.get(inputIdx);
+      if (outputSetForInputIdx == null) {
+        outputSetForInputIdx=new HashSet<>();
+        outputEdges.put(inputIdx,outputSetForInputIdx);
+      }
+      outputSetForInputIdx.add(idx);
     }
-    inputEdges.put(gv.getVertexIndex(),set);
+    inputEdges.put(idx,inputSet);
   }
   LinkedList<Integer> noIncomingEdges=new LinkedList<>();
   for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
@@ -25,13 +59,13 @@
   while (noIncomingEdges.size() > 0) {
     int next=noIncomingEdges.removeFirst();
     out[outCounter++]=next;
-    VertexIndices[] vertexOutputsTo=vertices[next].getOutputVertices();
+    Set<Integer> vertexOutputsTo=outputEdges.get(next);
     if (vertexOutputsTo != null) {
-      for (      VertexIndices v : vertexOutputsTo) {
-        Set<Integer> set=inputEdges.get(v.getVertexIndex());
+      for (      Integer v : vertexOutputsTo) {
+        Set<Integer> set=inputEdges.get(v);
         set.remove(next);
         if (set.size() == 0) {
-          noIncomingEdges.add(v.getVertexIndex());
+          noIncomingEdges.add(v);
         }
       }
     }
@@ -39,7 +73,7 @@
   for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
     Set<Integer> set=entry.getValue();
     if (set == null)     continue;
-    if (set.size() > 0)     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + vertices[entry.getKey()].getVertexName() + "\")");
+    if (set.size() > 0)     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + vertexNamesMap.get(entry.getKey()) + "\")");
   }
   return out;
 }

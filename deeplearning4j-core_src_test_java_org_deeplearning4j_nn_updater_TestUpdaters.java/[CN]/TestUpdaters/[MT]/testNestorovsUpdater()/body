@@ -3,12 +3,14 @@
   double mu=0.6;
   INDArray v, vPrev;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(mu).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   updater.update(layer,gradient,-1,1);
   Gradient gradientDup=new DefaultGradient();
-  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
   for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
     val=entry.getValue();
     v=Nd4j.zeros(val.shape());

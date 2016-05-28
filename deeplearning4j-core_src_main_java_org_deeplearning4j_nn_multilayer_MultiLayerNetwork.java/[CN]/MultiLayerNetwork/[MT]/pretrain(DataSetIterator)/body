@@ -12,7 +12,7 @@
  else         layerInput=next.getFeatureMatrix();
         setInput(layerInput);
         if (this.getInput() == null || this.getLayers() == null)         initializeLayers(input());
-        getLayers()[i].fit(input());
+        layers[i].fit(input());
         log.info("Training on layer " + (i + 1) + " with "+ input().size(0)+ " examples");
       }
     }
