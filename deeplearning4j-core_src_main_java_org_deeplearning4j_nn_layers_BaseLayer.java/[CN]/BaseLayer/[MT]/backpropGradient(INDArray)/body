@@ -9,8 +9,7 @@
   INDArray weightGrad=gradientViews.get(DefaultParamInitializer.WEIGHT_KEY);
   Nd4j.gemm(input,delta,weightGrad,true,false,1.0,0.0);
   INDArray biasGrad=gradientViews.get(DefaultParamInitializer.BIAS_KEY);
-  INDArray tempBiasGrad=delta.sum(0);
-  biasGrad.assign(tempBiasGrad);
+  biasGrad.assign(delta.sum(0));
   ret.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightGrad);
   ret.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,biasGrad);
   INDArray epsilonNext=params.get(DefaultParamInitializer.WEIGHT_KEY).mmul(delta.transpose()).transpose();

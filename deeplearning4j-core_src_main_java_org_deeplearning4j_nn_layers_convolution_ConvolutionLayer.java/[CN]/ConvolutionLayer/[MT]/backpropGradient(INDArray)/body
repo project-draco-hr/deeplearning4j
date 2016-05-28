@@ -14,6 +14,7 @@
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
   INDArray biasGradView=gradientViews.get(ConvolutionParamInitializer.BIAS_KEY);
   INDArray weightGradView=gradientViews.get(ConvolutionParamInitializer.WEIGHT_KEY);
+  INDArray weightGradView2df=Shape.newShapeNoCopy(weightGradView,new int[]{outDepth,inDepth * kH * kW},false).transpose();
   INDArray delta;
   String afn=conf.getLayer().getActivationFunction();
   if ("identity".equals(afn)) {
@@ -30,8 +31,7 @@
   INDArray col2=col.permute(0,3,4,5,1,2);
   Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
   INDArray im2col2d=col.reshape('c',miniBatch * outH * outW,inDepth * kH * kW);
-  INDArray weightGrads2d=Nd4j.gemm(im2col2d,delta2d,true,true).transpose();
-  INDArray weightGrads=Shape.newShapeNoCopy(weightGrads2d,new int[]{outDepth,inDepth,kH,kW},false);
+  Nd4j.gemm(im2col2d,delta2d,weightGradView2df,true,true,1.0,0.0);
   INDArray wPermuted=weights.permute(3,2,1,0);
   INDArray w2d=wPermuted.reshape('f',inDepth * kH * kW,outDepth);
   INDArray epsNext2d=w2d.mmul(delta2d);
@@ -43,7 +43,6 @@
   Gradient retGradient=new DefaultGradient();
   INDArray biasGradTemp=delta2d.sum(1);
   biasGradView.assign(biasGradTemp);
-  weightGradView.assign(weightGrads);
   retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,biasGradView);
   retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGradView,'c');
   return new Pair<>(retGradient,epsNext);
