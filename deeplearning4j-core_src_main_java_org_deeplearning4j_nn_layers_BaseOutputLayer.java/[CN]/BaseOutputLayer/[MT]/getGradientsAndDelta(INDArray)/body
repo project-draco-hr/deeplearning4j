@@ -24,7 +24,7 @@ break;
 case MSE:
 INDArray delta=outSubLabels.mul(derivativeActivation(preOut));
 weightGradView.assign(input.transpose().mmul(delta));
-biasGradView.assign(outSubLabels.sum(0));
+biasGradView.assign(delta.sum(0));
 triple=new Triple<>(gradient,delta,output);
 break;
 case EXPLL:
