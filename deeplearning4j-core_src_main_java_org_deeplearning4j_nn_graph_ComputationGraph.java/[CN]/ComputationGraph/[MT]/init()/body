@@ -24,14 +24,14 @@
     numParams+=numParamsForVertex[i];
     i++;
   }
-  params=Nd4j.create(1,numParams);
+  flattenedParams=Nd4j.create(1,numParams);
   INDArray[] paramsViewForVertex=new INDArray[topologicalOrder.length];
   int paramOffsetSoFar=0;
   i=0;
   for (  int vertexIdx : topologicalOrder) {
     int nParamsThisVertex=numParamsForVertex[vertexIdx];
     if (nParamsThisVertex != 0) {
-      paramsViewForVertex[vertexIdx]=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramOffsetSoFar,paramOffsetSoFar + nParamsThisVertex));
+      paramsViewForVertex[vertexIdx]=flattenedParams.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramOffsetSoFar,paramOffsetSoFar + nParamsThisVertex));
     }
     i++;
     paramOffsetSoFar+=nParamsThisVertex;
@@ -94,9 +94,7 @@
     VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
     int j=0;
     for (    String s : thisVertexOutputsTo) {
-      GraphVertex next=verticesMap.get(s);
-      List<String> nextVertexInputNames;
-      nextVertexInputNames=vertexInputs.get(s);
+      List<String> nextVertexInputNames=vertexInputs.get(s);
       int outputVertexInputNumber=nextVertexInputNames.indexOf(vertexName);
       int outputVertexIndex=allNamesReverse.get(s);
       outputIndices[j++]=new VertexIndices(outputVertexIndex,outputVertexInputNumber);

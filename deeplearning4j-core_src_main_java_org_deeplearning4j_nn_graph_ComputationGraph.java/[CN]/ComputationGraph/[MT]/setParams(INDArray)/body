@@ -1,6 +1,6 @@
 {
-  if (this.params != null && this.params.length() == params.length()) {
-    this.params.assign(params);
+  if (this.flattenedParams != null && this.flattenedParams.length() == params.length()) {
+    this.flattenedParams.assign(params);
     return;
   }
   int idx=0;

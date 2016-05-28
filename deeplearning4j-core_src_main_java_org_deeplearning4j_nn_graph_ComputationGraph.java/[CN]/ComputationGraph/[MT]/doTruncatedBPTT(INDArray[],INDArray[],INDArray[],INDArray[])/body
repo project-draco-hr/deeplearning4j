@@ -1,4 +1,5 @@
 {
+  if (flattenedGradients == null)   initGradientsView();
   int timeSeriesLength=-1;
   for (  INDArray in : inputs) {
     if (in.rank() != 3)     continue;
