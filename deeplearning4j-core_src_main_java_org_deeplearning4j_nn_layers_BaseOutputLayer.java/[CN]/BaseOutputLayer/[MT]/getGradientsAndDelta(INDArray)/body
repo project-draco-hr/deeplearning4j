@@ -11,41 +11,37 @@
   }
   Triple<Gradient,INDArray,INDArray> triple;
 switch (layerConf().getLossFunction()) {
+case NEGATIVELOGLIKELIHOOD:
 case MCXENT:
-    weightGradView.assign(input.transpose().mmul(outSubLabels));
+    Nd4j.gemm(input,outSubLabels,weightGradView,true,false,1.0,0.0);
   biasGradView.assign(outSubLabels.sum(0));
 triple=new Triple<>(gradient,outSubLabels,output);
 break;
 case XENT:
-weightGradView.assign(input.transpose().mmul(outSubLabels.div(output.mul(output.rsub(1)))));
+Nd4j.gemm(input,outSubLabels.div(output.mul(output.rsub(1))),weightGradView,true,false,1.0,0.0);
 biasGradView.assign(outSubLabels.sum(0));
 triple=new Triple<>(gradient,outSubLabels,output);
 break;
 case MSE:
 INDArray delta=outSubLabels.mul(derivativeActivation(preOut));
-weightGradView.assign(input.transpose().mmul(delta));
+Nd4j.gemm(input,delta,weightGradView,true,false,1.0,0.0);
 biasGradView.assign(delta.sum(0));
 triple=new Triple<>(gradient,delta,output);
 break;
 case EXPLL:
-weightGradView.assign(input.transpose().mmul(labels.rsub(1).divi(output)));
+Nd4j.gemm(input,labels.rsub(1).divi(output),weightGradView,true,false,1.0,0.0);
 biasGradView.assign(outSubLabels.sum(0));
 triple=new Triple<>(gradient,outSubLabels,output);
 break;
 case RMSE_XENT:
 INDArray squaredrmseXentDiff=pow(outSubLabels,2.0);
 INDArray sqrt=sqrt(squaredrmseXentDiff);
-weightGradView.assign(input.transpose().mmul(sqrt));
+Nd4j.gemm(input,sqrt,weightGradView,true,false,1.0,0.0);
 biasGradView.assign(outSubLabels.sum(0));
 triple=new Triple<>(gradient,outSubLabels,output);
 break;
 case SQUARED_LOSS:
-weightGradView.assign(input.transpose().mmul(pow(outSubLabels,2)));
-biasGradView.assign(outSubLabels.sum(0));
-triple=new Triple<>(gradient,outSubLabels,output);
-break;
-case NEGATIVELOGLIKELIHOOD:
-weightGradView.assign(input.transpose().mmul(outSubLabels));
+Nd4j.gemm(input,outSubLabels.mul(outSubLabels),weightGradView,true,false,1.0,0.0);
 biasGradView.assign(outSubLabels.sum(0));
 triple=new Triple<>(gradient,outSubLabels,output);
 break;
