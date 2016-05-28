@@ -4,6 +4,7 @@
     Gradient gradient=pair.getFirst();
     INDArray params=model.params();
     stepFunction.step(params,gradient.gradient());
+    model.setParams(params);
     for (    IterationListener listener : iterationListeners)     listener.iterationDone(model,i);
     checkTerminalConditions(pair.getFirst().gradient(),oldScore,score,i);
   }

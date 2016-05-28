@@ -1,4 +1,5 @@
 {
+  if (params == paramsFlattened)   return;
   List<String> parameterList=conf.variables();
   int lengthPretrain=0;
   int lengthBackprop=0;
@@ -11,14 +12,17 @@
   if (!pretrain && params.length() != lengthBackprop) {
     throw new IllegalArgumentException("Unable to set parameters: must be of length " + lengthPretrain + " for pretrain, "+ " or "+ lengthBackprop+ " for backprop. Is: "+ params.length());
   }
+  if (!pretrain) {
+    paramsFlattened.assign(params);
+    return;
+  }
   int idx=0;
   Set<String> paramKeySet=this.params.keySet();
   for (  String s : paramKeySet) {
-    if (!pretrain && PretrainParamInitializer.VISIBLE_BIAS_KEY.equals(s))     continue;
     INDArray param=getParam(s);
     INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,idx + param.length()));
     if (param.length() != get.length())     throw new IllegalStateException("Parameter " + s + " should have been of length "+ param.length()+ " but was "+ get.length());
-    setParam(s,get.reshape('f',param.shape()));
+    param.assign(get.reshape('f',param.shape()));
     idx+=param.length();
   }
 }

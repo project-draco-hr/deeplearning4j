@@ -1,4 +1,5 @@
 {
+  if (params == flattenedParams)   return;
   if (this.flattenedParams != null && this.flattenedParams.length() == params.length()) {
     this.flattenedParams.assign(params);
     return;

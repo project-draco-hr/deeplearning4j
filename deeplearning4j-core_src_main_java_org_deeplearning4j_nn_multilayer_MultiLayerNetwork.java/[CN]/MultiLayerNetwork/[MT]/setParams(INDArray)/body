@@ -1,4 +1,17 @@
 {
-  if (this.flattenedParams == null)   this.flattenedParams=params;
- else   this.flattenedParams.assign(params);
+  if (flattenedParams == params)   return;
+  if (flattenedParams != null && params.length() == flattenedParams.length()) {
+    flattenedParams.assign(params);
+  }
+ else {
+    int idx=0;
+    for (int i=0; i < getLayers().length; i++) {
+      Layer layer=getLayer(i);
+      int range=(layer instanceof BasePretrainNetwork ? ((BasePretrainNetwork<?>)layer).numParamsBackprop() : layer.numParams());
+      if (range <= 0)       continue;
+      INDArray get=params.get(NDArrayIndex.point(0),NDArrayIndex.interval(idx,range + idx));
+      layer.setParams(get);
+      idx+=range;
+    }
+  }
 }
