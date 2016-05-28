@@ -4,6 +4,7 @@
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
   GravesBidirectionalLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+  lstm.setBackpropGradientsViewArray(Nd4j.create(1,LayerFactories.getFactory(conf.getLayer()).initializer().numParams(conf,true)));
   lstm.activate(inputData);
   assertNotNull(lstm.input());
   INDArray epsilon=Nd4j.ones(miniBatchSize,lstmNHiddenUnits,timeSeriesLength);

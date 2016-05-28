@@ -9,6 +9,7 @@
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
   OutputLayer o=LayerFactories.getFactory(conf).create(conf,null,0,params);
+  o.setBackpropGradientsViewArray(Nd4j.create(1,params.length()));
   o.setListeners(new ScoreIterationListener(1));
   o.fit(dataset);
 }

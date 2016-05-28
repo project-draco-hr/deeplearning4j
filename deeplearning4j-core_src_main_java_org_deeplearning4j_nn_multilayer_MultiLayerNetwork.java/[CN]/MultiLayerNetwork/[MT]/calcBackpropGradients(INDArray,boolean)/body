@@ -1,4 +1,5 @@
 {
+  if (flattenedGradients == null)   initGradientsView();
   String multiGradientKey;
   Gradient gradient=new DefaultGradient(flattenedGradients);
   Layer currLayer;
