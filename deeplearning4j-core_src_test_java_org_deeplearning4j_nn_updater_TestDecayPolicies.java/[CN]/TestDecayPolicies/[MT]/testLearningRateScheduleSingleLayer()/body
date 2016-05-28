@@ -10,11 +10,11 @@
     Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
     Updater updater=UpdaterCreator.getUpdater(layer);
     Gradient gradientActual=new DefaultGradient();
-    gradientActual.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-    gradientActual.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+    gradientActual.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+    gradientActual.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
     Gradient gradientExpected=new DefaultGradient();
-    gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-    gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+    gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+    gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
     for (int i=0; i < 2; i++) {
       updater.update(layer,gradientActual,i,1);
       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.SGD))       lr=testSGDComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);

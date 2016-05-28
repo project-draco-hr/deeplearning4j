@@ -10,8 +10,8 @@
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   Gradient gradientExpected=new DefaultGradient();
-  gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-  gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  gradientExpected.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+  gradientExpected.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
   for (int i=0; i < 2; i++) {
     updater.update(layer,gradientSingle,i,1);
     mu=testNesterovsComputation(gradientSingle,gradientExpected,lr,mu,momentumAfter,i);

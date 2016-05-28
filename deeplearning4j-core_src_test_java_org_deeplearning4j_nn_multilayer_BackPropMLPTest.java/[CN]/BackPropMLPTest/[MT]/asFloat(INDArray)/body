@@ -1,6 +1,9 @@
 {
   int len=arr.length();
   float[] f=new float[len];
-  for (int i=0; i < len; i++)   f[i]=arr.getFloat(i);
+  NdIndexIterator iterator=new NdIndexIterator('c',arr.shape());
+  for (int i=0; i < len; i++) {
+    f[i]=arr.getFloat(iterator.next());
+  }
   return f;
 }

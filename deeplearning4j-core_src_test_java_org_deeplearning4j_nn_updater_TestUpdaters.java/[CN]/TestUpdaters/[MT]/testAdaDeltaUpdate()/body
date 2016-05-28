@@ -9,8 +9,8 @@
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
   Updater updater=UpdaterCreator.getUpdater(layer);
   Gradient gradientDup=new DefaultGradient();
-  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+  gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
   for (int i=0; i < 2; i++) {
     updater.update(layer,gradient,i,1);
     for (    Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {

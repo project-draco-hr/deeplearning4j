@@ -1,4 +1,4 @@
 {
-  gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
-  gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
+  gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
+  gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
 }
