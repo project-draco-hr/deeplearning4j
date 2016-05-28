@@ -1,7 +1,7 @@
 {
   if (!(conf.getLayer() instanceof org.deeplearning4j.nn.conf.layers.FeedForwardLayer))   throw new IllegalArgumentException("unsupported layer type: " + conf.getLayer().getClass().getName());
   int length=numParams(conf,true);
-  if (paramsView.length() != length)   throw new IllegalStateException("Expected params view of length " + length + ", got length "+ paramsView);
+  if (paramsView.length() != length)   throw new IllegalStateException("Expected params view of length " + length + ", got length "+ paramsView.length());
   org.deeplearning4j.nn.conf.layers.FeedForwardLayer layerConf=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)conf.getLayer();
   int nIn=layerConf.getNIn();
   int nOut=layerConf.getNOut();
