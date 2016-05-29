@@ -4,7 +4,10 @@
     truncatedBPTTGradient();
   }
  else {
-    feedForward(true);
+    List<INDArray> activations=feedForwardToLayer(layers.length - 2,true);
+    INDArray actSecondLastLayer=activations.get(activations.size() - 1);
+    if (layerWiseConfigurations.getInputPreProcess(layers.length - 1) != null)     actSecondLastLayer=layerWiseConfigurations.getInputPreProcess(layers.length - 1).preProcess(actSecondLastLayer,getInputMiniBatchSize());
+    getOutputLayer().setInput(actSecondLastLayer);
     backprop();
   }
   score=((BaseOutputLayer<?>)getOutputLayer()).computeScore(calcL1(),calcL2(),true);
