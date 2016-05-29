@@ -9,7 +9,8 @@
     vTmp=vPrev.mul(mu).subi(val.mul(lr));
     gradExpected=vPrev.muli(mu).addi(vTmp.mul(-mu - 1));
     gradientExpected.setGradientFor(key,gradExpected);
-    assertEquals(gradExpected,gradientActual.getGradientFor(entry.getKey()));
+    INDArray act=gradientActual.getGradientFor(entry.getKey());
+    assertEquals(gradExpected,act);
     tmpStorage.put(key,vTmp);
   }
   return mu;

@@ -14,9 +14,9 @@
   Gradient gradientExpected=new DefaultGradient();
   for (int k=0; k < net.getnLayers(); k++) {
     wKey=String.valueOf(k) + "_" + DefaultParamInitializer.WEIGHT_KEY;
-    gradientExpected.setGradientFor(wKey,weightGradient);
+    gradientExpected.setGradientFor(wKey,weightGradient.dup());
     bKey=String.valueOf(k) + "_" + DefaultParamInitializer.BIAS_KEY;
-    gradientExpected.setGradientFor(bKey,biasGradient);
+    gradientExpected.setGradientFor(bKey,biasGradient.dup());
   }
   for (int i=0; i < 2; i++) {
     updater.update(net,gradientMLN,i,1);

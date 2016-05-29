@@ -18,7 +18,7 @@
   int[] pad=layerConf().getPadding();
   int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
-  INDArray col=Nd4j.create(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
+  INDArray col=Nd4j.createUninitialized(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');
   INDArray col2=col.permute(0,3,4,5,1,2);
   Convolution.im2col(input,kH,kW,strides[0],strides[1],pad[0],pad[1],false,col2);
   INDArray reshapedCol=Shape.newShapeNoCopy(col,new int[]{miniBatch * outH * outW,inDepth * kH * kW},false);

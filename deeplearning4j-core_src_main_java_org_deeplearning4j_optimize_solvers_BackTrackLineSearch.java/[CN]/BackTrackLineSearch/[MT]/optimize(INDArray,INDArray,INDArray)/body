@@ -35,7 +35,7 @@
       log.trace("before step, x.1norm: {} \nstep: {} \noldStep: {}",parameters.norm1(Integer.MAX_VALUE),step,oldStep);
     }
     if (step == oldStep)     throw new IllegalArgumentException("Current step == oldStep");
-    candidateParameters=Shape.toOffsetZeroCopy(parameters,'f');
+    candidateParameters=parameters.dup('f');
     stepFunction.step(candidateParameters,searchDirection,step);
     oldStep=step;
     if (log.isTraceEnabled()) {

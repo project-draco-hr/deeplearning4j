@@ -1,7 +1,0 @@
-{
-  if (((org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer()).getKernelSize().length < 2)   throw new IllegalArgumentException("Filter size must be == 2");
-  params.put(BIAS_KEY,createBias(conf));
-  params.put(WEIGHT_KEY,createWeightMatrix(conf));
-  conf.addVariable(WEIGHT_KEY);
-  conf.addVariable(BIAS_KEY);
-}

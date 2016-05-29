@@ -5,7 +5,8 @@
     val=entry.getValue();
     gradExpected=val.mul(lr);
     gradientExpected.setGradientFor(key,gradExpected);
-    assertEquals(gradExpected,gradientActual.getGradientFor(key));
+    INDArray act=gradientActual.getGradientFor(key);
+    assertEquals(gradExpected,act);
   }
   return lr;
 }

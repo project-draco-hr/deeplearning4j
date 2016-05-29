@@ -51,7 +51,7 @@
     network.setLabels(y);
     network.computeGradientAndScore();
     Gradient gradient=network.gradientAndScore().getFirst();
-    float eps=1e-6f;
+    float eps=1e-4f;
     for (int i=0; i < hiddenLayerSizes.length; i++) {
       String wKey=i + "_" + DefaultParamInitializer.WEIGHT_KEY;
       String bKey=i + "_" + DefaultParamInitializer.BIAS_KEY;

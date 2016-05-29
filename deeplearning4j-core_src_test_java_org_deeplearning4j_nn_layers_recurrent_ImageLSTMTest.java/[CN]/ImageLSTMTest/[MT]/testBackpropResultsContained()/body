@@ -1,7 +1,0 @@
-{
-  INDArray input=getContainedData();
-  Layer layer=getLSTMConfig(input.shape()[0],10);
-  INDArray epsilon=Nd4j.ones(8,10);
-  layer.activate(input);
-  Pair<Gradient,INDArray> pair=layer.backpropGradient(epsilon);
-}

@@ -1,28 +1,53 @@
 {
   if (initCalled)   return;
-  Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeMap=configuration.getVertices();
+  topologicalOrder=topologicalSortOrder();
+  Map<String,org.deeplearning4j.nn.conf.graph.GraphVertex> configVertexMap=configuration.getVertices();
   List<String> networkInputNames=configuration.getNetworkInputs();
   Map<String,List<String>> vertexInputs=configuration.getVertexInputs();
   this.vertices=new GraphVertex[networkInputNames.size() + configuration.getVertices().size()];
   Map<String,Integer> allNamesReverse=new HashMap<>();
-  int i=0;
+  int vertexNumber=0;
   for (  String name : networkInputNames) {
-    GraphVertex gv=new InputVertex(this,name,i,null);
-    allNamesReverse.put(name,i);
-    vertices[i++]=gv;
+    GraphVertex gv=new InputVertex(this,name,vertexNumber,null);
+    allNamesReverse.put(name,vertexNumber);
+    vertices[vertexNumber++]=gv;
+  }
+  int numParams=0;
+  int[] numParamsForVertex=new int[topologicalOrder.length];
+  int i=0;
+  for (; i < configuration.getNetworkInputs().size(); i++) {
+    numParamsForVertex[i]=0;
+  }
+  for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeEntry : configVertexMap.entrySet()) {
+    org.deeplearning4j.nn.conf.graph.GraphVertex n=nodeEntry.getValue();
+    numParamsForVertex[i]=n.numParams(true);
+    numParams+=numParamsForVertex[i];
+    i++;
+  }
+  flattenedParams=Nd4j.create(1,numParams);
+  INDArray[] paramsViewForVertex=new INDArray[topologicalOrder.length];
+  int paramOffsetSoFar=0;
+  i=0;
+  for (  int vertexIdx : topologicalOrder) {
+    int nParamsThisVertex=numParamsForVertex[vertexIdx];
+    if (nParamsThisVertex != 0) {
+      paramsViewForVertex[vertexIdx]=flattenedParams.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramOffsetSoFar,paramOffsetSoFar + nParamsThisVertex));
+    }
+    i++;
+    paramOffsetSoFar+=nParamsThisVertex;
   }
   int numLayers=0;
   List<Layer> tempLayerList=new ArrayList<>();
-  for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeEntry : nodeMap.entrySet()) {
+  for (  Map.Entry<String,org.deeplearning4j.nn.conf.graph.GraphVertex> nodeEntry : configVertexMap.entrySet()) {
     org.deeplearning4j.nn.conf.graph.GraphVertex n=nodeEntry.getValue();
     String name=nodeEntry.getKey();
-    GraphVertex gv=n.instantiate(this,name,i);
+    GraphVertex gv=n.instantiate(this,name,vertexNumber,paramsViewForVertex[vertexNumber]);
     if (gv.hasLayer()) {
       numLayers++;
       tempLayerList.add(gv.getLayer());
     }
-    allNamesReverse.put(name,i);
-    vertices[i++]=gv;
+    allNamesReverse.put(name,vertexNumber);
+    vertices[vertexNumber++]=gv;
   }
   layers=tempLayerList.toArray(new Layer[numLayers]);
   verticesMap=new HashMap<>();
@@ -69,15 +94,12 @@
     VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
     int j=0;
     for (    String s : thisVertexOutputsTo) {
-      GraphVertex next=verticesMap.get(s);
-      List<String> nextVertexInputNames;
-      nextVertexInputNames=vertexInputs.get(s);
+      List<String> nextVertexInputNames=vertexInputs.get(s);
       int outputVertexInputNumber=nextVertexInputNames.indexOf(vertexName);
       int outputVertexIndex=allNamesReverse.get(s);
       outputIndices[j++]=new VertexIndices(outputVertexIndex,outputVertexInputNumber);
     }
     gv.setOutputVertices(outputIndices);
   }
-  topologicalOrder=topologicalSortOrder();
   initCalled=true;
 }

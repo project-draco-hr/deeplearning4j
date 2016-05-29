@@ -15,7 +15,6 @@
   assertEquals(lr,net.getLayer(0).conf().getLearningRateByParam("W"),1e-4);
   assertEquals(biasLr,net.getLayer(0).conf().getLearningRateByParam("b"),1e-4);
   assertEquals(0.7,net.getLayer(1).conf().getLearningRateByParam("gamma"),1e-4);
-  assertEquals(0.7,net.getLayer(1).conf().getLearningRateByParam("b"),1e-4);
   assertEquals(0.3,net.getLayer(2).conf().getLearningRateByParam("W"),1e-4);
   assertEquals(0.3,net.getLayer(2).conf().getLearningRateByParam("b"),1e-4);
 }

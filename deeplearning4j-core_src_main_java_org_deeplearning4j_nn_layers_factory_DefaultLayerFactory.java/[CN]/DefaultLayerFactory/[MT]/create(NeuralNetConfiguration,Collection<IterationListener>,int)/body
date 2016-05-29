@@ -1,8 +1,0 @@
-{
-  Layer ret=getInstance(conf);
-  ret.setListeners(iterationListeners);
-  ret.setIndex(index);
-  ret.setParamTable(getParams(conf));
-  ret.setConf(conf);
-  return (E)ret;
-}

@@ -4,7 +4,9 @@
   fetcher.fetch(100);
   DataSet d2=fetcher.next();
   INDArray input=d2.getFeatureMatrix();
-  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.asList(new ScoreIterationListener(1),new UpdateActivationIterationListener(1)),0);
+  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  INDArray params=Nd4j.create(1,numParams);
+  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,Arrays.asList(new ScoreIterationListener(1),new UpdateActivationIterationListener(1)),0,params);
   da.setParams(da.params());
   da.fit(input);
 }

@@ -10,5 +10,5 @@
  else {
     fwdPass=activateHelper(true,null,null,true);
   }
-  return LSTMHelpers.backpropGradientHelper(this.conf,this.input,recurrentWeights,inputWeights,epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY,GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY,GravesLSTMParamInitializer.BIAS_KEY);
+  return LSTMHelpers.backpropGradientHelper(this.conf,this.input,recurrentWeights,inputWeights,epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY,GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY,GravesLSTMParamInitializer.BIAS_KEY,gradientViews);
 }

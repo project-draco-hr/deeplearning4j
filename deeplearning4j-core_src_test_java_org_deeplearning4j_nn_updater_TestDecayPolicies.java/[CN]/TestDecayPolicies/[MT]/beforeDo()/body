@@ -5,9 +5,9 @@
   gradientSingle.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
   for (int j=0; j < nLayers; j++) {
     wKey=String.valueOf(j) + "_" + DefaultParamInitializer.WEIGHT_KEY;
-    gradientMLN.setGradientFor(wKey,weightGradient);
+    gradientMLN.setGradientFor(wKey,weightGradient.dup());
     bKey=String.valueOf(j) + "_" + DefaultParamInitializer.BIAS_KEY;
-    gradientMLN.setGradientFor(bKey,biasGradient);
+    gradientMLN.setGradientFor(bKey,biasGradient.dup());
   }
   val=null;
   gradExpected=null;

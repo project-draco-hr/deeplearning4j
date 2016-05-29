@@ -1,6 +1,7 @@
 {
+  if (flattenedGradients == null)   initGradientsView();
   String multiGradientKey;
-  Gradient gradient=new DefaultGradient();
+  Gradient gradient=new DefaultGradient(flattenedGradients);
   Layer currLayer;
   int numLayers=getnLayers();
   LinkedList<Triple<String,INDArray,Character>> gradientList=new LinkedList<>();

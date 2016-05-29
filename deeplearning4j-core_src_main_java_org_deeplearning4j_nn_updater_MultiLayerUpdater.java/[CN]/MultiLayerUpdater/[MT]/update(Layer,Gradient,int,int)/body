@@ -12,8 +12,5 @@
   }
   for (int i=0; i < layerUpdaters.length; i++) {
     layerUpdaters[i].update(mln.getLayer(i),layerGradients[i],iteration,batchSize);
-    for (    Map.Entry<String,INDArray> entry : layerGradients[i].gradientForVariable().entrySet()) {
-      gradient.setGradientFor(i + "_" + entry.getKey(),entry.getValue());
-    }
   }
 }
