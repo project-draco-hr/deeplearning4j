@@ -1,27 +1,20 @@
 {
-  as=ActorSystem.create("Workers");
+  as=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
   for (  final String workerHost : workers) {
     try {
-      Future<Void> f=Futures.future(new Callable<Void>(){
-        /** 
- * Computes a result, or throws an exception if unable to do so.
- * @return computed result
- * @throws Exception if unable to compute a result
- */
-        @Override public Void call() throws Exception {
+      as.submit(new Runnable(){
+        @Override public void run(){
           HostProvisioner uploader=new HostProvisioner(workerHost,"ec2-user");
-          uploader.addKeyFile(pathToPrivateKey);
-          uploader.uploadAndRun(workerSetupScriptPath,"");
-          return null;
+          try {
+            uploader.addKeyFile(pathToPrivateKey);
+            uploader.uploadAndRun(workerSetupScriptPath,"");
+          }
+ catch (          Exception e) {
+            e.printStackTrace();
+          }
         }
       }
-,as.dispatcher());
-      f.onComplete(new OnComplete<Void>(){
-        @Override public void onComplete(        Throwable throwable,        Void aVoid) throws Throwable {
-          if (throwable != null)           throw throwable;
-        }
-      }
-,as.dispatcher());
+);
     }
  catch (    Exception e) {
       log.error("Error ",e);
