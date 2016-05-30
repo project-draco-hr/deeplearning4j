@@ -13,5 +13,8 @@
   this.input=reshape3dTo2d(input);
   INDArray out=super.activate(true);
   this.input=origInput;
+  if (maskArray != null) {
+    out.muliColumnVector(maskArray);
+  }
   return reshape2dTo3d(out,input.size(0));
 }

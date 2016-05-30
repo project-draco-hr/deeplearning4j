@@ -4,7 +4,7 @@
     backprop(true);
   }
  else {
-    feedForward(true);
+    feedForward(true,true);
     backprop(false);
   }
   double l1=calcL1();
