@@ -1,0 +1,9 @@
+{
+  if (inputNumber > 0)   throw new IllegalArgumentException("Invalid input number: LayerVertex instances have only ");
+  inputs[inputNumber]=input;
+  INDArray currInput=inputs[0];
+  if (layerPreProcessor != null) {
+    currInput=layerPreProcessor.preProcess(currInput,graph.batchSize());
+  }
+  layer.setInput(currInput);
+}
