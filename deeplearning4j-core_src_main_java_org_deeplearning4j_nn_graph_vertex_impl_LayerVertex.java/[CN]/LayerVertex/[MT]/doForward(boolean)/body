@@ -1,8 +1,4 @@
 {
   if (!canDoForward())   throw new IllegalStateException("Cannot do forward pass: all inputs not set");
-  INDArray currInput=inputs[0];
-  if (layerPreProcessor != null) {
-    currInput=layerPreProcessor.preProcess(currInput,graph.batchSize());
-  }
-  return layer.activate(currInput,training);
+  return layer.activate(training);
 }

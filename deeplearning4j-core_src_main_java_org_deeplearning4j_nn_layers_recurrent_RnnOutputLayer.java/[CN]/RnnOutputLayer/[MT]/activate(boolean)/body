@@ -7,5 +7,8 @@
   }
   INDArray input2d=reshape3dTo2d(input);
   INDArray act2d=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),input2d.mmul(W).addiRowVector(b)));
+  if (maskArray != null) {
+    act2d.muliColumnVector(maskArray);
+  }
   return reshape2dTo3d(act2d,input.size(0));
 }
