@@ -11,8 +11,6 @@
   if (!(lookupTable instanceof InMemoryLookupTable))   throw new IllegalStateException("At this moment only InMemoryLookupTable is supported.");
   VectorsConfiguration conf=vec.getConfiguration();
   conf.setVocabSize(vocabCache.numWords());
-  printWriter.println(conf.toJson());
-  log.info("Word2Vec conf. JSON: " + conf.toJson());
   StringBuilder builder=new StringBuilder();
   for (int x=0; x < ((InMemoryLookupTable)lookupTable).getExpTable().length; x++) {
     builder.append(((InMemoryLookupTable)lookupTable).getExpTable()[x]).append(" ");
@@ -60,7 +58,6 @@
       }
       vw.setHistoricalGradient(ada);
     }
-    printWriter.println(vw.toJson());
   }
   printWriter.flush();
   printWriter.close();
