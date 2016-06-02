@@ -1,0 +1,24 @@
+{
+  ClassLoader loader=null;
+  try {
+    loader=Thread.currentThread().getContextClassLoader();
+  }
+ catch (  Exception e) {
+  }
+  if (loader == null) {
+    loader=ClassPathResource.class.getClassLoader();
+  }
+  URL url=loader.getResource(this.resourceName);
+  if (url == null) {
+    if (this.resourceName.startsWith("/")) {
+      url=loader.getResource(this.resourceName.replaceFirst("[\\\\/]",""));
+      if (url != null)       return url;
+    }
+ else {
+      url=loader.getResource("/" + this.resourceName);
+      if (url != null)       return url;
+    }
+    throw new IllegalStateException("Resource '" + this.resourceName + "' cannot be found.");
+  }
+  return url;
+}

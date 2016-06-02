@@ -1,0 +1,3 @@
+{
+  FileUtils.writeStringToFile(new File(outputPath),renderHTML(components));
+}

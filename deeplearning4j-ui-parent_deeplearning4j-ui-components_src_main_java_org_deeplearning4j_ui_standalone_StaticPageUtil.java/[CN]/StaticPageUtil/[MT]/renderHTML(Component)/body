@@ -1,0 +1,28 @@
+{
+  ObjectMapper mapper=new ObjectMapper();
+  mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+  mapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY,true);
+  mapper.enable(SerializationFeature.INDENT_OUTPUT);
+  Configuration cfg=new Configuration(new Version(2,3,23));
+  cfg.setClassForTemplateLoading(StaticPageUtil.class,"");
+  cfg.setIncompatibleImprovements(new Version(2,3,23));
+  cfg.setDefaultEncoding("UTF-8");
+  cfg.setLocale(Locale.US);
+  cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+  ClassPathResource cpr=new ClassPathResource("assets/dl4j-ui.js");
+  String scriptContents=IOUtils.toString(cpr.getInputStream(),"UTF-8");
+  Map<String,Object> pageElements=new HashMap<>();
+  List<ComponentObject> list=new ArrayList<>();
+  int i=0;
+  for (  Component c : components) {
+    list.add(new ComponentObject(String.valueOf(i),mapper.writeValueAsString(c)));
+    i++;
+  }
+  pageElements.put("components",list);
+  pageElements.put("scriptcontent",scriptContents);
+  Template template=cfg.getTemplate("staticpage.ftl");
+  Writer stringWriter=new StringWriter();
+  template.process(pageElements,stringWriter);
+  return stringWriter.toString();
+}
