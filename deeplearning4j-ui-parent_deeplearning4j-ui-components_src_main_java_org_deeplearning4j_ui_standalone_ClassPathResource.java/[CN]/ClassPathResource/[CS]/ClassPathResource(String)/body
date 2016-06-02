@@ -1,0 +1,4 @@
+{
+  if (resourceName == null)   throw new IllegalStateException("Resource name can't be null");
+  this.resourceName=resourceName;
+}

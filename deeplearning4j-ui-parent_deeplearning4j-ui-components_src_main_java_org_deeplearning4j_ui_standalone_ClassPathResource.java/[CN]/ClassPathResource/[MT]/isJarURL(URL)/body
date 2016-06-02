@@ -1,0 +1,4 @@
+{
+  String protocol=url.getProtocol();
+  return "jar".equals(protocol) || "zip".equals(protocol) || "wsjar".equals(protocol)|| "code-source".equals(protocol) && url.getPath().contains("!/");
+}
