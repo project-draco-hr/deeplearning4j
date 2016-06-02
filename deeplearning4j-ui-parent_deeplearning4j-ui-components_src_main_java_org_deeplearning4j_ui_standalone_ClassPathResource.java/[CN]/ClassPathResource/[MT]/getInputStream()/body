@@ -1,0 +1,28 @@
+{
+  URL url=this.getUrl();
+  if (isJarURL(url)) {
+    try {
+      url=extractActualUrl(url);
+      ZipFile zipFile=new ZipFile(url.getFile());
+      ZipEntry entry=zipFile.getEntry(this.resourceName);
+      if (entry == null) {
+        if (this.resourceName.startsWith("/")) {
+          entry=zipFile.getEntry(this.resourceName.replaceFirst("/",""));
+          if (entry == null) {
+            throw new FileNotFoundException("Resource " + this.resourceName + " not found");
+          }
+        }
+ else         throw new FileNotFoundException("Resource " + this.resourceName + " not found");
+      }
+      InputStream stream=zipFile.getInputStream(entry);
+      return stream;
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+ else {
+    File srcFile=this.getFile();
+    return new FileInputStream(srcFile);
+  }
+}
