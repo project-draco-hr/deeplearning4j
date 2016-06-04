@@ -6,7 +6,7 @@
     DataSet ds=iris.next();
     assertTrue(ds.getLabels().sum(Integer.MAX_VALUE).getDouble(0) == 1.0);
   }
-  assertTrue(irisC == 5);
+  assertEquals(5,irisC);
   DataSetIterator mnist=new MnistDataSetIterator(1,5);
   int mnistC=0;
   while (mnist.hasNext()) {
@@ -14,7 +14,7 @@
     DataSet ds=mnist.next();
     assertTrue(ds.getLabels().sum(Integer.MAX_VALUE).getDouble(0) == 1.0);
   }
-  assertTrue(mnistC == 5);
+  assertEquals(5,mnistC);
   DataSetIterator lfw=new LFWDataSetIterator(1,5);
   int lfwC=0;
   while (lfw.hasNext()) {
@@ -22,5 +22,5 @@
     DataSet ds=lfw.next();
     assertTrue(ds.getLabels().sum(Integer.MAX_VALUE).getDouble(0) == 1.0);
   }
-  assertTrue(lfwC == 5);
+  assertEquals(5,lfwC);
 }
