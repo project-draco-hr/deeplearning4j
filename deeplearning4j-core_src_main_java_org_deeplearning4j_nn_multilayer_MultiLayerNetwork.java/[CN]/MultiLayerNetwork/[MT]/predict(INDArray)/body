@@ -1,5 +1,5 @@
 {
-  INDArray output=output(d);
+  INDArray output=output(d,Layer.TrainingMode.TEST);
   int[] ret=new int[d.size(0)];
   if (d.isRowVector())   ret[0]=Nd4j.getBlasWrapper().iamax(output);
  else {
