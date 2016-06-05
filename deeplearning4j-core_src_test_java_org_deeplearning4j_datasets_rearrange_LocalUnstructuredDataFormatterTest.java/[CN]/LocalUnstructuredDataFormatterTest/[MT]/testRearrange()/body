@@ -1,5 +1,5 @@
 {
-  new LFWDataSetIterator(10,28,28).next();
+  new LFWDataSetIterator(new int[]{10,28,28}).next();
   File destinationDir=new File(System.getProperty("user.home"),"rearrangedlfw");
   if (destinationDir.exists())   FileUtils.deleteDirectory(destinationDir);
   LocalUnstructuredDataFormatter formatter=new LocalUnstructuredDataFormatter(destinationDir,new File(System.getProperty("user.home"),"lfw"),LocalUnstructuredDataFormatter.LabelingType.DIRECTORY,0.8);
