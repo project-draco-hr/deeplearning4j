@@ -1,0 +1,9 @@
+{
+  this.vocabCache=vocabCache;
+  this.lookupTable=lookupTable;
+  this.configuration=configuration;
+  this.window=configuration.getWindow();
+  this.useAdaGrad=configuration.isUseAdaGrad();
+  this.negative=configuration.getNegative();
+  this.sampling=configuration.getSampling();
+}
