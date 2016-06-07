@@ -26,7 +26,7 @@
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
     f=expTable[idx];
-    double g=(1 - code - f) * alpha;
+    double g=useAdaGrad ? currentWord.getGradient(i,(1 - code - f),alpha) : (1 - code - f) * alpha;
     Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,syn1row,neu1e);
     Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,neu1,syn1row);
   }

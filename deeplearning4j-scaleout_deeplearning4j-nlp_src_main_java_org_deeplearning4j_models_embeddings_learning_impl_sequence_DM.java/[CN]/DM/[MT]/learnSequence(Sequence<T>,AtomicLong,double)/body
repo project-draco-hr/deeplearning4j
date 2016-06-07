@@ -1,2 +1,9 @@
 {
+  List<T> seq=cbow.applySubsampling(sequence,nextRandom).getElements();
+  List<T> labels=new ArrayList<>();
+  labels.addAll(sequence.getSequenceLabels());
+  if (sequence.getSequenceLabel() == null)   throw new IllegalStateException("Label is NULL");
+  if (seq.isEmpty() || labels.isEmpty())   return;
+  for (  T lastWord : labels) {
+  }
 }
