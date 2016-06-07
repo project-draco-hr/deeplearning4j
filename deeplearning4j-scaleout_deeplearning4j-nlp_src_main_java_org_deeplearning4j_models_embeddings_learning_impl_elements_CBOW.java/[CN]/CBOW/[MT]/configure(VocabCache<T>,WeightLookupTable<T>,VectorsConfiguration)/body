@@ -10,4 +10,5 @@
   this.syn1=((InMemoryLookupTable<T>)lookupTable).getSyn1();
   this.syn1Neg=((InMemoryLookupTable<T>)lookupTable).getSyn1Neg();
   this.expTable=((InMemoryLookupTable<T>)lookupTable).getExpTable();
+  this.table=((InMemoryLookupTable<T>)lookupTable).getTable();
 }
