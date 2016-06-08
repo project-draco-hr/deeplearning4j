@@ -21,7 +21,8 @@
       int c=i - window + a;
       if (c >= 0 && c < sentence.size()) {
         T lastWord=sentence.get(c);
-        syn0.getRow(lastWord.getIndex()).addiRowVector(neu1e);
+        INDArray syn0row=syn0.getRow(lastWord.getIndex());
+        Nd4j.getBlasWrapper().level1().axpy(lookupTable.layerSize(),1.0,neu1e,syn0row);
       }
     }
   }
