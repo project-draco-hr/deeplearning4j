@@ -1,4 +1,9 @@
 {
+  DataSetIterator iter;
+  if (!(iterator instanceof AsyncDataSetIterator || iterator instanceof ListDataSetIterator)) {
+    iter=new AsyncDataSetIterator((org.deeplearning4j.datasets.iterator.DataSetIterator)iterator,10);
+  }
+ else   iter=iterator;
   if (layerWiseConfigurations.isPretrain()) {
     pretrain(iter);
     iter.reset();
