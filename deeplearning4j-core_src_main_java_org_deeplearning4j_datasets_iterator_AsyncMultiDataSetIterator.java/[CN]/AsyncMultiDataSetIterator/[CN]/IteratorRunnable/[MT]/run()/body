@@ -1,0 +1,18 @@
+{
+  try {
+    while (!killRunnable && iterator.hasNext()) {
+      queue.put(iterator.next());
+    }
+  }
+ catch (  InterruptedException e) {
+    if (killRunnable)     return;
+ else     exception=new RuntimeException("Runnable interrupted unexpectedly",e);
+  }
+catch (  RuntimeException e) {
+    exception=e;
+  }
+ finally {
+    isAlive=false;
+    runCompletedSemaphore.release();
+  }
+}

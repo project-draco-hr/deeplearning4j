@@ -6,9 +6,9 @@
   }
  catch (  InterruptedException e) {
   }
-  blockingQueue.clear();
-  baseIterator.reset();
-  runnable=new IteratorRunnable();
+  queue.clear();
+  iterator.reset();
+  runnable=new AsyncMultiDataSetIterator.IteratorRunnable();
   thread=new Thread(runnable);
   Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
   Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
