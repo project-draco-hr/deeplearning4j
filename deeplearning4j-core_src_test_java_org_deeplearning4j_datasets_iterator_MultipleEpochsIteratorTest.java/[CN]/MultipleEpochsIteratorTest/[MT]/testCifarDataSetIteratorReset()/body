@@ -1,9 +1,12 @@
 {
-  int epochs=3;
+  int epochs=2;
   Nd4j.getRandom().setSeed(12345);
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).learningRate(1.0).weightInit(WeightInit.XAVIER).seed(12345L).list().layer(0,new DenseLayer.Builder().nIn(400).nOut(50).activation("relu").build()).layer(1,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(50).nOut(10).build()).pretrain(false).backprop(true).build();
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
-  MultipleEpochsIterator ds=new MultipleEpochsIterator(epochs,new CifarDataSetIterator(10,10,new int[]{20,20,1}));
+  net.setListeners(Arrays.asList((IterationListener)new ScoreIterationListener(1)));
+  MultipleEpochsIterator ds=new MultipleEpochsIterator(epochs,new CifarDataSetIterator(10,20,new int[]{20,20,1}));
   net.fit(ds);
+  assertEquals(epochs,ds.epochs);
+  assertEquals(2,ds.batch);
 }
