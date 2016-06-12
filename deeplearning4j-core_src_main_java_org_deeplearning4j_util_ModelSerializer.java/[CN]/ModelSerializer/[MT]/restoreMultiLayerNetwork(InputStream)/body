@@ -1,0 +1,47 @@
+{
+  ZipInputStream zipFile=new ZipInputStream(is);
+  boolean gotConfig=false;
+  boolean gotCoefficients=false;
+  boolean gotUpdater=false;
+  String json="";
+  INDArray params=null;
+  Updater updater=null;
+  ZipEntry entry;
+  while ((entry=zipFile.getNextEntry()) != null) {
+switch (entry.getName()) {
+case "configuration.json":
+      DataInputStream dis=new DataInputStream(zipFile);
+    params=Nd4j.read(dis);
+  gotCoefficients=true;
+break;
+case "coefficients.bin":
+DataInputStream dis2=new DataInputStream(zipFile);
+params=Nd4j.read(dis2);
+gotCoefficients=true;
+break;
+case "updater.bin":
+ObjectInputStream ois=new ObjectInputStream(zipFile);
+try {
+updater=(Updater)ois.readObject();
+}
+ catch (ClassNotFoundException e) {
+throw new RuntimeException(e);
+}
+gotUpdater=true;
+break;
+}
+zipFile.closeEntry();
+}
+zipFile.close();
+if (gotConfig && gotCoefficients) {
+MultiLayerConfiguration confFromJson=MultiLayerConfiguration.fromJson(json);
+MultiLayerNetwork network=new MultiLayerNetwork(confFromJson);
+network.init();
+network.setParameters(params);
+if (gotUpdater && updater != null) {
+network.setUpdater(updater);
+}
+return network;
+}
+ else throw new IllegalStateException("Model wasnt found within file: gotConfig: [" + gotConfig + "], gotCoefficients: ["+ gotCoefficients+ "], gotUpdater: ["+ gotUpdater+ "]");
+}
