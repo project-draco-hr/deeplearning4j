@@ -1,3 +1,3 @@
 {
-  this(recordReader,converter,batchSize,-1,-1);
+  this(recordReader,converter,batchSize,-1,recordReader.getLabels() == null ? -1 : recordReader.getLabels().size());
 }
