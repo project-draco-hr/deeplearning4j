@@ -2,6 +2,7 @@
   if (layers == null || !(layers[layers.length - 1] instanceof BaseOutputLayer)) {
     throw new IllegalStateException("Cannot evaluate network with no output layer");
   }
+  if (labelsList == null)   labelsList=iterator.getLabels();
   Evaluation e=(labelsList == null) ? new Evaluation() : new Evaluation(labelsList);
   while (iterator.hasNext()) {
     DataSet next=iterator.next();
