@@ -1,3 +1,4 @@
 {
-  return 0;
+  if (labels != null)   return labels.size();
+  return numLabels;
 }
