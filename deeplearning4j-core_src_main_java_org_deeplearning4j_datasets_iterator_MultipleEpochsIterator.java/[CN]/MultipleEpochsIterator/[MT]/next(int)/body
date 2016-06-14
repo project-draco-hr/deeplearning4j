@@ -1,30 +1,32 @@
 {
   DataSet next;
+  batch++;
   if (iter == null) {
     if (num == -1) {
-      if (passes < numPasses)       trackEpoch();
       next=ds;
+      if (epochs < numEpochs)       trackEpochs();
+      ;
     }
  else {
       if (batchedDS.isEmpty() && num > 0)       batchedDS=ds.batchBy(num);
       next=batchedDS.get(batch);
       if (batch + 1 == batchedDS.size()) {
-        trackEpoch();
-        if (passes < numPasses)         batch=-1;
+        trackEpochs();
+        if (epochs < numEpochs)         batch=-1;
       }
     }
   }
  else {
+    next=num == -1 ? iter.next() : iter.next(num);
     if (!iter.hasNext()) {
-      trackEpoch();
-      if (passes < numPasses) {
+      trackEpochs();
+      if (epochs < numEpochs) {
         iter.reset();
+        lastBatch=batch;
         batch=0;
       }
     }
-    next=num == -1 ? iter.next() : iter.next(num);
-    if (preProcessor != null)     preProcessor.preProcess(next);
   }
-  batch++;
+  if (preProcessor != null)   preProcessor.preProcess(next);
   return next;
 }

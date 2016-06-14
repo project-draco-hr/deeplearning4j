@@ -5,11 +5,9 @@
   DataSetIterator iter=new RecordReaderDataSetIterator(rr,150);
   MultipleEpochsIterator multiIter=new MultipleEpochsIterator(epochs,iter);
   assertTrue(multiIter.hasNext());
-  int actualEpochs=0;
   while (multiIter.hasNext()) {
     DataSet path=multiIter.next();
     assertFalse(path == null);
-    actualEpochs++;
   }
-  assertEquals(epochs,actualEpochs,0.0);
+  assertEquals(epochs,multiIter.epochs);
 }

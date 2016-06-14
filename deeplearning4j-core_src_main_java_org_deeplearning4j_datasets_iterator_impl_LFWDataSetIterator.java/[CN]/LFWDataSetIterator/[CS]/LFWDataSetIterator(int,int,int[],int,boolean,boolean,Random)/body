@@ -1,3 +1,0 @@
-{
-  super(new LFWLoader(useSubset).getRecordReader(numExamples,batchSize,imgDim[0],imgDim[1],imgDim[2],train,rng),batchSize,1,numCategories);
-}
