@@ -1,0 +1,5 @@
+{
+  NetBroadcastTuple tuple=new NetBroadcastTuple(network.getNetwork().getLayerWiseConfigurations(),network.getNetwork().params(),network.getNetwork().getUpdater());
+  Broadcast<NetBroadcastTuple> broadcast=network.getSparkContext().broadcast(tuple);
+  return new VanillaTrainingWorker(broadcast);
+}
