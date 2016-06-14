@@ -1,0 +1,39 @@
+{
+  if (!hasNext())   throw new NoSuchElementException();
+  List<DataSet> list=new ArrayList<>();
+  int countSoFar=0;
+  while ((!queued.isEmpty() || iterator.hasNext()) && countSoFar < batchSize) {
+    DataSet next;
+    if (!queued.isEmpty()) {
+      next=queued.removeFirst();
+    }
+ else {
+      next=iterator.next();
+    }
+    int nExamples=next.numExamples();
+    if (countSoFar + nExamples <= batchSize) {
+      list.add(next);
+    }
+ else {
+      DataSet toKeep=(DataSet)next.getRange(0,batchSize - countSoFar);
+      DataSet toCache=(DataSet)next.getRange(batchSize - countSoFar,nExamples);
+      list.add(toKeep);
+      queued.add(toCache);
+    }
+  }
+  if (inputColumns == -1) {
+    DataSet temp=list.get(0);
+    inputColumns=temp.getFeatureMatrix().size(1);
+    totalOutcomes=temp.getLabels().size(1);
+  }
+  DataSet out;
+  if (list.size() == 1) {
+    out=list.get(0);
+  }
+ else {
+    out=DataSet.merge(list);
+  }
+  if (preProcessor != null)   preProcessor.preProcess(out);
+  cursor+=out.numExamples();
+  return out;
+}

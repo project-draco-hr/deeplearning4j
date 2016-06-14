@@ -1,2 +1,25 @@
 {
+  WorkerConfiguration dataConfig=worker.getDataConfiguration();
+  int batchSize=dataConfig.getBatchSizePerWorker();
+  final int prefetchCount=dataConfig.getPrefetchNumBatches();
+  DataSetIterator batchedIterator=new IteratorDataSetIterator(dataSetIterator,batchSize);
+  if (prefetchCount > 0) {
+    batchedIterator=new AsyncDataSetIterator(batchedIterator,prefetchCount);
+  }
+  try {
+    MultiLayerNetwork net=worker.getInitialModel();
+    while (batchedIterator.hasNext()) {
+      DataSet next=batchedIterator.next();
+      R result=worker.processMinibatch(next,net,batchedIterator.hasNext());
+      if (result != null) {
+        return Collections.singletonList(result);
+      }
+    }
+    return Collections.singletonList(worker.getFinalResult(net));
+  }
+  finally {
+    if (batchedIterator instanceof AsyncDataSetIterator) {
+      ((AsyncDataSetIterator)batchedIterator).shutdown();
+    }
+  }
 }
