@@ -1,0 +1,4 @@
+{
+  MultiLayerNetwork net=ModelSerializer.restoreMultiLayerNetwork(modelName);
+  return net;
+}
