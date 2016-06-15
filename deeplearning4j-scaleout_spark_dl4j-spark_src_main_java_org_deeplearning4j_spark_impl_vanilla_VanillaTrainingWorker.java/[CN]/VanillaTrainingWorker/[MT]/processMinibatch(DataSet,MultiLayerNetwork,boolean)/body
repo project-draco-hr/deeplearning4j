@@ -1,3 +1,5 @@
 {
+  network.fit(dataSet);
+  if (isLast)   return getFinalResult(network);
   return null;
 }

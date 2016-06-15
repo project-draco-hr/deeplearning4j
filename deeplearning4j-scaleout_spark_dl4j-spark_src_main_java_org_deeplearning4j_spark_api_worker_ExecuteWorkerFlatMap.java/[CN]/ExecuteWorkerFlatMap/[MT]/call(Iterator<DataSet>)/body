@@ -8,7 +8,9 @@
   }
   try {
     MultiLayerNetwork net=worker.getInitialModel();
-    while (batchedIterator.hasNext()) {
+    int miniBatchCount=0;
+    int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
+    while (batchedIterator.hasNext() && miniBatchCount++ < maxMinibatches) {
       DataSet next=batchedIterator.next();
       R result=worker.processMinibatch(next,net,batchedIterator.hasNext());
       if (result != null) {

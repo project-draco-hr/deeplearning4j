@@ -1,0 +1,17 @@
+{
+  if (tuple == null) {
+    return new VanillaAggregationTuple(result.getParameters(),result.getUpdater().getAggregator(true),result.getScore());
+  }
+  INDArray params=tuple.getParameters().addi(result.getParameters());
+  UpdaterAggregator aggregator;
+  if (tuple.getUpdaterAggregator() == null) {
+    if (result.getUpdater() == null)     aggregator=null;
+ else     aggregator=result.getUpdater().getAggregator(true);
+  }
+ else {
+    aggregator=tuple.getUpdaterAggregator();
+    if (result.getUpdater() == null)     aggregator.aggregate(result.getUpdater());
+  }
+  double scoreSum=tuple.getScoreSum() + result.getScore();
+  return new VanillaAggregationTuple(params,aggregator,scoreSum);
+}

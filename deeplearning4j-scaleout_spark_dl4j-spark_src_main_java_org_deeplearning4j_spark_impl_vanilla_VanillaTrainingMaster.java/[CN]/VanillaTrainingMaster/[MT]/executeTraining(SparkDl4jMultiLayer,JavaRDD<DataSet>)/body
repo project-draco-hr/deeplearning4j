@@ -1,3 +1,23 @@
 {
-  return null;
+  trainingData.persist(StorageLevel.MEMORY_ONLY());
+  long totalCount=trainingData.count();
+  int examplesPerSplit=numWorkers * batchSizePerWorker * averagingFrequency;
+  JavaRDD<DataSet>[] splits;
+  if (totalCount <= examplesPerSplit) {
+    splits=(JavaRDD<DataSet>[])new Object[]{trainingData};
+  }
+ else {
+    int numSplits=(int)(totalCount / examplesPerSplit);
+    double[] weights=new double[numSplits];
+    for (int i=0; i < weights.length; i++)     weights[i]=1.0 / numSplits;
+    splits=trainingData.randomSplit(weights);
+  }
+  int splitNum=1;
+  for (  JavaRDD<DataSet> split : splits) {
+    log.info("Starting training of split {} of {}. MiniBatch={}, avgFrequency={}, totalExamples={}",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalCount);
+    FlatMapFunction<Iterator<DataSet>,VanillaTrainingResult> function=new ExecuteWorkerFlatMap<>(getWorkerInstance(network));
+    JavaRDD<VanillaTrainingResult> result=split.mapPartitions(function);
+    processResults(network,result);
+    splitNum++;
+  }
 }

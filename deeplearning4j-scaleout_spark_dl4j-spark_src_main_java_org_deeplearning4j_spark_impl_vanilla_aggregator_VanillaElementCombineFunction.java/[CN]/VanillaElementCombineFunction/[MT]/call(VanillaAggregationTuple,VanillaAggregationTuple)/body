@@ -1,0 +1,14 @@
+{
+  INDArray newParams=v1.getParameters().addi(v2.getParameters());
+  UpdaterAggregator updaterAggregator=v1.getUpdaterAggregator();
+  UpdaterAggregator updaterAggregator2=v2.getUpdaterAggregator();
+  UpdaterAggregator combinedAggregator;
+  if (updaterAggregator == null)   combinedAggregator=updaterAggregator2;
+ else   if (updaterAggregator2 == null)   combinedAggregator=updaterAggregator;
+ else {
+    updaterAggregator.merge(updaterAggregator2);
+    combinedAggregator=updaterAggregator;
+  }
+  double scoreSum=v1.getScoreSum() + v2.getScoreSum();
+  return new VanillaAggregationTuple(newParams,combinedAggregator,scoreSum);
+}

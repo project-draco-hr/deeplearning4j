@@ -1,3 +1,9 @@
 {
-  return null;
+  NetBroadcastTuple tuple=broadcast.getValue();
+  MultiLayerNetwork net=new MultiLayerNetwork(tuple.getConfiguration());
+  net.setParameters(tuple.getParameters().dup());
+  if (tuple.getUpdater() != null) {
+    net.setUpdater(tuple.getUpdater());
+  }
+  return net;
 }
