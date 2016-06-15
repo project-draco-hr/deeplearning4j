@@ -1,5 +1,7 @@
 {
-  INDArray newParams=v1.getParameters().addi(v2.getParameters());
+  if (v1 == null)   return v2;
+ else   if (v2 == null)   return v1;
+  INDArray newParams=v1.getParametersSum().addi(v2.getParametersSum());
   UpdaterAggregator updaterAggregator=v1.getUpdaterAggregator();
   UpdaterAggregator updaterAggregator2=v2.getUpdaterAggregator();
   UpdaterAggregator combinedAggregator;
@@ -10,5 +12,6 @@
     combinedAggregator=updaterAggregator;
   }
   double scoreSum=v1.getScoreSum() + v2.getScoreSum();
-  return new VanillaAggregationTuple(newParams,combinedAggregator,scoreSum);
+  int aggregationCount=v1.getAggregationsCount() + v2.getAggregationsCount();
+  return new VanillaAggregationTuple(newParams,combinedAggregator,scoreSum,aggregationCount);
 }

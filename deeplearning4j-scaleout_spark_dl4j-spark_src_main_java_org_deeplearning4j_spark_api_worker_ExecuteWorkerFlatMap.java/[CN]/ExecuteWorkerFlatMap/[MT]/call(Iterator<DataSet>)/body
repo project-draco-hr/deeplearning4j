@@ -1,4 +1,5 @@
 {
+  if (!dataSetIterator.hasNext())   return Collections.emptyList();
   WorkerConfiguration dataConfig=worker.getDataConfiguration();
   int batchSize=dataConfig.getBatchSizePerWorker();
   final int prefetchCount=dataConfig.getPrefetchNumBatches();
