@@ -1,2 +1,6 @@
 {
+  VanillaAggregationTuple tuple=results.aggregate(null,new VanillaElementAddFunction(),new VanillaElementCombineFunction());
+  MultiLayerNetwork net=network.getNetwork();
+  net.setParameters(tuple.getParameters());
+  net.setUpdater(tuple.getUpdaterAggregator().getUpdater());
 }
