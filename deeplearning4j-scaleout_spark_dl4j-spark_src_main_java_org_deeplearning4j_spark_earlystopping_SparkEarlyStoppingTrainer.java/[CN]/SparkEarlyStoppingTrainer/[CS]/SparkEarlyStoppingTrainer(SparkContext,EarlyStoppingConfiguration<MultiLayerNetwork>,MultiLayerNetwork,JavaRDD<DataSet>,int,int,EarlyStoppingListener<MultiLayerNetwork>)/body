@@ -1,4 +1,0 @@
-{
-  super(sc,esConfig,net,train,null,examplesPerFit,totalExamples,0,listener);
-  sparkNet=new SparkDl4jMultiLayer(sc,net);
-}

@@ -1,4 +1,0 @@
-{
-  JavaRDD<DataSet> points=loadFromTextFile(path,labelIndex,recordReader);
-  return fitDataSet(points,examplesPerFit,totalExamples,numPartitions);
-}

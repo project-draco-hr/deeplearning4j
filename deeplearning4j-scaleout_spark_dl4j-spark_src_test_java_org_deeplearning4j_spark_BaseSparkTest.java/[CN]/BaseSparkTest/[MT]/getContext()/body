@@ -1,6 +1,6 @@
 {
   if (sc != null)   return sc;
-  SparkConf sparkConf=new SparkConf().set(SparkDl4jMultiLayer.AVERAGE_EACH_ITERATION,"false").set(SparkDl4jMultiLayer.ACCUM_GRADIENT,"false").set(SparkDl4jMultiLayer.DIVIDE_ACCUM_GRADIENT,"false").setMaster("local[*]").setAppName("sparktest");
+  SparkConf sparkConf=new SparkConf().setMaster("local[*]").setAppName("sparktest");
   sc=new JavaSparkContext(sparkConf);
   return sc;
 }

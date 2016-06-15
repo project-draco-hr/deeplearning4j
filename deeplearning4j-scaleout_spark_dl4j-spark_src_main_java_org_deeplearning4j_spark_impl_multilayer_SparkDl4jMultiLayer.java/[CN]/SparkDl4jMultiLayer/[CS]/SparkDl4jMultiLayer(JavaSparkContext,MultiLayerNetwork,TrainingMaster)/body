@@ -1,0 +1,7 @@
+{
+  sc=javaSparkContext;
+  this.conf=network.getLayerWiseConfigurations().clone();
+  this.network=network;
+  if (!network.isInitCalled())   network.init();
+  this.trainingMaster=trainingMaster;
+}

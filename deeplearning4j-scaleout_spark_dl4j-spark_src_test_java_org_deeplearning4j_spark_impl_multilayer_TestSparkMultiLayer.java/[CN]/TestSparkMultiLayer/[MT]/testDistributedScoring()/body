@@ -1,6 +1,6 @@
 {
   MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l1(0.1).l2(0.1).seed(123).updater(Updater.NESTEROVS).learningRate(0.1).momentum(0.9).list().layer(0,new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(nIn).nOut(3).activation("tanh").build()).layer(1,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(nOut).activation("softmax").build()).backprop(true).pretrain(false).build();
-  SparkDl4jMultiLayer sparkNet=new SparkDl4jMultiLayer(sc,conf);
+  SparkDl4jMultiLayer sparkNet=new SparkDl4jMultiLayer(sc,conf,new VanillaTrainingMaster(true,Runtime.getRuntime().availableProcessors(),10,1,0));
   MultiLayerNetwork netCopy=sparkNet.getNetwork().clone();
   int nRows=100;
   INDArray features=Nd4j.rand(nRows,nIn);

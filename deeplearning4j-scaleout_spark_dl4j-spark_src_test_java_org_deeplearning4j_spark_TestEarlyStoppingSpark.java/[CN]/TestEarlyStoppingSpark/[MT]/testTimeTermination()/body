@@ -6,7 +6,7 @@
   JavaRDD<DataSet> irisData=getIris();
   EarlyStoppingModelSaver<MultiLayerNetwork> saver=new InMemoryModelSaver<>();
   EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(10000)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(3,TimeUnit.SECONDS),new MaxScoreIterationTerminationCondition(7.5)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc.sc())).modelSaver(saver).build();
-  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),esConf,net,irisData,50,150,5);
+  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),new VanillaTrainingMaster(true,4,150 / 15,1,0),esConf,net,irisData);
   long startTime=System.currentTimeMillis();
   EarlyStoppingResult result=trainer.fit();
   long endTime=System.currentTimeMillis();
