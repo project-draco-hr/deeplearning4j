@@ -1,4 +1,5 @@
 {
-  if (kernelHeight >= (inHeight + 2 * padHeight))   throw new InvalidInputTypeException("Invalid input: activations into layer are h=" + inHeight + " but kernel size is "+ kernelHeight+ " with padding "+ padHeight);
-  if (kernelWidth >= (inWidth + 2 * padWidth))   throw new InvalidInputTypeException("Invalid input: activations into layer are w=" + inWidth + " but kernel size is "+ kernelWidth+ " with padding "+ padWidth);
+  if (kernelHeight > (inHeight + 2 * padHeight))   throw new InvalidInputTypeException("Invalid input: activations into layer are h=" + inHeight + " but kernel size is "+ kernelHeight+ " with padding "+ padHeight);
+  if (kernelWidth > (inWidth + 2 * padWidth))   throw new InvalidInputTypeException("Invalid input: activations into layer are w=" + inWidth + " but kernel size is "+ kernelWidth+ " with padding "+ padWidth);
+  if ((strideHeight <= 0) || (strideWidth <= 0))   throw new InvalidInputTypeException("Invalid stride: strideHeight is " + strideHeight + " and strideWidth is "+ strideWidth+ " and both should be great than 0");
 }

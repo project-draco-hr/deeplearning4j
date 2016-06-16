@@ -1,6 +1,6 @@
 {
   int iterations=conf.getConf(0).getNumIterations();
-  log.info("Running distributed training:  (averaging each iteration = " + averageEachIteration + "), (iterations = "+ iterations+ "), (num partions = "+ rdd.partitions().size()+ ")");
+  log.info("Running distributed training:  (averaging each iteration = " + averageEachIteration + "), (iterations = "+ iterations+ "), (num partitions = "+ rdd.partitions().size()+ ")");
   if (!averageEachIteration) {
     runIteration(rdd);
   }

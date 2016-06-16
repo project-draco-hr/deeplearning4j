@@ -6,6 +6,6 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(1e-1f).layer(new org.deeplearning4j.nn.conf.layers.RBM.Builder(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.GAUSSIAN,org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).nIn(d.numInputs()).nOut(3).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  RBM r=LayerFactories.getFactory(conf).create(conf,null,0,params);
+  RBM r=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   r.fit(d.getFeatureMatrix());
 }

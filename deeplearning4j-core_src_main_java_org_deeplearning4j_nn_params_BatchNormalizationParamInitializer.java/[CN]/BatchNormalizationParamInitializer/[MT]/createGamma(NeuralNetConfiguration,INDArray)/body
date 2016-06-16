@@ -1,5 +1,0 @@
-{
-  BatchNormalization layer=(BatchNormalization)conf.getLayer();
-  gammaView.assign(layer.getGamma());
-  return gammaView;
-}

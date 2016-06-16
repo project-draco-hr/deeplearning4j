@@ -1,0 +1,53 @@
+{
+  ZipInputStream zis=new ZipInputStream(is);
+  boolean gotConfig=false;
+  boolean gotCoefficients=false;
+  boolean gotUpdater=false;
+  String json="";
+  INDArray params=null;
+  ComputationGraphUpdater updater=null;
+  BufferedReader reader=new BufferedReader(new InputStreamReader(zis));
+  ZipEntry entry;
+  while ((entry=zis.getNextEntry()) != null) {
+switch (entry.getName()) {
+case "configuration.json":
+      String line;
+    StringBuilder js=new StringBuilder();
+  while ((line=reader.readLine()) != null) {
+    js.append(line).append("\n");
+  }
+json=js.toString();
+gotConfig=true;
+break;
+case "coefficients.bin":
+DataInputStream dis=new DataInputStream(zis);
+params=Nd4j.read(dis);
+gotCoefficients=true;
+break;
+case "updater.bin":
+ObjectInputStream ois=new ObjectInputStream(zis);
+try {
+updater=(ComputationGraphUpdater)ois.readObject();
+}
+ catch (ClassNotFoundException e) {
+throw new RuntimeException(e);
+}
+gotUpdater=true;
+}
+zis.closeEntry();
+}
+if (gotConfig && gotCoefficients) {
+ComputationGraphConfiguration confFromJson=ComputationGraphConfiguration.fromJson(json);
+ComputationGraph cg=new ComputationGraph(confFromJson);
+cg.init(params,false);
+if (gotUpdater && updater != null) {
+cg.setUpdater(updater);
+}
+zis.close();
+return cg;
+}
+ else {
+zis.close();
+throw new IllegalStateException("Model wasnt found within file: gotConfig: [" + gotConfig + "], gotCoefficients: ["+ gotCoefficients+ "], gotUpdater: ["+ gotUpdater+ "]");
+}
+}

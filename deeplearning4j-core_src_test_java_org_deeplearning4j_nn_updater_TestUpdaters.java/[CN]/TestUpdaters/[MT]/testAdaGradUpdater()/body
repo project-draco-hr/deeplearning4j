@@ -3,7 +3,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADAGRAD).build()).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
   updater.update(layer,gradient,-1,1);
   Gradient gradientDup=new DefaultGradient();

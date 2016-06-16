@@ -6,12 +6,10 @@
   DataSet ds=iter.next(50);
   MultipleEpochsIterator multiIter=new MultipleEpochsIterator(epochs,ds);
   assertTrue(multiIter.hasNext());
-  int actualEpochs=0;
   while (multiIter.hasNext()) {
     DataSet path=multiIter.next();
     assertEquals(path.numExamples(),50,0.0);
     assertFalse(path == null);
-    actualEpochs++;
   }
-  assertEquals(epochs,actualEpochs,0.0);
+  assertEquals(epochs,multiIter.epochs);
 }

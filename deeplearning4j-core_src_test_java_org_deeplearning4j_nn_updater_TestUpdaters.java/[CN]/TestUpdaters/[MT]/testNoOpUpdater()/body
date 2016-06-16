@@ -4,7 +4,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NONE).build()).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params);
+  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
   for (int i=0; i < weightGradient.length(); i++)   weightGradient.putScalar(i,r.nextDouble());
   for (int i=0; i < biasGradient.length(); i++)   biasGradient.putScalar(i,r.nextDouble());

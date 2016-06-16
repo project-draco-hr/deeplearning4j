@@ -1,3 +1,0 @@
-{
-  super(new LFWLoader().getRecordReader(numExamples,batchSize,train),batchSize,1,numCategories);
-}
