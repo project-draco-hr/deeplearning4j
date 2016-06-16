@@ -2,5 +2,5 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345L).iterations(1).miniBatch(true).maxNumLineSearchIterations(maxIterations).layer(new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(lossFunction).nIn(4).nOut(3).activation(activationFunction).weightInit(WeightInit.XAVIER).build()).build();
   int numParams=LayerFactories.getFactory(conf.getLayer()).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  return LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+  return LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
 }
