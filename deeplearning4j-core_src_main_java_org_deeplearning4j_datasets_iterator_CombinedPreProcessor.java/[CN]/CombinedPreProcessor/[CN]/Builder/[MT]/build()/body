@@ -1,0 +1,5 @@
+{
+  CombinedPreProcessor preProcessor=new CombinedPreProcessor();
+  preProcessor.preProcessors=this.preProcessors;
+  return preProcessor;
+}
