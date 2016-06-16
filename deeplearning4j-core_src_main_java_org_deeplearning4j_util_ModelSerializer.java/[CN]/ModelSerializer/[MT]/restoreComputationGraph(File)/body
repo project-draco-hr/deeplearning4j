@@ -44,8 +44,7 @@
   if (gotConfig && gotCoefficients) {
     ComputationGraphConfiguration confFromJson=ComputationGraphConfiguration.fromJson(json);
     ComputationGraph cg=new ComputationGraph(confFromJson);
-    cg.init();
-    cg.setParams(params);
+    cg.init(params,false);
     if (gotUpdater && updater != null) {
       cg.setUpdater(updater);
     }

@@ -44,8 +44,7 @@
   if (gotConfig && gotCoefficients) {
     MultiLayerConfiguration confFromJson=MultiLayerConfiguration.fromJson(json);
     MultiLayerNetwork network=new MultiLayerNetwork(confFromJson);
-    network.init();
-    network.setParameters(params);
+    network.init(params,false);
     if (gotUpdater && updater != null) {
       network.setUpdater(updater);
     }
