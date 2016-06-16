@@ -6,11 +6,19 @@
     List<INDArray> cFeatures=new ArrayList<>();
     for (int cnt=0; cnt < batchSize; cnt++) {
       if (iterator.hasNext()) {
-        Pair<?,?> pair=(Pair<?,?>)iterator.next();
+        Pair<T,T> pair=iterator.next();
         if (numFeatures < 1) {
           if (pair.getFirst() instanceof INDArray) {
             numFeatures=((INDArray)pair.getFirst()).length();
             numLabels=((INDArray)pair.getSecond()).length();
+          }
+ else           if (pair.getFirst() instanceof float[]) {
+            numFeatures=((float[])pair.getFirst()).length;
+            numLabels=((float[])pair.getSecond()).length;
+          }
+ else           if (pair.getFirst() instanceof double[]) {
+            numFeatures=((double[])pair.getFirst()).length;
+            numLabels=((double[])pair.getSecond()).length;
           }
         }
         if (pair.getFirst() instanceof INDArray) {
