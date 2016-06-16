@@ -1,6 +1,4 @@
 {
-  String confOut=FilenameUtils.concat(directory,latestFileNameConf);
-  String paramOut=FilenameUtils.concat(directory,latestFileNameParam);
-  String updaterOut=FilenameUtils.concat(directory,latestFileNameUpdater);
-  return load(confOut,paramOut,updaterOut);
+  String confOut=FilenameUtils.concat(directory,latestFileName);
+  return load(confOut);
 }

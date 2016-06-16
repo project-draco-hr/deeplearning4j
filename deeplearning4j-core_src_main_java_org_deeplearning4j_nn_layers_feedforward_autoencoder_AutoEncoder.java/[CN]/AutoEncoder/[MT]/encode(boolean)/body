@@ -1,6 +1,6 @@
 {
   if (conf.getLayer().getDropOut() > 0 && training) {
-    dropoutMask=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
+    Dropout.applyDropout(input,conf.getLayer().getDropOut());
   }
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);

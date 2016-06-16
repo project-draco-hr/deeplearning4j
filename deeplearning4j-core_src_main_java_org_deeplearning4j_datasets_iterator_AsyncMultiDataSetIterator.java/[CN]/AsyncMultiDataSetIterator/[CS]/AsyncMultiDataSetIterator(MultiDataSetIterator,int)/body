@@ -1,0 +1,11 @@
+{
+  if (queueLength <= 0)   throw new IllegalArgumentException("Queue size must be > 0");
+  this.iterator=iterator;
+  this.queue=new LinkedBlockingQueue<>(queueLength);
+  runnable=new AsyncMultiDataSetIterator.IteratorRunnable();
+  thread=new Thread(runnable);
+  Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
+  Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
+  thread.setDaemon(true);
+  thread.start();
+}

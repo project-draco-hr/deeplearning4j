@@ -1,0 +1,25 @@
+{
+  return new Iterable<Pair<float[],float[]>>(){
+    @Override public Iterator<Pair<float[],float[]>> iterator(){
+      return new Iterator<Pair<float[],float[]>>(){
+        private AtomicInteger cnt=new AtomicInteger(0);
+        @Override public boolean hasNext(){
+          return cnt.incrementAndGet() <= totalRows;
+        }
+        @Override public Pair<float[],float[]> next(){
+          float features[]=new float[numColumns];
+          float labels[]=new float[numColumns];
+          for (int i=0; i < numColumns; i++) {
+            features[i]=(float)i;
+            labels[i]=RandomUtils.nextFloat(0,5);
+          }
+          return Pair.makePair(features,labels);
+        }
+        @Override public void remove(){
+        }
+      }
+;
+    }
+  }
+;
+}
