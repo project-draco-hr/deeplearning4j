@@ -3,7 +3,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(lstmNHiddenUnits).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(0,1)).activation("tanh").build()).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  GravesBidirectionalLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+  GravesBidirectionalLSTM lstm=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
   lstm.setBackpropGradientsViewArray(Nd4j.create(1,LayerFactories.getFactory(conf.getLayer()).initializer().numParams(conf,true)));
   lstm.activate(inputData);
   assertNotNull(lstm.input());
