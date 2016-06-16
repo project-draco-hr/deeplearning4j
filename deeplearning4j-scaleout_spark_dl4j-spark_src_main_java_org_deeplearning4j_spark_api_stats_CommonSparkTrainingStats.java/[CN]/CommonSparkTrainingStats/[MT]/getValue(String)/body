@@ -1,0 +1,19 @@
+{
+switch (key) {
+case "workerFlatMapTotalTimeMs":
+    return workerFlatMapTotalTimeMs;
+case "workerFlatMapTotalExampleCount":
+  return workerFlatMapTotalExampleCount;
+case "workerFlatMapGetInitialModelTimeMs":
+return workerFlatMapGetInitialModelTimeMs;
+case "workerFlatMapDataSetGetTimesMs":
+return workerFlatMapDataSetGetTimesMs;
+case "workerFlatMapProcessMiniBatchTimesMs":
+return workerFlatMapProcessMiniBatchTimesMs;
+case "workerFlatMapCountNoDataInstances":
+return workerFlatMapCountNoDataInstances;
+default :
+if (trainingMasterSpecificStats != null) return trainingMasterSpecificStats.getValue(key);
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

@@ -1,0 +1,5 @@
+{
+  Set<String> set=new LinkedHashSet<>(columnNames);
+  if (trainingMasterSpecificStats != null)   set.addAll(trainingMasterSpecificStats.getKeySet());
+  return set;
+}

@@ -1,0 +1,5 @@
+{
+  long now=System.currentTimeMillis();
+  dataSetGetTimes.add((int)(now - lastDataSetBefore));
+  totalExampleCount+=numExamples;
+}

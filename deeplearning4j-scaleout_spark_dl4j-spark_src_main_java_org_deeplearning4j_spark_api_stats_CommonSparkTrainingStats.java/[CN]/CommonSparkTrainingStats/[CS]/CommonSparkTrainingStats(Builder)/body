@@ -1,0 +1,9 @@
+{
+  this.trainingMasterSpecificStats=builder.trainingMasterSpecificStats;
+  this.workerFlatMapTotalTimeMs=builder.workerFlatMapTotalTimeMs;
+  this.workerFlatMapTotalExampleCount=builder.workerFlatMapTotalExampleCount;
+  this.workerFlatMapGetInitialModelTimeMs=builder.workerFlatMapGetInitialModelTimeMs;
+  this.workerFlatMapDataSetGetTimesMs=builder.workerFlatMapDataSetGetTimesMs;
+  this.workerFlatMapProcessMiniBatchTimesMs=builder.workerFlatMapProcessMiniBatchTimesMs;
+  this.workerFlatMapCountNoDataInstances=builder.workerFlatMapCountNoDataInstances;
+}
