@@ -6,7 +6,7 @@
   INDArray input=d2.getFeatureMatrix();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+  AutoEncoder da=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
   da.setListeners(new ScoreIterationListener(1),new HistogramIterationListener(5));
   da.setParams(da.params());
   da.fit(input);

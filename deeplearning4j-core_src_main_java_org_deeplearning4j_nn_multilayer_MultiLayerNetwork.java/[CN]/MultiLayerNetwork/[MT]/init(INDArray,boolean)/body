@@ -1,0 +1,50 @@
+{
+  if (layerWiseConfigurations == null || layers == null)   intializeConfigurations();
+  if (initCalled)   return;
+  int nLayers=getnLayers();
+  if (nLayers < 1)   throw new IllegalStateException("Unable to create network: number of layers is less than 1");
+  if (this.layers == null || this.layers[0] == null) {
+    if (this.layers == null)     this.layers=new Layer[nLayers];
+    int backpropParamLength=0;
+    int[] nParamsPerLayer=new int[nLayers];
+    for (int i=0; i < nLayers; i++) {
+      NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
+      nParamsPerLayer[i]=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+      backpropParamLength+=nParamsPerLayer[i];
+    }
+    boolean initializeParams;
+    if (parameters != null) {
+      if (parameters.isRowVector())       throw new IllegalArgumentException("Invalid parameters: should be a row vector");
+      if (parameters.length() != backpropParamLength)       throw new IllegalArgumentException("Invalid parameters: expected length " + backpropParamLength + ", got length "+ parameters.length());
+      if (cloneParametersArray)       flattenedParams=parameters.dup();
+ else       flattenedParams=parameters;
+      initializeParams=false;
+    }
+ else {
+      flattenedParams=Nd4j.create(1,backpropParamLength);
+      initializeParams=true;
+    }
+    int paramCountSoFar=0;
+    for (int i=0; i < nLayers; i++) {
+      INDArray paramsView;
+      if (nParamsPerLayer[i] > 0) {
+        paramsView=flattenedParams.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramCountSoFar,paramCountSoFar + nParamsPerLayer[i]));
+      }
+ else {
+        paramsView=null;
+      }
+      paramCountSoFar+=nParamsPerLayer[i];
+      NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
+      layers[i]=LayerFactories.getFactory(conf).create(conf,listeners,i,paramsView,initializeParams);
+      layerMap.put(conf.getLayer().getLayerName(),layers[i]);
+    }
+    initCalled=true;
+    initMask();
+  }
+  defaultConfiguration.clearVariables();
+  for (int i=0; i < layers.length; i++) {
+    for (    String s : layers[i].conf().variables()) {
+      defaultConfiguration.addVariable(i + "_" + s);
+    }
+  }
+}

@@ -7,7 +7,7 @@
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LBFGS).weightInit(WeightInit.RELU).updater(Updater.ADAM).activation("sigmoid").iterations(10).regularization(true).l2(1e-1).gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).learningRate(1e-1).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).layer(new org.deeplearning4j.nn.conf.layers.RBM.Builder(RBM.HiddenUnit.BINARY,RBM.VisibleUnit.BINARY).nIn(784).nOut(400).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  org.deeplearning4j.nn.layers.feedforward.rbm.RBM da=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+  org.deeplearning4j.nn.layers.feedforward.rbm.RBM da=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
   da.setListeners(new ScoreIterationListener(1));
   mnist=new MnistDataSetIterator(1000,1000);
   da.fit(mnist.next().getFeatureMatrix());
