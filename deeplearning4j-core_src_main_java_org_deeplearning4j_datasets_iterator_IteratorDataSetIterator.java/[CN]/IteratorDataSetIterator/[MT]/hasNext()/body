@@ -1,3 +1,4 @@
 {
-  return !queued.isEmpty() || iterator.hasNext();
+  boolean temp=!queued.isEmpty() || iterator.hasNext();
+  return temp;
 }

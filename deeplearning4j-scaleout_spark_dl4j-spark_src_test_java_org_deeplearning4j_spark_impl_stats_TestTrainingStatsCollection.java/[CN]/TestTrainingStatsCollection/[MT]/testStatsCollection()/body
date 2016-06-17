@@ -1,5 +1,5 @@
 {
-  int nWorkers=4;
+  int nWorkers=1;
   SparkConf sparkConf=new SparkConf();
   sparkConf.setMaster("local[" + nWorkers + "]");
   sparkConf.setAppName("Test");
@@ -79,7 +79,7 @@
   assertGreaterEqZero(workerFlatMapDataSetGetTimesMs);
   int[] workerFlatMapProcessMiniBatchTimesMs=cStats.getWorkerFlatMapProcessMiniBatchTimesMs();
   assertEquals(numberOfAveragings * nWorkers * averagingFrequency,workerFlatMapProcessMiniBatchTimesMs.length);
-  assertGreaterZero(workerFlatMapProcessMiniBatchTimesMs);
+  assertGreaterEqZero(workerFlatMapProcessMiniBatchTimesMs);
   int workerFlatMapCountNoDataInstances=cStats.getWorkerFlatMapCountNoDataInstances();
   assertEquals(0,workerFlatMapCountNoDataInstances);
   SparkTrainingStats vanillaStats=cStats.getNestedTrainingStats();

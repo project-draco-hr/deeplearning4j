@@ -20,13 +20,12 @@
     int miniBatchCount=0;
     int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
     while (batchedIterator.hasNext() && miniBatchCount++ < maxMinibatches) {
-      System.out.println(Thread.currentThread().getId() + "\t" + miniBatchCount);
       if (stats)       s.logNextDataSetBefore();
       DataSet next=batchedIterator.next();
       if (stats)       s.logNextDataSetAfter(next.numExamples());
       if (stats) {
         s.logProcessMinibatchBefore();
-        Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,batchedIterator.hasNext());
+        Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,!batchedIterator.hasNext());
         s.logProcessMinibatchAfter();
         if (result != null) {
           s.logReturnTime();
@@ -37,7 +36,7 @@
         }
       }
  else {
-        R result=worker.processMinibatch(next,net,batchedIterator.hasNext());
+        R result=worker.processMinibatch(next,net,!batchedIterator.hasNext());
         if (result != null) {
           return Collections.singletonList(result);
         }
