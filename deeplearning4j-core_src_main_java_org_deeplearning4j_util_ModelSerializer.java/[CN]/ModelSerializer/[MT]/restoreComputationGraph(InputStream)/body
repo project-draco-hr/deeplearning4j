@@ -3,9 +3,11 @@
   boolean gotConfig=false;
   boolean gotCoefficients=false;
   boolean gotUpdater=false;
+  boolean gotPreProcessor=false;
   String json="";
   INDArray params=null;
   ComputationGraphUpdater updater=null;
+  DataSetPreProcessor preProcessor=null;
   BufferedReader reader=new BufferedReader(new InputStreamReader(zis));
   ZipEntry entry;
   while ((entry=zis.getNextEntry()) != null) {
@@ -25,6 +27,7 @@ params=Nd4j.read(dis);
 gotCoefficients=true;
 break;
 case "updater.bin":
+{
 ObjectInputStream ois=new ObjectInputStream(zis);
 try {
 updater=(ComputationGraphUpdater)ois.readObject();
@@ -33,6 +36,20 @@ updater=(ComputationGraphUpdater)ois.readObject();
 throw new RuntimeException(e);
 }
 gotUpdater=true;
+}
+break;
+case "preprocessor.bin":
+{
+ObjectInputStream ois=new ObjectInputStream(zis);
+try {
+preProcessor=(DataSetPreProcessor)ois.readObject();
+}
+ catch (ClassNotFoundException e) {
+throw new RuntimeException(e);
+}
+gotPreProcessor=true;
+}
+break;
 }
 zis.closeEntry();
 }
