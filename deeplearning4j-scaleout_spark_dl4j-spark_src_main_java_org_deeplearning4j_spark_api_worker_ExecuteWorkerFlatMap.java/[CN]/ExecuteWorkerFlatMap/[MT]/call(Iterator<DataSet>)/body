@@ -28,10 +28,10 @@
         Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,batchedIterator.hasNext());
         s.logProcessMinibatchAfter();
         if (result != null) {
-          if (stats) {
-            s.logReturnTime();
-            result.getFirst().setStats(s.build(result.getSecond()));
-          }
+          s.logReturnTime();
+          SparkTrainingStats workerStats=result.getSecond();
+          SparkTrainingStats returnStats=s.build(workerStats);
+          result.getFirst().setStats(returnStats);
           return Collections.singletonList(result.getFirst());
         }
       }

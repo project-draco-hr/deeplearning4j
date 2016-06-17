@@ -7,6 +7,6 @@
  else {
     if (o.workerStats != null)     workerStats=o.workerStats;
   }
-  this.vanillaMasterBroadcastCreateTimeMs=ArrayUtil.combine(vanillaMasterBroadcastCreateTimeMs,o.vanillaMasterBroadcastCreateTimeMs);
-  this.vanillaMasterFitTimeMs=ArrayUtil.combine(vanillaMasterFitTimeMs,o.vanillaMasterFitTimeMs);
+  this.vanillaMasterBroadcastCreateTimesMs=ArrayUtil.combine(vanillaMasterBroadcastCreateTimesMs,o.vanillaMasterBroadcastCreateTimesMs);
+  this.vanillaMasterFitTimesMs=ArrayUtil.combine(vanillaMasterFitTimesMs,o.vanillaMasterFitTimesMs);
 }

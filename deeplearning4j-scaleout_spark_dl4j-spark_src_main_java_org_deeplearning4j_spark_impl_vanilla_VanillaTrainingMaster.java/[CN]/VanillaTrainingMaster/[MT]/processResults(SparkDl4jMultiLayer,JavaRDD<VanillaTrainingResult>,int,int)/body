@@ -4,6 +4,7 @@
   INDArray params=tuple.getParametersSum();
   int aggCount=tuple.getAggregationsCount();
   UpdaterAggregator updaterAg=tuple.getUpdaterAggregator();
+  SparkTrainingStats aggregatedStats=tuple.getSparkTrainingStats();
   if (collectTrainingStats)   stats.logAggregationEndTime();
   MultiLayerNetwork net=network.getNetwork();
   if (collectTrainingStats)   stats.logProcessParamsUpdaterStart();
@@ -11,6 +12,9 @@
   Updater updater=updaterAg.getUpdater();
   net.setParameters(params);
   net.setUpdater(updater);
-  if (collectTrainingStats)   stats.logProcessParamsUpdaterEnd();
+  if (collectTrainingStats) {
+    stats.logProcessParamsUpdaterEnd();
+    stats.addWorkerStats(aggregatedStats);
+  }
   log.info("Completed training of split {} of {}",splitNum,totalSplits);
 }

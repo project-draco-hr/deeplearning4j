@@ -1,16 +1,16 @@
 {
 switch (key) {
-case "workerFlatMapTotalTimeMs":
+case "WorkerFlatMapTotalTimeMs":
     return workerFlatMapTotalTimeMs;
-case "workerFlatMapTotalExampleCount":
+case "WorkerFlatMapTotalExampleCount":
   return workerFlatMapTotalExampleCount;
-case "workerFlatMapGetInitialModelTimeMs":
+case "WorkerFlatMapGetInitialModelTimeMs":
 return workerFlatMapGetInitialModelTimeMs;
-case "workerFlatMapDataSetGetTimesMs":
+case "WorkerFlatMapDataSetGetTimesMs":
 return workerFlatMapDataSetGetTimesMs;
-case "workerFlatMapProcessMiniBatchTimesMs":
+case "WorkerFlatMapProcessMiniBatchTimesMs":
 return workerFlatMapProcessMiniBatchTimesMs;
-case "workerFlatMapCountNoDataInstances":
+case "WorkerFlatMapCountNoDataInstances":
 return workerFlatMapCountNoDataInstances;
 default :
 if (trainingMasterSpecificStats != null) return trainingMasterSpecificStats.getValue(key);

@@ -1,6 +1,6 @@
 {
   int bcast=(int)(broadcastEndTime - broadcastStartTime);
-  int init=(int)(initEndTime - initStartTime);
+  int init=(int)(initEndTime - broadcastEndTime);
   int[] fitTimesArr=new int[fitTimes.size()];
   for (int i=0; i < fitTimesArr.length; i++)   fitTimesArr[i]=fitTimes.get(i);
   return new VanillaTrainingWorkerStats(bcast,init,fitTimesArr);
