@@ -1,0 +1,4 @@
+{
+  if (iterable != null)   this.iterator=iterable.iterator();
+ else   throw new IllegalStateException("To use reset() method you need to provide Iterable<DataSet>, not Iterator");
+}

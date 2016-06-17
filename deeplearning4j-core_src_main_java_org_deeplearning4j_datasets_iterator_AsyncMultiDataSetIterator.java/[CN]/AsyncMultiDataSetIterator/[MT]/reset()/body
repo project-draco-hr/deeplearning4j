@@ -1,0 +1,17 @@
+{
+  runnable.killRunnable=true;
+  if (runnable.isAlive)   thread.interrupt();
+  try {
+    runnable.runCompletedSemaphore.tryAcquire(5,TimeUnit.SECONDS);
+  }
+ catch (  InterruptedException e) {
+  }
+  queue.clear();
+  iterator.reset();
+  runnable=new AsyncMultiDataSetIterator.IteratorRunnable();
+  thread=new Thread(runnable);
+  Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
+  Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
+  thread.setDaemon(true);
+  thread.start();
+}

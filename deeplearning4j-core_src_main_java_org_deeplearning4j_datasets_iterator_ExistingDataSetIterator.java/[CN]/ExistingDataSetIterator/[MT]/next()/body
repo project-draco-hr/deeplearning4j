@@ -1,0 +1,8 @@
+{
+  if (preProcessor != null) {
+    DataSet ds=iterator.next();
+    preProcessor.preProcess(ds);
+    return ds;
+  }
+ else   return iterator.next();
+}

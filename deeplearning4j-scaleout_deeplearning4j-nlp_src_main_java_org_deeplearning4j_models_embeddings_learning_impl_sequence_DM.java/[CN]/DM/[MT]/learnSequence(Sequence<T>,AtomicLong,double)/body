@@ -1,0 +1,11 @@
+{
+  Sequence<T> seq=cbow.applySubsampling(sequence,nextRandom);
+  List<T> labels=new ArrayList<>();
+  labels.addAll(sequence.getSequenceLabels());
+  if (sequence.getSequenceLabel() == null)   throw new IllegalStateException("Label is NULL");
+  if (seq.isEmpty() || labels.isEmpty())   return;
+  for (int i=0; i < seq.size(); i++) {
+    nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
+    dm(i,seq,(int)nextRandom.get() % window,nextRandom,learningRate);
+  }
+}
