@@ -1,0 +1,12 @@
+{
+  if (!(other instanceof VanillaTrainingMasterStats))   throw new IllegalArgumentException("Expected VanillaTrainingMasterStats, got " + (other != null ? other.getClass() : null));
+  VanillaTrainingMasterStats o=(VanillaTrainingMasterStats)other;
+  if (workerStats != null) {
+    if (o.workerStats != null)     workerStats.addOtherTrainingStats(o.workerStats);
+  }
+ else {
+    if (o.workerStats != null)     workerStats=o.workerStats;
+  }
+  this.vanillaMasterBroadcastCreateTimeMs=ArrayUtil.combine(vanillaMasterBroadcastCreateTimeMs,o.vanillaMasterBroadcastCreateTimeMs);
+  this.vanillaMasterFitTimeMs=ArrayUtil.combine(vanillaMasterFitTimeMs,o.vanillaMasterFitTimeMs);
+}

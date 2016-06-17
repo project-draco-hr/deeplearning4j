@@ -1,0 +1,9 @@
+{
+  int[] bcast=new int[broadcastTimes.size()];
+  for (int i=0; i < bcast.length; i++)   bcast[i]=broadcastTimes.get(i);
+  int[] fit=new int[fitTimes.size()];
+  for (int i=0; i < fit.length; i++)   fit[i]=fitTimes.get(i);
+  int[] split=new int[splitTimes.size()];
+  for (int i=0; i < split.length; i++)   split[i]=splitTimes.get(i);
+  return new VanillaTrainingMasterStats(workerStats,bcast,fit,split);
+}

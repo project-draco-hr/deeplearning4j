@@ -1,10 +1,10 @@
 {
 switch (key) {
-case "vanillaWorkerBroadcastGetValueTimeMs":
+case "VanillaWorkerBroadcastGetValueTimeMs":
     return vanillaWorkerBroadcastGetValueTimeMs;
-case "vanillaWorkerInitTimeMs":
+case "VanillaWorkerInitTimeMs":
   return vanillaWorkerInitTimeMs;
-case "vanillaWorkerFitTimesMs":
+case "VanillaWorkerFitTimesMs":
 return vanillaWorkerFitTimesMs;
 default :
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");

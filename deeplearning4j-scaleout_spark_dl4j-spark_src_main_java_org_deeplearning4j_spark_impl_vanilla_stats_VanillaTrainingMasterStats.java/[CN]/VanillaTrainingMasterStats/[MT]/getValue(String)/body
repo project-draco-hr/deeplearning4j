@@ -1,0 +1,17 @@
+{
+switch (key) {
+case "VanillaMasterBroadcastCreateTimesMs":
+    return vanillaMasterBroadcastCreateTimeMs;
+case "VanillaMasterFitTimesMs":
+  return vanillaMasterFitTimeMs;
+case "VanillaMasterSplitTimesMs":
+return vanillaMasterSplitTimeMs;
+case "VanillaMasterAggregateTimesMs":
+return vanillaMasterAggregateTimesMs;
+case "VanillaMasterProcessParamsUpdaterTimesMs":
+return vanillaMasterProcessParamsUpdaterTimesMs;
+default :
+if (workerStats != null) return workerStats.getValue(key);
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

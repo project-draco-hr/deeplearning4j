@@ -1,8 +1,16 @@
 {
+  if (collectTrainingStats)   stats.logAggregateStartTime();
   VanillaAggregationTuple tuple=results.aggregate(null,new VanillaElementAddFunction(),new VanillaElementCombineFunction());
+  INDArray params=tuple.getParametersSum();
+  int aggCount=tuple.getAggregationsCount();
+  UpdaterAggregator updaterAg=tuple.getUpdaterAggregator();
+  if (collectTrainingStats)   stats.logAggregationEndTime();
   MultiLayerNetwork net=network.getNetwork();
-  INDArray params=tuple.getParametersSum().divi(tuple.getAggregationsCount());
+  if (collectTrainingStats)   stats.logProcessParamsUpdaterStart();
+  params.divi(aggCount);
+  Updater updater=updaterAg.getUpdater();
   net.setParameters(params);
-  net.setUpdater(tuple.getUpdaterAggregator().getUpdater());
+  net.setUpdater(updater);
+  if (collectTrainingStats)   stats.logProcessParamsUpdaterEnd();
   log.info("Completed training of split {} of {}",splitNum,totalSplits);
 }

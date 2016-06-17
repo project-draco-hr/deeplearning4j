@@ -1,3 +1,9 @@
 {
   this.collectTrainingStats=collectTrainingStats;
+  if (collectTrainingStats) {
+    if (this.stats == null)     this.stats=new VanillaTrainingMasterStats.VanillaTrainingMasterStatsHelper();
+  }
+ else {
+    this.stats=null;
+  }
 }

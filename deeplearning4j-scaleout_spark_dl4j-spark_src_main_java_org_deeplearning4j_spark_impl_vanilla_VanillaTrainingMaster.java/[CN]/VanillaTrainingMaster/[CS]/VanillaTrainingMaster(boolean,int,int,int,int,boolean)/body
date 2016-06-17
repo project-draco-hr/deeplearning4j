@@ -5,4 +5,5 @@
   this.averagingFrequency=averagingFrequency;
   this.prefetchNumBatches=prefetchNumBatches;
   this.collectTrainingStats=collectTrainingStats;
+  if (collectTrainingStats)   stats=new VanillaTrainingMasterStats.VanillaTrainingMasterStatsHelper();
 }

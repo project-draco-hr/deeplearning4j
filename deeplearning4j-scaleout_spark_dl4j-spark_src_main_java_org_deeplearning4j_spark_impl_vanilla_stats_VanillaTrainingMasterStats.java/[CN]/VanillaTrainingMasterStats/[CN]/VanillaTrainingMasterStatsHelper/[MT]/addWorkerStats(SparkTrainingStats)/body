@@ -1,0 +1,4 @@
+{
+  if (this.workerStats == null)   this.workerStats=workerStats;
+ else   if (workerStats != null)   this.workerStats.addOtherTrainingStats(workerStats);
+}
