@@ -17,6 +17,6 @@
   if (workerFlatMapProcessMiniBatchTimesMs == null)   sb.append("-\n");
  else   sb.append(Arrays.toString(workerFlatMapProcessMiniBatchTimesMs)).append("\n");
   sb.append(String.format(f,"WorkerFlatMapCountNoDataInstances")).append(workerFlatMapCountNoDataInstances).append("\n");
-  if (trainingMasterSpecificStats != null)   sb.append(trainingMasterSpecificStats.statsAsString()).append("\n");
+  if (trainingWorkerSpecificStats != null)   sb.append(trainingWorkerSpecificStats.statsAsString()).append("\n");
   return sb.toString();
 }

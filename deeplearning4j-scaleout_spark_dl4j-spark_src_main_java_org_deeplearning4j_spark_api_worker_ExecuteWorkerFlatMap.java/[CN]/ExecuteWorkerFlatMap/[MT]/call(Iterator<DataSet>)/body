@@ -20,6 +20,7 @@
     int miniBatchCount=0;
     int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
     while (batchedIterator.hasNext() && miniBatchCount++ < maxMinibatches) {
+      System.out.println(Thread.currentThread().getId() + "\t" + miniBatchCount);
       if (stats)       s.logNextDataSetBefore();
       DataSet next=batchedIterator.next();
       if (stats)       s.logNextDataSetAfter(next.numExamples());

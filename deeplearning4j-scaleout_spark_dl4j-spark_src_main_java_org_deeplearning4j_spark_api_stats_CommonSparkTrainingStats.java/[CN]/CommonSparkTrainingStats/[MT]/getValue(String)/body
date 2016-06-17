@@ -13,7 +13,7 @@ return workerFlatMapProcessMiniBatchTimesMs;
 case "WorkerFlatMapCountNoDataInstances":
 return workerFlatMapCountNoDataInstances;
 default :
-if (trainingMasterSpecificStats != null) return trainingMasterSpecificStats.getValue(key);
+if (trainingWorkerSpecificStats != null) return trainingWorkerSpecificStats.getValue(key);
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
 }
 }
