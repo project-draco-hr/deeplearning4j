@@ -1,5 +1,7 @@
 {
+  if (configuration.isCollectTrainingStats())   stats.logFitStart();
   network.fit(dataSet);
+  if (configuration.isCollectTrainingStats())   stats.logFitEnd();
   if (isLast)   return getFinalResult(network);
   return null;
 }

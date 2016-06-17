@@ -1,0 +1,12 @@
+{
+switch (key) {
+case "vanillaWorkerBroadcastGetValueTimeMs":
+    return vanillaWorkerBroadcastGetValueTimeMs;
+case "vanillaWorkerInitTimeMs":
+  return vanillaWorkerInitTimeMs;
+case "vanillaWorkerFitTimesMs":
+return vanillaWorkerFitTimesMs;
+default :
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

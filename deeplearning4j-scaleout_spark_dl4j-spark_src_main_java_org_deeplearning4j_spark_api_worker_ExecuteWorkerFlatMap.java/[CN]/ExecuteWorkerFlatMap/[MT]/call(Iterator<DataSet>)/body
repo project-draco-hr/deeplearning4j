@@ -3,7 +3,10 @@
   boolean stats=dataConfig.isCollectTrainingStats();
   StatsCalculationHelper s=(stats ? new StatsCalculationHelper() : null);
   if (stats)   s.logMethodStartTime();
-  if (!dataSetIterator.hasNext())   return Collections.emptyList();
+  if (!dataSetIterator.hasNext()) {
+    if (stats)     s.logReturnTime();
+    return Collections.emptyList();
+  }
   int batchSize=dataConfig.getBatchSizePerWorker();
   final int prefetchCount=dataConfig.getPrefetchNumBatches();
   DataSetIterator batchedIterator=new IteratorDataSetIterator(dataSetIterator,batchSize);
@@ -27,7 +30,7 @@
         if (result != null) {
           if (stats) {
             s.logReturnTime();
-            result.getFirst().setStats(result.getSecond());
+            result.getFirst().setStats(s.build(result.getSecond()));
           }
           return Collections.singletonList(result.getFirst());
         }
@@ -39,7 +42,15 @@
         }
       }
     }
-    return Collections.singletonList(worker.getFinalResult(net));
+    if (stats) {
+      s.logReturnTime();
+      Pair<R,SparkTrainingStats> pair=worker.getFinalResultWithStats(net);
+      pair.getFirst().setStats(s.build(pair.getSecond()));
+      return Collections.singletonList(pair.getFirst());
+    }
+ else {
+      return Collections.singletonList(worker.getFinalResult(net));
+    }
   }
   finally {
     if (batchedIterator instanceof AsyncDataSetIterator) {
