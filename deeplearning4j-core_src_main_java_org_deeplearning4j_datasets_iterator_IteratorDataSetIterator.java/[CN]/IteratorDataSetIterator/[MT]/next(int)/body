@@ -20,6 +20,7 @@
       list.add(toKeep);
       queued.add(toCache);
     }
+    countSoFar+=nExamples;
   }
   if (inputColumns == -1) {
     DataSet temp=list.get(0);
