@@ -1,0 +1,4 @@
+{
+  if (event != targetEvent)   return;
+  logger.info("Average score for last batch: {}",sequenceVectors.getScore());
+}

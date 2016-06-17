@@ -1,8 +1,11 @@
 {
   Sequence<T> tempSequence=sequence;
   if (sampling > 0)   tempSequence=applySubsampling(sequence,nextRandom);
+  double score=0.0;
   for (int i=0; i < tempSequence.getElements().size(); i++) {
     nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
-    skipGram(i,tempSequence.getElements(),(int)nextRandom.get() % window,nextRandom,learningRate);
+    score+=skipGram(i,tempSequence.getElements(),(int)nextRandom.get() % window,nextRandom,learningRate);
   }
+  if (tempSequence.getElements().size() > 0)   score/=tempSequence.getElements().size();
+  return score;
 }

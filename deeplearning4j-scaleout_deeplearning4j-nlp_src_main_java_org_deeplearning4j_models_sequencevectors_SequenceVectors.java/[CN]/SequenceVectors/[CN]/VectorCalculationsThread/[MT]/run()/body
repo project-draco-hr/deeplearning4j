@@ -28,6 +28,11 @@
             }
           }
         }
+        if (eventListeners != null && eventListeners.size() > 0) {
+          for (          VectorsListener listener : eventListeners) {
+            if (listener.validateEvent(ListenerEvent.ITERATION,i))             listener.processEvent(ListenerEvent.ITERATION,SequenceVectors.this,i);
+          }
+        }
       }
     }
  catch (    Exception e) {

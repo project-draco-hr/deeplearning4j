@@ -1,6 +1,7 @@
 {
-  if (w1 == null || w2 == null || w2.getIndex() < 0 || w1.getIndex() == w2.getIndex() || w1.getLabel().equals("STOP") || w2.getLabel().equals("STOP") || w1.getLabel().equals("UNK") || w2.getLabel().equals("UNK"))   return;
+  if (w1 == null || w2 == null || w2.getIndex() < 0 || w1.getIndex() == w2.getIndex() || w1.getLabel().equals("STOP") || w2.getLabel().equals("STOP") || w1.getLabel().equals("UNK") || w2.getLabel().equals("UNK"))   return 0.0;
   INDArray l1=this.syn0.slice(w2.getIndex());
+  double score=0.0;
   INDArray neu1e=Nd4j.create(configuration.getLayersSize());
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
@@ -8,6 +9,7 @@
     if (point >= syn0.rows() || point < 0)     throw new IllegalStateException("Illegal point " + point);
     INDArray syn1=this.syn1.slice(point);
     double dot=Nd4j.getBlasWrapper().dot(l1,syn1);
+    score+=dot;
     if (dot < -MAX_EXP || dot >= MAX_EXP)     continue;
     int idx=(int)((dot + MAX_EXP) * ((double)expTable.length / MAX_EXP / 2.0));
     if (idx >= expTable.length)     continue;
@@ -16,6 +18,7 @@
     Nd4j.getBlasWrapper().level1().axpy(syn1.length(),g,syn1,neu1e);
     Nd4j.getBlasWrapper().level1().axpy(syn1.length(),g,l1,syn1);
   }
+  score/=w1.getCodeLength();
   int target=w1.getIndex();
   int label;
   if (negative > 0)   for (int d=0; d < negative + 1; d++) {
@@ -42,4 +45,5 @@
     Nd4j.getBlasWrapper().level1().axpy(lookupTable.layerSize(),g,l1,syn1Neg.slice(target));
   }
   Nd4j.getBlasWrapper().level1().axpy(lookupTable.layerSize(),1.0,neu1e,l1);
+  return score;
 }
