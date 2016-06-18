@@ -1,6 +1,3 @@
 {
-  super(null,batchSize,1,CifarLoader.NUM_LABELS);
-  this.loader=new CifarLoader();
-  this.inputStream=loader.getInputStream();
-  this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
+  this(batchSize,numExamples,new int[]{height,width,channels},CifarLoader.NUM_LABELS,null,0,true);
 }

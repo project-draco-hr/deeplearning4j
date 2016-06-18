@@ -7,7 +7,7 @@
   int batchNumCount=0;
   byte[] byteFeature=new byte[numPixels];
   List<DataSet> dataSets=new ArrayList<>();
-  INDArray label=null;
+  INDArray label;
   Mat image=new Mat(height,width,CV_8UC(channels));
   ByteBuffer imageData=image.createBuffer();
   try {

@@ -17,6 +17,7 @@
     }
   }
  else {
+    iter=async ? new AsyncDataSetIterator(iter,queueSize) : iter;
     next=num == -1 ? iter.next() : iter.next(num);
     if (!iter.hasNext()) {
       trackEpochs();
