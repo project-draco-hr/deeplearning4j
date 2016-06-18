@@ -1,0 +1,7 @@
+{
+  if (event != targetEvent)   return;
+  long cnt=counter.getAndIncrement();
+  if (cnt % frequency != 0)   return;
+  double similarity=sequenceVectors.similarity(element1,element2);
+  logger.info("Invocation: {}, similarity: {}",cnt,similarity);
+}

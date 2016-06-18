@@ -9,11 +9,9 @@
       int c=i - window + a;
       if (c >= 0 && c < sentence.size()) {
         T lastWord=sentence.get(c);
-        score+=iterateSample(word,lastWord,nextRandom,alpha);
-        cnt++;
+        score=iterateSample(word,lastWord,nextRandom,alpha);
       }
     }
   }
-  if (cnt > 0)   score/=cnt;
   return score;
 }

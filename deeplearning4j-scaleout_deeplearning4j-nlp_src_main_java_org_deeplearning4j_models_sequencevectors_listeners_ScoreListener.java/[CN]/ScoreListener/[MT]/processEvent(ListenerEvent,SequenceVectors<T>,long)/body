@@ -1,4 +1,5 @@
 {
   if (event != targetEvent)   return;
-  logger.info("Average score for last batch: {}",sequenceVectors.getScore());
+  callsCount.incrementAndGet();
+  if (callsCount.get() % frequency == 0)   logger.info("Average score for last batch: {}",sequenceVectors.getElementsScore());
 }
