@@ -1,0 +1,13 @@
+{
+  int[] bcast=new int[broadcastTimes.size()];
+  for (int i=0; i < bcast.length; i++)   bcast[i]=broadcastTimes.get(i);
+  int[] fit=new int[fitTimes.size()];
+  for (int i=0; i < fit.length; i++)   fit[i]=fitTimes.get(i);
+  int[] split=new int[splitTimes.size()];
+  for (int i=0; i < split.length; i++)   split[i]=splitTimes.get(i);
+  int[] agg=new int[aggregateTimes.size()];
+  for (int i=0; i < agg.length; i++)   agg[i]=aggregateTimes.get(i);
+  int[] proc=new int[processParamsUpdaterTimes.size()];
+  for (int i=0; i < proc.length; i++)   proc[i]=processParamsUpdaterTimes.get(i);
+  return new ParameterAveragingTrainingMasterStats(workerStats,bcast,fit,split,agg,proc);
+}

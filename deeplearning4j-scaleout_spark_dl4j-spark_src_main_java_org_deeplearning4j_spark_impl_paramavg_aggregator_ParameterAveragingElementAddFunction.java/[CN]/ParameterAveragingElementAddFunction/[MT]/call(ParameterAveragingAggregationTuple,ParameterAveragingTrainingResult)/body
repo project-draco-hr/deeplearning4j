@@ -1,0 +1,22 @@
+{
+  if (tuple == null) {
+    return new ParameterAveragingAggregationTuple(result.getParameters(),result.getUpdater().getAggregator(true),result.getScore(),1,result.getSparkTrainingStats());
+  }
+  INDArray params=tuple.getParametersSum().addi(result.getParameters());
+  UpdaterAggregator aggregator;
+  if (tuple.getUpdaterAggregator() == null) {
+    if (result.getUpdater() == null)     aggregator=null;
+ else     aggregator=result.getUpdater().getAggregator(true);
+  }
+ else {
+    aggregator=tuple.getUpdaterAggregator();
+    if (result.getUpdater() == null)     aggregator.aggregate(result.getUpdater());
+  }
+  double scoreSum=tuple.getScoreSum() + result.getScore();
+  SparkTrainingStats stats=tuple.getSparkTrainingStats();
+  if (result.getSparkTrainingStats() != null) {
+    if (stats == null)     stats=result.getSparkTrainingStats();
+ else     stats.addOtherTrainingStats(result.getSparkTrainingStats());
+  }
+  return new ParameterAveragingAggregationTuple(params,aggregator,scoreSum,tuple.getAggregationsCount() + 1,stats);
+}

@@ -1,6 +1,0 @@
-{
-  VanillaTrainingResult result=getFinalResult(network);
-  if (result == null)   return null;
-  SparkTrainingStats statsToReturn=(stats != null ? stats.build() : null);
-  return new Pair<>(getFinalResult(network),statsToReturn);
-}

@@ -1,7 +1,0 @@
-{
-  if (!(other instanceof VanillaTrainingWorkerStats))   throw new IllegalArgumentException("Cannot merge VanillaTrainingWorkerStats with " + (other != null ? other.getClass() : null));
-  VanillaTrainingWorkerStats o=(VanillaTrainingWorkerStats)other;
-  this.vanillaWorkerBroadcastGetValueTimeMs=ArrayUtil.combine(vanillaWorkerBroadcastGetValueTimeMs,o.vanillaWorkerBroadcastGetValueTimeMs);
-  this.vanillaWorkerInitTimeMs=ArrayUtil.combine(vanillaWorkerInitTimeMs,o.vanillaWorkerInitTimeMs);
-  this.vanillaWorkerFitTimesMs=ArrayUtil.combine(vanillaWorkerFitTimesMs,o.vanillaWorkerFitTimesMs);
-}

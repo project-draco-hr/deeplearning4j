@@ -1,3 +1,0 @@
-{
-  return new VanillaTrainingResult(network.params(),(saveUpdater ? network.getUpdater() : null),network.score());
-}

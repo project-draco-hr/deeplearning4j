@@ -1,6 +1,0 @@
-{
-  VanillaTrainingResult result=processMinibatch(dataSet,network,isLast);
-  if (result == null)   return null;
-  SparkTrainingStats statsToReturn=(stats != null ? stats.build() : null);
-  return new Pair<>(result,statsToReturn);
-}

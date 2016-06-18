@@ -1,0 +1,3 @@
+{
+  return new ParameterAveragingTrainingResult(network.params(),(saveUpdater ? network.getUpdater() : null),network.score());
+}

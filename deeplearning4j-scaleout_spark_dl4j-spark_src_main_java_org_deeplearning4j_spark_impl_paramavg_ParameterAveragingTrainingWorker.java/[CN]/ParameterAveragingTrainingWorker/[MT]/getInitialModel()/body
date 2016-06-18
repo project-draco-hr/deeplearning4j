@@ -1,0 +1,13 @@
+{
+  if (configuration.isCollectTrainingStats())   stats=new ParameterAveragingTrainingWorkerStats.ParameterAveragingTrainingWorkerStatsHelper();
+  if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueStart();
+  NetBroadcastTuple tuple=broadcast.getValue();
+  if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
+  MultiLayerNetwork net=new MultiLayerNetwork(tuple.getConfiguration());
+  net.init(tuple.getParameters(),true);
+  if (tuple.getUpdater() != null) {
+    net.setUpdater(tuple.getUpdater().clone());
+  }
+  if (configuration.isCollectTrainingStats())   stats.logInitEnd();
+  return net;
+}
