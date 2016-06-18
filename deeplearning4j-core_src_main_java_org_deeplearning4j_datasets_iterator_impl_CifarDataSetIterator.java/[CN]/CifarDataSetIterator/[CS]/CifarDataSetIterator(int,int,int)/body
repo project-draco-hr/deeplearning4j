@@ -1,6 +1,0 @@
-{
-  super(null,batchSize,1,numCategories);
-  this.loader=new CifarLoader();
-  this.inputStream=loader.getInputStream();
-  this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
-}

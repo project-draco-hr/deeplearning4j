@@ -1,0 +1,3 @@
+{
+  super(new LFWLoader(imgDim,imageTransform,normalizeValue,useSubset).getRecordReader(numExamples,batchSize,imgDim,numLabels,labelGenerator,train,splitTrainTest,rng),batchSize,1,numLabels);
+}
