@@ -1,8 +1,0 @@
-{
-  sc=javaSparkContext;
-  this.conf=network.getConfiguration().clone();
-  this.network=network;
-  this.network.init();
-  this.updater=sc.broadcast(network.getUpdater());
-  this.averageEachIteration=sc.getConf().getBoolean(AVERAGE_EACH_ITERATION,false);
-}

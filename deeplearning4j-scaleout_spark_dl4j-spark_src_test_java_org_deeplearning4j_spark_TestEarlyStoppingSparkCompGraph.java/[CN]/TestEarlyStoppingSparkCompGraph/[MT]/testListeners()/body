@@ -6,7 +6,8 @@
   EarlyStoppingModelSaver<ComputationGraph> saver=new InMemoryModelSaver<>();
   EarlyStoppingConfiguration<ComputationGraph> esConf=new EarlyStoppingConfiguration.Builder<ComputationGraph>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkLossCalculatorComputationGraph(irisData.map(new DataSetToMultiDataSetFn()),true,sc.sc())).modelSaver(saver).build();
   LoggingEarlyStoppingListener listener=new LoggingEarlyStoppingListener();
-  IEarlyStoppingTrainer<ComputationGraph> trainer=new SparkEarlyStoppingGraphTrainer(getContext().sc(),esConf,net,irisData.map(new DataSetToMultiDataSetFn()));
+  TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),10,1,0);
+  IEarlyStoppingTrainer<ComputationGraph> trainer=new SparkEarlyStoppingGraphTrainer(getContext().sc(),tm,esConf,net,irisData.map(new DataSetToMultiDataSetFn()));
   trainer.fit();
   assertEquals(1,listener.onStartCallCount);
   assertEquals(5,listener.onEpochCallCount);

@@ -1,4 +1,0 @@
-{
-  super(sc,esConfig,net,null,train,listener);
-  this.sparkNet=new SparkComputationGraph(sc,net);
-}
