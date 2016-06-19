@@ -1,5 +1,6 @@
 {
   WorkerConfiguration dataConfig=worker.getDataConfiguration();
+  final boolean isGraph=dataConfig.isGraphNetwork();
   boolean stats=dataConfig.isCollectTrainingStats();
   StatsCalculationHelper s=(stats ? new StatsCalculationHelper() : null);
   if (stats)   s.logMethodStartTime();
@@ -14,8 +15,11 @@
     batchedIterator=new AsyncDataSetIterator(batchedIterator,prefetchCount);
   }
   try {
+    MultiLayerNetwork net=null;
+    ComputationGraph graph=null;
     if (stats)     s.logInitialModelBefore();
-    MultiLayerNetwork net=worker.getInitialModel();
+    if (isGraph)     graph=worker.getInitialModelGraph();
+ else     net=worker.getInitialModel();
     if (stats)     s.logInitialModelAfter();
     int miniBatchCount=0;
     int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
@@ -25,7 +29,9 @@
       if (stats)       s.logNextDataSetAfter(next.numExamples());
       if (stats) {
         s.logProcessMinibatchBefore();
-        Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,!batchedIterator.hasNext());
+        Pair<R,SparkTrainingStats> result;
+        if (isGraph)         result=worker.processMinibatchWithStats(next,graph,!batchedIterator.hasNext());
+ else         result=worker.processMinibatchWithStats(next,net,!batchedIterator.hasNext());
         s.logProcessMinibatchAfter();
         if (result != null) {
           s.logReturnTime();
@@ -36,7 +42,9 @@
         }
       }
  else {
-        R result=worker.processMinibatch(next,net,!batchedIterator.hasNext());
+        R result;
+        if (isGraph)         result=worker.processMinibatch(next,graph,!batchedIterator.hasNext());
+ else         result=worker.processMinibatch(next,net,!batchedIterator.hasNext());
         if (result != null) {
           return Collections.singletonList(result);
         }
@@ -44,12 +52,15 @@
     }
     if (stats) {
       s.logReturnTime();
-      Pair<R,SparkTrainingStats> pair=worker.getFinalResultWithStats(net);
+      Pair<R,SparkTrainingStats> pair;
+      if (isGraph)       pair=worker.getFinalResultWithStats(graph);
+ else       pair=worker.getFinalResultWithStats(net);
       pair.getFirst().setStats(s.build(pair.getSecond()));
       return Collections.singletonList(pair.getFirst());
     }
  else {
-      return Collections.singletonList(worker.getFinalResult(net));
+      if (isGraph)       return Collections.singletonList(worker.getFinalResult(graph));
+ else       return Collections.singletonList(worker.getFinalResult(net));
     }
   }
   finally {

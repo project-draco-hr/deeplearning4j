@@ -3,6 +3,6 @@
   if (collectTrainingStats)   stats.logBroadcastStart();
   Broadcast<NetBroadcastTuple> broadcast=network.getSparkContext().broadcast(tuple);
   if (collectTrainingStats)   stats.logBroadcastEnd();
-  WorkerConfiguration configuration=new WorkerConfiguration(batchSizePerWorker,averagingFrequency,prefetchNumBatches,collectTrainingStats);
+  WorkerConfiguration configuration=new WorkerConfiguration(false,batchSizePerWorker,averagingFrequency,prefetchNumBatches,collectTrainingStats);
   return new ParameterAveragingTrainingWorker(broadcast,saveUpdater,configuration);
 }

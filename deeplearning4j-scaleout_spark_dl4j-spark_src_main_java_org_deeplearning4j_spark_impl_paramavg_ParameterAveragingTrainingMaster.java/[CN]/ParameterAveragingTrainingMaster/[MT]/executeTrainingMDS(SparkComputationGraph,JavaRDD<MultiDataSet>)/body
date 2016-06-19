@@ -7,9 +7,9 @@
   int splitNum=1;
   for (  JavaRDD<MultiDataSet> split : splits) {
     log.info("Starting graph training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, dataSetTotalExamples={}. Configured for {} executors",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalCount,numWorkers);
-    FlatMapFunction<Iterator<DataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerFlatMap<>(getWorkerInstance(graph));
+    FlatMapFunction<Iterator<MultiDataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerMultiDataSetFlatMap<>(getWorkerInstance(graph));
     JavaRDD<ParameterAveragingTrainingResult> result=split.mapPartitions(function);
-    processResults(network,result,splitNum,splits.length);
+    processResults(null,graph,result,splitNum,splits.length);
     splitNum++;
   }
   if (collectTrainingStats)   stats.logFitEnd();

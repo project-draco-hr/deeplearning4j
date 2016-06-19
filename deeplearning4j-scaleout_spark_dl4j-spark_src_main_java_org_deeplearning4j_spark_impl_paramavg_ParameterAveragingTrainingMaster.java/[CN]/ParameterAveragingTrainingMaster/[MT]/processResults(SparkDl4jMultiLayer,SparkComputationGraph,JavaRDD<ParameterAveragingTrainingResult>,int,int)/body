@@ -6,12 +6,21 @@
   UpdaterAggregator updaterAg=tuple.getUpdaterAggregator();
   SparkTrainingStats aggregatedStats=tuple.getSparkTrainingStats();
   if (collectTrainingStats)   stats.logAggregationEndTime();
-  MultiLayerNetwork net=network.getNetwork();
   if (collectTrainingStats)   stats.logProcessParamsUpdaterStart();
   params.divi(aggCount);
-  Updater updater=updaterAg.getUpdater();
-  net.setParameters(params);
-  net.setUpdater(updater);
+  if (network != null) {
+    MultiLayerNetwork net=network.getNetwork();
+    Updater updater=updaterAg.getUpdater();
+    net.setParameters(params);
+    net.setUpdater(updater);
+  }
+ else {
+    ComputationGraph g=graph.getNetwork();
+    ComputationGraphUpdater updater=null;
+    g.setParams(params);
+    g.setUpdater(updater);
+    throw new RuntimeException("NOT YET IMPLEMENTED");
+  }
   if (collectTrainingStats) {
     stats.logProcessParamsUpdaterEnd();
     stats.addWorkerStats(aggregatedStats);

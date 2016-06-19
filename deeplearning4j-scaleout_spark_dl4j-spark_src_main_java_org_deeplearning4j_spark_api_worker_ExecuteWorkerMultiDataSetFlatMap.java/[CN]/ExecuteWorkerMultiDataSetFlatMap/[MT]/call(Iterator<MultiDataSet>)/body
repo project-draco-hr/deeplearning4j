@@ -9,20 +9,20 @@
   }
   int batchSize=dataConfig.getBatchSizePerWorker();
   final int prefetchCount=dataConfig.getPrefetchNumBatches();
-  DataSetIterator batchedIterator=new IteratorDataSetIterator(dataSetIterator,batchSize);
+  MultiDataSetIterator batchedIterator=new IteratorMultiDataSetIterator(dataSetIterator,batchSize);
   if (prefetchCount > 0) {
-    batchedIterator=new AsyncDataSetIterator(batchedIterator,prefetchCount);
+    batchedIterator=new AsyncMultiDataSetIterator(batchedIterator,prefetchCount);
   }
   try {
     if (stats)     s.logInitialModelBefore();
-    MultiLayerNetwork net=worker.getInitialModel();
+    ComputationGraph net=worker.getInitialModelGraph();
     if (stats)     s.logInitialModelAfter();
     int miniBatchCount=0;
     int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
     while (batchedIterator.hasNext() && miniBatchCount++ < maxMinibatches) {
       if (stats)       s.logNextDataSetBefore();
-      DataSet next=batchedIterator.next();
-      if (stats)       s.logNextDataSetAfter(next.numExamples());
+      MultiDataSet next=batchedIterator.next();
+      if (stats)       s.logNextDataSetAfter(next.getFeatures(0).size(0));
       if (stats) {
         s.logProcessMinibatchBefore();
         Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,!batchedIterator.hasNext());
@@ -53,8 +53,8 @@
     }
   }
   finally {
-    if (batchedIterator instanceof AsyncDataSetIterator) {
-      ((AsyncDataSetIterator)batchedIterator).shutdown();
+    if (batchedIterator instanceof AsyncMultiDataSetIterator) {
+      ((AsyncMultiDataSetIterator)batchedIterator).shutdown();
     }
   }
 }
