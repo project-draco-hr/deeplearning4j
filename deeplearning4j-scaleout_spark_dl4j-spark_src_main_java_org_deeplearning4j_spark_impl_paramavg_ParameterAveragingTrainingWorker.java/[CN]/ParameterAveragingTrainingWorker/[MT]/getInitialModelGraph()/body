@@ -1,0 +1,13 @@
+{
+  if (configuration.isCollectTrainingStats())   stats=new ParameterAveragingTrainingWorkerStats.ParameterAveragingTrainingWorkerStatsHelper();
+  if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueStart();
+  NetBroadcastTuple tuple=broadcast.getValue();
+  if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
+  ComputationGraph net=new ComputationGraph(tuple.getGraphConfiguration());
+  net.init(tuple.getParameters(),true);
+  if (tuple.getGraphUpdater() != null) {
+    net.setUpdater(tuple.getGraphUpdater().clone());
+  }
+  if (configuration.isCollectTrainingStats())   stats.logInitEnd();
+  return net;
+}

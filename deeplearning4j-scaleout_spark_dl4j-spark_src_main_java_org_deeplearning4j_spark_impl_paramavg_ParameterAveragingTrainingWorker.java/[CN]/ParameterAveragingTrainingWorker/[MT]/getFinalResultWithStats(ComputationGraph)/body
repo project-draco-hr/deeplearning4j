@@ -1,5 +1,5 @@
 {
-  ParameterAveragingTrainingResult result=getFinalResult(network);
+  ParameterAveragingTrainingResult result=getFinalResult(graph);
   if (result == null)   return null;
   SparkTrainingStats statsToReturn=(stats != null ? stats.build() : null);
   return new Pair<>(result,statsToReturn);

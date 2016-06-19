@@ -1,0 +1,3 @@
+{
+  return processMinibatchWithStats(ComputationGraphUtil.toMultiDataSet(dataSet),graph,isLast);
+}

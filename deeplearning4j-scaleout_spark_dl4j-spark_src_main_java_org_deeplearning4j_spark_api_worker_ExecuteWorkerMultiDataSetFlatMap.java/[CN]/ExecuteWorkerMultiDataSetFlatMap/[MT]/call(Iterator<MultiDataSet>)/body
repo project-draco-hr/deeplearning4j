@@ -1,0 +1,60 @@
+{
+  WorkerConfiguration dataConfig=worker.getDataConfiguration();
+  boolean stats=dataConfig.isCollectTrainingStats();
+  StatsCalculationHelper s=(stats ? new StatsCalculationHelper() : null);
+  if (stats)   s.logMethodStartTime();
+  if (!dataSetIterator.hasNext()) {
+    if (stats)     s.logReturnTime();
+    return Collections.emptyList();
+  }
+  int batchSize=dataConfig.getBatchSizePerWorker();
+  final int prefetchCount=dataConfig.getPrefetchNumBatches();
+  DataSetIterator batchedIterator=new IteratorDataSetIterator(dataSetIterator,batchSize);
+  if (prefetchCount > 0) {
+    batchedIterator=new AsyncDataSetIterator(batchedIterator,prefetchCount);
+  }
+  try {
+    if (stats)     s.logInitialModelBefore();
+    MultiLayerNetwork net=worker.getInitialModel();
+    if (stats)     s.logInitialModelAfter();
+    int miniBatchCount=0;
+    int maxMinibatches=(dataConfig.getMaxBatchesPerWorker() > 0 ? dataConfig.getMaxBatchesPerWorker() : Integer.MAX_VALUE);
+    while (batchedIterator.hasNext() && miniBatchCount++ < maxMinibatches) {
+      if (stats)       s.logNextDataSetBefore();
+      DataSet next=batchedIterator.next();
+      if (stats)       s.logNextDataSetAfter(next.numExamples());
+      if (stats) {
+        s.logProcessMinibatchBefore();
+        Pair<R,SparkTrainingStats> result=worker.processMinibatchWithStats(next,net,!batchedIterator.hasNext());
+        s.logProcessMinibatchAfter();
+        if (result != null) {
+          s.logReturnTime();
+          SparkTrainingStats workerStats=result.getSecond();
+          SparkTrainingStats returnStats=s.build(workerStats);
+          result.getFirst().setStats(returnStats);
+          return Collections.singletonList(result.getFirst());
+        }
+      }
+ else {
+        R result=worker.processMinibatch(next,net,!batchedIterator.hasNext());
+        if (result != null) {
+          return Collections.singletonList(result);
+        }
+      }
+    }
+    if (stats) {
+      s.logReturnTime();
+      Pair<R,SparkTrainingStats> pair=worker.getFinalResultWithStats(net);
+      pair.getFirst().setStats(s.build(pair.getSecond()));
+      return Collections.singletonList(pair.getFirst());
+    }
+ else {
+      return Collections.singletonList(worker.getFinalResult(net));
+    }
+  }
+  finally {
+    if (batchedIterator instanceof AsyncDataSetIterator) {
+      ((AsyncDataSetIterator)batchedIterator).shutdown();
+    }
+  }
+}

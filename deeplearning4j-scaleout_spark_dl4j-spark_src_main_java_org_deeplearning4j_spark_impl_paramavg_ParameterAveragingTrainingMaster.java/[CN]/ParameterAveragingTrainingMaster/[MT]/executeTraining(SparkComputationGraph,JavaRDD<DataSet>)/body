@@ -1,0 +1,4 @@
+{
+  JavaRDD<MultiDataSet> mdsTrainingData=trainingData.map(new DataSetToMultiDataSetFn());
+  executeTrainingMDS(graph,mdsTrainingData);
+}

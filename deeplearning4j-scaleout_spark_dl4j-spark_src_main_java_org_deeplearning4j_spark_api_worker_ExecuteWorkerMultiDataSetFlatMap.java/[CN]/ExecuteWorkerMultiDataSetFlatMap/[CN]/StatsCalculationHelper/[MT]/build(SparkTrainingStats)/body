@@ -1,0 +1,7 @@
+{
+  int[] dataSetGetTimesArr=new int[dataSetGetTimes.size()];
+  for (int i=0; i < dataSetGetTimesArr.length; i++)   dataSetGetTimesArr[i]=dataSetGetTimes.get(i);
+  int[] processMiniBatchTimesArr=new int[processMiniBatchTimes.size()];
+  for (int i=0; i < processMiniBatchTimesArr.length; i++)   processMiniBatchTimesArr[i]=processMiniBatchTimes.get(i);
+  return new CommonSparkTrainingStats.Builder().trainingMasterSpecificStats(masterSpecificStats).workerFlatMapTotalTimeMs((int)(returnTime - methodStartTime)).workerFlatMapTotalExampleCount(totalExampleCount).workerFlatMapGetInitialModelTimeMs((int)(initialModelAfter - initalModelBefore)).workerFlatMapDataSetGetTimesMs(dataSetGetTimesArr).workerFlatMapProcessMiniBatchTimesMs(processMiniBatchTimesArr).workerFlatMapCountNoDataInstances(dataSetGetTimes.size() == 0 ? 1 : 0).build();
+}
