@@ -1,0 +1,11 @@
+{
+  SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  String dataPath="/ext/Temp/SampleRussianCorpus.txt";
+  JavaRDD<String> corpus=sc.textFile(dataPath);
+  TokenizerFactory t=new DefaultTokenizerFactory();
+  t.setTokenPreProcessor(new CommonPreprocessor());
+  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(10).useAdaGrad(false).layerSize(150).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(3).batchSize(100).minWordFrequency(5).stopWords(Arrays.asList("three")).useUnknown(true).build();
+  word2Vec.train(corpus);
+  WordVectorSerializer.writeWordVectors(word2Vec.getLookupTable(),"/ext/Temp/sparkRuModel.txt");
+}
