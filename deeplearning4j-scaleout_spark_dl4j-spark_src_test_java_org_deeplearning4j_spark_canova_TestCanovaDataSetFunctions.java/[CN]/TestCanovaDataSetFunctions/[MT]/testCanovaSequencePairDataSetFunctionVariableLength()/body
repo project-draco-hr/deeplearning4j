@@ -1,10 +1,10 @@
 {
-  ClassPathResource cpr=new ClassPathResource("/csvsequence/csvsequence_0.txt");
-  String pathFeatures=cpr.getFile().getAbsolutePath();
+  File f=new File("src/test/resources/csvsequence/csvsequence_0.txt");
+  String pathFeatures=f.getAbsolutePath();
   String folderFeatures=pathFeatures.substring(0,pathFeatures.length() - 17);
   pathFeatures=folderFeatures + "*";
-  cpr=new ClassPathResource("/csvsequencelabels/csvsequencelabelsShort_0.txt");
-  String pathLabels=cpr.getFile().getAbsolutePath();
+  File f2=new File("src/test/resources/csvsequencelabels/csvsequencelabelsShort_0.txt");
+  String pathLabels=f2.getPath();
   String folderLabels=pathLabels.substring(0,pathLabels.length() - 28);
   pathLabels=folderLabels + "*";
   PathToKeyConverter pathConverter=new PathToKeyConverterNumber();
@@ -22,10 +22,8 @@
   CanovaSequencePairDataSetFunction pairFn=new CanovaSequencePairDataSetFunction(4,false,CanovaSequencePairDataSetFunction.AlignmentMode.ALIGN_END);
   JavaRDD<DataSet> data=writables.map(pairFn);
   List<DataSet> sparkData=data.collect();
-  ClassPathResource resource=new ClassPathResource("/csvsequence/csvsequence_0.txt");
-  String featuresPath=resource.getFile().getAbsolutePath().replaceAll("0","%d");
-  resource=new ClassPathResource("/csvsequencelabels/csvsequencelabelsShort_0.txt");
-  String labelsPath=resource.getFile().getAbsolutePath().replaceAll("0","%d");
+  String featuresPath=f.getPath().replaceAll("0","%d");
+  String labelsPath=f2.getPath().replaceAll("0","%d");
   SequenceRecordReader featureReader=new CSVSequenceRecordReader(1,",");
   SequenceRecordReader labelReader=new CSVSequenceRecordReader(1,",");
   featureReader.initialize(new NumberedFileInputSplit(featuresPath,0,2));

@@ -70,14 +70,14 @@
  else   if (alignmentMode == AlignmentMode.ALIGN_END) {
     if (featuresLength > labelsLength) {
       INDArray newOutput=Nd4j.create(1,outputArr.size(1),featuresLength);
-      newOutput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(featuresLength - labelsLength,featuresLength)).assign(outputArr);
+      newOutput.get(NDArrayIndex.point(0),NDArrayIndex.all(),NDArrayIndex.interval(featuresLength - labelsLength,featuresLength)).assign(outputArr);
       INDArray outputMask=Nd4j.create(1,featuresLength);
       for (int j=featuresLength - labelsLength; j < featuresLength; j++)       outputMask.putScalar(j,1.0);
       ds=new DataSet(inputArr,newOutput,null,outputMask);
     }
  else {
       INDArray newInput=Nd4j.create(1,inputArr.size(1),labelsLength);
-      newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(labelsLength - featuresLength,labelsLength)).assign(inputArr);
+      newInput.get(NDArrayIndex.point(0),NDArrayIndex.all(),NDArrayIndex.interval(labelsLength - featuresLength,labelsLength)).assign(inputArr);
       INDArray inputMask=Nd4j.create(1,labelsLength);
       for (int j=labelsLength - featuresLength; j < labelsLength; j++)       inputMask.putScalar(j,1.0);
       ds=new DataSet(newInput,outputArr,inputMask,null);
@@ -86,14 +86,14 @@
  else   if (alignmentMode == AlignmentMode.ALIGN_START) {
     if (featuresLength > labelsLength) {
       INDArray newOutput=Nd4j.create(1,outputArr.size(1),featuresLength);
-      newOutput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(0,labelsLength)).assign(outputArr);
+      newOutput.get(NDArrayIndex.point(0),NDArrayIndex.all(),NDArrayIndex.interval(0,labelsLength)).assign(outputArr);
       INDArray outputMask=Nd4j.create(1,featuresLength);
       for (int j=0; j < labelsLength; j++)       outputMask.putScalar(j,1.0);
       ds=new org.nd4j.linalg.dataset.DataSet(inputArr,newOutput,null,outputMask);
     }
  else {
       INDArray newInput=Nd4j.create(1,inputArr.size(1),labelsLength);
-      newInput.get(NDArrayIndex.point(1),NDArrayIndex.all(),NDArrayIndex.interval(0,featuresLength)).assign(inputArr);
+      newInput.get(NDArrayIndex.point(0),NDArrayIndex.all(),NDArrayIndex.interval(0,featuresLength)).assign(inputArr);
       INDArray inputMask=Nd4j.create(1,labelsLength);
       for (int j=0; j < featuresLength; j++)       inputMask.putScalar(j,1.0);
       ds=new DataSet(newInput,outputArr,inputMask,null);

@@ -1,7 +1,7 @@
 {
   JavaSparkContext sc=getContext();
-  ClassPathResource cpr=new ClassPathResource("/csvsequence/csvsequence_0.txt");
-  String path=cpr.getFile().getAbsolutePath();
+  File f=new File("src/test/resources/csvsequence/csvsequence_0.txt");
+  String path=f.getPath();
   String folder=path.substring(0,path.length() - 17);
   path=folder + "*";
   PathToKeyConverter pathConverter=new PathToKeyConverterFilename();
@@ -19,8 +19,7 @@
   CanovaSequencePairDataSetFunction pairFn=new CanovaSequencePairDataSetFunction();
   JavaRDD<DataSet> data=writables.map(pairFn);
   List<DataSet> sparkData=data.collect();
-  ClassPathResource resource=new ClassPathResource("csvsequence_0.txt");
-  String featuresPath=resource.getFile().getAbsolutePath().replaceAll("0","%d");
+  String featuresPath=f.getAbsolutePath().replaceAll("0","%d");
   SequenceRecordReader featureReader=new CSVSequenceRecordReader(1,",");
   SequenceRecordReader labelReader=new CSVSequenceRecordReader(1,",");
   featureReader.initialize(new NumberedFileInputSplit(featuresPath,0,2));
