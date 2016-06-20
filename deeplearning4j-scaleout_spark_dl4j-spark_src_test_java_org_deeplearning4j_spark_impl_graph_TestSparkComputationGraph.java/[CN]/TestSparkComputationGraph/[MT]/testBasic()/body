@@ -10,6 +10,7 @@
   cg.init();
   TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),10,1,0);
   SparkComputationGraph scg=new SparkComputationGraph(sc,cg,tm);
+  scg.setListeners(Collections.singleton((IterationListener)new ScoreIterationListener(1)));
   JavaRDD<MultiDataSet> rdd=sc.parallelize(list);
   scg.fitMultiDataSet(rdd);
   DataSetIterator iris=new IrisDataSetIterator(1,150);

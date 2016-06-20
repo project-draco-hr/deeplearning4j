@@ -28,4 +28,21 @@
     stats.addWorkerStats(aggregatedStats);
   }
   log.info("Completed training of split {} of {}",splitNum,totalSplits);
+  if (listeners != null) {
+    if (network != null) {
+      MultiLayerNetwork net=network.getNetwork();
+      net.setScore(network.getScore());
+      for (      IterationListener il : listeners) {
+        il.iterationDone(net,iterationCount);
+      }
+    }
+ else {
+      ComputationGraph g=graph.getNetwork();
+      g.setScore(graph.getScore());
+      for (      IterationListener il : listeners) {
+        il.iterationDone(g,iterationCount);
+      }
+    }
+  }
+  iterationCount++;
 }

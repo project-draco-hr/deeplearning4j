@@ -1,4 +1,5 @@
 {
   this.listeners.clear();
   this.listeners.addAll(listeners);
+  if (trainingMaster != null)   trainingMaster.setListeners(this.listeners);
 }
