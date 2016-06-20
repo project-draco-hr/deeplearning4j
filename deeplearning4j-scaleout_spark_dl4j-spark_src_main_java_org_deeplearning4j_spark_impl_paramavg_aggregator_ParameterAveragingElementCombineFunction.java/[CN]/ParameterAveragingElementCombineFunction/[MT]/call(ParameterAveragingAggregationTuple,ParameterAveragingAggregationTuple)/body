@@ -11,6 +11,15 @@
     updaterAggregator.merge(updaterAggregator2);
     combinedAggregator=updaterAggregator;
   }
+  ComputationGraphUpdater.Aggregator uAGraph1=v1.getUpdaterAggregatorGraph();
+  ComputationGraphUpdater.Aggregator uaGraph2=v2.getUpdaterAggregatorGraph();
+  ComputationGraphUpdater.Aggregator uaGraphCombined;
+  if (uAGraph1 == null)   uaGraphCombined=uaGraph2;
+ else   if (uaGraph2 == null)   uaGraphCombined=uAGraph1;
+ else {
+    uAGraph1.merge(uaGraph2);
+    uaGraphCombined=uAGraph1;
+  }
   double scoreSum=v1.getScoreSum() + v2.getScoreSum();
   int aggregationCount=v1.getAggregationsCount() + v2.getAggregationsCount();
   SparkTrainingStats stats=v1.getSparkTrainingStats();
@@ -18,5 +27,5 @@
     if (stats == null)     stats=v2.getSparkTrainingStats();
  else     stats.addOtherTrainingStats(v2.getSparkTrainingStats());
   }
-  return new ParameterAveragingAggregationTuple(newParams,combinedAggregator,scoreSum,aggregationCount,stats);
+  return new ParameterAveragingAggregationTuple(newParams,combinedAggregator,uaGraphCombined,scoreSum,aggregationCount,stats);
 }

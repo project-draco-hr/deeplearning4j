@@ -1,0 +1,5 @@
+{
+  Nd4j.getRandom().setSeed(seed);
+  ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(0.5).weightInit(WeightInit.XAVIER).updater(updater).iterations(1).seed(seed).graphBuilder().addInputs("in").addLayer("0",new DenseLayer.Builder().nIn(10).nOut(10).build(),"in").addLayer("1",new OutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nIn(10).nOut(10).build(),"0").setOutputs("1").pretrain(false).backprop(true).build();
+  return conf;
+}
