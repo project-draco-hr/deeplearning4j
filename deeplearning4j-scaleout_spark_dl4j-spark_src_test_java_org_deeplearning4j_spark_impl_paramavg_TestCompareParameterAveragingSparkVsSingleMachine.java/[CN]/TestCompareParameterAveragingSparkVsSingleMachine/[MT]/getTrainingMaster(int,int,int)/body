@@ -1,4 +1,3 @@
 {
-  ParameterAveragingTrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(nWorkers).averagingFrequency(avgFreq).batchSizePerWorker(miniBatchSize).saveUpdater(true).workerPrefetchNumBatches(0).build();
-  return tm;
+  return getTrainingMaster(avgFreq,miniBatchSize,nWorkers,true);
 }
