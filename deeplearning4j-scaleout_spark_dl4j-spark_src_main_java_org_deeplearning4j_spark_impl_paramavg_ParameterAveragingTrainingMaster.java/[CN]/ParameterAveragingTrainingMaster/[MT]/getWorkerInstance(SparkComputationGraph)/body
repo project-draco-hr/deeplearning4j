@@ -1,0 +1,8 @@
+{
+  NetBroadcastTuple tuple=new NetBroadcastTuple(graph.getNetwork().getConfiguration(),graph.getNetwork().params(),graph.getNetwork().getUpdater());
+  if (collectTrainingStats)   stats.logBroadcastStart();
+  Broadcast<NetBroadcastTuple> broadcast=graph.getSparkContext().broadcast(tuple);
+  if (collectTrainingStats)   stats.logBroadcastEnd();
+  WorkerConfiguration configuration=new WorkerConfiguration(true,batchSizePerWorker,averagingFrequency,prefetchNumBatches,collectTrainingStats);
+  return new ParameterAveragingTrainingWorker(broadcast,saveUpdater,configuration);
+}

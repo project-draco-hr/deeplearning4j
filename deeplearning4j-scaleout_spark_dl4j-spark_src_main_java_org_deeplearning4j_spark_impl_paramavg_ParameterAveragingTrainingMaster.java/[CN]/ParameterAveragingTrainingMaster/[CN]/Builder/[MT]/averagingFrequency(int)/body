@@ -1,0 +1,5 @@
+{
+  if (averagingFrequency <= 0)   throw new IllegalArgumentException("Ivalid input: averaging frequency must be >= 1");
+  this.averagingFrequency=averagingFrequency;
+  return this;
+}

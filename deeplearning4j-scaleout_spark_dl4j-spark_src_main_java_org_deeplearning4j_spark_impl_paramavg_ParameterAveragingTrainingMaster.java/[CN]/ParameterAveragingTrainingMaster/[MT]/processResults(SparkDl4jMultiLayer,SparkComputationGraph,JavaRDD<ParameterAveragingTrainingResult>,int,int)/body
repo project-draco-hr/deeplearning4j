@@ -1,0 +1,48 @@
+{
+  if (collectTrainingStats)   stats.logAggregateStartTime();
+  ParameterAveragingAggregationTuple tuple=results.aggregate(null,new ParameterAveragingElementAddFunction(),new ParameterAveragingElementCombineFunction());
+  INDArray params=tuple.getParametersSum();
+  int aggCount=tuple.getAggregationsCount();
+  SparkTrainingStats aggregatedStats=tuple.getSparkTrainingStats();
+  if (collectTrainingStats)   stats.logAggregationEndTime();
+  if (collectTrainingStats)   stats.logProcessParamsUpdaterStart();
+  params.divi(aggCount);
+  if (network != null) {
+    MultiLayerNetwork net=network.getNetwork();
+    UpdaterAggregator updaterAg=tuple.getUpdaterAggregator();
+    Updater updater=(updaterAg != null ? updaterAg.getUpdater() : null);
+    net.setParameters(params);
+    net.setUpdater(updater);
+    network.setScore(tuple.getScoreSum() / tuple.getAggregationsCount());
+  }
+ else {
+    ComputationGraph g=graph.getNetwork();
+    ComputationGraphUpdater.Aggregator updaterAg=tuple.getUpdaterAggregatorGraph();
+    ComputationGraphUpdater updater=(updaterAg != null ? updaterAg.getUpdater() : null);
+    g.setParams(params);
+    g.setUpdater(updater);
+    graph.setScore(tuple.getScoreSum() / tuple.getAggregationsCount());
+  }
+  if (collectTrainingStats) {
+    stats.logProcessParamsUpdaterEnd();
+    stats.addWorkerStats(aggregatedStats);
+  }
+  log.info("Completed training of split {} of {}",splitNum,totalSplits);
+  if (listeners != null) {
+    if (network != null) {
+      MultiLayerNetwork net=network.getNetwork();
+      net.setScore(network.getScore());
+      for (      IterationListener il : listeners) {
+        il.iterationDone(net,iterationCount);
+      }
+    }
+ else {
+      ComputationGraph g=graph.getNetwork();
+      g.setScore(graph.getScore());
+      for (      IterationListener il : listeners) {
+        il.iterationDone(g,iterationCount);
+      }
+    }
+  }
+  iterationCount++;
+}

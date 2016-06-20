@@ -1,0 +1,7 @@
+SparkContext sc
+TrainingMaster trainingMaster
+EarlyStoppingConfiguration<ComputationGraph> esConfig
+ComputationGraph net
+JavaRDD<MultiDataSet> train
+int examplesPerFit
+int totalExamples

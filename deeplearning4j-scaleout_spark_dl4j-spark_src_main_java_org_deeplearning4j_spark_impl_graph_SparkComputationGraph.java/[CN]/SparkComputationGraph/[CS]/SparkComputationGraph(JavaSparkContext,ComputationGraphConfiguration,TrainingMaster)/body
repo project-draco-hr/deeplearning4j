@@ -1,0 +1,7 @@
+{
+  sc=sparkContext;
+  this.trainingMaster=trainingMaster;
+  this.conf=conf.clone();
+  this.network=new ComputationGraph(conf);
+  this.network.init();
+}

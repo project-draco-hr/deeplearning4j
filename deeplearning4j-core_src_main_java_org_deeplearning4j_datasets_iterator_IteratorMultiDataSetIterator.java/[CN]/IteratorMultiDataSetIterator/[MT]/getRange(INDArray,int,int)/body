@@ -1,0 +1,14 @@
+{
+  if (arr == null)   return null;
+  int rank=arr.rank();
+switch (rank) {
+case 2:
+    return arr.get(NDArrayIndex.interval(exampleFrom,exampleToExclusive),NDArrayIndex.all());
+case 3:
+  return arr.get(NDArrayIndex.interval(exampleFrom,exampleToExclusive),NDArrayIndex.all(),NDArrayIndex.all());
+case 4:
+return arr.get(NDArrayIndex.interval(exampleFrom,exampleToExclusive),NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.all());
+default :
+throw new RuntimeException("Invalid rank: " + rank);
+}
+}

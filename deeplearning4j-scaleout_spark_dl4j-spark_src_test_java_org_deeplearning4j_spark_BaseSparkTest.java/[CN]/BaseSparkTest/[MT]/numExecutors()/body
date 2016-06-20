@@ -1,0 +1,4 @@
+{
+  int numProc=Runtime.getRuntime().availableProcessors();
+  return Math.min(4,numProc);
+}

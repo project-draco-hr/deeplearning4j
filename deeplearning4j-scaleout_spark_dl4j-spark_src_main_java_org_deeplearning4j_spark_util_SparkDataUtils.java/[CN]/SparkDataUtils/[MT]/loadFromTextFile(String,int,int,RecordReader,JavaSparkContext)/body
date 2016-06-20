@@ -1,0 +1,4 @@
+{
+  JavaRDD<String> lines=sc.textFile(path);
+  return lines.map(new RecordReaderFunction(recordReader,labelIndex,numClasses));
+}

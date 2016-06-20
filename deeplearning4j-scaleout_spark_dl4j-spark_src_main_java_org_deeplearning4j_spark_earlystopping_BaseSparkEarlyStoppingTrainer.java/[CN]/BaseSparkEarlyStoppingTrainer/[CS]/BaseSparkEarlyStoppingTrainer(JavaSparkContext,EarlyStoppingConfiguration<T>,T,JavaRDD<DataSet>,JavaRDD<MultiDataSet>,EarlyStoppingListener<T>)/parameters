@@ -1,0 +1,6 @@
+JavaSparkContext sc
+EarlyStoppingConfiguration<T> esConfig
+T net
+JavaRDD<DataSet> train
+JavaRDD<MultiDataSet> trainMulti
+EarlyStoppingListener<T> listener

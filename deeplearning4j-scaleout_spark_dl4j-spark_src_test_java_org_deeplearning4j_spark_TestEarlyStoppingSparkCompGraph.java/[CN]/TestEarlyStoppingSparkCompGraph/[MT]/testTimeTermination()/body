@@ -6,7 +6,8 @@
   JavaRDD<DataSet> irisData=getIris();
   EarlyStoppingModelSaver<ComputationGraph> saver=new InMemoryModelSaver<>();
   EarlyStoppingConfiguration<ComputationGraph> esConf=new EarlyStoppingConfiguration.Builder<ComputationGraph>().epochTerminationConditions(new MaxEpochsTerminationCondition(10000)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(3,TimeUnit.SECONDS),new MaxScoreIterationTerminationCondition(7.5)).scoreCalculator(new SparkLossCalculatorComputationGraph(irisData.map(new DataSetToMultiDataSetFn()),true,sc.sc())).modelSaver(saver).build();
-  IEarlyStoppingTrainer<ComputationGraph> trainer=new SparkEarlyStoppingGraphTrainer(getContext().sc(),esConf,net,irisData.map(new DataSetToMultiDataSetFn()),50,150,5);
+  TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),10,1,0);
+  IEarlyStoppingTrainer<ComputationGraph> trainer=new SparkEarlyStoppingGraphTrainer(getContext().sc(),tm,esConf,net,irisData.map(new DataSetToMultiDataSetFn()));
   long startTime=System.currentTimeMillis();
   EarlyStoppingResult result=trainer.fit();
   long endTime=System.currentTimeMillis();

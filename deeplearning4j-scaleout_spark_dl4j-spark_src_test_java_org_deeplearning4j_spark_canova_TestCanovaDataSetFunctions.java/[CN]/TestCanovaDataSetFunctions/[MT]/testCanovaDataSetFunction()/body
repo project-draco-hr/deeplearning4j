@@ -1,8 +1,8 @@
 {
   JavaSparkContext sc=getContext();
-  ClassPathResource cpr=new ClassPathResource("/imagetest/0/a.bmp");
+  File f=new File("src/test/resources/imagetest/0/a.bmp");
   List<String> labelsList=Arrays.asList("0","1");
-  String path=cpr.getFile().getAbsolutePath();
+  String path=f.getPath();
   String folder=path.substring(0,path.length() - 7);
   path=folder + "*";
   JavaPairRDD<String,PortableDataStream> origData=sc.binaryFiles(path);
@@ -10,7 +10,7 @@
   RecordReader rr=new ImageRecordReader(28,28,1,true,labelsList);
   org.canova.spark.functions.RecordReaderFunction rrf=new org.canova.spark.functions.RecordReaderFunction(rr);
   JavaRDD<Collection<Writable>> rdd=origData.map(rrf);
-  JavaRDD<DataSet> data=rdd.map(new CanovaDataSetFunction(28 * 28,2,false));
+  JavaRDD<DataSet> data=rdd.map(new CanovaDataSetFunction(1,2,false));
   List<DataSet> collected=data.collect();
   InputSplit is=new FileSplit(new File(folder),new String[]{"bmp"},true);
   ImageRecordReader irr=new ImageRecordReader(28,28,1,true);

@@ -1,0 +1,7 @@
+{
+  sc=javaSparkContext;
+  this.trainingMaster=trainingMaster;
+  this.conf=network.getConfiguration().clone();
+  this.network=network;
+  this.network.init();
+}

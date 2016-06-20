@@ -1,6 +1,7 @@
 {
   ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l1(0.1).l2(0.1).seed(123).updater(Updater.NESTEROVS).learningRate(0.1).momentum(0.9).graphBuilder().addInputs("in").addLayer("0",new org.deeplearning4j.nn.conf.layers.DenseLayer.Builder().nIn(nIn).nOut(3).activation("tanh").build(),"in").addLayer("1",new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(3).nOut(nOut).activation("softmax").build(),"0").setOutputs("1").backprop(true).pretrain(false).build();
-  SparkComputationGraph sparkNet=new SparkComputationGraph(sc,conf);
+  TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),10,1,0);
+  SparkComputationGraph sparkNet=new SparkComputationGraph(sc,conf,tm);
   ComputationGraph netCopy=sparkNet.getNetwork().clone();
   int nRows=100;
   INDArray features=Nd4j.rand(nRows,nIn);
@@ -17,8 +18,8 @@
     dataWithKeys.add(new Tuple2<>(String.valueOf(i),ds));
   }
   JavaPairRDD<String,DataSet> dataWithKeysRdd=sc.parallelizePairs(dataWithKeys);
-  JavaPairRDD<String,Double> sparkScoresWithReg=sparkNet.scoreExamplesDataSet(dataWithKeysRdd,true,4);
-  JavaPairRDD<String,Double> sparkScoresNoReg=sparkNet.scoreExamplesDataSet(dataWithKeysRdd,false,4);
+  JavaPairRDD<String,Double> sparkScoresWithReg=sparkNet.scoreExamples(dataWithKeysRdd,true,4);
+  JavaPairRDD<String,Double> sparkScoresNoReg=sparkNet.scoreExamples(dataWithKeysRdd,false,4);
   Map<String,Double> sparkScoresWithRegMap=sparkScoresWithReg.collectAsMap();
   Map<String,Double> sparkScoresNoRegMap=sparkScoresNoReg.collectAsMap();
   for (int i=0; i < nRows; i++) {
@@ -34,8 +35,8 @@
     dataNoKeys.add(new DataSet(features.getRow(i).dup(),labels.getRow(i).dup()));
   }
   JavaRDD<DataSet> dataNoKeysRdd=sc.parallelize(dataNoKeys);
-  List<Double> scoresWithReg=sparkNet.scoreExamplesDataSet(dataNoKeysRdd,true,4).collect();
-  List<Double> scoresNoReg=sparkNet.scoreExamplesDataSet(dataNoKeysRdd,false,4).collect();
+  List<Double> scoresWithReg=sparkNet.scoreExamples(dataNoKeysRdd,true,4).collect();
+  List<Double> scoresNoReg=sparkNet.scoreExamples(dataNoKeysRdd,false,4).collect();
   Collections.sort(scoresWithReg);
   Collections.sort(scoresNoReg);
   double[] localScoresWithRegDouble=localScoresWithReg.data().asDouble();
