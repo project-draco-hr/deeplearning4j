@@ -5,8 +5,15 @@
   StatsCalculationHelper s=(stats ? new StatsCalculationHelper() : null);
   if (stats)   s.logMethodStartTime();
   if (!dataSetIterator.hasNext()) {
-    if (stats)     s.logReturnTime();
-    return Collections.emptyList();
+    if (stats) {
+      s.logReturnTime();
+      Pair<R,SparkTrainingStats> pair=worker.getFinalResultNoDataWithStats();
+      pair.getFirst().setStats(s.build(pair.getSecond()));
+      return Collections.singletonList(pair.getFirst());
+    }
+ else {
+      return Collections.singletonList(worker.getFinalResultNoData());
+    }
   }
   int batchSize=dataConfig.getBatchSizePerWorker();
   final int prefetchCount=dataConfig.getPrefetchNumBatches();
