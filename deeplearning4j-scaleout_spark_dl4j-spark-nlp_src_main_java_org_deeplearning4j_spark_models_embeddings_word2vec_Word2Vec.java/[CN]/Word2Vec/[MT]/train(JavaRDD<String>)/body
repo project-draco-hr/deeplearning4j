@@ -19,6 +19,7 @@
   vocabWordListRDD=pipeline.getVocabWordListRDD();
   Broadcast<VocabCache<VocabWord>> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
   vocabCache=vocabCacheBroadcast.getValue();
+  log.info("Vocab size: {}",vocabCache.numWords());
   log.info("Building Huffman Tree ...");
   log.info("Calculating cumulative sum of sentence counts ...");
   sentenceCumSumCountRDD=new CountCumSum(sentenceWordsCountRDD).buildCumSum();
@@ -51,9 +52,6 @@
     }
   }
   long totals=0;
-  for (  Long up : updaters.values()) {
-    totals+=up;
-  }
   vocab=vocabCache;
   InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
   Environment env=EnvironmentUtils.buildEnvironment();
