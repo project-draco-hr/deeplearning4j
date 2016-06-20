@@ -1,4 +1,0 @@
-{
-  FeedForwardLayer outputLayer=(FeedForwardLayer)conf.getConf(conf.getConfs().size() - 1).getLayer();
-  return fitDataSet(MLLibUtil.fromLabeledPoint(sc,rdd,outputLayer.getNOut()));
-}

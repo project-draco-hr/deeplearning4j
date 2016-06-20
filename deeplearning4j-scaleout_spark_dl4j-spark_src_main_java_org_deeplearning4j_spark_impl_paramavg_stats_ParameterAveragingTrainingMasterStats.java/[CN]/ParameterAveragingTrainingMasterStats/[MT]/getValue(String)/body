@@ -1,0 +1,17 @@
+{
+switch (key) {
+case "ParameterAveragingMasterBroadcastCreateTimesMs":
+    return parameterAveragingMasterBroadcastCreateTimesMs;
+case "ParameterAveragingMasterFitTimesMs":
+  return parameterAveragingMasterFitTimesMs;
+case "ParameterAveragingMasterSplitTimesMs":
+return parameterAveragingMasterSplitTimesMs;
+case "ParameterAveragingMasterAggregateTimesMs":
+return paramaterAveragingMasterAggregateTimesMs;
+case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":
+return parameterAveragingMasterProcessParamsUpdaterTimesMs;
+default :
+if (workerStats != null) return workerStats.getValue(key);
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

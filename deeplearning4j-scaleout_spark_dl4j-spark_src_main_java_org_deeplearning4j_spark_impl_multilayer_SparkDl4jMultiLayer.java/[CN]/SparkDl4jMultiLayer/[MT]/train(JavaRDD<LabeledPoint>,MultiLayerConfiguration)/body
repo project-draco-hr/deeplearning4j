@@ -1,4 +1,0 @@
-{
-  SparkDl4jMultiLayer multiLayer=new SparkDl4jMultiLayer(data.context(),conf);
-  return multiLayer.fit(new JavaSparkContext(data.context()),data);
-}

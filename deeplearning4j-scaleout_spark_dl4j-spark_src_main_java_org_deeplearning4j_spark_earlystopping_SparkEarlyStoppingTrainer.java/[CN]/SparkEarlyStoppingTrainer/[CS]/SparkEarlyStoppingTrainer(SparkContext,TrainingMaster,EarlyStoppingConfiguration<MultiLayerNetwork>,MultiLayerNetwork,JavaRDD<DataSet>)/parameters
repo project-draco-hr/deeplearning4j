@@ -1,0 +1,5 @@
+SparkContext sc
+TrainingMaster trainingMaster
+EarlyStoppingConfiguration<MultiLayerNetwork> esConfig
+MultiLayerNetwork net
+JavaRDD<DataSet> train

@@ -1,0 +1,4 @@
+{
+  super(sc,esConfig,net,train,null,listener);
+  sparkNet=new SparkDl4jMultiLayer(sc,net,trainingMaster);
+}

@@ -1,0 +1,11 @@
+int batchSize
+int numExamples
+int[] imgDim
+int numLabels
+boolean useSubset
+PathLabelGenerator labelGenerator
+boolean train
+double splitTrainTest
+ImageTransform imageTransform
+int normalizeValue
+Random rng

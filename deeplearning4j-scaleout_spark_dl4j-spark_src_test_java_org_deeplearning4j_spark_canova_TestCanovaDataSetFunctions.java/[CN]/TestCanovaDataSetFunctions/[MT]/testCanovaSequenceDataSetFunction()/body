@@ -1,7 +1,7 @@
 {
   JavaSparkContext sc=getContext();
-  ClassPathResource cpr=new ClassPathResource("/csvsequence/csvsequence_0.txt");
-  String path=cpr.getFile().getAbsolutePath();
+  File f=new File("src/test/resources/csvsequence/csvsequence_0.txt");
+  String path=f.getPath();
   String folder=path.substring(0,path.length() - 17);
   path=folder + "*";
   JavaPairRDD<String,PortableDataStream> origData=sc.binaryFiles(path);

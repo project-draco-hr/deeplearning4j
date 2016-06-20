@@ -1,0 +1,5 @@
+JavaSparkContext sc
+TrainingMaster trainingMaster
+EarlyStoppingConfiguration<ComputationGraph> esConfig
+ComputationGraph net
+JavaRDD<MultiDataSet> train

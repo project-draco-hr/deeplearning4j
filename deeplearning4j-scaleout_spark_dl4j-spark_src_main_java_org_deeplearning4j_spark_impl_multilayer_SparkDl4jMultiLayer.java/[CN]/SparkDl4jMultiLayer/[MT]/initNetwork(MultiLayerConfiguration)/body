@@ -1,0 +1,5 @@
+{
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  return net;
+}

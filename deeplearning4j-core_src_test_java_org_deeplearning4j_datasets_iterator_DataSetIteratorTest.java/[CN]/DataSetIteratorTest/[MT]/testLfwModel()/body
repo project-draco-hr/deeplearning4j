@@ -13,7 +13,7 @@
   new ConvolutionLayerSetup(builder,numRows,numColumns,numChannels);
   MultiLayerNetwork model=new MultiLayerNetwork(builder.build());
   model.init();
-  model.setListeners(Arrays.asList((IterationListener)new ScoreIterationListener(listenerFreq)));
+  model.setListeners(new ScoreIterationListener(listenerFreq));
   model.fit(lfw.next());
   DataSet dataTest=lfw.next();
   INDArray output=model.output(dataTest.getFeatureMatrix());
