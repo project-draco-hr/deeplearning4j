@@ -7,6 +7,7 @@
   EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc.sc())).modelSaver(saver).build();
   LoggingEarlyStoppingListener listener=new LoggingEarlyStoppingListener();
   IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),new ParameterAveragingTrainingMaster(true,Runtime.getRuntime().availableProcessors(),10,1,0),esConf,net,irisData);
+  trainer.setListener(listener);
   trainer.fit();
   assertEquals(1,listener.onStartCallCount);
   assertEquals(5,listener.onEpochCallCount);
