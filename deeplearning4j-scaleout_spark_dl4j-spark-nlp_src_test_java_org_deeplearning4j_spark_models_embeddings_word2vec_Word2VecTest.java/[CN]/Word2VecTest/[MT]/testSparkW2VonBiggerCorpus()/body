@@ -1,5 +1,5 @@
 {
-  SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest").set("spark.driver.memory","16g").set("spark.driver.maxResultSize","16g").set("spark.executor.memory","16g");
+  SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest");
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
   String dataPath="/ext/Temp/SampleRussianCorpus.txt";
   JavaRDD<String> corpus=sc.textFile(dataPath);
