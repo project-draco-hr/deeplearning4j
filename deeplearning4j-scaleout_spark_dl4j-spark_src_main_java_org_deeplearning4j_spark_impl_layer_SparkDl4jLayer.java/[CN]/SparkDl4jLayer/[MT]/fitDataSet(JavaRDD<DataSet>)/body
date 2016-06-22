@@ -5,7 +5,8 @@
   if (!averageEachIteration) {
     int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
     final INDArray params=Nd4j.create(1,numParams);
-    Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+    Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
+    layer.setBackpropGradientsViewArray(Nd4j.create(1,numParams));
     this.params=sc.broadcast(params);
     log.info("Broadcasting initial parameters of length " + params.length());
     int paramsLength=layer.numParams();
@@ -21,7 +22,8 @@
     conf.setNumIterations(1);
     int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
     final INDArray params=Nd4j.create(1,numParams);
-    Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params);
+    Layer layer=LayerFactories.getFactory(conf.getLayer()).create(conf,null,0,params,true);
+    layer.setBackpropGradientsViewArray(Nd4j.create(1,numParams));
     this.params=sc.broadcast(params);
     for (int i=0; i < iterations; i++) {
       JavaRDD<INDArray> results=rdd.sample(true,0.3).mapPartitions(new IterativeReduceFlatMap(conf.toJson(),this.params));

@@ -1,0 +1,7 @@
+{
+  super(null,batchSize,1,numExamples);
+  this.loader=new CifarLoader(imgDim[0],imgDim[1],imgDim[2],imageTransform,normalizeValue,train);
+  this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
+  this.numPossibleLabels=numPossibleLables;
+  this.inputStream=loader.getInputStream();
+}

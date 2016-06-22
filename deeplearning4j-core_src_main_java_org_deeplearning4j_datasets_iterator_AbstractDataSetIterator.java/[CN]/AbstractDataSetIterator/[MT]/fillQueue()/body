@@ -1,0 +1,46 @@
+{
+  if (queue.isEmpty()) {
+    INDArray labels=null;
+    INDArray features=null;
+    List<INDArray> cLabels=new ArrayList<>();
+    List<INDArray> cFeatures=new ArrayList<>();
+    for (int cnt=0; cnt < batchSize; cnt++) {
+      if (iterator.hasNext()) {
+        Pair<T,T> pair=iterator.next();
+        if (numFeatures < 1) {
+          if (pair.getFirst() instanceof INDArray) {
+            numFeatures=((INDArray)pair.getFirst()).length();
+            numLabels=((INDArray)pair.getSecond()).length();
+          }
+ else           if (pair.getFirst() instanceof float[]) {
+            numFeatures=((float[])pair.getFirst()).length;
+            numLabels=((float[])pair.getSecond()).length;
+          }
+ else           if (pair.getFirst() instanceof double[]) {
+            numFeatures=((double[])pair.getFirst()).length;
+            numLabels=((double[])pair.getSecond()).length;
+          }
+        }
+        if (pair.getFirst() instanceof INDArray) {
+          cFeatures.add(((INDArray)pair.getFirst()));
+          cLabels.add(((INDArray)pair.getSecond()));
+        }
+ else         if (pair.getFirst() instanceof float[]) {
+          cFeatures.add(Nd4j.create((float[])pair.getFirst()));
+          cLabels.add(Nd4j.create((float[])pair.getSecond()));
+        }
+ else         if (pair.getFirst() instanceof double[]) {
+          cFeatures.add(Nd4j.create((double[])pair.getFirst()));
+          cLabels.add(Nd4j.create((double[])pair.getSecond()));
+        }
+      }
+ else       break;
+    }
+    if (cFeatures.size() == batchSize) {
+      features=Nd4j.vstack(cFeatures);
+      labels=Nd4j.vstack(cLabels);
+      DataSet dataSet=new DataSet(features,labels);
+      queue.add(dataSet);
+    }
+  }
+}

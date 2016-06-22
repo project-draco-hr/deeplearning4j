@@ -9,6 +9,12 @@
     while ((line=reader.readLine()) != null)     builder.append(line).append(" ");
     document.setContent(builder.toString());
     document.setLabel(label);
+    try {
+      reader.close();
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
     return document;
   }
  catch (  Exception e) {

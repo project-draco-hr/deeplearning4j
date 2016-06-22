@@ -1,3 +1,0 @@
-{
-  super(new LFWLoader().getRecordReader(imgDim[0],imgDim[1],imgDim[2]),batchSize,1,LFWLoader.NUM_LABELS);
-}

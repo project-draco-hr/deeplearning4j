@@ -10,6 +10,6 @@
   INDArray input=d2.getFeatureMatrix();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  RBM rbm=LayerFactories.getFactory(conf).create(conf,null,0,params);
+  RBM rbm=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   rbm.fit(input);
 }

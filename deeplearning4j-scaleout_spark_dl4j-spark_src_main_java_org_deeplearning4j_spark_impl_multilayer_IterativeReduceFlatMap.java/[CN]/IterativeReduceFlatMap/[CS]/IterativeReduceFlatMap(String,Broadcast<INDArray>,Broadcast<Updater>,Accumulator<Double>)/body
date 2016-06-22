@@ -1,7 +1,0 @@
-{
-  this.json=json;
-  this.params=params;
-  this.updater=updater;
-  if (updater.getValue() == null)   throw new IllegalArgumentException("Updater shouldn't be null");
-  this.best_score_acc=bestScoreAcc;
-}

@@ -1,0 +1,7 @@
+{
+  SparkConf sparkConf=new SparkConf();
+  sparkConf.setMaster("local[" + nWorkers + "]");
+  sparkConf.setAppName("Test");
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  return sc;
+}

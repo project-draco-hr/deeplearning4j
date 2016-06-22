@@ -4,6 +4,8 @@
   blockingQueue=new LinkedBlockingDeque<>(queueSize);
   runnable=new IteratorRunnable();
   thread=new Thread(runnable);
+  Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
+  Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
   thread.setDaemon(true);
   thread.start();
 }

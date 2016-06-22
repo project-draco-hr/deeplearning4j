@@ -1,6 +1,6 @@
 {
   if (training && conf.getLayer().getDropOut() > 0.0) {
-    input=Dropout.applyDropout(input,conf.getLayer().getDropOut(),dropoutMask);
+    Dropout.applyDropout(input,conf.getLayer().getDropOut());
   }
   INDArray propUp=propUp(input,training);
   return propUp;

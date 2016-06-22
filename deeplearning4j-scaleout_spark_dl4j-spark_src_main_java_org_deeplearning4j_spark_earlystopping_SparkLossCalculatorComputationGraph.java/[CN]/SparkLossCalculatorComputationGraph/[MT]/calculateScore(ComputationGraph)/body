@@ -1,4 +1,4 @@
 {
-  SparkComputationGraph net=new SparkComputationGraph(sc,network);
-  return net.calculateScore(data,average);
+  SparkComputationGraph net=new SparkComputationGraph(sc,network,null);
+  return net.calculateScoreMultiDataSet(data,average);
 }

@@ -1,0 +1,7 @@
+{
+  if (batchSize < 1)   throw new IllegalStateException("batchSize can't be < 1");
+  this.iterable=iterable;
+  this.iterator=this.iterable.iterator();
+  this.batchSize=batchSize;
+  fillQueue();
+}

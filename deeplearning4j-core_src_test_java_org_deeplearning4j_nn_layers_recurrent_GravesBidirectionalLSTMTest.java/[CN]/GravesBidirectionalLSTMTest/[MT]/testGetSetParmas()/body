@@ -7,7 +7,7 @@
   final NeuralNetConfiguration confBidirectional=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM.Builder().nIn(nIn).nOut(layerSize).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-0.1,0.1)).activation("tanh").build()).build();
   int numParams=LayerFactories.getFactory(confBidirectional).initializer().numParams(confBidirectional,true);
   INDArray params=Nd4j.create(1,numParams);
-  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional,null,0,params);
+  final GravesBidirectionalLSTM bidirectionalLSTM=LayerFactories.getFactory(confBidirectional.getLayer()).create(confBidirectional,null,0,params,true);
   final INDArray sig=Nd4j.rand(new int[]{miniBatchSize,nIn,timeSeriesLength});
   final INDArray act1=bidirectionalLSTM.activate(sig);
   params=bidirectionalLSTM.params();

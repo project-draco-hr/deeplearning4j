@@ -1,0 +1,4 @@
+{
+  long now=System.currentTimeMillis();
+  aggregateTimes.add((int)(now - lastAggregateStartTime));
+}

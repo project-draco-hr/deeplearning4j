@@ -1,3 +1,3 @@
 {
-  super(new LFWLoader().getRecordReader(numExamples,batchSize,imgDim[0],imgDim[1],imgDim[2],true,1,new Random(123)),batchSize,1,LFWLoader.NUM_LABELS);
+  this(batchSize,numExamples,imgDim,LFWLoader.NUM_LABELS,false,LFWLoader.LABEL_PATTERN,true,1,null,0,new Random(System.currentTimeMillis()));
 }

@@ -1,3 +1,0 @@
-{
-  return scoreExamples(data.mapToPair(new PairDataSetToMultiDataSetFn<K>()),includeRegularizationTerms,DEFAULT_EVAL_SCORE_BATCH_SIZE);
-}

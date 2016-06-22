@@ -1,0 +1,7 @@
+{
+  if (configuration.isCollectTrainingStats())   stats.logFitStart();
+  graph.fit(dataSet);
+  if (configuration.isCollectTrainingStats())   stats.logFitEnd();
+  if (isLast)   return getFinalResult(graph);
+  return null;
+}

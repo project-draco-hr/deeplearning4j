@@ -1,0 +1,9 @@
+{
+  this.collectTrainingStats=collectTrainingStats;
+  if (collectTrainingStats) {
+    if (this.stats == null)     this.stats=new ParameterAveragingTrainingMasterStats.parameterAveragingTrainingMasterStatsHelper();
+  }
+ else {
+    this.stats=null;
+  }
+}

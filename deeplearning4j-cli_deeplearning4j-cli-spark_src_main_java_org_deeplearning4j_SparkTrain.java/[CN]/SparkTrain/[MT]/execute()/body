@@ -2,9 +2,10 @@
   ComputationGraph graph;
   try {
     graph=getComputationGraph();
-    SparkComputationGraph multiLayer=new SparkComputationGraph(getContext(),graph);
+    TrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(numWorkers).batchSizePerWorker(examplesPerFit / numWorkers).saveUpdater(saveUpdater).averagingFrequency(averagingFrequency).workerPrefetchNumBatches(workerPrefetchNumBatches).build();
+    SparkComputationGraph multiLayer=new SparkComputationGraph(getContext(),graph,tm);
     JavaRDD<DataSet> dataSet=getDataSet();
-    ComputationGraph newGraph=multiLayer.fitDataSet(dataSet,examplesPerFit,totalExamples,numPartitions);
+    ComputationGraph newGraph=multiLayer.fit(dataSet);
     saveGraph(newGraph);
   }
  catch (  IOException e) {
