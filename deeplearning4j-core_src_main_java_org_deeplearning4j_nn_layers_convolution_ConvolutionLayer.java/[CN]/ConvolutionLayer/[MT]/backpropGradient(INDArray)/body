@@ -25,6 +25,12 @@
     Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(afn,sigmaPrimeZ,conf.getExtraArgs()).derivative());
     delta=sigmaPrimeZ.muli(epsilon);
   }
+  if (helper != null) {
+    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,weights,delta,kernel,strides,pad,biasGradView,weightGradView,afn);
+    if (ret != null) {
+      return ret;
+    }
+  }
   delta=delta.permute(1,0,2,3);
   INDArray delta2d=delta.reshape('c',new int[]{outDepth,miniBatch * outH * outW});
   INDArray col=Nd4j.createUninitialized(new int[]{miniBatch,outH,outW,inDepth,kH,kW},'c');

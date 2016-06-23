@@ -11,6 +11,12 @@
   int[] pad=layerConf().getPadding();
   int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  if (helper != null) {
+    INDArray ret=helper.activate(input,training,kernel,strides,pad,layerConf().getPoolingType());
+    if (ret != null) {
+      return ret;
+    }
+  }
   INDArray col=Nd4j.create(new int[]{miniBatch,inDepth,outH,outW,kernel[0],kernel[1]},'c');
   INDArray col2=col.permute(0,1,4,5,2,3);
   Convolution.im2col(input,kernel[0],kernel[1],strides[0],strides[1],pad[0],pad[1],false,col2);
