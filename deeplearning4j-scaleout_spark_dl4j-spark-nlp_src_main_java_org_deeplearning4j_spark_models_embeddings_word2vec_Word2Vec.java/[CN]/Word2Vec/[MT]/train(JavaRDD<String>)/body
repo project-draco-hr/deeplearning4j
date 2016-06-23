@@ -31,8 +31,10 @@
   log.info("Training word2vec sentences ...");
   FlatMapFunction firstIterFunc=new SecondIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,vocabCacheBroadcast);
   @SuppressWarnings("unchecked") JavaRDD<Pair<VocabWord,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
+  log.info("Collect on results...");
   List<Pair<VocabWord,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
   INDArray syn0=Nd4j.zeros(vocabCache.numWords(),layerSize);
+  log.info("Averaging results...");
   Map<VocabWord,AtomicInteger> updates=new HashMap<>();
   Map<Long,Long> updaters=new HashMap<>();
   for (  Pair<VocabWord,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
@@ -52,6 +54,7 @@
     }
   }
   long totals=0;
+  log.info("Finished calculations...");
   vocab=vocabCache;
   InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
   Environment env=EnvironmentUtils.buildEnvironment();

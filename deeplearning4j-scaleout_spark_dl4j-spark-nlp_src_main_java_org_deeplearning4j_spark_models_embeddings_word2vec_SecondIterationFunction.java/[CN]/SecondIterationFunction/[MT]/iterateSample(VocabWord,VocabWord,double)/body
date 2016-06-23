@@ -2,7 +2,7 @@
   if (w1 == null || w2 == null || w2.getIndex() < 0 || w2.getIndex() == w1.getIndex())   return;
   final int currentWordIndex=w2.getIndex();
   INDArray neu1e=Nd4j.create(vectorLength);
-  INDArray l1=vocabHolder.getSyn0Vector(currentWordIndex);
+  INDArray l1=vocabHolder.getSyn0Vector(currentWordIndex,vocab);
   for (int i=0; i < w1.getCodeLength(); i++) {
     int code=w1.getCodes().get(i);
     int point=w1.getPoints().get(i);

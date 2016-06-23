@@ -1,4 +1,10 @@
 {
+  this.vocabHolder=VocabHolder.getInstance();
+  this.vocabHolder.setSeed(seed,vectorLength);
+  if (negative > 0) {
+    negativeHolder=NegativeHolder.getInstance();
+    negativeHolder.initHolder(vocab,expTable,this.vectorLength);
+  }
   while (pairIter.hasNext()) {
     List<Pair<List<VocabWord>,Long>> batch=new ArrayList<>();
     while (pairIter.hasNext() && batch.size() < batchSize) {
