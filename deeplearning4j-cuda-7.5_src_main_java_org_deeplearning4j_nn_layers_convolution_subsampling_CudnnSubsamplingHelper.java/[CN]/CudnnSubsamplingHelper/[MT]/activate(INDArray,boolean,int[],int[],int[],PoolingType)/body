@@ -1,0 +1,34 @@
+{
+  int miniBatch=input.size(0);
+  int inDepth=input.size(1);
+  int inH=input.size(2);
+  int inW=input.size(3);
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  int poolingMode;
+switch (poolingType) {
+case AVG:
+    poolingMode=CUDNN_POOLING_AVERAGE_COUNT_INCLUDE_PADDING;
+  break;
+case MAX:
+poolingMode=CUDNN_POOLING_MAX;
+break;
+case NONE:
+return input;
+default :
+return null;
+}
+int[] srcStride=input.stride();
+checkCudnn(cudnnSetPooling2dDescriptor(cudnnContext.poolingDesc,poolingMode,CUDNN_PROPAGATE_NAN,kernel[0],kernel[1],pad[0],pad[1],strides[0],strides[1]));
+checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,inDepth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));
+INDArray reduced=Nd4j.createUninitialized(new int[]{miniBatch,inDepth,outH,outW},'c');
+int[] dstStride=reduced.stride();
+checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.dstTensorDesc,dataType,miniBatch,inDepth,outH,outW,dstStride[0],dstStride[1],dstStride[2],dstStride[3]));
+Allocator allocator=AtomicAllocator.getInstance();
+CudaContext context=allocator.getFlowController().prepareAction(input,reduced);
+Pointer srcData=allocator.getPointer(input,context);
+Pointer dstData=allocator.getPointer(reduced,context);
+checkCudnn(cudnnPoolingForward(cudnnContext,cudnnContext.poolingDesc,alpha,cudnnContext.srcTensorDesc,srcData,beta,cudnnContext.dstTensorDesc,dstData));
+allocator.registerAction(context,input,reduced);
+return reduced;
+}

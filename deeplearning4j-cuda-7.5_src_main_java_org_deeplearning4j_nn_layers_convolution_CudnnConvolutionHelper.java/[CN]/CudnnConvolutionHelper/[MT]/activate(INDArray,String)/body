@@ -1,0 +1,32 @@
+{
+  INDArray activation=z;
+  Allocator allocator=AtomicAllocator.getInstance();
+  CudaContext context=allocator.getFlowController().prepareAction(z);
+  Pointer dstData=allocator.getPointer(z,context);
+switch (afn) {
+case "identity":
+    break;
+case "sigmoid":
+  checkCudnn(cudnnSetActivationDescriptor(cudnnContext.activationDesc,CUDNN_ACTIVATION_SIGMOID,CUDNN_PROPAGATE_NAN,0));
+checkCudnn(cudnnActivationForward(cudnnContext,cudnnContext.activationDesc,alpha,cudnnContext.dstTensorDesc,dstData,beta,cudnnContext.dstTensorDesc,dstData));
+break;
+case "relu":
+checkCudnn(cudnnSetActivationDescriptor(cudnnContext.activationDesc,CUDNN_ACTIVATION_RELU,CUDNN_PROPAGATE_NAN,0));
+checkCudnn(cudnnActivationForward(cudnnContext,cudnnContext.activationDesc,alpha,cudnnContext.dstTensorDesc,dstData,beta,cudnnContext.dstTensorDesc,dstData));
+break;
+case "tanh":
+checkCudnn(cudnnSetActivationDescriptor(cudnnContext.activationDesc,CUDNN_ACTIVATION_TANH,CUDNN_PROPAGATE_NAN,0));
+checkCudnn(cudnnActivationForward(cudnnContext,cudnnContext.activationDesc,alpha,cudnnContext.dstTensorDesc,dstData,beta,cudnnContext.dstTensorDesc,dstData));
+break;
+case "softmax":
+checkCudnn(cudnnSoftmaxForward(cudnnContext,CUDNN_SOFTMAX_ACCURATE,CUDNN_SOFTMAX_MODE_CHANNEL,alpha,cudnnContext.dstTensorDesc,dstData,beta,cudnnContext.dstTensorDesc,dstData));
+break;
+case "logsoftmax":
+checkCudnn(cudnnSoftmaxForward(cudnnContext,CUDNN_SOFTMAX_LOG,CUDNN_SOFTMAX_MODE_CHANNEL,alpha,cudnnContext.dstTensorDesc,dstData,beta,cudnnContext.dstTensorDesc,dstData));
+break;
+default :
+activation=null;
+}
+allocator.registerAction(context,z);
+return activation;
+}

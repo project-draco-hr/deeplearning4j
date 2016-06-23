@@ -2,6 +2,12 @@
   if (input == null)   throw new IllegalArgumentException("No null input allowed");
   applyDropOutIfNecessary(training);
   INDArray z=preOutput(training);
+  if (helper != null) {
+    INDArray ret=helper.activate(z,conf.getLayer().getActivationFunction());
+    if (ret != null) {
+      return ret;
+    }
+  }
   INDArray activation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),z));
   return activation;
 }
