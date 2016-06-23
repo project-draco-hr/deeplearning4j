@@ -1,3 +1,10 @@
 {
-  return null;
+  if (!pointSyn1VecMap.containsKey(point)) {
+synchronized (this) {
+      if (!pointSyn1VecMap.containsKey(point)) {
+        pointSyn1VecMap.put(point,Nd4j.zeros(1,vectorLength.get()));
+      }
+    }
+  }
+  return pointSyn1VecMap.get(point);
 }

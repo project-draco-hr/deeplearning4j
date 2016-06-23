@@ -29,7 +29,7 @@
   Broadcast<Map<String,Object>> word2vecVarMapBroadcast=sc.broadcast(word2vecVarMap);
   Broadcast<double[]> expTableBroadcast=sc.broadcast(expTable);
   log.info("Training word2vec sentences ...");
-  FlatMapFunction firstIterFunc=new FirstIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,vocabCacheBroadcast);
+  FlatMapFunction firstIterFunc=new SecondIterationFunction(word2vecVarMapBroadcast,expTableBroadcast,vocabCacheBroadcast);
   @SuppressWarnings("unchecked") JavaRDD<Pair<VocabWord,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
   List<Pair<VocabWord,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
   INDArray syn0=Nd4j.zeros(vocabCache.numWords(),layerSize);
