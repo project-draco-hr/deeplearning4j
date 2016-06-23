@@ -5,7 +5,7 @@
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new LowCasePreProcessor());
-  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(10).useAdaGrad(false).layerSize(100).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(3).batchSize(100).minWordFrequency(5).useUnknown(true).build();
+  Word2Vec word2Vec=new Word2Vec.Builder().setNGrams(1).tokenizerFactory(t).seed(42L).negative(3).useAdaGrad(false).layerSize(100).windowSize(5).learningRate(0.025).minLearningRate(0.0001).iterations(1).batchSize(100).minWordFrequency(5).useUnknown(true).build();
   word2Vec.train(corpus);
   sc.stop();
   WordVectorSerializer.writeWordVectors(word2Vec.getLookupTable(),"/ext/Temp/sparkRuModel.txt");
