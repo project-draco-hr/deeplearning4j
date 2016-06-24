@@ -1,0 +1,10 @@
+{
+  checkCudnn(cudnnCreate(this));
+  checkCudnn(cudnnCreateTensorDescriptor(srcTensorDesc));
+  checkCudnn(cudnnCreateTensorDescriptor(dstTensorDesc));
+  checkCudnn(cudnnCreateTensorDescriptor(biasTensorDesc));
+  checkCudnn(cudnnCreateTensorDescriptor(deltaTensorDesc));
+  checkCudnn(cudnnCreateFilterDescriptor(filterDesc));
+  checkCudnn(cudnnCreateConvolutionDescriptor(convDesc));
+  checkCudnn(cudnnCreateActivationDescriptor(activationDesc));
+}

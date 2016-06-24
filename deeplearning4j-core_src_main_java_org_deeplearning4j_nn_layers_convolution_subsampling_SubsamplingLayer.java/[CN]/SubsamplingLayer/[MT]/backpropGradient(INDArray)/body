@@ -8,6 +8,12 @@
   int[] pad=layerConf().getPadding();
   int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  if (helper != null) {
+    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,epsilon,kernel,strides,pad,layerConf().getPoolingType());
+    if (ret != null) {
+      return ret;
+    }
+  }
   int inputHeight=input().size(-2);
   int inputWidth=input().size(-1);
   INDArray reshapeEpsilon, retE;

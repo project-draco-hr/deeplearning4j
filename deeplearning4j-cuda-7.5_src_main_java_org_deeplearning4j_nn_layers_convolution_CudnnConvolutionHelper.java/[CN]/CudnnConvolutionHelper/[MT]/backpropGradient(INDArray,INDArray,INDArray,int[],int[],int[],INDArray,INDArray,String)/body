@@ -1,0 +1,50 @@
+{
+  int miniBatch=input.size(0);
+  int inH=input.size(2);
+  int inW=input.size(3);
+  int outDepth=weights.size(0);
+  int inDepth=weights.size(1);
+  int kH=weights.size(2);
+  int kW=weights.size(3);
+  int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
+  int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
+  if (!Shape.strideDescendingCAscendingF(delta)) {
+    delta=delta.dup();
+  }
+  int[] srcStride=input.stride();
+  int[] deltaStride=delta.stride();
+  int[] algo=new int[1];
+  checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,inDepth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));
+  checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.deltaTensorDesc,dataType,miniBatch,outDepth,outH,outW,deltaStride[0],deltaStride[1],deltaStride[2],deltaStride[3]));
+  checkCudnn(cudnnSetConvolution2dDescriptor(cudnnContext.convDesc,pad[0],pad[1],strides[0],strides[1],1,1,CUDNN_CROSS_CORRELATION));
+  checkCudnn(cudnnSetFilter4dDescriptor(cudnnContext.filterDesc,dataType,tensorFormat,outDepth,inDepth,kH,kW));
+  checkCudnn(cudnnGetConvolutionBackwardFilterAlgorithm(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.deltaTensorDesc,cudnnContext.convDesc,cudnnContext.filterDesc,CUDNN_CONVOLUTION_BWD_FILTER_PREFER_FASTEST,0,algo));
+  INDArray epsNext=Nd4j.create(new int[]{miniBatch,inDepth,inH,inW},'c');
+  int[] dstStride=epsNext.stride();
+  Allocator allocator=AtomicAllocator.getInstance();
+  CudaContext context=allocator.getFlowController().prepareAction(input,weights,weightGradView,biasGradView,delta,epsNext);
+  Pointer srcData=allocator.getPointer(input,context);
+  Pointer filterData=allocator.getPointer(weights,context);
+  Pointer filterGradData=allocator.getPointer(weightGradView,context);
+  Pointer biasGradData=allocator.getPointer(biasGradView,context);
+  Pointer deltaData=allocator.getPointer(delta,context);
+  Pointer dstData=allocator.getPointer(epsNext,context);
+  checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.dstTensorDesc,dataType,miniBatch,inDepth,inH,inW,dstStride[0],dstStride[1],dstStride[2],dstStride[3]));
+  checkCudnn(cudnnGetConvolutionBackwardFilterWorkspaceSize(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.deltaTensorDesc,cudnnContext.convDesc,cudnnContext.filterDesc,algo[0],sizeInBytes));
+  long sizeInBytes1=sizeInBytes.get(0);
+  checkCudnn(cudnnGetConvolutionBackwardDataWorkspaceSize(cudnnContext,cudnnContext.filterDesc,cudnnContext.deltaTensorDesc,cudnnContext.convDesc,cudnnContext.dstTensorDesc,algo[0],sizeInBytes));
+  long sizeInBytes2=sizeInBytes.get(0);
+  if (sizeInBytes1 > workSpace.capacity() || sizeInBytes2 > workSpace.capacity()) {
+    workSpace.deallocate();
+    workSpace=new WorkSpace(Math.max(sizeInBytes1,sizeInBytes2));
+  }
+  checkCudnn(cudnnSetTensor4dDescriptor(cudnnContext.biasTensorDesc,tensorFormat,dataType,1,outDepth,1,1));
+  checkCudnn(cudnnConvolutionBackwardBias(cudnnContext,alpha,cudnnContext.deltaTensorDesc,deltaData,beta,cudnnContext.biasTensorDesc,biasGradData));
+  checkCudnn(cudnnConvolutionBackwardFilter(cudnnContext,alpha,cudnnContext.srcTensorDesc,srcData,cudnnContext.deltaTensorDesc,deltaData,cudnnContext.convDesc,algo[0],workSpace,workSpace.capacity(),beta,cudnnContext.filterDesc,filterGradData));
+  checkCudnn(cudnnConvolutionBackwardData(cudnnContext,alpha,cudnnContext.filterDesc,filterData,cudnnContext.deltaTensorDesc,deltaData,cudnnContext.convDesc,algo[0],workSpace,workSpace.capacity(),beta,cudnnContext.dstTensorDesc,dstData));
+  allocator.registerAction(context,input,weights,weightGradView,biasGradView,delta,epsNext);
+  Gradient retGradient=new DefaultGradient();
+  retGradient.setGradientFor(ConvolutionParamInitializer.BIAS_KEY,biasGradView);
+  retGradient.setGradientFor(ConvolutionParamInitializer.WEIGHT_KEY,weightGradView,'c');
+  return new Pair<>(retGradient,epsNext);
+}
