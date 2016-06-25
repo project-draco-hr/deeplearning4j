@@ -1,2 +1,10 @@
 {
+  try {
+    Class<?> c=Class.forName(className);
+    Method m=c.getMethod("getInstance");
+    return (TimeSource)m.invoke(null);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Error getting TimeSource instance for class \"" + className + "\"",e);
+  }
 }

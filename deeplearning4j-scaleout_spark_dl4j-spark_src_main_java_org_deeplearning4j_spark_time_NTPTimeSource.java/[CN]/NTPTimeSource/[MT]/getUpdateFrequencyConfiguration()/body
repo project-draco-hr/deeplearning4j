@@ -11,7 +11,7 @@
     }
     if (parseAttempt != null) {
       if (parseAttempt < MIN_UPDATE_FREQUENCY) {
-        log.info("Invalid update frequency (milliseconds): {} is less than minimum {}",parseAttempt,MIN_UPDATE_FREQUENCY);
+        log.info("Invalid update frequency (milliseconds): {} is less than minimum {}. Using default update frequency: {} ms",parseAttempt,MIN_UPDATE_FREQUENCY,DEFAULT_UPDATE_FREQUENCY);
         updateFreq=DEFAULT_UPDATE_FREQUENCY;
       }
  else {
