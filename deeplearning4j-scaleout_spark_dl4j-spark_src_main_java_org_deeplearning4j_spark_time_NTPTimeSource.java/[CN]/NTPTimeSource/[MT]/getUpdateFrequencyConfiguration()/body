@@ -1,0 +1,29 @@
+{
+  String property=System.getProperty(NTP_SOURCE_UPDATE_FREQUENCY_MS_PROPERTY);
+  Long parseAttempt=null;
+  long updateFreq;
+  if (property != null) {
+    try {
+      parseAttempt=Long.parseLong(property);
+    }
+ catch (    Exception e) {
+      log.info("Error parsing system property \"{}\" with value \"{}\"",NTP_SOURCE_UPDATE_FREQUENCY_MS_PROPERTY,property);
+    }
+    if (parseAttempt != null) {
+      if (parseAttempt < MIN_UPDATE_FREQUENCY) {
+        log.info("Invalid update frequency (milliseconds): {} is less than minimum {}",parseAttempt,MIN_UPDATE_FREQUENCY);
+        updateFreq=DEFAULT_UPDATE_FREQUENCY;
+      }
+ else {
+        updateFreq=parseAttempt;
+      }
+    }
+ else {
+      updateFreq=DEFAULT_UPDATE_FREQUENCY;
+    }
+  }
+ else {
+    updateFreq=DEFAULT_UPDATE_FREQUENCY;
+  }
+  return updateFreq;
+}

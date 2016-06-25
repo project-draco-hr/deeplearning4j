@@ -1,0 +1,32 @@
+{
+  Long offsetResult=null;
+  for (int i=0; i < MAX_QUERY_RETRIES; i++) {
+    try {
+      NTPUDPClient client=new NTPUDPClient();
+      client.setDefaultTimeout(DEFAULT_NTP_TIMEOUT_MS);
+      client.open();
+      InetAddress hostAddr=InetAddress.getByName(ntpServer);
+      System.out.println("> " + hostAddr.getHostName() + "/"+ hostAddr.getHostAddress());
+      TimeInfo info=client.getTime(hostAddr);
+      info.computeDetails();
+      Long offset=info.getOffset();
+      if (offset == null) {
+        throw new Exception("Could not calculate time offset");
+      }
+ else {
+        offsetResult=offset;
+        break;
+      }
+    }
+ catch (    Exception e) {
+      log.error("Error querying NTP server, attempt {} of {}",(i + 1),MAX_QUERY_RETRIES,e);
+    }
+  }
+  if (offsetResult == null) {
+    log.error("Could not successfully query NTP server after " + MAX_QUERY_RETRIES + " tries");
+    throw new RuntimeException("Could not successfully query NTP server after " + MAX_QUERY_RETRIES + " tries");
+  }
+  lastOffsetGetTimeSystemMS=System.currentTimeMillis();
+  lastOffsetMilliseconds=offsetResult;
+  log.debug("Updated local time offset based on NTP server result. Offset = {}",lastOffsetMilliseconds);
+}

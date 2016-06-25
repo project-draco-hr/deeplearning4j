@@ -1,0 +1,4 @@
+{
+  String className=System.getProperty(TIMESOURCE_CLASSNAME_PROPERTY,DEFAULT_TIMESOURCE_CLASS_NAME);
+  return getInstance(className);
+}
