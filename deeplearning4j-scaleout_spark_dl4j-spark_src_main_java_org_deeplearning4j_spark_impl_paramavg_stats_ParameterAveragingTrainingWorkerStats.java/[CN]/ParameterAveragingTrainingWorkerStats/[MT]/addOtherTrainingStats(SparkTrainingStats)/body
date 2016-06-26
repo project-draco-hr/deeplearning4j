@@ -1,7 +1,7 @@
 {
   if (!(other instanceof ParameterAveragingTrainingWorkerStats))   throw new IllegalArgumentException("Cannot merge ParameterAveragingTrainingWorkerStats with " + (other != null ? other.getClass() : null));
   ParameterAveragingTrainingWorkerStats o=(ParameterAveragingTrainingWorkerStats)other;
-  this.parameterAveragingWorkerBroadcastGetValueTimeMs=ArrayUtil.combine(parameterAveragingWorkerBroadcastGetValueTimeMs,o.parameterAveragingWorkerBroadcastGetValueTimeMs);
-  this.parameterAveragingWorkerInitTimeMs=ArrayUtil.combine(parameterAveragingWorkerInitTimeMs,o.parameterAveragingWorkerInitTimeMs);
-  this.parameterAveragingWorkerFitTimesMs=ArrayUtil.combine(parameterAveragingWorkerFitTimesMs,o.parameterAveragingWorkerFitTimesMs);
+  this.parameterAveragingWorkerBroadcastGetValueTimeMs.addAll(o.parameterAveragingWorkerBroadcastGetValueTimeMs);
+  this.parameterAveragingWorkerInitTimeMs.addAll(o.parameterAveragingWorkerInitTimeMs);
+  this.parameterAveragingWorkerFitTimesMs.addAll(o.parameterAveragingWorkerFitTimesMs);
 }

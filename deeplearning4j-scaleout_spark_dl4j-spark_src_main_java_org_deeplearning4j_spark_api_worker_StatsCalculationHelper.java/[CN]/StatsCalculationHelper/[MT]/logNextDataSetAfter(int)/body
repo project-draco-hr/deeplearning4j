@@ -1,5 +1,6 @@
 {
-  long now=System.currentTimeMillis();
-  dataSetGetTimes.add((int)(now - lastDataSetBefore));
+  long now=timeSource.currentTimeMillis();
+  long duration=now - lastDataSetBefore;
+  dataSetGetTimes.add(new BaseEventStats(lastDataSetBefore,duration));
   totalExampleCount+=numExamples;
 }

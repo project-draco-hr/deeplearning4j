@@ -1,11 +1,11 @@
 {
   if (!(other instanceof CommonSparkTrainingStats))   throw new IllegalArgumentException("Cannot add other training stats: not an instance of CommonSparkTrainingStats");
   CommonSparkTrainingStats o=(CommonSparkTrainingStats)other;
-  workerFlatMapTotalTimeMs=ArrayUtil.combine(workerFlatMapTotalTimeMs,o.workerFlatMapTotalTimeMs);
-  workerFlatMapTotalExampleCount=ArrayUtil.combine(workerFlatMapTotalExampleCount,o.workerFlatMapTotalExampleCount);
-  workerFlatMapGetInitialModelTimeMs=ArrayUtil.combine(workerFlatMapGetInitialModelTimeMs,o.workerFlatMapGetInitialModelTimeMs);
-  workerFlatMapDataSetGetTimesMs=ArrayUtil.combine(workerFlatMapDataSetGetTimesMs,o.workerFlatMapDataSetGetTimesMs);
-  workerFlatMapProcessMiniBatchTimesMs=ArrayUtil.combine(workerFlatMapProcessMiniBatchTimesMs,o.workerFlatMapProcessMiniBatchTimesMs);
+  workerFlatMapTotalTimeMs.addAll(o.workerFlatMapTotalTimeMs);
+  workerFlatMapTotalExampleCount.addAll(o.workerFlatMapTotalExampleCount);
+  workerFlatMapGetInitialModelTimeMs.addAll(o.workerFlatMapGetInitialModelTimeMs);
+  workerFlatMapDataSetGetTimesMs.addAll(o.workerFlatMapDataSetGetTimesMs);
+  workerFlatMapProcessMiniBatchTimesMs.addAll(o.workerFlatMapProcessMiniBatchTimesMs);
   if (trainingWorkerSpecificStats != null)   trainingWorkerSpecificStats.addOtherTrainingStats(o.trainingWorkerSpecificStats);
  else   if (o.trainingWorkerSpecificStats != null)   throw new IllegalStateException("Cannot merge: training master specific stats is null in one, but not the other");
 }
