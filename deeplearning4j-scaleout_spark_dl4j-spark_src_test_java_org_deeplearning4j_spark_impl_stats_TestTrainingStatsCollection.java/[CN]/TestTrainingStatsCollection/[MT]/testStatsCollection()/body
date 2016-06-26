@@ -44,6 +44,7 @@
     }
     String statsAsString=stats.statsAsString();
     System.out.println(statsAsString);
+    assertEquals(actualKeySet.size(),statsAsString.split("\n").length);
     assertTrue(stats instanceof ParameterAveragingTrainingMasterStats);
     ParameterAveragingTrainingMasterStats masterStats=(ParameterAveragingTrainingMasterStats)stats;
     List<EventStats> broadcastCreateTime=masterStats.getParameterAveragingMasterBroadcastCreateTimesMs();
@@ -117,6 +118,8 @@
     String tempDir=System.getProperty("java.io.tmpdir");
     String outDir=FilenameUtils.concat(tempDir,"dl4j_testTrainingStatsCollection");
     stats.exportStatFiles(outDir,sc.sc());
+    String htmlPlotsPath=FilenameUtils.concat(outDir,"AnalysisPlots.html");
+    StatsUtils.exportStatsAsHtml(stats,htmlPlotsPath,sc);
   }
   finally {
     sc.stop();
