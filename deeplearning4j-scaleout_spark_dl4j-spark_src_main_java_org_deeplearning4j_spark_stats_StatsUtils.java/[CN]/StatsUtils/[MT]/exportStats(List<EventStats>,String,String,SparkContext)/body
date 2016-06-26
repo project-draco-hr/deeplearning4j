@@ -2,7 +2,7 @@
   StringBuilder sb=new StringBuilder();
   boolean first=true;
   for (  EventStats e : list) {
-    if (first)     sb.append(e.getStringHeader(delimiter));
+    if (first)     sb.append(e.getStringHeader(delimiter)).append("\n");
     sb.append(e.asString(delimiter)).append("\n");
     first=false;
   }
