@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  boolean first=true;
+  for (  EventStats e : list) {
+    if (first)     sb.append(e.getStringHeader(delimiter));
+    sb.append(e.asString(delimiter)).append("\n");
+    first=false;
+  }
+  SparkUtils.writeStringToFile(outputPath,sb.toString(),sc);
+}

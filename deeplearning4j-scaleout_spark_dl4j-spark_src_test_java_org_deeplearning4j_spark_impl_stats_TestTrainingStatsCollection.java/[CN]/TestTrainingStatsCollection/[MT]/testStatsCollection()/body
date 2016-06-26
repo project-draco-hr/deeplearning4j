@@ -114,6 +114,9 @@
     assertNonNullFields(parameterAveragingWorkerFitTimesMs);
     assertExpectedNumberMachineIdsJvmIdsThreadIds(parameterAveragingWorkerFitTimesMs,1,1,nWorkers);
     assertNull(pStats.getNestedTrainingStats());
+    String tempDir=System.getProperty("java.io.tmpdir");
+    String outDir=FilenameUtils.concat(tempDir,"dl4j_testTrainingStatsCollection");
+    stats.exportStatFiles(outDir,sc.sc());
   }
   finally {
     sc.stop();
