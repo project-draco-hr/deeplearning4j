@@ -2,7 +2,6 @@
   if (!(other instanceof CommonSparkTrainingStats))   throw new IllegalArgumentException("Cannot add other training stats: not an instance of CommonSparkTrainingStats");
   CommonSparkTrainingStats o=(CommonSparkTrainingStats)other;
   workerFlatMapTotalTimeMs.addAll(o.workerFlatMapTotalTimeMs);
-  workerFlatMapTotalExampleCount.addAll(o.workerFlatMapTotalExampleCount);
   workerFlatMapGetInitialModelTimeMs.addAll(o.workerFlatMapGetInitialModelTimeMs);
   workerFlatMapDataSetGetTimesMs.addAll(o.workerFlatMapDataSetGetTimesMs);
   workerFlatMapProcessMiniBatchTimesMs.addAll(o.workerFlatMapProcessMiniBatchTimesMs);

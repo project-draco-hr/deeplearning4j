@@ -2,10 +2,8 @@
 switch (key) {
 case "WorkerFlatMapTotalTimeMs":
     return workerFlatMapTotalTimeMs;
-case "WorkerFlatMapTotalExampleCount":
-  return workerFlatMapTotalExampleCount;
 case "WorkerFlatMapGetInitialModelTimeMs":
-return workerFlatMapGetInitialModelTimeMs;
+  return workerFlatMapGetInitialModelTimeMs;
 case "WorkerFlatMapDataSetGetTimesMs":
 return workerFlatMapDataSetGetTimesMs;
 case "WorkerFlatMapProcessMiniBatchTimesMs":

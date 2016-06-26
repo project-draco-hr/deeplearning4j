@@ -1,3 +1,0 @@
-{
-  return new CommonSparkTrainingStats.Builder().trainingMasterSpecificStats(masterSpecificStats).workerFlatMapTotalTimeMs(Collections.singletonList((EventStats)new BaseEventStats(methodStartTime,returnTime - methodStartTime))).workerFlatMapGetInitialModelTimeMs(Collections.singletonList((EventStats)new BaseEventStats(initalModelBefore,initialModelAfter - initalModelBefore))).workerFlatMapDataSetGetTimesMs(dataSetGetTimes).workerFlatMapProcessMiniBatchTimesMs(processMiniBatchTimes).build();
-}

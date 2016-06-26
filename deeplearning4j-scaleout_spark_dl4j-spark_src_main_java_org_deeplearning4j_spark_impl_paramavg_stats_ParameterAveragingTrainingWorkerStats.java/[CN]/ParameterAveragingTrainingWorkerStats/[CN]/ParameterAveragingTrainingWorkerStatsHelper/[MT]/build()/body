@@ -1,3 +1,7 @@
 {
-  return new ParameterAveragingTrainingWorkerStats(Collections.singletonList((EventStats)new BaseEventStats(broadcastStartTime,broadcastEndTime - broadcastStartTime)),Collections.singletonList((EventStats)new BaseEventStats(broadcastEndTime,initEndTime - broadcastEndTime)),fitTimes);
+  List<EventStats> bList=new ArrayList<>();
+  bList.add(new BaseEventStats(broadcastStartTime,broadcastEndTime - broadcastStartTime));
+  List<EventStats> initList=new ArrayList<>();
+  initList.add(new BaseEventStats(broadcastEndTime,initEndTime - broadcastEndTime));
+  return new ParameterAveragingTrainingWorkerStats(bList,initList,fitTimes);
 }
