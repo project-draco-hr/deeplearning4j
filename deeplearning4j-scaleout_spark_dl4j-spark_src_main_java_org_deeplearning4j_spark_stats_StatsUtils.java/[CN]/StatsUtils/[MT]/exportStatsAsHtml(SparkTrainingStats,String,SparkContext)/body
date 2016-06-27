@@ -17,6 +17,7 @@
     }
     components.add(new ChartLine.Builder(s,styleChart).addSeries("Duration",x,duration).build());
   }
+  components.add(getTrainingStatsTimelineChart(sparkTrainingStats));
   String html=StaticPageUtil.renderHTML(components);
   SparkUtils.writeStringToFile(path,html,sc);
 }

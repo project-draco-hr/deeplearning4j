@@ -1,0 +1,13 @@
+{
+  if (o1._1().equals(o2._1())) {
+    if (o1._2().equals(o2._2())) {
+      return Long.compare(o1._3(),o2._3());
+    }
+ else {
+      return o1._2().compareTo(o2._2());
+    }
+  }
+ else {
+    return o1._1().compareTo(o2._1());
+  }
+}
