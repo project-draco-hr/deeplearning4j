@@ -19,6 +19,16 @@
   Style divStyle=new StyleDiv.Builder().width(30,LengthUnit.Percent).height(200,LengthUnit.Px).backgroundColor(Color.GREEN).floatValue(StyleDiv.FloatValue.right).build();
   Component c8=new ComponentDiv(divStyle,c7,new ComponentText("(Also: it's float right, 30% width, 200 px high )",null));
   list.add(c8);
+  List<ChartTimeline.TimelineEntry> entries=new ArrayList<>();
+  for (int i=0; i < 10; i++) {
+    entries.add(new ChartTimeline.TimelineEntry(String.valueOf(i),10 * i,10 * i + 5));
+  }
+  List<ChartTimeline.TimelineEntry> entries2=new ArrayList<>();
+  for (int i=0; i < 10; i++) {
+    entries2.add(new ChartTimeline.TimelineEntry(String.valueOf(i),(int)(5 * i + 0.2 * i * i),(int)(5 * i + 0.2 * i * i) + 3));
+  }
+  Component c9=new ChartTimeline.Builder("Title",s).addLane("Lane0",entries).addLane("Lane1",entries2).build();
+  list.add(c9);
   StringBuilder sb=new StringBuilder();
   sb.append("<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "<head>\n"+ "    <meta charset=\"UTF-8\">\n"+ "    <title>Title</title>\n"+ "</head>\n"+ "<body>\n"+ "\n"+ "    <div id=\"maindiv\">\n"+ "\n"+ "    </div>\n"+ "\n"+ "\n"+ "    <script src=\"//code.jquery.com/jquery-1.10.2.js\"></script>\n"+ "    <script src=\"https://code.jquery.com/ui/1.11.4/jquery-ui.min.js\"></script>\n"+ "    <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css\">\n"+ "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js\"></script>\n"+ "    <script src=\"src/main/resources/assets/dl4j-ui.js\"></script>\n"+ "\n"+ "    <script>\n");
   ObjectMapper om=new ObjectMapper();

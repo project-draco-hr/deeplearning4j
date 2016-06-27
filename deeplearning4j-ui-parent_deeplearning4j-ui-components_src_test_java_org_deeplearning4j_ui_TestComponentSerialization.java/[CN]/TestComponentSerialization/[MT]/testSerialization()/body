@@ -23,4 +23,10 @@
   assertSerializable(divStyle);
   Component c8=new ComponentDiv(divStyle,c7,new ComponentText("(Also: it's float right, 30% width, 200 px high )",null));
   assertSerializable(c8);
+  List<ChartTimeline.TimelineEntry> entries=new ArrayList<>();
+  for (int i=0; i < 10; i++) {
+    entries.add(new ChartTimeline.TimelineEntry(String.valueOf(i),10 * i,10 * i + 5));
+  }
+  Component c9=new ChartTimeline.Builder("Title",s).addLane("Lane0",entries).build();
+  assertSerializable(c9);
 }
