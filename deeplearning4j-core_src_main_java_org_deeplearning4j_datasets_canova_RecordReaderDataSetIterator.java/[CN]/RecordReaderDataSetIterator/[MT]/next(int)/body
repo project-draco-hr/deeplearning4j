@@ -21,6 +21,7 @@
     }
   }
   batchNum++;
+  if (dataSets.isEmpty())   return new DataSet();
   DataSet ret=DataSet.merge(dataSets);
   last=ret;
   if (preProcessor != null)   preProcessor.preProcess(ret);
