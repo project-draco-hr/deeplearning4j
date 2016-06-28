@@ -2,13 +2,13 @@
   List<String> result=new ArrayList<String>();
   int i=0;
   int length=s.length();
-  StringBuffer b=new StringBuffer();
+  StringBuilder b=new StringBuilder();
   while (i < length) {
     char curr=s.charAt(i);
     if (curr == splitChar) {
       if (b.length() > 0) {
         result.add(b.toString());
-        b=new StringBuffer();
+        b=new StringBuilder();
       }
       i++;
     }

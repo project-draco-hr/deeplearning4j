@@ -1,7 +1,7 @@
 {
   List<String> lines=new ArrayList<String>();
   for (  List<String> list : this) {
-    StringBuffer sb=new StringBuffer();
+    StringBuilder sb=new StringBuilder();
     for (    String s : list) {
       sb.append(s.replaceAll(sep," "));
       sb.append(sep);

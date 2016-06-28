@@ -1,7 +1,7 @@
 {
   if (str == null)   str="null";
   int slen=str.length();
-  StringBuffer sb=new StringBuffer(str);
+  StringBuilder sb=new StringBuilder(str);
   for (int i=0; i < totalChars - slen; i++) {
     sb.append(" ");
   }
