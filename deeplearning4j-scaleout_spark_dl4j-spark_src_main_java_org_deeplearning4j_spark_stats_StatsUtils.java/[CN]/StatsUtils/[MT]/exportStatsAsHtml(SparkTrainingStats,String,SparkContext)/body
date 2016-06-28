@@ -1,14 +1,14 @@
 {
   Set<String> keySet=sparkTrainingStats.getKeySet();
   List<Component> components=new ArrayList<>();
-  StyleChart styleChart=new StyleChart.Builder().backgroundColor(Color.WHITE).width(800,LengthUnit.Px).height(400,LengthUnit.Px).build();
+  StyleChart styleChart=new StyleChart.Builder().backgroundColor(Color.WHITE).width(700,LengthUnit.Px).height(400,LengthUnit.Px).build();
   StyleText styleText=new StyleText.Builder().color(Color.BLACK).fontSize(20).build();
   Component headerText=new ComponentText("Deeplearning4j - Spark Training Analysis Statistics Plots",styleText);
   Component header=new ComponentDiv(new StyleDiv.Builder().height(40,LengthUnit.Px).width(100,LengthUnit.Percent).build(),headerText);
   components.add(header);
   Set<String> keySetInclude=new HashSet<>();
   for (  String s : keySet)   if (sparkTrainingStats.defaultIncludeInPlots(s))   keySetInclude.add(s);
-  components.add(getTrainingStatsTimelineChart(sparkTrainingStats,keySetInclude));
+  Collections.addAll(components,getTrainingStatsTimelineChart(sparkTrainingStats,keySetInclude));
   for (  String s : keySet) {
     List<EventStats> list=new ArrayList<>(sparkTrainingStats.getValue(s));
     Collections.sort(list,new StartTimeComparator());
@@ -18,7 +18,16 @@
       x[i]=i;
       duration[i]=list.get(i).getDurationMs();
     }
-    components.add(new ChartLine.Builder(s,styleChart).addSeries("Duration",x,duration).build());
+    Component line=new ChartLine.Builder(s,styleChart).addSeries("Duration",x,duration).build();
+    Component hist=getHistogram(duration,20,s,styleChart);
+    Component[] temp;
+    if (hist != null) {
+      temp=new Component[]{line,hist};
+    }
+ else {
+      temp=new Component[]{line};
+    }
+    components.add(new ComponentDiv(new StyleDiv.Builder().width(100,LengthUnit.Percent).build(),temp));
   }
   String html=StaticPageUtil.renderHTML(components);
   SparkUtils.writeStringToFile(path,html,sc);
