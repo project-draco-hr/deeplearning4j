@@ -1,0 +1,102 @@
+{
+  Set<Tuple3<String,String,Long>> uniqueTuples=new HashSet<>();
+  Set<String> machineIDs=new HashSet<>();
+  Set<String> jvmIDs=new HashSet<>();
+  Map<String,String> machineShortNames=new HashMap<>();
+  Map<String,String> jvmShortNames=new HashMap<>();
+  long earliestStart=Long.MAX_VALUE;
+  long latestEnd=Long.MIN_VALUE;
+  for (  String s : includeSet) {
+    List<EventStats> list=stats.getValue(s);
+    for (    EventStats e : list) {
+      machineIDs.add(e.getMachineID());
+      jvmIDs.add(e.getJvmID());
+      uniqueTuples.add(new Tuple3<>(e.getMachineID(),e.getJvmID(),e.getThreadID()));
+      earliestStart=Math.min(earliestStart,e.getStartTime());
+      latestEnd=Math.max(latestEnd,e.getStartTime() + e.getDurationMs());
+    }
+  }
+  int count=0;
+  for (  String s : machineIDs) {
+    machineShortNames.put(s,"PC " + count++);
+  }
+  count=0;
+  for (  String s : jvmIDs) {
+    jvmShortNames.put(s,"JVM " + count++);
+  }
+  int nLanes=uniqueTuples.size();
+  List<Tuple3<String,String,Long>> outputOrder=new ArrayList<>(uniqueTuples);
+  Collections.sort(outputOrder,new TupleComparator());
+  Color[] colors=getColors(includeSet.size());
+  Map<String,Color> colorMap=new HashMap<>();
+  count=0;
+  for (  String s : includeSet) {
+    colorMap.put(s,colors[count++]);
+  }
+  List<Component> tempList=new ArrayList<>();
+  for (  String s : includeSet) {
+    String key=stats.getShortNameForKey(s) + " - " + s;
+    tempList.add(new ComponentDiv(new StyleDiv.Builder().backgroundColor(colorMap.get(s)).width(33.3,LengthUnit.Percent).height(25,LengthUnit.Px).floatValue(StyleDiv.FloatValue.left).build(),new ComponentText(key,new StyleText.Builder().fontSize(11).build())));
+  }
+  Component key=new ComponentDiv(new StyleDiv.Builder().width(100,LengthUnit.Percent).build(),tempList);
+  int nCharts=(int)((latestEnd - earliestStart) / maxDurationMs);
+  if (nCharts < 1)   nCharts=1;
+  long[] chartStartTimes=new long[nCharts];
+  long[] chartEndTimes=new long[nCharts];
+  for (int i=0; i < nCharts; i++) {
+    chartStartTimes[i]=earliestStart + i * maxDurationMs;
+    chartEndTimes[i]=earliestStart + (i + 1) * maxDurationMs;
+  }
+  List<List<List<ChartTimeline.TimelineEntry>>> entriesByLane=new ArrayList<>();
+  for (int c=0; c < nCharts; c++) {
+    entriesByLane.add(new ArrayList<List<ChartTimeline.TimelineEntry>>());
+    for (int i=0; i < nLanes; i++) {
+      entriesByLane.get(c).add(new ArrayList<ChartTimeline.TimelineEntry>());
+    }
+  }
+  for (  String s : includeSet) {
+    List<EventStats> list=stats.getValue(s);
+    for (    EventStats e : list) {
+      if (e.getDurationMs() == 0)       continue;
+      long start=e.getStartTime();
+      long end=start + e.getDurationMs();
+      int chartIdx=-1;
+      for (int j=0; j < nCharts; j++) {
+        if (start >= chartStartTimes[j] && start < chartEndTimes[j]) {
+          chartIdx=j;
+        }
+      }
+      if (chartIdx == -1)       chartIdx=nCharts - 1;
+      Tuple3<String,String,Long> tuple=new Tuple3<>(e.getMachineID(),e.getJvmID(),e.getThreadID());
+      int idx=outputOrder.indexOf(tuple);
+      Color c=colorMap.get(s);
+      ChartTimeline.TimelineEntry entry=new ChartTimeline.TimelineEntry(stats.getShortNameForKey(s),start,end,c);
+      entriesByLane.get(chartIdx).get(idx).add(entry);
+    }
+  }
+  for (int i=0; i < nCharts; i++) {
+    for (    List<ChartTimeline.TimelineEntry> l : entriesByLane.get(i)) {
+      Collections.sort(l,new Comparator<ChartTimeline.TimelineEntry>(){
+        @Override public int compare(        ChartTimeline.TimelineEntry o1,        ChartTimeline.TimelineEntry o2){
+          return Long.compare(o1.getStartTimeMs(),o2.getStartTimeMs());
+        }
+      }
+);
+    }
+  }
+  StyleChart sc=new StyleChart.Builder().width(1280,LengthUnit.Px).height(50 * nLanes + (60 + 20 + 25),LengthUnit.Px).margin(LengthUnit.Px,60,20,200,10).build();
+  List<Component> list=new ArrayList<>(nCharts);
+  for (int j=0; j < nCharts; j++) {
+    ChartTimeline.Builder b=new ChartTimeline.Builder("Timeline: Training Activities",sc);
+    int i=0;
+    for (    List<ChartTimeline.TimelineEntry> l : entriesByLane.get(j)) {
+      Tuple3<String,String,Long> t3=outputOrder.get(i);
+      String name=machineShortNames.get(t3._1()) + ", " + jvmShortNames.get(t3._2())+ ", Thread "+ t3._3();
+      b.addLane(name,l);
+      i++;
+    }
+    list.add(b.build());
+  }
+  list.add(key);
+  return list.toArray(new Component[list.size()]);
+}
