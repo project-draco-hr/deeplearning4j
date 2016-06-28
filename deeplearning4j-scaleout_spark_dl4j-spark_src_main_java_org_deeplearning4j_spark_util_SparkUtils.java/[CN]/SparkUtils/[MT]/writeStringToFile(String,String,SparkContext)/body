@@ -1,0 +1,6 @@
+{
+  FileSystem fileSystem=FileSystem.get(sc.hadoopConfiguration());
+  try (BufferedOutputStream bos=new BufferedOutputStream(fileSystem.create(new Path(path)))){
+    bos.write(toWrite.getBytes("UTF-8"));
+  }
+ }

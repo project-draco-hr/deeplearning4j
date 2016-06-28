@@ -1,0 +1,10 @@
+{
+  for (  EventStats e : array) {
+    assertNotNull(e.getMachineID());
+    assertNotNull(e.getJvmID());
+    assertNotNull(e.getDurationMs());
+    assertFalse(e.getMachineID().isEmpty());
+    assertFalse(e.getJvmID().isEmpty());
+    assertTrue(e.getThreadID() > 0);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  Color[] c=new Color[nColors];
+  double step;
+  if (nColors <= 1)   step=1.0;
+ else   step=1.0 / (nColors + 1);
+  for (int i=0; i < nColors; i++) {
+    c[i]=Color.getHSBColor((float)step * i,0.4f,0.75f);
+  }
+  return c;
+}

@@ -1,0 +1,4 @@
+{
+  String path=FilenameUtils.concat(outputDirectory,filename);
+  exportStats(list,path,delimiter,sc);
+}

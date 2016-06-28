@@ -1,0 +1,27 @@
+{
+  double min=Double.MAX_VALUE;
+  double max=-Double.MAX_VALUE;
+  for (  double d : data) {
+    min=Math.min(min,d);
+    max=Math.max(max,d);
+  }
+  if (min == max)   return null;
+  double[] bins=new double[nBins + 1];
+  int[] counts=new int[nBins];
+  double step=(max - min) / nBins;
+  for (int i=0; i < bins.length; i++)   bins[i]=min + i * step;
+  for (  double d : data) {
+    for (int i=0; i < bins.length - 1; i++) {
+      if (d >= bins[i] && d < bins[i + 1]) {
+        counts[i]++;
+        break;
+      }
+    }
+    if (d == bins[bins.length - 1])     counts[counts.length - 1]++;
+  }
+  ChartHistogram.Builder b=new ChartHistogram.Builder(title,styleChart);
+  for (int i=0; i < bins.length - 1; i++) {
+    b.addBin(bins[i],bins[i + 1],counts[i]);
+  }
+  return b.build();
+}

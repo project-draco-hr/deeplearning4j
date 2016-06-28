@@ -1,0 +1,5 @@
+{
+  long now=timeSource.currentTimeMillis();
+  long duration=now - lastProcessBefore;
+  processMiniBatchTimes.add(new BaseEventStats(lastProcessBefore,duration));
+}

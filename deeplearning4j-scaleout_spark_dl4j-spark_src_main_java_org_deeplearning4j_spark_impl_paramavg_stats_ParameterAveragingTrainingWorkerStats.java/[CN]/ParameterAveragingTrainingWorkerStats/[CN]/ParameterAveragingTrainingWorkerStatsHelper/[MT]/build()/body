@@ -1,7 +1,7 @@
 {
-  int bcast=(int)(broadcastEndTime - broadcastStartTime);
-  int init=(int)(initEndTime - broadcastEndTime);
-  int[] fitTimesArr=new int[fitTimes.size()];
-  for (int i=0; i < fitTimesArr.length; i++)   fitTimesArr[i]=fitTimes.get(i);
-  return new ParameterAveragingTrainingWorkerStats(bcast,init,fitTimesArr);
+  List<EventStats> bList=new ArrayList<>();
+  bList.add(new BaseEventStats(broadcastStartTime,broadcastEndTime - broadcastStartTime));
+  List<EventStats> initList=new ArrayList<>();
+  initList.add(new BaseEventStats(broadcastEndTime,initEndTime - broadcastEndTime));
+  return new ParameterAveragingTrainingWorkerStats(bList,initList,fitTimes);
 }

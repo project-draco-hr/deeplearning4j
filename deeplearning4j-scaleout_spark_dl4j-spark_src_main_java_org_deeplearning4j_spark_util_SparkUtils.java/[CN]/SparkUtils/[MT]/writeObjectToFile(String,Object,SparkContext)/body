@@ -1,0 +1,7 @@
+{
+  FileSystem fileSystem=FileSystem.get(sc.hadoopConfiguration());
+  try (BufferedOutputStream bos=new BufferedOutputStream(fileSystem.create(new Path(path)))){
+    ObjectOutputStream oos=new ObjectOutputStream(bos);
+    oos.writeObject(toWrite);
+  }
+ }

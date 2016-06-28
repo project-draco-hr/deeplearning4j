@@ -1,0 +1,3 @@
+{
+  this(UIDProvider.getHardwareUID(),UIDProvider.getJVMUID(),Thread.currentThread().getId(),startTime,durationMs);
+}
