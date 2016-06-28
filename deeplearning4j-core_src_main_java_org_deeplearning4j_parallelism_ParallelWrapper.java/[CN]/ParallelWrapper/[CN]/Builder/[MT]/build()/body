@@ -1,4 +1,4 @@
 {
-  ParallelWrapper wrapper=new ParallelWrapper();
+  ParallelWrapper wrapper=new ParallelWrapper(model,workers,prefetchSize);
   return wrapper;
 }

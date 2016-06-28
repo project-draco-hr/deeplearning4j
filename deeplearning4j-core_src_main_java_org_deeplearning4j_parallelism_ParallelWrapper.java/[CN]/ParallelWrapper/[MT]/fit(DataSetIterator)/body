@@ -1,2 +1,11 @@
 {
+  DataSetIterator iterator;
+  if (prefetchSize > 0 && (!(source instanceof AsyncDataSetIterator) && !(source instanceof ListDataSetIterator))) {
+    iterator=new AsyncDataSetIterator(source,prefetchSize);
+  }
+ else   iterator=source;
+  iterator.reset();
+  while (iterator.hasNext()) {
+    DataSet dataSet=iterator.next();
+  }
 }
