@@ -2,8 +2,9 @@
   _dict=new HashMap<String,Double>();
   HashMap<String,List<Double>> _temp=new HashMap<String,List<Double>>();
   ClassPathResource resource=new ClassPathResource(sentiWordNetPath);
+  BufferedReader csv=null;
   try {
-    BufferedReader csv=new BufferedReader(new InputStreamReader(resource.getInputStream()));
+    csv=new BufferedReader(new InputStreamReader(resource.getInputStream()));
     String line="";
     while ((line=csv.readLine()) != null) {
       if (line.isEmpty())       continue;
@@ -44,5 +45,15 @@
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
+  }
+ finally {
+    if (csv != null) {
+      try {
+        csv.close();
+      }
+ catch (      IOException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
