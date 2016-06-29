@@ -4,7 +4,7 @@
   sequenceIterator.reset();
   List<CoOccurrencesCalculatorThread> threads=new ArrayList<>();
   for (int x=0; x < workers; x++) {
-    threads.add(x,new CoOccurrencesCalculatorThread(x,new FilteredSequenceIterator<T>(new SynchronizedSequenceIterator<T>(sequenceIterator),vocabCache),processedSequences));
+    threads.add(x,new CoOccurrencesCalculatorThread(x,new FilteredSequenceIterator<>(new SynchronizedSequenceIterator<>(sequenceIterator),vocabCache),processedSequences));
     threads.get(x).start();
   }
   for (int x=0; x < workers; x++) {

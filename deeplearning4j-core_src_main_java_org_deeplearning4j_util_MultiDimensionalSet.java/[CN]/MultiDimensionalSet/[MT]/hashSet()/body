@@ -1,3 +1,3 @@
 {
-  return new MultiDimensionalSet<K,V>(new HashSet<Pair<K,V>>());
+  return new MultiDimensionalSet<>(new HashSet<Pair<K,V>>());
 }

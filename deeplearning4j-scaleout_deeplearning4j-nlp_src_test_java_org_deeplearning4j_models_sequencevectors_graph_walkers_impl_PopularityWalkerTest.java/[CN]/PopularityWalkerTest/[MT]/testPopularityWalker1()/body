@@ -1,5 +1,5 @@
 {
-  GraphWalker<VocabWord> walker=new PopularityWalker.Builder<VocabWord>(graph).setWalkDirection(WalkDirection.FORWARD_ONLY).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(10).setPopularityMode(PopularityMode.MAXIMUM).setPopularitySpread(3).setSpreadSpectrum(SpreadSpectrum.PLAIN).build();
+  GraphWalker<VocabWord> walker=new PopularityWalker.Builder<>(graph).setWalkDirection(WalkDirection.FORWARD_ONLY).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).setWalkLength(10).setPopularityMode(PopularityMode.MAXIMUM).setPopularitySpread(3).setSpreadSpectrum(SpreadSpectrum.PLAIN).build();
   System.out.println("Connected [3] size: " + graph.getConnectedVertices(3).size());
   System.out.println("Connected [4] size: " + graph.getConnectedVertices(4).size());
   Sequence<VocabWord> sequence=walker.next();

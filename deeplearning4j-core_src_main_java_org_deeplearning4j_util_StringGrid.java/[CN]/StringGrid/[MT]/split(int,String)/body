@@ -1,7 +1,7 @@
 {
   List<String> col=getColumn(column);
   int validate=-1;
-  Set<String> remove=new HashSet<String>();
+  Set<String> remove=new HashSet<>();
   for (int i=0; i < col.size(); i++) {
     String s=col.get(i);
     String[] split2=StringUtils.splitOnCharWithQuoting(s,sepBy.charAt(0),'"','\\');

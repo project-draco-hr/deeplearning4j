@@ -1,5 +1,5 @@
 {
-  this.vertices=new ArrayList<Vertex<V>>();
+  this.vertices=new ArrayList<>();
   this.allowMultipleEdges=allowMultipleEdges;
   int idx=0;
   for (  V element : elements) {

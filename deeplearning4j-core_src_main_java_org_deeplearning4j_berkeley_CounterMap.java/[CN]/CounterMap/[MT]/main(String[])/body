@@ -1,5 +1,5 @@
 {
-  CounterMap<String,String> bigramCounterMap=new CounterMap<String,String>();
+  CounterMap<String,String> bigramCounterMap=new CounterMap<>();
   bigramCounterMap.incrementCount("people","run",1);
   bigramCounterMap.incrementCount("cats","growl",2);
   bigramCounterMap.incrementCount("cats","scamper",3);

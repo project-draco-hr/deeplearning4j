@@ -1,5 +1,5 @@
 {
-  Counter<String> counter=new Counter<String>();
+  Counter<String> counter=new Counter<>();
   for (  String s : map.keySet()) {
     counter.incrementCount(s,map.get(s));
   }

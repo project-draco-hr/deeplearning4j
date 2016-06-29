@@ -3,7 +3,7 @@
   Integer max=null;
   for (  String key : cluster.keySet()) {
     StringTokenizer val=new StringTokenizer(key);
-    List<String> list=new ArrayList<String>();
+    List<String> list=new ArrayList<>();
     boolean allLower=true;
     outer:     while (val.hasMoreTokens()) {
       String token=val.nextToken();
@@ -33,7 +33,7 @@
   if (chosenKey == null) {
     String max2=maximalValue(cluster);
     StringTokenizer val=new StringTokenizer(max2);
-    List<String> list=new ArrayList<String>();
+    List<String> list=new ArrayList<>();
     while (val.hasMoreTokens()) {
       String token=val.nextToken();
       if (token.length() >= 3 && token.matches("[A-Z]+")) {

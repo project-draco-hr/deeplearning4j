@@ -21,7 +21,7 @@
   }
   if (labelAwareIterator != null) {
     SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(labelAwareIterator).tokenizerFactory(tokenizerFactory).build();
-    this.iterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+    this.iterator=new AbstractSequenceIterator.Builder<>(transformer).build();
   }
   ret.numEpochs=this.numEpochs;
   ret.numIterations=this.iterations;

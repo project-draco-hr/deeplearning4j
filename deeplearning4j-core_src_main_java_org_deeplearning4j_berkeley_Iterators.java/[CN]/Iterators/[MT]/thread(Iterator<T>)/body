@@ -1,6 +1,6 @@
 {
   return new Iterator<T>(){
-    ArrayBlockingQueue<T> els=new ArrayBlockingQueue<T>(2);
+    ArrayBlockingQueue<T> els=new ArrayBlockingQueue<>(2);
     private boolean finishedLoading=false;
     private boolean running=false;
     Thread thread=new Thread(new Runnable(){

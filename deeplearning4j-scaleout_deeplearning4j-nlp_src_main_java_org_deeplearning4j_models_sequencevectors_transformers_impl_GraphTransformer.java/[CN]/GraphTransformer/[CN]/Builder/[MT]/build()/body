@@ -1,5 +1,5 @@
 {
-  GraphTransformer<T> transformer=new GraphTransformer<T>();
+  GraphTransformer<T> transformer=new GraphTransformer<>();
   transformer.sourceGraph=this.sourceGraph;
   transformer.labelsProvider=this.labelsProvider;
   transformer.shuffle=this.shuffle;

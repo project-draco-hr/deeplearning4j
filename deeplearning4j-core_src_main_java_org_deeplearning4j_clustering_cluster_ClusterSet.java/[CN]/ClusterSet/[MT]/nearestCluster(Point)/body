@@ -9,5 +9,5 @@
       nearestCluster=cluster;
     }
   }
-  return new Pair<Cluster,Double>(nearestCluster,minDistance);
+  return new Pair<>(nearestCluster,minDistance);
 }

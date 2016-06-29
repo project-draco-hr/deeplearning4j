@@ -1,5 +1,5 @@
 {
-  final Counter<String> counter=new Counter<String>();
+  final Counter<String> counter=new Counter<>();
   List<String> col=getColumn(column);
   for (  String s : col) {
     StringTokenizer tokenizer=new StringTokenizer(s);
@@ -12,7 +12,7 @@
     return;
   }
   counter.incrementAll(counter.keySet(),1.0);
-  Set<String> remove=new HashSet<String>();
+  Set<String> remove=new HashSet<>();
   for (  String key : counter.keySet())   if (key.length() < 2 || key.matches("[a-z]+"))   remove.add(key);
   for (  String key : remove)   counter.removeKey(key);
   counter.pruneKeysBelowThreshold(4.0);

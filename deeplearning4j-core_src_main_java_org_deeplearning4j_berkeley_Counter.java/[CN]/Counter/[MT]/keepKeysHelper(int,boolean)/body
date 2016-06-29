@@ -1,5 +1,5 @@
 {
-  Counter<E> tmp=new Counter<E>();
+  Counter<E> tmp=new Counter<>();
   int n=0;
   for (  E e : Iterators.able(top ? asPriorityQueue() : asMinPriorityQueue())) {
     if (n <= keepN)     tmp.setCount(e,getCount(e));
