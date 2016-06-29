@@ -22,6 +22,7 @@
   Pointer filterData=allocator.getPointer(weights,context);
   Pointer biasData=allocator.getPointer(bias,context);
   Pointer dstData=allocator.getPointer(z,context);
+  checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
   checkCudnn(cudnnGetConvolutionForwardWorkspaceSize(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.filterDesc,cudnnContext.convDesc,cudnnContext.dstTensorDesc,algo[0],sizeInBytes));
   if (sizeInBytes.get(0) > workSpace.capacity()) {
     workSpace.deallocate();
