@@ -22,7 +22,6 @@
     writer.flush();
   }
  catch (  Exception e) {
-    ;
   }
   log.info("Wrote " + words + " with size of "+ vec.lookupTable().layerSize());
 }

@@ -24,7 +24,6 @@
           reader.close();
         }
  catch (        Exception ex) {
-          ;
         }
       }
     }
@@ -63,7 +62,6 @@
     reader.close();
   }
  catch (  Exception e) {
-    ;
   }
   return new Pair<>(lookupTable,cache);
 }

@@ -5,7 +5,6 @@
     if (num == -1) {
       next=ds;
       if (epochs < numEpochs)       trackEpochs();
-      ;
     }
  else {
       if (batchedDS.isEmpty() && num > 0)       batchedDS=ds.batchBy(num);
