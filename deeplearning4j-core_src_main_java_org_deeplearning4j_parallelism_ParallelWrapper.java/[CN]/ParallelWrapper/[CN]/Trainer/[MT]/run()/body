@@ -1,0 +1,9 @@
+{
+  if (dataSet == null)   throw new IllegalStateException("DataSet is NULL");
+  if (originalModel instanceof MultiLayerNetwork) {
+    ((MultiLayerNetwork)replicatedModel).fit(dataSet);
+  }
+ else   if (originalModel instanceof ComputationGraph) {
+    ((ComputationGraph)replicatedModel).fit(dataSet);
+  }
+}

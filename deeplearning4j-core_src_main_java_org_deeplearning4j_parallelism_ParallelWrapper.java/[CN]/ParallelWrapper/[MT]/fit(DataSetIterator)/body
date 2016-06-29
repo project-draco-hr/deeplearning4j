@@ -4,8 +4,44 @@
     iterator=new AsyncDataSetIterator(source,prefetchSize);
   }
  else   iterator=source;
+  AtomicInteger locker=new AtomicInteger(0);
   iterator.reset();
   while (iterator.hasNext()) {
     DataSet dataSet=iterator.next();
+    int pos=locker.getAndIncrement();
+    zoo[pos].feedDataSet(dataSet);
+    zoo[pos].updateModel(model);
+    zoo[pos].start();
+    if (pos + 1 == workers || !iterator.hasNext()) {
+      for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+        try {
+          zoo[cnt].join();
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+      double score=0.0;
+      INDArray result=Nd4j.create(model.params().shape());
+      for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+        INDArray params=zoo[cnt].getModel().params();
+        result.addi(params);
+        score+=zoo[cnt].getModel().score();
+      }
+      result.divi(Math.min(workers,locker.get()));
+      model.setParams(result);
+      score/=Math.min(workers,locker.get());
+      logger.info("Score: " + score);
+      if (model instanceof MultiLayerNetwork) {
+        ((MultiLayerNetwork)model).setScore(score);
+      }
+ else       if (model instanceof ComputationGraph) {
+        ((ComputationGraph)model).setScore(score);
+      }
+      for (int cnt=0; cnt < workers; cnt++) {
+        zoo[cnt]=new Trainer(model);
+      }
+      locker.set(0);
+    }
   }
 }

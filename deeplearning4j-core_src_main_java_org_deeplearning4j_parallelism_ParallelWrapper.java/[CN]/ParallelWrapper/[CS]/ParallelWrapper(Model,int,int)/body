@@ -2,5 +2,8 @@
   this.model=model;
   this.workers=workers;
   this.prefetchSize=prefetchSize;
-  zoo=new Model[workers];
+  zoo=new Trainer[workers];
+  for (int cnt=0; cnt < workers; cnt++) {
+    zoo[cnt]=new Trainer(model);
+  }
 }
