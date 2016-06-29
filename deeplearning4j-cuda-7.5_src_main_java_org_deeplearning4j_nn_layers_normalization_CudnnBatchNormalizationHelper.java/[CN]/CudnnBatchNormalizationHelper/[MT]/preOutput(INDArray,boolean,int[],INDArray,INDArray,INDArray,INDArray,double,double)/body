@@ -1,0 +1,38 @@
+{
+  int miniBatch=x.size(0);
+  int inDepth=x.size(1);
+  int inH=x.size(2);
+  int inW=x.size(3);
+  int[] srcStride=x.stride();
+  checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,inDepth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));
+  INDArray activations=Nd4j.createUninitialized(new int[]{miniBatch,inDepth,inH,inW},'c');
+  int[] dstStride=activations.stride();
+  checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.dstTensorDesc,dataType,miniBatch,inDepth,inH,inW,dstStride[0],dstStride[1],dstStride[2],dstStride[3]));
+  int[] gammaStride=gamma.stride();
+  checkCudnn(cudnnSetTensor4dDescriptor(cudnnContext.gammaBetaTensorDesc,tensorFormat,dataType,shape[0],shape[1],shape.length > 2 ? shape[2] : 1,shape.length > 3 ? shape[3] : 1));
+  Allocator allocator=AtomicAllocator.getInstance();
+  CudaContext context=allocator.getFlowController().prepareAction(x,activations,gamma,beta,mean,var);
+  Pointer srcData=allocator.getPointer(x,context);
+  Pointer dstData=allocator.getPointer(activations,context);
+  Pointer gammaData=allocator.getPointer(gamma,context);
+  Pointer betaData=allocator.getPointer(beta,context);
+  Pointer meanData=allocator.getPointer(mean,context);
+  Pointer varData=allocator.getPointer(var,context);
+  checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
+  if (training) {
+    if (meanCache.capacity() < mean.data().length()) {
+      meanCache.deallocate();
+      meanCache=new Cache(mean.data().length());
+    }
+    if (varCache.capacity() < var.data().length()) {
+      varCache.deallocate();
+      varCache=new Cache(var.data().length());
+    }
+    checkCudnn(cudnnBatchNormalizationForwardTraining(cudnnContext,batchNormMode,this.alpha,this.beta,cudnnContext.srcTensorDesc,srcData,cudnnContext.dstTensorDesc,dstData,cudnnContext.gammaBetaTensorDesc,gammaData,betaData,decay,meanData,varData,eps,meanCache,varCache));
+  }
+ else {
+    checkCudnn(cudnnBatchNormalizationForwardInference(cudnnContext,batchNormMode,this.alpha,this.beta,cudnnContext.srcTensorDesc,srcData,cudnnContext.dstTensorDesc,dstData,cudnnContext.gammaBetaTensorDesc,gammaData,betaData,meanData,varData,eps));
+  }
+  allocator.registerAction(context,x,activations,gamma,beta,mean,var);
+  return activations;
+}

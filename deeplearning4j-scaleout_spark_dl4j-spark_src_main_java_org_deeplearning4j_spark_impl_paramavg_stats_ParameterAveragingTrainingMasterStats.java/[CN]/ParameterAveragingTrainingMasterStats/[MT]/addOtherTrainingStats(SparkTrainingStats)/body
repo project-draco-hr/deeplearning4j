@@ -7,6 +7,6 @@
  else {
     if (o.workerStats != null)     workerStats=o.workerStats;
   }
-  this.parameterAveragingMasterBroadcastCreateTimesMs=ArrayUtil.combine(parameterAveragingMasterBroadcastCreateTimesMs,o.parameterAveragingMasterBroadcastCreateTimesMs);
-  this.parameterAveragingMasterFitTimesMs=ArrayUtil.combine(parameterAveragingMasterFitTimesMs,o.parameterAveragingMasterFitTimesMs);
+  this.parameterAveragingMasterBroadcastCreateTimesMs.addAll(o.parameterAveragingMasterBroadcastCreateTimesMs);
+  this.parameterAveragingMasterFitTimesMs.addAll(o.parameterAveragingMasterFitTimesMs);
 }

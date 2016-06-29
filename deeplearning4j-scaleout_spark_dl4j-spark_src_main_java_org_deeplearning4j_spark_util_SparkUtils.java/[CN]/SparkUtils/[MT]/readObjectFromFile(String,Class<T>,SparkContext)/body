@@ -1,0 +1,13 @@
+{
+  FileSystem fileSystem=FileSystem.get(sc.hadoopConfiguration());
+  try (ObjectInputStream ois=new ObjectInputStream(new BufferedInputStream(fileSystem.open(new Path(path))))){
+    Object o;
+    try {
+      o=ois.readObject();
+    }
+ catch (    ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    return (T)o;
+  }
+ }

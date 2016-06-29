@@ -1,6 +1,6 @@
 {
   BufferedReader r=new BufferedReader(reader);
-  StringBuffer buff=new StringBuffer();
+  StringBuilder buff=new StringBuilder();
   try {
     char[] chars=new char[SLURPBUFFSIZE];
     while (true) {

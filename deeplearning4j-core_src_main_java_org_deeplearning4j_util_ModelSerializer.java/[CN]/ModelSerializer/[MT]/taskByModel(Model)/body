@@ -25,7 +25,6 @@
  else         task.setArchitectureType(Task.ArchitectureType.UNKNOWN);
       }
  catch (      Exception e) {
-        ;
       }
     }
  else     if (model instanceof MultiLayerNetwork) {
@@ -51,7 +50,6 @@
  else         task.setArchitectureType(Task.ArchitectureType.UNKNOWN);
       }
  catch (      Exception e) {
-        ;
       }
     }
     return task;

@@ -1,7 +1,7 @@
 {
   this.collectTrainingStats=collectTrainingStats;
   if (collectTrainingStats) {
-    if (this.stats == null)     this.stats=new ParameterAveragingTrainingMasterStats.parameterAveragingTrainingMasterStatsHelper();
+    if (this.stats == null)     this.stats=new ParameterAveragingTrainingMasterStats.ParameterAveragingTrainingMasterStatsHelper();
   }
  else {
     this.stats=null;

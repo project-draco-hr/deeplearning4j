@@ -21,29 +21,28 @@ case RANDOM:
         int[] nextHops=sourceGraph.getConnectedVertexIndices(currentPosition);
         startPosition=nextHops[rng.nextInt(nextHops.length)];
       }
-    ;
-  break;
+    break;
 case FORWARD_ONLY:
 {
-  int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),lastId);
-  if (nextHops.length > 0) {
-    startPosition=nextHops[rng.nextInt(nextHops.length)];
-  }
+    int[] nextHops=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(currentPosition),lastId);
+    if (nextHops.length > 0) {
+      startPosition=nextHops[rng.nextInt(nextHops.length)];
+    }
  else {
 switch (noEdgeHandling) {
 case CUTOFF_ON_DISCONNECTED:
 {
-        i+=walkLength;
-      }
-    break;
+          i+=walkLength;
+        }
+      break;
 case EXCEPTION_ON_DISCONNECTED:
 {
-    throw new NoEdgesException("No more edges at vertex [" + currentPosition + "]");
-  }
+      throw new NoEdgesException("No more edges at vertex [" + currentPosition + "]");
+    }
 case SELF_LOOP_ON_DISCONNECTED:
 {
-  startPosition=currentPosition;
-}
+    startPosition=currentPosition;
+  }
 break;
 case PADDING_ON_DISCONNECTED:
 {
@@ -59,7 +58,6 @@ throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling
 }
 }
 }
-;
 break;
 case FORWARD_UNIQUE:
 {
@@ -97,7 +95,6 @@ throw new UnsupportedOperationException("NoEdgeHandling mode [" + noEdgeHandling
 }
 }
 }
-;
 break;
 case FORWARD_PREFERRED:
 {

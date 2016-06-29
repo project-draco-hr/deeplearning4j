@@ -1,0 +1,6 @@
+{
+  String d=DEFAULT_DELIMITER;
+  StatsUtils.exportStats(parameterAveragingWorkerBroadcastGetValueTimeMs,outputPath,FILENAME_BROADCAST_GET_STATS,d,sc);
+  StatsUtils.exportStats(parameterAveragingWorkerInitTimeMs,outputPath,FILENAME_INIT_STATS,d,sc);
+  StatsUtils.exportStats(parameterAveragingWorkerFitTimesMs,outputPath,FILENAME_FIT_STATS,d,sc);
+}

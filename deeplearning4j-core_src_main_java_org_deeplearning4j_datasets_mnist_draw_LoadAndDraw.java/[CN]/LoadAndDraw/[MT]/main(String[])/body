@@ -2,6 +2,11 @@
   MnistDataSetIterator iter=new MnistDataSetIterator(60,60000);
   @SuppressWarnings("unchecked") ObjectInputStream ois=new ObjectInputStream(new FileInputStream(args[0]));
   BasePretrainNetwork network=(BasePretrainNetwork)ois.readObject();
+  try {
+    ois.close();
+  }
+ catch (  IOException e) {
+  }
   DataSet test=null;
   while (iter.hasNext()) {
     test=iter.next();

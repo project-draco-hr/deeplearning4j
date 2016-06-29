@@ -12,7 +12,7 @@
   }
   BufferedReader br=new BufferedReader(new InputStreamReader(is,encoding));
   String temp;
-  StringBuffer buff=new StringBuffer(16000);
+  StringBuilder buff=new StringBuilder(16000);
   while ((temp=br.readLine()) != null) {
     buff.append(temp);
     buff.append(lineSeparator);

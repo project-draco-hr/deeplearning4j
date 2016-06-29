@@ -1,0 +1,5 @@
+{
+  long offset=getSystemOffset();
+  long systemTime=System.currentTimeMillis();
+  return systemTime + offset;
+}

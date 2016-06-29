@@ -29,6 +29,7 @@
   Pointer biasGradData=allocator.getPointer(biasGradView,context);
   Pointer deltaData=allocator.getPointer(delta,context);
   Pointer dstData=allocator.getPointer(epsNext,context);
+  checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
   checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.dstTensorDesc,dataType,miniBatch,inDepth,inH,inW,dstStride[0],dstStride[1],dstStride[2],dstStride[3]));
   checkCudnn(cudnnGetConvolutionBackwardFilterWorkspaceSize(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.deltaTensorDesc,cudnnContext.convDesc,cudnnContext.filterDesc,algo[0],sizeInBytes));
   long sizeInBytes1=sizeInBytes.get(0);

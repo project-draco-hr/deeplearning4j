@@ -2,7 +2,7 @@
   if (str == null)   str="null";
   int leng=str.length();
   if (leng < num) {
-    StringBuffer sb=new StringBuffer(str);
+    StringBuilder sb=new StringBuilder(str);
     for (int i=0; i < num - leng; i++) {
       sb.append(" ");
     }

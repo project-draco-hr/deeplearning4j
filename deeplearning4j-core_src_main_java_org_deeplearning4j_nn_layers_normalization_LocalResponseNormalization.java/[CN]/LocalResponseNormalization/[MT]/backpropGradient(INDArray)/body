@@ -1,4 +1,10 @@
 {
+  if (helper != null) {
+    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,epsilon,k,n,alpha,beta);
+    if (ret != null) {
+      return ret;
+    }
+  }
   int channel=input.shape()[1];
   INDArray tmp, addVal;
   Gradient retGradient=new DefaultGradient();

@@ -7,6 +7,12 @@
   Gradient retGradient=new DefaultGradient();
   INDArray dGammaView=gradientViews.get(BatchNormalizationParamInitializer.GAMMA);
   INDArray dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
+  if (helper != null) {
+    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,epsilon,shape,gamma,dGammaView,dBetaView,layerConf.getEps());
+    if (ret != null) {
+      return ret;
+    }
+  }
   if (epsilon.rank() == 2) {
     INDArray dGamma=epsilon.mul(xHat).sum(0);
     INDArray dBeta=epsilon.sum(0);

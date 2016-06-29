@@ -3,6 +3,7 @@
   Allocator allocator=AtomicAllocator.getInstance();
   CudaContext context=allocator.getFlowController().prepareAction(z);
   Pointer dstData=allocator.getPointer(z,context);
+  checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
 switch (afn) {
 case "identity":
     break;

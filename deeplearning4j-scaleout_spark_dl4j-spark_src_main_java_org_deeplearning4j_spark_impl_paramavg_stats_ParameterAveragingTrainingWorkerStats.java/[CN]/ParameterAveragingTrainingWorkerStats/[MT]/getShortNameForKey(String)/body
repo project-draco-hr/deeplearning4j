@@ -1,0 +1,12 @@
+{
+switch (key) {
+case "ParameterAveragingWorkerBroadcastGetValueTimeMs":
+    return "BroadcastGetVal";
+case "ParameterAveragingWorkerInitTimeMs":
+  return "ModelInit";
+case "ParameterAveragingWorkerFitTimesMs":
+return "Fit";
+default :
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

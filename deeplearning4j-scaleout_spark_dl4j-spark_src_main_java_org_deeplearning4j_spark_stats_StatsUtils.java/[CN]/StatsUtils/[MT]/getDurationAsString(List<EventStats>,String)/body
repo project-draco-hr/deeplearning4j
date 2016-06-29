@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  int num=list.size();
+  int count=0;
+  for (  EventStats e : list) {
+    sb.append(e.getDurationMs());
+    if (count++ < num - 1)     sb.append(delim);
+  }
+  return sb.toString();
+}

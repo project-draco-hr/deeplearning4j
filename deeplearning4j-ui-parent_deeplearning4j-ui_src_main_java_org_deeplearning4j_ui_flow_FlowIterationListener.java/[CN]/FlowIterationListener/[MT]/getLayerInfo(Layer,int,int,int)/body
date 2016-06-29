@@ -6,7 +6,6 @@
     info.setName(layer.conf().getLayer().getLayerName());
   }
  catch (  Exception e) {
-    ;
   }
   if (info.getName() == null || info.getName().isEmpty())   info.setName("unnamed");
   info.setId(order);

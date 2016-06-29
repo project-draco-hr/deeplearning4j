@@ -5,7 +5,7 @@
   }
   if (nPath != null) {
     nPath=nPath.replaceFirst("^/","");
-    builder.append(path.endsWith("/") ? nPath : ("/" + nPath)).append("/");
+    builder.append(nPath.startsWith("/") ? nPath : ("/" + nPath)).append("/");
   }
   return builder.toString().replaceAll("\\/{2,}","/");
 }

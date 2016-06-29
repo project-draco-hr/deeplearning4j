@@ -1,0 +1,15 @@
+{
+switch (key) {
+case "WorkerFlatMapTotalTimeMs":
+    return false;
+case "WorkerFlatMapGetInitialModelTimeMs":
+  return false;
+case "WorkerFlatMapDataSetGetTimesMs":
+return true;
+case "WorkerFlatMapProcessMiniBatchTimesMs":
+return false;
+default :
+if (trainingWorkerSpecificStats != null) return trainingWorkerSpecificStats.defaultIncludeInPlots(key);
+return false;
+}
+}

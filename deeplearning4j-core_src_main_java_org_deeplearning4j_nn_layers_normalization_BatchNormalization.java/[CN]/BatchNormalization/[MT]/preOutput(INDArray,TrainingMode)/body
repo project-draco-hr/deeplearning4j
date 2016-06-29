@@ -24,6 +24,18 @@
     gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
     beta=getParam(BatchNormalizationParamInitializer.BETA);
   }
+  if (helper != null) {
+    double decay=setMeanVar ? 1 : layerConf.getDecay();
+    if (setMeanVar) {
+      this.mean=this.mean == null ? Nd4j.zeros(mean.shape()) : this.mean;
+      this.var=this.var == null ? Nd4j.valueArrayOf(var.shape(),layerConf.getEps()) : this.var;
+      setMeanVar=false;
+    }
+    INDArray ret=helper.preOutput(x,training == TrainingMode.TRAIN && layerConf.isUseBatchMean(),shape,gamma,beta,this.mean,this.var,decay,layerConf.getEps());
+    if (ret != null) {
+      return ret;
+    }
+  }
   if (x.rank() == 2) {
     xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,x.dup(),-1));
     xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,xMu.dup(),-1));
