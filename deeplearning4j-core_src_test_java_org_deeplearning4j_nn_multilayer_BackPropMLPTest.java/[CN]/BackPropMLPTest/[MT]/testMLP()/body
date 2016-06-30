@@ -4,5 +4,7 @@
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   DataSetIterator iter=new IrisDataSetIterator(10,100);
-  while (iter.hasNext())   network.fit(iter.next());
+  while (iter.hasNext()) {
+    network.fit(iter.next());
+  }
 }

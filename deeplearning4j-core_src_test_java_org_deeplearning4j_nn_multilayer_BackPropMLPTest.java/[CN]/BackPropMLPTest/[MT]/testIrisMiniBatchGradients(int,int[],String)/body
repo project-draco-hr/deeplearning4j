@@ -3,7 +3,9 @@
   if (totalExamples > 150) {
     totalExamples=miniBatchSize * (150 / miniBatchSize);
   }
-  if (miniBatchSize > 150)   fail();
+  if (miniBatchSize > 150) {
+    fail();
+  }
   DataSetIterator iris=new IrisDataSetIterator(miniBatchSize,totalExamples);
   MultiLayerNetwork network=new MultiLayerNetwork(getIrisMLPSimpleConfig(hiddenLayerSizes,"sigmoid"));
   network.init();

@@ -1,5 +1,7 @@
 {
-  if (getMemoryFootprint() < getMemoryThreshold() && !isFinished.get())   return;
+  if (getMemoryFootprint() < getMemoryThreshold() && !isFinished.get()) {
+    return;
+  }
   int numberOfLinesSaved=0;
   isInvoked.set(true);
   logger.debug("Memory purge started.");
