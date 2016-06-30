@@ -1,16 +1,15 @@
 {
   try {
     while (true) {
-      DataSet dataSet=queue.poll(3,TimeUnit.SECONDS);
+      DataSet dataSet=queue.poll(1,TimeUnit.SECONDS);
       if (dataSet != null) {
-        running.set(true);
         if (replicatedModel instanceof MultiLayerNetwork) {
           ((MultiLayerNetwork)replicatedModel).fit(dataSet);
         }
  else         if (replicatedModel instanceof ComputationGraph) {
           ((ComputationGraph)replicatedModel).fit(dataSet);
         }
-        running.set(false);
+        running.decrementAndGet();
       }
     }
   }

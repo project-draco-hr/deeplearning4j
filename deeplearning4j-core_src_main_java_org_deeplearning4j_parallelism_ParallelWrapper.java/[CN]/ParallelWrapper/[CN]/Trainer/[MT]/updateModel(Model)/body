@@ -1,9 +1,8 @@
 {
-  this.originalModel=model;
   if (model instanceof MultiLayerNetwork) {
-    this.replicatedModel=((MultiLayerNetwork)model).clone();
+    replicatedModel=((MultiLayerNetwork)model).clone();
   }
  else   if (model instanceof ComputationGraph) {
-    this.replicatedModel=((ComputationGraph)model).clone();
+    replicatedModel=((ComputationGraph)model).clone();
   }
 }
