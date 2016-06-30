@@ -19,6 +19,7 @@
   int splitNum=1;
   for (  JavaRDD<DataSet> split : splits) {
     log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, dataSetTotalExamples={}. Configured for {} executors",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalCount,numWorkers);
+    JavaRDD<DataSet> splitData=split;
 switch (repartition) {
 case Never:
       break;
@@ -27,14 +28,14 @@ case NumPartitionsExecutorsDiffers:
   if (nPartitions == numWorkers)   break;
 case Always:
 if (collectTrainingStats) stats.logRepartitionStart();
-split.repartition(numWorkers);
+splitData=split.repartition(numWorkers);
 if (collectTrainingStats) stats.logRepartitionEnd();
 break;
 default :
 throw new RuntimeException("Unknown setting for repartition: " + repartition);
 }
 FlatMapFunction<Iterator<DataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerFlatMap<>(getWorkerInstance(network));
-JavaRDD<ParameterAveragingTrainingResult> result=split.mapPartitions(function);
+JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
 processResults(network,null,result,splitNum,splits.length);
 splitNum++;
 }
