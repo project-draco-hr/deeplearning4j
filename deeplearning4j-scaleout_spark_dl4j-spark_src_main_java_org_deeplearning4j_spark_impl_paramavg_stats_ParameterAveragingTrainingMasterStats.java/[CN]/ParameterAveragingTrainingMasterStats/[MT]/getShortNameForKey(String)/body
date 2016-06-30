@@ -6,10 +6,14 @@ case "ParameterAveragingMasterFitTimesMs":
   return "Fit";
 case "ParameterAveragingMasterSplitTimesMs":
 return "Split";
+case "ParameterAveragingMasterMapPartitionsTimesMs":
+return "MapPart";
 case "ParameterAveragingMasterAggregateTimesMs":
 return "Aggregate";
 case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":
 return "ProcessParams";
+case "ParameterAveragingMasterRepartitionTimesMs":
+return "Repartition";
 default :
 if (workerStats != null) return workerStats.getShortNameForKey(key);
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");

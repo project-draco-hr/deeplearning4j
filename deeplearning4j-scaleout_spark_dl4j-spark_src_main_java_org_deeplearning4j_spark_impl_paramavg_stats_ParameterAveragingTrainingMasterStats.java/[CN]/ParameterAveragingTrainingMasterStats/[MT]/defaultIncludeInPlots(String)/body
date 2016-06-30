@@ -6,9 +6,13 @@ case "ParameterAveragingMasterFitTimesMs":
   return false;
 case "ParameterAveragingMasterSplitTimesMs":
 return true;
+case "ParameterAveragingMasterMapPartitionsTimesMs":
+return false;
 case "ParameterAveragingMasterAggregateTimesMs":
 return true;
 case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":
+return true;
+case "ParameterAveragingMasterRepartitionTimesMs":
 return true;
 default :
 if (workerStats != null) return workerStats.defaultIncludeInPlots(key);

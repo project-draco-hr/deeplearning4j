@@ -1,4 +1,0 @@
-{
-  long now=timeSource.currentTimeMillis();
-  fitTimes.add(new BaseEventStats(lastFitStartTime,now - lastFitStartTime));
-}
