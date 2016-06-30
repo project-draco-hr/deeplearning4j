@@ -72,6 +72,11 @@
     assertDurationGreaterEqZero(processParamsTimesMs);
     assertNonNullFields(processParamsTimesMs);
     assertExpectedNumberMachineIdsJvmIdsThreadIds(processParamsTimesMs,1,1,1);
+    List<EventStats> repartitionTimesMs=masterStats.getParameterAveragingMasterRepartitionTimesMs();
+    assertEquals(numberOfAveragings,repartitionTimesMs.size());
+    assertDurationGreaterEqZero(repartitionTimesMs);
+    assertNonNullFields(repartitionTimesMs);
+    assertExpectedNumberMachineIdsJvmIdsThreadIds(repartitionTimesMs,1,1,1);
     SparkTrainingStats commonStats=masterStats.getNestedTrainingStats();
     assertNotNull(commonStats);
     assertTrue(commonStats instanceof CommonSparkTrainingStats);
