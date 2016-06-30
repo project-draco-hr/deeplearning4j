@@ -23,7 +23,8 @@
       maxDur=Math.max(maxDur,duration[i]);
     }
     Component line=new ChartLine.Builder(s,styleChart).addSeries("Duration",x,duration).setYMin(minDur == maxDur ? minDur - 1 : null).setYMax(minDur == maxDur ? minDur + 1 : null).build();
-    Component hist=getHistogram(duration,20,s,styleChart);
+    Component hist=null;
+    if (minDur != maxDur && list.size() > 0)     hist=getHistogram(duration,20,s,styleChart);
     Component[] temp;
     if (hist != null) {
       temp=new Component[]{line,hist};
@@ -44,7 +45,8 @@
       }
       String title=s + " / " + (exCount ? "Number of Examples" : "Number of Partitions");
       Component line2=new ChartLine.Builder(title,styleChart).addSeries((exCount ? "Examples" : "Partitions"),x,y).setYMin(miny == maxy ? miny - 1 : null).setYMax(miny == maxy ? miny + 1 : null).build();
-      Component hist2=getHistogram(y,20,title,styleChart);
+      Component hist2=null;
+      if (miny != maxy)       hist2=getHistogram(y,20,title,styleChart);
       Component[] temp2;
       if (hist2 != null) {
         temp2=new Component[]{line2,hist2};
