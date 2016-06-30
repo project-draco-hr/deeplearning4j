@@ -10,6 +10,9 @@
   sb.append(String.format(f,"ParameterAveragingMasterSplitTimesMs"));
   if (parameterAveragingMasterSplitTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterSplitTimesMs,",")).append("\n");
+  sb.append(String.format(f,"ParameterAveragingMasterMapPartitionsTimesMs"));
+  if (parameterAveragingMasterMapPartitionsTimesMs == null)   sb.append("-\n");
+ else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterMapPartitionsTimesMs,",")).append("\n");
   sb.append(String.format(f,"ParameterAveragingMasterAggregateTimesMs"));
   if (paramaterAveragingMasterAggregateTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(paramaterAveragingMasterAggregateTimesMs,",")).append("\n");

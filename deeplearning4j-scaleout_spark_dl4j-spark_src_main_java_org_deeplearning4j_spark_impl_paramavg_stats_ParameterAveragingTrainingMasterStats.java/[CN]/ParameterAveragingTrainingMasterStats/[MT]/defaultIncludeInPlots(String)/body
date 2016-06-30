@@ -6,6 +6,8 @@ case "ParameterAveragingMasterFitTimesMs":
   return false;
 case "ParameterAveragingMasterSplitTimesMs":
 return true;
+case "ParameterAveragingMasterMapPartitionsTimesMs":
+return false;
 case "ParameterAveragingMasterAggregateTimesMs":
 return true;
 case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":

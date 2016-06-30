@@ -6,6 +6,8 @@
   StatsUtils.exportStats(parameterAveragingMasterFitTimesMs,fitTimePath,d,sc);
   String splitTimePath=FilenameUtils.concat(outputPath,FILENAME_SPLIT_TIME);
   StatsUtils.exportStats(parameterAveragingMasterSplitTimesMs,splitTimePath,d,sc);
+  String mapPartitionsPath=FilenameUtils.concat(outputPath,FILENAME_MAP_PARTITIONS_TIME);
+  StatsUtils.exportStats(parameterAveragingMasterMapPartitionsTimesMs,mapPartitionsPath,d,sc);
   String aggregatePath=FilenameUtils.concat(outputPath,FILENAME_AGGREGATE_TIME);
   StatsUtils.exportStats(paramaterAveragingMasterAggregateTimesMs,aggregatePath,d,sc);
   String processParamsPath=FilenameUtils.concat(outputPath,FILENAME_PROCESS_PARAMS_TIME);

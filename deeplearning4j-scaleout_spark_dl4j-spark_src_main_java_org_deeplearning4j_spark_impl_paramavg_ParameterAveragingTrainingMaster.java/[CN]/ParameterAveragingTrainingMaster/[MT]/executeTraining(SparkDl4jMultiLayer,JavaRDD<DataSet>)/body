@@ -19,15 +19,16 @@
   int splitNum=1;
   for (  JavaRDD<DataSet> split : splits) {
     log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, dataSetTotalExamples={}. Configured for {} executors",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalCount,numWorkers);
+    if (collectTrainingStats)     stats.logMapPartitionsStart();
     JavaRDD<DataSet> splitData=split;
+    int nPartitions=split.partitions().size();
 switch (repartition) {
 case Never:
       break;
 case NumPartitionsExecutorsDiffers:
-    int nPartitions=split.partitions().size();
-  if (nPartitions == numWorkers)   break;
+    if (nPartitions == numWorkers)     break;
 case Always:
-if (collectTrainingStats) stats.logRepartitionStart();
+  if (collectTrainingStats)   stats.logRepartitionStart();
 splitData=split.repartition(numWorkers);
 if (collectTrainingStats) stats.logRepartitionEnd();
 break;
@@ -38,6 +39,7 @@ FlatMapFunction<Iterator<DataSet>,ParameterAveragingTrainingResult> function=new
 JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
 processResults(network,null,result,splitNum,splits.length);
 splitNum++;
+if (collectTrainingStats) stats.logMapPartitionsEnd(nPartitions);
 }
-if (collectTrainingStats) stats.logFitEnd();
+if (collectTrainingStats) stats.logFitEnd((int)totalCount);
 }
