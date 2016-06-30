@@ -10,36 +10,37 @@
     DataSet dataSet=iterator.next();
     int pos=locker.getAndIncrement();
     zoo[pos].feedDataSet(dataSet);
-    zoo[pos].updateModel(model);
-    zoo[pos].start();
     if (pos + 1 == workers || !iterator.hasNext()) {
+      iterationsCounter.incrementAndGet();
       for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
         try {
-          zoo[cnt].join();
+          zoo[cnt].waitTillRunning();
         }
  catch (        Exception e) {
           throw new RuntimeException(e);
         }
       }
-      double score=0.0;
-      INDArray result=Nd4j.create(model.params().shape());
-      for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
-        INDArray params=zoo[cnt].getModel().params();
-        result.addi(params);
-        score+=zoo[cnt].getModel().score();
-      }
-      result.divi(Math.min(workers,locker.get()));
-      model.setParams(result);
-      score/=Math.min(workers,locker.get());
-      logger.info("Score: " + score);
-      if (model instanceof MultiLayerNetwork) {
-        ((MultiLayerNetwork)model).setScore(score);
-      }
- else       if (model instanceof ComputationGraph) {
-        ((ComputationGraph)model).setScore(score);
-      }
-      for (int cnt=0; cnt < workers; cnt++) {
-        zoo[cnt]=new Trainer(model);
+      if (iterationsCounter.get() % averagingFrequency == 0 || !iterator.hasNext()) {
+        double score=0.0;
+        INDArray result=Nd4j.create(model.params().shape());
+        for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+          INDArray params=zoo[cnt].getModel().params();
+          result.addi(params);
+          score+=zoo[cnt].getModel().score();
+        }
+        result.divi(Math.min(workers,locker.get()));
+        model.setParams(result);
+        score/=Math.min(workers,locker.get());
+        logger.info("Score: " + score);
+        if (model instanceof MultiLayerNetwork) {
+          ((MultiLayerNetwork)model).setScore(score);
+        }
+ else         if (model instanceof ComputationGraph) {
+          ((ComputationGraph)model).setScore(score);
+        }
+        for (int i=0; i < workers; i++) {
+          zoo[i].updateModel(model);
+        }
       }
       locker.set(0);
     }

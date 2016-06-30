@@ -1,3 +1,4 @@
 {
-  this.originalModel=model;
+  updateModel(model);
+  this.setDaemon(true);
 }

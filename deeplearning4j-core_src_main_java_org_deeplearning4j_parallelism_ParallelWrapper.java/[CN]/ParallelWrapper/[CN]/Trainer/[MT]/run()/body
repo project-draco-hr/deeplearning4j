@@ -1,9 +1,20 @@
 {
-  if (dataSet == null)   throw new IllegalStateException("DataSet is NULL");
-  if (originalModel instanceof MultiLayerNetwork) {
-    ((MultiLayerNetwork)replicatedModel).fit(dataSet);
+  try {
+    while (true) {
+      DataSet dataSet=queue.poll(3,TimeUnit.SECONDS);
+      if (dataSet != null) {
+        running.set(true);
+        if (replicatedModel instanceof MultiLayerNetwork) {
+          ((MultiLayerNetwork)replicatedModel).fit(dataSet);
+        }
+ else         if (replicatedModel instanceof ComputationGraph) {
+          ((ComputationGraph)replicatedModel).fit(dataSet);
+        }
+        running.set(false);
+      }
+    }
   }
- else   if (originalModel instanceof ComputationGraph) {
-    ((ComputationGraph)replicatedModel).fit(dataSet);
+ catch (  Exception e) {
   }
+  logger.info("Finished training thread...");
 }

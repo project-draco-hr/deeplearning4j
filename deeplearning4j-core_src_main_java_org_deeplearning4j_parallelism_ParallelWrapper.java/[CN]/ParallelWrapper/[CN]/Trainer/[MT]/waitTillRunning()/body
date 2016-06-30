@@ -1,0 +1,10 @@
+{
+  while (running.get()) {
+    try {
+      Thread.sleep(50);
+    }
+ catch (    Exception e) {
+      ;
+    }
+  }
+}
