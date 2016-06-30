@@ -1,0 +1,7 @@
+{
+  FileSystem fileSystem=FileSystem.get(sc.hadoopConfiguration());
+  try (BufferedInputStream bis=new BufferedInputStream(fileSystem.open(new Path(path)))){
+    byte[] asBytes=IOUtils.toByteArray(bis);
+    return new String(asBytes,"UTF-8");
+  }
+ }

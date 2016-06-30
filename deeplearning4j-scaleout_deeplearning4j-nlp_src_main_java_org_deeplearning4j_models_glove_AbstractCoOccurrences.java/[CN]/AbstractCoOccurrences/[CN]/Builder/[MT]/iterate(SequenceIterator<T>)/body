@@ -1,4 +1,4 @@
 {
-  this.sequenceIterator=new SynchronizedSequenceIterator<T>(iterator);
+  this.sequenceIterator=new SynchronizedSequenceIterator<>(iterator);
   return this;
 }

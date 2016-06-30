@@ -1,0 +1,10 @@
+{
+  try {
+    helper=Class.forName("org.deeplearning4j.nn.layers.convolution.CudnnConvolutionHelper").asSubclass(ConvolutionHelper.class).newInstance();
+  }
+ catch (  Throwable t) {
+    if (!(t instanceof ClassNotFoundException)) {
+      log.warn("Could not load CudnnConvolutionHelper",t);
+    }
+  }
+}

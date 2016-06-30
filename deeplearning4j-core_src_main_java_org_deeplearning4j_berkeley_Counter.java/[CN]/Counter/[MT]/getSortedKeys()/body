@@ -1,6 +1,6 @@
 {
   PriorityQueue<E> pq=this.asPriorityQueue();
-  List<E> keys=new ArrayList<E>();
+  List<E> keys=new ArrayList<>();
   while (pq.hasNext()) {
     keys.add(pq.next());
   }

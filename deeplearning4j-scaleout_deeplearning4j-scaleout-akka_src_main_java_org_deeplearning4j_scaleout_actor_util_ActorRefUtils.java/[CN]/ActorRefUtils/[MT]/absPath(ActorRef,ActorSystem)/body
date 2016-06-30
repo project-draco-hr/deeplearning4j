@@ -1,6 +1,6 @@
 {
   String address=Cluster.get(system).selfAddress().toString();
-  List<String> path2=new ArrayList<String>();
+  List<String> path2=new ArrayList<>();
   scala.collection.immutable.Iterable<String> elements=self.path().elements();
   scala.collection.Iterator<String> iter=elements.iterator();
   while (iter.hasNext())   path2.add(iter.next());

@@ -1,5 +1,5 @@
 {
-  Counter<E> newCounter=new Counter<E>();
+  Counter<E> newCounter=new Counter<>();
   for (  Map.Entry<E,Double> entry : getEntrySet()) {
     newCounter.setCount(entry.getKey(),entry.getValue() * c);
   }

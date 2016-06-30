@@ -1,5 +1,5 @@
 {
-  CounterMap<V,K> invertCounterMap=new CounterMap<V,K>();
+  CounterMap<V,K> invertCounterMap=new CounterMap<>();
   for (  K key : this.keySet()) {
     Counter<V> keyCounts=this.getCounter(key);
     for (    V val : keyCounts.keySet()) {

@@ -4,6 +4,12 @@
   alpha=layerConf().getAlpha();
   beta=layerConf().getBeta();
   halfN=(int)n / 2;
+  if (helper != null) {
+    activations=helper.activate(input,training,k,n,alpha,beta);
+    if (activations != null) {
+      return activations;
+    }
+  }
   int channel=input.shape()[1];
   INDArray tmp, addVal;
   INDArray activitySqr=input.mul(input);

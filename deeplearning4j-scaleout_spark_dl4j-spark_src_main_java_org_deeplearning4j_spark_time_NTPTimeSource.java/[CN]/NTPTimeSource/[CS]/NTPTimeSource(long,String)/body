@@ -1,0 +1,9 @@
+{
+  this.synchronizationFreqMS=synchronizationFreqMS;
+  this.ntpServer=ntpServer;
+  log.debug("Initializing NTPTimeSource with query frequency {} ms using server {}",synchronizationFreqMS,ntpServer);
+  queryServerNow();
+  Timer timer=new Timer(true);
+  timer.scheduleAtFixedRate(new QueryServerTask(),synchronizationFreqMS,synchronizationFreqMS);
+  log.debug("Initialized NTPTimeSource with query frequency {} ms using server {}",synchronizationFreqMS,ntpServer);
+}

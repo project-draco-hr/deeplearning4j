@@ -2,16 +2,12 @@
 switch (key) {
 case "WorkerFlatMapTotalTimeMs":
     return workerFlatMapTotalTimeMs;
-case "WorkerFlatMapTotalExampleCount":
-  return workerFlatMapTotalExampleCount;
 case "WorkerFlatMapGetInitialModelTimeMs":
-return workerFlatMapGetInitialModelTimeMs;
+  return workerFlatMapGetInitialModelTimeMs;
 case "WorkerFlatMapDataSetGetTimesMs":
 return workerFlatMapDataSetGetTimesMs;
 case "WorkerFlatMapProcessMiniBatchTimesMs":
 return workerFlatMapProcessMiniBatchTimesMs;
-case "WorkerFlatMapCountNoDataInstances":
-return workerFlatMapCountNoDataInstances;
 default :
 if (trainingWorkerSpecificStats != null) return trainingWorkerSpecificStats.getValue(key);
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");

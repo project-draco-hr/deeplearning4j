@@ -1,9 +1,9 @@
 {
   if (sequenceLearningAlgorithm == null) {
-    sequenceLearningAlgorithm=new DBOW<VocabWord>();
+    sequenceLearningAlgorithm=new DBOW<>();
     sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
   }
-  Sequence<VocabWord> sequence=new Sequence<VocabWord>();
+  Sequence<VocabWord> sequence=new Sequence<>();
   sequence.addElements(document);
   sequence.setSequenceLabel(new VocabWord(1.0,String.valueOf(new Random().nextInt())));
   for (int i=0; i < iterations; i++) {

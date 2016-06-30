@@ -8,7 +8,7 @@
   try {
     lock.writeLock().lock();
     localMap=coOccurrenceCounts;
-    coOccurrenceCounts=new CountMap<T>();
+    coOccurrenceCounts=new CountMap<>();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);

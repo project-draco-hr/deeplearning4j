@@ -3,7 +3,7 @@
   NumberFormat f=NumberFormat.getInstance();
   f.setMaximumFractionDigits(5);
   int numKeysPrinted=0;
-  for (  E element : new TreeSet<E>(keySet())) {
+  for (  E element : new TreeSet<>(keySet())) {
     sb.append(element.toString());
     sb.append(" : ");
     sb.append(f.format(getCount(element)));

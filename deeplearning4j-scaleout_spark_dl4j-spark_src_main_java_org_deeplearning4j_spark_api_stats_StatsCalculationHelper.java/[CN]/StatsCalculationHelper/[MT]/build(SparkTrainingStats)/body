@@ -1,0 +1,7 @@
+{
+  List<EventStats> totalTime=new ArrayList<>();
+  totalTime.add(new ExampleCountEventStats(methodStartTime,returnTime - methodStartTime,totalExampleCount));
+  List<EventStats> initTime=new ArrayList<>();
+  initTime.add(new BaseEventStats(initalModelBefore,initialModelAfter - initalModelBefore));
+  return new CommonSparkTrainingStats.Builder().trainingMasterSpecificStats(masterSpecificStats).workerFlatMapTotalTimeMs(totalTime).workerFlatMapGetInitialModelTimeMs(initTime).workerFlatMapDataSetGetTimesMs(dataSetGetTimes).workerFlatMapProcessMiniBatchTimesMs(processMiniBatchTimes).build();
+}

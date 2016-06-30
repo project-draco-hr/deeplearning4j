@@ -1,9 +1,18 @@
 {
+  ObjectInputStream ois=null;
   try {
-    ObjectInputStream ois=new ObjectInputStream(FileUtils.openInputStream(file));
+    ois=new ObjectInputStream(FileUtils.openInputStream(file));
     return (T)ois.readObject();
   }
  catch (  Exception e) {
     throw new RuntimeException(e);
+  }
+ finally {
+    if (ois != null)     try {
+      ois.close();
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
   }
 }

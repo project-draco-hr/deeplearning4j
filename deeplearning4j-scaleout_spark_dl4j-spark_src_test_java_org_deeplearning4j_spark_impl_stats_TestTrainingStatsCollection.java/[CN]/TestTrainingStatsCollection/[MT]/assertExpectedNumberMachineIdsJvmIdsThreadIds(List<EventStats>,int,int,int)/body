@@ -1,0 +1,13 @@
+{
+  Set<String> machineIDs=new HashSet<>();
+  Set<String> jvmIDs=new HashSet<>();
+  Set<Long> threadIDs=new HashSet<>();
+  for (  EventStats e : events) {
+    machineIDs.add(e.getMachineID());
+    jvmIDs.add(e.getJvmID());
+    threadIDs.add(e.getThreadID());
+  }
+  assertTrue(machineIDs.size() == expNMachineIDs);
+  assertTrue(jvmIDs.size() == expNumJvmIds);
+  assertTrue(threadIDs.size() == expNumThreadIds);
+}

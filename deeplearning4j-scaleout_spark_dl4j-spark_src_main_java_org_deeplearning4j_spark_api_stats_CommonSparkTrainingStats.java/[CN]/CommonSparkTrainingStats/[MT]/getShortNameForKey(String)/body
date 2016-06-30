@@ -1,0 +1,15 @@
+{
+switch (key) {
+case "WorkerFlatMapTotalTimeMs":
+    return "Total";
+case "WorkerFlatMapGetInitialModelTimeMs":
+  return "GetInitModel";
+case "WorkerFlatMapDataSetGetTimesMs":
+return "GetDataSet";
+case "WorkerFlatMapProcessMiniBatchTimesMs":
+return "ProcessBatch";
+default :
+if (trainingWorkerSpecificStats != null) return trainingWorkerSpecificStats.getShortNameForKey(key);
+throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
+}
+}

@@ -22,7 +22,7 @@ case FORWARD_ONLY:
 case FORWARD_UNIQUE:
 case FORWARD_PREFERRED:
 {
-        PriorityQueue<Node<T>> queue=new PriorityQueue<Node<T>>();
+        PriorityQueue<Node<T>> queue=new PriorityQueue<>();
         int[] connections=ArrayUtils.removeElements(sourceGraph.getConnectedVertexIndices(vertex.vertexID()),visitedHops);
         int start=0;
         int stop=0;
@@ -48,7 +48,7 @@ stop=mid + (cSpread / 2);
 break;
 }
 cnt=0;
-List<Node<T>> list=new ArrayList<Node<T>>();
+List<Node<T>> list=new ArrayList<>();
 double[] weights=new double[cSpread];
 int fcnt=0;
 while (queue.hasNext()) {

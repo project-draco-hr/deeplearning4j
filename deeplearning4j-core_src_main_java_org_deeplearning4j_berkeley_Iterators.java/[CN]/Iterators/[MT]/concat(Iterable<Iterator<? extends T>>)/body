@@ -5,5 +5,5 @@
     }
   }
 ;
-  return new IteratorIterator<T>(Arrays.asList(args).iterator(),factory);
+  return new IteratorIterator<>(Arrays.asList(args).iterator(),factory);
 }

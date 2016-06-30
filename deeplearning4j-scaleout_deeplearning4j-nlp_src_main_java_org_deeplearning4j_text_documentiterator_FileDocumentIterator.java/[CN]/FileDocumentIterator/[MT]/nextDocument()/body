@@ -9,7 +9,9 @@
         lineIterator=FileUtils.lineIterator(next);
       }
     }
-    if (lineIterator.hasNext())     return new BufferedInputStream(IOUtils.toInputStream(lineIterator.nextLine()));
+    if (lineIterator != null && lineIterator.hasNext()) {
+      return new BufferedInputStream(IOUtils.toInputStream(lineIterator.nextLine()));
+    }
   }
  catch (  Exception e) {
     log.warn("Error reading input stream...this is just a warning..Going to return",e);

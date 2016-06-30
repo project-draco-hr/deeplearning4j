@@ -1,7 +1,7 @@
 {
   if (PosUimaTokenizer.engine == null)   PosUimaTokenizer.engine=engine;
   this.allowedPosTags=allowedPosTags;
-  this.tokens=new ArrayList<String>();
+  this.tokens=new ArrayList<>();
   this.stripNones=stripNones;
   try {
     if (cas == null)     cas=engine.newCAS();

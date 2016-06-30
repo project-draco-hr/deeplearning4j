@@ -1,0 +1,4 @@
+{
+  long now=timeSource.currentTimeMillis();
+  broadcastTimes.add(new BaseEventStats(lastBroadcastStartTime,now - lastBroadcastStartTime));
+}

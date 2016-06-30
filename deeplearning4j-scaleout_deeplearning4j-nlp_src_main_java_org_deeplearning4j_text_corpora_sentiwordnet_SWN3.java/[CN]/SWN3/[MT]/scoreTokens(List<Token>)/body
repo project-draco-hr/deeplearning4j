@@ -1,6 +1,6 @@
 {
   double totalScore=0.0;
-  Set<String> negativeWords=new HashSet<String>();
+  Set<String> negativeWords=new HashSet<>();
   double scoreForSentence=0.0;
   for (  Token token : tokens) {
     scoreForSentence+=extract(token.getCoveredText().toLowerCase());

@@ -7,7 +7,7 @@
     graph.addEdge(edge);
   }
   int walkLength=4;
-  RandomWalkIterator<String> iter=new RandomWalkIterator<String>(graph,walkLength,1235,NoEdgeHandling.EXCEPTION_ON_DISCONNECTED);
+  RandomWalkIterator<String> iter=new RandomWalkIterator<>(graph,walkLength,1235,NoEdgeHandling.EXCEPTION_ON_DISCONNECTED);
   int count=0;
   Set<Integer> startIdxSet=new HashSet<>();
   while (iter.hasNext()) {

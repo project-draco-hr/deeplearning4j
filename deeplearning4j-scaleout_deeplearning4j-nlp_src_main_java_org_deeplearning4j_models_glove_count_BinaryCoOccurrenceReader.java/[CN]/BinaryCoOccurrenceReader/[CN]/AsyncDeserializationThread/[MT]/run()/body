@@ -8,7 +8,7 @@
     int e1idx=bB.getInt(position);
     int e2idx=bB.getInt(position + 4);
     double eW=bB.getDouble(position + 8);
-    CoOccurrenceWeight<T> object=new CoOccurrenceWeight<T>();
+    CoOccurrenceWeight<T> object=new CoOccurrenceWeight<>();
     object.setElement1(vocabCache.elementAtIndex(e1idx));
     object.setElement2(vocabCache.elementAtIndex(e2idx));
     if (countMap != null) {

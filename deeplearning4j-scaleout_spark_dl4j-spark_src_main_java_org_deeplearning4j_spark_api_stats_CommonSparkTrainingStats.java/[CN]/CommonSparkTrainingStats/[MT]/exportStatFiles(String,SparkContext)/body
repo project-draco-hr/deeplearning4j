@@ -1,0 +1,12 @@
+{
+  String d=DEFAULT_DELIMITER;
+  String totalTimeStatsPath=FilenameUtils.concat(outputPath,FILENAME_TOTAL_TIME_STATS);
+  StatsUtils.exportStats(workerFlatMapTotalTimeMs,totalTimeStatsPath,d,sc);
+  String getInitialModelStatsPath=FilenameUtils.concat(outputPath,FILENAME_GET_INITIAL_MODEL_STATS);
+  StatsUtils.exportStats(workerFlatMapGetInitialModelTimeMs,getInitialModelStatsPath,d,sc);
+  String getDataSetStatsPath=FilenameUtils.concat(outputPath,FILENAME_DATASET_GET_TIME_STATS);
+  StatsUtils.exportStats(workerFlatMapDataSetGetTimesMs,getDataSetStatsPath,d,sc);
+  String processMiniBatchStatsPath=FilenameUtils.concat(outputPath,FILENAME_PROCESS_MINIBATCH_TIME_STATS);
+  StatsUtils.exportStats(workerFlatMapProcessMiniBatchTimesMs,processMiniBatchStatsPath,d,sc);
+  if (trainingWorkerSpecificStats != null)   trainingWorkerSpecificStats.exportStatFiles(outputPath,sc);
+}

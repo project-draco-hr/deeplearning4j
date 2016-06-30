@@ -36,7 +36,7 @@
  catch (        IOException e2) {
           throw new RuntimeException(e2);
         }
-        return new EarlyStoppingResult<T>(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+        return new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
       }
       lastScore=model.score();
       for (      IterationTerminationCondition c : esConfig.getIterationTerminationConditions()) {

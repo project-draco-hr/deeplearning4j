@@ -1,0 +1,7 @@
+{
+  super(c);
+  srcTensorDesc=new cudnnTensorStruct(c.srcTensorDesc);
+  dstTensorDesc=new cudnnTensorStruct(c.dstTensorDesc);
+  deltaTensorDesc=new cudnnTensorStruct(c.deltaTensorDesc);
+  lrnDesc=new cudnnLRNStruct(c.lrnDesc);
+}

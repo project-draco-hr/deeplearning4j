@@ -5,7 +5,7 @@
     Counter<V> counter=entry.getValue();
     V localMax=counter.argMax();
     if (counter.getCount(localMax) > maxCount || maxKey == null) {
-      maxKey=new Pair<K,V>(entry.getKey(),localMax);
+      maxKey=new Pair<>(entry.getKey(),localMax);
       maxCount=counter.getCount(localMax);
     }
   }

@@ -1,5 +1,5 @@
 {
-  RandomWalker<T> walker=new RandomWalker<T>();
+  RandomWalker<T> walker=new RandomWalker<>();
   walker.noEdgeHandling=this.noEdgeHandling;
   walker.sourceGraph=this.sourceGraph;
   walker.walkLength=this.walkLength;

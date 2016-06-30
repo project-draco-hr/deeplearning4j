@@ -17,7 +17,7 @@
       T element1=vocabCache.elementAtIndex(Integer.valueOf(strings[0]));
       T element2=vocabCache.elementAtIndex(Integer.valueOf(strings[1]));
       Double weight=Double.valueOf(strings[2]);
-      return new Pair<>(new Pair<T,T>(element1,element2),weight);
+      return new Pair<>(new Pair<>(element1,element2),weight);
     }
     @Override public void remove(){
       throw new UnsupportedOperationException("remove() method can't be supported on read-only interface");

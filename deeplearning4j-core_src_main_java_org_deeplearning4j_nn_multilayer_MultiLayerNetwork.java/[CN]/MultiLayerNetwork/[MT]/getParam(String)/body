@@ -1,5 +1,5 @@
 {
-  int idx=param.indexOf("_");
+  int idx=param.indexOf('_');
   if (idx == -1)   throw new IllegalStateException("Invalid param key: not have layer separator: \"" + param + "\"");
   int layerIdx=Integer.parseInt(param.substring(0,idx));
   String newKey=param.substring(idx + 1);
