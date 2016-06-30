@@ -10,5 +10,9 @@
   StatsUtils.exportStats(paramaterAveragingMasterAggregateTimesMs,aggregatePath,d,sc);
   String processParamsPath=FilenameUtils.concat(outputPath,FILENAME_PROCESS_PARAMS_TIME);
   StatsUtils.exportStats(parameterAveragingMasterProcessParamsUpdaterTimesMs,processParamsPath,d,sc);
+  if (parameterAveragingMasterRepartitionTimesMs != null) {
+    String repartitionPath=FilenameUtils.concat(outputPath,FILENAME_REPARTITION_STATS);
+    StatsUtils.exportStats(parameterAveragingMasterRepartitionTimesMs,repartitionPath,d,sc);
+  }
   if (workerStats != null)   workerStats.exportStatFiles(outputPath,sc);
 }

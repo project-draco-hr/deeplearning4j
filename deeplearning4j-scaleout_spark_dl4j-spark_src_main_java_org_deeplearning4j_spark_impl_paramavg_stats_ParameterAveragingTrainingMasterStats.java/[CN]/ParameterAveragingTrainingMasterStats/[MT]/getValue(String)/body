@@ -10,6 +10,8 @@ case "ParameterAveragingMasterAggregateTimesMs":
 return paramaterAveragingMasterAggregateTimesMs;
 case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":
 return parameterAveragingMasterProcessParamsUpdaterTimesMs;
+case "ParameterAveragingMasterRepartitionTimesMs":
+return parameterAveragingMasterRepartitionTimesMs;
 default :
 if (workerStats != null) return workerStats.getValue(key);
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");
