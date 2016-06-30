@@ -4,6 +4,9 @@
   sb.append(String.format(f,"ParameterAveragingMasterBroadcastCreateTimesMs"));
   if (parameterAveragingMasterBroadcastCreateTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterBroadcastCreateTimesMs,",")).append("\n");
+  sb.append(String.format(f,"ParameterAveragingMasterRepartitionTimesMs"));
+  if (parameterAveragingMasterRepartitionTimesMs == null)   sb.append("-\n");
+ else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterRepartitionTimesMs,",")).append("\n");
   sb.append(String.format(f,"ParameterAveragingMasterFitTimesMs"));
   if (parameterAveragingMasterFitTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterFitTimesMs,",")).append("\n");

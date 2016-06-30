@@ -30,6 +30,7 @@ case NumPartitionsExecutorsDiffers:
 case Always:
   if (collectTrainingStats)   stats.logRepartitionStart();
 splitData=split.repartition(numWorkers);
+log.info("Repartitioned training data. Partitions before: {}. Partitions after: {}",nPartitions,splitData.partitions().size());
 if (collectTrainingStats) stats.logRepartitionEnd();
 break;
 default :
