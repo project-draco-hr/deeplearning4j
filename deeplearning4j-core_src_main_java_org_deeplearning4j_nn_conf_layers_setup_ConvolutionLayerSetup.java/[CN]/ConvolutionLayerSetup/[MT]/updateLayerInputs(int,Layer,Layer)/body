@@ -62,7 +62,6 @@ break;
 }
 break;
 case "SubsamplingLayer":
-if (i < lastLayerNumber) {
 SubsamplingLayer subsamplingLayer=(SubsamplingLayer)inputLayer;
 getConvolutionOutputSize(new int[]{lastHeight,lastWidth},subsamplingLayer.getKernelSize(),subsamplingLayer.getPadding(),subsamplingLayer.getStride());
 if (i == 0) throw new UnsupportedOperationException("Unsupported path: first layer shouldn't be " + inLayerName);
@@ -101,7 +100,6 @@ storeNInAndNOut(inLayerName,lastnOut);
 feedForwardLayer.setNOut(lastnOut);
 useCNN=true;
 break;
-}
 }
 break;
 case "GravesLSTM":

@@ -1,8 +1,8 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
   if (training) {
-    if (conf.isUseDropConnect() && training) {
-      if (conf.getLayer().getDropOut() > 0 && training) {
+    if (conf.isUseDropConnect()) {
+      if (conf.getLayer().getDropOut() > 0) {
         W=Dropout.applyDropConnect(this,DefaultParamInitializer.WEIGHT_KEY);
       }
     }
