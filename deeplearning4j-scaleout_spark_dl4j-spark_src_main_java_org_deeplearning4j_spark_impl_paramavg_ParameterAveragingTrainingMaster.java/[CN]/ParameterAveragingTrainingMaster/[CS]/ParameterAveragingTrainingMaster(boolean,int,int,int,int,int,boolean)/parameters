@@ -1,5 +1,7 @@
 boolean saveUpdater
 int numWorkers
+int rddDataSetNumExamples
 int batchSizePerWorker
 int averagingFrequency
 int prefetchNumBatches
+boolean collectTrainingStats

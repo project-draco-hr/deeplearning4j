@@ -1,0 +1,6 @@
+{
+  if (numWorkers <= 0)   throw new IllegalArgumentException("Invalid number of workers: " + numWorkers + " (must be >= 1)");
+  if (rddDataSetNumExamples <= 0)   throw new IllegalArgumentException("Invalid rdd data set size: " + rddDataSetNumExamples + " (must be >= 1)");
+  this.numWorkers=numWorkers;
+  this.rddDataSetNumExamples=rddDataSetNumExamples;
+}
