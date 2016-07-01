@@ -6,7 +6,7 @@
   if (walkLength == 0)   return new VertexSequence<>(graph,indices);
   for (int i=1; i <= walkLength; i++) {
     List<? extends Edge<? extends Number>> edgeList=graph.getEdgesOut(currVertexIdx);
-    if (edgeList == null || edgeList.size() == 0) {
+    if (edgeList == null || edgeList.isEmpty()) {
 switch (mode) {
 case SELF_LOOP_ON_DISCONNECTED:
         for (int j=i; j < walkLength; j++)         indices[j]=currVertexIdx;

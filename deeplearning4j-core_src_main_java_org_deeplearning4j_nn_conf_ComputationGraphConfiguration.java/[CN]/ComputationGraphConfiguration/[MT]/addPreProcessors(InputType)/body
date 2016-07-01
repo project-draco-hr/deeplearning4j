@@ -23,15 +23,15 @@
   for (  Map.Entry<String,List<String>> entry : vertexInputs.entrySet()) {
     inputEdges.put(entry.getKey(),new HashSet<>(entry.getValue()));
   }
-  while (noIncomingEdges.size() > 0) {
+  while (!noIncomingEdges.isEmpty()) {
     String next=noIncomingEdges.removeFirst();
     topologicalOrdering.add(next);
     List<String> nextEdges=verticesOutputTo.get(next);
-    if (nextEdges != null && nextEdges.size() > 0) {
+    if (nextEdges != null && !nextEdges.isEmpty()) {
       for (      String s : nextEdges) {
         Set<String> set=inputEdges.get(s);
         set.remove(next);
-        if (set.size() == 0) {
+        if (set.isEmpty()) {
           noIncomingEdges.add(s);
         }
       }
@@ -40,7 +40,7 @@
   for (  Map.Entry<String,Set<String>> entry : inputEdges.entrySet()) {
     Set<String> set=entry.getValue();
     if (set == null)     continue;
-    if (set.size() > 0)     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + entry.getKey() + "\")");
+    if (!set.isEmpty())     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + entry.getKey() + "\")");
   }
   Map<String,InputType> vertexOutputs=new HashMap<>();
   for (  String s : topologicalOrdering) {

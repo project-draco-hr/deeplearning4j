@@ -1,5 +1,5 @@
 {
-  if (tokens.size() > 0)   return tokens;
+  if (!tokens.isEmpty())   return tokens;
   log.info("Starting prebuffering...");
   while (streamHasMoreTokens()) {
     tokens.add(nextTokenFromStream());

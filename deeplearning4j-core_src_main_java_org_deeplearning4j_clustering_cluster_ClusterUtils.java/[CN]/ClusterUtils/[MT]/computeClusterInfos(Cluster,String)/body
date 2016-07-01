@@ -6,6 +6,6 @@
     info.getPointDistancesFromCenter().put(point.getId(),distance);
     info.setTotalPointDistanceFromCenter(info.getTotalPointDistanceFromCenter() + distance);
   }
-  if (cluster.getPoints().size() > 0)   info.setAveragePointDistanceFromCenter(info.getTotalPointDistanceFromCenter() / cluster.getPoints().size());
+  if (!cluster.getPoints().isEmpty())   info.setAveragePointDistanceFromCenter(info.getTotalPointDistanceFromCenter() / cluster.getPoints().size());
   return info;
 }

@@ -1,8 +1,8 @@
 {
-  if (buffer.size() > 0)   return true;
+  if (!buffer.isEmpty())   return true;
   try {
     this.lock.readLock().lock();
-    return iterator.hasNext() || buffer.size() > 0;
+    return iterator.hasNext() || !buffer.isEmpty();
   }
   finally {
     this.lock.readLock().unlock();

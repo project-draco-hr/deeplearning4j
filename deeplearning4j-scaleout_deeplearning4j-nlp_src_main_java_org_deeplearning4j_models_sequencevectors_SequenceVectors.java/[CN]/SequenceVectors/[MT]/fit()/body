@@ -59,7 +59,7 @@
       }
     }
     log.info("Epoch: [" + currentEpoch + "]; Words vectorized so far: ["+ wordsCounter.get()+ "];  Lines vectorized so far: ["+ linesCounter.get()+ "]; learningRate: ["+ minLearningRate+ "]");
-    if (eventListeners != null && eventListeners.size() > 0) {
+    if (eventListeners != null && !eventListeners.isEmpty()) {
       for (      VectorsListener listener : eventListeners) {
         if (listener.validateEvent(ListenerEvent.EPOCH,currentEpoch))         listener.processEvent(ListenerEvent.EPOCH,this,currentEpoch);
       }
