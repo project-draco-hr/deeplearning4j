@@ -2,7 +2,7 @@
   DataSet dataSet=new IrisDataSetIterator(5,5).next();
   List<DataSet> list=dataSet.asList();
   JavaRDD<DataSet> data=sc.parallelize(list);
-  SparkDl4jMultiLayer sparkNetCopy=new SparkDl4jMultiLayer(sc,getBasicConf(),new ParameterAveragingTrainingMaster(true,Runtime.getRuntime().availableProcessors(),5,1,0));
+  SparkDl4jMultiLayer sparkNetCopy=new SparkDl4jMultiLayer(sc,getBasicConf(),new ParameterAveragingTrainingMaster(true,Runtime.getRuntime().availableProcessors(),1,5,1,0));
   MultiLayerNetwork networkCopy=sparkNetCopy.fit(data);
   INDArray expectedParams=networkCopy.params();
   SparkDl4jMultiLayer sparkNet=getBasicNetwork();

@@ -8,7 +8,7 @@
   ComputationGraphConfiguration config=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(0.1).graphBuilder().addInputs("in").addLayer("dense",new DenseLayer.Builder().nIn(4).nOut(2).build(),"in").addLayer("out",new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(2).nOut(3).build(),"dense").setOutputs("out").pretrain(false).backprop(true).build();
   ComputationGraph cg=new ComputationGraph(config);
   cg.init();
-  TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),10,1,0);
+  TrainingMaster tm=new ParameterAveragingTrainingMaster(true,numExecutors(),1,10,1,0);
   SparkComputationGraph scg=new SparkComputationGraph(sc,cg,tm);
   scg.setListeners(Collections.singleton((IterationListener)new ScoreIterationListener(1)));
   JavaRDD<MultiDataSet> rdd=sc.parallelize(list);
