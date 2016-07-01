@@ -16,10 +16,8 @@
   INDArray br=biases.get(NDArrayIndex.point(0),interval(0,layerSize));
   INDArray bu=biases.get(NDArrayIndex.point(0),interval(layerSize,2 * layerSize));
   INDArray bc=biases.get(NDArrayIndex.point(0),interval(2 * layerSize,3 * layerSize));
-  if (conf.isUseDropConnect() && training) {
-    if (conf.getLayer().getDropOut() > 0) {
-      inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHT_KEY);
-    }
+  if (conf.isUseDropConnect() && training && conf.getLayer().getDropOut() > 0) {
+    inputWeights=Dropout.applyDropConnect(this,GRUParamInitializer.INPUT_WEIGHT_KEY);
   }
   INDArray outputActivations=Nd4j.zeros(miniBatchSize,hiddenLayerSize,timeSeriesLength);
   INDArray rucZs=Nd4j.zeros(miniBatchSize,3 * hiddenLayerSize,timeSeriesLength);

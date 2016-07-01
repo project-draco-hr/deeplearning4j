@@ -14,10 +14,8 @@
     prevMemCellState=originalPrevMemCellState.dup('f');
   }
   INDArray recurrentWeightsIFOG=recurrentWeights.get(NDArrayIndex.all(),NDArrayIndex.interval(0,4 * hiddenLayerSize)).dup('f');
-  if (conf.isUseDropConnect() && training) {
-    if (conf.getLayer().getDropOut() > 0) {
-      inputWeights=Dropout.applyDropConnect(layer,inputWeightKey);
-    }
+  if (conf.isUseDropConnect() && training && conf.getLayer().getDropOut() > 0) {
+    inputWeights=Dropout.applyDropConnect(layer,inputWeightKey);
   }
   INDArray wFFTranspose=recurrentWeights.get(NDArrayIndex.all(),interval(4 * hiddenLayerSize,4 * hiddenLayerSize + 1)).transpose();
   INDArray wOOTranspose=recurrentWeights.get(NDArrayIndex.all(),interval(4 * hiddenLayerSize + 1,4 * hiddenLayerSize + 2)).transpose();
