@@ -1,7 +1,9 @@
 {
   String chosenKey=null;
   Integer max=null;
-  for (  String key : cluster.keySet()) {
+  for (  Map.Entry<String,Integer> entry : cluster.entrySet()) {
+    String key=entry.getKey();
+    int value=entry.getValue();
     StringTokenizer val=new StringTokenizer(key);
     List<String> list=new ArrayList<>();
     boolean allLower=true;
@@ -22,11 +24,11 @@
       continue;
     }
     if (max == null) {
-      max=cluster.get(key);
+      max=value;
       chosenKey=key;
     }
- else     if (!allLower && cluster.get(key) > max) {
-      max=cluster.get(key);
+ else     if (!allLower && value > max) {
+      max=value;
       chosenKey=key;
     }
   }
