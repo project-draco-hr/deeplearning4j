@@ -4,7 +4,9 @@
     return true;
   }
  else {
-    if (!runnable.killRunnable && runnable.exception != null)     throw runnable.exception;
+    if (!runnable.killRunnable && runnable.exception != null) {
+      throw runnable.exception;
+    }
     return !queue.isEmpty();
   }
 }
