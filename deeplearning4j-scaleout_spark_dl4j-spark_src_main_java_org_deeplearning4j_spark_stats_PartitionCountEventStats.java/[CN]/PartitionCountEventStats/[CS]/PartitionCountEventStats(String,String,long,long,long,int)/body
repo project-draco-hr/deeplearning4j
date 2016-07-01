@@ -1,0 +1,4 @@
+{
+  super(machineId,jvmId,threadId,startTime,durationMs);
+  this.numPartitions=numPartitions;
+}

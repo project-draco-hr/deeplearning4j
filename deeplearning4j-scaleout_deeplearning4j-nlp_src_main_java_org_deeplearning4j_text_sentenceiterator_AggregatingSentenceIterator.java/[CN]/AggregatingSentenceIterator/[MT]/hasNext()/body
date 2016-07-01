@@ -1,6 +1,8 @@
 {
   for (  SentenceIterator iterator : backendIterators) {
-    if (iterator.hasNext())     return true;
+    if (iterator.hasNext()) {
+      return true;
+    }
   }
   return false;
 }

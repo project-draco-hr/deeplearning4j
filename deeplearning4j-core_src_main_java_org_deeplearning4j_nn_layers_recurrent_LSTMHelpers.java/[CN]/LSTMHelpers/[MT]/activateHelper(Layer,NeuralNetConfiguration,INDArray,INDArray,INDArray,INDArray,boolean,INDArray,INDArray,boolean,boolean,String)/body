@@ -64,12 +64,12 @@
     INDArray forgetGateActivations=ifogActivations.get(NDArrayIndex.all(),NDArrayIndex.interval(hiddenLayerSize,2 * hiddenLayerSize));
     INDArray pmcellWFF=prevMemCellState.dup('f').muliRowVector(wFFTranspose);
     l1BLAS.axpy(pmcellWFF.length(),1.0,pmcellWFF,forgetGateActivations);
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",forgetGateActivations));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(SIGMOID,forgetGateActivations));
     if (forBackprop)     toReturn.fa[time]=forgetGateActivations;
     INDArray inputModGateActivations=ifogActivations.get(NDArrayIndex.all(),NDArrayIndex.interval(3 * hiddenLayerSize,4 * hiddenLayerSize));
     INDArray pmcellWGG=prevMemCellState.dup('f').muliRowVector(wGGTranspose);
     l1BLAS.axpy(pmcellWGG.length(),1.0,pmcellWGG,inputModGateActivations);
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",inputModGateActivations));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(SIGMOID,inputModGateActivations));
     if (forBackprop)     toReturn.ga[time]=inputModGateActivations;
     INDArray currentMemoryCellState;
     INDArray inputModMulInput;
@@ -85,7 +85,7 @@
     INDArray outputGateActivations=ifogActivations.get(NDArrayIndex.all(),NDArrayIndex.interval(2 * hiddenLayerSize,3 * hiddenLayerSize));
     INDArray pmcellWOO=currentMemoryCellState.dup('f').muliRowVector(wOOTranspose);
     l1BLAS.axpy(pmcellWOO.length(),1.0,pmcellWOO,outputGateActivations);
-    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("sigmoid",outputGateActivations));
+    Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(SIGMOID,outputGateActivations));
     if (forBackprop)     toReturn.oa[time]=outputGateActivations;
     INDArray currMemoryCellActivation=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),currentMemoryCellState.dup('f')));
     INDArray currHiddenUnitActivations;

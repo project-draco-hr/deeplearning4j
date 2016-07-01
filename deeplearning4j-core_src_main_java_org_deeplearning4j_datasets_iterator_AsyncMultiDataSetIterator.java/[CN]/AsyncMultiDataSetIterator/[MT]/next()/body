@@ -1,13 +1,19 @@
 {
-  if (!hasNext())   throw new NoSuchElementException();
-  if (runnable.exception != null)   throw runnable.exception;
+  if (!hasNext()) {
+    throw new NoSuchElementException();
+  }
+  if (runnable.exception != null) {
+    throw runnable.exception;
+  }
   if (!queue.isEmpty()) {
     return queue.poll();
   }
   try {
     while (runnable.exception == null) {
       MultiDataSet ds=queue.poll(5,TimeUnit.SECONDS);
-      if (ds != null)       return ds;
+      if (ds != null) {
+        return ds;
+      }
       if (runnable.killRunnable) {
         throw new ConcurrentModificationException("Reset while next() is waiting for element?");
       }

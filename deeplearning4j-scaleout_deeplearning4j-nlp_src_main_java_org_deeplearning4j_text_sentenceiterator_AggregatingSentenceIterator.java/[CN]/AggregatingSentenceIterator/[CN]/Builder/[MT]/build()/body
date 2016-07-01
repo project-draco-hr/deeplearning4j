@@ -1,5 +1,7 @@
 {
   AggregatingSentenceIterator sentenceIterator=new AggregatingSentenceIterator(this.backendIterators);
-  if (this.preProcessor != null)   sentenceIterator.setPreProcessor(this.preProcessor);
+  if (this.preProcessor != null) {
+    sentenceIterator.setPreProcessor(this.preProcessor);
+  }
   return sentenceIterator;
 }

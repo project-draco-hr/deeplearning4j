@@ -101,7 +101,7 @@
   for (  GraphVertex gv : vertices) {
     String vertexName=gv.getVertexName();
     List<String> thisVertexOutputsTo=verticesOutputTo.get(vertexName);
-    if (thisVertexOutputsTo == null || thisVertexOutputsTo.size() == 0)     continue;
+    if (thisVertexOutputsTo == null || thisVertexOutputsTo.isEmpty())     continue;
     VertexIndices[] outputIndices=new VertexIndices[thisVertexOutputsTo.size()];
     int j=0;
     for (    String s : thisVertexOutputsTo) {

@@ -1,5 +1,5 @@
 {
-  if (sequence.getElements().size() == 0)   return;
+  if (sequence.getElements().isEmpty())   return;
   if (trainElementsVectors) {
     nextRandom.set(nextRandom.get() * 25214903917L + 11);
     if (!elementsLearningAlgorithm.isEarlyTerminationHit())     elementsLearningAlgorithm.learnSequence(sequence,nextRandom,alpha);

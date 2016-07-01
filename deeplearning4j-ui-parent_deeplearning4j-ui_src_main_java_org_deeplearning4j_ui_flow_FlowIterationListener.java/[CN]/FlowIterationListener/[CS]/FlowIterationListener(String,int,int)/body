@@ -3,9 +3,9 @@
   this.remotePort=port;
   this.frequency=frequency;
   UiConnectionInfo info=null;
-  if (address.equals("localhost") || address.equals("127.0.0.1") || address.isEmpty()) {
+  if (address.equals(LOCALHOST) || address.equals("127.0.0.1") || address.isEmpty()) {
     try {
-      this.remoteAddr="localhost";
+      this.remoteAddr=LOCALHOST;
       this.remotePort=UiServer.getInstance().getPort();
       info=UiServer.getInstance().getConnectionInfo();
     }

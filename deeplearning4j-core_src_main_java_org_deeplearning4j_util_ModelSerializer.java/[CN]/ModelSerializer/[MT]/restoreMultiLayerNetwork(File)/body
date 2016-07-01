@@ -28,7 +28,7 @@
     dis.close();
     gotCoefficients=true;
   }
-  ZipEntry updaters=zipFile.getEntry("updater.bin");
+  ZipEntry updaters=zipFile.getEntry(UPDATER_BIN);
   if (updaters != null) {
     InputStream stream=zipFile.getInputStream(updaters);
     ObjectInputStream ois=new ObjectInputStream(stream);

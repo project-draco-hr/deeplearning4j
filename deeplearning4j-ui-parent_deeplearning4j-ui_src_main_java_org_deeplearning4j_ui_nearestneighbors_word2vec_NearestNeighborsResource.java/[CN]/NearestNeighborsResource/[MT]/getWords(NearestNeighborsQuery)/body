@@ -1,5 +1,5 @@
 {
-  WordVectors vectors=(WordVectors)storage.getObject("UploadedFile",ObjectType.WORD2VEC);
+  WordVectors vectors=(WordVectors)storage.getObject(UPLOADED_FILE,ObjectType.WORD2VEC);
   if (vectors == null)   return Response.noContent().build();
   Collection<String> nearestNeighors=vectors.wordsNearest(query.getWord(),query.getNumWords());
   Map<String,Double> map=new LinkedHashMap<>();

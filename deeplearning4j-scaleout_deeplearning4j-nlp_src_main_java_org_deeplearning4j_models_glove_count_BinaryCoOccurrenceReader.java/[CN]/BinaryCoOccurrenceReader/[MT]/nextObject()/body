@@ -1,5 +1,5 @@
 {
-  if (buffer.size() > 0) {
+  if (!buffer.isEmpty()) {
     return buffer.poll();
   }
  else {

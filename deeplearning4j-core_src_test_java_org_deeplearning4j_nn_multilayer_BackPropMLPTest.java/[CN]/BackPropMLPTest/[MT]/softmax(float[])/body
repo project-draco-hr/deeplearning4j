@@ -1,7 +1,11 @@
 {
   float[] out=new float[in.length];
   float sumExp=0.0f;
-  for (int i=0; i < in.length; i++)   sumExp+=Math.exp(in[i]);
-  for (int i=0; i < in.length; i++)   out[i]=(float)Math.exp(in[i]) / sumExp;
+  for (int i=0; i < in.length; i++) {
+    sumExp+=Math.exp(in[i]);
+  }
+  for (int i=0; i < in.length; i++) {
+    out[i]=(float)Math.exp(in[i]) / sumExp;
+  }
   return out;
 }

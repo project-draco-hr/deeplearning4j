@@ -4,8 +4,8 @@
   String analogyType="";
   for (  String s : questions) {
     if (s.startsWith(":")) {
-      double correct=right.getCount("correct");
-      double wrong=right.getCount("wrong");
+      double correct=right.getCount(CORRECT);
+      double wrong=right.getCount(WRONG);
       if (analogyType.isEmpty()) {
         analogyType=s;
         continue;
@@ -23,12 +23,12 @@
       String predicted=split[3];
       String w=wordsNearest(positive,negative,1).iterator().next();
       if (predicted.equals(w))       right.incrementCount("right",1.0);
- else       right.incrementCount("wrong",1.0);
+ else       right.incrementCount(WRONG,1.0);
     }
   }
   if (!analogyType.isEmpty()) {
-    double correct=right.getCount("correct");
-    double wrong=right.getCount("wrong");
+    double correct=right.getCount(CORRECT);
+    double wrong=right.getCount(WRONG);
     double accuracyRet=100.0 * correct / (correct + wrong);
     accuracy.put(analogyType,accuracyRet);
   }

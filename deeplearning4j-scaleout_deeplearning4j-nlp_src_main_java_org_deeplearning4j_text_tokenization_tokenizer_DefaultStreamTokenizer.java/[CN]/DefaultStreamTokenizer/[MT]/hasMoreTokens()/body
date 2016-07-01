@@ -1,5 +1,5 @@
 {
   log.info("Tokens size: [" + tokens.size() + "], position: ["+ position.get()+ "]");
-  if (tokens.size() > 0)   return position.get() < tokens.size();
+  if (!tokens.isEmpty())   return position.get() < tokens.size();
  else   return streamHasMoreTokens();
 }

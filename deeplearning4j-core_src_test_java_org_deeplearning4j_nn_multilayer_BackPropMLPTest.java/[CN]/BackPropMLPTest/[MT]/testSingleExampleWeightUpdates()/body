@@ -21,7 +21,9 @@
     float hiddenUnitPreSigmoid=dotProduct(l1WeightsFloat,xFloat) + l1BiasFloat;
     float hiddenUnitPostSigmoid=sigmoid(hiddenUnitPreSigmoid);
     float[] outputPreSoftmax=new float[3];
-    for (int i=0; i < 3; i++)     outputPreSoftmax[i]=hiddenUnitPostSigmoid * l2WeightsFloat[i] + l2BiasFloatArray[i];
+    for (int i=0; i < 3; i++) {
+      outputPreSoftmax[i]=hiddenUnitPostSigmoid * l2WeightsFloat[i] + l2BiasFloatArray[i];
+    }
     float[] outputPostSoftmax=softmax(outputPreSoftmax);
     float[] deltaOut=vectorDifference(outputPostSoftmax,yFloat);
     float deltaHidden=0.0f;

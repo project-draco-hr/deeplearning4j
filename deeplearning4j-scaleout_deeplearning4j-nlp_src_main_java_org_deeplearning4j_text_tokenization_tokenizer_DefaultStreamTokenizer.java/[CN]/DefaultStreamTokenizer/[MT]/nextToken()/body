@@ -1,4 +1,4 @@
 {
-  if (tokens.size() > 0 && position.get() < tokens.size())   return tokens.get(position.getAndIncrement());
+  if (!tokens.isEmpty() && position.get() < tokens.size())   return tokens.get(position.getAndIncrement());
   return nextTokenFromStream();
 }

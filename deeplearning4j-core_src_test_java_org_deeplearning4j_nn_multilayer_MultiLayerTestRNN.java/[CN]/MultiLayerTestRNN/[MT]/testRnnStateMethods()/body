@@ -23,8 +23,8 @@
   INDArray expectedLastActL1=allOutputActivations.get(2).tensorAlongDimension(timeSeriesLength - 1,1,0);
   assertTrue(expectedLastActL1.equals(lastActL1));
   mln.rnnClearPreviousState();
-  assertTrue(mln.rnnGetPreviousState(0).size() == 0);
-  assertTrue(mln.rnnGetPreviousState(1).size() == 0);
+  assertTrue(mln.rnnGetPreviousState(0).isEmpty());
+  assertTrue(mln.rnnGetPreviousState(1).isEmpty());
   mln.rnnSetPreviousState(0,currStateL0);
   assertTrue(mln.rnnGetPreviousState(0).size() == 2);
   mln.rnnSetPreviousState(1,currStateL1);

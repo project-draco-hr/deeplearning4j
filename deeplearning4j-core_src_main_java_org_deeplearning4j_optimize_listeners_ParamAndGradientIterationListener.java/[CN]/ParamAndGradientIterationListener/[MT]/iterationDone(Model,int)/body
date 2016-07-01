@@ -43,9 +43,9 @@
   sb.append(totalIterationCount);
   sb.append(delimiter);
   sb.append(model.score());
-  for (  String s : params.keySet()) {
-    INDArray currParams=params.get(s);
-    INDArray currGrad=grads.get(s);
+  for (  Map.Entry<String,INDArray> entry : params.entrySet()) {
+    INDArray currParams=entry.getValue();
+    INDArray currGrad=grads.get(entry.getKey());
     if (printMean) {
       sb.append(delimiter);
       sb.append(currParams.meanNumber().doubleValue());

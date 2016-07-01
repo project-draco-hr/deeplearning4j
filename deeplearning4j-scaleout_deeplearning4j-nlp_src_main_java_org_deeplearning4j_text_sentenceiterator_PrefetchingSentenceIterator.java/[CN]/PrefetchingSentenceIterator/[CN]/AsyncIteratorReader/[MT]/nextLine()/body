@@ -1,5 +1,5 @@
 {
-  if (buffer.size() > 0)   return buffer.poll();
+  if (!buffer.isEmpty())   return buffer.poll();
   try {
     return buffer.poll(2L,TimeUnit.SECONDS);
   }

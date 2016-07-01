@@ -1,0 +1,4 @@
+{
+  long now=timeSource.currentTimeMillis();
+  mapPartitions.add(new PartitionCountEventStats(lastMapPartitionsStartTime,(now - lastMapPartitionsStartTime),nPartitions));
+}
