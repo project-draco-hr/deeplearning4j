@@ -1,11 +1,7 @@
 {
   INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY);
-  if (training) {
-    if (conf.isUseDropConnect()) {
-      if (conf.getLayer().getDropOut() > 0) {
-        W=Dropout.applyDropConnect(this,DefaultParamInitializer.WEIGHT_KEY);
-      }
-    }
+  if (training && conf.isUseDropConnect() && conf.getLayer().getDropOut() > 0) {
+    W=Dropout.applyDropConnect(this,DefaultParamInitializer.WEIGHT_KEY);
   }
   INDArray hBias=getParam(PretrainParamInitializer.BIAS_KEY);
   if (layerConf().getVisibleUnit() == org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN)   this.sigma=v.var(0).divi(input.rows());
