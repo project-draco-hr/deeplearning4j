@@ -1,16 +1,16 @@
 {
   StringBuilder sb=new StringBuilder();
   String f=SparkTrainingStats.DEFAULT_PRINT_FORMAT;
-  sb.append(String.format(f,"WorkerFlatMapTotalTimeMs"));
+  sb.append(String.format(f,WORKER_FLAT_MAP_TOTAL_TIME_MS));
   if (workerFlatMapTotalTimeMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(workerFlatMapTotalTimeMs,",")).append("\n");
-  sb.append(String.format(f,"WorkerFlatMapGetInitialModelTimeMs"));
+  sb.append(String.format(f,WORKER_FLAT_MAP_GET_INITIAL_MODEL_TIME_MS));
   if (workerFlatMapGetInitialModelTimeMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(workerFlatMapGetInitialModelTimeMs,",")).append("\n");
-  sb.append(String.format(f,"WorkerFlatMapDataSetGetTimesMs"));
+  sb.append(String.format(f,WORKER_FLAT_MAP_DATA_SET_GET_TIMES_MS));
   if (workerFlatMapDataSetGetTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(workerFlatMapDataSetGetTimesMs,",")).append("\n");
-  sb.append(String.format(f,"WorkerFlatMapProcessMiniBatchTimesMs"));
+  sb.append(String.format(f,WORKER_FLAT_MAP_PROCESS_MINI_BATCH_TIMES_MS));
   if (workerFlatMapProcessMiniBatchTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(workerFlatMapProcessMiniBatchTimesMs,",")).append("\n");
   if (trainingWorkerSpecificStats != null)   sb.append(trainingWorkerSpecificStats.statsAsString()).append("\n");

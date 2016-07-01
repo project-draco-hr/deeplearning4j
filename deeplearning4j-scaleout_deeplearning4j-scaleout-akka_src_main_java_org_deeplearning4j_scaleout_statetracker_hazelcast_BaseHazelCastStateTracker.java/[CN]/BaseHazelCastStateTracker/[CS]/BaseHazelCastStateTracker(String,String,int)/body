@@ -1,7 +1,7 @@
 {
   log.info("Setting up hazelcast with type " + type + " connection string "+ connectionString+ " and port "+ stateTrackerPort);
-  if (type.equals("master") && !PortTaken.portTaken(stateTrackerPort)) {
-    if (connectionString.equals("master")) {
+  if (type.equals(MASTER) && !PortTaken.portTaken(stateTrackerPort)) {
+    if (connectionString.equals(MASTER)) {
       String hazelCastHost;
       try {
         hazelCastHost=System.getProperty(HAZELCAST_HOST,InetAddress.getLocalHost().getHostName());
@@ -27,7 +27,7 @@
     }
 );
   }
- else   if (type.equals("master") && PortTaken.portTaken(stateTrackerPort))   throw new IllegalStateException("Specified type was master and the port specified was taken, please specify a different port");
+ else   if (type.equals(MASTER) && PortTaken.portTaken(stateTrackerPort))   throw new IllegalStateException("Specified type was master and the port specified was taken, please specify a different port");
  else {
     setConnectionString(connectionString);
     log.info("Connecting to hazelcast on " + connectionString);
@@ -56,7 +56,7 @@
   patience=h.getAtomicReference(PATIENCE);
   numBatches=h.getAtomicReference(NUM_BATCHES_SO_FAR_RAN);
   references=h.getMap(GLOBAL_REFERENCE);
-  if (type.equals("master")) {
+  if (type.equals(MASTER)) {
     begunTraining.set(false);
     saver=createUpdateSaver();
     numTimesPretrainRan.set(0);

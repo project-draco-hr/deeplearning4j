@@ -1,18 +1,18 @@
 {
 switch (key) {
-case "ParameterAveragingMasterBroadcastCreateTimesMs":
+case PARAMETER_AVERAGING_MASTER_BROADCAST_CREATE_TIMES_MS:
     return true;
-case "ParameterAveragingMasterFitTimesMs":
+case PARAMETER_AVERAGING_MASTER_FIT_TIMES_MS:
   return false;
-case "ParameterAveragingMasterSplitTimesMs":
+case PARAMETER_AVERAGING_MASTER_SPLIT_TIMES_MS:
 return true;
-case "ParameterAveragingMasterMapPartitionsTimesMs":
+case PARAMETER_AVERAGING_MASTER_MAP_PARTITIONS_TIMES_MS:
 return false;
-case "ParameterAveragingMasterAggregateTimesMs":
+case PARAMETER_AVERAGING_MASTER_AGGREGATE_TIMES_MS:
 return true;
-case "ParameterAveragingMasterProcessParamsUpdaterTimesMs":
+case PARAMETER_AVERAGING_MASTER_PROCESS_PARAMS_UPDATER_TIMES_MS:
 return true;
-case "ParameterAveragingMasterRepartitionTimesMs":
+case PARAMETER_AVERAGING_MASTER_REPARTITION_TIMES_MS:
 return true;
 default :
 if (workerStats != null) return workerStats.defaultIncludeInPlots(key);
