@@ -1,0 +1,17 @@
+{
+  int nPartitions=rdd.partitions().size();
+switch (repartition) {
+case Never:
+    return rdd;
+case NumPartitionsExecutorsDiffers:
+  if (nPartitions == numWorkers)   return rdd;
+case Always:
+JavaRDD<T> temp;
+if (collectTrainingStats) stats.logRepartitionStart();
+temp=rdd.repartition(numWorkers);
+if (collectTrainingStats) stats.logRepartitionEnd();
+return temp;
+default :
+throw new RuntimeException("Unknown setting for repartition: " + repartition);
+}
+}
