@@ -8,17 +8,7 @@
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaRDD<DataSet> split : splits) {
-    log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, dataSetTotalExamples={}. Configured for {} executors",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalDataSetObjectCount,numWorkers);
-    if (collectTrainingStats)     stats.logMapPartitionsStart();
-    JavaRDD<DataSet> splitData=split;
-    splitData=repartitionIfRequired(splitData);
-    int nPartitions=split.partitions().size();
-    System.out.println("SPLIT SIZE: " + splitData.count());
-    FlatMapFunction<Iterator<DataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerFlatMap<>(getWorkerInstance(network));
-    JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
-    processResults(network,null,result,splitNum,splits.length);
-    splitNum++;
-    if (collectTrainingStats)     stats.logMapPartitionsEnd(nPartitions);
+    doIteration(network,split,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }

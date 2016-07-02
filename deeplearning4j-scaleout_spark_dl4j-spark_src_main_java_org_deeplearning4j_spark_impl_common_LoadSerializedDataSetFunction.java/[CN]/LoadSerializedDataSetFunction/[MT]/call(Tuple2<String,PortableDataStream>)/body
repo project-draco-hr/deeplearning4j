@@ -1,0 +1,11 @@
+{
+  try {
+    InputStream is=t2._2().open();
+    DataSet d=new DataSet();
+    d.load(is);
+    return d;
+  }
+  finally {
+    t2._2().close();
+  }
+}
