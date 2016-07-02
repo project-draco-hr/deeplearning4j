@@ -1,0 +1,11 @@
+{
+  log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, Configured for {} executors",splitNum,numSplits,batchSizePerWorker,averagingFrequency,numWorkers);
+  if (collectTrainingStats)   stats.logMapPartitionsStart();
+  JavaRDD<MultiDataSet> splitData=split;
+  splitData=repartitionIfRequired(splitData);
+  int nPartitions=split.partitions().size();
+  FlatMapFunction<Iterator<MultiDataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerMultiDataSetFlatMap<>(getWorkerInstance(graph));
+  JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
+  processResults(null,graph,result,splitNum,numSplits);
+  if (collectTrainingStats)   stats.logMapPartitionsEnd(nPartitions);
+}
