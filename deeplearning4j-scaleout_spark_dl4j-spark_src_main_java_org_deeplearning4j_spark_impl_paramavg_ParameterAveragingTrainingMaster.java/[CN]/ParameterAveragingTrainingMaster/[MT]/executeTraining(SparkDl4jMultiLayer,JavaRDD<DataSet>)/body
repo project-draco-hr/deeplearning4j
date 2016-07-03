@@ -4,7 +4,10 @@
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
-  JavaRDD<DataSet>[] splits=randomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
+  JavaRDD<DataSet>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
+  for (int i=0; i < splits.length; i++) {
+    System.out.println("SPLIT: " + i + ", SIZE (nObjects) = "+ splits[i].collect().size());
+  }
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaRDD<DataSet> split : splits) {

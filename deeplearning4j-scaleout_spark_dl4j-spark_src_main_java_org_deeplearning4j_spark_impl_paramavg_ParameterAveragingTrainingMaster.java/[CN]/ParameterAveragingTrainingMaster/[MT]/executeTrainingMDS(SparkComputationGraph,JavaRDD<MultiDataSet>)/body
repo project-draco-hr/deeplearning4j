@@ -3,7 +3,7 @@
   trainingData.persist(StorageLevel.MEMORY_ONLY());
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
-  JavaRDD<MultiDataSet>[] splits=randomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
+  JavaRDD<MultiDataSet>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
   int splitNum=1;
   for (  JavaRDD<MultiDataSet> split : splits) {
     doIteration(graph,split,splitNum++,splits.length);

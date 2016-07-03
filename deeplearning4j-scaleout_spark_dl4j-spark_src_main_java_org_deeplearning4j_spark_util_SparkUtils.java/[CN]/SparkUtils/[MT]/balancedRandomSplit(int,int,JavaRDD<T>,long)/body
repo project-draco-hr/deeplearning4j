@@ -1,0 +1,15 @@
+{
+  JavaRDD<T>[] splits;
+  if (totalObjectCount <= numObjectsPerSplit) {
+    splits=(JavaRDD<T>[])Array.newInstance(JavaRDD.class,1);
+    splits[0]=data;
+  }
+ else {
+    int numSplits=totalObjectCount / numObjectsPerSplit;
+    splits=(JavaRDD<T>[])Array.newInstance(JavaRDD.class,numSplits);
+    for (int i=0; i < numSplits; i++) {
+      splits[i]=data.mapPartitionsWithIndex(new SplitPartitions<T>(i,numSplits,rngSeed),true);
+    }
+  }
+  return splits;
+}

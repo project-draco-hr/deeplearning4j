@@ -1,0 +1,12 @@
+{
+  int elementIdx=(Integer)key;
+  if (elementIdx <= elementsPerPartition * numStandardPartitions) {
+    return elementIdx / elementsPerPartition;
+  }
+ else {
+    int numValsInStdPartitions=elementsPerPartition * numStandardPartitions;
+    int idxInSmallerPartitions=elementIdx - numValsInStdPartitions;
+    int smallPartitionIdx=idxInSmallerPartitions / (elementsPerPartition - 1);
+    return numStandardPartitions + smallPartitionIdx;
+  }
+}

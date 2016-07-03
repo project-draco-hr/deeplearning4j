@@ -2,7 +2,7 @@
   if (collectTrainingStats)   stats.logFitStart();
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
-  JavaPairRDD<String,PortableDataStream>[] splits=randomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
+  JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData,new Random().nextLong());
   int splitNum=1;
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
     JavaRDD<DataSet> splitData=split.map(new LoadSerializedDataSetFunction());

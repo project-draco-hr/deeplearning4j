@@ -2,12 +2,12 @@
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
-  JavaPairRDD<String,PortableDataStream>[] splits=randomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
+  JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
     JavaRDD<DataSet> splitData=split.map(new LoadSerializedDataSetFunction());
-    splitData=repartitionIfRequired(splitData);
+    splitData=SparkUtils.repartitionIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
     doIteration(network,splitData,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);

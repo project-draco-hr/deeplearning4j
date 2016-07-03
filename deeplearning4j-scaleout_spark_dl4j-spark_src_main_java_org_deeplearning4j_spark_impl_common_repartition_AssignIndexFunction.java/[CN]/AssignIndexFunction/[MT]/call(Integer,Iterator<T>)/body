@@ -1,0 +1,8 @@
+{
+  int currIdx=partitionElementStartIdxs[partionNum];
+  List<Tuple2<Integer,T>> list=new ArrayList<>();
+  while (v2.hasNext()) {
+    list.add(new Tuple2<>(currIdx++,v2.next()));
+  }
+  return list.iterator();
+}

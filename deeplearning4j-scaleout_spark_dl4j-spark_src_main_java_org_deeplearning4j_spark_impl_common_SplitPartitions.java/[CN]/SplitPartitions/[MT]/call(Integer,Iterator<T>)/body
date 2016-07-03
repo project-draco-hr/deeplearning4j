@@ -1,0 +1,17 @@
+{
+  long thisRngSeed=baseRngSeed + v1;
+  Random r=new Random(thisRngSeed);
+  List<Integer> list=new ArrayList<>();
+  for (int i=0; i < numSplits; i++) {
+    list.add(i);
+  }
+  List<T> outputList=new ArrayList<>();
+  int i=0;
+  while (iter.hasNext()) {
+    T next=iter.next();
+    if (i % numSplits == 0)     Collections.shuffle(list,r);
+    if (i % numSplits == splitIndex)     outputList.add(next);
+    i++;
+  }
+  return outputList.iterator();
+}

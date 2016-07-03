@@ -4,12 +4,11 @@
     dataSetObjectsPerSplit=numWorkers * batchSizePerWorker * averagingFrequency;
   }
  else {
-    int reqNumExamplesEachWorker=batchSizePerWorker * averagingFrequency;
-    int numDataSetsReqEachWorker=reqNumExamplesEachWorker / batchSizePerWorker;
-    if (numDataSetsReqEachWorker < 1) {
-      numDataSetsReqEachWorker=1;
+    int numDataSetObjsReqEachWorker=numObjectsEachWorker();
+    if (numDataSetObjsReqEachWorker < 1) {
+      numDataSetObjsReqEachWorker=1;
     }
-    dataSetObjectsPerSplit=numDataSetsReqEachWorker * numWorkers;
+    dataSetObjectsPerSplit=numDataSetObjsReqEachWorker * numWorkers;
   }
   return dataSetObjectsPerSplit;
 }
