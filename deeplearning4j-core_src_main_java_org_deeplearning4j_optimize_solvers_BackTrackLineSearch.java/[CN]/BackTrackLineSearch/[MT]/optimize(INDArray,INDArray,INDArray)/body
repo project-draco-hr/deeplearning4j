@@ -49,11 +49,7 @@
     }
     score=setScoreFor(candidateParameters);
     log.debug("Model score after step = {}",score);
-    if (minObjectiveFunction && score < bestScore) {
-      bestScore=score;
-      bestStepSize=step;
-    }
- else     if (!minObjectiveFunction && score > bestScore) {
+    if ((minObjectiveFunction && score < bestScore) || (!minObjectiveFunction && score > bestScore)) {
       bestScore=score;
       bestStepSize=step;
     }

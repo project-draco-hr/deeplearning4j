@@ -23,11 +23,7 @@
     if (list.get(list.size() - 1).toLowerCase().equals("the")) {
       continue;
     }
-    if (max == null) {
-      max=value;
-      chosenKey=key;
-    }
- else     if (!allLower && value > max) {
+    if (max == null || (!allLower && value > max)) {
       max=value;
       chosenKey=key;
     }
