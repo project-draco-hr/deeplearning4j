@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  for (  Integer port : ports) {
+    if (sb.length() > 0) {
+      sb.append(",");
+    }
+    sb.append("localhost:").append(port);
+  }
+  return sb.toString();
+}

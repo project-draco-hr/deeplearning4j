@@ -1,0 +1,7 @@
+{
+  List<Integer> resolvedPorts=new ArrayList<Integer>();
+  for (  Integer port : ports) {
+    resolvedPorts.add(resolvePort(port));
+  }
+  return resolvedPorts;
+}

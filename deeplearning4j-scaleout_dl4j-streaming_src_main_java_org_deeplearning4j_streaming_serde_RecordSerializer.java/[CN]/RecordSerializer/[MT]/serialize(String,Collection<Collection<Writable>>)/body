@@ -1,0 +1,16 @@
+{
+  ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+  DataOutputStream dataOutputStream=new DataOutputStream(byteArrayOutputStream);
+  SerializationUtils.writeObject((Serializable)writables,dataOutputStream);
+  try {
+    byteArrayOutputStream.flush();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+ finally {
+    IOUtils.closeQuietly(byteArrayOutputStream);
+  }
+  byte[] ret=byteArrayOutputStream.toByteArray();
+  return ret;
+}

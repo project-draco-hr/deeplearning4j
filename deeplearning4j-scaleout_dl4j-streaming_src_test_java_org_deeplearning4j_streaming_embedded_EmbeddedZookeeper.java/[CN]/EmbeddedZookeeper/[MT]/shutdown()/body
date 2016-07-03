@@ -1,0 +1,13 @@
+{
+  factory.shutdown();
+  try {
+    TestUtils.deleteFile(snapshotDir);
+  }
+ catch (  FileNotFoundException e) {
+  }
+  try {
+    TestUtils.deleteFile(logDir);
+  }
+ catch (  FileNotFoundException e) {
+  }
+}

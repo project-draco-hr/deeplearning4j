@@ -1,0 +1,18 @@
+{
+  for (  KafkaServer broker : brokers) {
+    try {
+      broker.shutdown();
+    }
+ catch (    Exception e) {
+      e.printStackTrace();
+    }
+  }
+  for (  File logDir : logDirs) {
+    try {
+      TestUtils.deleteFile(logDir);
+    }
+ catch (    FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+}

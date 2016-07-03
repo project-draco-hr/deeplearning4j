@@ -1,0 +1,5 @@
+{
+  KafkaServer server=new KafkaServer(new KafkaConfig(props),new SystemTime());
+  server.startup();
+  return server;
+}

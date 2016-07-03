@@ -1,0 +1,6 @@
+{
+  if (port == -1) {
+    return TestUtils.getAvailablePort();
+  }
+  return port;
+}

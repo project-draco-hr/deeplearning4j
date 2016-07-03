@@ -1,0 +1,6 @@
+{
+  for (  KafkaServer server : brokers) {
+    return server.zkClient();
+  }
+  return null;
+}

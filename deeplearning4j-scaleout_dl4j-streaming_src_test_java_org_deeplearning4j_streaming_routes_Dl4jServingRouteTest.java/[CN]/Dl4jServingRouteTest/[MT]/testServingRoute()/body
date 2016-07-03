@@ -1,0 +1,28 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.LINE_GRADIENT_DESCENT).iterations(5).seed(123).list().layer(0,new DenseLayer.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(1,new DenseLayer.Builder().nIn(3).nOut(2).weightInit(WeightInit.XAVIER).activation("tanh").build()).layer(2,new org.deeplearning4j.nn.conf.layers.OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nIn(2).nOut(3).build()).backprop(true).pretrain(false).build();
+  MultiLayerNetwork network=new MultiLayerNetwork(conf);
+  network.init();
+  network.setListeners(new ScoreIterationListener(1));
+  network.fit(next);
+  String outputPath="networktest.zip";
+  dir.mkdirs();
+  File tmp=new File(dir,"tmp.txt");
+  tmp.deleteOnExit();
+  ModelSerializer.writeModel(network,outputPath,false);
+  final boolean computationGraph=false;
+  final String uri=String.format("file://%s?fileName=tmp.txt",dir.getAbsolutePath());
+  context.addRoutes(DL4jServeRouteBuilder.builder().computationGraph(computationGraph).zooKeeperPort(zookeeper.getPort()).kafkaBroker(kafkaCluster.getBrokerList()).consumingTopic(topicName).modelUri(outputPath).outputUri(uri).finalProcessor(new Processor(){
+    @Override public void process(    Exchange exchange) throws Exception {
+      exchange.getIn().setBody(exchange.getIn().getBody().toString());
+    }
+  }
+).build());
+  context.startAllRoutes();
+  Endpoint endpoint=context.getRoutes().get(1).getConsumer().getEndpoint();
+  ConsumerTemplate consumerTemplate=context.createConsumerTemplate();
+  ProducerTemplate producerTemplate=context.createProducerTemplate();
+  producerTemplate.sendBody("direct:start","hello");
+  consumerTemplate.receiveBody(endpoint,3000,String.class);
+  String contents=FileUtils.readFileToString(new File(dir,"tmp.txt"));
+  assertNotEquals("",contents);
+}

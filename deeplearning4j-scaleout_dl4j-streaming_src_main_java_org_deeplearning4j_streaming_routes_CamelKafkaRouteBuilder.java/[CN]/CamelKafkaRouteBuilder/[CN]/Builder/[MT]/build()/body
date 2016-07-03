@@ -1,0 +1,10 @@
+{
+  CamelKafkaRouteBuilder routeBuilder;
+  assertStringNotNUllOrEmpty(inputUri,"input uri");
+  assertStringNotNUllOrEmpty(topicName,"topic name");
+  assertStringNotNUllOrEmpty(kafkaBrokerList,"kafka broker");
+  assertStringNotNUllOrEmpty(inputFormat,"input format");
+  routeBuilder=new CamelKafkaRouteBuilder(topicName,kafkaBrokerList,writableConverter,canovaMarshaller,inputUri,inputFormat,processor,dataTypeUnMarshal,zooKeeperHost,zooKeeperPort);
+  if (camelContext != null)   routeBuilder.setContext(camelContext);
+  return routeBuilder;
+}

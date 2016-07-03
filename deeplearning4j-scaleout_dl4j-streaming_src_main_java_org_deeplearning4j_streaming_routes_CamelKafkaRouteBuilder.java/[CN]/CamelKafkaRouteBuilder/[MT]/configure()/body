@@ -1,0 +1,3 @@
+{
+  from(inputUri).unmarshal(dataTypeUnMarshal).to(String.format("canova://%s?inputMarshaller=%s&writableConverter=%s",inputFormat,canovaMarshaller,writableConverter)).process(processor).to(String.format("kafka:%s?topic=%s&zookeeperHost=%szookeeperPort=%d&serializerClass=%s&keySerializerClass=%s",kafkaBrokerList,topicName,zooKeeperHost,zooKeeperPort,StringEncoder.class.getName(),StringEncoder.class.getName()));
+}

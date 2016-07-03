@@ -1,0 +1,5 @@
+{
+  jssc.start();
+  if (timeout < 0)   jssc.awaitTermination();
+ else   jssc.awaitTermination(timeout);
+}

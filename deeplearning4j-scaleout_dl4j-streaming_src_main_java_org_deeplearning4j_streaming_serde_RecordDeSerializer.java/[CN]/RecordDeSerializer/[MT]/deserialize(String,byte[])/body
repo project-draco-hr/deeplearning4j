@@ -1,0 +1,12 @@
+{
+  ByteArrayInputStream bis=new ByteArrayInputStream(bytes);
+  Collection<Collection<Writable>> ret;
+  try {
+    ret=SerializationUtils.readObject(bis);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  IOUtils.closeQuietly(bis);
+  return ret;
+}

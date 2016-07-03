@@ -1,0 +1,17 @@
+{
+  if (camelContext == null)   camelContext=new DefaultCamelContext();
+  camelContext.addRoutes(new CamelKafkaRouteBuilder.Builder().camelContext(camelContext).inputFormat(inputFormat).topicName(kafkaTopic).camelContext(camelContext).dataTypeUnMarshal(dataType).inputUri(inputUri).kafkaBrokerList(kafkaBroker).processor(new Processor(){
+    @Override public void process(    Exchange exchange) throws Exception {
+      Collection<Collection<Writable>> record=(Collection<Collection<Writable>>)exchange.getIn().getBody();
+      exchange.getIn().setHeader(KafkaConstants.KEY,UUID.randomUUID().toString());
+      exchange.getIn().setHeader(KafkaConstants.PARTITION_KEY,new Random().nextInt(kafkaPartitions));
+      byte[] bytes=new RecordSerializer().serialize(kafkaTopic,record);
+      String base64=Base64.encodeBase64String(bytes);
+      exchange.getIn().setBody(base64,String.class);
+    }
+  }
+).build());
+  if (hadoopHome == null)   hadoopHome=System.getProperty("java.io.tmpdir");
+  System.setProperty("hadoop.home.dir",hadoopHome);
+  initComponents();
+}

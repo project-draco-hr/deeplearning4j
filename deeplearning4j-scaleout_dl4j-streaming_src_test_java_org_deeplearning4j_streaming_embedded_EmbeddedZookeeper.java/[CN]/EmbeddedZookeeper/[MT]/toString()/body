@@ -1,0 +1,6 @@
+{
+  final StringBuilder sb=new StringBuilder("EmbeddedZookeeper{");
+  sb.append("connection=").append(getConnection());
+  sb.append('}');
+  return sb.toString();
+}
