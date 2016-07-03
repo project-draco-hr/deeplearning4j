@@ -1,0 +1,7 @@
+{
+  SparkStreamingPipeline pipeline=SparkStreamingPipeline.builder().dataType("csv").kafkaBroker(kafkaCluster.getBrokerList()).inputFormat("org.canova.api.formats.input.impl.ListStringInputFormat").inputUri("file:src/test/resources/?fileName=iris.dat&noop=true").streamingDuration(Durations.seconds(1)).kafkaPartitions(1).kafkaTopic("test3").sparkMaster("local[*]").numLabels(3).recordToDataSetFunction(new CSVRecordToDataSet()).zkHost("localhost:" + zkPort).sparkAppName("canova").build();
+  pipeline.init();
+  final JavaDStream<DataSet> dataSetJavaDStream=pipeline.run();
+  dataSetJavaDStream.foreach(new PrintDataSet());
+  pipeline.startStreamingConsumption(1000);
+}

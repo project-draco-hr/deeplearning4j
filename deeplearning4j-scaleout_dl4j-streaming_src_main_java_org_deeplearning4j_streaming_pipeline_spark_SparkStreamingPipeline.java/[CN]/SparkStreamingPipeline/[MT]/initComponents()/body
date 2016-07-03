@@ -1,0 +1,4 @@
+{
+  sparkConf=new SparkConf().setAppName(sparkAppName).setMaster(sparkMaster);
+  jssc=new JavaStreamingContext(sparkConf,streamingDuration);
+}

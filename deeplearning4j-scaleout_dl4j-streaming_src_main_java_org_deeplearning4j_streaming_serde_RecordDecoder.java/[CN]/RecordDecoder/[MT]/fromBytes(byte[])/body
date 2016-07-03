@@ -1,0 +1,5 @@
+{
+  ByteArrayInputStream bis=new ByteArrayInputStream(bytes);
+  BufferedInputStream bis2=new BufferedInputStream(bis);
+  return SerializationUtils.readObject(bis2);
+}

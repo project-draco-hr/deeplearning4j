@@ -1,0 +1,8 @@
+{
+  this.zkConnection=zkConnection;
+  this.ports=resolvePorts(ports);
+  this.baseProperties=baseProperties;
+  this.brokers=new ArrayList<KafkaServer>();
+  this.logDirs=new ArrayList<File>();
+  this.brokerList=constructBrokerList(this.ports);
+}

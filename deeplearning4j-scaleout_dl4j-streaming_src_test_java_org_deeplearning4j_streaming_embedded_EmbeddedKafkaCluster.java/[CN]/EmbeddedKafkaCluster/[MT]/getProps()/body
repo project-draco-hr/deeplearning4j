@@ -1,0 +1,7 @@
+{
+  Properties props=new Properties();
+  props.putAll(baseProperties);
+  props.put("metadata.broker.list",brokerList);
+  props.put("zookeeper.connect",zkConnection);
+  return props;
+}

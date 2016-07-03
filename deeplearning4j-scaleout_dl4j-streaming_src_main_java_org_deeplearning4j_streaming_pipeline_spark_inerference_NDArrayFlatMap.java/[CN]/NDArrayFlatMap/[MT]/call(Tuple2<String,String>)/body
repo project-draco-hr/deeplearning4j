@@ -1,0 +1,12 @@
+{
+  try {
+    byte[] bytes=Base64.decodeBase64(stringStringTuple2._2());
+    Collection<Collection<Writable>> records=new RecordDeSerializer().deserialize("topic",bytes);
+    INDArray d=recordToDataSetFunction.convert(records);
+    return Arrays.asList(d);
+  }
+ catch (  Exception e) {
+    System.out.println("Error serializing");
+  }
+  return null;
+}

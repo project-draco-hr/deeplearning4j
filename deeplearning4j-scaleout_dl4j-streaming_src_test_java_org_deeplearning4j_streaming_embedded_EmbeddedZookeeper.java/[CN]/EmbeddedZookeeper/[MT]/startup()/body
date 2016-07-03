@@ -1,0 +1,14 @@
+{
+  if (this.port == -1) {
+    this.port=TestUtils.getAvailablePort();
+  }
+  this.factory=ServerCnxnFactory.createFactory(new InetSocketAddress("localhost",port),1024);
+  this.snapshotDir=TestUtils.constructTempDir("embeeded-zk/snapshot");
+  this.logDir=TestUtils.constructTempDir("embeeded-zk/log");
+  try {
+    factory.startup(new ZooKeeperServer(snapshotDir,logDir,tickTime));
+  }
+ catch (  InterruptedException e) {
+    throw new IOException(e);
+  }
+}

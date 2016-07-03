@@ -1,0 +1,5 @@
+{
+  for (  String topic : topics) {
+    AdminUtils.createTopic(getZkClient(),topic,2,1,new Properties());
+  }
+}

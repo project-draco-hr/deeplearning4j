@@ -1,0 +1,8 @@
+{
+  zkPort=TestUtils.getAvailablePort();
+  zookeeper=new EmbeddedZookeeper(zkPort);
+  zookeeper.startup();
+  kafkaCluster=new EmbeddedKafkaCluster(LOCALHOST + ":" + zkPort);
+  kafkaCluster.startup();
+  kafkaCluster.createTopics(topicName);
+}

@@ -1,0 +1,8 @@
+{
+  super(kafkaTopic,inputUri,inputFormat,kafkaBroker,zkHost,camelContext,hadoopHome,dataType,sparkAppName,kafkaPartitions,recordToDataSetFunction,numLabels,dataset);
+  this.jssc=jssc;
+  this.sparkConf=sparkConf;
+  this.streamProcessor=streamProcessor;
+  this.streamingDuration=streamingDuration;
+  this.sparkMaster=sparkMaster;
+}

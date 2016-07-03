@@ -1,0 +1,9 @@
+{
+  dataSetJavaRDD.foreach(new VoidFunction<INDArray>(){
+    @Override public void call(    INDArray dataSet) throws Exception {
+      System.out.println(dataSet);
+    }
+  }
+);
+  return null;
+}

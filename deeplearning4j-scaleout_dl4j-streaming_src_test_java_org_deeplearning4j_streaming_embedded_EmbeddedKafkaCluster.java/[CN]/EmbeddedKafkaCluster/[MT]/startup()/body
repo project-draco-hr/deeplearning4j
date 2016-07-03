@@ -1,0 +1,20 @@
+{
+  for (int i=0; i < ports.size(); i++) {
+    Integer port=ports.get(i);
+    File logDir=TestUtils.constructTempDir("kafka-local");
+    Properties properties=new Properties();
+    properties.putAll(baseProperties);
+    properties.setProperty("zookeeper.connect",zkConnection);
+    properties.setProperty("broker.id",String.valueOf(i + 1));
+    properties.setProperty("host.name","localhost");
+    properties.setProperty("port",Integer.toString(port));
+    properties.setProperty("log.dir",logDir.getAbsolutePath());
+    properties.setProperty("num.partitions",String.valueOf(1));
+    properties.setProperty("auto.create.topics.enable",String.valueOf(Boolean.TRUE));
+    properties.setProperty("log.flush.interval.messages",String.valueOf(1));
+    LOG.info("EmbeddedKafkaCluster: local directory: " + logDir.getAbsolutePath());
+    KafkaServer broker=startBroker(properties);
+    brokers.add(broker);
+    logDirs.add(logDir);
+  }
+}

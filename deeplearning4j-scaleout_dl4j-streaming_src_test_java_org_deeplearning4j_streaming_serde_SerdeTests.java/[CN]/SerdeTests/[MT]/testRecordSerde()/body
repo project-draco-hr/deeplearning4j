@@ -1,0 +1,10 @@
+{
+  Collection<Collection<Writable>> records=new ArrayList<>();
+  records.add(Arrays.asList((Writable)new DoubleWritable(2.0)));
+  records.add(Arrays.asList((Writable)new DoubleWritable(2.0)));
+  RecordSerializer serializer=new RecordSerializer();
+  byte[] bytes=serializer.serialize("",records);
+  RecordDeSerializer deSerializer=new RecordDeSerializer();
+  Collection<Collection<Writable>> recordsTest=deSerializer.deserialize("",bytes);
+  assertEquals(records,recordsTest);
+}
