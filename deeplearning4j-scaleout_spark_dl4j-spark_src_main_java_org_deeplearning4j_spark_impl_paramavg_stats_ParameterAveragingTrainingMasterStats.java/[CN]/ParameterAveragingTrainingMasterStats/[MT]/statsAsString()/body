@@ -22,9 +22,6 @@
   sb.append(String.format(f,"ParameterAveragingMasterProcessParamsUpdaterTimesMs"));
   if (parameterAveragingMasterProcessParamsUpdaterTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterProcessParamsUpdaterTimesMs,",")).append("\n");
-  sb.append(String.format(f,"ParameterAveragingMasterRepartitionTimesMs"));
-  if (parameterAveragingMasterRepartitionTimesMs == null)   sb.append("-\n");
- else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterRepartitionTimesMs,",")).append("\n");
   if (workerStats != null)   sb.append(workerStats.statsAsString());
   return sb.toString();
 }
