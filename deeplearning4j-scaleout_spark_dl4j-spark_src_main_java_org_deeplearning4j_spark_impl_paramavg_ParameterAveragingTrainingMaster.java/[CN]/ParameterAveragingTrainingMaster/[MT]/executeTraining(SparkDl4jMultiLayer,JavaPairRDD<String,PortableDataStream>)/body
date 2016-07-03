@@ -1,4 +1,5 @@
 {
+  if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
