@@ -1,7 +1,9 @@
 {
   this.saveUpdater=builder.saveUpdater;
   this.numWorkers=builder.numWorkers;
+  this.rddDataSetNumExamples=builder.rddDataSetNumExamples;
   this.batchSizePerWorker=builder.batchSizePerWorker;
   this.averagingFrequency=builder.averagingFrequency;
   this.prefetchNumBatches=builder.prefetchNumBatches;
+  this.repartition=builder.repartition;
 }

@@ -3,7 +3,7 @@
   SentenceIterator iter=new BasicLineIterator(inputFile);
   VocabCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
   SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(iter).tokenizerFactory(t).build();
-  AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<VocabWord>(transformer).build();
+  AbstractSequenceIterator<VocabWord> sequenceIterator=new AbstractSequenceIterator.Builder<>(transformer).build();
   VocabConstructor<VocabWord> constructor=new VocabConstructor.Builder<VocabWord>().addSource(sequenceIterator,5).useAdaGrad(false).setTargetVocabCache(cache).build();
   constructor.buildJointVocabulary(false,true);
   assertEquals(242,cache.numWords());

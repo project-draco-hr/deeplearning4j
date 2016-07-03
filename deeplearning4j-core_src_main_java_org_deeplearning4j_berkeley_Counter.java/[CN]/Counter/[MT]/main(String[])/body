@@ -1,5 +1,5 @@
 {
-  Counter<String> counter=new Counter<String>();
+  Counter<String> counter=new Counter<>();
   System.out.println(counter);
   counter.incrementCount("planets",7);
   System.out.println(counter);

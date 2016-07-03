@@ -1,7 +1,7 @@
 {
   this.dir=dir;
-  if (!dir.exists()) {
-    if (dir.isDirectory())     throw new IllegalArgumentException("Illegal queue: must be a directory");
+  if (!dir.exists() && dir.isDirectory()) {
+    throw new IllegalArgumentException("Illegal queue: must be a directory");
   }
   if (!dir.exists())   dir.mkdirs();
   if (dir.listFiles() != null && dir.listFiles().length > 1)   try {

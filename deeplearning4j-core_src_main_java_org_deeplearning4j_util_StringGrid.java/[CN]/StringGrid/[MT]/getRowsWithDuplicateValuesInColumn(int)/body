@@ -2,7 +2,7 @@
   checkInvalidColumn(column);
   StringGrid grid=new StringGrid(sep,numColumns);
   List<String> columns=getColumn(column);
-  Counter<String> counter=new Counter<String>();
+  Counter<String> counter=new Counter<>();
   for (  String val : columns)   counter.incrementCount(val,1.0);
   counter.pruneKeysBelowThreshold(2.0);
   Set<String> keys=counter.keySet();

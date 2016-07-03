@@ -1,5 +1,6 @@
 {
   log.info("Start training ...");
+  if (workers > 0)   corpusRDD.repartition(workers);
   final JavaSparkContext sc=new JavaSparkContext(corpusRDD.context());
   Map<String,Object> tokenizerVarMap=getTokenizerVarMap();
   Map<String,Object> word2vecVarMap=getWord2vecVarMap();
@@ -19,6 +20,7 @@
   vocabWordListRDD=pipeline.getVocabWordListRDD();
   Broadcast<VocabCache<VocabWord>> vocabCacheBroadcast=pipeline.getBroadCastVocabCache();
   vocabCache=vocabCacheBroadcast.getValue();
+  log.info("Vocab size: {}",vocabCache.numWords());
   log.info("Building Huffman Tree ...");
   log.info("Calculating cumulative sum of sentence counts ...");
   sentenceCumSumCountRDD=new CountCumSum(sentenceWordsCountRDD).buildCumSum();
@@ -32,6 +34,7 @@
   @SuppressWarnings("unchecked") JavaRDD<Pair<VocabWord,INDArray>> indexSyn0UpdateEntryRDD=vocabWordListSentenceCumSumRDD.mapPartitions(firstIterFunc).map(new MapToPairFunction());
   List<Pair<VocabWord,INDArray>> syn0UpdateEntries=indexSyn0UpdateEntryRDD.collect();
   INDArray syn0=Nd4j.zeros(vocabCache.numWords(),layerSize);
+  log.info("Averaging results...");
   Map<VocabWord,AtomicInteger> updates=new HashMap<>();
   Map<Long,Long> updaters=new HashMap<>();
   for (  Pair<VocabWord,INDArray> syn0UpdateEntry : syn0UpdateEntries) {
@@ -51,9 +54,7 @@
     }
   }
   long totals=0;
-  for (  Long up : updaters.values()) {
-    totals+=up;
-  }
+  log.info("Finished calculations...");
   vocab=vocabCache;
   InMemoryLookupTable<VocabWord> inMemoryLookupTable=new InMemoryLookupTable<VocabWord>();
   Environment env=EnvironmentUtils.buildEnvironment();

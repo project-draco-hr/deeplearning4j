@@ -12,7 +12,7 @@
   }
   for (  Map.Entry<String,List<String>> e : vertexInputs.entrySet()) {
     String nodeName=e.getKey();
-    if (e.getValue() == null || e.getValue().size() == 0) {
+    if (e.getValue() == null || e.getValue().isEmpty()) {
       throw new IllegalStateException("Invalid configuration: vertex \"" + nodeName + "\" has no inputs");
     }
     for (    String inputName : e.getValue()) {

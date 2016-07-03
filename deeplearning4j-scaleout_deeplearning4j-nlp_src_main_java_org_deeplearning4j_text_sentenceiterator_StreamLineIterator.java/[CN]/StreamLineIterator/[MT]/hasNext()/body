@@ -1,6 +1,6 @@
 {
   try {
-    return buffer.size() > 0 || iterator.hasNext() || (currentReader != null && currentReader.ready());
+    return !buffer.isEmpty() || iterator.hasNext() || (currentReader != null && currentReader.ready());
   }
  catch (  IOException e) {
     return false;

@@ -1,5 +1,5 @@
 {
-  PopularityWalker<T> walker=new PopularityWalker<T>();
+  PopularityWalker<T> walker=new PopularityWalker<>();
   walker.noEdgeHandling=this.noEdgeHandling;
   walker.sourceGraph=this.sourceGraph;
   walker.walkLength=this.walkLength;

@@ -11,7 +11,9 @@
       c.initialize();
     }
   }
-  if (listener != null)   listener.onStart(esConfig,model);
+  if (listener != null) {
+    listener.onStart(esConfig,model);
+  }
   Map<Integer,Double> scoreVsEpoch=new LinkedHashMap<>();
   int epochCount=0;
   while (true) {
@@ -36,7 +38,7 @@
  catch (        IOException e2) {
           throw new RuntimeException(e2);
         }
-        return new EarlyStoppingResult<T>(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
+        return new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.Error,e.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
       }
       lastScore=model.score();
       for (      IterationTerminationCondition c : esConfig.getIterationTerminationConditions()) {
@@ -46,7 +48,9 @@
           break;
         }
       }
-      if (terminate)       break;
+      if (terminate) {
+        break;
+      }
       iterCount++;
     }
     if (terminate) {
@@ -67,7 +71,9 @@
         throw new RuntimeException(e2);
       }
       EarlyStoppingResult<T> result=new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.IterationTerminationCondition,terminationReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount,bestModel);
-      if (listener != null)       listener.onCompletion(result);
+      if (listener != null) {
+        listener.onCompletion(result);
+      }
       return result;
     }
     log.info("Completed training epoch {}",epochCount);
@@ -99,7 +105,9 @@
           throw new RuntimeException("Error saving most recent model",e);
         }
       }
-      if (listener != null)       listener.onEpoch(epochCount,score,esConfig,model);
+      if (listener != null) {
+        listener.onEpoch(epochCount,score,esConfig,model);
+      }
       boolean epochTerminate=false;
       EpochTerminationCondition termReason=null;
       for (      EpochTerminationCondition c : esConfig.getEpochTerminationConditions()) {
@@ -119,7 +127,9 @@
           throw new RuntimeException(e2);
         }
         EarlyStoppingResult<T> result=new EarlyStoppingResult<>(EarlyStoppingResult.TerminationReason.EpochTerminationCondition,termReason.toString(),scoreVsEpoch,bestModelEpoch,bestModelScore,epochCount + 1,bestModel);
-        if (listener != null)         listener.onCompletion(result);
+        if (listener != null) {
+          listener.onCompletion(result);
+        }
         return result;
       }
     }

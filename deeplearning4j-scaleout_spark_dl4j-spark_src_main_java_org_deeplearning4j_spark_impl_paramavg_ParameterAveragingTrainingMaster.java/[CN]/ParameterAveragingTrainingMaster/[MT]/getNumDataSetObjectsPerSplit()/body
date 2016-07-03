@@ -1,0 +1,14 @@
+{
+  int dataSetObjectsPerSplit;
+  if (rddDataSetNumExamples == 1) {
+    dataSetObjectsPerSplit=numWorkers * batchSizePerWorker * averagingFrequency;
+  }
+ else {
+    int numDataSetObjsReqEachWorker=numObjectsEachWorker();
+    if (numDataSetObjsReqEachWorker < 1) {
+      numDataSetObjsReqEachWorker=1;
+    }
+    dataSetObjectsPerSplit=numDataSetObjsReqEachWorker * numWorkers;
+  }
+  return dataSetObjectsPerSplit;
+}

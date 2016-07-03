@@ -25,7 +25,7 @@
     }
   }
 ,10,TimeUnit.SECONDS);
-  masterActor=system.actorOf(ClusterSingletonManager.defaultProps(masterProps,"master",PoisonPill.getInstance(),"master"));
+  masterActor=system.actorOf(ClusterSingletonManager.defaultProps(masterProps,MASTER,PoisonPill.getInstance(),MASTER));
   log.info("Started master with address " + realJoinAddress.toString());
   c.set(MASTER_PATH,ActorRefUtils.absPath(masterActor,system));
   log.info("Set master abs path " + c.get(MASTER_PATH));

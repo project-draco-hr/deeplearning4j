@@ -20,7 +20,7 @@
     }
     JavaRDD<DataSet> rdd=sc.parallelize(list);
     rdd.repartition(4);
-    ParameterAveragingTrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(nWorkers).averagingFrequency(averagingFrequency).batchSizePerWorker(miniBatchSizePerWorker).saveUpdater(true).workerPrefetchNumBatches(0).build();
+    ParameterAveragingTrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(nWorkers,1).averagingFrequency(averagingFrequency).batchSizePerWorker(miniBatchSizePerWorker).saveUpdater(true).workerPrefetchNumBatches(0).repartionData(Repartition.Always).build();
     SparkDl4jMultiLayer sparkNet=new SparkDl4jMultiLayer(sc,conf,tm);
     sparkNet.setCollectTrainingStats(true);
     sparkNet.fit(rdd);
@@ -72,6 +72,11 @@
     assertDurationGreaterEqZero(processParamsTimesMs);
     assertNonNullFields(processParamsTimesMs);
     assertExpectedNumberMachineIdsJvmIdsThreadIds(processParamsTimesMs,1,1,1);
+    List<EventStats> repartitionTimesMs=masterStats.getParameterAveragingMasterRepartitionTimesMs();
+    assertEquals(numberOfAveragings,repartitionTimesMs.size());
+    assertDurationGreaterEqZero(repartitionTimesMs);
+    assertNonNullFields(repartitionTimesMs);
+    assertExpectedNumberMachineIdsJvmIdsThreadIds(repartitionTimesMs,1,1,1);
     SparkTrainingStats commonStats=masterStats.getNestedTrainingStats();
     assertNotNull(commonStats);
     assertTrue(commonStats instanceof CommonSparkTrainingStats);

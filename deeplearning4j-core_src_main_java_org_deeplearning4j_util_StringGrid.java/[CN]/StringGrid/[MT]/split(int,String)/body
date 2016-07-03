@@ -1,7 +1,7 @@
 {
   List<String> col=getColumn(column);
   int validate=-1;
-  Set<String> remove=new HashSet<String>();
+  Set<String> remove=new HashSet<>();
   for (int i=0; i < col.size(); i++) {
     String s=col.get(i);
     String[] split2=StringUtils.splitOnCharWithQuoting(s,sepBy.charAt(0),'"','\\');
@@ -27,5 +27,7 @@
     }
     replace.put(i,newList);
   }
-  for (  Integer i : replace.keySet())   set(i,replace.get(i));
+  for (  Map.Entry<Integer,List<String>> entry : replace.entrySet()) {
+    set(entry.getKey(),entry.getValue());
+  }
 }

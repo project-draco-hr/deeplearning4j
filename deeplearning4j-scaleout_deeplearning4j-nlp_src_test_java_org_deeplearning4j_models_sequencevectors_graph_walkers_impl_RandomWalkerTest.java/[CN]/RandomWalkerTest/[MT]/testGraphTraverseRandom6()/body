@@ -1,5 +1,5 @@
 {
-  GraphWalker<VocabWord> walker=new RandomWalker.Builder<VocabWord>(graphDirected).setWalkLength(20).setWalkDirection(WalkDirection.FORWARD_UNIQUE).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).build();
+  GraphWalker<VocabWord> walker=new RandomWalker.Builder<>(graphDirected).setWalkLength(20).setWalkDirection(WalkDirection.FORWARD_UNIQUE).setNoEdgeHandling(NoEdgeHandling.CUTOFF_ON_DISCONNECTED).build();
   Sequence<VocabWord> sequence=walker.next();
   assertEquals("0",sequence.getElements().get(0).getLabel());
   assertEquals("3",sequence.getElements().get(1).getLabel());

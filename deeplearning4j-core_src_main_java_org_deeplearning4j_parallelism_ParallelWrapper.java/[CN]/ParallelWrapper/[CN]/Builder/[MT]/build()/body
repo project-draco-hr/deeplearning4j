@@ -1,0 +1,5 @@
+{
+  ParallelWrapper wrapper=new ParallelWrapper(model,workers,prefetchSize);
+  wrapper.averagingFrequency=this.averagingFrequency;
+  return wrapper;
+}

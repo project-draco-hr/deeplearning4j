@@ -1,0 +1,5 @@
+{
+  JavaPairRDD<String,PortableDataStream> serializedDataSets=sc.binaryFiles(path);
+  trainingMaster.executeTraining(this,serializedDataSets);
+  return network;
+}

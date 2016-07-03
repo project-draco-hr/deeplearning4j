@@ -11,7 +11,7 @@
     cnt++;
   }
   reader.close();
-  Graph<Blogger,Double> graph=new Graph<Blogger,Double>(bloggers,true);
+  Graph<Blogger,Double> graph=new Graph<>(bloggers,true);
   File edges=new File("/ext/Temp/BlogCatalog/edges.csv");
   reader=new CSVRecordReader(0,",");
   reader.initialize(new FileSplit(edges));

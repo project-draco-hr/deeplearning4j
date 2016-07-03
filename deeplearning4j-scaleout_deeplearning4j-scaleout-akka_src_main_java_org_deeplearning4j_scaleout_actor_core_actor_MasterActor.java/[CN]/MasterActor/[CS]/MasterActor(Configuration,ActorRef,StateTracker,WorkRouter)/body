@@ -36,8 +36,9 @@
       try {
         long now=System.currentTimeMillis();
         Map<String,Long> heartbeats=MasterActor.this.stateTracker.getHeartBeats();
-        for (        String key : heartbeats.keySet()) {
-          long lastChecked=heartbeats.get(key);
+        for (        Map.Entry<String,Long> entry : heartbeats.entrySet()) {
+          String key=entry.getKey();
+          long lastChecked=entry.getValue();
           long diff=now - lastChecked;
           long seconds=TimeUnit.MILLISECONDS.toSeconds(diff);
           if (seconds >= 120) {

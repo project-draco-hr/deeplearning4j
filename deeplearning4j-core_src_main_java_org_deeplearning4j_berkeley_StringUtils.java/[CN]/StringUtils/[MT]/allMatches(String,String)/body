@@ -1,6 +1,6 @@
 {
   Pattern p=Pattern.compile(regex);
-  List<Matcher> matches=new ArrayList<Matcher>();
+  List<Matcher> matches=new ArrayList<>();
   while (true) {
     Matcher m=p.matcher(str);
     if (!m.find())     break;

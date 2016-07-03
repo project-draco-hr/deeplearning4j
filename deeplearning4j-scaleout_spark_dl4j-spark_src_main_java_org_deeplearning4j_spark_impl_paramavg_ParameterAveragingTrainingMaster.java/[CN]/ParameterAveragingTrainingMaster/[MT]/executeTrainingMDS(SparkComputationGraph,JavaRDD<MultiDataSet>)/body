@@ -1,16 +1,13 @@
 {
+  if (numWorkers == null)   numWorkers=graph.getSparkContext().defaultParallelism();
   if (collectTrainingStats)   stats.logFitStart();
   trainingData.persist(StorageLevel.MEMORY_ONLY());
-  long totalCount=trainingData.count();
-  int examplesPerSplit=numWorkers * batchSizePerWorker * averagingFrequency;
-  JavaRDD<MultiDataSet>[] splits=randomSplit((int)totalCount,examplesPerSplit,trainingData);
+  long totalDataSetObjectCount=trainingData.count();
+  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
+  JavaRDD<MultiDataSet>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
   int splitNum=1;
   for (  JavaRDD<MultiDataSet> split : splits) {
-    log.info("Starting graph training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, dataSetTotalExamples={}. Configured for {} executors",splitNum,splits.length,batchSizePerWorker,averagingFrequency,totalCount,numWorkers);
-    FlatMapFunction<Iterator<MultiDataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerMultiDataSetFlatMap<>(getWorkerInstance(graph));
-    JavaRDD<ParameterAveragingTrainingResult> result=split.mapPartitions(function);
-    processResults(null,graph,result,splitNum,splits.length);
-    splitNum++;
+    doIteration(graph,split,splitNum++,splits.length);
   }
-  if (collectTrainingStats)   stats.logFitEnd();
+  if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }

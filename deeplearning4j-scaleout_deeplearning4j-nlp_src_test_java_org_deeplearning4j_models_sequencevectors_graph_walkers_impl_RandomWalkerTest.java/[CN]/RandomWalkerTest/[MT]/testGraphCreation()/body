@@ -1,5 +1,5 @@
 {
-  Graph<VocabWord,Double> graph=new Graph<VocabWord,Double>(10,false,new AbstractVertexFactory<VocabWord>());
+  Graph<VocabWord,Double> graph=new Graph<>(10,false,new AbstractVertexFactory<VocabWord>());
   assertEquals(10,graph.numVertices());
   for (int i=0; i < 10; i++) {
     Vertex<VocabWord> vertex=graph.getVertex(i);

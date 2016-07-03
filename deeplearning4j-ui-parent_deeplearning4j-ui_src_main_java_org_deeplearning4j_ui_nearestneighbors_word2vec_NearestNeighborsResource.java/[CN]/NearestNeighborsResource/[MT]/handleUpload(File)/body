@@ -7,7 +7,7 @@
       vectors=WordVectorSerializer.fromPair(WordVectorSerializer.loadTxt(path));
     }
     vectors.setModelUtils(new BasicModelUtils());
-    storage.putObject("UploadedFile",ObjectType.WORD2VEC,vectors);
+    storage.putObject(UPLOADED_FILE,ObjectType.WORD2VEC,vectors);
   }
  catch (  Exception e) {
     e.printStackTrace();

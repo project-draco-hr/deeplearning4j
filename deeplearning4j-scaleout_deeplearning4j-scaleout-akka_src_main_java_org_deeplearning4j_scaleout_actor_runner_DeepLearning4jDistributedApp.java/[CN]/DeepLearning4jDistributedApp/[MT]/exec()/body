@@ -1,7 +1,7 @@
 {
   if (type != null && type.equals("worker")) {
     log.info("Initializing conf from zookeeper at " + host);
-    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,"master");
+    ZookeeperConfigurationRetriever retriever=new ZookeeperConfigurationRetriever(host,2181,MASTER);
     Configuration conf=retriever.retrieve();
     String address=conf.get(MASTER_URL);
     log.info("Creating hazel cast state tracker... " + conf.get(STATE_TRACKER_CONNECTION_STRING));
@@ -17,7 +17,7 @@
     Configuration conf=new Configuration();
     JobIteratorFactory factory=(JobIteratorFactory)Class.forName(jobFactoryClazz).newInstance();
     iter=factory.create();
-    runner=new DeepLearning4jDistributed("master",iter);
+    runner=new DeepLearning4jDistributed(MASTER,iter);
     runner.setStateTrackerPort(stateTrackerPort);
     runner.setup(conf);
   }

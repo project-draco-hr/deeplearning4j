@@ -5,7 +5,7 @@
   LaunchSpecification launchSpecification=new LaunchSpecification();
   launchSpecification.setImageId("ami-8c1fece5");
   launchSpecification.setInstanceType("t1.micro");
-  List<String> securityGroups=new ArrayList<String>();
+  List<String> securityGroups=new ArrayList<>();
   securityGroups.add("GettingStartedGroup");
   launchSpecification.setSecurityGroups(securityGroups);
   requestRequest.setLaunchSpecification(launchSpecification);

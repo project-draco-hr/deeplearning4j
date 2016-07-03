@@ -1,0 +1,18 @@
+{
+  try {
+    while (true) {
+      DataSet dataSet=queue.poll(1,TimeUnit.SECONDS);
+      if (dataSet != null) {
+        if (replicatedModel instanceof MultiLayerNetwork) {
+          ((MultiLayerNetwork)replicatedModel).fit(dataSet);
+        }
+ else         if (replicatedModel instanceof ComputationGraph) {
+          ((ComputationGraph)replicatedModel).fit(dataSet);
+        }
+        running.decrementAndGet();
+      }
+    }
+  }
+ catch (  Exception e) {
+  }
+}

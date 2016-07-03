@@ -1,13 +1,13 @@
 {
-  Map<String,String[]> result=new HashMap<String,String[]>();
-  List<String> remainingArgs=new ArrayList<String>();
+  Map<String,String[]> result=new HashMap<>();
+  List<String> remainingArgs=new ArrayList<>();
   String key;
   for (int i=0; i < args.length; i++) {
     key=args[i];
     if (key.charAt(0) == '-') {
       Integer maxFlagArgs=flagsToNumArgs.get(key);
       int max=maxFlagArgs == null ? 0 : maxFlagArgs.intValue();
-      List<String> flagArgs=new ArrayList<String>();
+      List<String> flagArgs=new ArrayList<>();
       for (int j=0; j < max && i + 1 < args.length && args[i + 1].charAt(0) != '-'; i++, j++) {
         flagArgs.add(args[i + 1]);
       }

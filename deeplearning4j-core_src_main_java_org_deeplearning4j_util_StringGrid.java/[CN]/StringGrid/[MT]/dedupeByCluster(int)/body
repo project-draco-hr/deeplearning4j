@@ -9,7 +9,7 @@
     }
   }
   FingerPrintKeyer keyer=new FingerPrintKeyer();
-  Set<Integer> alreadyDeDupped=new HashSet<Integer>();
+  Set<Integer> alreadyDeDupped=new HashSet<>();
   for (int i=0; i < size(); i++) {
     String key=keyer.key(get(i).get(column));
     Map<String,Integer> map=cluster.get(key);

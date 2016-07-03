@@ -1,8 +1,8 @@
 {
   final AnnotationComboIterator comboIterator=new AnnotationComboIterator(tcas,this.sentenceType,this.tokenType);
   for (  AnnotationIteratorPair annotationIteratorPair : comboIterator) {
-    final List<AnnotationFS> sentenceTokenAnnotationList=new LinkedList<AnnotationFS>();
-    final List<String> sentenceTokenList=new LinkedList<String>();
+    final List<AnnotationFS> sentenceTokenAnnotationList=new LinkedList<>();
+    final List<String> sentenceTokenList=new LinkedList<>();
     for (    AnnotationFS tokenAnnotation : annotationIteratorPair.getSubIterator()) {
       sentenceTokenAnnotationList.add(tokenAnnotation);
       sentenceTokenList.add(tokenAnnotation.getCoveredText());

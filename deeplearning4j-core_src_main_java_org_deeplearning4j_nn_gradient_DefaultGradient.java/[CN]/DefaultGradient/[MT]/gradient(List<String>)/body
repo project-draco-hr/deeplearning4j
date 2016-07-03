@@ -9,7 +9,7 @@
  else {
     for (    String s : order) {
       if (!gradients.containsKey(s))       continue;
-      if (flatteningOrders != null && flatteningOrders.containsKey(s) && flatteningOrders.get(s) != DEFAULT_FLATTENING_ORDER) {
+      if (flatteningOrders.containsKey(s) && flatteningOrders.get(s) != DEFAULT_FLATTENING_ORDER) {
         toFlatten.add(Nd4j.toFlattened(flatteningOrders.get(s),gradients.get(s)));
       }
  else {

@@ -1,9 +1,11 @@
 {
   String chosenKey=null;
   Integer max=null;
-  for (  String key : cluster.keySet()) {
+  for (  Map.Entry<String,Integer> entry : cluster.entrySet()) {
+    String key=entry.getKey();
+    int value=entry.getValue();
     StringTokenizer val=new StringTokenizer(key);
-    List<String> list=new ArrayList<String>();
+    List<String> list=new ArrayList<>();
     boolean allLower=true;
     outer:     while (val.hasMoreTokens()) {
       String token=val.nextToken();
@@ -21,19 +23,15 @@
     if (list.get(list.size() - 1).toLowerCase().equals("the")) {
       continue;
     }
-    if (max == null) {
-      max=cluster.get(key);
-      chosenKey=key;
-    }
- else     if (!allLower && cluster.get(key) > max) {
-      max=cluster.get(key);
+    if (max == null || (!allLower && value > max)) {
+      max=value;
       chosenKey=key;
     }
   }
   if (chosenKey == null) {
     String max2=maximalValue(cluster);
     StringTokenizer val=new StringTokenizer(max2);
-    List<String> list=new ArrayList<String>();
+    List<String> list=new ArrayList<>();
     while (val.hasMoreTokens()) {
       String token=val.nextToken();
       if (token.length() >= 3 && token.matches("[A-Z]+")) {

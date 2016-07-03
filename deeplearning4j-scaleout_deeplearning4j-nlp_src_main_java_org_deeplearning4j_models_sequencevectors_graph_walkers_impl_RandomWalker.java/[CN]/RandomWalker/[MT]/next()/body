@@ -1,7 +1,7 @@
 {
   int[] visitedHops=new int[walkLength];
   Arrays.fill(visitedHops,-1);
-  Sequence<T> sequence=new Sequence<T>();
+  Sequence<T> sequence=new Sequence<>();
   int startPosition=position.getAndIncrement();
   int lastId=-1;
   int startPoint=order[startPosition];

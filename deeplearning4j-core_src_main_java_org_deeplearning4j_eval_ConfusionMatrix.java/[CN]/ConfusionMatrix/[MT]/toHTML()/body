@@ -3,7 +3,7 @@
   int numClasses=classes.size();
   builder.append("<table>\n");
   builder.append("<tr><th class=\"empty-space\" colspan=\"2\" rowspan=\"2\">");
-  builder.append(String.format("<th class=\"predicted-class-header\" colspan=\"%d\">Predicted Class</th></tr>\n",numClasses + 1));
+  builder.append(String.format("<th class=\"predicted-class-header\" colspan=\"%d\">Predicted Class</th></tr>%n",numClasses + 1));
   builder.append("<tr>");
   for (  T predicted : classes) {
     builder.append("<th class=\"predicted-class-header\">");

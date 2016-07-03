@@ -3,8 +3,10 @@
   boolean gotConfig=false;
   boolean gotCoefficients=false;
   boolean gotUpdater=false;
+  boolean gotPreProcessor=false;
   String json="";
   INDArray params=null;
+  DataSetPreProcessor preProcessor=null;
   Updater updater=null;
   ZipEntry entry;
   while ((entry=zipFile.getNextEntry()) != null) {
@@ -12,14 +14,15 @@ switch (entry.getName()) {
 case "configuration.json":
       DataInputStream dis=new DataInputStream(zipFile);
     params=Nd4j.read(dis);
-  gotCoefficients=true;
+  gotConfig=true;
 break;
 case "coefficients.bin":
 DataInputStream dis2=new DataInputStream(zipFile);
 params=Nd4j.read(dis2);
 gotCoefficients=true;
 break;
-case "updater.bin":
+case UPDATER_BIN:
+{
 ObjectInputStream ois=new ObjectInputStream(zipFile);
 try {
 updater=(Updater)ois.readObject();
@@ -28,6 +31,19 @@ updater=(Updater)ois.readObject();
 throw new RuntimeException(e);
 }
 gotUpdater=true;
+}
+break;
+case "preprocessor.bin":
+{
+ObjectInputStream ois=new ObjectInputStream(zipFile);
+try {
+preProcessor=(DataSetPreProcessor)ois.readObject();
+}
+ catch (ClassNotFoundException e) {
+throw new RuntimeException(e);
+}
+gotPreProcessor=true;
+}
 break;
 }
 zipFile.closeEntry();
