@@ -6,7 +6,6 @@ case Never:
 case NumPartitionsWorkersDiffers:
   if (origNumPartitions == numPartitions)   return rdd;
 case Always:
-JavaRDD<T> temp;
 rdd.persist(StorageLevel.MEMORY_ONLY());
 List<Tuple2<Integer,Integer>> partitionCounts=rdd.mapPartitionsWithIndex(new CountPartitionsFunction<T>(),true).collect();
 int totalObjects=0;
@@ -19,6 +18,15 @@ int partitionSize=t2._2();
 countPerPartition[x++]=partitionSize;
 allCorrectSize&=(partitionSize == objectsPerPartition);
 totalObjects+=t2._2();
+}
+if (numPartitions * objectsPerPartition < totalObjects) {
+int add=(totalObjects - numPartitions * objectsPerPartition) / numPartitions;
+if (add < 1) add++;
+numPartitions+=add;
+allCorrectSize=true;
+for (Tuple2<Integer,Integer> t2 : partitionCounts) {
+allCorrectSize&=(t2._2() == objectsPerPartition);
+}
 }
 if (initialPartitions == numPartitions && allCorrectSize) {
 return rdd;

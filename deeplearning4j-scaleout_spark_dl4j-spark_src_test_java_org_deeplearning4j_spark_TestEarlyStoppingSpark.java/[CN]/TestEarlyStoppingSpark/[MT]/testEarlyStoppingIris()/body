@@ -5,7 +5,7 @@
   JavaRDD<DataSet> irisData=getIris();
   EarlyStoppingModelSaver<MultiLayerNetwork> saver=new InMemoryModelSaver<>();
   EarlyStoppingConfiguration<MultiLayerNetwork> esConf=new EarlyStoppingConfiguration.Builder<MultiLayerNetwork>().epochTerminationConditions(new MaxEpochsTerminationCondition(5)).iterationTerminationConditions(new MaxTimeIterationTerminationCondition(1,TimeUnit.MINUTES)).scoreCalculator(new SparkDataSetLossCalculator(irisData,true,sc.sc())).modelSaver(saver).build();
-  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),new ParameterAveragingTrainingMaster(true,4,1,150 / 4,1,0),esConf,net,irisData);
+  IEarlyStoppingTrainer<MultiLayerNetwork> trainer=new SparkEarlyStoppingTrainer(getContext().sc(),new ParameterAveragingTrainingMaster.Builder(irisBatchSize()).saveUpdater(true).averagingFrequency(1).build(),esConf,net,irisData);
   EarlyStoppingResult<MultiLayerNetwork> result=trainer.fit();
   System.out.println(result);
   assertEquals(5,result.getTotalEpochs());
