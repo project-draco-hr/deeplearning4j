@@ -1,5 +1,5 @@
 {
-  if (wordFreq.size() == 0) {
+  if (wordFreq.isEmpty()) {
     throw new IllegalStateException("IllegalStateException: wordFreqCounter has nothing. Check accumulator updating");
   }
   for (  Entry<String,Double> entry : wordFreq.entrySet()) {

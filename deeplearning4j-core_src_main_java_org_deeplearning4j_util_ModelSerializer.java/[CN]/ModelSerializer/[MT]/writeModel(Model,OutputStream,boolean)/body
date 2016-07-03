@@ -20,7 +20,7 @@
   InputStream inputStream=new ByteArrayInputStream(bos.toByteArray());
   writeEntry(inputStream,zipfile);
   if (saveUpdater) {
-    ZipEntry updater=new ZipEntry("updater.bin");
+    ZipEntry updater=new ZipEntry(UPDATER_BIN);
     zipfile.putNextEntry(updater);
     bos=new ByteArrayOutputStream();
     ObjectOutputStream oos=new ObjectOutputStream(bos);

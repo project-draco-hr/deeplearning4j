@@ -1,6 +1,6 @@
 {
-  if (o instanceof String) {
-    if (o.toString().isEmpty())     throw new IllegalArgumentException("Unable to add the empty string");
+  if (o instanceof String && o.toString().isEmpty()) {
+    throw new IllegalArgumentException("Unable to add the empty string");
   }
   Integer index=indexes.get(o);
   if (index == null) {

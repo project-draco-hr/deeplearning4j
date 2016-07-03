@@ -1,6 +1,8 @@
 {
   String line=iterator.nextSentence();
-  if (line == null || line.isEmpty())   return null;
+  if (line == null || line.isEmpty()) {
+    return null;
+  }
   String[] strings=line.split(" ");
   CoOccurrenceWeight<T> object=new CoOccurrenceWeight<>();
   object.setElement1(vocabCache.elementAtIndex(Integer.valueOf(strings[0])));

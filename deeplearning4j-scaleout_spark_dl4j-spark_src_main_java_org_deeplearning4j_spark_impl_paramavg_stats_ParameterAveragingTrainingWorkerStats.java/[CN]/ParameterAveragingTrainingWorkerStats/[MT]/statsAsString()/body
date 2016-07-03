@@ -1,13 +1,13 @@
 {
   StringBuilder sb=new StringBuilder();
   String f=SparkTrainingStats.DEFAULT_PRINT_FORMAT;
-  sb.append(String.format(f,"ParameterAveragingWorkerBroadcastGetValueTimeMs"));
+  sb.append(String.format(f,PARAMETER_AVERAGING_WORKER_BROADCAST_GET_VALUE_TIME_MS));
   if (parameterAveragingWorkerBroadcastGetValueTimeMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingWorkerBroadcastGetValueTimeMs,",")).append("\n");
-  sb.append(String.format(f,"ParameterAveragingWorkerInitTimeMs"));
+  sb.append(String.format(f,PARAMETER_AVERAGING_WORKER_INIT_TIME_MS));
   if (parameterAveragingWorkerInitTimeMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingWorkerInitTimeMs,",")).append("\n");
-  sb.append(String.format(f,"ParameterAveragingWorkerFitTimesMs"));
+  sb.append(String.format(f,PARAMETER_AVERAGING_WORKER_FIT_TIMES_MS));
   if (parameterAveragingWorkerFitTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingWorkerFitTimesMs,",")).append("\n");
   return sb.toString();

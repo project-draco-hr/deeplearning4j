@@ -14,14 +14,14 @@ switch (entry.getName()) {
 case "configuration.json":
       DataInputStream dis=new DataInputStream(zipFile);
     params=Nd4j.read(dis);
-  gotCoefficients=true;
+  gotConfig=true;
 break;
 case "coefficients.bin":
 DataInputStream dis2=new DataInputStream(zipFile);
 params=Nd4j.read(dis2);
 gotCoefficients=true;
 break;
-case "updater.bin":
+case UPDATER_BIN:
 {
 ObjectInputStream ois=new ObjectInputStream(zipFile);
 try {

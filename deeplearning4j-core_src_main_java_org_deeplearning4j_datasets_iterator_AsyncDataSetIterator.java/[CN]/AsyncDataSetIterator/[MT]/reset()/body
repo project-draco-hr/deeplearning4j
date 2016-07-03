@@ -1,6 +1,8 @@
 {
   runnable.killRunnable=true;
-  if (runnable.isAlive)   thread.interrupt();
+  if (runnable.isAlive) {
+    thread.interrupt();
+  }
   try {
     runnable.runCompletedSemaphore.tryAcquire(5,TimeUnit.SECONDS);
   }

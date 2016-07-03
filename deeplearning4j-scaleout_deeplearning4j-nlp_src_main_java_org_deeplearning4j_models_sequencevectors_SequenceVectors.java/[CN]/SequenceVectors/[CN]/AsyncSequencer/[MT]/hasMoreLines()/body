@@ -1,3 +1,3 @@
 {
-  return buffer.size() > 0 || isRunning.get();
+  return !buffer.isEmpty() || isRunning.get();
 }

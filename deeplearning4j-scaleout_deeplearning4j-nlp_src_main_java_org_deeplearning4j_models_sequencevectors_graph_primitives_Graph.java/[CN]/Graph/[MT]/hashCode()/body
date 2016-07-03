@@ -1,0 +1,7 @@
+{
+  int result=23;
+  result=31 * result + (allowMultipleEdges ? 1 : 0);
+  result=31 * result + Arrays.hashCode(edges);
+  result=31 * result + vertices.hashCode();
+  return result;
+}

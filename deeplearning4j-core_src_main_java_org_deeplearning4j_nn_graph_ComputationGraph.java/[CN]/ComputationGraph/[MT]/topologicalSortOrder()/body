@@ -29,7 +29,7 @@
     String thisVertexName=entry.getKey();
     int idx=vertexNamesMap2.get(thisVertexName);
     List<String> inputsToThisVertex=configuration.getVertexInputs().get(thisVertexName);
-    if (inputsToThisVertex == null || inputsToThisVertex.size() == 0) {
+    if (inputsToThisVertex == null || inputsToThisVertex.isEmpty()) {
       inputEdges.put(idx,null);
       continue;
     }
@@ -52,11 +52,11 @@
   LinkedList<Integer> noIncomingEdges=new LinkedList<>();
   for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
     Set<Integer> inputsFrom=entry.getValue();
-    if (inputsFrom == null || inputsFrom.size() == 0) {
+    if (inputsFrom == null || inputsFrom.isEmpty()) {
       noIncomingEdges.add(entry.getKey());
     }
   }
-  while (noIncomingEdges.size() > 0) {
+  while (!noIncomingEdges.isEmpty()) {
     int next=noIncomingEdges.removeFirst();
     out[outCounter++]=next;
     Set<Integer> vertexOutputsTo=outputEdges.get(next);
@@ -64,7 +64,7 @@
       for (      Integer v : vertexOutputsTo) {
         Set<Integer> set=inputEdges.get(v);
         set.remove(next);
-        if (set.size() == 0) {
+        if (set.isEmpty()) {
           noIncomingEdges.add(v);
         }
       }
@@ -73,7 +73,7 @@
   for (  Map.Entry<Integer,Set<Integer>> entry : inputEdges.entrySet()) {
     Set<Integer> set=entry.getValue();
     if (set == null)     continue;
-    if (set.size() > 0)     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + vertexNamesMap.get(entry.getKey()) + "\")");
+    if (!set.isEmpty())     throw new IllegalStateException("Invalid configuration: cycle detected in graph. Cannot calculate topological ordering with graph cycle (" + "cycle includes vertex \"" + vertexNamesMap.get(entry.getKey()) + "\")");
   }
   return out;
 }

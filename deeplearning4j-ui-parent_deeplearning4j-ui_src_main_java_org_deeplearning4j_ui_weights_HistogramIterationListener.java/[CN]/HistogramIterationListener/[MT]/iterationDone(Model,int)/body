@@ -3,7 +3,7 @@
     Map<String,Map> newGrad=new LinkedHashMap<>();
     try {
       Map<String,INDArray> grad=model.gradient().gradientForVariable();
-      if (meanMagHistoryParams.size() == 0) {
+      if (meanMagHistoryParams.isEmpty()) {
         int maxLayerIdx=-1;
         for (        String s : grad.keySet()) {
           maxLayerIdx=Math.max(maxLayerIdx,indexFromString(s));

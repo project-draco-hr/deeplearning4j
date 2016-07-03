@@ -4,12 +4,16 @@
     List<String> tokens=new ArrayList<>(sequence.asLabels());
     for (int x=0; x < sequence.getElements().size(); x++) {
       int wordIdx=vocabCache.indexOf(tokens.get(x));
-      if (wordIdx < 0)       continue;
+      if (wordIdx < 0) {
+        continue;
+      }
       String w1=vocabCache.wordFor(tokens.get(x)).getLabel();
       int windowStop=Math.min(x + windowSize + 1,tokens.size());
       for (int j=x; j < windowStop; j++) {
         int otherWord=vocabCache.indexOf(tokens.get(j));
-        if (otherWord < 0)         continue;
+        if (otherWord < 0) {
+          continue;
+        }
         String w2=vocabCache.wordFor(tokens.get(j)).getLabel();
         if (w2.equals(Glove.DEFAULT_UNK) || otherWord == wordIdx) {
           continue;
@@ -20,7 +24,9 @@
         while (getMemoryFootprint() >= getMemoryThreshold()) {
           try {
             shadowThread.invoke();
-            if (threadId == 0)             logger.debug("Memory consuimption > threshold: {footrpint: [" + getMemoryFootprint() + "], threshold: ["+ getMemoryThreshold()+ "] }");
+            if (threadId == 0) {
+              logger.debug("Memory consuimption > threshold: {footrpint: [" + getMemoryFootprint() + "], threshold: ["+ getMemoryThreshold()+ "] }");
+            }
             Thread.sleep(10000);
           }
  catch (          Exception e) {
