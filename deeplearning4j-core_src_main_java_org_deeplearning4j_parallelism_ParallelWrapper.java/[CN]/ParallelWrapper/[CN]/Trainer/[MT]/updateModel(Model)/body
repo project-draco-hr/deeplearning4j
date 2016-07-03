@@ -1,0 +1,8 @@
+{
+  if (model instanceof MultiLayerNetwork) {
+    replicatedModel=((MultiLayerNetwork)model).clone();
+  }
+ else   if (model instanceof ComputationGraph) {
+    replicatedModel=((ComputationGraph)model).clone();
+  }
+}

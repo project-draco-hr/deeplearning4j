@@ -22,7 +22,7 @@
       List<String> negative=Arrays.asList(split[1],split[2]);
       String predicted=split[3];
       String w=wordsNearest(positive,negative,1).iterator().next();
-      if (predicted.equals(w))       right.incrementCount("right",1.0);
+      if (predicted.equals(w))       right.incrementCount(CORRECT,1.0);
  else       right.incrementCount(WRONG,1.0);
     }
   }

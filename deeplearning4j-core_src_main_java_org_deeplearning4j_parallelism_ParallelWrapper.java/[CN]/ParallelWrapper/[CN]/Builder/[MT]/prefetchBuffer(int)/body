@@ -1,0 +1,5 @@
+{
+  if (size < 0)   size=0;
+  this.prefetchSize=size;
+  return this;
+}

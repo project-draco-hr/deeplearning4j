@@ -1,0 +1,58 @@
+{
+  DataSetIterator iterator;
+  if (prefetchSize > 0 && (!(source instanceof AsyncDataSetIterator) && !(source instanceof ListDataSetIterator))) {
+    iterator=new AsyncDataSetIterator(source,prefetchSize);
+  }
+ else   iterator=source;
+  AtomicInteger locker=new AtomicInteger(0);
+  iterator.reset();
+  while (iterator.hasNext()) {
+    DataSet dataSet=iterator.next();
+    int pos=locker.getAndIncrement();
+    zoo[pos].feedDataSet(dataSet);
+    if (pos + 1 == workers || !iterator.hasNext()) {
+      iterationsCounter.incrementAndGet();
+      for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+        try {
+          zoo[cnt].waitTillRunning();
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+      if (iterationsCounter.get() % averagingFrequency == 0 || !iterator.hasNext()) {
+        double score=0.0;
+        INDArray result=Nd4j.zeros(model.params().shape());
+        for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+          INDArray params=zoo[cnt].getModel().params();
+          result.addi(params);
+          score+=zoo[cnt].getModel().score();
+        }
+        result.divi(Math.min(workers,locker.get()));
+        model.setParams(result);
+        score/=Math.min(workers,locker.get());
+        logger.info("Averaged score: " + score);
+        if (model instanceof MultiLayerNetwork) {
+          UpdaterAggregator uag=((MultiLayerNetwork)zoo[0].getModel()).getUpdater().getAggregator(false);
+          for (int cnt=0; cnt < workers; cnt++) {
+            uag.merge(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          }
+          ((MultiLayerNetwork)model).setScore(score);
+          ((MultiLayerNetwork)model).setUpdater(uag.getUpdater());
+        }
+ else         if (model instanceof ComputationGraph) {
+          ComputationGraphUpdater.Aggregator uag=((ComputationGraph)zoo[0].getModel()).getUpdater().getAggregator(false);
+          for (int cnt=0; cnt < workers; cnt++) {
+            uag.merge(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          }
+          ((ComputationGraph)model).setScore(score);
+          ((ComputationGraph)model).setUpdater(uag.getUpdater());
+        }
+        for (int i=0; i < workers; i++) {
+          zoo[i].updateModel(model);
+        }
+      }
+      locker.set(0);
+    }
+  }
+}

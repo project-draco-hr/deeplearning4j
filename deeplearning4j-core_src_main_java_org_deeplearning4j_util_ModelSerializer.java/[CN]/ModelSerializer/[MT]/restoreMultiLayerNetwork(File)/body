@@ -3,9 +3,11 @@
   boolean gotConfig=false;
   boolean gotCoefficients=false;
   boolean gotUpdater=false;
+  boolean gotPreProcessor=false;
   String json="";
   INDArray params=null;
   Updater updater=null;
+  DataSetPreProcessor preProcessor=null;
   ZipEntry config=zipFile.getEntry("configuration.json");
   if (config != null) {
     InputStream stream=zipFile.getInputStream(config);
@@ -39,6 +41,18 @@
       throw new RuntimeException(e);
     }
     gotUpdater=true;
+  }
+  ZipEntry prep=zipFile.getEntry("preprocessor.bin");
+  if (prep != null) {
+    InputStream stream=zipFile.getInputStream(prep);
+    ObjectInputStream ois=new ObjectInputStream(stream);
+    try {
+      preProcessor=(DataSetPreProcessor)ois.readObject();
+    }
+ catch (    ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    gotPreProcessor=true;
   }
   zipFile.close();
   if (gotConfig && gotCoefficients) {

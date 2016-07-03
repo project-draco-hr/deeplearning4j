@@ -1,0 +1,10 @@
+{
+  this.model=model;
+  this.workers=workers;
+  this.prefetchSize=prefetchSize;
+  zoo=new Trainer[workers];
+  for (int cnt=0; cnt < workers; cnt++) {
+    zoo[cnt]=new Trainer(cnt,model);
+    zoo[cnt].start();
+  }
+}

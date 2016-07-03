@@ -1,0 +1,11 @@
+{
+  Set<Map.Entry<VocabWord,INDArray>> set=new HashSet<>();
+  int cnt=0;
+  for (  Map.Entry<VocabWord,INDArray> entry : indexSyn0VecMap.entrySet()) {
+    set.add(entry);
+    cnt++;
+    if (cnt > 10)     break;
+  }
+  System.out.println("Returning set: " + set.size());
+  return set;
+}

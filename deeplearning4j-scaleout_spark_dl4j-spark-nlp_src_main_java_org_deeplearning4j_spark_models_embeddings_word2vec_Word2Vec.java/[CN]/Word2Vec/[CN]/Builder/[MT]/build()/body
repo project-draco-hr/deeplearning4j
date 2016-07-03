@@ -13,6 +13,7 @@
   this.configuration.setEpochs(this.numEpochs);
   this.configuration.setBatchSize(this.batchSize);
   this.configuration.setStopList(this.stopWords);
+  ret.workers=this.workers;
   ret.configuration=this.configuration;
   ret.numEpochs=this.numEpochs;
   ret.numIterations=this.numIterations;
