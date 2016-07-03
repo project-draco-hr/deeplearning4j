@@ -21,7 +21,7 @@
             newSequence.addElement(unknownElement);
           }
         }
-        if (newSequence.getElements().size() > 0)         buffer.add(newSequence);
+        if (!newSequence.getElements().isEmpty())         buffer.add(newSequence);
         linesLoaded.incrementAndGet();
       }
     }

@@ -1,8 +1,8 @@
 {
-  if (newEpoch || (newEpoch && epochs == numEpochs)) {
+  if (newEpoch) {
     log.info("Epoch " + epochs + ", number of batches completed "+ lastBatch);
     newEpoch=false;
   }
-  if (iter == null)   return (epochs < numEpochs) && ((batchedDS.size() != 0 && batchedDS.size() > batch) || batchedDS.size() == 0);
+  if (iter == null)   return (epochs < numEpochs) && ((!batchedDS.isEmpty() && batchedDS.size() > batch) || batchedDS.isEmpty());
  else   return (epochs < numEpochs) || (iter.hasNext() && (epochs == 0 || epochs == numEpochs));
 }

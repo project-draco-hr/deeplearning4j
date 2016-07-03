@@ -1,0 +1,12 @@
+{
+  if (!workers.contains(Thread.currentThread().getId()))   workers.add(Thread.currentThread().getId());
+  VocabWord word=vocabCache.elementAtIndex(wordIndex);
+  if (!indexSyn0VecMap.containsKey(word)) {
+synchronized (this) {
+      if (!indexSyn0VecMap.containsKey(word)) {
+        indexSyn0VecMap.put(word,getRandomSyn0Vec(vectorLength.get(),wordIndex));
+      }
+    }
+  }
+  return indexSyn0VecMap.get(word);
+}

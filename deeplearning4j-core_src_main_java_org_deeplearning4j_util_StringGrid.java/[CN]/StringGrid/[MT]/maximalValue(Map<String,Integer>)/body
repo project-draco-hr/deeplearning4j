@@ -1,7 +1,7 @@
 {
   Counter<String> counter=new Counter<>();
-  for (  String s : map.keySet()) {
-    counter.incrementCount(s,map.get(s));
+  for (  Map.Entry<String,Integer> entry : map.entrySet()) {
+    counter.incrementCount(entry.getKey(),map.get(entry.getValue()));
   }
   return counter.argMax();
 }

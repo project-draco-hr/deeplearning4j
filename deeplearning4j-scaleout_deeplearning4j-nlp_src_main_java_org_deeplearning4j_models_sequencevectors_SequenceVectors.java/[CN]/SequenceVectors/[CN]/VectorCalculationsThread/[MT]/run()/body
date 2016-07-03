@@ -11,7 +11,7 @@
         }
       }
       double alpha=0.025;
-      if (sequences.size() == 0) {
+      if (sequences.isEmpty()) {
         continue;
       }
       for (int i=0; i < numIterations; i++) {
@@ -22,10 +22,15 @@
           totalLines.incrementAndGet();
           this.wordsCounter.addAndGet(sequence.getElements().size());
           if (totalLines.get() % 100000 == 0)           log.info("Epoch: [" + this.epochNumber + "]; Words vectorized so far: ["+ this.wordsCounter.get()+ "];  Lines vectorized so far: ["+ this.totalLines.get()+ "]; learningRate: ["+ alpha+ "]");
-          if (eventListeners != null && eventListeners.size() > 0) {
+          if (eventListeners != null && !eventListeners.isEmpty()) {
             for (            VectorsListener listener : eventListeners) {
               if (listener.validateEvent(ListenerEvent.LINE,totalLines.get()))               listener.processEvent(ListenerEvent.LINE,SequenceVectors.this,totalLines.get());
             }
+          }
+        }
+        if (eventListeners != null && eventListeners.size() > 0) {
+          for (          VectorsListener listener : eventListeners) {
+            if (listener.validateEvent(ListenerEvent.ITERATION,i))             listener.processEvent(ListenerEvent.ITERATION,SequenceVectors.this,i);
           }
         }
       }

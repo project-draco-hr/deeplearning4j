@@ -7,7 +7,7 @@
   int initialClusterCount=clusteringStrategy.getInitialClusterCount();
   INDArray dxs=Nd4j.create(points.size());
   dxs.addi(Double.MAX_VALUE);
-  while (clusterSet.getClusterCount() < initialClusterCount && points.size() > 0) {
+  while (clusterSet.getClusterCount() < initialClusterCount && !points.isEmpty()) {
     dxs=ClusterUtils.computeSquareDistancesFromNearestCluster(clusterSet,points,dxs,exec);
     double r=random.nextFloat() * dxs.maxNumber().doubleValue();
     for (int i=0; i < dxs.length(); i++) {

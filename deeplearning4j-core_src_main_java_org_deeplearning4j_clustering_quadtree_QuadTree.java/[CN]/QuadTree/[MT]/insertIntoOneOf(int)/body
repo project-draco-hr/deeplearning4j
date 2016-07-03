@@ -1,6 +1,6 @@
 {
   boolean success=false;
-  if (!success)   success=northWest.insert(index);
+  success=northWest.insert(index);
   if (!success)   success=northEast.insert(index);
   if (!success)   success=southWest.insert(index);
   if (!success)   success=southEast.insert(index);

@@ -1,10 +1,10 @@
 {
 switch (key) {
-case "ParameterAveragingWorkerBroadcastGetValueTimeMs":
+case PARAMETER_AVERAGING_WORKER_BROADCAST_GET_VALUE_TIME_MS:
     return parameterAveragingWorkerBroadcastGetValueTimeMs;
-case "ParameterAveragingWorkerInitTimeMs":
+case PARAMETER_AVERAGING_WORKER_INIT_TIME_MS:
   return parameterAveragingWorkerInitTimeMs;
-case "ParameterAveragingWorkerFitTimesMs":
+case PARAMETER_AVERAGING_WORKER_FIT_TIMES_MS:
 return parameterAveragingWorkerFitTimesMs;
 default :
 throw new IllegalArgumentException("Unknown key: \"" + key + "\"");

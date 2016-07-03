@@ -5,4 +5,5 @@
     nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
     cbow(i,tempSequence.getElements(),(int)nextRandom.get() % window,nextRandom,learningRate);
   }
+  return 0;
 }

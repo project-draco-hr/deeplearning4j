@@ -1,7 +1,7 @@
 {
   updater.updaterForVariable=new LinkedHashMap<>();
-  for (  String s : this.aggregatorMap.keySet()) {
-    updater.updaterForVariable.put(s,this.aggregatorMap.get(s).getUpdater());
+  for (  Map.Entry<String,GradientUpdaterAggregator> entry : aggregatorMap.entrySet()) {
+    updater.updaterForVariable.put(entry.getKey(),entry.getValue().getUpdater());
   }
   return updater;
 }

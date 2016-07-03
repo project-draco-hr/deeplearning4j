@@ -24,7 +24,7 @@
     }
     Component line=new ChartLine.Builder(s,styleChart).addSeries("Duration",x,duration).setYMin(minDur == maxDur ? minDur - 1 : null).setYMax(minDur == maxDur ? minDur + 1 : null).build();
     Component hist=null;
-    if (minDur != maxDur && list.size() > 0)     hist=getHistogram(duration,20,s,styleChart);
+    if (minDur != maxDur && !list.isEmpty())     hist=getHistogram(duration,20,s,styleChart);
     Component[] temp;
     if (hist != null) {
       temp=new Component[]{line,hist};
@@ -33,7 +33,7 @@
       temp=new Component[]{line};
     }
     components.add(new ComponentDiv(new StyleDiv.Builder().width(100,LengthUnit.Percent).build(),temp));
-    if (list.size() > 0 && (list.get(0) instanceof ExampleCountEventStats || list.get(0) instanceof PartitionCountEventStats)) {
+    if (!list.isEmpty() && (list.get(0) instanceof ExampleCountEventStats || list.get(0) instanceof PartitionCountEventStats)) {
       boolean exCount=list.get(0) instanceof ExampleCountEventStats;
       double[] y=new double[list.size()];
       double miny=Double.MAX_VALUE;

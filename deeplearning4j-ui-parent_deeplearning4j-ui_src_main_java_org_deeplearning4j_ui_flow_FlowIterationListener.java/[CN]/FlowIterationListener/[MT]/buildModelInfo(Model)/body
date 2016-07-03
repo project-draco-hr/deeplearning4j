@@ -10,7 +10,7 @@
       info.setName(input);
       info.setY(0);
       info.setX(x);
-      info.setLayerType("INPUT");
+      info.setLayerType(INPUT);
       info.setDescription(new Description());
       info.getDescription().setMainLine("Model input");
       modelInfo.addLayer(info);
@@ -35,7 +35,7 @@
     info.setName("Input");
     info.setY(0);
     info.setX(0);
-    info.setLayerType("INPUT");
+    info.setLayerType(INPUT);
     info.setDescription(new Description());
     info.getDescription().setMainLine("Model input");
     info.addConnection(0,1);
@@ -59,7 +59,7 @@
     String curColor=colors.get(cnt.getAndIncrement());
     if (cnt.get() >= colors.size())     cnt.set(0);
     for (    LayerInfo layerInfo : modelInfo.getLayersByType(layerType)) {
-      if (layerType.equals("INPUT")) {
+      if (layerType.equals(INPUT)) {
         layerInfo.setColor("#99ff66");
       }
  else       if (layerType.equals("OUTPUT")) {

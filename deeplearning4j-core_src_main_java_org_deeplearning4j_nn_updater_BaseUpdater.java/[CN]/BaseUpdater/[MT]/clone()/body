@@ -1,7 +1,7 @@
 {
   Map<String,GradientUpdater> newMap=new HashMap<>();
-  for (  String s : updaterForVariable.keySet()) {
-    newMap.put(s,updaterForVariable.get(s).getAggregator(true).getUpdater());
+  for (  Map.Entry<String,GradientUpdater> entry : updaterForVariable.entrySet()) {
+    newMap.put(entry.getKey(),entry.getValue().getAggregator(true).getUpdater());
   }
   BaseUpdater updater;
   try {

@@ -2,7 +2,7 @@
   system=ActorSystem.create(systemName);
   ActorRefUtils.addShutDownForSystem(system);
   mediator=DistributedPubSubExtension.get(system).mediator();
-  if (type.equals("master")) {
+  if (type.equals(MASTER)) {
     if (iter == null)     throw new IllegalStateException("Unable to initialize no dataset to iterate");
     log.info("Starting master");
     try {
@@ -73,7 +73,7 @@
 ,system.dispatcher());
     log.info("Setup worker nodes");
   }
-  if (type.equals("master")) {
+  if (type.equals(MASTER)) {
     stateTracker.startRestApi();
   }
  else   if (stateTracker instanceof HazelCastStateTracker)   log.info("Not starting drop wizard; worker state detected");
