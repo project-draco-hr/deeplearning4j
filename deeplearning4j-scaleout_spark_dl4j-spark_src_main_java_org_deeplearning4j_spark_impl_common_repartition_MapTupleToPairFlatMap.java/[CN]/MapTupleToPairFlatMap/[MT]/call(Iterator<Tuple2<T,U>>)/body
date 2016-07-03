@@ -1,0 +1,7 @@
+{
+  List<Tuple2<T,U>> list=new ArrayList<>();
+  while (tuple2Iterator.hasNext()) {
+    list.add(tuple2Iterator.next());
+  }
+  return list;
+}

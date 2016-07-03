@@ -1,0 +1,4 @@
+{
+  if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
+  throw new UnsupportedOperationException("Not implemented");
+}

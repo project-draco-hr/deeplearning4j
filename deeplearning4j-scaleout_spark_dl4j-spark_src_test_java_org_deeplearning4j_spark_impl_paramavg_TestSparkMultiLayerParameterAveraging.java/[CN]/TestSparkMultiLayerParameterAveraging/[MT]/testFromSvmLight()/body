@@ -10,7 +10,7 @@
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   System.out.println("Initializing network");
-  SparkDl4jMultiLayer master=new SparkDl4jMultiLayer(sc,getBasicConf(),new ParameterAveragingTrainingMaster(true,Runtime.getRuntime().availableProcessors(),5,1,0));
+  SparkDl4jMultiLayer master=new SparkDl4jMultiLayer(sc,getBasicConf(),new ParameterAveragingTrainingMaster(true,numExecutors(),1,5,1,0));
   MultiLayerNetwork network2=master.fitLabeledPoint(data);
   Evaluation evaluation=new Evaluation();
   evaluation.eval(d.getLabels(),network2.output(d.getFeatureMatrix()));

@@ -1,4 +1,5 @@
 {
+  if (numWorkers == null)   numWorkers=graph.getSparkContext().defaultParallelism();
   JavaRDD<MultiDataSet> mdsTrainingData=trainingData.map(new DataSetToMultiDataSetFn());
   executeTrainingMDS(graph,mdsTrainingData);
 }

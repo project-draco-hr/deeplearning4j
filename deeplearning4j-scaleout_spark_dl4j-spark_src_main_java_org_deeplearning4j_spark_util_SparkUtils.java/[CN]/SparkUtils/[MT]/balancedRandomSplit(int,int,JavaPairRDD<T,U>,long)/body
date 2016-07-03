@@ -1,0 +1,16 @@
+{
+  JavaPairRDD<T,U>[] splits;
+  if (totalObjectCount <= numObjectsPerSplit) {
+    splits=(JavaPairRDD<T,U>[])Array.newInstance(JavaPairRDD.class,1);
+    splits[0]=data;
+  }
+ else {
+    int numSplits=totalObjectCount / numObjectsPerSplit;
+    splits=(JavaPairRDD<T,U>[])Array.newInstance(JavaPairRDD.class,numSplits);
+    for (int i=0; i < numSplits; i++) {
+      JavaRDD<Tuple2<T,U>> split=data.mapPartitionsWithIndex(new SplitPartitionsFunction2<T,U>(i,numSplits,rngSeed),true);
+      splits[i]=split.mapPartitionsToPair(new MapTupleToPairFlatMap<T,U>(),true);
+    }
+  }
+  return splits;
+}

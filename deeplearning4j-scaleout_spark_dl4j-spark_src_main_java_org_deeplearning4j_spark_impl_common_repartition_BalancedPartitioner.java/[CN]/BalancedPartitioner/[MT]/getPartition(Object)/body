@@ -1,0 +1,20 @@
+{
+  int elementIdx=(Integer)key;
+  if (elementIdx <= elementsPerPartition * numStandardPartitions) {
+    int outputPartition=elementIdx / elementsPerPartition;
+    if (outputPartition >= numPartitions) {
+      outputPartition=getRandom().nextInt(numPartitions);
+    }
+    return outputPartition;
+  }
+ else {
+    int numValsInStdPartitions=elementsPerPartition * numStandardPartitions;
+    int idxInSmallerPartitions=elementIdx - numValsInStdPartitions;
+    int smallPartitionIdx=idxInSmallerPartitions / (elementsPerPartition - 1);
+    int outputPartition=numStandardPartitions + smallPartitionIdx;
+    if (outputPartition >= numPartitions) {
+      outputPartition=getRandom().nextInt(numPartitions);
+    }
+    return outputPartition;
+  }
+}

@@ -2,7 +2,7 @@
   ComputationGraph graph;
   try {
     graph=getComputationGraph();
-    TrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(numWorkers).batchSizePerWorker(examplesPerFit / numWorkers).saveUpdater(saveUpdater).averagingFrequency(averagingFrequency).workerPrefetchNumBatches(workerPrefetchNumBatches).build();
+    TrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(numWorkers,1).batchSizePerWorker(examplesPerFit / numWorkers).saveUpdater(saveUpdater).averagingFrequency(averagingFrequency).workerPrefetchNumBatches(workerPrefetchNumBatches).build();
     SparkComputationGraph multiLayer=new SparkComputationGraph(getContext(),graph,tm);
     JavaRDD<DataSet> dataSet=getDataSet();
     ComputationGraph newGraph=multiLayer.fit(dataSet);

@@ -1,0 +1,49 @@
+{
+  int origNumPartitions=rdd.partitions().size();
+switch (repartition) {
+case Never:
+    return rdd;
+case NumPartitionsWorkersDiffers:
+  if (origNumPartitions == numPartitions)   return rdd;
+case Always:
+rdd.persist(StorageLevel.MEMORY_ONLY());
+List<Tuple2<Integer,Integer>> partitionCounts=rdd.mapPartitionsWithIndex(new CountPartitionsFunction<T>(),true).collect();
+int totalObjects=0;
+int initialPartitions=partitionCounts.size();
+boolean allCorrectSize=true;
+int[] countPerPartition=new int[partitionCounts.size()];
+int x=0;
+for (Tuple2<Integer,Integer> t2 : partitionCounts) {
+int partitionSize=t2._2();
+countPerPartition[x++]=partitionSize;
+allCorrectSize&=(partitionSize == objectsPerPartition);
+totalObjects+=t2._2();
+}
+if (numPartitions * objectsPerPartition < totalObjects) {
+int add=(totalObjects - numPartitions * objectsPerPartition) / numPartitions;
+int mod=(totalObjects - numPartitions * objectsPerPartition) % numPartitions;
+if (mod != 0) add++;
+objectsPerPartition+=add;
+allCorrectSize=true;
+for (Tuple2<Integer,Integer> t2 : partitionCounts) {
+allCorrectSize&=(t2._2() == objectsPerPartition);
+}
+}
+if (numPartitions * objectsPerPartition < totalObjects) throw new RuntimeException();
+if (initialPartitions == numPartitions && allCorrectSize) {
+return rdd;
+}
+int[] elementStartOffsetByPartitions=new int[countPerPartition.length];
+for (int i=1; i < elementStartOffsetByPartitions.length; i++) {
+elementStartOffsetByPartitions[i]=elementStartOffsetByPartitions[i - 1] + countPerPartition[i - 1];
+}
+JavaRDD<Tuple2<Integer,T>> indexed=rdd.mapPartitionsWithIndex(new AssignIndexFunction<T>(elementStartOffsetByPartitions),true);
+JavaPairRDD<Integer,T> pairIndexed=indexed.mapPartitionsToPair(new MapTupleToPairFlatMap<Integer,T>(),true);
+int numStandardPartitions=totalObjects / objectsPerPartition;
+if (totalObjects % objectsPerPartition != 0) numStandardPartitions++;
+pairIndexed=pairIndexed.partitionBy(new BalancedPartitioner(numPartitions,numStandardPartitions,objectsPerPartition));
+return pairIndexed.values();
+default :
+throw new RuntimeException("Unknown setting for repartition: " + repartition);
+}
+}
