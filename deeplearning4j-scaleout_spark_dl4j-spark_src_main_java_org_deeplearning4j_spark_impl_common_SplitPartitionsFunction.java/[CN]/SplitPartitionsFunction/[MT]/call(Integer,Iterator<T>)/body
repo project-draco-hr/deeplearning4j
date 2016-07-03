@@ -8,8 +8,8 @@
   List<T> outputList=new ArrayList<>();
   int i=0;
   while (iter.hasNext()) {
-    T next=iter.next();
     if (i % numSplits == 0)     Collections.shuffle(list,r);
+    T next=iter.next();
     if (list.get(i % numSplits) == splitIndex)     outputList.add(next);
     i++;
   }

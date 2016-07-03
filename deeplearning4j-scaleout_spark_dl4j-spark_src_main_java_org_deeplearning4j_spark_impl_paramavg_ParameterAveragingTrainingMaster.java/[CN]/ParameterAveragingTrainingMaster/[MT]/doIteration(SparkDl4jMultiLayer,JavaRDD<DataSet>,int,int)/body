@@ -1,5 +1,5 @@
 {
-  log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, Configured for {} executors",splitNum,numSplits,batchSizePerWorker,averagingFrequency,numWorkers);
+  log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, Configured for {} workers",splitNum,numSplits,batchSizePerWorker,averagingFrequency,numWorkers);
   if (collectTrainingStats)   stats.logMapPartitionsStart();
   JavaRDD<DataSet> splitData=split;
   if (collectTrainingStats)   stats.logRepartitionStart();

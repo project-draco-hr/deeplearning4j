@@ -9,7 +9,8 @@
   int i=0;
   while (iter.hasNext()) {
     if (i % numSplits == 0)     Collections.shuffle(list,r);
-    if (i % numSplits == splitIndex)     outputList.add(iter.next());
+    Tuple2<T,U> next=iter.next();
+    if (list.get(i % numSplits) == splitIndex)     outputList.add(next);
     i++;
   }
   return outputList.iterator();

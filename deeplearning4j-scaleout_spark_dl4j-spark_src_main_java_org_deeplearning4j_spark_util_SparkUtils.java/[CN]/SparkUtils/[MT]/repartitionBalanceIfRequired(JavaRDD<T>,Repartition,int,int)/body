@@ -21,13 +21,15 @@ totalObjects+=t2._2();
 }
 if (numPartitions * objectsPerPartition < totalObjects) {
 int add=(totalObjects - numPartitions * objectsPerPartition) / numPartitions;
-if (add < 1) add++;
-numPartitions+=add;
+int mod=(totalObjects - numPartitions * objectsPerPartition) % numPartitions;
+if (mod != 0) add++;
+objectsPerPartition+=add;
 allCorrectSize=true;
 for (Tuple2<Integer,Integer> t2 : partitionCounts) {
 allCorrectSize&=(t2._2() == objectsPerPartition);
 }
 }
+if (numPartitions * objectsPerPartition < totalObjects) throw new RuntimeException();
 if (initialPartitions == numPartitions && allCorrectSize) {
 return rdd;
 }

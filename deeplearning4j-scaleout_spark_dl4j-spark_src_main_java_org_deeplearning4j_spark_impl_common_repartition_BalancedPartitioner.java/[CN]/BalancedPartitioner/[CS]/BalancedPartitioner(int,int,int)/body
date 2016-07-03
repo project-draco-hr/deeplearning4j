@@ -1,0 +1,6 @@
+{
+  if (numStandardPartitions > numPartitions)   throw new IllegalArgumentException("Invalid input: numStandardPartitions > numPartitions");
+  this.numPartitions=numPartitions;
+  this.numStandardPartitions=numStandardPartitions;
+  this.elementsPerPartition=elementsPerPartition;
+}

@@ -8,7 +8,7 @@
     int numSplits=totalObjectCount / numObjectsPerSplit;
     splits=(JavaRDD<T>[])Array.newInstance(JavaRDD.class,numSplits);
     for (int i=0; i < numSplits; i++) {
-      splits[i]=data.mapPartitionsWithIndex(new SplitPartitions<T>(i,numSplits,rngSeed),true);
+      splits[i]=data.mapPartitionsWithIndex(new SplitPartitionsFunction<T>(i,numSplits,rngSeed),true);
     }
   }
   return splits;
