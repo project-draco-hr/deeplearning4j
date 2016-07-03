@@ -2,7 +2,7 @@
   log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, Configured for {} executors",splitNum,numSplits,batchSizePerWorker,averagingFrequency,numWorkers);
   if (collectTrainingStats)   stats.logMapPartitionsStart();
   JavaRDD<MultiDataSet> splitData=split;
-  splitData=SparkUtils.repartitionIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
+  splitData=SparkUtils.repartitionBalanceIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
   int nPartitions=split.partitions().size();
   FlatMapFunction<Iterator<MultiDataSet>,ParameterAveragingTrainingResult> function=new ExecuteWorkerMultiDataSetFlatMap<>(getWorkerInstance(graph));
   JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);

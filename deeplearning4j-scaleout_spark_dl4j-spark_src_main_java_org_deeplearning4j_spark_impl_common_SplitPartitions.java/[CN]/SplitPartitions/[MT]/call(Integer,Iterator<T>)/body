@@ -10,7 +10,7 @@
   while (iter.hasNext()) {
     T next=iter.next();
     if (i % numSplits == 0)     Collections.shuffle(list,r);
-    if (i % numSplits == splitIndex)     outputList.add(next);
+    if (list.get(i % numSplits) == splitIndex)     outputList.add(next);
     i++;
   }
   return outputList.iterator();

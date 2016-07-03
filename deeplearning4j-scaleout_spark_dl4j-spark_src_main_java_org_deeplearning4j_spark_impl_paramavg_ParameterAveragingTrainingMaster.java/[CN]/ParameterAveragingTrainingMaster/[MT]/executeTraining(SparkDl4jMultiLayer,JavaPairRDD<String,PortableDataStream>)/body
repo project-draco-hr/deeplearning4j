@@ -8,7 +8,7 @@
   int splitNum=1;
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
     JavaRDD<DataSet> splitData=split.map(new LoadSerializedDataSetFunction());
-    splitData=SparkUtils.repartitionIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
+    splitData=SparkUtils.repartitionBalanceIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
     doIteration(network,splitData,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);

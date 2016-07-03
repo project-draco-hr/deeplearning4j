@@ -1,10 +1,10 @@
 {
-  int nPartitions=rdd.partitions().size();
+  int origNumPartitions=rdd.partitions().size();
 switch (repartition) {
 case Never:
     return rdd;
-case NumPartitionsExecutorsDiffers:
-  if (nPartitions == numPartitions)   return rdd;
+case NumPartitionsWorkersDiffers:
+  if (origNumPartitions == numPartitions)   return rdd;
 case Always:
 JavaRDD<T> temp;
 rdd.persist(StorageLevel.MEMORY_ONLY());
@@ -32,8 +32,7 @@ JavaPairRDD<Integer,T> pairIndexed=indexed.mapPartitionsToPair(new MapTupleToPai
 int numStandardPartitions=totalObjects / objectsPerPartition;
 if (totalObjects % objectsPerPartition != 0) numStandardPartitions++;
 pairIndexed=pairIndexed.partitionBy(new BalancedPartitioner(numPartitions,numStandardPartitions,objectsPerPartition));
-temp=pairIndexed.values();
-return temp;
+return pairIndexed.values();
 default :
 throw new RuntimeException("Unknown setting for repartition: " + repartition);
 }
