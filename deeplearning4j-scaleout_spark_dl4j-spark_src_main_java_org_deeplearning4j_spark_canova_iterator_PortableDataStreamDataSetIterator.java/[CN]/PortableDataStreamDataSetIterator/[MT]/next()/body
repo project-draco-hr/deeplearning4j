@@ -7,8 +7,8 @@
  else {
     ds=load(iter.next());
   }
-  totalOutcomes=ds.numOutcomes();
-  inputColumns=ds.numInputs();
+  totalOutcomes=ds.getLabels().size(1);
+  inputColumns=ds.getFeatureMatrix().size(1);
   batch=ds.numExamples();
   if (preprocessor != null)   preprocessor.preProcess(ds);
   return ds;

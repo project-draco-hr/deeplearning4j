@@ -1,6 +1,6 @@
 {
   preloadedDataSet=load(iter.next());
-  totalOutcomes=preloadedDataSet.numOutcomes();
-  inputColumns=preloadedDataSet.numInputs();
+  totalOutcomes=preloadedDataSet.getLabels().size(1);
+  inputColumns=preloadedDataSet.getFeatureMatrix().size(1);
   batch=preloadedDataSet.numExamples();
 }
