@@ -1,0 +1,6 @@
+{
+  preloadedDataSet=load(iter.next());
+  totalOutcomes=preloadedDataSet.numOutcomes();
+  inputColumns=preloadedDataSet.numInputs();
+  batch=preloadedDataSet.numExamples();
+}
