@@ -7,12 +7,11 @@
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
-    JavaRDD<PortableDataStream> temp=split.values();
+    JavaRDD<PortableDataStream> streams=split.values();
     if (collectTrainingStats)     stats.logRepartitionStart();
-    temp=SparkUtils.repartitionBalanceIfRequired(temp,repartition,numObjectsEachWorker(),numWorkers);
+    streams=SparkUtils.repartitionBalanceIfRequired(streams,repartition,numObjectsEachWorker(),numWorkers);
     if (collectTrainingStats && repartition != Repartition.Never)     stats.logRepartitionEnd();
-    JavaRDD<DataSet> splitData=temp.map(new LoadSerializedDataSetFunction());
-    doIteration(network,splitData,splitNum++,splits.length);
+    doIterationPDS(network,streams,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }
