@@ -1,0 +1,5 @@
+{
+  if (dataSetStreams == null)   throw new IllegalStateException("Cannot reset iterator constructed with an iterator");
+  iter=dataSetStreams.iterator();
+  cursor=0;
+}
