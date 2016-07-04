@@ -1,0 +1,14 @@
+{
+  if (list.isEmpty())   return;
+  if (list.size() < batchSize && !finalRecord)   return;
+  RecordReader rr=new CollectionRecordReader(list);
+  RecordReaderDataSetIterator iter=new RecordReaderDataSetIterator(rr,new SelfWritableConverter(),batchSize,labelIndex,numPossibleLabels,regression);
+  DataSet ds=iter.next();
+  String filename="dataset_" + uid + "_"+ (outputCount++)+ ".bin";
+  URI uri=new URI(outputDir.getPath() + "/" + filename);
+  FileSystem file=FileSystem.get(uri,conf);
+  try (FSDataOutputStream out=file.create(new Path(uri))){
+    ds.save(out);
+  }
+   list.clear();
+}
