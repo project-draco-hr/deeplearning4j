@@ -1,0 +1,15 @@
+{
+  MultiDataSet ds=new org.nd4j.linalg.dataset.MultiDataSet();
+  PortableDataStream pds=iter.next();
+  try {
+    ds.load(pds.open());
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+ finally {
+    pds.close();
+  }
+  if (preprocessor != null)   preprocessor.preProcess(ds);
+  return ds;
+}
