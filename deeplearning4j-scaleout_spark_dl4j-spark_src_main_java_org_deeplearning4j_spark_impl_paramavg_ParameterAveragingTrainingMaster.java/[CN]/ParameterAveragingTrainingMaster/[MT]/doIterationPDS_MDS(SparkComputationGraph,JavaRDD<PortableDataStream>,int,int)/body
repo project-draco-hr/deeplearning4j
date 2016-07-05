@@ -1,0 +1,13 @@
+{
+  log.info("Starting training of split {} of {}. workerMiniBatchSize={}, averagingFreq={}, Configured for {} workers",splitNum,numSplits,batchSizePerWorker,averagingFrequency,numWorkers);
+  if (collectTrainingStats)   stats.logMapPartitionsStart();
+  JavaRDD<PortableDataStream> splitData=split;
+  if (collectTrainingStats)   stats.logRepartitionStart();
+  splitData=SparkUtils.repartitionBalanceIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
+  int nPartitions=splitData.partitions().size();
+  if (collectTrainingStats && repartition != Repartition.Never)   stats.logRepartitionEnd();
+  FlatMapFunction<Iterator<PortableDataStream>,ParameterAveragingTrainingResult> function=new ExecuteWorkerPDSMDSFlatMap<>(getWorkerInstance(graph));
+  JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
+  processResults(null,graph,result,splitNum,numSplits);
+  if (collectTrainingStats)   stats.logMapPartitionsEnd(nPartitions);
+}

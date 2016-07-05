@@ -11,7 +11,7 @@
     if (collectTrainingStats)     stats.logRepartitionStart();
     streams=SparkUtils.repartitionBalanceIfRequired(streams,repartition,numObjectsEachWorker(),numWorkers);
     if (collectTrainingStats && repartition != Repartition.Never)     stats.logRepartitionEnd();
-    doIterationPDS(network,streams,splitNum++,splits.length);
+    doIterationPDS(network,null,streams,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }

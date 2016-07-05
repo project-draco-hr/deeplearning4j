@@ -6,8 +6,10 @@
   splitData=SparkUtils.repartitionBalanceIfRequired(splitData,repartition,numObjectsEachWorker(),numWorkers);
   int nPartitions=splitData.partitions().size();
   if (collectTrainingStats && repartition != Repartition.Never)   stats.logRepartitionEnd();
-  FlatMapFunction<Iterator<PortableDataStream>,ParameterAveragingTrainingResult> function=new ExecuteWorkerPDSFlatMap<>(getWorkerInstance(network));
+  FlatMapFunction<Iterator<PortableDataStream>,ParameterAveragingTrainingResult> function;
+  if (network != null)   function=new ExecuteWorkerPDSFlatMap<>(getWorkerInstance(network));
+ else   function=new ExecuteWorkerPDSFlatMap<>(getWorkerInstance(graph));
   JavaRDD<ParameterAveragingTrainingResult> result=splitData.mapPartitions(function);
-  processResults(network,null,result,splitNum,numSplits);
+  processResults(network,graph,result,splitNum,numSplits);
   if (collectTrainingStats)   stats.logMapPartitionsEnd(nPartitions);
 }
