@@ -6,13 +6,11 @@
   JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData,new Random().nextLong());
   int splitNum=1;
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
-    JavaRDD<PortableDataStream> temp=split.values();
+    JavaRDD<PortableDataStream> streams=split.values();
     if (collectTrainingStats)     stats.logRepartitionStart();
-    temp=SparkUtils.repartitionBalanceIfRequired(temp,repartition,numObjectsEachWorker(),numWorkers);
+    streams=SparkUtils.repartitionBalanceIfRequired(streams,repartition,numObjectsEachWorker(),numWorkers);
     if (collectTrainingStats && repartition != Repartition.Never)     stats.logRepartitionEnd();
-    JavaRDD<DataSet> splitData=temp.map(new LoadSerializedDataSetFunction());
-    JavaRDD<MultiDataSet> splitData2=splitData.map(new DataSetToMultiDataSetFn());
-    doIteration(graph,splitData2,splitNum++,splits.length);
+    doIterationPDS(null,graph,streams,splitNum++,splits.length);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }
