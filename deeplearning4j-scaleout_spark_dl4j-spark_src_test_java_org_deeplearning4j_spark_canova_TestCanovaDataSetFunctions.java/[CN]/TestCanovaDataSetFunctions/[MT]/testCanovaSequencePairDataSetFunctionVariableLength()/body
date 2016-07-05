@@ -38,7 +38,6 @@
   for (int i=0; i < 3; i++) {
     DataSet dsSpark=sparkData.get(i);
     DataSet dsLocal=localData.get(i);
-    assertNull(dsSpark.getFeaturesMaskArray());
     assertNotNull(dsSpark.getLabelsMaskArray());
     INDArray fSpark=dsSpark.getFeatureMatrix();
     INDArray fLocal=dsLocal.getFeatureMatrix();
@@ -78,7 +77,6 @@
   for (int i=0; i < 3; i++) {
     DataSet dsSpark=sparkDataAlignStart.get(i);
     DataSet dsLocal=localDataAlignStart.get(i);
-    assertNull(dsSpark.getFeaturesMaskArray());
     assertNotNull(dsSpark.getLabelsMaskArray());
     INDArray fSpark=dsSpark.getFeatureMatrix();
     INDArray fLocal=dsLocal.getFeatureMatrix();
