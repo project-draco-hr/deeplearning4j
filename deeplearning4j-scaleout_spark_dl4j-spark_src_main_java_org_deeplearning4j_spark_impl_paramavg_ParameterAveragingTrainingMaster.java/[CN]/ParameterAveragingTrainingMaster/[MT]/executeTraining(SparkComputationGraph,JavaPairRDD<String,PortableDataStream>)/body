@@ -1,6 +1,11 @@
 {
   if (numWorkers == null)   numWorkers=graph.getSparkContext().defaultParallelism();
   if (collectTrainingStats)   stats.logFitStart();
+  int origNumPartitions=trainingData.partitions().size();
+  if (origNumPartitions >= COALESCE_THRESHOLD * numWorkers) {
+    log.info("Coalesing streams from {} to {} partitions",origNumPartitions,numWorkers);
+    trainingData=trainingData.coalesce(numWorkers);
+  }
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
