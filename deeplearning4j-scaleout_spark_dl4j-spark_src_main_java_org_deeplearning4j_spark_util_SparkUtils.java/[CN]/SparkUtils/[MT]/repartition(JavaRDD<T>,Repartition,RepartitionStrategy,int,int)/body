@@ -1,0 +1,12 @@
+{
+  if (repartition == Repartition.Never)   return rdd;
+switch (repartitionStrategy) {
+case SparkDefault:
+    if (repartition == Repartition.NumPartitionsWorkersDiffers && rdd.partitions().size() == numPartitions)     return rdd;
+  return rdd.repartition(numPartitions);
+case Balanced:
+return repartitionBalanceIfRequired(rdd,repartition,objectsPerPartition,numPartitions);
+default :
+throw new RuntimeException("Unknown repartition strategy: " + repartitionStrategy);
+}
+}

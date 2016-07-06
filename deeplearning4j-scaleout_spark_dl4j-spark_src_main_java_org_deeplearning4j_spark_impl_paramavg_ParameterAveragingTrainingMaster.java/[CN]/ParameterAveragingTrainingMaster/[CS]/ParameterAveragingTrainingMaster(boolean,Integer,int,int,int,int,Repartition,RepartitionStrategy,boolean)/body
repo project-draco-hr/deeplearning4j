@@ -9,5 +9,6 @@
   this.prefetchNumBatches=prefetchNumBatches;
   this.collectTrainingStats=collectTrainingStats;
   this.repartition=repartition;
+  this.repartitionStrategy=repartitionStrategy;
   if (collectTrainingStats)   stats=new ParameterAveragingTrainingMasterStats.ParameterAveragingTrainingMasterStatsHelper();
 }

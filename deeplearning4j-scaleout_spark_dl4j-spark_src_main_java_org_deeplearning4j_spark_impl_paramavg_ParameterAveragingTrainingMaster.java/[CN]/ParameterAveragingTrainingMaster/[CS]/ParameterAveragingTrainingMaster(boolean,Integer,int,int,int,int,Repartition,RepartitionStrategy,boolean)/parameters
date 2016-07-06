@@ -5,4 +5,5 @@ int batchSizePerWorker
 int averagingFrequency
 int prefetchNumBatches
 Repartition repartition
+RepartitionStrategy repartitionStrategy
 boolean collectTrainingStats
