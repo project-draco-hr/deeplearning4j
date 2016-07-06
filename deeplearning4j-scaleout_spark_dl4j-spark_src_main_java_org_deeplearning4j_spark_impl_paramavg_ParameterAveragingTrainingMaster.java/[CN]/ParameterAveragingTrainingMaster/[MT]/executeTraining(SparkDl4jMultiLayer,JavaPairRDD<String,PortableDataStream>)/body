@@ -1,5 +1,8 @@
 {
   if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
+  log.info("STARTING COALESCE: " + System.currentTimeMillis());
+  trainingData=trainingData.coalesce(numWorkers);
+  log.info("ENDING COALESCE: " + System.currentTimeMillis());
   long totalDataSetObjectCount=trainingData.count();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
