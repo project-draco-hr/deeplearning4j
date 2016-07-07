@@ -1,0 +1,8 @@
+{
+  this.batchSize=builder.batchSize;
+  this.alignmentMode=builder.alignmentMode;
+  this.recordReaders=builder.recordReaders;
+  this.sequenceRecordReaders=builder.sequenceRecordReaders;
+  this.inputs.addAll(builder.inputs);
+  this.outputs.addAll(builder.outputs);
+}

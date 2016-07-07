@@ -1,0 +1,16 @@
+{
+  if (useStored) {
+    useStored=false;
+    DataSet temp=stored;
+    stored=null;
+    if (preProcessor != null)     preProcessor.preProcess(temp);
+    return temp;
+  }
+  if (!hasNext())   throw new NoSuchElementException();
+  if (singleSequenceReaderMode) {
+    return nextSingleSequenceReader(num);
+  }
+ else {
+    return nextMultipleSequenceReaders(num);
+  }
+}

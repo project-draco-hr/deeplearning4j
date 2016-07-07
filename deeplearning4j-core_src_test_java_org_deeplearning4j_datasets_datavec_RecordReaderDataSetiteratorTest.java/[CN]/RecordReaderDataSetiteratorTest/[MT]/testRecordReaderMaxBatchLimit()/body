@@ -1,0 +1,9 @@
+{
+  RecordReader recordReader=new CSVRecordReader();
+  FileSplit csv=new FileSplit(new ClassPathResource("csv-example.csv").getFile());
+  recordReader.initialize(csv);
+  DataSetIterator iter=new RecordReaderDataSetIterator(recordReader,10,-1,-1,2);
+  iter.next();
+  iter.next();
+  assertEquals(false,iter.hasNext());
+}

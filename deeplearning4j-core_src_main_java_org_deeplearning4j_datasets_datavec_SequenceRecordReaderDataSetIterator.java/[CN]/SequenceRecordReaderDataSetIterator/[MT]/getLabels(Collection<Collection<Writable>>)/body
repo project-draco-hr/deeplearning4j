@@ -1,0 +1,50 @@
+{
+  int[] shape=new int[2];
+  shape[0]=labels.size();
+  Iterator<Collection<Writable>> iter=labels.iterator();
+  int i=0;
+  INDArray out=null;
+  while (iter.hasNext()) {
+    Collection<Writable> stepCollection=iter.next();
+    List<Writable> step=(stepCollection instanceof List ? (List<Writable>)stepCollection : new ArrayList<>(stepCollection));
+    if (i == 0) {
+      if (regression) {
+        for (        Writable w : step) {
+          if (w instanceof NDArrayWritable) {
+            shape[1]+=((NDArrayWritable)w).get().length();
+          }
+ else {
+            shape[1]++;
+          }
+        }
+      }
+ else {
+        shape[1]=numPossibleLabels;
+      }
+      out=Nd4j.create(shape,'f');
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int f=0;
+    if (regression) {
+      while (timeStepIter.hasNext()) {
+        Writable current=timeStepIter.next();
+        if (current instanceof NDArrayWritable) {
+          INDArray w=((NDArrayWritable)current).get();
+          out.put(new INDArrayIndex[]{NDArrayIndex.point(i),NDArrayIndex.interval(f,f + w.length())},w);
+          f+=w.length();
+        }
+ else {
+          out.put(i,f++,current.toDouble());
+        }
+      }
+    }
+ else {
+      Writable value=timeStepIter.next();
+      int idx=value.toInt();
+      INDArray line=FeatureUtil.toOutcomeVector(idx,numPossibleLabels);
+      out.getRow(i).assign(line);
+    }
+    i++;
+  }
+  return out;
+}

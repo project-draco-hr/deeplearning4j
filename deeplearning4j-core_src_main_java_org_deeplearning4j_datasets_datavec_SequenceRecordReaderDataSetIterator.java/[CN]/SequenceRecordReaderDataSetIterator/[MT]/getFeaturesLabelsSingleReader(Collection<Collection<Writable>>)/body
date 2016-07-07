@@ -1,0 +1,70 @@
+{
+  Iterator<Collection<Writable>> iter=input.iterator();
+  int i=0;
+  INDArray features=null;
+  INDArray labels=null;
+  int featureSize=0;
+  while (iter.hasNext()) {
+    Collection<Writable> stepCollection=iter.next();
+    List<Writable> step=(stepCollection instanceof List ? (List<Writable>)stepCollection : new ArrayList<>(stepCollection));
+    if (i == 0) {
+      int j=0;
+      for (      Writable w : step) {
+        if (j++ != labelIndex) {
+          if (w instanceof NDArrayWritable) {
+            featureSize+=((NDArrayWritable)w).get().length();
+          }
+ else {
+            featureSize+=1;
+          }
+        }
+      }
+      features=Nd4j.zeros(input.size(),featureSize);
+      int labelSize;
+      if (regression) {
+        if (step.get(labelIndex) instanceof NDArrayWritable) {
+          labelSize=((NDArrayWritable)step.get(labelIndex)).get().length();
+        }
+ else {
+          labelSize=1;
+        }
+      }
+ else {
+        labelSize=numPossibleLabels;
+      }
+      labels=Nd4j.zeros(input.size(),labelSize);
+    }
+    Iterator<Writable> timeStepIter=step.iterator();
+    int countIn=0;
+    int countFeatures=0;
+    while (timeStepIter.hasNext()) {
+      Writable current=timeStepIter.next();
+      if (countIn++ == labelIndex) {
+        if (regression) {
+          if (current instanceof NDArrayWritable) {
+            labels.putRow(i,((NDArrayWritable)current).get());
+          }
+ else {
+            labels.put(i,0,current.toDouble());
+          }
+        }
+ else {
+          labels.putScalar(i,current.toInt(),1.0);
+        }
+      }
+ else {
+        if (current instanceof NDArrayWritable) {
+          INDArray w=((NDArrayWritable)current).get();
+          int length=w.length();
+          features.put(new INDArrayIndex[]{NDArrayIndex.point(i),NDArrayIndex.interval(countFeatures,countFeatures + length)},w);
+          countFeatures+=length;
+        }
+ else {
+          features.put(i,countFeatures++,current.toDouble());
+        }
+      }
+    }
+    i++;
+  }
+  return new INDArray[]{features,labels};
+}

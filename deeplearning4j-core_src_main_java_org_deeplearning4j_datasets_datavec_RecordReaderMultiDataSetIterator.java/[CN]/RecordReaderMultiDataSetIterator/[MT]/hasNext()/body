@@ -1,0 +1,5 @@
+{
+  for (  RecordReader rr : recordReaders.values())   if (!rr.hasNext())   return false;
+  for (  SequenceRecordReader rr : sequenceRecordReaders.values())   if (!rr.hasNext())   return false;
+  return true;
+}
