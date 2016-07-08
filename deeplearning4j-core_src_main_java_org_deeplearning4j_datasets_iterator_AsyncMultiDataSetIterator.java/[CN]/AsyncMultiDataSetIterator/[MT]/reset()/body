@@ -10,7 +10,7 @@
   }
   queue.clear();
   iterator.reset();
-  runnable=new AsyncMultiDataSetIterator.IteratorRunnable();
+  runnable=new AsyncMultiDataSetIterator.IteratorRunnable(iterator.hasNext());
   thread=new Thread(runnable);
   Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
   Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
