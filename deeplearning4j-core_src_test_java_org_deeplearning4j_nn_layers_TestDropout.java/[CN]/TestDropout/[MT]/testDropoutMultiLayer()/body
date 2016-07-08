@@ -15,51 +15,21 @@
     INDArray out=Nd4j.rand(1,nOut).dup('c');
     INDArray inCopy=in.dup('c');
     net.fit(new DataSet(in,out));
-    INDArray dropoutMask=((INDArray)dropoutMaskField.get(net.getLayer(0)));
-    assertNotNull(dropoutMask);
-    dropoutMask=dropoutMask.dup('c');
     INDArray l0Input=net.getLayer(0).input().dup('c');
-    if (inCopy.equals(l0Input)) {
-      int countNonZero=0;
-      for (int j=0; j < dropoutMask.length(); j++) {
-        if (dropoutMask.getDouble(j) != 0.0)         countNonZero++;
-      }
-      if (countNonZero != nIn) {
-        fail("No dropout occurred, but dropoutMask contains 0.0 elements. mask = " + dropoutMask);
-      }
- else {
-        noDropoutCount++;
-      }
-    }
- else {
-      System.out.println(i);
-      NdIndexIterator iter=new NdIndexIterator(inCopy.shape());
-      while (iter.hasNext()) {
-        int[] idx=iter.next();
-        double origValue=inCopy.getDouble(idx);
-        double doValue=l0Input.getDouble(idx);
-        double maskValue=dropoutMask.getDouble(idx);
-        assertTrue(maskValue == 0.0 || maskValue == 2.0);
-        if (maskValue == 0.0) {
-          assertEquals(0.0,doValue,0.0);
-        }
- else {
-          assertEquals(origValue * 2.0,doValue,0.0001);
-        }
+    NdIndexIterator iter=new NdIndexIterator(inCopy.shape());
+    while (iter.hasNext()) {
+      int[] idx=iter.next();
+      double origValue=inCopy.getDouble(idx);
+      double doValue=l0Input.getDouble(idx);
+      if (doValue > 0.0) {
+        assertEquals(origValue * 2.0,doValue,0.0001);
       }
     }
     for (int j=1; j < 3; j++) {
-      dropoutMask=(INDArray)dropoutMaskField.get(net.getLayer(j));
-      assertNotNull(dropoutMask);
       INDArray ljInput=net.getLayer(j).input();
       for (int k=0; k < ljInput.length(); k++) {
         double doValue=ljInput.getDouble(j);
-        double maskValue=dropoutMask.getDouble(j);
-        assertTrue(maskValue == 0.0 || maskValue == 2.0);
-        if (maskValue == 0.0) {
-          assertEquals(0.0,doValue,0.0);
-        }
- else {
+        if (doValue > 0.0) {
           assertEquals(2.0,doValue,0.1);
         }
       }
