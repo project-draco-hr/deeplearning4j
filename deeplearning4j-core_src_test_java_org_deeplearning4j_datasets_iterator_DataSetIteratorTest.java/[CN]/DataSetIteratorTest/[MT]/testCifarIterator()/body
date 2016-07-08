@@ -7,5 +7,5 @@
   assertTrue(iter.hasNext());
   DataSet data=iter.next();
   assertEquals(numExamples,data.getLabels().size(0));
-  assertEquals(row * col * channels,data.getFeatureMatrix().size(1));
+  assertEquals(channels * row * col,data.getFeatureMatrix().size(1));
 }

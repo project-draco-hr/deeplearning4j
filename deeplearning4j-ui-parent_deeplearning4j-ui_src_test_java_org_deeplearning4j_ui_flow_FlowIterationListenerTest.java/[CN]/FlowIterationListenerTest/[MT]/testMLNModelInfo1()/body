@@ -4,7 +4,7 @@
   for (  LayerInfo layerInfo : info.getLayers()) {
     log.info("Layer: " + layerInfo);
   }
-  assertEquals(9,info.size());
+  assertEquals(9,info.size() - 1);
   assertNotEquals(null,info.getLayerInfoByName("cnn1"));
   assertNotEquals(null,info.getLayerInfoByName("cnn2"));
   assertNotEquals(null,info.getLayerInfoByName("cnn3"));
