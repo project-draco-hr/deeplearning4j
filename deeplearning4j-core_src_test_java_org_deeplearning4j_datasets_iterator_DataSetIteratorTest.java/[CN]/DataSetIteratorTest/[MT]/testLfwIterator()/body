@@ -1,5 +1,5 @@
 {
-  int numExamples=10;
+  int numExamples=1;
   int row=28;
   int col=28;
   int channels=1;
@@ -7,5 +7,5 @@
   assertTrue(iter.hasNext());
   DataSet data=iter.next();
   assertEquals(numExamples,data.getLabels().size(0));
-  assertEquals(row * col * channels,data.getFeatureMatrix().size(1));
+  assertEquals(row,data.getFeatureMatrix().size(2));
 }
