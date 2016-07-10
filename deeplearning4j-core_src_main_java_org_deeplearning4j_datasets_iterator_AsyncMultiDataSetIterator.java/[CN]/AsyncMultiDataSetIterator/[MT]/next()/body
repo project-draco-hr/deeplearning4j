@@ -17,6 +17,9 @@
       if (runnable.killRunnable) {
         throw new ConcurrentModificationException("Reset while next() is waiting for element?");
       }
+      if (!runnable.isAlive && queue.isEmpty()) {
+        throw new IllegalStateException("Unexpected state occurred for AsyncMultiDataSetIterator: runnable died or no data available");
+      }
     }
     throw runnable.exception;
   }

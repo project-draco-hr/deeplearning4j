@@ -1,9 +1,3 @@
 {
-  try {
-    return exampleCount < numExamples;
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-  }
-  return false;
+  return exampleCount < numExamples && (maxNumBatches == -1 || batchNum < maxNumBatches) && !overshot;
 }

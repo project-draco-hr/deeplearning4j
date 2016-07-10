@@ -1,0 +1,11 @@
+{
+  String jvmuid=UIDProvider.getJVMUID();
+  uid=Thread.currentThread().getId() + jvmuid.substring(0,Math.min(8,jvmuid.length()));
+  List<Collection<Writable>> list=new ArrayList<>(batchSize);
+  while (stringIterator.hasNext()) {
+    String next=stringIterator.next();
+    recordReader.initialize(new StringSplit(next));
+    list.add(recordReader.next());
+    processBatchIfRequired(list,!stringIterator.hasNext());
+  }
+}

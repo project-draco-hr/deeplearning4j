@@ -1,0 +1,21 @@
+{
+  File temp=new File(tempFile);
+  temp.deleteOnExit();
+  Random rand=new Random(12345);
+  double[][] dArr=new double[nLines][nFeatures + 1];
+  try (PrintWriter out=new PrintWriter(new BufferedWriter(new FileWriter(temp)))){
+    for (int i=0; i < nLines; i++) {
+      dArr[i][0]=rand.nextDouble();
+      out.print(dArr[i][0]);
+      for (int j=0; j < nFeatures; j++) {
+        dArr[i][j + 1]=rand.nextDouble();
+        out.print("," + dArr[i][j + 1]);
+      }
+      out.println();
+    }
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  return dArr;
+}

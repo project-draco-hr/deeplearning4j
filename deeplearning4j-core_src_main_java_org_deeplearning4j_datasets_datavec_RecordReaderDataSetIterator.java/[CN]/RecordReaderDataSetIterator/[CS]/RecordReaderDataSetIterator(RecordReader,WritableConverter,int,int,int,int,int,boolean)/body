@@ -1,0 +1,10 @@
+{
+  this.recordReader=recordReader;
+  this.converter=converter;
+  this.batchSize=batchSize;
+  this.maxNumBatches=maxNumBatches;
+  this.labelIndex=labelIndexFrom;
+  this.labelIndexTo=labelIndexTo;
+  this.numPossibleLabels=numPossibleLabels;
+  this.regression=regression;
+}

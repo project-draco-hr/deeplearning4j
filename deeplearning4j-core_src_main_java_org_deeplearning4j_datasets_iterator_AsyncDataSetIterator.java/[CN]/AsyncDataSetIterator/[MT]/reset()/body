@@ -10,7 +10,7 @@
   }
   blockingQueue.clear();
   baseIterator.reset();
-  runnable=new IteratorRunnable();
+  runnable=new IteratorRunnable(baseIterator.hasNext());
   thread=new Thread(runnable);
   Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
   Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);

@@ -1,0 +1,4 @@
+{
+  INDArray array=getWordVectors(labels);
+  return array.mean(0);
+}

@@ -1,0 +1,11 @@
+{
+  DataSet ds=new DataSet();
+  try {
+    ds.load(pds.open());
+  }
+  finally {
+    pds.close();
+  }
+  cursor++;
+  return ds;
+}
