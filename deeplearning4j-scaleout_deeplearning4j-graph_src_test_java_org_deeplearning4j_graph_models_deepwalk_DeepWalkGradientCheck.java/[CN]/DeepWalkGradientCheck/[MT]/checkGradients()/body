@@ -1,6 +1,6 @@
 {
   ClassPathResource cpr=new ClassPathResource("testgraph_7vertices.txt");
-  Graph<String,String> graph=GraphLoader.loadUndirectedGraphEdgeListFile(cpr.getFile().getAbsolutePath(),7,",");
+  Graph<String,String> graph=GraphLoader.loadUndirectedGraphEdgeListFile(cpr.getTempFileFromArchive().getAbsolutePath(),7,",");
   int vectorSize=5;
   int windowSize=2;
   Nd4j.getRandom().setSeed(12345);

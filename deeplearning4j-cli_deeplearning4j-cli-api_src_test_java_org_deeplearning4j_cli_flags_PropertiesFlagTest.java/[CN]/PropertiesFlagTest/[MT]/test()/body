@@ -1,5 +1,5 @@
 {
-  File file=new ClassPathResource("testConfig.txt").getFile();
+  File file=new ClassPathResource("testConfig.txt").getTempFileFromArchive();
   Properties propertiesFlag=new Properties();
   Configuration testConfig=propertiesFlag.value(file.getAbsolutePath());
   assertEquals("1",testConfig.get("one"));

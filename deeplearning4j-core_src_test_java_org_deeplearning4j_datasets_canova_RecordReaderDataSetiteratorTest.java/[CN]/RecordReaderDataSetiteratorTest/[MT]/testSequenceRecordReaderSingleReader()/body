@@ -1,6 +1,9 @@
 {
+  for (int i=0; i < 3; i++) {
+    new ClassPathResource(String.format("csvsequenceSingle_%d.txt",i)).getTempFileFromArchive();
+  }
   ClassPathResource resource=new ClassPathResource("csvsequenceSingle_0.txt");
-  String path=resource.getFile().getAbsolutePath().replaceAll("0","%d");
+  String path=resource.getTempFileFromArchive().getAbsolutePath().replaceAll("0","%d");
   SequenceRecordReader reader=new CSVSequenceRecordReader(1,",");
   reader.initialize(new NumberedFileInputSplit(path,0,2));
   SequenceRecordReaderDataSetIterator iteratorClassification=new SequenceRecordReaderDataSetIterator(reader,1,3,0,false);

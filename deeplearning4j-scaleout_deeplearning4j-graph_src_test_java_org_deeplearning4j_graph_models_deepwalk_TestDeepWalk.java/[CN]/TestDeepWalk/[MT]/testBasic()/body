@@ -1,6 +1,6 @@
 {
   ClassPathResource cpr=new ClassPathResource("testgraph_7vertices.txt");
-  Graph<String,String> graph=GraphLoader.loadUndirectedGraphEdgeListFile(cpr.getFile().getAbsolutePath(),7,",");
+  Graph<String,String> graph=GraphLoader.loadUndirectedGraphEdgeListFile(cpr.getTempFileFromArchive().getAbsolutePath(),7,",");
   int vectorSize=5;
   int windowSize=2;
   DeepWalk<String,String> deepWalk=new DeepWalk.Builder<String,String>().learningRate(0.01).vectorSize(vectorSize).windowSize(windowSize).learningRate(0.01).build();
