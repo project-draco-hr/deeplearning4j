@@ -1,6 +1,6 @@
 {
   RecordReader csv=new CSVRecordReader();
-  csv.initialize(new FileSplit(new ClassPathResource("iris.txt").getFile()));
+  csv.initialize(new FileSplit(new ClassPathResource("iris.txt").getTempFileFromArchive()));
   int batchSize=3;
   int labelIdxFrom=3;
   int labelIdxTo=4;
