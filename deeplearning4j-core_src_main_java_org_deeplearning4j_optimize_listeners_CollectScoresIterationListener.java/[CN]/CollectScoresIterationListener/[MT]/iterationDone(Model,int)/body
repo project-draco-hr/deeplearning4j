@@ -1,0 +1,6 @@
+{
+  if (++iterationCount % frequency == 0) {
+    double score=model.score();
+    scoreVsIter.add(new Pair<>(iterationCount,score));
+  }
+}
