@@ -1,3 +1,5 @@
 {
-  return numParams(false);
+  if (isInitCalled())   return numParams(false);
+ else   log.info("Model is not initialized. Initialize net with init()");
+  return 0;
 }
