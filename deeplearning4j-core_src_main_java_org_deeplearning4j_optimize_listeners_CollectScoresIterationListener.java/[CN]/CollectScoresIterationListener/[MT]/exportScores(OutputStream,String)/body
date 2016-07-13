@@ -1,0 +1,8 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("Iteration").append(delimiter).append("Score");
+  for (  Pair<Integer,Double> p : scoreVsIter) {
+    sb.append("\n").append(p.getFirst()).append(delimiter).append(p.getSecond());
+  }
+  outputStream.write(sb.toString().getBytes("UTF-8"));
+}
