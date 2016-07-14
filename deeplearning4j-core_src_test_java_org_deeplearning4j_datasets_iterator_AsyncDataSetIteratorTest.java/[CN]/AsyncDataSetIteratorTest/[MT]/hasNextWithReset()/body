@@ -7,8 +7,7 @@
         DataSet ds=iterator.next();
         assertNotEquals(null,ds);
         cnt++;
-        assertEquals(100,ds.getFeatureMatrix().length());
-        assertEquals(10,ds.getLabels().length());
+        if (cnt == TEST_SIZE / 2)         iterator.reset();
       }
     }
   }

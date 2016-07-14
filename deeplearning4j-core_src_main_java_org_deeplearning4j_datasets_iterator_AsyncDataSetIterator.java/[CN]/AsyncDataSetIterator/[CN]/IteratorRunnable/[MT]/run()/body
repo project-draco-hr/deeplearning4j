@@ -6,6 +6,7 @@
         blockingQueue.put(baseIterator.next());
       }
   finally {
+        logger.info("Releasing");
         back.release();
       }
     }

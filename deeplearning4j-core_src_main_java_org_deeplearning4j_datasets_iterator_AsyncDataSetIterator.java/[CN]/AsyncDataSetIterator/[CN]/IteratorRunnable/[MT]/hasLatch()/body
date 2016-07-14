@@ -1,6 +1,8 @@
 {
+  logger.info("back permits: {}",back.availablePermits());
   if (back.tryAcquire()) {
     boolean result=baseIterator.hasNext();
+    logger.info("got result: {}",result);
     back.release();
     return result;
   }
