@@ -1,7 +1,13 @@
 {
   try {
     while (!killRunnable && iterator.hasNext()) {
-      queue.put(iterator.next());
+      try {
+        back.acquire();
+        queue.put(iterator.next());
+      }
+  finally {
+        back.release();
+      }
     }
   }
  catch (  InterruptedException e) {

@@ -1,0 +1,10 @@
+{
+  if (back.tryAcquire()) {
+    boolean result=iterator.hasNext();
+    back.release();
+    return result;
+  }
+ else {
+    return true;
+  }
+}

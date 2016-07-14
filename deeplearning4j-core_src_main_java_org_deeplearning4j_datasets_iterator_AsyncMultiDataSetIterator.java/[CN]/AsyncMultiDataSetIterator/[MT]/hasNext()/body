@@ -1,7 +1,7 @@
 {
   if (!queue.isEmpty())   return true;
   if (runnable.isAlive) {
-    return true;
+    return runnable.hasLatch();
   }
  else {
     if (!runnable.killRunnable && runnable.exception != null) {
