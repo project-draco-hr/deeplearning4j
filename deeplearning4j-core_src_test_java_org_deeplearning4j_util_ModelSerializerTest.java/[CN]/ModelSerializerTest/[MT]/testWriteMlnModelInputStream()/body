@@ -6,8 +6,10 @@
   net.init();
   File tempFile=File.createTempFile("tsfs","fdfsdf");
   tempFile.deleteOnExit();
-  ModelSerializer.writeModel(net,tempFile,true);
-  MultiLayerNetwork network=ModelSerializer.restoreMultiLayerNetwork(tempFile);
+  FileOutputStream fos=new FileOutputStream(tempFile);
+  ModelSerializer.writeModel(net,fos,true);
+  FileInputStream fis=new FileInputStream(tempFile);
+  MultiLayerNetwork network=ModelSerializer.restoreMultiLayerNetwork(fis);
   assertEquals(network.getLayerWiseConfigurations().toJson(),net.getLayerWiseConfigurations().toJson());
   assertEquals(net.params(),network.params());
   assertEquals(net.getUpdater(),network.getUpdater());
