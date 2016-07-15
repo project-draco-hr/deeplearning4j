@@ -1,17 +1,14 @@
 {
   if (!blockingQueue.isEmpty()) {
-    logger.debug("Branch A");
     return true;
   }
   if (runnable.isAlive.get()) {
-    logger.debug("Branch B");
     return runnable.hasLatch();
   }
  else {
     if (!runnable.killRunnable && runnable.exception != null) {
       throw runnable.exception;
     }
-    logger.debug("Branch C");
     return !blockingQueue.isEmpty();
   }
 }

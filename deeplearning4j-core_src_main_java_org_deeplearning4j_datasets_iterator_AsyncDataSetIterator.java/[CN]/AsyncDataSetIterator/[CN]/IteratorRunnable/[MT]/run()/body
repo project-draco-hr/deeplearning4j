@@ -1,14 +1,11 @@
 {
   try {
     while (!killRunnable && baseIterator.hasNext()) {
-      try {
-        back.acquire();
-        blockingQueue.put(baseIterator.next());
-      }
-  finally {
-        logger.info("Releasing");
-        back.release();
-      }
+      lock.writeLock().lock();
+      DataSet ds=baseIterator.next();
+      feeder.incrementAndGet();
+      lock.writeLock().unlock();
+      blockingQueue.put(ds);
     }
   }
  catch (  InterruptedException e) {

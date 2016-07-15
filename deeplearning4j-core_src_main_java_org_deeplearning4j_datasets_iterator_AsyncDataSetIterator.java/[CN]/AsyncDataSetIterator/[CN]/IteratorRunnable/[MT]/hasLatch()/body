@@ -1,12 +1,10 @@
 {
-  logger.info("back permits: {}",back.availablePermits());
-  if (back.tryAcquire()) {
-    boolean result=baseIterator.hasNext();
-    logger.info("got result: {}",result);
-    back.release();
-    return result;
+  if (feeder.get() > 0 || !blockingQueue.isEmpty())   return true;
+  try {
+    lock.readLock().lock();
+    return baseIterator.hasNext() || feeder.get() != 0 || !blockingQueue.isEmpty();
   }
- else {
-    return true;
+  finally {
+    lock.readLock().unlock();
   }
 }

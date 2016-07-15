@@ -10,6 +10,7 @@
         assertEquals(100,ds.getFeatureMatrix().length());
         assertEquals(10,ds.getLabels().length());
       }
+      assertEquals("Failed on iteration: " + iter + ", prefetchSize: "+ prefetchSize,TEST_SIZE,cnt);
     }
   }
 }

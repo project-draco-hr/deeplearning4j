@@ -9,6 +9,7 @@
         cnt++;
         if (cnt == TEST_SIZE / 2)         iterator.reset();
       }
+      assertEquals(TEST_SIZE + (TEST_SIZE / 2),cnt);
     }
   }
 }
