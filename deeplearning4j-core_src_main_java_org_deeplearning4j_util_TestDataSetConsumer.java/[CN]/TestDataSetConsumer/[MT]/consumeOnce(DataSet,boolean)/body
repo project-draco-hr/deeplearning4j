@@ -1,0 +1,14 @@
+{
+  long timeMs=System.currentTimeMillis() + delay;
+  while (System.currentTimeMillis() < timeMs) {
+    if (consumeWithSleep)     try {
+      Thread.sleep(delay + 1);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  count.incrementAndGet();
+  if (count.get() % 100 == 0)   logger.info("Passed {} datasets...",count.get());
+  return count.get();
+}

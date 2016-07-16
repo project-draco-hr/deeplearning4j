@@ -1,0 +1,8 @@
+{
+  for (int iter=0; iter < ITERATIONS; iter++) {
+    AsyncDataSetIterator iterator=new AsyncDataSetIterator(backIterator,8);
+    TestDataSetConsumer consumer=new TestDataSetConsumer(iterator,EXECUTION_TIME);
+    consumer.consumeWhileHasNext(true);
+    assertEquals(TEST_SIZE,consumer.getCount());
+  }
+}
