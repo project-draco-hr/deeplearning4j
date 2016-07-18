@@ -7,6 +7,7 @@
   this.outputVertices=outputVertices;
   this.layer=layer;
   this.layerPreProcessor=layerPreProcessor;
+  this.outputVertex=outputVertex;
   this.inputs=new INDArray[(inputVertices != null ? inputVertices.length : 0)];
   this.epsilons=new INDArray[(outputVertices != null ? outputVertices.length : 0)];
 }

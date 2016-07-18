@@ -1,11 +1,11 @@
 {
   if (configuration.getBackpropType() == BackpropType.TruncatedBPTT) {
     rnnActivateUsingStoredState(inputs,true,true);
-    backprop(true);
+    calcBackpropGradients(true);
   }
  else {
     feedForward(true,true);
-    backprop(false);
+    calcBackpropGradients(false);
   }
   double l1=calcL1();
   double l2=calcL2();
