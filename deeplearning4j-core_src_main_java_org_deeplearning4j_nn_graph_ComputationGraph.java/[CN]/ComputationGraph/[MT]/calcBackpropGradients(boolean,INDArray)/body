@@ -5,10 +5,15 @@
     GraphVertex current=vertices[topologicalOrder[i]];
     if (current.isInputVertex())     continue;
     if (current.isOutputVertex()) {
-      BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)current.getLayer();
       int thisOutputNumber=configuration.getNetworkOutputs().indexOf(current.getVertexName());
-      INDArray currLabels=labels[thisOutputNumber];
-      outputLayer.setLabels(currLabels);
+      if (current.getLayer() instanceof BaseOutputLayer) {
+        BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)current.getLayer();
+        INDArray currLabels=labels[thisOutputNumber];
+        outputLayer.setLabels(currLabels);
+      }
+ else {
+        current.setErrors(externalEpsilons[thisOutputNumber]);
+      }
     }
     Pair<Gradient,INDArray[]> pair=current.doBackward(truncatedBPTT);
     INDArray[] epsilons=pair.getSecond();

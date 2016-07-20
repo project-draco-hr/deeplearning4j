@@ -1,3 +1,4 @@
 {
-  return new org.deeplearning4j.nn.graph.vertex.impl.LayerVertex(graph,name,idx,LayerFactories.getFactory(layerConf).create(layerConf,null,idx,paramsView,initializeParams),preProcessor);
+  boolean isOutput=graph.getConfiguration().getNetworkOutputs().contains(name);
+  return new org.deeplearning4j.nn.graph.vertex.impl.LayerVertex(graph,name,idx,LayerFactories.getFactory(layerConf).create(layerConf,null,idx,paramsView,initializeParams),preProcessor,isOutput);
 }
