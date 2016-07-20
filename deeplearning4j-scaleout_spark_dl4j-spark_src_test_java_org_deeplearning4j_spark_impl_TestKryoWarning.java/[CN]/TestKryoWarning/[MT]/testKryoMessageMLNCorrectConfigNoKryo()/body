@@ -1,0 +1,4 @@
+{
+  SparkConf sparkConf=new SparkConf().setMaster("local[*]").setAppName("sparktest");
+  doTestMLN(sparkConf);
+}

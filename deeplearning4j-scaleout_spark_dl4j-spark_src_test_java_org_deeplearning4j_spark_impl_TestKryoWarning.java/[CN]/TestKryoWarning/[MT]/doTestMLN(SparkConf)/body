@@ -1,0 +1,11 @@
+{
+  JavaSparkContext sc=new JavaSparkContext(sparkConf);
+  try {
+    MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().list().layer(0,new OutputLayer.Builder().nIn(10).nOut(10).build()).pretrain(false).backprop(true).build();
+    TrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(1).build();
+    SparkDl4jMultiLayer sml=new SparkDl4jMultiLayer(sc,conf,tm);
+  }
+  finally {
+    sc.stop();
+  }
+}
