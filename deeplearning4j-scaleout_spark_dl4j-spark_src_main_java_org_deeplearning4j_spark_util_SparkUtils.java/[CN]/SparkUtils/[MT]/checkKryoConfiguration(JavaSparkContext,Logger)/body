@@ -1,0 +1,13 @@
+{
+  String serializer=javaSparkContext.getConf().get("spark.serializer",null);
+  if (serializer != null && serializer.equals("org.apache.spark.serializer.KryoSerializer")) {
+    String kryoRegistrator=javaSparkContext.getConf().get("spark.kryo.registrator",null);
+    if (kryoRegistrator == null || !kryoRegistrator.equals("org.nd4j.Nd4jRegistrator")) {
+      log.warn("***** Kryo serialization detected without Nd4j Registrator *****");
+      log.warn("***** ND4J Kryo registrator is required to avoid serialization (NullPointerException) issues on NDArrays *****");
+      log.warn("***** Use nd4j-kryo_2.10 or _2.11 artifact, with sparkConf.set(\"spark.kryo.registrator\", \"org.nd4j.Nd4jRegistrator\"); *****");
+      return false;
+    }
+  }
+  return true;
+}
