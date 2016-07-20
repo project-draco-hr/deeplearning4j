@@ -1,7 +1,11 @@
 {
   try {
     while (!killRunnable && baseIterator.hasNext()) {
-      blockingQueue.put(baseIterator.next());
+      lock.writeLock().lock();
+      DataSet ds=baseIterator.next();
+      feeder.incrementAndGet();
+      lock.writeLock().unlock();
+      blockingQueue.put(ds);
     }
   }
  catch (  InterruptedException e) {
@@ -14,7 +18,7 @@ catch (  RuntimeException e) {
     exception=e;
   }
  finally {
-    isAlive=false;
+    isAlive.set(false);
     runCompletedSemaphore.release();
   }
 }

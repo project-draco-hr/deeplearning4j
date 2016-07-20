@@ -1,7 +1,11 @@
 {
   try {
     while (!killRunnable && iterator.hasNext()) {
-      queue.put(iterator.next());
+      lock.writeLock().lock();
+      MultiDataSet ds=iterator.next();
+      feeder.incrementAndGet();
+      lock.writeLock().unlock();
+      queue.put(ds);
     }
   }
  catch (  InterruptedException e) {
