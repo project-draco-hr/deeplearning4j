@@ -1,0 +1,10 @@
+{
+  if (feeder.get() > 0 || !queue.isEmpty())   return true;
+  try {
+    lock.readLock().lock();
+    return iterator.hasNext() || feeder.get() != 0 || !queue.isEmpty();
+  }
+  finally {
+    lock.readLock().unlock();
+  }
+}

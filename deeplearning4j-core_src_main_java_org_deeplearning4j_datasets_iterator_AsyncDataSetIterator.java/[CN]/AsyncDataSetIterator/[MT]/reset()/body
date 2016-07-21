@@ -1,6 +1,6 @@
 {
   runnable.killRunnable=true;
-  if (runnable.isAlive) {
+  if (runnable.isAlive.get()) {
     thread.interrupt();
   }
   try {

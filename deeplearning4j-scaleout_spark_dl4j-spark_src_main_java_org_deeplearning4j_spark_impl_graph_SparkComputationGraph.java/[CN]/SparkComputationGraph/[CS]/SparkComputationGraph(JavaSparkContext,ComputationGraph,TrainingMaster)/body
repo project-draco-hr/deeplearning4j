@@ -4,4 +4,5 @@
   this.conf=network.getConfiguration().clone();
   this.network=network;
   this.network.init();
+  SparkUtils.checkKryoConfiguration(javaSparkContext,log);
 }

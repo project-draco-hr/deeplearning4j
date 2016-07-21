@@ -1,0 +1,15 @@
+{
+  for (int iter=0; iter < ITERATIONS; iter++) {
+    for (int prefetchSize=1; prefetchSize <= 10; prefetchSize++) {
+      AsyncDataSetIterator iterator=new AsyncDataSetIterator(backIterator,prefetchSize);
+      int cnt=0;
+      while (iterator.hasNext()) {
+        DataSet ds=iterator.next();
+        assertNotEquals(null,ds);
+        cnt++;
+        if (cnt == TEST_SIZE / 2)         iterator.reset();
+      }
+      assertEquals(TEST_SIZE + (TEST_SIZE / 2),cnt);
+    }
+  }
+}

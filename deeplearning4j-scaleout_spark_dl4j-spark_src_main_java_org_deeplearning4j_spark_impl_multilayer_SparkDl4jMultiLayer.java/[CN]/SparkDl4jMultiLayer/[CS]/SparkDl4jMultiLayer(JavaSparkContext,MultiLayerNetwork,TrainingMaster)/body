@@ -4,4 +4,5 @@
   this.network=network;
   if (!network.isInitCalled())   network.init();
   this.trainingMaster=trainingMaster;
+  SparkUtils.checkKryoConfiguration(javaSparkContext,log);
 }
