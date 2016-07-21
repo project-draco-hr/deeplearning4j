@@ -31,7 +31,7 @@
         result.divi(Math.min(workers,locker.get()));
         model.setParams(result);
         score/=Math.min(workers,locker.get());
-        logger.info("Averaged score: " + score);
+        if (reportScore)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
           UpdaterAggregator uag=((MultiLayerNetwork)zoo[0].getModel()).getUpdater().getAggregator(false);
           for (int cnt=0; cnt < workers; cnt++) {
