@@ -1,0 +1,6 @@
+{
+  backingQueues=new ArrayList<>();
+  for (int i=0; i < numberOfFlows; i++) {
+    backingQueues.add(new ConcurrentLinkedQueue<DataSet>());
+  }
+}
