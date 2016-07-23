@@ -1,8 +1,12 @@
 {
   while (true) {
     try {
-      DataSet ds=bufferQueue.poll(1,TimeUnit.SECONDS);
+      DataSet ds=bufferQueue.poll(100,TimeUnit.MILLISECONDS);
       if (ds != null) {
+        if (ds.getFeaturesMaskArray() != null)         Nd4j.getAffinityManager().touch(ds.getFeaturesMaskArray());
+        if (ds.getLabelsMaskArray() != null)         Nd4j.getAffinityManager().touch(ds.getLabelsMaskArray());
+        Nd4j.getAffinityManager().touch(ds.getFeatures());
+        Nd4j.getAffinityManager().touch(ds.getLabels());
         targetQueue.add(ds);
       }
     }

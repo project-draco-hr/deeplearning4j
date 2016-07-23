@@ -1,3 +1,7 @@
 {
+synchronized (this) {
+    if (nextBucket.get() >= backingQueues.size())     nextBucket.set(0);
+  }
+  handlers.get(nextBucket.getAndIncrement()).put(dataSet);
   return true;
 }

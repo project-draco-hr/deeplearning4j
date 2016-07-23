@@ -1,6 +1,12 @@
 {
   backingQueues=new ArrayList<>();
+  handlers=new ArrayList<>();
   for (int i=0; i < numberOfFlows; i++) {
-    backingQueues.add(new ConcurrentLinkedQueue<DataSet>());
+    ConcurrentLinkedQueue<DataSet> queue=new ConcurrentLinkedQueue<>();
+    backingQueues.add(queue);
+    QueueHandler handler=new QueueHandler(queue);
+    handler.start();
+    handlers.add(handler);
   }
+  numberOfBuckets=numberOfFlows;
 }
