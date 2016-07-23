@@ -22,14 +22,12 @@
       }
       if (iterationsCounter.get() % averagingFrequency == 0 || !iterator.hasNext()) {
         double score=0.0;
-        INDArray result=Nd4j.zeros(model.params().shape());
+        List<INDArray> params=new ArrayList<>();
         for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
-          INDArray params=zoo[cnt].getModel().params();
-          result.addi(params);
+          params.add(zoo[cnt].getModel().params());
           score+=zoo[cnt].getModel().score();
         }
-        result.divi(Math.min(workers,locker.get()));
-        model.setParams(result);
+        Nd4j.averageAndPropagate(model.params(),params);
         score/=Math.min(workers,locker.get());
         if (reportScore)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
