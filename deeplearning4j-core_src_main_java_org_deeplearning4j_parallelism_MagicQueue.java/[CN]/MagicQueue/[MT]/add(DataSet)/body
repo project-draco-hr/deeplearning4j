@@ -1,7 +1,13 @@
 {
+  if (numberOfBuckets > 1) {
 synchronized (this) {
-    if (nextBucket.get() >= backingQueues.size())     nextBucket.set(0);
+      if (nextBucket.get() >= backingQueues.size())       nextBucket.set(0);
+    }
+    handlers.get(nextBucket.getAndIncrement()).put(dataSet);
+    return true;
   }
-  handlers.get(nextBucket.getAndIncrement()).put(dataSet);
-  return true;
+ else {
+    backingQueues.get(0).add(dataSet);
+    return true;
+  }
 }
