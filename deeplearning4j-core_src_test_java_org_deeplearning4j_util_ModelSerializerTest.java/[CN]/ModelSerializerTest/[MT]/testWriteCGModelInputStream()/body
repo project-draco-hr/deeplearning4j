@@ -9,4 +9,5 @@
   ComputationGraph network=ModelSerializer.restoreComputationGraph(fis);
   assertEquals(network.getConfiguration().toJson(),cg.getConfiguration().toJson());
   assertEquals(cg.params(),network.params());
+  assertEquals(cg.getUpdater(),network.getUpdater());
 }
