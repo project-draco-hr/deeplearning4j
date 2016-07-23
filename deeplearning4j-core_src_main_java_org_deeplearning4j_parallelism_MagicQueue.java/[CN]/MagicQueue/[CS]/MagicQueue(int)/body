@@ -5,6 +5,7 @@
     ConcurrentLinkedQueue<DataSet> queue=new ConcurrentLinkedQueue<>();
     backingQueues.add(queue);
     QueueHandler handler=new QueueHandler(queue);
+    Nd4j.getAffinityManager().attachThreadToDevice(handler,i);
     handler.start();
     handlers.add(handler);
   }
