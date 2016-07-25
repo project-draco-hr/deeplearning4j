@@ -3,7 +3,12 @@
   int startPosition=position.getAndIncrement();
   int lastId=-1;
   int currentPoint=order[startPosition];
+  int startPoint=currentPoint;
   for (int i=0; i < walkLength; i++) {
+    if (alpha > 0 && lastId != startPoint && lastId != -1 && alpha > rng.nextDouble()) {
+      startPosition=startPoint;
+      continue;
+    }
     Vertex<T> vertex=sourceGraph.getVertex(currentPoint);
     sequence.addElement(vertex.getValue());
     List<? extends Edge<? extends Number>> edges=sourceGraph.getEdgesOut(currentPoint);
@@ -45,6 +50,7 @@ currentPoint=edge.getTo();
 currentPoint=edge.getFrom();
 }
 }
+lastId=currentPoint;
 break;
 }
 }

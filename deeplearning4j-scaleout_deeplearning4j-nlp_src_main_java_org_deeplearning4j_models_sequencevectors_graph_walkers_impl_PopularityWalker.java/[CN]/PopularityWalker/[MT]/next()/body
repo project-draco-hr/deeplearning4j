@@ -68,6 +68,7 @@ case PLAIN:
 con=RandomUtils.nextInt(start,stop + 1);
 Vertex<T> nV=sourceGraph.getVertex(connections[con]);
 startPosition=nV.vertexID();
+lastId=vertex.vertexID();
 }
 break;
 case PROPORTIONAL:
@@ -78,6 +79,7 @@ double floor=0.0;
 for (int b=0; b < weights.length; b++) {
 if (prob >= floor && prob < floor + norm[b]) {
 startPosition=list.get(b).getVertexId();
+lastId=startPosition;
 break;
 }
  else {
