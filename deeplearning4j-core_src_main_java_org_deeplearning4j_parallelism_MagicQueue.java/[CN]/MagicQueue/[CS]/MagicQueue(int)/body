@@ -3,7 +3,7 @@
   handlers=new ArrayList<>();
   if (numberOfFlows > 1) {
     for (int i=0; i < numberOfFlows; i++) {
-      ConcurrentLinkedQueue<DataSet> queue=new ConcurrentLinkedQueue<>();
+      LinkedBlockingQueue<DataSet> queue=new LinkedBlockingQueue<>();
       backingQueues.add(queue);
       QueueHandler handler=new QueueHandler(queue);
       Nd4j.getAffinityManager().attachThreadToDevice(handler,i);
@@ -12,7 +12,7 @@
     }
   }
  else {
-    ConcurrentLinkedQueue<DataSet> queue=new ConcurrentLinkedQueue<>();
+    LinkedBlockingQueue<DataSet> queue=new LinkedBlockingQueue<>();
     backingQueues.add(queue);
   }
   numberOfBuckets=numberOfFlows;
