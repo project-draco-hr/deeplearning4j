@@ -1,0 +1,11 @@
+{
+  Map<String,INDArray> params=layer.paramTable();
+  int count=0;
+  for (  Map.Entry<String,INDArray> entry : params.entrySet()) {
+    GradientUpdater gu=init(entry.getKey(),layer);
+    int thisSize=gu.stateSizeForInputSize(entry.getValue().length());
+    INDArray subset=viewArray.get(NDArrayIndex.point(0),NDArrayIndex.interval(count,count + thisSize));
+    gu.setStateViewArray(subset,initialize);
+    count+=thisSize;
+  }
+}

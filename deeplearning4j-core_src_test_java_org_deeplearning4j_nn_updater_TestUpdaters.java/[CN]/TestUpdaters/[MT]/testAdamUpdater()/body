@@ -9,6 +9,9 @@
   INDArray params=Nd4j.create(1,numParams);
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
+  int updaterStateSize=updater.stateSizeForLayer(layer);
+  INDArray updaterState=Nd4j.create(1,updaterStateSize);
+  updater.setStateViewArray(layer,updaterState,true);
   updater.update(layer,gradient,iteration,1);
   double beta1t=FastMath.pow(beta1,iteration);
   double beta2t=FastMath.pow(beta2,iteration);
