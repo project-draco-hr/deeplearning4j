@@ -1,5 +1,5 @@
 {
-  WeightedWalker<T> walker=new WeightedWalker<>(sourceGraph);
+  WeightedWalker<T> walker=new WeightedWalker<>();
   walker.noEdgeHandling=this.noEdgeHandling;
   walker.sourceGraph=this.sourceGraph;
   walker.walkLength=this.walkLength;
