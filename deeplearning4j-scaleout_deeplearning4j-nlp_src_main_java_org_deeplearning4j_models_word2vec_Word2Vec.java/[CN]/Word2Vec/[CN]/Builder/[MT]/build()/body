@@ -24,6 +24,7 @@
   ret.workers=this.workers;
   ret.useUnknown=this.useUnknown;
   ret.unknownElement=this.unknownElement;
+  ret.variableWindows=this.variableWindows;
   ret.iterator=this.iterator;
   ret.lookupTable=this.lookupTable;
   ret.tokenizerFactory=this.tokenizerFactory;
@@ -45,6 +46,7 @@
   this.configuration.setNegative(negative);
   this.configuration.setEpochs(this.numEpochs);
   this.configuration.setStopList(this.stopWords);
+  this.configuration.setVariableWindows(variableWindows);
   ret.configuration=this.configuration;
   ret.trainSequenceVectors=false;
   ret.trainElementsVectors=true;

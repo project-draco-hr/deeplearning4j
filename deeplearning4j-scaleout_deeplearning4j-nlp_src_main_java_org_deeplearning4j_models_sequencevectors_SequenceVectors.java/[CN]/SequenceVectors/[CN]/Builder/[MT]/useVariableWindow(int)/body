@@ -1,0 +1,5 @@
+{
+  if (windows == null || windows.length == 0)   throw new IllegalStateException("Variable windows can't be empty");
+  variableWindows=windows;
+  return this;
+}
