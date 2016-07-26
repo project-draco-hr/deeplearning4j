@@ -1,0 +1,8 @@
+{
+  List<Object> rewards=storage.getSorted(key,HistoryStorage.SortOutput.ASCENDING);
+  List<ReportBean> conv=new ArrayList<>();
+  for (  Object object : rewards) {
+    conv.add((ReportBean)object);
+  }
+  return Response.ok(conv).build();
+}
