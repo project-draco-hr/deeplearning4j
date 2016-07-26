@@ -6,7 +6,7 @@
     long ntpTime=timeSource.currentTimeMillis();
     long offset=ntpTime - systemTime;
     System.out.println("System: " + systemTime + "\tSystemClockTimeSource: "+ ntpTime+ "\tOffset: "+ offset);
-    assertEquals(systemTime,ntpTime);
+    assertEquals(systemTime,ntpTime,2);
     Thread.sleep(500);
   }
 }
