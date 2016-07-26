@@ -1,0 +1,10 @@
+{
+  UiServer.createServer();
+  System.out.println("Server: http://localhost:" + UiServer.getInstance().getPort() + "/rl");
+  Thread.sleep(1000);
+  ReinforcedReporter reporter=new ReinforcedReporter(UiServer.getInstance().getConnectionInfo());
+  for (int x=0; x < 10; x++) {
+    reporter.report(x,x);
+  }
+  Thread.sleep(100000000);
+}
