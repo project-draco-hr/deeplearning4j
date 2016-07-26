@@ -1,5 +1,5 @@
 {
-  weightGradient=Nd4j.ones(1,nIn * nOut);
+  weightGradient=Nd4j.ones(nIn,nOut);
   biasGradient=Nd4j.ones(1,nOut);
   gradient.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
   gradient.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());

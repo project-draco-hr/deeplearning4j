@@ -1,3 +1,4 @@
 {
-  throw new RuntimeException("Not yet implemented");
+  if (!(layer instanceof MultiLayerNetwork))   throw new IllegalArgumentException("Expected MultiLayerNetwork");
+  return viewArray.length();
 }

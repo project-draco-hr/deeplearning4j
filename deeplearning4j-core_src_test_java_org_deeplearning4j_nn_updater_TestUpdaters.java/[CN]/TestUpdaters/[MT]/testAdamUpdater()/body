@@ -16,6 +16,7 @@
   double beta1t=FastMath.pow(beta1,iteration);
   double beta2t=FastMath.pow(beta2,iteration);
   double alphat=lr * FastMath.sqrt(1 - beta2t) / (1 - beta1t);
+  if (Double.isNaN(alphat) || alphat == 0.0)   alphat=epsilon;
   Gradient gradientDup=new DefaultGradient();
   gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient);
   gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient);
