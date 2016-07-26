@@ -1,7 +1,0 @@
-{
-  AdaDeltaAggregator ag=new AdaDeltaAggregator();
-  if (addThis) {
-    ag.aggregate(this);
-  }
-  return ag;
-}

@@ -33,20 +33,10 @@
         score/=Math.min(workers,locker.get());
         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
-          UpdaterAggregator uag=((MultiLayerNetwork)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getAggregator(true));
-          }
-          ((MultiLayerNetwork)model).setScore(score);
-          ((MultiLayerNetwork)model).setUpdater(uag.getUpdater());
+          throw new RuntimeException("TODO - updater aggregation");
         }
  else         if (model instanceof ComputationGraph) {
-          ComputationGraphUpdater.Aggregator uag=((ComputationGraph)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getAggregator(true));
-          }
-          ((ComputationGraph)model).setScore(score);
-          ((ComputationGraph)model).setUpdater(uag.getUpdater());
+          throw new RuntimeException("TODO - updater aggregation");
         }
         for (int i=0; i < workers; i++) {
           zoo[i].updateModel(model);
