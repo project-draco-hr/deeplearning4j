@@ -33,10 +33,28 @@
         score/=Math.min(workers,locker.get());
         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
-          throw new RuntimeException("TODO - updater aggregation");
+          Updater updater=((MultiLayerNetwork)zoo[0].getModel()).getUpdater();
+          INDArray updaterState=Nd4j.zeros(updater.getStateViewArray().shape());
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            Updater u=((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater();
+            INDArray updaterView=u.getStateViewArray();
+            updaterState.addi(updaterView);
+          }
+          updaterState.divi(Math.min(workers,locker.get()));
+          ((MultiLayerNetwork)model).getUpdater().setStateViewArray((Layer)model,updaterState,false);
+          ((MultiLayerNetwork)model).setScore(score);
         }
  else         if (model instanceof ComputationGraph) {
-          throw new RuntimeException("TODO - updater aggregation");
+          ComputationGraphUpdater updater=((ComputationGraph)zoo[0].getModel()).getUpdater();
+          INDArray updaterState=Nd4j.zeros(updater.getStateViewArray().shape());
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            ComputationGraphUpdater u=((ComputationGraph)zoo[cnt].getModel()).getUpdater();
+            INDArray updaterView=u.getStateViewArray();
+            updaterState.addi(updaterView);
+          }
+          updaterState.divi(Math.min(workers,locker.get()));
+          ((ComputationGraph)model).getUpdater().setStateViewArray(updaterState);
+          ((ComputationGraph)model).setScore(score);
         }
         for (int i=0; i < workers; i++) {
           zoo[i].updateModel(model);
