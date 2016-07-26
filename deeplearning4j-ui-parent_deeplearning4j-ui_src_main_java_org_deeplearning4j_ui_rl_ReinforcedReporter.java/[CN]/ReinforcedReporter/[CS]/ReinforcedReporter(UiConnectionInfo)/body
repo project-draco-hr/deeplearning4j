@@ -1,0 +1,4 @@
+{
+  this.connectionInfo=connectionInfo;
+  target=client.target(connectionInfo.getFirstPart()).path(connectionInfo.getSecondPart("rl")).path("state").queryParam("sid",connectionInfo.getSessionId());
+}
