@@ -5,8 +5,8 @@
   if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
   ComputationGraph net=new ComputationGraph(tuple.getGraphConfiguration());
   net.init(tuple.getParameters(),true);
-  if (tuple.getGraphUpdater() != null) {
-    net.setUpdater(tuple.getGraphUpdater().clone());
+  if (tuple.getUpdaterState() != null) {
+    net.setUpdater(new ComputationGraphUpdater(net,tuple.getUpdaterState().dup()));
   }
   if (configuration.isCollectTrainingStats())   stats.logInitEnd();
   return net;

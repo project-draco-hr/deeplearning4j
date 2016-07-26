@@ -8,17 +8,17 @@
   if (collectTrainingStats)   stats.logProcessParamsUpdaterStart();
   params.divi(aggCount);
   INDArray updaterState=tuple.getUpdaterStateSum();
-  updaterState.divi(aggCount);
+  if (updaterState != null)   updaterState.divi(aggCount);
   if (network != null) {
     MultiLayerNetwork net=network.getNetwork();
     net.setParameters(params);
-    net.getUpdater().setStateViewArray(null,updaterState,false);
+    if (updaterState != null)     net.getUpdater().setStateViewArray(null,updaterState,false);
     network.setScore(tuple.getScoreSum() / tuple.getAggregationsCount());
   }
  else {
     ComputationGraph g=graph.getNetwork();
     g.setParams(params);
-    g.getUpdater().setStateViewArray(updaterState);
+    if (updaterState != null)     g.getUpdater().setStateViewArray(updaterState);
     graph.setScore(tuple.getScoreSum() / tuple.getAggregationsCount());
   }
   if (collectTrainingStats) {
