@@ -1,4 +1,5 @@
 {
+  this.shouldUpdate.set(true);
   if (model instanceof MultiLayerNetwork) {
     replicatedModel=((MultiLayerNetwork)model).clone();
   }
