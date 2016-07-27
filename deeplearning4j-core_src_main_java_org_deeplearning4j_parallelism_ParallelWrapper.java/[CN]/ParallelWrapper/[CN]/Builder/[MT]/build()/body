@@ -2,5 +2,6 @@
   ParallelWrapper wrapper=new ParallelWrapper(model,workers,prefetchSize);
   wrapper.averagingFrequency=this.averagingFrequency;
   wrapper.reportScore=this.reportScore;
+  wrapper.averageUpdaters=this.averageUpdaters;
   return wrapper;
 }
