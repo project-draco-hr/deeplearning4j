@@ -31,7 +31,7 @@
         result.divi(Math.min(workers,locker.get()));
         model.setParams(result);
         score/=Math.min(workers,locker.get());
-        logger.info("Averaged score: " + score);
+        if (verbose)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
           Updater updater=((MultiLayerNetwork)zoo[0].getModel()).getUpdater();
           INDArray updaterState=Nd4j.zeros(updater.getStateViewArray().shape());
