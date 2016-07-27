@@ -1,11 +1,11 @@
 {
+  source.reset();
   DataSetIterator iterator;
   if (prefetchSize > 0 && (!(source instanceof AsyncDataSetIterator) && !(source instanceof ListDataSetIterator))) {
     iterator=new AsyncDataSetIterator(source,prefetchSize);
   }
  else   iterator=source;
   AtomicInteger locker=new AtomicInteger(0);
-  iterator.reset();
   while (iterator.hasNext()) {
     DataSet dataSet=iterator.next();
     int pos=locker.getAndIncrement();
@@ -20,7 +20,7 @@
           throw new RuntimeException(e);
         }
       }
-      if (iterationsCounter.get() % averagingFrequency == 0 || !iterator.hasNext()) {
+      if (iterationsCounter.get() % averagingFrequency == 0) {
         double score=0.0;
         List<INDArray> params=new ArrayList<>();
         for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
@@ -32,7 +32,7 @@
         if (reportScore)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
           if (averageUpdaters) {
-            Updater updater=((MultiLayerNetwork)zoo[0].getModel()).getUpdater();
+            Updater updater=((MultiLayerNetwork)model).getUpdater();
             if (updater != null && updater.getStateViewArray() != null) {
               List<INDArray> updaters=new ArrayList<>();
               for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
@@ -45,7 +45,7 @@
         }
  else         if (model instanceof ComputationGraph) {
           if (averageUpdaters) {
-            ComputationGraphUpdater updater=((ComputationGraph)zoo[0].getModel()).getUpdater();
+            ComputationGraphUpdater updater=((ComputationGraph)model).getUpdater();
             if (updater != null && updater.getStateViewArray() != null) {
               List<INDArray> updaters=new ArrayList<>();
               for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
@@ -60,4 +60,6 @@
       locker.set(0);
     }
   }
+  logger.debug("Iterations passed: {}",iterationsCounter.get());
+  iterationsCounter.set(0);
 }

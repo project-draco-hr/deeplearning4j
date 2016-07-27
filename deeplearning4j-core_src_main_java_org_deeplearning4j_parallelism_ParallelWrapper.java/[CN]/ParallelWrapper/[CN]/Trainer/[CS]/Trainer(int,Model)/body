@@ -1,6 +1,7 @@
 {
   this.threadId=threadId;
   this.setDaemon(true);
+  this.setName("ParallelWrapper trainer " + threadId);
   this.originalModel=model;
   if (model instanceof MultiLayerNetwork) {
   }
