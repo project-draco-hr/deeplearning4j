@@ -1,5 +1,14 @@
 {
   try {
+    if (originalModel instanceof MultiLayerNetwork) {
+      MultiLayerConfiguration conf=((MultiLayerNetwork)originalModel).getLayerWiseConfigurations().clone();
+      this.replicatedModel=new MultiLayerNetwork(conf);
+      ((MultiLayerNetwork)replicatedModel).init();
+    }
+ else     if (originalModel instanceof ComputationGraph) {
+      this.replicatedModel=new ComputationGraph(((ComputationGraph)originalModel).getConfiguration().clone());
+      ((ComputationGraph)this.replicatedModel).init();
+    }
     while (true) {
       DataSet dataSet=queue.poll(1,TimeUnit.SECONDS);
       if (dataSet != null) {
