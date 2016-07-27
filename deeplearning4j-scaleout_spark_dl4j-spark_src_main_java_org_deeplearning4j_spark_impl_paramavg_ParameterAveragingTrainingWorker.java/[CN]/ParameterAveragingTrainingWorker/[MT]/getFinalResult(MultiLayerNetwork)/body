@@ -1,3 +1,8 @@
 {
-  return new ParameterAveragingTrainingResult(network.params(),(saveUpdater ? network.getUpdater() : null),network.score());
+  INDArray updaterState=null;
+  if (saveUpdater) {
+    Updater u=network.getUpdater();
+    if (u != null)     updaterState=u.getStateViewArray();
+  }
+  return new ParameterAveragingTrainingResult(network.params(),updaterState,network.score());
 }

@@ -1,7 +1,0 @@
-{
-  AdaGradAggregator ag=new AdaGradAggregator();
-  if (addThis) {
-    ag.aggregate(this);
-  }
-  return ag;
-}

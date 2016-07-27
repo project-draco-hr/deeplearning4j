@@ -20,14 +20,20 @@
   uArr[0]=new SgdUpdater();
   uArr[1]=new NoOpUpdater();
   uArr[2]=new AdaGradUpdater();
+  int updaterStateSize=uArr[2].stateSizeForLayer(net.getLayer(2));
+  INDArray updaterState=Nd4j.create(1,updaterStateSize);
+  uArr[2].setStateViewArray(net.getLayer(2),updaterState,true);
   uArr[3]=new NesterovsUpdater();
+  updaterStateSize=uArr[3].stateSizeForLayer(net.getLayer(3));
+  updaterState=Nd4j.create(1,updaterStateSize);
+  uArr[3].setStateViewArray(net.getLayer(3),updaterState,true);
   int[] nIns={4,5,6,7};
   int[] nOuts={5,6,7,8};
   for (int i=0; i < 5; i++) {
     Gradient gradient=new DefaultGradient();
-    Map<String,INDArray> expectedGradient=new HashMap<>();
+    Map<String,INDArray> expectedGradient=new LinkedHashMap<>();
     for (int j=0; j < net.getnLayers(); j++) {
-      INDArray wGrad=Nd4j.rand(nIns[j],nOuts[j]);
+      INDArray wGrad=Nd4j.rand(1,nIns[j] * nOuts[j]);
       INDArray bGrad=Nd4j.rand(1,nOuts[j]);
       String wKey=j + "_" + DefaultParamInitializer.WEIGHT_KEY;
       String bKey=j + "_" + DefaultParamInitializer.BIAS_KEY;
@@ -42,6 +48,6 @@
       }
     }
     updater.update(net,gradient,i,1);
-    assertTrue(gradient.gradientForVariable().equals(expectedGradient));
+    assertEquals(gradient.gradientForVariable(),expectedGradient);
   }
 }
