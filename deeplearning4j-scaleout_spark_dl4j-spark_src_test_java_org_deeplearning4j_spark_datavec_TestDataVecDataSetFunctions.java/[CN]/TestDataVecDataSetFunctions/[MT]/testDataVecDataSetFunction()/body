@@ -10,7 +10,7 @@
   ImageRecordReader rr=new ImageRecordReader(28,28,1,new ParentPathLabelGenerator());
   rr.setLabels(labelsList);
   org.datavec.spark.functions.RecordReaderFunction rrf=new org.datavec.spark.functions.RecordReaderFunction(rr);
-  JavaRDD<Collection<Writable>> rdd=origData.map(rrf);
+  JavaRDD<List<Writable>> rdd=origData.map(rrf);
   JavaRDD<DataSet> data=rdd.map(new DataVecDataSetFunction(1,2,false));
   List<DataSet> collected=data.collect();
   InputSplit is=new FileSplit(new File(folder),new String[]{"bmp"},true);

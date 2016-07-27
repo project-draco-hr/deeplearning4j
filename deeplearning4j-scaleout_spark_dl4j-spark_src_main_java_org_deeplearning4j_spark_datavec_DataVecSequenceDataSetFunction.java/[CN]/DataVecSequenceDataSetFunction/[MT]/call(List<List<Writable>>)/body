@@ -1,12 +1,12 @@
 {
-  Iterator<Collection<Writable>> iter=input.iterator();
+  Iterator<List<Writable>> iter=input.iterator();
   INDArray features=null;
   INDArray labels=Nd4j.zeros(1,(regression ? 1 : numPossibleLabels),input.size());
   int[] fIdx=new int[3];
   int[] lIdx=new int[3];
   int i=0;
   while (iter.hasNext()) {
-    Collection<Writable> step=iter.next();
+    List<Writable> step=iter.next();
     if (i == 0) {
       features=Nd4j.zeros(1,step.size() - 1,input.size());
     }
