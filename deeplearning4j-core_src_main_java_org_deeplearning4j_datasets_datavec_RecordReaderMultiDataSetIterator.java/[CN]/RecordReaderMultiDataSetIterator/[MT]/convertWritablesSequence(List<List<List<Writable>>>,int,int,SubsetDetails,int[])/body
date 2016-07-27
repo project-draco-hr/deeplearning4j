@@ -8,14 +8,14 @@
  else   if (details.oneHot)   arr=Nd4j.create(new int[]{minValues,details.oneHotNumClasses,maxTSLength},'f');
  else   arr=Nd4j.create(new int[]{minValues,details.subsetEndInclusive - details.subsetStart + 1,maxTSLength},'f');
   boolean needMaskArray=false;
-  for (  Collection<Collection<Writable>> c : list) {
+  for (  List<List<Writable>> c : list) {
     if (c.size() < maxTSLength)     needMaskArray=true;
   }
   INDArray maskArray;
   if (needMaskArray)   maskArray=Nd4j.ones(minValues,maxTSLength);
  else   maskArray=null;
   for (int i=0; i < minValues; i++) {
-    Collection<Collection<Writable>> sequence=list.get(i);
+    List<List<Writable>> sequence=list.get(i);
     int startOffset;
     if (alignmentMode == AlignmentMode.ALIGN_START || alignmentMode == AlignmentMode.EQUAL_LENGTH) {
       startOffset=0;
@@ -25,7 +25,7 @@
     }
     int t=0;
     int k;
-    for (    Collection<Writable> timeStep : sequence) {
+    for (    List<Writable> timeStep : sequence) {
       k=startOffset + t++;
       if (details.entireReader) {
         Iterator<Writable> iter=timeStep.iterator();

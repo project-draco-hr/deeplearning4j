@@ -1,11 +1,11 @@
 {
   int[] shape=new int[2];
   shape[0]=features.size();
-  Iterator<Collection<Writable>> iter=features.iterator();
+  Iterator<List<Writable>> iter=features.iterator();
   int i=0;
   INDArray out=null;
   while (iter.hasNext()) {
-    Collection<Writable> step=iter.next();
+    List<Writable> step=iter.next();
     if (i == 0) {
       for (      Writable w : step) {
         if (w instanceof NDArrayWritable) {

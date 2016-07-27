@@ -1,12 +1,11 @@
 {
-  Iterator<Collection<Writable>> iter=input.iterator();
+  Iterator<List<Writable>> iter=input.iterator();
   int i=0;
   INDArray features=null;
   INDArray labels=null;
   int featureSize=0;
   while (iter.hasNext()) {
-    Collection<Writable> stepCollection=iter.next();
-    List<Writable> step=(stepCollection instanceof List ? (List<Writable>)stepCollection : new ArrayList<>(stepCollection));
+    List<Writable> step=iter.next();
     if (i == 0) {
       int j=0;
       for (      Writable w : step) {

@@ -4,7 +4,7 @@
  else   if (details.oneHot)   arr=Nd4j.zeros(minValues,details.oneHotNumClasses);
  else   arr=Nd4j.create(minValues,details.subsetEndInclusive - details.subsetStart + 1);
   for (int i=0; i < minValues; i++) {
-    Collection<Writable> c=list.get(i);
+    List<Writable> c=list.get(i);
     if (details.entireReader) {
       int j=0;
       for (      Writable w : c) {

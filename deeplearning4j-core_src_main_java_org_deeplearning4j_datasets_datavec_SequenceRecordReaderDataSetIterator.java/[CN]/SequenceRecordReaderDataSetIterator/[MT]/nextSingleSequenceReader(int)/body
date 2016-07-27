@@ -4,7 +4,7 @@
   int minLength=0;
   int maxLength=0;
   for (int i=0; i < num && hasNext(); i++) {
-    Collection<Collection<Writable>> sequence=recordReader.sequenceRecord();
+    List<List<Writable>> sequence=recordReader.sequenceRecord();
     INDArray[] fl=getFeaturesLabelsSingleReader(sequence);
     if (i == 0) {
       minLength=fl[0].size(0);

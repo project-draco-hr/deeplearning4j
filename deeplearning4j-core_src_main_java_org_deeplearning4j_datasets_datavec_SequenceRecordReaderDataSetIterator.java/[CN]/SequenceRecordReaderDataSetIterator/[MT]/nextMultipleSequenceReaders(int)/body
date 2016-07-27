@@ -2,8 +2,8 @@
   List<INDArray> featureList=new ArrayList<>(num);
   List<INDArray> labelList=new ArrayList<>(num);
   for (int i=0; i < num && hasNext(); i++) {
-    Collection<Collection<Writable>> featureSequence=recordReader.sequenceRecord();
-    Collection<Collection<Writable>> labelSequence=labelsReader.sequenceRecord();
+    List<List<Writable>> featureSequence=recordReader.sequenceRecord();
+    List<List<Writable>> labelSequence=labelsReader.sequenceRecord();
     INDArray features=getFeatures(featureSequence);
     INDArray labels=getLabels(labelSequence);
     featureList.add(features);

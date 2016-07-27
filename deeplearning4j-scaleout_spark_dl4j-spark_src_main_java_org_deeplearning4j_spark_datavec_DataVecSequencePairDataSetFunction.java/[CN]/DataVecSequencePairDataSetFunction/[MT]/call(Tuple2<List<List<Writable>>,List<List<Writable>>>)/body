@@ -1,16 +1,16 @@
 {
-  Collection<Collection<Writable>> featuresSeq=input._1();
-  Collection<Collection<Writable>> labelsSeq=input._2();
+  List<List<Writable>> featuresSeq=input._1();
+  List<List<Writable>> labelsSeq=input._2();
   int featuresLength=featuresSeq.size();
   int labelsLength=labelsSeq.size();
-  Iterator<Collection<Writable>> fIter=featuresSeq.iterator();
-  Iterator<Collection<Writable>> lIter=labelsSeq.iterator();
+  Iterator<List<Writable>> fIter=featuresSeq.iterator();
+  Iterator<List<Writable>> lIter=labelsSeq.iterator();
   INDArray inputArr=null;
   INDArray outputArr=null;
   int[] idx=new int[3];
   int i=0;
   while (fIter.hasNext()) {
-    Collection<Writable> step=fIter.next();
+    List<Writable> step=fIter.next();
     if (i == 0) {
       int[] inShape=new int[]{1,step.size(),featuresLength};
       inputArr=Nd4j.create(inShape);
@@ -39,7 +39,7 @@
   idx=new int[3];
   i=0;
   while (lIter.hasNext()) {
-    Collection<Writable> step=lIter.next();
+    List<Writable> step=lIter.next();
     if (i == 0) {
       int[] outShape=new int[]{1,(regression ? step.size() : numPossibleLabels),labelsLength};
       outputArr=Nd4j.create(outShape);
