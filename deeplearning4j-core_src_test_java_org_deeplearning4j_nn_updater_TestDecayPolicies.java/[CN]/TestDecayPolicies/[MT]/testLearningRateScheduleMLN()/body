@@ -16,11 +16,11 @@
       Gradient gradientExpected=new DefaultGradient();
       for (int k=0; k < net.getnLayers(); k++) {
         wKey=String.valueOf(k) + "_" + DefaultParamInitializer.WEIGHT_KEY;
-        gradientActual.setGradientFor(wKey,weightGradient.dup());
-        gradientExpected.setGradientFor(wKey,weightGradient.dup());
+        gradientActual.setGradientFor(wKey,Nd4j.ones(nIns[k],nOuts[k]));
+        gradientExpected.setGradientFor(wKey,Nd4j.ones(nIns[k],nOuts[k]));
         bKey=String.valueOf(k) + "_" + DefaultParamInitializer.BIAS_KEY;
-        gradientActual.setGradientFor(bKey,biasGradient.dup());
-        gradientExpected.setGradientFor(bKey,biasGradient.dup());
+        gradientActual.setGradientFor(bKey,Nd4j.ones(1,nOuts[k]));
+        gradientExpected.setGradientFor(bKey,Nd4j.ones(1,nOuts[k]));
       }
       updater.update(net,gradientActual,i,1);
       if (updaterFunc.equals(org.deeplearning4j.nn.conf.Updater.SGD))       lr=testSGDComputation(gradientActual,gradientExpected,lr,learningRateAfter,i);

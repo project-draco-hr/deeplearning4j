@@ -1,0 +1,4 @@
+{
+  storage.put(key,Pair.newPair((int)bean.getEpochId(),0),bean);
+  return Response.ok(Collections.singletonMap("status","ok")).build();
+}

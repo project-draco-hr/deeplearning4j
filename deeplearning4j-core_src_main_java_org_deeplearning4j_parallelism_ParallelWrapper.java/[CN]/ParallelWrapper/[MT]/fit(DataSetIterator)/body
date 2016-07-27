@@ -31,20 +31,28 @@
         score/=Math.min(workers,locker.get());
         if (reportScore)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
-          UpdaterAggregator uag=((MultiLayerNetwork)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          Updater updater=((MultiLayerNetwork)zoo[0].getModel()).getUpdater();
+          INDArray updaterState=Nd4j.zeros(updater.getStateViewArray().shape());
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            Updater u=((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater();
+            INDArray updaterView=u.getStateViewArray();
+            updaterState.addi(updaterView);
           }
+          updaterState.divi(Math.min(workers,locker.get()));
+          ((MultiLayerNetwork)model).getUpdater().setStateViewArray((Layer)model,updaterState,false);
           ((MultiLayerNetwork)model).setScore(score);
-          ((MultiLayerNetwork)model).setUpdater(uag.getUpdater());
         }
  else         if (model instanceof ComputationGraph) {
-          ComputationGraphUpdater.Aggregator uag=((ComputationGraph)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          ComputationGraphUpdater updater=((ComputationGraph)zoo[0].getModel()).getUpdater();
+          INDArray updaterState=Nd4j.zeros(updater.getStateViewArray().shape());
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            ComputationGraphUpdater u=((ComputationGraph)zoo[cnt].getModel()).getUpdater();
+            INDArray updaterView=u.getStateViewArray();
+            updaterState.addi(updaterView);
           }
+          updaterState.divi(Math.min(workers,locker.get()));
+          ((ComputationGraph)model).getUpdater().setStateViewArray(updaterState);
           ((ComputationGraph)model).setScore(score);
-          ((ComputationGraph)model).setUpdater(uag.getUpdater());
         }
         for (int i=0; i < workers; i++) {
           zoo[i].updateModel(model);

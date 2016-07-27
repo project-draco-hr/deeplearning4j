@@ -7,6 +7,9 @@
   INDArray params=Nd4j.create(1,numParams);
   Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
+  int updaterStateSize=updater.stateSizeForLayer(layer);
+  INDArray updaterState=Nd4j.create(1,updaterStateSize);
+  updater.setStateViewArray(layer,updaterState,true);
   updater.update(layer,gradient,-1,1);
   Gradient gradientDup=new DefaultGradient();
   gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());

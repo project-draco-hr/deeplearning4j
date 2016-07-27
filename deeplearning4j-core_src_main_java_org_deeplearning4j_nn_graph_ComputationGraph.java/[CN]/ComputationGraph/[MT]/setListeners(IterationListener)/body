@@ -1,5 +1,9 @@
 {
   List<IterationListener> list=new ArrayList<>();
-  Collections.addAll(list,listeners);
+  if (listeners != null && listeners.length > 0) {
+    for (    IterationListener i : listeners) {
+      if (i != null)       list.add(i);
+    }
+  }
   setListeners(list);
 }

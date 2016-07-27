@@ -1,21 +1,19 @@
 {
   if (!dataSetIterator.hasNext()) {
-    return Collections.singletonList(0.0);
+    return Collections.singletonList(new Tuple2<>(0,0.0));
   }
-  List<DataSet> collect=new ArrayList<>();
-  while (dataSetIterator.hasNext()) {
-    collect.add(dataSetIterator.next());
-  }
-  DataSet data=DataSet.merge(collect,false);
-  if (log.isDebugEnabled()) {
-    log.debug("Scoring {} examples with data {}",data.numExamples(),data.labelCounts());
-  }
+  DataSetIterator iter=new IteratorDataSetIterator(dataSetIterator,minibatchSize);
   ComputationGraph network=new ComputationGraph(ComputationGraphConfiguration.fromJson(json));
   network.init();
   INDArray val=params.value();
   if (val.length() != network.numParams(false))   throw new IllegalStateException("Network did not have same number of parameters as the broadcast set parameters");
   network.setParams(val);
-  double score=network.score(data,false);
-  if (network.conf().isMiniBatch())   score*=data.getFeatureMatrix().size(0);
-  return Collections.singletonList(score);
+  List<Tuple2<Integer,Double>> out=new ArrayList<>();
+  while (iter.hasNext()) {
+    DataSet ds=iter.next();
+    double score=network.score(ds,false);
+    int numExamples=ds.getFeatureMatrix().size(0);
+    out.add(new Tuple2<>(numExamples,score * numExamples));
+  }
+  return out;
 }
