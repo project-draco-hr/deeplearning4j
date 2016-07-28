@@ -1,7 +1,7 @@
 {
   List<String> labels=new ArrayList<>(Arrays.asList("Zico","Ziwang_Xu"));
   String rootDir=new ClassPathResource("lfwtest").getTempFileFromArchive().getAbsolutePath();
-  RecordReader reader=new ImageRecordReader(28,28,3,true,labels);
+  RecordReader reader=new ImageRecordReader(28,28,3);
   reader.initialize(new FileSplit(new File(rootDir)));
   DataSetIterator recordReader=new RecordReaderDataSetIterator(reader,1,labels.size());
   labels.remove("lfwtest");

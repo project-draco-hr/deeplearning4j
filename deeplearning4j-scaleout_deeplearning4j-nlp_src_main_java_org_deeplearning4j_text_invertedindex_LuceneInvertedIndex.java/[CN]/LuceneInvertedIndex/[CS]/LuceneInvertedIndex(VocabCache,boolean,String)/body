@@ -1,9 +1,0 @@
-{
-  this.vocabCache=vocabCache;
-  this.indexPath=indexPath;
-  if (new File(indexPath).exists()) {
-    indexPath=UUID.randomUUID().toString();
-    log.warn("Changing index path to" + indexPath);
-  }
-  initReader();
-}
