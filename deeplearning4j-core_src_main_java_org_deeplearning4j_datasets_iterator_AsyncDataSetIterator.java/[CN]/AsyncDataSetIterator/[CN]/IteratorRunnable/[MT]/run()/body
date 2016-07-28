@@ -1,12 +1,13 @@
 {
   try {
     while (!killRunnable && baseIterator.hasNext()) {
+      feeder.incrementAndGet();
       lock.writeLock().lock();
       DataSet ds=baseIterator.next();
-      feeder.incrementAndGet();
       lock.writeLock().unlock();
       blockingQueue.put(ds);
     }
+    isAlive.set(false);
   }
  catch (  InterruptedException e) {
     if (killRunnable) {
