@@ -1,5 +1,7 @@
 {
   String d=DEFAULT_DELIMITER;
+  String countRddPath=FilenameUtils.concat(outputPath,FILENAME_COUNT_RDD_SIZE);
+  StatsUtils.exportStats(parameterAveragingMasterCountRddSizeTimesMs,countRddPath,d,sc);
   String broadcastTimePath=FilenameUtils.concat(outputPath,FILENAME_BROADCAST_CREATE);
   StatsUtils.exportStats(parameterAveragingMasterBroadcastCreateTimesMs,broadcastTimePath,d,sc);
   String repartitionTime=FilenameUtils.concat(outputPath,FILENAME_REPARTITION_STATS);

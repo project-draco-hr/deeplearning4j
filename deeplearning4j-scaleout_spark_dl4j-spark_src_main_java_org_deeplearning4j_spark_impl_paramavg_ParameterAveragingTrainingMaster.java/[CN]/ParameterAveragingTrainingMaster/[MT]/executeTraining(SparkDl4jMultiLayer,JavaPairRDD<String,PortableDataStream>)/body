@@ -5,7 +5,9 @@
     log.info("Coalesing streams from {} to {} partitions",origNumPartitions,numWorkers);
     trainingData=trainingData.coalesce(numWorkers);
   }
+  if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
+  if (collectTrainingStats)   stats.logCountEnd();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
   JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
