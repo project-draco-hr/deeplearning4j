@@ -1,3 +1,0 @@
-{
-  this(recordReader,new SelfWritableConverter(),batchSize,-1,recordReader.getLabels() == null ? -1 : recordReader.getLabels().size());
-}

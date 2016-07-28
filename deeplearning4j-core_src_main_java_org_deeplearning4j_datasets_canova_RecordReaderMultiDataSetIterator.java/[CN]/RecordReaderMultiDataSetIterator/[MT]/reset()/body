@@ -1,4 +1,0 @@
-{
-  for (  RecordReader rr : recordReaders.values())   rr.reset();
-  for (  SequenceRecordReader rr : sequenceRecordReaders.values())   rr.reset();
-}

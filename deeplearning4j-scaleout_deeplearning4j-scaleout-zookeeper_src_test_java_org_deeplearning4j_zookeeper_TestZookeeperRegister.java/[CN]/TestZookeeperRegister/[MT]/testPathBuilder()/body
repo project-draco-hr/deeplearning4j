@@ -1,4 +1,0 @@
-{
-  String expected="/testhadoop:2181/tmp";
-  assertEquals(expected,new ZookeeperPathBuilder().setHost("testhadoop").setPort(2181).addPath("tmp").build());
-}
