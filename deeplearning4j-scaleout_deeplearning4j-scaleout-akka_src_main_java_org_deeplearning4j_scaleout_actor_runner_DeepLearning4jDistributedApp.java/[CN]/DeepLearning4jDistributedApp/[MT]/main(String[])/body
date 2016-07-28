@@ -1,5 +1,0 @@
-{
-  DeepLearning4jDistributedApp app=new DeepLearning4jDistributedApp(args);
-  app.exec();
-  if (app.type.equals(MASTER))   app.train();
-}

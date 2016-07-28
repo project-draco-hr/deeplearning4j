@@ -1,5 +1,0 @@
-{
-  cluster.subscribe(getSelf(),MemberEvent.class);
-  mediator.tell(new DistributedPubSubMediator.Subscribe(TOPICS,getSelf()),getSelf());
-  log.info("Subscribed to cluster events");
-}
