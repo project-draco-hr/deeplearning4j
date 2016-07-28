@@ -37,7 +37,7 @@
             params.addi(zoo[cnt].getModel().params());
             score+=zoo[cnt].getModel().score();
           }
-          params.divi(cnt);
+          params.divi(workers);
           model.setParams(params);
         }
         score/=Math.min(workers,locker.get());
@@ -54,13 +54,13 @@
                 Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
               }
  else {
-                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape(),updater.getStateViewArray().ordering());
+                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
                 int cnt=0;
                 for (; cnt < workers && cnt < locker.get(); cnt++) {
-                  state.addi(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                  state.addi(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray().dup());
                 }
                 state.divi(cnt);
-                updater.getStateViewArray().assign(state);
+                updater.setStateViewArray((MultiLayerNetwork)model,state,false);
               }
             }
           }
@@ -78,13 +78,13 @@
                 Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
               }
  else {
-                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape(),updater.getStateViewArray().ordering());
+                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
                 int cnt=0;
                 for (; cnt < workers && cnt < locker.get(); cnt++) {
                   state.addi(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getStateViewArray());
                 }
                 state.divi(cnt);
-                updater.getStateViewArray().assign(state);
+                updater.setStateViewArray(state);
               }
             }
           }

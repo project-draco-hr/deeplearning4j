@@ -2,6 +2,12 @@
   this.model=model;
   this.workers=workers;
   this.prefetchSize=prefetchSize;
+  if (this.model instanceof MultiLayerNetwork) {
+    ((MultiLayerNetwork)this.model).getUpdater();
+  }
+ else   if (this.model instanceof ComputationGraph) {
+    ((ComputationGraph)this.model).getUpdater();
+  }
   zoo=new Trainer[workers];
   for (int cnt=0; cnt < workers; cnt++) {
     zoo[cnt]=new Trainer(cnt,model);
