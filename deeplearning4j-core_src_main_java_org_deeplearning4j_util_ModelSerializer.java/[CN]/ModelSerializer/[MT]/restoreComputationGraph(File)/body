@@ -2,11 +2,13 @@
   ZipFile zipFile=new ZipFile(file);
   boolean gotConfig=false;
   boolean gotCoefficients=false;
-  boolean gotUpdater=false;
+  boolean gotOldUpdater=false;
+  boolean gotUpdaterState=false;
   boolean gotPreProcessor=false;
   String json="";
   INDArray params=null;
   ComputationGraphUpdater updater=null;
+  INDArray updaterState=null;
   DataSetPreProcessor preProcessor=null;
   ZipEntry config=zipFile.getEntry("configuration.json");
   if (config != null) {
@@ -30,9 +32,9 @@
     dis.close();
     gotCoefficients=true;
   }
-  ZipEntry updaters=zipFile.getEntry(UPDATER_BIN);
-  if (updaters != null) {
-    InputStream stream=zipFile.getInputStream(updaters);
+  ZipEntry oldUpdaters=zipFile.getEntry(OLD_UPDATER_BIN);
+  if (oldUpdaters != null) {
+    InputStream stream=zipFile.getInputStream(oldUpdaters);
     ObjectInputStream ois=new ObjectInputStream(stream);
     try {
       updater=(ComputationGraphUpdater)ois.readObject();
@@ -40,7 +42,15 @@
  catch (    ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
-    gotUpdater=true;
+    gotOldUpdater=true;
+  }
+  ZipEntry updaterStateEntry=zipFile.getEntry(UPDATER_BIN);
+  if (updaterStateEntry != null) {
+    InputStream stream=zipFile.getInputStream(updaterStateEntry);
+    DataInputStream dis=new DataInputStream(stream);
+    updaterState=Nd4j.read(dis);
+    dis.close();
+    gotUpdaterState=true;
   }
   ZipEntry prep=zipFile.getEntry("preprocessor.bin");
   if (prep != null) {
@@ -59,10 +69,13 @@
     ComputationGraphConfiguration confFromJson=ComputationGraphConfiguration.fromJson(json);
     ComputationGraph cg=new ComputationGraph(confFromJson);
     cg.init(params,false);
-    if (gotUpdater && updater != null) {
+    if (gotUpdaterState && updaterState != null) {
+      cg.getUpdater().setStateViewArray(updaterState);
+    }
+ else     if (gotOldUpdater && updater != null) {
       cg.setUpdater(updater);
     }
     return cg;
   }
- else   throw new IllegalStateException("Model wasnt found within file: gotConfig: [" + gotConfig + "], gotCoefficients: ["+ gotCoefficients+ "], gotUpdater: ["+ gotUpdater+ "]");
+ else   throw new IllegalStateException("Model wasnt found within file: gotConfig: [" + gotConfig + "], gotCoefficients: ["+ gotCoefficients+ "], gotUpdater: ["+ gotUpdaterState+ "]");
 }

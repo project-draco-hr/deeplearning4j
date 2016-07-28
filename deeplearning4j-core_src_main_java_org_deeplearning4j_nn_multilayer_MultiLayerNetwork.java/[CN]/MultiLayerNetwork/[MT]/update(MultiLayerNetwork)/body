@@ -12,7 +12,11 @@
     this.layers=null;
   }
   if (network.solver != null) {
-    this.setUpdater(network.getUpdater().clone());
+    INDArray updaterView=network.getUpdater().getStateViewArray();
+    if (updaterView != null) {
+      Updater newUpdater=new MultiLayerUpdater(this,updaterView.dup());
+      this.setUpdater(newUpdater);
+    }
   }
  else {
     this.solver=null;

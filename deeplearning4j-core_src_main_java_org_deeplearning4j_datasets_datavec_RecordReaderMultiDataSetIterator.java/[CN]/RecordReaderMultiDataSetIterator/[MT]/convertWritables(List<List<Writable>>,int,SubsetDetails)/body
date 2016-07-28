@@ -1,0 +1,56 @@
+{
+  INDArray arr;
+  if (details.entireReader)   arr=Nd4j.create(minValues,list.get(0).size());
+ else   if (details.oneHot)   arr=Nd4j.zeros(minValues,details.oneHotNumClasses);
+ else   arr=Nd4j.create(minValues,details.subsetEndInclusive - details.subsetStart + 1);
+  for (int i=0; i < minValues; i++) {
+    List<Writable> c=list.get(i);
+    if (details.entireReader) {
+      int j=0;
+      for (      Writable w : c) {
+        try {
+          arr.putScalar(i,j,w.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (w instanceof NDArrayWritable) {
+            arr.putRow(i,((NDArrayWritable)w).get());
+          }
+ else {
+            throw e;
+          }
+        }
+        j++;
+      }
+    }
+ else     if (details.oneHot) {
+      Writable w=null;
+      if (c instanceof List)       w=((List<Writable>)c).get(details.subsetStart);
+ else {
+        Iterator<Writable> iter=c.iterator();
+        for (int k=0; k <= details.subsetStart; k++)         w=iter.next();
+      }
+      arr.putScalar(i,w.toInt(),1.0);
+    }
+ else {
+      Iterator<Writable> iter=c.iterator();
+      for (int j=0; j < details.subsetStart; j++)       iter.next();
+      int k=0;
+      for (int j=details.subsetStart; j <= details.subsetEndInclusive; j++) {
+        Writable w=iter.next();
+        try {
+          arr.putScalar(i,k,w.toDouble());
+        }
+ catch (        UnsupportedOperationException e) {
+          if (w instanceof NDArrayWritable) {
+            arr.putRow(i,((NDArrayWritable)w).get().get(NDArrayIndex.all(),NDArrayIndex.interval(details.subsetStart,details.subsetEndInclusive + 1)));
+          }
+ else {
+            throw e;
+          }
+        }
+        k++;
+      }
+    }
+  }
+  return arr;
+}

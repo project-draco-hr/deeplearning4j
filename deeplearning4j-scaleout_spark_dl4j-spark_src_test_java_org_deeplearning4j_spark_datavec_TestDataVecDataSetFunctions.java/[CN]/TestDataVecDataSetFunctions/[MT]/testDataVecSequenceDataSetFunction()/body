@@ -8,7 +8,7 @@
   assertEquals(3,origData.count());
   SequenceRecordReader seqRR=new CSVSequenceRecordReader(1,",");
   SequenceRecordReaderFunction rrf=new SequenceRecordReaderFunction(seqRR);
-  JavaRDD<Collection<Collection<Writable>>> rdd=origData.map(rrf);
+  JavaRDD<List<List<Writable>>> rdd=origData.map(rrf);
   JavaRDD<DataSet> data=rdd.map(new DataVecSequenceDataSetFunction(2,-1,true,null,null));
   List<DataSet> collected=data.collect();
   InputSplit is=new FileSplit(new File(folder),new String[]{"txt"},true);

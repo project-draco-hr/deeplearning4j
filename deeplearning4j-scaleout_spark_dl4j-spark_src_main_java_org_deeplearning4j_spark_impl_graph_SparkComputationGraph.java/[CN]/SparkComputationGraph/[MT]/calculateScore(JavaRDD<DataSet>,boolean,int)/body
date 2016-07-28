@@ -1,0 +1,10 @@
+{
+  JavaRDD<Tuple2<Integer,Double>> rdd=data.mapPartitions(new ScoreFlatMapFunctionCGDataSet(conf.toJson(),sc.broadcast(network.params(false)),minibatchSize));
+  Tuple2<Integer,Double> countAndSumScores=rdd.reduce(new IntDoubleReduceFunction());
+  if (average) {
+    return countAndSumScores._2() / countAndSumScores._1();
+  }
+ else {
+    return countAndSumScores._2();
+  }
+}
