@@ -20,6 +20,7 @@
         throw new ConcurrentModificationException("Reset while next() is waiting for element?");
       }
       if (!runnable.isAlive.get() && blockingQueue.isEmpty()) {
+        if (runnable.exception != null)         throw new RuntimeException("Exception thrown in base iterator",runnable.exception);
         throw new IllegalStateException("Unexpected state occurred for AsyncDataSetIterator: runnable died or no data available");
       }
     }
