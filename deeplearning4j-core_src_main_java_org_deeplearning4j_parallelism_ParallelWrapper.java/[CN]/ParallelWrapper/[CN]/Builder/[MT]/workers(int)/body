@@ -1,5 +1,5 @@
 {
-  if (num < 1)   throw new RuntimeException("Number of workers can't be lower then 1!");
+  if (num < 2)   throw new RuntimeException("Number of workers can't be lower then 2!");
   this.workers=num;
   return this;
 }

@@ -1,0 +1,10 @@
+{
+  if (numberOfBuckets > 1) {
+    long cnt=0;
+    for (int i=0; i < numberOfBuckets; i++) {
+      cnt+=backingQueues.get(i).size();
+    }
+    return (int)Math.floor(cnt / numberOfBuckets);
+  }
+ else   return backingQueues.get(0).size();
+}

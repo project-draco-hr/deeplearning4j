@@ -6,12 +6,14 @@
     throw runnable.exception;
   }
   if (!queue.isEmpty()) {
+    runnable.feeder.decrementAndGet();
     return queue.poll();
   }
   try {
     while (runnable.exception == null) {
       MultiDataSet ds=queue.poll(5,TimeUnit.SECONDS);
       if (ds != null) {
+        runnable.feeder.decrementAndGet();
         return ds;
       }
       if (runnable.killRunnable) {

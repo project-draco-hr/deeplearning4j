@@ -6,6 +6,11 @@
     r.add(list.get(curr));
   }
   DataSet d=DataSet.merge(r);
-  if (preProcessor != null)   preProcessor.preProcess(d);
+  if (preProcessor != null) {
+    if (!d.isPreProcessed()) {
+      preProcessor.preProcess(d);
+      d.markAsPreProcessed();
+    }
+  }
   return d;
 }

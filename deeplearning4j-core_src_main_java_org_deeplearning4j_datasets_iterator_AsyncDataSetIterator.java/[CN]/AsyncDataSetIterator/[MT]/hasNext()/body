@@ -9,6 +9,6 @@
     if (!runnable.killRunnable && runnable.exception != null) {
       throw runnable.exception;
     }
-    return !blockingQueue.isEmpty();
+    return runnable.hasLatch();
   }
 }

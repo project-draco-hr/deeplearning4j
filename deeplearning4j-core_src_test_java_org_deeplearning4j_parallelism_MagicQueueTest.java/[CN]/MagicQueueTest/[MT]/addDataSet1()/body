@@ -1,0 +1,29 @@
+{
+  MagicQueue queue=new MagicQueue.Builder().setNumberOfBuckets(1).build();
+  int numDevices=1;
+  DataSet dataSet_1=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_2=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_3=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_4=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_5=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_6=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_7=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  DataSet dataSet_8=new DataSet(Nd4j.create(new float[]{1f,2f,3f}),Nd4j.create(new float[]{1f,2f,3f}));
+  queue.add(dataSet_1);
+  queue.add(dataSet_2);
+  queue.add(dataSet_3);
+  queue.add(dataSet_4);
+  queue.add(dataSet_5);
+  queue.add(dataSet_6);
+  queue.add(dataSet_7);
+  queue.add(dataSet_8);
+  Thread.sleep(500);
+  assertEquals(8 / numDevices,queue.size());
+  int cnt=0;
+  while (!queue.isEmpty()) {
+    DataSet ds=queue.poll();
+    assertNotEquals("Failed on iteration: " + cnt,null,ds);
+    cnt++;
+  }
+  assertEquals(8,cnt);
+}

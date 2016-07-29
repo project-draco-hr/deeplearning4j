@@ -1,0 +1,5 @@
+{
+  this.targetQueue=queue;
+  this.bufferQueue=new LinkedBlockingQueue<DataSet>();
+  this.setDaemon(true);
+}

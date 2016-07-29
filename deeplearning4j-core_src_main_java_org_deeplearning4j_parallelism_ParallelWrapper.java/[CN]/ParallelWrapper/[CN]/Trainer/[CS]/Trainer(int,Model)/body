@@ -1,10 +1,9 @@
 {
   this.threadId=threadId;
   this.setDaemon(true);
+  this.setName("ParallelWrapper trainer " + threadId);
   this.originalModel=model;
   if (model instanceof MultiLayerNetwork) {
-    this.replicatedModel=((MultiLayerNetwork)model).clone();
-    if (threadId != 0)     ((MultiLayerNetwork)this.replicatedModel).setListeners(new ArrayList<IterationListener>());
   }
  else   if (model instanceof ComputationGraph) {
     this.replicatedModel=((ComputationGraph)model).clone();

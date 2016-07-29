@@ -1,0 +1,5 @@
+{
+  if (numberOfBuckets < 1)   numberOfBuckets=Nd4j.getAffinityManager().getNumberOfDevices();
+  MagicQueue queue=new MagicQueue(numberOfBuckets);
+  return queue;
+}
