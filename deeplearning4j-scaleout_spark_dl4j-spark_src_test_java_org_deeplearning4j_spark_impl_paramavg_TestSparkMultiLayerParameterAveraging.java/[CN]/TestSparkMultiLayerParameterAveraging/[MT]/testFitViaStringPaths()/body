@@ -1,6 +1,7 @@
 {
   Path tempDir=Files.createTempDirectory("DL4J-testFitViaStringPaths");
   File tempDirF=tempDir.toFile();
+  tempDirF.deleteOnExit();
   int dataSetObjSize=5;
   int batchSizePerExecutor=25;
   DataSetIterator iter=new MnistDataSetIterator(dataSetObjSize,1000,false);
