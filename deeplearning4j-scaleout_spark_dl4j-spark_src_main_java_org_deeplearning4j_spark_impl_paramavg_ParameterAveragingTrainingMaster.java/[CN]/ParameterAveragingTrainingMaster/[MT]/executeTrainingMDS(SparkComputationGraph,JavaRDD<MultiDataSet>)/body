@@ -1,7 +1,9 @@
 {
   if (numWorkers == null)   numWorkers=graph.getSparkContext().defaultParallelism();
   if (collectTrainingStats)   stats.logFitStart();
+  if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
+  if (collectTrainingStats)   stats.logCountEnd();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
   JavaRDD<MultiDataSet>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);

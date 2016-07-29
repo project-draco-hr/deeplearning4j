@@ -47,6 +47,11 @@
     assertEquals(actualKeySet.size(),statsAsString.split("\n").length);
     assertTrue(stats instanceof ParameterAveragingTrainingMasterStats);
     ParameterAveragingTrainingMasterStats masterStats=(ParameterAveragingTrainingMasterStats)stats;
+    List<EventStats> countRddTime=masterStats.getParameterAveragingMasterCountRddSizeTimesMs();
+    assertEquals(1,countRddTime.size());
+    assertDurationGreaterEqZero(countRddTime);
+    assertNonNullFields(countRddTime);
+    assertExpectedNumberMachineIdsJvmIdsThreadIds(countRddTime,1,1,1);
     List<EventStats> broadcastCreateTime=masterStats.getParameterAveragingMasterBroadcastCreateTimesMs();
     assertEquals(numberOfAveragings,broadcastCreateTime.size());
     assertDurationGreaterEqZero(broadcastCreateTime);

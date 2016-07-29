@@ -4,12 +4,14 @@
     NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).miniBatch(false).learningRate(1e-2).layer(new DenseLayer.Builder().nIn(1).nOut(1).updater(Updater.ADAGRAD).build()).build();
     conf.addVariable("x");
     Model m=new RastriginFunctionModel(100,conf);
+    int nParams=m.numParams();
     if (i == 0) {
       m.computeGradientAndScore();
       scores[0]=m.score();
     }
  else {
       ConvexOptimizer opt=getOptimizer(oa,conf,m);
+      opt.getUpdater().setStateViewArray((Layer)m,Nd4j.createUninitialized(new int[]{1,nParams},'c'),true);
       opt.optimize();
       m.computeGradientAndScore();
       scores[i]=m.score();
