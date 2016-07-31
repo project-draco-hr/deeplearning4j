@@ -1,0 +1,3 @@
+{
+  return NDArrayConsumer.builder().camelContext(camelContext).kafkaUri(kafkaUri).topicName(kafkaTopic).build();
+}

@@ -1,0 +1,23 @@
+{
+  String topicName="testkafka";
+  EmbeddedZookeeper embeddedZookeeper=new EmbeddedZookeeper(TestUtils.getAvailablePort());
+  embeddedZookeeper.startup();
+  EmbeddedKafkaCluster embeddedKafkaCluster=new EmbeddedKafkaCluster(embeddedZookeeper.getConnection());
+  embeddedKafkaCluster.startup();
+  embeddedKafkaCluster.createTopics(topicName);
+  CamelContext camelContext=new DefaultCamelContext();
+  INDArray arr=Nd4j.linspace(1,4,4);
+  String kafkaUri=KafkaUriBuilder.builder().kafkaBroker(embeddedKafkaCluster.getBrokerList()).consumingTopic(topicName).groupId("dl4jgroup").zooKeeperHost("localhost").zooKeeperPort(embeddedZookeeper.getPort()).build().uri();
+  NDArrayPublisher publisher=NDArrayPublisher.builder().camelContext(camelContext).kafkaUri(kafkaUri).topicName(topicName).build();
+  camelContext.start();
+  publisher.start();
+  NDArrayConsumer consumer=NDArrayConsumer.builder().kafkaUri(kafkaUri).topicName(topicName).camelContext(camelContext).build();
+  consumer.start();
+  publisher.publish(arr);
+  Thread.sleep(5000);
+  INDArray get=consumer.getINDArray();
+  assertEquals(arr,get);
+  embeddedKafkaCluster.shutdown();
+  embeddedZookeeper.shutdown();
+  camelContext.stop();
+}
