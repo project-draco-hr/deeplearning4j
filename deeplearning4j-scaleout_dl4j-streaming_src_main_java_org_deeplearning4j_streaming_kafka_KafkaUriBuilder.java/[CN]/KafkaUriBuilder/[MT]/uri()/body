@@ -1,0 +1,3 @@
+{
+  return String.format("kafka://%s?topic=%s&groupId=%s&zookeeperHost=%s&zookeeperPort=%d&serializerClass=%s&keySerializerClass=%s",kafkaBroker,consumingTopic,groupId,zooKeeperHost,zooKeeperPort,StringEncoder.class.getName(),StringEncoder.class.getName());
+}

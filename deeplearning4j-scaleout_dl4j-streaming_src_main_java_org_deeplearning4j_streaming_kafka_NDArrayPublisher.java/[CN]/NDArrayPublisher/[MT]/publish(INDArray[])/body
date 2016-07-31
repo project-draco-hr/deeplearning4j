@@ -1,0 +1,6 @@
+{
+  if (!started) {
+    start();
+  }
+  producerTemplate.sendBody(DIRECT_ROUTE,arr);
+}
