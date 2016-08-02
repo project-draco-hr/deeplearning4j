@@ -1,8 +1,0 @@
-{
-  try {
-    return recordWriterFactory.create(uri);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}
