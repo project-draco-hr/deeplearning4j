@@ -1,7 +1,7 @@
 {
   SparkConf sparkConf=new SparkConf().setMaster("local[8]").setAppName("sparktest").set("spark.driver.maxResultSize","4g").set("spark.driver.memory","8g").set("spark.executor.memory","8g");
   JavaSparkContext sc=new JavaSparkContext(sparkConf);
-  String dataPath="/ext/Temp/SampleRussianCorpus.txt";
+  String dataPath=new ClassPathResource("spark_word2vec_test.txt").getFile().getAbsolutePath();
   JavaRDD<String> corpus=sc.textFile(dataPath);
   TokenizerFactory t=new DefaultTokenizerFactory();
   t.setTokenPreProcessor(new LowCasePreProcessor());
