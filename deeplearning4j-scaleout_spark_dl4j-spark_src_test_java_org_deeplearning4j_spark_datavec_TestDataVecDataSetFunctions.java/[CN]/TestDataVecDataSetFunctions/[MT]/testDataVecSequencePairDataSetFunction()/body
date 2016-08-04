@@ -15,7 +15,7 @@
   SequenceRecordReader srr1=new CSVSequenceRecordReader(1,",");
   SequenceRecordReader srr2=new CSVSequenceRecordReader(1,",");
   PairSequenceRecordReaderBytesFunction psrbf=new PairSequenceRecordReaderBytesFunction(srr1,srr2);
-  JavaRDD<Tuple2<Collection<Collection<Writable>>,Collection<Collection<Writable>>>> writables=fromSeq.map(psrbf);
+  JavaRDD<Tuple2<List<List<Writable>>,List<List<Writable>>>> writables=fromSeq.map(psrbf);
   DataVecSequencePairDataSetFunction pairFn=new DataVecSequencePairDataSetFunction();
   JavaRDD<DataSet> data=writables.map(pairFn);
   List<DataSet> sparkData=data.collect();

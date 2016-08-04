@@ -1,8 +1,17 @@
 {
-  if (model instanceof MultiLayerNetwork) {
-    replicatedModel=((MultiLayerNetwork)model).clone();
+  this.shouldUpdate.set(true);
+  if (replicatedModel instanceof MultiLayerNetwork) {
+    replicatedModel.setParams(model.params().dup());
+    Updater updater=((MultiLayerNetwork)originalModel).getUpdater();
+    INDArray view=updater.getStateViewArray();
+    updater=((MultiLayerNetwork)replicatedModel).getUpdater();
+    updater.setStateViewArray((MultiLayerNetwork)replicatedModel,view.dup(),false);
   }
- else   if (model instanceof ComputationGraph) {
-    replicatedModel=((ComputationGraph)model).clone();
+ else   if (replicatedModel instanceof ComputationGraph) {
+    replicatedModel.setParams(model.params().dup());
+    ComputationGraphUpdater updater=((ComputationGraph)originalModel).getUpdater();
+    INDArray view=updater.getStateViewArray();
+    updater=((ComputationGraph)replicatedModel).getUpdater();
+    updater.setStateViewArray(view.dup());
   }
 }

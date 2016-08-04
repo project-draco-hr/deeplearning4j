@@ -1,0 +1,7 @@
+{
+  if (numberOfBuckets > 1) {
+    int deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
+    return backingQueues.get(deviceId).poll(time,timeUnit);
+  }
+ else   return backingQueues.get(0).poll(time,timeUnit);
+}

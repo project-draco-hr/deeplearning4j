@@ -1,4 +1,5 @@
 {
+  this.inputs=inputs;
   boolean inputIs2d=true;
   for (  INDArray i : inputs) {
     if (i.rank() != 2) {
@@ -56,5 +57,6 @@
       }
     }
   }
+  this.inputs=null;
   return outputs;
 }

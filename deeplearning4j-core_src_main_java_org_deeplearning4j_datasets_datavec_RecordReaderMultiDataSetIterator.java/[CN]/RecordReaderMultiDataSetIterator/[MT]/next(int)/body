@@ -1,11 +1,11 @@
 {
   if (!hasNext())   throw new NoSuchElementException("No next elements");
-  Map<String,List<Collection<Writable>>> nextRRVals=new HashMap<>();
-  Map<String,List<Collection<Collection<Writable>>>> nextSeqRRVals=new HashMap<>();
+  Map<String,List<List<Writable>>> nextRRVals=new HashMap<>();
+  Map<String,List<List<List<Writable>>>> nextSeqRRVals=new HashMap<>();
   int minExamples=Integer.MAX_VALUE;
   for (  Map.Entry<String,RecordReader> entry : recordReaders.entrySet()) {
     RecordReader rr=entry.getValue();
-    List<Collection<Writable>> writables=new ArrayList<>(num);
+    List<List<Writable>> writables=new ArrayList<>(num);
     for (int i=0; i < num && rr.hasNext(); i++) {
       writables.add(rr.next());
     }
@@ -14,9 +14,9 @@
   }
   for (  Map.Entry<String,SequenceRecordReader> entry : sequenceRecordReaders.entrySet()) {
     SequenceRecordReader rr=entry.getValue();
-    List<Collection<Collection<Writable>>> writables=new ArrayList<>(num);
+    List<List<List<Writable>>> writables=new ArrayList<>(num);
     for (int i=0; i < num && rr.hasNext(); i++) {
-      Collection<Collection<Writable>> next=rr.sequenceRecord();
+      List<List<Writable>> next=rr.sequenceRecord();
       writables.add(next);
     }
     minExamples=Math.min(minExamples,writables.size());
@@ -26,8 +26,8 @@
   int[] longestSequence=null;
   if (alignmentMode == AlignmentMode.ALIGN_END) {
     longestSequence=new int[minExamples];
-    for (    Map.Entry<String,List<Collection<Collection<Writable>>>> entry : nextSeqRRVals.entrySet()) {
-      List<Collection<Collection<Writable>>> list=entry.getValue();
+    for (    Map.Entry<String,List<List<List<Writable>>>> entry : nextSeqRRVals.entrySet()) {
+      List<List<List<Writable>>> list=entry.getValue();
       for (int i=0; i < list.size() && i < minExamples; i++) {
         longestSequence[i]=Math.max(longestSequence[i],list.get(i).size());
       }
@@ -35,9 +35,9 @@
   }
   int longestTS=-1;
   if (alignmentMode != AlignmentMode.EQUAL_LENGTH) {
-    for (    Map.Entry<String,List<Collection<Collection<Writable>>>> entry : nextSeqRRVals.entrySet()) {
-      List<Collection<Collection<Writable>>> list=entry.getValue();
-      for (      Collection<Collection<Writable>> c : list) {
+    for (    Map.Entry<String,List<List<List<Writable>>>> entry : nextSeqRRVals.entrySet()) {
+      List<List<List<Writable>>> list=entry.getValue();
+      for (      List<List<Writable>> c : list) {
         longestTS=Math.max(longestTS,c.size());
       }
     }
@@ -48,11 +48,11 @@
   int i=0;
   for (  SubsetDetails d : inputs) {
     if (nextRRVals.containsKey(d.readerName)) {
-      List<Collection<Writable>> list=nextRRVals.get(d.readerName);
+      List<List<Writable>> list=nextRRVals.get(d.readerName);
       inputArrs[i]=convertWritables(list,minExamples,d);
     }
  else {
-      List<Collection<Collection<Writable>>> list=nextSeqRRVals.get(d.readerName);
+      List<List<List<Writable>>> list=nextSeqRRVals.get(d.readerName);
       Pair<INDArray,INDArray> p=convertWritablesSequence(list,minExamples,longestTS,d,longestSequence);
       inputArrs[i]=p.getFirst();
       inputArrMasks[i]=p.getSecond();
@@ -67,11 +67,11 @@
   i=0;
   for (  SubsetDetails d : outputs) {
     if (nextRRVals.containsKey(d.readerName)) {
-      List<Collection<Writable>> list=nextRRVals.get(d.readerName);
+      List<List<Writable>> list=nextRRVals.get(d.readerName);
       outputArrs[i]=convertWritables(list,minExamples,d);
     }
  else {
-      List<Collection<Collection<Writable>>> list=nextSeqRRVals.get(d.readerName);
+      List<List<List<Writable>>> list=nextSeqRRVals.get(d.readerName);
       Pair<INDArray,INDArray> p=convertWritablesSequence(list,minExamples,longestTS,d,longestSequence);
       outputArrs[i]=p.getFirst();
       outputArrMasks[i]=p.getSecond();

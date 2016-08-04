@@ -9,14 +9,14 @@
     if (!hasNext())     break;
     if (recordReader instanceof SequenceRecordReader) {
       if (sequenceIter == null || !sequenceIter.hasNext()) {
-        Collection<Collection<Writable>> sequenceRecord=((SequenceRecordReader)recordReader).sequenceRecord();
+        List<List<Writable>> sequenceRecord=((SequenceRecordReader)recordReader).sequenceRecord();
         sequenceIter=sequenceRecord.iterator();
       }
-      Collection<Writable> record=sequenceIter.next();
+      List<Writable> record=sequenceIter.next();
       dataSets.add(getDataSet(record));
     }
  else {
-      Collection<Writable> record=recordReader.next();
+      List<Writable> record=recordReader.next();
       dataSets.add(getDataSet(record));
     }
   }

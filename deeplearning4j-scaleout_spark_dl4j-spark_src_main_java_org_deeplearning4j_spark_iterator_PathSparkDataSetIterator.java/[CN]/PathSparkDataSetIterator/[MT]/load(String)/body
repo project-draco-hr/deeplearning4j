@@ -1,0 +1,19 @@
+{
+  if (fileSystem == null) {
+    try {
+      fileSystem=FileSystem.get(new URI(path),new Configuration());
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  DataSet ds=new DataSet();
+  try (FSDataInputStream inputStream=fileSystem.open(new Path(path),BUFFER_SIZE)){
+    ds.load(inputStream);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  cursor++;
+  return ds;
+}

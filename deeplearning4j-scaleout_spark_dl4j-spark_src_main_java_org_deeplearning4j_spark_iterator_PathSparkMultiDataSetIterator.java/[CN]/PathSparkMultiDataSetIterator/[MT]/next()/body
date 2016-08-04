@@ -1,0 +1,5 @@
+{
+  MultiDataSet ds=load(iter.next());
+  if (preprocessor != null)   preprocessor.preProcess(ds);
+  return ds;
+}

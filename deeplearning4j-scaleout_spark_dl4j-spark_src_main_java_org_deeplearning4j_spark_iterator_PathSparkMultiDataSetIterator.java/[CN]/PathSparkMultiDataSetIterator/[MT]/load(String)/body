@@ -1,0 +1,18 @@
+{
+  if (fileSystem == null) {
+    try {
+      fileSystem=FileSystem.get(new URI(path),new Configuration());
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+  MultiDataSet ds=new org.nd4j.linalg.dataset.MultiDataSet();
+  try (FSDataInputStream inputStream=fileSystem.open(new Path(path),BUFFER_SIZE)){
+    ds.load(inputStream);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+  return ds;
+}

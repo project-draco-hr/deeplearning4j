@@ -1,0 +1,4 @@
+{
+  if (deviceId >= backingQueues.size())   throw new RuntimeException("DeviceID exceeds number of actual backing queues");
+  return backingQueues.get(deviceId).size();
+}

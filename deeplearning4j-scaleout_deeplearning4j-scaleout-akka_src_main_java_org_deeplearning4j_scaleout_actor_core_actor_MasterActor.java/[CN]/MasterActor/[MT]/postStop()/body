@@ -1,6 +1,0 @@
-{
-  super.postStop();
-  log.info("Post stop on master");
-  if (clearStateWorkers != null)   clearStateWorkers.cancel();
-  if (forceNextPhase != null)   forceNextPhase.cancel();
-}

@@ -7,6 +7,7 @@
  else {
     if (o.workerStats != null)     workerStats=o.workerStats;
   }
+  this.parameterAveragingMasterCountRddSizeTimesMs.addAll(o.parameterAveragingMasterCountRddSizeTimesMs);
   this.parameterAveragingMasterBroadcastCreateTimesMs.addAll(o.parameterAveragingMasterBroadcastCreateTimesMs);
   this.parameterAveragingMasterRepartitionTimesMs.addAll(o.parameterAveragingMasterRepartitionTimesMs);
   this.parameterAveragingMasterFitTimesMs.addAll(o.parameterAveragingMasterFitTimesMs);

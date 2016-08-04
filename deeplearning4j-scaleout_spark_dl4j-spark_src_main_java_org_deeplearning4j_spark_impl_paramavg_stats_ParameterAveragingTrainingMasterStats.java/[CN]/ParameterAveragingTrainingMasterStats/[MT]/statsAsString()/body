@@ -1,6 +1,9 @@
 {
   StringBuilder sb=new StringBuilder();
   String f=SparkTrainingStats.DEFAULT_PRINT_FORMAT;
+  sb.append(String.format(f,PARAMETER_AVERAGING_MASTER_COUNT_RDD_TIMES_MS));
+  if (parameterAveragingMasterCountRddSizeTimesMs == null)   sb.append("-\n");
+ else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterCountRddSizeTimesMs,",")).append("\n");
   sb.append(String.format(f,PARAMETER_AVERAGING_MASTER_BROADCAST_CREATE_TIMES_MS));
   if (parameterAveragingMasterBroadcastCreateTimesMs == null)   sb.append("-\n");
  else   sb.append(StatsUtils.getDurationAsString(parameterAveragingMasterBroadcastCreateTimesMs,",")).append("\n");

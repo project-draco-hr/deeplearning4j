@@ -20,20 +20,24 @@
   InputStream inputStream=new ByteArrayInputStream(bos.toByteArray());
   writeEntry(inputStream,zipfile);
   if (saveUpdater) {
-    ZipEntry updater=new ZipEntry(UPDATER_BIN);
-    zipfile.putNextEntry(updater);
-    bos=new ByteArrayOutputStream();
-    ObjectOutputStream oos=new ObjectOutputStream(bos);
+    INDArray updaterState=null;
     if (model instanceof MultiLayerNetwork) {
-      oos.writeObject(((MultiLayerNetwork)model).getUpdater());
+      updaterState=((MultiLayerNetwork)model).getUpdater().getStateViewArray();
     }
  else     if (model instanceof ComputationGraph) {
-      oos.writeObject(((ComputationGraph)model).getUpdater());
+      updaterState=((ComputationGraph)model).getUpdater().getStateViewArray();
     }
-    oos.flush();
-    oos.close();
-    inputStream=new ByteArrayInputStream(bos.toByteArray());
-    writeEntry(inputStream,zipfile);
+    if (updaterState != null && updaterState.length() > 0) {
+      ZipEntry updater=new ZipEntry(UPDATER_BIN);
+      zipfile.putNextEntry(updater);
+      bos=new ByteArrayOutputStream();
+      dos=new DataOutputStream(bos);
+      Nd4j.write(updaterState,dos);
+      dos.flush();
+      dos.close();
+      inputStream=new ByteArrayInputStream(bos.toByteArray());
+      writeEntry(inputStream,zipfile);
+    }
   }
   zipfile.flush();
   zipfile.close();

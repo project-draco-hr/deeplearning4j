@@ -1,8 +1,0 @@
-{
-  try {
-    stateTracker.addJobToCurrent(job);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

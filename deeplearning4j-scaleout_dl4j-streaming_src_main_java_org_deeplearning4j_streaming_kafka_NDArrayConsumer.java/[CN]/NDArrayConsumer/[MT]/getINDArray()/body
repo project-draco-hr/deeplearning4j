@@ -1,0 +1,7 @@
+{
+  if (!started) {
+    start();
+    started=true;
+  }
+  return consumerTemplate.receiveBody(DIRECT_ROUTE,INDArray.class);
+}

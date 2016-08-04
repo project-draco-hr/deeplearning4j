@@ -1,9 +1,11 @@
 {
 switch (key) {
+case PARAMETER_AVERAGING_MASTER_COUNT_RDD_TIMES_MS:
+    return parameterAveragingMasterCountRddSizeTimesMs;
 case PARAMETER_AVERAGING_MASTER_BROADCAST_CREATE_TIMES_MS:
-    return parameterAveragingMasterBroadcastCreateTimesMs;
+  return parameterAveragingMasterBroadcastCreateTimesMs;
 case PARAMETER_AVERAGING_MASTER_FIT_TIMES_MS:
-  return parameterAveragingMasterFitTimesMs;
+return parameterAveragingMasterFitTimesMs;
 case PARAMETER_AVERAGING_MASTER_SPLIT_TIMES_MS:
 return parameterAveragingMasterSplitTimesMs;
 case PARAMETER_AVERAGING_MASTER_MAP_PARTITIONS_TIMES_MS:

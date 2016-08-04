@@ -11,4 +11,5 @@
   this.useAdaGrad=configuration.isUseAdaGrad();
   this.negative=configuration.getNegative();
   this.sampling=configuration.getSampling();
+  this.variableWindows=configuration.getVariableWindows();
 }

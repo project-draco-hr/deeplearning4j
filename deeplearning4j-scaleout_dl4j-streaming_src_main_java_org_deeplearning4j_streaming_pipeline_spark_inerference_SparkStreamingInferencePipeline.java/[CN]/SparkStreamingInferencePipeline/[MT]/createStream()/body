@@ -1,5 +1,5 @@
 {
-  JavaPairInputDStream<String,String> messages=KafkaUtils.createStream(jssc,zkHost,"canova",Collections.singletonMap(kafkaTopic,kafkaPartitions));
+  JavaPairInputDStream<String,String> messages=KafkaUtils.createStream(jssc,zkHost,"datavec",Collections.singletonMap(kafkaTopic,kafkaPartitions));
   JavaDStream<INDArray> dataset=messages.flatMap(new NDArrayFlatMap(recordToDataSetFunction)).cache();
   return dataset;
 }

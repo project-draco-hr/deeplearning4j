@@ -1,4 +1,0 @@
-{
-  super.aroundPostRestart(reason);
-  log.info("Restarted because of ",reason);
-}

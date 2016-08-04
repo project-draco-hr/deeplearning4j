@@ -2,10 +2,12 @@
   if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
   int origNumPartitions=trainingData.partitions().size();
   if (origNumPartitions >= COALESCE_THRESHOLD * numWorkers) {
-    log.info("Coalesing streams from {} to {} partitions",origNumPartitions,numWorkers);
+    log.info("Coalesing PortableDataStreams from {} to {} partitions",origNumPartitions,numWorkers);
     trainingData=trainingData.coalesce(numWorkers);
   }
+  if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
+  if (collectTrainingStats)   stats.logCountEnd();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
   if (collectTrainingStats)   stats.logSplitStart();
   JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);

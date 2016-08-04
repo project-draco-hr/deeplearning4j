@@ -9,6 +9,8 @@
     INDArray params=Nd4j.create(1,numParams);
     Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
     Updater updater=UpdaterCreator.getUpdater(layer);
+    int stateSize=updater.stateSizeForLayer(layer);
+    if (stateSize > 0)     updater.setStateViewArray(layer,Nd4j.create(1,stateSize),true);
     Gradient gradientActual=new DefaultGradient();
     gradientActual.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
     gradientActual.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());

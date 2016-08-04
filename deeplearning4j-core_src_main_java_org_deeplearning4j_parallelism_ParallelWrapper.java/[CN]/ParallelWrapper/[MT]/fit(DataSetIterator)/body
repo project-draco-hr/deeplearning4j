@@ -1,11 +1,11 @@
 {
+  source.reset();
   DataSetIterator iterator;
   if (prefetchSize > 0 && (!(source instanceof AsyncDataSetIterator) && !(source instanceof ListDataSetIterator))) {
     iterator=new AsyncDataSetIterator(source,prefetchSize);
   }
  else   iterator=source;
   AtomicInteger locker=new AtomicInteger(0);
-  iterator.reset();
   while (iterator.hasNext()) {
     DataSet dataSet=iterator.next();
     int pos=locker.getAndIncrement();
@@ -20,39 +20,85 @@
           throw new RuntimeException(e);
         }
       }
-      if (iterationsCounter.get() % averagingFrequency == 0 || !iterator.hasNext()) {
+      if (iterationsCounter.get() % averagingFrequency == 0 && pos + 1 == workers) {
         double score=0.0;
-        INDArray result=Nd4j.zeros(model.params().shape());
-        for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
-          INDArray params=zoo[cnt].getModel().params();
-          result.addi(params);
-          score+=zoo[cnt].getModel().score();
+        if (!legacyAveraging) {
+          List<INDArray> params=new ArrayList<>();
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            params.add(zoo[cnt].getModel().params());
+            score+=zoo[cnt].getModel().score();
+          }
+          Nd4j.averageAndPropagate(model.params(),params);
         }
-        result.divi(Math.min(workers,locker.get()));
-        model.setParams(result);
+ else {
+          INDArray params=Nd4j.zeros(model.params().shape());
+          int cnt=0;
+          for (; cnt < workers && cnt < locker.get(); cnt++) {
+            params.addi(zoo[cnt].getModel().params());
+            score+=zoo[cnt].getModel().score();
+          }
+          params.divi(workers);
+          model.setParams(params);
+        }
         score/=Math.min(workers,locker.get());
-        if (verbose)         logger.info("Averaged score: " + score);
+        if (reportScore)         logger.info("Averaged score: " + score);
         if (model instanceof MultiLayerNetwork) {
-          UpdaterAggregator uag=((MultiLayerNetwork)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          if (averageUpdaters) {
+            Updater updater=((MultiLayerNetwork)model).getUpdater();
+            if (updater != null && updater.getStateViewArray() != null) {
+              if (!legacyAveraging) {
+                List<INDArray> updaters=new ArrayList<>();
+                for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+                  updaters.add(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                }
+                Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
+              }
+ else {
+                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
+                int cnt=0;
+                for (; cnt < workers && cnt < locker.get(); cnt++) {
+                  state.addi(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray().dup());
+                }
+                state.divi(cnt);
+                updater.setStateViewArray((MultiLayerNetwork)model,state,false);
+              }
+            }
           }
           ((MultiLayerNetwork)model).setScore(score);
-          ((MultiLayerNetwork)model).setUpdater(uag.getUpdater());
         }
  else         if (model instanceof ComputationGraph) {
-          ComputationGraphUpdater.Aggregator uag=((ComputationGraph)zoo[0].getModel()).getUpdater().getAggregator(false);
-          for (int cnt=0; cnt < workers; cnt++) {
-            uag.merge(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getAggregator(true));
+          if (averageUpdaters) {
+            ComputationGraphUpdater updater=((ComputationGraph)model).getUpdater();
+            if (updater != null && updater.getStateViewArray() != null) {
+              if (!legacyAveraging) {
+                List<INDArray> updaters=new ArrayList<>();
+                for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+                  updaters.add(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                }
+                Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
+              }
+ else {
+                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
+                int cnt=0;
+                for (; cnt < workers && cnt < locker.get(); cnt++) {
+                  state.addi(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                }
+                state.divi(cnt);
+                updater.setStateViewArray(state);
+              }
+            }
           }
           ((ComputationGraph)model).setScore(score);
-          ((ComputationGraph)model).setUpdater(uag.getUpdater());
         }
-        for (int i=0; i < workers; i++) {
-          zoo[i].updateModel(model);
+        if (legacyAveraging) {
+          for (int cnt=0; cnt < workers; cnt++) {
+            zoo[cnt].updateModel(model);
+          }
         }
       }
       locker.set(0);
     }
   }
+  logger.debug("Iterations passed: {}",iterationsCounter.get());
+  iterationsCounter.set(0);
 }
