@@ -9,11 +9,11 @@
   MultiLayerNetwork net=new MultiLayerNetwork(conf);
   net.init();
   net.fit(iter.next());
-  Gradient trainGradient=net.gradient();
-  net.update(expectedGradient);
   Gradient actualGradient=net.gradient();
-  assertEquals(expectedGradient.gradient(),actualGradient);
-  assertNotEquals(actualGradient,trainGradient.gradient());
+  assertNotEquals(expectedGradient.gradient(),actualGradient.gradient());
+  net.update(expectedGradient);
+  actualGradient=net.gradient();
+  assertEquals(expectedGradient.gradient(),actualGradient.gradient());
   net.setParam("0_W",Nd4j.ones(4,5));
   net.setParam("0_b",Nd4j.ones(1,5));
   net.setParam("1_W",Nd4j.ones(5,3));

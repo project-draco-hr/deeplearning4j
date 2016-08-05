@@ -1,3 +1,5 @@
 {
-  return gradients.put(variable,newGradient);
+  INDArray last=gradients.put(variable,newGradient);
+  flattenGradient();
+  return last;
 }
