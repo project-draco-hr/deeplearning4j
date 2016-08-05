@@ -96,7 +96,7 @@ int nIn=conv.getHeight() * conv.getWidth() * conv.getDepth();
 break;
 }
 }
- else {
+ else if (l instanceof FeedForwardLayer) {
 switch (layerInput.getType()) {
 case FF:
 setNInIfNecessary(lv,layerInput);
