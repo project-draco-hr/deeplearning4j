@@ -5,10 +5,10 @@
     INDArray val=entry.getValue();
     int idx=key.indexOf('_');
     if (idx == -1)     throw new IllegalStateException("Invalid param key: not have layer separator: \"" + key + "\"");
-    Integer layerId=Integer.parseInt(key.substring(0,idx));
-    String paramType=key.substring(idx + 1);
+    String layerName=key.substring(0,idx);
+    String paramType=key.split("_")[1];
     this.gradient.setGradientFor(key,val);
-    layers[layerId].update(val,paramType);
+    getLayer(layerName).update(val,paramType);
   }
   setBackpropGradientsViewArray(gradient.gradient());
 }

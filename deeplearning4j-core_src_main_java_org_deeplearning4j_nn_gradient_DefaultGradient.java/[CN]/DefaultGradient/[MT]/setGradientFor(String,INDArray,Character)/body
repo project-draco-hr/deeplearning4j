@@ -4,5 +4,6 @@
     if (flatteningOrders == null)     flatteningOrders=new LinkedHashMap<>();
     flatteningOrders.put(variable,flatteningOrder);
   }
+  flattenGradient();
   return last;
 }
