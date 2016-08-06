@@ -52,7 +52,7 @@ case MAX:
 isMax.muliColumnVector(epsilon1d);
 break;
 case AVG:
-col2d.addiRowVector(epsilon1d);
+col2d.addiColumnVector(epsilon1d);
 break;
 case NONE:
 return new Pair<>(retGradient,epsilon);
