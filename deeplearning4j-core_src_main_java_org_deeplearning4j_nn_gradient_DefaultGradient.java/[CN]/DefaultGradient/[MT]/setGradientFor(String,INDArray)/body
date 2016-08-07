@@ -1,5 +1,4 @@
 {
   INDArray last=gradients.put(variable,newGradient);
-  flattenGradient();
   return last;
 }
