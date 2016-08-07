@@ -32,25 +32,27 @@
     dis.close();
     gotCoefficients=true;
   }
-  ZipEntry oldUpdaters=zipFile.getEntry(OLD_UPDATER_BIN);
-  if (oldUpdaters != null) {
-    InputStream stream=zipFile.getInputStream(oldUpdaters);
-    ObjectInputStream ois=new ObjectInputStream(stream);
-    try {
-      updater=(ComputationGraphUpdater)ois.readObject();
+  if (loadUpdater) {
+    ZipEntry oldUpdaters=zipFile.getEntry(OLD_UPDATER_BIN);
+    if (oldUpdaters != null) {
+      InputStream stream=zipFile.getInputStream(oldUpdaters);
+      ObjectInputStream ois=new ObjectInputStream(stream);
+      try {
+        updater=(ComputationGraphUpdater)ois.readObject();
+      }
+ catch (      ClassNotFoundException e) {
+        throw new RuntimeException(e);
+      }
+      gotOldUpdater=true;
     }
- catch (    ClassNotFoundException e) {
-      throw new RuntimeException(e);
+    ZipEntry updaterStateEntry=zipFile.getEntry(UPDATER_BIN);
+    if (updaterStateEntry != null) {
+      InputStream stream=zipFile.getInputStream(updaterStateEntry);
+      DataInputStream dis=new DataInputStream(stream);
+      updaterState=Nd4j.read(dis);
+      dis.close();
+      gotUpdaterState=true;
     }
-    gotOldUpdater=true;
-  }
-  ZipEntry updaterStateEntry=zipFile.getEntry(UPDATER_BIN);
-  if (updaterStateEntry != null) {
-    InputStream stream=zipFile.getInputStream(updaterStateEntry);
-    DataInputStream dis=new DataInputStream(stream);
-    updaterState=Nd4j.read(dis);
-    dis.close();
-    gotUpdaterState=true;
   }
   ZipEntry prep=zipFile.getEntry("preprocessor.bin");
   if (prep != null) {
