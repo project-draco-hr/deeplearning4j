@@ -1,4 +1,10 @@
 {
-  double m2a=m2Actual.getDouble(column);
-  return sumSquaredErrorsPerColumn.getDouble(column) / m2a;
+  double numerator=sumSquaredPredicted.getDouble(column) - 2 * sumOfProducts.getDouble(column) + sumSquaredLabels.getDouble(column);
+  double denominator=sumSquaredLabels.getDouble(column) - exampleCount * currentMean.getDouble(column) * currentMean.getDouble(column);
+  if (Math.abs(denominator) > Nd4j.EPS_THRESHOLD) {
+    return numerator / denominator;
+  }
+ else {
+    return Double.POSITIVE_INFINITY;
+  }
 }
