@@ -7,6 +7,12 @@
   g.gradientForVariable().put("x",gradient);
   this.gradient=g;
   INDArray paramExceeds512=parameters.cond(new Condition(){
+    @Override public int condtionNum(){
+      return 0;
+    }
+    @Override public double getValue(){
+      return 0;
+    }
     @Override public Boolean apply(    Number input){
       return Math.abs(input.doubleValue()) > 5.12;
     }
