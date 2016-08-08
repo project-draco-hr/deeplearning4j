@@ -7,7 +7,7 @@
     if (idx == -1)     throw new IllegalStateException("Invalid param key: not have layer separator: \"" + key + "\"");
     Integer layerId=Integer.parseInt(key.substring(0,idx));
     String paramType=key.substring(idx + 1);
-    this.gradient.setGradientFor(key,val);
+    this.gradient.gradientForVariable().put(key,val);
     layers[layerId].update(val,paramType);
   }
   setBackpropGradientsViewArray(gradient.gradient());
