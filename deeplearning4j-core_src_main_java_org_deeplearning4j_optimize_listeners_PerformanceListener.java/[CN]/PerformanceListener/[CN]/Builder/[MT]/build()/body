@@ -1,0 +1,8 @@
+{
+  PerformanceListener listener=new PerformanceListener(frequency,reportScore);
+  listener.reportIteration=this.reportIteration;
+  listener.reportTime=this.reportTime;
+  listener.reportBatch=this.reportBatch;
+  listener.reportSample=this.reportSample;
+  return listener;
+}
