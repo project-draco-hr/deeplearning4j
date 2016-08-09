@@ -17,6 +17,9 @@
   }
 catch (  RuntimeException e) {
     exception=e;
+    if (lock.writeLock().isHeldByCurrentThread()) {
+      lock.writeLock().unlock();
+    }
   }
  finally {
     isAlive=false;
