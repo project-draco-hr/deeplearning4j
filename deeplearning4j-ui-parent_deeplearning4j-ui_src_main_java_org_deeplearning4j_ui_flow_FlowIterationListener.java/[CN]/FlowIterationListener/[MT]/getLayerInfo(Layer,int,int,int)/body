@@ -12,7 +12,7 @@
   Description description=new Description();
   info.setDescription(description);
   try {
-    info.setLayerType(layer.getClass().getSimpleName());
+    info.setLayerType(layer.getClass().getSimpleName().replaceAll("Layer$",""));
   }
  catch (  Exception e) {
     info.setLayerType("n/a");
