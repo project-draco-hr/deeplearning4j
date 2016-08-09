@@ -1,3 +1,5 @@
 {
-  return layer.getParam(variable).mul(Nd4j.getDistributions().createBinomial(1,layer.conf().getLayer().getDropOut()).sample(layer.getParam(variable).shape()));
+  INDArray result=layer.getParam(variable).dup();
+  Nd4j.getExecutioner().exec(new DropOut(result,result,layer.conf().getLayer().getDropOut()));
+  return result;
 }
