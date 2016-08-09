@@ -1,0 +1,17 @@
+{
+  long currentTime=System.currentTimeMillis();
+  long timeSpent=lastTime - currentTime;
+  float timeSec=timeSpent / 1000;
+  INDArray input=model.input();
+  long tadLength=Shape.getTADLength(input.shape(),ArrayUtil.range(1,input.rank()));
+  long numSamples=input.lengthLong() / tadLength;
+  samplesPerSec=numSamples / timeSec;
+  batchesPerSec=1 / timeSec;
+  if (iteration % frequency == 0) {
+    StringBuilder builder=new StringBuilder();
+    builder.append("Iteration ").append(iteration).append("; ").append("samples/sec: ").append(samplesPerSec).append("; ").append("batches/sec: ").append(batchesPerSec).append("; ");
+    if (reportScore)     builder.append("score: ").append(model.score()).append(";");
+    logger.info(builder.toString());
+  }
+  lastTime=System.currentTimeMillis();
+}
