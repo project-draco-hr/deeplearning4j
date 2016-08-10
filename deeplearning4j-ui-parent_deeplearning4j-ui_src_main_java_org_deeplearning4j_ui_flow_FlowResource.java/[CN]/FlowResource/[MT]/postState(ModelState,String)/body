@@ -1,0 +1,4 @@
+{
+  storage.putObject(sessionId,ObjectType.FLOW_STATE,state);
+  return Response.ok(Collections.singletonMap("status","ok")).build();
+}

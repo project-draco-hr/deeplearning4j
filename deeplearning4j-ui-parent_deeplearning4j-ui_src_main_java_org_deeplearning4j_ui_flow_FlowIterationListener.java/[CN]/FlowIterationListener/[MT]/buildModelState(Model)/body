@@ -1,0 +1,10 @@
+{
+  long timeSpent=currTime - lastTime;
+  float timeSec=timeSpent / 1000f;
+  INDArray input=model.input();
+  long tadLength=Shape.getTADLength(input.shape(),ArrayUtil.range(1,input.rank()));
+  long numSamples=input.lengthLong() / tadLength;
+  modelState.setPerformanceSamples(numSamples / timeSec);
+  modelState.setPerformanceBatches(1 / timeSec);
+  modelState.addScore((float)model.score());
+}
