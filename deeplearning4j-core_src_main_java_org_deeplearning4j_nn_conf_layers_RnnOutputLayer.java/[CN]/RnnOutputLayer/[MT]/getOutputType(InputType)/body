@@ -1,0 +1,6 @@
+{
+  if (inputType == null || inputType.getType() != InputType.Type.RNN) {
+    throw new IllegalStateException("Invalid input type: Expected RNN input, got " + inputType);
+  }
+  return InputType.recurrent(nOut);
+}
