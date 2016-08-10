@@ -1,0 +1,11 @@
+{
+  if (inputType == null || inputType.getType() != InputType.Type.RNN) {
+    throw new IllegalStateException("Invalid input type: Expected input of type RNN, got " + inputType);
+  }
+  InputType.InputTypeRecurrent c=(InputType.InputTypeRecurrent)inputType;
+  int expSize=inputHeight * inputWidth * numChannels;
+  if (c.getSize() != expSize) {
+    throw new IllegalStateException("Invalid input: expected RNN input of size " + expSize + " = (d="+ numChannels+ " * w="+ inputWidth+ " * h="+ inputHeight+ "), got "+ inputType);
+  }
+  return InputType.convolutional(inputHeight,inputWidth,numChannels);
+}
