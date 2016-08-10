@@ -8,4 +8,7 @@
   modelState.addPerformanceBatches(1 / timeSec);
   modelState.setIterationTime(timeSpent);
   modelState.addScore((float)model.score());
+  modelState.setScore((float)model.score());
+  modelState.setLr(0.001f);
+  modelState.setTrainingTime(parseTime(System.currentTimeMillis() - initTime));
 }
