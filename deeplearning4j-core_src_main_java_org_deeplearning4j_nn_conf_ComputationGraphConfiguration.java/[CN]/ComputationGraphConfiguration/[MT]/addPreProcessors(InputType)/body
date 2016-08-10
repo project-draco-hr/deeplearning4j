@@ -67,14 +67,11 @@ case RNN:
     break;
 case CNN:
   InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
-if (networkInputs.contains(vertexInputs.get(s).get(0))) {
-  lv.setPreProcessor(new FeedForwardToCnnPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
-}
 if (l instanceof ConvolutionLayer) {
-ConvolutionLayer cl=(ConvolutionLayer)l;
-if (cl.getNIn() == 0) {
-  cl.setNIn(conv.getDepth());
-}
+  ConvolutionLayer cl=(ConvolutionLayer)l;
+  if (cl.getNIn() == 0) {
+    cl.setNIn(conv.getDepth());
+  }
 }
 break;
 }
