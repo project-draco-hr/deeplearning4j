@@ -1,8 +1,8 @@
 {
-  if (iteration % frequency == 0) {
+  if (iterationCount.incrementAndGet() % frequency == 0) {
     currTime=System.currentTimeMillis();
-    ModelInfo info=buildModelInfo(model);
     buildModelState(model);
+    ModelInfo info=buildModelInfo(model);
     Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(info,MediaType.APPLICATION_JSON));
     log.debug("Response: " + resp);
     resp=targetState.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(modelState,MediaType.APPLICATION_JSON));

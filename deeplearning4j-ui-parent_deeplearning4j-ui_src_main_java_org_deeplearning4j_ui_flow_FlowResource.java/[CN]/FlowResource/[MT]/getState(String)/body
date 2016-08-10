@@ -1,4 +1,4 @@
 {
-  ModelInfo model=(ModelInfo)storage.getObject(sessionId,ObjectType.FLOW);
-  return Response.ok(model).build();
+  ModelState modelState=(ModelState)storage.getObject(sessionId,ObjectType.FLOW_STATE);
+  return Response.ok(modelState).build();
 }

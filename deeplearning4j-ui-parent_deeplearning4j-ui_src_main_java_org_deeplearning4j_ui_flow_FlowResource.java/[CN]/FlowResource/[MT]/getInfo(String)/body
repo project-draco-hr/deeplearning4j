@@ -1,0 +1,4 @@
+{
+  ModelInfo model=(ModelInfo)storage.getObject(sessionId,ObjectType.FLOW);
+  return Response.ok(model).build();
+}
