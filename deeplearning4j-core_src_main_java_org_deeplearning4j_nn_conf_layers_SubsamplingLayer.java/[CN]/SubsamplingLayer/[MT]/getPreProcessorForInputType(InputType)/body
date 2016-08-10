@@ -1,0 +1,6 @@
+{
+  if (inputType == null) {
+    throw new IllegalStateException("Invalid input for Subsampling layer (layer name=\"" + getLayerName() + "\"): input is null");
+  }
+  return InputTypeUtil.getPreProcessorForInputTypeCnnLayers(inputType,getLayerName());
+}
