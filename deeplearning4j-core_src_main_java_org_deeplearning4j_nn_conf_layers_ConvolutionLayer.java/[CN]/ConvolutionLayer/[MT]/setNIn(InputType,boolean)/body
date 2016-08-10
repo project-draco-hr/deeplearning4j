@@ -2,5 +2,8 @@
   if (inputType == null || inputType.getType() != InputType.Type.CNN) {
     throw new IllegalStateException("Invalid input for Convolution layer (layer name=\"" + getLayerName() + "\"): Expected CNN input, got "+ inputType);
   }
-  return InputTypeUtil.getOutputTypeCnnLayers(inputType,kernelSize,stride,padding,nOut,getLayerName());
+  if (nIn <= 0 || override) {
+    InputType.InputTypeConvolutional c=(InputType.InputTypeConvolutional)inputType;
+    this.nIn=c.getDepth();
+  }
 }

@@ -2,5 +2,8 @@
   if (inputType == null || inputType.getType() != InputType.Type.RNN) {
     throw new IllegalStateException("Invalid input type for RnnOutputLayer (layer name=\"" + getLayerName() + "\"): Expected RNN input, got "+ inputType);
   }
-  return InputType.recurrent(nOut);
+  if (nIn <= 0 || override) {
+    InputType.InputTypeRecurrent r=(InputType.InputTypeRecurrent)inputType;
+    this.nIn=r.getSize();
+  }
 }

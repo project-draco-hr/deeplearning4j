@@ -2,5 +2,8 @@
   if (inputType == null || inputType.getType() != InputType.Type.FF) {
     throw new IllegalStateException("Invalid input type (layer name=\"" + getLayerName() + "\"): expected FeedForward input type. Got: "+ inputType);
   }
-  return InputType.feedForward(nOut);
+  if (nIn <= 0 || override) {
+    InputType.InputTypeFeedForward f=(InputType.InputTypeFeedForward)inputType;
+    this.nIn=f.getSize();
+  }
 }
