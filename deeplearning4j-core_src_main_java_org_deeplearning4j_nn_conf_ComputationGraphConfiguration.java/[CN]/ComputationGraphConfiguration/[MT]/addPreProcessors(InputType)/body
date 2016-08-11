@@ -54,76 +54,29 @@
     if (gv instanceof LayerVertex) {
       String in=vertexInputs.get(s).get(0);
       InputType layerInput=vertexOutputs.get(in);
+      inputTypeList.add(layerInput);
       LayerVertex lv=(LayerVertex)gv;
-      if (lv.getPreProcessor() != null)       continue;
       Layer l=lv.getLayerConf().getLayer();
-      if (l instanceof ConvolutionLayer || l instanceof SubsamplingLayer) {
-switch (layerInput.getType()) {
-case FF:
-          log.warn("Automatic addition of FF -> CNN preprocessors: not yet implemented (layer: " + s + ")");
-        break;
-case RNN:
-      log.warn("Automatic addition of RNN -> CNN preprocessors: not yet implemented (layer: " + s + ")");
-    break;
-case CNN:
-  InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
-if (networkInputs.contains(vertexInputs.get(s).get(0))) {
-  lv.setPreProcessor(new FeedForwardToCnnPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
-}
-if (l instanceof ConvolutionLayer) {
-ConvolutionLayer cl=(ConvolutionLayer)l;
-if (cl.getNIn() == 0) {
-  cl.setNIn(conv.getDepth());
-}
-}
-break;
-}
-}
- else if (l instanceof BaseRecurrentLayer || l instanceof RnnOutputLayer) {
-switch (layerInput.getType()) {
-case FF:
-lv.setPreProcessor(new FeedForwardToRnnPreProcessor());
-setNInIfNecessary(lv,layerInput);
-break;
-case RNN:
-setNInIfNecessary(lv,layerInput);
-break;
-case CNN:
-InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
-lv.setPreProcessor(new CnnToRnnPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
-int nIn=conv.getHeight() * conv.getWidth() * conv.getDepth();
-((FeedForwardLayer)lv.getLayerConf().getLayer()).setNIn(nIn);
-break;
-}
-}
- else if (l instanceof FeedForwardLayer) {
-switch (layerInput.getType()) {
-case FF:
-setNInIfNecessary(lv,layerInput);
-break;
-case RNN:
-lv.setPreProcessor(new RnnToFeedForwardPreProcessor());
-setNInIfNecessary(lv,layerInput);
-break;
-case CNN:
-InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
-lv.setPreProcessor(new CnnToFeedForwardPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
-int nIn=conv.getHeight() * conv.getWidth() * conv.getDepth();
-((FeedForwardLayer)lv.getLayerConf().getLayer()).setNIn(nIn);
-break;
-}
-}
-inputTypeList.add(layerInput);
-}
+      if (lv.getPreProcessor() == null) {
+        InputPreProcessor preproc=l.getPreProcessorForInputType(layerInput);
+        lv.setPreProcessor(preproc);
+      }
+      InputType afterPreproc=layerInput;
+      if (lv.getPreProcessor() != null) {
+        InputPreProcessor ip=lv.getPreProcessor();
+        afterPreproc=ip.getOutputType(layerInput);
+      }
+      l.setNIn(afterPreproc,false);
+    }
  else {
-List<String> inputs=vertexInputs.get(s);
-if (inputs != null) {
-for (String inputVertexName : inputs) {
-inputTypeList.add(vertexOutputs.get(inputVertexName));
-}
-}
-}
-InputType outputFromVertex=gv.getOutputType(inputTypeList.toArray(new InputType[inputTypeList.size()]));
-vertexOutputs.put(s,outputFromVertex);
-}
+      List<String> inputs=vertexInputs.get(s);
+      if (inputs != null) {
+        for (        String inputVertexName : inputs) {
+          inputTypeList.add(vertexOutputs.get(inputVertexName));
+        }
+      }
+    }
+    InputType outputFromVertex=gv.getOutputType(inputTypeList.toArray(new InputType[inputTypeList.size()]));
+    vertexOutputs.put(s,outputFromVertex);
+  }
 }

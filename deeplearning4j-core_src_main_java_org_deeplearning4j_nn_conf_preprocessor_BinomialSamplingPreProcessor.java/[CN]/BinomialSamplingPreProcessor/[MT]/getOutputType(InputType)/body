@@ -1,0 +1,4 @@
+{
+  if (inputType == null)   throw new IllegalStateException("Invalid input type: cannot be null");
+  return inputType;
+}
