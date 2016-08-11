@@ -34,7 +34,7 @@
     int layer=Integer.parseInt(param.replaceAll("\\_.*$",""));
     String key=param.replaceAll("^.*?_","").toLowerCase();
     if (!layerParamsMap.containsKey(layer))     layerParamsMap.put(layer,new LayerParams());
-    HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(20).setRounding(6).build();
+    HistogramBin histogram=new HistogramBin.Builder(entry.getValue().dup()).setBinCount(14).setRounding(6).build();
     if (key.equalsIgnoreCase("w")) {
       layerParamsMap.get(layer).setW(histogram.getData());
     }
