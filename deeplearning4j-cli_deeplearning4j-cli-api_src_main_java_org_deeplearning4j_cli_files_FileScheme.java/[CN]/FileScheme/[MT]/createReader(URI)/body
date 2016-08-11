@@ -1,8 +1,0 @@
-{
-  try {
-    return readerFactory.create(uri);
-  }
- catch (  UnknownFormatException e) {
-    throw new RuntimeException(e);
-  }
-}

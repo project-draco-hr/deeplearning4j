@@ -1,4 +1,4 @@
 {
-  int result=this.word == null ? 0 : this.word.hashCode();
+  final int result=this.word == null ? 0 : this.word.hashCode();
   return result;
 }

@@ -1,3 +1,8 @@
 {
-  throw new UnsupportedOperationException("Not yet implemented");
+  int paramsSoFar=0;
+  for (  Layer layer : layers) {
+    if (layer.numParams() == 0)     continue;
+    layer.setBackpropGradientsViewArray(gradients.get(NDArrayIndex.point(0),NDArrayIndex.interval(paramsSoFar,paramsSoFar + layer.numParams())));
+    paramsSoFar+=layer.numParams();
+  }
 }

@@ -9,14 +9,7 @@
   sumSquaredLabels.addi(labels.mul(labels).sum(0));
   sumSquaredPredicted.addi(predictions.mul(predictions).sum(0));
   int nRows=labels.size(0);
-  for (int i=0; i < nRows; i++) {
-    exampleCount++;
-    INDArray lRow=labels.getRow(i);
-    INDArray pRow=predictions.getRow(i);
-    INDArray deltaPredicted=pRow.sub(currentPredictionMean);
-    INDArray deltaActual=lRow.sub(currentMean);
-    currentMean.addi(deltaActual.div(exampleCount));
-    currentPredictionMean.addi(deltaPredicted.div(exampleCount));
-    m2Actual.addi(deltaActual.muli(lRow.sub(currentMean)));
-  }
+  currentMean.muli(exampleCount).addi(labels.sum(0)).divi(exampleCount + nRows);
+  currentPredictionMean.muli(exampleCount).addi(predictions.sum(0)).divi(exampleCount + nRows);
+  exampleCount+=nRows;
 }

@@ -66,10 +66,16 @@ case RNN:
       log.warn("Automatic addition of RNN -> CNN preprocessors: not yet implemented (layer: " + s + ")");
     break;
 case CNN:
-  if (networkInputs.contains(vertexInputs.get(s).get(0))) {
-    InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
-    lv.setPreProcessor(new FeedForwardToCnnPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
-  }
+  InputType.InputTypeConvolutional conv=(InputType.InputTypeConvolutional)layerInput;
+if (networkInputs.contains(vertexInputs.get(s).get(0))) {
+  lv.setPreProcessor(new FeedForwardToCnnPreProcessor(conv.getHeight(),conv.getWidth(),conv.getDepth()));
+}
+if (l instanceof ConvolutionLayer) {
+ConvolutionLayer cl=(ConvolutionLayer)l;
+if (cl.getNIn() == 0) {
+  cl.setNIn(conv.getDepth());
+}
+}
 break;
 }
 }
@@ -90,7 +96,7 @@ int nIn=conv.getHeight() * conv.getWidth() * conv.getDepth();
 break;
 }
 }
- else {
+ else if (l instanceof FeedForwardLayer) {
 switch (layerInput.getType()) {
 case FF:
 setNInIfNecessary(lv,layerInput);

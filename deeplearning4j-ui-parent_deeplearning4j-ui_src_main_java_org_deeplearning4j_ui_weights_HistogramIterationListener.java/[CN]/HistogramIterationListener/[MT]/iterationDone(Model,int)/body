@@ -1,5 +1,5 @@
 {
-  if (iteration % iterations == 0) {
+  if (curIteration % iterations == 0) {
     Map<String,Map> newGrad=new LinkedHashMap<>();
     try {
       Map<String,INDArray> grad=model.gradient().gradientForVariable();
@@ -81,4 +81,5 @@
       firstIteration=false;
     }
   }
+  curIteration+=1;
 }
