@@ -1,3 +1,3 @@
 {
-  return new BarnesHutTsne(null,null,2,similarityFunction,theta,invert,maxIter,realMin,initialMomentum,finalMomentum,momentum,switchMomentumIteration,normalize,usePca,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity,minGain);
+  return new BarnesHutTsne(numDim,similarityFunction,theta,invert,maxIter,realMin,initialMomentum,finalMomentum,momentum,switchMomentumIteration,normalize,stopLyingIteration,tolerance,learningRate,useAdaGrad,perplexity,null,minGain);
 }
