@@ -1,17 +1,3 @@
 {
-  if (inputType == null) {
-    throw new IllegalStateException("Invalid input for RNN layer (layer name = \"" + getLayerName() + "\"): input type is null");
-  }
-switch (inputType.getType()) {
-case FF:
-case CNNFlat:
-    return new FeedForwardToRnnPreProcessor();
-case RNN:
-  return null;
-case CNN:
-InputType.InputTypeConvolutional c=(InputType.InputTypeConvolutional)inputType;
-return new CnnToRnnPreProcessor(c.getHeight(),c.getWidth(),c.getDepth());
-default :
-throw new RuntimeException("Unknown input type: " + inputType);
-}
+  return InputTypeUtil.getPreprocessorForInputTypeRnnLayers(inputType,getLayerName());
 }

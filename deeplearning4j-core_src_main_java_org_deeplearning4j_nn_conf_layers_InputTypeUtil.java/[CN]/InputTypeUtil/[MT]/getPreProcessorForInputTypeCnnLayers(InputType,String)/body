@@ -8,6 +8,9 @@ log.warn("Automatic addition of RNN -> CNN preprocessors: not yet implemented (l
 return null;
 case CNN:
 return null;
+case CNNFlat:
+InputType.InputTypeConvolutionalFlat f=(InputType.InputTypeConvolutionalFlat)inputType;
+return new FeedForwardToCnnPreProcessor(f.getHeight(),f.getWidth(),f.getDepth());
 default :
 throw new RuntimeException("Unknown input type: " + inputType);
 }
