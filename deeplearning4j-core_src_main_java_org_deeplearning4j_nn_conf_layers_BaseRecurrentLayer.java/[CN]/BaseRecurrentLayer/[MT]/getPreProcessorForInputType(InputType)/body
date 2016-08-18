@@ -4,6 +4,7 @@
   }
 switch (inputType.getType()) {
 case FF:
+case CNNFlat:
     return new FeedForwardToRnnPreProcessor();
 case RNN:
   return null;

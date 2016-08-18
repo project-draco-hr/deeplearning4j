@@ -1,3 +1,7 @@
 {
+  if (inputType.getType() == InputType.Type.CNNFlat) {
+    InputType.InputTypeConvolutionalFlat i=(InputType.InputTypeConvolutionalFlat)inputType;
+    return new FeedForwardToCnnPreProcessor(i.getHeight(),i.getWidth(),i.getDepth());
+  }
   return null;
 }

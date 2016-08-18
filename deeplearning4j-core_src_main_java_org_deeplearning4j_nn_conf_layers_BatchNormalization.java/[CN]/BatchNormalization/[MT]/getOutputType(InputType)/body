@@ -1,6 +1,6 @@
 {
-  if (inputType == null || inputType.getType() != InputType.Type.CNN) {
-    throw new IllegalStateException("Invalid input type: Expected input of type CNN, got " + inputType);
+  if (inputType == null || (inputType.getType() != InputType.Type.CNN && inputType.getType() != InputType.Type.CNNFlat)) {
+    throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, got " + inputType);
   }
   return inputType;
 }
