@@ -14,6 +14,8 @@ if (to >= depth) {
 throw new InvalidInputTypeException("Invalid range: Cannot select depth subset [" + from + ","+ to+ "] inclusive from CNN activations with "+ " [depth,width,height] = ["+ depth+ ","+ conv.getWidth()+ ","+ conv.getHeight()+ "]");
 }
 return InputType.convolutional(from - to + 1,conv.getWidth(),conv.getHeight());
+case CNNFlat:
+throw new UnsupportedOperationException("Subsetting data in flattened convolutional format not yet supported");
 default :
 throw new RuntimeException("Unknown input type: " + vertexInputs[0]);
 }
