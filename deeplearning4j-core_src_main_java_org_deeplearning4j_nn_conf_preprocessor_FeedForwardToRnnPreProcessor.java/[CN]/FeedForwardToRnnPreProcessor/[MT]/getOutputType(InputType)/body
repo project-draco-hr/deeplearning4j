@@ -1,7 +1,13 @@
 {
-  if (inputType == null || inputType.getType() != InputType.Type.FF) {
+  if (inputType == null || (inputType.getType() != InputType.Type.FF && inputType.getType() != InputType.Type.CNNFlat)) {
     throw new IllegalStateException("Invalid input: expected input of type FeedForward, got " + inputType);
   }
-  InputType.InputTypeFeedForward ff=(InputType.InputTypeFeedForward)inputType;
-  return InputType.recurrent(ff.getSize());
+  if (inputType.getType() == InputType.Type.FF) {
+    InputType.InputTypeFeedForward ff=(InputType.InputTypeFeedForward)inputType;
+    return InputType.recurrent(ff.getSize());
+  }
+ else {
+    InputType.InputTypeConvolutionalFlat cf=(InputType.InputTypeConvolutionalFlat)inputType;
+    return InputType.recurrent(cf.getFlattenedSize());
+  }
 }
