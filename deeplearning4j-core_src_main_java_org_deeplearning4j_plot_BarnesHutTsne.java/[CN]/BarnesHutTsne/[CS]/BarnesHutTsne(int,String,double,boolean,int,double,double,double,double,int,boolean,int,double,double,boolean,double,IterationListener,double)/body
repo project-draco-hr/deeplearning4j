@@ -1,0 +1,20 @@
+{
+  this.maxIter=maxIter;
+  this.realMin=realMin;
+  this.initialMomentum=initialMomentum;
+  this.finalMomentum=finalMomentum;
+  this.momentum=momentum;
+  this.normalize=normalize;
+  this.useAdaGrad=useAdaGrad;
+  this.stopLyingIteration=stopLyingIteration;
+  this.learningRate=learningRate;
+  this.switchMomentumIteration=switchMomentumIteration;
+  this.tolerance=tolerance;
+  this.perplexity=perplexity;
+  this.minGain=minGain;
+  this.numDimensions=numDimensions;
+  this.simiarlityFunction=simiarlityFunction;
+  this.theta=theta;
+  this.iterationListener=iterationListener;
+  this.invert=invert;
+}

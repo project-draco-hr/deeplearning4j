@@ -5,6 +5,15 @@
     List<String> inputs=graph.getConfiguration().getNetworkInputs();
     int x=0;
     for (    String input : inputs) {
+      GraphVertex vertex=graph.getVertex(input);
+      INDArray gInput=vertex.getInputs()[0];
+      long tadLength=Shape.getTADLength(gInput.shape(),ArrayUtil.range(1,gInput.rank()));
+      long numSamples=gInput.lengthLong() / tadLength;
+      StringBuilder builder=new StringBuilder();
+      builder.append("Vertex name: ").append(input).append("<br/>");
+      builder.append("Model input").append("<br/>");
+      builder.append("Input size: ").append(tadLength).append("<br/>");
+      builder.append("Batch size: ").append(numSamples).append("<br/>");
       LayerInfo info=new LayerInfo();
       info.setId(0);
       info.setName(input);
@@ -13,6 +22,7 @@
       info.setLayerType(INPUT);
       info.setDescription(new Description());
       info.getDescription().setMainLine("Model input");
+      info.getDescription().setText(builder.toString());
       modelInfo.addLayer(info);
       x++;
     }
@@ -30,6 +40,13 @@
   }
  else   if (model instanceof MultiLayerNetwork) {
     MultiLayerNetwork network=(MultiLayerNetwork)model;
+    INDArray input=model.input();
+    long tadLength=Shape.getTADLength(input.shape(),ArrayUtil.range(1,input.rank()));
+    long numSamples=input.lengthLong() / tadLength;
+    StringBuilder builder=new StringBuilder();
+    builder.append("Model input").append("<br/>");
+    builder.append("Input size: ").append(tadLength).append("<br/>");
+    builder.append("Batch size: ").append(numSamples).append("<br/>");
     LayerInfo info=new LayerInfo();
     info.setId(0);
     info.setName("Input");
@@ -38,6 +55,7 @@
     info.setLayerType(INPUT);
     info.setDescription(new Description());
     info.getDescription().setMainLine("Model input");
+    info.getDescription().setText(builder.toString());
     info.addConnection(0,1);
     modelInfo.addLayer(info);
     int y=1;

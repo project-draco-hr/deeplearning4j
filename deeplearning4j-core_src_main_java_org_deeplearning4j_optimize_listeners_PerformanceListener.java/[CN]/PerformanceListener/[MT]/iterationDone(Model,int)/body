@@ -1,0 +1,20 @@
+{
+  if (iterationCount.getAndIncrement() % frequency == 0) {
+    long currentTime=System.currentTimeMillis();
+    long timeSpent=currentTime - lastTime;
+    float timeSec=timeSpent / 1000f;
+    INDArray input=model.input();
+    long tadLength=Shape.getTADLength(input.shape(),ArrayUtil.range(1,input.rank()));
+    long numSamples=input.lengthLong() / tadLength;
+    samplesPerSec=numSamples / timeSec;
+    batchesPerSec=1 / timeSec;
+    StringBuilder builder=new StringBuilder();
+    if (reportIteration)     builder.append("iteration ").append(iterationCount.get()).append("; ");
+    if (reportTime)     builder.append("iteration time: ").append(timeSpent).append(" ms; ");
+    if (reportSample)     builder.append("samples/sec: ").append(String.format("%.3f",samplesPerSec)).append("; ");
+    if (reportBatch)     builder.append("batches/sec: ").append(String.format("%.3f",batchesPerSec)).append("; ");
+    if (reportScore)     builder.append("score: ").append(model.score()).append(";");
+    logger.info(builder.toString());
+  }
+  lastTime=System.currentTimeMillis();
+}

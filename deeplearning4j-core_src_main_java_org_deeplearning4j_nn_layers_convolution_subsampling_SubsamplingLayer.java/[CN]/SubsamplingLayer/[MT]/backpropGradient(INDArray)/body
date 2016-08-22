@@ -16,7 +16,6 @@
   }
   int inputHeight=input().size(-2);
   int inputWidth=input().size(-1);
-  INDArray reshapeEpsilon, retE;
   Gradient retGradient=new DefaultGradient();
   boolean cOrderStrides=false;
   if (epsilon.ordering() != 'c') {
