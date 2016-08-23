@@ -1,0 +1,17 @@
+{
+  List<DataSet> out=new ArrayList<>();
+  while (iter.hasNext()) {
+    List<DataSet> list=new ArrayList<>();
+    int count=0;
+    while (count < minibatchSize && iter.hasNext()) {
+      DataSet ds=iter.next();
+      count+=ds.getFeatureMatrix().size(0);
+      list.add(ds);
+    }
+    DataSet next;
+    if (list.size() == 0)     next=list.get(0);
+ else     next=DataSet.merge(list);
+    out.add(next);
+  }
+  return out;
+}
