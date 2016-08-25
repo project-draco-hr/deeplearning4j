@@ -9,7 +9,7 @@
     int[] nParamsPerLayer=new int[nLayers];
     for (int i=0; i < nLayers; i++) {
       NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
-      nParamsPerLayer[i]=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+      nParamsPerLayer[i]=layers[i].conf().getLayer().initializer().numParams(conf,true);
       backpropParamLength+=nParamsPerLayer[i];
     }
     boolean initializeParams;
@@ -35,7 +35,7 @@
       }
       paramCountSoFar+=nParamsPerLayer[i];
       NeuralNetConfiguration conf=layerWiseConfigurations.getConf(i);
-      layers[i]=LayerFactories.getFactory(conf).create(conf,listeners,i,paramsView,initializeParams);
+      layers[i]=conf.getLayer().instantiate(conf,listeners,i,paramsView,initializeParams);
       layerMap.put(conf.getLayer().getLayerName(),layers[i]);
     }
     initCalled=true;
