@@ -1,5 +1,5 @@
 {
-  org.deeplearning4j.nn.layers.feedforward.dense.DenseLayer ret=new org.deeplearning4j.nn.layers.feedforward.dense.DenseLayer(conf);
+  org.deeplearning4j.nn.layers.convolution.subsampling.SubsamplingLayer ret=new org.deeplearning4j.nn.layers.convolution.subsampling.SubsamplingLayer(conf);
   ret.setListeners(iterationListeners);
   ret.setIndex(layerIndex);
   ret.setParamsViewArray(layerParamsView);
