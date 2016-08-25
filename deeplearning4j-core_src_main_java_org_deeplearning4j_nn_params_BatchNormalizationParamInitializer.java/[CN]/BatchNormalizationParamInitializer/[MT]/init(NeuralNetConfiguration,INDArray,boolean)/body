@@ -1,4 +1,5 @@
 {
+  Map<String,INDArray> params=Collections.synchronizedMap(new LinkedHashMap<String,INDArray>());
   BatchNormalization layer=(BatchNormalization)conf.getLayer();
   int nOut=layer.getNOut();
   INDArray gammaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
@@ -7,4 +8,5 @@
   conf.addVariable(GAMMA);
   params.put(BETA,createBeta(conf,betaView,initializeParams));
   conf.addVariable(BETA);
+  return params;
 }

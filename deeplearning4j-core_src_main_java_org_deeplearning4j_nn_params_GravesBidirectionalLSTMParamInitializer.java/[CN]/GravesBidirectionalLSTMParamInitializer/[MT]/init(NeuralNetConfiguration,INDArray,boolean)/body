@@ -1,4 +1,5 @@
 {
+  Map<String,INDArray> params=Collections.synchronizedMap(new LinkedHashMap<String,INDArray>());
   org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesBidirectionalLSTM)conf.getLayer();
   double forgetGateInit=layerConf.getForgetGateBiasInit();
   Distribution dist=Distributions.createDistribution(layerConf.getDist());
@@ -44,4 +45,5 @@
     params.put(RECURRENT_WEIGHT_KEY_BACKWARDS,WeightInitUtil.reshapeWeights(new int[]{nL,4 * nL + 3},rwR));
     params.put(BIAS_KEY_BACKWARDS,bR);
   }
+  return params;
 }
