@@ -1,8 +1,8 @@
 {
   org.deeplearning4j.nn.conf.layers.RBM cnn=new org.deeplearning4j.nn.conf.layers.RBM.Builder().nIn(1).nOut(3).biasInit(1).build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(cnn).build();
-  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  int numParams=conf.getLayer().initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
+  Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
   assertEquals(1,layer.getParam("b").size(0));
 }
