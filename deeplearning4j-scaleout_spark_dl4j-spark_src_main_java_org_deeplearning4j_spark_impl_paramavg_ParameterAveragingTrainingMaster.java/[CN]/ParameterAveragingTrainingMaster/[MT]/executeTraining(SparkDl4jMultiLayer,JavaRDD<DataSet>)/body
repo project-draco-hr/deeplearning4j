@@ -1,7 +1,7 @@
 {
   if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
   if (collectTrainingStats)   stats.logFitStart();
-  trainingData.persist(StorageLevel.MEMORY_ONLY());
+  if (storageLevel != null)   trainingData.persist(storageLevel);
   if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
   if (collectTrainingStats)   stats.logCountEnd();

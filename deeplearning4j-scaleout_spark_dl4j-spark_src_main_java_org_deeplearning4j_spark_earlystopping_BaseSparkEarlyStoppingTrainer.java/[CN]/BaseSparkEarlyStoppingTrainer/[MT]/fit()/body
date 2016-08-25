@@ -13,8 +13,6 @@
   }
   if (listener != null)   listener.onStart(esConfig,net);
   Map<Integer,Double> scoreVsEpoch=new LinkedHashMap<>();
-  if (train != null)   train.cache();
- else   trainMulti.cache();
   int epochCount=0;
   while (true) {
     double lastScore;
