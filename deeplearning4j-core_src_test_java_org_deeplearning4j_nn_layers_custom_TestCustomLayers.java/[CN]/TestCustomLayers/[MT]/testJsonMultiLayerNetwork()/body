@@ -6,10 +6,10 @@
   boolean found=false;
   for (  NamedType nt : types) {
     System.out.println(nt);
-    if (nt.getType() == CustomTestLayer.class)     found=true;
+    if (nt.getType() == CustomLayer.class)     found=true;
   }
-  assertTrue("CustomTestLayer: not registered with NeuralNetConfiguration mapper",found);
-  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(0.1).list().layer(0,new DenseLayer.Builder().nIn(10).nOut(10).build()).layer(1,new CustomTestLayer(3.14159)).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(10).nOut(10).build()).pretrain(false).backprop(true).build();
+  assertTrue("CustomLayer: not registered with NeuralNetConfiguration mapper",found);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(0.1).list().layer(0,new DenseLayer.Builder().nIn(10).nOut(10).build()).layer(1,new CustomLayer(3.14159)).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(10).nOut(10).build()).pretrain(false).backprop(true).build();
   String json=conf.toJson();
   String yaml=conf.toYaml();
   System.out.println(json);
