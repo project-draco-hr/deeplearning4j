@@ -1,0 +1,20 @@
+{
+  ObjectMapper mapper=NeuralNetConfiguration.mapper();
+  AnnotatedClass ac=AnnotatedClass.construct(Layer.class,mapper.getSerializationConfig().getAnnotationIntrospector(),null);
+  Collection<NamedType> types=mapper.getSubtypeResolver().collectAndResolveSubtypes(ac,mapper.getSerializationConfig(),mapper.getSerializationConfig().getAnnotationIntrospector());
+  Set<Class<?>> registeredSubtypes=new HashSet<>();
+  boolean found=false;
+  for (  NamedType nt : types) {
+    System.out.println(nt);
+    if (nt.getType() == CustomTestLayer.class)     found=true;
+  }
+  assertTrue("CustomTestLayer: not registered with NeuralNetConfiguration mapper",found);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(0.1).list().layer(0,new DenseLayer.Builder().nIn(10).nOut(10).build()).layer(1,new CustomTestLayer(3.14159)).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(10).nOut(10).build()).pretrain(false).backprop(true).build();
+  String json=conf.toJson();
+  String yaml=conf.toYaml();
+  System.out.println(json);
+  MultiLayerConfiguration confFromJson=MultiLayerConfiguration.fromJson(json);
+  assertEquals(conf,confFromJson);
+  MultiLayerConfiguration confFromYaml=MultiLayerConfiguration.fromYaml(yaml);
+  assertEquals(conf,confFromYaml);
+}
