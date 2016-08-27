@@ -9,6 +9,8 @@
   INDArray dnnExpectedEpsilonOutOther=Nd4j.create(new double[]{16.,15.,14.,13.,12.,11.,10.,9.,8.,7.,6.,5.,4.,3.,2.,1.,-16.,-15.,-14.,-13.,-12.,-11.,-10.,-9.,-8.,-7.,-6.,-5.,-4.,-3.,-2.,-1.},new int[]{2,16});
   INDArray expectedGGamma=Nd4j.create(new double[]{16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.,16.},new int[]{1,16});
   INDArray expectedBeta=Nd4j.create(new double[]{16.,18.,20.,22.,24.,26.,28.,30.,32.,34.,36.,38.,40.,42.,44.,46.},new int[]{1,16});
+  System.out.println(Arrays.toString(dnnExpectedEpsilonOut.data().asFloat()));
+  System.out.println(Arrays.toString(actualOut.getSecond().data().asFloat()));
   assertEquals(dnnExpectedEpsilonOut,actualOut.getSecond());
   assertEquals(expectedGGamma,actualOut.getFirst().getGradientFor("gamma"));
   assertEquals(expectedBeta,actualOut.getFirst().getGradientFor("beta"));
