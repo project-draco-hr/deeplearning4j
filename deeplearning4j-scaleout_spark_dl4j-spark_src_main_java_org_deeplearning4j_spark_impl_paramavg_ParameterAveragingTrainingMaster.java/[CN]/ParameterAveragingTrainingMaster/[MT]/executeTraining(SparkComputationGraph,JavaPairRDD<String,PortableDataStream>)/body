@@ -6,6 +6,7 @@
     log.info("Coalesing streams from {} to {} partitions",origNumPartitions,numWorkers);
     trainingData=trainingData.coalesce(numWorkers);
   }
+  if (storageLevelStreams != null)   trainingData.persist(storageLevelStreams);
   if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
   if (collectTrainingStats)   stats.logCountEnd();

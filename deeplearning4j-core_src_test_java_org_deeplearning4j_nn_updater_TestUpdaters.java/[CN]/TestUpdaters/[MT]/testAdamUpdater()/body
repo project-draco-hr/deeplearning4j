@@ -13,8 +13,8 @@
   INDArray updaterState=Nd4j.create(1,updaterStateSize);
   updater.setStateViewArray(layer,updaterState,true);
   updater.update(layer,gradient,iteration,1);
-  double beta1t=FastMath.pow(beta1,iteration);
-  double beta2t=FastMath.pow(beta2,iteration);
+  double beta1t=FastMath.pow(beta1,iteration + 1);
+  double beta2t=FastMath.pow(beta2,iteration + 1);
   double alphat=lr * FastMath.sqrt(1 - beta2t) / (1 - beta1t);
   if (Double.isNaN(alphat) || alphat == 0.0)   alphat=epsilon;
   Gradient gradientDup=new DefaultGradient();

@@ -6,7 +6,6 @@ case Never:
 case NumPartitionsWorkersDiffers:
   if (origNumPartitions == numPartitions)   return rdd;
 case Always:
-rdd.persist(StorageLevel.MEMORY_ONLY());
 List<Tuple2<Integer,Integer>> partitionCounts=rdd.mapPartitionsWithIndex(new CountPartitionsFunction<T>(),true).collect();
 int totalObjects=0;
 int initialPartitions=partitionCounts.size();

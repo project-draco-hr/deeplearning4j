@@ -14,13 +14,14 @@
   Gradient gradientDup=new DefaultGradient();
   gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
   gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
+  double epsilon=1e-8;
   for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
     key=entry.getKey();
     val=entry.getValue();
     INDArray lastGTmp=lastG.get(key);
     if (lastGTmp == null)     lastGTmp=Nd4j.zeros(val.shape());
     lastGTmp.muli(rmsDecay).addi(val.mul(val).muli(1 - rmsDecay));
-    gradExpected=val.mul(lr).div(Transforms.sqrt(lastGTmp.add(Nd4j.EPS_THRESHOLD)));
+    gradExpected=val.mul(lr).div(Transforms.sqrt(lastGTmp.add(epsilon)));
     assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
     lastG.put(key,lastGTmp);
   }
