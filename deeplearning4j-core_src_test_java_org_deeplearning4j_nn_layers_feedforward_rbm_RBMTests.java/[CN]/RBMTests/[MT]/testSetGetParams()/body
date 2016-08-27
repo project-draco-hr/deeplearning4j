@@ -7,6 +7,6 @@
   rbm.setParams(rand2);
   rbm.setInput(Nd4j.zeros(6));
   rbm.computeGradientAndScore();
-  INDArray getParams=rbm.params();
+  INDArray getParams=rbm.params(true);
   assertEquals(rand2,getParams);
 }

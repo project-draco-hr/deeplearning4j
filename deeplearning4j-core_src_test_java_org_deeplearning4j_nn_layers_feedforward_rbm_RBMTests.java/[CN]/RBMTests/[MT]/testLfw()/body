@@ -1,7 +1,5 @@
 {
-  LFWDataSetIterator iter=new LFWDataSetIterator(10,10,new int[]{28,28,1},true,1.0);
-  DataSet d=iter.next();
-  d.normalizeZeroMeanZeroUnitVariance();
+  DataSet d=new MnistDataSetIterator(10,true,12345).next();
   int nOut=600;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().layer(new org.deeplearning4j.nn.conf.layers.RBM.Builder(org.deeplearning4j.nn.conf.layers.RBM.HiddenUnit.RECTIFIED,org.deeplearning4j.nn.conf.layers.RBM.VisibleUnit.GAUSSIAN).nIn(d.numInputs()).nOut(nOut).weightInit(WeightInit.VI).lossFunction(LossFunctions.LossFunction.RMSE_XENT).build()).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(1e-3f).build();
   int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
