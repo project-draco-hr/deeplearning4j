@@ -29,6 +29,22 @@ log.warn("Layer \"" + layerName + "\" adamVarDecay is automatically set to 0.999
 break;
 case ADADELTA:
 if (Double.isNaN(layer.getRho())) layer.setRho(rho);
+if (Double.isNaN(epsilon) && Double.isNaN(layer.getEpsilon())) {
+layer.setEpsilon(1e-6);
+log.warn("Layer \"" + layerName + "\" AdaDelta epsilon is automatically set to 1e-6. Add epsilon to configuration to change the value.");
+}
+ else if (Double.isNaN(layer.getEpsilon())) {
+layer.setEpsilon(epsilon);
+}
+break;
+case ADAGRAD:
+if (Double.isNaN(epsilon) && Double.isNaN(layer.getEpsilon())) {
+layer.setEpsilon(1e-6);
+}
+ else if (Double.isNaN(layer.getEpsilon())) {
+layer.setEpsilon(epsilon);
+}
+break;
 case RMSPROP:
 if (Double.isNaN(rmsDecay) && Double.isNaN(layer.getRmsDecay())) {
 layer.setRmsDecay(0.95);
