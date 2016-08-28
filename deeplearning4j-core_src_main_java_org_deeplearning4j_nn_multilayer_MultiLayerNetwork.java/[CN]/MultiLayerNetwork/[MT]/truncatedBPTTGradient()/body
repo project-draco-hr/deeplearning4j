@@ -23,8 +23,8 @@
   if (getLayerWiseConfigurations().getInputPreProcess(numLayers - 1) != null)   currPair=new Pair<>(currPair.getFirst(),this.layerWiseConfigurations.getInputPreProcess(numLayers - 1).backprop(currPair.getSecond(),getInputMiniBatchSize()));
   for (int j=numLayers - 2; j >= 0; j--) {
     currLayer=getLayer(j);
-    if (currLayer instanceof BaseRecurrentLayer) {
-      currPair=((BaseRecurrentLayer<?>)currLayer).tbpttBackpropGradient(currPair.getSecond(),layerWiseConfigurations.getTbpttBackLength());
+    if (currLayer instanceof RecurrentLayer) {
+      currPair=((RecurrentLayer)currLayer).tbpttBackpropGradient(currPair.getSecond(),layerWiseConfigurations.getTbpttBackLength());
     }
  else {
       currPair=currLayer.backpropGradient(currPair.getSecond());

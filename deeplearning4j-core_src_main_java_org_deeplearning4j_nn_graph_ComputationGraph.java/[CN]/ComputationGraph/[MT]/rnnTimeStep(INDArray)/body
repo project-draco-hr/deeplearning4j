@@ -23,8 +23,8 @@
       INDArray out;
       if (current.hasLayer()) {
         Layer l=current.getLayer();
-        if (l instanceof BaseRecurrentLayer<?>) {
-          out=((BaseRecurrentLayer<?>)l).rnnTimeStep(current.getInputs()[0]);
+        if (l instanceof RecurrentLayer) {
+          out=((RecurrentLayer)l).rnnTimeStep(current.getInputs()[0]);
         }
  else         if (l instanceof MultiLayerNetwork) {
           out=((MultiLayerNetwork)l).rnnTimeStep(current.getInputs()[0]);

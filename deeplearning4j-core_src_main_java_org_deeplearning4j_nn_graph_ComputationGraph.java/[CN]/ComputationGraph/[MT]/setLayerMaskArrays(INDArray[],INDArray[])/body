@@ -19,7 +19,7 @@
         GraphVertex nextVertex=verticesMap.get(nextVertexName);
         if (nextVertex.hasLayer()) {
           Layer l=nextVertex.getLayer();
-          if (l instanceof BaseRecurrentLayer<?>) {
+          if (l instanceof RecurrentLayer) {
             continue;
           }
  else           if (l.type() == Layer.Type.FEED_FORWARD || l.type() == Layer.Type.CONVOLUTIONAL) {
