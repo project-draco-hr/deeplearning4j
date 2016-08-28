@@ -1,6 +1,6 @@
 {
   DataSetIterator iter;
-  if (!(iterator instanceof AsyncDataSetIterator || iterator instanceof ListDataSetIterator || iterator instanceof MultipleEpochsIterator)) {
+  if (!(iterator instanceof AsyncDataSetIterator || iterator instanceof ListDataSetIterator || iterator instanceof MultipleEpochsIterator|| iterator instanceof CifarDataSetIterator|| iterator instanceof LFWDataSetIterator)) {
     iter=new AsyncDataSetIterator(iterator,2);
   }
  else   iter=iterator;
