@@ -4,8 +4,8 @@
   List<INDArray> activations=feedForwardToLayer(layers.length - 2,data.getFeatureMatrix(),training);
   int n=activations.size();
   setLabels(data.getLabels());
-  if (getOutputLayer() instanceof BaseOutputLayer) {
-    BaseOutputLayer<?> ol=(BaseOutputLayer<?>)getOutputLayer();
+  if (getOutputLayer() instanceof IOutputLayer) {
+    IOutputLayer ol=(IOutputLayer)getOutputLayer();
     INDArray olInput=activations.get(n - 1);
     if (getLayerWiseConfigurations().getInputPreProcess(n - 1) != null) {
       olInput=getLayerWiseConfigurations().getInputPreProcess(n - 1).preProcess(olInput,input.size(0));

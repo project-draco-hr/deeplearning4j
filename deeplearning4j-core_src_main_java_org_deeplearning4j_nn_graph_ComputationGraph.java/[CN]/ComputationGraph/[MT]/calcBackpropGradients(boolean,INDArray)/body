@@ -6,8 +6,8 @@
     if (current.isInputVertex())     continue;
     if (current.isOutputVertex()) {
       int thisOutputNumber=configuration.getNetworkOutputs().indexOf(current.getVertexName());
-      if (current.getLayer() instanceof BaseOutputLayer) {
-        BaseOutputLayer<?> outputLayer=(BaseOutputLayer<?>)current.getLayer();
+      if (current.getLayer() instanceof IOutputLayer) {
+        IOutputLayer outputLayer=(IOutputLayer)current.getLayer();
         INDArray currLabels=labels[thisOutputNumber];
         outputLayer.setLabels(currLabels);
       }
