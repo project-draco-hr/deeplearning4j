@@ -5,9 +5,9 @@
   for (  org.deeplearning4j.nn.conf.Updater updaterFunc : updaters) {
     double lr=1e-2;
     NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).learningRateSchedule(learningRateAfter).learningRateDecayPolicy(LearningRatePolicy.Schedule).iterations(iterations).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(updaterFunc).build()).build();
-    int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+    int numParams=conf.getLayer().initializer().numParams(conf,true);
     INDArray params=Nd4j.create(1,numParams);
-    Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
+    Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
     Updater updater=UpdaterCreator.getUpdater(layer);
     int stateSize=updater.stateSizeForLayer(layer);
     if (stateSize > 0)     updater.setStateViewArray(layer,Nd4j.create(1,stateSize),true);

@@ -11,8 +11,8 @@
     }
   }
   Pair<Gradient,INDArray> pair;
-  if (tbptt && layer instanceof BaseRecurrentLayer<?>) {
-    pair=((BaseRecurrentLayer<?>)layer).tbpttBackpropGradient(epsTotal,graph.getConfiguration().getTbpttBackLength());
+  if (tbptt && layer instanceof RecurrentLayer) {
+    pair=((RecurrentLayer)layer).tbpttBackpropGradient(epsTotal,graph.getConfiguration().getTbpttBackLength());
   }
  else {
     pair=layer.backpropGradient(epsTotal);

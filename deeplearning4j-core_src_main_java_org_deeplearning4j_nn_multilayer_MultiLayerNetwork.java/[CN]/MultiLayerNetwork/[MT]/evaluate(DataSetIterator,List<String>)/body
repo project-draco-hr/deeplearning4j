@@ -1,5 +1,5 @@
 {
-  if (layers == null || !(layers[layers.length - 1] instanceof BaseOutputLayer)) {
+  if (layers == null || !(getOutputLayer() instanceof IOutputLayer)) {
     throw new IllegalStateException("Cannot evaluate network with no output layer");
   }
   if (labelsList == null)   labelsList=iterator.getLabels();

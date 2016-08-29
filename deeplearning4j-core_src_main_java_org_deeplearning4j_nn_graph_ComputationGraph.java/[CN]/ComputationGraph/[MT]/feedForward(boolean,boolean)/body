@@ -13,7 +13,7 @@
       }
     }
  else {
-      if (excludeOutputLayers && current.isOutputVertex() && current.hasLayer()&& current.getLayer() instanceof BaseOutputLayer) {
+      if (excludeOutputLayers && current.isOutputVertex() && current.hasLayer()&& current.getLayer() instanceof IOutputLayer) {
         continue;
       }
       INDArray out=current.doForward(train);

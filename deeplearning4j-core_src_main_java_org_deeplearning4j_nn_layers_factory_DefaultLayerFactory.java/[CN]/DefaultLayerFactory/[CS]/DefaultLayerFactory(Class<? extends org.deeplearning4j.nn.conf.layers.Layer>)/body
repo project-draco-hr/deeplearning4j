@@ -1,8 +1,0 @@
-{
-  try {
-    this.layerConfig=layerConfig.newInstance();
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

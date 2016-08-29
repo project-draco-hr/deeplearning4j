@@ -1,6 +1,0 @@
-{
-  if (this == o)   return true;
-  if (!(o instanceof DefaultLayerFactory))   return false;
-  DefaultLayerFactory that=(DefaultLayerFactory)o;
-  return !(layerConfig != null ? !layerConfig.equals(that.layerConfig) : that.layerConfig != null);
-}

@@ -1,7 +1,7 @@
 {
   for (int i=0; i < topologicalOrder.length; i++) {
     if (!vertices[i].hasLayer())     continue;
-    if (vertices[i].getLayer() instanceof BaseOutputLayer<?>)     continue;
+    if (vertices[i].getLayer() instanceof IOutputLayer)     continue;
     LinkedList<Integer> partialTopoSort=new LinkedList<>();
     Set<Integer> seenSoFar=new HashSet<>();
     partialTopoSort.add(topologicalOrder[i]);

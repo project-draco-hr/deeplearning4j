@@ -16,8 +16,8 @@
       INDArray out;
       if (current.hasLayer()) {
         Layer l=current.getLayer();
-        if (l instanceof BaseRecurrentLayer<?>) {
-          out=((BaseRecurrentLayer<?>)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
+        if (l instanceof RecurrentLayer) {
+          out=((RecurrentLayer)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
         }
  else         if (l instanceof MultiLayerNetwork) {
           List<INDArray> temp=((MultiLayerNetwork)l).rnnActivateUsingStoredState(current.getInputs()[0],training,storeLastForTBPTT);
