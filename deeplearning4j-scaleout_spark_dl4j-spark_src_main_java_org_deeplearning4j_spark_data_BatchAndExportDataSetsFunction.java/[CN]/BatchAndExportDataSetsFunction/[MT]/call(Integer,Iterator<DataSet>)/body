@@ -5,7 +5,7 @@
   while (iterator.hasNext()) {
     DataSet next=iterator.next();
     if (next.numExamples() == minibatchSize) {
-      export(next,partitionIdx,count++);
+      outputPaths.add(export(next,partitionIdx,count++));
       continue;
     }
     tempList.add(next);
