@@ -1,0 +1,10 @@
+{
+  String baseDir=getBaseDirForRDD(trainingData);
+  String dataDir=baseDir + "data/";
+  String pathsDir=baseDir + "paths/";
+  log.info("Initiating RDD<DataSet> export at {}",baseDir);
+  JavaRDD<String> paths=trainingData.mapPartitionsWithIndex(new BatchAndExportDataSetsFunction(batchSizePerWorker,dataDir),true);
+  paths.saveAsTextFile(pathsDir);
+  log.info("RDD<DataSet> export complete at {}",baseDir);
+  return baseDir;
+}
