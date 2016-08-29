@@ -1,0 +1,31 @@
+{
+  int numExamples=0;
+  for (  DataSet ds : tempList) {
+    numExamples+=ds.numExamples();
+  }
+  if (numExamples < minibatchSize && !finalExport) {
+    return new Pair<>(countBefore,Collections.<String>emptyList());
+  }
+  List<String> exportPaths=new ArrayList<>();
+  int countAfter=countBefore;
+  if (finalExport || numExamples >= minibatchSize) {
+    int countSoFar=0;
+    List<DataSet> tempToMerge=new ArrayList<>();
+    while (tempList.size() > 0 && countSoFar != minibatchSize) {
+      DataSet next=tempList.removeFirst();
+      if (countSoFar + next.numExamples() <= minibatchSize) {
+        tempToMerge.add(next);
+        countSoFar+=next.numExamples();
+      }
+ else {
+        List<DataSet> examples=next.asList();
+        for (        DataSet ds : examples) {
+          tempList.addFirst(ds);
+        }
+      }
+    }
+    DataSet toExport=DataSet.merge(tempToMerge);
+    exportPaths.add(export(toExport,partitionIdx,countAfter++));
+  }
+  return new Pair<>(countAfter,exportPaths);
+}
