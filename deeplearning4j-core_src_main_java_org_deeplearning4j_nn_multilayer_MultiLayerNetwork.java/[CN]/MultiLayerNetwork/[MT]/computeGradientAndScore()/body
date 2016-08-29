@@ -10,5 +10,8 @@
     getOutputLayer().setInput(actSecondLastLayer);
     backprop();
   }
-  score=((BaseOutputLayer<?>)getOutputLayer()).computeScore(calcL1(),calcL2(),true);
+  if (!(getOutputLayer() instanceof IOutputLayer)) {
+    throw new IllegalStateException("Cannot calculate gradient and score with respect to labels: final layer is not an IOutputLayer");
+  }
+  score=((IOutputLayer)getOutputLayer()).computeScore(calcL1(),calcL2(),true);
 }

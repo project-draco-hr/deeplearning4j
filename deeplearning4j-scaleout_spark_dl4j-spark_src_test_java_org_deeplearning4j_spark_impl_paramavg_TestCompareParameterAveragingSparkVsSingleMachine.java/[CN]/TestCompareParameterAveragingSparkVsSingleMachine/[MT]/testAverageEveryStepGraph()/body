@@ -27,7 +27,9 @@
       INDArray finalSparkParams=sparkNet.getNetwork().params().dup();
       assertEquals(initialParams,initialSparkParams);
       assertNotEquals(initialParams,finalParams);
-      assertEquals(finalParams,finalSparkParams);
+      float[] finalParamsFloat=finalParams.dup().data().asFloat();
+      float[] finalSparkParamsFloat=finalSparkParams.dup().data().asFloat();
+      assertArrayEquals(finalParamsFloat,finalSparkParamsFloat,0.001f);
       double sparkScore=sparkNet.getScore();
       assertTrue(sparkScore > 0.0);
       assertEquals(net.score(),sparkScore,1e-3);

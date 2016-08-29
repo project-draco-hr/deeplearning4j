@@ -4,8 +4,8 @@
   boolean inputIs2d=input.rank() == 2;
   for (int i=0; i < layers.length; i++) {
     if (getLayerWiseConfigurations().getInputPreProcess(i) != null)     input=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(input,getInputMiniBatchSize());
-    if (layers[i] instanceof BaseRecurrentLayer) {
-      input=((BaseRecurrentLayer<?>)layers[i]).rnnTimeStep(input);
+    if (layers[i] instanceof RecurrentLayer) {
+      input=((RecurrentLayer)layers[i]).rnnTimeStep(input);
     }
  else     if (layers[i] instanceof MultiLayerNetwork) {
       input=((MultiLayerNetwork)layers[i]).rnnTimeStep(input);

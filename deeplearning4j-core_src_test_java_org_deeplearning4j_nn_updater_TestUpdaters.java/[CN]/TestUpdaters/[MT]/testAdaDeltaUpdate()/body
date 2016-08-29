@@ -3,10 +3,10 @@
   Map<String,INDArray> msg=new HashMap<>();
   Map<String,INDArray> msdx=new HashMap<>();
   double rho=0.85;
-  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().rho(rho).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADADELTA).build()).build();
-  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().rho(rho).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.ADADELTA).epsilon(Nd4j.EPS_THRESHOLD).build()).build();
+  int numParams=conf.getLayer().initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
+  Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
   int updaterStateSize=updater.stateSizeForLayer(layer);
   INDArray updaterState=Nd4j.create(1,updaterStateSize);
@@ -26,7 +26,7 @@
         msdxTmp=Nd4j.zeros(val.shape());
       }
       msgTmp.muli(rho);
-      msgTmp.addi(1 - rho).muli(val.mul(val));
+      msgTmp.addi(val.mul(val).muli(1 - rho));
       gradExpected=Transforms.sqrt(msdxTmp.add(Nd4j.EPS_THRESHOLD)).divi(Transforms.sqrt(msgTmp.add(Nd4j.EPS_THRESHOLD))).muli(val);
       gradientDup.setGradientFor(key,gradExpected);
       assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));

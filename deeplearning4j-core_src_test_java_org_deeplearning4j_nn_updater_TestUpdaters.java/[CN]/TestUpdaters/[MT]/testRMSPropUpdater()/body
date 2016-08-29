@@ -3,9 +3,9 @@
   double rmsDecay=0.25;
   Map<String,INDArray> lastG=new HashMap<>();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).rmsDecay(rmsDecay).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.RMSPROP).build()).build();
-  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  int numParams=conf.getLayer().initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
+  Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
   int updaterStateSize=updater.stateSizeForLayer(layer);
   INDArray updaterState=Nd4j.create(1,updaterStateSize);
@@ -14,13 +14,14 @@
   Gradient gradientDup=new DefaultGradient();
   gradientDup.setGradientFor(DefaultParamInitializer.WEIGHT_KEY,weightGradient.dup());
   gradientDup.setGradientFor(DefaultParamInitializer.BIAS_KEY,biasGradient.dup());
+  double epsilon=1e-8;
   for (  Map.Entry<String,INDArray> entry : gradientDup.gradientForVariable().entrySet()) {
     key=entry.getKey();
     val=entry.getValue();
     INDArray lastGTmp=lastG.get(key);
     if (lastGTmp == null)     lastGTmp=Nd4j.zeros(val.shape());
     lastGTmp.muli(rmsDecay).addi(val.mul(val).muli(1 - rmsDecay));
-    gradExpected=val.mul(lr).div(Transforms.sqrt(lastGTmp.add(Nd4j.EPS_THRESHOLD)));
+    gradExpected=val.mul(lr).div(Transforms.sqrt(lastGTmp.add(epsilon)));
     assertEquals(gradExpected,gradient.getGradientFor(entry.getKey()));
     lastG.put(key,lastGTmp);
   }

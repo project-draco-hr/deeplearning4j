@@ -10,7 +10,7 @@
     }
   }
   if (labelsMaskArray != null) {
-    if (!(layers[layers.length - 1] instanceof BaseOutputLayer))     return;
+    if (!(getOutputLayer() instanceof IOutputLayer))     return;
     layers[layers.length - 1].setMaskArray(labelsMaskArray);
   }
 }

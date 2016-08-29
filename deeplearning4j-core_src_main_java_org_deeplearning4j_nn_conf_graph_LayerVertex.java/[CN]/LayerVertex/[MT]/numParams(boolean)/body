@@ -1,3 +1,3 @@
 {
-  return LayerFactories.getFactory(layerConf).initializer().numParams(layerConf,backprop);
+  return layerConf.getLayer().initializer().numParams(layerConf,backprop);
 }
