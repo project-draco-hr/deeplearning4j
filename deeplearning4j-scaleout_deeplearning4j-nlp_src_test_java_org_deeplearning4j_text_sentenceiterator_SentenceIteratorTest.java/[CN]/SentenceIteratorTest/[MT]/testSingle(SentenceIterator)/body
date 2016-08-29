@@ -1,9 +1,0 @@
-{
-  assertTrue(iter.hasNext());
-  String sentence=iter.nextSentence();
-  assertTrue(iter.hasNext());
-  assertEquals("Hello",sentence);
-  assertEquals("My",iter.nextSentence());
-  assertEquals("Name",iter.nextSentence());
-  assertFalse(iter.hasNext());
-}

@@ -1,3 +1,0 @@
-{
-  return binary ? readBinaryModel(modelFile,lineBreaks,true) : WordVectorSerializer.fromPair(loadTxt(modelFile));
-}

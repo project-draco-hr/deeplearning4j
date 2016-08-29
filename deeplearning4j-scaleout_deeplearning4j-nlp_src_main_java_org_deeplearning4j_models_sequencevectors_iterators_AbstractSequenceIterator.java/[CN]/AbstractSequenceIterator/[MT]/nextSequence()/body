@@ -1,5 +1,0 @@
-{
-  Sequence<T> sequence=currentIterator.next();
-  sequence.setSequenceId(tagger.getAndIncrement());
-  return sequence;
-}

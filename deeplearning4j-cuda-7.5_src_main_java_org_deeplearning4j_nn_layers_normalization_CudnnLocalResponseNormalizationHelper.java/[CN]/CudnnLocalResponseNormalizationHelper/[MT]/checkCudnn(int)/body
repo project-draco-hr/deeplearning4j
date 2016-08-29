@@ -1,5 +1,0 @@
-{
-  if (status != CUDNN_STATUS_SUCCESS) {
-    throw new RuntimeException("cuDNN status = " + status);
-  }
-}

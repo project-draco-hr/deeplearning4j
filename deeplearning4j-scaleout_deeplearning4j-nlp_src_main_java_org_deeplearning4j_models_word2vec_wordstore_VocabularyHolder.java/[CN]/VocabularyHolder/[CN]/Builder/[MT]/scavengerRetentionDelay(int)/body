@@ -1,5 +1,0 @@
-{
-  if (delay < 2)   throw new IllegalStateException("Delay < 2 doesn't really makes sense");
-  this.retentionDelay=delay;
-  return this;
-}

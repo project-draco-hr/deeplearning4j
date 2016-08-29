@@ -1,6 +1,0 @@
-{
-  File test=new File("dir");
-  test.mkdir();
-  FileUtils.deleteQuietly(test);
-  FileUtils.deleteQuietly(new File("multidir"));
-}

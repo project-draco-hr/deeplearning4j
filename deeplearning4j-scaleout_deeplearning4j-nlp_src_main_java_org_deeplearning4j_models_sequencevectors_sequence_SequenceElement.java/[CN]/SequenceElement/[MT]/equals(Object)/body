@@ -1,6 +1,0 @@
-{
-  if (this == object)   return true;
-  if (object == null)   return false;
-  if (!(object instanceof SequenceElement))   return false;
-  return this.getLabel().equals(((SequenceElement)object).getLabel());
-}

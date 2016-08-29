@@ -1,5 +1,0 @@
-{
-  int result=element1 != null ? element1.hashCode() : 0;
-  result=31 * result + (element2 != null ? element2.hashCode() : 0);
-  return result;
-}

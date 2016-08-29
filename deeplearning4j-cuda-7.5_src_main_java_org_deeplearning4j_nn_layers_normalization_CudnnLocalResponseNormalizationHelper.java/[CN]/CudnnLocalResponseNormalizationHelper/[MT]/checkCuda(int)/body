@@ -1,5 +1,0 @@
-{
-  if (error != cudaSuccess) {
-    throw new RuntimeException("CUDA error = " + error);
-  }
-}

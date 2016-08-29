@@ -1,6 +1,0 @@
-{
-  if (tokenizerFactory != null) {
-    SentenceTransformer transformer=new SentenceTransformer.Builder().iterator(iterator).tokenizerFactory(tokenizerFactory).build();
-    this.iterator=new AbstractSequenceIterator.Builder<>(transformer).build();
-  }
-}

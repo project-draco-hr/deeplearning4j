@@ -1,8 +1,0 @@
-{
-  try {
-    return AnalysisEngineFactory.createEngine(AnalysisEngineFactory.createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),PoStagger.getDescription("en"),StemmerAnnotator.getDescription("English")));
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

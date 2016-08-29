@@ -1,4 +1,0 @@
-{
-  for (  Tree child : tree.children())   assertCollapsedUnaries(child);
-  if (tree.children().size() == 1 && !tree.isPreTerminal())   throw new IllegalStateException("Trees with size of 1 and non preterminals should have been collapsed");
-}

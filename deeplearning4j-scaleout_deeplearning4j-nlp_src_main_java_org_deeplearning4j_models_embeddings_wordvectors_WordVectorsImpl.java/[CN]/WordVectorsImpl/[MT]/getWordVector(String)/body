@@ -1,5 +1,0 @@
-{
-  int i=vocab().indexOf(word);
-  if (i < 0)   return null;
-  return lookupTable.vector(word).dup().data().asDouble();
-}
