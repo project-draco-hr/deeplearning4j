@@ -6,5 +6,7 @@
   JavaRDD<String> paths=trainingData.mapPartitionsWithIndex(new BatchAndExportDataSetsFunction(batchSizePerWorker,dataDir),true);
   paths.saveAsTextFile(pathsDir);
   log.info("RDD<DataSet> export complete at {}",baseDir);
+  lastExportedRDDId=trainingData.id();
+  lastRDDExportPath=baseDir;
   return baseDir;
 }

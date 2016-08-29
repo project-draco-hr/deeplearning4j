@@ -5,13 +5,13 @@
   if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingDataPaths.count();
   if (collectTrainingStats)   stats.logCountEnd();
-  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit(rddDataSetNumExamples);
+  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit(dataSetObjectsNumExamples);
   if (collectTrainingStats)   stats.logSplitStart();
   JavaRDD<String>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingDataPaths);
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaRDD<String> split : splits) {
-    doIterationPaths(null,network,split,splitNum++,splits.length,rddDataSetNumExamples);
+    doIterationPaths(network,null,split,splitNum++,splits.length,dataSetObjectsNumExamples);
   }
   if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
 }

@@ -5,7 +5,7 @@
   if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingData.count();
   if (collectTrainingStats)   stats.logCountEnd();
-  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
+  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit(rddDataSetNumExamples);
   if (collectTrainingStats)   stats.logSplitStart();
   JavaPairRDD<String,PortableDataStream>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData,new Random().nextLong());
   if (collectTrainingStats)   stats.logSplitEnd();
@@ -13,7 +13,7 @@
   for (  JavaPairRDD<String,PortableDataStream> split : splits) {
     JavaRDD<PortableDataStream> streams=split.values();
     if (collectTrainingStats)     stats.logRepartitionStart();
-    streams=SparkUtils.repartition(streams,repartition,repartitionStrategy,numObjectsEachWorker(),numWorkers);
+    streams=SparkUtils.repartition(streams,repartition,repartitionStrategy,numObjectsEachWorker(rddDataSetNumExamples),numWorkers);
     if (collectTrainingStats && repartition != Repartition.Never)     stats.logRepartitionEnd();
     doIterationPDS_MDS(graph,streams,splitNum++,splits.length);
   }

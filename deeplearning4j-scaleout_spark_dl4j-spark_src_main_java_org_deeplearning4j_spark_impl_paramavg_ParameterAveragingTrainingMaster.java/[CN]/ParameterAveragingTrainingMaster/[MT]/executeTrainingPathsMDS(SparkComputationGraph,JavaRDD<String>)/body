@@ -5,7 +5,7 @@
   if (collectTrainingStats)   stats.logCountStart();
   long totalDataSetObjectCount=trainingMultiDataPaths.count();
   if (collectTrainingStats)   stats.logCountEnd();
-  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
+  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit(rddDataSetNumExamples);
   if (collectTrainingStats)   stats.logSplitStart();
   JavaRDD<String>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingMultiDataPaths);
   if (collectTrainingStats)   stats.logSplitEnd();

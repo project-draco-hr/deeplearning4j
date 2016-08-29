@@ -2,11 +2,11 @@
   if (collectTrainingStats)   stats.logExportStart();
   int currentRDDUid=trainingData.id();
   String baseDir;
-  if (lastRDDUid == Integer.MIN_VALUE) {
+  if (lastExportedRDDId == Integer.MIN_VALUE) {
     baseDir=export(trainingData);
   }
  else {
-    if (lastRDDUid == currentRDDUid) {
+    if (lastExportedRDDId == currentRDDUid) {
       baseDir=getBaseDirForRDD(trainingData);
     }
  else {

@@ -1,10 +1,10 @@
 {
   int dataSetObjectsPerSplit;
-  if (rddDataSetNumExamples == 1) {
+  if (numExamplesEachRddObject == 1) {
     dataSetObjectsPerSplit=numWorkers * batchSizePerWorker * averagingFrequency;
   }
  else {
-    int numDataSetObjsReqEachWorker=numObjectsEachWorker();
+    int numDataSetObjsReqEachWorker=numObjectsEachWorker(numExamplesEachRddObject);
     if (numDataSetObjsReqEachWorker < 1) {
       numDataSetObjsReqEachWorker=1;
     }
