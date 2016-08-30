@@ -1,0 +1,8 @@
+{
+  List<Blogger> result=new ArrayList<>();
+  List<Vertex<Blogger>> bloggers=graph.getVertices(0,graph.numVertices() - 1);
+  for (  Vertex<Blogger> vertex : bloggers) {
+    result.add(vertex.getValue());
+  }
+  return result;
+}

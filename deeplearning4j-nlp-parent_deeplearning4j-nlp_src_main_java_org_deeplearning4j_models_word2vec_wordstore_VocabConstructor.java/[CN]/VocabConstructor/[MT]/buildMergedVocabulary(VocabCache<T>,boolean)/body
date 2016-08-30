@@ -1,0 +1,38 @@
+{
+  if (cache == null)   cache=new AbstractCache.Builder<T>().build();
+  for (int t=0; t < vocabCache.numWords(); t++) {
+    String label=vocabCache.wordAtIndex(t);
+    if (label == null)     continue;
+    T element=vocabCache.wordFor(label);
+    if (!fetchLabels && element.isLabel())     continue;
+    cache.addToken(element);
+    cache.addWordToIndex(element.getIndex(),element.getLabel());
+    cache.putVocabWord(element.getLabel());
+  }
+  if (cache.numWords() == 0)   throw new IllegalStateException("Source VocabCache has no indexes available, transfer is impossible");
+  log.info("Vocab size before labels: " + cache.numWords());
+  if (fetchLabels) {
+    for (    VocabSource<T> source : sources) {
+      SequenceIterator<T> iterator=source.getIterator();
+      iterator.reset();
+      while (iterator.hasMoreSequences()) {
+        Sequence<T> sequence=iterator.nextSequence();
+        seqCount.incrementAndGet();
+        for (        T label : sequence.getSequenceLabels()) {
+          if (!cache.containsWord(label.getLabel())) {
+            label.markAsLabel(true);
+            label.setSpecial(true);
+            label.setIndex(cache.numWords());
+            cache.addToken(label);
+            cache.addWordToIndex(label.getIndex(),label.getLabel());
+            cache.putVocabWord(label.getLabel());
+            log.info("Adding label [" + label.getLabel() + "]: "+ cache.wordFor(label.getLabel()));
+          }
+ else           log.info("Label [" + label.getLabel() + "] already exists: "+ cache.wordFor(label.getLabel()));
+        }
+      }
+    }
+  }
+  log.info("Vocab size after labels: " + cache.numWords());
+  return cache;
+}

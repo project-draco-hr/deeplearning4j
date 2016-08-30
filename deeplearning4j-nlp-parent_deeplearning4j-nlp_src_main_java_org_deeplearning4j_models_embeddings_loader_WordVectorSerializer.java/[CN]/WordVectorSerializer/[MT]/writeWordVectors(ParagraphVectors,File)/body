@@ -1,0 +1,8 @@
+{
+  try (FileOutputStream fos=new FileOutputStream(path)){
+    writeWordVectors(vectors,fos);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

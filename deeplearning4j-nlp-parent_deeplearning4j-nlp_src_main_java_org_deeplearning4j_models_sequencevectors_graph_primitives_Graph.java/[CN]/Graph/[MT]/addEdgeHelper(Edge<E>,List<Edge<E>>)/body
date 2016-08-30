@@ -1,0 +1,27 @@
+{
+  if (!allowMultipleEdges) {
+    boolean duplicate=false;
+    if (edge.isDirected()) {
+      for (      Edge<E> e : list) {
+        if (e.getTo() == edge.getTo()) {
+          duplicate=true;
+          break;
+        }
+      }
+    }
+ else {
+      for (      Edge<E> e : list) {
+        if ((e.getFrom() == edge.getFrom() && e.getTo() == edge.getTo()) || (e.getTo() == edge.getFrom() && e.getFrom() == edge.getTo())) {
+          duplicate=true;
+          break;
+        }
+      }
+    }
+    if (!duplicate) {
+      list.add(edge);
+    }
+  }
+ else {
+    list.add(edge);
+  }
+}

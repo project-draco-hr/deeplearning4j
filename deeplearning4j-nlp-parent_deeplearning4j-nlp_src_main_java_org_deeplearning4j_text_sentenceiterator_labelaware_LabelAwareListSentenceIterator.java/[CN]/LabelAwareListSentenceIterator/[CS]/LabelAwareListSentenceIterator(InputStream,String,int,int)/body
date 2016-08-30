@@ -1,0 +1,6 @@
+{
+  StringGrid grid=StringGrid.fromInput(is,delimiter);
+  labels=grid.getColumn(labelPosition);
+  text=grid.getColumn(textPosition);
+  is.close();
+}

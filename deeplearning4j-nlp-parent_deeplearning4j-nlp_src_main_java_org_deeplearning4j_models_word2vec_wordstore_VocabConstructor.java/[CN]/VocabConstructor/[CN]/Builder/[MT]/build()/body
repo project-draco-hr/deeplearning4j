@@ -1,0 +1,11 @@
+{
+  VocabConstructor<T> constructor=new VocabConstructor<>();
+  constructor.sources=this.sources;
+  constructor.cache=this.cache;
+  constructor.stopWords=this.stopWords;
+  constructor.useAdaGrad=this.useAdaGrad;
+  constructor.fetchLabels=this.fetchLabels;
+  constructor.limit=this.limit;
+  constructor.index=this.index;
+  return constructor;
+}

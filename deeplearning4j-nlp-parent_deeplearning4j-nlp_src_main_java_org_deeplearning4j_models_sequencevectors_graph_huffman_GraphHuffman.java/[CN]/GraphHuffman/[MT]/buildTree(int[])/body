@@ -1,0 +1,13 @@
+{
+  PriorityQueue<Node> pq=new PriorityQueue<>();
+  for (int i=0; i < vertexDegree.length; i++)   pq.add(new Node(i,vertexDegree[i],null,null));
+  while (pq.size() > 1) {
+    Node left=pq.remove();
+    Node right=pq.remove();
+    Node newNode=new Node(-1,left.count + right.count,left,right);
+    pq.add(newNode);
+  }
+  Node tree=pq.remove();
+  int[] innerNodePath=new int[MAX_CODE_LENGTH];
+  traverse(tree,0L,(byte)0,-1,innerNodePath,0);
+}

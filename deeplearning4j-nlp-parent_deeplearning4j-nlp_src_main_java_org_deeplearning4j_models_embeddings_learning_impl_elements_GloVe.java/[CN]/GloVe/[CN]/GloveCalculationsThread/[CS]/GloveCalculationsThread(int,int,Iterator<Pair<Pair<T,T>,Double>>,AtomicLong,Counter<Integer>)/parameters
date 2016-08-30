@@ -1,0 +1,5 @@
+int epochId
+int threadId
+Iterator<Pair<Pair<T,T>,Double>> pairs
+AtomicLong pairsCounter
+Counter<Integer> errorCounter

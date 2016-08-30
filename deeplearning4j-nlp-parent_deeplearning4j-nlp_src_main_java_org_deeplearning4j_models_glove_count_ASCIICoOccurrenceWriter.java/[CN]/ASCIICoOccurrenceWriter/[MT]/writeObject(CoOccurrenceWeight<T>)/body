@@ -1,0 +1,4 @@
+{
+  StringBuilder builder=new StringBuilder(String.valueOf(object.getElement1().getIndex())).append(" ").append(String.valueOf(object.getElement2().getIndex())).append(" ").append(String.valueOf(object.getWeight()));
+  writer.println(builder.toString());
+}

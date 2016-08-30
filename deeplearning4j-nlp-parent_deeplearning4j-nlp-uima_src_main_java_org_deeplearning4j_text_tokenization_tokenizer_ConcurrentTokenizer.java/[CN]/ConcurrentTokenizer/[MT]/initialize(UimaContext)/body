@@ -1,0 +1,12 @@
+{
+  super.initialize(context);
+  TokenizerModel model;
+  try {
+    TokenizerModelResource modelResource=(TokenizerModelResource)context.getResourceObject(UimaUtil.MODEL_PARAMETER);
+    model=modelResource.getModel();
+  }
+ catch (  ResourceAccessException e) {
+    throw new ResourceInitializationException(e);
+  }
+  tokenizer=new TokenizerME(model);
+}

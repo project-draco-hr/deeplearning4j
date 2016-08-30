@@ -1,0 +1,5 @@
+{
+  List<Window> ret=new ArrayList<>();
+  for (int i=0; i < words.size(); i++)   ret.add(windowForWordInPosition(windowSize,i,words));
+  return ret;
+}

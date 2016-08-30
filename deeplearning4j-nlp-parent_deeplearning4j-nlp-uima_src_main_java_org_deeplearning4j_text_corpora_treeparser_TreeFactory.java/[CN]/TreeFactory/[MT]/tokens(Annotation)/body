@@ -1,0 +1,7 @@
+{
+  List<String> ret=new ArrayList<>();
+  for (  Token t : JCasUtil.select(ann.getCAS().getJCas(),Token.class)) {
+    ret.add(t.getCoveredText());
+  }
+  return ret;
+}

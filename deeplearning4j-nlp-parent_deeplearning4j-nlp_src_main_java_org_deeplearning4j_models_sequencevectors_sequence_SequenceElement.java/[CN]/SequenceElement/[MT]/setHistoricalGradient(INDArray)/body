@@ -1,0 +1,4 @@
+{
+  if (adaGrad == null)   adaGrad=new AdaGrad(1,getCodeLength(),0.025);
+  adaGrad.setHistoricalGradient(gradient);
+}

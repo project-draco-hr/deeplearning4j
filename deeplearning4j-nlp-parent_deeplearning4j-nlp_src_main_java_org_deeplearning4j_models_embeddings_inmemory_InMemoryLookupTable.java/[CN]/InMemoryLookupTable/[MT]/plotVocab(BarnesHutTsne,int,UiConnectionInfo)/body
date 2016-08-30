@@ -1,0 +1,22 @@
+{
+  try {
+    final List<String> labels=fitTnseAndGetLabels(tsne,numWords);
+    final INDArray reducedData=tsne.getData();
+    List<String> list=new ArrayList<>();
+    for (int i=0; i < reducedData.rows() && i < numWords; i++) {
+      String word=labels.get(i);
+      INDArray wordVector=reducedData.getRow(i);
+      for (int j=0; j < wordVector.length(); j++) {
+        list.add(wordVector.getDouble(j) + "");
+      }
+      list.add(word);
+    }
+    Client client=ClientBuilder.newClient().register(JacksonJsonProvider.class).register(new ObjectMapperProvider());
+    WebTarget target=client.target(connectionInfo.getFirstPart()).path(connectionInfo.getSecondPart("api")).path("coords").queryParam("sid",connectionInfo.getSessionId());
+    Response resp=target.request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.entity(list,MediaType.APPLICATION_JSON));
+    log.debug("{}",resp);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

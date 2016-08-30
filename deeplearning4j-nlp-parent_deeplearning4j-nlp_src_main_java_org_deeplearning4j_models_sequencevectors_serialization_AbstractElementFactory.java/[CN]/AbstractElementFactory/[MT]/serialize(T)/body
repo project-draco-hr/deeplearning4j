@@ -1,0 +1,19 @@
+{
+  String json=null;
+  try {
+    json=element.toJSON();
+  }
+ catch (  Exception e) {
+    log.error("Direct serialization failed, falling back to jackson");
+  }
+  if (json == null || json.isEmpty()) {
+    ObjectMapper mapper=SequenceElement.mapper();
+    try {
+      json=mapper.writeValueAsString(element);
+    }
+ catch (    com.fasterxml.jackson.core.JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  return json;
+}

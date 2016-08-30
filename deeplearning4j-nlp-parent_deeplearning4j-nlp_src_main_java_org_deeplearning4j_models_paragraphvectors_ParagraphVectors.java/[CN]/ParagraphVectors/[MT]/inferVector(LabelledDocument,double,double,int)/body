@@ -1,0 +1,6 @@
+{
+  if (document.getReferencedContent() != null) {
+    return inferVector(document.getReferencedContent(),this.learningRate.get(),this.minLearningRate,this.numEpochs);
+  }
+ else   return inferVector(document.getContent(),this.learningRate.get(),this.minLearningRate,this.numEpochs);
+}

@@ -1,0 +1,6 @@
+{
+  if (lookupTable != null) {
+    modelUtils.init(lookupTable);
+    this.modelUtils=modelUtils;
+  }
+}

@@ -1,0 +1,5 @@
+{
+  Collection<String> collection=wordsNearest(lookupTable.vector(label),n);
+  if (collection.contains(label))   collection.remove(label);
+  return collection;
+}

@@ -1,0 +1,4 @@
+{
+  this.sentenceIterator=new StreamLineIterator.Builder(iterator).setFetchSize(100).build();
+  return this;
+}

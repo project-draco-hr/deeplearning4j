@@ -1,0 +1,10 @@
+{
+  ObjectMapper mapper=mapper();
+  try {
+    VectorsConfiguration ret=mapper.readValue(json,VectorsConfiguration.class);
+    return ret;
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

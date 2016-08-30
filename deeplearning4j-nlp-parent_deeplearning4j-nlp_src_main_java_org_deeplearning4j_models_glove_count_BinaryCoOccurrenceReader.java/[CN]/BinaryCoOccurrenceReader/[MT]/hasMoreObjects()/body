@@ -1,0 +1,9 @@
+{
+  if (!buffer.isEmpty())   return true;
+  try {
+    return readerThread.hasMoreObjects() || !buffer.isEmpty();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

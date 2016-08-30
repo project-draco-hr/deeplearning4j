@@ -1,0 +1,8 @@
+{
+  List<String> result=new ArrayList<>();
+  for (int x=0; x < results.size(); x++) {
+    result.add(results.get(x).getWord());
+    if (result.size() >= limit)     break;
+  }
+  return result;
+}

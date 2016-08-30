@@ -1,0 +1,11 @@
+{
+  ClassPathResource resource=new ClassPathResource("/raw_sentences.txt");
+  File file=resource.getFile();
+  iter=new LineSentenceIterator(file);
+  iter.setPreProcessor(new SentencePreProcessor(){
+    @Override public String preProcess(    String sentence){
+      return sentence.toLowerCase();
+    }
+  }
+);
+}

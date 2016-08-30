@@ -1,0 +1,4 @@
+{
+  if (idx < 0 || idx >= vertices.size())   throw new IllegalArgumentException("Invalid index: " + idx);
+  return vertices.get(idx);
+}

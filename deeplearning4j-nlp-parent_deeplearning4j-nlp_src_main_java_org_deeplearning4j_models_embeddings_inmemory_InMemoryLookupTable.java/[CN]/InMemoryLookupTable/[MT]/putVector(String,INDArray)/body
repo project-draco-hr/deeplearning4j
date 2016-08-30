@@ -1,0 +1,6 @@
+{
+  if (word == null)   throw new IllegalArgumentException("No null words allowed");
+  if (vector == null)   throw new IllegalArgumentException("No null vectors allowed");
+  int idx=vocab.indexOf(word);
+  syn0.slice(idx).assign(vector);
+}

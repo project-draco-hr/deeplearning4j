@@ -1,0 +1,12 @@
+{
+  checkTree();
+  List<DataPoint> add=new ArrayList<>();
+  List<Double> distances=new ArrayList<>();
+  vpTree.search(new DataPoint(0,words),top,add,distances);
+  Collection<String> ret=new ArrayList<>();
+  for (  DataPoint e : add) {
+    String word=vocabCache.wordAtIndex(e.getIndex());
+    ret.add(word);
+  }
+  return super.wordsNearest(words,top);
+}

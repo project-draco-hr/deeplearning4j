@@ -1,0 +1,9 @@
+{
+  if (labels != null) {
+    return labels.get(((Long)counter.getAndIncrement()).intValue());
+  }
+ else {
+    maxCount=counter.getAndIncrement();
+    return formatLabel(maxCount);
+  }
+}

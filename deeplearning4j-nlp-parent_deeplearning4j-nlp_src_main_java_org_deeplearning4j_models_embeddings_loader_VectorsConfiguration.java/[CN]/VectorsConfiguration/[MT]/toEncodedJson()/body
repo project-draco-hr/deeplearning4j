@@ -1,0 +1,9 @@
+{
+  Base64 base64=new Base64(Integer.MAX_VALUE);
+  try {
+    return base64.encodeAsString(this.toJson().getBytes("UTF-8"));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

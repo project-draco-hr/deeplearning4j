@@ -1,0 +1,10 @@
+{
+  try {
+    lock.writeLock().lock();
+    if (value == limit)     value=lower;
+ else     value++;
+  }
+  finally {
+    lock.writeLock().unlock();
+  }
+}

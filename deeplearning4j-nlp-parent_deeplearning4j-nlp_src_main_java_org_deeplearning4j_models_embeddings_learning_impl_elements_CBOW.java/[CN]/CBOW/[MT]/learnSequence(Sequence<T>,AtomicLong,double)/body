@@ -1,0 +1,13 @@
+{
+  Sequence<T> tempSequence=sequence;
+  if (sampling > 0)   tempSequence=applySubsampling(sequence,nextRandom);
+  int currentWindow=window;
+  if (variableWindows != null && variableWindows.length != 0) {
+    currentWindow=variableWindows[RandomUtils.nextInt(variableWindows.length)];
+  }
+  for (int i=0; i < tempSequence.getElements().size(); i++) {
+    nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
+    cbow(i,tempSequence.getElements(),(int)nextRandom.get() % currentWindow,nextRandom,learningRate,currentWindow);
+  }
+  return 0;
+}

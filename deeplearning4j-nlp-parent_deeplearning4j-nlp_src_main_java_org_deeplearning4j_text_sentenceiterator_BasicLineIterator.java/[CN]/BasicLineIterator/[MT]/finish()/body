@@ -1,0 +1,8 @@
+{
+  try {
+    if (this.internal && backendStream != null)     backendStream.close();
+    if (reader != null)     reader.close();
+  }
+ catch (  Exception e) {
+  }
+}

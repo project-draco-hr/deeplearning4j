@@ -1,0 +1,16 @@
+{
+  if (edge.getFrom() < 0 || edge.getTo() >= vertices.size())   throw new IllegalArgumentException("Invalid edge: " + edge + ", from/to indexes out of range");
+  List<Edge<E>> fromList=edges[edge.getFrom()];
+  if (fromList == null) {
+    fromList=new ArrayList<>();
+    edges[edge.getFrom()]=fromList;
+  }
+  addEdgeHelper(edge,fromList);
+  if (edge.isDirected())   return;
+  List<Edge<E>> toList=edges[edge.getTo()];
+  if (toList == null) {
+    toList=new ArrayList<>();
+    edges[edge.getTo()]=toList;
+  }
+  addEdgeHelper(edge,toList);
+}

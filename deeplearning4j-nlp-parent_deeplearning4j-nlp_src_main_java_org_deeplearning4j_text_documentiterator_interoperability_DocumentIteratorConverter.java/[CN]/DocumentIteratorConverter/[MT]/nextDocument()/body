@@ -1,0 +1,16 @@
+{
+  try {
+    LabelledDocument document=new LabelledDocument();
+    document.setContent(readStream(backendIterator.nextDocument()));
+    if (backendIterator instanceof LabelAwareDocumentIterator) {
+      String currentLabel=((LabelAwareDocumentIterator)backendIterator).currentLabel();
+      document.setLabel(currentLabel);
+      generator.storeLabel(currentLabel);
+    }
+ else     document.setLabel(generator.nextLabel());
+    return document;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  CAS ret=casPool.getCas();
+  try {
+    return ret == null ? analysisEngine.newCAS() : ret;
+  }
+ catch (  ResourceInitializationException e) {
+    throw new RuntimeException(e);
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return createEngine(createEngineDescription(SentenceAnnotator.getDescription(),TokenizerAnnotator.getDescription(),PoStagger.getDescription("en"),StemmerAnnotator.getDescription("English")));
+}

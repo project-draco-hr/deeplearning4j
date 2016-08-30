@@ -1,0 +1,6 @@
+{
+  SentenceIterator iter=new FileSentenceIterator(new File("dir"));
+  SentenceIterator multiIter=new FileSentenceIterator(new File("multidir"));
+  testSingle(iter);
+  testMulti(multiIter,3);
+}

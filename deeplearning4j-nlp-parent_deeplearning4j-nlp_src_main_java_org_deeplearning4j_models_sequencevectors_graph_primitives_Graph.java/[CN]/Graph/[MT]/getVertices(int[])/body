@@ -1,0 +1,5 @@
+{
+  List<Vertex<V>> out=new ArrayList<>(indexes.length);
+  for (  int i : indexes)   out.add(getVertex(i));
+  return out;
+}

@@ -1,0 +1,5 @@
+{
+  if (vocabulary.containsKey(word)) {
+    vocabulary.get(word).incrementCount();
+  }
+}

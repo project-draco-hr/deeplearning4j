@@ -1,0 +1,6 @@
+{
+  for (  SentenceIterator iterator : backendIterators) {
+    iterator.reset();
+  }
+  this.position.set(0);
+}

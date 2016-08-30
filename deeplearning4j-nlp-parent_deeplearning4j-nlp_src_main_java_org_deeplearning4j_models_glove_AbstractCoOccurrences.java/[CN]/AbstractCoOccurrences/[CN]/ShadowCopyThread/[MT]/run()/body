@@ -1,0 +1,16 @@
+{
+  while (!isFinished.get() && !isTerminate.get()) {
+    if (getMemoryFootprint() > getMemoryThreshold() || (shouldInvoke.get() && !isInvoked.get())) {
+      shouldInvoke.compareAndSet(true,false);
+      invokeBlocking();
+    }
+ else {
+      try {
+        Thread.sleep(1000);
+      }
+ catch (      Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+}

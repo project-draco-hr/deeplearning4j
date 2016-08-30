@@ -1,0 +1,12 @@
+{
+  BufferedReader reader=new BufferedReader(new InputStreamReader(stream,"UTF-8"));
+  AbstractCache<VocabWord> vocabCache=new AbstractCache.Builder<VocabWord>().build();
+  VocabWordFactory factory=new VocabWordFactory();
+  String line="";
+  while ((line=reader.readLine()) != null) {
+    VocabWord word=factory.deserialize(line);
+    vocabCache.addToken(word);
+    vocabCache.addWordToIndex(word.getIndex(),word.getLabel());
+  }
+  return vocabCache;
+}

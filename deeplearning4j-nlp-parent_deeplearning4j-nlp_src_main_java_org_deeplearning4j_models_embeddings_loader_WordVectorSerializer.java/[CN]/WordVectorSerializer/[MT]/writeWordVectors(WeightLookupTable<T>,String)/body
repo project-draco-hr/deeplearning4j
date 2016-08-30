@@ -1,0 +1,8 @@
+{
+  try {
+    writeWordVectors(lookupTable,new FileOutputStream(path));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

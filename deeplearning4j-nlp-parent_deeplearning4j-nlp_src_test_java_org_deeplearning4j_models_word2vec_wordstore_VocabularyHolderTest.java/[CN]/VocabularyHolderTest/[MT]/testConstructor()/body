@@ -1,0 +1,5 @@
+{
+  InMemoryLookupCache cache=new InMemoryLookupCache(true);
+  VocabularyHolder holder=new VocabularyHolder(cache,false);
+  assertEquals(0,holder.numWords());
+}

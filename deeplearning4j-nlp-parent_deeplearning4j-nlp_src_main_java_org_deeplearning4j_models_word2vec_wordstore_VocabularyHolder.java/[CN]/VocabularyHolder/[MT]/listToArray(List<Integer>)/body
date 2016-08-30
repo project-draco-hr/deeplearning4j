@@ -1,0 +1,7 @@
+{
+  byte[] array=new byte[MAX_CODE_LENGTH];
+  for (int x=0; x < code.size(); x++) {
+    array[x]=code.get(x).byteValue();
+  }
+  return array;
+}

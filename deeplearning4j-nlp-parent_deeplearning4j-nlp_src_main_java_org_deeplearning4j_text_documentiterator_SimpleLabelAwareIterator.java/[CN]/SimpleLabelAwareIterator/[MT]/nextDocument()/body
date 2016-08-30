@@ -1,0 +1,7 @@
+{
+  LabelledDocument document=currentIterator.next();
+  if (document.getLabel() != null) {
+    labels.storeLabel(document.getLabel());
+  }
+  return document;
+}

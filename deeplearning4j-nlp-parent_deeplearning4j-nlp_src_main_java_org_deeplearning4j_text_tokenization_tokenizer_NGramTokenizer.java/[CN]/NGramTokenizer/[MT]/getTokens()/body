@@ -1,0 +1,7 @@
+{
+  List<String> tokens=new ArrayList<>();
+  while (hasMoreTokens()) {
+    tokens.add(nextToken());
+  }
+  return tokens;
+}

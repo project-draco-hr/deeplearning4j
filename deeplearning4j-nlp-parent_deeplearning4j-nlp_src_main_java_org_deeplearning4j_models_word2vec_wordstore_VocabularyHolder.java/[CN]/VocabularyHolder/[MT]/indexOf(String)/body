@@ -1,0 +1,6 @@
+{
+  if (vocabulary.containsKey(word)) {
+    return vocabulary.get(word).getHuffmanNode().getIdx();
+  }
+ else   return -1;
+}

@@ -1,0 +1,9 @@
+{
+  if (vpTree == null) {
+    List<DataPoint> points=new ArrayList<>();
+    for (    String word : vocabCache.words()) {
+      points.add(new DataPoint(vocabCache.indexOf(word),lookupTable.vector(word)));
+    }
+    vpTree=new VPTree(points);
+  }
+}

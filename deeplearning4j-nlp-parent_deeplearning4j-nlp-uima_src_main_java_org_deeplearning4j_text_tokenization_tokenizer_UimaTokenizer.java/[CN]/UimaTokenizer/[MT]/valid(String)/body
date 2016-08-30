@@ -1,0 +1,3 @@
+{
+  return !(check.matches("<[A-Z]+>") || check.matches("</[A-Z]+>"));
+}

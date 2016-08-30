@@ -1,0 +1,10 @@
+{
+  List<Tree> ret=new ArrayList<>();
+  try {
+    for (int i=0; i < batchSize; i++)     if (hasNext())     ret.addAll(treeVectorizer.getTreesWithLabels(sentenceIterator.nextSentence(),sentenceIterator.currentLabel(),labels));
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  return ret;
+}

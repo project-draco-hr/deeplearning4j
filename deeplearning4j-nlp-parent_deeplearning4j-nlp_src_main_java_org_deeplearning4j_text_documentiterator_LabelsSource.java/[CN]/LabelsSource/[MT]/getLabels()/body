@@ -1,0 +1,8 @@
+{
+  if (labels != null && !labels.isEmpty())   return labels;
+ else {
+    List<String> result=new ArrayList<>();
+    for (long x=0; x < counter.get(); x++)     result.add(formatLabel(x));
+    return result;
+  }
+}

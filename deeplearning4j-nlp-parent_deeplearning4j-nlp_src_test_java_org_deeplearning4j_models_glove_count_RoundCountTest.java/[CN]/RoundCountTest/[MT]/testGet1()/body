@@ -1,0 +1,8 @@
+{
+  RoundCount count=new RoundCount(1);
+  assertEquals(0,count.get());
+  count.tick();
+  assertEquals(1,count.get());
+  count.tick();
+  assertEquals(0,count.get());
+}

@@ -1,0 +1,4 @@
+{
+  String modelPath=String.format("/models/%s-pos-maxent.bin",languageCode);
+  return AnalysisEngineFactory.createEngineDescription(PoStagger.class,opennlp.uima.util.UimaUtil.MODEL_PARAMETER,ExternalResourceFactory.createExternalResourceDescription(POSModelResourceImpl.class,PoStagger.class.getResource(modelPath).toString()),opennlp.uima.util.UimaUtil.SENTENCE_TYPE_PARAMETER,Sentence.class.getName(),opennlp.uima.util.UimaUtil.TOKEN_TYPE_PARAMETER,Token.class.getName(),opennlp.uima.util.UimaUtil.POS_FEATURE_PARAMETER,"pos");
+}

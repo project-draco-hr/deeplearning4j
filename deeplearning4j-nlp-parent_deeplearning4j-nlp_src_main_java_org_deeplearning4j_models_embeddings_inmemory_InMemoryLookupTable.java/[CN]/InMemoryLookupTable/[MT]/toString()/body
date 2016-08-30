@@ -1,0 +1,3 @@
+{
+  return "InMemoryLookupTable{" + "syn0=" + syn0 + ", syn1="+ syn1+ ", vectorLength="+ vectorLength+ ", rng="+ rng+ ", lr="+ lr+ ", expTable="+ Arrays.toString(expTable)+ ", seed="+ seed+ ", table="+ table+ ", syn1Neg="+ syn1Neg+ ", useAdaGrad="+ useAdaGrad+ ", negative="+ negative+ ", vocab="+ vocab+ ", codes="+ codes+ '}';
+}

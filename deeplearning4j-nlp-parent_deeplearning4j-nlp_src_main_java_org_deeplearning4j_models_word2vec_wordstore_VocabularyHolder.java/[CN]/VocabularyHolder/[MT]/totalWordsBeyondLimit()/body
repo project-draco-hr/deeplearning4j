@@ -1,0 +1,9 @@
+{
+  if (totalWordOccurencies == 0) {
+    for (    VocabularyWord word : vocabulary.values()) {
+      totalWordOccurencies+=word.getCount();
+    }
+    return totalWordOccurencies;
+  }
+ else   return totalWordOccurencies;
+}

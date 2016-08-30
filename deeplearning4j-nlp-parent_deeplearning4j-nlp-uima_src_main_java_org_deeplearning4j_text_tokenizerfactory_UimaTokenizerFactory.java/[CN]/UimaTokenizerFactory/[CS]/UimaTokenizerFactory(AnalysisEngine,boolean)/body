@@ -1,0 +1,10 @@
+{
+  super();
+  this.checkForLabel=checkForLabel;
+  try {
+    this.uimaResource=new UimaResource(tokenizer);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

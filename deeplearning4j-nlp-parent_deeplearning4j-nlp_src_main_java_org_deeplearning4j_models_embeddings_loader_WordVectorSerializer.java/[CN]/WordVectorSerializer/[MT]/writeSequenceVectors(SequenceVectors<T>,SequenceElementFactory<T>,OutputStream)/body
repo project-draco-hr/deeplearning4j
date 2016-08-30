@@ -1,0 +1,15 @@
+{
+  WeightLookupTable<T> lookupTable=vectors.getLookupTable();
+  VocabCache<T> vocabCache=vectors.getVocab();
+  PrintWriter writer=new PrintWriter(new BufferedWriter(new OutputStreamWriter(stream,"UTF-8")));
+  writer.write(vectors.getConfiguration().toEncodedJson());
+  for (int x=0; x < vocabCache.numWords(); x++) {
+    T element=vocabCache.elementAtIndex(x);
+    String json=factory.serialize(element);
+    double[] vector=lookupTable.vector(element.getLabel()).data().asDouble();
+    ElementPair pair=new ElementPair(json,vector);
+    writer.println(pair.toEncodedJson());
+  }
+  writer.flush();
+  writer.close();
+}

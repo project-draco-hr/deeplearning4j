@@ -1,0 +1,67 @@
+{
+  BufferedReader reader=new BufferedReader(new InputStreamReader(new FileInputStream(vectorsFile),"UTF-8"));
+  VocabCache cache=new AbstractCache<>();
+  LineIterator iter=IOUtils.lineIterator(reader);
+  String line=null;
+  boolean hasHeader=false;
+  if (iter.hasNext()) {
+    line=iter.nextLine();
+    if (!line.contains(" ")) {
+      log.info("Skipping first line");
+      hasHeader=true;
+    }
+ else {
+      String[] split=line.split(" ");
+      try {
+        for (int x=1; x < split.length; x++) {
+          double val=Double.parseDouble(split[x]);
+        }
+        if (split.length < 4)         hasHeader=true;
+      }
+ catch (      Exception e) {
+        hasHeader=true;
+        try {
+          reader.close();
+        }
+ catch (        Exception ex) {
+        }
+      }
+    }
+  }
+  if (hasHeader) {
+    line="";
+    iter.close();
+    reader=new BufferedReader(new FileReader(vectorsFile));
+    iter=IOUtils.lineIterator(reader);
+    iter.nextLine();
+  }
+  List<INDArray> arrays=new ArrayList<>();
+  while (iter.hasNext()) {
+    if (line.isEmpty())     line=iter.nextLine();
+    String[] split=line.split(" ");
+    String word=split[0].replaceAll(whitespaceReplacement," ");
+    VocabWord word1=new VocabWord(1.0,word);
+    word1.setIndex(cache.numWords());
+    cache.addToken(word1);
+    cache.addWordToIndex(word1.getIndex(),word);
+    cache.putVocabWord(word);
+    float[] vector=new float[split.length - 1];
+    for (int i=1; i < split.length; i++) {
+      vector[i - 1]=Float.parseFloat(split[i]);
+    }
+    INDArray row=Nd4j.create(vector);
+    arrays.add(row);
+    line="";
+  }
+  INDArray syn=Nd4j.vstack(arrays);
+  InMemoryLookupTable lookupTable=(InMemoryLookupTable)new InMemoryLookupTable.Builder().vectorLength(arrays.get(0).columns()).useAdaGrad(false).cache(cache).build();
+  Nd4j.clearNans(syn);
+  lookupTable.setSyn0(syn);
+  iter.close();
+  try {
+    reader.close();
+  }
+ catch (  Exception e) {
+  }
+  return new Pair<>(lookupTable,cache);
+}

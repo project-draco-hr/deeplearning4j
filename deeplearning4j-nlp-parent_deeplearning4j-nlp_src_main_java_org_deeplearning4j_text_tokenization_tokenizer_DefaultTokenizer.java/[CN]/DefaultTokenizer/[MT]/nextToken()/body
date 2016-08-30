@@ -1,0 +1,5 @@
+{
+  String base=tokenizer.nextToken();
+  if (tokenPreProcess != null)   base=tokenPreProcess.preProcess(base);
+  return base;
+}

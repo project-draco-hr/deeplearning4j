@@ -1,0 +1,14 @@
+{
+  if (element1.getIndex() < 0 || element1.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + element1.getLabel());
+  if (element2.getIndex() < 0 || element2.getIndex() >= syn0.rows())   throw new IllegalArgumentException("Illegal index for word " + element2.getLabel());
+  INDArray w1Vector=syn0.slice(element1.getIndex());
+  INDArray w2Vector=syn0.slice(element2.getIndex());
+  double prediction=Nd4j.getBlasWrapper().dot(w1Vector,w2Vector);
+  prediction+=bias.getDouble(element1.getIndex()) + bias.getDouble(element2.getIndex()) - Math.log(score);
+  double fDiff=(score > xMax) ? prediction : Math.pow(score / xMax,alpha) * prediction;
+  if (Double.isNaN(fDiff))   fDiff=Nd4j.EPS_THRESHOLD;
+  double gradient=fDiff * learningRate;
+  update(element1,w1Vector,w2Vector,gradient);
+  update(element2,w2Vector,w1Vector,gradient);
+  return 0.5 * fDiff * prediction;
+}

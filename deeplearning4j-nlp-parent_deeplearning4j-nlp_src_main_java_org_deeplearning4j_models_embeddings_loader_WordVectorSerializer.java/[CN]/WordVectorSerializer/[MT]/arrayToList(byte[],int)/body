@@ -1,0 +1,7 @@
+{
+  List<Integer> result=new ArrayList<>();
+  for (int x=0; x < codeLen; x++) {
+    result.add((int)array[x]);
+  }
+  return result;
+}

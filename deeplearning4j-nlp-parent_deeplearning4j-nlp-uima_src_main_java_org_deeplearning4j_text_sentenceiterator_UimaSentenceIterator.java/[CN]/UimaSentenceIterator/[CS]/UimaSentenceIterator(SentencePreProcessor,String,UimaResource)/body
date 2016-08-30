@@ -1,0 +1,22 @@
+{
+  super(preProcessor);
+  this.path=path;
+  File f=new File(path);
+  if (f.isFile()) {
+    try {
+      this.reader=FilesCollectionReader.getCollectionReader(path);
+    }
+ catch (    Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+ else {
+    try {
+      this.reader=FilesCollectionReader.getCollectionReader(path);
+    }
+ catch (    ResourceInitializationException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  this.resource=resource;
+}

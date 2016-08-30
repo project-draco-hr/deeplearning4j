@@ -1,0 +1,10 @@
+{
+  try {
+    outputStream.writeInt(object.getElement1().getIndex());
+    outputStream.writeInt(object.getElement2().getIndex());
+    outputStream.writeDouble(object.getWeight());
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

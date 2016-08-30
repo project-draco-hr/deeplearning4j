@@ -1,0 +1,7 @@
+{
+  double totalScore=0.0;
+  for (  Sentence sentence : JCasUtil.select(cas.getJCas(),Sentence.class)) {
+    totalScore+=scoreTokens(JCasUtil.selectCovered(Token.class,sentence));
+  }
+  return totalScore;
+}

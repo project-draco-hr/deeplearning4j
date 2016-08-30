@@ -1,0 +1,5 @@
+{
+  List<String> ret=new ArrayList<>();
+  for (int i=0; i < node.getNodeTags().size(); i++)   ret.add(node.getNodeTags(i));
+  return ret;
+}

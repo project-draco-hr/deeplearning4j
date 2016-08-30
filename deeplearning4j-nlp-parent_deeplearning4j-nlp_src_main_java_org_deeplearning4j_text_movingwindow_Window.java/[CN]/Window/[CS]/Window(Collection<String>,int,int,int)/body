@@ -1,0 +1,8 @@
+{
+  if (words == null)   throw new IllegalArgumentException("Words must be a list of size 3");
+  this.words=new ArrayList<>(words);
+  this.windowSize=windowSize;
+  this.begin=begin;
+  this.end=end;
+  initContext();
+}

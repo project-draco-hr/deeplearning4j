@@ -1,0 +1,5 @@
+{
+  String check=token.getCoveredText();
+  if (check.matches("<[A-Z]+>") || check.matches("</[A-Z]+>") || (token.getPos() != null && !this.allowedPosTags.contains(token.getPos())))   return false;
+  return true;
+}

@@ -1,0 +1,4 @@
+{
+  if (useFormatter)   return String.format(template,value);
+ else   return template + value;
+}

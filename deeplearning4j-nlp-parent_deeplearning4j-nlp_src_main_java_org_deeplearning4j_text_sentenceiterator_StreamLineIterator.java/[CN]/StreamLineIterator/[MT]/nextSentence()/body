@@ -1,0 +1,13 @@
+{
+  if (buffer.size() < linesToFetch) {
+    if (currentReader != null) {
+      fetchLines(linesToFetch);
+    }
+ else     if (this.iterator.hasNext()) {
+      currentReader=new BufferedReader(new InputStreamReader(iterator.nextDocument()));
+      fetchLines(linesToFetch);
+    }
+  }
+  if (buffer.size() < 1)   return null;
+ else   return buffer.poll();
+}

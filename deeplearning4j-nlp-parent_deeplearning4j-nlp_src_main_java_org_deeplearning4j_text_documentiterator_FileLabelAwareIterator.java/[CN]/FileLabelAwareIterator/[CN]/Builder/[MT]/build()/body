@@ -1,0 +1,21 @@
+{
+  List<File> fileList=new ArrayList<>();
+  List<String> labels=new ArrayList<>();
+  for (  File file : foldersToScan) {
+    if (!file.isDirectory())     continue;
+    File[] files=file.listFiles();
+    if (files == null || files.length == 0)     continue;
+    for (    File fileLabel : files) {
+      if (!fileLabel.isDirectory())       continue;
+      if (!labels.contains(fileLabel.getName()))       labels.add(fileLabel.getName());
+      File[] docs=fileLabel.listFiles();
+      if (docs == null || docs.length == 0)       continue;
+      for (      File fileDoc : docs) {
+        if (!fileDoc.isDirectory())         fileList.add(fileDoc);
+      }
+    }
+  }
+  LabelsSource source=new LabelsSource(labels);
+  FileLabelAwareIterator iterator=new FileLabelAwareIterator(fileList,source);
+  return iterator;
+}

@@ -1,0 +1,6 @@
+{
+  totalWordOccurrences.set(0);
+  for (  VocabWord word : vocabWords()) {
+    totalWordOccurrences.addAndGet((long)word.getElementFrequency());
+  }
+}

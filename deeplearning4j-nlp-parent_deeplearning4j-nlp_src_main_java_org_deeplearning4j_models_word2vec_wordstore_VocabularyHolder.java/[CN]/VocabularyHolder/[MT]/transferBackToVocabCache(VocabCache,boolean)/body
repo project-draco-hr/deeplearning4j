@@ -1,0 +1,26 @@
+{
+  if (!(cache instanceof InMemoryLookupCache))   throw new IllegalStateException("Sorry, only InMemoryLookupCache use implemented.");
+  List<VocabularyWord> words=words();
+  for (  VocabularyWord word : words) {
+    if (word.getWord().isEmpty())     continue;
+    VocabWord vocabWord=new VocabWord(1,word.getWord());
+    if (word.getHistoricalGradient() != null) {
+      INDArray gradient=Nd4j.create(word.getHistoricalGradient());
+      vocabWord.setHistoricalGradient(gradient);
+    }
+    ((InMemoryLookupCache)cache).getVocabs().put(word.getWord(),vocabWord);
+    ((InMemoryLookupCache)cache).getTokens().put(word.getWord(),vocabWord);
+    if (word.getHuffmanNode() != null) {
+      vocabWord.setIndex(word.getHuffmanNode().getIdx());
+      vocabWord.setCodeLength(word.getHuffmanNode().getLength());
+      vocabWord.setPoints(arrayToList(word.getHuffmanNode().getPoint(),word.getHuffmanNode().getLength()));
+      vocabWord.setCodes(arrayToList(word.getHuffmanNode().getCode(),word.getHuffmanNode().getLength()));
+      cache.addWordToIndex(word.getHuffmanNode().getIdx(),word.getWord());
+    }
+    if (word.getCount() > 1)     cache.incrementWordCount(word.getWord(),word.getCount() - 1);
+  }
+  if (emptyHolder) {
+    idxMap.clear();
+    vocabulary.clear();
+  }
+}

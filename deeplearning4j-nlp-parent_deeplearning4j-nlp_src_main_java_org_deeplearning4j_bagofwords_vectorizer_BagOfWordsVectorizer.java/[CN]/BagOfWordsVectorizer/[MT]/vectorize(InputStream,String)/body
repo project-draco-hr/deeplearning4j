@@ -1,0 +1,14 @@
+{
+  try {
+    BufferedReader reader=new BufferedReader(new InputStreamReader(is,"UTF-8"));
+    String line="";
+    StringBuilder builder=new StringBuilder();
+    while ((line=reader.readLine()) != null) {
+      builder.append(line);
+    }
+    return vectorize(builder.toString(),label);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

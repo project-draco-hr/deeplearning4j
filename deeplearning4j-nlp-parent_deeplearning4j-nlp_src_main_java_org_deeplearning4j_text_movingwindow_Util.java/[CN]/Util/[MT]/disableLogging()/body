@@ -1,0 +1,9 @@
+{
+  Logger logger=Logger.getLogger("org.apache.uima");
+  while (logger.getLevel() == null) {
+    logger=logger.getParent();
+  }
+  Level level=logger.getLevel();
+  logger.setLevel(Level.OFF);
+  return level;
+}

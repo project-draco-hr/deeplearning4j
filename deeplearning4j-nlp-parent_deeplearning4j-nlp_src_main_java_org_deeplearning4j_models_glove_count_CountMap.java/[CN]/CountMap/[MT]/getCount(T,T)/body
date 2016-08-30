@@ -1,0 +1,7 @@
+{
+  Pair<T,T> tempEntry=new Pair<>(element1,element2);
+  if (backingMap.containsKey(tempEntry)) {
+    return backingMap.get(tempEntry).get();
+  }
+ else   return 0;
+}

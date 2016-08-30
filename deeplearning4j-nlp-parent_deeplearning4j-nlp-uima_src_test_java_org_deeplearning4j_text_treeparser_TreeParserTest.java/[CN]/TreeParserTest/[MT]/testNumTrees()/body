@@ -1,0 +1,4 @@
+{
+  List<Tree> trees=parser.getTrees("This is one sentence. This is another sentence.");
+  assertEquals(2,trees.size());
+}

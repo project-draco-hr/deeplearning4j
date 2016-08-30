@@ -1,0 +1,14 @@
+{
+  VocabularyHolder holder=null;
+  if (cache != null) {
+    holder=new VocabularyHolder(cache,true);
+  }
+ else {
+    holder=new VocabularyHolder();
+  }
+  holder.minWordFrequency=this.minWordFrequency;
+  holder.hugeModelExpected=this.hugeModelExpected;
+  holder.scavengerThreshold=this.scavengerThreshold;
+  holder.retentionDelay=this.retentionDelay;
+  return holder;
+}

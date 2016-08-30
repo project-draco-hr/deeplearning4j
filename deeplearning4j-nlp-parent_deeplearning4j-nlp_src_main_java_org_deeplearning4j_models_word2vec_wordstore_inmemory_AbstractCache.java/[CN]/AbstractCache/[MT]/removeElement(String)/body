@@ -1,0 +1,9 @@
+{
+  if (vocabulary.containsKey(label)) {
+    SequenceElement element=vocabulary.get(label);
+    totalWordCount.getAndAdd((long)element.getElementFrequency() * -1);
+    idxMap.remove(element.getIndex());
+    vocabulary.remove(label);
+  }
+ else   throw new IllegalStateException("Can't get label: '" + label + "'");
+}

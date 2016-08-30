@@ -1,0 +1,7 @@
+{
+  float[] ret=new float[length];
+  for (int i=1; i < split.length; i++) {
+    ret[i - 1]=Float.parseFloat(split[i]);
+  }
+  return ret;
+}

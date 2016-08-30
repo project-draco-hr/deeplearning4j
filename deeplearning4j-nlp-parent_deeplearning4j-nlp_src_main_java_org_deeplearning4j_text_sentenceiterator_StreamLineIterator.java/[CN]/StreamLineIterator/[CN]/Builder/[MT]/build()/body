@@ -1,0 +1,6 @@
+{
+  StreamLineIterator lineIterator=new StreamLineIterator(this.iterator);
+  lineIterator.linesToFetch=linesToFetch;
+  lineIterator.setPreProcessor(preProcessor);
+  return lineIterator;
+}

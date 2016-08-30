@@ -1,0 +1,12 @@
+{
+  Sequence<VocabWord> sequence=new Sequence<>();
+  Tokenizer tokenizer=tokenizerFactory.create(object);
+  List<String> list=tokenizer.getTokens();
+  for (  String token : list) {
+    if (token == null || token.isEmpty() || token.trim().isEmpty())     continue;
+    VocabWord word=new VocabWord(1.0,token);
+    sequence.addElement(word);
+  }
+  sequence.setSequenceId(sentenceCounter.getAndIncrement());
+  return sequence;
+}

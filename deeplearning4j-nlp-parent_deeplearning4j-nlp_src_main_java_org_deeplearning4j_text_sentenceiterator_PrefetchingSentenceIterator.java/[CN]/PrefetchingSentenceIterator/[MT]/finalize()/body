@@ -1,0 +1,4 @@
+{
+  if (reader != null)   reader.terminate();
+  super.finalize();
+}

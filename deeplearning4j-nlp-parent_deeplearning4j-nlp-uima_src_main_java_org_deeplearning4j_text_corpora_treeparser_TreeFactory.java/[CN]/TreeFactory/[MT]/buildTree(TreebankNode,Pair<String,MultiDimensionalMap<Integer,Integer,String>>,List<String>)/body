@@ -1,0 +1,19 @@
+{
+  if (node.getLeaf())   return toTree(node);
+ else {
+    List<TreebankNode> preChildren=children(node);
+    List<Tree> children=new ArrayList<>();
+    Tree t=toTree(node);
+    for (    Pair<Integer,Integer> interval : labels.getSecond().keySet()) {
+      if (inRange(interval.getFirst(),interval.getSecond(),t)) {
+        t.setGoldLabel(possibleLabels.indexOf(labels.getSecond().get(interval.getFirst(),interval.getSecond())));
+        break;
+      }
+    }
+    for (int i=0; i < preChildren.size(); i++) {
+      children.add(buildTree(preChildren.get(i)));
+    }
+    t.connect(children);
+    return t;
+  }
+}

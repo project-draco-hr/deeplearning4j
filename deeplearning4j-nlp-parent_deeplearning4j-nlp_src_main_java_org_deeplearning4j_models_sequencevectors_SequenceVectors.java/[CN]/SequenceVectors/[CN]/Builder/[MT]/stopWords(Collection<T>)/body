@@ -1,0 +1,6 @@
+{
+  for (  T word : stopList) {
+    this.stopWords.add(word.getLabel());
+  }
+  return this;
+}

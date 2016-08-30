@@ -1,0 +1,16 @@
+{
+  if (codeLengthSoFar >= MAX_CODE_LENGTH)   throw new RuntimeException("Cannot generate code: code length exceeds " + MAX_CODE_LENGTH + " bits");
+  if (node.left == null && node.right == null) {
+    codes[node.vertexIdx]=codeSoFar;
+    codeLength[node.vertexIdx]=codeLengthSoFar;
+    innerNodePathToLeaf[node.vertexIdx]=Arrays.copyOf(innerNodePath,currDepth);
+    return innerNodeCount;
+  }
+  innerNodeCount++;
+  innerNodePath[currDepth]=innerNodeCount;
+  long codeLeft=setBit(codeSoFar,codeLengthSoFar,false);
+  innerNodeCount=traverse(node.left,codeLeft,(byte)(codeLengthSoFar + 1),innerNodeCount,innerNodePath,currDepth + 1);
+  long codeRight=setBit(codeSoFar,codeLengthSoFar,true);
+  innerNodeCount=traverse(node.right,codeRight,(byte)(codeLengthSoFar + 1),innerNodeCount,innerNodePath,currDepth + 1);
+  return innerNodeCount;
+}
