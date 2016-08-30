@@ -1,0 +1,4 @@
+{
+  environment.jersey().register(new ApiResource("coords.csv"));
+  environment.jersey().register(new RenderResource());
+}

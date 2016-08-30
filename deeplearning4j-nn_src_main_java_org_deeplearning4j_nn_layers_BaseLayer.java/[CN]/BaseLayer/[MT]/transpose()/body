@@ -1,0 +1,33 @@
+{
+  if (!(conf.getLayer() instanceof org.deeplearning4j.nn.conf.layers.FeedForwardLayer))   throw new UnsupportedOperationException("unsupported layer type: " + conf.getLayer().getClass().getName());
+  INDArray w=getParam(DefaultParamInitializer.WEIGHT_KEY);
+  INDArray b=getParam(DefaultParamInitializer.BIAS_KEY);
+  INDArray vb=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
+  Layer layer;
+  try {
+    NeuralNetConfiguration clone=conf.clone();
+    org.deeplearning4j.nn.conf.layers.FeedForwardLayer clonedLayerConf=(org.deeplearning4j.nn.conf.layers.FeedForwardLayer)clone.getLayer();
+    int nIn=clonedLayerConf.getNOut();
+    int nOut=clonedLayerConf.getNIn();
+    clonedLayerConf.setNIn(nIn);
+    clonedLayerConf.setNOut(nOut);
+    INDArray newB;
+    INDArray newVB=null;
+    if (vb != null) {
+      newB=vb.dup();
+      newVB=b.dup();
+    }
+ else {
+      newB=Nd4j.create(1,nOut);
+    }
+    INDArray paramsView=Nd4j.create(1,w.length() + nOut);
+    layer=clone.getLayer().instantiate(clone,iterationListeners,this.index,paramsView,true);
+    layer.setParam(DefaultParamInitializer.WEIGHT_KEY,w.transpose().dup());
+    layer.setParam(DefaultParamInitializer.BIAS_KEY,newB);
+    if (vb != null)     layer.setParam(PretrainParamInitializer.VISIBLE_BIAS_KEY,newVB);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("unable to construct transposed layer",e);
+  }
+  return layer;
+}

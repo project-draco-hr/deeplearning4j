@@ -1,9 +1,0 @@
-{
-  double maxCount=max ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
-  for (  Map.Entry<E,Double> entry : entries.entrySet()) {
-    if ((max && entry.getValue() > maxCount) || (!max && entry.getValue() < maxCount)) {
-      maxCount=entry.getValue();
-    }
-  }
-  return maxCount;
-}
