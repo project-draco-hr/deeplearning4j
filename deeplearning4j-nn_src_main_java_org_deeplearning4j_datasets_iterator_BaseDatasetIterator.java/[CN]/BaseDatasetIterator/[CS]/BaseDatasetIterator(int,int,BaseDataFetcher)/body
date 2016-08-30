@@ -1,0 +1,6 @@
+{
+  this.batch=batch;
+  if (numExamples < 0)   numExamples=fetcher.totalExamples();
+  this.numExamples=numExamples;
+  this.fetcher=fetcher;
+}

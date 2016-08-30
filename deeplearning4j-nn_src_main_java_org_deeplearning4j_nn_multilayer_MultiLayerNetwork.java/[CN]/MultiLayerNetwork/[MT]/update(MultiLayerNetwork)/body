@@ -1,0 +1,24 @@
+{
+  this.defaultConfiguration=(network.defaultConfiguration != null ? network.defaultConfiguration.clone() : null);
+  if (network.input != null)   setInput(network.input.dup());
+  this.labels=network.labels;
+  if (network.layers != null) {
+    layers=new Layer[network.layers.length];
+    for (int i=0; i < layers.length; i++) {
+      layers[i]=network.layers[i].clone();
+    }
+  }
+ else {
+    this.layers=null;
+  }
+  if (network.solver != null) {
+    INDArray updaterView=network.getUpdater().getStateViewArray();
+    if (updaterView != null) {
+      Updater newUpdater=new MultiLayerUpdater(this,updaterView.dup());
+      this.setUpdater(newUpdater);
+    }
+  }
+ else {
+    this.solver=null;
+  }
+}

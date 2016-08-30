@@ -1,0 +1,28 @@
+{
+  try {
+    while (!killRunnable && iterator.hasNext()) {
+      feeder.incrementAndGet();
+      lock.writeLock().lock();
+      MultiDataSet ds=iterator.next();
+      lock.writeLock().unlock();
+      queue.put(ds);
+    }
+    isAlive=false;
+  }
+ catch (  InterruptedException e) {
+    if (killRunnable) {
+      return;
+    }
+ else     exception=new RuntimeException("Runnable interrupted unexpectedly",e);
+  }
+catch (  RuntimeException e) {
+    exception=e;
+    if (lock.writeLock().isHeldByCurrentThread()) {
+      lock.writeLock().unlock();
+    }
+  }
+ finally {
+    isAlive=false;
+    runCompletedSemaphore.release();
+  }
+}

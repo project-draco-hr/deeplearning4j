@@ -1,0 +1,61 @@
+{
+  GradientNormalization normalization=layer.conf().getLayer().getGradientNormalization();
+  if (normalization == null || normalization == GradientNormalization.None)   return;
+  final double threshold=layer.conf().getLayer().getGradientNormalizationThreshold();
+switch (normalization) {
+case RenormalizeL2PerLayer:
+    double sumSquares=0.0;
+  for (  INDArray g : gradient.gradientForVariable().values()) {
+    double l2=g.norm2Number().doubleValue();
+    sumSquares+=l2 * l2;
+  }
+double layerL2=FastMath.sqrt(sumSquares);
+for (INDArray g : gradient.gradientForVariable().values()) {
+g.divi(layerL2);
+}
+break;
+case RenormalizeL2PerParamType:
+for (INDArray g : gradient.gradientForVariable().values()) {
+double l2=Nd4j.getExecutioner().execAndReturn(new Norm2(g)).getFinalResult().doubleValue();
+g.divi(l2);
+}
+break;
+case ClipElementWiseAbsoluteValue:
+Condition absValueCondition=new AbsValueGreaterThan(threshold);
+Function<Number,Number> clipFn=new Function<Number,Number>(){
+@Override public Number apply(Number number){
+return (number.doubleValue() > threshold ? threshold : -threshold);
+}
+}
+;
+for (INDArray g : gradient.gradientForVariable().values()) {
+BooleanIndexing.applyWhere(g,absValueCondition,clipFn);
+}
+break;
+case ClipL2PerLayer:
+double sumSquares2=0.0;
+for (INDArray g : gradient.gradientForVariable().values()) {
+double l2=Nd4j.getExecutioner().execAndReturn(new Norm2(g)).getFinalResult().doubleValue();
+sumSquares2+=l2 * l2;
+}
+double layerL22=FastMath.sqrt(sumSquares2);
+if (layerL22 > threshold) {
+double scalingFactor=threshold / layerL22;
+for (INDArray g : gradient.gradientForVariable().values()) {
+g.muli(scalingFactor);
+}
+}
+break;
+case ClipL2PerParamType:
+for (INDArray g : gradient.gradientForVariable().values()) {
+double l2=g.norm2Number().doubleValue();
+if (l2 > threshold) {
+double scalingFactor=l2 / threshold;
+g.divi(scalingFactor);
+}
+}
+break;
+default :
+throw new RuntimeException("Unknown (or not implemented) gradient normalization strategy: " + normalization);
+}
+}

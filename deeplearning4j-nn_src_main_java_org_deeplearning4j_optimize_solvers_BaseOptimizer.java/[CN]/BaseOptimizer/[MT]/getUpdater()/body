@@ -1,0 +1,6 @@
+{
+  if (updater == null) {
+    updater=UpdaterCreator.getUpdater(model);
+  }
+  return updater;
+}

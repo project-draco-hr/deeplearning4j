@@ -1,0 +1,6 @@
+{
+  final INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  final INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  final INDArray biases=getParam(GravesLSTMParamInitializer.BIAS_KEY);
+  return LSTMHelpers.activateHelper(this,this.conf,this.input,recurrentWeights,inputWeights,biases,training,prevOutputActivations,prevMemCellState,forBackprop,true,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+}

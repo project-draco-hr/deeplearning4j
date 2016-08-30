@@ -1,0 +1,14 @@
+{
+  final INDArray inputWeights=getParam(GravesLSTMParamInitializer.INPUT_WEIGHT_KEY);
+  final INDArray recurrentWeights=getParam(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY);
+  FwdPassReturn fwdPass;
+  if (truncatedBPTT) {
+    fwdPass=activateHelper(true,stateMap.get(STATE_KEY_PREV_ACTIVATION),stateMap.get(STATE_KEY_PREV_MEMCELL),true);
+    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION,fwdPass.lastAct);
+    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL,fwdPass.lastMemCell);
+  }
+ else {
+    fwdPass=activateHelper(true,null,null,true);
+  }
+  return LSTMHelpers.backpropGradientHelper(this.conf,this.input,recurrentWeights,inputWeights,epsilon,truncatedBPTT,tbpttBackwardLength,fwdPass,true,GravesLSTMParamInitializer.INPUT_WEIGHT_KEY,GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY,GravesLSTMParamInitializer.BIAS_KEY,gradientViews);
+}

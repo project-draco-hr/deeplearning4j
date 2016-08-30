@@ -1,0 +1,4 @@
+{
+  if (shape.length < 2)   throw new IllegalArgumentException("No width and height able to be found: array must be at least length 2");
+  return new int[]{shape[shape.length - 1],shape[shape.length - 2]};
+}

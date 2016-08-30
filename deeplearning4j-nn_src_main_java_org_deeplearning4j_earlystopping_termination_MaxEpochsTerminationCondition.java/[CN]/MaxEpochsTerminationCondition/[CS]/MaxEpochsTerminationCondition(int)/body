@@ -1,0 +1,4 @@
+{
+  if (maxEpochs <= 0)   throw new IllegalArgumentException("Max number of epochs must be >= 1");
+  this.maxEpochs=maxEpochs;
+}

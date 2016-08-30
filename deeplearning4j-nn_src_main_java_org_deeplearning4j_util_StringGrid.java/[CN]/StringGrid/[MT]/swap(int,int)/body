@@ -1,0 +1,8 @@
+{
+  List<String> col1=getColumn(column1);
+  List<String> col2=getColumn(column2);
+  for (int i=0; i < size(); i++) {
+    get(i).set(column1,col2.get(i));
+    get(i).set(column2,col1.get(i));
+  }
+}

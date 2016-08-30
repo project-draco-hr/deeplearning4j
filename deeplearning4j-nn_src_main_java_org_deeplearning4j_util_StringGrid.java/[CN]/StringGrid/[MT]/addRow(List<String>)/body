@@ -1,0 +1,9 @@
+{
+  if (row.isEmpty()) {
+    log.warn("Unable to add empty row");
+  }
+ else   if (!isEmpty() && row.size() != get(0).size()) {
+    log.warn("Unable to add row; not the same number of columns");
+  }
+ else   add(row);
+}

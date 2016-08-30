@@ -1,0 +1,6 @@
+{
+  StringTokenizer tokenizer=new StringTokenizer(column);
+  double count=0;
+  while (tokenizer.hasMoreTokens())   count+=Math.log(counter.getCount(column) / totalCount);
+  return count;
+}

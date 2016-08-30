@@ -1,0 +1,23 @@
+{
+  int s1=o1.size();
+  int s2=o2.size();
+  if (s1 == s2) {
+    int total1=0;
+    for (    int i : o1.values()) {
+      total1+=i;
+    }
+    int total2=0;
+    for (    int i : o2.values()) {
+      total2+=i;
+    }
+    if (total2 < total1)     return -1;
+    if (total2 > total1)     return 1;
+    return 0;
+  }
+ else   if (s2 < s1) {
+    return -1;
+  }
+ else {
+    return 1;
+  }
+}

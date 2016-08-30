@@ -1,0 +1,20 @@
+{
+  if (!resetSupported())   throw new UnsupportedOperationException("Cannot reset Async iterator wrapping iterator that does not support reset");
+  runnable.killRunnable=true;
+  if (runnable.isAlive.get()) {
+    thread.interrupt();
+  }
+  try {
+    runnable.runCompletedSemaphore.tryAcquire(5,TimeUnit.SECONDS);
+  }
+ catch (  InterruptedException e) {
+  }
+  blockingQueue.clear();
+  baseIterator.reset();
+  runnable=new IteratorRunnable(baseIterator.hasNext());
+  thread=new Thread(runnable);
+  Integer deviceId=Nd4j.getAffinityManager().getDeviceForCurrentThread();
+  Nd4j.getAffinityManager().attachThreadToDevice(thread,deviceId);
+  thread.setDaemon(true);
+  thread.start();
+}

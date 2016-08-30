@@ -1,0 +1,9 @@
+{
+  String paramPath=FilenameUtils.concat(basePath,net.toString() + "updators.bin");
+  try (ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(new File(paramPath)))){
+    oos.writeObject(net.getUpdater());
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

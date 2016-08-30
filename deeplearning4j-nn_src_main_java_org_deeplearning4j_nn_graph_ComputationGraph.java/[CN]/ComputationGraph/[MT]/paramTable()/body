@@ -1,0 +1,11 @@
+{
+  Map<String,INDArray> allParams=new LinkedHashMap<>();
+  for (  Layer layer : layers) {
+    Map<String,INDArray> paramMap=layer.paramTable();
+    for (    Map.Entry<String,INDArray> entry : paramMap.entrySet()) {
+      String newKey=layer.conf().getLayer().getLayerName() + "_" + entry.getKey();
+      allParams.put(newKey,entry.getValue());
+    }
+  }
+  return allParams;
+}

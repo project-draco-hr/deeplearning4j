@@ -1,0 +1,13 @@
+{
+  String confPath=FilenameUtils.concat(basePath,net.toString() + "-conf.json");
+  String paramPath=FilenameUtils.concat(basePath,net.toString() + ".bin");
+  log.info("Saving model and parameters to {} and {} ...",confPath,paramPath);
+  try (DataOutputStream dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(paramPath)))){
+    Nd4j.write(net.params(),dos);
+    dos.flush();
+    FileUtils.write(new File(confPath),net.getLayerWiseConfigurations().toJson());
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

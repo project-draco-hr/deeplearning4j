@@ -1,0 +1,11 @@
+{
+  return new Iterable<T>(){
+    boolean used=false;
+    public Iterator<T> iterator(){
+      if (used)       throw new RuntimeException("One use iterable");
+      used=true;
+      return it;
+    }
+  }
+;
+}

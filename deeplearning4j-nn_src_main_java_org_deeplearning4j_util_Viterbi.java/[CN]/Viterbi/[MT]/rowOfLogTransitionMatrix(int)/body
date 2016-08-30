@@ -1,0 +1,5 @@
+{
+  INDArray row=Nd4j.ones(1,states).muli(logOfDiangnalTProb);
+  row.putScalar(k,logMetaInstability);
+  return row;
+}

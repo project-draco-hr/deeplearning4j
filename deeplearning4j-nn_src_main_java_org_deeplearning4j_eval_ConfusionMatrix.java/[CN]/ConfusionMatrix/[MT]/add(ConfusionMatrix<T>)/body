@@ -1,0 +1,9 @@
+{
+  for (  T actual : other.matrix.keySet()) {
+    Multiset<T> counts=other.matrix.get(actual);
+    for (    T predicted : counts.elementSet()) {
+      int count=counts.count(predicted);
+      this.add(actual,predicted,count);
+    }
+  }
+}

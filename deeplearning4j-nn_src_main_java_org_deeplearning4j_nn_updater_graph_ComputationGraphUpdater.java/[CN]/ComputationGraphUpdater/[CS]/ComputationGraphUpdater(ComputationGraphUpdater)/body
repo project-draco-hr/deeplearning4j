@@ -1,0 +1,5 @@
+{
+  layerUpdaters=new Updater[updater.layerUpdaters.length];
+  for (int i=0; i < layerUpdaters.length; i++)   layerUpdaters[i]=updater.layerUpdaters[i].clone();
+  layerUpdatersMap=new HashMap<>(updater.layerUpdatersMap);
+}

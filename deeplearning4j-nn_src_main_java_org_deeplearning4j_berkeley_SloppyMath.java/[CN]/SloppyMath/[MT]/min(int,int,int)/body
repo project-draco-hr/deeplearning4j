@@ -1,0 +1,11 @@
+{
+  int mi;
+  mi=a;
+  if (b < mi) {
+    mi=b;
+  }
+  if (c < mi) {
+    mi=c;
+  }
+  return mi;
+}

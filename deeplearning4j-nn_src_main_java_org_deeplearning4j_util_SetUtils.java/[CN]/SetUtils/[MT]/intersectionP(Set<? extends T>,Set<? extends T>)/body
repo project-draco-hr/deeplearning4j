@@ -1,0 +1,6 @@
+{
+  for (  T elt : s1) {
+    if (s2.contains(elt))     return true;
+  }
+  return false;
+}

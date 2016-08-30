@@ -1,0 +1,5 @@
+{
+  if (!(o instanceof SubsetVertex))   return false;
+  SubsetVertex s=(SubsetVertex)o;
+  return s.from == from && s.to == to;
+}

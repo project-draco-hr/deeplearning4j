@@ -1,0 +1,9 @@
+{
+  if (backwardOnly)   return params();
+  List<INDArray> params=new ArrayList<>();
+  for (  Layer layer : getLayers()) {
+    INDArray layerParams=layer.params();
+    if (layerParams != null)     params.add(layerParams);
+  }
+  return Nd4j.toFlattened('f',params);
+}

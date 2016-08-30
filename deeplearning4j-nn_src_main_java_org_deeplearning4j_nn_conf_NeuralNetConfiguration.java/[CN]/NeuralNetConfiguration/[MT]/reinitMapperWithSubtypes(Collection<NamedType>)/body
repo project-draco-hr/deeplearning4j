@@ -1,0 +1,5 @@
+{
+  mapper.registerSubtypes(additionalTypes.toArray(new NamedType[additionalTypes.size()]));
+  mapper=mapper.copy();
+  return mapper;
+}

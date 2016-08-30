@@ -1,0 +1,43 @@
+{
+  INDArray ret;
+switch (initScheme) {
+case DISTRIBUTION:
+    ret=dist.sample(shape);
+  break;
+case NORMALIZED:
+ret=Nd4j.rand(order,shape);
+ret.subi(0.5).divi(shape[0]);
+break;
+case RELU:
+ret=Nd4j.randn(order,shape).muli(FastMath.sqrt(2.0 / shape[0]));
+break;
+case SIZE:
+ret=uniformBasedOnInAndOut(shape,shape[0],shape[1]);
+break;
+case UNIFORM:
+double a=1 / (double)shape[0];
+ret=Nd4j.rand(order,shape).muli(2 * a).subi(a);
+break;
+case VI:
+ret=Nd4j.rand(order,shape);
+int len=0;
+for (int aShape : shape) {
+len+=aShape;
+}
+double r=Math.sqrt(6) / Math.sqrt(len + 1);
+ret.muli(2 * r).subi(r);
+break;
+case XAVIER:
+ret=Nd4j.randn(order,shape).divi(FastMath.sqrt(shape[0] + shape[1]));
+break;
+case ZERO:
+ret=Nd4j.create(shape,order);
+break;
+default :
+throw new IllegalStateException("Illegal weight init value: " + initScheme);
+}
+INDArray flat=Nd4j.toFlattened(order,ret);
+if (flat.length() != paramView.length()) throw new RuntimeException("ParamView length does not match initialized weights length");
+paramView.assign(flat);
+return paramView.reshape(order,shape);
+}

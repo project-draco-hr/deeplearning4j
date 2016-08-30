@@ -1,0 +1,5 @@
+{
+  UnitVarianceProcessor clone=(UnitVarianceProcessor)super.clone();
+  if (clone.columnStds != null)   clone.columnStds=clone.columnStds.dup();
+  return clone;
+}

@@ -1,0 +1,8 @@
+{
+  int[] intRet=predict(dataSet.getFeatureMatrix());
+  List<String> ret=new ArrayList<>();
+  for (  int i : intRet) {
+    ret.add(i,dataSet.getLabelName(i));
+  }
+  return ret;
+}

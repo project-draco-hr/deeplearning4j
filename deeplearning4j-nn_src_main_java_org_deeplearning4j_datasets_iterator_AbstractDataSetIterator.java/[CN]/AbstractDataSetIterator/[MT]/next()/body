@@ -1,0 +1,6 @@
+{
+  if (queue.isEmpty())   throw new NoSuchElementException();
+  DataSet dataSet=queue.poll();
+  if (preProcessor != null)   preProcessor.preProcess(dataSet);
+  return dataSet;
+}

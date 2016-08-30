@@ -1,0 +1,11 @@
+{
+  int ma;
+  ma=a;
+  if (b > ma) {
+    ma=b;
+  }
+  if (c > ma) {
+    ma=c;
+  }
+  return ma;
+}

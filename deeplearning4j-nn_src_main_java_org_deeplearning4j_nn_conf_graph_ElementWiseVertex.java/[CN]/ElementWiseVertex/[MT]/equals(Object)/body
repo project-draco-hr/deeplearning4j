@@ -1,0 +1,4 @@
+{
+  if (!(o instanceof ElementWiseVertex))   return false;
+  return ((ElementWiseVertex)o).op == op;
+}

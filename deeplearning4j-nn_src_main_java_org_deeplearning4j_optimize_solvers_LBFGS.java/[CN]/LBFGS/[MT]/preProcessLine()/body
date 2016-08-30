@@ -1,0 +1,3 @@
+{
+  if (!searchState.containsKey(SEARCH_DIR))   searchState.put(SEARCH_DIR,((INDArray)searchState.get(GRADIENT_KEY)).dup());
+}

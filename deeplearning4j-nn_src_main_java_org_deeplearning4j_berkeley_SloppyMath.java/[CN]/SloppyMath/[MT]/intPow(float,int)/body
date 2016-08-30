@@ -1,0 +1,14 @@
+{
+  if (e == 0) {
+    return 1;
+  }
+  float result=1;
+  float currPow=b;
+  do {
+    if ((e & 1) == 1)     result*=currPow;
+    currPow=currPow * currPow;
+    e>>=1;
+  }
+ while (e > 0);
+  return result;
+}

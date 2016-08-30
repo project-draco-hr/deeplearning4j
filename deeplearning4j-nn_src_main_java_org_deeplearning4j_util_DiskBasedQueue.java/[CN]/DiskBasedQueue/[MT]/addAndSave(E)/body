@@ -1,0 +1,5 @@
+{
+  File path=new File(dir,UUID.randomUUID().toString());
+  SerializationUtils.saveObject(e,path);
+  paths.add(path.getAbsolutePath());
+}

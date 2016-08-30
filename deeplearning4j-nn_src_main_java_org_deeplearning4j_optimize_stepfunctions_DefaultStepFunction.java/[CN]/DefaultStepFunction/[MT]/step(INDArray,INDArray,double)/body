@@ -1,0 +1,3 @@
+{
+  Nd4j.getBlasWrapper().level1().axpy(searchDirection.length(),step,searchDirection,parameters);
+}

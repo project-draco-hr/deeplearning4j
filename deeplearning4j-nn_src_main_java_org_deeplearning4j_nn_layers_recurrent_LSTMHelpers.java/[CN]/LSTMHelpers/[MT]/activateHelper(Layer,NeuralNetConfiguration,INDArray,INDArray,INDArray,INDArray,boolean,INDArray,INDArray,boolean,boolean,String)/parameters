@@ -1,0 +1,12 @@
+Layer layer
+NeuralNetConfiguration conf
+INDArray input
+INDArray recurrentWeights
+INDArray originalInputWeights
+INDArray biases
+boolean training
+INDArray originalPrevOutputActivations
+INDArray originalPrevMemCellState
+boolean forBackprop
+boolean forwards
+String inputWeightKey

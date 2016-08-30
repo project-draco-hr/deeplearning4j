@@ -1,0 +1,7 @@
+{
+  if (!iterator.hasNext())   return;
+  DataSet next=iterator.next();
+  inputColumns=next.getFeatureMatrix().size(1);
+  totalOutcomes=next.getLabels().size(1);
+  queued.add(next);
+}

@@ -1,0 +1,8 @@
+{
+  INDArray last=setGradientFor(variable,gradient);
+  if (flatteningOrder != null) {
+    if (flatteningOrders == null)     flatteningOrders=new LinkedHashMap<>();
+    flatteningOrders.put(variable,flatteningOrder);
+  }
+  return last;
+}

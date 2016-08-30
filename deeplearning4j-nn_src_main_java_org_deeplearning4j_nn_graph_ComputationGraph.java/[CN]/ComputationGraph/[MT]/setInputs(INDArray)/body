@@ -1,0 +1,6 @@
+{
+  if (inputs != null && inputs.length != this.numInputArrays) {
+    throw new IllegalArgumentException("Invalid input array: network has " + numInputArrays + " inputs, but array is of length "+ inputs.length);
+  }
+  this.inputs=inputs;
+}

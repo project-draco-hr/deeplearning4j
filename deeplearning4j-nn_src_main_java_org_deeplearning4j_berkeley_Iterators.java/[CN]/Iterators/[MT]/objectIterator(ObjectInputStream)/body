@@ -1,0 +1,28 @@
+{
+  return new Iterator<Object>(){
+    Object next=softRead();
+    public boolean hasNext(){
+      return next != null;
+    }
+    private Object softRead(){
+      try {
+        return instream.readObject();
+      }
+ catch (      IOException e) {
+        return null;
+      }
+catch (      ClassNotFoundException e) {
+        return null;
+      }
+    }
+    public Object next(){
+      Object curr=next;
+      next=softRead();
+      return curr;
+    }
+    public void remove(){
+      throw new UnsupportedOperationException();
+    }
+  }
+;
+}

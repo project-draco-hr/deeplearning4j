@@ -1,0 +1,4 @@
+{
+  for (  InputPreProcessor preProcessor : inputPreProcessors)   input=preProcessor.preProcess(input,miniBatchSize);
+  return input;
+}

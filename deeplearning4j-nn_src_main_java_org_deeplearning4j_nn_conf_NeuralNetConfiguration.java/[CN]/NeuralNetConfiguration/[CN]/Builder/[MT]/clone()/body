@@ -1,0 +1,11 @@
+{
+  try {
+    Builder clone=(Builder)super.clone();
+    if (clone.layer != null)     clone.layer=clone.layer.clone();
+    if (clone.stepFunction != null)     clone.stepFunction=clone.stepFunction.clone();
+    return clone;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException(e);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  if (numInputArrays != input.length)   throw new UnsupportedOperationException("Cannot feedForward with " + input.length + " inputs for graph network with "+ numInputArrays+ " expected inputs");
+  for (int i=0; i < input.length; i++)   setInput(i,input[i]);
+  return feedForward(train);
+}

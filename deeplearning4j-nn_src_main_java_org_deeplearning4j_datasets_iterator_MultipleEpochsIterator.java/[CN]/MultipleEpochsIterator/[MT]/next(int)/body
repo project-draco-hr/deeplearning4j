@@ -1,0 +1,32 @@
+{
+  DataSet next;
+  batch++;
+  if (iter == null) {
+    if (num == -1) {
+      next=ds;
+      if (epochs < numEpochs)       trackEpochs();
+    }
+ else {
+      if (batchedDS.isEmpty() && num > 0)       batchedDS=ds.batchBy(num);
+      next=batchedDS.get(batch);
+      if (batch + 1 == batchedDS.size()) {
+        trackEpochs();
+        if (epochs < numEpochs)         batch=-1;
+      }
+    }
+  }
+ else {
+    iter=async ? new AsyncDataSetIterator(iter,queueSize) : iter;
+    next=num == -1 ? iter.next() : iter.next(num);
+    if (!iter.hasNext()) {
+      trackEpochs();
+      if (epochs < numEpochs) {
+        iter.reset();
+        lastBatch=batch;
+        batch=0;
+      }
+    }
+  }
+  if (preProcessor != null)   preProcessor.preProcess(next);
+  return next;
+}

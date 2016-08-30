@@ -1,0 +1,8 @@
+{
+  if (s.charAt(0) >= 'a') {
+    return (char)(s.charAt(0) + ('A' - 'a')) + s.substring(1);
+  }
+ else {
+    return s;
+  }
+}

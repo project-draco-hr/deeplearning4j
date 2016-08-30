@@ -1,0 +1,10 @@
+{
+  log.info("Saving parameters to {} ...",paramPath);
+  try (DataOutputStream dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(paramPath)))){
+    Nd4j.write(param,dos);
+    dos.flush();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

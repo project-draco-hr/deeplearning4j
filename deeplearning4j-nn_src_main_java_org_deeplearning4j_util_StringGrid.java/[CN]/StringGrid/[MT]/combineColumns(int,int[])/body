@@ -1,0 +1,8 @@
+{
+  for (  List<String> list : this) {
+    List<String> format=new ArrayList<>();
+    for (    int j : paramColumns)     format.add(list.get(j));
+    list.set(templateColumn,String.format(list.get(templateColumn),(Object[])format.toArray(new String[]{})));
+    list.removeAll(format);
+  }
+}

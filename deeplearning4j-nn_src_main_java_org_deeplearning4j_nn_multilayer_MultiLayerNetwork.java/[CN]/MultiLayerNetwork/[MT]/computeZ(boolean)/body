@@ -1,0 +1,10 @@
+{
+  INDArray currInput=this.input;
+  List<INDArray> activations=new ArrayList<>();
+  activations.add(currInput);
+  for (int i=0; i < layers.length; i++) {
+    currInput=zFromPrevLayer(i,currInput,training);
+    activations.add(currInput);
+  }
+  return activations;
+}

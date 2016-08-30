@@ -1,0 +1,8 @@
+{
+  if (!matrix.containsKey(actual)) {
+    return 0;
+  }
+ else {
+    return matrix.get(actual).count(predicted);
+  }
+}

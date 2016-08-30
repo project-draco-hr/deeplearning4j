@@ -1,0 +1,30 @@
+{
+  if (!layerWiseConfigurations.isPretrain())   return;
+  INDArray layerInput;
+  for (int i=0; i < getnLayers(); i++) {
+    if (i == 0) {
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        if (getLayerWiseConfigurations().getInputPreProcess(i) != null) {
+          INDArray features=next.getFeatureMatrix();
+          layerInput=getLayerWiseConfigurations().getInputPreProcess(i).preProcess(features,features.size(0));
+        }
+ else         layerInput=next.getFeatureMatrix();
+        setInput(layerInput);
+        if (this.getInput() == null || this.getLayers() == null)         initializeLayers(input());
+        layers[i].fit(input());
+        log.info("Training on layer " + (i + 1) + " with "+ input().size(0)+ " examples");
+      }
+    }
+ else {
+      while (iter.hasNext()) {
+        DataSet next=iter.next();
+        layerInput=next.getFeatureMatrix();
+        for (int j=1; j <= i; j++)         layerInput=activationFromPrevLayer(j - 1,layerInput,true);
+        log.info("Training on layer " + (i + 1) + " with "+ layerInput.size(0)+ " examples");
+        getLayer(i).fit(layerInput);
+      }
+    }
+    iter.reset();
+  }
+}

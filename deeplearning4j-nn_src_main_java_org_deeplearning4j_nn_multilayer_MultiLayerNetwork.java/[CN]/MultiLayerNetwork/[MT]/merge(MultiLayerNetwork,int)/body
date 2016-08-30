@@ -1,0 +1,9 @@
+{
+  if (network.layers.length != layers.length)   throw new IllegalArgumentException("Unable to merge networks that are not of equal length");
+  for (int i=0; i < getnLayers(); i++) {
+    Layer n=layers[i];
+    Layer otherNetwork=network.layers[i];
+    n.merge(otherNetwork,batchSize);
+  }
+  getOutputLayer().merge(network.getOutputLayer(),batchSize);
+}

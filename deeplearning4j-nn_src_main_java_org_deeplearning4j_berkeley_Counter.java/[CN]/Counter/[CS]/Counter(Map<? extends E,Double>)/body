@@ -1,0 +1,7 @@
+{
+  this(false);
+  this.entries=new HashMap<>();
+  for (  Entry<? extends E,Double> entry : mapCounts.entrySet()) {
+    incrementCount(entry.getKey(),entry.getValue());
+  }
+}

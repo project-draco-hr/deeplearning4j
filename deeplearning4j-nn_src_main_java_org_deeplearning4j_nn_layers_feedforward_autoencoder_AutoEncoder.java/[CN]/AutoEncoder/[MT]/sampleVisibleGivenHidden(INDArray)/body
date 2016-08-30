@@ -1,0 +1,4 @@
+{
+  INDArray ret=decode(h);
+  return new Pair<>(ret,ret);
+}

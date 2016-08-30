@@ -1,0 +1,10 @@
+{
+  setInput(input);
+  FwdPassReturn fwdPass=activateHelper(training,stateMap.get(STATE_KEY_PREV_ACTIVATION),stateMap.get(STATE_KEY_PREV_MEMCELL),false);
+  INDArray outAct=fwdPass.fwdPassOutput;
+  if (storeLastForTBPTT) {
+    tBpttStateMap.put(STATE_KEY_PREV_ACTIVATION,fwdPass.lastAct);
+    tBpttStateMap.put(STATE_KEY_PREV_MEMCELL,fwdPass.lastMemCell);
+  }
+  return outAct;
+}

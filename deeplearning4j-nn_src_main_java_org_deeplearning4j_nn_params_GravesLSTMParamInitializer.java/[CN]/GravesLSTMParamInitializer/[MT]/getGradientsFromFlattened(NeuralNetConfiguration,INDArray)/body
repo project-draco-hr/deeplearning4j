@@ -1,0 +1,18 @@
+{
+  org.deeplearning4j.nn.conf.layers.GravesLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesLSTM)conf.getLayer();
+  int nL=layerConf.getNOut();
+  int nLast=layerConf.getNIn();
+  int length=numParams(conf,true);
+  if (gradientView.length() != length)   throw new IllegalStateException("Expected gradient view of length " + length + ", got length "+ gradientView.length());
+  int nParamsIn=nLast * (4 * nL);
+  int nParamsRecurrent=nL * (4 * nL + 3);
+  int nBias=4 * nL;
+  INDArray inputWeightGradView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nParamsIn)).reshape('f',nLast,4 * nL);
+  INDArray recurrentWeightGradView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nParamsIn,nParamsIn + nParamsRecurrent)).reshape('f',nL,4 * nL + 3);
+  INDArray biasGradView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nParamsIn + nParamsRecurrent,nParamsIn + nParamsRecurrent + nBias));
+  Map<String,INDArray> out=new LinkedHashMap<>();
+  out.put(INPUT_WEIGHT_KEY,inputWeightGradView);
+  out.put(RECURRENT_WEIGHT_KEY,recurrentWeightGradView);
+  out.put(BIAS_KEY,biasGradView);
+  return out;
+}

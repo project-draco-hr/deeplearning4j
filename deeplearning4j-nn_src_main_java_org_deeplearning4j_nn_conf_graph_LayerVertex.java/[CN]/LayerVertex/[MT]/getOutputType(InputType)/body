@@ -1,0 +1,9 @@
+{
+  if (vertexInputs.length != 1) {
+    throw new InvalidInputTypeException("LayerVertex expects exactly one input. Got: " + Arrays.toString(vertexInputs));
+  }
+  InputType afterPreprocessor;
+  if (preProcessor == null)   afterPreprocessor=vertexInputs[0];
+ else   afterPreprocessor=preProcessor.getOutputType(vertexInputs[0]);
+  return layerConf.getLayer().getOutputType(afterPreprocessor);
+}

@@ -1,0 +1,7 @@
+{
+  double totalCount=totalCount();
+  for (  E key : keySet()) {
+    setCount(key,getCount(key) / totalCount);
+  }
+  dirty=true;
+}

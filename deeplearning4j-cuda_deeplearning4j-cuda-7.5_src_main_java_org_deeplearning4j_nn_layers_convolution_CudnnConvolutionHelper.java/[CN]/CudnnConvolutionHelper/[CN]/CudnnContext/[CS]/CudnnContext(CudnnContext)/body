@@ -1,0 +1,10 @@
+{
+  super(c);
+  srcTensorDesc=new cudnnTensorStruct(c.srcTensorDesc);
+  dstTensorDesc=new cudnnTensorStruct(c.dstTensorDesc);
+  biasTensorDesc=new cudnnTensorStruct(c.biasTensorDesc);
+  deltaTensorDesc=new cudnnTensorStruct(c.deltaTensorDesc);
+  filterDesc=new cudnnFilterStruct(c.filterDesc);
+  convDesc=new cudnnConvolutionStruct(c.convDesc);
+  activationDesc=new cudnnActivationStruct(c.activationDesc);
+}

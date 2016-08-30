@@ -1,0 +1,3 @@
+{
+  return Float.isInfinite(d) || Float.isNaN(d) || d == 0.0;
+}

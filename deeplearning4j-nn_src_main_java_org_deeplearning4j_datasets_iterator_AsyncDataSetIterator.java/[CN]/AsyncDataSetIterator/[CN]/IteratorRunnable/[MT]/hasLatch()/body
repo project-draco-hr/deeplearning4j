@@ -1,0 +1,16 @@
+{
+  if (feeder.get() > 0 || !blockingQueue.isEmpty())   return true;
+  try {
+    lock.readLock().lock();
+    boolean result=baseIterator.hasNext() || feeder.get() != 0 || !blockingQueue.isEmpty();
+    if (!isAlive.get())     return result;
+ else     while (isAlive.get()) {
+      result=feeder.get() != 0 || !blockingQueue.isEmpty() || baseIterator.hasNext();
+      if (result)       return true;
+    }
+    return result;
+  }
+  finally {
+    lock.readLock().unlock();
+  }
+}

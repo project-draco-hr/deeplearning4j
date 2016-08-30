@@ -1,0 +1,19 @@
+{
+  INDArray W=getParam(PretrainParamInitializer.WEIGHT_KEY).transpose();
+  INDArray vBias=getParam(PretrainParamInitializer.VISIBLE_BIAS_KEY);
+  INDArray vMean=h.mmul(W).addiRowVector(vBias);
+switch (layerConf().getVisibleUnit()) {
+case GAUSSIAN:
+    INDArray sample=Nd4j.getDistributions().createNormal(vMean,1).sample(vMean.shape());
+  vMean.addi(sample);
+return vMean;
+case LINEAR:
+return vMean;
+case BINARY:
+return sigmoid(vMean);
+case SOFTMAX:
+return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform("softmax",vMean));
+default :
+throw new IllegalStateException("Visible unit type should either be binary or gaussian");
+}
+}

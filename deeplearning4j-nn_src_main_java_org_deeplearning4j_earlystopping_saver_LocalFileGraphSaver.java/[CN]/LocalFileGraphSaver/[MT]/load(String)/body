@@ -1,0 +1,4 @@
+{
+  ComputationGraph net=ModelSerializer.restoreComputationGraph(confOut);
+  return net;
+}

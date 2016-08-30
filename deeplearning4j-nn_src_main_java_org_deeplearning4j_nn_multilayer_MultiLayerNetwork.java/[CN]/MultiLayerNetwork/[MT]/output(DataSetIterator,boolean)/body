@@ -1,0 +1,17 @@
+{
+  List<INDArray> outList=new ArrayList<>();
+  while (iterator.hasNext()) {
+    DataSet next=iterator.next();
+    if (next.getFeatureMatrix() == null || next.getLabels() == null)     break;
+    INDArray features=next.getFeatures();
+    if (next.hasMaskArrays()) {
+      INDArray fMask=next.getFeaturesMaskArray();
+      INDArray lMask=next.getLabelsMaskArray();
+      outList.add(this.output(features,train,fMask,lMask));
+    }
+ else {
+      outList.add(output(features,train));
+    }
+  }
+  return Nd4j.vstack(outList.toArray(new INDArray[0]));
+}

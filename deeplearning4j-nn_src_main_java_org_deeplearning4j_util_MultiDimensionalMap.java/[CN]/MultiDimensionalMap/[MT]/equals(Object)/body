@@ -1,0 +1,6 @@
+{
+  if (this == o)   return true;
+  if (!(o instanceof MultiDimensionalMap))   return false;
+  MultiDimensionalMap that=(MultiDimensionalMap)o;
+  return !(backedMap != null ? !backedMap.equals(that.backedMap) : that.backedMap != null);
+}

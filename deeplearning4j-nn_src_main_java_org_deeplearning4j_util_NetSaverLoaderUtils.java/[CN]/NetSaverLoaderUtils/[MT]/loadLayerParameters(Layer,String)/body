@@ -1,0 +1,14 @@
+{
+  String name=layer.conf().getLayer().getLayerName();
+  log.info("Loading saved parameters for layer {} ...",name);
+  try {
+    DataInputStream dis=new DataInputStream(new FileInputStream(paramPath));
+    INDArray param=Nd4j.read(dis);
+    dis.close();
+    layer.setParams(param);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  return layer;
+}

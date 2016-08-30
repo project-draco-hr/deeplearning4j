@@ -1,0 +1,16 @@
+{
+  if (input.ordering() == 'c')   input=input.dup('f');
+  int[] shape=input.shape();
+  INDArray in2d;
+  if (shape[0] == 1) {
+    in2d=input.tensorAlongDimension(0,1,2).permutei(1,0);
+  }
+ else   if (shape[2] == 1) {
+    in2d=input.tensorAlongDimension(0,1,0);
+  }
+ else {
+    INDArray permuted=input.permute(0,2,1);
+    in2d=permuted.reshape('f',shape[0] * shape[2],shape[1]);
+  }
+  return in2d.dup('c').reshape('c',shape[0] * shape[2],numChannels,inputHeight,inputWidth);
+}

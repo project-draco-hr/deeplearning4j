@@ -1,0 +1,7 @@
+{
+  org.deeplearning4j.nn.conf.layers.GravesLSTM layerConf=(org.deeplearning4j.nn.conf.layers.GravesLSTM)conf.getLayer();
+  int nL=layerConf.getNOut();
+  int nLast=layerConf.getNIn();
+  int nParams=nLast * (4 * nL) + nL * (4 * nL + 3) + 4 * nL;
+  return nParams;
+}

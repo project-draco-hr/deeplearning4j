@@ -1,0 +1,6 @@
+{
+  if (conf.getLayer().getDropOut() > 0 && !conf.isUseDropConnect() && training && !dropoutApplied) {
+    Dropout.applyDropout(input,conf.getLayer().getDropOut());
+    dropoutApplied=true;
+  }
+}

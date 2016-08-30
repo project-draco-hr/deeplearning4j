@@ -1,0 +1,12 @@
+{
+  int result;
+  long temp;
+  result=entries != null ? entries.hashCode() : 0;
+  result=31 * result + (dirty ? 1 : 0);
+  temp=Double.doubleToLongBits(cacheTotal);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
+  result=31 * result + (mf != null ? mf.hashCode() : 0);
+  temp=Double.doubleToLongBits(deflt);
+  result=31 * result + (int)(temp ^ (temp >>> 32));
+  return result;
+}

@@ -1,0 +1,4 @@
+{
+  if (this.params != null && params.length() != numParams())   throw new IllegalArgumentException("Invalid input: expect params of length " + numParams() + ", got params of length "+ params.length());
+  this.paramsFlattened=params;
+}

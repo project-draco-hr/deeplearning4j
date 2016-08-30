@@ -1,0 +1,4 @@
+{
+  Counter<V> valueCounter=ensureCounter(key);
+  valueCounter.incrementCount(value,count);
+}

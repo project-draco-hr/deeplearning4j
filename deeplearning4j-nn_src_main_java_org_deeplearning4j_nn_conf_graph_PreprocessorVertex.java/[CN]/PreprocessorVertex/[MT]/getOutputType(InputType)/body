@@ -1,0 +1,5 @@
+{
+  if (vertexInputs.length != 1)   throw new InvalidInputTypeException("Invalid input: Preprocessor vertex expects " + "exactly one input");
+  if (outputType != null)   return outputType;
+  return preProcessor.getOutputType(vertexInputs[0]);
+}

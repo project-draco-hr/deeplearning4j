@@ -1,0 +1,10 @@
+{
+  for (  List<String> list : this) {
+    if (list.size() < numColumns) {
+      int diff=numColumns - list.size();
+      for (int i=0; i < diff; i++) {
+        list.add(NONE);
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  final FwdPassReturn forwardsEval=LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_FORWARDS),training,null,null,forBackprop,true,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_FORWARDS);
+  final FwdPassReturn backwardsEval=LSTMHelpers.activateHelper(this,this.conf,this.input,getParam(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS),getParam(GravesBidirectionalLSTMParamInitializer.BIAS_KEY_BACKWARDS),training,null,null,forBackprop,false,GravesBidirectionalLSTMParamInitializer.INPUT_WEIGHT_KEY_BACKWARDS);
+  final INDArray fwdOutput=forwardsEval.fwdPassOutput;
+  final INDArray backOutput=backwardsEval.fwdPassOutput;
+  final INDArray totalOutput=fwdOutput.addi(backOutput);
+  return totalOutput;
+}

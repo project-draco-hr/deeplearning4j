@@ -1,0 +1,18 @@
+{
+  FileWriter fw=null;
+  PrintWriter pw=null;
+  try {
+    fw=new FileWriter(file,append);
+    pw=new PrintWriter(fw);
+    pw.print(message);
+  }
+ catch (  Exception e) {
+    System.out.println("Exception: in printToFile " + file.getAbsolutePath() + " "+ message);
+    e.printStackTrace();
+  }
+ finally {
+    if (pw != null) {
+      pw.close();
+    }
+  }
+}

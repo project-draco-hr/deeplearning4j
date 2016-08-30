@@ -1,0 +1,7 @@
+{
+  if (!(o instanceof LayerVertex))   return false;
+  LayerVertex lv=(LayerVertex)o;
+  if (!layerConf.equals(lv.layerConf))   return false;
+  if (preProcessor == null && lv.preProcessor != null || preProcessor != null && lv.preProcessor == null)   return false;
+  return preProcessor == null || preProcessor.equals(lv.preProcessor);
+}

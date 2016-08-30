@@ -1,0 +1,4 @@
+{
+  List<INDArray> forward=feedForward(x);
+  return forward.get(layerNum - 1);
+}

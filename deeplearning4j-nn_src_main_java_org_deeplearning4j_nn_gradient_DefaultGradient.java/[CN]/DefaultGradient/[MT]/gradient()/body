@@ -1,0 +1,5 @@
+{
+  if (flattenedGradient != null)   return flattenedGradient;
+  flattenGradient();
+  return flattenedGradient;
+}

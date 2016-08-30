@@ -1,0 +1,8 @@
+{
+  try {
+    return slurpFile(filename,encoding);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException();
+  }
+}

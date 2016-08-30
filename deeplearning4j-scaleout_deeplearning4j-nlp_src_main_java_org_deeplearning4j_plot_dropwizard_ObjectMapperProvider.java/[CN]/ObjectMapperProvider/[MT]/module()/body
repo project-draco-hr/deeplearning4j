@@ -1,0 +1,6 @@
+{
+  SimpleModule module=new SimpleModule("nd4j");
+  module.addDeserializer(INDArray.class,new VectorDeSerializer());
+  module.addSerializer(INDArray.class,new VectorSerializer());
+  return module;
+}

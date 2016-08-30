@@ -1,0 +1,8 @@
+{
+  double[] ret=new double[nums.length];
+  for (int i=0; i < nums.length; i++) {
+    double[] curr=nums[i];
+    ret[i]=curr[column];
+  }
+  return ret;
+}

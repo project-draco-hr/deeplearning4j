@@ -1,0 +1,10 @@
+{
+  Constructor<?> c=clazz.getDeclaredConstructors()[0];
+  for (int i=0; i < clazz.getDeclaredConstructors().length; i++) {
+    if (clazz.getDeclaredConstructors()[i].getParameterTypes().length < 1) {
+      c=clazz.getDeclaredConstructors()[i];
+      break;
+    }
+  }
+  return c;
+}

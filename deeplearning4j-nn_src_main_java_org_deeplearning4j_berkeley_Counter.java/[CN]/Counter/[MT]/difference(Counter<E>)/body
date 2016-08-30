@@ -1,0 +1,8 @@
+{
+  Counter<E> clone=new Counter<>(this);
+  for (  E key : counter.keySet()) {
+    double count=counter.getCount(key);
+    clone.incrementCount(key,-1 * count);
+  }
+  return clone;
+}

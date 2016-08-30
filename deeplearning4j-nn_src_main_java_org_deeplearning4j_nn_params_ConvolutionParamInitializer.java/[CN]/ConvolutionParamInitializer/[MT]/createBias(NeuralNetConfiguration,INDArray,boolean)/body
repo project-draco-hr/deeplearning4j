@@ -1,0 +1,5 @@
+{
+  org.deeplearning4j.nn.conf.layers.ConvolutionLayer layerConf=(org.deeplearning4j.nn.conf.layers.ConvolutionLayer)conf.getLayer();
+  if (initializeParams)   biasView.assign(layerConf.getBiasInit());
+  return biasView;
+}

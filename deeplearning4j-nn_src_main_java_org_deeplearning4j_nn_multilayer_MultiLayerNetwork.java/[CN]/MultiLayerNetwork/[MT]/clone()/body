@@ -1,0 +1,13 @@
+{
+  MultiLayerConfiguration conf=this.layerWiseConfigurations.clone();
+  MultiLayerNetwork ret=new MultiLayerNetwork(conf);
+  ret.init(this.params().dup(),false);
+  if (solver != null) {
+    Updater u=this.getUpdater();
+    INDArray updaterState=u.getStateViewArray();
+    if (updaterState != null) {
+      ret.getUpdater().setStateViewArray(ret,updaterState.dup(),false);
+    }
+  }
+  return ret;
+}

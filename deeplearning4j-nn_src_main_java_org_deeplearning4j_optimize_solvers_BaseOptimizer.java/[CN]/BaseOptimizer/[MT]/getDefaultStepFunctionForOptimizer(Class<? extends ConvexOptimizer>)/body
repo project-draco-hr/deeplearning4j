@@ -1,0 +1,8 @@
+{
+  if (optimizerClass == StochasticGradientDescent.class) {
+    return new NegativeGradientStepFunction();
+  }
+ else {
+    return new NegativeDefaultStepFunction();
+  }
+}

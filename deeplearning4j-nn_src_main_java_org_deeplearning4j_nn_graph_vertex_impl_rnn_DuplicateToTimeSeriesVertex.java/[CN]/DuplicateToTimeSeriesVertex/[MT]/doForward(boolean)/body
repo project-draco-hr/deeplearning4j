@@ -1,0 +1,9 @@
+{
+  int tsLength=graph.getInput(inputVertexIndex).size(2);
+  int[] outShape=new int[]{inputs[0].size(0),inputs[0].size(1),tsLength};
+  INDArray out=Nd4j.create(outShape);
+  for (int i=0; i < tsLength; i++) {
+    out.put(new INDArrayIndex[]{NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.point(i)},inputs[0]);
+  }
+  return out;
+}

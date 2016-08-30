@@ -1,0 +1,10 @@
+{
+  double sumxiyi=sumOfProducts.getDouble(column);
+  double predictionMean=this.currentPredictionMean.getDouble(column);
+  double labelMean=this.currentMean.getDouble(column);
+  double sumSquaredLabels=this.sumSquaredLabels.getDouble(column);
+  double sumSquaredPredicted=this.sumSquaredPredicted.getDouble(column);
+  double r2=sumxiyi - exampleCount * predictionMean * labelMean;
+  r2/=Math.sqrt(sumSquaredLabels - exampleCount * labelMean * labelMean) * Math.sqrt(sumSquaredPredicted - exampleCount * predictionMean * predictionMean);
+  return r2;
+}

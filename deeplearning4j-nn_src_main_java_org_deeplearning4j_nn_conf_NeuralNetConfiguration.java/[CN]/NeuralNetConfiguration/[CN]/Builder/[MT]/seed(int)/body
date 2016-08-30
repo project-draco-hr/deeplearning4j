@@ -1,0 +1,5 @@
+{
+  this.seed=(long)seed;
+  Nd4j.getRandom().setSeed(seed);
+  return this;
+}

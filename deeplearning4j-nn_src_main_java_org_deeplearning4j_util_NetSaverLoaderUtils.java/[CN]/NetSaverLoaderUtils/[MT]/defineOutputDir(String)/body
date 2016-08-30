@@ -1,0 +1,7 @@
+{
+  String tmpDir=System.getProperty("java.io.tmpdir");
+  String outputPath=File.separator + networkType + File.separator+ "output";
+  File dataDir=new File(tmpDir,outputPath);
+  if (!dataDir.getParentFile().exists())   dataDir.mkdirs();
+  return dataDir.toString();
+}

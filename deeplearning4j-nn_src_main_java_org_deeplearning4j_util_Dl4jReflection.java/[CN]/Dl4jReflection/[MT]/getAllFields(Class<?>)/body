@@ -1,0 +1,10 @@
+{
+  Class<?> targetClass=clazz;
+  List<Field> fields=new ArrayList<>();
+  do {
+    fields.addAll(Arrays.asList(targetClass.getDeclaredFields()));
+    targetClass=targetClass.getSuperclass();
+  }
+ while (targetClass != null && targetClass != Object.class);
+  return fields.toArray(new Field[fields.size()]);
+}

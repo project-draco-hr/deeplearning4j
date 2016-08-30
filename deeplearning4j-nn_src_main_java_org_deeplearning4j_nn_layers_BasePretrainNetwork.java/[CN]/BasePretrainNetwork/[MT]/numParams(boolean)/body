@@ -1,0 +1,10 @@
+{
+  if (!backwards)   return super.numParams(backwards);
+  int ret=0;
+  for (  String s : paramTable().keySet()) {
+    if (!s.equals(PretrainParamInitializer.VISIBLE_BIAS_KEY)) {
+      ret+=getParam(s).length();
+    }
+  }
+  return ret;
+}

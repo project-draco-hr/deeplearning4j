@@ -1,0 +1,14 @@
+{
+  if (gradient.gradient().length() != numParams(true))   throw new IllegalArgumentException("Invalid input: expect gradients array of length " + numParams(true));
+  for (  Map.Entry<String,INDArray> entry : gradient.gradientForVariable().entrySet()) {
+    String key=entry.getKey();
+    INDArray val=entry.getValue();
+    int idx=key.indexOf('_');
+    if (idx == -1)     throw new IllegalStateException("Invalid param key: not have layer separator: \"" + key + "\"");
+    String layerName=key.substring(0,idx);
+    String paramType=key.split("_")[1];
+    this.gradient.gradientForVariable().put(key,val);
+    getLayer(layerName).update(val,paramType);
+  }
+  setBackpropGradientsViewArray(gradient.gradient());
+}

@@ -1,0 +1,9 @@
+{
+  if (this == obj)   return true;
+  if (obj == null)   return false;
+  if (getClass() != obj.getClass())   return false;
+  BinomialDistribution other=(BinomialDistribution)obj;
+  if (numberOfTrials != other.numberOfTrials)   return false;
+  if (Double.doubleToLongBits(probabilityOfSuccess) != Double.doubleToLongBits(other.probabilityOfSuccess))   return false;
+  return true;
+}

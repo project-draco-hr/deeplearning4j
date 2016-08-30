@@ -1,0 +1,25 @@
+{
+  if (lastIndex == 0)   return Float.NEGATIVE_INFINITY;
+  float max=Float.NEGATIVE_INFINITY;
+  float maxIndex=0;
+  for (int i=0; i < lastIndex; i++) {
+    if (logV[i] > max) {
+      max=logV[i];
+      maxIndex=i;
+    }
+  }
+  if (max == Float.NEGATIVE_INFINITY)   return Float.NEGATIVE_INFINITY;
+  float threshold=max - LOGTOLERANCE_F;
+  double sumNegativeDifferences=0.0;
+  for (int i=0; i < lastIndex; i++) {
+    if (i != maxIndex && logV[i] > threshold) {
+      sumNegativeDifferences+=Math.exp((logV[i] - max));
+    }
+  }
+  if (sumNegativeDifferences > 0.0) {
+    return max + (float)Math.log(1.0 + sumNegativeDifferences);
+  }
+ else {
+    return max;
+  }
+}

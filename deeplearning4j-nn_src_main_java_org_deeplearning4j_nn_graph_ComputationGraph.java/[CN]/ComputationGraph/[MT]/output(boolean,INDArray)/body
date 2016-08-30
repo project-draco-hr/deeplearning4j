@@ -1,0 +1,10 @@
+{
+  setInputs(input);
+  Map<String,INDArray> activations=feedForward(train);
+  INDArray[] outputs=new INDArray[numOutputArrays];
+  int i=0;
+  for (  String s : configuration.getNetworkOutputs()) {
+    outputs[i++]=activations.get(s);
+  }
+  return outputs;
+}

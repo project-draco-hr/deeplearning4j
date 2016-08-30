@@ -1,0 +1,5 @@
+{
+  checkCuda(cudaMalloc(this,size));
+  limit=capacity=size;
+  deallocator(new Deallocator(this));
+}

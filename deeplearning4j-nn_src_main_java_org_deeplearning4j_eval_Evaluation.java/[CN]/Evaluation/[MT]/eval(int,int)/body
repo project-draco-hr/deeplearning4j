@@ -1,0 +1,20 @@
+{
+  numRowCounter++;
+  if (confusion == null) {
+    throw new UnsupportedOperationException("Cannot evaluate single example without initializing confusion matrix first");
+  }
+  addToConfusion(predictedIdx,actualIdx);
+  if (predictedIdx == actualIdx) {
+    incrementTruePositives(predictedIdx);
+    for (    Integer clazz : confusion.getClasses()) {
+      if (clazz != predictedIdx)       trueNegatives.incrementCount(clazz,1.0);
+    }
+  }
+ else {
+    incrementFalseNegatives(actualIdx);
+    incrementFalsePositives(predictedIdx);
+    for (    Integer clazz : confusion.getClasses()) {
+      if (clazz != predictedIdx && clazz != actualIdx)       trueNegatives.incrementCount(clazz,1.0);
+    }
+  }
+}

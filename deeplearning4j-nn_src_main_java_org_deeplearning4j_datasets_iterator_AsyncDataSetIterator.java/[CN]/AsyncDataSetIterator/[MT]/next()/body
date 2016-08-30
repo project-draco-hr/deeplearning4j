@@ -1,0 +1,32 @@
+{
+  if (!hasNext()) {
+    throw new NoSuchElementException();
+  }
+  if (runnable.exception != null) {
+    throw runnable.exception;
+  }
+  if (!blockingQueue.isEmpty()) {
+    runnable.feeder.decrementAndGet();
+    return blockingQueue.poll();
+  }
+  try {
+    while (runnable.exception == null) {
+      DataSet ds=blockingQueue.poll(2,TimeUnit.SECONDS);
+      if (ds != null) {
+        runnable.feeder.decrementAndGet();
+        return ds;
+      }
+      if (runnable.killRunnable) {
+        throw new ConcurrentModificationException("Reset while next() is waiting for element?");
+      }
+      if (!runnable.isAlive.get() && blockingQueue.isEmpty()) {
+        if (runnable.exception != null)         throw new RuntimeException("Exception thrown in base iterator",runnable.exception);
+        throw new IllegalStateException("Unexpected state occurred for AsyncDataSetIterator: runnable died or no data available");
+      }
+    }
+    throw runnable.exception;
+  }
+ catch (  InterruptedException e) {
+    throw new RuntimeException(e);
+  }
+}

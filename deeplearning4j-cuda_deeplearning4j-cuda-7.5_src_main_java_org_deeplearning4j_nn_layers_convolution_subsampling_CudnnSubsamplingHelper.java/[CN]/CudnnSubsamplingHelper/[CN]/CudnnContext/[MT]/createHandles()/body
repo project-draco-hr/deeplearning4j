@@ -1,0 +1,7 @@
+{
+  checkCudnn(cudnnCreate(this));
+  checkCudnn(cudnnCreateTensorDescriptor(srcTensorDesc));
+  checkCudnn(cudnnCreateTensorDescriptor(dstTensorDesc));
+  checkCudnn(cudnnCreateTensorDescriptor(deltaTensorDesc));
+  checkCudnn(cudnnCreatePoolingDescriptor(poolingDesc));
+}

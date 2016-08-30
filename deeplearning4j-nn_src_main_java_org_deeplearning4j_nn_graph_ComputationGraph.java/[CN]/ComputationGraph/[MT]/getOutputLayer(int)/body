@@ -1,0 +1,4 @@
+{
+  if (outputLayerIdx >= numOutputArrays)   throw new IllegalArgumentException("Invalid index: cannot get output layer " + outputLayerIdx + ", total number of network outputs = "+ numOutputArrays);
+  return getLayer(configuration.getNetworkOutputs().get(outputLayerIdx));
+}

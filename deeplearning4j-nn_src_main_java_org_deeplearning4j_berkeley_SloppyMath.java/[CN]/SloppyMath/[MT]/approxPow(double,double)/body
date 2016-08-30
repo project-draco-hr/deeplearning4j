@@ -1,0 +1,5 @@
+{
+  final int tmp=(int)(Double.doubleToLongBits(a) >> 32);
+  final int tmp2=(int)(b * (tmp - 1072632447) + 1072632447);
+  return Double.longBitsToDouble(((long)tmp2) << 32);
+}

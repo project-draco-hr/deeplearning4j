@@ -1,0 +1,10 @@
+{
+  int size=labels.size();
+  List<String> labelsList=new ArrayList<>(size);
+  for (int i=0; i < size; i++) {
+    String str=labels.get(i);
+    if (str == null)     throw new IllegalArgumentException("Invalid labels map: missing key for class " + i + " (expect integers 0 to "+ (size - 1)+ ")");
+    labelsList.add(str);
+  }
+  return labelsList;
+}

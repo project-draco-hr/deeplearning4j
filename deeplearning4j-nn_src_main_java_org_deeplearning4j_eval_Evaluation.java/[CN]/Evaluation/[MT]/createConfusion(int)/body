@@ -1,0 +1,7 @@
+{
+  List<Integer> classes=new ArrayList<>();
+  for (int i=0; i < nClasses; i++) {
+    classes.add(i);
+  }
+  confusion=new ConfusionMatrix<>(classes);
+}

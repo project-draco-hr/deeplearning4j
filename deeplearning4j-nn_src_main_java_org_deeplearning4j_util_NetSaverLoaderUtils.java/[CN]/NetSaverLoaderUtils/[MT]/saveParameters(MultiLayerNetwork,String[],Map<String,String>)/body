@@ -1,0 +1,9 @@
+{
+  Layer layer;
+  for (  String layerId : layerIds) {
+    layer=net.getLayer(layerId);
+    if (!layer.paramTable().isEmpty()) {
+      NetSaverLoaderUtils.saveLayerParameters(layer.params(),paramPaths.get(layerId));
+    }
+  }
+}

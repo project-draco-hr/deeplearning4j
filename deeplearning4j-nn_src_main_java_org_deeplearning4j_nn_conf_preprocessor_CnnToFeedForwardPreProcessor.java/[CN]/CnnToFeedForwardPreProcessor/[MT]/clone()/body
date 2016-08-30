@@ -1,0 +1,9 @@
+{
+  try {
+    CnnToFeedForwardPreProcessor clone=(CnnToFeedForwardPreProcessor)super.clone();
+    return clone;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException(e);
+  }
+}

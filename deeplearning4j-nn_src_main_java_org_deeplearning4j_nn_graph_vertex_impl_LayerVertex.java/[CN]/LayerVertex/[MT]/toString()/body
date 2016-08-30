@@ -1,0 +1,5 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("LayerVertex(id=").append(vertexIndex).append(",name=\"").append(vertexName).append("\",inputs=").append(Arrays.toString(inputVertices)).append(",outputs=").append(Arrays.toString(outputVertices)).append(")");
+  return sb.toString();
+}

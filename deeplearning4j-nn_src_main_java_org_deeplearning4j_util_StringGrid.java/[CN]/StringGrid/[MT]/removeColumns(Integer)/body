@@ -1,0 +1,12 @@
+{
+  if (columns.length < 1)   throw new IllegalArgumentException("Columns must contain at least one column");
+  List<Integer> removeOrder=Arrays.asList(columns);
+  Collections.sort(removeOrder);
+  for (  List<String> list : this) {
+    List<String> remove=new ArrayList<>();
+    for (int i=0; i < columns.length; i++) {
+      remove.add(list.get(columns[i]));
+    }
+    list.removeAll(remove);
+  }
+}

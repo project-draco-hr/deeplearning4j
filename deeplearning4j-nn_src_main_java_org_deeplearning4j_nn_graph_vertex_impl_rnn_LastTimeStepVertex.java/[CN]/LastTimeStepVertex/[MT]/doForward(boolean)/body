@@ -1,0 +1,27 @@
+{
+  INDArray[] inputMaskArrays=graph.getInputMaskArrays();
+  INDArray mask=(inputMaskArrays != null ? inputMaskArrays[inputIdx] : null);
+  fwdPassShape=inputs[0].shape();
+  INDArray out;
+  if (mask == null) {
+    int lastTS=inputs[0].size(2) - 1;
+    out=inputs[0].get(NDArrayIndex.all(),NDArrayIndex.all(),NDArrayIndex.point(lastTS));
+    fwdPassTimeSteps=null;
+  }
+ else {
+    int[] outShape=new int[]{inputs[0].size(0),inputs[0].size(1)};
+    out=Nd4j.create(outShape);
+    int maxTsLength=fwdPassShape[2];
+    INDArray row=Nd4j.linspace(0,maxTsLength - 1,maxTsLength);
+    INDArray temp=mask.mulRowVector(row);
+    INDArray lastElementIdx=Nd4j.argMax(temp,1);
+    fwdPassTimeSteps=new int[fwdPassShape[0]];
+    for (int i=0; i < fwdPassTimeSteps.length; i++) {
+      fwdPassTimeSteps[i]=(int)lastElementIdx.getDouble(i);
+    }
+    for (int i=0; i < fwdPassTimeSteps.length; i++) {
+      out.putRow(i,inputs[0].get(NDArrayIndex.point(i),NDArrayIndex.all(),NDArrayIndex.point(fwdPassTimeSteps[i])));
+    }
+  }
+  return out;
+}

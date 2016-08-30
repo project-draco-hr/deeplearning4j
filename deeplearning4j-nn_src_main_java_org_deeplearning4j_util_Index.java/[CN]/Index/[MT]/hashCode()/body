@@ -1,0 +1,5 @@
+{
+  int result=objects != null ? objects.hashCode() : 0;
+  result=31 * result + (indexes != null ? indexes.hashCode() : 0);
+  return result;
+}

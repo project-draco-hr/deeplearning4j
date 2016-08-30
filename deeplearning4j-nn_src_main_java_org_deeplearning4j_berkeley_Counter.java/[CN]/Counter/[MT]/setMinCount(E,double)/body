@@ -1,0 +1,7 @@
+{
+  Double value=entries.get(key);
+  if (value == null || val < value) {
+    setCount(key,val);
+    dirty=true;
+  }
+}

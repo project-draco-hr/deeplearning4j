@@ -1,0 +1,24 @@
+{
+  double max=Double.NEGATIVE_INFINITY;
+  double maxIndex=0;
+  for (int i=0; i < logV.size(); i++) {
+    if (logV.get(i) > max) {
+      max=logV.get(i);
+      maxIndex=i;
+    }
+  }
+  if (max == Double.NEGATIVE_INFINITY)   return Double.NEGATIVE_INFINITY;
+  double threshold=max - LOGTOLERANCE;
+  double sumNegativeDifferences=0.0;
+  for (int i=0; i < logV.size(); i++) {
+    if (i != maxIndex && logV.get(i) > threshold) {
+      sumNegativeDifferences+=Math.exp(logV.get(i) - max);
+    }
+  }
+  if (sumNegativeDifferences > 0.0) {
+    return max + Math.log(1.0 + sumNegativeDifferences);
+  }
+ else {
+    return max;
+  }
+}

@@ -1,0 +1,13 @@
+NeuralNetConfiguration conf
+INDArray input
+INDArray recurrentWeights
+INDArray inputWeights
+INDArray epsilon
+boolean truncatedBPTT
+int tbpttBackwardLength
+FwdPassReturn fwdPass
+boolean forwards
+String inputWeightKey
+String recurrentWeightKey
+String biasWeightKey
+Map<String,INDArray> gradientViews

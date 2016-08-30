@@ -1,0 +1,7 @@
+{
+  String path=paths.poll();
+  E ret=SerializationUtils.readObject(new File(path));
+  File item=new File(path);
+  item.delete();
+  return ret;
+}

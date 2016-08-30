@@ -1,0 +1,5 @@
+{
+  if (backprop)   return super.numParams(conf,backprop);
+  org.deeplearning4j.nn.conf.layers.BasePretrainNetwork layerConf=(org.deeplearning4j.nn.conf.layers.BasePretrainNetwork)conf.getLayer();
+  return super.numParams(conf,backprop) + layerConf.getNIn();
+}

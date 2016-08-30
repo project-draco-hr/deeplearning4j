@@ -1,0 +1,4 @@
+{
+  this.outputVertices=outputVertices;
+  this.epsilons=new INDArray[(outputVertices != null ? outputVertices.length : 0)];
+}

@@ -1,0 +1,5 @@
+{
+  if (totalOutcomes != -1)   return totalOutcomes;
+  prefetchBatchSetInputOutputValues();
+  return totalOutcomes;
+}

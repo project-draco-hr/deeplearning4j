@@ -1,0 +1,5 @@
+{
+  INDArray columnMeans=input.mean(0);
+  input.subiRowVector(columnMeans);
+  return input;
+}

@@ -1,0 +1,7 @@
+{
+  double l2=0.0;
+  for (  Layer l : layers) {
+    l2+=l.calcL2();
+  }
+  return l2;
+}

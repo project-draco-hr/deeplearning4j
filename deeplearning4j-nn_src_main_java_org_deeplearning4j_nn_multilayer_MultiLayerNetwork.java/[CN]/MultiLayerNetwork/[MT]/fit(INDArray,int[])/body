@@ -1,0 +1,4 @@
+{
+  org.deeplearning4j.nn.conf.layers.OutputLayer layerConf=(org.deeplearning4j.nn.conf.layers.OutputLayer)getOutputLayer().conf().getLayer();
+  fit(examples,FeatureUtil.toOutcomeMatrix(labels,layerConf.getNOut()));
+}

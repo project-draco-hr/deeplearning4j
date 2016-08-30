@@ -1,0 +1,10 @@
+{
+  double logSum=logAdd(logV);
+  if (Double.isNaN(logSum)) {
+    throw new RuntimeException("Bad log-sum");
+  }
+  if (logSum == 0.0)   return;
+  for (int i=0; i < logV.length; i++) {
+    logV[i]-=logSum;
+  }
+}

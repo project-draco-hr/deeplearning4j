@@ -1,0 +1,8 @@
+{
+  this.esConfig=earlyStoppingConfiguration;
+  this.model=model;
+  this.train=train;
+  this.trainMulti=trainMulti;
+  this.iterator=(train != null ? train : trainMulti);
+  this.listener=listener;
+}

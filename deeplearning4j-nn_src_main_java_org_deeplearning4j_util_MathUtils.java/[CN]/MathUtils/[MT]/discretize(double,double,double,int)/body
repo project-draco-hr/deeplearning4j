@@ -1,0 +1,4 @@
+{
+  int discreteValue=(int)(binCount * normalize(value,min,max));
+  return clamp(discreteValue,0,binCount - 1);
+}

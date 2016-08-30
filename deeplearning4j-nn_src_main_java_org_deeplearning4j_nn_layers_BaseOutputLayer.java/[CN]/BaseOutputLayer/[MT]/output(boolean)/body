@@ -1,0 +1,4 @@
+{
+  if (input == null)   throw new IllegalArgumentException("No null input allowed");
+  return super.activate(training);
+}

@@ -1,0 +1,12 @@
+{
+  double total=0.0;
+  for (int m=k; m <= n; m++) {
+    double nChooseM=1.0;
+    for (int r=1; r <= m; r++) {
+      nChooseM*=(n - r) + 1;
+      nChooseM/=r;
+    }
+    total+=nChooseM * Math.pow(p,m) * Math.pow(1.0 - p,n - m);
+  }
+  return total;
+}

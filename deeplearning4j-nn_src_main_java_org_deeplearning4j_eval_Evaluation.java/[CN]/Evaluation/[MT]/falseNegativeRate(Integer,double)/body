@@ -1,0 +1,8 @@
+{
+  double fnCount=falseNegatives.getCount(classLabel);
+  double tpCount=truePositives.getCount(classLabel);
+  if (fnCount == 0 && tpCount == 0) {
+    return edgeCase;
+  }
+  return fnCount / (fnCount + tpCount);
+}

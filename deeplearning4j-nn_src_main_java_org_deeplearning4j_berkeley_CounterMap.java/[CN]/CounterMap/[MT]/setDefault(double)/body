@@ -1,0 +1,6 @@
+{
+  this.defltVal=defltVal;
+  for (  Counter<V> vCounter : counterMap.values()) {
+    vCounter.setDeflt(defltVal);
+  }
+}

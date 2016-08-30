@@ -1,0 +1,4 @@
+{
+  String confOut=FilenameUtils.concat(directory,latestFileName);
+  save(net,confOut);
+}

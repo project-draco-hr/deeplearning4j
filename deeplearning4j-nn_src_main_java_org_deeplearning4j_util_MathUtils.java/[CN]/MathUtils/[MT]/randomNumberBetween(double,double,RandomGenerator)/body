@@ -1,0 +1,4 @@
+{
+  if (begin > end)   throw new IllegalArgumentException("Begin must not be less than end");
+  return (int)begin + (int)(rng.nextDouble() * ((end - begin) + 1));
+}

@@ -1,0 +1,7 @@
+{
+  Counter<String> counter=new Counter<>();
+  for (  Map.Entry<String,Integer> entry : map.entrySet()) {
+    counter.incrementCount(entry.getKey(),entry.getValue());
+  }
+  return counter.argMax();
+}
