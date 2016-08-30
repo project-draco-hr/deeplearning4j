@@ -3,7 +3,7 @@
   if (collectTrainingStats)   stats.logMapPartitionsStart();
   JavaRDD<String> splitData=split;
   if (collectTrainingStats)   stats.logRepartitionStart();
-  splitData=SparkUtils.repartition(splitData,repartition,repartitionStrategy,numObjectsEachWorker(rddDataSetNumExamples),numWorkers);
+  splitData=SparkUtils.repartition(splitData,repartition,repartitionStrategy,numObjectsEachWorker(dataSetObjectNumExamples),numWorkers);
   int nPartitions=splitData.partitions().size();
   if (collectTrainingStats && repartition != Repartition.Never)   stats.logRepartitionEnd();
   FlatMapFunction<Iterator<String>,ParameterAveragingTrainingResult> function=new ExecuteWorkerPathMDSFlatMap<>(getWorkerInstance(graph));
