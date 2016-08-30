@@ -1,0 +1,5 @@
+{
+  for (  Entry<E,Double> entry : getEntrySet()) {
+    entry.setValue(entry.getValue() * c);
+  }
+}

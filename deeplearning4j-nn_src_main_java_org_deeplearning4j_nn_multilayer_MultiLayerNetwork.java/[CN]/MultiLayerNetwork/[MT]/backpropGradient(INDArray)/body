@@ -1,0 +1,4 @@
+{
+  if (getOutputLayer() instanceof IOutputLayer)   throw new UnsupportedOperationException("Cannot calculate gradients based on epsilon with OutputLayer");
+  return calcBackpropGradients(epsilon,false);
+}

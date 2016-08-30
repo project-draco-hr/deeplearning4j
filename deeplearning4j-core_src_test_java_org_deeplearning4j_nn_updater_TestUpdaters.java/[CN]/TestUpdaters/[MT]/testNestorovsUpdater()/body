@@ -3,9 +3,9 @@
   double mu=0.6;
   INDArray v, vPrev;
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().learningRate(lr).momentum(mu).layer(new DenseLayer.Builder().nIn(nIn).nOut(nOut).updater(org.deeplearning4j.nn.conf.Updater.NESTEROVS).build()).build();
-  int numParams=LayerFactories.getFactory(conf).initializer().numParams(conf,true);
+  int numParams=conf.getLayer().initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
-  Layer layer=LayerFactories.getFactory(conf).create(conf,null,0,params,true);
+  Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
   Updater updater=UpdaterCreator.getUpdater(layer);
   int updaterStateSize=updater.stateSizeForLayer(layer);
   INDArray updaterState=Nd4j.create(1,updaterStateSize);

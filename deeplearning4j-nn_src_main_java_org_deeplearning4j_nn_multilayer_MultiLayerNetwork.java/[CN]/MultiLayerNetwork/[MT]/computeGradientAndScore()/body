@@ -1,0 +1,17 @@
+{
+  if (layerWiseConfigurations.getBackpropType() == BackpropType.TruncatedBPTT) {
+    rnnActivateUsingStoredState(getInput(),true,true);
+    truncatedBPTTGradient();
+  }
+ else {
+    List<INDArray> activations=feedForwardToLayer(layers.length - 2,true);
+    INDArray actSecondLastLayer=activations.get(activations.size() - 1);
+    if (layerWiseConfigurations.getInputPreProcess(layers.length - 1) != null)     actSecondLastLayer=layerWiseConfigurations.getInputPreProcess(layers.length - 1).preProcess(actSecondLastLayer,getInputMiniBatchSize());
+    getOutputLayer().setInput(actSecondLastLayer);
+    backprop();
+  }
+  if (!(getOutputLayer() instanceof IOutputLayer)) {
+    throw new IllegalStateException("Cannot calculate gradient and score with respect to labels: final layer is not an IOutputLayer");
+  }
+  score=((IOutputLayer)getOutputLayer()).computeScore(calcL1(),calcL2(),true);
+}
