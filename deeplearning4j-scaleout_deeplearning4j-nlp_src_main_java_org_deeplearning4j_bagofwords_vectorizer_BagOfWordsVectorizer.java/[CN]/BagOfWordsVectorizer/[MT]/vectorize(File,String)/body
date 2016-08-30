@@ -1,9 +1,0 @@
-{
-  try {
-    String string=FileUtils.readFileToString(input);
-    return vectorize(string,label);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

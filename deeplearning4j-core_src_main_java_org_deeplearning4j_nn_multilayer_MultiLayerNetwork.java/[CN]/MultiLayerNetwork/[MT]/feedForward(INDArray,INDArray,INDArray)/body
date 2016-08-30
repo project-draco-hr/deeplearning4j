@@ -1,6 +1,0 @@
-{
-  setLayerMaskArrays(featuresMask,labelsMask);
-  List<INDArray> list=feedForward(input);
-  clearLayerMaskArrays();
-  return list;
-}

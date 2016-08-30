@@ -1,9 +1,0 @@
-{
-  if (!tokens.isEmpty())   return tokens;
-  log.info("Starting prebuffering...");
-  while (streamHasMoreTokens()) {
-    tokens.add(nextTokenFromStream());
-  }
-  log.info("Tokens prefetch finished. Tokens size: [" + tokens.size() + "]");
-  return tokens;
-}

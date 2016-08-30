@@ -1,4 +1,0 @@
-{
-  BarnesHutTsne tsne=new BarnesHutTsne.Builder().normalize(false).setFinalMomentum(0.8f).numDimension(2).setMaxIter(1000).build();
-  plotVocab(tsne,numWords,file);
-}

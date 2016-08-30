@@ -1,4 +1,0 @@
-{
-  if (!(other instanceof BaseUpdater))   return false;
-  return updaterForVariable.equals(((BaseUpdater)other).updaterForVariable);
-}

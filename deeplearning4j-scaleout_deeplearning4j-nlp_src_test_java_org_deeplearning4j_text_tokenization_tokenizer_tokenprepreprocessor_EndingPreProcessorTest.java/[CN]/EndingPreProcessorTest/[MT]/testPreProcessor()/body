@@ -1,5 +1,0 @@
-{
-  TokenPreProcess preProcess=new EndingPreProcessor();
-  String endingTest="ending";
-  assertEquals("end",preProcess.preProcess(endingTest));
-}

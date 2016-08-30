@@ -1,7 +1,0 @@
-{
-  if (multiDataSet.hasMaskArrays()) {
-    setLayerMaskArrays(multiDataSet.getFeaturesMaskArrays(),multiDataSet.getLabelsMaskArrays());
-  }
-  fit(multiDataSet.getFeatures(),multiDataSet.getLabels());
-  if (multiDataSet.hasMaskArrays())   clearLayerMaskArrays();
-}

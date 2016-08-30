@@ -1,7 +1,0 @@
-{
-  if (input.rank() == 2)   return input;
-  if (input.ordering() != 'c' || !Shape.strideDescendingCAscendingF(input))   input=input.dup('c');
-  int[] inShape=input.shape();
-  int[] outShape=new int[]{inShape[0],inShape[1] * inShape[2] * inShape[3]};
-  return input.reshape('c',outShape);
-}

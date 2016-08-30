@@ -1,5 +1,0 @@
-{
-  if (input == null)   throw new IllegalArgumentException("No null input allowed");
-  applyDropOutIfNecessary(training);
-  return Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf.getLayer().getActivationFunction(),input));
-}

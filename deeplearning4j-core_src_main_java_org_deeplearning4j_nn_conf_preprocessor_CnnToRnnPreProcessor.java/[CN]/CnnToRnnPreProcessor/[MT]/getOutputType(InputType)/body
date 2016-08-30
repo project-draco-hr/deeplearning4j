@@ -1,8 +1,0 @@
-{
-  if (inputType == null || inputType.getType() != InputType.Type.CNN) {
-    throw new IllegalStateException("Invalid input type: Expected input of type CNN, got " + inputType);
-  }
-  InputType.InputTypeConvolutional c=(InputType.InputTypeConvolutional)inputType;
-  int outSize=c.getDepth() * c.getHeight() * c.getWidth();
-  return InputType.recurrent(outSize);
-}

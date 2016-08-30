@@ -1,6 +1,0 @@
-{
-  if (inputType == null || (inputType.getType() != InputType.Type.FF && inputType.getType() != InputType.Type.CNNFlat)) {
-    throw new IllegalStateException("Invalid input type (layer name=\"" + getLayerName() + "\"): expected FeedForward input type. Got: "+ inputType);
-  }
-  return InputType.feedForward(nOut);
-}

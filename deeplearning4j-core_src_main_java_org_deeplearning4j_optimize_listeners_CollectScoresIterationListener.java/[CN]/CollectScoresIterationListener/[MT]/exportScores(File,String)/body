@@ -1,5 +1,0 @@
-{
-  try (FileOutputStream fos=new FileOutputStream(file)){
-    exportScores(fos,delimiter);
-  }
- }

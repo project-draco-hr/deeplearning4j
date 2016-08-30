@@ -1,9 +1,0 @@
-{
-  if (layerwise.containsKey(ind)) {
-    layerwise.get(ind).layer(layer);
-  }
- else {
-    layerwise.put(ind,globalConfig.clone().layer(layer));
-  }
-  return this;
-}

@@ -1,6 +1,0 @@
-{
-  for (  K key : keySet()) {
-    Counter<V> counts=getCounter(key);
-    counts.scale(scaleFactor);
-  }
-}

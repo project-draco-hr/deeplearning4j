@@ -1,6 +1,0 @@
-{
-  this.sentenceType=AnnotatorUtil.getRequiredTypeParameter(this.context,typeSystem,UimaUtil.SENTENCE_TYPE_PARAMETER);
-  this.tokenType=AnnotatorUtil.getRequiredTypeParameter(this.context,typeSystem,UimaUtil.TOKEN_TYPE_PARAMETER);
-  this.posFeature=AnnotatorUtil.getRequiredFeatureParameter(this.context,this.tokenType,UimaUtil.POS_FEATURE_PARAMETER,CAS.TYPE_NAME_STRING);
-  this.probabilityFeature=AnnotatorUtil.getOptionalFeatureParameter(this.context,this.tokenType,UimaUtil.PROBABILITY_FEATURE_PARAMETER,CAS.TYPE_NAME_DOUBLE);
-}

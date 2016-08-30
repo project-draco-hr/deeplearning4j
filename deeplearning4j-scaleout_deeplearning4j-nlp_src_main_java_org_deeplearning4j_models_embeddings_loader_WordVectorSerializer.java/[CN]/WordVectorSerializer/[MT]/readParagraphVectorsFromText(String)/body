@@ -1,8 +1,0 @@
-{
-  try {
-    return readParagraphVectorsFromText(new FileInputStream(path));
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

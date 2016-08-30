@@ -1,8 +1,0 @@
-{
-  int i=Integer.parseInt(value);
-  Enum[] constants=clazz.getEnumConstants();
-  for (  Enum constant : constants) {
-    if (constant.ordinal() == i)     return (E)constant;
-  }
-  return null;
-}

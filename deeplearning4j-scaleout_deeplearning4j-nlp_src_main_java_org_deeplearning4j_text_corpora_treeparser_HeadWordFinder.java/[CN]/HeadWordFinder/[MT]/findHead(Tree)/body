@@ -1,5 +1,0 @@
-{
-  Tree cursor=parentNode.getType().equals("TOP") ? parentNode.firstChild() : parentNode;
-  while (cursor.children() != null && !cursor.children().isEmpty())   cursor=findHead2(cursor);
-  return cursor;
-}

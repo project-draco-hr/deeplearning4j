@@ -1,6 +1,0 @@
-{
-  String prep=super.preProcess(token);
-  stemmer.setCurrent(prep);
-  stemmer.stem();
-  return stemmer.getCurrent();
-}

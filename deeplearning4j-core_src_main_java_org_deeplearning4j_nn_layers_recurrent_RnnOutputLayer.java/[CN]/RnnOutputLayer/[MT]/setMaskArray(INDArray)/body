@@ -1,6 +1,0 @@
-{
-  if (maskArray != null && maskArray.size(1) != 1) {
-    maskArray=TimeSeriesUtils.reshapeTimeSeriesMaskToVector(maskArray);
-  }
-  this.maskArray=maskArray;
-}

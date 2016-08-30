@@ -1,4 +1,0 @@
-{
-  if (file.isFile())   fileIterator=Arrays.asList(file).iterator();
- else   fileIterator=FileUtils.iterateFiles(file,null,true);
-}

@@ -1,9 +1,0 @@
-{
-  super(builder);
-  this.decay=builder.decay;
-  this.eps=builder.eps;
-  this.useBatchMean=builder.useBatchMean;
-  this.gamma=builder.gamma;
-  this.beta=builder.beta;
-  this.lockGammaBeta=builder.lockGammaBeta;
-}

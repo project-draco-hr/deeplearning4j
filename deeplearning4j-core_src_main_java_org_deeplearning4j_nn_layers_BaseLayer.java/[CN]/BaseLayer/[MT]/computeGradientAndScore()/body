@@ -1,5 +1,0 @@
-{
-  if (this.input == null)   return;
-  INDArray output=activate(true);
-  setScoreWithZ(output);
-}

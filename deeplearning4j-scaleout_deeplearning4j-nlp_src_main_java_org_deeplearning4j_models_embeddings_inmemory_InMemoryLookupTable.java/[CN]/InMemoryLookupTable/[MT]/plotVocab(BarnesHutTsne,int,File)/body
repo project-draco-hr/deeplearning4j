@@ -1,9 +1,0 @@
-{
-  final List<String> labels=fitTnseAndGetLabels(tsne,numWords);
-  try {
-    tsne.saveAsFile(labels,file.getAbsolutePath());
-  }
- catch (  IOException e) {
-    throw new RuntimeException(e);
-  }
-}

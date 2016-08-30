@@ -1,4 +1,0 @@
-{
-  coOccurrences=new AbstractCoOccurrences.Builder<T>().symmetric(this.symmetric).windowSize(configuration.getWindow()).iterate(iterator).workers(workers).vocabCache(vocabCache).maxMemory(maxmemory).build();
-  coOccurrences.fit();
-}

@@ -1,5 +1,0 @@
-{
-  this.vertices=new ArrayList<>(vertices);
-  this.allowMultipleEdges=allowMultipleEdges;
-  edges=(List<Edge<E>>[])Array.newInstance(List.class,vertices.size());
-}

@@ -1,8 +1,0 @@
-{
-  INDArray columnMeans=input.mean(0);
-  INDArray columnStds=input.std(0);
-  input.subiRowVector(columnMeans);
-  columnStds.addi(Nd4j.EPS_THRESHOLD);
-  input.diviRowVector(columnStds);
-  return input;
-}

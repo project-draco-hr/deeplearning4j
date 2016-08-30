@@ -1,9 +1,0 @@
-{
-  try {
-    return slurpGBURL(u);
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-    return null;
-  }
-}

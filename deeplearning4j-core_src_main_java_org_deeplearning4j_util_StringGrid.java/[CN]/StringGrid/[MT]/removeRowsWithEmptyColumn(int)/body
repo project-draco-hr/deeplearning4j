@@ -1,7 +1,0 @@
-{
-  List<List<String>> remove=new ArrayList<>();
-  for (  List<String> list : this) {
-    if (list.get(column).equals(NONE))     remove.add(list);
-  }
-  removeAll(remove);
-}

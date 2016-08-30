@@ -1,6 +1,0 @@
-{
-  if (document.getReferencedContent() != null) {
-    return similarityToLabel(document.getReferencedContent(),label);
-  }
- else   return similarityToLabel(document.getContent(),label);
-}

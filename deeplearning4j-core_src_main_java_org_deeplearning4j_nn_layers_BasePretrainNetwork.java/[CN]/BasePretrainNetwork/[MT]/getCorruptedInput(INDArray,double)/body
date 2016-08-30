@@ -1,5 +1,0 @@
-{
-  INDArray corrupted=Nd4j.getDistributions().createBinomial(1,1 - corruptionLevel).sample(x.shape());
-  corrupted.muli(x);
-  return corrupted;
-}

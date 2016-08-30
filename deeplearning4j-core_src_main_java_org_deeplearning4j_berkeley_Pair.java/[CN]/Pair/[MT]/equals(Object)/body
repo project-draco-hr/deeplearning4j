@@ -1,6 +1,0 @@
-{
-  if (this == o)   return true;
-  if (!(o instanceof Pair))   return false;
-  final Pair pair=(Pair)o;
-  return !(first != null ? !first.equals(pair.first) : pair.first != null) && !(second != null ? !second.equals(pair.second) : pair.second != null);
-}

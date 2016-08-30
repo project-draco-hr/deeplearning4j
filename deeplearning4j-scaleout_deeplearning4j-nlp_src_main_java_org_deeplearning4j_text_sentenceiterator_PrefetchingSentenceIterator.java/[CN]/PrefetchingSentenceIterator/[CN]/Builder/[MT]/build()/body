@@ -1,8 +1,0 @@
-{
-  PrefetchingSentenceIterator pre=new PrefetchingSentenceIterator();
-  pre.sourceIterator=this.iterator;
-  pre.fetchSize=this.fetchSize;
-  pre.preProcessor=this.preProcessor;
-  pre.init();
-  return pre;
-}

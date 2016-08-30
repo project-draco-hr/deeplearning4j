@@ -1,4 +1,0 @@
-{
-  if (document.getReferencedContent() != null)   return predict(document.getReferencedContent());
- else   return predict(document.getContent());
-}

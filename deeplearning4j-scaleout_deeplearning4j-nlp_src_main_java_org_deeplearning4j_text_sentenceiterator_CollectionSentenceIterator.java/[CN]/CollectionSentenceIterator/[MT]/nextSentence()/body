@@ -1,5 +1,0 @@
-{
-  String ret=iter.next();
-  if (this.getPreProcessor() != null)   ret=this.getPreProcessor().preProcess(ret);
-  return ret;
-}

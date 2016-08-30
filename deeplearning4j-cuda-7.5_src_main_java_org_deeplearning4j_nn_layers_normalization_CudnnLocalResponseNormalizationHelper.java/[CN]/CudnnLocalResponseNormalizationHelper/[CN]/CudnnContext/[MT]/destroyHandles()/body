@@ -1,7 +1,0 @@
-{
-  checkCudnn(cudnnDestroyLRNDescriptor(lrnDesc));
-  checkCudnn(cudnnDestroyTensorDescriptor(srcTensorDesc));
-  checkCudnn(cudnnDestroyTensorDescriptor(dstTensorDesc));
-  checkCudnn(cudnnDestroyTensorDescriptor(deltaTensorDesc));
-  checkCudnn(cudnnDestroy(this));
-}

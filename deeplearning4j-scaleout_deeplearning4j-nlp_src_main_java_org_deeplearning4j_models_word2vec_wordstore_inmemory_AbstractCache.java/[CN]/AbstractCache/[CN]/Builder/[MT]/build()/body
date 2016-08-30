@@ -1,7 +1,0 @@
-{
-  AbstractCache<T> cache=new AbstractCache<>();
-  cache.minWordFrequency=this.minElementFrequency;
-  cache.scavengerThreshold=this.scavengerThreshold;
-  cache.retentionDelay=this.retentionDelay;
-  return cache;
-}

@@ -1,7 +1,0 @@
-{
-  if (input == null || labels == null)   return;
-  INDArray preOut=preOutput2d(true);
-  Triple<Gradient,INDArray,INDArray> triple=getGradientsAndDelta(preOut);
-  this.gradient=triple.getFirst();
-  setScore(triple.getThird(),preOut);
-}

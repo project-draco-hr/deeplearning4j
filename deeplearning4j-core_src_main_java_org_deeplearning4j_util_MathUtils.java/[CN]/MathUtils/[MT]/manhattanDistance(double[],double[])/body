@@ -1,8 +1,0 @@
-{
-  double ret=0;
-  for (int i=0; i < p.length; i++) {
-    double difference=p[i] - q[i];
-    ret+=Math.abs(difference);
-  }
-  return ret;
-}

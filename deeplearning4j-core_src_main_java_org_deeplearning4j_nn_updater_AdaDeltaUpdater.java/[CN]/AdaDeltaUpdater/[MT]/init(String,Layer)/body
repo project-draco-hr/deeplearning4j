@@ -1,8 +1,0 @@
-{
-  GradientUpdater updater=updaterForVariable.get(variable);
-  if (updater == null) {
-    updater=new AdaDelta(layer.conf().getLayer().getRho(),layer.conf().getLayer().getEpsilon());
-    updaterForVariable.put(variable,updater);
-  }
-  return updater;
-}

@@ -1,9 +1,0 @@
-{
-  if (vector == null)   return null;
-  double[] x=new double[vector.length / 2];
-  int count=0;
-  for (int i=0; i < vector.length; i++) {
-    if (i % 2 != 0)     x[count++]=vector[i];
-  }
-  return x;
-}
