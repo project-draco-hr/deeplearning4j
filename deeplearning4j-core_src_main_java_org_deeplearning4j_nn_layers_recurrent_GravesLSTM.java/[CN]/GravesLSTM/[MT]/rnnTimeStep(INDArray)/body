@@ -1,8 +1,0 @@
-{
-  setInput(input);
-  FwdPassReturn fwdPass=activateHelper(false,stateMap.get(STATE_KEY_PREV_ACTIVATION),stateMap.get(STATE_KEY_PREV_MEMCELL),false);
-  INDArray outAct=fwdPass.fwdPassOutput;
-  stateMap.put(STATE_KEY_PREV_ACTIVATION,fwdPass.lastAct);
-  stateMap.put(STATE_KEY_PREV_MEMCELL,fwdPass.lastMemCell);
-  return outAct;
-}

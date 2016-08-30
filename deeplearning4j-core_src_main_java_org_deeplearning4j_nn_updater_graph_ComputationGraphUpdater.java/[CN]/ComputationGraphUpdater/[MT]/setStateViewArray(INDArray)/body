@@ -1,4 +1,0 @@
-{
-  if (this.viewArray.length() != viewArray.length())   throw new IllegalStateException("Invalid input: view arrays differ in length. " + "Expected length " + this.viewArray.length() + ", got length "+ viewArray.length());
-  this.viewArray.assign(viewArray);
-}

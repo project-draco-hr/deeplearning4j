@@ -1,8 +1,0 @@
-{
-  String[] split=data.split(separator);
-  double[] ret=new double[split.length];
-  for (int i=0; i < split.length; i++) {
-    ret[i]=Double.parseDouble(split[i]);
-  }
-  return ret;
-}

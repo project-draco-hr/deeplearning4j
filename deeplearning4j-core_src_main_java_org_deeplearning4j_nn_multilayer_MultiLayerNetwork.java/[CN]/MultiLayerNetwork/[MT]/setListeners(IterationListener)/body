@@ -1,9 +1,0 @@
-{
-  Collection<IterationListener> cListeners=new ArrayList<>();
-  if (listeners != null && listeners.length > 0) {
-    for (    IterationListener i : listeners) {
-      if (i != null)       cListeners.add(i);
-    }
-  }
-  setListeners(cListeners);
-}

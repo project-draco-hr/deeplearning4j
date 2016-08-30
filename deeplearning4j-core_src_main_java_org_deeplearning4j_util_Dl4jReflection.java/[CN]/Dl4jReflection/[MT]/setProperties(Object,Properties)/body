@@ -1,8 +1,0 @@
-{
-  for (  Field field : obj.getClass().getDeclaredFields()) {
-    field.setAccessible(true);
-    if (props.containsKey(field.getName())) {
-      set(field,obj,props.getProperty(field.getName()));
-    }
-  }
-}

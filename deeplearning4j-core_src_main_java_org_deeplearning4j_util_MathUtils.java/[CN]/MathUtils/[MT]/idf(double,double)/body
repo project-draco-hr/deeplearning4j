@@ -1,5 +1,0 @@
-{
-  if (totalDocs == 0)   return 0;
-  double idf=Math.log10(totalDocs / numTimesWordAppearedInADocument);
-  return idf;
-}

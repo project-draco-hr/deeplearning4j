@@ -1,5 +1,0 @@
-{
-  if (epsilons == null || epsilons.length != numOutputArrays)   throw new IllegalArgumentException("Invalid input: must have epsilons length equal to number of output arrays");
-  calcBackpropGradients(configuration.getBackpropType() == BackpropType.TruncatedBPTT,epsilons);
-  return gradient;
-}

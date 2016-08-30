@@ -1,7 +1,0 @@
-{
-  for (  T key : counter.keySet()) {
-    double count=counter.getCount(key);
-    incrementCount(key,count);
-  }
-  dirty=true;
-}

@@ -1,7 +1,0 @@
-{
-  Gradient ret=new DefaultGradient();
-  ret.gradientForVariable().put(PretrainParamInitializer.VISIBLE_BIAS_KEY,vBiasGradient);
-  ret.gradientForVariable().put(PretrainParamInitializer.BIAS_KEY,hBiasGradient);
-  ret.gradientForVariable().put(PretrainParamInitializer.WEIGHT_KEY,wGradient);
-  return ret;
-}

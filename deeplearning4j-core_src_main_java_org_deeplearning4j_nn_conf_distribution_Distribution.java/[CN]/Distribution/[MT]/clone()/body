@@ -1,8 +1,0 @@
-{
-  try {
-    return (Distribution)super.clone();
-  }
- catch (  CloneNotSupportedException e) {
-    throw new RuntimeException(e);
-  }
-}

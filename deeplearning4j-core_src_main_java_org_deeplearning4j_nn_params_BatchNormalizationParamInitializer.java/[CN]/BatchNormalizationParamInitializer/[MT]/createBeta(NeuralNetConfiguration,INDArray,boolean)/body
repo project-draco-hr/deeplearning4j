@@ -1,5 +1,0 @@
-{
-  BatchNormalization layer=(BatchNormalization)conf.getLayer();
-  if (initializeParams)   betaView.assign(layer.getBeta());
-  return betaView;
-}

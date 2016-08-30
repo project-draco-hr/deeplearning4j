@@ -1,5 +1,0 @@
-{
-  for (  String paramType : gradient.gradientForVariable().keySet()) {
-    update(gradient.getGradientFor(paramType),paramType);
-  }
-}

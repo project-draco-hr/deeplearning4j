@@ -1,4 +1,0 @@
-{
-  INDArray outcomeMatrix=FeatureUtil.toOutcomeMatrix(labels,numLabels());
-  fit(examples,outcomeMatrix);
-}

@@ -1,9 +1,0 @@
-{
-  Map<String,Map<String,INDArray>> states=new HashMap<>();
-  for (  Layer l : layers) {
-    if (l instanceof RecurrentLayer) {
-      states.put(l.conf().getLayer().getLayerName(),((RecurrentLayer)l).rnnGetPreviousState());
-    }
-  }
-  return states;
-}

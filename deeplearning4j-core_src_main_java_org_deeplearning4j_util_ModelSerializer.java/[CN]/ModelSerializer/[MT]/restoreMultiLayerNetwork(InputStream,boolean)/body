@@ -1,5 +1,0 @@
-{
-  File tmpFile=File.createTempFile("restore","multiLayer");
-  Files.copy(is,Paths.get(tmpFile.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
-  return restoreMultiLayerNetwork(tmpFile,loadUpdater);
-}

@@ -1,4 +1,0 @@
-{
-  INDArray gradient=(INDArray)searchState.get(GRADIENT_KEY);
-  searchState.put(SEARCH_DIR,gradient.dup());
-}

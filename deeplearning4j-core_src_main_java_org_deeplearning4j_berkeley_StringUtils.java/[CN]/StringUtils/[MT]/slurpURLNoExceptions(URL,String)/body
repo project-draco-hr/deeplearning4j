@@ -1,9 +1,0 @@
-{
-  try {
-    return slurpURL(u,encoding);
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-    return null;
-  }
-}

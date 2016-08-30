@@ -1,6 +1,0 @@
-{
-  fetcher.fetch(num);
-  DataSet next=fetcher.next();
-  if (preProcessor != null)   preProcessor.preProcess(next);
-  return next;
-}

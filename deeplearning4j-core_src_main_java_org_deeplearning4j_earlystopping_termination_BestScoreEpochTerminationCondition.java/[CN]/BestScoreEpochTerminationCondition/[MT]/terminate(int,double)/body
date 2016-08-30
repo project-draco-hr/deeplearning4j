@@ -1,8 +1,0 @@
-{
-  if (lesserBetter) {
-    return score < bestExpectedScore;
-  }
- else {
-    return bestExpectedScore < score;
-  }
-}

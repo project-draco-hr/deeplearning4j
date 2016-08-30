@@ -1,4 +1,0 @@
-{
-  if (size() > 0)   return priorities[0];
-  throw new NoSuchElementException();
-}

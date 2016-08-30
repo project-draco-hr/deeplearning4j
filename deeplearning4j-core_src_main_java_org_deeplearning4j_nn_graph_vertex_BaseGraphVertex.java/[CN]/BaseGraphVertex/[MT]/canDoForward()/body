@@ -1,8 +1,0 @@
-{
-  for (  INDArray input : inputs) {
-    if (input == null) {
-      return false;
-    }
-  }
-  return true;
-}

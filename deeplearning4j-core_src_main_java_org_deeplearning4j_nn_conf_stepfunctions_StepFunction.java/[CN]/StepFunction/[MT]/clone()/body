@@ -1,9 +1,0 @@
-{
-  try {
-    StepFunction clone=(StepFunction)super.clone();
-    return clone;
-  }
- catch (  CloneNotSupportedException e) {
-    throw new RuntimeException(e);
-  }
-}

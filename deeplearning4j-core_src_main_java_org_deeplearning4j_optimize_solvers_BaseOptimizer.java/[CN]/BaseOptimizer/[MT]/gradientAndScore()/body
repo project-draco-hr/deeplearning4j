@@ -1,8 +1,0 @@
-{
-  oldScore=score;
-  model.computeGradientAndScore();
-  Pair<Gradient,Double> pair=model.gradientAndScore();
-  score=pair.getSecond();
-  updateGradientAccordingToParams(pair.getFirst(),model,model.batchSize());
-  return pair;
-}

@@ -1,5 +1,0 @@
-{
-  if (input.rank() != 3)   throw new IllegalArgumentException("Input must be rank 3 (is: " + input.rank());
-  setInput(input);
-  return output(false);
-}

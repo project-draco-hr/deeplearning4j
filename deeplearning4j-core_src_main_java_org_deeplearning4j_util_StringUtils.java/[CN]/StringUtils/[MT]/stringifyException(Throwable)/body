@@ -1,7 +1,0 @@
-{
-  StringWriter stm=new StringWriter();
-  PrintWriter wrt=new PrintWriter(stm);
-  e.printStackTrace(wrt);
-  wrt.close();
-  return stm.toString();
-}

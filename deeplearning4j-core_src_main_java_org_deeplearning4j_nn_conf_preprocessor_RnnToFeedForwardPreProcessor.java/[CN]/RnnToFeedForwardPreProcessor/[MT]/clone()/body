@@ -1,9 +1,0 @@
-{
-  try {
-    RnnToFeedForwardPreProcessor clone=(RnnToFeedForwardPreProcessor)super.clone();
-    return clone;
-  }
- catch (  CloneNotSupportedException e) {
-    throw new RuntimeException(e);
-  }
-}

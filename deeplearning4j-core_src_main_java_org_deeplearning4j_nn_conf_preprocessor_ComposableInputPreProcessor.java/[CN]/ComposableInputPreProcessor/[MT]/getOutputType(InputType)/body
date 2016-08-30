@@ -1,6 +1,0 @@
-{
-  for (  InputPreProcessor p : inputPreProcessors) {
-    inputType=p.getOutputType(inputType);
-  }
-  return inputType;
-}

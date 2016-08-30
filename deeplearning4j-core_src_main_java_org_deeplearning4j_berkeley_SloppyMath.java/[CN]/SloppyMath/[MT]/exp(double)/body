@@ -1,4 +1,0 @@
-{
-  if (Math.abs(logX) < 0.001)   return 1 + logX;
-  return Math.exp(logX);
-}

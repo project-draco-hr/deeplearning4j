@@ -1,8 +1,0 @@
-{
-  INDArray ret=Nd4j.cumsum(toAvg);
-  INDArrayIndex[] ends=new INDArrayIndex[]{NDArrayIndex.interval(n,toAvg.columns())};
-  INDArrayIndex[] begins=new INDArrayIndex[]{NDArrayIndex.interval(0,toAvg.columns() - n,false)};
-  INDArrayIndex[] nMinusOne=new INDArrayIndex[]{NDArrayIndex.interval(n - 1,toAvg.columns())};
-  ret.put(ends,ret.get(ends).sub(ret.get(begins)));
-  return ret.get(nMinusOne).divi(n);
-}

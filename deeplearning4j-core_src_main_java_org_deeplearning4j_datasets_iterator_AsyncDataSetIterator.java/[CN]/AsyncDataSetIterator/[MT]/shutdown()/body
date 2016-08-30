@@ -1,6 +1,0 @@
-{
-  if (thread.isAlive()) {
-    runnable.killRunnable=true;
-    thread.interrupt();
-  }
-}

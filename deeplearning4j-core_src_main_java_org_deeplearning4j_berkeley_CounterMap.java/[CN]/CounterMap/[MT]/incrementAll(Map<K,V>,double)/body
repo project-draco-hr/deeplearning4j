@@ -1,5 +1,0 @@
-{
-  for (  Map.Entry<K,V> entry : map.entrySet()) {
-    incrementCount(entry.getKey(),entry.getValue(),count);
-  }
-}

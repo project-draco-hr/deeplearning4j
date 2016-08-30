@@ -1,9 +1,0 @@
-{
-  try {
-    ObjectOutputStream os=new ObjectOutputStream(writeTo);
-    os.writeObject(toSave);
-  }
- catch (  Exception e) {
-    throw new RuntimeException(e);
-  }
-}

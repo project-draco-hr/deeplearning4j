@@ -1,5 +1,0 @@
-{
-  Counter<V> valueCounter=counterMap.get(key);
-  if (valueCounter == null)   return 0.0;
-  return valueCounter.totalCount();
-}

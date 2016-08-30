@@ -1,9 +1,0 @@
-{
-  if (x.length != y.length)   throw new IllegalArgumentException("Sample sizes must be the same for each data applyTransformToDestination.");
-  double[] ret=new double[x.length + y.length];
-  for (int i=0; i < x.length; i++) {
-    ret[i]=x[i];
-    ret[i + 1]=y[i];
-  }
-  return ret;
-}

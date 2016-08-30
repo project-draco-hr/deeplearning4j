@@ -1,9 +1,0 @@
-{
-  try {
-    return slurpReader(new FileReader(file));
-  }
- catch (  Exception e) {
-    e.printStackTrace();
-    return null;
-  }
-}

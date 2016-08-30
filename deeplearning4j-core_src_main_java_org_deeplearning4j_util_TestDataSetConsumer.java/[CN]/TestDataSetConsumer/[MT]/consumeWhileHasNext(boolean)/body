@@ -1,8 +1,0 @@
-{
-  if (iterator == null)   throw new RuntimeException("Can't use consumeWhileHasNext() if iterator isn't set");
-  while (iterator.hasNext()) {
-    DataSet ds=iterator.next();
-    this.consumeOnce(ds,consumeWithSleep);
-  }
-  return count.get();
-}

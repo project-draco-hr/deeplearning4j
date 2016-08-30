@@ -1,7 +1,0 @@
-{
-  Layer l=verticesMap.get(layerName).getLayer();
-  if (l == null || !(l instanceof RecurrentLayer)) {
-    throw new UnsupportedOperationException("Layer \"" + layerName + "\" is not a recurrent layer. Cannot set state");
-  }
-  ((RecurrentLayer)l).rnnSetPreviousState(state);
-}
