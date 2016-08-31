@@ -1,5 +1,13 @@
 {
-  checkCuda(cudaMalloc(this,size));
+  position=0;
   limit=capacity=size;
-  deallocator(new Deallocator(this));
+  int error=cudaMalloc(this,size);
+  if (error != cudaSuccess) {
+    log.warn("Cannot allocate " + size + " bytes of device memory (CUDA error = "+ error+ "), proceeding with host memory");
+    checkCuda(cudaMallocHost(this,size));
+    deallocator(new HostDeallocator(this));
+  }
+ else {
+    deallocator(new Deallocator(this));
+  }
 }
