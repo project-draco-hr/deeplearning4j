@@ -1,0 +1,29 @@
+{
+  int numExamples=0;
+  for (  MultiDataSet ds : tempList) {
+    numExamples+=ds.getFeatures(0).size(0);
+  }
+  if (tempList.size() == 0 || (numExamples < minibatchSize && !finalExport)) {
+    return new Pair<>(countBefore,Collections.<String>emptyList());
+  }
+  List<String> exportPaths=new ArrayList<>();
+  int countAfter=countBefore;
+  int countSoFar=0;
+  List<MultiDataSet> tempToMerge=new ArrayList<>();
+  while (tempList.size() > 0 && countSoFar != minibatchSize) {
+    MultiDataSet next=tempList.removeFirst();
+    if (countSoFar + next.getFeatures(0).size(0) <= minibatchSize) {
+      tempToMerge.add(next);
+      countSoFar+=next.getFeatures(0).size(0);
+    }
+ else {
+      List<MultiDataSet> examples=next.asList();
+      for (      MultiDataSet ds : examples) {
+        tempList.addFirst(ds);
+      }
+    }
+  }
+  MultiDataSet toExport=org.nd4j.linalg.dataset.MultiDataSet.merge(tempToMerge);
+  exportPaths.add(export(toExport,partitionIdx,countAfter++));
+  return new Pair<>(countAfter,exportPaths);
+}

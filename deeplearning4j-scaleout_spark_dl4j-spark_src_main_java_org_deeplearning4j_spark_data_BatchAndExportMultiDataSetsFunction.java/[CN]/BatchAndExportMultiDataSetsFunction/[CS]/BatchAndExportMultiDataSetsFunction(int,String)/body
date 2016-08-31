@@ -1,0 +1,6 @@
+{
+  this.minibatchSize=minibatchSize;
+  this.exportBaseDirectory=exportBaseDirectory;
+  String fullUID=UIDProvider.getJVMUID();
+  this.jvmuid=(fullUID.length() <= 8 ? fullUID : fullUID.substring(0,8));
+}

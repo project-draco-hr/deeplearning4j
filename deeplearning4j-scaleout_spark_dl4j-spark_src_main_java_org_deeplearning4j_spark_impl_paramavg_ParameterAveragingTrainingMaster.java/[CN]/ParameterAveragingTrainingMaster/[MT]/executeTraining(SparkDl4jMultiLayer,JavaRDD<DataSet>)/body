@@ -1,17 +1,10 @@
 {
   if (numWorkers == null)   numWorkers=network.getSparkContext().defaultParallelism();
-  if (collectTrainingStats)   stats.logFitStart();
-  if (storageLevel != null)   trainingData.persist(storageLevel);
-  if (collectTrainingStats)   stats.logCountStart();
-  long totalDataSetObjectCount=trainingData.count();
-  if (collectTrainingStats)   stats.logCountEnd();
-  int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit();
-  if (collectTrainingStats)   stats.logSplitStart();
-  JavaRDD<DataSet>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingData);
-  if (collectTrainingStats)   stats.logSplitEnd();
-  int splitNum=1;
-  for (  JavaRDD<DataSet> split : splits) {
-    doIteration(network,split,splitNum++,splits.length);
+  if (rddTrainingApproach == RDDTrainingApproach.Direct) {
+    executeTrainingDirect(network,trainingData);
   }
-  if (collectTrainingStats)   stats.logFitEnd((int)totalDataSetObjectCount);
+ else {
+    JavaRDD<String> paths=exportIfRequired(network.getSparkContext(),trainingData);
+    executeTrainingPathsHelper(network,paths,batchSizePerWorker);
+  }
 }

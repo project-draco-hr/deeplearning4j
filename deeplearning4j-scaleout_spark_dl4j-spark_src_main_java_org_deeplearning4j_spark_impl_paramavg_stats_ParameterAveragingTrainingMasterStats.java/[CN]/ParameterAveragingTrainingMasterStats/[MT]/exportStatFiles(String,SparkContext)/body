@@ -1,5 +1,7 @@
 {
   String d=DEFAULT_DELIMITER;
+  String exportRddPath=FilenameUtils.concat(outputPath,FILENAME_EXPORT_RDD_TIME);
+  StatsUtils.exportStats(parameterAveragingMasterExportTimesMs,exportRddPath,d,sc);
   String countRddPath=FilenameUtils.concat(outputPath,FILENAME_COUNT_RDD_SIZE);
   StatsUtils.exportStats(parameterAveragingMasterCountRddSizeTimesMs,countRddPath,d,sc);
   String broadcastTimePath=FilenameUtils.concat(outputPath,FILENAME_BROADCAST_CREATE);

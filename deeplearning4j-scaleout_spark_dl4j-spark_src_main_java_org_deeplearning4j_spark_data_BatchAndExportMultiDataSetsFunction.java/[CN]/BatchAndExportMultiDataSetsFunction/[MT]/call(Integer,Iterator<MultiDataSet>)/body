@@ -1,0 +1,23 @@
+{
+  List<String> outputPaths=new ArrayList<>();
+  LinkedList<MultiDataSet> tempList=new LinkedList<>();
+  int count=0;
+  while (iterator.hasNext()) {
+    MultiDataSet next=iterator.next();
+    if (next.getFeatures(0).size(0) == minibatchSize) {
+      outputPaths.add(export(next,partitionIdx,count++));
+      continue;
+    }
+    tempList.add(next);
+    Pair<Integer,List<String>> countAndPaths=processList(tempList,partitionIdx,count,false);
+    if (countAndPaths.getSecond() != null && countAndPaths.getSecond().size() > 0) {
+      outputPaths.addAll(countAndPaths.getSecond());
+    }
+    count=countAndPaths.getFirst();
+  }
+  Pair<Integer,List<String>> countAndPaths=processList(tempList,partitionIdx,count,true);
+  if (countAndPaths.getSecond() != null && countAndPaths.getSecond().size() > 0) {
+    outputPaths.addAll(countAndPaths.getSecond());
+  }
+  return outputPaths.iterator();
+}

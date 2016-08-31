@@ -9,4 +9,8 @@
   this.repartitionStrategy=builder.repartitionStrategy;
   this.storageLevel=builder.storageLevel;
   this.storageLevelStreams=builder.storageLevelStreams;
+  this.rddTrainingApproach=builder.rddTrainingApproach;
+  this.exportDirectory=builder.exportDirectory;
+  String jvmuid=UIDProvider.getJVMUID();
+  this.trainingMasterUID=System.currentTimeMillis() + "_" + (jvmuid.length() <= 8 ? jvmuid : jvmuid.substring(0,8));
 }

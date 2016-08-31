@@ -1,0 +1,19 @@
+{
+  if (collectTrainingStats)   stats.logExportStart();
+  int currentRDDUid=trainingData.id();
+  String baseDir;
+  if (lastExportedRDDId == Integer.MIN_VALUE) {
+    baseDir=export(trainingData);
+  }
+ else {
+    if (lastExportedRDDId == currentRDDUid) {
+      baseDir=getBaseDirForRDD(trainingData);
+    }
+ else {
+      deleteTempDir(sc,lastRDDExportPath);
+      baseDir=export(trainingData);
+    }
+  }
+  if (collectTrainingStats)   stats.logExportEnd();
+  return sc.textFile(baseDir + "paths/");
+}
