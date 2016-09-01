@@ -17,7 +17,7 @@
         for (int i=0; i < minibatchSize; i++) {
           labels.putScalar(new int[]{i,i % nOut},1.0);
         }
-        MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).learningRate(1.0).updater(Updater.SGD).list().layer(0,new ConvolutionLayer.Builder(kernel,stride,padding).nIn(inputDepth).nOut(3).build()).layer(1,new SubsamplingLayer.Builder(poolingType).kernelSize(kernel).stride(stride).padding(padding).build()).layer(2,new ConvolutionLayer.Builder(kernel,stride,padding).nIn(3).nOut(2).build()).layer(3,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(2 * 3 * 3).nOut(4).build()).setInputType(InputType.convolutionalFlat(height,width,inputDepth)).build();
+        MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).learningRate(1.0).updater(Updater.SGD).list().layer(0,new ConvolutionLayer.Builder(kernel,stride,padding).nIn(inputDepth).nOut(3).build()).layer(1,new SubsamplingLayer.Builder(poolingType).kernelSize(kernel).stride(stride).padding(padding).build()).layer(2,new ConvolutionLayer.Builder(kernel,stride,padding).nIn(3).nOut(2).build()).layer(3,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nIn(2 * 2 * 2).nOut(4).build()).setInputType(InputType.convolutionalFlat(height,width,inputDepth)).build();
         MultiLayerNetwork net=new MultiLayerNetwork(conf);
         net.init();
         String msg="PoolingType=" + poolingType + ", minibatch="+ minibatchSize+ ", activationFn="+ afn;
