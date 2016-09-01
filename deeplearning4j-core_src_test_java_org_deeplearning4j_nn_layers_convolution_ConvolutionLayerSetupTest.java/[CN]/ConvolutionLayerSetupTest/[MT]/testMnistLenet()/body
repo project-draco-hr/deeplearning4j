@@ -1,13 +1,9 @@
 {
   MultiLayerConfiguration.Builder incomplete=incompleteMnistLenet();
-  ConvolutionLayerSetup setup=new ConvolutionLayerSetup(incomplete,28,28,1);
-  assertArrayEquals(new int[]{24,24,20},setup.getOutSizesEachLayer().get("0"));
-  assertArrayEquals(new int[]{12,12,20},setup.getOutSizesEachLayer().get("1"));
-  assertArrayEquals(new int[]{8,8,50},setup.getOutSizesEachLayer().get("2"));
-  assertArrayEquals(new int[]{4,4,50},setup.getOutSizesEachLayer().get("3"));
-  assertEquals(800,setup.getnInForLayer().get("4").intValue());
-  assertEquals(500,setup.getnInForLayer().get("5").intValue());
+  new ConvolutionLayerSetup(incomplete,28,28,1);
   MultiLayerConfiguration testConf=incomplete.build();
+  assertEquals(800,((FeedForwardLayer)testConf.getConf(4).getLayer()).getNIn());
+  assertEquals(500,((FeedForwardLayer)testConf.getConf(5).getLayer()).getNIn());
   DataSetIterator iter=new MnistDataSetIterator(10,10);
   MultiLayerNetwork network=new MultiLayerNetwork(testConf);
   network.init();
