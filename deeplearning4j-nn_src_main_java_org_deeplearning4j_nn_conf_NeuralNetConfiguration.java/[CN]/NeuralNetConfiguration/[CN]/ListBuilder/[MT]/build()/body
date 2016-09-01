@@ -8,5 +8,5 @@
     if (layerwise.get(i).getLayer() == null)     throw new IllegalStateException("Cannot construct network: Layer config for" + "layer with index " + i + " is not defined)");
     list.add(layerwise.get(i).build());
   }
-  return new MultiLayerConfiguration.Builder().backprop(backprop).inputPreProcessors(inputPreProcessors).pretrain(pretrain).backpropType(backpropType).tBPTTForwardLength(tbpttFwdLength).tBPTTBackwardLength(tbpttBackLength).redistributeParams(redistributeParams).cnnInputSize(cnnInputSize).confs(list).build();
+  return new MultiLayerConfiguration.Builder().backprop(backprop).inputPreProcessors(inputPreProcessors).pretrain(pretrain).backpropType(backpropType).tBPTTForwardLength(tbpttFwdLength).tBPTTBackwardLength(tbpttBackLength).redistributeParams(redistributeParams).cnnInputSize(cnnInputSize).setInputType(this.inputType).confs(list).build();
 }

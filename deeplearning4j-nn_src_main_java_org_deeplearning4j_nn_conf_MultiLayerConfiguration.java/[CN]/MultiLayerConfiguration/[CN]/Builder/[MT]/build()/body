@@ -1,5 +1,5 @@
 {
-  if (inputType == null) {
+  if (inputType == null && inputPreProcessors.get(0) == null) {
     Layer firstLayer=confs.get(0).getLayer();
     if (firstLayer instanceof BaseRecurrentLayer) {
       BaseRecurrentLayer brl=(BaseRecurrentLayer)firstLayer;
@@ -8,7 +8,7 @@
         inputType=InputType.recurrent(nIn);
       }
     }
- else     if (firstLayer instanceof FeedForwardLayer) {
+ else     if (firstLayer instanceof DenseLayer || firstLayer instanceof EmbeddingLayer || firstLayer instanceof OutputLayer) {
       FeedForwardLayer ffl=(FeedForwardLayer)firstLayer;
       int nIn=ffl.getNIn();
       if (nIn > 0) {
@@ -18,8 +18,20 @@
   }
   if (inputType != null) {
     InputType currentInputType=inputType;
-    for (    NeuralNetConfiguration c : confs) {
-      Layer l=c.getLayer();
+    for (int i=0; i < confs.size(); i++) {
+      Layer l=confs.get(i).getLayer();
+      if (inputPreProcessors.get(i) == null) {
+        InputPreProcessor inputPreProcessor=l.getPreProcessorForInputType(currentInputType);
+        if (inputPreProcessor != null) {
+          inputPreProcessors.put(i,inputPreProcessor);
+        }
+      }
+      InputPreProcessor inputPreProcessor=inputPreProcessors.get(i);
+      if (inputPreProcessor != null) {
+        currentInputType=inputPreProcessor.getOutputType(currentInputType);
+      }
+      l.setNIn(currentInputType,false);
+      currentInputType=l.getOutputType(currentInputType);
     }
   }
   MultiLayerConfiguration conf=new MultiLayerConfiguration();
