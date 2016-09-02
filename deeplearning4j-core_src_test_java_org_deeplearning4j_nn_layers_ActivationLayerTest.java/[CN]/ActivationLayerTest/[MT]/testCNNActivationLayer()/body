@@ -5,7 +5,7 @@
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   network.fit(next);
-  MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).seed(123).list().layer(0,new ConvolutionLayer.Builder(4,4).stride(2,2).nIn(1).nOut(20).activation("identity").weightInit(WeightInit.XAVIER).build()).layer(1,new org.deeplearning4j.nn.conf.layers.ActivationLayer.Builder().activation("relu").build()).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nOut(10).build()).backprop(true).pretrain(false).cnnInputSize(28,28,1).build();
+  MultiLayerConfiguration conf2=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).seed(123).list().layer(0,new ConvolutionLayer.Builder(4,4).stride(2,2).nIn(1).nOut(20).activation("identity").weightInit(WeightInit.XAVIER).build()).layer(1,new org.deeplearning4j.nn.conf.layers.ActivationLayer.Builder().activation("relu").build()).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nOut(10).build()).backprop(true).pretrain(false).setInputType(InputType.convolutionalFlat(28,28,1)).build();
   MultiLayerNetwork network2=new MultiLayerNetwork(conf2);
   network2.init();
   network2.fit(next);
