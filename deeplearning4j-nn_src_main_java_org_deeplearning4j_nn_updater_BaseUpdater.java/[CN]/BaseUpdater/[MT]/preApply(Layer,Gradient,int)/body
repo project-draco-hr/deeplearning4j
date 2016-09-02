@@ -21,15 +21,9 @@ g.divi(l2);
 }
 break;
 case ClipElementWiseAbsoluteValue:
-Condition absValueCondition=new AbsValueGreaterThan(threshold);
-Function<Number,Number> clipFn=new Function<Number,Number>(){
-@Override public Number apply(Number number){
-return (number.doubleValue() > threshold ? threshold : -threshold);
-}
-}
-;
 for (INDArray g : gradient.gradientForVariable().values()) {
-BooleanIndexing.applyWhere(g,absValueCondition,clipFn);
+BooleanIndexing.applyWhere(g,Conditions.greaterThan(threshold),new Value(threshold));
+BooleanIndexing.applyWhere(g,Conditions.lessThan(-threshold),new Value(-threshold));
 }
 break;
 case ClipL2PerLayer:
