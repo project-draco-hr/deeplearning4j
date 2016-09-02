@@ -14,4 +14,5 @@
     updater=((ComputationGraph)replicatedModel).getUpdater();
     updater.setStateViewArray(view.dup());
   }
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
 }
