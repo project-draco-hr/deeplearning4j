@@ -1,0 +1,6 @@
+{
+  if (numOutputArrays != 1) {
+    throw new IllegalStateException("Cannot use outputSingle with ComputationGraph that does not have exactly 1 output. nOutputs: " + numOutputArrays);
+  }
+  return output(train,input)[0];
+}
