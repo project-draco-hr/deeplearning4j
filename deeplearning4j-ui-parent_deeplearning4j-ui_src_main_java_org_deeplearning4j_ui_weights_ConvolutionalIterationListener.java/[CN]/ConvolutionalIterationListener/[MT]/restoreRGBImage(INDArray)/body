@@ -1,7 +1,17 @@
 {
-  INDArray arrayR=tensor3D.tensorAlongDimension(2,2,1);
-  INDArray arrayG=tensor3D.tensorAlongDimension(1,2,1);
-  INDArray arrayB=tensor3D.tensorAlongDimension(0,2,1);
+  INDArray arrayR=null;
+  INDArray arrayG=null;
+  INDArray arrayB=null;
+  if (tensor3D.shape()[0] == 3) {
+    arrayR=tensor3D.tensorAlongDimension(2,2,1);
+    arrayG=tensor3D.tensorAlongDimension(1,2,1);
+    arrayB=tensor3D.tensorAlongDimension(0,2,1);
+  }
+ else {
+    arrayB=tensor3D.tensorAlongDimension(0,2,1);
+    arrayG=arrayB;
+    arrayR=arrayB;
+  }
   BufferedImage imageToRender=new BufferedImage(arrayR.columns(),arrayR.rows(),BufferedImage.TYPE_INT_RGB);
   for (int x=0; x < arrayR.columns(); x++) {
     for (int y=0; y < arrayR.rows(); y++) {

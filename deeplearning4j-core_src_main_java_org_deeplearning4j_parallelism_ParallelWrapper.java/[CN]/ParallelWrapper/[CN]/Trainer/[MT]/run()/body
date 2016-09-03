@@ -18,6 +18,7 @@
  else         if (replicatedModel instanceof ComputationGraph) {
           ((ComputationGraph)replicatedModel).fit(dataSet);
         }
+        if (Nd4j.getExecutioner() instanceof GridExecutioner)         ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
         running.decrementAndGet();
       }
     }
