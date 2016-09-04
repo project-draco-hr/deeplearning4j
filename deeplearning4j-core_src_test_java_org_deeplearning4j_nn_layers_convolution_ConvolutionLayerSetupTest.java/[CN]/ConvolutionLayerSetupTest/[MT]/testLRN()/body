@@ -6,7 +6,8 @@
   DataSetIterator recordReader=new RecordReaderDataSetIterator(reader,1,labels.size());
   labels.remove("lfwtest");
   NeuralNetConfiguration.ListBuilder builder=(NeuralNetConfiguration.ListBuilder)incompleteLRN();
-  new ConvolutionLayerSetup(builder,28,28,3);
-  ConvolutionLayer layer2=(ConvolutionLayer)builder.getLayerwise().get(3).getLayer();
+  builder.setInputType(InputType.convolutional(28,28,3));
+  MultiLayerConfiguration conf=builder.build();
+  ConvolutionLayer layer2=(ConvolutionLayer)conf.getConf(3).getLayer();
   assertEquals(6,layer2.getNIn());
 }

@@ -1,2 +1,17 @@
 {
+  if (nIn <= 0 || override) {
+switch (inputType.getType()) {
+case FF:
+      nIn=((InputType.InputTypeFeedForward)inputType).getSize();
+    break;
+case CNN:
+  nIn=((InputType.InputTypeConvolutional)inputType).getDepth();
+break;
+case CNNFlat:
+nIn=((InputType.InputTypeConvolutionalFlat)inputType).getDepth();
+default :
+throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, CNN Flat or FF, got " + inputType);
+}
+nOut=nIn;
+}
 }
