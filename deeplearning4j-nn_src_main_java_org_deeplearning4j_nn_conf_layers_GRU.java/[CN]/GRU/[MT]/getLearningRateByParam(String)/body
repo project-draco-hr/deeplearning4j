@@ -1,0 +1,16 @@
+{
+switch (paramName) {
+case GRUParamInitializer.INPUT_WEIGHT_KEY:
+case GRUParamInitializer.RECURRENT_WEIGHT_KEY:
+    return learningRate;
+case GRUParamInitializer.BIAS_KEY:
+  if (!Double.isNaN(biasLearningRate)) {
+    return biasLearningRate;
+  }
+ else {
+    return learningRate;
+  }
+default :
+throw new IllegalArgumentException("Unknown parameter: \"" + paramName + "\"");
+}
+}

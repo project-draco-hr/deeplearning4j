@@ -1,0 +1,10 @@
+{
+switch (paramName) {
+case DefaultParamInitializer.WEIGHT_KEY:
+    return l2;
+case DefaultParamInitializer.BIAS_KEY:
+  return 0.0;
+default :
+throw new IllegalStateException("Unknown parameter: \"" + paramName + "\"");
+}
+}

@@ -1,0 +1,9 @@
+{
+switch (paramName) {
+case BatchNormalizationParamInitializer.BETA:
+case BatchNormalizationParamInitializer.GAMMA:
+    return learningRate;
+default :
+  throw new IllegalArgumentException("Unknown parameter: \"" + paramName + "\"");
+}
+}
