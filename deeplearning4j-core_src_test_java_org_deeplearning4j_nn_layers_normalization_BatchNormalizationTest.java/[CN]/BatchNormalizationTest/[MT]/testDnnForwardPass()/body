@@ -1,6 +1,7 @@
 {
   int nOut=10;
   Layer l=getLayer(nOut,0.0,false,-1,-1);
+  assertEquals(2 * nOut,l.numParams());
   INDArray randInput=Nd4j.rand(100,nOut);
   INDArray output=l.activate(randInput,true);
   INDArray mean=output.mean(0);
@@ -11,6 +12,7 @@
   double gamma=2.0;
   double beta=3.0;
   l=getLayer(nOut,0.0,true,gamma,beta);
+  assertEquals(0,l.numParams());
   output=l.activate(randInput,true);
   mean=output.mean(0);
   stdev=output.std(false,0);

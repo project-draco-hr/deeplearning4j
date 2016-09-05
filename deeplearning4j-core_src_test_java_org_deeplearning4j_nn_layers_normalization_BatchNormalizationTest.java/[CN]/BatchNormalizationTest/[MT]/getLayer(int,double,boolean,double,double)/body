@@ -6,7 +6,10 @@
   BatchNormalization bN=b.build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(bN).build();
   int numParams=conf.getLayer().initializer().numParams(conf,true);
-  INDArray params=Nd4j.create(1,numParams);
+  INDArray params=null;
+  if (numParams > 0) {
+    params=Nd4j.create(1,numParams);
+  }
   Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
   return layer;
 }

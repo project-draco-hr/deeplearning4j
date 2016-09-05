@@ -26,7 +26,7 @@ var=this.globalVar;
 std=Transforms.sqrt(var,true);
 INDArray gamma=null;
 INDArray beta=null;
-if (!layerConf.isLockGammaBeta()) {
+if (layerConf.isLockGammaBeta()) {
 if (helper != null) {
 int[] gammaBetaShape=new int[]{1,layerConf().getNOut()};
 gamma=Nd4j.valueArrayOf(gammaBetaShape,layerConf().getGamma());
@@ -56,19 +56,33 @@ if (layerConf.isLockGammaBeta()) {
 double g=layerConf.getGamma();
 double b=layerConf.getBeta();
 if (g != 1.0 && b != 0.0) {
-activations=xHat.mul(g).addi(beta);
+activations=xHat.mul(g).addi(b);
+}
+ else {
+activations=xHat;
 }
 }
  else {
 activations=xHat.mulRowVector(gamma).addiRowVector(beta);
 }
-activations=xHat.mulRowVector(gamma).addiRowVector(beta);
 }
  else if (x.rank() == 4) {
 xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,Nd4j.createUninitialized(x.shape(),x.ordering()),1));
 xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,Nd4j.createUninitialized(x.shape(),x.ordering()),1));
+if (layerConf.isLockGammaBeta()) {
+double g=layerConf.getGamma();
+double b=layerConf.getBeta();
+if (g != 1.0 && b != 0.0) {
+activations=xHat.mul(g).addi(b);
+}
+ else {
+activations=xHat;
+}
+}
+ else {
 activations=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xHat,gamma,Nd4j.createUninitialized(x.shape(),x.ordering()),1));
 activations=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(activations,beta,activations,1));
+}
 }
  else {
 throw new IllegalStateException("The layer prior to BatchNorm in the configuration is not currently supported.");
