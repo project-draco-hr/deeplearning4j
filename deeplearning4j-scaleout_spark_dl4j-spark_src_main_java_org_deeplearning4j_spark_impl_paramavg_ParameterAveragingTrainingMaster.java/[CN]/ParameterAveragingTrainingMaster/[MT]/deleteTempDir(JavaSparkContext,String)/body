@@ -1,0 +1,20 @@
+{
+  log.info("Attempting to delete temporary directory: {}",tempDirPath);
+  Configuration hadoopConfiguration=sc.hadoopConfiguration();
+  FileSystem fileSystem;
+  try {
+    fileSystem=FileSystem.get(new URI(tempDirPath),hadoopConfiguration);
+  }
+ catch (  URISyntaxException|IOException e) {
+    throw new RuntimeException(e);
+  }
+  try {
+    fileSystem.delete(new Path(tempDirPath),true);
+    log.info("Deleted temporary directory: {}",tempDirPath);
+    return true;
+  }
+ catch (  IOException e) {
+    log.warn("Could not delete temporary directory: {}",tempDirPath,e);
+    return false;
+  }
+}

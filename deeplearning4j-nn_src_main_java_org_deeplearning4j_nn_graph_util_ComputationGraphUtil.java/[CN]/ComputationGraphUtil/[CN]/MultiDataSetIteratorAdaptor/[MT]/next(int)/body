@@ -1,5 +1,0 @@
-{
-  MultiDataSet mds=toMultiDataSet(iter.next(i));
-  if (preProcessor != null)   preProcessor.preProcess(mds);
-  return mds;
-}

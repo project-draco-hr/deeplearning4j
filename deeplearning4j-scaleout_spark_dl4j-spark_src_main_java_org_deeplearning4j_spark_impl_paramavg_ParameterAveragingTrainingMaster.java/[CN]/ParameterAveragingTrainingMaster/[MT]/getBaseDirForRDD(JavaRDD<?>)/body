@@ -1,0 +1,6 @@
+{
+  if (exportDirectory == null) {
+    exportDirectory=getDefaultExportDirectory(rdd.context());
+  }
+  return exportDirectory + (exportDirectory.endsWith("/") ? "" : "/") + trainingMasterUID+ "/"+ rdd.id()+ "/";
+}

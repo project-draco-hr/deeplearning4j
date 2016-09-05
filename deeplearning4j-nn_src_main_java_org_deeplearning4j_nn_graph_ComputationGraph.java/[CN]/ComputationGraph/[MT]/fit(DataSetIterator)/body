@@ -1,7 +1,7 @@
 {
   if (numInputArrays != 1 || numOutputArrays != 1)   throw new UnsupportedOperationException("Cannot train ComputationGraph network with " + " multiple inputs or outputs using a DataSetIterator");
   DataSetIterator dataSetIterator;
-  if (!(iterator instanceof AsyncDataSetIterator || iterator instanceof ListDataSetIterator)) {
+  if (iterator.asyncSupported()) {
     dataSetIterator=new AsyncDataSetIterator(iterator,2);
   }
  else   dataSetIterator=iterator;

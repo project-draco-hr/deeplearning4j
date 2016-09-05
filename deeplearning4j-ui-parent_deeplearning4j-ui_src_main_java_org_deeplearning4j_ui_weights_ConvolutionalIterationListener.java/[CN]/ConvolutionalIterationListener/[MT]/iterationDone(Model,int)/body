@@ -12,7 +12,7 @@
         if (cnt == 0) {
           INDArray inputs=((ConvolutionLayer)layer).input();
           try {
-            sourceImage=restoreRGBImage(inputs.tensorAlongDimension(sampleDim,3,2,1));
+            sourceImage=restoreRGBImage(inputs.tensorAlongDimension(sampleDim,new int[]{3,2,1}));
           }
  catch (          Exception e) {
             throw new RuntimeException(e);

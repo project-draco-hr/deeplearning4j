@@ -1,0 +1,9 @@
+{
+  String filename="dataset_" + partitionIdx + jvmuid+ "_"+ outputCount+ ".bin";
+  URI uri=new URI(exportBaseDirectory + (exportBaseDirectory.endsWith("/") || exportBaseDirectory.endsWith("\\") ? "" : "/") + filename);
+  FileSystem file=FileSystem.get(uri,conf);
+  try (FSDataOutputStream out=file.create(new Path(uri))){
+    dataSet.save(out);
+  }
+   return uri.getPath();
+}

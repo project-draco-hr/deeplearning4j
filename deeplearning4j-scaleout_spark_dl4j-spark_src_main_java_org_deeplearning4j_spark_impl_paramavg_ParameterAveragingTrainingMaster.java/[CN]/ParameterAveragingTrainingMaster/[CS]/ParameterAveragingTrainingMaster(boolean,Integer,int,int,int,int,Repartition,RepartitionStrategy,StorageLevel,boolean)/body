@@ -12,4 +12,6 @@
   this.repartitionStrategy=repartitionStrategy;
   this.storageLevel=storageLevel;
   if (collectTrainingStats)   stats=new ParameterAveragingTrainingMasterStats.ParameterAveragingTrainingMasterStatsHelper();
+  String jvmuid=UIDProvider.getJVMUID();
+  this.trainingMasterUID=System.currentTimeMillis() + "_" + (jvmuid.length() <= 8 ? jvmuid : jvmuid.substring(0,8));
 }

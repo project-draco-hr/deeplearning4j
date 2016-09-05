@@ -1,9 +1,11 @@
 {
   DataSetIterator iter;
-  if (!(iterator instanceof AsyncDataSetIterator || iterator instanceof ListDataSetIterator || iterator instanceof MultipleEpochsIterator)) {
+  if (iterator.asyncSupported()) {
     iter=new AsyncDataSetIterator(iterator,2);
   }
- else   iter=iterator;
+ else {
+    iter=iterator;
+  }
   if (layerWiseConfigurations.isPretrain()) {
     pretrain(iter);
     iter.reset();

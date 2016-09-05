@@ -1,5 +1,5 @@
 {
-  ZipOutputStream zipfile=new ZipOutputStream(stream);
+  ZipOutputStream zipfile=new ZipOutputStream(new CloseShieldOutputStream(stream));
   String json="";
   if (model instanceof MultiLayerNetwork) {
     json=((MultiLayerNetwork)model).getLayerWiseConfigurations().toJson();

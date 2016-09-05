@@ -1,23 +1,37 @@
 {
-  if (cnnInputSize != null) {
-    new ConvolutionLayerSetup(this,cnnInputSize[0],cnnInputSize[1],cnnInputSize[2]);
-  }
-  int nLayers=this.confs.size();
-  for (int i=1; i < nLayers; i++) {
-    if (inputPreProcessors.containsKey(i))     continue;
-    Layer currLayer=this.confs.get(i).getLayer();
-    if (currLayer instanceof ConvolutionLayer || currLayer instanceof SubsamplingLayer)     continue;
-    Layer lastLayer=this.confs.get(i - 1).getLayer();
-    if (lastLayer instanceof ConvolutionLayer || lastLayer instanceof SubsamplingLayer)     continue;
-    if (currLayer instanceof DenseLayer || currLayer instanceof BasePretrainNetwork || currLayer instanceof OutputLayer) {
-      if (lastLayer instanceof BaseRecurrentLayer) {
-        inputPreProcessors.put(i,new RnnToFeedForwardPreProcessor());
+  if (inputType == null && inputPreProcessors.get(0) == null) {
+    Layer firstLayer=confs.get(0).getLayer();
+    if (firstLayer instanceof BaseRecurrentLayer) {
+      BaseRecurrentLayer brl=(BaseRecurrentLayer)firstLayer;
+      int nIn=brl.getNIn();
+      if (nIn > 0) {
+        inputType=InputType.recurrent(nIn);
       }
     }
- else     if (currLayer instanceof BaseRecurrentLayer || currLayer instanceof RnnOutputLayer) {
-      if (lastLayer instanceof DenseLayer || lastLayer instanceof BasePretrainNetwork) {
-        inputPreProcessors.put(i,new FeedForwardToRnnPreProcessor());
+ else     if (firstLayer instanceof DenseLayer || firstLayer instanceof EmbeddingLayer || firstLayer instanceof OutputLayer) {
+      FeedForwardLayer ffl=(FeedForwardLayer)firstLayer;
+      int nIn=ffl.getNIn();
+      if (nIn > 0) {
+        inputType=InputType.feedForward(nIn);
       }
+    }
+  }
+  if (inputType != null) {
+    InputType currentInputType=inputType;
+    for (int i=0; i < confs.size(); i++) {
+      Layer l=confs.get(i).getLayer();
+      if (inputPreProcessors.get(i) == null) {
+        InputPreProcessor inputPreProcessor=l.getPreProcessorForInputType(currentInputType);
+        if (inputPreProcessor != null) {
+          inputPreProcessors.put(i,inputPreProcessor);
+        }
+      }
+      InputPreProcessor inputPreProcessor=inputPreProcessors.get(i);
+      if (inputPreProcessor != null) {
+        currentInputType=inputPreProcessor.getOutputType(currentInputType);
+      }
+      l.setNIn(currentInputType,false);
+      currentInputType=l.getOutputType(currentInputType);
     }
   }
   MultiLayerConfiguration conf=new MultiLayerConfiguration();

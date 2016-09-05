@@ -1,0 +1,5 @@
+{
+  String hadoopTmpDir=sc.hadoopConfiguration().get("hadoop.tmp.dir");
+  if (!hadoopTmpDir.endsWith("/") && !hadoopTmpDir.endsWith("\\"))   hadoopTmpDir=hadoopTmpDir + "/";
+  return hadoopTmpDir + "dl4j/";
+}

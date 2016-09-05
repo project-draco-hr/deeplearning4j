@@ -1,9 +1,9 @@
 {
   MultiDataSetIterator multiDataSetIterator;
-  if (!(multic instanceof AsyncMultiDataSetIterator)) {
-    multiDataSetIterator=new AsyncMultiDataSetIterator(multic,2);
+  if (multi.asyncSupported()) {
+    multiDataSetIterator=new AsyncMultiDataSetIterator(multi,2);
   }
- else   multiDataSetIterator=multic;
+ else   multiDataSetIterator=multi;
   if (configuration.isPretrain()) {
     pretrain(multiDataSetIterator);
   }
