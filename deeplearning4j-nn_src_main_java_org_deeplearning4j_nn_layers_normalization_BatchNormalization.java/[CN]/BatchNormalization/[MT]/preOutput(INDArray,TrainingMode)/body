@@ -26,8 +26,9 @@ var=this.globalVar;
 }
 std=Transforms.sqrt(var,true);
 if (layerConf.isLockGammaBeta()) {
-gamma=Nd4j.ones(shape);
-beta=Nd4j.zeros(shape);
+int[] gammaBetaShape=new int[]{1,layerConf.getNOut()};
+gamma=Nd4j.valueArrayOf(gammaBetaShape,layerConf.getGamma());
+beta=Nd4j.valueArrayOf(gammaBetaShape,layerConf.getBeta());
 }
  else {
 gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
@@ -37,7 +38,7 @@ if (helper != null) {
 double decay=setMeanVar ? 1 : layerConf.getDecay();
 if (setMeanVar) {
 this.globalMean=this.globalMean == null ? Nd4j.zeros(mean.shape()) : this.globalMean;
-this.globalVar=this.globalVar == null ? Nd4j.valueArrayOf(var.shape(),layerConf.getEps()) : this.globalVar;
+this.globalVar=this.globalVar == null ? Nd4j.ones(var.shape()) : this.globalVar;
 setMeanVar=false;
 }
 INDArray ret=helper.preOutput(x,training == TrainingMode.TRAIN,shape,gamma,beta,this.globalMean,this.globalVar,decay,layerConf.getEps());
@@ -63,12 +64,18 @@ double decay;
 if (training == TrainingMode.TRAIN) {
 if (setMeanVar) {
 this.globalMean=this.globalMean == null ? Nd4j.zeros(mean.shape()) : this.globalMean;
-this.globalVar=this.globalVar == null ? Nd4j.valueArrayOf(var.shape(),layerConf.getEps()) : this.globalVar;
+this.globalVar=this.globalVar == null ? Nd4j.ones(var.shape()) : this.globalVar;
 setMeanVar=false;
 }
+if (layerConf.isMinibatch()) {
 decay=layerConf.getDecay();
 this.globalMean.muli(decay).addi(mean.muli(1 - decay));
 this.globalVar.muli(decay).addi(var.muli(1 - decay));
+}
+ else {
+this.globalMean=mean;
+this.globalVar=var;
+}
 }
 return activations;
 }
