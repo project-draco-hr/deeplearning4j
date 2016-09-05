@@ -10,7 +10,7 @@ break;
 case CNNFlat:
 nIn=((InputType.InputTypeConvolutionalFlat)inputType).getDepth();
 default :
-throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, CNN Flat or FF, got " + inputType);
+throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, CNN Flat or FF, got " + inputType + " for layer "+ getLayerName()+ "\"");
 }
 nOut=nIn;
 }
