@@ -1,0 +1,9 @@
+{
+  org.deeplearning4j.nn.conf.layers.ActivationLayer l=new org.deeplearning4j.nn.conf.layers.ActivationLayer.Builder().activation("relu").build();
+  InputType in1=InputType.feedForward(20);
+  InputType in2=InputType.convolutional(28,28,1);
+  assertEquals(in1,l.getOutputType(in1));
+  assertEquals(in2,l.getOutputType(in2));
+  assertNull(l.getPreProcessorForInputType(in1));
+  assertNull(l.getPreProcessorForInputType(in2));
+}
