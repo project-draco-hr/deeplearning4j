@@ -1,5 +1,5 @@
 {
-  Layer layer=setupActivations(2,2);
+  Layer layer=getLayer(2);
   assertArrayEquals(new int[]{1,2},layer.getParam("gamma").shape());
   assertArrayEquals(new int[]{1,2},layer.getParam("beta").shape());
   layer.setParam("gamma",Nd4j.linspace(2,3,2));

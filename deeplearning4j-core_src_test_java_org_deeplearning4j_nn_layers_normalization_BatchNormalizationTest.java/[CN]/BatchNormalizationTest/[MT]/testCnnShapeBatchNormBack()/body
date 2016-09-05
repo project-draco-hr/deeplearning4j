@@ -1,5 +1,5 @@
 {
-  Layer layer=setupActivations(2,2);
+  Layer layer=getLayer(2);
   layer.setParam("gamma",Nd4j.linspace(2,3,2));
   layer.setParam("beta",Nd4j.linspace(2,3,2));
   layer.preOutput(cnnInput);

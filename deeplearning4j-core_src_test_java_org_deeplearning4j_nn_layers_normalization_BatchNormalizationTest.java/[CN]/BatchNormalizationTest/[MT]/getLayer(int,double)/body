@@ -1,5 +1,5 @@
 {
-  BatchNormalization bN=new BatchNormalization.Builder().nIn(nIn).nOut(nOut).build();
+  BatchNormalization bN=new BatchNormalization.Builder().nOut(nOut).eps(epsilon).build();
   NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().iterations(1).layer(bN).build();
   int numParams=conf.getLayer().initializer().numParams(conf,true);
   INDArray params=Nd4j.create(1,numParams);
