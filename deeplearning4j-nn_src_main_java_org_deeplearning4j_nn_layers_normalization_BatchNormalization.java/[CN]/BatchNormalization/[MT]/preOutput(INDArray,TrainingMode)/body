@@ -1,5 +1,4 @@
 {
-  INDArray gamma, beta;
   INDArray activations;
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   int batchSize=x.size(0);
@@ -25,10 +24,14 @@ mean=this.globalMean;
 var=this.globalVar;
 }
 std=Transforms.sqrt(var,true);
-if (layerConf.isLockGammaBeta()) {
-int[] gammaBetaShape=new int[]{1,layerConf.getNOut()};
-gamma=Nd4j.valueArrayOf(gammaBetaShape,layerConf.getGamma());
-beta=Nd4j.valueArrayOf(gammaBetaShape,layerConf.getBeta());
+INDArray gamma=null;
+INDArray beta=null;
+if (!layerConf.isLockGammaBeta()) {
+if (helper != null) {
+int[] gammaBetaShape=new int[]{1,layerConf().getNOut()};
+gamma=Nd4j.valueArrayOf(gammaBetaShape,layerConf().getGamma());
+beta=Nd4j.valueArrayOf(gammaBetaShape,layerConf().getBeta());
+}
 }
  else {
 gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
@@ -49,6 +52,16 @@ return ret;
 if (x.rank() == 2) {
 xMu=x.subRowVector(mean);
 xHat=xMu.divRowVector(std);
+if (layerConf.isLockGammaBeta()) {
+double g=layerConf.getGamma();
+double b=layerConf.getBeta();
+if (g != 1.0 && b != 0.0) {
+activations=xHat.mul(g).addi(beta);
+}
+}
+ else {
+activations=xHat.mulRowVector(gamma).addiRowVector(beta);
+}
 activations=xHat.mulRowVector(gamma).addiRowVector(beta);
 }
  else if (x.rank() == 4) {
