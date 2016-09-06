@@ -11,5 +11,8 @@
     params=Nd4j.create(1,numParams);
   }
   Layer layer=conf.getLayer().instantiate(conf,null,0,params,true);
+  if (numParams > 0) {
+    layer.setBackpropGradientsViewArray(Nd4j.create(1,numParams));
+  }
   return layer;
 }

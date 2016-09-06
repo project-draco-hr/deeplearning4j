@@ -20,15 +20,23 @@
       return ret;
     }
   }
+  int nOut=layerConf.getNOut();
   if (epsilon.rank() == 2) {
     INDArray dGamma=epsilon.mul(xHat).sum(0);
     INDArray dBeta=epsilon.sum(0);
     INDArray dxhat=epsilon.mulRowVector(gamma);
-    INDArray dLdVar=dxhat.mul(xMu).sum(0).muli(-0.5).divi(Transforms.pow(std,3.0,true));
-    INDArray dxmu1=dxhat.sum(0).divi(std);
-    INDArray dxmu2=xMu.mul(2.0 / batchSize).muliRowVector(dLdVar);
-    INDArray dLdmu=dxmu1.addi(dxmu2.sum(0).muli(dLdVar)).negi();
-    INDArray dLdx=dxhat.divRowVector(std).addiRowVector(dLdVar.muli(dxmu2.sum(0)).addi(dLdmu.muli(1.0 / batchSize)));
+    int[] dxhatShape=dxhat.shape();
+    if (!Arrays.equals(new int[]{batchSize,nOut},dxhatShape))     throw new RuntimeException();
+    INDArray dLdVar=dxhat.mul(xMu).mul(-0.5).mulRowVector(Transforms.pow(std,-3.0,true)).sum(0);
+    int[] dLdVarShape=dLdVar.shape();
+    if (!Arrays.equals(new int[]{1,nOut},dLdVarShape))     throw new RuntimeException();
+    INDArray dxmu1=dxhat.divRowVector(std).neg().sum(0);
+    if (!Arrays.equals(new int[]{1,nOut},dxmu1.shape()))     throw new RuntimeException();
+    INDArray dxmu2=dLdVar.mul(xMu.mul(-2.0 / batchSize).sum(0));
+    INDArray dLdmu=dxmu1.add(dxmu2);
+    if (!Arrays.equals(new int[]{1,nOut},dLdmu.shape()))     throw new RuntimeException();
+    INDArray dLdx=dxhat.divRowVector(std).add(xMu.mulRowVector(dLdVar).mul(2.0 / batchSize)).addRowVector(dLdmu.mul(1.0 / batchSize));
+    if (!Arrays.equals(new int[]{batchSize,nOut},dLdx.shape()))     throw new RuntimeException();
     dGammaView.assign(dGamma);
     dBetaView.assign(dBeta);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGammaView);
