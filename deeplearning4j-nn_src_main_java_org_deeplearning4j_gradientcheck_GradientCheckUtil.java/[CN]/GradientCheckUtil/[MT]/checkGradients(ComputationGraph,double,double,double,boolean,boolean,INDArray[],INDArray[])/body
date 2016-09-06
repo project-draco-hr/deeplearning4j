@@ -3,6 +3,22 @@
   if (maxRelError <= 0.0 || maxRelError > 0.25)   throw new IllegalArgumentException("Invalid maxRelativeError: " + maxRelError);
   if (graph.getNumInputArrays() != inputs.length)   throw new IllegalArgumentException("Invalid input arrays: expect " + graph.getNumInputArrays() + " inputs");
   if (graph.getNumOutputArrays() != labels.length)   throw new IllegalArgumentException("Invalid labels arrays: expect " + graph.getNumOutputArrays() + " outputs");
+  int layerCount=0;
+  for (  String vertexName : graph.getConfiguration().getVertices().keySet()) {
+    GraphVertex gv=graph.getConfiguration().getVertices().get(vertexName);
+    if (!(gv instanceof LayerVertex))     continue;
+    LayerVertex lv=(LayerVertex)gv;
+    org.deeplearning4j.nn.conf.Updater u=lv.getLayerConf().getLayer().getUpdater();
+    if (u == org.deeplearning4j.nn.conf.Updater.SGD) {
+      double lr=lv.getLayerConf().getLayer().getLearningRate();
+      if (lr != 1.0) {
+        throw new IllegalStateException("When using SGD updater, must also use lr=1.0 for layer \"" + vertexName + "\"; got "+ u);
+      }
+    }
+ else     if (u != org.deeplearning4j.nn.conf.Updater.NONE) {
+      throw new IllegalStateException("Must have Updater.NONE (or SGD + lr=1.0) for layer \"" + vertexName + "\"; got "+ u);
+    }
+  }
   for (int i=0; i < inputs.length; i++)   graph.setInput(i,inputs[i]);
   for (int i=0; i < labels.length; i++)   graph.setLabel(i,labels[i]);
   graph.computeGradientAndScore();
@@ -32,9 +48,15 @@
     if (backpropGradient == 0.0 && numericalGradient == 0.0)     relError=0.0;
     if (relError > maxError)     maxError=relError;
     if (relError > maxRelError || Double.isNaN(relError)) {
-      if (print)       log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
-      if (exitOnFirstError)       return false;
-      totalNFailures++;
+      double absError=Math.abs(backpropGradient - numericalGradient);
+      if (absError < minAbsoluteError) {
+        log.info("Param " + i + " passed: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ "; absolute error = "+ absError+ " < minAbsoluteError = "+ minAbsoluteError);
+      }
+ else {
+        if (print)         log.info("Param " + i + " FAILED: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError+ ", scorePlus="+ scorePlus+ ", scoreMinus= "+ scoreMinus);
+        if (exitOnFirstError)         return false;
+        totalNFailures++;
+      }
     }
  else     if (print) {
       log.info("Param " + i + " passed: grad= "+ backpropGradient+ ", numericalGrad= "+ numericalGradient+ ", relError= "+ relError);

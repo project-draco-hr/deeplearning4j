@@ -1,8 +1,8 @@
 MultiLayerNetwork mln
 double epsilon
 double maxRelError
+double minAbsoluteError
 boolean print
 boolean exitOnFirstError
 INDArray input
 INDArray labels
-boolean useUpdater
