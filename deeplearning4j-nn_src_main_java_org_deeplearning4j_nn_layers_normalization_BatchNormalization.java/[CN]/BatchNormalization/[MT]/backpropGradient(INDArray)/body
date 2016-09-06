@@ -20,23 +20,15 @@
       return ret;
     }
   }
-  int nOut=layerConf.getNOut();
   if (epsilon.rank() == 2) {
     INDArray dGamma=epsilon.mul(xHat).sum(0);
     INDArray dBeta=epsilon.sum(0);
     INDArray dxhat=epsilon.mulRowVector(gamma);
-    int[] dxhatShape=dxhat.shape();
-    if (!Arrays.equals(new int[]{batchSize,nOut},dxhatShape))     throw new RuntimeException();
-    INDArray dLdVar=dxhat.mul(xMu).mul(-0.5).mulRowVector(Transforms.pow(std,-3.0,true)).sum(0);
-    int[] dLdVarShape=dLdVar.shape();
-    if (!Arrays.equals(new int[]{1,nOut},dLdVarShape))     throw new RuntimeException();
-    INDArray dxmu1=dxhat.divRowVector(std).neg().sum(0);
-    if (!Arrays.equals(new int[]{1,nOut},dxmu1.shape()))     throw new RuntimeException();
-    INDArray dxmu2=dLdVar.mul(xMu.mul(-2.0 / batchSize).sum(0));
-    INDArray dLdmu=dxmu1.add(dxmu2);
-    if (!Arrays.equals(new int[]{1,nOut},dLdmu.shape()))     throw new RuntimeException();
-    INDArray dLdx=dxhat.divRowVector(std).add(xMu.mulRowVector(dLdVar).mul(2.0 / batchSize)).addRowVector(dLdmu.mul(1.0 / batchSize));
-    if (!Arrays.equals(new int[]{batchSize,nOut},dLdx.shape()))     throw new RuntimeException();
+    INDArray dLdVar=dxhat.mul(xMu).sum(0).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
+    INDArray dxmu1=dxhat.sum(0).divi(std).negi();
+    INDArray dxmu2=xMu.sum(0).muli(-2.0 / batchSize).muli(dLdVar);
+    INDArray dLdmu=dxmu1.addi(dxmu2);
+    INDArray dLdx=dxhat.diviRowVector(std).addi(xMu.muliRowVector(dLdVar.muli(2.0 / batchSize))).addiRowVector(dLdmu.muli(1.0 / batchSize));
     dGammaView.assign(dGamma);
     dBetaView.assign(dBeta);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGammaView);
@@ -46,18 +38,20 @@
  else   if (epsilon.rank() == 4) {
     INDArray dGamma=epsilon.mul(xHat).sum(0,2,3);
     INDArray dBeta=epsilon.sum(0,2,3);
-    INDArray dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,epsilon.dup(),1));
-    INDArray dsq=dxhat.mul(xMu).sum(0).mul(0.5).div(Transforms.pow(std,3)).neg().div(batchSize);
-    INDArray dxmu1=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(dxhat,std,dxhat,new int[]{1,2,3}));
-    INDArray dxmu2=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xMu.mul(2),dsq,xMu.mul(2),new int[]{1,2,3}));
-    INDArray dx1=dxmu1.add(dxmu2);
-    INDArray dmu=dx1.sum(0).neg();
-    INDArray dx2=dmu.div(batchSize);
-    nextEpsilon=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dx1,dx2,dx1.dup(),new int[]{1,2,3}));
+    INDArray dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,Nd4j.createUninitialized(epsilon.shape(),epsilon.ordering()),1));
+    INDArray temp=Transforms.pow(std,-3.0,true);
+    INDArray dLdVar=dxhat.mul(xMu).sum(0,2,3).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
+    int effectiveBatchSize=input.size(0) * input.size(2) * input.size(3);
+    INDArray dxmu1=dxhat.sum(0,2,3).divi(std).negi();
+    INDArray dxmu2=xMu.sum(0,2,3).muli(-2.0 / effectiveBatchSize).muli(dLdVar);
+    INDArray dLdmu=dxmu1.addi(dxmu2);
+    INDArray dLdx=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(dxhat,std,dxhat,1)).addi(Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xMu,dLdVar.muli(2.0 / effectiveBatchSize),xMu,1)));
+    Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dLdx,dLdmu.muli(1.0 / effectiveBatchSize),dLdx,1));
     dGammaView.assign(dGamma);
     dBetaView.assign(dBeta);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGammaView);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,dBetaView);
+    nextEpsilon=dLdx;
   }
  else {
     throw new IllegalStateException("The layer prior to BatchNorm in the configuration is not currently supported.");
