@@ -6,11 +6,6 @@
   INDArray biasGradView=gradientViews.get(DefaultParamInitializer.BIAS_KEY);
   gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightGradView);
   gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,biasGradView);
-  if (maskArray != null) {
-    outSubLabels.muliColumnVector(maskArray);
-  }
   Triple<Gradient,INDArray,INDArray> triple;
-switch (layerConf().getLossFunction()) {
-  }
   return triple;
 }

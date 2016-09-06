@@ -3,13 +3,5 @@
   this.fullNetworkL1=fullNetworkL1;
   this.fullNetworkL2=fullNetworkL2;
   INDArray preOut=preOutput2d(training);
-  LossFunctions.LossFunction lf=((org.deeplearning4j.nn.conf.layers.BaseOutputLayer)conf.getLayer()).getLossFunction();
-  if ((lf == LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD || lf == LossFunctions.LossFunction.MCXENT) && layerConf().getActivationFunction().equals("softmax")) {
-    setScore(null,preOut);
-  }
- else {
-    INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),preOut));
-    setScoreWithZ(output);
-  }
   return score;
 }
