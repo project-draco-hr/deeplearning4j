@@ -2,6 +2,7 @@
   if (configuration.isCollectTrainingStats())   stats.logFitStart();
   graph.fit(dataSet);
   if (configuration.isCollectTrainingStats())   stats.logFitEnd(dataSet.getFeatures(0).size(0));
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   if (isLast)   return getFinalResult(graph);
   return null;
 }
