@@ -1,0 +1,7 @@
+{
+  Evaluation e=new Evaluation(5);
+  System.out.println(e.stats());
+  char c="\uFFFD".toCharArray()[0];
+  System.out.println(c);
+  assertFalse(e.stats().contains("\uFFFD"));
+}
