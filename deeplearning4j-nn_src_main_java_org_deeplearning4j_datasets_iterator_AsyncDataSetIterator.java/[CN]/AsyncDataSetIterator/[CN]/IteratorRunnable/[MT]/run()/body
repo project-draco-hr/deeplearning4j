@@ -4,6 +4,7 @@
       feeder.incrementAndGet();
       lock.writeLock().lock();
       DataSet ds=baseIterator.next();
+      if (Nd4j.getExecutioner() instanceof GridExecutioner)       ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
       lock.writeLock().unlock();
       blockingQueue.put(ds);
     }

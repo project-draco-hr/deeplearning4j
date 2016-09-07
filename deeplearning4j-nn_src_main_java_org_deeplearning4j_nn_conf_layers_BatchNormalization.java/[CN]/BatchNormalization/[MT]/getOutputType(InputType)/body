@@ -1,6 +1,13 @@
 {
-  if (inputType == null || (inputType.getType() != InputType.Type.CNN && inputType.getType() != InputType.Type.CNNFlat)) {
-    throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, got " + inputType);
+  if (inputType == null) {
+    throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, got null for layer \"" + getLayerName() + "\"");
   }
-  return inputType;
+switch (inputType.getType()) {
+case FF:
+case CNN:
+case CNNFlat:
+    return inputType;
+default :
+  throw new IllegalStateException("Invalid input type: Batch norm layer expected input of type CNN, CNN Flat or FF, got " + inputType + " for layer "+ getLayerName()+ "\"");
+}
 }

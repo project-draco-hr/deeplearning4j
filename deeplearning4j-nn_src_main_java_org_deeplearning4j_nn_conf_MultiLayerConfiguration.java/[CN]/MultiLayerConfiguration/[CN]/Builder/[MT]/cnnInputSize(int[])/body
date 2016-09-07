@@ -1,4 +1,6 @@
 {
-  this.cnnInputSize=cnnInputSize;
+  if (cnnInputSize != null) {
+    this.cnnInputSize=cnnInputSize;
+  }
   return this;
 }

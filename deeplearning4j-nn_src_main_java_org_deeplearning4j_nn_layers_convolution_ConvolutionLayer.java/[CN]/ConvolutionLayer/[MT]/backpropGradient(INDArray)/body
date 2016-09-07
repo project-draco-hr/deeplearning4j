@@ -26,7 +26,7 @@
     delta=sigmaPrimeZ.muli(epsilon);
   }
   if (helper != null) {
-    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,weights,delta,kernel,strides,pad,biasGradView,weightGradView,afn);
+    Pair<Gradient,INDArray> ret=helper.backpropGradient(input,weights,delta,kernel,strides,pad,biasGradView,weightGradView,afn,layerConf().getCudnnAlgoMode());
     if (ret != null) {
       return ret;
     }

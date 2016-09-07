@@ -4,9 +4,9 @@
   DataSet next=new DataSet(in,labels);
   NeuralNetConfiguration.ListBuilder builder=(NeuralNetConfiguration.ListBuilder)incompleteLFW();
   new ConvolutionLayerSetup(builder,28,28,3);
-  ConvolutionLayer layer2=(ConvolutionLayer)builder.getLayerwise().get(2).getLayer();
-  assertEquals(6,layer2.getNIn());
   MultiLayerConfiguration conf=builder.build();
+  ConvolutionLayer layer2=(ConvolutionLayer)conf.getConf(2).getLayer();
+  assertEquals(6,layer2.getNIn());
   MultiLayerNetwork network=new MultiLayerNetwork(conf);
   network.init();
   network.fit(next);
