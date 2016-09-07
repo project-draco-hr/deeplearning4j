@@ -8,6 +8,7 @@
       MultiLayerNetwork net=new MultiLayerNetwork(getConf(12345,Updater.SGD));
       net.init();
       INDArray initialParams=net.params().dup();
+      if (Nd4j.getExecutioner() instanceof GridExecutioner)       ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
       for (int i=0; i < seeds.length; i++) {
         DataSet ds=getOneDataSet(miniBatchSizePerWorker * nWorkers,seeds[i]);
         if (!saveUpdater)         net.setUpdater(null);
@@ -25,6 +26,7 @@
       }
       System.out.println(sparkNet.getSparkTrainingStats().statsAsString());
       INDArray finalSparkParams=sparkNet.getNetwork().params().dup();
+      if (Nd4j.getExecutioner() instanceof GridExecutioner)       ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
       System.out.println("Initial (Local) params:       " + Arrays.toString(initialParams.data().asFloat()));
       System.out.println("Initial (Spark) params:       " + Arrays.toString(initialSparkParams.data().asFloat()));
       System.out.println("Final (Local) params: " + Arrays.toString(finalParams.data().asFloat()));
