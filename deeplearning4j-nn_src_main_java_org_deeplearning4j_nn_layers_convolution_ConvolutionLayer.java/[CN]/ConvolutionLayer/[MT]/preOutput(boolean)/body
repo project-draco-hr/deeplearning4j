@@ -17,7 +17,7 @@
   int outH=Convolution.outSize(inH,kernel[0],strides[0],pad[0],false);
   int outW=Convolution.outSize(inW,kernel[1],strides[1],pad[1],false);
   if (helper != null) {
-    INDArray ret=helper.preOutput(input,weights,bias,kernel,strides,pad);
+    INDArray ret=helper.preOutput(input,weights,bias,kernel,strides,pad,layerConf().getCudnnAlgoMode());
     if (ret != null) {
       return ret;
     }
