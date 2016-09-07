@@ -15,7 +15,7 @@
   INDArray z=Nd4j.createUninitialized(new int[]{n[0],c[0],h[0],w[0]},'c');
   int[] dstStride=z.stride();
   checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.dstTensorDesc,dataType,n[0],c[0],h[0],w[0],dstStride[0],dstStride[1],dstStride[2],dstStride[3]));
-  checkCudnn(cudnnGetConvolutionForwardAlgorithm(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.filterDesc,cudnnContext.convDesc,cudnnContext.dstTensorDesc,CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,0,algo));
+  checkCudnn(cudnnGetConvolutionForwardAlgorithm(cudnnContext,cudnnContext.srcTensorDesc,cudnnContext.filterDesc,cudnnContext.convDesc,cudnnContext.dstTensorDesc,mode == AlgoMode.NO_WORKSPACE ? CUDNN_CONVOLUTION_FWD_NO_WORKSPACE : CUDNN_CONVOLUTION_FWD_PREFER_FASTEST,0,algo));
   Allocator allocator=AtomicAllocator.getInstance();
   CudaContext context=allocator.getFlowController().prepareAction(input,weights,bias,z);
   Pointer srcData=allocator.getPointer(input,context);
