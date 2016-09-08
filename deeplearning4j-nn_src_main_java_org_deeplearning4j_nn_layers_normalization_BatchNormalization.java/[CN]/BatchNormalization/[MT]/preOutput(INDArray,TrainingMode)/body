@@ -67,6 +67,7 @@ activations=xHat.mulRowVector(gamma).addiRowVector(beta);
 }
 }
  else if (x.rank() == 4) {
+if (!Shape.strideDescendingCAscendingF(x)) x=x.dup();
 xMu=Nd4j.getExecutioner().execAndReturn(new BroadcastSubOp(x,mean,Nd4j.createUninitialized(x.shape(),x.ordering()),1));
 xHat=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(xMu,std,Nd4j.createUninitialized(x.shape(),x.ordering()),1));
 if (layerConf.isLockGammaBeta()) {
