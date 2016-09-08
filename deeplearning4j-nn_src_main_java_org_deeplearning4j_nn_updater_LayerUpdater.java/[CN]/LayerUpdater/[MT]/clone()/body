@@ -1,0 +1,15 @@
+{
+  Map<String,GradientUpdater> newMap=new HashMap<>();
+  for (  Map.Entry<String,GradientUpdater> entry : updaterForVariable.entrySet()) {
+    newMap.put(entry.getKey(),entry.getValue().getAggregator(true).getUpdater());
+  }
+  LayerUpdater updater;
+  try {
+    updater=this.getClass().getConstructor().newInstance();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+  updater.updaterForVariable=newMap;
+  return updater;
+}

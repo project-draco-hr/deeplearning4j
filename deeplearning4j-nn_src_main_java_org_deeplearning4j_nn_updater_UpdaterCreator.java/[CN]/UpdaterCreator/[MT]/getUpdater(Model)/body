@@ -3,6 +3,6 @@
     return new MultiLayerUpdater((MultiLayerNetwork)layer);
   }
  else {
-    return getUpdater(layer.conf());
+    return new LayerUpdater();
   }
 }
