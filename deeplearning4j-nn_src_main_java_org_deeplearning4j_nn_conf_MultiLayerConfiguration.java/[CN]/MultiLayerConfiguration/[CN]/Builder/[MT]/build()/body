@@ -1,5 +1,8 @@
 {
-  if (inputType == null && inputPreProcessors.get(0) == null) {
+  if (cnnInputSize != null) {
+    new ConvolutionLayerSetup(this,cnnInputSize[0],cnnInputSize[1],cnnInputSize[2]);
+  }
+ else   if (inputType == null && inputPreProcessors.get(0) == null) {
     Layer firstLayer=confs.get(0).getLayer();
     if (firstLayer instanceof BaseRecurrentLayer) {
       BaseRecurrentLayer brl=(BaseRecurrentLayer)firstLayer;
