@@ -37,8 +37,5 @@
   INDArray dldbeta=p.getFirst().getGradientFor("beta");
   assertEquals(dldgammaExp,dldgamma);
   assertEquals(dldbetaExp,dldbeta);
-  System.out.println("EPSILONS");
-  System.out.println(Arrays.toString(dldinExp.data().asDouble()));
-  System.out.println(Arrays.toString(p.getSecond().dup().data().asDouble()));
   assertEquals(dldinExp,p.getSecond());
 }
