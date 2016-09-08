@@ -1,3 +1,3 @@
 {
-  return f1Score(data.getFeatureMatrix(),data.getLabels());
+  return f1Score(data.getFeatures(),data.getLabels());
 }

@@ -11,6 +11,12 @@
   this.storageLevelStreams=builder.storageLevelStreams;
   this.rddTrainingApproach=builder.rddTrainingApproach;
   this.exportDirectory=builder.exportDirectory;
+  if (builder.rngSeed == null) {
+    this.rng=new Random();
+  }
+ else {
+    this.rng=new Random(builder.rngSeed);
+  }
   String jvmuid=UIDProvider.getJVMUID();
   this.trainingMasterUID=System.currentTimeMillis() + "_" + (jvmuid.length() <= 8 ? jvmuid : jvmuid.substring(0,8));
 }

@@ -2,11 +2,25 @@
   Map<String,INDArray> params=Collections.synchronizedMap(new LinkedHashMap<String,INDArray>());
   BatchNormalization layer=(BatchNormalization)conf.getLayer();
   int nOut=layer.getNOut();
-  INDArray gammaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
-  INDArray betaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
-  params.put(GAMMA,createGamma(conf,gammaView,initializeParams));
-  conf.addVariable(GAMMA);
-  params.put(BETA,createBeta(conf,betaView,initializeParams));
-  conf.addVariable(BETA);
+  int meanOffset=0;
+  if (!layer.isLockGammaBeta()) {
+    INDArray gammaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
+    INDArray betaView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
+    params.put(GAMMA,createGamma(conf,gammaView,initializeParams));
+    conf.addVariable(GAMMA);
+    params.put(BETA,createBeta(conf,betaView,initializeParams));
+    conf.addVariable(BETA);
+    meanOffset=2 * nOut;
+  }
+  INDArray globalMeanView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(meanOffset,meanOffset + nOut));
+  INDArray globalVarView=paramView.get(NDArrayIndex.point(0),NDArrayIndex.interval(meanOffset + nOut,meanOffset + 2 * nOut));
+  if (initializeParams) {
+    globalMeanView.assign(0);
+    globalVarView.assign(1);
+  }
+  params.put(GLOBAL_MEAN,globalMeanView);
+  conf.addVariable(GLOBAL_MEAN);
+  params.put(GLOBAL_VAR,globalVarView);
+  conf.addVariable(GLOBAL_VAR);
   return params;
 }

@@ -1,0 +1,12 @@
+{
+switch (paramName) {
+case PretrainParamInitializer.WEIGHT_KEY:
+    return l2;
+case PretrainParamInitializer.BIAS_KEY:
+  return 0.0;
+case PretrainParamInitializer.VISIBLE_BIAS_KEY:
+return 0.0;
+default :
+throw new IllegalArgumentException("Unknown parameter name: \"" + paramName + "\"");
+}
+}
