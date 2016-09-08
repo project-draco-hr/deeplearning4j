@@ -12,7 +12,7 @@
     update(TaskUtils.buildTask(dataSetIterator));
     while (dataSetIterator.hasNext()) {
       DataSet next=dataSetIterator.next();
-      if (next.getFeatureMatrix() == null || next.getLabels() == null)       break;
+      if (next.getFeatures() == null || next.getLabels() == null)       break;
       boolean hasMaskArrays=next.hasMaskArrays();
       if (hasMaskArrays) {
         INDArray[] fMask=(next.getFeaturesMaskArray() != null ? new INDArray[]{next.getFeaturesMaskArray()} : null);
@@ -23,7 +23,7 @@
         doTruncatedBPTT(new INDArray[]{next.getFeatures()},new INDArray[]{next.getLabels()},(hasMaskArrays ? new INDArray[]{next.getFeaturesMaskArray()} : null),(hasMaskArrays ? new INDArray[]{next.getLabelsMaskArray()} : null));
       }
  else {
-        setInput(0,next.getFeatureMatrix());
+        setInput(0,next.getFeatures());
         setLabel(0,next.getLabels());
         if (solver == null) {
           solver=new Solver.Builder().configure(defaultConfiguration).listeners(listeners).model(this).build();
