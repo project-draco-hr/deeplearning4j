@@ -1,16 +1,14 @@
 {
+  AtomicLong nextRandom=new AtomicLong(nr);
   Sequence<T> seq=cbow.applySubsampling(sequence,nextRandom);
-  List<T> labels=new ArrayList<>();
-  labels.addAll(sequence.getSequenceLabels());
   if (sequence.getSequenceLabel() == null)   throw new IllegalStateException("Label is NULL");
-  if (seq.isEmpty() || labels.isEmpty())   return 0;
+  if (seq.isEmpty())   return null;
   List<INDArray> labelArrays=new ArrayList<>();
-  for (  T label : labels) {
-    labelArrays.add(syn0.getRow(label.getIndex()));
-  }
+  INDArray ret=Nd4j.rand(nr,new int[]{1,lookupTable.layerSize()}).subi(0.5).divi(lookupTable.layerSize());
+  labelArrays.add(ret);
   for (int i=0; i < seq.size(); i++) {
     nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
     dm(i,seq,(int)nextRandom.get() % window,nextRandom,learningRate,labelArrays);
   }
-  return 0;
+  return ret;
 }
