@@ -25,11 +25,12 @@
       }
       System.out.println(sparkNet.getSparkTrainingStats().statsAsString());
       INDArray finalSparkParams=sparkNet.getNetwork().params().dup();
-      assertEquals(initialParams,initialSparkParams);
-      assertNotEquals(initialParams,finalParams);
-      System.out.println("Initial params:       " + Arrays.toString(initialParams.data().asFloat()));
+      System.out.println("Initial (Local) params:       " + Arrays.toString(initialParams.data().asFloat()));
+      System.out.println("Initial (Spark) params:       " + Arrays.toString(initialSparkParams.data().asFloat()));
       System.out.println("Final (Local) params: " + Arrays.toString(finalParams.data().asFloat()));
       System.out.println("Final (Spark) params: " + Arrays.toString(finalSparkParams.data().asFloat()));
+      assertEquals(initialParams,initialSparkParams);
+      assertNotEquals(initialParams,finalParams);
       assertEquals(finalParams,finalSparkParams);
       double sparkScore=sparkNet.getScore();
       assertTrue(sparkScore > 0.0);

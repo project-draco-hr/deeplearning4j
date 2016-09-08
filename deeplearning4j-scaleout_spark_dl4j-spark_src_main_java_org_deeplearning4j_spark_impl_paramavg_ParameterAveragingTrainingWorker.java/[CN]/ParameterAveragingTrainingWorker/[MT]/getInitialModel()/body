@@ -9,5 +9,6 @@
     net.setUpdater(new MultiLayerUpdater(net,tuple.getUpdaterState().dup()));
   }
   if (configuration.isCollectTrainingStats())   stats.logInitEnd();
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   return net;
 }

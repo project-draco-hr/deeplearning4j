@@ -1,4 +1,5 @@
 {
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
   JavaPairRDD<String,PortableDataStream> serializedDataSets=sc.binaryFiles(path);
   trainingMaster.executeTraining(this,serializedDataSets);
   return network;

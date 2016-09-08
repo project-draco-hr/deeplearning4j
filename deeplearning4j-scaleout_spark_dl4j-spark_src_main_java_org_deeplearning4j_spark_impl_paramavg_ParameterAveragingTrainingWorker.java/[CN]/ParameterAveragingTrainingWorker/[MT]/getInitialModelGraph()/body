@@ -8,6 +8,7 @@
   if (tuple.getUpdaterState() != null) {
     net.setUpdater(new ComputationGraphUpdater(net,tuple.getUpdaterState().dup()));
   }
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   if (configuration.isCollectTrainingStats())   stats.logInitEnd();
   return net;
 }
