@@ -5,7 +5,7 @@
       return ret;
     }
   }
-  int channel=input.shape()[1];
+  int channel=input.size(1);
   INDArray tmp, addVal;
   Gradient retGradient=new DefaultGradient();
   INDArray reverse=activations.mul(epsilon);
@@ -18,6 +18,6 @@
     addVal=reverse.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()});
     sumPart.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()},tmp.addi(addVal));
   }
-  INDArray nextEpsilon=epsilon.mul(scale).sub(input.mul(2 * alpha * beta).mul(sumPart.div(unitScale)));
+  INDArray nextEpsilon=epsilon.mul(scale).subi(sumPart.muli(input).divi(unitScale).muli(2 * alpha * beta));
   return new Pair<>(retGradient,nextEpsilon);
 }
