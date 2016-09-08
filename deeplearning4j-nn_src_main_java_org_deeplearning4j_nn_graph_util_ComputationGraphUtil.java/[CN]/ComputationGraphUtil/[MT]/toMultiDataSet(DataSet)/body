@@ -1,5 +1,5 @@
 {
-  INDArray f=dataSet.getFeatureMatrix();
+  INDArray f=dataSet.getFeatures();
   INDArray l=dataSet.getLabels();
   INDArray fMask=dataSet.getFeaturesMaskArray();
   INDArray lMask=dataSet.getLabelsMaskArray();
