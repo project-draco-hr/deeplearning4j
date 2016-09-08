@@ -1,6 +1,6 @@
 {
   INDArray nextEpsilon;
-  shape=getShape(epsilon);
+  int[] shape=getShape(epsilon);
   int batchSize=epsilon.size(0);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   INDArray gamma=null;

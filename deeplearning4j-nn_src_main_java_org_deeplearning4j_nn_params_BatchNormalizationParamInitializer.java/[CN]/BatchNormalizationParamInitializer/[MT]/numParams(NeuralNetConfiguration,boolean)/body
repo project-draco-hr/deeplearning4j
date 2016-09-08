@@ -1,9 +1,9 @@
 {
   BatchNormalization layer=(BatchNormalization)conf.getLayer();
   if (layer.isLockGammaBeta()) {
-    return 0;
+    return 2 * layer.getNOut();
   }
  else {
-    return 2 * layer.getNOut();
+    return 4 * layer.getNOut();
   }
 }
