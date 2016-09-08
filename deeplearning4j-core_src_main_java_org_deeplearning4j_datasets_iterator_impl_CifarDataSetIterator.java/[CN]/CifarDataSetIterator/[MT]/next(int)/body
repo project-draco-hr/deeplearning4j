@@ -1,50 +1,18 @@
 {
   if (useCurrent) {
     useCurrent=false;
-    if (preProcessor != null)     preProcessor.preProcess(last);
     return last;
   }
-  int batchNumCount=0;
-  byte[] byteFeature=new byte[numPixels];
-  List<DataSet> dataSets=new ArrayList<>();
-  INDArray label;
-  Mat image=new Mat(height,width,CV_8UC(channels));
-  ByteBuffer imageData=image.createBuffer();
-  try {
-    while ((inputStream.read(byteFeature)) != -1 && batchNumCount != num) {
-      label=FeatureUtil.toOutcomeVector(byteFeature[0],numPossibleLabels);
-      for (int i=0; i < height * width; i++) {
-        imageData.put(3 * i,byteFeature[i + 1 + 2 * height * width]);
-        imageData.put(3 * i + 1,byteFeature[i + 1 + height * width]);
-        imageData.put(3 * i + 2,byteFeature[i + 1]);
-      }
-      try {
-        dataSets.add(new DataSet(loader.asRowVector(image),label));
-        batchNumCount++;
-      }
- catch (      Exception e) {
-        break;
-      }
-    }
-    exampleCount+=batchNumCount;
-  }
- catch (  IOException e) {
-    e.printStackTrace();
-  }
-  List<INDArray> inputs=new ArrayList<>();
-  List<INDArray> labels=new ArrayList<>();
-  for (  DataSet data : dataSets) {
-    inputs.add(data.getFeatureMatrix());
-    labels.add(data.getLabels());
-  }
+  DataSet ret=CifarLoader.convertDataSet(num);
+  exampleCount+=num;
   batchNum++;
-  if (inputs.isEmpty() || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
+  if (ret.getFeatureMatrix() == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
     overshot=true;
     return last;
   }
-  DataSet ret=new DataSet(Nd4j.vstack(inputs),Nd4j.vstack(labels));
-  last=ret;
+  ret.shuffle();
   if (preProcessor != null)   preProcessor.preProcess(ret);
+  last=ret;
   if (loader.getLabels() != null)   ret.setLabelNames(loader.getLabels());
   return ret;
 }

@@ -5,4 +5,6 @@
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
   this.numPossibleLabels=numPossibleLables;
   this.inputStream=loader.getInputStream();
+  this.preProcessor=preProcessor;
+  this.imageTransform=imageTransform;
 }
