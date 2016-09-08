@@ -1,0 +1,4 @@
+{
+  if (!(other instanceof LayerUpdater))   return false;
+  return updaterForVariable.equals(((LayerUpdater)other).updaterForVariable);
+}
