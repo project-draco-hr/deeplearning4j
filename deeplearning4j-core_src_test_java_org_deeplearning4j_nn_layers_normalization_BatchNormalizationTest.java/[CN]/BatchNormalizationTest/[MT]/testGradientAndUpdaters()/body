@@ -1,0 +1,42 @@
+{
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1).updater(Updater.RMSPROP).seed(12345).list().layer(0,new ConvolutionLayer.Builder().nIn(1).nOut(6).weightInit(WeightInit.XAVIER).activation("identity").build()).layer(1,new BatchNormalization.Builder().build()).layer(2,new ActivationLayer.Builder().activation("leakyrelu").build()).layer(3,new DenseLayer.Builder().nOut(10).activation("leakyrelu").build()).layer(4,new BatchNormalization.Builder().build()).layer(5,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).weightInit(WeightInit.XAVIER).activation("softmax").nOut(10).build()).backprop(true).pretrain(false).setInputType(InputType.convolutionalFlat(28,28,1)).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  DataSetIterator iter=new MnistDataSetIterator(16,true,12345);
+  DataSet ds=iter.next();
+  net.setInput(ds.getFeatures());
+  net.setLabels(ds.getLabels());
+  net.computeGradientAndScore();
+  Gradient g=net.gradient();
+  Map<String,INDArray> map=g.gradientForVariable();
+  for (  String s : map.keySet()) {
+    INDArray grad=map.get(s);
+    if (s.endsWith(BatchNormalizationParamInitializer.GLOBAL_MEAN) || s.endsWith(BatchNormalizationParamInitializer.GLOBAL_VAR)) {
+      assertEquals(Nd4j.zeros(grad.shape()),grad);
+    }
+  }
+  org.deeplearning4j.nn.api.Updater u=net.getUpdater();
+  Field f=MultiLayerUpdater.class.getDeclaredField("layerUpdaters");
+  f.setAccessible(true);
+  org.deeplearning4j.nn.api.Updater[] updaters=(org.deeplearning4j.nn.api.Updater[])f.get(u);
+  assertNotNull(updaters);
+  assertEquals(6,updaters.length);
+  for (int i=0; i <= 5; i++) {
+    LayerUpdater lu=(LayerUpdater)updaters[i];
+    Map<String,GradientUpdater> guMap=lu.getUpdaterForVariable();
+    for (    Map.Entry<String,GradientUpdater> entry : guMap.entrySet()) {
+      if (i == 1 || i == 4) {
+        String param=entry.getKey();
+        if (BatchNormalizationParamInitializer.GLOBAL_MEAN.equals(param) || BatchNormalizationParamInitializer.GLOBAL_VAR.equals(param)) {
+          assertTrue(entry.getValue() instanceof NoOpUpdater);
+        }
+ else {
+          assertTrue(entry.getValue() instanceof RmsProp);
+        }
+      }
+ else {
+        assertTrue(entry.getValue() instanceof RmsProp);
+      }
+    }
+  }
+}
