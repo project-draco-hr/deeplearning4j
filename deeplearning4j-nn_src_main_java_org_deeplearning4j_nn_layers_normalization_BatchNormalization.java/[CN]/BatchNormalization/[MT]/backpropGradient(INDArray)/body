@@ -4,17 +4,23 @@
   int batchSize=epsilon.size(0);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
   INDArray gamma=null;
-  INDArray beta=null;
+  INDArray dGammaView;
+  INDArray dBetaView;
   if (layerConf.isLockGammaBeta()) {
+    int[] tempShape=new int[]{1,shape[1]};
+    dGammaView=Nd4j.createUninitialized(tempShape,'c');
+    dBetaView=Nd4j.createUninitialized(tempShape,'c');
   }
  else {
     gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
-    beta=getParam(BatchNormalizationParamInitializer.BETA);
+    dGammaView=gradientViews.get(BatchNormalizationParamInitializer.GAMMA);
+    dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
   }
   Gradient retGradient=new DefaultGradient();
-  INDArray dGammaView=gradientViews.get(BatchNormalizationParamInitializer.GAMMA);
-  INDArray dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
   if (helper != null) {
+    if (layerConf.isLockGammaBeta()) {
+      gamma=Nd4j.valueArrayOf(new int[]{1,shape[1]},layerConf.getGamma());
+    }
     Pair<Gradient,INDArray> ret=helper.backpropGradient(input,epsilon,shape,gamma,dGammaView,dBetaView,layerConf.getEps());
     if (ret != null) {
       return ret;
@@ -23,7 +29,13 @@
   if (epsilon.rank() == 2) {
     INDArray dGamma=epsilon.mul(xHat).sum(0);
     INDArray dBeta=epsilon.sum(0);
-    INDArray dxhat=epsilon.mulRowVector(gamma);
+    INDArray dxhat;
+    if (layerConf.isLockGammaBeta()) {
+      dxhat=epsilon.mul(layerConf.getGamma());
+    }
+ else {
+      dxhat=epsilon.mulRowVector(gamma);
+    }
     INDArray dLdVar=dxhat.mul(xMu).sum(0).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
     INDArray dxmu1=dxhat.sum(0).divi(std).negi();
     INDArray dxmu2=xMu.sum(0).muli(-2.0 / batchSize).muli(dLdVar);
@@ -39,7 +51,13 @@
     if (!Shape.strideDescendingCAscendingF(epsilon))     epsilon=epsilon.dup();
     INDArray dGamma=epsilon.mul(xHat).sum(0,2,3);
     INDArray dBeta=epsilon.sum(0,2,3);
-    INDArray dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,Nd4j.createUninitialized(epsilon.shape(),epsilon.ordering()),1));
+    INDArray dxhat;
+    if (layerConf.isLockGammaBeta()) {
+      dxhat=epsilon.mul(layerConf.getGamma());
+    }
+ else {
+      dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,Nd4j.createUninitialized(epsilon.shape(),epsilon.ordering()),1));
+    }
     INDArray temp=Transforms.pow(std,-3.0,true);
     INDArray dLdVar=dxhat.mul(xMu).sum(0,2,3).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
     int effectiveBatchSize=input.size(0) * input.size(2) * input.size(3);
