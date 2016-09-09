@@ -43,6 +43,9 @@
    fis=new FileInputStream(tempFileHuffman);
   writeEntry(fis,zipfile);
   fis.close();
+  ZipEntry config=new ZipEntry("config.json");
+  zipfile.putNextEntry(config);
+  writeEntry(new ByteArrayInputStream(vectors.getConfiguration().toJson().getBytes()),zipfile);
   zipfile.flush();
   zipfile.close();
 }

@@ -1,3 +1,26 @@
 {
-  return null;
+  File tmpFileSyn0=File.createTempFile("paravec","0");
+  File tmpFileSyn1=File.createTempFile("paravec","1");
+  File tmpFileH=File.createTempFile("paravec","h");
+  ZipFile zipFile=new ZipFile(file);
+  ZipEntry syn0=zipFile.getEntry("syn0.txt");
+  InputStream stream=zipFile.getInputStream(syn0);
+  Files.copy(stream,Paths.get(tmpFileSyn0.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry syn1=zipFile.getEntry("syn1.txt");
+  stream=zipFile.getInputStream(syn1);
+  Files.copy(stream,Paths.get(tmpFileSyn1.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry huffman=zipFile.getEntry("huffman.txt");
+  stream=zipFile.getInputStream(huffman);
+  Files.copy(stream,Paths.get(tmpFileH.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry config=zipFile.getEntry("config.json");
+  stream=zipFile.getInputStream(config);
+  StringBuilder builder=new StringBuilder();
+  try (BufferedReader reader=new BufferedReader(new InputStreamReader(stream))){
+    String line;
+    while ((line=reader.readLine()) != null) {
+      builder.append(line);
+    }
+  }
+   VectorsConfiguration configuration=VectorsConfiguration.fromJson(builder.toString().trim());
+  return readParagraphVectorsFromText(tmpFileSyn0,tmpFileSyn1,tmpFileH,configuration);
 }
