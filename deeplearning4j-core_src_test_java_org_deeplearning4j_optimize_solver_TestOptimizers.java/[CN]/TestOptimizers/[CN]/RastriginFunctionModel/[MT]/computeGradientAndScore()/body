@@ -4,7 +4,7 @@
   gradient.muli(20 * Math.PI);
   gradient.addi(parameters.mul(2));
   Gradient g=new DefaultGradient();
-  g.gradientForVariable().put("x",gradient);
+  g.gradientForVariable().put("W",gradient);
   this.gradient=g;
   INDArray paramExceeds512=parameters.cond(new Condition(){
     @Override public int condtionNum(){

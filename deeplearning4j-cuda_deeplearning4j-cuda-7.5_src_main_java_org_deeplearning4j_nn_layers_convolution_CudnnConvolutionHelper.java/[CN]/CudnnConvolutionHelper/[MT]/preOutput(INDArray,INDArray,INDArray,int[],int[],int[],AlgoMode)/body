@@ -7,6 +7,7 @@
   int kH=weights.size(2);
   int kW=weights.size(3);
   int[] srcStride=input.stride();
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
   checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,inDepth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));
   checkCudnn(cudnnSetFilter4dDescriptor(cudnnContext.filterDesc,dataType,tensorFormat,outDepth,inDepth,kH,kW));
   checkCudnn(cudnnSetConvolution2dDescriptor(cudnnContext.convDesc,pad[0],pad[1],strides[0],strides[1],1,1,CUDNN_CROSS_CORRELATION));

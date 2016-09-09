@@ -6,6 +6,6 @@
     INDArray[] lMask=(dataSet.getLabelsMaskArray() != null ? new INDArray[]{dataSet.getLabelsMaskArray()} : null);
     setLayerMaskArrays(fMask,lMask);
   }
-  fit(new INDArray[]{dataSet.getFeatureMatrix()},new INDArray[]{dataSet.getLabels()});
+  fit(new INDArray[]{dataSet.getFeatures()},new INDArray[]{dataSet.getLabels()});
   if (hasMaskArrays)   clearLayerMaskArrays();
 }

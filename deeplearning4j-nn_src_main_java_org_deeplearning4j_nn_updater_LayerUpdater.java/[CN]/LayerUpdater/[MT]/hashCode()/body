@@ -1,0 +1,5 @@
+{
+  int result=19;
+  result=31 * result + (updaterForVariable == null ? 0 : updaterForVariable.hashCode());
+  return result;
+}

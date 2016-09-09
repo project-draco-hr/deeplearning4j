@@ -17,5 +17,6 @@
     if (stats == null)     stats=result.getSparkTrainingStats();
  else     stats.addOtherTrainingStats(result.getSparkTrainingStats());
   }
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   return new ParameterAveragingAggregationTuple(params,updaterStateSum,scoreSum,tuple.getAggregationsCount() + 1,stats);
 }

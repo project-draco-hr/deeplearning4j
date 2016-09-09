@@ -1,0 +1,10 @@
+{
+switch (paramName) {
+case ConvolutionParamInitializer.WEIGHT_KEY:
+    return l2;
+case ConvolutionParamInitializer.BIAS_KEY:
+  return 0.0;
+default :
+throw new IllegalArgumentException("Unknown parameter name: \"" + paramName + "\"");
+}
+}
