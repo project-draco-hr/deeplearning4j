@@ -36,6 +36,7 @@
       codes.add(Integer.parseInt(split[i]));
     }
     word.setCodes(codes);
+    word.setCodeLength(codes.size());
   }
   reader.close();
   ParagraphVectors d2v=new ParagraphVectors.Builder(configuration).vocabCache(vocab).lookupTable(lookupTable).resetModel(false).build();
