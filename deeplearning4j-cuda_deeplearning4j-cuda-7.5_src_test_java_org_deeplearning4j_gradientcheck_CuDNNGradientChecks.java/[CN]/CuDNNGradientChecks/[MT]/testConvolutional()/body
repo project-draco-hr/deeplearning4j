@@ -2,8 +2,8 @@
   String[] activFns={"sigmoid","tanh"};
   boolean[] characteristic={false,true};
   int[] minibatchSizes={1,4};
-  int width=5;
-  int height=5;
+  int width=6;
+  int height=6;
   int inputDepth=2;
   int nOut=3;
   Field f=org.deeplearning4j.nn.layers.convolution.ConvolutionLayer.class.getDeclaredField("helper");
@@ -12,12 +12,12 @@
   for (  String afn : activFns) {
     for (    boolean doLearningFirst : characteristic) {
       for (      int minibatchSize : minibatchSizes) {
-        INDArray input=Nd4j.rand(minibatchSize,inputDepth,height,width);
+        INDArray input=Nd4j.rand(new int[]{minibatchSize,inputDepth,height,width});
         INDArray labels=Nd4j.zeros(minibatchSize,nOut);
         for (int i=0; i < minibatchSize; i++) {
           labels.putScalar(i,r.nextInt(nOut),1.0);
         }
-        MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-1,1)).updater(Updater.NONE).seed(12345L).list().layer(0,new ConvolutionLayer.Builder(2,2).stride(1,1).padding(1,1).nOut(3).activation(afn).build()).layer(0,new ConvolutionLayer.Builder(2,2).stride(2,2).padding(0,0).nOut(3).activation(afn).build()).layer(1,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nOut(nOut).build()).setInputType(InputType.convolutionalFlat(1,4,1)).pretrain(false).backprop(true);
+        MultiLayerConfiguration.Builder builder=new NeuralNetConfiguration.Builder().regularization(false).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).weightInit(WeightInit.DISTRIBUTION).dist(new UniformDistribution(-1,1)).updater(Updater.NONE).seed(12345L).list().layer(0,new ConvolutionLayer.Builder(2,2).stride(2,2).padding(1,1).nOut(3).activation(afn).build()).layer(1,new ConvolutionLayer.Builder(2,2).stride(2,2).padding(0,0).nOut(3).activation(afn).build()).layer(2,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax").nOut(nOut).build()).setInputType(InputType.convolutional(height,width,inputDepth)).pretrain(false).backprop(true);
         MultiLayerConfiguration conf=builder.build();
         MultiLayerNetwork mln=new MultiLayerNetwork(conf);
         mln.init();

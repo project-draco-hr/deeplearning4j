@@ -15,8 +15,8 @@
   mln.init();
   Field f=org.deeplearning4j.nn.layers.normalization.LocalResponseNormalization.class.getDeclaredField("helper");
   f.setAccessible(true);
-  org.deeplearning4j.nn.layers.normalization.LocalResponseNormalization b=(org.deeplearning4j.nn.layers.normalization.LocalResponseNormalization)mln.getLayer(1);
-  LocalResponseNormalizationHelper lrn=(LocalResponseNormalizationHelper)f.get(b);
+  org.deeplearning4j.nn.layers.normalization.LocalResponseNormalization l=(org.deeplearning4j.nn.layers.normalization.LocalResponseNormalization)mln.getLayer(1);
+  LocalResponseNormalizationHelper lrn=(LocalResponseNormalizationHelper)f.get(l);
   assertTrue(lrn instanceof CudnnLocalResponseNormalizationHelper);
   if (PRINT_RESULTS) {
     for (int j=0; j < mln.getnLayers(); j++)     System.out.println("Layer " + j + " # params: "+ mln.getLayer(j).numParams());
