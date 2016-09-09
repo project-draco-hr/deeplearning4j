@@ -20,11 +20,11 @@
   while ((line=reader.readLine()) != null) {
     String[] split=line.split(" ");
     VocabWord word=vocab.wordFor(split[0]);
-    List<Integer> codes=new ArrayList<>();
+    List<Integer> points=new ArrayList<>();
     for (int i=1; i < split.length; i++) {
-      codes.add(Integer.parseInt(split[i]));
+      points.add(Integer.parseInt(split[i]));
     }
-    word.setCodes(codes);
+    word.setPoints(points);
   }
   reader.close();
   ParagraphVectors d2v=new ParagraphVectors.Builder(configuration).vocabCache(vocab).lookupTable(lookupTable).resetModel(false).build();
