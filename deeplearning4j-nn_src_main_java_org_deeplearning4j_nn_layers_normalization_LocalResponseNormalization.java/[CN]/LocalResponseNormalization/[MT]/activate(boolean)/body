@@ -10,19 +10,19 @@
       return activations;
     }
   }
-  int channel=input.shape()[1];
+  int channel=input.size(1);
   INDArray tmp, addVal;
   INDArray activitySqr=input.mul(input);
   INDArray sumPart=activitySqr.dup();
   for (int i=1; i < halfN + 1; i++) {
-    tmp=sumPart.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()});
-    addVal=activitySqr.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()});
+    tmp=sumPart.get(NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all());
+    addVal=activitySqr.get(NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all());
     sumPart.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()},tmp.addi(addVal));
-    tmp=sumPart.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()});
-    addVal=activitySqr.get(new INDArrayIndex[]{NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all()});
+    tmp=sumPart.get(NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all());
+    addVal=activitySqr.get(NDArrayIndex.all(),interval(i,channel),NDArrayIndex.all(),NDArrayIndex.all());
     sumPart.put(new INDArrayIndex[]{NDArrayIndex.all(),interval(0,channel - i),NDArrayIndex.all(),NDArrayIndex.all()},tmp.addi(addVal));
   }
-  unitScale=sumPart.mul(alpha).add(k);
+  unitScale=sumPart.mul(alpha).addi(k);
   scale=Transforms.pow(unitScale,-beta);
   activations=input.mul(scale);
   return activations;
