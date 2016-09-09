@@ -16,7 +16,7 @@
   reader.close();
   INDArray syn1=Nd4j.vstack(rows);
   lookupTable.setSyn1(syn1);
-  reader=new BufferedReader(new FileReader(hs_mapping));
+  reader=new BufferedReader(new FileReader(h_points));
   while ((line=reader.readLine()) != null) {
     String[] split=line.split(" ");
     VocabWord word=vocab.wordFor(split[0]);
@@ -25,6 +25,17 @@
       points.add(Integer.parseInt(split[i]));
     }
     word.setPoints(points);
+  }
+  reader.close();
+  reader=new BufferedReader(new FileReader(h_codes));
+  while ((line=reader.readLine()) != null) {
+    String[] split=line.split(" ");
+    VocabWord word=vocab.wordFor(split[0]);
+    List<Integer> codes=new ArrayList<>();
+    for (int i=1; i < split.length; i++) {
+      codes.add(Integer.parseInt(split[i]));
+    }
+    word.setCodes(codes);
   }
   reader.close();
   ParagraphVectors d2v=new ParagraphVectors.Builder(configuration).vocabCache(vocab).lookupTable(lookupTable).resetModel(false).build();

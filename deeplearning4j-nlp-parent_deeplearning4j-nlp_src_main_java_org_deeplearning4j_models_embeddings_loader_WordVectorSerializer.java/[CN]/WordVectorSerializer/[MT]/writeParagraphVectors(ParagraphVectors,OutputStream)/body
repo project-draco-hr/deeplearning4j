@@ -26,6 +26,23 @@
   fis=new FileInputStream(tempFileSyn1);
   writeEntry(fis,zipfile);
   fis.close();
+  File tempFileCodes=File.createTempFile("paravec","h");
+  tempFileCodes.deleteOnExit();
+  ZipEntry hC=new ZipEntry("codes.txt");
+  zipfile.putNextEntry(hC);
+  try (PrintWriter writer=new PrintWriter(new FileWriter(tempFileCodes))){
+    for (int i=0; i < vectors.getVocab().numWords(); i++) {
+      VocabWord word=vectors.getVocab().elementAtIndex(i);
+      StringBuilder builder=new StringBuilder(word.getLabel()).append(" ");
+      for (      int code : word.getCodes()) {
+        builder.append(code).append(" ");
+      }
+      writer.println(builder.toString().trim());
+    }
+  }
+   fis=new FileInputStream(tempFileCodes);
+  writeEntry(fis,zipfile);
+  fis.close();
   File tempFileHuffman=File.createTempFile("paravec","h");
   tempFileHuffman.deleteOnExit();
   ZipEntry hP=new ZipEntry("huffman.txt");
