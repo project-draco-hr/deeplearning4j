@@ -2,6 +2,9 @@
   File tmpFileSyn0=File.createTempFile("paravec","0");
   File tmpFileSyn1=File.createTempFile("paravec","1");
   File tmpFileH=File.createTempFile("paravec","h");
+  tmpFileSyn0.deleteOnExit();
+  tmpFileSyn1.deleteOnExit();
+  tmpFileH.deleteOnExit();
   ZipFile zipFile=new ZipFile(file);
   ZipEntry syn0=zipFile.getEntry("syn0.txt");
   InputStream stream=zipFile.getInputStream(syn0);

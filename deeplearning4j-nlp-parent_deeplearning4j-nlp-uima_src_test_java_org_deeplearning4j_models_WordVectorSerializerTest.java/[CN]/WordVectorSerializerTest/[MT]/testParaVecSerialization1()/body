@@ -1,0 +1,40 @@
+{
+  VectorsConfiguration configuration=new VectorsConfiguration();
+  configuration.setIterations(14123);
+  configuration.setLayersSize(156);
+  INDArray syn0=Nd4j.rand(100,configuration.getLayersSize());
+  INDArray syn1=Nd4j.rand(100,configuration.getLayersSize());
+  AbstractCache<VocabWord> cache=new AbstractCache.Builder<VocabWord>().build();
+  for (int i=0; i < 100; i++) {
+    VocabWord word=new VocabWord(1.0f,"word_" + i);
+    List<Integer> points=new ArrayList<>();
+    for (int x=0; x < 10; x++) {
+      points.add(org.apache.commons.lang3.RandomUtils.nextInt(1,100000));
+    }
+    word.setIndex(i);
+    word.setPoints(points);
+    cache.addToken(word);
+    cache.addWordToIndex(i,word.getLabel());
+  }
+  InMemoryLookupTable<VocabWord> lookupTable=(InMemoryLookupTable<VocabWord>)new InMemoryLookupTable.Builder<VocabWord>().vectorLength(configuration.getLayersSize()).cache(cache).build();
+  lookupTable.setSyn0(syn0);
+  lookupTable.setSyn1(syn1);
+  ParagraphVectors originalVectors=new ParagraphVectors.Builder(configuration).vocabCache(cache).lookupTable(lookupTable).build();
+  File tempFile=File.createTempFile("paravec","tests");
+  tempFile.deleteOnExit();
+  WordVectorSerializer.writeParagraphVectors(originalVectors,tempFile);
+  ParagraphVectors restoredVectors=WordVectorSerializer.readParagraphVectors(tempFile);
+  InMemoryLookupTable<VocabWord> restoredLookupTable=(InMemoryLookupTable<VocabWord>)restoredVectors.getLookupTable();
+  AbstractCache<VocabWord> restoredVocab=(AbstractCache<VocabWord>)restoredVectors.getVocab();
+  assertEquals(restoredLookupTable.getSyn0(),lookupTable.getSyn0());
+  assertEquals(restoredLookupTable.getSyn1(),lookupTable.getSyn1());
+  for (int i=0; i < cache.numWords(); i++) {
+    assertEquals(cache.wordAtIndex(i),restoredVocab.wordAtIndex(i));
+    List<Integer> originalPoints=cache.elementAtIndex(i).getPoints();
+    List<Integer> restoredPoints=restoredVocab.elementAtIndex(i).getPoints();
+    assertEquals(originalPoints.size(),restoredPoints.size());
+    for (int x=0; x < originalPoints.size(); x++) {
+      assertEquals(originalPoints.get(x),restoredPoints.get(x));
+    }
+  }
+}

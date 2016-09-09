@@ -2,13 +2,13 @@
   ZipOutputStream zipfile=new ZipOutputStream(new CloseShieldOutputStream(stream));
   ZipEntry syn0=new ZipEntry("syn0.txt");
   zipfile.putNextEntry(syn0);
-  File tempFileSyn0=File.createTempFile("pv","0");
+  File tempFileSyn0=File.createTempFile("paravec","0");
   tempFileSyn0.deleteOnExit();
   writeWordVectors(vectors.lookupTable(),tempFileSyn0);
   FileInputStream fis=new FileInputStream(tempFileSyn0);
   writeEntry(fis,zipfile);
   fis.close();
-  File tempFileSyn1=File.createTempFile("pv","1");
+  File tempFileSyn1=File.createTempFile("paravec","1");
   tempFileSyn1.deleteOnExit();
   INDArray syn1=((InMemoryLookupTable<VocabWord>)vectors.getLookupTable()).getSyn1();
   try (PrintWriter writer=new PrintWriter(new FileWriter(tempFileSyn1))){
@@ -26,7 +26,7 @@
   fis=new FileInputStream(tempFileSyn1);
   writeEntry(fis,zipfile);
   fis.close();
-  File tempFileHuffman=File.createTempFile("pv","h");
+  File tempFileHuffman=File.createTempFile("paravec","h");
   tempFileHuffman.deleteOnExit();
   ZipEntry hP=new ZipEntry("huffman.txt");
   zipfile.putNextEntry(hP);
