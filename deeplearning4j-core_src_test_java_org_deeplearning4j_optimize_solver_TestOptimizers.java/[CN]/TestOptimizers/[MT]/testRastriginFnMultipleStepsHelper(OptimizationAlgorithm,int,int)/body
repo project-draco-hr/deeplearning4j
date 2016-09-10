@@ -2,7 +2,7 @@
   double[] scores=new double[nOptIter + 1];
   for (int i=0; i <= nOptIter; i++) {
     NeuralNetConfiguration conf=new NeuralNetConfiguration.Builder().maxNumLineSearchIterations(maxNumLineSearchIter).iterations(i).miniBatch(false).learningRate(1e-2).layer(new DenseLayer.Builder().nIn(1).nOut(1).updater(Updater.ADAGRAD).build()).build();
-    conf.addVariable("x");
+    conf.addVariable("W");
     Model m=new RastriginFunctionModel(100,conf);
     int nParams=m.numParams();
     if (i == 0) {

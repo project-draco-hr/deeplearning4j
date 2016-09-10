@@ -1,4 +1,4 @@
 {
-  inputType=InputType.convolutional(height,width,depth);
+  this.cnnInputSize=new int[]{height,width,depth};
   return this;
 }

@@ -4,10 +4,11 @@
   NetBroadcastTuple tuple=broadcast.getValue();
   if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
   ComputationGraph net=new ComputationGraph(tuple.getGraphConfiguration());
-  net.init(tuple.getParameters(),true);
+  net.init(tuple.getParameters().unsafeDuplication(),true);
   if (tuple.getUpdaterState() != null) {
-    net.setUpdater(new ComputationGraphUpdater(net,tuple.getUpdaterState().dup()));
+    net.setUpdater(new ComputationGraphUpdater(net,tuple.getUpdaterState().unsafeDuplication()));
   }
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   if (configuration.isCollectTrainingStats())   stats.logInitEnd();
   return net;
 }

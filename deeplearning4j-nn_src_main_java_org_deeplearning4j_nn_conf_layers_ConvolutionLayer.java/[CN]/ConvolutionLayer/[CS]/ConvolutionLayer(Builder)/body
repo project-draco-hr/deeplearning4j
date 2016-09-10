@@ -7,4 +7,5 @@
   this.stride=builder.stride;
   if (builder.padding.length != 2)   throw new IllegalArgumentException("Padding should include padding for rows and columns (a 2d array)");
   this.padding=builder.padding;
+  this.cudnnAlgoMode=builder.cudnnAlgoMode;
 }

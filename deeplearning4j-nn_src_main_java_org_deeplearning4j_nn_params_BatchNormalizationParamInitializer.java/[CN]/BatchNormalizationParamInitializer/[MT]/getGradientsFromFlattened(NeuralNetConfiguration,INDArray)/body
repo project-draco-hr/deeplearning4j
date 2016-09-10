@@ -1,10 +1,16 @@
 {
   BatchNormalization layer=(BatchNormalization)conf.getLayer();
   int nOut=layer.getNOut();
-  INDArray gammaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
-  INDArray betaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
   Map<String,INDArray> out=new LinkedHashMap<>();
-  out.put(GAMMA,gammaView);
-  out.put(BETA,betaView);
+  int meanOffset=0;
+  if (!layer.isLockGammaBeta()) {
+    INDArray gammaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(0,nOut));
+    INDArray betaView=gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(nOut,2 * nOut));
+    out.put(GAMMA,gammaView);
+    out.put(BETA,betaView);
+    meanOffset=2 * nOut;
+  }
+  out.put(GLOBAL_MEAN,gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(meanOffset,meanOffset + nOut)));
+  out.put(GLOBAL_VAR,gradientView.get(NDArrayIndex.point(0),NDArrayIndex.interval(meanOffset + nOut,meanOffset + 2 * nOut)));
   return out;
 }

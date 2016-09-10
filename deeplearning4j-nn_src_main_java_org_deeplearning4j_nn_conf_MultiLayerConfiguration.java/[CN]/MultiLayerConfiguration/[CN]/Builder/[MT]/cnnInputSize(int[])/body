@@ -1,6 +1,6 @@
 {
   if (cnnInputSize != null) {
-    inputType=InputType.convolutional(cnnInputSize[0],cnnInputSize[1],cnnInputSize[2]);
+    this.cnnInputSize=cnnInputSize;
   }
   return this;
 }

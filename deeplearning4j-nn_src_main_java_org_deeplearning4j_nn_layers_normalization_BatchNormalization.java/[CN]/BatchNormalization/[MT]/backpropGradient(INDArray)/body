@@ -1,13 +1,28 @@
 {
   INDArray nextEpsilon;
-  shape=getShape(epsilon);
+  int[] shape=getShape(epsilon);
   int batchSize=epsilon.size(0);
   org.deeplearning4j.nn.conf.layers.BatchNormalization layerConf=layerConf();
-  INDArray gamma=(layerConf.isLockGammaBeta()) ? Nd4j.ones(shape) : getParam(BatchNormalizationParamInitializer.GAMMA);
+  INDArray gamma=null;
+  INDArray dGammaView;
+  INDArray dBetaView;
+  INDArray dGlobalMeanView=gradientViews.get(BatchNormalizationParamInitializer.GLOBAL_MEAN);
+  INDArray dGlobalVarView=gradientViews.get(BatchNormalizationParamInitializer.GLOBAL_VAR);
+  if (layerConf.isLockGammaBeta()) {
+    int[] tempShape=new int[]{1,shape[1]};
+    dGammaView=Nd4j.createUninitialized(tempShape,'c');
+    dBetaView=Nd4j.createUninitialized(tempShape,'c');
+  }
+ else {
+    gamma=getParam(BatchNormalizationParamInitializer.GAMMA);
+    dGammaView=gradientViews.get(BatchNormalizationParamInitializer.GAMMA);
+    dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
+  }
   Gradient retGradient=new DefaultGradient();
-  INDArray dGammaView=gradientViews.get(BatchNormalizationParamInitializer.GAMMA);
-  INDArray dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
-  if (helper != null) {
+  if (helper != null && epsilon.rank() == 4) {
+    if (layerConf.isLockGammaBeta()) {
+      gamma=Nd4j.valueArrayOf(new int[]{1,shape[1]},layerConf.getGamma());
+    }
     Pair<Gradient,INDArray> ret=helper.backpropGradient(input,epsilon,shape,gamma,dGammaView,dBetaView,layerConf.getEps());
     if (ret != null) {
       return ret;
@@ -16,36 +31,55 @@
   if (epsilon.rank() == 2) {
     INDArray dGamma=epsilon.mul(xHat).sum(0);
     INDArray dBeta=epsilon.sum(0);
-    INDArray dxhat=epsilon.mulRowVector(gamma);
-    INDArray dsq=dxhat.mul(xMu).sum(0).mul(0.5).div(Transforms.pow(std,3)).neg().div(batchSize);
-    INDArray dxmu1=dxhat.divRowVector(std);
-    INDArray dxmu2=xMu.mul(2).mulRowVector(dsq);
-    INDArray dx1=dxmu1.add(dxmu2);
-    INDArray dmu=dx1.sum(0).neg();
-    INDArray dx2=dmu.div(batchSize);
-    nextEpsilon=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dx1,dx2,dx1.dup(),-1));
-    INDArray r=xMu.divRowVector(Transforms.pow(std,2)).mulRowVector(epsilon.mul(xMu).sum(0));
-    INDArray otherEp=epsilon.mul(2).subRowVector(dBeta).mulRowVector(gamma.div(std.mul(2))).sub(r);
+    INDArray dxhat;
+    if (layerConf.isLockGammaBeta()) {
+      dxhat=epsilon.mul(layerConf.getGamma());
+    }
+ else {
+      dxhat=epsilon.mulRowVector(gamma);
+    }
+    INDArray dLdVar=dxhat.mul(xMu).sum(0).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
+    INDArray dxmu1=dxhat.sum(0).divi(std).negi();
+    INDArray dxmu2=xMu.sum(0).muli(-2.0 / batchSize).muli(dLdVar);
+    INDArray dLdmu=dxmu1.addi(dxmu2);
+    INDArray dLdx=dxhat.diviRowVector(std).addi(xMu.muliRowVector(dLdVar.muli(2.0 / batchSize))).addiRowVector(dLdmu.muli(1.0 / batchSize));
     dGammaView.assign(dGamma);
     dBetaView.assign(dBeta);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGammaView);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,dBetaView);
+    dGlobalMeanView.assign(0);
+    dGlobalVarView.assign(0);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GLOBAL_MEAN,dGlobalMeanView);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GLOBAL_VAR,dGlobalVarView);
+    nextEpsilon=dLdx;
   }
  else   if (epsilon.rank() == 4) {
+    if (!Shape.strideDescendingCAscendingF(epsilon))     epsilon=epsilon.dup();
     INDArray dGamma=epsilon.mul(xHat).sum(0,2,3);
     INDArray dBeta=epsilon.sum(0,2,3);
-    INDArray dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,epsilon.dup(),1));
-    INDArray dsq=dxhat.mul(xMu).sum(0).mul(0.5).div(Transforms.pow(std,3)).neg().div(batchSize);
-    INDArray dxmu1=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(dxhat,std,dxhat,new int[]{1,2,3}));
-    INDArray dxmu2=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xMu.mul(2),dsq,xMu.mul(2),new int[]{1,2,3}));
-    INDArray dx1=dxmu1.add(dxmu2);
-    INDArray dmu=dx1.sum(0).neg();
-    INDArray dx2=dmu.div(batchSize);
-    nextEpsilon=Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dx1,dx2,dx1.dup(),new int[]{1,2,3}));
+    INDArray dxhat;
+    if (layerConf.isLockGammaBeta()) {
+      dxhat=epsilon.mul(layerConf.getGamma());
+    }
+ else {
+      dxhat=Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(epsilon,gamma,Nd4j.createUninitialized(epsilon.shape(),epsilon.ordering()),1));
+    }
+    INDArray dLdVar=dxhat.mul(xMu).sum(0,2,3).muli(-0.5).muli(Transforms.pow(std,-3.0,true));
+    int effectiveBatchSize=input.size(0) * input.size(2) * input.size(3);
+    INDArray dxmu1=dxhat.sum(0,2,3).divi(std).negi();
+    INDArray dxmu2=xMu.sum(0,2,3).muli(-2.0 / effectiveBatchSize).muli(dLdVar);
+    INDArray dLdmu=dxmu1.addi(dxmu2);
+    INDArray dLdx=Nd4j.getExecutioner().execAndReturn(new BroadcastDivOp(dxhat,std,dxhat,1)).addi(Nd4j.getExecutioner().execAndReturn(new BroadcastMulOp(xMu,dLdVar.muli(2.0 / effectiveBatchSize),xMu,1)));
+    Nd4j.getExecutioner().execAndReturn(new BroadcastAddOp(dLdx,dLdmu.muli(1.0 / effectiveBatchSize),dLdx,1));
     dGammaView.assign(dGamma);
     dBetaView.assign(dBeta);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.GAMMA,dGammaView);
     retGradient.setGradientFor(BatchNormalizationParamInitializer.BETA,dBetaView);
+    dGlobalMeanView.assign(0);
+    dGlobalVarView.assign(0);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GLOBAL_MEAN,dGlobalMeanView);
+    retGradient.setGradientFor(BatchNormalizationParamInitializer.GLOBAL_VAR,dGlobalVarView);
+    nextEpsilon=dLdx;
   }
  else {
     throw new IllegalStateException("The layer prior to BatchNorm in the configuration is not currently supported.");

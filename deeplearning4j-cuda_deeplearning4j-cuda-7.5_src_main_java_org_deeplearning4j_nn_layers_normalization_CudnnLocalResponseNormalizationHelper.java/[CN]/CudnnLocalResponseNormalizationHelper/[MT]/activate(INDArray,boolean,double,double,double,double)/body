@@ -13,6 +13,7 @@
   CudaContext context=allocator.getFlowController().prepareAction(input,activations);
   Pointer srcData=allocator.getPointer(input,context);
   Pointer dstData=allocator.getPointer(activations,context);
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
   checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
   checkCudnn(cudnnLRNCrossChannelForward(cudnnContext,cudnnContext.lrnDesc,CUDNN_LRN_CROSS_CHANNEL_DIM1,this.alpha,cudnnContext.srcTensorDesc,srcData,this.beta,cudnnContext.dstTensorDesc,dstData));
   allocator.registerAction(context,input,activations);

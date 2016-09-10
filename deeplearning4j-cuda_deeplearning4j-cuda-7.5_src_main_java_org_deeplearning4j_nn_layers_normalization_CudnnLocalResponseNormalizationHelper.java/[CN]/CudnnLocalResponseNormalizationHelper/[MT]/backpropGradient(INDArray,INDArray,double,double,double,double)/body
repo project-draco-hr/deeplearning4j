@@ -9,6 +9,7 @@
   }
   int[] srcStride=input.stride();
   int[] deltaStride=epsilon.stride();
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
   checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,depth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));
   checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.deltaTensorDesc,dataType,miniBatch,depth,inH,inW,deltaStride[0],deltaStride[1],deltaStride[2],deltaStride[3]));
   checkCudnn(cudnnSetLRNDescriptor(cudnnContext.lrnDesc,(int)n,alpha,beta,k));

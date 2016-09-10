@@ -1,0 +1,15 @@
+{
+switch (paramName) {
+case DefaultParamInitializer.WEIGHT_KEY:
+    return learningRate;
+case DefaultParamInitializer.BIAS_KEY:
+  if (!Double.isNaN(biasLearningRate)) {
+    return biasLearningRate;
+  }
+ else {
+    return learningRate;
+  }
+default :
+throw new IllegalStateException("Unknown parameter: \"" + paramName + "\"");
+}
+}
