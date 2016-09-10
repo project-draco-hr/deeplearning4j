@@ -4,7 +4,7 @@
   NetBroadcastTuple tuple=broadcast.getValue();
   if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
   MultiLayerNetwork net=new MultiLayerNetwork(tuple.getConfiguration());
-  net.init(tuple.getParameters().unsafeDuplication(),true);
+  net.init(tuple.getParameters().unsafeDuplication(),false);
   if (tuple.getUpdaterState() != null) {
     net.setUpdater(new MultiLayerUpdater(net,tuple.getUpdaterState().unsafeDuplication()));
   }
