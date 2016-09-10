@@ -4,9 +4,13 @@
   labels.addAll(sequence.getSequenceLabels());
   if (sequence.getSequenceLabel() == null)   throw new IllegalStateException("Label is NULL");
   if (seq.isEmpty() || labels.isEmpty())   return 0;
+  List<INDArray> labelArrays=new ArrayList<>();
+  for (  T label : labels) {
+    labelArrays.add(syn0.getRow(label.getIndex()));
+  }
   for (int i=0; i < seq.size(); i++) {
     nextRandom.set(Math.abs(nextRandom.get() * 25214903917L + 11));
-    dm(i,seq,(int)nextRandom.get() % window,nextRandom,learningRate);
+    dm(i,seq,(int)nextRandom.get() % window,nextRandom,learningRate,labelArrays,false);
   }
   return 0;
 }
