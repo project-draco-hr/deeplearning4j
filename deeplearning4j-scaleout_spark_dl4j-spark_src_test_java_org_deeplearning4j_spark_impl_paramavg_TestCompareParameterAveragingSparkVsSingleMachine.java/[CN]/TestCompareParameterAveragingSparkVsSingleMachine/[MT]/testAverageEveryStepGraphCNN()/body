@@ -5,7 +5,7 @@
     JavaSparkContext sc=getContext(nWorkers);
     try {
       int[] seeds={1,2,3};
-      MultiLayerNetwork net=new MultiLayerNetwork(getConfCNN(12345,Updater.SGD));
+      ComputationGraph net=new ComputationGraph(getGraphConfCNN(12345,Updater.SGD));
       net.init();
       INDArray initialParams=net.params().dup();
       for (int i=0; i < seeds.length; i++) {
@@ -14,8 +14,8 @@
         net.fit(ds);
       }
       INDArray finalParams=net.params().dup();
-      ParameterAveragingTrainingMaster tm=new ParameterAveragingTrainingMaster.Builder(1).averagingFrequency(1).batchSizePerWorker(miniBatchSizePerWorker).saveUpdater(saveUpdater).workerPrefetchNumBatches(0).rddTrainingApproach(RDDTrainingApproach.Export).build();
-      SparkDl4jMultiLayer sparkNet=new SparkDl4jMultiLayer(sc,getConfCNN(12345,Updater.SGD),tm);
+      TrainingMaster tm=getTrainingMaster(1,miniBatchSizePerWorker,saveUpdater);
+      SparkComputationGraph sparkNet=new SparkComputationGraph(sc,getGraphConfCNN(12345,Updater.SGD),tm);
       sparkNet.setCollectTrainingStats(true);
       INDArray initialSparkParams=sparkNet.getNetwork().params().dup();
       for (int i=0; i < seeds.length; i++) {
@@ -25,10 +25,10 @@
       }
       System.out.println(sparkNet.getSparkTrainingStats().statsAsString());
       INDArray finalSparkParams=sparkNet.getNetwork().params().dup();
-      System.out.println("Initial (Local) params:       " + Arrays.toString(initialParams.data().asFloat()));
-      System.out.println("Initial (Spark) params:       " + Arrays.toString(initialSparkParams.data().asFloat()));
-      System.out.println("Final (Local) params: " + Arrays.toString(finalParams.data().asFloat()));
-      System.out.println("Final (Spark) params: " + Arrays.toString(finalSparkParams.data().asFloat()));
+      System.out.println("Initial (Local) params:  " + Arrays.toString(initialParams.data().asFloat()));
+      System.out.println("Initial (Spark) params:  " + Arrays.toString(initialSparkParams.data().asFloat()));
+      System.out.println("Final (Local) params:    " + Arrays.toString(finalParams.data().asFloat()));
+      System.out.println("Final (Spark) params:    " + Arrays.toString(finalSparkParams.data().asFloat()));
       assertArrayEquals(initialParams.data().asFloat(),initialSparkParams.data().asFloat(),1e-8f);
       assertArrayEquals(finalParams.data().asFloat(),finalSparkParams.data().asFloat(),1e-6f);
       double sparkScore=sparkNet.getScore();
