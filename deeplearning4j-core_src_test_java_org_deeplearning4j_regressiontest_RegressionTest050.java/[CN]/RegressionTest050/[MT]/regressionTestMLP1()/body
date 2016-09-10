@@ -16,6 +16,7 @@
   OutputLayer l1=(OutputLayer)conf.getConf(1).getLayer();
   assertEquals("softmax",l1.getActivationFunction());
   assertEquals(LossFunctions.LossFunction.MCXENT,l1.getLossFunction());
+  assertTrue(l1.getLossFn() instanceof LossMCXENT);
   assertEquals(4,l1.getNIn());
   assertEquals(5,l1.getNOut());
   assertEquals(WeightInit.XAVIER,l1.getWeightInit());

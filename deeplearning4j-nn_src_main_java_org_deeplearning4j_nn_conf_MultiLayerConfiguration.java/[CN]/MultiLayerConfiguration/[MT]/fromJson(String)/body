@@ -1,9 +1,75 @@
 {
+  MultiLayerConfiguration conf;
   ObjectMapper mapper=NeuralNetConfiguration.mapper();
   try {
-    return mapper.readValue(json,MultiLayerConfiguration.class);
+    conf=mapper.readValue(json,MultiLayerConfiguration.class);
   }
  catch (  IOException e) {
     throw new RuntimeException(e);
   }
+  int layerCount=0;
+  for (  NeuralNetConfiguration nnc : conf.getConfs()) {
+    Layer l=nnc.getLayer();
+    if (l instanceof BaseOutputLayer && ((BaseOutputLayer)l).getLossFn() == null) {
+      BaseOutputLayer ol=(BaseOutputLayer)l;
+      try {
+        JsonNode jsonNode=mapper.readTree(json);
+        JsonNode confs=jsonNode.get("confs");
+        if (confs instanceof ArrayNode) {
+          ArrayNode layerConfs=(ArrayNode)confs;
+          JsonNode outputLayerNNCNode=layerConfs.get(layerCount);
+          if (outputLayerNNCNode == null)           return conf;
+          JsonNode outputLayerNode=outputLayerNNCNode.get("layer");
+          JsonNode lossFunctionNode=null;
+          if (outputLayerNode.has("output")) {
+            lossFunctionNode=outputLayerNode.get("output").get("lossFunction");
+          }
+ else           if (outputLayerNode.has("rnnoutput")) {
+            lossFunctionNode=outputLayerNode.get("rnnoutput").get("lossFunction");
+          }
+          if (lossFunctionNode != null) {
+            String lossFunctionEnumStr=lossFunctionNode.asText();
+            LossFunctions.LossFunction lossFunction=null;
+            try {
+              lossFunction=LossFunctions.LossFunction.valueOf(lossFunctionEnumStr);
+            }
+ catch (            Exception e) {
+              log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not parse JSON",e);
+            }
+            if (lossFunction != null) {
+switch (lossFunction) {
+case MSE:
+                ol.setLossFn(new LossMSE());
+              break;
+case XENT:
+            ol.setLossFn(new LossBinaryXENT());
+          break;
+case NEGATIVELOGLIKELIHOOD:
+case MCXENT:
+        ol.setLossFn(new LossMCXENT());
+      break;
+case EXPLL:
+case RMSE_XENT:
+case SQUARED_LOSS:
+case RECONSTRUCTION_CROSSENTROPY:
+case CUSTOM:
+default :
+    log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not set loss function for {}",lossFunction);
+  break;
+}
+}
+}
+}
+ else {
+log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not parse JSON: layer 'confs' field is not an ArrayNode (is: {})",(confs != null ? confs.getClass() : null));
+}
+}
+ catch (IOException e) {
+log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not parse JSON",e);
+break;
+}
+}
+layerCount++;
+}
+return conf;
 }
