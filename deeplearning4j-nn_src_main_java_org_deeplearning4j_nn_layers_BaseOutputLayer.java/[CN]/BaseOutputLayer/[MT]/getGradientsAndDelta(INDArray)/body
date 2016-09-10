@@ -1,7 +1,6 @@
 {
-  Triple<Gradient,INDArray,INDArray> triple;
   ILossFunction lossFunction=layerConf().getLossFn();
-  INDArray delta=lossFunction.computeGradient(labels,preOut,layerConf().getActivationFunction(),maskArray);
+  INDArray delta=lossFunction.computeGradient(getLabels2d(),preOut,layerConf().getActivationFunction(),maskArray);
   INDArray output=Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(),preOut.dup()));
   Gradient gradient=new DefaultGradient();
   INDArray weightGradView=gradientViews.get(DefaultParamInitializer.WEIGHT_KEY);
