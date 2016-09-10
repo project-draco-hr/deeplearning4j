@@ -7,5 +7,5 @@
   gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY,weightGradView);
   gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY,biasGradView);
   Triple<Gradient,INDArray,INDArray> triple;
-  return triple;
+  return null;
 }

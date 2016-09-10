@@ -1,2 +1,24 @@
 {
+switch (lossFunction) {
+case MSE:
+    return lossFunction(new LossMSE());
+case EXPLL:
+  throw new UnsupportedOperationException("Not yet implemented");
+case XENT:
+return lossFunction(new LossBinaryXENT());
+case MCXENT:
+return lossFunction(new LossMCXENT());
+case RMSE_XENT:
+throw new UnsupportedOperationException("Not yet implemented");
+case SQUARED_LOSS:
+throw new UnsupportedOperationException("Not yet implemented");
+case RECONSTRUCTION_CROSSENTROPY:
+throw new UnsupportedOperationException("Not yet implemented");
+case NEGATIVELOGLIKELIHOOD:
+return lossFunction(new LossMCXENT());
+case CUSTOM:
+throw new UnsupportedOperationException("Not yet implemented");
+default :
+throw new IllegalStateException("Unknown loss function: " + lossFunction);
+}
 }

@@ -1,6 +1,5 @@
 {
   super(builder);
-  this.lossFunction=builder.lossFunction;
+  this.lossFn=builder.lossFn;
   this.customLossFunction=builder.customLossFunction;
-  this.iLossFunction=builder.ilossFunction;
 }
