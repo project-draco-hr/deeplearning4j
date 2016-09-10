@@ -3,5 +3,10 @@
   this.fullNetworkL1=fullNetworkL1;
   this.fullNetworkL2=fullNetworkL2;
   INDArray preOut=preOutput2d(training);
+  ILossFunction lossFunction=layerConf().getLossFn();
+  double score=lossFunction.computeScore(getLabels2d(),preOut,layerConf().getActivationFunction(),maskArray,false);
+  score+=fullNetworkL1 + fullNetworkL2;
+  score/=getInputMiniBatchSize();
+  this.score=score;
   return score;
 }
