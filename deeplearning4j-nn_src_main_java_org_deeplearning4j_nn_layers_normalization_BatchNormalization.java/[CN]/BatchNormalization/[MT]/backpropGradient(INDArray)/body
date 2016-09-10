@@ -19,7 +19,7 @@
     dBetaView=gradientViews.get(BatchNormalizationParamInitializer.BETA);
   }
   Gradient retGradient=new DefaultGradient();
-  if (helper != null) {
+  if (helper != null && epsilon.rank() == 4) {
     if (layerConf.isLockGammaBeta()) {
       gamma=Nd4j.valueArrayOf(new int[]{1,shape[1]},layerConf.getGamma());
     }
