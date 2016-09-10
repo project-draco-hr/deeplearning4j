@@ -1,0 +1,35 @@
+{
+  File tmpFileSyn0=File.createTempFile("word2vec","0");
+  File tmpFileSyn1=File.createTempFile("word2vec","1");
+  File tmpFileC=File.createTempFile("word2vec","c");
+  File tmpFileH=File.createTempFile("word2vec","h");
+  tmpFileSyn0.deleteOnExit();
+  tmpFileSyn1.deleteOnExit();
+  tmpFileH.deleteOnExit();
+  tmpFileC.deleteOnExit();
+  ZipFile zipFile=new ZipFile(file);
+  ZipEntry syn0=zipFile.getEntry("syn0.txt");
+  InputStream stream=zipFile.getInputStream(syn0);
+  Files.copy(stream,Paths.get(tmpFileSyn0.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry syn1=zipFile.getEntry("syn1.txt");
+  stream=zipFile.getInputStream(syn1);
+  Files.copy(stream,Paths.get(tmpFileSyn1.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry codes=zipFile.getEntry("codes.txt");
+  stream=zipFile.getInputStream(codes);
+  Files.copy(stream,Paths.get(tmpFileC.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry huffman=zipFile.getEntry("huffman.txt");
+  stream=zipFile.getInputStream(huffman);
+  Files.copy(stream,Paths.get(tmpFileH.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  ZipEntry config=zipFile.getEntry("config.json");
+  stream=zipFile.getInputStream(config);
+  StringBuilder builder=new StringBuilder();
+  try (BufferedReader reader=new BufferedReader(new InputStreamReader(stream))){
+    String line;
+    while ((line=reader.readLine()) != null) {
+      builder.append(line);
+    }
+  }
+   VectorsConfiguration configuration=VectorsConfiguration.fromJson(builder.toString().trim());
+  Word2Vec w2v=readWord2VecFromText(tmpFileSyn0,tmpFileSyn1,tmpFileC,tmpFileH,configuration);
+  return w2v;
+}
