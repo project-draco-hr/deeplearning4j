@@ -63,6 +63,13 @@
   ZipEntry config=new ZipEntry("config.json");
   zipfile.putNextEntry(config);
   writeEntry(new ByteArrayInputStream(vectors.getConfiguration().toJson().getBytes()),zipfile);
+  ZipEntry labels=new ZipEntry("labels.txt");
+  zipfile.putNextEntry(labels);
+  StringBuilder builder=new StringBuilder();
+  for (  VocabWord word : vectors.getVocab().tokens()) {
+    if (word.isLabel())     builder.append(word.getLabel()).append("\n");
+  }
+  writeEntry(new ByteArrayInputStream(builder.toString().trim().getBytes()),zipfile);
   zipfile.flush();
   zipfile.close();
 }
