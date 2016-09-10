@@ -1,0 +1,5 @@
+{
+  Nd4j.getRandom().setSeed(seed);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(0.5).weightInit(WeightInit.XAVIER).updater(updater).iterations(1).seed(seed).list().layer(0,new ConvolutionLayer.Builder().nOut(3).kernelSize(2,2).stride(1,1).padding(0,0).activation("tanh").build()).layer(1,new ConvolutionLayer.Builder().nOut(3).kernelSize(2,2).stride(1,1).padding(0,0).activation("tanh").build()).layer(1,new OutputLayer.Builder().lossFunction(LossFunctions.LossFunction.MSE).nOut(10).build()).setInputType(InputType.convolutional(10,10,3)).pretrain(false).backprop(true).build();
+  return conf;
+}
