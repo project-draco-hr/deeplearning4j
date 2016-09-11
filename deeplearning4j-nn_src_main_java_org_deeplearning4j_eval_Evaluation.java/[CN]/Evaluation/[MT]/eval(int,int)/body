@@ -3,7 +3,7 @@
   if (confusion == null) {
     throw new UnsupportedOperationException("Cannot evaluate single example without initializing confusion matrix first");
   }
-  addToConfusion(predictedIdx,actualIdx);
+  addToConfusion(actualIdx,predictedIdx);
   if (predictedIdx == actualIdx) {
     incrementTruePositives(predictedIdx);
     for (    Integer clazz : confusion.getClasses()) {

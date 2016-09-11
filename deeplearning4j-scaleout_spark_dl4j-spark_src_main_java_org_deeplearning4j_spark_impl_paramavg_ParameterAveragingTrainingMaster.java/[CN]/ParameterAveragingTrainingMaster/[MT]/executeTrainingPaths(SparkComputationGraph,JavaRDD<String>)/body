@@ -7,7 +7,7 @@
   if (collectTrainingStats)   stats.logCountEnd();
   int dataSetObjectsPerSplit=getNumDataSetObjectsPerSplit(rddDataSetNumExamples);
   if (collectTrainingStats)   stats.logSplitStart();
-  JavaRDD<String>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingDataPaths);
+  JavaRDD<String>[] splits=SparkUtils.balancedRandomSplit((int)totalDataSetObjectCount,dataSetObjectsPerSplit,trainingDataPaths,rng.nextLong());
   if (collectTrainingStats)   stats.logSplitEnd();
   int splitNum=1;
   for (  JavaRDD<String> split : splits) {

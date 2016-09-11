@@ -1,0 +1,44 @@
+{
+  Reflections reflections=new Reflections();
+  org.reflections.Store store=reflections.getStore();
+  List<String> classNames=new ArrayList<>();
+  for (  Class<?> c : baseClasses) {
+    classNames.add(c.getName());
+  }
+  Iterable<String> subtypesByName=store.getAll(org.reflections.scanners.SubTypesScanner.class.getSimpleName(),classNames);
+  Set<? extends Class<?>> subtypeClasses=Sets.newHashSet(ReflectionUtils.forNames(subtypesByName));
+  Set<Class<?>> registeredSubtypes=new HashSet<>();
+  for (  Class<?> c : baseClasses) {
+    AnnotatedClass ac=AnnotatedClass.construct(c,mapper.getSerializationConfig().getAnnotationIntrospector(),null);
+    Collection<NamedType> types=mapper.getSubtypeResolver().collectAndResolveSubtypes(ac,mapper.getSerializationConfig(),mapper.getSerializationConfig().getAnnotationIntrospector());
+    for (    NamedType nt : types) {
+      registeredSubtypes.add(nt.getType());
+    }
+  }
+  List<NamedType> toRegister=new ArrayList<>();
+  for (  Class<?> c : subtypeClasses) {
+    if (Modifier.isAbstract(c.getModifiers()) || Modifier.isInterface(c.getModifiers())) {
+      continue;
+    }
+    if (!registeredSubtypes.contains(c)) {
+      String name;
+      if (ClassUtils.isInnerClass(c)) {
+        Class<?> c2=c.getDeclaringClass();
+        name=c2.getSimpleName() + "$" + c.getSimpleName();
+      }
+ else {
+        name=c.getSimpleName();
+      }
+      toRegister.add(new NamedType(c,name));
+      if (log.isDebugEnabled()) {
+        for (        Class<?> baseClass : baseClasses) {
+          if (baseClass.isAssignableFrom(c)) {
+            log.debug("Registering class for JSON serialization: {} as subtype of {}",c.getName(),baseClass.getName());
+            break;
+          }
+        }
+      }
+    }
+  }
+  mapper.registerSubtypes(toRegister.toArray(new NamedType[toRegister.size()]));
+}

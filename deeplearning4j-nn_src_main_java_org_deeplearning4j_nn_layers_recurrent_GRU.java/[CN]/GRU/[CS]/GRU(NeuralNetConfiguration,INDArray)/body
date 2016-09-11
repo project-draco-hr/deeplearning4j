@@ -1,4 +1,0 @@
-{
-  super(conf,input);
-  throw new UnsupportedOperationException("GRU layer disabled: Backprop implementation is incorrect in this version. Consider using GravesLSTM instead");
-}

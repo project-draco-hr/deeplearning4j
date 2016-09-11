@@ -18,6 +18,7 @@ return input;
 default :
 return null;
 }
+if (Nd4j.getExecutioner() instanceof GridExecutioner) ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
 int[] srcStride=input.stride();
 checkCudnn(cudnnSetPooling2dDescriptor(cudnnContext.poolingDesc,poolingMode,CUDNN_PROPAGATE_NAN,kernel[0],kernel[1],pad[0],pad[1],strides[0],strides[1]));
 checkCudnn(cudnnSetTensor4dDescriptorEx(cudnnContext.srcTensorDesc,dataType,miniBatch,inDepth,inH,inW,srcStride[0],srcStride[1],srcStride[2],srcStride[3]));

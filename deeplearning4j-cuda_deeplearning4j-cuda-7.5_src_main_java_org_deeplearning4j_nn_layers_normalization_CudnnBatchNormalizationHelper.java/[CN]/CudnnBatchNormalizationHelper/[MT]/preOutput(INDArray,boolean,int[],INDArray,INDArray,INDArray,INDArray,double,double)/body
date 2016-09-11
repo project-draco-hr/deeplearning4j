@@ -18,6 +18,7 @@
   Pointer betaData=allocator.getPointer(beta,context);
   Pointer meanData=allocator.getPointer(mean,context);
   Pointer varData=allocator.getPointer(var,context);
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
   checkCudnn(cudnnSetStream(cudnnContext,new CUstream_st(context.getOldStream())));
   if (training) {
     if (meanCache.capacity() < mean.data().length() * mean.data().getElementSize()) {
