@@ -1,0 +1,5 @@
+{
+  File tmpFile=File.createTempFile("restore","paravec");
+  Files.copy(stream,Paths.get(tmpFile.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+  return readParagraphVectors(tmpFile);
+}

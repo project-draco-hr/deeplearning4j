@@ -4,6 +4,8 @@
   if (this.existingVectors != null) {
     this.trainElementsVectors=false;
     this.elementsLearningAlgorithm=null;
+    this.lookupTable=this.existingVectors.lookupTable();
+    this.vocabCache=this.existingVectors.vocab();
   }
   if (this.labelsSource == null)   this.labelsSource=new LabelsSource();
   if (docIter != null) {

@@ -1,0 +1,22 @@
+{
+  File tmpFileL=File.createTempFile("paravec","l");
+  tmpFileL.deleteOnExit();
+  Word2Vec w2v=readWord2Vec(file);
+  ParagraphVectors vectors=new ParagraphVectors.Builder(w2v.getConfiguration()).vocabCache(w2v.getVocab()).lookupTable(w2v.getLookupTable()).resetModel(false).build();
+  ZipFile zipFile=new ZipFile(file);
+  ZipEntry labels=zipFile.getEntry("labels.txt");
+  if (labels != null) {
+    InputStream stream=zipFile.getInputStream(labels);
+    Files.copy(stream,Paths.get(tmpFileL.getAbsolutePath()),StandardCopyOption.REPLACE_EXISTING);
+    try (BufferedReader reader=new BufferedReader(new FileReader(tmpFileL))){
+      String line;
+      while ((line=reader.readLine()) != null) {
+        VocabWord word=vectors.getVocab().tokenFor(line.trim());
+        if (word != null) {
+          word.markAsLabel(true);
+        }
+      }
+    }
+   }
+  return vectors;
+}
