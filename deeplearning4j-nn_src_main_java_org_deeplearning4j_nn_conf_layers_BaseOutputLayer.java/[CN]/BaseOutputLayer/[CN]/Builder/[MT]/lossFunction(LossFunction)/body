@@ -15,7 +15,7 @@ throw new UnsupportedOperationException("Not yet implemented");
 case RECONSTRUCTION_CROSSENTROPY:
 throw new UnsupportedOperationException("Not yet implemented");
 case NEGATIVELOGLIKELIHOOD:
-return lossFunction(new LossMCXENT());
+return lossFunction(new LossNegativeLogLikelihood());
 case CUSTOM:
 throw new UnsupportedOperationException("Not yet implemented");
 default :

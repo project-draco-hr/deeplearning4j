@@ -1,5 +1,8 @@
 {
-  if (lossFn instanceof LossMCXENT) {
+  if (lossFn instanceof LossNegativeLogLikelihood) {
+    return LossFunction.NEGATIVELOGLIKELIHOOD;
+  }
+ else   if (lossFn instanceof LossMCXENT) {
     return LossFunction.MCXENT;
   }
  else   if (lossFn instanceof LossMSE) {

@@ -24,7 +24,7 @@
   OutputLayer l2=(OutputLayer)conf.getConf(2).getLayer();
   assertEquals("sigmoid",l1.getActivationFunction());
   assertEquals(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD,l2.getLossFunction());
-  assertTrue(l2.getLossFn() instanceof LossMCXENT);
+  assertTrue(l2.getLossFn() instanceof LossNegativeLogLikelihood);
   assertEquals(26 * 26 * 3,l2.getNIn());
   assertEquals(5,l2.getNOut());
   assertEquals(WeightInit.RELU,l0.getWeightInit());

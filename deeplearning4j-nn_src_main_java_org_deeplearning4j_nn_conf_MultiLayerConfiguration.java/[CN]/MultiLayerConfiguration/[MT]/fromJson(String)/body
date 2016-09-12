@@ -45,17 +45,19 @@ case XENT:
             ol.setLossFn(new LossBinaryXENT());
           break;
 case NEGATIVELOGLIKELIHOOD:
-case MCXENT:
-        ol.setLossFn(new LossMCXENT());
+        ol.setLossFn(new LossNegativeLogLikelihood());
       break;
+case MCXENT:
+    ol.setLossFn(new LossMCXENT());
+  break;
 case EXPLL:
 case RMSE_XENT:
 case SQUARED_LOSS:
 case RECONSTRUCTION_CROSSENTROPY:
 case CUSTOM:
 default :
-    log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not set loss function for {}",lossFunction);
-  break;
+log.warn("OutputLayer with null LossFunction or pre-0.6.0 loss function configuration detected: could not set loss function for {}",lossFunction);
+break;
 }
 }
 }

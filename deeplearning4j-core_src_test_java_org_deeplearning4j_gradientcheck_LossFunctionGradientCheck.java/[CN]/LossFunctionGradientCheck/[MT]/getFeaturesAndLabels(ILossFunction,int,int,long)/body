@@ -1,0 +1,32 @@
+{
+  Nd4j.getRandom().setSeed(seed);
+  INDArray[] ret=new INDArray[2];
+switch (l.getClass().getSimpleName()) {
+case "LossBinaryXENT":
+    break;
+case "LossCosineProximity":
+  break;
+case "LossHinge":
+break;
+case "LossKLD":
+break;
+case "LossMAE":
+break;
+case "LossMAPE":
+break;
+case "LossMCXENT":
+break;
+case "LossMSE":
+case "LossMSLE":
+break;
+case "LossNegativeLogLikelihood":
+break;
+case "LossPoisson":
+break;
+case "LossSquaredHinge":
+break;
+default :
+throw new IllegalArgumentException("Unknown class: " + l.getClass().getSimpleName());
+}
+return ret;
+}
