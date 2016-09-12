@@ -4,7 +4,7 @@
   NetBroadcastTuple tuple=broadcast.getValue();
   if (configuration.isCollectTrainingStats())   stats.logBroadcastGetValueEnd();
   ComputationGraph net=new ComputationGraph(tuple.getGraphConfiguration());
-  net.init(tuple.getParameters().unsafeDuplication(),true);
+  net.init(tuple.getParameters().unsafeDuplication(),false);
   if (tuple.getUpdaterState() != null) {
     net.setUpdater(new ComputationGraphUpdater(net,tuple.getUpdaterState().unsafeDuplication()));
   }

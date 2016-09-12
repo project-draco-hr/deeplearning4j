@@ -1,13 +1,12 @@
 {
-  if (sequenceLearningAlgorithm == null) {
-    sequenceLearningAlgorithm=new DBOW<>();
-    sequenceLearningAlgorithm.configure(vocab,lookupTable,configuration);
+  SequenceLearningAlgorithm<VocabWord> learner=sequenceLearningAlgorithm;
+  if (learner == null || !learner.getCodeName().equals("PV-DM")) {
+    learner=new DM<VocabWord>();
+    learner.configure(vocab,lookupTable,configuration);
   }
   Sequence<VocabWord> sequence=new Sequence<>();
   sequence.addElements(document);
   sequence.setSequenceLabel(new VocabWord(1.0,String.valueOf(new Random().nextInt())));
-  for (int i=0; i < iterations; i++) {
-    sequenceLearningAlgorithm.learnSequence(sequence,new AtomicLong(0),learningRate);
-  }
-  return null;
+  INDArray inf=learner.inferSequence(sequence,119,learningRate);
+  return inf;
 }

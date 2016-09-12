@@ -12,9 +12,10 @@
     f=expTable[idx];
     double g=useAdaGrad ? currentWord.getGradient(p,(1 - code - f),alpha) : (1 - code - f) * alpha;
     Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,syn1row,neu1e);
-    Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,neu1,syn1row);
+    if (!isInference)     Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,neu1,syn1row);
+ else     Nd4j.getBlasWrapper().level1().axpy(syn1row.length(),g,neu1,syn1row.dup());
   }
-  if (negative > 0) {
+  if (negative > 0 && !isInference) {
     int target=currentWord.getIndex();
     int label;
     for (int d=0; d < negative + 1; d++) {
