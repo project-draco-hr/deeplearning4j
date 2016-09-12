@@ -26,6 +26,8 @@ ret[1].putScalar(i,r.nextInt(nOut),1.0);
 }
 break;
 case "LossMAPE":
+ret[1]=Nd4j.rand(minibatch,nOut).addi(1.0);
+break;
 case "LossMAE":
 case "LossMSE":
 ret[1]=Nd4j.rand(minibatch,nOut).muli(2).subi(1);
