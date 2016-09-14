@@ -7,8 +7,8 @@
   ds.normalizeZeroMeanZeroUnitVariance();
   INDArray input=ds.getFeatureMatrix();
   INDArray labels=ds.getLabels();
-  double[] l2vals={0.4,0.0,0.4};
-  double[] l1vals={0.0,0.5,0.5};
+  double[] l2vals={0.2,0.0,0.2};
+  double[] l1vals={0.0,0.3,0.3};
   for (  String afn : activFns) {
     for (    boolean doLearningFirst : characteristic) {
       for (int i=0; i < lossFunctions.length; i++) {
@@ -17,7 +17,7 @@
           String outputActivation=outputActivations[i];
           double l2=l2vals[k];
           double l1=l1vals[k];
-          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(l2).l1(l1).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).seed(12345L).list().layer(0,new AutoEncoder.Builder().nIn(4).nOut(3).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(afn).build()).layer(1,new OutputLayer.Builder(lf).nIn(3).nOut(3).weightInit(WeightInit.XAVIER).dist(new NormalDistribution(0,1)).updater(Updater.NONE).activation(outputActivation).build()).pretrain(true).backprop(true).build();
+          MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(true).l2(l2).l1(l1).optimizationAlgo(OptimizationAlgorithm.CONJUGATE_GRADIENT).seed(12345L).weightInit(WeightInit.XAVIER).updater(Updater.NONE).list().layer(0,new AutoEncoder.Builder().nIn(4).nOut(3).activation(afn).build()).layer(1,new OutputLayer.Builder(lf).nIn(3).nOut(3).activation(outputActivation).build()).pretrain(true).backprop(true).build();
           MultiLayerNetwork mln=new MultiLayerNetwork(conf);
           mln.init();
           if (doLearningFirst) {
@@ -29,7 +29,7 @@
             mln.computeGradientAndScore();
             double scoreAfter=mln.score();
             String msg="testGradMLP2LayerIrisSimple() - score did not (sufficiently) decrease during learning - activationFn=" + afn + ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst+ ", l2="+ l2+ ", l1="+ l1+ " (before="+ scoreBefore+ ", scoreAfter="+ scoreAfter+ ")";
-            assertTrue(msg,scoreAfter < 0.8 * scoreBefore);
+            assertTrue(msg,scoreAfter < scoreBefore);
           }
           if (PRINT_RESULTS) {
             System.out.println("testGradientMLP2LayerIrisSimpleRandom() - activationFn=" + afn + ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst+ ", l2="+ l2+ ", l1="+ l1);
