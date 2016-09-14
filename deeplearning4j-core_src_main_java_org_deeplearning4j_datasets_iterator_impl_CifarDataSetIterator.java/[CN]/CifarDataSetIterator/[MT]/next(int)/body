@@ -3,16 +3,23 @@
     useCurrent=false;
     return last;
   }
-  DataSet ret=CifarLoader.convertDataSet(num);
-  exampleCount+=num;
+  DataSet result=null;
+  if (preProcessCifar) {
+    if (batchNum == 0) {
+      for (int i=1; i <= CifarLoader.TRAINFILENAMES.length; i++) {
+        result=loader.next(batchSize,i,batchNum);
+      }
+    }
+  }
+ else   result=loader.next(batchSize);
+  exampleCount+=batchSize;
   batchNum++;
-  if (ret.getFeatureMatrix() == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
+  if (result.getFeatureMatrix() == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
     overshot=true;
     return last;
   }
-  ret.shuffle();
-  if (preProcessor != null)   preProcessor.preProcess(ret);
-  last=ret;
-  if (loader.getLabels() != null)   ret.setLabelNames(loader.getLabels());
-  return ret;
+  if (preProcessor != null)   preProcessor.preProcess(result);
+  last=result;
+  if (loader.getLabels() != null)   result.setLabelNames(loader.getLabels());
+  return result;
 }
