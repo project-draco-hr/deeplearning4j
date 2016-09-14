@@ -1,5 +1,11 @@
 {
-  JavaPairRDD<String,PortableDataStream> serializedDataSets=sc.binaryFiles(path);
-  trainingMaster.executeTraining(this,serializedDataSets);
-  return network;
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueue();
+  JavaRDD<String> paths;
+  try {
+    paths=SparkUtils.listPaths(sc,path);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException("Error listing paths in directory",e);
+  }
+  return fitPaths(paths);
 }

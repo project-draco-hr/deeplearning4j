@@ -4,5 +4,6 @@
     Updater u=network.getUpdater();
     if (u != null)     updaterState=u.getStateViewArray();
   }
+  if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   return new ParameterAveragingTrainingResult(network.params(),updaterState,network.score());
 }

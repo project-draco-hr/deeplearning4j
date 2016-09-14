@@ -1,0 +1,4 @@
+{
+  if (Double.isNaN(num) || Double.isInfinite(num))   return String.valueOf(num);
+  return f.format(num);
+}
