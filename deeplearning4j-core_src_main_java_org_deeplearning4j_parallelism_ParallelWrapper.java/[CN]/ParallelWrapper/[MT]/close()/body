@@ -1,5 +1,8 @@
 {
-  if (zoo != null)   for (int i=0; i < zoo.length; i++) {
-    if (zoo[i] != null)     zoo[i].shutdown();
+  if (zoo != null) {
+    for (int i=0; i < zoo.length; i++) {
+      if (zoo[i] != null)       zoo[i].shutdown();
+    }
+    zoo=null;
   }
 }
