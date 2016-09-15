@@ -1,4 +1,11 @@
 {
+  if (zoo == null) {
+    zoo=new Trainer[workers];
+    for (int cnt=0; cnt < workers; cnt++) {
+      zoo[cnt]=new Trainer(cnt,model);
+      zoo[cnt].start();
+    }
+  }
   source.reset();
   DataSetIterator iterator;
   if (prefetchSize > 0 && (!(source instanceof AsyncDataSetIterator) && !(source instanceof ListDataSetIterator))) {
