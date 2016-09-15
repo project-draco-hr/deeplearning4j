@@ -24,7 +24,7 @@
           ComputationGraphConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).graphBuilder().addInputs("in").addLayer("0",new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build(),"in").addLayer("1",new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE).activation("identity").nIn(5).nOut(nOut).weightInit(WeightInit.ZERO).updater(Updater.NONE).build(),"0").setOutputs("1").pretrain(false).backprop(true).build();
           ComputationGraph net=new ComputationGraph(conf);
           net.init();
-          double expScore=0.5 * nOut * (tsLength - nToMask);
+          double expScore=tsLength - nToMask;
           net.setLayerMaskArrays(null,new INDArray[]{labelMaskArray});
           net.setInput(0,input);
           net.setLabel(0,labels);

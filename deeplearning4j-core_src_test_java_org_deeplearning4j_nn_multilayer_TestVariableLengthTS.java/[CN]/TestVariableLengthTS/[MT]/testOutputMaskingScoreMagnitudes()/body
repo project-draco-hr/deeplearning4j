@@ -24,7 +24,7 @@
           MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().regularization(false).seed(12345L).list().layer(0,new GravesLSTM.Builder().nIn(nIn).nOut(5).weightInit(WeightInit.DISTRIBUTION).dist(new NormalDistribution(0,1)).updater(Updater.NONE).build()).layer(1,new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE).activation("identity").nIn(5).nOut(nOut).weightInit(WeightInit.ZERO).updater(Updater.NONE).build()).pretrain(false).backprop(true).build();
           MultiLayerNetwork mln=new MultiLayerNetwork(conf);
           mln.init();
-          double expScore=0.5 * nOut * (tsLength - nToMask);
+          double expScore=(tsLength - nToMask);
           mln.setLayerMaskArrays(null,labelMaskArray);
           mln.setInput(input);
           mln.setLabels(labels);

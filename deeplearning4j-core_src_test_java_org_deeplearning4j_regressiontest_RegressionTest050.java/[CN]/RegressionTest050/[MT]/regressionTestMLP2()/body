@@ -20,6 +20,7 @@
   OutputLayer l1=(OutputLayer)conf.getConf(1).getLayer();
   assertEquals("identity",l1.getActivationFunction());
   assertEquals(LossFunctions.LossFunction.MSE,l1.getLossFunction());
+  assertTrue(l1.getLossFn() instanceof LossMSE);
   assertEquals(4,l1.getNIn());
   assertEquals(5,l1.getNOut());
   assertEquals(WeightInit.DISTRIBUTION,l0.getWeightInit());
