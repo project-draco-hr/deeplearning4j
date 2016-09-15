@@ -39,7 +39,7 @@
             mln.computeGradientAndScore();
             double scoreAfter=mln.score();
             String msg=name + " - score did not (sufficiently) decrease during learning - activationFn=" + afn+ ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst= "+ doLearningFirst+ " (before="+ scoreBefore+ ", scoreAfter="+ scoreAfter+ ")";
-            assertTrue(msg,scoreAfter < 0.8 * scoreBefore);
+            assertTrue(msg,scoreAfter < 0.9 * scoreBefore);
           }
           if (PRINT_RESULTS) {
             System.out.println(name + " - activationFn=" + afn+ ", lossFn="+ lf+ ", outputActivation="+ outputActivation+ ", doLearningFirst="+ doLearningFirst+ ", l1="+ l1vals[j]+ ", l2="+ l2vals[j]);
