@@ -35,6 +35,8 @@ ret[1]=Nd4j.rand(minibatch,nOut).addi(1.0);
 break;
 case "LossMAE":
 case "LossMSE":
+case "LossL1":
+case "LossL2":
 ret[1]=Nd4j.rand(minibatch,nOut).muli(2).subi(1);
 break;
 case "LossMSLE":
