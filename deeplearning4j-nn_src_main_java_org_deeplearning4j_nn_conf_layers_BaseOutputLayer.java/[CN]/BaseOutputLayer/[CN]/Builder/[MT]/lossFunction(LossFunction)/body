@@ -1,4 +1,3 @@
 {
-  this.lossFunction=lossFunction;
-  return (T)this;
+  return lossFunction(lossFunction.getILossFunction());
 }

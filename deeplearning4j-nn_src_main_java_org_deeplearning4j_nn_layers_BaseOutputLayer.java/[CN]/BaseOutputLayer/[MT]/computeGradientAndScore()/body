@@ -3,5 +3,5 @@
   INDArray preOut=preOutput2d(true);
   Triple<Gradient,INDArray,INDArray> triple=getGradientsAndDelta(preOut);
   this.gradient=triple.getFirst();
-  setScore(triple.getThird(),preOut);
+  score=computeScore(fullNetworkL1,fullNetworkL2,true);
 }

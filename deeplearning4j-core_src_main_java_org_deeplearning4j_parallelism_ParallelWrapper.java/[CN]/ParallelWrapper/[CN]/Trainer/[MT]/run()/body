@@ -9,8 +9,8 @@
       this.replicatedModel=new ComputationGraph(((ComputationGraph)originalModel).getConfiguration().clone());
       ((ComputationGraph)this.replicatedModel).init();
     }
-    while (true) {
-      DataSet dataSet=queue.poll(1,TimeUnit.SECONDS);
+    while (!shouldStop.get()) {
+      DataSet dataSet=queue.poll(100,TimeUnit.MILLISECONDS);
       if (dataSet != null) {
         if (replicatedModel instanceof MultiLayerNetwork) {
           ((MultiLayerNetwork)replicatedModel).fit(dataSet);
