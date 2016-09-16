@@ -14,7 +14,7 @@
  else   result=loader.next(batchSize);
   exampleCount+=batchSize;
   batchNum++;
-  if (result.getFeatureMatrix() == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
+  if (result == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
     overshot=true;
     return last;
   }
