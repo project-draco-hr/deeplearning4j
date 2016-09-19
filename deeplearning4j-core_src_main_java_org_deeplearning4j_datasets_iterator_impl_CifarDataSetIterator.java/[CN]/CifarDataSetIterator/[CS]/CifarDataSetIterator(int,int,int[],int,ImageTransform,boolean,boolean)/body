@@ -4,7 +4,7 @@
   this.totalExamples=train ? totalExamples : CifarLoader.NUM_TEST_IMAGES;
   this.numExamples=numExamples > totalExamples ? totalExamples : numExamples;
   this.numPossibleLabels=numPossibleLables;
-  this.preProcessor=preProcessor;
+  this.preProcessCifar=preProcessCifar;
   this.imageTransform=imageTransform;
   this.train=train;
 }

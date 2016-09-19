@@ -1,3 +1,3 @@
 {
-  this(batchSize,numExamples,imgDim,CifarLoader.NUM_LABELS,null,null,train);
+  this(batchSize,numExamples,imgDim,CifarLoader.NUM_LABELS,null,preProcessCifar,train);
 }
