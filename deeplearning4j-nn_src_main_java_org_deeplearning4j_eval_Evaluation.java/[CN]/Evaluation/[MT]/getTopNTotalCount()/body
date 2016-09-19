@@ -1,0 +1,6 @@
+{
+  if (topN <= 1) {
+    return getNumRowCounter();
+  }
+  return topNTotalCount;
+}
