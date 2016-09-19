@@ -1,0 +1,7 @@
+{
+  this.labelsList=labels;
+  if (labels != null) {
+    createConfusion(labels.size());
+  }
+  this.topN=topN;
+}

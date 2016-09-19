@@ -1,0 +1,5 @@
+{
+  if (topN <= 1)   return accuracy();
+  if (topNTotalCount == 0)   return 0.0;
+  return topNCorrectCount / (double)topNTotalCount;
+}
