@@ -3,13 +3,11 @@
     useCurrent=false;
     return last;
   }
-  DataSet result=null;
+  DataSet result;
+  int i=1;
   if (preProcessCifar) {
-    if (batchNum == 0) {
-      for (int i=1; i <= CifarLoader.TRAINFILENAMES.length; i++) {
-        result=loader.next(batchSize,i,batchNum);
-      }
-    }
+    if (train && batchNum == 0 && i <= CifarLoader.TRAINFILENAMES.length)     i++;
+    result=loader.next(batchSize,i,batchNum);
   }
  else   result=loader.next(batchSize);
   exampleCount+=batchSize;
