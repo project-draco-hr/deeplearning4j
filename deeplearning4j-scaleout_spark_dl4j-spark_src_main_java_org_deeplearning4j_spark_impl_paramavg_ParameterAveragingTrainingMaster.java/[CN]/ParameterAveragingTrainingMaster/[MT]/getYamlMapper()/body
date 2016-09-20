@@ -1,0 +1,6 @@
+{
+  if (yamlMapper == null) {
+    yamlMapper=getNewMapper(new YAMLFactory());
+  }
+  return yamlMapper;
+}
