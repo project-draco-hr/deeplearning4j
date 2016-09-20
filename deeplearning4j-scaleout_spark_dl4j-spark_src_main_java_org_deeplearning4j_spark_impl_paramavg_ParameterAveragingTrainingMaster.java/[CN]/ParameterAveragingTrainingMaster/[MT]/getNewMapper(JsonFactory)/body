@@ -1,0 +1,8 @@
+{
+  ObjectMapper om=new ObjectMapper(new JsonFactory());
+  om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+  om.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY,true);
+  om.enable(SerializationFeature.INDENT_OUTPUT);
+  return om;
+}

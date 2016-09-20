@@ -1,0 +1,9 @@
+{
+  ObjectMapper om=getJsonMapper();
+  try {
+    return om.writeValueAsString(this);
+  }
+ catch (  JsonProcessingException e) {
+    throw new RuntimeException("Error producing JSON representation for ParameterAveragingTrainingMaster",e);
+  }
+}

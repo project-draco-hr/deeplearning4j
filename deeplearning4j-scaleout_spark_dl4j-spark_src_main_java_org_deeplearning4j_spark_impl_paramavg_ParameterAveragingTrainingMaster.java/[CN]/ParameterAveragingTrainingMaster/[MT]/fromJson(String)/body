@@ -1,0 +1,9 @@
+{
+  ObjectMapper om=getJsonMapper();
+  try {
+    return om.readValue(jsonStr,ParameterAveragingTrainingMaster.class);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException("Could not parse JSON",e);
+  }
+}
