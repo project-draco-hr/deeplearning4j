@@ -1,0 +1,8 @@
+{
+  JsonNode node=jsonParser.getCodec().readTree(jsonParser);
+  String value=node.textValue();
+  if (value == null || "null".equals(value)) {
+    return null;
+  }
+  return StorageLevel.fromString(value);
+}
