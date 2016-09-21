@@ -5,14 +5,14 @@
   }
   DataSet result;
   int i=1;
-  if (preProcessCifar) {
+  if (usePreProcessCifar) {
     if (train && batchNum == 0 && i <= CifarLoader.TRAINFILENAMES.length)     i++;
     result=loader.next(batchSize,i,batchNum);
   }
  else   result=loader.next(batchSize);
   exampleCount+=batchSize;
   batchNum++;
-  if (result == null || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
+  if ((result == null || result == new DataSet()) || (maxNumBatches > -1 && batchNum >= maxNumBatches)) {
     overshot=true;
     return last;
   }
