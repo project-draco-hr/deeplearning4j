@@ -1,31 +1,3 @@
 {
-  if (layers == null || !(getOutputLayer() instanceof IOutputLayer)) {
-    throw new IllegalStateException("Cannot evaluate network with no output layer");
-  }
-  if (labelsList == null)   labelsList=iterator.getLabels();
-  Evaluation e=(labelsList == null) ? new Evaluation() : new Evaluation(labelsList);
-  while (iterator.hasNext()) {
-    DataSet next=iterator.next();
-    if (next.getFeatureMatrix() == null || next.getLabels() == null)     break;
-    INDArray features=next.getFeatures();
-    INDArray labels=next.getLabels();
-    INDArray out;
-    if (next.hasMaskArrays()) {
-      INDArray fMask=next.getFeaturesMaskArray();
-      INDArray lMask=next.getLabelsMaskArray();
-      out=this.output(features,false,fMask,lMask);
-      if (lMask != null) {
-        e.evalTimeSeries(labels,out,lMask);
-      }
- else {
-        e.evalTimeSeries(labels,out);
-      }
-    }
- else {
-      out=this.output(features,false);
-      if (labels.rank() == 3)       e.evalTimeSeries(labels,out);
- else       e.eval(labels,out);
-    }
-  }
-  return e;
+  return evaluate(iterator,labelsList,1);
 }
