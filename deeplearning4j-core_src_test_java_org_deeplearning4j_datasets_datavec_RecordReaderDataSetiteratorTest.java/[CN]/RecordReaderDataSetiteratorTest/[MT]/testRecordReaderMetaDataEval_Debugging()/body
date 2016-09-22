@@ -1,0 +1,34 @@
+{
+  RecordReaderMeta csv=new CSVRecordReader();
+  csv.initialize(new FileSplit(new ClassPathResource("iris.txt").getTempFileFromArchive()));
+  int batchSize=10;
+  int labelIdx=4;
+  int numClasses=3;
+  RecordReaderDataSetIterator rrdsi=new RecordReaderDataSetIterator(csv,batchSize,labelIdx,numClasses);
+  rrdsi.setCollectMetaData(true);
+  NormalizerStandardize ns=new NormalizerStandardize();
+  ns.fit(rrdsi);
+  rrdsi.setPreProcessor(ns);
+  rrdsi.reset();
+  Nd4j.getRandom().setSeed(12345);
+  MultiLayerConfiguration conf=new NeuralNetConfiguration.Builder().seed(12345).iterations(1).optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).updater(Updater.SGD).learningRate(0.1).list().layer(0,new OutputLayer.Builder(LossFunctions.LossFunction.MCXENT).nIn(4).nOut(3).build()).pretrain(false).backprop(true).build();
+  MultiLayerNetwork net=new MultiLayerNetwork(conf);
+  net.init();
+  for (int i=0; i < 4; i++) {
+    net.fit(rrdsi);
+    rrdsi.reset();
+  }
+  Evaluation e=new Evaluation();
+  while (rrdsi.hasNext()) {
+    DataSet ds=rrdsi.next();
+    List<RecordMetaData> meta=ds.getExampleMetaData(RecordMetaData.class);
+    INDArray out=net.output(ds.getFeatures());
+    e.eval(ds.getLabels(),out,meta);
+  }
+  System.out.println(e.stats());
+  System.out.println("\n\nPrediction Errors:");
+  List<Prediction> errors=e.getPredictionErrors();
+  for (  Prediction t : errors) {
+    System.out.println(t + "\t\tRaw Data: " + csv.loadFromMeta(t.getRecordMetaData()).getRecord());
+  }
+}

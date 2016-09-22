@@ -1,0 +1,72 @@
+{
+  numRowCounter+=realOutcomes.shape()[0];
+  if (confusion == null) {
+    int nClasses=realOutcomes.columns();
+    if (nClasses == 1)     nClasses=2;
+    labelsList=new ArrayList<>(nClasses);
+    for (int i=0; i < nClasses; i++)     labelsList.add(String.valueOf(i));
+    createConfusion(nClasses);
+  }
+  if (realOutcomes.length() != guesses.length())   throw new IllegalArgumentException("Unable to evaluate. Outcome matrices not same length");
+  int nCols=realOutcomes.columns();
+  int nRows=realOutcomes.rows();
+  if (nCols == 1) {
+    INDArray binaryGuesses=guesses.gt(0.5);
+    int tp=binaryGuesses.mul(realOutcomes).sumNumber().intValue();
+    int fp=binaryGuesses.mul(-1.0).addi(1.0).muli(realOutcomes).sumNumber().intValue();
+    int fn=binaryGuesses.mul(realOutcomes.mul(-1.0).addi(1.0)).sumNumber().intValue();
+    int tn=nRows - tp - fp- fn;
+    confusion.add(1,1,tp);
+    confusion.add(1,0,fn);
+    confusion.add(0,1,fp);
+    confusion.add(0,0,tn);
+    truePositives.incrementCount(1,tp);
+    falsePositives.incrementCount(1,fp);
+    falseNegatives.incrementCount(1,fp);
+    trueNegatives.incrementCount(1,tp);
+    truePositives.incrementCount(0,tn);
+    falsePositives.incrementCount(0,fn);
+    falseNegatives.incrementCount(0,fn);
+    trueNegatives.incrementCount(0,tn);
+  }
+ else {
+    INDArray guessIndex=Nd4j.argMax(guesses,1);
+    INDArray realOutcomeIndex=Nd4j.argMax(realOutcomes,1);
+    int nExamples=guessIndex.length();
+    for (int i=0; i < nExamples; i++) {
+      int actual=(int)realOutcomeIndex.getDouble(i);
+      int predicted=(int)guessIndex.getDouble(i);
+      confusion.add(actual,predicted);
+      if (meta != null && meta.size() > i) {
+        RecordMetaData m=meta.get(i);
+        addToMetaConfusionMatrix(actual,predicted,m);
+      }
+    }
+    for (int col=0; col < nCols; col++) {
+      INDArray colBinaryGuesses=guessIndex.eps(col);
+      INDArray colRealOutcomes=realOutcomes.getColumn(col);
+      int colTp=colBinaryGuesses.mul(colRealOutcomes).sumNumber().intValue();
+      int colFp=colBinaryGuesses.mul(colRealOutcomes.mul(-1.0).addi(1.0)).sumNumber().intValue();
+      int colFn=colBinaryGuesses.mul(-1.0).addi(1.0).muli(colRealOutcomes).sumNumber().intValue();
+      int colTn=nRows - colTp - colFp- colFn;
+      truePositives.incrementCount(col,colTp);
+      falsePositives.incrementCount(col,colFp);
+      falseNegatives.incrementCount(col,colFn);
+      trueNegatives.incrementCount(col,colTn);
+    }
+  }
+  if (nCols > 1 && topN > 1) {
+    INDArray realOutcomeIndex=Nd4j.argMax(realOutcomes,1);
+    int nExamples=realOutcomeIndex.length();
+    for (int i=0; i < nExamples; i++) {
+      int labelIdx=(int)realOutcomeIndex.getDouble(i);
+      double prob=guesses.getDouble(i,labelIdx);
+      INDArray row=guesses.getRow(i);
+      int countGreaterThan=(int)Nd4j.getExecutioner().exec(new MatchCondition(row,Conditions.greaterThan(prob)),Integer.MAX_VALUE).getDouble(0);
+      if (countGreaterThan < topN) {
+        topNCorrectCount++;
+      }
+      topNTotalCount++;
+    }
+  }
+}

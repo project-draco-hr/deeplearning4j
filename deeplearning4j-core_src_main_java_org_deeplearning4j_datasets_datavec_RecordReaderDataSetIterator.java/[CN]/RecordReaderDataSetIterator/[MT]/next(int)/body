@@ -5,6 +5,7 @@
     return last;
   }
   List<DataSet> dataSets=new ArrayList<>();
+  List<RecordMetaData> meta=(collectMetaData ? new ArrayList<RecordMetaData>() : null);
   for (int i=0; i < num; i++) {
     if (!hasNext())     break;
     if (recordReader instanceof SequenceRecordReader) {
@@ -16,13 +17,23 @@
       dataSets.add(getDataSet(record));
     }
  else {
-      List<Writable> record=recordReader.next();
-      dataSets.add(getDataSet(record));
+      if (collectMetaData && (recordReader instanceof RecordReaderMeta)) {
+        Record record=((RecordReaderMeta)recordReader).nextMeta();
+        dataSets.add(getDataSet(record.getRecord()));
+        meta.add(record.getMetaData());
+      }
+ else {
+        List<Writable> record=recordReader.next();
+        dataSets.add(getDataSet(record));
+      }
     }
   }
   batchNum++;
   if (dataSets.isEmpty())   return new DataSet();
   DataSet ret=DataSet.merge(dataSets);
+  if (collectMetaData) {
+    ret.setExampleMetaData(meta);
+  }
   last=ret;
   if (preProcessor != null)   preProcessor.preProcess(ret);
   if (recordReader.getLabels() != null)   ret.setLabelNames(recordReader.getLabels());
