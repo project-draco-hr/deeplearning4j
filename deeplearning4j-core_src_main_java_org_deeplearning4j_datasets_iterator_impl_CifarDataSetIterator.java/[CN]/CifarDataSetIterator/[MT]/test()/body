@@ -1,5 +1,3 @@
 {
-  this.train=false;
-  this.loader.test();
-  reset();
+  test(CifarLoader.NUM_TEST_IMAGES);
 }
