@@ -1,3 +1,4 @@
 {
+  if (thrownException != null)   throw new RuntimeException(thrownException);
   return running.get() == 0;
 }

@@ -24,5 +24,6 @@
     }
   }
  catch (  Exception e) {
+    this.thrownException=e;
   }
 }
