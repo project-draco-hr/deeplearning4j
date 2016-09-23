@@ -2,21 +2,21 @@
   if (zoo == null) {
     zoo=new Trainer[workers];
     for (int cnt=0; cnt < workers; cnt++) {
-      zoo[cnt]=new Trainer(cnt,model);
+      zoo[cnt]=new Trainer(cnt,model,true);
       zoo[cnt].start();
     }
   }
   source.reset();
-  DataSetIterator iterator;
+  MultiDataSetIterator iterator;
   if (prefetchSize > 0 && source.asyncSupported()) {
-    iterator=new AsyncDataSetIterator(source,prefetchSize);
+    iterator=new AsyncMultiDataSetIterator(source,prefetchSize);
   }
  else   iterator=source;
   AtomicInteger locker=new AtomicInteger(0);
   while (iterator.hasNext()) {
-    DataSet dataSet=iterator.next();
+    MultiDataSet dataSet=iterator.next();
     int pos=locker.getAndIncrement();
-    zoo[pos].feedDataSet(dataSet);
+    zoo[pos].feedMultiDataSet(dataSet);
     if (pos + 1 == workers || !iterator.hasNext()) {
       iterationsCounter.incrementAndGet();
       for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
@@ -49,31 +49,7 @@
         }
         score/=Math.min(workers,locker.get());
         if (reportScore)         logger.info("Averaged score: " + score);
-        if (model instanceof MultiLayerNetwork) {
-          if (averageUpdaters) {
-            Updater updater=((MultiLayerNetwork)model).getUpdater();
-            if (updater != null && updater.getStateViewArray() != null) {
-              if (!legacyAveraging) {
-                List<INDArray> updaters=new ArrayList<>();
-                for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
-                  updaters.add(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray());
-                }
-                Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
-              }
- else {
-                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
-                int cnt=0;
-                for (; cnt < workers && cnt < locker.get(); cnt++) {
-                  state.addi(((MultiLayerNetwork)zoo[cnt].getModel()).getUpdater().getStateViewArray().dup());
-                }
-                state.divi(cnt);
-                updater.setStateViewArray((MultiLayerNetwork)model,state,false);
-              }
-            }
-          }
-          ((MultiLayerNetwork)model).setScore(score);
-        }
- else         if (model instanceof ComputationGraph) {
+        if (model instanceof ComputationGraph) {
           if (averageUpdaters) {
             ComputationGraphUpdater updater=((ComputationGraph)model).getUpdater();
             if (updater != null && updater.getStateViewArray() != null) {
@@ -97,6 +73,7 @@
           }
           ((ComputationGraph)model).setScore(score);
         }
+ else         throw new RuntimeException("MultiDataSet might be used only with ComputationGraph model");
         if (legacyAveraging) {
           for (int cnt=0; cnt < workers; cnt++) {
             zoo[cnt].updateModel(model);
