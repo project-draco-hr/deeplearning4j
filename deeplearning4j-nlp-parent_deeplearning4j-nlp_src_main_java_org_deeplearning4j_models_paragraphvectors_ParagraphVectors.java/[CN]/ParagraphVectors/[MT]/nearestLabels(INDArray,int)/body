@@ -5,6 +5,14 @@
     log.warn("Labels list is empty!");
     return new ArrayList<>();
   }
+  if (!normalizedLabels) {
+synchronized (this) {
+      if (!normalizedLabels) {
+        labelsMatrix.diviColumnVector(labelsMatrix.norm1(1));
+        normalizedLabels=true;
+      }
+    }
+  }
   INDArray similarity=Transforms.unitVec(labelVector).mmul(labelsMatrix.transpose());
   List<Double> highToLowSimList=getTopN(similarity,topN + 20);
   for (int i=0; i < highToLowSimList.size(); i++) {
