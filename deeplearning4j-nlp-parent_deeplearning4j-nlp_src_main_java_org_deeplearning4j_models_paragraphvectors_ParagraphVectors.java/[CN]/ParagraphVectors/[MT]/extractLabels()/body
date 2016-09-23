@@ -1,0 +1,17 @@
+{
+  Collection<VocabWord> vocabWordCollection=vocab.vocabWords();
+  List<VocabWord> vocabWordList=new ArrayList<>();
+  int[] indexArray;
+  for (  VocabWord vWord : vocabWordCollection) {
+    if (vWord.isLabel()) {
+      vocabWordList.add(vWord);
+    }
+  }
+  indexArray=new int[vocabWordList.size()];
+  int i=0;
+  for (  VocabWord vWord : vocabWordList) {
+    indexArray[i]=vWord.getIndex();
+    i++;
+  }
+  INDArray pulledArray=Nd4j.pullRows(lookupTable.getWeights(),1,indexArray);
+}
