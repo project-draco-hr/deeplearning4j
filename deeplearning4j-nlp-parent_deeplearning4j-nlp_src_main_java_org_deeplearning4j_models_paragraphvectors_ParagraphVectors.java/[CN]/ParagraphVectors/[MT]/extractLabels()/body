@@ -13,5 +13,8 @@
     indexArray[i]=vWord.getIndex();
     i++;
   }
-  INDArray pulledArray=Nd4j.pullRows(lookupTable.getWeights(),1,indexArray);
+  if (i > 0) {
+    labelsMatrix=Nd4j.pullRows(lookupTable.getWeights(),1,indexArray);
+    labelsList=vocabWordList;
+  }
 }

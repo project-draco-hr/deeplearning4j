@@ -41,6 +41,7 @@
     }
  catch (    Exception e) {
     }
+    vectors.extractLabels();
     return vectors;
   }
  catch (  Exception e) {
