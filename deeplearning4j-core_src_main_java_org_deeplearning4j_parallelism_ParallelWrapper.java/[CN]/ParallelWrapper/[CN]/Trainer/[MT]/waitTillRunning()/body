@@ -1,5 +1,6 @@
 {
   while (running.get() != 0) {
+    if (thrownException != null)     throw new RuntimeException(thrownException);
     try {
       Thread.sleep(10);
     }
