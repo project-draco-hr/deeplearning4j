@@ -3,7 +3,7 @@
   try {
     return mapper.writeValueAsString(this);
   }
- catch (  com.fasterxml.jackson.core.JsonProcessingException e) {
+ catch (  org.nd4j.shade.jackson.core.JsonProcessingException e) {
     throw new RuntimeException(e);
   }
 }
