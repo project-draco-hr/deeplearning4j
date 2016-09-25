@@ -1,0 +1,18 @@
+{
+  List<Record> records=((RecordReaderMeta)recordReader).loadFromMeta(list);
+  List<DataSet> dataSets=new ArrayList<>();
+  List<RecordMetaData> meta=new ArrayList<>();
+  for (  Record r : records) {
+    dataSets.add(getDataSet(r.getRecord()));
+    meta.add(r.getMetaData());
+  }
+  if (dataSets.isEmpty()) {
+    return new DataSet();
+  }
+  DataSet ret=DataSet.merge(dataSets);
+  ret.setExampleMetaData(meta);
+  last=ret;
+  if (preProcessor != null)   preProcessor.preProcess(ret);
+  if (recordReader.getLabels() != null)   ret.setLabelNames(recordReader.getLabels());
+  return ret;
+}
