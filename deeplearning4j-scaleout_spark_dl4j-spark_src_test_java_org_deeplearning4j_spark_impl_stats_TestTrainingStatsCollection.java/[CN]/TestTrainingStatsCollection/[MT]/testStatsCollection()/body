@@ -135,6 +135,11 @@
     stats.exportStatFiles(outDir,sc.sc());
     String htmlPlotsPath=FilenameUtils.concat(outDir,"AnalysisPlots.html");
     StatsUtils.exportStatsAsHtml(stats,htmlPlotsPath,sc);
+    ByteArrayOutputStream baos=new ByteArrayOutputStream();
+    StatsUtils.exportStatsAsHTML(stats,baos);
+    baos.close();
+    byte[] bytes=baos.toByteArray();
+    String str=new String(bytes,"UTF-8");
   }
   finally {
     sc.stop();

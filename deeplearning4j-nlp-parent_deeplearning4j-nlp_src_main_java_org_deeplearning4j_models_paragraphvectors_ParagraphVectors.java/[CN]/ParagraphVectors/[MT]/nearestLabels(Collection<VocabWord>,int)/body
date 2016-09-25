@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("Not implemented yet");
+  INDArray vector=inferVector(new ArrayList<VocabWord>(document));
+  return nearestLabels(vector,topN);
 }

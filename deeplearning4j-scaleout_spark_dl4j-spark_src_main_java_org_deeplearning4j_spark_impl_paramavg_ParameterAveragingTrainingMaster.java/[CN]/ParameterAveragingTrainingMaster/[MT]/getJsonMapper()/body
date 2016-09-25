@@ -1,0 +1,6 @@
+{
+  if (jsonMapper == null) {
+    jsonMapper=getNewMapper(new JsonFactory());
+  }
+  return jsonMapper;
+}

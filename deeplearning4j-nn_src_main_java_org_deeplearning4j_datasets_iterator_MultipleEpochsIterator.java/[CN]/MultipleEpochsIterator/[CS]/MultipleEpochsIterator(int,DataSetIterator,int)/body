@@ -1,6 +1,6 @@
 {
   this.numEpochs=numEpochs;
-  this.iter=iter;
   this.queueSize=queueSize;
-  this.async=queueSize == 1 ? false : true;
+  this.async=queueSize > 1 && iter.asyncSupported();
+  this.iter=async ? new AsyncDataSetIterator(iter,queueSize) : iter;
 }

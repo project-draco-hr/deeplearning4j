@@ -3,5 +3,5 @@
   ret.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
   ret.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY,true);
   ret.enable(SerializationFeature.INDENT_OUTPUT);
-  registerSubtypes(ret,Layer.class,InputPreProcessor.class,GraphVertex.class);
+  registerSubtypes(ret,Layer.class,InputPreProcessor.class,GraphVertex.class,ILossFunction.class);
 }

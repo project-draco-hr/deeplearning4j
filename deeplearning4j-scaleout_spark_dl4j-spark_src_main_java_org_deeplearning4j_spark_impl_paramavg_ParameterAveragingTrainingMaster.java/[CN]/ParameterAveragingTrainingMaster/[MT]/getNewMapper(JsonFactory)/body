@@ -1,0 +1,10 @@
+{
+  ObjectMapper om=new ObjectMapper(jsonFactory);
+  om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+  om.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY,true);
+  om.enable(SerializationFeature.INDENT_OUTPUT);
+  om.setVisibility(PropertyAccessor.ALL,JsonAutoDetect.Visibility.NONE);
+  om.setVisibility(PropertyAccessor.FIELD,JsonAutoDetect.Visibility.ANY);
+  return om;
+}

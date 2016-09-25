@@ -11,7 +11,7 @@
     try {
       json=mapper.writeValueAsString(element);
     }
- catch (    com.fasterxml.jackson.core.JsonProcessingException e) {
+ catch (    org.nd4j.shade.jackson.core.JsonProcessingException e) {
       throw new RuntimeException(e);
     }
   }

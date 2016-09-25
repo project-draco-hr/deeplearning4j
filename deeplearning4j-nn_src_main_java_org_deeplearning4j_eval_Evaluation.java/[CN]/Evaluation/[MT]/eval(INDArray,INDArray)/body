@@ -49,4 +49,18 @@
       trueNegatives.incrementCount(col,colTn);
     }
   }
+  if (nCols > 1 && topN > 1) {
+    INDArray realOutcomeIndex=Nd4j.argMax(realOutcomes,1);
+    int nExamples=realOutcomeIndex.length();
+    for (int i=0; i < nExamples; i++) {
+      int labelIdx=(int)realOutcomeIndex.getDouble(i);
+      double prob=guesses.getDouble(i,labelIdx);
+      INDArray row=guesses.getRow(i);
+      int countGreaterThan=(int)Nd4j.getExecutioner().exec(new MatchCondition(row,Conditions.greaterThan(prob)),Integer.MAX_VALUE).getDouble(0);
+      if (countGreaterThan < topN) {
+        topNCorrectCount++;
+      }
+      topNTotalCount++;
+    }
+  }
 }

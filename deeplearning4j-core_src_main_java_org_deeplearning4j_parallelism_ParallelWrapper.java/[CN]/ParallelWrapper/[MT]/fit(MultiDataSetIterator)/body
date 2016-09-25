@@ -1,0 +1,88 @@
+{
+  if (zoo == null) {
+    zoo=new Trainer[workers];
+    for (int cnt=0; cnt < workers; cnt++) {
+      zoo[cnt]=new Trainer(cnt,model,true);
+      zoo[cnt].start();
+    }
+  }
+  source.reset();
+  MultiDataSetIterator iterator;
+  if (prefetchSize > 0 && source.asyncSupported()) {
+    iterator=new AsyncMultiDataSetIterator(source,prefetchSize);
+  }
+ else   iterator=source;
+  AtomicInteger locker=new AtomicInteger(0);
+  while (iterator.hasNext()) {
+    MultiDataSet dataSet=iterator.next();
+    int pos=locker.getAndIncrement();
+    zoo[pos].feedMultiDataSet(dataSet);
+    if (pos + 1 == workers || !iterator.hasNext()) {
+      iterationsCounter.incrementAndGet();
+      for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+        try {
+          zoo[cnt].waitTillRunning();
+        }
+ catch (        Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
+      if (iterationsCounter.get() % averagingFrequency == 0 && pos + 1 == workers) {
+        double score=0.0;
+        if (!legacyAveraging) {
+          List<INDArray> params=new ArrayList<>();
+          for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+            params.add(zoo[cnt].getModel().params());
+            score+=zoo[cnt].getModel().score();
+          }
+          Nd4j.averageAndPropagate(model.params(),params);
+        }
+ else {
+          INDArray params=Nd4j.zeros(model.params().shape());
+          int cnt=0;
+          for (; cnt < workers && cnt < locker.get(); cnt++) {
+            params.addi(zoo[cnt].getModel().params());
+            score+=zoo[cnt].getModel().score();
+          }
+          params.divi(workers);
+          model.setParams(params);
+        }
+        score/=Math.min(workers,locker.get());
+        if (reportScore)         logger.info("Averaged score: " + score);
+        if (model instanceof ComputationGraph) {
+          if (averageUpdaters) {
+            ComputationGraphUpdater updater=((ComputationGraph)model).getUpdater();
+            if (updater != null && updater.getStateViewArray() != null) {
+              if (!legacyAveraging) {
+                List<INDArray> updaters=new ArrayList<>();
+                for (int cnt=0; cnt < workers && cnt < locker.get(); cnt++) {
+                  updaters.add(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                }
+                Nd4j.averageAndPropagate(updater.getStateViewArray(),updaters);
+              }
+ else {
+                INDArray state=Nd4j.zeros(updater.getStateViewArray().shape());
+                int cnt=0;
+                for (; cnt < workers && cnt < locker.get(); cnt++) {
+                  state.addi(((ComputationGraph)zoo[cnt].getModel()).getUpdater().getStateViewArray());
+                }
+                state.divi(cnt);
+                updater.setStateViewArray(state);
+              }
+            }
+          }
+          ((ComputationGraph)model).setScore(score);
+        }
+ else         throw new RuntimeException("MultiDataSet might be used only with ComputationGraph model");
+        if (legacyAveraging) {
+          for (int cnt=0; cnt < workers; cnt++) {
+            zoo[cnt].updateModel(model);
+          }
+        }
+      }
+      locker.set(0);
+    }
+  }
+  logger.debug("Iterations passed: {}",iterationsCounter.get());
+  iterationsCounter.set(0);
+}

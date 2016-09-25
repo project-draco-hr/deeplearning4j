@@ -1,0 +1,7 @@
+{
+  String s=null;
+  if (storageLevel != null) {
+    s=map.get(storageLevel);
+  }
+  jsonGenerator.writeString(s);
+}
