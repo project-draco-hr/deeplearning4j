@@ -1,4 +1,5 @@
 {
+  if (iterationsCounter.get() >= totalIterations)   return false;
   if (newEpoch) {
     log.info("Epoch " + epochs + ", number of batches completed "+ lastBatch);
     newEpoch=false;
