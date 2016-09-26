@@ -2,5 +2,5 @@
   exampleCount=0;
   overshot=false;
   batchNum=0;
-  inputStream=loader.getInputStream();
+  loader.reset();
 }
