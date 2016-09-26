@@ -2,10 +2,15 @@
   INDArray ret=Nd4j.create(1,vocabCache.numWords());
   Tokenizer tokenizer=tokenizerFactory.create(text);
   List<String> tokens=tokenizer.getTokens();
+  Map<String,AtomicInteger> counts=new HashMap<>();
+  for (  String token : tokens) {
+    if (!counts.containsKey(token))     counts.put(token,new AtomicInteger(0));
+    counts.get(token).incrementAndGet();
+  }
   for (int i=0; i < tokens.size(); i++) {
     int idx=vocabCache.indexOf(tokens.get(i));
     if (idx >= 0) {
-      ret.putScalar(idx,tfidfWord(tokens.get(i),tokens.size()));
+      ret.putScalar(idx,tfidfWord(tokens.get(i),counts.get(tokens.get(i)).intValue(),tokens.size()));
     }
   }
   return ret;
