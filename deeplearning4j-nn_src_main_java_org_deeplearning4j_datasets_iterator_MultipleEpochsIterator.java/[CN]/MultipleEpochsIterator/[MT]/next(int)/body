@@ -1,6 +1,7 @@
 {
   DataSet next;
   batch++;
+  iterationsCounter.incrementAndGet();
   if (iter == null) {
     if (num == -1) {
       next=ds;
