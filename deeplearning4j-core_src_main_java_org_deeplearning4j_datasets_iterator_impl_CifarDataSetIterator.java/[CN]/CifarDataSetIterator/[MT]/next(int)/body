@@ -4,7 +4,7 @@
     return last;
   }
   DataSet result;
-  if (usePreProcessCifar) {
+  if (useSpecialPreProcessCifar) {
     result=loader.next(batchSize,exampleCount);
   }
  else   result=loader.next(batchSize);
