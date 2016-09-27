@@ -1,7 +1,7 @@
 {
-  if (this.confusionMatrixMeta == null)   return null;
+  if (this.confusionMatrixMetaData == null)   return null;
   List<Prediction> list=new ArrayList<>();
-  List<Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>>> sorted=new ArrayList<>(confusionMatrixMeta.entrySet());
+  List<Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>>> sorted=new ArrayList<>(confusionMatrixMetaData.entrySet());
   Collections.sort(sorted,new Comparator<Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>>>(){
     @Override public int compare(    Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> o1,    Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> o2){
       Pair<Integer,Integer> p1=o1.getKey();

@@ -28,6 +28,14 @@
     falsePositives.incrementCount(0,fn);
     falseNegatives.incrementCount(0,fn);
     trueNegatives.incrementCount(0,tn);
+    if (recordMetaData != null) {
+      for (int i=0; i < binaryGuesses.size(0); i++) {
+        if (i >= recordMetaData.size())         break;
+        int actual=realOutcomes.getDouble(0) == 0.0 ? 0 : 1;
+        int predicted=binaryGuesses.getDouble(0) == 0.0 ? 0 : 1;
+        addToMetaConfusionMatrix(actual,predicted,recordMetaData.get(i));
+      }
+    }
   }
  else {
     INDArray guessIndex=Nd4j.argMax(guesses,1);
@@ -37,8 +45,8 @@
       int actual=(int)realOutcomeIndex.getDouble(i);
       int predicted=(int)guessIndex.getDouble(i);
       confusion.add(actual,predicted);
-      if (meta != null && meta.size() > i) {
-        RecordMetaData m=meta.get(i);
+      if (recordMetaData != null && recordMetaData.size() > i) {
+        RecordMetaData m=recordMetaData.get(i);
         addToMetaConfusionMatrix(actual,predicted,m);
       }
     }

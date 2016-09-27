@@ -34,7 +34,7 @@
   INDArray output=net.output(ds.getFeatures());
   int count=0;
   for (  Prediction t : errors) {
-    System.out.println(t + "\t\tRaw Data: " + csv.loadFromMeta(t.getRecordMetaData()).getRecord()+ "\tNormalized: "+ ds.getFeatureMatrix().getRow(count)+ "\tLabels: "+ ds.getLabels().getRow(count)+ "\tNetwork predictions: "+ output.getRow(count));
+    System.out.println(t + "\t\tRaw Data: " + csv.loadFromMetaData(t.getRecordMetaData()).getRecord()+ "\tNormalized: "+ ds.getFeatureMatrix().getRow(count)+ "\tLabels: "+ ds.getLabels().getRow(count)+ "\tNetwork predictions: "+ output.getRow(count));
     count++;
   }
 }

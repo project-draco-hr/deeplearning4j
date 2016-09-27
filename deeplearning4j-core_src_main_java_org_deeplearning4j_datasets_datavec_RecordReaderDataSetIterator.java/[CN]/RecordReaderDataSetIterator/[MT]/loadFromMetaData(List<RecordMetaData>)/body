@@ -1,5 +1,5 @@
 {
-  List<Record> records=((RecordReaderMeta)recordReader).loadFromMeta(list);
+  List<Record> records=((RecordReaderMeta)recordReader).loadFromMetaData(list);
   List<DataSet> dataSets=new ArrayList<>();
   List<RecordMetaData> meta=new ArrayList<>();
   for (  Record r : records) {

@@ -1,12 +1,12 @@
 {
-  if (confusionMatrixMeta == null) {
-    confusionMatrixMeta=new HashMap<>();
+  if (confusionMatrixMetaData == null) {
+    confusionMatrixMetaData=new HashMap<>();
   }
   Pair<Integer,Integer> p=new Pair<>(actual,predicted);
-  List<RecordMetaData> list=confusionMatrixMeta.get(p);
+  List<RecordMetaData> list=confusionMatrixMetaData.get(p);
   if (list == null) {
     list=new ArrayList<>();
-    confusionMatrixMeta.put(p,list);
+    confusionMatrixMetaData.put(p,list);
   }
   list.add(metaData);
 }

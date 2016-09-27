@@ -1,0 +1,14 @@
+{
+  if (confusionMatrixMetaData == null)   return null;
+  List<Prediction> out=new ArrayList<>();
+  for (  Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> entry : confusionMatrixMetaData.entrySet()) {
+    if (entry.getKey().getSecond() == predictedClass) {
+      int actual=entry.getKey().getFirst();
+      int predicted=entry.getKey().getSecond();
+      for (      RecordMetaData m : entry.getValue()) {
+        out.add(new Prediction(actual,predicted,m));
+      }
+    }
+  }
+  return out;
+}

@@ -18,7 +18,7 @@
     }
  else {
       if (collectMetaData && (recordReader instanceof RecordReaderMeta)) {
-        Record record=((RecordReaderMeta)recordReader).nextMeta();
+        Record record=((RecordReaderMeta)recordReader).nextRecord();
         dataSets.add(getDataSet(record.getRecord()));
         meta.add(record.getMetaData());
       }
