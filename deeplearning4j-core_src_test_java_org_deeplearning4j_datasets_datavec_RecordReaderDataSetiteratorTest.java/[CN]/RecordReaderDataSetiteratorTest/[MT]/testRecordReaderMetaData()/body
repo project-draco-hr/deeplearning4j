@@ -22,5 +22,7 @@
       i++;
     }
     System.out.println();
+    DataSet fromMeta=rrdsi.loadFromMetaData(meta);
+    assertEquals(ds,fromMeta);
   }
 }
