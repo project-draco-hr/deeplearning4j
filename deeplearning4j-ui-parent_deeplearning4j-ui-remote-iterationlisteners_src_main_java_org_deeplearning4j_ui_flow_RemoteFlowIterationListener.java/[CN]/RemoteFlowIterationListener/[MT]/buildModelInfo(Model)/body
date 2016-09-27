@@ -1,0 +1,92 @@
+{
+  ModelInfo modelInfo=new ModelInfo();
+  if (model instanceof ComputationGraph) {
+    ComputationGraph graph=(ComputationGraph)model;
+    List<String> inputs=graph.getConfiguration().getNetworkInputs();
+    int x=0;
+    for (    String input : inputs) {
+      GraphVertex vertex=graph.getVertex(input);
+      INDArray gInput=vertex.getInputs()[0];
+      long tadLength=Shape.getTADLength(gInput.shape(),ArrayUtil.range(1,gInput.rank()));
+      long numSamples=gInput.lengthLong() / tadLength;
+      StringBuilder builder=new StringBuilder();
+      builder.append("Vertex name: ").append(input).append("<br/>");
+      builder.append("Model input").append("<br/>");
+      builder.append("Input size: ").append(tadLength).append("<br/>");
+      builder.append("Batch size: ").append(numSamples).append("<br/>");
+      LayerInfo info=new LayerInfo();
+      info.setId(0);
+      info.setName(input);
+      info.setY(0);
+      info.setX(x);
+      info.setLayerType(INPUT);
+      info.setDescription(new Description());
+      info.getDescription().setMainLine("Model input");
+      info.getDescription().setText(builder.toString());
+      modelInfo.addLayer(info);
+      x++;
+    }
+    GraphVertex[] vertices=graph.getVertices();
+    List<String> needle=new ArrayList<>();
+    for (int y=1; y < vertices.length; y++) {
+      if (needle.isEmpty())       needle.addAll(inputs);
+      List<LayerInfo> layersForGridY=flattenToY(modelInfo,vertices,needle,y);
+      needle.clear();
+      for (      LayerInfo layerInfo : layersForGridY) {
+        needle.add(layerInfo.getName());
+      }
+      if (needle.isEmpty())       break;
+    }
+  }
+ else   if (model instanceof MultiLayerNetwork) {
+    MultiLayerNetwork network=(MultiLayerNetwork)model;
+    INDArray input=model.input();
+    long tadLength=Shape.getTADLength(input.shape(),ArrayUtil.range(1,input.rank()));
+    long numSamples=input.lengthLong() / tadLength;
+    StringBuilder builder=new StringBuilder();
+    builder.append("Model input").append("<br/>");
+    builder.append("Input size: ").append(tadLength).append("<br/>");
+    builder.append("Batch size: ").append(numSamples).append("<br/>");
+    LayerInfo info=new LayerInfo();
+    info.setId(0);
+    info.setName("Input");
+    info.setY(0);
+    info.setX(0);
+    info.setLayerType(INPUT);
+    info.setDescription(new Description());
+    info.getDescription().setMainLine("Model input");
+    info.getDescription().setText(builder.toString());
+    info.addConnection(0,1);
+    modelInfo.addLayer(info);
+    int y=1;
+    final int x=0;
+    for (    Layer layer : network.getLayers()) {
+      LayerInfo layerInfo=getLayerInfo(layer,x,y,y);
+      layerInfo.addConnection(x,y + 1);
+      modelInfo.addLayer(layerInfo);
+      y++;
+    }
+    LayerInfo layerInfo=modelInfo.getLayerInfoByCoords(x,y - 1);
+    layerInfo.dropConnections();
+  }
+  for (  LayerInfo layerInfo : modelInfo.getLayers()) {
+    if (layerInfo.getConnections().size() == 0)     layerInfo.setLayerType("OUTPUT");
+  }
+  AtomicInteger cnt=new AtomicInteger(0);
+  for (  String layerType : modelInfo.getLayerTypes()) {
+    String curColor=colors.get(cnt.getAndIncrement());
+    if (cnt.get() >= colors.size())     cnt.set(0);
+    for (    LayerInfo layerInfo : modelInfo.getLayersByType(layerType)) {
+      if (layerType.equals(INPUT)) {
+        layerInfo.setColor("#99ff66");
+      }
+ else       if (layerType.equals("OUTPUT")) {
+        layerInfo.setColor("#e6e6e6");
+      }
+ else {
+        layerInfo.setColor(curColor);
+      }
+    }
+  }
+  return modelInfo;
+}

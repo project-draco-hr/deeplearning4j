@@ -1,0 +1,6 @@
+{
+  target=client.target(uiConnectionInfo.getAddress()).path(subPath).path("update");
+  listener=new PlotFiltersIterationListener(filters,variables,0);
+  this.iterations=iterations;
+  path=uiConnectionInfo.getFullAddress() + "/" + subPath;
+}

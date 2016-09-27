@@ -11,6 +11,7 @@
   this.storageLevelStreams=builder.storageLevelStreams;
   this.rddTrainingApproach=builder.rddTrainingApproach;
   this.exportDirectory=builder.exportDirectory;
+  this.trainingHookList=builder.trainingHooks;
   if (builder.rngSeed == null) {
     this.rng=new Random();
   }
