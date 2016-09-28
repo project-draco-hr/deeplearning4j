@@ -1,9 +1,4 @@
 {
-  for (int i=0; i < 3; i++) {
-    new ClassPathResource(String.format("csvsequence_%d.txt",i)).getTempFileFromArchive();
-    new ClassPathResource(String.format("csvsequencelabels_%d.txt",i)).getTempFileFromArchive();
-    new ClassPathResource(String.format("csvsequencelabelsShort_%d.txt",i)).getTempFileFromArchive();
-  }
   RecordReader rr=new CSVRecordReader(0,",");
   rr.initialize(new FileSplit(new ClassPathResource("iris.txt").getTempFileFromArchive()));
   RecordReaderDataSetIterator rrdsi=new RecordReaderDataSetIterator(rr,10,4,3);

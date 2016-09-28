@@ -1,0 +1,34 @@
+{
+  Map<String,List<List<Writable>>> nextRRVals=new HashMap<>();
+  Map<String,List<List<List<Writable>>>> nextSeqRRVals=new HashMap<>();
+  List<RecordMetaDataComposableMap> nextMetas=(collectMetaData ? new ArrayList<RecordMetaDataComposableMap>() : null);
+  for (  Map.Entry<String,RecordReader> entry : recordReaders.entrySet()) {
+    RecordReader rr=entry.getValue();
+    List<RecordMetaData> thisRRMeta=new ArrayList<>();
+    for (    RecordMetaData m : list) {
+      RecordMetaDataComposableMap m2=(RecordMetaDataComposableMap)m;
+      thisRRMeta.add(m2.getMeta().get(entry.getKey()));
+    }
+    List<Record> fromMeta=((RecordReaderMeta)rr).loadFromMetaData(thisRRMeta);
+    List<List<Writable>> writables=new ArrayList<>(list.size());
+    for (    Record r : fromMeta) {
+      writables.add(r.getRecord());
+    }
+    nextRRVals.put(entry.getKey(),writables);
+  }
+  for (  Map.Entry<String,SequenceRecordReader> entry : sequenceRecordReaders.entrySet()) {
+    SequenceRecordReader rr=entry.getValue();
+    List<RecordMetaData> thisRRMeta=new ArrayList<>();
+    for (    RecordMetaData m : list) {
+      RecordMetaDataComposableMap m2=(RecordMetaDataComposableMap)m;
+      thisRRMeta.add(m2.getMeta().get(entry.getKey()));
+    }
+    List<SequenceRecord> fromMeta=((SequenceRecordReaderMeta)rr).loadSequenceFromMetaData(thisRRMeta);
+    List<List<List<Writable>>> writables=new ArrayList<>(list.size());
+    for (    SequenceRecord r : fromMeta) {
+      writables.add(r.getSequenceRecord());
+    }
+    nextSeqRRVals.put(entry.getKey(),writables);
+  }
+  return nextMultiDataSet(nextRRVals,nextSeqRRVals,nextMetas);
+}
