@@ -1,0 +1,10 @@
+{
+  if (confusionMatrixMetaData == null)   return null;
+  List<Prediction> out=new ArrayList<>();
+  List<RecordMetaData> list=confusionMatrixMetaData.get(new Pair<>(actualClass,predictedClass));
+  if (list == null)   return out;
+  for (  RecordMetaData meta : list) {
+    out.add(new Prediction(actualClass,predictedClass,meta));
+  }
+  return out;
+}

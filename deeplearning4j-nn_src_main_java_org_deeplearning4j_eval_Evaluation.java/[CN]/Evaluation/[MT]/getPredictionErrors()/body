@@ -1,0 +1,26 @@
+{
+  if (this.confusionMatrixMetaData == null)   return null;
+  List<Prediction> list=new ArrayList<>();
+  List<Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>>> sorted=new ArrayList<>(confusionMatrixMetaData.entrySet());
+  Collections.sort(sorted,new Comparator<Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>>>(){
+    @Override public int compare(    Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> o1,    Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> o2){
+      Pair<Integer,Integer> p1=o1.getKey();
+      Pair<Integer,Integer> p2=o2.getKey();
+      int order=Integer.compare(p1.getFirst(),p2.getFirst());
+      if (order != 0)       return order;
+      order=Integer.compare(p1.getSecond(),p2.getSecond());
+      return order;
+    }
+  }
+);
+  for (  Map.Entry<Pair<Integer,Integer>,List<RecordMetaData>> entry : sorted) {
+    Pair<Integer,Integer> p=entry.getKey();
+    if (p.getFirst().equals(p.getSecond())) {
+      continue;
+    }
+    for (    RecordMetaData m : entry.getValue()) {
+      list.add(new Prediction(p.getFirst(),p.getSecond(),m));
+    }
+  }
+  return list;
+}

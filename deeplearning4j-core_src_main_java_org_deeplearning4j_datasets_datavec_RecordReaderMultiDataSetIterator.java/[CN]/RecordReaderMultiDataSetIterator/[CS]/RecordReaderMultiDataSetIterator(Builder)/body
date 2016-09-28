@@ -5,4 +5,11 @@
   this.sequenceRecordReaders=builder.sequenceRecordReaders;
   this.inputs.addAll(builder.inputs);
   this.outputs.addAll(builder.outputs);
+  metaCollectionPossible=true;
+  for (  RecordReader rr : this.recordReaders.values()) {
+    metaCollectionPossible&=(rr instanceof RecordReaderMeta);
+  }
+  for (  SequenceRecordReader rr : this.sequenceRecordReaders.values()) {
+    metaCollectionPossible&=(rr instanceof SequenceRecordReaderMeta);
+  }
 }
