@@ -1,6 +1,0 @@
-{
-  if (this == o)   return true;
-  if (o == null || getClass() != o.getClass())   return false;
-  NearestNeighborsQuery that=(NearestNeighborsQuery)o;
-  return numWords == that.numWords && !(word != null ? !word.equals(that.word) : that.word != null);
-}

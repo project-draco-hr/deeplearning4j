@@ -1,0 +1,18 @@
+{
+  int underscore=str.indexOf('_');
+  if (underscore == -1) {
+    if (!layerNameIndexes.containsKey(str)) {
+      layerNames.add(str);
+      layerNameIndexes.put(str,layerNameIndexesCount++);
+    }
+    return layerNameIndexes.get(str);
+  }
+ else {
+    String subStr=str.substring(0,underscore);
+    if (!layerNameIndexes.containsKey(subStr)) {
+      layerNames.add(subStr);
+      layerNameIndexes.put(subStr,layerNameIndexesCount++);
+    }
+    return layerNameIndexes.get(subStr);
+  }
+}

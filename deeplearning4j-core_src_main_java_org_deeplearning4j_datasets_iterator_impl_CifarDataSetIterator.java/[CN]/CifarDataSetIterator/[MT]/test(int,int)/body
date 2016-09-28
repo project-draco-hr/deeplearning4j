@@ -1,0 +1,7 @@
+{
+  super.batchSize=batchSize;
+  this.train=false;
+  this.loader.test();
+  this.numExamples=numExamples;
+  reset();
+}

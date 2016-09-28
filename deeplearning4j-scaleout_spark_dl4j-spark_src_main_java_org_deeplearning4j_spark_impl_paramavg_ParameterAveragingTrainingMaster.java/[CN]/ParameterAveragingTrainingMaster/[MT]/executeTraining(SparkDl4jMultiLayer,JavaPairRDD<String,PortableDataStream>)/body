@@ -3,7 +3,7 @@
   if (collectTrainingStats)   stats.logFitStart();
   int origNumPartitions=trainingData.partitions().size();
   if (origNumPartitions >= COALESCE_THRESHOLD * numWorkers) {
-    log.info("Coalesing PortableDataStreams from {} to {} partitions",origNumPartitions,numWorkers);
+    log.info("Coalescing PortableDataStreams from {} to {} partitions",origNumPartitions,numWorkers);
     trainingData=trainingData.coalesce(numWorkers);
   }
   if (storageLevelStreams != null)   trainingData.persist(storageLevelStreams);

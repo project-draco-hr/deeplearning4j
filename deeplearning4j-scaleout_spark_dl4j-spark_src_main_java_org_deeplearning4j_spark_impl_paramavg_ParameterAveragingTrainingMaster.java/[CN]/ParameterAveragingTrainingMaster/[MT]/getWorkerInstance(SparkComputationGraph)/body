@@ -4,5 +4,5 @@
   Broadcast<NetBroadcastTuple> broadcast=graph.getSparkContext().broadcast(tuple);
   if (collectTrainingStats)   stats.logBroadcastEnd();
   WorkerConfiguration configuration=new WorkerConfiguration(true,batchSizePerWorker,averagingFrequency,prefetchNumBatches,collectTrainingStats);
-  return new ParameterAveragingTrainingWorker(broadcast,saveUpdater,configuration);
+  return new ParameterAveragingTrainingWorker(broadcast,saveUpdater,configuration,trainingHookList);
 }

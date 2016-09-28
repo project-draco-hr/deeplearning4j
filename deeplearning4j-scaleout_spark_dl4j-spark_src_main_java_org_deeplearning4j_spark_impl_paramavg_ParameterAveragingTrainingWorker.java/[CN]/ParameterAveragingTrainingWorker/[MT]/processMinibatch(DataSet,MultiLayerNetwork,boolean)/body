@@ -1,6 +1,8 @@
 {
   if (configuration.isCollectTrainingStats())   stats.logFitStart();
+  for (  TrainingHook trainingHook : trainingHooks)   trainingHook.preUpdate(dataSet,network);
   network.fit(dataSet);
+  for (  TrainingHook trainingHook : trainingHooks)   trainingHook.postUpdate(dataSet,network);
   if (configuration.isCollectTrainingStats())   stats.logFitEnd(dataSet.numExamples());
   if (Nd4j.getExecutioner() instanceof GridExecutioner)   ((GridExecutioner)Nd4j.getExecutioner()).flushQueueBlocking();
   if (isLast)   return getFinalResult(network);

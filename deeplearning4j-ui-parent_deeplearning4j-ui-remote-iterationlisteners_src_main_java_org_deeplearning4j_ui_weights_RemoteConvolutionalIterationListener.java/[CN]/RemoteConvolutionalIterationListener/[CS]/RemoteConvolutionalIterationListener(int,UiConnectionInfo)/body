@@ -1,0 +1,7 @@
+{
+  String subPath="activations";
+  this.uiConnectionInfo=uiConnectionInfo;
+  this.freq=iterations;
+  path=uiConnectionInfo.getPath() + "/" + subPath;
+  target=client.target(uiConnectionInfo.getFullAddress()).path(subPath).path("update");
+}
