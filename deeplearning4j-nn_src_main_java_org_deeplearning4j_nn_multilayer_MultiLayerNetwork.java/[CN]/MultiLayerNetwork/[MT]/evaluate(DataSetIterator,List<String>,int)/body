@@ -24,7 +24,7 @@
  else {
       out=this.output(features,false);
       if (labels.rank() == 3)       e.evalTimeSeries(labels,out);
- else       e.eval(labels,out);
+ else       e.eval(labels,out,next.getExampleMetaData(RecordMetaData.class));
     }
   }
   return e;
